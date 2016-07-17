@@ -177,13 +177,13 @@
       the page of instructions for <a href="Ant.shtml">building
       with Ant</a>.</p>
 
-      <h2><a name="contributing" id=
-      "contributing">Contributing</a></h2>
+      <a name="contributing"></a>
+      <h2>Contributing</h2>
 
-      <p><a name="contributing">We encourage
+      <p>We encourage
       contributions of code, decoder definitions, improvements to
       web pages, etc, to the JMRI project so that we can distribute
-      them to the rest of the community.</a></p>
+      them to the rest of the community.</p>
 
       <p>For initial and/or small contributions, e.g. a new decoder
       file or small bug fix, you can fill out a new "Patches" entry
@@ -226,10 +226,10 @@
       "../../../Acknowledgements.shtml">acknowledgements
       page</a>.</p>
 
-      <h2><a name="use">Licensing</a></h2><a name="use"
-      id="use">We encourage people to build their own projects on
+      <a name="use"></a>
+      <h2>Licensing</h2>We encourage people to build their own projects on
       top of JMRI. That's the original reason that the JMRI&reg;
-      project was started!</a>
+      project was started!
 
       <p>JMRI is licensed only under the "GNU General Public
       License", sometimes called the "GPL". We use version 2 of the

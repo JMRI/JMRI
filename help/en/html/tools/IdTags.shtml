@@ -1,107 +1,126 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-  <title>
- 	JMRI: ID Tag Documentation
-  </title>
-  <meta name="author" content="Matthew Harris">
-  <meta name="keywords"
-        content="rfid tag ID tag model railroad JMRI decoderpro panelpro">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: ID Tag Documentation</title>
+  <meta name="author" content="Matthew Harris">
+  <meta name="keywords" content=
+  "rfid tag ID tag model railroad JMRI decoderpro panelpro">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-      <div id="mainContent">
+    <div id="mainContent">
       <!-- Page Body -->
-        <h1>
-		JMRI: ID Tags Documentation
-        </h1>
 
-<h2>What are ID Tags?</h2>
+      <h1>JMRI: ID Tags Documentation</h1>
 
-<p>
-An ID Tag is JMRI's way of representing information about ID Tags that can
-be attached to, for example, various items of rolling stock.
-<p>
-When an ID Tag is read by a suitable reader, this is notified via both a 
-<a href="Sensors.shtml">Sensor</a> becoming ACTIVE and a 
-<a href="Reporters.shtml">Reporter</a> being set to the value of the ID Tag.
-The ID Tag will also record both by which Reporter it was last seen by, as
-well as the time it was last seen.
-<p>
-If an unknown ID Tag is detected by a reader, details of this tag will be
-automatically entered into the 
-<a href="../../package/jmri/jmrit/beantable/IdTagTable.shtml">ID Tag Table</a>.
-<p>
-At system shutdown, the details of all ID Tags known to the system are written
-to a file stored in the "idtags" sub-directory of user 
-<a href="../../package/apps/TabbedPreferences.shtml">Preferences</a>.  The storage of
-details when and where a given ID Tag was last seen is configurable by setting
-the option at the bottom of the ID Tag Table.
-<p>
-Current implementations are for CORE-ID based readers. These are supported in
-stand-alone mode via the 'Generic Stand-alone' protocol and as an up-to 8-way
-Concentrator using <a href="http://www.merg.org.uk/">MERG</a> hardware via the
-'MERG Concentrator' protocol.
-<br>
-Note: The <a href="http://www.merg.org.uk/">MERG</a> starter kit as supplied
-should be configured using the 'Generic Stand-alone' protocol - only when
-extending the kit with the additional concentrator components should the
-'MERG Concentrator' protocol be used.</p>
+      <h2>What are ID Tags?</h2>
 
-<h2>How to setup ID Tags</h2>
+      <p>An ID Tag is JMRI's way of representing information about
+      ID Tags that can be attached to, for example, various items
+      of rolling stock.</p>
 
-<h3>ID Tag Table</h3>
-<p>The 
-<a href="../../package/jmri/jmrit/beantable/IdTagTable.shtml">ID Tag Table</a>
-provides easy access to the contents of all ID Tags that JMRI knows about.</p>
+      <p>When an ID Tag is read by a suitable reader, this is
+      notified via both a <a href="Sensors.shtml">Sensor</a>
+      becoming ACTIVE and a <a href="Reporters.shtml">Reporter</a>
+      being set to the value of the ID Tag. The ID Tag will also
+      record both by which Reporter it was last seen by, as well as
+      the time it was last seen.</p>
 
-<h3>ID Tag Table Controls</h3>
-<p>
-Below the table there's an 
-<a href="../../package/jmri/jmrit/beantable/IdTagAddEdit.shtml">"Add..." button</a>
-for creating your own ID Tags; JMRI automatically creates
-ID Tag objects for tags detected on the layout.</p>
-<p>Next to it, two check boxes let you activate:
-	<ul>
-	<li>Save when and where last seen</li>
-	<li>Use Fast Clock Time</li>
-	</ul>
+      <p>If an unknown ID Tag is detected by a reader, details of
+      this tag will be automatically entered into the <a href=
+      "../../package/jmri/jmrit/beantable/IdTagTable.shtml">ID Tag
+      Table</a>.</p>
 
-<h3>Displaying ID Tags on Panels</h3>
-<p>An ID Tag can be displayed on a Panel via the use of the Reporter Icon
-associated with a given reader.
-To do this:</p>
-	<ul>
-	<li>On the Panel Editor window for your Panel, find the "Add Reporter" 
-	button.
-	<li>In the text box next to that button, type the User Name or System Name of the
-	desired Reporter.
-	<li>Click the button.  The Reporter icon will be placed on the Panel.
-	If it's not visible, that might be because the value is currently blank;
-	use the Reporter Table to change the value to something that will be visible.
-	<li>You can drag the icon to where you want it in the usual way.
-	<li>The pop-up menu on the Reporter Icon will let you change the formatting.
-	</ul>
-<p>
-More information about Reporters can be found in the 
-<a href="Reporters.shtml">Reporters help page</a>.</p>
+      <p>At system shutdown, the details of all ID Tags known to
+      the system are written to a file stored in the "idtags"
+      sub-directory of user <a href=
+      "../../package/apps/TabbedPreferences.shtml">Preferences</a>.
+      The storage of details when and where a given ID Tag was last
+      seen is configurable by setting the option at the bottom of
+      the ID Tag Table.</p>
 
-<!--#include virtual="/Footer" -->
+      <p>Current implementations are for CORE-ID based readers.
+      These are supported in stand-alone mode via the 'Generic
+      Stand-alone' protocol and as an up-to 8-way Concentrator
+      using <a href="http://www.merg.org.uk/">MERG</a> hardware via
+      the 'MERG Concentrator' protocol.<br>
+      Note: The <a href="http://www.merg.org.uk/">MERG</a> starter
+      kit as supplied should be configured using the 'Generic
+      Stand-alone' protocol - only when extending the kit with the
+      additional concentrator components should the 'MERG
+      Concentrator' protocol be used.</p>
 
-      </div><!-- closes #mainContent-->
-    </div> <!-- closes #mBody-->
+      <h2>How to setup ID Tags</h2>
+
+      <h3>ID Tag Table</h3>
+
+      <p>The <a href=
+      "../../package/jmri/jmrit/beantable/IdTagTable.shtml">ID Tag
+      Table</a> provides easy access to the contents of all ID Tags
+      that JMRI knows about.</p>
+
+      <h3>ID Tag Table Controls</h3>
+
+      <p>Below the table there's an <a href=
+      "../../package/jmri/jmrit/beantable/IdTagAddEdit.shtml">"Add..."
+      button</a> for creating your own ID Tags; JMRI automatically
+      creates ID Tag objects for tags detected on the layout.</p>
+
+      <p>Next to it, two check boxes let you activate:</p>
+
+      <ul>
+        <li>Save when and where last seen</li>
+
+        <li>Use Fast Clock Time</li>
+      </ul>
+
+      <h3>Displaying ID Tags on Panels</h3>
+
+      <p>An ID Tag can be displayed on a Panel via the use of the
+      Reporter Icon associated with a given reader. To do this:</p>
+
+      <ul>
+        <li>On the Panel Editor window for your Panel, find the
+        "Add Reporter" button.</li>
+
+        <li>In the text box next to that button, type the User Name
+        or System Name of the desired Reporter.</li>
+
+        <li>Click the button. The Reporter icon will be placed on
+        the Panel. If it's not visible, that might be because the
+        value is currently blank; use the Reporter Table to change
+        the value to something that will be visible.</li>
+
+        <li>You can drag the icon to where you want it in the usual
+        way.</li>
+
+        <li>The pop-up menu on the Reporter Icon will let you
+        change the formatting.</li>
+      </ul>
+
+      <p>More information about Reporters can be found in the
+      <a href="Reporters.shtml">Reporters help page</a>.</p>
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

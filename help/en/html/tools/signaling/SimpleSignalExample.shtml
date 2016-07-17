@@ -1,305 +1,460 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<title>JMRI: Simple Signal Logic Example</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
 
-<meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-<meta name="Date.Modified" content="20151107"/>
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: Simple Signal Logic Example</title>
+  <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
+  <meta name="Date.Modified" content="20151107"><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<!-- Page Body -->
-<h1>
-JMRI: Simple Signal Logic Example
-</h1>
-<p class="important">Don't use the Simple Signal Logic (SSL) Tool when you have already built Signal Masts and the more advanced Signal Mast Logic in the same Panel/Configuration file.</p>
-<p>
-This page provides an example of using the JMRI <a href="../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">Simple Signal Logic</a> 
- (in short: SSL) to control Signals Heads connected to a Digitrax SE8c board. This also works for 
-other types of <i>single head</i> hardware signals, including LEDs connected to stationary decoders, C/MRI
-systems, etc.<br>
-Please try our <a href="#example1">ready-to-use example</a> as a starter for <a href="#setup">setting up your own SSL</a>.
-<p>
-Modeling railroad signaling on a layout can be done in many different ways,
-ranging from "stoplights" to complete emulation of a particular prototype's
-signaling rule book. For more information on the various possibilities,
-please see the
-<a href="index.shtml">JMRI Signaling help page</a>.
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<a id="example1"></a><h2>Predefined example</h2>
+    <div id="mainContent">
+      <!-- Page Body -->
 
-<p>A predefined SSL example is provided in the JMRI installation (see the
-<a href="http://jmri.org/download">download page</a> for information on downloading).
-To use this example:
-<ul>
-<li>Start the PanelPro program, and select "Preferences..." from the Edit menu (from the PanelPro menu on OS X).
-On the pane that opens, click Connections at left and then select "Digitrax" as the System Manufacturer and "LocoNet Simulator" as the System Connection.
-Click the <b>Save</b> button at the bottom left of the Preferences pane and quit PanelPro. This will let you use the example (which
-uses LocoNet addresses for Signal Heads, Turnouts and Sensors) even when 
-your computer is not connected to a layout of any kind.
-<li>Restart the PanelPro program.
-<li>From the "Panels" menu, select "Open Panels..." and navigate to 
-the file "SE8cSignalExample.xml" in the <a href="../../../../../xml/layout/">JMRI/xml/layout/</a> directory.
-Note that you may have to look around for this file; it's in the
-same place that you installed the program.<a href="images/StartPanel.png"><img src="images/StartPanel.png" align="right" width="317" height="173" hspace="0" vspace="2" alt="Demo screen at startup"></a></li>
-<li>
-You should now see a simple schematic Panel for a layout consisting of a loop
-of track and one passing siding (like the non-functioning image to the right; click to enlarge).
-<p>
-Because there's no connection to a real layout, the status of the Sensors and
-Turnouts isn't initially known. Our example shows this by displaying the
-Sensor icons as Red, and the Turnout icons as [?] meaning "not connected either way".
-Since the Simple Signal Logic isn't sure yet whether Blocks are occupied nor how Turnouts
-are set, it shows a "Red" Appearance on all Signal Heads.
-<p>
-You can click on your Panel icons to change the occupancy and
-turnout status, or use another tool (e.g. the Turnout Table) to do that.
-<p>Click on each of the Turnout icons to set them "Closed". Click on the 
-Sensor icons to set them "Unoccupied", which is shown as a 
-grey circle ("Occupied" would be indicated by a yellow circle).</li>
-<li>
-The display should now look like the image to the right. 
-<a href="images/SensorsCleared.png"><img src="images/SensorsCleared.png" align="right" width="317" height="173" hspace="0" vspace="2" alt="Demo screen in clear state"></a>
-Both signals on the passing siding are Red, as the Turnouts are thrown against
-them. All the signals on the mainline show a Green Appearance.
-<p>
-If you "hover" the cursor over an item on your Panel, a tooltip will pop up with information
-about the item. For example, a Turnout might pop up "Turnout 1 (LT1)".
-LT1 is the "System Name" for that Turnout. In this case, it
-means "LocoNet Turnout with address 1". "Turnout 1" is the "User Name", 
-which can be anything you want it to be as long as it is unique on your Panel.  You can edit these from the
-"Turnout Table" accessed from the Tools > Tables > Turnouts menu.<br>
-Signal Heads and Sensors
-are identified using similar names (see the
-<a href="../../doc/Technical/Names.shtml">JMRI help page on System Names and Naming</a>).</li>
-<li>
-You can now click on the Sensor icons to learn how the Signals react
-to the presence of a train.  For example, the image to the right
-shows a train entering the passing siding from the left side. It's about
-to encounter a Yellow signal upon entering the siding, which tells it to 
-be prepared to stop for a Red signal at the far end of the 
-siding.<br><a href="images/SensorTuroutsSet.png"><img src="images/SensorTuroutsSet.png" align=right width="317" height="173" hspace="0" vspace="2" alt="Demo screen with two trains"></a>
-Note that the rear of this train is protected by a Red signal, which in
-turn is protected by a Yellow signal in the preceding Block.
-Another train is just leaving 
-onto the main going to the right.  
+      <h1>JMRI: Simple Signal Logic Example</h1>
 
-<li>
-If you're interested in how the program would communicate with a real 
-Digitrax SE8c signaling board, you can open the "Monitor LocoNet"
-tool from the LocoNet menu.<br>
-In the pane that opens, you will see that clicking on a Turnout icon sends a
-LocoNet message to move that Turnout. Clicking on a Sensor icon
-sends a message as if a BDL16 sensor channel had seen
-a change in occupancy.  If either of those messages results in
-a change to the signals, the program will send 
-messages to the corresponding SE8c channels to change their output to match.
-For example, when the train in the previous image enters the
-block on the right side (Block 1), the messages are:
-<pre><!-- Updated for panel included in JMRI 4.1.3 -->
+      <p class="important">Don't use the Simple Signal Logic (SSL)
+      Tool when you have already built Signal Masts and the more
+      advanced Signal Mast Logic in the same Panel/Configuration
+      file.</p>
+
+      <p>This page provides an example of using the JMRI <a href=
+      "../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">Simple
+      Signal Logic</a> (in short: SSL) to control Signals Heads
+      connected to a Digitrax SE8c board. This also works for other
+      types of <i>single head</i> hardware signals, including LEDs
+      connected to stationary decoders, C/MRI systems, etc.<br>
+      Please try our <a href="#example1">ready-to-use example</a>
+      as a starter for <a href="#setup">setting up your own
+      SSL</a>.</p>
+
+      <p>Modeling railroad signaling on a layout can be done in
+      many different ways, ranging from "stoplights" to complete
+      emulation of a particular prototype's signaling rule book.
+      For more information on the various possibilities, please see
+      the <a href="index.shtml">JMRI Signaling help page</a>.
+      <a id="example1" name="example1"></a></p>
+
+      <h2>Predefined example</h2>
+
+      <p>A predefined SSL example is provided in the JMRI
+      installation (see the <a href=
+      "http://jmri.org/download">download page</a> for information
+      on downloading). To use this example:</p>
+
+      <ul>
+        <li>Start the PanelPro program, and select "Preferences..."
+        from the Edit menu (from the PanelPro menu on OS X). On the
+        pane that opens, click Connections at left and then select
+        "Digitrax" as the System Manufacturer and "LocoNet
+        Simulator" as the System Connection. Click the <b>Save</b>
+        button at the bottom left of the Preferences pane and quit
+        PanelPro. This will let you use the example (which uses
+        LocoNet addresses for Signal Heads, Turnouts and Sensors)
+        even when your computer is not connected to a layout of any
+        kind.</li>
+
+        <li>Restart the PanelPro program.</li>
+
+        <li>From the "Panels" menu, select "Open Panels..." and
+        navigate to the file "SE8cSignalExample.xml" in the
+        <a href="../../../../../xml/layout/">JMRI/xml/layout/</a>
+        directory. Note that you may have to look around for this
+        file; it's in the same place that you installed the
+        program.<a href="images/StartPanel.png"><img src=
+        "images/StartPanel.png" align="right" width="317" height=
+        "173" hspace="0" vspace="2" alt=
+        "Demo screen at startup"></a></li>
+
+        <li>You should now see a simple schematic Panel for a
+        layout consisting of a loop of track and one passing siding
+        (like the non-functioning image to the right; click to
+        enlarge).
+
+          <p>Because there's no connection to a real layout, the
+          status of the Sensors and Turnouts isn't initially known.
+          Our example shows this by displaying the Sensor icons as
+          Red, and the Turnout icons as [?] meaning "not connected
+          either way". Since the Simple Signal Logic isn't sure yet
+          whether Blocks are occupied nor how Turnouts are set, it
+          shows a "Red" Appearance on all Signal Heads.</p>
+
+          <p>You can click on your Panel icons to change the
+          occupancy and turnout status, or use another tool (e.g.
+          the Turnout Table) to do that.</p>
+
+          <p>Click on each of the Turnout icons to set them
+          "Closed". Click on the Sensor icons to set them
+          "Unoccupied", which is shown as a grey circle ("Occupied"
+          would be indicated by a yellow circle).</p>
+        </li>
+
+        <li>The display should now look like the image to the
+        right. <a href="images/SensorsCleared.png"><img src=
+        "images/SensorsCleared.png" align="right" width="317"
+        height="173" hspace="0" vspace="2" alt=
+        "Demo screen in clear state"></a> Both signals on the
+        passing siding are Red, as the Turnouts are thrown against
+        them. All the signals on the mainline show a Green
+        Appearance.
+
+          <p>If you "hover" the cursor over an item on your Panel,
+          a tooltip will pop up with information about the item.
+          For example, a Turnout might pop up "Turnout 1 (LT1)".
+          LT1 is the "System Name" for that Turnout. In this case,
+          it means "LocoNet Turnout with address 1". "Turnout 1" is
+          the "User Name", which can be anything you want it to be
+          as long as it is unique on your Panel. You can edit these
+          from the "Turnout Table" accessed from the Tools &gt;
+          Tables &gt; Turnouts menu.<br>
+          Signal Heads and Sensors are identified using similar
+          names (see the <a href=
+          "../../doc/Technical/Names.shtml">JMRI help page on
+          System Names and Naming</a>).</p>
+        </li>
+
+        <li>You can now click on the Sensor icons to learn how the
+        Signals react to the presence of a train. For example, the
+        image to the right shows a train entering the passing
+        siding from the left side. It's about to encounter a Yellow
+        signal upon entering the siding, which tells it to be
+        prepared to stop for a Red signal at the far end of the
+        siding.<br>
+        <a href="images/SensorTuroutsSet.png"><img src=
+        "images/SensorTuroutsSet.png" align="right" width="317"
+        height="173" hspace="0" vspace="2" alt=
+        "Demo screen with two trains"></a> Note that the rear of
+        this train is protected by a Red signal, which in turn is
+        protected by a Yellow signal in the preceding Block.
+        Another train is just leaving onto the main going to the
+        right.</li>
+
+        <li>If you're interested in how the program would
+        communicate with a real Digitrax SE8c signaling board, you
+        can open the "Monitor LocoNet" tool from the LocoNet
+        menu.<br>
+          In the pane that opens, you will see that clicking on a
+          Turnout icon sends a LocoNet message to move that
+          Turnout. Clicking on a Sensor icon sends a message as if
+          a BDL16 sensor channel had seen a change in occupancy. If
+          either of those messages results in a change to the
+          signals, the program will send messages to the
+          corresponding SE8c channels to change their output to
+          match. For example, when the train in the previous image
+          enters the block on the right side (Block 1), the
+          messages are:
+          <pre>
+<!-- Updated for panel included in JMRI 4.1.3 -->
   Sensor LS1  (Block 1) is Hi.  (BDL16 #1, DS1; DS54/64/SE8c #1, AuxA/A1/DS01)
   Requesting Switch at LT285 () to Thrown (output On).
   Requesting Switch at LT291 () to Thrown (output On).
   Requesting Switch at LT282 () to Thrown (output On).
-</pre>
-These three switch messages set Signal Heads 4C, 5B and 4A to Red, Red and Yellow respectively.
-<li>
-To learn how signals are configured in SSL, open the 
-"Simple Signal Logic" item in the Tools menu.<a href="../../../images/SE8cExampleLogic.png"><img src="../../../images/SE8cExampleLogic.png" align="right" width="290" height="270" hspace="0" vspace="0" alt="Simple Signal Logic Window"></a>
-In the pane that opens, enter a Signal (Head) Name, e.g. "Section 5A", in the top
-text field and hit the Return key. You should get something
-like the image to the right (click to enlarge).  
-"Section 5A" is the name of the Signal (Head) protecting
-Turnout "LT2", the right-hand entrance to the passing siding.
-<ul>
-<li>It is defined here as an "On Facing-Point Turnout" signal. 
-<li>It protects Sensor "LS7" by turning Red when the Sensor
-detects a train in the Block monitored by LS7.
-<li>It watches the status of Turnout "LT2".<br>
-To Protect Signal: When Turnout LT2 is "Closed", signal "Section 5A" will be Yellow when Signal Head LH261, located on the mainline between the turnouts, is Red.<br>
-And Protect Signal: When Turnout LT2 is "Thrown", signal "Section 5A" will be Yellow when Signal Head LH263 at the entrance to the
-passing siding is Red.
-<li>
-The "With Flashing Yellow" checkbox isn't selected in our example, but if it was, signal "Section 5A" 
-would protect a Yellow signal further on by displaying a Flashing Yellow.
-<li>
-If you check the "Distant Signal" box, the 
-Signal Head you're controlling here is programmed to show the same or a more restrictive Appearance 
-as the next signal, instead of possibly one faster. Instead of showing Yellow before a Red, it 
-will show a Red.
-</ul>
-You can change any of these settings and click "Apply" at the bottom of the pane to put them into
-effect, then click on the example Panel to see how the new settings work.
-</ul>
+</pre>These three switch messages set Signal Heads 4C, 5B and 4A to
+Red, Red and Yellow respectively.
+        </li>
 
-<a name="setup">
-</a><h2>Setting up your own example</h2>
-The complete set of steps involved in creating this example are:
-<ol>
-<li>Launch and configure the PanelPro application. Restart it to 
-have your preferences take effect.
-<br>
-For more information on launching and configuring 
-PanelPro, please see the
-<a href="../../apps/PanelPro/PanelPro.shtml">PanelPro help page</a>.
+        <li>To learn how signals are configured in SSL, open the
+        "Simple Signal Logic" item in the Tools menu.<a href=
+        "../../../images/SE8cExampleLogic.png"><img src=
+        "../../../images/SE8cExampleLogic.png" align="right"
+          width="290" height="270" hspace="0" vspace="0" alt=
+          "Simple Signal Logic Window"></a> In the pane that opens,
+          enter a Signal (Head) Name, e.g. "Section 5A", in the top
+          text field and hit the Return key. You should get
+          something like the image to the right (click to enlarge).
+          "Section 5A" is the name of the Signal (Head) protecting
+          Turnout "LT2", the right-hand entrance to the passing
+          siding.
 
-<li>Tell the program about your Sensors: 
-  <ul>
-  <li>From the Tools menu, open the "Tables" > "Sensors" tool.
-  <li>If you have a Digitrax DCC system with your
-      occupancy detectors connected to LocoNet, just
-      power the track Off and On using either a DT-series
-      throttle or the "Power Control..." pane from the Tools menu.
-      PanelPro will capture all sensor addresses from 
-      the resulting LocoNet traffic.
-   <li>For layouts with a different System Connection, use the "Add..." button at the bottom of the Sensor Table to create the needed sensors.  
-   </ul>
+          <ul>
+            <li>It is defined here as an "On Facing-Point Turnout"
+            signal.</li>
 
-<li>Save your work by selecting "Save Panels..." from the "Panels" menu,
-typing a filename, and hitting "Save Panels". (You might want to do this often!)
+            <li>It protects Sensor "LS7" by turning Red when the
+            Sensor detects a train in the Block monitored by
+            LS7.</li>
 
-<li>Tell the program about your computer-driven Turnouts:
-  <ul>
-  <li>From the Tools menu, open the "Tables" > "Turnouts" tool.
-  <li>If you have a Digitrax DCC system, just
-      throw or close each Turnout from a throttle.
-      PanelPro will capture the Turnout addresses from 
-      the resulting LocoNet traffic.
-   <li>You can also use the "Add..." button on the Turnout Table to open a 
-      pane to enter new Turnouts.
-   <li>The "Turnout Control..." pane in the Tools menu also creates a new
-      Turnout entry for every turnout address you operate.
-   </ul>
+            <li>It watches the status of Turnout "LT2".<br>
+            To Protect Signal: When Turnout LT2 is "Closed", signal
+            "Section 5A" will be Yellow when Signal Head LH261,
+            located on the mainline between the turnouts, is
+            Red.<br>
+            And Protect Signal: When Turnout LT2 is "Thrown",
+            signal "Section 5A" will be Yellow when Signal Head
+            LH263 at the entrance to the passing siding is
+            Red.</li>
 
-<li>If you have Signal Heads connected to "turnout-type" outputs,
-tell the program about those Turnout addresses too (SE8c users skip this step).
+            <li>The "With Flashing Yellow" checkbox isn't selected
+            in our example, but if it was, signal "Section 5A"
+            would protect a Yellow signal further on by displaying
+            a Flashing Yellow.</li>
 
-<a name="definesignals"/>
-<li>Tell PanelPro how your Signals are addressed:
-<a href="../../../package/jmri/jmrit/beantable/SignalHeads.png"><img src="../../../package/jmri/jmrit/beantable/SignalHeads.png" align="right" width="369" height="123" hspace="0" vspace="0" alt="Signal Head Table Figure"></a>
+            <li>If you check the "Distant Signal" box, the Signal
+            Head you're controlling here is programmed to show the
+            same or a more restrictive Appearance as the next
+            signal, instead of possibly one faster. Instead of
+            showing Yellow before a Red, it will show a Red.</li>
+          </ul>You can change any of these settings and click
+          "Apply" at the bottom of the pane to put them into
+          effect, then click on the example Panel to see how the
+          new settings work.
+        </li>
+      </ul><a name="setup" id="setup"></a>
 
-  <ul>
-  <li>From the Tools menu, open the "Tables" > "Signals" > "Signal Heads" tool.
-  <li>Click the 
-      "<a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">Add...</a>"
-      button at the left bottom of the table to pop a pane. At the top are several choices for your type of Signal Head driver:
-      <dl>
-      <dt>Triple Output
-      <dd>A Signal Head Connection Type with red/yellow/green lights that
-      are driven by three separate outputs.  
-      The outputs are driven by JMRI turnout logic, and 
-      appear in the Turnout Table.
-      <br>To configure one of these,
-      enter the name you want to give it (typically something like "IH2"), and
-      the address numbers of the three outputs that drive the lamps (like "258" etc.).
-      <dt>Double Output
-      <dd>A Signal Head Connection Type with lights that
-      are driven by two output connections. 
-      The two outputs drive red and green lights separately; PanelPro
-      will turn them both On to make yellow.
-      The outputs are driven by JMRI turnout logic, and 
-      appear in the Turnout Table.
-      <br>
-      To configure one of these,
-      enter the name you want to give it (typically something like "IH2"), and
-      the address numbers of the two outputs that drive the lamps (like "258" etc.).
-      <dt>SE8c 4 Aspect
-      <dd>This Connection Type is for Signal Heads driven by a Digitrax SE8c decoder.  
-      <br>
-      Enter the lower of the two Turnout addresses that this Signal Head
-      responds to.  For example, if it's the first Signal Head on your first
-      SE8c board, you can control it by setting Turnouts 257 and 258 with
-      your throttle. Enter "257" in the Turnout Number box on the pane.
-      <br>
-      Note: The SE8c board should be configured so that the "4th aspect" is "Dark";
-      JMRI will handle any flashing that's needed.
-      <dt>And many more...
-      <dd>Other signal driver options are "DCC Signal Decoder" and "Acela", among many others (you may have to scroll up or down to see them all).<br>See the <a href="SignalHeads.shtml">Signal Heads help page</a> for more information an each.
-      </dl>
-      Once you've set the options, click "OK".  You can 
-      use this pane repeatedly to enter as many Signal Heads as you have.
-  </ul>
+      <h2>Setting up your own example</h2>The complete set of steps
+      involved in creating this example are:
 
-<li>Configure your signaling logic using the Simple Signal Logic (SSL) Tool.<br>
-Open the "Simple Signal Logic" tool from the "Tools" menu.  You should get a pane
-	with a number of fields:
-	<a href="../../../images/SE8cExampleLogic.png"><img src="../../../images/SE8cExampleLogic.png" align=right width="290" height="270" hspace="2" vspace="0" alt="Simple Signal Logic Window"></a>
-	<ul>
-	<li>In the top box, enter the name of the Signal Head you want to configure.
-	<li>The radio buttons below that select one of four possible uses
-	for this signal:
-		<ul>
-		<li>"On Single Block" - this signal protects one end of a straight
-		through block, with no signaled turnouts
-		<li>"Main Leg of (trailing-point) Turnout" - this signal is along
-		 the main route through a turnout, which is defined as the direction
-		 taken by trains when the turnout is "Closed".  It's protecting the
-		 frog of the turnout so that trains will stop before running 
-		 through a turnout set against them.
-		<li>"Diverging Leg of (trailing-point) Turnout" - this signal is along
-		 the diverging route through a turnout, which is defined as the direction
-		 taken by trains when the turnout is set to "Thrown".  It's protecting the
-		 frog of the turnout so that trains will stop before running 
-		 through a turnout set against them.
-		<li>"On Facing-Point Turnout" - this signal is protecting the 
-		points-end of a turnout. Depending on whether the Turnout you watch is
-		"Thrown" or "Closed", the train will take one of two different routes, and the
-		Signal will protect different next Blocks, which you fill in next.
-		</ul>
-	<li>If you want the Signal Head to go Red when a Sensor shows
-	Occupied (sensor active), enter the Sensor Name in the next box.
-	<li>If this signal is protecting travel in the trailing point
-	direction through a turnout, you can have the Signal Head show Red if
-	the turnout is thrown against the train. To do this, enter the
-	Turnout Name to be monitored in the 3rd box, and select whether
-	the Signal Head should be Red when the Turnout is either Thrown or Closed.
-	<li>If you want multi-block logic, e.g. Absolute Block Signaling "Light",
-	enter the name of the following Signal Head in the last box.  When that
-	Signal Head shows Red, the one you're now configuring will be set to Yellow to warn the engineer
-	that the train must be able to stop at the next signal.<br>
-	<br>
-	If you'd like to give an additional warning, check the "With Flashing
-	Yellow" checkbox.  In that case, the signal before a Red will show 
-	Yellow, and the signal before that Yellow will
-	show a Flashing Yellow.<br>
-  <i>We suggest you use the newer <a href="AspectSignaling.shtml">Aspect Based Signaling</a> instead of SSL for any more complex setup.</i>
-  <li>Once you've set the options, click "Apply". You can 
-      use this form repeatedly to enter as many as you'd like, each with it's own unique name of course.
-	</ul>
-<li>Once you save your work by selecting "Store Configuration and Panels To File..." from the File menu, you're done!
-</ol>
+      <ol>
+        <li>Launch and configure the PanelPro application. Restart
+        it to have your preferences take effect.<br>
+        For more information on launching and configuring PanelPro,
+        please see the <a href=
+        "../../apps/PanelPro/PanelPro.shtml">PanelPro help
+        page</a>.</li>
 
-<p>Now try out your Simple Signal Logic by operating your layout.
-<br>
-Although it's a lot less fun than actually running the layout, 
-you can also test your Simple Signal Logic by changing Turnout
-and Sensor states on the computer itself.  Just click on the status
-information in one of the Tables to change it. For example, if Turnout
-"LT23" is showing "Thrown" in the Turnout Table, click on that word to change it to "Closed". The
-signal icon will update to the new Appearance.
-<p>
-You can create a small Control Panel to do this graphically. For more
-info on how to do that, see the 
-<a href="../../apps/PanelPro/Panels.shtml">Panels help page</a>.
-<p>
+        <li>Tell the program about your Sensors:
 
-<p>Back to <a href="../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">Simple Signal Logic help page</a>.
-<p>Located at en\html\tools\signaling\
+          <ul>
+            <li>From the Tools menu, open the "Tables" &gt;
+            "Sensors" tool.</li>
 
-<!--#include virtual="/Footer" -->
+            <li>If you have a Digitrax DCC system with your
+            occupancy detectors connected to LocoNet, just power
+            the track Off and On using either a DT-series throttle
+            or the "Power Control..." pane from the Tools menu.
+            PanelPro will capture all sensor addresses from the
+            resulting LocoNet traffic.</li>
+
+            <li>For layouts with a different System Connection, use
+            the "Add..." button at the bottom of the Sensor Table
+            to create the needed sensors.</li>
+          </ul>
+        </li>
+
+        <li>Save your work by selecting "Save Panels..." from the
+        "Panels" menu, typing a filename, and hitting "Save
+        Panels". (You might want to do this often!)</li>
+
+        <li>Tell the program about your computer-driven Turnouts:
+
+          <ul>
+            <li>From the Tools menu, open the "Tables" &gt;
+            "Turnouts" tool.</li>
+
+            <li>If you have a Digitrax DCC system, just throw or
+            close each Turnout from a throttle. PanelPro will
+            capture the Turnout addresses from the resulting
+            LocoNet traffic.</li>
+
+            <li>You can also use the "Add..." button on the Turnout
+            Table to open a pane to enter new Turnouts.</li>
+
+            <li>The "Turnout Control..." pane in the Tools menu
+            also creates a new Turnout entry for every turnout
+            address you operate.</li>
+          </ul>
+        </li>
+
+        <li>If you have Signal Heads connected to "turnout-type"
+        outputs, tell the program about those Turnout addresses too
+        (SE8c users skip this step). <a name="definesignals" id=
+        "definesignals"></a></li>
+
+        <li>
+          <a name="definesignals" id="definesignals">Tell PanelPro
+          how your Signals are addressed:</a><a name=
+          "definesignals" id="definesignals"></a> <a href=
+          "../../../package/jmri/jmrit/beantable/SignalHeads.png"><img src="../../../package/jmri/jmrit/beantable/SignalHeads.png"
+          align="right" width="369" height="123" hspace="0" vspace=
+          "0" alt="Signal Head Table Figure"></a>
+
+          <ul>
+            <li>From the Tools menu, open the "Tables" &gt;
+            "Signals" &gt; "Signal Heads" tool.</li>
+
+            <li>Click the "<a href=
+            "../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">Add...</a>"
+            button at the left bottom of the table to pop a pane.
+            At the top are several choices for your type of Signal
+            Head driver:
+
+              <dl>
+                <dt>Triple Output</dt>
+
+                <dd>A Signal Head Connection Type with
+                red/yellow/green lights that are driven by three
+                separate outputs. The outputs are driven by JMRI
+                turnout logic, and appear in the Turnout Table.<br>
+                To configure one of these, enter the name you want
+                to give it (typically something like "IH2"), and
+                the address numbers of the three outputs that drive
+                the lamps (like "258" etc.).</dd>
+
+                <dt>Double Output</dt>
+
+                <dd>A Signal Head Connection Type with lights that
+                are driven by two output connections. The two
+                outputs drive red and green lights separately;
+                PanelPro will turn them both On to make yellow. The
+                outputs are driven by JMRI turnout logic, and
+                appear in the Turnout Table.<br>
+                To configure one of these, enter the name you want
+                to give it (typically something like "IH2"), and
+                the address numbers of the two outputs that drive
+                the lamps (like "258" etc.).</dd>
+
+                <dt>SE8c 4 Aspect</dt>
+
+                <dd>This Connection Type is for Signal Heads driven
+                by a Digitrax SE8c decoder.<br>
+                Enter the lower of the two Turnout addresses that
+                this Signal Head responds to. For example, if it's
+                the first Signal Head on your first SE8c board, you
+                can control it by setting Turnouts 257 and 258 with
+                your throttle. Enter "257" in the Turnout Number
+                box on the pane.<br>
+                Note: The SE8c board should be configured so that
+                the "4th aspect" is "Dark"; JMRI will handle any
+                flashing that's needed.</dd>
+
+                <dt>And many more...</dt>
+
+                <dd>Other signal driver options are "DCC Signal
+                Decoder" and "Acela", among many others (you may
+                have to scroll up or down to see them all).<br>
+                See the <a href="SignalHeads.shtml">Signal Heads
+                help page</a> for more information an each.</dd>
+              </dl>Once you've set the options, click "OK". You can
+              use this pane repeatedly to enter as many Signal
+              Heads as you have.
+            </li>
+          </ul>
+        </li>
+
+        <li>Configure your signaling logic using the Simple Signal
+        Logic (SSL) Tool.<br>
+          Open the "Simple Signal Logic" tool from the "Tools"
+          menu. You should get a pane with a number of fields:
+          <a href="../../../images/SE8cExampleLogic.png"><img src=
+          "../../../images/SE8cExampleLogic.png" align="right"
+          width="290" height="270" hspace="2" vspace="0" alt=
+          "Simple Signal Logic Window"></a>
+
+          <ul>
+            <li>In the top box, enter the name of the Signal Head
+            you want to configure.</li>
+
+            <li>The radio buttons below that select one of four
+            possible uses for this signal:
+
+              <ul>
+                <li>"On Single Block" - this signal protects one
+                end of a straight through block, with no signaled
+                turnouts</li>
+
+                <li>"Main Leg of (trailing-point) Turnout" - this
+                signal is along the main route through a turnout,
+                which is defined as the direction taken by trains
+                when the turnout is "Closed". It's protecting the
+                frog of the turnout so that trains will stop before
+                running through a turnout set against them.</li>
+
+                <li>"Diverging Leg of (trailing-point) Turnout" -
+                this signal is along the diverging route through a
+                turnout, which is defined as the direction taken by
+                trains when the turnout is set to "Thrown". It's
+                protecting the frog of the turnout so that trains
+                will stop before running through a turnout set
+                against them.</li>
+
+                <li>"On Facing-Point Turnout" - this signal is
+                protecting the points-end of a turnout. Depending
+                on whether the Turnout you watch is "Thrown" or
+                "Closed", the train will take one of two different
+                routes, and the Signal will protect different next
+                Blocks, which you fill in next.</li>
+              </ul>
+            </li>
+
+            <li>If you want the Signal Head to go Red when a Sensor
+            shows Occupied (sensor active), enter the Sensor Name
+            in the next box.</li>
+
+            <li>If this signal is protecting travel in the trailing
+            point direction through a turnout, you can have the
+            Signal Head show Red if the turnout is thrown against
+            the train. To do this, enter the Turnout Name to be
+            monitored in the 3rd box, and select whether the Signal
+            Head should be Red when the Turnout is either Thrown or
+            Closed.</li>
+
+            <li>If you want multi-block logic, e.g. Absolute Block
+            Signaling "Light", enter the name of the following
+            Signal Head in the last box. When that Signal Head
+            shows Red, the one you're now configuring will be set
+            to Yellow to warn the engineer that the train must be
+            able to stop at the next signal.<br>
+            <br>
+            If you'd like to give an additional warning, check the
+            "With Flashing Yellow" checkbox. In that case, the
+            signal before a Red will show Yellow, and the signal
+            before that Yellow will show a Flashing Yellow.<br>
+            <i>We suggest you use the newer <a href=
+            "AspectSignaling.shtml">Aspect Based Signaling</a>
+            instead of SSL for any more complex setup.</i></li>
+
+            <li>Once you've set the options, click "Apply". You can
+            use this form repeatedly to enter as many as you'd
+            like, each with it's own unique name of course.</li>
+          </ul>
+        </li>
+
+        <li>Once you save your work by selecting "Store
+        Configuration and Panels To File..." from the File menu,
+        you're done!</li>
+      </ol>
+
+      <p>Now try out your Simple Signal Logic by operating your
+      layout.<br>
+      Although it's a lot less fun than actually running the
+      layout, you can also test your Simple Signal Logic by
+      changing Turnout and Sensor states on the computer itself.
+      Just click on the status information in one of the Tables to
+      change it. For example, if Turnout "LT23" is showing "Thrown"
+      in the Turnout Table, click on that word to change it to
+      "Closed". The signal icon will update to the new
+      Appearance.</p>
+
+      <p>You can create a small Control Panel to do this
+      graphically. For more info on how to do that, see the
+      <a href="../../apps/PanelPro/Panels.shtml">Panels help
+      page</a>.</p>
+
+      <p>Back to <a href=
+      "../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">Simple
+      Signal Logic help page</a>.</p>
+
+      <p>Located at en\html\tools\signaling\ 
+      <!--#include virtual="/Footer" --></p>
+    </div>
+  </div>
 </body>
 </html>

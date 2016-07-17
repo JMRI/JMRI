@@ -40,11 +40,6 @@ public class JythonWindow extends AbstractAction {
     protected JCheckBox alwaysOnTopCheckBox = new JCheckBox();
 
     /**
-     *
-     */
-    private static final long serialVersionUID = 2991411495753279905L;
-
-    /**
      * Constructor just initializes parent class.
      *
      * @param name Action name

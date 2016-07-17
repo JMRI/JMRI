@@ -77,8 +77,7 @@
 
       <p>A new JMRI checkout should build cleanly. If not, please
       check with the JMRIusers or jmri-developers mailings lists
-      for help.</p>
-    <!--#include virtual="/Footer" -->
+      for help.</p><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

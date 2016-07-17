@@ -15,7 +15,10 @@ import jmri.server.json.time.JsonTimeServiceFactory;
  *
  * @author Randall Wood (C) 2013, 2014, 2016
  * @see jmri.server.json.JSON
+ * @deprecated since 4.5.2; use the equivalent constant from
+ * {@link jmri.server.json.JSON} or other classes as documented.
  */
+@Deprecated
 public final class JSON {
 
     /**
@@ -52,15 +55,15 @@ public final class JSON {
     /**
      * {@value #PING}
      */
-    public static final String PING = "ping"; // NOI18N
+    public static final String PING = jmri.server.json.JSON.PING; // NOI18N
     /**
      * {@value #PONG}
      */
-    public static final String PONG = "pong"; // NOI18N
+    public static final String PONG = jmri.server.json.JSON.PONG; // NOI18N
     /**
      * {@value #GOODBYE}
      */
-    public static final String GOODBYE = "goodbye"; // NOI18N
+    public static final String GOODBYE = jmri.server.json.JSON.GOODBYE; // NOI18N
     /**
      * {@value #NAME}
      */
@@ -123,14 +126,20 @@ public final class JSON {
     /* JSON error */
     /**
      * {@value #ERROR}
+     *
+     * @see jmri.server.json.JsonException#ERROR
      */
     public static final String ERROR = JsonException.ERROR; // NOI18N
     /**
      * {@value #CODE}
+     *
+     * @see jmri.server.json.JsonException#CODE
      */
     public static final String CODE = JsonException.CODE; // NOI18N
     /**
      * {@value #MESSAGE}
+     *
+     * @see jmri.server.json.JsonException#MESSAGE
      */
     public static final String MESSAGE = JsonException.MESSAGE; // NOI18N
 
@@ -138,7 +147,7 @@ public final class JSON {
     /**
      * {@value #HELLO}
      */
-    public static final String HELLO = "hello"; // NOI18N
+    public static final String HELLO = jmri.server.json.JSON.HELLO; // NOI18N
     /**
      * {@value #JMRI}
      */
@@ -208,7 +217,7 @@ public final class JSON {
     /**
      * {@value #METADATA}
      */
-    public static final String METADATA = "metadata"; // NOI18N
+    public static final String METADATA = jmri.server.json.JSON.METADATA; // NOI18N
     /**
      * {@value #PANELS}
      */
@@ -219,16 +228,22 @@ public final class JSON {
     public static final String REPORTERS = "reporters"; // NOI18N
     /**
      * {@value #ROSTER}
+     *
+     * @see jmri.server.json.roster.JsonRoster#ROSTER
+     *
      */
     public static final String ROSTER = JsonRoster.ROSTER; // NOI18N
     /**
      * {@value #ROSTER_GROUP}
      *
      * @since 2.0
+     * @see jmri.server.json.roster.JsonRoster#ROSTER_GROUP
      */
     public static final String ROSTER_GROUP = JsonRoster.ROSTER_GROUP; // NOI18N
     /**
      * {@value #ROSTER_GROUPS}
+     *
+     * @see jmri.server.json.roster.JsonRoster#ROSTER_GROUPS
      */
     public static final String ROSTER_GROUPS = JsonRoster.ROSTER_GROUPS; // NOI18N
     /**
@@ -237,6 +252,8 @@ public final class JSON {
     public static final String ROUTES = "routes"; // NOI18N
     /**
      * {@value #SENSORS}
+     *
+     * @see jmri.server.json.sensor.JsonSensorServiceFactory#SENSORS
      */
     public static final String SENSORS = JsonSensorServiceFactory.SENSORS;
     /**
@@ -258,7 +275,7 @@ public final class JSON {
     /**
      * {@value #NETWORK_SERVICES}
      */
-    public static final String NETWORK_SERVICES = "networkServices"; // NOI18N
+    public static final String NETWORK_SERVICES = jmri.server.json.JSON.NETWORK_SERVICES; // NOI18N
 
     /* JSON data types */
     /**
@@ -298,13 +315,15 @@ public final class JSON {
      *
      * @since 2.0
      */
-    public static final String NETWORK_SERVICE = "networkService"; // NOI18N
+    public static final String NETWORK_SERVICE = jmri.server.json.JSON.NETWORK_SERVICE; // NOI18N
     /**
      * {@value #PANEL}
      */
     public static final String PANEL = "panel"; // NOI18N
     /**
      * {@value #POWER}
+     *
+     * @see jmri.server.json.power.JsonPowerServiceFactory#POWER
      */
     public static final String POWER = JsonPowerServiceFactory.POWER; // NOI18N
     /**
@@ -317,6 +336,8 @@ public final class JSON {
     public static final String ROUTE = "route"; // NOI18N
     /**
      * {@value #SENSOR}
+     *
+     * @see jmri.server.json.sensor.JsonSensorServiceFactory#SENSOR
      */
     public static final String SENSOR = JsonSensorServiceFactory.SENSOR;
     /**
@@ -333,14 +354,20 @@ public final class JSON {
     public static final String REPORTER = "reporter"; // NOI18N
     /**
      * {@value #ROSTER_ENTRY}
+     *
+     * @see jmri.server.json.roster.JsonRoster#ROSTER_ENTRY
      */
     public static final String ROSTER_ENTRY = JsonRoster.ROSTER_ENTRY; // NOI18N
     /**
      * {@value #THROTTLE}
+     *
+     * @see jmri.server.json.throttle.JsonThrottle#THROTTLE
      */
     public static final String THROTTLE = JsonThrottle.THROTTLE; // NOI18N
     /**
      * {@value #TIME}
+     *
+     * @see jmri.server.json.time.JsonTimeServiceFactory#TIME
      */
     public static final String TIME = JsonTimeServiceFactory.TIME; // NOI18N
     /**
@@ -756,36 +783,52 @@ public final class JSON {
     /* JSON throttle tokens */
     /**
      * {@value #ADDRESS}
+     *
+     * @see jmri.server.json.throttle.JsonThrottle#ADDRESS
      */
     public static final String ADDRESS = JsonThrottle.ADDRESS;
     /**
      * {@value #FORWARD}
+     *
+     * @see jmri.server.json.throttle.JsonThrottle#FORWARD
      */
     public static final String FORWARD = JsonThrottle.FORWARD;
     /**
      * {@value #RELEASE}
+     *
+     * @see jmri.server.json.throttle.JsonThrottle#RELEASE
      */
     public static final String RELEASE = JsonThrottle.RELEASE;
     /**
      * {@value #ESTOP}
+     *
+     * @see jmri.server.json.throttle.JsonThrottle#ESTOP
      */
     public static final String ESTOP = JsonThrottle.ESTOP;
     /**
      * {@value #IDLE}
+     *
+     * @see jmri.server.json.throttle.JsonThrottle#IDLE
      */
     public static final String IDLE = JsonThrottle.IDLE;
     /**
      * {@value #SPEED}
+     *
+     * @see jmri.server.json.throttle.JsonThrottle#SPEED
      */
     public static final String SPEED = JsonThrottle.SPEED;
     /**
      * {@value #SPEED_STEPS}
+     *
+     * @see jmri.server.json.throttle.JsonThrottle#SPEED_STEPS
      */
     public static final String SPEED_STEPS = JsonThrottle.SPEED_STEPS;
     /**
      * Prefix for the throttle function keys (F0-F28).
      * <p>
      * {@value #F}
+     *
+     * @see jmri.server.json.throttle.JsonThrottle#F
      */
     public static final String F = JsonThrottle.F;
     /**
@@ -795,6 +838,7 @@ public final class JSON {
      * {@value #CLIENTS}
      *
      * @since 2.0
+     * @see jmri.server.json.throttle.JsonThrottle#CLIENTS
      */
     public static final String CLIENTS = JsonThrottle.CLIENTS;
 
@@ -840,7 +884,7 @@ public final class JSON {
      * JSON State (an unsigned integer)
      */
 
-    /* Common state */
+ /* Common state */
     /**
      * {@value #UNKNOWN}
      * <p>
@@ -951,13 +995,13 @@ public final class JSON {
      *
      * @since 2.0
      */
-    public static final String SYSTEM_CONNECTION = "systemConnection"; // NOI18N
+    public static final String SYSTEM_CONNECTION = jmri.server.json.JSON.SYSTEM_CONNECTION; // NOI18N
     /**
      * {@value #SYSTEM_CONNECTIONS}
      *
      * @since 2.0
      */
-    public static final String SYSTEM_CONNECTIONS = "systemConnections"; // NOI18N
+    public static final String SYSTEM_CONNECTIONS = jmri.server.json.JSON.SYSTEM_CONNECTIONS; // NOI18N
 
     /* ZeroConf support */
     /**

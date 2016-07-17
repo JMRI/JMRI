@@ -11,7 +11,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.Vector;
-
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -19,7 +20,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Memory;
@@ -31,14 +31,9 @@ import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.beantable.beanedit.BeanEditItem;
 import jmri.jmrit.beantable.beanedit.BeanItemPanel;
 import jmri.util.JmriJFrame;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
 
 /**
  * A LayoutBlock is a group of track segments and turnouts on a LayoutEditor
@@ -308,6 +303,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 panels.get(i).redrawPanel();
             }
         }
+        firePropertyChange("redraw", null, null);
     }
 
     /**
@@ -2938,7 +2934,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     @CheckForNull Routes getValidRoute(Block nxtBlock, Block dstBlock) {
         ArrayList<Routes> rtr = getRouteByNeighbour(nxtBlock);
         if (rtr.size()==0) {
-            log.info("From " + this.getDisplayName() + "No routes returned in get valid routes");
+            log.info("From {}, no routes returned for getRouteByNeighbor({})", this.getDisplayName(), nxtBlock.getDisplayName());
             return null;
         }
         for (int i = 0; i < rtr.size(); i++) {

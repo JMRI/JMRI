@@ -1,4 +1,3 @@
-// SignallingSourceAction.java
 package jmri.jmrit.signalling;
 
 import java.awt.event.ActionEvent;
@@ -11,14 +10,9 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a SignallingFrame object
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision$
  */
 public class SignallingSourceAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5614597834004934713L;
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
 
     public SignallingSourceAction(String s) {
@@ -52,6 +46,3 @@ public class SignallingSourceAction extends AbstractAction {
     }
     private final static Logger log = LoggerFactory.getLogger(SignallingSourceAction.class.getName());
 }
-
-
-/* @(#)SignallingSourceAction.java */
