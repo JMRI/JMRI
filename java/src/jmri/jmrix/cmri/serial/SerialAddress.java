@@ -77,7 +77,7 @@ public class SerialAddress {
      * Node Note: Returns 'null' if illegal systemName format or if the node is
      * not found
      */
-    public static AbstractNode getNodeFromSystemName(String systemName) {
+    public static AbstractNode getNodeFromSystemName(String systemName,SerialTrafficController tc) {
         // get the node address
         int ua;
         ua = getNodeAddressFromSystemName(systemName);
@@ -86,7 +86,7 @@ public class SerialAddress {
             return null;
         }
 
-        return (SerialTrafficController.instance().getNodeFromAddress(ua));
+        return (tc.getNodeFromAddress(ua));
     }
 
     /**
@@ -224,12 +224,12 @@ public class SerialAddress {
      * returns 'true' if system name has a valid meaning in current
      * configuration, else returns 'false'
      */
-    public static boolean validSystemNameConfig(String systemName, char type) {
+    public static boolean validSystemNameConfig(String systemName, char type,SerialTrafficController tc) {
         if (!validSystemNameFormat(systemName, type)) {
             // No point in trying if a valid system name format is not present
             return false;
         }
-        SerialNode node = (SerialNode) getNodeFromSystemName(systemName);
+        SerialNode node = (SerialNode) getNodeFromSystemName(systemName,tc);
         if (node == null) {
             // The node indicated by this system address is not present
             return false;
