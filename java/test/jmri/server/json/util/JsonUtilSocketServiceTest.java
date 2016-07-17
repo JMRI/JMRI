@@ -2,13 +2,23 @@ package jmri.server.json.util;
 
 import static org.junit.Assert.*;
 
+import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.Locale;
+import jmri.jmris.json.JsonServerPreferences;
+import jmri.profile.NullProfile;
+import jmri.profile.Profile;
+import jmri.profile.ProfileManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonMockConnection;
+import jmri.util.FileUtil;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -28,18 +38,24 @@ public class JsonUtilSocketServiceTest {
 
     @BeforeClass
     public static void setUpClass() {
+        Log4JFixture.setUp();
     }
 
     @AfterClass
     public static void tearDownClass() {
+        Log4JFixture.tearDown();
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
+        Profile profile = new NullProfile("TestProfile", null, FileUtil.getFile(FileUtil.SETTINGS));
+        ProfileManager.getDefault().setActiveProfile(profile);
+        JUnitUtil.initConfigureManager();
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.resetInstanceManager();
     }
 
     /**
@@ -79,14 +95,19 @@ public class JsonUtilSocketServiceTest {
      */
     @Test
     public void testOnList() throws Exception {
-        System.out.println("onList");
-        String type = "";
-        JsonNode data = null;
-        Locale locale = null;
-        JsonUtilSocketService instance = null;
-        instance.onList(type, data, locale);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Locale locale = Locale.ENGLISH;
+        ObjectMapper mapper = new ObjectMapper();
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonNode empty = connection.getObjectMapper().createObjectNode();
+        JsonUtilSocketService instance = new JsonUtilSocketService(connection);
+        JsonUtilHttpService helper = new JsonUtilHttpService(mapper);
+        JsonServerPreferences.getDefault().setHeartbeatInterval(10);
+        instance.onList(JSON.METADATA, empty, locale);
+        Assert.assertEquals(helper.getMetadata(locale), connection.getMessage());
+        instance.onList(JSON.NETWORK_SERVICES, empty, locale);
+        Assert.assertEquals(helper.getNetworkServices(locale), connection.getMessage());
+        instance.onList(JSON.SYSTEM_CONNECTIONS, empty, locale);
+        Assert.assertEquals(helper.getSystemConnections(locale), connection.getMessage());
     }
 
     /**
