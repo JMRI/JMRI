@@ -12,7 +12,7 @@ import java
 entry = jmri.jmrit.roster.RosterEntry()
 
 # first, include it in the Roster
-jmri.jmrit.roster.Roster.instance().addEntry(entry)
+jmri.jmrit.roster.Roster.getDefault().addEntry(entry)
 
 # need to set the ID to something
 entry.setId("New empty entry")

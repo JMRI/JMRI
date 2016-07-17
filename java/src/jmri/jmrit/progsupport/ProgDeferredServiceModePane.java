@@ -1,4 +1,3 @@
-// ProgDeferredServiceModePane.java
 package jmri.jmrit.progsupport;
 
 import java.awt.FlowLayout;
@@ -39,14 +38,9 @@ import org.slf4j.LoggerFactory;
  * <p>
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2014
- * @version	$Revision$
  */
 public class ProgDeferredServiceModePane extends ProgModeSelector implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4795140446582465455L;
     ProgServiceModePane servicePane;
     JFrame setFrame;
     JLabel currentMode = new JLabel();
@@ -105,7 +99,7 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName() == "Mode") {
+        if (e.getPropertyName().equals("Mode")) {
             // mode changed in programmer, change GUI here if needed
             // take the mode from the message, not the programmer, to get
             // proper synchronization

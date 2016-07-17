@@ -1,4 +1,3 @@
-// PortalIcon.java
 package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.event.ActionEvent;
@@ -23,10 +22,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PortalIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4299340063847211257L;
     public static final String HIDDEN = "hidden";
     public static final String VISIBLE = "block";
     public static final String PATH = "path";

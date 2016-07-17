@@ -1,66 +1,90 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<title>JMRI: Signal Masts documentation</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
 
-<meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-<meta name="Date.Modified" content="20160323"/>
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: Signal Masts documentation</title>
+  <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
+  <meta name="Date.Modified" content="20160323"><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
+    <div id="mainContent">
+      <h1>JMRI: Signal Masts</h1>
 
-<h1>JMRI: Signal Masts</h1>
-<p class="subtitle">
-    Using Signal Masts
-</p>
+      <p class="subtitle">Using Signal Masts</p>
 
-<div class="para">
-<a href="../../../package/jmri/jmrit/beantable/SignalMasts.png">
-   <img src="../../../package/jmri/jmrit/beantable/SignalMasts.png" 
-        width="619" height="166" align="right">
-</a>
-<p>JMRI Signal Mast objects allow you to display prototypical Aspects on 
-	signals. For background information, see the <a href="AspectSignaling.shtml">Aspect Signaling</a> page.</p>
+      <div class="para">
+        <a href=
+        "../../../package/jmri/jmrit/beantable/SignalMasts.png"><img src="../../../package/jmri/jmrit/beantable/SignalMasts.png"
+        width="619" height="166" align="right"></a>
 
-<h3>The Signal Mast Table</h3>
-<p>Signal Masts are configured through the
-<a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Mast Table</a>. You access this tool from the <b>Tools > Tables > Signal Masts</b> menu.
-<p>
-From the table, you can manually set individual Signal Masts to any Aspect that they're able to
-	display by clicking on one of the buttons in the "Aspect" column.<br/>
-	You can change the settings of a Signal Mast by clicking on the "Edit" button in the corresponding line.</p>
+        <p>JMRI Signal Mast objects allow you to display
+        prototypical Aspects on signals. For background
+        information, see the <a href="AspectSignaling.shtml">Aspect
+        Signaling</a> page.</p>
 
-<a name="add"><h3>Creating a Signal Mast</h3></a>
-	<p>You add a new Signal Mast by clicking on the "Add..."  button
-at the bottom of the Signal Mast Table, which takes you to the
-	<a href="../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">"Add Signal Mast" pane</a>.</p>
+        <h3>The Signal Mast Table</h3>
 
-<h3>Signal Mast Repeaters</h3>
-<img src="images/SignalMastRepeaterPane.png" width="291" height="98" align="right">
-<p>From the Signal Mast Table's <b>Tools</b> menu you may configure Signal Mast Repeaters.
-These mirror another mast, and van be set as Slave, merely following the other Mast, or as a two way coupling so clicking he Repeater on your Panel also sets the Master.</p>
-	
-<h2>Saving and Reloading Configuration</h2>
+        <p>Signal Masts are configured through the <a href=
+        "../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">
+        Signal Mast Table</a>. You access this tool from the
+        <b>Tools &gt; Tables &gt; Signal Masts</b> menu.</p>
 
-The Signal Mast information is saved as part of the JMRI configuration in an XML file, along with control panel setup and similar stuff. For more information on creating and displaying panels, including how to show signals on your panels, please see the <a href="../../apps/PanelPro/Panels.shtml">Panels pages</a>.
-	
-	<p>Back to the <a href="index.shtml#tools">Signaling main help page</a>.</p>
-<!--#include virtual="/Footer" -->
+        <p>From the table, you can manually set individual Signal
+        Masts to any Aspect that they're able to display by
+        clicking on one of the buttons in the "Aspect" column.<br>
+        You can change the settings of a Signal Mast by clicking on
+        the "Edit" button in the corresponding line.</p><a name=
+        "add" id="add"></a>
 
-    </div><!-- closes #mainContent-->
-  </div> <!-- closes #mBody-->
+        <h3>Creating a Signal Mast</h3>
+
+        <p>You add a new Signal Mast by clicking on the "Add..."
+        button at the bottom of the Signal Mast Table, which takes
+        you to the <a href=
+        "../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">
+        "Add Signal Mast" pane</a>.</p>
+
+        <h3>Signal Mast Repeaters</h3><img src=
+        "images/SignalMastRepeaterPane.png" width="291" height="98"
+        align="right">
+
+        <p>From the Signal Mast Table's <b>Tools</b> menu you may
+        configure Signal Mast Repeaters. These mirror another mast,
+        and van be set as Slave, merely following the other Mast,
+        or as a two way coupling so clicking he Repeater on your
+        Panel also sets the Master.</p>
+
+        <h2>Saving and Reloading Configuration</h2>The Signal Mast
+        information is saved as part of the JMRI configuration in
+        an XML file, along with control panel setup and similar
+        stuff. For more information on creating and displaying
+        panels, including how to show signals on your panels,
+        please see the <a href=
+        "../../apps/PanelPro/Panels.shtml">Panels pages</a>.
+
+        <p>Back to the <a href="index.shtml#tools">Signaling main
+        help page</a>.</p><!--#include virtual="/Footer" -->
+      </div><!-- closes #mainContent-->
+    </div><!-- closes #mBody-->
+  </div>
 </body>
 </html>

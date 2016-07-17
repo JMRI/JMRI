@@ -18,6 +18,7 @@
 
 <BODY>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
     <div id="mainContent">
 
@@ -45,7 +46,7 @@ soit au moins mettre un commentaire dans les autres pour
 d&#233;crire comment ils diff&#232;rent maintenant.
 
 <a name="linux">
-<h2>Linux</h2></a>
+</a><h2>Linux</h2>
 
 La distributions JMRI  pour Linux contient les shell (bash) scripts
 pour chacune des applications principales: DecoderPro, PanelPro, etc
@@ -142,7 +143,7 @@ pour &#234;tre une liste de noms s&#233;par&#233; par des virgules.
 </ dl>
 
 <a name="macosx"> 
-<h2> Mac OS X</h2></a>
+</a><h2> Mac OS X</h2>
 Les Distributions JMRI pour Mac OS X contiennentt des kits d'applications
 pour chacune des applications princpales: DecoderPro, PanelPro, etc
 Ceux-ci fournissent des ic&#244;nes d'application famili&#232;res pour l'utilisateur.
@@ -233,7 +234,7 @@ les param&#232;tres n&#233;cessaires aux noms des programmes, fixant des limites
 
 
 <a name="windows">
-<h2>Windows</h2></a>
+</a><h2>Windows</h2>
 
 Jusqu'&#224; et y compris la version JMRI 2.3.2 , le fichiers Windows.bat a juste cr&#233;er une commande java d&#233;fini et l'a ex&#233;cut&#233;e.
 <p> Depuis la version  JMRI 2.3.3, le fichier individuel Windows.bat appelle maintenant un petit lanceur application, LaunchJMRI.exe..

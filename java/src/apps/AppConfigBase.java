@@ -122,17 +122,17 @@ public class AppConfigBase extends JmriPanel {
 
     public void saveContents() {
         // remove old prefs that are registered in ConfigManager
-        InstanceManager.configureManagerInstance().removePrefItems();
+        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).removePrefItems();
         // put the new GUI managedPreferences on the persistance list
         this.getPreferencesPanels().values().stream().forEach((panel) -> {
             this.registerWithConfigureManager(panel);
         });
-        InstanceManager.configureManagerInstance().storePrefs();
+        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).storePrefs();
     }
 
     private void registerWithConfigureManager(PreferencesPanel panel) {
         if (panel.isPersistant()) {
-            InstanceManager.configureManagerInstance().registerPref(panel);
+            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(panel);
         }
         if (panel instanceof ManagingPreferencesPanel) {
             log.debug("Iterating over managed panels within {}/{}", panel.getPreferencesItemText(), panel.getTabbedPreferencesTitle());

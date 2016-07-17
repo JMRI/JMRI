@@ -1,8 +1,6 @@
 package jmri.jmrit.withrottle;
 
 /**
- * DeviceServer.java
- *
  * WiThrottle
  *
  * @author Brett Hoffman Copyright (C) 2009, 2010
@@ -99,7 +97,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     private static final String versionNumber = "2.0";
 
     private Socket device;
-    private CommandStation cmdStation = jmri.InstanceManager.commandStationInstance();
+    private CommandStation cmdStation = jmri.InstanceManager.getOptionalDefault(CommandStation.class);
     String newLine = System.getProperty("line.separator");
     BufferedReader in = null;
     PrintStream out = null;

@@ -1,110 +1,120 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<title>Throttles Preferences</title>
-	<meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro" >
-	<meta name="Description" content="Throttle documentation for JMRI project" >
-	<meta name="Author" content="Lionel Jeanson" >
-	<meta name="Language" content="EN" >
-	
-	<!-- Style -->
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" >
-	<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen" >
-	<link rel="stylesheet" type="text/css" href="/css/print.css" media="print" >
-	<link rel="icon" href="/images/jmri.ico" type="image/png" >
-	<link rel="home" title="Home" href="/" >
-	<!-- /Style -->
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org" />
+
+  <title>Throttles Preferences</title>
+  <meta name="keywords" content=
+  "JMRI decoderpro dcc nmra throttle throttlepro" />
+  <meta name="Description" content=
+  "Throttle documentation for JMRI project" />
+  <meta name="Author" content="Lionel Jeanson" />
+  <meta name="Language" content="EN" /><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii" />
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen" />
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print" />
+  <link rel="icon" href="/images/jmri.ico" type="image/png" />
+  <link rel="home" title="Home" href="/" /><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h1>Throttles Preferences</h1>
+    <div id="mainContent">
+      <h1>Throttles Preferences</h1><img src=
+      "images/ThrottlesPreferencesPane.png" alt=
+      "Throttle Pref pane" />
 
-<img src="images/ThrottlesPreferencesPane.png" alt="Throttle Pref pane" >
+      <p>The Throttles Preferences pane is accessible from the
+      <a href="ToolsMenuThrottleEntry.shtml">Throttles submenus in
+      Tools menu</a>.<br />
+      For best experience, the recommended settings are those
+      illustrated above.</p>It is recommended to close all Throttle
+      panes before applying a new set of Preferences, and then
+      reopen them once new settings are applied or saved.
 
-<p>
-The Throttles Preferences pane is accessible from the <a href="ToolsMenuThrottleEntry.shtml">Throttles submenus in Tools menu</a>.<br>
-For best experience, the recommended settings are those illustrated above.</p>
+      <ul>
+        <li>Cancel button will close the window and leave current
+        Throttles settings as they are.</li>
 
-It is recommended to close all Throttle panes before applying a new
-set of Preferences, and then reopen them once new settings are
-applied or saved.
-	<ul>
-	<li>Cancel button will close the window and leave current Throttles settings as they are.</li>
-	<li>Apply button will apply the current set of preferences and the
-	preferences window will stay open.</li>
-	<li>Save button will apply, save current Preferences, and close the Preferences Windows, settings will be
-	automatically loaded at next start of JMRI.</li>
-	</ul>
+        <li>Apply button will apply the current set of preferences
+        and the preferences window will stay open.</li>
 
-<h2>Use extended throttle</h2>
+        <li>Save button will apply, save current Preferences, and
+        close the Preferences Windows, settings will be
+        automatically loaded at next start of JMRI.</li>
+      </ul>
 
-This setting will enable/disable all extended throttles features.
+      <h2>Use extended throttle</h2>This setting will
+      enable/disable all extended throttles features.
 
-<h2>Set Controls transparent</h2>
+      <h2>Set Controls transparent</h2>Will set background of
+      throttle internal windows transparent, or semi
+      transparent.<br />
+      <span style="font-style: italic;">This feature is known to
+      work fine on OS X, but Linux and Windows to be worked on,
+      totally varies depending on curent Java interface look'n feel
+      (modifiable in JMRI main preferences)</span>
 
-Will set background of throttle internal windows transparent, or semi
-transparent.<br >
+      <h2>Use Roster image as background</h2>When a roster is
+      selected, the image defined in its <a href=
+      "RostersMediaPane.shtml">Media Panel</a> will be loaded as a
+      background for the throttle window.<br />
+      When this option is enabled and the selected address is 0 or
+      3, a default image will be loaded.
 
-<span style="font-style: italic;">This feature is known to work
-fine on OS X, but Linux and Windows to be worked on, totally varies
-depending on curent Java interface look'n feel (modifiable in JMRI main
-preferences)</span>
+      <h2>Resize window to image size</h2>When a background image
+      is loaded for current throttle, will force the Throttle
+      Window size to the one of that image.
 
-<h2>Use Roster image as background</h2>
+      <h2>Search Roster info when address entered</h2>When an
+      address is entered in <a href="BasicThrottleWindow.shtml">the
+      Address Panel</a>, the JMRI Roster database will be searched
+      for a matching roster entry (and will hence triggers options
+      described above and bellow if they're enabled).
 
-When a roster is selected, the image defined in its <a href="RostersMediaPane.shtml">Media Panel</a> will be
-loaded as a background for the throttle window.<br >
+      <h2>Automatic loading Throttle pane preferences when linked
+      to Roster</h2>When a Roster is selected, if a matching
+      Throttle definition file exist, JMRI will automatically loads
+      it.<br />
+      These files are stored in &lt;JMRI Preference
+      Folder&gt;/Throttle/XYZ.xml where XYZ in the Roster ID.<br />
+      Using the <a href="ThrottleWindowMenus.shtml">Save</a> menu
+      entry from the File menu in a Throttle Window will create or
+      update these files.
 
-When this option is enabled and the selected address is 0 or 3, a default image will be loaded.
+      <h2>Ignore Throttle frame position</h2>For old Throttle files
+      that contain Throttle Window position in them, do as
+      described.<br />
+      <span style="font-style: italic;">Note: Throttle Windows
+      position are now saved in the <span style=
+      "font-weight: bold;">Throttles Layout</span> backup files
+      (not in the Throttles backup files anymore)</span>
 
-<h2>Resize window to image size</h2>
-When a background image is loaded for current throttle, will force the Throttle Window size to the one of that image.
+      <h2>Hide undefined Roster function buttons</h2>When a Roster
+      is selected, the address panels buttons are initialized as
+      defined in the Functions panel in DecoderPro. If this option
+      is enabled, buttons not defined (no text) in PanelPro will be
+      automatically hidden in the <a href=
+      "BasicThrottleWindow.shtml">Function Panel</a>.<br />
+      <span style="font-style: italic;">Note: you can reset
+      Function Buttons visibility in a Throttle Window by going to
+      <a href="ThrottleWindowMenus.shtml">View Menu and clicking
+      "Show all function buttons"</a>.</span>
 
-<h2>Search Roster info when address entered</h2>
-
-When an address is entered in <a href="BasicThrottleWindow.shtml">the Address Panel</a>, the JMRI Roster database will
-be searched for a matching roster entry (and will hence triggers options
-described above and bellow if they're enabled).
-
-<h2>Automatic loading Throttle pane preferences when linked to Roster</h2>
-
-When a Roster is selected, if a matching Throttle definition file exist,
-JMRI will automatically loads it.
-<br >
-These files are stored in &lt;JMRI
-Preference Folder&gt;/Throttle/XYZ.xml where XYZ in the Roster ID. <br >
-Using the <a href="ThrottleWindowMenus.shtml">Save</a> menu entry from the
-File menu in a Throttle Window will create or update these files.
-
-<h2>Ignore Throttle frame position</h2>
-
-For old Throttle files that contain Throttle Window position in them, do as
-described.
-<br >
-<span style="font-style: italic;">Note: Throttle Windows position are now saved in the <span style="font-weight: bold;">Throttles Layout</span> backup files (not in the Throttles backup files anymore)</span>
-
-<h2>Hide undefined Roster function buttons</h2>
-
-When a Roster is selected, the address panels buttons are initialized as
-defined in the Functions panel in DecoderPro. If this option is enabled,
-buttons not defined (no text) in PanelPro will be automatically hidden in the
-<a href="BasicThrottleWindow.shtml">Function Panel</a>.<br >
-
-<span style="font-style: italic;">Note: you can reset Function Buttons visibility in a Throttle Window by going to <a href="ThrottleWindowMenus.shtml">View Menu and clicking "Show all function buttons"</a>.</span>
-
-<h2>Enable Throttle toolbar</h2>
-
-This option enables a <a href="ThrottleToolBar.shtml">Toolbar that
-will show in all Throttle Windows</a>.
-
-<!--#include virtual="/Footer" -->
-
-      </div><!-- closes #mainContent-->
-    </div> <!-- closes #mBody-->
+      <h2>Enable Throttle toolbar</h2>This option enables a
+      <a href="ThrottleToolBar.shtml">Toolbar that will show in all
+      Throttle Windows</a>. <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

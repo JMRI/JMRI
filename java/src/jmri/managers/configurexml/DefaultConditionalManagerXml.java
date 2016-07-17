@@ -1,4 +1,3 @@
-// DefaultConditionalManagerXML.java
 package jmri.managers.configurexml;
 
 import java.util.ArrayList;
@@ -21,7 +20,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (c) 2007
  * @author Pete Cressman Copyright (C) 2009, 2011
- * @version $Revision$
  */
 public class DefaultConditionalManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -188,7 +186,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
         if (log.isDebugEnabled()) {
             log.debug("Found " + conditionalList.size() + " conditionals");
         }
-        ConditionalManager tm = InstanceManager.conditionalManagerInstance();
+        ConditionalManager tm = InstanceManager.getDefault(jmri.ConditionalManager.class);
 
         for (int i = 0; i < conditionalList.size(); i++) {
             Element condElem = conditionalList.get(i);
@@ -379,14 +377,14 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
      * absolute type.
      */
     protected void replaceConditionalManager() {
-        if (InstanceManager.conditionalManagerInstance().getClass().getName()
+        if (InstanceManager.getDefault(jmri.ConditionalManager.class).getClass().getName()
                 .equals(DefaultConditionalManager.class.getName())) {
             return;
         }
         // if old manager exists, remove it from configuration process
-        if (InstanceManager.conditionalManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().deregister(
-                    InstanceManager.conditionalManagerInstance());
+        if (InstanceManager.getOptionalDefault(jmri.ConditionalManager.class) != null) {
+            InstanceManager.getDefault(jmri.ConfigureManager.class).deregister(
+                    InstanceManager.getDefault(jmri.ConditionalManager.class));
         }
         // register new one with InstanceManager
         DefaultConditionalManager pManager = DefaultConditionalManager.instance();
@@ -397,7 +395,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
     }
 
     public int loadOrder() {
-        return InstanceManager.conditionalManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(jmri.ConditionalManager.class).getXMLOrder();
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultConditionalManagerXml.class.getName());

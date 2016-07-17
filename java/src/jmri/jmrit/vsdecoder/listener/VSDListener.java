@@ -26,7 +26,7 @@ public class VSDListener {
         _sysname = ListenerSysNamePrefix + sname;
         _username = uname;
 
-        AudioManager am = jmri.InstanceManager.audioManagerInstance();
+        AudioManager am = jmri.InstanceManager.getDefault(jmri.AudioManager.class);
         try {
             _listener = (AudioListener) am.provideAudio(ListenerSysNamePrefix + _sysname);
             log.debug("Listener Created: " + _listener);
@@ -44,7 +44,7 @@ public class VSDListener {
 
     public VSDListener() {
         // Initialize the AudioManager (if it isn't already) and get the Listener.
-        AudioManager am = jmri.InstanceManager.audioManagerInstance();
+        AudioManager am = jmri.InstanceManager.getDefault(jmri.AudioManager.class);
         am.init();
         _listener = am.getActiveAudioFactory().getActiveAudioListener();
 

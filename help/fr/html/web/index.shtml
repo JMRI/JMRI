@@ -16,7 +16,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -75,23 +75,25 @@ Dans le menu Outils, s&#233;lectionnez JMRI "Commande  Alimentation", qui devrai
 Puis cliquez sur
 <a href="http://localhost:12080/panel/Power%20Control.html"> ce lien </a>
 ou entrez l'URL
-<pre><code>
+<pre style="font-family: monospace;">
+
 http://localhost:12080/frame/Power%20Control.html
-</code></pre>
+</pre>
 Cela devrait afficher la fen&#234;tre de  Commande Alimentation de votre navigateur Web.
 (Remarque: "localhost" est un alias pour votre 
 ordinateur, si vous souhaitez acc&#233;der &#224; l'ordinateur ex&#233;cutant JMRI depuis un autre ordinateur,
 remplacer "localhost"
 avec l'adresse IP affich&#233;e sur l'&#233;cran principal, par exemple,
-<pre><code>
+<pre style="font-family: monospace;">
+
 http://192.168.1.7:12080/frame/Power%20Control.html
-</code></pre>
+</pre>
 ou quelque chose de similaire)
 Si tout fonctionne, vous devriez voir la fen&#234;tre Commande Alimentation sur votre &#233;cran navigateur.
 Cliquez sur le bouton "On" pour alimenter le r&#233;seau .
 
 <a id="Configure">
-<h2> Configuration </h2></a>
+</a><h2> Configuration </h2>
 
 Vous pouvez utiliser les
 "<a href="../../package/apps/TabbedPreferences.shtml"> Pr&#233;f&#233;rences</a>"
@@ -111,7 +113,7 @@ Le port par d&#233;faut MiniServer est 12080, mais cela peut &#234;tre modifi&#2
 la bo&#238;te de dialogue Pr&#233;f&#233;rences MiniServer.
 
 <a id="URLs">
-<h2> Acc&#232;s aux URLs</h2></a>
+</a><h2> Acc&#232;s aux URLs</h2>
 Vous pouvez cr&#233;er vos propres pages Web en utilisant n'importe quel outil que vous souhaitez.
 Pour acc&#233;der &#224; JMRI depuis ces pages, vous avez 
 besoin de conna&#238;tre les URL correctes pour demander les services que vous souhaitez.
@@ -120,12 +122,16 @@ Plusieurs exemples sont li&#233;s depuis l'index.html (Page d'accueil su Serveur
 <h2>Ouvrir Acc&#232;s Fen&#234;tre (Image)</h2>
     Pour afficher toutes les fen&#234;tres JMRI <em>d&#233;j&#224; ouverte</em> comme une image <b>clicable</b> qui est p&#233;riodiquement rafra&#238;chie, utiliser un URL comme:
     
-    <pre><code><a href="http://127.0.0.1:12080/frame/Monitor%20Slots.html">http://127.0.0.1:12080/frame/Monitor%20Slots.html</a> </code></pre>
-    <pre><code><a href="http://127.0.0.1:12080/frame/Analog%20Clock.html">http://127.0.0.1:12080/frame/Analog%20Clock.html</a></code></pre></a>
-    <pre><code><a href="http://127.0.0.1:12080/frame/Turnout%20Table.html">http://127.0.0.1:12080/frame/Turnout%20Table.html</a></code></pre></a>
+    <pre style="font-family: monospace;">
+<a href="http://127.0.0.1:12080/frame/Monitor%20Slots.html">http://127.0.0.1:12080/frame/Monitor%20Slots.html</a> </pre>
+    <pre style="font-family: monospace;">
+<a href="http://127.0.0.1:12080/frame/Analog%20Clock.html">http://127.0.0.1:12080/frame/Analog%20Clock.html</a></pre></a>
+    <pre style="font-family: monospace;">
+<a href="http://127.0.0.1:12080/frame/Turnout%20Table.html">http://127.0.0.1:12080/frame/Turnout%20Table.html</a></pre></a>
   <p>Notez le titre du cadre dans l'URL, suivi de ". html". Remplacez les espaces dans le titre par "% 20".</p>
     Pour la liste courante, g&#233;n&#233;rant dynamiquement des fen&#234;tres disponibles, utilisez cet URL:
-    <pre><code><a href="http://127.0.0.1:12080/frame">http://127.0.0.1:12080/frame</a></code></pre>
+    <pre style="font-family: monospace;">
+<a href="http://127.0.0.1:12080/frame">http://127.0.0.1:12080/frame</a></pre>
     <p><em>Note:</em> R&#233;gler par d&#233;faut comme d&#233;lai de rafra&#238;chissement, des cadres non autoris&#233;s et l'utilisation ajax dans les Pr&#233;f&#233;rences du serveur Web. </P>
      Vous pouvez remplacer les valeurs par d&#233;faut pour des pages individuelles en utilisant les param&#232;tresms suivants dans votre URL:
     <div>
@@ -134,7 +140,8 @@ Plusieurs exemples sont li&#233;s depuis l'index.html (Page d'accueil su Serveur
     <li><b>ajax</b> (utiliser ajax pour les mises &#224; jour)</li>
 
  Example, montrant sans lien, proteg&#233;, utilisant ajax pour rafra&#238;chir toutes les 12 secondes:
-    <pre><code><a href="http://127.0.0.1:12080/frame/Power%20Control.html?ajax=true&plain=true&protect=true&retry=12">http://127.0.0.1:12080/frame/Power%20Control.html?ajax=true&plain=true&protect=true&retry=12</a></code></pre>
+    <pre style="font-family: monospace;">
+<a href="http://127.0.0.1:12080/frame/Power%20Control.html?ajax=true&plain=true&protect=true&retry=12">http://127.0.0.1:12080/frame/Power%20Control.html?ajax=true&plain=true&protect=true&retry=12</a></pre>
 
 Vous pouvez aussi appeler le <b>WebThrottle</b> directement:
 <code> <pre>
@@ -182,9 +189,10 @@ Par exemple, pour afficher "myFile.xml" &#224; partir du r&#233;pertoire JMRI pr
 <h3> Pour afficher une liste format&#233;e JMRI </h3>
 
 Pour obtenir une vue joliment format&#233; de votre liste JMRI simplement aller &#224;:
-<pre><code>
+<pre style="font-family: monospace;">
+
 <a href="http://localhost:12080/roster?format=xml"> http://localhost:12080/roster?format=xml </a>
-</code></pre>
+</pre>
 Notez que ceci est votre fichier roster.xml qui s'affiche uniquement en utilisant une transformation XSLT.
 
 <h2><a name="security">s&#233;curit&#233;</a></h2>

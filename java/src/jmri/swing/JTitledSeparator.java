@@ -27,11 +27,6 @@ import javax.swing.border.TitledBorder;
  */
 public class JTitledSeparator extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4197641321226803099L;
-
     private final static class SeparatorPane extends JPanel {
 
         /**

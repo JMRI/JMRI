@@ -1,96 +1,164 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id: AddEditSignallingLogic.shtml 17977 2011-07-18 17:23:46Z zoo  -->
 <!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-11-->
-<HTML LANG="fr">
-<HEAD>
-<TITLE>JMRI: Adding/Editing SignalMast Logic</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Kevin Dickerson" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help SignalMast Logic Add Edit">
 
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<BODY>
-<!--#include virtual="/Header" -->
+  <title>JMRI: Adding/Editing SignalMast Logic</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta content="Kevin Dickerson" name="Author">
+  <meta name="keywords" content=
+  "JMRI help SignalMast Logic Add Edit"><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1><a name="Adding/Editing Routes"></a>Ajout/Modifications
+      Logiques de M&acirc;t de Signal</h1>
 
- <H1><A NAME="Adding/Editing Routes"></A>Ajout/Modifications Logiques de M&#226;t de Signal </H1>
+      <p>La premi&egrave;re chose que vous devez faire lorsque vous
+      cr&eacute;ez une Logique M&acirc;t de Signal est de
+      s&eacute;lectionner les m&acirc;ts de Signalisation sources
+      suivi par ceux de destination. Le m&acirc;t du signal source
+      est celui dont vous souhaitez commander l'ensemble de ses
+      apparences. Le m&acirc;t de signal de destination est le
+      m&acirc;t de signal suivant sur la ligne, l'apparition du
+      m&acirc;t de destination ainsi que l'&eacute;tat des
+      aiguillages et des cantons auront un effet direct sur la
+      l'apparence du m&acirc;t du signal source.<br>
+      Si vous n'utilisez pas l'&Eacute;diteur de R&eacute;seau,
+      alors AUCUNE validation n'est effectu&eacute;e sur les
+      m&acirc;ts source et de destination. Si l'&eacute;diteur
+      r&eacute;seau est utilis&eacute;, alors le syst&egrave;me va
+      essayer de d&eacute;terminer si le m&acirc;t de destination
+      est accessible &agrave; partir du m&acirc;t source.</p>
 
-<P>La premi&#232;re chose que vous devez faire lorsque vous cr&#233;ez une Logique M&#226;t de Signal est de s&#233;lectionner les m&#226;ts de Signalisation sources suivi par ceux de destination. Le m&#226;t du signal source est celui dont vous souhaitez commander l'ensemble de ses apparences. Le m&#226;t de signal de destination
-est le m&#226;t de signal suivant sur la ligne, l'apparition du m&#226;t de destination
-ainsi que l'&#233;tat des aiguillages et des cantons auront un effet direct sur la
-l'apparence du m&#226;t du signal source. <br>
-Si vous n'utilisez pas l'&#201;diteur de R&#233;seau, alors AUCUNE validation n'est effectu&#233;e sur les m&#226;ts
-source et de destination. Si l'&#233;diteur r&#233;seau est utilis&#233;,
-alors le syst&#232;me va essayer de d&#233;terminer si le m&#226;t de destination est accessible &#224; partir du
- m&#226;t source.
-</P>
-<p><b>En Mode Modification Uniquement</b>La vitesse maximale admissible entre le chemin s&#233;parant les
-deux m&#226;ts de signaux est affich&#233;e, cela est d&#233;termin&#233; par la vitesse configur&#233;e en raison des cantons et des aiguillages. 
-</p>
-<P>La case "Utiliser Chemins &#201;diteur de R&#233;seau" vous permet
-d'obtenir le syst&#232;me pour g&#233;n&#233;rer automatiquement les cantons n&#233;cessaires, l'aiguillage et le
-m&#226;ts de signaux avec leurs &#233;tats qui sont situ&#233;s entre la source et le
-m&#226;ts de signaux de destination. <br>
-En s&#233;lectionnant "Utilisation de Chemins de l'&#201;diteur de R&#233;seau", deux cases &#224; cocher suppl&#233;mentaires apparaissent,
-"Utiliser D&#233;tails Aiguillage de l'&#201;diteur de R&#233;seau" et "Utiliser les D&#233;tails des Cantons de l'&#201;diteur de R&#233;seau"
-La s&#233;lection d'une de ces informations permettra de d&#233;terminer ce qui de l'&#233;diteur de r&#233;seau
-est utilis&#233; lorsque le syst&#232;me g&#233;n&#232;re automatiquement l'itin&#233;raire. <br>
-Les informations g&#233;n&#233;r&#233;es automatiquement ne sont pas enregistr&#233;es avec le fichier du panneau, cet
-information est g&#233;n&#233;r&#233;e chaque fois que le panneau de r&#233;seau est ouvert. <br>
-Si les informations sur le panneau &#233;diteur de r&#233;seau sont modifi&#233;es, le changement n'est pas
-refl&#233;t&#233; dans la Logique M&#226;t Signal, vous aurez besoin d'enregistrer le panneau, fermer JMRI
-et re-ouvrir le panneau pour que la logique soit mise &#224; jour. </P>
-<P>
-L'option "Autoriser La logique &#224; d&#233;terminer automatiquement les conflits M&#226;t Signal" 
-tente de d&#233;terminer quels signaux pourraient causer un itin&#233;raire incompatible
-s'ils n'&#233;taient pas mis sur danger. </P>
-<P>
-La fonctionnalit&#233; "Verrouillage des Aiguillages lorsque la Logique M&#226;t Signal est Active"  vous permet de
-d&#233;sactiver de mani&#232;re s&#233;lective les commandes d'accessoires (aiguillages) &#224; partir depanneaux de commande et/ou de boutons-poussoirs locaux c&#226;bl&#233;s. JMRI d&#233;sactive les poussoirs en envoyant une commande d&#233;sactiver les bouton-poussoirs aux d&#233;codeurs d'aiguillages lorsque l'itin&#233;raire est bloqu&#233;, 
-, et autorise les boutons poussoirs lorsque l'itin&#233;raire est d&#233;verrouill&#233;. Lorsque le verrouillage d'un aiguillage a lieu &#224; partir de panneaux de commandes, le programme JMRI suivra l'adresse accessoire de l'aiguillage et si Jmri d&#233;tecte une commande de changement en provenance d'un panneau de commande, va annuler la commande imm&#233;diatement
-en envoyant la commande oppos&#233;e &#224; l'aiguillage. Tous les aiguillages qui sont surveill&#233;s par le programme JMRI et qui sont inclus dans l'itin&#233;raire
-seront verrouill&#233;s. </P>
+      <p><b>En Mode Modification Uniquement</b>La vitesse maximale
+      admissible entre le chemin s&eacute;parant les deux
+      m&acirc;ts de signaux est affich&eacute;e, cela est
+      d&eacute;termin&eacute; par la vitesse configur&eacute;e en
+      raison des cantons et des aiguillages.</p>
 
-<P>Le bouton radio en dessous de "Aiguillage Verrouill&#233; quand M&#226;t Signal Actif"
-vous permet de n'afficher que les aiguillages, capteurs, cantons ou des m&#226;ts signaux
-qui font partie de cette logique m&#226;t signal. </p>
-  <p>
-Il y a quatre onglets dessous le bouton "Montrer", chacun contient les d&#233;tails de cantons,
-aiguillages, des capteurs et m&#226;ts signal qui composent la logique M&#226;t Signal.
-Dans chacun de ces onglets, il y a un tableau modifiable qui vous permet de 
-s&#233;lectionner manuellement l'&#233;l&#233;ment qui doit &#234;tre inclu dans la logique de M&#226;t Signal et de l'&#233;tat
-dans lequel cet &#233;l&#233;ment devrait &#234;tre positionn&#233; <br>
-Ci-dessous est un autre tableau qui montre les &#233;l&#233;ments automatiquement g&#233;n&#233;r&#233;s
-(sauf dans l'onglet du capteur). Un &#233;l&#233;ments saisit manuellement l'emportera sur l'&#233;l&#233;ments g&#233;n&#233;r&#233; automatiquement
-, donc si vous souhaitez l'emporter sur n'importe quel &#233;l&#233;ment automatique, listez les dans une tableau manuel, s&#233;lectionnez l'&#233;l&#233;ment correspondant et
-d&#233;finissez son &#233;tat.
+      <p>La case "Utiliser Chemins &Eacute;diteur de R&eacute;seau"
+      vous permet d'obtenir le syst&egrave;me pour
+      g&eacute;n&eacute;rer automatiquement les cantons
+      n&eacute;cessaires, l'aiguillage et le m&acirc;ts de signaux
+      avec leurs &eacute;tats qui sont situ&eacute;s entre la
+      source et le m&acirc;ts de signaux de destination.<br>
+      En s&eacute;lectionnant "Utilisation de Chemins de
+      l'&Eacute;diteur de R&eacute;seau", deux cases &agrave;
+      cocher suppl&eacute;mentaires apparaissent, "Utiliser
+      D&eacute;tails Aiguillage de l'&Eacute;diteur de
+      R&eacute;seau" et "Utiliser les D&eacute;tails des Cantons de
+      l'&Eacute;diteur de R&eacute;seau" La s&eacute;lection d'une
+      de ces informations permettra de d&eacute;terminer ce qui de
+      l'&eacute;diteur de r&eacute;seau est utilis&eacute; lorsque
+      le syst&egrave;me g&eacute;n&egrave;re automatiquement
+      l'itin&eacute;raire.<br>
+      Les informations g&eacute;n&eacute;r&eacute;es
+      automatiquement ne sont pas enregistr&eacute;es avec le
+      fichier du panneau, cet information est
+      g&eacute;n&eacute;r&eacute;e chaque fois que le panneau de
+      r&eacute;seau est ouvert.<br>
+      Si les informations sur le panneau &eacute;diteur de
+      r&eacute;seau sont modifi&eacute;es, le changement n'est pas
+      refl&eacute;t&eacute; dans la Logique M&acirc;t Signal, vous
+      aurez besoin d'enregistrer le panneau, fermer JMRI et
+      re-ouvrir le panneau pour que la logique soit mise &agrave;
+      jour.</p>
 
-Cliquez sur l'option "Inclure" dans l'une des tables pour ajouter l'&#233;l&#233;ment d&#233;sir&#233; &#224; votre
-logique M&#226;t Signal. A c&#244;t&#233; de l'option "Inclure" se trouve l'option d'&#233;tat dans lequel l'&#233;l&#233;ment doit &#234;tre pour que le Mat Signal devienne Actif
-Par exemple, si vous souhaitez que l'aiguillage soit d&#233;vi&#233; pour d&#233;clencher la
-logique, alors s&#233;lectionnez "d&#233;vi&#233;" dans le menu d&#233;roulant. Si vous souhaitez l'emporter sur un
-aiguillage qui a &#233;t&#233; automatiquement inclus, et que vous ne vous souciez de l'&#233;tat dans lequel il est
-r&#233;gl&#233;, s&#233;lectionnez "Tout &#201;tat" &#224; partir du menu d&#233;roulant. </P>
+      <p>L'option "Autoriser La logique &agrave; d&eacute;terminer
+      automatiquement les conflits M&acirc;t Signal" tente de
+      d&eacute;terminer quels signaux pourraient causer un
+      itin&eacute;raire incompatible s'ils n'&eacute;taient pas mis
+      sur danger.</p>
 
- <P>Mise &#224; jour Logique M&#226;t Signal  </P>
-Cela va ajouter ou mettre &#224; jour votre Logique M&#226;t signal pour le syst&#232;me, une fois ajout&#233;, les
-tableaux contenant les donn&#233;es automatiquement g&#233;n&#233;r&#233;s seront alors re-remplis.
-<P>
-Ceci est la page d'aide help/fr/package/jmri/jmrit/signalling/AddEitSignallingLogic.shtml
-<P>
-<P>
-<!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
+      <p>La fonctionnalit&eacute; "Verrouillage des Aiguillages
+      lorsque la Logique M&acirc;t Signal est Active" vous permet
+      de d&eacute;sactiver de mani&egrave;re s&eacute;lective les
+      commandes d'accessoires (aiguillages) &agrave; partir
+      depanneaux de commande et/ou de boutons-poussoirs locaux
+      c&acirc;bl&eacute;s. JMRI d&eacute;sactive les poussoirs en
+      envoyant une commande d&eacute;sactiver les bouton-poussoirs
+      aux d&eacute;codeurs d'aiguillages lorsque
+      l'itin&eacute;raire est bloqu&eacute;, , et autorise les
+      boutons poussoirs lorsque l'itin&eacute;raire est
+      d&eacute;verrouill&eacute;. Lorsque le verrouillage d'un
+      aiguillage a lieu &agrave; partir de panneaux de commandes,
+      le programme JMRI suivra l'adresse accessoire de l'aiguillage
+      et si Jmri d&eacute;tecte une commande de changement en
+      provenance d'un panneau de commande, va annuler la commande
+      imm&eacute;diatement en envoyant la commande oppos&eacute;e
+      &agrave; l'aiguillage. Tous les aiguillages qui sont
+      surveill&eacute;s par le programme JMRI et qui sont inclus
+      dans l'itin&eacute;raire seront verrouill&eacute;s.</p>
 
+      <p>Le bouton radio en dessous de "Aiguillage
+      Verrouill&eacute; quand M&acirc;t Signal Actif" vous permet
+      de n'afficher que les aiguillages, capteurs, cantons ou des
+      m&acirc;ts signaux qui font partie de cette logique m&acirc;t
+      signal.</p>
+
+      <p>Il y a quatre onglets dessous le bouton "Montrer", chacun
+      contient les d&eacute;tails de cantons, aiguillages, des
+      capteurs et m&acirc;ts signal qui composent la logique
+      M&acirc;t Signal. Dans chacun de ces onglets, il y a un
+      tableau modifiable qui vous permet de s&eacute;lectionner
+      manuellement l'&eacute;l&eacute;ment qui doit &ecirc;tre
+      inclu dans la logique de M&acirc;t Signal et de l'&eacute;tat
+      dans lequel cet &eacute;l&eacute;ment devrait &ecirc;tre
+      positionn&eacute;<br>
+      Ci-dessous est un autre tableau qui montre les
+      &eacute;l&eacute;ments automatiquement
+      g&eacute;n&eacute;r&eacute;s (sauf dans l'onglet du capteur).
+      Un &eacute;l&eacute;ments saisit manuellement l'emportera sur
+      l'&eacute;l&eacute;ments g&eacute;n&eacute;r&eacute;
+      automatiquement , donc si vous souhaitez l'emporter sur
+      n'importe quel &eacute;l&eacute;ment automatique, listez les
+      dans une tableau manuel, s&eacute;lectionnez
+      l'&eacute;l&eacute;ment correspondant et d&eacute;finissez
+      son &eacute;tat. Cliquez sur l'option "Inclure" dans l'une
+      des tables pour ajouter l'&eacute;l&eacute;ment
+      d&eacute;sir&eacute; &agrave; votre logique M&acirc;t Signal.
+      A c&ocirc;t&eacute; de l'option "Inclure" se trouve l'option
+      d'&eacute;tat dans lequel l'&eacute;l&eacute;ment doit
+      &ecirc;tre pour que le Mat Signal devienne Actif Par exemple,
+      si vous souhaitez que l'aiguillage soit d&eacute;vi&eacute;
+      pour d&eacute;clencher la logique, alors s&eacute;lectionnez
+      "d&eacute;vi&eacute;" dans le menu d&eacute;roulant. Si vous
+      souhaitez l'emporter sur un aiguillage qui a
+      &eacute;t&eacute; automatiquement inclus, et que vous ne vous
+      souciez de l'&eacute;tat dans lequel il est
+      r&eacute;gl&eacute;, s&eacute;lectionnez "Tout &Eacute;tat"
+      &agrave; partir du menu d&eacute;roulant.</p>
+
+      <p>Mise &agrave; jour Logique M&acirc;t Signal</p>Cela va
+      ajouter ou mettre &agrave; jour votre Logique M&acirc;t
+      signal pour le syst&egrave;me, une fois ajout&eacute;, les
+      tableaux contenant les donn&eacute;es automatiquement
+      g&eacute;n&eacute;r&eacute;s seront alors re-remplis.
+
+      <p>Ceci est la page d'aide
+      help/fr/package/jmri/jmrit/signalling/AddEitSignallingLogic.shtml</p>
+
+      <p><!--#include virtual="/Footer" --></p>
+    </div>
+  </div>
+</body>
+</html>

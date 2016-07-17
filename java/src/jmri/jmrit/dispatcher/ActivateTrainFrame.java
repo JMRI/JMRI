@@ -1,4 +1,3 @@
-// ActivateTrainFrame.java 
 package jmri.jmrit.dispatcher;
 
 import java.awt.Container;
@@ -49,16 +48,12 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Dave Duchamp Copyright (C) 2009
- * @version	$Revision$
  */
 public class ActivateTrainFrame {
 
     public ActivateTrainFrame(DispatcherFrame d) {
         _dispatcher = d;
         _tiFile = new TrainInfoFile();
-        if (_tiFile == null) {
-            log.error("Failed to create TrainInfoFile object when constructing ActivateTrainFrame");
-        }
     }
 
     static final ResourceBundle rb = ResourceBundle
@@ -71,7 +66,7 @@ public class ActivateTrainFrame {
     private boolean _TrainsFromRoster = true;
     private boolean _TrainsFromTrains = false;
     private ArrayList<ActiveTrain> _ActiveTrainsList = null;
-    private TransitManager _TransitManager = InstanceManager.transitManagerInstance();
+    private TransitManager _TransitManager = InstanceManager.getDefault(jmri.TransitManager.class);
     private String _trainInfoName = "";
 
     // initiate train window variables
@@ -927,48 +922,47 @@ public class ActivateTrainFrame {
 
     private void saveTrainInfo(ActionEvent e) {
         TrainInfo info = dialogToTrainInfo();
-        if (info != null) {
-            // get file name
-            String eName = "";
-            eName = JOptionPane.showInputDialog(initiateFrame,
-                    Bundle.getMessage("EnterFileName") + " :", _trainInfoName);
-            if (eName.length() < 1) {
-                JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage("Error25"),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            String fileName = normalizeXmlFileName(eName);
-            _trainInfoName = fileName;
-            // check if train info file name is in use
-            String[] names = _tiFile.getTrainInfoFileNames();
-            if (names.length > 0) {
-                boolean found = false;
-                for (int i = 0; i < names.length; i++) {
-                    if (fileName.equals(names[i])) {
-                        found = true;
-                    }
-                }
-                if (found) {
-                    // file by that name is already present
-                    int selectedValue = JOptionPane.showOptionDialog(initiateFrame,
-                            Bundle.getMessage("Question3", fileName),
-                            Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE, null, new Object[]{Bundle.getMessage("FileYes"),
-                                Bundle.getMessage("FileNo")}, Bundle.getMessage("FileNo"));
-                    if (selectedValue == 1) {
-                        return;   // return without writing if "No" response
-                    }
+
+        // get file name
+        String eName = "";
+        eName = JOptionPane.showInputDialog(initiateFrame,
+                Bundle.getMessage("EnterFileName") + " :", _trainInfoName);
+        if (eName.length() < 1) {
+            JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage("Error25"),
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String fileName = normalizeXmlFileName(eName);
+        _trainInfoName = fileName;
+        // check if train info file name is in use
+        String[] names = _tiFile.getTrainInfoFileNames();
+        if (names.length > 0) {
+            boolean found = false;
+            for (int i = 0; i < names.length; i++) {
+                if (fileName.equals(names[i])) {
+                    found = true;
                 }
             }
-            // write the Train Info file
-            try {
-                _tiFile.writeTrainInfo(info, fileName);
-            } //catch (org.jdom2.JDOMException jde) { 
-            //	log.error("JDOM exception writing Train Info: "+jde); 
-            //}                           
-            catch (java.io.IOException ioe) {
-                log.error("IO exception writing Train Info: " + ioe);
+            if (found) {
+                // file by that name is already present
+                int selectedValue = JOptionPane.showOptionDialog(initiateFrame,
+                        Bundle.getMessage("Question3", fileName),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null, new Object[]{Bundle.getMessage("FileYes"),
+                            Bundle.getMessage("FileNo")}, Bundle.getMessage("FileNo"));
+                if (selectedValue == 1) {
+                    return;   // return without writing if "No" response
+                }
             }
+        }
+        // write the Train Info file
+        try {
+            _tiFile.writeTrainInfo(info, fileName);
+        } //catch (org.jdom2.JDOMException jde) { 
+        //	log.error("JDOM exception writing Train Info: "+jde); 
+        //}                           
+        catch (java.io.IOException ioe) {
+            log.error("IO exception writing Train Info: " + ioe);
         }
     }
 

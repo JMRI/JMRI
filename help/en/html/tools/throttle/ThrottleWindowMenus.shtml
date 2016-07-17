@@ -1,118 +1,142 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="en">
-<head>
-  <title>Throttle Menus</title>
-  <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro" >
-	<meta name="Description" content="Throttle documentation for JMRI project" >
-	<meta name="Author" content="Lionel Jeanson" >
-	<meta name="Language" content="EN" >
-	<meta name="Robots" content="Index, Follow" >
-	<meta name="Revisit-After" content="7 Days" >
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-	<!-- Style -->
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" >
-	<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen" >
-	<link rel="stylesheet" type="text/css" href="/css/print.css" media="print" >
-	<link rel="icon" href="/images/jmri.ico" type="image/png" >
-	<link rel="home" title="Home" href="/" >
-	<!-- /Style -->
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org" />
+
+  <title>Throttle Menus</title>
+  <meta name="keywords" content=
+  "JMRI decoderpro dcc nmra throttle throttlepro" />
+  <meta name="Description" content=
+  "Throttle documentation for JMRI project" />
+  <meta name="Author" content="Lionel Jeanson" />
+  <meta name="Language" content="EN" />
+  <meta name="Robots" content="Index, Follow" />
+  <meta name="Revisit-After" content="7 Days" /><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii" />
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen" />
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print" />
+  <link rel="icon" href="/images/jmri.ico" type="image/png" />
+  <link rel="home" title="Home" href="/" /><!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h1>Throttle Menus</h1>
-<h2><a name="FileMenu">File menu</a></h2>
+    <div id="mainContent">
+      <h1>Throttle Menus</h1>
 
-<img src="images/ThrottlesMenu3.png" alt="" ><br >
-<h3>Load throttle</h3>
+      <h2><a name="FileMenu" id="FileMenu">File
+      menu</a></h2><img src="images/ThrottlesMenu3.png" alt=
+      "" /><br />
 
-This menu entry allows to load a Throttle window layout into the current
-Throttle Window; it will load inner windows properties, and
-Jynstruments if any.<br >
+      <h3>Load throttle</h3>This menu entry allows to load a
+      Throttle window layout into the current Throttle Window; it
+      will load inner windows properties, and Jynstruments if
+      any.<br />
 
-<h3>Save current throttle</h3>
+      <h3>Save current throttle</h3>This menu entry allows to save
+      the current Throttle window layout; it will save inner
+      windows of the current throttle properties, and Jynstruments
+      if any.<br />
+      When a Roster entry is selected, that menu entry is
+      automatically enabled. Using it will create (or update) a
+      default Throttle file for that Roster entry in &lt;JMRI
+      Preferences Folder&gt;/throttle/XYZ.xml where XYZ is the
+      Roster ID.<br />
+      <br />
+      Note that when saving a Throttle that is the default one for
+      a Roster Entry, Function Buttons customization won't be saved
+      in that file, they have to be exported to the Roster Entry
+      (from the Edit menu, see below).<br />
 
-This menu entry allows to save the current Throttle window layout; it
-will save inner windows of the current throttle properties, and
-Jynstruments if any.<br >
-When a Roster entry is selected, that menu entry is automatically
-enabled. Using it will create (or update) a default Throttle file for
-that Roster entry in &lt;JMRI Preferences Folder&gt;/throttle/XYZ.xml
-where XYZ is the Roster ID.<br >
-<br >
-Note that when saving a Throttle that is the default one for a Roster
-Entry, Function Buttons customization won't be saved in that file, they have to be
-exported to the Roster Entry (from the Edit menu, see below).<br >
+      <h3>Save current throttle as...</h3>Allows to save the
+      current Throttle window layout using any file name and path.
+      If this filename is not the default one for a Roster Entry,
+      then Function Buttons customizations will be saved in that
+      file.<br />
 
-<h3>Save current throttle as...</h3>
+      <h2><a name="EditMenu" id="EditMenu">Edit
+      menu</a></h2><img src="images/ThrottlesMenu1.png" alt=
+      "" /><br />
 
-Allows to save the current Throttle window layout using any file name and path.
-If this filename is not the default one for a Roster Entry, then
-Function Buttons customizations will be saved in that file.<br >
+      <h3>Frame Properties</h3><img src=
+      "images/ThrottleWindowPreferences.png" alt=
+      "ThrottleWindowPreferences.png" /><br />
+      Allows for editing current Throttle Window properties,
+      particularly the Window title:<br />
 
-<h2><a name="EditMenu">Edit menu</a></h2>
+      <ul>
+        <li>Address - Automatically display the address of whatever
+        locomotive is selected. This is the default.</li>
 
-<img src="images/ThrottlesMenu1.png" alt="" ><br >
+        <li>Text - Display the text that you enter in the field at
+        the top of this window</li>
 
-<h3>Frame Properties</h3>
+        <li>Text Address - Display the text you entered, followed
+        by the selected address</li>
 
-<img src="images/ThrottleWindowPreferences.png" alt="ThrottleWindowPreferences.png" >
-<br >
-Allows for editing current Throttle Window properties, particularly the
-Window title:<br >
+        <li>Address Text - Display the selected address, followed
+        by the text you entered</li>
 
-<ul>
-  <li>Address - Automatically display the address of whatever locomotive is selected. This is the default.</li>
-  <li>Text - Display the text that you enter in the field at the top of this window</li>
-  <li>Text Address - Display the text you entered, followed by the selected address</li>
-  <li>Address Text - Display the selected address, followed by the text you entered</li>
-  <li>Roster ID - Display the selected Roster ID</li>
-</ul>
+        <li>Roster ID - Display the selected Roster ID</li>
+      </ul>Note that if you enter text, it won't be visible unless
+      one of the middle three modes is selected.<br />
 
-Note that if you enter text, it won't be visible unless one of the middle three modes is selected.<br >
+      <h3>Reset Function Buttons</h3>Reset the function buttons
+      content to default and reset their visibility.<br />
+      If a Roster is selected, default button content will be
+      loaded from Roster entry; furthermore, if the matching
+      preference is enabled, buttons undefined is the Roster entry
+      will be hidden.<br />
 
-<h3>Reset Function Buttons</h3>
+      <h3>Export current throttles customization to roster</h3>Push
+      current Throttle window customizations to the Roster, in
+      particular Function Buttons customizations. See <a href=
+      "RostersMediaPane.shtml" name="EditMenu" id="EditMenu">Roster
+      Functions Labels Pane.</a>
 
-Reset the function buttons content to default and reset their visibility.<br >
-If a Roster is selected, default button content will be loaded from Roster entry; furthermore, if the matching preference is enabled, buttons undefined is the Roster entry will be hidden.<br>
+      <h2><a name="ViewMenu" id="ViewMenu">View
+      menu</a></h2><img src="images/ThrottlesMenu2.png" alt=
+      "" /><br />
+      The first part of the "<big>View</big>" menu displays a small
+      menu of 3 items - by default, each with a check mark
+      preceding the item. This corresponds to the 3 sub-windows
+      (Address Panel, Function Panel, &amp; Control Panel) that are
+      part of the throttle window.<br />
 
-<h3>Export current throttles customization to roster</h3>
+      <p>As each sub-window has a minimize and close buttons, if
+      one gets closed down in error, this menu option allows you to
+      restore the window again.</p>
 
-Push current Throttle window customizations to the Roster, in particular Function Buttons customizations. See <a href="RostersMediaPane.shtml" name="EditMenu">Roster Functions Labels Pane.</a>
+      <p>Another way to use this option is when using the features
+      of the Throttles for decoders that are <u>not</u> associated
+      with a Locomotive (such as a lighted passenger car or caboose
+      or a Fred unit). In these cases, critical screen real estate
+      can be saved by being able to disable (or close down) the
+      Control Panel. Be a little creative with the window resizing,
+      and you could have several of these custom Throttle windows
+      in the same area as one single complete Throttle window would
+      take up.</p>
 
-<h2><a name="ViewMenu">View menu</a></h2>
+      <h3>Show all function buttons</h3>Note: this functionality
+      was moved to "Reset Function Buttons" in the <a href=
+      "#EditMenu">"Edit" menu</a>
 
-<img src="images/ThrottlesMenu2.png" alt="" ><br >
-The first part of the "<big>View</big>" menu displays a small menu of
-							3 items &#8212; by default, each with a check mark preceding the item.  This
-							corresponds to the 3 sub-windows (Address Panel, Function Panel, &amp; Control
-							Panel) that are part of the throttle window.<br >
-<p>As each
-							sub-window has a minimize and close buttons, if one gets closed down in
-							error, this menu option allows you to restore the window again.</p>
+      <h3>Get all current throttle components in bounds</h3>
 
-<p>Another way to use this option is when using the features of the Throttles
-							for decoders that are <u>not</u> associated with a Locomotive (such as a lighted
-							passenger car or caboose or a Fred unit).  In these cases, critical screen
-							real estate can be saved by being able to disable (or close down) the
-							Control Panel.  Be a little creative with the window resizing, and you
-							could have several of these custom Throttle windows in the same area as one
-							single complete Throttle window would take up.</a></p>
-
-<h3>Show all function buttons</h3>
-Note: this functionality was moved to "Reset Function Buttons" in the <a href="#EditMenu">"Edit" menu</a>
-
-<h3>Get all current throttle components in bounds</h3>
-<p>
-Make sure that all inner windows of the current Throttle are inside the Throttle Window bounds.
-
-<!--#include virtual="/Footer" -->
-
-      </div><!-- closes #mainContent-->
-    </div> <!-- closes #mBody-->
+      <p>Make sure that all inner windows of the current Throttle
+      are inside the Throttle Window bounds. 
+      <!--#include virtual="/Footer" --></p>
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

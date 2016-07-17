@@ -16,7 +16,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -89,7 +89,7 @@ de rec&#226;bler m&#234;me des parties importantes de votre r&#233;seau afin de 
 </ol>
 
 
-<a name="store"><h3>Comment faire pour Sauver mon Travail?</h3></a>
+<a name="store"></a><h3>Comment faire pour Sauver mon Travail?</h3>
 
 Il y a plusieurs fa&#231;ons de sauvegarder  votre panneau. C'est parce que les programmes ont &#224; stocker &#224; la fois de la configuration 
 (aiguillages, capteurs, etc) et de la mise en page (les d&#233;tails de votre panneau sp&#233;cifique) de l'information.
@@ -104,7 +104,7 @@ Et enregistrer ce fichier &#224; partir du menu "Panneaux", en utilisant les &#2
 Cela fonctionne parce que les panneaux sont conserv&#233;s avec toutes les informations de configuration au m&#234;me moment (ce qui garantit 
 qu'ils vont travailler quand ils seront recharg&#233;s)
 
-<a name="multifile"><h3>Puis -  Enregistrer Uniquement les Informations de Configuration?</h3></a>
+<a name="multifile"></a><h3>Puis -  Enregistrer Uniquement les Informations de Configuration?</h3>
 
 Vous pouvez enregistrer seulement la "configuration" des informations dans un fichier, que vous pouvez enregistrer sans vous soucier 
 de savoir si votre panneau est ouvert, etc"
@@ -132,7 +132,7 @@ Maintenant, assurez vous que ces informations de configuration se chargent autom
 
 
 <a name="location">
-<h3>O&#249; dois-je mettre mes Ic&#244;nes Personnalis&#233;es et Autres Fichiers?</h3></a>
+</a><h3>O&#249; dois-je mettre mes Ic&#244;nes Personnalis&#233;es et Autres Fichiers?</h3>
 
 Le meilleur endroit pour mettre vos propres fichiers est dans le r&#233;pertoire pr&#233;f&#233;rences du programme. (DecoderPro utilise
 <A HREF="../DecoderPro/Files.shtml#location"> le m&#234;me r&#233;pertoire </a>)

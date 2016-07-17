@@ -43,7 +43,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
     /**
      * Reference to current active AudioListener
      */
-    private AudioListener activeAudioListener = InstanceManager.audioManagerInstance().getActiveAudioFactory().getActiveAudioListener();
+    private AudioListener activeAudioListener = InstanceManager.getDefault(jmri.AudioManager.class).getActiveAudioFactory().getActiveAudioListener();
 
     /**
      * True if we've been initialised
@@ -363,7 +363,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         // Default value to start with (used for no distance attenuation)
         float currentGain = 1.0f;
 
-        if (InstanceManager.audioManagerInstance().getActiveAudioFactory().isDistanceAttenuated()) {
+        if (InstanceManager.getDefault(jmri.AudioManager.class).getActiveAudioFactory().isDistanceAttenuated()) {
             // Calculate gain of this source using clamped inverse distance
             // attenuation model
 

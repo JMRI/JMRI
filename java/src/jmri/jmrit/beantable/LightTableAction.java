@@ -67,7 +67,7 @@ public class LightTableAction extends AbstractTableAction {
         this(Bundle.getMessage("TitleLightTable"));
     }
 
-    protected LightManager lightManager = InstanceManager.lightManagerInstance();
+    protected LightManager lightManager = InstanceManager.getOptionalDefault(jmri.LightManager.class);
 
     public void setManager(Manager man) {
         lightManager = (LightManager) man;
@@ -254,9 +254,6 @@ public class LightTableAction extends AbstractTableAction {
             public NamedBean getByUserName(String name) {
                 return lightManager.getByUserName(name);
             }
-
-            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnLightInUse(); }
-             public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnLightInUse(boo); }*/
 
             protected String getMasterClassName() {
                 return getClassName();

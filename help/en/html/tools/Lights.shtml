@@ -1,309 +1,381 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-  <title>
- 	JMRI: Lights Documentation
-  </title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
+  <title>JMRI: Lights Documentation</title>
   <meta name="Author" content="Bob Jacobsen">
-  <meta name="keywords"
-        content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <meta name="keywords" content=
+  "hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header" -->
 
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h1>JMRI: Lights Documentation</h1>
+    <div id="mainContent">
+      <h1>JMRI: Lights Documentation</h1>
 
-<h2>What are Lights?</h2>
+      <h2>What are Lights?</h2>
 
-<p>Lights are digital output bits that function as on/off switches. Lights
-were created to provide easy control for fascia panel lights and scenery
-lighting. Lights can also be used for any purpose that requires an on/off
-switch. A light can be used, for example, to activate an electromagnetic
-decoupler for a pre-determined time in response to a fascia panel button.
-Originally developed for use with C/MRI, Lights currently are also 
-implemented on LocoNet (Digitrax), Oaktree and MERG CBUS systems.</p>
-<p>Lights share available digital output bits with Turnouts. Either a 
-Light or a Turnout, but not both, can control a specific digital output bit.
-Since Lights lack the feedback structure of Turnouts, Lights should not 
-be used to control track switches (Turnouts) on the layout; only Turnouts
-should be used to control track switches. For historical reasons, Signal 
-Head appearances are defined using Turnouts, even though they may actually
-be physical lights. So Turnouts should be used to reference the digital 
-output bits used with JMRI Signal Heads. Lights should be used if you need
-a simple mechanism to control scenery lighting or panel lights, or for 
-other on/off tasks where the control mechanisms of Lights fit the need.</p>
-<p>Optionally a Light may be controlled in one of four ways: it may be 
-controlled by a Sensor, by a Turnout, by the JMRI Fast Clock, or switched
-on for a specified Time by a sensor. When a Light is created, or when it 
-is read from a configuration file, the Light is 'activated'; it is set up
-to automatically monitor any changes in state of its control Sensor, 
-Turnout, or Fast Clock. When the controlling Sensor, Turnout, or Fast Clock
-changes in a user-specified way, the Light is switched on or off. Lights 
-can also be controlled by <a href="Logix.shtml">Logix</a>, if more 
-complicated control logic is needed.</p>
-<p>The Light Table contains an 'Enabled' column. For a Light to be 
-triggered by its control Sensor, its control Turnout or the Fast Clock 
-it must be "enabled", that is, its check box in the 'Enabled' column
-must be checked.  You can uncheck this box to temporarily disable a 
-Light from being triggered, i.e. prevent it switching when its control
-mechanism fires.</p>
+      <p>Lights are digital output bits that function as on/off
+      switches. Lights were created to provide easy control for
+      fascia panel lights and scenery lighting. Lights can also be
+      used for any purpose that requires an on/off switch. A light
+      can be used, for example, to activate an electromagnetic
+      decoupler for a pre-determined time in response to a fascia
+      panel button. Originally developed for use with C/MRI, Lights
+      currently are also implemented on LocoNet (Digitrax), Oaktree
+      and MERG CBUS systems.</p>
 
-<h2>How to setup Lights</h2>
+      <p>Lights share available digital output bits with Turnouts.
+      Either a Light or a Turnout, but not both, can control a
+      specific digital output bit. Since Lights lack the feedback
+      structure of Turnouts, Lights should not be used to control
+      track switches (Turnouts) on the layout; only Turnouts should
+      be used to control track switches. For historical reasons,
+      Signal Head appearances are defined using Turnouts, even
+      though they may actually be physical lights. So Turnouts
+      should be used to reference the digital output bits used with
+      JMRI Signal Heads. Lights should be used if you need a simple
+      mechanism to control scenery lighting or panel lights, or for
+      other on/off tasks where the control mechanisms of Lights fit
+      the need.</p>
 
-<h3>The Light Table</h3>
-<p>Lights are created and edited in the <a href="../../package/jmri/jmrit/beantable/LightTable.shtml">Light Table</a>.<br>
-It contains the following columns:</p>
-	<ul>
-	<li>System Name</li>
-	<li>User Name (optional)</li>
-	<li>State</li>
-	<li>Comment (optional, double click to edit)</li>
-	<li>Enabled</li>
-	<li>Intensity</li>
-	</ul>
+      <p>Optionally a Light may be controlled in one of four ways:
+      it may be controlled by a Sensor, by a Turnout, by the JMRI
+      Fast Clock, or switched on for a specified Time by a sensor.
+      When a Light is created, or when it is read from a
+      configuration file, the Light is 'activated'; it is set up to
+      automatically monitor any changes in state of its control
+      Sensor, Turnout, or Fast Clock. When the controlling Sensor,
+      Turnout, or Fast Clock changes in a user-specified way, the
+      Light is switched on or off. Lights can also be controlled by
+      <a href="Logix.shtml">Logix</a>, if more complicated control
+      logic is needed.</p>
 
-<h3>Light Table Controls</h3>
-<p>Below the Light Table there's an <a href="../../package/jmri/jmrit/beantable/LightAddEdit.shtml">Add...</a> button.</p>
-<p>In each line of the table is an Edit and a Delete button.</p>
+      <p>The Light Table contains an 'Enabled' column. For a Light
+      to be triggered by its control Sensor, its control Turnout or
+      the Fast Clock it must be "enabled", that is, its check box
+      in the 'Enabled' column must be checked. You can uncheck this
+      box to temporarily disable a Light from being triggered, i.e.
+      prevent it switching when its control mechanism fires.</p>
 
-<h3>Switching a Light On or Off</h3>
-<p>Lights may be turned on or off by clicking the button in the State
-column of the Light Table. A Light may be set up to follow the state of 
-a track switch (Turnout), On when the Turnout is Closed, and Off when it is
-Thrown, or vice versa. A Light may be set to follow the state of a Block 
-occupancy Sensor, On when the Sensor is Active, and Off when it is Inactive, or
-vice versa. A Light may also be set by a fascia panel button if a Sensor for 
-that button is defined as the Control Sensor. A Light may be configured to 
-follow the JMRI Fast Clock, On for a specified time period, then Off.
-A Light may also be controlled from a 
-<a href="Logix.shtml">Logix</a>,
-as the action of one of its 
-Conditionals.  If you need more powerful logic to control your Light, consider 
-using a <a href="Logix.shtml">Logix</a>.</p>
+      <h2>How to setup Lights</h2>
 
-<p>Note that enabled/disabled applies only to a Light's automated
-control mechanism. A 'disabled' state will not prevent a Light
-from being turned On or Off using the button in the Light Table or from 
-being controlled by a Logix.</p>
-   
-<h3>Saving Lights to disk</h3>
+      <h3>The Light Table</h3>
 
-<p>Lights are saved in your layout configuration file, along with Turnouts, 
-Sensors, Signal Heads, etc. To store this information on disk, use <b>Store 
-Configuration...</b> in the <b>File</b> menu at the top of the Lights 
-Table (or other tables from the Tools menu), or select <b>Store Panel...</b>
-in the <b>Panel</b> menu. Note that the enabled/disabled state of each Light
-is not saved in the configuration file.  When Lights are loaded from a
-configuration file, they are all enabled.
+      <p>Lights are created and edited in the <a href=
+      "../../package/jmri/jmrit/beantable/LightTable.shtml">Light
+      Table</a>.<br>
+      It contains the following columns:</p>
 
-<a name="addLight"><h3>Adding a new Light</h3></a>
-<p>To add a new Light, follow this procedure:</p>
-<ol>
-	<li>Click the <b>Tools</b> -&gt; <b>Tables</b> -&gt; <b>Lights</b> menu to bring up
-the <a href="../../package/jmri/jmrit/beantable/LightTable.shtml">Light Table</a>,
-and click the <b>Add...</b> button at the bottom of the pane to bring up the
-<a href="../../package/jmri/jmrit/beantable/LightAddEdit.shtml">Add/Edit Light pane</a>.</li>
-	<li>Enter a System Name, according to the JMRI convention. The first
-letter designates your hardware system ('L' for LocoNet, 'C" for C/MRI,
-etc.), and the second letter must be 'L' for Light. These are followed by
-a number that gives the hardware address of the digital output bit being
-referenced.  Examples of valid system addresses are: <code>CL1004</code> and <code>LL401</code>, 
-assuming you have the hardware for the addressed digital output bits.
-	</li>
-	<li>Enter a User Name. Any string of characters that is different 
-from the User Name of other Lights will be accepted, but it's 
-wise to use a string that describes the intended use or layout location of the Light.
-	</li>
-	<li>Select the control type from the options in the popup menu.  
-When you change the control type, different options appear on the two lines
-below. Control options are discussed in more detail 
-<a href="#lightcontrol">below</a>.
-	</li>
-	<li>Enter the required information to complete the control definition 
-in the fields that appear. If you need to enter a Sensor name or a Turnout 
-name, you must enter the name (System Name or User Name) of an existing 
-Sensor or Turnout. <b>Caution</b>: if you choose to enter a User Name, be careful about 
-changing the User Name of your Sensor or Turnout afterwards. A simple change
-of User Name could break your Light control definition.
-	</li>
-	<li>Next is the notes area of the Add/Edit Light window. This is 
-where instructions and error messages will appear as you create or edit 
-a Light. Always check this area to see if things went as expected.
-	</li>
-	<li>Click the <b>Create</b> button at the bottom of the pane.  
-If everything is fine, a message stating "New Light added... " will be 
-displayed in the notes area. If there is trouble with anything, an error or 
-warning message will be displayed in the notes area; you should then
-correct the error and click <b>Create</b> again.
-</li>
-</ol>
+      <ul>
+        <li>System Name</li>
 
-<h3>Editing an existing Light</h3>
-<p>To edit an existing Light, follow this procedure:</p>
-<ol>
-	<li>Edit of an existing Light may be started in either of two ways:
-		<ul>
-			<li>Click on a Light's <b>Edit</b> button in the
-			<a href="../../package/jmri/jmrit/beantable/LightTable.shtml">Light Table</a>.</li>
-			<li>Enter the System Name of the Light to be edited in the 
-		<a href="../../package/jmri/jmrit/beantable/LightAddEdit.shtml">Add/Edit Light pane</a>
-		and click the <b>Edit</b> button at the bottom of the pane.
-		This must be the same as the System Name shown in the Light Table.</li>
-		</ul>
-	The <b>Create</b> and <b>Edit</b> buttons at the bottom of the Add/Edit 
-	Light panel will change to <b>Update</b> and <b>Cancel</b>.</li>
-	<li> Make whatever changes or additions you need to the information in
-	the dialog. Note that the System Name of the edited Light may not be 
-	changed, but the User Name may be changed. Other items are as described 
-	<a href="#addLight">above</a>.</li>
-	<li>After making changes to the Light information, click <b>Update</b> 
-	to change the selected Light. If everything is fine, a 
-	message stating "Light updated... " will be displayed in the notes 
-	area.  If there is any trouble, an error or warning message will be 
-	displayed in the notes area, and the update is stopped for you to 
-	correct the error and click <b>Update</b> again.</li>
-	<li>Click <b>Cancel</b> to exit edit mode without changing the 
-	selected Light. If the Add/Edit Light panel is dismissed (closed) 
-	while in edit mode, <b>Cancel</b> is automatically selected, and no 
-	changes are made to the selected Light.</li>
-</ol>
+        <li>User Name (optional)</li>
 
-<a name="lightcontrol"><h3>Automated Control Options for Lights</h3></a>
+        <li>State</li>
 
-The operation of a Light can be controlled in the following ways:
-	<ul>
-	<li><p><b>By Sensor</b> - The Light will be turned on when the Control Sensor
-	changes to active or inactive, depending upon the choice made in the 
-	'Sense for ON' popup menu, and it will be turned off, when the sensor
-	reverses state.  Specify the Sensor by entering its name 
-	(System Name or User Name) in the 'Sensor Name' field. This option has 
-	a number of uses, including setting a fascia panel light to follow Block
-	occupancy. That is useful, for example, for monitoring train positions in
-	a hidden staging area.</p>
-	</li>
-	<li><p><b>By Fast Clock</b> - The Light will be turned on when the Fast
-	Clock reaches the time entered in 'Time On' and will be turned off when
-	the Fast Clock reaches the time entered in 'Time Off'. The times are 
-	entered in "hh:mm" format, where "hh" is hours and "mm" is  minutes for a
-	24-hour clock. One use of this option is to turn on and off scenery 
-	lighting, street lights, house lights, etc. to simulate night time on the 
-	layout.</p>
-	</li>
-	<li><p><b>By Turnout Status</b> - The Light will be turned on when the 
-	turnout changes to closed or thrown, depending upon the choice made in the 
-	'Status for ON' popup menu, and it will be turned off, when the turnout
-	reverses its status.  Specify the Turnout by entering its name 
-	(System Name or User Name) in the 'Turnout Name' field. This option may 
-	be used to set a fascia panel light to follow the status of a Turnout. 
-	That is useful, for example, for monitoring the status of hidden turnouts.
-	</p>
-	</li>
-	<li><p><b>By Timed ON</b> - The Light will be turned on when the trigger
-	Sensor changes to Active, and it will be turned off when the specified 
-	time has elapsed. Specify the trigger Sensor by entering its name 
-	(System Name or User Name) in the 'Trigger Sensor Name' field. Enter
-	the time the Light is to remain on (in milliseconds) in the 'Duration ON'
-	field. This option has a number of uses, it was originally designed to 
-	turn on an electromagnetic decoupler in response to a fascia pushbutton, 
-	but it can also be used for other types of layout animation, for example, 
-	to control the ringing of a crossing bell when a Train enters a Block.</p>
-	</li>
-	</ul>
+        <li>Comment (optional, double click to edit)</li>
 
-<a name="variablelight"><h3>Variable Lights</h3></a>
+        <li>Enabled</li>
 
-<p>
-	A variable Light allows for a variable number of intensities between on and off.
-	The typical use would be for layout lighting simulating the changes for the
-	time of day and night. Only some forms of Lights have the ability to be variable.
-	Examples would include Internal and PowerLine devices.
-	A number of configuration options are available for variable Lights 
-    <a href="#VariableLightSettings">below</a>.
-</p>
-<p>
-	A variable Light is adjusted by an intensity setting.
-	The range of the intensity is from 0.00 for full Off to 1.00 which is
-	full On. User entry for the intensity will either use a floating point
-	value from 0 to 1 or a percentage value of 0% to 100%.
-</p>
-<p>
-	Depending on the hardware used, some variable Lights will make an
-	initialization adjustment when switching from simple on/off mode
-	to using intensity settings.
-	On such devices this will not be needed again as long as <b>only</b>
-	intensity setting commands are used.
-	Mixing on/off commands may require the initialization to occur again.
-</p>
-<p>
-	A Variable Light has three types of operators:
-	<dl>
-		<dt><b>On</b></dt>
-		<dd>
-			This operation will turn a Variable Light on.
-            It will over-ride any current intensity and set the intensity to 1.
-            If there are any transition effects enabled, they will be ignored
-            and intensity will go to the maximum amount.
-		</dd>
-		<dt><b>Off</b></dt>
-		<dd>
-			This operation will turn a Variable Light off.
-            It will over-ride any current intensity and set the intensity to 0.
-            If there are any transition effects enabled, they will be ignored
-            and intensity will go to the maximum amount.
-		</dd>
+        <li>Intensity</li>
+      </ul>
+
+      <h3>Light Table Controls</h3>
+
+      <p>Below the Light Table there's an <a href=
+      "../../package/jmri/jmrit/beantable/LightAddEdit.shtml">Add...</a>
+      button.</p>
+
+      <p>In each line of the table is an Edit and a Delete
+      button.</p>
+
+      <h3>Switching a Light On or Off</h3>
+
+      <p>Lights may be turned on or off by clicking the button in
+      the State column of the Light Table. A Light may be set up to
+      follow the state of a track switch (Turnout), On when the
+      Turnout is Closed, and Off when it is Thrown, or vice versa.
+      A Light may be set to follow the state of a Block occupancy
+      Sensor, On when the Sensor is Active, and Off when it is
+      Inactive, or vice versa. A Light may also be set by a fascia
+      panel button if a Sensor for that button is defined as the
+      Control Sensor. A Light may be configured to follow the JMRI
+      Fast Clock, On for a specified time period, then Off. A Light
+      may also be controlled from a <a href=
+      "Logix.shtml">Logix</a>, as the action of one of its
+      Conditionals. If you need more powerful logic to control your
+      Light, consider using a <a href="Logix.shtml">Logix</a>.</p>
+
+      <p>Note that enabled/disabled applies only to a Light's
+      automated control mechanism. A 'disabled' state will not
+      prevent a Light from being turned On or Off using the button
+      in the Light Table or from being controlled by a Logix.</p>
+
+      <h3>Saving Lights to disk</h3>
+
+      <p>Lights are saved in your layout configuration file, along
+      with Turnouts, Sensors, Signal Heads, etc. To store this
+      information on disk, use <b>Store Configuration...</b> in the
+      <b>File</b> menu at the top of the Lights Table (or other
+      tables from the Tools menu), or select <b>Store Panel...</b>
+      in the <b>Panel</b> menu. Note that the enabled/disabled
+      state of each Light is not saved in the configuration file.
+      When Lights are loaded from a configuration file, they are
+      all enabled. <a name="addLight" id="addLight"></a></p>
+
+      <h3>Adding a new Light</h3>
+
+      <p>To add a new Light, follow this procedure:</p>
+
+      <ol>
+        <li>Click the <b>Tools</b> -&gt; <b>Tables</b> -&gt;
+        <b>Lights</b> menu to bring up the <a href=
+        "../../package/jmri/jmrit/beantable/LightTable.shtml">Light
+        Table</a>, and click the <b>Add...</b> button at the bottom
+        of the pane to bring up the <a href=
+        "../../package/jmri/jmrit/beantable/LightAddEdit.shtml">Add/Edit
+        Light pane</a>.</li>
+
+        <li>Enter a System Name, according to the JMRI convention.
+        The first letter designates your hardware system ('L' for
+        LocoNet, 'C" for C/MRI, etc.), and the second letter must
+        be 'L' for Light. These are followed by a number that gives
+        the hardware address of the digital output bit being
+        referenced. Examples of valid system addresses are:
+        <code>CL1004</code> and <code>LL401</code>, assuming you
+        have the hardware for the addressed digital output
+        bits.</li>
+
+        <li>Enter a User Name. Any string of characters that is
+        different from the User Name of other Lights will be
+        accepted, but it's wise to use a string that describes the
+        intended use or layout location of the Light.</li>
+
+        <li>Select the control type from the options in the popup
+        menu. When you change the control type, different options
+        appear on the two lines below. Control options are
+        discussed in more detail <a href=
+        "#lightcontrol">below</a>.</li>
+
+        <li>Enter the required information to complete the control
+        definition in the fields that appear. If you need to enter
+        a Sensor name or a Turnout name, you must enter the name
+        (System Name or User Name) of an existing Sensor or
+        Turnout. <b>Caution</b>: if you choose to enter a User
+        Name, be careful about changing the User Name of your
+        Sensor or Turnout afterwards. A simple change of User Name
+        could break your Light control definition.</li>
+
+        <li>Next is the notes area of the Add/Edit Light window.
+        This is where instructions and error messages will appear
+        as you create or edit a Light. Always check this area to
+        see if things went as expected.</li>
+
+        <li>Click the <b>Create</b> button at the bottom of the
+        pane. If everything is fine, a message stating "New Light
+        added... " will be displayed in the notes area. If there is
+        trouble with anything, an error or warning message will be
+        displayed in the notes area; you should then correct the
+        error and click <b>Create</b> again.</li>
+      </ol>
+
+      <h3>Editing an existing Light</h3>
+
+      <p>To edit an existing Light, follow this procedure:</p>
+
+      <ol>
+        <li>Edit of an existing Light may be started in either of
+        two ways:
+
+          <ul>
+            <li>Click on a Light's <b>Edit</b> button in the
+            <a href=
+            "../../package/jmri/jmrit/beantable/LightTable.shtml">Light
+            Table</a>.</li>
+
+            <li>Enter the System Name of the Light to be edited in
+            the <a href=
+            "../../package/jmri/jmrit/beantable/LightAddEdit.shtml">
+            Add/Edit Light pane</a> and click the <b>Edit</b>
+            button at the bottom of the pane. This must be the same
+            as the System Name shown in the Light Table.</li>
+          </ul>The <b>Create</b> and <b>Edit</b> buttons at the
+          bottom of the Add/Edit Light panel will change to
+          <b>Update</b> and <b>Cancel</b>.
+        </li>
+
+        <li>Make whatever changes or additions you need to the
+        information in the dialog. Note that the System Name of the
+        edited Light may not be changed, but the User Name may be
+        changed. Other items are as described <a href=
+        "#addLight">above</a>.</li>
+
+        <li>After making changes to the Light information, click
+        <b>Update</b> to change the selected Light. If everything
+        is fine, a message stating "Light updated... " will be
+        displayed in the notes area. If there is any trouble, an
+        error or warning message will be displayed in the notes
+        area, and the update is stopped for you to correct the
+        error and click <b>Update</b> again.</li>
+
+        <li>Click <b>Cancel</b> to exit edit mode without changing
+        the selected Light. If the Add/Edit Light panel is
+        dismissed (closed) while in edit mode, <b>Cancel</b> is
+        automatically selected, and no changes are made to the
+        selected Light.</li>
+      </ol><a name="lightcontrol" id="lightcontrol"></a>
+
+      <h3>Automated Control Options for Lights</h3>The operation of
+      a Light can be controlled in the following ways:
+
+      <ul>
+        <li>
+          <p><b>By Sensor</b> - The Light will be turned on when
+          the Control Sensor changes to active or inactive,
+          depending upon the choice made in the 'Sense for ON'
+          popup menu, and it will be turned off, when the sensor
+          reverses state. Specify the Sensor by entering its name
+          (System Name or User Name) in the 'Sensor Name' field.
+          This option has a number of uses, including setting a
+          fascia panel light to follow Block occupancy. That is
+          useful, for example, for monitoring train positions in a
+          hidden staging area.</p>
+        </li>
+
+        <li>
+          <p><b>By Fast Clock</b> - The Light will be turned on
+          when the Fast Clock reaches the time entered in 'Time On'
+          and will be turned off when the Fast Clock reaches the
+          time entered in 'Time Off'. The times are entered in
+          "hh:mm" format, where "hh" is hours and "mm" is minutes
+          for a 24-hour clock. One use of this option is to turn on
+          and off scenery lighting, street lights, house lights,
+          etc. to simulate night time on the layout.</p>
+        </li>
+
+        <li>
+          <p><b>By Turnout Status</b> - The Light will be turned on
+          when the turnout changes to closed or thrown, depending
+          upon the choice made in the 'Status for ON' popup menu,
+          and it will be turned off, when the turnout reverses its
+          status. Specify the Turnout by entering its name (System
+          Name or User Name) in the 'Turnout Name' field. This
+          option may be used to set a fascia panel light to follow
+          the status of a Turnout. That is useful, for example, for
+          monitoring the status of hidden turnouts.</p>
+        </li>
+
+        <li>
+          <p><b>By Timed ON</b> - The Light will be turned on when
+          the trigger Sensor changes to Active, and it will be
+          turned off when the specified time has elapsed. Specify
+          the trigger Sensor by entering its name (System Name or
+          User Name) in the 'Trigger Sensor Name' field. Enter the
+          time the Light is to remain on (in milliseconds) in the
+          'Duration ON' field. This option has a number of uses, it
+          was originally designed to turn on an electromagnetic
+          decoupler in response to a fascia pushbutton, but it can
+          also be used for other types of layout animation, for
+          example, to control the ringing of a crossing bell when a
+          Train enters a Block.</p>
+        </li>
+      </ul><a name="variablelight" id="variablelight"></a>
+
+      <h3>Variable Lights</h3>
+
+      <p>A variable Light allows for a variable number of
+      intensities between on and off. The typical use would be for
+      layout lighting simulating the changes for the time of day
+      and night. Only some forms of Lights have the ability to be
+      variable. Examples would include Internal and PowerLine
+      devices. A number of configuration options are available for
+      variable Lights <a href=
+      "#VariableLightSettings">below</a>.</p>
+
+      <p>A variable Light is adjusted by an intensity setting. The
+      range of the intensity is from 0.00 for full Off to 1.00
+      which is full On. User entry for the intensity will either
+      use a floating point value from 0 to 1 or a percentage value
+      of 0% to 100%.</p>
+
+      <p>Depending on the hardware used, some variable Lights will
+      make an initialization adjustment when switching from simple
+      on/off mode to using intensity settings. On such devices this
+      will not be needed again as long as <b>only</b> intensity
+      setting commands are used. Mixing on/off commands may require
+      the initialization to occur again.</p>
+
+      <p>A Variable Light has three types of operators:</p>
+
+      <dl>
+        <dt><b>On</b></dt>
+
+        <dd>This operation will turn a Variable Light on. It will
+        over-ride any current intensity and set the intensity to 1.
+        If there are any transition effects enabled, they will be
+        ignored and intensity will go to the maximum amount.</dd>
+
+        <dt><b>Off</b></dt>
+
+        <dd>This operation will turn a Variable Light off. It will
+        over-ride any current intensity and set the intensity to 0.
+        If there are any transition effects enabled, they will be
+        ignored and intensity will go to the maximum amount.</dd>
+
         <dt><b>Set Intensity</b></dt>
-		<dd>
-			This operation will set a target intensity for the Variable
-			Light. If the interface supports transition effects and they are
-			configured, the Light will make a controlled transition from the current
-			setting to the new setting.
-		</dd>
-    </dl>
-</p>
 
-<a name="VariableLightSettings"><h4>Variable Light Settings</h4></a>
-<p>
-	These settings adjust how the 'set intensity' command is used.
-	<dl>
-		<dt><b>Minimum Intensity:</b></dt>
-		<dd>
-			A value 0 to 100 (percent) that sets the lowest amount of light that
-			will be output by a dim command.
-			An explicit Off command will ignore this value.
-		</dd>
-		
-		<dt><b>Maximum Intensity:</b></dt>
-		<dd>
-			A value 0 to 100 (percent) that sets the highest amount of light that
-			will be output by a dim command.
-			An explicit On command will ignore this value.
-		</dd>
-		
-		<dt><b>Transition Time:</b></dt>
-		<dd>
-		   Number of Fast Clock minutes to go from 0% to 100% intensity.
-		   A value of zero will cause the device to change from one intensity
-		   to new intensity as fast as the device is able to do so.
-		</dd>
-	</dl>
-</p>
+        <dd>This operation will set a target intensity for the
+        Variable Light. If the interface supports transition
+        effects and they are configured, the Light will make a
+        controlled transition from the current setting to the new
+        setting.</dd>
+      </dl><a name="VariableLightSettings" id=
+      "VariableLightSettings"></a>
 
-<!--#include virtual="/Footer" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+      <h4>Variable Light Settings</h4>
+
+      <p>These settings adjust how the 'set intensity' command is
+      used.</p>
+
+      <dl>
+        <dt><b>Minimum Intensity:</b></dt>
+
+        <dd>A value 0 to 100 (percent) that sets the lowest amount
+        of light that will be output by a dim command. An explicit
+        Off command will ignore this value.</dd>
+
+        <dt><b>Maximum Intensity:</b></dt>
+
+        <dd>A value 0 to 100 (percent) that sets the highest amount
+        of light that will be output by a dim command. An explicit
+        On command will ignore this value.</dd>
+
+        <dt><b>Transition Time:</b></dt>
+
+        <dd>Number of Fast Clock minutes to go from 0% to 100%
+        intensity. A value of zero will cause the device to change
+        from one intensity to new intensity as fast as the device
+        is able to do so.</dd>
+      </dl><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

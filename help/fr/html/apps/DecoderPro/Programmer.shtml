@@ -16,7 +16,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -133,7 +133,7 @@ Tous les fichiers .xml dans le sous-r&#233;pertoire "programmers"  appara&#238;t
 </dl>
 
 <a name="id">
-<h3>Comment les variables dans un fichier d&#233;codeur correspondent avec le fichier programmateur</h3></a>
+</a><h3>Comment les variables dans un fichier d&#233;codeur correspondent avec le fichier programmateur</h3>
 
 Chaque fichier d&#233;codeur d&#233;finit
 <a HREF="CreateDecoder.shtml#variable"> les variables </a> qui d&#233;crivent des contr&#244;les sp&#233;cifiques dans

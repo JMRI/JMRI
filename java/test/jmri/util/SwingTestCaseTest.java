@@ -19,7 +19,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.util.SwingTestCase class.
  *
  * @author	Bob Jacobsen Copyright 2009
- * @version	$Revision$
  */
 public class SwingTestCaseTest extends SwingTestCase {
 

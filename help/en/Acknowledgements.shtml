@@ -55,7 +55,8 @@
 	<li>Rick Beaber contributed definitions for MRC decoders
 	<li>Robin Becker, who has had a major role in the Soundtraxx decoder
 	definitions, created our Windows icons, has debugged several
-	difficult problems and created a Tam Valley decoder definition.
+	difficult problems, created several Tam Valley decoder definitions,
+	and is a primary author of EngineDriver.
 	<li>John Bell, who improved the NCE instructions
 	<li>Paul Bender, who wrote the XpressNet throttle code, maintains the
 	XpressNet implementation, created the LI101 configuration tool, has
@@ -282,7 +283,8 @@
 	<li>Martin Jahner, who fixed the constant checkboxen
 	<li>Bob Jacobsen, who wrote some of the early code and does packaging and user support
 	<li>Martin Jahner, who built a replacement library for Mac OS X
-	<li>Jay Janzen, who debugged a RobotThrottle problem
+	<li>Jay Janzen, who debugged a RobotThrottle problem and provided improvements
+	    for Dispatcher.
 	<li>Lionel Jeanson, who added images to the roster,
 	    updated the throttle to add preferences for displaying them,
 	    cleaned up some code problems in the throttle,
@@ -402,7 +404,8 @@
 	<li>Gerry Pruss, who provided information on connecting to the QSI Programmer
 <a name="Q"></a>
 <a name="R"></a>
-	<li>Balazs Racz, who fixed a bug in startup and improved our tech documentation
+	<li>Balazs Racz, who fixed a bug in startup and improved our tech documentation,
+	    and updated the OpenLCB support to their version 0.7
 	<li>Steve Rawlinson, who fixed a bug in Layout Blocks.</li>
 	<li>Simon Reader, who improved the throttle,
 	added a check for completed status to Routes,
@@ -485,8 +488,8 @@
 	    updated lots of decoder definitions,
 	    improved many help pages,
 	    and is an active jmriusers moderator.
-	<li>Steve Todd, who updated the EngineDriver throttle for Android, fixed an IPv6 problem,
-	    and worked on the mini web server and examples for it
+	<li>Steve Todd, primary author of EngineDriver throttle for Android, adds scripts,  
+	    helps with web server, particularly client-side panels and updates Dispatcher
 	<li>Dale Tripp, who co-wrote the 2009 version of the DecoderPro manual
 	    and provided the decoder definition for the Kato FL12
 <a name="U"></a>

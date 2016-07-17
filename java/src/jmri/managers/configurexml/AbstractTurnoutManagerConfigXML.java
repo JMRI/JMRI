@@ -129,9 +129,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                     TurnoutOperationXml adapter = TurnoutOperationXml.getAdapter(op);
                     if (adapter != null) {
                         Element nonceOpElem = adapter.store(op);
-                        if (opElem != null) {
-                            elem.addContent(nonceOpElem);
-                        }
+                        elem.addContent(nonceOpElem);
                     }
                 } else {
                     opstr = op.getName();

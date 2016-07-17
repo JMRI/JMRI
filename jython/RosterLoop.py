@@ -12,7 +12,7 @@ import jmri.jmrit.roster
 
 # get a list of matched roster entries;
 # the list of None's means match everything
-rosterlist = jmri.jmrit.roster.Roster.instance().matchingList(None, None, None, None, None, None, None)
+rosterlist = jmri.jmrit.roster.Roster.getDefault().matchingList(None, None, None, None, None, None, None)
 
 # now loop through the matched entries, printing things
 for entry in rosterlist.toArray() :

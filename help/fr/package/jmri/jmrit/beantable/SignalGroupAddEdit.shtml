@@ -1,125 +1,207 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="fr">
 <head>
-<!-- UpDated by Herv&#233; Blorec  2013-10-12-->
-<title>JMRI: Tableau de Groupe Signaux</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- UpDated by Herv&#233; Blorec  2013-10-12-->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: Tableau de Groupe Signaux</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h1> 
-JMRI: Tableau de Groupe Signaux
-</h1>
-Groupes de Signaux.
+    <div id="mainContent">
+      <h1>JMRI: Tableau de Groupe Signaux</h1>Groupes de Signaux.
+      Les groupes de signaux sont utilis&eacute;s pour
+      d&eacute;finir un certain nombre de t&ecirc;tes de signal,
+      o&ugrave; une seule t&ecirc;te de signal peut &ecirc;tre
+      &eacute;clair&eacute;e &agrave; un moment donn&eacute;, en
+      fonction de l'&eacute;tat du m&acirc;t de signal
+      associ&eacute; et un ensemble de conditions.<br>
+      Les groupes de signaux seront utilis&eacute;s lorsque des
+      indicateurs suppl&eacute;mentaires sont utilis&eacute;s pour
+      compl&eacute;ter le m&acirc;t du signal principal, tels que
+      les affichages Direction, Itin&eacute;raire ou Vitesse. Ces
+      indicateurs fournissent des informations
+      suppl&eacute;mentaires pour le conducteur qui ne sont pas
+      donn&eacute;es par le m&acirc;t du signal principal. Ces
+      indicateurs sont fr&eacute;quemment observ&eacute;s sur la
+      signalisation en Europe et au Royaume-Uni.<br>
 
-Les groupes de signaux sont utilis&#233;s pour d&#233;finir un certain nombre de t&#234;tes de signal, o&#249; une seule t&#234;te de signal peut &#234;tre &#233;clair&#233;e &#224; un moment donn&#233;, en fonction de l'&#233;tat du m&#226;t de signal associ&#233; et un ensemble de conditions. <br>
+      <h2>Indicateurs de Direction</h2>Un indicateur de Direction
+      peut &ecirc;tre configur&eacute; pour afficher n'importe
+      laquelles des voies divergentes 1 &agrave; 6. Un seul
+      indicateur sera souvent trouv&eacute; o&ugrave; un
+      embranchement diverge hors d'une ligne principale. Plusieurs
+      indicateurs se trouvent dans des domaines plus complexes tels
+      que l'approche des stations et les gares de triage, o&ugrave;
+      plusieurs routes peuvent &ecirc;tre prises. L'indicateur de
+      direction informe le conducteur qu'il est en train de prendre
+      un itin&eacute;raire diff&eacute;rent et doit donc adapter sa
+      vitesse en fonction de la signalisation.<br>
+      Les indicateurs de direction seront fix&eacute;s en fonction
+      d'un ensemble de donn&eacute;es d'aiguillage pour cette
+      direction<br>
 
-Les groupes de signaux seront utilis&#233;s lorsque des indicateurs suppl&#233;mentaires sont utilis&#233;s pour compl&#233;ter le m&#226;t du signal principal, tels que les affichages Direction, Itin&#233;raire ou Vitesse. Ces indicateurs fournissent des informations suppl&#233;mentaires pour le conducteur qui ne sont pas donn&#233;es par le m&#226;t du signal principal. Ces indicateurs sont fr&#233;quemment observ&#233;s sur la signalisation en Europe et au Royaume-Uni.  <br>
+      <h2>Indicateurs Itin&eacute;raires</h2>Un indicateur
+      d'itin&eacute;raire tel qu'il est utilis&eacute; au
+      Royaume-Uni, affiche un chiffre ou une lettre, ils sont
+      surtout attach&eacute;s &agrave; trouver des signaux &agrave;
+      l'approche d'une gare. Ils affichent le quai vers lequel le
+      train a &eacute;t&eacute; achemin&eacute; &eacute;tant
+      donn&eacute; la complexit&eacute; de certaines gares, il peut
+      y avoir un certain nombre d'itin&eacute;raires physiques
+      diff&eacute;rents qui pourraient &ecirc;tre &agrave; prendre
+      &agrave; partir du signal de la destination. Ainsi un
+      indicateur de direction ne pouvait pas &ecirc;tre
+      utilis&eacute; lorsque "tired" avec des positions
+      d'aiguillage. De plus l'indicateur de direction ne peut
+      traiter que 6 itin&eacute;raires diff&eacute;rents, et
+      certaines gares ont plus de 6 quais.<br>
+      Par cons&eacute;quent, l'indicateur d'itin&eacute;raire ne
+      peut afficher qu'une destination &agrave; la fois.
+      L'affichage d'un itin&eacute;raire ne signifie pas
+      n&eacute;cessairement que le pilote prendra le m&ecirc;me
+      chemin pour se rendre au quai de destination.<br>
+      <a href="SignalGroup.png"><img src="SignalGroup.png" height=
+      "274" width="306"></a>
 
-<h2>Indicateurs de Direction</h2>
+      <h2>Chaque groupe de signal comprend les
+      &eacute;l&eacute;ments suivants</h2>Un m&acirc;t de signal -.
+      Auquel ce groupe est attach&eacute;<br>
+      Une liste des apparences qui peuvent &ecirc;tre valables pour
+      le groupe de signaux devienne actif.<br>
+      par exemple : le M&acirc;t de Signal, doit &ecirc;tre
+      configur&eacute; pour Proc&eacute;der ou Prudence, mais pas
+      Danger.<br>
 
-Un indicateur de Direction peut &#234;tre configur&#233; pour afficher n'importe laquelles des voies divergentes 1 &#224; 6. Un seul indicateur sera souvent trouv&#233; o&#249; un embranchement diverge hors d'une ligne principale. Plusieurs indicateurs se trouvent dans des domaines plus complexes tels que l'approche des stations et les gares de triage, o&#249; plusieurs routes peuvent &#234;tre prises. L'indicateur de direction informe le conducteur qu'il est en train de prendre un itin&#233;raire diff&#233;rent et doit donc adapter sa vitesse en fonction de la signalisation. <br>
+      <p>Les T&ecirc;tes de signal qui composent chacune des
+      indications du groupe. Les T&ecirc;tes de signaux au sein du
+      groupe sont constitu&eacute;s &agrave; partir de t&ecirc;te
+      de signal cr&eacute;&eacute;e en utilisant le type de sortie
+      unique, &agrave; partir du Tableau T&ecirc;tes de signal.<br>
+      <a href="SingleSignalHead.png"><img src=
+      "SingleSignalHead.png" height="159" width="121"></a></p>
 
-Les indicateurs de direction seront fix&#233;s en fonction d'un ensemble de donn&#233;es d'aiguillage pour cette direction <br>
+      <p>Chaque t&ecirc;te de Signal a alors un ensemble de
+      crit&egrave;res qui doivent &ecirc;tre remplis avant que la
+      t&ecirc;te de signal soit allum&eacute;. Il est
+      constitu&eacute; d'Aiguillages et/ou des &eacute;tats de
+      capteurs.<br></p>
 
-<h2>Indicateurs Itin&#233;raires</h2>
+      <h2>Exemple - Indicateur de Direction</h2>Consid&eacute;rons
+      le sch&eacute;ma piste suivant, vous avez ici six Directions
+      possibles en sortie de la ligne principale.<br>
+      <a href="SignalGroupTrackDiagram.png"><img src=
+      "SignalGroupTrackDiagram.png" height="90" width="233"></a>
 
-Un indicateur d'itin&#233;raire tel qu'il est utilis&#233; au Royaume-Uni, affiche un chiffre ou une lettre, ils sont surtout attach&#233;s &#224; trouver des signaux &#224; l'approche d'une gare. Ils affichent le quai vers lequel le train a &#233;t&#233; achemin&#233;  &#233;tant donn&#233; la complexit&#233; de certaines  gares, il peut y avoir un certain nombre d'itin&#233;raires physiques diff&#233;rents qui pourraient &#234;tre &#224; prendre &#224; partir du signal de la destination. Ainsi un indicateur de direction ne pouvait pas &#234;tre utilis&#233; lorsque "tired" avec des positions d'aiguillage. De plus l'indicateur de direction ne peut traiter que 6 itin&#233;raires diff&#233;rents, et certaines gares ont plus de 6 quais. <br>
+      <p>Le signal face &agrave; cette jonction aura un indicateur
+      de jonction fix&eacute;e, chaque voie possible aura sa propre
+      indication. Lorsque l'itin&eacute;raire est fix&eacute; pour
+      tout droit, aucun indicateur n'est indiqu&eacute;. Si
+      l'itin&eacute;raire est fix&eacute; pour la position 1, alors
+      la position 1 de l'indicateur sera affich&eacute;e.<br>
+      <a href="SignalGroupTrackDiagram1.png"><img src=
+      "SignalGroupTrackDiagram1.png" height="90" width=
+      "262"></a></p>
 
-Par cons&#233;quent, l'indicateur d'itin&#233;raire ne peut afficher qu'une destination &#224; la fois. L'affichage d'un itin&#233;raire ne signifie pas n&#233;cessairement que le pilote prendra le m&#234;me chemin pour se rendre au quai de destination. <br>
+      <p>Avec cette configuration, vous devez cr&eacute;er une
+      simple t&ecirc;te de signal d'aiguillage pour chaque
+      position, configur&eacute; avec une apparence &eacute;teinte
+      et lunaire. Vous pouvez utiliser deux combinaisons de
+      couleurs que vous aimez, si &eacute;teinte et lunaire sont
+      plus adapt&eacute;s &agrave; cette situation.</p>
 
-<a href="SignalGroup.png"> 
-<Img src = "SignalGroup.png"
-height = "274" width = "306">
-</A>
+      <p>Dans le Groupe Signal, vous s&eacute;lectionnez chacune
+      des T&ecirc;tes de Signal qui sont utilis&eacute;es pour
+      cr&eacute;er l'indicateur de direction. La logique pour
+      chaque T&ecirc;te de Signal est alors configur&eacute; comme
+      suit.</p>
 
-<h2> Chaque groupe de signal comprend les &#233;l&#233;ments suivants</h2>
+      <table>
+        <tr>
+          <td width="200" valign="top">
+            <p>Position 1 - position Aiguillage</p>
 
-Un m&#226;t de signal -. Auquel ce groupe est attach&#233; <br>
-Une liste des apparences qui peuvent &#234;tre valables pour le groupe de signaux devienne actif. <br>
-par exemple : le M&#226;t de Signal, doit &#234;tre configur&#233; pour Proc&#233;der ou Prudence, mais pas Danger. <br>
+            <p>IT1 mis D&eacute;vi&eacute;,</p>
 
-<p>Les T&#234;tes de signal  qui composent chacune des indications du groupe.
-Les T&#234;tes de signaux au sein du groupe sont constitu&#233;s &#224; partir de t&#234;te de signal cr&#233;&#233;e en utilisant le type de sortie unique, &#224; partir du Tableau T&#234;tes de signal. <br>
-<a href="SingleSignalHead.png"> 
-<Img src = "SingleSignalHead.png"
-height = "159" width = "121">
-</A>
-<p> Chaque t&#234;te de Signal a alors un ensemble de crit&#232;res qui doivent &#234;tre remplis avant que la t&#234;te de signal soit allum&#233;. Il est constitu&#233; d'Aiguillages et/ou des &#233;tats de capteurs. <br>
+            <p>IT2 mis Droit.</p>
+          </td>
 
+          <td width="200">
+            <p>Position2 - position Aiguillage</p>
 
-<h2> Exemple - Indicateur de Direction</h2>
-Consid&#233;rons le sch&#233;ma piste suivant, vous avez ici six Directions possibles en sortie de la ligne principale. <br>
+            <p>IT1 mis D&eacute;vi&eacute;,</p>
 
-<a href="SignalGroupTrackDiagram.png"> 
- <img src = "SignalGroupTrackDiagram.png"
- height = "90" width = "233">
-</a>
+            <p>IT2 mis Droit,</p>
 
-<p> Le signal face &#224; cette jonction aura un indicateur de jonction fix&#233;e, chaque voie possible aura sa propre indication. Lorsque l'itin&#233;raire est fix&#233; pour tout droit,  aucun indicateur n'est indiqu&#233;. Si l'itin&#233;raire est fix&#233; pour la position 1, alors la position 1 de l'indicateur sera affich&#233;e. <br>
-<a href="SignalGroupTrackDiagram1.png"> <img src = "SignalGroupTrackDiagram1.png"
- height = "90" width = "262">
-</a>
+            <p>IT3 mis D&eacute;vi&eacute;.</p>
+          </td>
+        </tr>
 
-<p>Avec cette configuration, vous devez cr&#233;er une simple t&#234;te de signal d'aiguillage pour chaque position, configur&#233; avec une apparence &#233;teinte et lunaire. Vous pouvez utiliser deux combinaisons de couleurs que vous aimez, si &#233;teinte et lunaire sont plus adapt&#233;s &#224; cette situation.
+        <tr>
+          <td width="200">
+            <p>Position 3 - position Aiguillage</p>
 
-<p> Dans le Groupe Signal, vous s&#233;lectionnez chacune des T&#234;tes de Signal qui sont utilis&#233;es pour cr&#233;er l'indicateur de direction. La logique pour chaque T&#234;te de Signal est alors configur&#233; comme suit.
-<table>
- <td width=200 valign=top>
-<p> Position 1 - position Aiguillage</p>
- <p> IT1  mis D&#233;vi&#233;,</p>
- <p> IT2 mis Droit.</p>
-</td>
- <td width=200>
- <p> Position2   - position Aiguillage</p>
- <p> IT1  mis D&#233;vi&#233;,</p>
- <p> IT2 mis Droit,</p>
- <p> IT3 mis D&#233;vi&#233;.</p>
-</td>
-</tr>
- <td width=200>
- <p> Position 3  - position Aiguillage</p>
- <p> IT1  mis D&#233;vi&#233;,</p>
- <p> IT2 mis Droitt,</p>
- <p> IT3 mise Droit.</p>
-</td>
- <td width=200>
- <p> Position 4 - position Aiguillage</p>
- <p> IT1 mis Droit</p>
- <p> IT4 mis D&#233;vi&#233;</p>
- <p> IT5 mis D&#233;vi&#233;</p>
-</td>
-</tr>
-<td width=200>
- <p> Position 5  - position Aiguillage</p>
- <p> IT1mis Droit</p>
- <p> IT4 mis D&#233;vi&#233;</p>
-<p> IT5 mis Droit</p>
-<p> IT6 mis D&#233;vi&#233;</p>
-</td>
- <td width=200>
- <p> Position 6 - position Aiguillage</p>
- <p> IT1 mis Droit</p>
- <p> IT4 mis D&#233;vi&#233;</p>
- <p> IT5 mis Droit</p>
- <p> IT6 mis Droitt</p>
-</td>
-</tr>
-</table>
+            <p>IT1 mis D&eacute;vi&eacute;,</p>
 
-<!--#include virtual="/Footer" -->
- </div>
+            <p>IT2 mis Droitt,</p>
+
+            <p>IT3 mise Droit.</p>
+          </td>
+
+          <td width="200">
+            <p>Position 4 - position Aiguillage</p>
+
+            <p>IT1 mis Droit</p>
+
+            <p>IT4 mis D&eacute;vi&eacute;</p>
+
+            <p>IT5 mis D&eacute;vi&eacute;</p>
+          </td>
+        </tr>
+
+        <tr>
+          <td width="200">
+            <p>Position 5 - position Aiguillage</p>
+
+            <p>IT1mis Droit</p>
+
+            <p>IT4 mis D&eacute;vi&eacute;</p>
+
+            <p>IT5 mis Droit</p>
+
+            <p>IT6 mis D&eacute;vi&eacute;</p>
+          </td>
+
+          <td width="200">
+            <p>Position 6 - position Aiguillage</p>
+
+            <p>IT1 mis Droit</p>
+
+            <p>IT4 mis D&eacute;vi&eacute;</p>
+
+            <p>IT5 mis Droit</p>
+
+            <p>IT6 mis Droitt</p>
+          </td>
+        </tr>
+      </table><!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

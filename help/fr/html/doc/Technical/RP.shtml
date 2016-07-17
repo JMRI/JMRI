@@ -18,6 +18,7 @@
 </head>
 <body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
@@ -100,9 +101,9 @@ de sorte qu'il serait bon de coder ailleurs, pendant que &#231;a fonctionne touj
 <p>
 Vous pouvez travailler avec les contr&#244;les relatifs &#224; l'obsolescence "on" lors de la compilation.
 Pour ce faire, changez cette ligne de build.xml:
-<pre><code>
+<pre style="font-family: monospace;">
 &lt;property name="deprecation" value="on" /&gt;
-</code></pre>
+</pre>
 
 Cela vous permet d'&#234;tre attentif aux nouveaux avertissements de d&#233;sapprobation que vous code.
 
