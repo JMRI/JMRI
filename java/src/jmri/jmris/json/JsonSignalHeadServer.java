@@ -1,14 +1,14 @@
 package jmri.jmris.json;
 
-import static jmri.jmris.json.JSON.CODE;
-import static jmri.jmris.json.JSON.DATA;
-import static jmri.jmris.json.JSON.ERROR;
-import static jmri.jmris.json.JSON.MESSAGE;
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.SIGNAL_HEAD;
-import static jmri.jmris.json.JSON.STATE;
-import static jmri.jmris.json.JSON.TYPE;
-import static jmri.jmris.json.JSON.UNKNOWN;
+import static jmri.server.json.JsonException.CODE;
+import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JsonException.ERROR;
+import static jmri.server.json.JsonException.MESSAGE;
+import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.SIGNAL_HEAD;
+import static jmri.server.json.JSON.STATE;
+import static jmri.server.json.JSON.TYPE;
+import static jmri.server.json.JSON.UNKNOWN;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
