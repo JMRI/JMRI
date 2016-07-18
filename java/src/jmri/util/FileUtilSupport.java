@@ -743,13 +743,13 @@ public class FileUtilSupport extends Bean {
      * <p>
      * The <code>locations</code> parameter limits the above logic by limiting
      * the location searched.
-     * <ol><li>{@link Location#ALL} will not place any limits on the
-     * search</li><li>{@link Location#NONE} effectively requires that
+     * <ol><li>{@link FileUtil.Location#ALL} will not place any limits on the
+     * search</li><li>{@link FileUtil.Location#NONE} effectively requires that
      * <code>path</code> be a portable
-     * pathname</li><li>{@link Location#INSTALLED} limits the search to the
-     * {@link #PROGRAM} directory and JARs in the class
-     * path</li><li>{@link Location#USER} limits the search to the
-     * {@link #PROFILE} directory</li></ol>
+     * pathname</li><li>{@link FileUtil.Location#INSTALLED} limits the search to
+     * the {@link FileUtil#PROGRAM} directory and JARs in the class
+     * path</li><li>{@link FileUtil.Location#USER} limits the search to the
+     * {@link FileUtil#PROFILE} directory</li></ol>
      *
      * @param path        The relative path of the file or resource
      * @param locations   The types of locations to limit the search to
@@ -887,13 +887,13 @@ public class FileUtilSupport extends Bean {
      * <p>
      * The <code>locations</code> parameter limits the above logic by limiting
      * the location searched.
-     * <ol><li>{@link Location#ALL} will not place any limits on the
-     * search</li><li>{@link Location#NONE} effectively requires that
+     * <ol><li>{@link FileUtil.Location#ALL} will not place any limits on the
+     * search</li><li>{@link FileUtil.Location#NONE} effectively requires that
      * <code>path</code> be a portable
-     * pathname</li><li>{@link Location#INSTALLED} limits the search to the
-     * {@link #PROGRAM} directory and JARs in the class
-     * path</li><li>{@link Location#USER} limits the search to the
-     * {@link #PROFILE} directory</li></ol>
+     * pathname</li><li>{@link FileUtil.Location#INSTALLED} limits the search to the
+     * {@link FileUtil#PROGRAM} directory and JARs in the class
+     * path</li><li>{@link FileUtil.Location#USER} limits the search to the
+     * {@link FileUtil#PROFILE} directory</li></ol>
      *
      * @param path        The relative path of the file or resource
      * @param locations   The types of locations to limit the search to
