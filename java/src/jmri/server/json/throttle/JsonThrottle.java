@@ -15,10 +15,10 @@ import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.Throttle;
 import jmri.ThrottleListener;
-import static jmri.jmris.json.JSON.ID;
-import static jmri.jmris.json.JSON.IS_LONG_ADDRESS;
-import static jmri.jmris.json.JSON.ROSTER_ENTRY;
-import static jmri.jmris.json.JSON.STATUS;
+import static jmri.server.json.JSON.ID;
+import static jmri.server.json.JSON.IS_LONG_ADDRESS;
+import static jmri.server.json.roster.JsonRoster.ROSTER_ENTRY;
+import static jmri.server.json.JSON.STATUS;
 import jmri.jmrit.roster.Roster;
 import jmri.server.json.JsonException;
 import org.slf4j.Logger;
@@ -86,11 +86,11 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
      * Creates a new JsonThrottle or returns an existing one if the request is
      * for an existing throttle.
      *
-     * data can contain either a string {@link jmri.jmris.json.JSON#ID} node containing the ID
+     * data can contain either a string {@link jmri.server.json.JSON#ID} node containing the ID
      * of a {@link jmri.jmrit.roster.RosterEntry} or an integer
-     * {@link jmri.jmris.json.JSON#ADDRESS} node. If data contains an ADDRESS, the ID node is
+     * {@link jmri.server.json.JSON#ADDRESS} node. If data contains an ADDRESS, the ID node is
      * ignored. The ADDRESS may be accompanied by a boolean
-     * {@link jmri.jmris.json.JSON#IS_LONG_ADDRESS} node specifying the type of address, if
+     * {@link jmri.server.json.JSON#IS_LONG_ADDRESS} node specifying the type of address, if
      * IS_LONG_ADDRESS is not specified, the inverse of {@link jmri.ThrottleManager#canBeShortAddress(int)
      * } is used as the "best guess" of the address length.
      *

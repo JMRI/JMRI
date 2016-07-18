@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of the LocoNetOverTcp LbServer Server Protocol
+ * Implementation of the DCCppOverTcp Server Protocol
  *
  * @author Alex Shepherd Copyright (C) 2006
  * @author Mark Underwood Copyright (C) 2015
@@ -96,7 +96,7 @@ public class Server {
         try {
             OutputStream outStream = new FileOutputStream(settingsFileName);
             PrintStream settingsStream = new PrintStream(outStream);
-            settingsStream.println("# LocoNetOverTcp Configuration Settings");
+            settingsStream.println("# DCCppOverTcp Configuration Settings");
             settingsStream.println(AUTO_START_KEY + " = " + (autoStart ? "1" : "0"));
             settingsStream.println(PORT_NUMBER_KEY + " = " + portNumber);
 

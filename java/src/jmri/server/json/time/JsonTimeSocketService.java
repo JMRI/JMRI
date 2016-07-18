@@ -19,7 +19,7 @@ import jmri.server.json.JsonSocketService;
  *
  * @author Randall Wood
  */
-class JsonTimeSocketService extends JsonSocketService implements PropertyChangeListener {
+public class JsonTimeSocketService extends JsonSocketService implements PropertyChangeListener {
 
     private boolean listening = false;
     private final JsonTimeHttpService service;

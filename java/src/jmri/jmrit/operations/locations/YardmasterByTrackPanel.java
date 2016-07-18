@@ -222,6 +222,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                         pTrack.add(pTrain);
                     }
                 }
+                // now do locomotive set outs
                 if (Setup.isPrintHeadersEnabled()) {
                     for (Engine engine : engList) {
                         if (engine.getDestinationTrack() == _track) {
@@ -243,6 +244,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                         pTrack.add(pTrain);
                     }
                 }
+                // now cars
                 List<Car> carList = carManager.getByTrainDestinationList(train);
                 if (Setup.isPrintHeadersEnabled()) {
                     for (Car car : carList) {
@@ -351,6 +353,9 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                         pTrack.add(pTrain);
                     }
                 }
+                pTrackPane.validate();
+                pTrain.setMaximumSize(new Dimension(2000, pTrain.getHeight()));
+                pTrain.revalidate();
             }
             // now do car holds
             // we only need the cars on this track
@@ -374,7 +379,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                 } else {
                     text = MessageFormat.format(TrainSwitchListText.getStringHoldCar(),
                             new Object[]{TrainCommon.padAndTruncateString(car.getRoadName(), CarRoads.instance().getMaxNameLength()),
-                                    TrainCommon.padAndTruncateString(car.getNumber(), Control.max_len_string_print_road_number),
+                                    TrainCommon.padAndTruncateString(TrainCommon.splitString(car.getNumber()), Control.max_len_string_print_road_number),
                                     TrainCommon.padAndTruncateString(car.getTypeName().split("-")[0], CarTypes.instance().getMaxNameLength()),
                                     TrainCommon.padAndTruncateString(car.getLength() + TrainCommon.LENGTHABV, Control.max_len_string_length_name),
                                     TrainCommon.padAndTruncateString(car.getLoadName(), CarLoads.instance().getMaxNameLength()),
@@ -389,6 +394,8 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                 pTrack.add(pHoldCars);
             }
             pTrackPane.validate();
+            pHoldCars.setMaximumSize(new Dimension(2000, pHoldCars.getHeight()));
+            pHoldCars.revalidate();
             if (pickup && !setout) {
                 textTrackCommentWorkPane.setText(_track.getCommentPickup());
             } else if (!pickup && setout) {
