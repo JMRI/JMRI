@@ -1,186 +1,338 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- UpDated by Herv&#233; Blorec  2013-10-13-->
+
 <html lang="fr">
 <head>
- <TITLE>
-      JMRI: ViewSpecialActions
- </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Transit Special Actions">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: ViewSpecialActions</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content=
+  "JMRI help Transit Special Actions"><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Actions</h1>
 
-<h1>Actions</h1>
-    
-<H2> Qu'est ce que les actions?</H2>
-<p>Les <b>Actions</b> sont des t&#226;ches qui peuvent &#234;tre d&#233;clench&#233;es automatiquement comme un train avec un trajet en
-mode automatique, qui traverse le r&#233;seau suivant un
-<b><a href="TransitTable.shtml"> Transit</a></b>. Une ou plusieurs <b>Actions</b> peuvent
-&#234;tre demand&#233;es pour chaque<b> <a href="SectionTable.shtml">Section</a></b> dans un Transit.
-Si une Section est dans un transit &#224; plusieurs reprises, diff&#233;rentes
-<b>Actions</b> peuvent &#234;tre sp&#233;cifi&#233;es pour chaque occurrence de la
-Section. Les <b>Actions</b> ne s'applique qu'aux trains pilot&#233;s automatiquement sous
-<b><a href="../dispatcher/DispatcherFrame.shtml"> Dispatcher</a></b>
-par un op&#233;rateur <i>virtuels</i>. Si l'exploitation des trains est en mode automatique, il y a un int&#233;r&#234;t
-&#224; lire la suite. Si vos trains  seront ex&#233;cut&#233;s manuellement avec un op&#233;rateur humain,
-Les <b>Actions</b> ne sont pas utilis&#233;s.</p>
+      <h2>Qu'est ce que les actions?</h2>
 
-<p>Les<b>Actions</b> sont en plus des <i>actions standards</i> qui
-se font automatiquement quand un train passe en mode automatique. Des actions standards
-sont des choses comme le suivi des  signaux et l'utilisation de capteurs d'arr&#234;t, qui sont sp&#233;cifi&#233;s avec
-chaque Section. Les <i>actions standards</i> se produisent automatiquement chaque fois qu'une Section est
-parcourue en mode automatique. Les autres <i>actions standards</i> comprennent automatiquement
-la demande d'attribution des Sections, et le changement automatique de la vitesse de la locomotive
-en fonction des restrictions des signaux.</p>
+      <p>Les <b>Actions</b> sont des t&acirc;ches qui peuvent
+      &ecirc;tre d&eacute;clench&eacute;es automatiquement comme un
+      train avec un trajet en mode automatique, qui traverse le
+      r&eacute;seau suivant un <b><a href=
+      "TransitTable.shtml">Transit</a></b>. Une ou plusieurs
+      <b>Actions</b> peuvent &ecirc;tre demand&eacute;es pour
+      chaque <b><a href="SectionTable.shtml">Section</a></b> dans
+      un Transit. Si une Section est dans un transit &agrave;
+      plusieurs reprises, diff&eacute;rentes <b>Actions</b> peuvent
+      &ecirc;tre sp&eacute;cifi&eacute;es pour chaque occurrence de
+      la Section. Les <b>Actions</b> ne s'applique qu'aux trains
+      pilot&eacute;s automatiquement sous <b><a href=
+      "../dispatcher/DispatcherFrame.shtml">Dispatcher</a></b> par
+      un op&eacute;rateur <i>virtuels</i>. Si l'exploitation des
+      trains est en mode automatique, il y a un
+      int&eacute;r&ecirc;t &agrave; lire la suite. Si vos trains
+      seront ex&eacute;cut&eacute;s manuellement avec un
+      op&eacute;rateur humain, Les <b>Actions</b> ne sont pas
+      utilis&eacute;s.</p>
 
-<p>Les<b>Actions</b> sont li&#233;es &#224; des Sections mais sont sp&#233;cifi&#233;es au niveau du transit
-pour fournir une flexibilit&#233; maximum pour l'utilisateur. Une Section est un morceau de voie physique,
-qui peut, par exemple, &#234;tre utilis&#233;e par les trains de passagers, par les trains de marchandises, ou des train locaux
-. Chacun de ces usages peut avoir besoin de diff&#233;rentes <b>Actions</b> dans une Section sp&#233;cifique
-. Par exemple, un train de passagers peut faire un arr&#234;t en gare dans une Section particuliere
-, alors qu'un train de marchandise peut traverser directement. Placer des
-<b>Actions</b> dans les transits permet aux trains actif empruntant le m&#234;me chemin
-&#224; travers le r&#233;seau d'avoir diff&#233;rentes <b>Actions</b>.</p>
+      <p>Les<b>Actions</b> sont en plus des <i>actions
+      standards</i> qui se font automatiquement quand un train
+      passe en mode automatique. Des actions standards sont des
+      choses comme le suivi des signaux et l'utilisation de
+      capteurs d'arr&ecirc;t, qui sont sp&eacute;cifi&eacute;s avec
+      chaque Section. Les <i>actions standards</i> se produisent
+      automatiquement chaque fois qu'une Section est parcourue en
+      mode automatique. Les autres <i>actions standards</i>
+      comprennent automatiquement la demande d'attribution des
+      Sections, et le changement automatique de la vitesse de la
+      locomotive en fonction des restrictions des signaux.</p>
 
-<h2> Demande d'une Action</h2>
+      <p>Les<b>Actions</b> sont li&eacute;es &agrave; des Sections
+      mais sont sp&eacute;cifi&eacute;es au niveau du transit pour
+      fournir une flexibilit&eacute; maximum pour l'utilisateur.
+      Une Section est un morceau de voie physique, qui peut, par
+      exemple, &ecirc;tre utilis&eacute;e par les trains de
+      passagers, par les trains de marchandises, ou des train
+      locaux . Chacun de ces usages peut avoir besoin de
+      diff&eacute;rentes <b>Actions</b> dans une Section
+      sp&eacute;cifique . Par exemple, un train de passagers peut
+      faire un arr&ecirc;t en gare dans une Section particuliere ,
+      alors qu'un train de marchandise peut traverser directement.
+      Placer des <b>Actions</b> dans les transits permet aux trains
+      actif empruntant le m&ecirc;me chemin &agrave; travers le
+      r&eacute;seau d'avoir diff&eacute;rentes <b>Actions</b>.</p>
 
-<p> Une Action est demand&#233;e en pr&#233;cisant  <i>quelle</i> action &#224;
-effectu&#233;e et <i>quand</i> l'action doIY23it &#234;tre effectu&#233;e. Tout &#233;v&#233;nement <i>quand</i>
-peut &#234;tre combin&#233; &#224; toute action<i>quelle</i>, offrant une grande vari&#233;t&#233; d'Actions sp&#233;ciales
-. Une Action est initi&#233;e lorsque le train entre dans la Section o&#249; l'Action est
-demand&#233;e. Pour d&#233;cider du moment pour effectuer l'Action apr&#232;s l'entr&#233;e dans la section, le
-programme regarde les &#233;v&#233;nement <i>quand</i>. Actuellement disponible les &#233;v&#233;nements <i>quand</i> sont:</p>
+      <h2>Demande d'une Action</h2>
 
-<ul><p>
-<li><b>Sur Entr&#233;e Section</b> - Lorsque le train automatique p&#233;n&#232;tre dans la
-Section courante.
-<li><b>Sur Sortie Section</b> - Lorsque le train automatique quitte  la
-Section courante. Cela signifie que lorsque la derni&#232;re voiture d&#233;tectable quitte la section, et que la
-Section est inoccup&#233;.
-<li><b>Sur Entr&#233;e Canton</b> - Lorsque le train automatique p&#233;n&#232;tre dans un 
-Canton sp&#233;cifi&#233; dans la Section. Pour les sections avec un seul Canton, c'est
-&#233;quivalent &#224; <b>Sur Entr&#233;e Section</b>.</li>
-<li><b>Sur Sortie Canton</b> - A la sortie du trains automatique d'un
-Canton sp&#233;cifi&#233; dans la Section. Cela signifie que lorsque la derni&#232;re voiture d&#233;tectable quitte
-le Canton sp&#233;cifi&#233;, et que le Canton est inoccup&#233;. Pour les 
-Sections avec un seul Canton, ce qui &#233;quivaut &#224; <b>Sur Sortie Section</b>.</Li>
-<li><b>Sur Arr&#234;t Train</b> - Lors des arr&#234;ts automatiques du train. Cela peut &#234;tre
-utilis&#233;s, par exemple, pour arr&#234;ter la cloche dans un d&#233;codeur de son ou &#224; initier d'autres
-actions lorsque le train s'arr&#234;te &#224; une gare.</li>
-<li><b>Sur D&#233;marrage Train</b> - Lorsque les trains automatiques d&#233;marrent apr&#232;s avoir
-&#233;t&#233; arr&#234;t&#233;s. Cela peut &#234;tre utilis&#233;, par exemple, pour initier des actions quand un train
-d&#233;marre apr&#232;s un arr&#234;t en gare.</li>
-<li><b>Sur Capteur ACTIF</b> - Lorsque le capteur sp&#233;cifi&#233; se d&#233;place vers l'
-&#233;tat actif. Le capteur sp&#233;cifi&#233; peut &#234;tre interne ou mat&#233;riel et doit &#234;tre
- dans le Tableau Capteur. Cela pourrait &#234;tre utilis&#233;, par exemple, avec un capteur mat&#233;riel
-reli&#233; &#224; un bouton poussoir au tableau de bord pour d&#233;clencher une action. Il pourrait &#233;galement &#234;tre utilis&#233; pour
-d&#233;clencher des actions en utilisant des capteurs de position de mat&#233;riel sur le trac&#233;. Avec des 
-capteurs internes il peut fournir un lien vers Logix.</li>
-<li><b>Sur Capteur INACTIF</b> - Lorsque le capteur sp&#233;cifi&#233; se d&#233;place vers l'
-&#233;tat inactif. C'est la m&#234;me chose que ci-dessus, mais avec l'&#233;tat du capteur oppos&#233;.
-Utilisez celui qui correspond le mieux &#224; votre mat&#233;riel ou &#224; Logix.</Li>
-</ul></p>
-<p> Un temporisation optionnelle, sp&#233;cifi&#233;e en millisecondes, est disponible pour chaque &#233;v&#233;nement <i>Quand</i>
-. Aucun retard par d&#233;faut. Si aucun d&#233;lai optionnel n'est entr&#233; (ou un
-temporisation de z&#233;ro est entr&#233;e), l'action sera effectu&#233;e imm&#233;diatement apr&#232;s que l'&#233;v&#233;nement
-<i>Quand</i> se produit. Si aucun d&#233;lai n'est sp&#233;cifi&#233;, le programme attendra
-pendant le temps sp&#233;cifi&#233; apr&#232;s que l'&#233;v&#233;nement <i>Quand</i> se produise avant l'ex&#233;cution des
-d'actions.</p>
-<p> Les actions <i>quelles</i>actuellement disponibles sont les suivantes:
-<ul><p>
-<li><b>Pause Train</b> - Arr&#234;ter le train pour un nombre d&#233;termin&#233; de minutes d'horloge rapide.
-Cet &#233;l&#233;ment peut &#234;tre utilis&#233; pour demander un arr&#234;t en gare.</Li>
-<li><b>Vitesse Maximum</b> - R&#233;gler la vitesse maximale &#224; un pourcentage d&#233;termin&#233;
-de la vitesse maximale du mat&#233;riel. Quand un train est ex&#233;cut&#233; en mode automatique, le
-programme ne pourra jamais d&#233;passer la vitesse maximale. Par exemple, cet &#233;l&#233;ment peut &#234;tre utilis&#233;
-pour forcer un train automatique &#224; courir lentement &#224; travers une ville. Le r&#233;glage de la vitesse maximale
-n'affecte pas la vitesse actuelle du train si elle est inf&#233;rieure &#224; la vitesse maximale sp&#233;cifi&#233;e.
-l</li>
-<li> <b>R&#233;gler Vitesse Train</b> - R&#233;gler la vitesse du train en cours &#224; un  pourcentage de la vitesse cible.
-Le r&#233;gulateur enverra la nouvelle vitesse de la locomotive imm&#233;diatement. Combien de temps cela prend pour que le
-le train atteigne la nouvelle vitesse  d&#233;pend du d&#233;codeur.
-La nouvelle vitesse peut &#234;tre soit inf&#233;rieure ou sup&#233;rieure &#224; la valeur pr&#233;c&#233;dente, mais ne sera pas
-autoris&#233;e &#224; d&#233;passer la vitesse maximale.</li>
-<li><b>Rampe Vitesse Train</b> - R&#233;gler la vitesse du train en cours &#224; un pourcentage 
-par rampe &#224; la valeur cible en utilisant le taux de rampe par d&#233;faut du train en fonctionnement automatique 
-. Si le taux de rampe par d&#233;faut du train est RAMP_NONE, cette action est
-&#233;quivalente &#224; <b>R&#233;gler Vitesse Train</b>. La nouvelle vitesse peut &#234;tre soit inf&#233;rieure ou sup&#233;rieure
-&#224; la valeur pr&#233;c&#233;dente, mais ne sera pas autoris&#233;e &#224; d&#233;passer la vitesse maximale.</li>
-<li><b>Passer en Mode Manuel</b> - Sortir du mode automatique pour permettre &#224; un op&#233;rateur humain
- d'ex&#233;cuter un travail avec un r&#233;gulateur &#224; main. Cette action supporte le sc&#233;nario
-o&#249; un train peut &#234;tre ex&#233;cut&#233; automatiquement vers un site de travail, o&#249; un op&#233;rateur humain
-prend le relais pour effectuer des travaux, apr&#232;s quoi l'ex&#233;cution automatique se poursuit. Le train
-restera en mode manuel jusqu'&#224; ce que le r&#233;partiteur reprenne le mode automatique
-.En option un <b>Capteur Termin&#233;</b> permet &#224; un op&#233;rateur &#233;loign&#233; du
-r&#233;partiteur d'aviser celui-ci que le travail a &#233;t&#233; achev&#233; et que le fonctionnement automatique
- peut &#234;tre repris. Lorsque le <b> Capteur Termin&#233;</b> devient actif, l'&#233;tat du
- train est pass&#233; de TRAVAIL &#224; PR&#234;T. Pour plus d'informations sur cette action,
-Voir <b><a href="../dispatcher/DispatcherFrame.shtml"> Dispatcher</a></b>. <b>Remarque:</b>
-Lorsque le train est en mode manuel, l'ordinateur ne dispose pas d'un r&#233;gulateur pour 
-le train disponible, ainsi les actions qui arrivent alors et qui exigent un r&#233;gulateur sont
-ignor&#233;es.</Li>
-<li><b>R&#233;glage Lumi&#232;re Locomotive</b> - D&#233;finit que la lumi&#232;re de locomotive sera <i>On</i> ou
-<i>Off</i> comme s&#233;lectionn&#233;e</li>
-<li><b>D&#233;marrer Cloche</b> -La cloche commencent &#224; sonner sur un d&#233;codeur sonore. Cet &#233;l&#233;ment
-mettra la fonction 1 du r&#233;gulateur sur On</li>
-<li><b>Arr&#234;tez Cloche</b> - la cloche cesse de sonner sur un d&#233;codeur sonore. Cet &#233;l&#233;ment
-mettra la fonction 1 du r&#233;gulateur sur Off.</li>
-<li><b>Trompe Sonore</b> - Son de Trompe (sifflet) d'un d&#233;codeur de son pour une dur&#233;e d&#233;termin&#233;e
-. Cet &#233;l&#233;ment  &#233;quivalent &#224; mettre la fonction 2 du r&#233;gulateur &#224; 0 pour un
-temps sp&#233;cifi&#233;.</li>
-<li><b>Mod&#232;le Sonore Corne</b> - Son de Trompe (sifflet) d'une  mani&#232;re sp&#233;cifi&#233;e par
-un mod&#232;le entr&#233; par l'utilisateur. Le mod&#232;le se compose de sons brefs et longs, sp&#233;cifi&#233; comme
-«S» et «l» dans le mod&#232;le. Par exemple un mod&#232;le de «lSl» pr&#233;cise long-court-long.
-L'utilisateur d&#233;finit la dur&#233;e des coups courts et longs. Le coups de dur&#233;e courte
-est utilis&#233; comme  temps d'attente entre les coups. Les dur&#233;es r&#233;elles r&#233;alis&#233;es seront
-d&#233;pendantes du d&#233;codeur de son et comment l'ordinateur est occup&#233;. La corne/sifflet est
-suppos&#233; &#234;tre la fonction 2 du r&#233;gulateur.</li>
-<li><b>R&#233;gler Fonction D&#233;codeur</b> - D&#233;finit la fonction sp&#233;cifi&#233;e du d&#233;codeur soit
-<i>On</i> ou <i>Off</i> comme s&#233;lectionn&#233;e. Cela fonctionne pour les d&#233;codeurs sonores et les
-d&#233;codeurs sans le son.</li>
-<li><b>R&#233;gler Capteur ACTIF</b> - D&#233;finir un Capteur sp&#233;cifi&#233; actif. Le Capteur sp&#233;cifi&#233;
- doit &#234;tre dans le Tableau Capteur. Si le capteur sp&#233;cifi&#233; est d&#233;j&#224; dans l'
-&#233;tat actif, il est d'abord bascul&#233; &#224; l'&#233;tat inactif, puis revient actif. Cette
-d'action peut &#234;tre utilis&#233;e, par exemple, avec un capteur interne pour d&#233;clencher un Logix, d&#233;clencher un
-un Itin&#233;raire, ou de r&#233;gler une Lumi&#232;re. Il offre un acc&#232;s &#224; une grande vari&#233;t&#233; d'actions non
-incluses ici, tels que l'ex&#233;cution de scripts ou de jouer des sons.</li>
-<li><b>R&#233;gler Capteur INACTIF</b> - D&#233;finir un Capteur sp&#233;cifi&#233; inactif. Le Capteur sp&#233;cifi&#233;
- doit &#234;tre dans le Tableau  Capteur. Si le capteur sp&#233;cifi&#233; est d&#233;j&#224; dans l'
-&#233;tat inactif, il est d'abord bascul&#233; &#224; l'&#233;tat actif, puis r&#233;glez &#224; inactif. Ceci
-est &#233;quivalent &#224; l'action ci-dessus, sauf avec un &#233;tat du Capteur cible diff&#233;rente.</li>
-</ul></p>
+      <p>Une Action est demand&eacute;e en pr&eacute;cisant
+      <i>quelle</i> action &agrave; effectu&eacute;e et
+      <i>quand</i> l'action doIY23it &ecirc;tre effectu&eacute;e.
+      Tout &eacute;v&eacute;nement <i>quand</i> peut &ecirc;tre
+      combin&eacute; &agrave; toute action<i>quelle</i>, offrant
+      une grande vari&eacute;t&eacute; d'Actions sp&eacute;ciales .
+      Une Action est initi&eacute;e lorsque le train entre dans la
+      Section o&ugrave; l'Action est demand&eacute;e. Pour
+      d&eacute;cider du moment pour effectuer l'Action apr&egrave;s
+      l'entr&eacute;e dans la section, le programme regarde les
+      &eacute;v&eacute;nement <i>quand</i>. Actuellement disponible
+      les &eacute;v&eacute;nements <i>quand</i> sont:</p>
 
-<h2> Fen&#234;tre Voir Actions </h2>
-<p>La fen&#234;tre <b>Afficher Actions</b> affiche les Actions qui sont
-actuellement d&#233;termin&#233;es, et pr&#233;voit d'ajouter, &#233;diter ou supprimer des Actions.
-La fen&#234;tre Afficher Actions (exemple ci-dessous) est affich&#233; pour une
-Section particuliere de Transit en appuyant sur le bouton <b>Voir/Ajouter/Editer Actions</b> sur cette
-rang&#233;e de la Section dans la fen&#234;tre<b>Ajouter/Editer Transit</b>.</P>
-<img src="ViewSpecialActions.png" height="336" width="750"></li>
-<p> Pour toutes les actions qui ont &#233;t&#233; cr&#233;&#233;s, l'&#233;v&#233;nement <i>quand</i> et 
-<i>quelle</i> action sont d&#233;crits dans les colonnes <b>Quand</b> et <b>Action demand&#233;e</b>
-. Pour ajouter une nouvelle action, cliquez sur <b>Ajouter Nouvelle Action</b> pour faire appara&#238;tre la fen&#234;tre
-<a href="AddEditAction.shtml"> <b>Ajouter/Editer Action</b></a>. Pour modifier une
-Action existante,  cliquez sur le bouton <b>Modifier</b> dans sa rang&#233;e. Pour supprimer une
-Action existante, cliquez sur le bouton <b>Supprimer</b> dans sa rang&#233;e.
-L'ordre des actions n'est pas important.</P>
-<p> lorsque les actions sont compl&#232;tement d&#233;finies, cliquez sur le bouton<b>Termin&#233;</b>.
-</P>
+      <ul>
+        <li><b>Sur Entr&eacute;e Section</b> - Lorsque le train
+        automatique p&eacute;n&egrave;tre dans la Section
+        courante.</li>
 
-<!--#include virtual="/Footer" -->
-      </div>
+        <li><b>Sur Sortie Section</b> - Lorsque le train
+        automatique quitte la Section courante. Cela signifie que
+        lorsque la derni&egrave;re voiture d&eacute;tectable quitte
+        la section, et que la Section est inoccup&eacute;.</li>
+
+        <li><b>Sur Entr&eacute;e Canton</b> - Lorsque le train
+        automatique p&eacute;n&egrave;tre dans un Canton
+        sp&eacute;cifi&eacute; dans la Section. Pour les sections
+        avec un seul Canton, c'est &eacute;quivalent &agrave;
+        <b>Sur Entr&eacute;e Section</b>.</li>
+
+        <li><b>Sur Sortie Canton</b> - A la sortie du trains
+        automatique d'un Canton sp&eacute;cifi&eacute; dans la
+        Section. Cela signifie que lorsque la derni&egrave;re
+        voiture d&eacute;tectable quitte le Canton
+        sp&eacute;cifi&eacute;, et que le Canton est
+        inoccup&eacute;. Pour les Sections avec un seul Canton, ce
+        qui &eacute;quivaut &agrave; <b>Sur Sortie
+        Section</b>.</li>
+
+        <li><b>Sur Arr&ecirc;t Train</b> - Lors des arr&ecirc;ts
+        automatiques du train. Cela peut &ecirc;tre
+        utilis&eacute;s, par exemple, pour arr&ecirc;ter la cloche
+        dans un d&eacute;codeur de son ou &agrave; initier d'autres
+        actions lorsque le train s'arr&ecirc;te &agrave; une
+        gare.</li>
+
+        <li><b>Sur D&eacute;marrage Train</b> - Lorsque les trains
+        automatiques d&eacute;marrent apr&egrave;s avoir
+        &eacute;t&eacute; arr&ecirc;t&eacute;s. Cela peut
+        &ecirc;tre utilis&eacute;, par exemple, pour initier des
+        actions quand un train d&eacute;marre apr&egrave;s un
+        arr&ecirc;t en gare.</li>
+
+        <li><b>Sur Capteur ACTIF</b> - Lorsque le capteur
+        sp&eacute;cifi&eacute; se d&eacute;place vers l'
+        &eacute;tat actif. Le capteur sp&eacute;cifi&eacute; peut
+        &ecirc;tre interne ou mat&eacute;riel et doit &ecirc;tre
+        dans le Tableau Capteur. Cela pourrait &ecirc;tre
+        utilis&eacute;, par exemple, avec un capteur
+        mat&eacute;riel reli&eacute; &agrave; un bouton poussoir au
+        tableau de bord pour d&eacute;clencher une action. Il
+        pourrait &eacute;galement &ecirc;tre utilis&eacute; pour
+        d&eacute;clencher des actions en utilisant des capteurs de
+        position de mat&eacute;riel sur le trac&eacute;. Avec des
+        capteurs internes il peut fournir un lien vers Logix.</li>
+
+        <li><b>Sur Capteur INACTIF</b> - Lorsque le capteur
+        sp&eacute;cifi&eacute; se d&eacute;place vers l'
+        &eacute;tat inactif. C'est la m&ecirc;me chose que
+        ci-dessus, mais avec l'&eacute;tat du capteur
+        oppos&eacute;. Utilisez celui qui correspond le mieux
+        &agrave; votre mat&eacute;riel ou &agrave; Logix.</li>
+      </ul>
+
+      <p>Un temporisation optionnelle, sp&eacute;cifi&eacute;e en
+      millisecondes, est disponible pour chaque
+      &eacute;v&eacute;nement <i>Quand</i> . Aucun retard par
+      d&eacute;faut. Si aucun d&eacute;lai optionnel n'est
+      entr&eacute; (ou un temporisation de z&eacute;ro est
+      entr&eacute;e), l'action sera effectu&eacute;e
+      imm&eacute;diatement apr&egrave;s que
+      l'&eacute;v&eacute;nement <i>Quand</i> se produit. Si aucun
+      d&eacute;lai n'est sp&eacute;cifi&eacute;, le programme
+      attendra pendant le temps sp&eacute;cifi&eacute; apr&egrave;s
+      que l'&eacute;v&eacute;nement <i>Quand</i> se produise avant
+      l'ex&eacute;cution des d'actions.</p>
+
+      <p>Les actions <i>quelles</i>actuellement disponibles sont
+      les suivantes:</p>
+
+      <ul>
+        <li><b>Pause Train</b> - Arr&ecirc;ter le train pour un
+        nombre d&eacute;termin&eacute; de minutes d'horloge rapide.
+        Cet &eacute;l&eacute;ment peut &ecirc;tre utilis&eacute;
+        pour demander un arr&ecirc;t en gare.</li>
+
+        <li><b>Vitesse Maximum</b> - R&eacute;gler la vitesse
+        maximale &agrave; un pourcentage d&eacute;termin&eacute; de
+        la vitesse maximale du mat&eacute;riel. Quand un train est
+        ex&eacute;cut&eacute; en mode automatique, le programme ne
+        pourra jamais d&eacute;passer la vitesse maximale. Par
+        exemple, cet &eacute;l&eacute;ment peut &ecirc;tre
+        utilis&eacute; pour forcer un train automatique &agrave;
+        courir lentement &agrave; travers une ville. Le
+        r&eacute;glage de la vitesse maximale n'affecte pas la
+        vitesse actuelle du train si elle est inf&eacute;rieure
+        &agrave; la vitesse maximale sp&eacute;cifi&eacute;e.
+        l</li>
+
+        <li><b>R&eacute;gler Vitesse Train</b> - R&eacute;gler la
+        vitesse du train en cours &agrave; un pourcentage de la
+        vitesse cible. Le r&eacute;gulateur enverra la nouvelle
+        vitesse de la locomotive imm&eacute;diatement. Combien de
+        temps cela prend pour que le le train atteigne la nouvelle
+        vitesse d&eacute;pend du d&eacute;codeur. La nouvelle
+        vitesse peut &ecirc;tre soit inf&eacute;rieure ou
+        sup&eacute;rieure &agrave; la valeur
+        pr&eacute;c&eacute;dente, mais ne sera pas autoris&eacute;e
+        &agrave; d&eacute;passer la vitesse maximale.</li>
+
+        <li><b>Rampe Vitesse Train</b> - R&eacute;gler la vitesse
+        du train en cours &agrave; un pourcentage par rampe
+        &agrave; la valeur cible en utilisant le taux de rampe par
+        d&eacute;faut du train en fonctionnement automatique . Si
+        le taux de rampe par d&eacute;faut du train est RAMP_NONE,
+        cette action est &eacute;quivalente &agrave;
+        <b>R&eacute;gler Vitesse Train</b>. La nouvelle vitesse
+        peut &ecirc;tre soit inf&eacute;rieure ou sup&eacute;rieure
+        &agrave; la valeur pr&eacute;c&eacute;dente, mais ne sera
+        pas autoris&eacute;e &agrave; d&eacute;passer la vitesse
+        maximale.</li>
+
+        <li><b>Passer en Mode Manuel</b> - Sortir du mode
+        automatique pour permettre &agrave; un op&eacute;rateur
+        humain d'ex&eacute;cuter un travail avec un
+        r&eacute;gulateur &agrave; main. Cette action supporte le
+        sc&eacute;nario o&ugrave; un train peut &ecirc;tre
+        ex&eacute;cut&eacute; automatiquement vers un site de
+        travail, o&ugrave; un op&eacute;rateur humain prend le
+        relais pour effectuer des travaux, apr&egrave;s quoi
+        l'ex&eacute;cution automatique se poursuit. Le train
+        restera en mode manuel jusqu'&agrave; ce que le
+        r&eacute;partiteur reprenne le mode automatique .En option
+        un <b>Capteur Termin&eacute;</b> permet &agrave; un
+        op&eacute;rateur &eacute;loign&eacute; du
+        r&eacute;partiteur d'aviser celui-ci que le travail a
+        &eacute;t&eacute; achev&eacute; et que le fonctionnement
+        automatique peut &ecirc;tre repris. Lorsque le <b>Capteur
+        Termin&eacute;</b> devient actif, l'&eacute;tat du train
+        est pass&eacute; de TRAVAIL &agrave; PR&ecirc;T. Pour plus
+        d'informations sur cette action, Voir <b><a href=
+        "../dispatcher/DispatcherFrame.shtml">Dispatcher</a></b>.
+        <b>Remarque:</b> Lorsque le train est en mode manuel,
+        l'ordinateur ne dispose pas d'un r&eacute;gulateur pour le
+        train disponible, ainsi les actions qui arrivent alors et
+        qui exigent un r&eacute;gulateur sont ignor&eacute;es.</li>
+
+        <li><b>R&eacute;glage Lumi&egrave;re Locomotive</b> -
+        D&eacute;finit que la lumi&egrave;re de locomotive sera
+        <i>On</i> ou <i>Off</i> comme
+        s&eacute;lectionn&eacute;e</li>
+
+        <li><b>D&eacute;marrer Cloche</b> -La cloche commencent
+        &agrave; sonner sur un d&eacute;codeur sonore. Cet
+        &eacute;l&eacute;ment mettra la fonction 1 du
+        r&eacute;gulateur sur On</li>
+
+        <li><b>Arr&ecirc;tez Cloche</b> - la cloche cesse de sonner
+        sur un d&eacute;codeur sonore. Cet &eacute;l&eacute;ment
+        mettra la fonction 1 du r&eacute;gulateur sur Off.</li>
+
+        <li><b>Trompe Sonore</b> - Son de Trompe (sifflet) d'un
+        d&eacute;codeur de son pour une dur&eacute;e
+        d&eacute;termin&eacute;e . Cet &eacute;l&eacute;ment
+        &eacute;quivalent &agrave; mettre la fonction 2 du
+        r&eacute;gulateur &agrave; 0 pour un temps
+        sp&eacute;cifi&eacute;.</li>
+
+        <li><b>Mod&egrave;le Sonore Corne</b> - Son de Trompe
+        (sifflet) d'une mani&egrave;re sp&eacute;cifi&eacute;e par
+        un mod&egrave;le entr&eacute; par l'utilisateur. Le
+        mod&egrave;le se compose de sons brefs et longs,
+        sp&eacute;cifi&eacute; comme &laquo;S&raquo; et
+        &laquo;l&raquo; dans le mod&egrave;le. Par exemple un
+        mod&egrave;le de &laquo;lSl&raquo; pr&eacute;cise
+        long-court-long. L'utilisateur d&eacute;finit la
+        dur&eacute;e des coups courts et longs. Le coups de
+        dur&eacute;e courte est utilis&eacute; comme temps
+        d'attente entre les coups. Les dur&eacute;es r&eacute;elles
+        r&eacute;alis&eacute;es seront d&eacute;pendantes du
+        d&eacute;codeur de son et comment l'ordinateur est
+        occup&eacute;. La corne/sifflet est suppos&eacute;
+        &ecirc;tre la fonction 2 du r&eacute;gulateur.</li>
+
+        <li><b>R&eacute;gler Fonction D&eacute;codeur</b> -
+        D&eacute;finit la fonction sp&eacute;cifi&eacute;e du
+        d&eacute;codeur soit <i>On</i> ou <i>Off</i> comme
+        s&eacute;lectionn&eacute;e. Cela fonctionne pour les
+        d&eacute;codeurs sonores et les d&eacute;codeurs sans le
+        son.</li>
+
+        <li><b>R&eacute;gler Capteur ACTIF</b> - D&eacute;finir un
+        Capteur sp&eacute;cifi&eacute; actif. Le Capteur
+        sp&eacute;cifi&eacute; doit &ecirc;tre dans le Tableau
+        Capteur. Si le capteur sp&eacute;cifi&eacute; est
+        d&eacute;j&agrave; dans l' &eacute;tat actif, il est
+        d'abord bascul&eacute; &agrave; l'&eacute;tat inactif, puis
+        revient actif. Cette d'action peut &ecirc;tre
+        utilis&eacute;e, par exemple, avec un capteur interne pour
+        d&eacute;clencher un Logix, d&eacute;clencher un un
+        Itin&eacute;raire, ou de r&eacute;gler une Lumi&egrave;re.
+        Il offre un acc&egrave;s &agrave; une grande
+        vari&eacute;t&eacute; d'actions non incluses ici, tels que
+        l'ex&eacute;cution de scripts ou de jouer des sons.</li>
+
+        <li><b>R&eacute;gler Capteur INACTIF</b> - D&eacute;finir
+        un Capteur sp&eacute;cifi&eacute; inactif. Le Capteur
+        sp&eacute;cifi&eacute; doit &ecirc;tre dans le Tableau
+        Capteur. Si le capteur sp&eacute;cifi&eacute; est
+        d&eacute;j&agrave; dans l' &eacute;tat inactif, il est
+        d'abord bascul&eacute; &agrave; l'&eacute;tat actif, puis
+        r&eacute;glez &agrave; inactif. Ceci est &eacute;quivalent
+        &agrave; l'action ci-dessus, sauf avec un &eacute;tat du
+        Capteur cible diff&eacute;rente.</li>
+      </ul>
+
+      <h2>Fen&ecirc;tre Voir Actions</h2>
+
+      <p>La fen&ecirc;tre <b>Afficher Actions</b> affiche les
+      Actions qui sont actuellement d&eacute;termin&eacute;es, et
+      pr&eacute;voit d'ajouter, &eacute;diter ou supprimer des
+      Actions. La fen&ecirc;tre Afficher Actions (exemple
+      ci-dessous) est affich&eacute; pour une Section particuliere
+      de Transit en appuyant sur le bouton <b>Voir/Ajouter/Editer
+      Actions</b> sur cette rang&eacute;e de la Section dans la
+      fen&ecirc;tre<b>Ajouter/Editer Transit</b>.</p><img src=
+      "ViewSpecialActions.png" height="336" width="750">
+
+      <p>Pour toutes les actions qui ont &eacute;t&eacute;
+      cr&eacute;&eacute;s, l'&eacute;v&eacute;nement <i>quand</i>
+      et <i>quelle</i> action sont d&eacute;crits dans les colonnes
+      <b>Quand</b> et <b>Action demand&eacute;e</b> . Pour ajouter
+      une nouvelle action, cliquez sur <b>Ajouter Nouvelle
+      Action</b> pour faire appara&icirc;tre la fen&ecirc;tre
+      <a href="AddEditAction.shtml"><b>Ajouter/Editer
+      Action</b></a>. Pour modifier une Action existante, cliquez
+      sur le bouton <b>Modifier</b> dans sa rang&eacute;e. Pour
+      supprimer une Action existante, cliquez sur le bouton
+      <b>Supprimer</b> dans sa rang&eacute;e. L'ordre des actions
+      n'est pas important.</p>
+
+      <p>lorsque les actions sont compl&egrave;tement
+      d&eacute;finies, cliquez sur le
+      bouton<b>Termin&eacute;</b>.</p><!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>
-

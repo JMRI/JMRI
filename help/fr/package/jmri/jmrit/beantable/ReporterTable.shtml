@@ -1,46 +1,53 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
 <!-- UpDated by Herv&#233; Blorec 2013-10-11-->
 
 <html lang="fr">
 <head>
- <TITLE>
-      JMRI: Reporter Table Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Reporter Table">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Reporter Table Help</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI help Reporter Table">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Le Tableau Rapport</h1>
 
-<H1>Le Tableau Rapport</H1>
-<p>
-Les "Rapports" JMRI montrent les informations d'&#233;tat re&#231;ues de votre r&#233;seau. Par exemple,
-<a href="http://www.digitrax.com/menu_transponding.php"> transpondeur Digitrax </a>
-fournit des informations via des objets Rapport JMRI.
-Le tableau Rapport montre tous les Rapports existants et de leurs plus r&#233;centes
-informations.
-<p>
-Pour plus d'informations sur les Rapport et leur utilisation, consultez la
-<a href="../../../../html/tools/Reporters.shtml"> page principale Rapport</a>.
+      <p>Les "Rapports" JMRI montrent les informations
+      d'&eacute;tat re&ccedil;ues de votre r&eacute;seau. Par
+      exemple, <a href=
+      "http://www.digitrax.com/menu_transponding.php">transpondeur
+      Digitrax</a> fournit des informations via des objets Rapport
+      JMRI. Le tableau Rapport montre tous les Rapports existants
+      et de leurs plus r&eacute;centes informations.</p>
 
-<p>
-Ceci est la page d'aide help/fr/package/jmri/jmrit/beantable/ReporterTable.shtml
-<!--#include virtual="/Footer" -->
+      <p>Pour plus d'informations sur les Rapport et leur
+      utilisation, consultez la <a href=
+      "../../../../html/tools/Reporters.shtml">page principale
+      Rapport</a>.</p>
+
+      <p>Ceci est la page d'aide
+      help/fr/package/jmri/jmrit/beantable/ReporterTable.shtml 
+      <!--#include virtual="/Footer" --></p>
+    </div>
+  </div>
 </body>
 </html>
-
-
- 	  	 

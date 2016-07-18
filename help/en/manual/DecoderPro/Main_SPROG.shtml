@@ -1,69 +1,103 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>
-DecoderPro&reg; Main Window
-</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>DecoderPro&reg; Main Window</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h1>DecoderPro&reg; Main Window</h1>
-<h2>SPROG Menu</h2>
+    <div id="mainContent">
+      <h1>DecoderPro&reg; Main Window</h1>
 
-<div align="right">
-<p><a href="Main_Menu.shtml#System">Back to Index</a></p>
-</div>
+      <h2>SPROG Menu</h2>
 
-<hr>
-<p><strong>Command Monitor</strong></p>
-<p>Opens the <a href="Main_Monitor_Window.shtml">Communications Monitor Window</a> and automatically displays the information that is being sent and received on the communications link between your computer and your DCC system.</p>
-<p><strong>Send Command</strong>
-<p>Opens the Send prompt with a text box to enter the <strong>Command</strong> message that will be sent to the DCC system when you click on the <strong>Send </strong>button.
-<p align="center"><img src="images/Main_SPROG_Command.png" alt="SPROG comamd" width="240" height="94">
-<p><strong><a name="ConsoleMenu"></a>Console</strong>
-<blockquote>
-  <p>Opens the <a href="#Console">Sprog Console</a> window that combines the communications monitor, Send Command and other features into a single user interface.</p>
-</blockquote>
-<p><strong>Get SPROG Firmware Version
-</strong>
-<blockquote>
-  <p>Retrieves the SPROG firmware version and displays that information.</p>
-</blockquote>
-<p><strong>SPROG V3/V4 Firmware Update</strong>
-<blockquote>
-  <p>Starts the SPROG Firmware Update wizard.</p>
-  <p><img src="images/Main_SPROG_firmware.png" alt="SPROG firmware" width="623" height="125" border="4"></p>
-</blockquote>
-<p><strong>SPROG II Firmware Update
-</strong>
-<blockquote>
-  <p>Starts the SPROG II Firmware Update Wizard (basically the same as above)</p>
-</blockquote>
-<hr>
+      <div align="right">
+        <p><a href="Main_Menu.shtml#System">Back to Index</a></p>
+      </div>
+      <hr>
 
-<h4><a name="Console"></a> SPROG Console</h4>
-<p>The Console combines the Communications Monitor, Send Command and other features into a single interface.</p>
-<p align="center"><img src="images/Main_SPROG_Console.png" alt="SPROG Console" width="898" height="594" border="4"></p>
+      <p><strong>Command Monitor</strong></p>
 
-<div align="right"><a href="#ConsoleMenu">Back</a>
-<p><a href="Main_Menu.shtml#System">Back to Index</a></p>
-</div>
+      <p>Opens the <a href=
+      "Main_Monitor_Window.shtml">Communications Monitor Window</a>
+      and automatically displays the information that is being sent
+      and received on the communications link between your computer
+      and your DCC system.</p>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
+      <p><strong>Send Command</strong></p>
+
+      <p>Opens the Send prompt with a text box to enter the
+      <strong>Command</strong> message that will be sent to the DCC
+      system when you click on the <strong>Send</strong>
+      button.</p>
+
+      <p align="center"><img src="images/Main_SPROG_Command.png"
+      alt="SPROG comamd" width="240" height="94"></p>
+
+      <p><strong><a name="ConsoleMenu" id=
+      "ConsoleMenu"></a>Console</strong></p>
+
+      <blockquote>
+        <p>Opens the <a href="#Console">Sprog Console</a> window
+        that combines the communications monitor, Send Command and
+        other features into a single user interface.</p>
+      </blockquote>
+
+      <p><strong>Get SPROG Firmware Version</strong></p>
+
+      <blockquote>
+        <p>Retrieves the SPROG firmware version and displays that
+        information.</p>
+      </blockquote>
+
+      <p><strong>SPROG V3/V4 Firmware Update</strong></p>
+
+      <blockquote>
+        <p>Starts the SPROG Firmware Update wizard.</p>
+
+        <p><img src="images/Main_SPROG_firmware.png" alt=
+        "SPROG firmware" width="623" height="125" border="4"></p>
+      </blockquote>
+
+      <p><strong>SPROG II Firmware Update</strong></p>
+
+      <blockquote>
+        <p>Starts the SPROG II Firmware Update Wizard (basically
+        the same as above)</p>
+      </blockquote>
+      <hr>
+
+      <h4><a name="Console" id="Console"></a> SPROG Console</h4>
+
+      <p>The Console combines the Communications Monitor, Send
+      Command and other features into a single interface.</p>
+
+      <p align="center"><img src="images/Main_SPROG_Console.png"
+      alt="SPROG Console" width="898" height="594" border="4"></p>
+
+      <div align="right">
+        <a href="#ConsoleMenu">Back</a>
+
+        <p><a href="Main_Menu.shtml#System">Back to Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

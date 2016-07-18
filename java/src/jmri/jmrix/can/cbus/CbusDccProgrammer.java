@@ -74,7 +74,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     }
 
     @Override
-    synchronized public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 

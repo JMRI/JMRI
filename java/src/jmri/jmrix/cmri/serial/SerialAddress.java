@@ -1,4 +1,3 @@
-// SerialAddress.java
 package jmri.jmrix.cmri.serial;
 
 import jmri.jmrix.AbstractNode;
@@ -19,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * 0, bit 2), CS1B3 (node address 1, bit 3), CL11B234 (node address 11, bit234)
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2006
- * @version $Revision$
  */
 public class SerialAddress {
 
@@ -79,7 +77,7 @@ public class SerialAddress {
      * Node Note: Returns 'null' if illegal systemName format or if the node is
      * not found
      */
-    public static AbstractNode getNodeFromSystemName(String systemName) {
+    public static AbstractNode getNodeFromSystemName(String systemName,SerialTrafficController tc) {
         // get the node address
         int ua;
         ua = getNodeAddressFromSystemName(systemName);
@@ -88,7 +86,7 @@ public class SerialAddress {
             return null;
         }
 
-        return (SerialTrafficController.instance().getNodeFromAddress(ua));
+        return (tc.getNodeFromAddress(ua));
     }
 
     /**
@@ -226,12 +224,12 @@ public class SerialAddress {
      * returns 'true' if system name has a valid meaning in current
      * configuration, else returns 'false'
      */
-    public static boolean validSystemNameConfig(String systemName, char type) {
+    public static boolean validSystemNameConfig(String systemName, char type,SerialTrafficController tc) {
         if (!validSystemNameFormat(systemName, type)) {
             // No point in trying if a valid system name format is not present
             return false;
         }
-        SerialNode node = (SerialNode) getNodeFromSystemName(systemName);
+        SerialNode node = (SerialNode) getNodeFromSystemName(systemName,tc);
         if (node == null) {
             // The node indicated by this system address is not present
             return false;
@@ -418,11 +416,10 @@ public class SerialAddress {
         }
         String altName = "";
         altName = convertSystemNameToAlternate(sysName);
-        if (altName != null) {
-            t = jmri.InstanceManager.turnoutManagerInstance().getBySystemName(altName);
-            if (t != null) {
-                return (altName);
-            }
+
+        t = jmri.InstanceManager.turnoutManagerInstance().getBySystemName(altName);
+        if (t != null) {
+            return (altName);
         }
 
         // check for a two-bit turnout assigned to the previous bit
@@ -457,11 +454,10 @@ public class SerialAddress {
             return (sysName);
         }
         altName = convertSystemNameToAlternate(sysName);
-        if (altName != null) {
-            lgt = jmri.InstanceManager.lightManagerInstance().getBySystemName(altName);
-            if (lgt != null) {
-                return (altName);
-            }
+
+        lgt = jmri.InstanceManager.lightManagerInstance().getBySystemName(altName);
+        if (lgt != null) {
+            return (altName);
         }
 
         // not assigned to a turnout or a light
@@ -499,12 +495,12 @@ public class SerialAddress {
         }
         String altName = "";
         altName = convertSystemNameToAlternate(sysName);
-        if (altName != null) {
-            s = jmri.InstanceManager.sensorManagerInstance().getBySystemName(altName);
-            if (s != null) {
-                return (altName);
-            }
+
+        s = jmri.InstanceManager.sensorManagerInstance().getBySystemName(altName);
+        if (s != null) {
+            return (altName);
         }
+
         // not assigned to a sensor
         return ("");
     }
@@ -554,5 +550,3 @@ public class SerialAddress {
 
     private final static Logger log = LoggerFactory.getLogger(SerialAddress.class.getName());
 }
-
-/* @(#)SerialAddress.java */

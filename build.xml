@@ -33,6 +33,12 @@
     <!-- Things you might want to set:                                                   -->
     <!--    # Your SourceForge ID (used for JavaDocs, distribution) if different         -->
     <!--    sourceforge.userid=                                                          -->
+    <!--    # JVM arguments to pass to the JVM running the JMRI application              -->
+    <!--    jvm.args=                                                                    -->
+    <!--    # paths to append to the classpath                                           -->
+    <!--    cp.append=                                                                    -->
+    <!--    # paths to prepend to the classpath                                           -->
+    <!--    cp.prepend=                                                                    -->
     <!--    # The directory where Findbugs is installed                                  -->
     <!--    findbugs.home=                                                               -->
     <!--    # You can specify a DecoderPro/PanelPro config file at runtime               -->
@@ -101,6 +107,22 @@
         <not><isset property="nsis.home"/></not>
     </condition>
 
+    <condition property="jvm.args" value="">
+        <not>
+            <isset property="jvm.args"/>
+        </not>
+    </condition>
+    <condition property="cp.append" value="">
+        <not>
+            <isset property="cp.append"/>
+        </not>
+    </condition>
+    <condition property="cp.prepend" value="">
+        <not>
+            <isset property="cp.prepend"/>
+        </not>
+    </condition>
+
     <!-- set global properties for this build -->
     <property name="dist"         value="${basedir}/dist"/>
     <property name="jartarget"    value="${basedir}"/>
@@ -116,7 +138,7 @@
     <property name="templatedir"  value="${javadir}/template"/>
     <property name="tmptarget"    value="${javadir}/tmp"/>
     <property name="lineendtmp"   value="${tmptarget}/lineend"/>
-    <property name="tempdir"      value="${basedir}/tempdir"/>    <!-- actual tmp files -->
+    <property name="tempdir"      value="${basedir}/temp"/>    <!-- actual tmp files -->
     <property name="java.debugging" value="yes" />
 
     <!-- location for all generated java code -->
@@ -205,9 +227,11 @@
 
     <!-- path to run regular executables -->
     <path id="project.class.path">
+        <pathelement path="${cp.prepend}"/>   <!-- prepended by user -->
         <pathelement location="${jartarget}"/>
         <path        refid="runtime.class.path"/>
         <pathelement location="${target}/"/>  <!-- last to check for name collisions -->
+        <pathelement path="${cp.append}"/>    <!-- appended by user -->
     </path>
 
     <!-- path to run tests -->
@@ -351,6 +375,7 @@
             <fileset dir="${genjavasrcdir}"/>
             <fileset file="${javadir}/manifest"/>
             <fileset dir="${tempdir}"/>
+            <fileset file="findbugs.html"/>
             <fileset file="findbugs.xml"/>
             <fileset file="junit-results.xml"/>
             <fileset file="jmri-fb.html"/>
@@ -562,6 +587,7 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>
@@ -765,6 +791,7 @@
             <!-- <jvmarg value="-verbose"/> -->
             <!-- <jvmarg value="-verbosegc"/> -->
             <!-- <jvmarg value="-Xloggc:memory.vgc"/> --><!-- for JTune -->
+            <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
     </target>
@@ -797,6 +824,7 @@
             <!-- <jvmarg value="-verbosegc"/> -->
             <!-- <jvmarg value="-Xloggc:memory.vgc"/> -->
             <!-- for JTune -->
+            <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
     </target>
@@ -990,6 +1018,7 @@
        <!-- <jvmarg value="-verbose"/> -->
        <!-- <jvmarg value="-verbosegc"/> -->
        <!-- <jvmarg value="-Xloggc:memory.vgc"/> --> <!-- for JTune -->
+            <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
     </target>
@@ -1010,6 +1039,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
     </target>
@@ -1122,8 +1152,10 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
             <sysproperty key="jmri.headlesstest" value="true"/>
+            <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
     </target>
@@ -1135,6 +1167,7 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <sysproperty key="java.awt.headless" value="true"/>
@@ -1174,6 +1207,7 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>
@@ -1195,9 +1229,12 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>
+
+            <jvmarg value="-Xmx640m"/>
 
             <test name="apps.tests.AllTest">
                 <formatter usefile="no" type="brief"/>
@@ -1217,6 +1254,7 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>
@@ -1246,19 +1284,22 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
 
     </target>
 
     <target name="logalltest" depends="tests, runtime-library-selection" description="run headless test suite">
-        <jacoco:coverage destfile="jacoco.exec">
+        <jacoco:coverage destfile="jacoco.exec" excludes="org.slf4j.*">
         <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>

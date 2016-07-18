@@ -1,81 +1,99 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12 -->
-<html lang="fr"><head>
-<!-- $Id$ --><title>JMRI: Throttle</title>
 
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- $Id$ -->
 
-
- 
-    
-  
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-
-    
+  <title>JMRI: Throttle</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
   <meta content="Bob Jacobsen" name="Author">
-
-    
-  <meta name="keywords" content="JMRI help Setup Fast Clock"><!-- Style -->
-
-
-
-  
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-
-  
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-
-  
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-
-  
+  <meta name="keywords" content="JMRI help Setup Fast Clock">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
 
-  
-  <link rel="home" title="Home" href="/"><!-- /Style --></head><body>
+<body>
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="/Header" -->
-  
-<div class="nomenu" id="mBody">
-    
-<div id="mainContent">
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>R&eacute;gulateur JMRI</h1>Ceci est la page de
+      r&eacute;f&eacute;rence rapide pour l'outil R&eacute;gulateur
+      JMRI.<br>
+      <br>
+      Plus d'informations sur:<br>
 
-<h1>R&#233;gulateur JMRI</h1>
+      <ul>
+        <li>Le <a href=
+        "../../../../html/tools/throttle/ToolsMenuThrottleEntry.shtml">
+        menu R&eacute;gulateur dans JMRI</a></li>
 
+        <li>La <a href=
+        "../../../../html/tools/throttle/BasicThrottleWindow.shtml">
+        fen&ecirc;tre R&eacute;gulateur elle-m&ecirc;me</a></li>
 
-Ceci est la page de r&#233;f&#233;rence rapide pour l'outil R&#233;gulateur JMRI.<br>
-<br>
-Plus d'informations sur: <br>
-<ul>
-   <li>Le <a href="../../../../html/tools/throttle/ToolsMenuThrottleEntry.shtml">menu R&#233;gulateur dans JMRI </a> </li>
-   <li>La <a href="../../../../html/tools/throttle/BasicThrottleWindow.shtml">fen&#234;tre R&#233;gulateur elle-m&#234;me </a> </li>
-   <li>Les <a href="../../../../html/tools/throttle/ThrottleWindowMenus.shtml">menus Fen&#234;tres R&#233;gulateur </a> </li>
-   <li>La <a href="../../../../html/tools/throttle/ThrottleToolBar.shtml"> Barre d'outils Fen&#234;tre R&#233;gulateur </a> </li>
-   <li>Les<a  href="../../../../html/tools/throttle/AdvancedThrottleControl.shtml"> Copmmandes Fen&#234;tre R&#233;gulateur </a> </li>
-   <li>La <a href="../../../../html/tools/throttle/ThrottlesListWindow.shtml">  Liste des Fen&#234;tres R&#233;gulateurs </a> </li>
-   <li>Le <a href="../../../../html/tools/throttle/ThrottlesPreferencesPane.shtml">panneau des pr&#233;f&#233;rences R&#233;gulateurs </a> <br>
-   </li>
-</ul>
-<br>
-Voir aussi: <br>
-<ul>
-   <li> Les <a href="../../../../html/tools/throttle/RostersMediaPane.shtml"> m&#233;dias et les panneaux &#233;tiquette Fonction dans DecoderPro </a> </li>
-   <li> <a href="../../../../html/tools/scripting/Jynstruments.shtml"> Jynstruments </a> </li>
-   <li> <a href="../../../../html/tools/throttle/HowToJMRIOrientedThrottle.shtml"> Comment construire un R&#233;gulateur orient&#233;e JMRI </a>. </li>
-</ul>
+        <li>Les <a href=
+        "../../../../html/tools/throttle/ThrottleWindowMenus.shtml">
+        menus Fen&ecirc;tres R&eacute;gulateur</a></li>
 
-<p>
-<br>
-Enfin la version pr&#233;c&#233;dente des pages d'aide<a href="../../../../html/tools/throttle/ThrottleMain.shtml"> de la page g&#233;n&#233;rale R&#233;gulateur</a> <a href = ".. /../../../ html/tools/throttle/ThrottleTOC.shtml "> (acc&#232;s direct TOC) </a>.
+        <li>La <a href=
+        "../../../../html/tools/throttle/ThrottleToolBar.shtml">Barre
+        d'outils Fen&ecirc;tre R&eacute;gulateur</a></li>
 
+        <li>Les <a href=
+        "../../../../html/tools/throttle/AdvancedThrottleControl.shtml">
+        Copmmandes Fen&ecirc;tre R&eacute;gulateur</a></li>
 
-</p>
+        <li>La <a href=
+        "../../../../html/tools/throttle/ThrottlesListWindow.shtml">
+        Liste des Fen&ecirc;tres R&eacute;gulateurs</a></li>
 
+        <li>Le <a href=
+        "../../../../html/tools/throttle/ThrottlesPreferencesPane.shtml">
+        panneau des pr&eacute;f&eacute;rences
+        R&eacute;gulateurs</a><br></li>
+      </ul><br>
+      Voir aussi:<br>
 
-<p>
-<a id="prefs">Ceci est la page d'aide help/en/package/jmri/jmrit/throttle/ThrottleFrame
-    
-<!--#include virtual="/Footer" -->
-</a></p>
-</div>
-</div>
-</body></html>
+      <ul>
+        <li>Les <a href=
+        "../../../../html/tools/throttle/RostersMediaPane.shtml">m&eacute;dias
+        et les panneaux &eacute;tiquette Fonction dans
+        DecoderPro</a></li>
+
+        <li><a href=
+        "../../../../html/tools/scripting/Jynstruments.shtml">Jynstruments</a></li>
+
+        <li><a href=
+        "../../../../html/tools/throttle/HowToJMRIOrientedThrottle.shtml">
+        Comment construire un R&eacute;gulateur orient&eacute;e
+        JMRI</a> .</li>
+      </ul>
+
+      <p><br>
+      Enfin la version pr&eacute;c&eacute;dente des pages d'aide
+      <a href=
+      "../../../../html/tools/throttle/ThrottleMain.shtml">de la
+      page g&eacute;n&eacute;rale R&eacute;gulateur</a> <a href=
+      "..%20/../../../%20html/tools/throttle/ThrottleTOC.shtml">(acc&egrave;s
+      direct TOC)</a> .</p>
+
+      <p><a id="prefs" name="prefs">Ceci est la page d'aide
+      help/en/package/jmri/jmrit/throttle/ThrottleFrame 
+      <!--#include virtual="/Footer" --></a></p>
+    </div>
+  </div>
+</body>
+</html>

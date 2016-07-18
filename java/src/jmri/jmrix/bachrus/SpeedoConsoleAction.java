@@ -1,4 +1,3 @@
-// SpeedoConsoleAction.java
 package jmri.jmrix.bachrus;
 
 import java.awt.event.ActionEvent;
@@ -10,21 +9,18 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a SpeedoConsoleFrame object
  *
  * @author	Andrew Crosland Copyright (C) 2010
- * @version	$Revision$
  */
 public class SpeedoConsoleAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5455680125546606150L;
+    SpeedoSystemConnectionMemo _memo = null;
 
-    public SpeedoConsoleAction(String s) {
+    public SpeedoConsoleAction(String s,SpeedoSystemConnectionMemo memo) {
         super(s);
+        _memo = memo;
     }
 
     public void actionPerformed(ActionEvent e) {
-        SpeedoConsoleFrame f = new SpeedoConsoleFrame();
+        SpeedoConsoleFrame f = new SpeedoConsoleFrame(_memo);
         try {
             f.initComponents();
         } catch (Exception ex) {
@@ -34,6 +30,3 @@ public class SpeedoConsoleAction extends AbstractAction {
     }
     private final static Logger log = LoggerFactory.getLogger(SpeedoConsoleAction.class.getName());
 }
-
-
-/* @(#)SpeedoConsoleAction.java */

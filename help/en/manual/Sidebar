@@ -1,6 +1,5 @@
 <!-- Sidebar -->
 	  <hr class="hide">
-	  <div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page for /help/en/manual Index page -->
 
 <div id="manual" style="text-align: center;">JMRI Manuals</div>

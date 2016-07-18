@@ -201,18 +201,17 @@ public class SensorTableAction extends AbstractTableAction {
                 handleCreateException(sName);
                 return; // without creating       
             }
-            if (s != null) {
-                String user = userName.getText();
-                if ((x != 0) && user != null && !user.equals("")) {
-                    user = userName.getText() + ":" + x;
-                }
-                if (user != null && !user.equals("") && (jmri.InstanceManager.sensorManagerInstance().getByUserName(user) == null)) {
-                    s.setUserName(user);
-                } else if (jmri.InstanceManager.sensorManagerInstance().getByUserName(user) != null && !p.getPreferenceState(getClassName(), "duplicateUserName")) {
-                    // I18N TODO
-                    jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                            showErrorMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", getClassName(), "duplicateUserName", false, true);
-                }
+
+            String user = userName.getText();
+            if ((x != 0) && user != null && !user.equals("")) {
+                user = userName.getText() + ":" + x;
+            }
+            if (user != null && !user.equals("") && (jmri.InstanceManager.sensorManagerInstance().getByUserName(user) == null)) {
+                s.setUserName(user);
+            } else if (user != null && !user.equals("") && jmri.InstanceManager.sensorManagerInstance().getByUserName(user) != null && !p.getPreferenceState(getClassName(), "duplicateUserName")) {
+                // I18N TODO
+                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                        showErrorMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", getClassName(), "duplicateUserName", false, true);
             }
         }
         p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem());

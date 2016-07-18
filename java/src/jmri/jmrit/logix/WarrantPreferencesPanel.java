@@ -55,7 +55,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     private ArrayList<DataPair<String, Integer>> _stepIncrementMap;
 
     public WarrantPreferencesPanel() {
-        if (jmri.InstanceManager.getDefault(WarrantPreferences.class) == null) {
+        if (jmri.InstanceManager.getOptionalDefault(WarrantPreferences.class) == null) {
             InstanceManager.store(new WarrantPreferences(jmri.util.FileUtil.getProfilePath() +
                     "signal" + File.separator + "WarrantPreferences.xml"), WarrantPreferences.class);
         }

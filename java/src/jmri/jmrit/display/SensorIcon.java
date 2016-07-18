@@ -109,7 +109,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
      * @param pName System/user name to lookup the sensor object
      */
     public void setSensor(String pName) {
-        if (InstanceManager.sensorManagerInstance() != null) {
+        if (InstanceManager.getOptionalDefault(jmri.SensorManager.class) != null) {
             try {
                 Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
                 setSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));

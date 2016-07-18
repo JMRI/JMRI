@@ -14,6 +14,9 @@ import junit.framework.TestSuite;
  */
 public class SerialAddressTest extends TestCase {
 
+    private jmri.jmrix.cmri.CMRISystemConnectionMemo memo = null;
+    private SerialTrafficControlScaffold stcs = null;
+
     SerialNode n10;
     SerialNode n18;
 
@@ -23,31 +26,29 @@ public class SerialAddressTest extends TestCase {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
 
-        // replace the SerialTrafficController
-        new SerialTrafficController() {
-            SerialTrafficController test() {
-                setInstance();
-                return this;
-            }
-        }.test();
-
-        n10 = new SerialNode(10, SerialNode.SMINI);
-        n18 = new SerialNode(18, SerialNode.SMINI);
-
-        // create and register the manager objects
         jmri.util.JUnitUtil.resetInstanceManager();
+
+        // replace the SerialTrafficController
+        stcs = new SerialTrafficControlScaffold();
+        memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
+        memo.setTrafficController(stcs);
+
+        n10 = new SerialNode(10, SerialNode.SMINI,stcs);
+        n18 = new SerialNode(18, SerialNode.SMINI,stcs);
+
         
-        jmri.TurnoutManager l = new SerialTurnoutManager() {
+        // create and register the manager objects
+        jmri.TurnoutManager l = new SerialTurnoutManager(memo) {
             public void notifyTurnoutCreationError(String conflict, int bitNum) {}
         };
         jmri.InstanceManager.setTurnoutManager(l);
 
-        jmri.LightManager lgt = new SerialLightManager() {
+        jmri.LightManager lgt = new SerialLightManager(memo) {
             public void notifyLightCreationError(String conflict, int bitNum) {}
         };
         jmri.InstanceManager.setLightManager(lgt);
 
-        jmri.SensorManager s = new SerialSensorManager();
+        jmri.SensorManager s = new SerialSensorManager(memo);
         jmri.InstanceManager.setSensorManager(s);
 
     }
@@ -57,7 +58,11 @@ public class SerialAddressTest extends TestCase {
     protected void tearDown() throws Exception {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        stcs = null;
+        memo = null;
     }
+
 
     public void testValidateSystemNameFormat() {
         Assert.assertTrue("valid format - CL2", SerialAddress.validSystemNameFormat("CL2", 'L'));
@@ -138,17 +143,17 @@ public class SerialAddressTest extends TestCase {
 
 
     public void testGetNodeFromSystemName() {
-        SerialNode d = new SerialNode(14, SerialNode.USIC_SUSIC);
-        SerialNode c = new SerialNode(17, SerialNode.SMINI);
-        SerialNode b = new SerialNode(127, SerialNode.SMINI);
-        Assert.assertEquals("node of CL14007", d, SerialAddress.getNodeFromSystemName("CL14007"));
-        Assert.assertEquals("node of CL14B7", d, SerialAddress.getNodeFromSystemName("CL14B7"));
-        Assert.assertEquals("node of CL127007", b, SerialAddress.getNodeFromSystemName("CL127007"));
-        Assert.assertEquals("node of CL127B7", b, SerialAddress.getNodeFromSystemName("CL127B7"));
-        Assert.assertEquals("node of CL17007", c, SerialAddress.getNodeFromSystemName("CL17007"));
-        Assert.assertEquals("node of CL17B7", c, SerialAddress.getNodeFromSystemName("CL17B7"));
-        Assert.assertEquals("node of CL11007", null, SerialAddress.getNodeFromSystemName("CL11007"));
-        Assert.assertEquals("node of CL11B7", null, SerialAddress.getNodeFromSystemName("CL11B7"));
+        SerialNode d = new SerialNode(14, SerialNode.USIC_SUSIC,stcs);
+        SerialNode c = new SerialNode(17, SerialNode.SMINI,stcs);
+        SerialNode b = new SerialNode(127, SerialNode.SMINI,stcs);
+        Assert.assertEquals("node of CL14007", d, SerialAddress.getNodeFromSystemName("CL14007",stcs));
+        Assert.assertEquals("node of CL14B7", d, SerialAddress.getNodeFromSystemName("CL14B7",stcs));
+        Assert.assertEquals("node of CL127007", b, SerialAddress.getNodeFromSystemName("CL127007",stcs));
+        Assert.assertEquals("node of CL127B7", b, SerialAddress.getNodeFromSystemName("CL127B7",stcs));
+        Assert.assertEquals("node of CL17007", c, SerialAddress.getNodeFromSystemName("CL17007",stcs));
+        Assert.assertEquals("node of CL17B7", c, SerialAddress.getNodeFromSystemName("CL17B7",stcs));
+        Assert.assertEquals("node of CL11007", null, SerialAddress.getNodeFromSystemName("CL11007",stcs));
+        Assert.assertEquals("node of CL11B7", null, SerialAddress.getNodeFromSystemName("CL11B7",stcs));
     }
 
     public void testGetNodeAddressFromSystemName() {
@@ -167,7 +172,7 @@ public class SerialAddressTest extends TestCase {
     }
 
     public void testValidSystemNameConfig() {
-        SerialNode d = new SerialNode(4, SerialNode.USIC_SUSIC);
+        SerialNode d = new SerialNode(4, SerialNode.USIC_SUSIC,stcs);
         d.setNumBitsPerCard(32);
         d.setCardTypeByAddress(0, SerialNode.INPUT_CARD);
         d.setCardTypeByAddress(1, SerialNode.OUTPUT_CARD);
@@ -176,30 +181,30 @@ public class SerialAddressTest extends TestCase {
         d.setCardTypeByAddress(4, SerialNode.INPUT_CARD);
         d.setCardTypeByAddress(5, SerialNode.OUTPUT_CARD);
         
-        SerialNode c = new SerialNode(10, SerialNode.SMINI);
+        SerialNode c = new SerialNode(10, SerialNode.SMINI,stcs);
         Assert.assertNotNull("exists", c);
-        Assert.assertTrue("valid config CL4007", SerialAddress.validSystemNameConfig("CL4007", 'L'));
-        Assert.assertTrue("valid config CL4B7", SerialAddress.validSystemNameConfig("CL4B7", 'L'));
-        Assert.assertTrue("valid config CS10007", SerialAddress.validSystemNameConfig("CS10007", 'S'));
-        Assert.assertTrue("valid config CS10B7", SerialAddress.validSystemNameConfig("CS10B7", 'S'));
-        Assert.assertTrue("valid config CL10048", SerialAddress.validSystemNameConfig("CL10048", 'L'));
-        Assert.assertTrue("valid config CL10B48", SerialAddress.validSystemNameConfig("CL10B48", 'L'));
-        Assert.assertTrue("invalid config CL10049", !SerialAddress.validSystemNameConfig("CL10049", 'L'));
-        Assert.assertTrue("invalid config CL10B49", !SerialAddress.validSystemNameConfig("CL10B49", 'L'));
-        Assert.assertTrue("valid config CS10024", SerialAddress.validSystemNameConfig("CS10024", 'S'));
-        Assert.assertTrue("valid config CS10B24", SerialAddress.validSystemNameConfig("CS10B24", 'S'));
-        Assert.assertTrue("invalid config CS10025", !SerialAddress.validSystemNameConfig("CS10025", 'S'));
-        Assert.assertTrue("invalid config CS10B25", !SerialAddress.validSystemNameConfig("CS10B25", 'S'));
-        Assert.assertTrue("valid config CT4128", SerialAddress.validSystemNameConfig("CT4128", 'T'));
-        Assert.assertTrue("valid config CT4B128", SerialAddress.validSystemNameConfig("CT4B128", 'T'));
-        Assert.assertTrue("invalid config CT4129", !SerialAddress.validSystemNameConfig("CT4129", 'T'));
-        Assert.assertTrue("invalid config CT4129", !SerialAddress.validSystemNameConfig("CT4B129", 'T'));
-        Assert.assertTrue("valid config CS4064", SerialAddress.validSystemNameConfig("CS4064", 'S'));
-        Assert.assertTrue("valid config CS4B64", SerialAddress.validSystemNameConfig("CS4B64", 'S'));
-        Assert.assertTrue("invalid config CS4065", !SerialAddress.validSystemNameConfig("CS4065", 'S'));
-        Assert.assertTrue("invalid config CS4B65", !SerialAddress.validSystemNameConfig("CS4B65", 'S'));
-        Assert.assertTrue("invalid config CL11007", !SerialAddress.validSystemNameConfig("CL11007", 'L'));
-        Assert.assertTrue("invalid config CL11B7", !SerialAddress.validSystemNameConfig("CL11B7", 'L'));
+        Assert.assertTrue("valid config CL4007", SerialAddress.validSystemNameConfig("CL4007", 'L',stcs));
+        Assert.assertTrue("valid config CL4B7", SerialAddress.validSystemNameConfig("CL4B7", 'L',stcs));
+        Assert.assertTrue("valid config CS10007", SerialAddress.validSystemNameConfig("CS10007", 'S',stcs));
+        Assert.assertTrue("valid config CS10B7", SerialAddress.validSystemNameConfig("CS10B7", 'S',stcs));
+        Assert.assertTrue("valid config CL10048", SerialAddress.validSystemNameConfig("CL10048", 'L',stcs));
+        Assert.assertTrue("valid config CL10B48", SerialAddress.validSystemNameConfig("CL10B48", 'L',stcs));
+        Assert.assertTrue("invalid config CL10049", !SerialAddress.validSystemNameConfig("CL10049", 'L',stcs));
+        Assert.assertTrue("invalid config CL10B49", !SerialAddress.validSystemNameConfig("CL10B49", 'L',stcs));
+        Assert.assertTrue("valid config CS10024", SerialAddress.validSystemNameConfig("CS10024", 'S',stcs));
+        Assert.assertTrue("valid config CS10B24", SerialAddress.validSystemNameConfig("CS10B24", 'S',stcs));
+        Assert.assertTrue("invalid config CS10025", !SerialAddress.validSystemNameConfig("CS10025", 'S',stcs));
+        Assert.assertTrue("invalid config CS10B25", !SerialAddress.validSystemNameConfig("CS10B25", 'S',stcs));
+        Assert.assertTrue("valid config CT4128", SerialAddress.validSystemNameConfig("CT4128", 'T',stcs));
+        Assert.assertTrue("valid config CT4B128", SerialAddress.validSystemNameConfig("CT4B128", 'T',stcs));
+        Assert.assertTrue("invalid config CT4129", !SerialAddress.validSystemNameConfig("CT4129", 'T',stcs));
+        Assert.assertTrue("invalid config CT4129", !SerialAddress.validSystemNameConfig("CT4B129", 'T',stcs));
+        Assert.assertTrue("valid config CS4064", SerialAddress.validSystemNameConfig("CS4064", 'S',stcs));
+        Assert.assertTrue("valid config CS4B64", SerialAddress.validSystemNameConfig("CS4B64", 'S',stcs));
+        Assert.assertTrue("invalid config CS4065", !SerialAddress.validSystemNameConfig("CS4065", 'S',stcs));
+        Assert.assertTrue("invalid config CS4B65", !SerialAddress.validSystemNameConfig("CS4B65", 'S',stcs));
+        Assert.assertTrue("invalid config CL11007", !SerialAddress.validSystemNameConfig("CL11007", 'L',stcs));
+        Assert.assertTrue("invalid config CL11B7", !SerialAddress.validSystemNameConfig("CL11B7", 'L',stcs));
     }
 
     public void testConvertSystemNameFormat() {

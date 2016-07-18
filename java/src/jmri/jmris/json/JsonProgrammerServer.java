@@ -1,19 +1,18 @@
-//JmriSRCPProgrammerServer.java
 package jmri.jmris.json;
 
-import static jmri.jmris.json.JSON.CODE;
-import static jmri.jmris.json.JSON.DATA;
-import static jmri.jmris.json.JSON.ERROR;
-import static jmri.jmris.json.JSON.MESSAGE;
-import static jmri.jmris.json.JSON.MODE;
-import static jmri.jmris.json.JSON.NODE_CV;
-import static jmri.jmris.json.JSON.OP;
-import static jmri.jmris.json.JSON.PROGRAMMER;
-import static jmri.jmris.json.JSON.READ;
-import static jmri.jmris.json.JSON.STATE;
-import static jmri.jmris.json.JSON.TYPE;
-import static jmri.jmris.json.JSON.VALUE;
-import static jmri.jmris.json.JSON.WRITE;
+import static jmri.server.json.JsonException.CODE;
+import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JsonException.ERROR;
+import static jmri.server.json.JsonException.MESSAGE;
+import static jmri.server.json.JSON.MODE;
+import static jmri.server.json.JSON.NODE_CV;
+import static jmri.server.json.JSON.OP;
+import static jmri.server.json.JSON.PROGRAMMER;
+import static jmri.server.json.JSON.READ;
+import static jmri.server.json.JSON.STATE;
+import static jmri.server.json.JSON.TYPE;
+import static jmri.server.json.JSON.VALUE;
+import static jmri.server.json.JSON.WRITE;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

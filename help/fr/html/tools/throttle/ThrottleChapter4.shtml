@@ -21,6 +21,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">dossier (sous-r&eacute;pertoire)

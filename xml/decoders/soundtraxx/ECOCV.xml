@@ -23,6 +23,7 @@
 <!--               so that this file can be used for Tsunami2 as well       -->
 <!-- version 2.1 - Move Light Effect CVs to separate file                   -->
 <!--               New enums for CV247 (Alain Le Marchand)                  -->
+<!-- version 2.2 - CV57 & 58 bit 6 & 7 set to 1 (Michael Mosher)            -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
@@ -164,6 +165,12 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6 Forward Directional Control</label>
       </variable>
+      <variable item="None1 Forward Directional Control" CV="57" mask="XVXXXXXX" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+      </variable>
+      <variable item="None2 Forward Directional Control" CV="57" mask="VXXXXXXX" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+      </variable>
       <variable item="Headlight F0(f) Reverse Directional Control" CV="58" mask="XXXXXXXV" default="0" minOut="1" tooltip="Check to enable F0(f) function output in Reverse direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Headlight F0(f) Reverse Directional Control</label>
@@ -187,6 +194,12 @@
       <variable item="FX6B Reverse Directional Control" CV="58" mask="XXVXXXXX" default="1" minOut="6"  tooltip="Check to enable FX6 function output in Reverse direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6 Reverse Directional Control</label>
+      </variable>
+      <variable item="None1 Reverse Directional Control" CV="58" mask="XVXXXXXX" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+      </variable>
+      <variable item="None2 Reverse Directional Control" CV="58" mask="VXXXXXXX" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
       </variable>
       <variable item="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="2" tooltip="Sets the overall flash rate of the Hyperlight effects, 0 is fast, 15 is slow">
         <decVal max="15"/>

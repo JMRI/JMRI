@@ -35,10 +35,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LocationsByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5286439226672099226L;
     LocationManager manager;
     String Empty = "            ";
 

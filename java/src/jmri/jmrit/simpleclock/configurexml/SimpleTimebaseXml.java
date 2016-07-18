@@ -28,7 +28,7 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
      */
     public Element store(Object o) {
 
-        Timebase clock = InstanceManager.timebaseInstance();
+        Timebase clock = InstanceManager.getDefault(jmri.Timebase.class);
 
         Element elem = new Element("timebase");
         elem.setAttribute("class", this.getClass().getName());
@@ -54,7 +54,7 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
     @Override
     public boolean load(Element shared, Element perNode) {
         boolean result = true;
-        Timebase clock = InstanceManager.timebaseInstance();
+        Timebase clock = InstanceManager.getDefault(jmri.Timebase.class);
         String val, val2;
         if (shared.getAttribute("master") != null) {
             val = shared.getAttributeValue("master");

@@ -60,7 +60,7 @@ public class SignalHeadSignalMastXml
         SignalMast m;
         String sys = getSystemName(shared);
         try {
-            m = InstanceManager.signalMastManagerInstance()
+            m = InstanceManager.getDefault(jmri.SignalMastManager.class)
                     .provideSignalMast(sys);
         } catch (Exception e) {
             log.error("An error occured while trying to create the signal '" + sys + "' " + e.toString());

@@ -1,7 +1,6 @@
 <!-- Sidebar -->
 <!-- This is the common sidebar definition for html/tools pages -->
 	<hr class="hide">
-	<div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
 	    <div style="text-align: center">JMRI is...</div>
 	    <dl class="toc">
@@ -41,7 +40,7 @@
 		    <li><dfn><a href="../hardware/easydcc/EasyDCC.shtml#tools">EasyDCC</a></dfn>
 		    <li><dfn><a href="../hardware/ecos/index.shtml#tools">ESU ECoS</a></dfn>
 		    <li><dfn><a href="../hardware/grapevine/index.shtml#tools">Grapevine</a></dfn>
-		    <li><dfn><a href="../apps/LocoTools/index.shtml">LocoNet (Digitrax)</a></dfn>
+		    <li><dfn><a href="../hardware/loconet/Digitrax.shtml#tools">LocoNet (Digitrax)</a></dfn>
 		    <li><dfn><a href="../hardware/marklin/index.shtml#tools">M&auml;rklin</a></dfn>
 		    <li><dfn><a href="../hardware/nce/index.shtml#tools">NCE</a></dfn>
 		    <li><dfn><a href="../hardware/openlcb/index.shtml#tools">OpenLCB</a></dfn>

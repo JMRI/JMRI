@@ -26,6 +26,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
@@ -40,13 +41,15 @@ infos sur les modes de pr&#233;f&#233;rence et de l'organisation, voir
 
 <h2>El&#233;ment avec juste le contenu du texte, pas d'attributs</h2>
 
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xs:element name="someData" minOccurs="0" maxOccurs="1"&gt;
-</pre></code>
+</pre>
 
 Cela ne veut pas pr&#233;ciser les frappe. Si vous souhaitez par exemple faire respecter les entier:
 
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xs:element name="someIntThing" &gt;
   &lt;xs:complexType&gt;
     &lt;xs:simpleContent&gt;
@@ -54,13 +57,14 @@ Cela ne veut pas pr&#233;ciser les frappe. Si vous souhaitez par exemple faire r
     &lt;/xs:simpleContent&gt;
   &lt;/xs:complexType&gt;
 &lt;/xs:element&gt;
-</pre></code>
+</pre>
 
 <h2>El&#233;ment avec seulement des attributs, pas de contenu</h2>
 
 Forme privil&#233;gi&#233;es Store Venitien:
 
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xs:element name="sample" type="SampleType" 
     minOccurs="0" maxOccurs="unbounded" /&gt;
 
@@ -68,12 +72,13 @@ Forme privil&#233;gi&#233;es Store Venitien:
   &lt;xs:attribute name="foo" /&gt;
   &lt;xs:attribute name="bar" /&gt;
 &lt;/xs:complexType&gt;
-</pre></code>
+</pre>
 
 Peut aussi &#234;tre combin&#233; si vous pensez qu'il est peu probable qu'il soit
 utilis&#233; ailleur:
 
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xs:element name="sample" 
     minOccurs="0" maxOccurs="unbounded" /&gt;
   &lt;xs:complexType&gt;
@@ -81,11 +86,12 @@ utilis&#233; ailleur:
     &lt;xs:attribute name="bar" /&gt;
   &lt;/xs:complexType&gt;
 &lt;/xs:element&gt;
-</pre></code>
+</pre>
 
 <h2>El&#233;ment avec du contenu  texte et des attributs</h2>
 
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xs:element name="someIntThing" &gt;
   &lt;xs:complexType&gt;
     &lt;xs:simpleContent&gt;
@@ -96,14 +102,15 @@ utilis&#233; ailleur:
     &lt;/xs:simpleContent&gt;
   &lt;/xs:complexType&gt;
 &lt;/xs:element&gt;
-</pre></code>
+</pre>
 
 <h2>Limiter un attribut pour certaines valeurs</h2>
 
 Si vous voulez faire cela, &#231;a vaut la peine de d&#233;finir un type g&#233;n&#233;ral
 qui peux &#234;tre r&#233;utilis&#233;. Ceux-ci sont en xml/schema/types/general.xsd.
 
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xs:simpleType name="yesNoType"&gt;
   &lt;xs:annotation&gt;
     &lt;xs:documentation&gt;
@@ -115,19 +122,20 @@ qui peux &#234;tre r&#233;utilis&#233;. Ceux-ci sont en xml/schema/types/general
     &lt;xs:enumeration value="no"/&gt;
   &lt;/xs:restriction&gt;
 &lt;/xs:simpleType&gt;
-</pre></code>
+</pre>
 
 Puis le mettre sur un attribut est simple:
 
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xs:attribute name="opsOnly" type="yesNoType"/&gt;
-</pre></code>
+</pre>
 
 <h2>El&#233;ment avec le contenu du texte restreint</h2>
 
 Pas un attribut, un &#233;l&#233;ment:
 
-<code><pre>
+<pre style="font-family: monospace;">
 &lt;xs:element name="relation"&gt;
   &lt;xs:simpleType&gt;
     &lt;xs:restriction base="xs:string"&gt;
@@ -138,7 +146,7 @@ Pas un attribut, un &#233;l&#233;ment:
     &lt;/xs:restriction&gt;
   &lt;/xs:simpleType&gt;
 &lt;/xs:element&gt;
-</pre></code>
+</pre>
 
 <h2>Groupes d'Attribut </h2>
 
@@ -146,7 +154,7 @@ Des groupes d'attributs sont bons pour repr&#233;senter un ensemble d'attributs
 lus et &#233;crits ainsi que par une routine de service commune.
 Exemple de d&#233;finition:
 
-<code><pre>
+<pre style="font-family: monospace;">
 &lt;xs:attributeGroup name="EditorCommonAttributesGroup"&gt;
   &lt;xs:annotation&gt;
     &lt;xs:documentation&gt;
@@ -161,13 +169,13 @@ Exemple de d&#233;finition:
   &lt;xs:attribute name="level" type="xs:int" /&gt;
   &lt;xs:attribute name="forcecontroloff" type="trueFalseType" default="false" /&gt;
 &lt;/xs:attributeGroup&gt;
-</pre></code>
+</pre>
 
 par exemple l'utilisation, dans certains type plus tard:
 
-<code><pre>
+<pre style="font-family: monospace;">
 &lt;xs:attributeGroup ref="EditorCommonAttributesGroup" /&gt;
-</pre></code>
+</pre>
 
 <!--#include virtual="/Footer" -->
 

@@ -4,6 +4,7 @@ import jmri.jmrix.cmri.serial.SerialListener;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialReply;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Frame displaying (and logging) CMRI serial command messages
@@ -12,8 +13,11 @@ import jmri.jmrix.cmri.serial.SerialTrafficController;
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
-    public SerialMonFrame() {
+    private CMRISystemConnectionMemo _memo = null;
+
+    public SerialMonFrame(CMRISystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
     protected String title() {
@@ -22,11 +26,11 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
     protected void init() {
         // connect to TrafficController
-        SerialTrafficController.instance().addSerialListener(this);
+        _memo.getTrafficController().addSerialListener(this);
     }
 
     public void dispose() {
-        SerialTrafficController.instance().removeSerialListener(this);
+        _memo.getTrafficController().removeSerialListener(this);
         super.dispose();
     }
 

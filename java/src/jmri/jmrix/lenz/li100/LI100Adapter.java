@@ -218,8 +218,6 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
 
         new LI100XNetInitializationManager(this.getSystemConnectionMemo());
-
-        jmri.jmrix.lenz.ActiveFlag.setActive();
     }
 
     // base class methods for the XNetSerialPortController interface

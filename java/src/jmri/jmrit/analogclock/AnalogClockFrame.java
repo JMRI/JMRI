@@ -1,4 +1,3 @@
-// AnalogClockFrame.java
 package jmri.jmrit.analogclock;
 
 import java.awt.Color;
@@ -27,15 +26,10 @@ import jmri.util.JmriJFrame;
  * Time code copied from code for the Nixie clock by Bob Jacobsen
  *
  * @author Dennis Miller Copyright (C) 2004
- * @version $Revision$
  */
 public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
     // GUI member declarations
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1891908489623623638L;
     Timebase clock;
     double minuteAngle;
     double hourAngle;
@@ -44,9 +38,9 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
     public AnalogClockFrame() {
         super(Bundle.getMessage("MenuItemAnalogClock"));
 
-        clock = InstanceManager.timebaseInstance();
+        clock = InstanceManager.getDefault(jmri.Timebase.class);
 
-        // listen for changes to the timebase parameters
+        // listen for changes to the Timebase parameters
         clock.addPropertyChangeListener(this);
 
         // init GUI

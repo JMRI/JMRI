@@ -39,9 +39,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Builds a train and creates the train's manifest.
  *
- * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
- *         2014, 2015
- * @version $Revision$
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
  */
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
 public class TrainBuilder extends TrainCommon {

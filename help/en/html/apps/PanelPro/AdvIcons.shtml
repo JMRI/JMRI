@@ -14,13 +14,13 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+<div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
 <h1>JMRI: Advanced Icons in PanelPro</h1>
 
-<a name="memoryicon"><h3>Memory Icons</h3></a>
+<a name="memoryicon"></a><h3>Memory Icons</h3>
 
 Memory objects are meant for scripting 
 control; the first implementation is a MemoryIcon that lets you put a multi-state icon 
@@ -36,7 +36,7 @@ if it's a NamedIcon.
 See xml/samples/MemoryIconExample.xml for info 
 on how to set this up.
 
-<a name="reportericon"><h3>Reporter Icons</h3></a>
+<a name="reportericon"></a><h3>Reporter Icons</h3>
 
 <a href="../../tools/images/AddReportertoPanel.png">
 <img src="../../tools/images/AddReportertoPanel.png" height="146" width="166" align="right"></a>

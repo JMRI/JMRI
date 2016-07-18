@@ -1,4 +1,3 @@
-// AbstractRosterItemAction.java
 package jmri.jmrit.roster;
 
 import java.awt.Component;
@@ -22,15 +21,9 @@ import org.slf4j.LoggerFactory;
  * doesn't use this base class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2007, 2008
- * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  */
 abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8258669241681051088L;
 
     public AbstractRosterItemAction(String pName, Component pWho) {
         super(pName);
