@@ -4,6 +4,25 @@
 #
 # First argument is fully=qualified class name.
 #
+# If the class has a main() method, that's launched.  This works
+# for running e.g. early-JUnit test classes, and applications
+# like apps.DecoderPro.DecoderPro
+#
+# If there is no main() method found in the named class, an
+# org.junit.runner.JUnitCore runner is asked to try to run the
+# class as JUnit4 tests. 
+# 
+# All this is done by using a script similar to (originally
+# identical to) the JMRI POSIX launcher, which invokes a
+# bespoke jmri.util.junit.TestClassMainMethod class.
+#
+# Note that, unlike running JUnit tests from Ant, 
+# this currently doesn't set the jmri.prefsdir system property
+# to "temp". Running tests in Ant does that, which causes
+# them to use a custom preferences directory.  You can
+# do that manually via (or similar)
+#  setenv JMRI_OPTIONS "-Djmri.prefsdir=${PWD}/temp ${JMRI_OPTIONS}"
+#
 # Made from the DecoderPro script, January 2010
 #
 # If you need to add any additional Java options or defines,
@@ -23,14 +42,8 @@
 #    export JMRI_SERIAL_PORTS="/dev/locobuffer,/dev/cmri"
 #
 # You can run separate instances of the program with their
-# own preferences and setup if you either
-# *) Provide the name of a configuration file as the 1st argument
-# or
-# *) Copy and rename this script.
-#
-# If you rename the script to e.g. JmriNew, it will use "JmriNewConfig2.xml"
-# as it's configuration file.  You can then set and save the preferences for
-# the next time you rerun the script.
+# own preferences and setup if you provide the name of a configuration file 
+# as the 1st argument
 #
 # If you are getting X11 warnings about meta keys, uncomment the next line
 # xprop -root -remove _MOTIF_DEFAULT_BINDINGS
@@ -38,8 +51,6 @@
 # For more information, please see
 # http://jmri.org/install/ShellScripts.shtml
 #
-# $Revision$ (CVS maintains this line, do not edit please)
-
 
 SYSLIBPATH=
 
