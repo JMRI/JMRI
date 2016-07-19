@@ -260,7 +260,7 @@ if [ -z "${JAVA_HOME}" ] ; then
         if [ -x "${JAVA_HOME}/bin/java" ] ; then
             JAVACMD="${JAVA_HOME}/bin/java"
             # Test if java is present and version 1.8 or 1.9
-            if [[ -x "${JAVACMD}" && "$( ${JAVACMD} -version 2>&1 )" =~ 1.[89] ]] ; then
+            if [[ -x "${JAVACMD}" && "$( "${JAVACMD}" -version 2>&1 )" =~ 1.[89] ]] ; then
                 JAVA_HOME=""
             fi
         fi
