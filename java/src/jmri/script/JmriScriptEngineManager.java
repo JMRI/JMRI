@@ -255,6 +255,19 @@ public final class JmriScriptEngineManager {
     }
 
     /**
+     * Evaluate a script using the given ScriptEngine and Bindings.
+     *
+     * @param reader   The script.
+     * @param engine   The script engine.
+     * @param bindings Bindings passed to the script.
+     * @return The results of evaluating the script.
+     * @throws ScriptException if there is an error in the script.
+     */
+    public Object eval(Reader reader, ScriptEngine engine, Bindings bindings) throws ScriptException {
+        return engine.eval(reader, bindings);
+    }
+
+    /**
      * Evaluate a script contained in a file. Uses the extension of the file to
      * determine which ScriptEngine to use.
      *
