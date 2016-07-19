@@ -4,10 +4,6 @@
 # Author: Bob Jacobsen, Copyright 2008, 2016
 # Part of the JMRI distribution
 #
-# Note: Modern JMRI versions can directly run Applescript, without
-# having to start with the Python interpreter. See the 
-# jython/Console.applescript file for an example.
-#
 
 import jmri
 
