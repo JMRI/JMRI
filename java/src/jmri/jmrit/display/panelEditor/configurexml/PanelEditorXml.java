@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision$
  */
 public class PanelEditorXml extends AbstractXmlAdapter {
 
@@ -225,7 +224,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         panel.getTargetFrame().setVisible(true);    // always show the panel
 
         // register the resulting panel for later configuration
-        InstanceManager.configureManagerInstance().registerUser(panel);
+        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerUser(panel);
 
         // reset the size and position, in case the display caused it to change
         panel.getTargetFrame().setLocation(x, y);

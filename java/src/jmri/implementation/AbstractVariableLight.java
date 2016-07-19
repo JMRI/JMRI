@@ -43,16 +43,12 @@ public abstract class AbstractVariableLight extends AbstractLight
 
     public AbstractVariableLight(String systemName, String userName) {
         super(systemName, userName);
-        if (internalClock == null) {
-            initClocks();
-        }
+        initClocks();
     }
 
     public AbstractVariableLight(String systemName) {
         super(systemName);
-        if (internalClock == null) {
-            initClocks();
-        }
+        initClocks();
     }
 
     /**
@@ -248,7 +244,7 @@ public abstract class AbstractVariableLight extends AbstractLight
             return; // already done
         }
         // Create a Timebase listener for the Minute change events
-        internalClock = InstanceManager.timebaseInstance();
+        internalClock = InstanceManager.getOptionalDefault(jmri.Timebase.class);
         if (internalClock == null) {
             log.error("No Timebase Instance");
             return;

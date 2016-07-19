@@ -1095,7 +1095,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 // finished service-track programming, time to power on
                 log.debug("end service-mode programming: turn power on");
                 try {
-                    jmri.InstanceManager.powerManagerInstance().setPower(jmri.PowerManager.ON);
+                    jmri.InstanceManager.getDefault(jmri.PowerManager.class).setPower(jmri.PowerManager.ON);
                 } catch (jmri.JmriException e) {
                     log.error("exception during power on at end of programming: " + e);
                 }

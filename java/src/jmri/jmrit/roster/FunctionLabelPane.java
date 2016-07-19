@@ -1,4 +1,3 @@
-// FunctionEntryPane.java
 package jmri.jmrit.roster;
 
 import java.awt.Color;
@@ -25,11 +24,6 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood Copyright (C) 2014
  */
 public class FunctionLabelPane extends javax.swing.JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4374849205711874964L;
 
     RosterEntry re;
 

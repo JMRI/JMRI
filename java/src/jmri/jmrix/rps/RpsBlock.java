@@ -30,7 +30,7 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
 
     public RpsBlock(String sensorname, String signalname, float slow, float fast) {
         this((RpsSensor) jmri.InstanceManager.sensorManagerInstance().getSensor(sensorname),
-                jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(signalname),
+                jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalname),
                 slow, fast);
     }
 

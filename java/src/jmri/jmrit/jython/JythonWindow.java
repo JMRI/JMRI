@@ -1,4 +1,3 @@
-// JythonWindow.java
 package jmri.jmrit.jython;
 
 import java.awt.BorderLayout;
@@ -27,7 +26,6 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen Copyright (C) 2004
  * @author Matthew Harris Copyright (C) 2010
- * @version $Revision$
  */
 public class JythonWindow extends AbstractAction {
 
@@ -40,11 +38,6 @@ public class JythonWindow extends AbstractAction {
     public static final String alwaysOnTopCheck = JythonWindow.class.getName() + ".alwaysOnTop";
     public static final String alwaysScrollCheck = JythonWindow.class.getName() + ".alwaysScroll";
     protected JCheckBox alwaysOnTopCheckBox = new JCheckBox();
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2991411495753279905L;
 
     /**
      * Constructor just initializes parent class.

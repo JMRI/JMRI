@@ -509,8 +509,7 @@ for more information.
             <li><a href="MS100.shtml">Digitrax MS100</a> (Strongly not recommended)</li>
         </ul>
     </li>
-    <li><a href="LocoNetTools.shtml">JMRI's Tools for LocoNet&reg; Devices</a></li>
-    <li>LocoNet-related Tools
+    <li><a name="tools"></a>LocoNet-related Tools
         <ul>
             <li><a href="../../../package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">Monitor LocoNet</a></li>
             <li><a href="../../../package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml">Monitor Slots</a></li>

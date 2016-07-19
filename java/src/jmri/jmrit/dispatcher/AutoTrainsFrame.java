@@ -1,4 +1,3 @@
-// AutoTrainsFrame.java
 package jmri.jmrit.dispatcher;
 
 import java.awt.Container;
@@ -43,14 +42,8 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Dave Duchamp Copyright (C) 2010
- * @version	$Revision$
  */
 public class AutoTrainsFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5083159503596027291L;
 
     public AutoTrainsFrame(DispatcherFrame disp) {
         super(false, true);

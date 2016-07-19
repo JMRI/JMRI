@@ -1200,6 +1200,7 @@
       <xs:attribute name="red" type="xs:unsignedByte" />
       <xs:attribute name="green" type="xs:unsignedByte" />
       <xs:attribute name="blue" type="xs:unsignedByte" />
+      <xs:attribute name="hasBackground" type="xs:string" />
       <xs:attribute name="justification" default="left" >
         <xs:simpleType>
           <xs:restriction base="xs:token">

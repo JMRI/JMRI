@@ -32,6 +32,7 @@ public class PackageTest extends TestCase {
         suite.addTest(NamedBeanTest.suite());
 
         // implementations
+        suite.addTest(AbstractSensorTest.suite());
         suite.addTest(AccessoryOpsModeProgrammerFacadeTest.suite());
         suite.addTest(AddressedHighCvProgrammerFacadeTest.suite());
         suite.addTest(DccSignalHeadTest.suite());

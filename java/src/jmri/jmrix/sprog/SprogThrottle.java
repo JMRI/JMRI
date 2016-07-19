@@ -128,10 +128,10 @@ public class SprogThrottle extends AbstractThrottle {
         int mode = address.isLongAddress()
                 ? SprogConstants.LONG_ADD : 0;
         try {
-            mode |= (InstanceManager.powerManagerInstance().getPower() == SprogPowerManager.ON)
+            mode |= (InstanceManager.getDefault(jmri.PowerManager.class).getPower() == SprogPowerManager.ON)
                     ? SprogConstants.POWER_BIT : 0;
         } catch (Exception e) {
-            log.error("Exception from InstanceManager.powerManagerInstance(): " + e);
+            log.error("Exception from InstanceManager.getDefault(jmri.PowerManager.class): " + e);
         }
         if (log.isDebugEnabled()) {
             log.debug("Speed Step Mode Change to Mode: " + Mode

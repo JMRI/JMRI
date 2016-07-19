@@ -236,7 +236,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
         if (log.isDebugEnabled()) {
             log.debug("Found " + routeList.size() + " routes");
         }
-        RouteManager tm = InstanceManager.routeManagerInstance();
+        RouteManager tm = InstanceManager.getDefault(jmri.RouteManager.class);
 
         for (int i = 0; i < routeList.size(); i++) {
 
@@ -492,27 +492,27 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
      * the right type
      */
     protected void replaceRouteManager() {
-        RouteManager current = InstanceManager.routeManagerInstance();
+        RouteManager current = InstanceManager.getOptionalDefault(jmri.RouteManager.class);
         if (current != null && current.getClass().getName()
                 .equals(DefaultRouteManager.class.getName())) {
             return;
         }
         // if old manager exists, remove it from configuration process
         if (current != null) {
-            InstanceManager.configureManagerInstance().deregister(
+            InstanceManager.getDefault(jmri.ConfigureManager.class).deregister(
                     current);
+            InstanceManager.deregister(current, RouteManager.class);
         }
 
         // register new one with InstanceManager
-        InstanceManager.deregister(current, RouteManager.class);
         DefaultRouteManager pManager = DefaultRouteManager.instance();
         InstanceManager.store(pManager, RouteManager.class);
         // register new one for configuration
-        InstanceManager.configureManagerInstance().registerConfig(pManager, jmri.Manager.ROUTES);
+        InstanceManager.getDefault(jmri.ConfigureManager.class).registerConfig(pManager, jmri.Manager.ROUTES);
     }
 
     public int loadOrder() {
-        return InstanceManager.routeManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(jmri.RouteManager.class).getXMLOrder();
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultRouteManagerXml.class.getName());

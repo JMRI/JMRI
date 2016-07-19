@@ -115,8 +115,8 @@ public class LogixTableAction extends AbstractTableAction {
         // set up managers - no need to use InstanceManager since both managers are
         // Default only (internal). We use InstanceManager to get managers for
         // compatibility with other facilities.
-        _logixManager = InstanceManager.logixManagerInstance();
-        _conditionalManager = InstanceManager.conditionalManagerInstance();
+        _logixManager = InstanceManager.getOptionalDefault(jmri.LogixManager.class);
+        _conditionalManager = InstanceManager.getOptionalDefault(jmri.ConditionalManager.class);
         // disable ourself if there is no Logix manager or no Conditional manager available
         if ((_logixManager == null) || (_conditionalManager == null)) {
             setEnabled(false);
@@ -247,27 +247,23 @@ public class LogixTableAction extends AbstractTableAction {
             }
 
             public Manager getManager() {
-                return InstanceManager.logixManagerInstance();
+                return InstanceManager.getDefault(jmri.LogixManager.class);
             }
 
             public NamedBean getBySystemName(String name) {
-                return InstanceManager.logixManagerInstance().getBySystemName(
+                return InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(
                         name);
             }
 
             public NamedBean getByUserName(String name) {
-                return InstanceManager.logixManagerInstance().getByUserName(
+                return InstanceManager.getDefault(jmri.LogixManager.class).getByUserName(
                         name);
             }
-            /* public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"deleteInUse"); }
-             public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "deleteInUse", boo); }*/
 
             protected String getMasterClassName() {
                 return getClassName();
             }
 
-            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnLogixInUse(); }
-             public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnLogixInUse(boo); }*/
             public void configureTable(JTable table) {
                 table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
                 table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
@@ -306,21 +302,12 @@ public class LogixTableAction extends AbstractTableAction {
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleLogixTable"));
     }
-    /*    
-     public void addToFrame(BeanTableFrame f) {
-     // Hack into Logix frame to add my junk. (pwc)
-     f.addToBottomBox(extraPanel, this.getClass().getName());
-     }
     
-     */ public void setMenuBar(BeanTableFrame f) {
+    public void setMenuBar(BeanTableFrame f) {
         JMenu menu = new JMenu(Bundle.getMessage("MenuOptions"));
         menu.setMnemonic(KeyEvent.VK_O);
         javax.swing.JMenuBar menuBar = f.getJMenuBar();
-        /*
-         if (InstanceManager.getDefault(jmri.UserPreferencesManager.class) != null)
-         _suppressReminder = InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-         getPreferenceState("beantable.LRouteTableAction.remindRoute");
-         */
+
         ButtonGroup enableButtonGroup = new ButtonGroup();
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(rbx.getString("EnableAll"));
         r.addActionListener(new ActionListener() {
@@ -1198,7 +1185,7 @@ public class LogixTableAction extends AbstractTableAction {
          javax.swing.JOptionPane.INFORMATION_MESSAGE);
          }*/
         if (_showReminder) {
-            if (InstanceManager.getDefault(jmri.UserPreferencesManager.class) != null) {
+            if (InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class) != null) {
                 InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemLogixTable")),
                                 getClassName(),
@@ -1343,7 +1330,7 @@ public class LogixTableAction extends AbstractTableAction {
         }
         final Logix x = _logixManager.getBySystemName(sName);
         final jmri.UserPreferencesManager p;
-        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        p = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
         if (p != null && p.getMultipleChoiceOption(getClassName(), "delete") == 0x02) {
             if (x != null) {
                 _logixManager.deleteLogix(x);
@@ -3574,7 +3561,7 @@ public class LogixTableAction extends AbstractTableAction {
     void loadJComboBoxWithSignalAspects(JComboBox<String> box, String signalName) {
         box.removeAllItems();
         log.debug("loadJComboBoxWithSignalAspects called with name: " + signalName);
-        SignalHead h = InstanceManager.signalHeadManagerInstance().getSignalHead(signalName);
+        SignalHead h = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
         if (h == null) {
             box.addItem(rbx.getString("PromptLoadSignalName"));
         } else {
@@ -3607,7 +3594,7 @@ public class LogixTableAction extends AbstractTableAction {
     void loadJComboBoxWithMastAspects(JComboBox<String> box, String mastName) {
         box.removeAllItems();
         log.debug("loadJComboBoxWithMastAspects called with name: " + mastName);
-        SignalMast m = InstanceManager.signalMastManagerInstance().getSignalMast(mastName);
+        SignalMast m = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(mastName);
         if (m == null) {
             box.addItem(rbx.getString("PromptLoadMastName"));
         } else {
@@ -4590,12 +4577,12 @@ public class LogixTableAction extends AbstractTableAction {
         SignalHead h = null;
         if (name != null) {
             if (name.length() > 0) {
-                h = InstanceManager.signalHeadManagerInstance().getByUserName(name);
+                h = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(name);
                 if (h != null) {
                     return name;
                 }
             }
-            h = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
+            h = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(name);
         }
         if (h == null) {
             messageInvalidActionItemName(name, "SignalHead"); //NOI18N
@@ -4611,13 +4598,13 @@ public class LogixTableAction extends AbstractTableAction {
         SignalMast h = null;
         if (name != null) {
             if (name.length() > 0) {
-                h = InstanceManager.signalMastManagerInstance().getByUserName(name);
+                h = InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName(name);
                 if (h != null) {
                     return name;
                 }
             }
             try {
-                h = InstanceManager.signalMastManagerInstance().provideSignalMast(name);
+                h = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(name);
             } catch (IllegalArgumentException ex) {
                 h = null; // tested below
             }
@@ -4672,14 +4659,13 @@ public class LogixTableAction extends AbstractTableAction {
         Sensor s = null;
         if (name != null) {
             if (name.length() > 0) {
-                s = InstanceManager.sensorManagerInstance().getByUserName(name);
+                s = InstanceManager.getDefault(jmri.SensorManager.class).getByUserName(name);
                 if (s != null) {
                     return name;
                 }
             }
-            s = InstanceManager.sensorManagerInstance().getBySystemName(name);
+            s = InstanceManager.getDefault(jmri.SensorManager.class).getBySystemName(name);
         }
-        s = InstanceManager.sensorManagerInstance().getBySystemName(name);
         if (s == null) {
             messageInvalidActionItemName(name, "Sensor"); //NOI18N
             return null;
@@ -4757,12 +4743,12 @@ public class LogixTableAction extends AbstractTableAction {
         Route r = null;
         if (name != null) {
             if (name.length() > 0) {
-                r = InstanceManager.routeManagerInstance().getByUserName(name);
+                r = InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(name);
                 if (r != null) {
                     return name;
                 }
             }
-            r = InstanceManager.routeManagerInstance().getBySystemName(name);
+            r = InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(name);
         }
         if (r == null) {
             messageInvalidActionItemName(name, "Route"); //NOI18N
@@ -4775,12 +4761,12 @@ public class LogixTableAction extends AbstractTableAction {
         Audio a = null;
         if (name != null) {
             if (name.length() > 0) {
-                a = InstanceManager.audioManagerInstance().getByUserName(name);
+                a = InstanceManager.getDefault(jmri.AudioManager.class).getByUserName(name);
                 if (a != null) {
                     return name;
                 }
             }
-            a = InstanceManager.audioManagerInstance().getBySystemName(name);
+            a = InstanceManager.getDefault(jmri.AudioManager.class).getBySystemName(name);
         }
         if (a == null || (a.getSubType() != Audio.SOURCE && a.getSubType() != Audio.LISTENER)) {
             messageInvalidActionItemName(name, "Audio"); //NOI18N

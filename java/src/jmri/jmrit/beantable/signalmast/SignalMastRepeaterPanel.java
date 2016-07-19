@@ -46,7 +46,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
 
     public SignalMastRepeaterPanel() {
         super();
-        dsmm = (DefaultSignalMastManager) jmri.InstanceManager.signalMastManagerInstance();
+        dsmm = (DefaultSignalMastManager) jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
         dsmm.addPropertyChangeListener(this);
 
         setLayout(new BorderLayout());

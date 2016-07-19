@@ -156,7 +156,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                 Roster.this.reloadRosterFile();
             }
         });
-        this.preferences = InstanceManager.getDefault(UserPreferencesManager.class);
+        this.preferences = InstanceManager.getOptionalDefault(UserPreferencesManager.class);
         if (this.preferences != null) {
             // for some reason, during JUnit testing, preferences is often null
             this.setDefaultRosterGroup((String) this.preferences.getProperty(Roster.class.getCanonicalName(), "defaultRosterGroup")); // NOI18N
@@ -190,9 +190,10 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * Locate the single instance of Roster, loading it if need be.
      *
      * Calls {@link #getDefault() } to provide the single instance.
-     *
+     * @deprecated 4.5.1
      * @return The valid Roster object
      */
+    @Deprecated
     public static synchronized Roster instance() {
         return Roster.getDefault();
     }
@@ -203,7 +204,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @return The default Roster object
      */
     public static synchronized Roster getDefault() {
-        if (InstanceManager.getDefault(Roster.class) == null) {
+        if (InstanceManager.getOptionalDefault(Roster.class) == null) {
             log.debug("Creating Roster default instance.");
             // Pass null to use defaults.
             InstanceManager.setDefault(Roster.class, new Roster(null));

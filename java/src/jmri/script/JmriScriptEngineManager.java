@@ -41,6 +41,7 @@ import jmri.TurnoutManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.util.FileUtil;
+import jmri.util.FileUtilSupport;
 import org.apache.commons.io.FilenameUtils;
 import org.python.core.PySystemState;
 import org.python.util.PythonInterpreter;
@@ -108,22 +109,22 @@ public final class JmriScriptEngineManager {
             this.factories.put(factory.getEngineName(), factory);
         });
         Bindings bindings = new SimpleBindings();
-        bindings.put("turnouts", InstanceManager.getDefault(TurnoutManager.class));
-        bindings.put("sensors", InstanceManager.getDefault(SensorManager.class));
-        bindings.put("signals", InstanceManager.getDefault(SignalHeadManager.class));
-        bindings.put("masts", InstanceManager.getDefault(SignalMastManager.class));
-        bindings.put("lights", InstanceManager.getDefault(LightManager.class));
-        bindings.put("dcc", InstanceManager.getDefault(CommandStation.class));
-        bindings.put("reporters", InstanceManager.getDefault(ReporterManager.class));
-        bindings.put("memories", InstanceManager.getDefault(MemoryManager.class));
-        bindings.put("routes", InstanceManager.getDefault(RouteManager.class));
-        bindings.put("blocks", InstanceManager.getDefault(BlockManager.class));
-        bindings.put("powermanager", InstanceManager.getDefault(PowerManager.class));
-        bindings.put("programmers", InstanceManager.getDefault(ProgrammerManager.class));
-        bindings.put("shutdown", InstanceManager.getDefault(ShutDownManager.class));
-        bindings.put("audio", InstanceManager.getDefault(AudioManager.class));
-        bindings.put("layoutblocks", InstanceManager.getDefault(LayoutBlockManager.class));
-        bindings.put("warrants", InstanceManager.getDefault(WarrantManager.class));
+        bindings.put("turnouts", InstanceManager.getOptionalDefault(TurnoutManager.class));
+        bindings.put("sensors", InstanceManager.getOptionalDefault(SensorManager.class));
+        bindings.put("signals", InstanceManager.getOptionalDefault(SignalHeadManager.class));
+        bindings.put("masts", InstanceManager.getOptionalDefault(SignalMastManager.class));
+        bindings.put("lights", InstanceManager.getOptionalDefault(LightManager.class));
+        bindings.put("dcc", InstanceManager.getOptionalDefault(CommandStation.class));
+        bindings.put("reporters", InstanceManager.getOptionalDefault(ReporterManager.class));
+        bindings.put("memories", InstanceManager.getOptionalDefault(MemoryManager.class));
+        bindings.put("routes", InstanceManager.getOptionalDefault(RouteManager.class));
+        bindings.put("blocks", InstanceManager.getOptionalDefault(BlockManager.class));
+        bindings.put("powermanager", InstanceManager.getOptionalDefault(PowerManager.class));
+        bindings.put("programmers", InstanceManager.getOptionalDefault(ProgrammerManager.class));
+        bindings.put("shutdown", InstanceManager.getOptionalDefault(ShutDownManager.class));
+        bindings.put("audio", InstanceManager.getOptionalDefault(AudioManager.class));
+        bindings.put("layoutblocks", InstanceManager.getOptionalDefault(LayoutBlockManager.class));
+        bindings.put("warrants", InstanceManager.getOptionalDefault(WarrantManager.class));
         bindings.put("CLOSED", Turnout.CLOSED);
         bindings.put("THROWN", Turnout.THROWN);
         bindings.put("CABLOCKOUT", Turnout.CABLOCKOUT);
@@ -145,7 +146,7 @@ public final class JmriScriptEngineManager {
         bindings.put("FLASHYELLOW", SignalHead.FLASHYELLOW);
         bindings.put("FLASHGREEN", SignalHead.FLASHGREEN);
         bindings.put("FLASHLUNAR", SignalHead.FLASHLUNAR);
-        bindings.put("FileUtil", FileUtil.class);
+        bindings.put("FileUtil", FileUtilSupport.getDefault());
         this.context = new SimpleScriptContext();
         this.context.setBindings(bindings, ScriptContext.GLOBAL_SCOPE);
     }
@@ -157,7 +158,7 @@ public final class JmriScriptEngineManager {
      * @return the default JmriScriptEngineManager
      */
     public static JmriScriptEngineManager getDefault() {
-        if (InstanceManager.getDefault(JmriScriptEngineManager.class) == null) {
+        if (InstanceManager.getOptionalDefault(JmriScriptEngineManager.class) == null) {
             InstanceManager.setDefault(JmriScriptEngineManager.class, new JmriScriptEngineManager());
         }
         return InstanceManager.getDefault(JmriScriptEngineManager.class);

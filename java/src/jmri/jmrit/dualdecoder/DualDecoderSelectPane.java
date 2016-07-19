@@ -1,4 +1,3 @@
-// DualDecoderSelectPane.java
 package jmri.jmrit.dualdecoder;
 
 import java.awt.GridLayout;
@@ -21,14 +20,9 @@ import org.slf4j.LoggerFactory;
  * Pane for selecting an active decoder from multiple ones in a loco
  *
  * @author Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.ProgListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1032342693614263212L;
     boolean scanning = false;
     int next = 0;
 

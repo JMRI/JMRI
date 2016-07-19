@@ -156,7 +156,7 @@ public class MatrixSignalMastXml
                 ((MatrixSignalMast) m).setAspectDisabled(asp.getText());
             }
         }
-        InstanceManager.signalMastManagerInstance().register(m);
+        InstanceManager.getDefault(jmri.SignalMastManager.class).register(m);
         return true;
     }
 

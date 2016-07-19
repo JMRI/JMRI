@@ -1,6 +1,3 @@
-/*
- * DCCppCommandStation.java
- */
 package jmri.jmrix.dccpp;
 
 import org.slf4j.Logger;
@@ -12,7 +9,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
  * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
  *
  * Based on LenzCommandStation by Bob Jacobsen and Paul Bender
  */
@@ -32,9 +28,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
     /** ctor */
     public DCCppCommandStation() {
 	super();
-	if (rmgr == null) {
 	    rmgr = new DCCppRegisterManager();
-	}
     }
 
     public void setBaseStationType(String s) {
@@ -78,28 +72,6 @@ public class DCCppCommandStation implements jmri.CommandStation {
      */
     public String getVersionString() {
         return(baseStationType + ": BUILD " + codeBuildDate);
-    }
-
-    /* 
-     * The next group of messages has to do with determining if the
-     * command station has, and is currently in service mode 
-     */
-    /**
-     * DCC++ does use a service mode
-     */
-    public boolean getHasServiceMode() {
-        return true;
-    }
-
-    /**
-     * If this command station has a service mode, is the command station
-     * currently in that mode?
-     */
-    public boolean getInServiceMode() {
-        //return mInServiceMode;
-	return(true); // TODO: Verify we are effectively always in service mode.
-	//TODO: Or just eliminate the concept of Service Mode entirely.
-	// Perhaps not possible, since it is an NMRA standard.
     }
 
     /**
@@ -232,5 +204,3 @@ public class DCCppCommandStation implements jmri.CommandStation {
 
 }
 
-
-/* @(#)DCCppCommandStation.java */

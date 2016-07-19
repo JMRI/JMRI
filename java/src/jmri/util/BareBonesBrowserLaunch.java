@@ -14,6 +14,11 @@ package jmri.util;
 import java.lang.reflect.Method;
 import javax.swing.JOptionPane;
 
+/**
+ * 
+ * @deprecated since 4.5.2. Use {@link java.awt.Desktop#browse(java.net.URI)} instead.
+ */
+@Deprecated
 public class BareBonesBrowserLaunch {
 
     private static final String errMsg = "Error attempting to launch web browser";
