@@ -8,6 +8,7 @@ import jmri.TurnoutManager;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 import jmri.jmrix.sprog.update.SprogType;
 import jmri.jmrix.sprog.update.SprogVersion;
+import jmri.jmrix.sprog.update.SprogVersionQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -300,6 +301,18 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
         }
         super.dispose();
+    }
+
+    private SprogVersionQuery svq = null;
+   
+    /*
+     * return an SprogVersionQuery object for this connection.
+     */
+    public SprogVersionQuery getSprogVersionQuery(){
+       if(svq == null ) {
+          svq = new SprogVersionQuery(this);
+       }
+       return svq;
     }
 
     private final static Logger log = LoggerFactory.getLogger(SprogSystemConnectionMemo.class.getName());

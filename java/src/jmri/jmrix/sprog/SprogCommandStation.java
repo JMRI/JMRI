@@ -454,7 +454,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             }
             
             // Is it time to send a status request?
-            if ((statusDue == 40) && SprogSlotMonFrame.instance() != null) {
+            if ((statusDue == 40) && monFrame != null) {
                 // Only ask for status if it's actually being displayed
                 log.debug("Sending status request");
                 tc.sendSprogMessage(SprogMessage.getStatus(), this);
@@ -474,7 +474,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                         statusA[0] = milliAmps;
                         String ampString;
                         ampString = Float.toString((float) statusA[0] / 1000);
-                        SprogSlotMonFrame.instance().updateStatus(ampString);
+                        monFrame.updateStatus(ampString);
                         statusDue = 0;
                     }
                 } else {
@@ -496,7 +496,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                         // Send the packet
                         sendPacket(p, SprogConstants.S_REPEATS);
                         log.debug("Packet sent");
-                        if (SprogSlotMonFrame.instance() != null) {
+                        if (monFrame != null) {
                             statusDue++;
                         }
                     } else {
@@ -594,6 +594,25 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         timer.setRepeats(false);
         timer.start();
     }
+
+
+    /**
+     * Set the slot SprogSlotMonFrame associated with this Command Station
+     * There can currently be only one SprogSlotMonFrame.
+     */
+    public void setSprogSlotMonFrame(SprogSlotMonFrame s) {
+       monFrame = s;
+    }
+
+    /**
+     * Get the slot SprogSlotMonFrame associated with this Command Station
+     * There can currently be only one SprogSlotMonFrame.
+     */
+    public SprogSlotMonFrame getSprogSlotMonFrame() {
+       return monFrame;
+    }
+
+    private SprogSlotMonFrame monFrame = null;
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(SprogCommandStation.class.getName());

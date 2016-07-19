@@ -30,8 +30,6 @@ public class SprogTurnoutManagerXml extends jmri.managers.configurexml.AbstractT
 
     @Override
     public boolean load(Element shared, Element perNode) {
-        // create the master object
-        SprogTurnoutManager.instance();
         // load individual turnouts
         return loadTurnouts(shared, perNode);
     }

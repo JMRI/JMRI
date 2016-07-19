@@ -26,7 +26,7 @@ public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVers
         addHelpMenu("package.jmri.jmrix.sprog.update.SprogVersionFrame", true);
 
         // Start the query
-        SprogVersionQuery query = new SprogVersionQuery(_memo);
+        SprogVersionQuery query = _memo.getSprogVersionQuery();
         query.requestVersion(this);
     }
 

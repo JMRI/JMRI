@@ -36,7 +36,7 @@ public class Sprogv4UpdateFrame
         addHelpMenu("package.jmri.jmrix.sprog.update.Sprogv4UpdateFrame", true);
 
         // Get the SPROG version
-        SprogVersionQuery.requestVersion(this);
+        _memo.getSprogVersionQuery().requestVersion(this);
     }
 
     synchronized public void notifyVersion(SprogVersion v) {

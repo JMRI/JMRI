@@ -114,7 +114,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
 
             //AJB - add Sprog Traffic Controller as event listener
             try {
-                activeSerialPort.addEventListener(SprogTrafficController.instance());
+                activeSerialPort.addEventListener(this.getSystemConnectionMemo().getSprogTrafficController());
             } catch (TooManyListenersException e) {
             }
 
@@ -180,19 +180,8 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
      */
     @Deprecated
     static public SerialDriverAdapter instance() {
-        if (mInstance == null) {
-            SerialDriverAdapter m = new SerialDriverAdapter();
-            m.setManufacturer(jmri.jmrix.sprog.SprogConnectionTypeList.SPROG);
-            mInstance = m;
-        }
-        return mInstance;
+        return null;
     }
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static volatile SerialDriverAdapter mInstance = null;
 
     /**
      * set up all of the other objects to operate with an Sprog command station
@@ -200,7 +189,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
      */
     public void configure() {
         // connect to the traffic controller
-        SprogTrafficController control = SprogTrafficController.instance();
+        SprogTrafficController control = new SprogTrafficController();
         control.connectPort(this);
         control.setAdapterMemo(this.getSystemConnectionMemo());
 
@@ -228,7 +217,6 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
     @Override
     public void dispose() {
         super.dispose();
-        mInstance = null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());

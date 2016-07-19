@@ -73,14 +73,14 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         this.sprogState = s;
         if (s == SprogState.V4BOOTMODE) {
             // enable flow control - required for sprog v4 bootloader
-            SerialDriverAdapter.instance().setHandshake(SerialPort.FLOWCONTROL_RTSCTS_IN
+            getController().setHandshake(SerialPort.FLOWCONTROL_RTSCTS_IN
                     | SerialPort.FLOWCONTROL_RTSCTS_OUT);
 
         } else {
             // disable flow control
             //AJB - removed Jan 2010 - this stops SPROG from sending. Could cause problems with
             //serial Sprogs, but I have no way of testing: 
-            //SerialDriverAdapter.instance().setHandshake(0);
+            //getController().setHandshake(0);
         }
         if (log.isDebugEnabled()) {
             log.debug("Setting sprogState " + s);
@@ -192,7 +192,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
     }
 
-    // methods to connect/disconnect to a source of data in a LnPortController
+    // methods to connect/disconnect to a source of data in a SprogPortController
     private AbstractPortController controller = null;
 
     /**
@@ -205,6 +205,14 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             log.warn("connectPort: connect called while connected");
         }
         controller = p;
+    }
+
+
+    /**
+     * return the port controller, as an SerialDriverAdapter.
+     */
+    protected SerialDriverAdapter getController(){
+       return (SerialDriverAdapter)controller;
     }
 
     /**

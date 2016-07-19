@@ -116,6 +116,9 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
         pane1.setMaximumSize(pane1.getSize());
         pack();
 
+        // register with the command station.
+        _memo.getCommandStation().setSprogSlotMonFrame(this);
+
     }
 
     public void initComponents() {
@@ -161,6 +164,8 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
     }
 
     public void dispose() {
+        // deregister with the command station.
+        _memo.getCommandStation().setSprogSlotMonFrame(null);
         slotModel.dispose();
         slotModel = null;
         slotTable = null;

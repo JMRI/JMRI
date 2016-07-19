@@ -263,7 +263,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         pack();
 
         // Now the GUI is all setup we can get the SPROG version
-        SprogVersionQuery.requestVersion(this);
+        _memo.getSprogVersionQuery().requestVersion(this);
     }
 
     /**
