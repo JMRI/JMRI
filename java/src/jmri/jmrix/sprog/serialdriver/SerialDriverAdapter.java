@@ -36,24 +36,32 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         //Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
         this.baudRate = 9600;
         this.getSystemConnectionMemo().setUserName("SPROG Programmer");
+        // create the traffic controller
+        this.getSystemConnectionMemo().setSprogTrafficController(new SprogTrafficController(this.getSystemConnectionMemo()));
     }
 
     public SerialDriverAdapter(SprogMode sm) {
         super(new SprogSystemConnectionMemo(sm));
         this.baudRate = 9600;
         this.getSystemConnectionMemo().setUserName("SPROG");
+        // create the traffic controller
+        this.getSystemConnectionMemo().setSprogTrafficController(new SprogTrafficController(this.getSystemConnectionMemo()));
     }
 
     public SerialDriverAdapter(SprogMode sm, int baud, SprogType type) {
         super(new SprogSystemConnectionMemo(sm, type));
         this.baudRate = baud;
         this.getSystemConnectionMemo().setUserName("SPROG");
+        // create the traffic controller
+        this.getSystemConnectionMemo().setSprogTrafficController(new SprogTrafficController(this.getSystemConnectionMemo()));
     }
 
     public SerialDriverAdapter(SprogMode sm, int baud) {
         super(new SprogSystemConnectionMemo(sm));
         this.baudRate = baud;
         this.getSystemConnectionMemo().setUserName("SPROG");
+        // create the traffic controller
+        this.getSystemConnectionMemo().setSprogTrafficController(new SprogTrafficController(this.getSystemConnectionMemo()));
     }
 
     SerialPort activeSerialPort = null;
@@ -61,7 +69,6 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
     private int baudRate = -1;
 
     public String openPort(String portName, String appName) {
-
         // open the port, check ability to set moderators
         try {
             // get and open the primary port
@@ -189,11 +196,8 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
      */
     public void configure() {
         // connect to the traffic controller
-        SprogTrafficController control = new SprogTrafficController();
-        control.connectPort(this);
-        control.setAdapterMemo(this.getSystemConnectionMemo());
+        this.getSystemConnectionMemo().getSprogTrafficController().connectPort(this);
 
-        this.getSystemConnectionMemo().setSprogTrafficController(control);
         this.getSystemConnectionMemo().configureCommandStation();
         this.getSystemConnectionMemo().configureManagers();
 

@@ -26,7 +26,7 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
     @Override
     public void configure() {
         log.debug("configure() called.");
-        SprogTrafficController control = new SprogTrafficController();
+        SprogTrafficController control = new SprogTrafficController(this.getSystemConnectionMemo());
 
         // connect to the traffic controller
         this.getSystemConnectionMemo().setSprogTrafficController(control);

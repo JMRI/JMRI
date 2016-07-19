@@ -35,8 +35,8 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
     private SprogState sprogState = SprogState.NORMAL;
 
-    public SprogTrafficController() {
-    }
+    //public SprogTrafficController() {
+    //}
 
     public SprogTrafficController(SprogSystemConnectionMemo adaptermemo) {
        memo = adaptermemo;
@@ -282,6 +282,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
                 break;
             case SerialPortEvent.DATA_AVAILABLE:
+                log.debug("Data Available");
                 handleOneIncomingReply();
                 break;
         }
