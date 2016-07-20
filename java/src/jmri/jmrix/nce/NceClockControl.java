@@ -50,7 +50,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         this.prefix = prefix;
 
         // Create a timebase listener for the Minute change events
-        internalClock = InstanceManager.getDefault(jmri.Timebase.class);
+        internalClock = InstanceManager.getOptionalDefault(jmri.Timebase.class);
         if (internalClock == null) {
             log.error("No Timebase Instance");
             return;
@@ -60,10 +60,6 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
                 newInternalMinute();
             }
         };
-        if (minuteChangeListener == null) {
-            log.error("No minuteChangeListener");
-            return;
-        }
         internalClock.addMinuteChangeListener(minuteChangeListener);
     }
     @SuppressWarnings("unused")

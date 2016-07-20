@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * Based on AbstractTurnoutManagerConfigXML
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision$
  */
 public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -57,7 +56,8 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
             while (iter.hasNext()) {
                 String sname = iter.next();
                 if (sname == null) {
-                    log.error("System name null during store");
+                    log.error("System name null during store, skipped");
+                    continue;
                 }
                 log.debug("system name is " + sname);
                 SignalHead sub = sm.getBySystemName(sname);
@@ -150,8 +150,8 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
             return;
         }
         // if old manager exists, remove it from configuration process
-        if (InstanceManager.getDefault(jmri.SignalHeadManager.class) != null) {
-            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).deregister(
+        if (InstanceManager.getOptionalDefault(jmri.SignalHeadManager.class) != null) {
+            InstanceManager.getDefault(jmri.ConfigureManager.class).deregister(
                     InstanceManager.getDefault(jmri.SignalHeadManager.class));
         }
 

@@ -1,89 +1,126 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-  <title>
- 	JMRI: Blocks Documentation
-  </title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
+  <title>JMRI: Blocks Documentation</title>
   <meta name="Author" content="Bob Jacobsen">
-  <meta name="keywords" content="layout java model railroad JMRI tools dcc">
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <meta name="keywords" content=
+  "layout java model railroad JMRI tools dcc"><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header" -->
 
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h1>JMRI: Blocks Documentation</h1>
+    <div id="mainContent">
+      <h1>JMRI: Blocks Documentation</h1>
 
-<h2>What are Blocks?</h2>
-<p>Blocks are sections of track whose occupancy may be individually monitored. Dividing 
-track into Blocks is optional. Blocks set up in a track diagram normally correspond 
-to physical blocks on a layout. Block occupancy is indicated by the state of an 
-occupancy <a href="Sensors.shtml">Sensor</a>. When a layout's track is divided into Blocks, all of the track need
-not belong to a Block. For example, yard track may not be in a Block, whereas mainline 
-track almost always would be divided into Blocks. The main use of Blocks is to facilitate 
-Signaling, but Blocks may be used for other layout control and animation functions.</p>
+      <h2>What are Blocks?</h2>
 
-<h2>How to setup Blocks</h2>
+      <p>Blocks are sections of track whose occupancy may be
+      individually monitored. Dividing track into Blocks is
+      optional. Blocks set up in a track diagram normally
+      correspond to physical blocks on a layout. Block occupancy is
+      indicated by the state of an occupancy <a href=
+      "Sensors.shtml">Sensor</a>. When a layout's track is divided
+      into Blocks, all of the track need not belong to a Block. For
+      example, yard track may not be in a Block, whereas mainline
+      track almost always would be divided into Blocks. The main
+      use of Blocks is to facilitate Signaling, but Blocks may be
+      used for other layout control and animation functions.</p>
 
-<h3>Block Properties</h3>
-<p>Blocks may be set up manually from the Block Table, using a script or automatically in a Layout Editor Panel.
-When a Block is defined on a Layout Editor Panel, a new Block is created if one does not already
-exist. In Layout Editor, Blocks are identified by their User Name, so if a Block shown 
-in the Block Table is used in a Layout Editor Panel, its User Name should not be changed.<br>
-If you want to change the User Name of a Block used in a Layout Editor Panel, make the 
-change in the Layout Editor, not in the Block Table.</p>
-<p>To complete the definition of a Block, Paths and Bean Settings must be attached to 
-each Block. Paths describe entry points to the Block. Each Block has one or more Paths
-associated with it. Sometimes a Turnout must be set a certain way to use a Path; Bean 
-Settings carry that information. Paths and Bean Settings are set up automatically for 
-Blocks defined in a Layout Editor Panel. They can also be set up in a script. There is 
-currently no way to manually enter Paths or Bean Settings. Paths and Bean Settings are 
-not shown in the Block Table, and are described here only for completeness.<br>
-Paths may however be deleted using the Paths menu.</p>
+      <h2>How to setup Blocks</h2>
 
-<h3>The Block Table</h3>
-<p>Blocks are created and edited in the <a href="../../package/jmri/jmrit/beantable/BlockTable.shtml">Block Table</a>.</p>
-<p>For use in automatically running Trains, a Length attribute and a Curvature attribute 
-may optionally be assigned to a Block. These optional attributes are entered manually 
-in this table. If Trains will not be run automatically through 
-a Block, there is no need to add these attributes.</p>
+      <h3>Block Properties</h3>
 
-<h4>Block Table controls</h4>
-	<ul>
-	<li>Below the Block Table you'll find the <b>Add...</b> button</li>
-	<li>The <b>Paths</b> menu contains a Delete Paths... item</li>
-	<li>The <b>Speeds</b> menu lets you set system wide Defaults...</li>
-	</ul>
-   
-<a name="addBlock"></a><h3>Adding a new Block</h3>
-<p>To add a new Block, follow this <a href="../../package/jmri/jmrit/beantable/BlockAddEdit.shtml">procedure</a></p>
+      <p>Blocks may be set up manually from the Block Table, using
+      a script or automatically in a Layout Editor Panel. When a
+      Block is defined on a Layout Editor Panel, a new Block is
+      created if one does not already exist. In Layout Editor,
+      Blocks are identified by their User Name, so if a Block shown
+      in the Block Table is used in a Layout Editor Panel, its User
+      Name should not be changed.<br>
+      If you want to change the User Name of a Block used in a
+      Layout Editor Panel, make the change in the Layout Editor,
+      not in the Block Table.</p>
 
-<h3>Editing an existing Block</h3>
-<p>To check or change the properties of a Block, follow this <a href="../../package/jmri/jmrit/beantable/BlockEdit.shtml">procedure</a></p>
+      <p>To complete the definition of a Block, Paths and Bean
+      Settings must be attached to each Block. Paths describe entry
+      points to the Block. Each Block has one or more Paths
+      associated with it. Sometimes a Turnout must be set a certain
+      way to use a Path; Bean Settings carry that information.
+      Paths and Bean Settings are set up automatically for Blocks
+      defined in a Layout Editor Panel. They can also be set up in
+      a script. There is currently no way to manually enter Paths
+      or Bean Settings. Paths and Bean Settings are not shown in
+      the Block Table, and are described here only for
+      completeness.<br>
+      Paths may however be deleted using the Paths menu.</p>
 
-<h3>Saving Blocks to disk</h3>
-<p>Blocks are saved in your layout configuration file, along with Turnouts, 
-Sensors, Signal Heads, etc. To store this information on disk, use <b>Store 
-Configuration...</b> in the <b>File</b> menu at the top of the Blocks 
-Table (or other tables from the Tools menu), or select <b>Store Panel...</b>
-in the <b>Panel</b> menu. Note that the occupied/unoccupied state of each Block
-is not saved in the configuration file.  When Blocks are loaded from a
-configuration file, their status is read from the Sensors.
+      <h3>The Block Table</h3>
 
-<!--#include virtual="/Footer" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+      <p>Blocks are created and edited in the <a href=
+      "../../package/jmri/jmrit/beantable/BlockTable.shtml">Block
+      Table</a>.</p>
+
+      <p>For use in automatically running Trains, a Length
+      attribute and a Curvature attribute may optionally be
+      assigned to a Block. These optional attributes are entered
+      manually in this table. If Trains will not be run
+      automatically through a Block, there is no need to add these
+      attributes.</p>
+
+      <h4>Block Table controls</h4>
+
+      <ul>
+        <li>Below the Block Table you'll find the <b>Add...</b>
+        button</li>
+
+        <li>The <b>Paths</b> menu contains a Delete Paths...
+        item</li>
+
+        <li>The <b>Speeds</b> menu lets you set system wide
+        Defaults...</li>
+      </ul><a name="addBlock" id="addBlock"></a>
+
+      <h3>Adding a new Block</h3>
+
+      <p>To add a new Block, follow this <a href=
+      "../../package/jmri/jmrit/beantable/BlockAddEdit.shtml">procedure</a></p>
+
+      <h3>Editing an existing Block</h3>
+
+      <p>To check or change the properties of a Block, follow this
+      <a href=
+      "../../package/jmri/jmrit/beantable/BlockEdit.shtml">procedure</a></p>
+
+      <h3>Saving Blocks to disk</h3>
+
+      <p>Blocks are saved in your layout configuration file, along
+      with Turnouts, Sensors, Signal Heads, etc. To store this
+      information on disk, use <b>Store Configuration...</b> in the
+      <b>File</b> menu at the top of the Blocks Table (or other
+      tables from the Tools menu), or select <b>Store Panel...</b>
+      in the <b>Panel</b> menu. Note that the occupied/unoccupied
+      state of each Block is not saved in the configuration file.
+      When Blocks are loaded from a configuration file, their
+      status is read from the Sensors. 
+      <!--#include virtual="/Footer" --></p>
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

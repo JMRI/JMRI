@@ -1,116 +1,171 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
 <!-- UpDated by Herv&#233; Blorec 2013-10-11-->
-<HTML LANG="fr">
-<HEAD>
-<TITLE>JMRI: Route Table Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Bob Jacobsen" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Route Table">
 
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<BODY>
-<!--#include virtual="/Header" -->
+  <title>JMRI: Route Table Help</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI help Route Table">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Le Tableau Itin&eacute;raire</h1>
 
-<H1> Le Tableau Itin&#233;raire </H1>
+      <p>Un itin&eacute;raire se compose d'un ou plusieurs
+      aiguillages ou des capteurs que vous souhaitez commander.
+      Avant de cr&eacute;er un itin&eacute;raire, vous devez
+      d'abord ajouter certains aiguillages ou des capteurs en
+      utilisant soit le tableau aiguillage ou le tableau capteur .
+      Ces tables peuvent &ecirc;tre trouv&eacute;es sous le menu
+      principal "Outils -&gt; Tableaux".</p>
 
-<P> Un itin&#233;raire se compose d'un ou plusieurs aiguillages ou des capteurs que vous
-souhaitez commander. Avant de cr&#233;er un itin&#233;raire, vous devez d'abord ajouter
-certains aiguillages ou des capteurs en utilisant soit le tableau aiguillage ou le tableau capteur
-. Ces tables peuvent &#234;tre trouv&#233;es sous le menu principal "Outils -> Tableaux".
+      <p>Une Fois que vous avez quelques aiguillages ou des
+      capteurs &agrave; g&eacute;rer utilisez le bouton "Ajouter"
+      dans le coin inf&eacute;rieur gauche du tableau
+      Itin&eacute;raire pour cr&eacute;er un nouvel
+      itin&eacute;raire.</p>
 
-<P>Une Fois que vous avez quelques aiguillages ou des capteurs &#224; g&#233;rer utilisez le bouton "Ajouter"
-dans le coin inf&#233;rieur gauche du tableau Itin&#233;raire pour cr&#233;er un nouvel itin&#233;raire.
+      <h2>Colonnes Tableau Itin&eacute;raire</h2>
 
-<H2>Colonnes Tableau Itin&#233;raire </H2>
+      <dl>
+        <dt>Nom Syst&egrave;me</dt>
 
-<DL>
-<DT>Nom Syst&#232;me </DT>
-<DD> Le Nom  Syst&#232;me ne peut pas &#234;tre chang&#233; une fois entr&#233; dans le tableau.
-Le bouton "Ajouter" situ&#233; dans le coin inf&#233;rieur gauche de le tableau 
-vous permet d'ajouter un nouvel itin&#233;raire dans le tableau.</dd>
+        <dd>Le Nom Syst&egrave;me ne peut pas &ecirc;tre
+        chang&eacute; une fois entr&eacute; dans le tableau. Le
+        bouton "Ajouter" situ&eacute; dans le coin inf&eacute;rieur
+        gauche de le tableau vous permet d'ajouter un nouvel
+        itin&eacute;raire dans le tableau.</dd>
 
-<DT>Nom Utilisateur </DT>
-<DD> Vous pouvez directement saisir ou modifier le champ "Nom Utilisateur" pour un
-itin&#233;raire existant.</dd>
+        <dt>Nom Utilisateur</dt>
 
-<DT> Valider</DT>
-<DD>Appuyer le bouton "Valider" va d&#233;clencher un itin&#233;raire existant.</Dd>
+        <dd>Vous pouvez directement saisir ou modifier le champ
+        "Nom Utilisateur" pour un itin&eacute;raire existant.</dd>
 
-<DT> Supprimer</DT>
-<DD> Appuyer le bouton "Supprimer" supprimera l'itin&#233;raire du
-tableau.
-<p>
-Notez que cela ne supprime pas l'itin&#233;raire de tous les fichiers que vous avez
-sauvegard&#233; et qui le contiennent. Si vous chargez un de ces fichiers, peut-&#234;tre
-lorsque vous red&#233;marrez le programme, l'itin&#233;raire va r&#233;appara&#238;tre.
-Vous devez utiliser les options "Stocker dans Fichier" dans le menu "Fichier"
-pour enregistrer de nouvelles versions de tous les fichiers qui contiennent cet itin&#233;raire
-</dd>
+        <dt>Valider</dt>
 
+        <dd>Appuyer le bouton "Valider" va d&eacute;clencher un
+        itin&eacute;raire existant.</dd>
 
-<DT> Activ&#233;</DT>
-<DD> Pour d&#233;sactiver un itin&#233;raire &#224; partir de d&#233;clenchement, d&#233;cochez la case "Activ&#233;" 
-pour l'itin&#233;raire. Activ&#233; n'est pas enregistr&#233; et sera restaur&#233; quand un panneau 
-est charg&#233; au d&#233;marrage.</dd>
+        <dt>Supprimer</dt>
 
-<DT> Verrouill&#233;</DT>
-<DD>Quand elle est coch&#233;e l'itin&#233;raire est bloqu&#233;. Cela signifie que les aiguillages
-inclus dans l'itin&#233;raire qui peut &#234;tre verrouill&#233; par JMRI ne r&#233;pondront pas aux commandes de pupitre de commande ou de
-boutons - poussoirs pour changer. Pour de plus amples renseignements, consultez 
-<A HREF="TurnoutTable.shtml#Lock Mode"> la section Mode de verrouillage</A>
-sur la
-<A HREF="TurnoutTable.shtml"> page Tableau Aiguillage</A>
-et la
-<A HREF="#Turnout  lock feature"> section sur la fonction de verrouillage d'aiguillage </A>
-ci-dessous.</dd>
+        <dd>
+          Appuyer le bouton "Supprimer" supprimera
+          l'itin&eacute;raire du tableau.
 
-<DT> Modifier</DT>
-<DD> Appuyez sur ce bouton pour modifier l'itin&#233;raire. Pour plus d'informations, voir: <a
-HREF= "RouteAddEdit.shtml"> Ajout/modification d'itin&#233;raires</A>.</Dd>
-</DL>
+          <p>Notez que cela ne supprime pas l'itin&eacute;raire de
+          tous les fichiers que vous avez sauvegard&eacute; et qui
+          le contiennent. Si vous chargez un de ces fichiers,
+          peut-&ecirc;tre lorsque vous red&eacute;marrez le
+          programme, l'itin&eacute;raire va
+          r&eacute;appara&icirc;tre. Vous devez utiliser les
+          options "Stocker dans Fichier" dans le menu "Fichier"
+          pour enregistrer de nouvelles versions de tous les
+          fichiers qui contiennent cet itin&eacute;raire</p>
+        </dd>
 
-<H3> Commandes Tableau Itin&#233;raire</H3>
+        <dt>Activ&eacute;</dt>
 
-Il y a aussi un bouton au bas du tableau Itin&#233;raire 
+        <dd>Pour d&eacute;sactiver un itin&eacute;raire &agrave;
+        partir de d&eacute;clenchement, d&eacute;cochez la case
+        "Activ&eacute;" pour l'itin&eacute;raire. Activ&eacute;
+        n'est pas enregistr&eacute; et sera restaur&eacute; quand
+        un panneau est charg&eacute; au d&eacute;marrage.</dd>
 
-<DL>
-<DT> Ajouter</DT>
-<DD> Appuyez sur ce bouton pour ajouter un nouvel itin&#233;raire. Pour plus d'informations, voir
-<A HREF="RouteAddEdit.shtml">  Ajout/modification d'itin&#233;raires</A>.</Dd>
-</DL>
+        <dt>Verrouill&eacute;</dt>
 
-<H2> <A NAME="Turnout lock feature">Fonction de verrouillage Aiguillage</A></H2>
+        <dd>Quand elle est coch&eacute;e l'itin&eacute;raire est
+        bloqu&eacute;. Cela signifie que les aiguillages inclus
+        dans l'itin&eacute;raire qui peut &ecirc;tre
+        verrouill&eacute; par JMRI ne r&eacute;pondront pas aux
+        commandes de pupitre de commande ou de boutons - poussoirs
+        pour changer. Pour de plus amples renseignements, consultez
+        <a href="TurnoutTable.shtml#Lock%20Mode">la section Mode de
+        verrouillage</a> sur la <a href="TurnoutTable.shtml">page
+        Tableau Aiguillage</a> et la <a href=
+        "#Turnout%20lock%20feature">section sur la fonction de
+        verrouillage d'aiguillage</a> ci-dessous.</dd>
 
-<P> La fonction de verrouillage  d'aiguillage vous permet de d&#233;sactiver de mani&#232;re s&#233;lective des commandes d'accessoires (aiguillages) &#224; partir de pupitre et/ou boutons - poussoirs locaux c&#226;bl&#233;s. JMRI d&#233;sactive les poussoirs en envoyant une commande de d&#233;sactivation au  d&#233;codeur d'aiguillage lorsque l'itin&#233;raire est bloqu&#233;, et autorise les boutons poussoirs
-lorsque l'itin&#233;raire est d&#233;verrouill&#233;. Lors du verrouillage d'un  aiguillage &#224; partir d'un pupitre de commandes ,
-le programme JMRI surveille l'adresse accessoire de l'aiguillage et si il
-d&#233;tecte une commande de changement depuis un pupitre, il va annuler la commande imm&#233;diatement
-en envoyant la commande oppos&#233;e &#224; l'aiguillage. Tous les aiguillages qui
-sont surveill&#233;s par le programme JMRI et sont inclus dans l'itin&#233;raire
-seront verrouill&#233;s.</P>
-<P> Pour vous aider &#224; s&#233;lectionner un ensemble d'appareils de voie pour verrouiller ou d&#233;verrouiller, un itin&#233;raire
-peut &#234;tre verrouill&#233; ou d&#233;verrouill&#233;. Dans la fen&#234;tre &#233;diter l'itin&#233;raire, un verrou commandant en option
-l'aiguillage est disponible. Vous pouvez utiliser la commande de verrouillage de l'aiguillage  pour
-activer ou d&#233;sactiver la fonction de verrouillage itin&#233;raire depuis une ic&#244;ne du panneau d'aiguillage, un
-aiguillage TCO ou un  aiguillage fant&#244;me. Une aiguillage fant&#244;me est un  aiguillage qui
-peut &#234;tre consult&#233; par votre pupitre, mais n'existe pas r&#233;ellement sur votre r&#233;seau.</P>
-<P> Pour plus d'informations sur comment configurer les aiguillages devant &#234;tre verrouill&#233;s
-S'il vous pla&#238;t voir la <A HREF="TurnoutTable.shtml#Turnout%20lock%20feature"> 
-Page Table Aiguillage</A>.</P>
-<!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
+        <dt>Modifier</dt>
 
+        <dd>Appuyez sur ce bouton pour modifier
+        l'itin&eacute;raire. Pour plus d'informations, voir:
+        <a href="RouteAddEdit.shtml">Ajout/modification
+        d'itin&eacute;raires</a>.</dd>
+      </dl>
+
+      <h3>Commandes Tableau Itin&eacute;raire</h3>Il y a aussi un
+      bouton au bas du tableau Itin&eacute;raire
+
+      <dl>
+        <dt>Ajouter</dt>
+
+        <dd>Appuyez sur ce bouton pour ajouter un nouvel
+        itin&eacute;raire. Pour plus d'informations, voir <a href=
+        "RouteAddEdit.shtml">Ajout/modification
+        d'itin&eacute;raires</a>.</dd>
+      </dl>
+
+      <h2><a name="Turnout lock feature">Fonction de verrouillage
+      Aiguillage</a></h2>
+
+      <p>La fonction de verrouillage d'aiguillage vous permet de
+      d&eacute;sactiver de mani&egrave;re s&eacute;lective des
+      commandes d'accessoires (aiguillages) &agrave; partir de
+      pupitre et/ou boutons - poussoirs locaux c&acirc;bl&eacute;s.
+      JMRI d&eacute;sactive les poussoirs en envoyant une commande
+      de d&eacute;sactivation au d&eacute;codeur d'aiguillage
+      lorsque l'itin&eacute;raire est bloqu&eacute;, et autorise
+      les boutons poussoirs lorsque l'itin&eacute;raire est
+      d&eacute;verrouill&eacute;. Lors du verrouillage d'un
+      aiguillage &agrave; partir d'un pupitre de commandes , le
+      programme JMRI surveille l'adresse accessoire de l'aiguillage
+      et si il d&eacute;tecte une commande de changement depuis un
+      pupitre, il va annuler la commande imm&eacute;diatement en
+      envoyant la commande oppos&eacute;e &agrave; l'aiguillage.
+      Tous les aiguillages qui sont surveill&eacute;s par le
+      programme JMRI et sont inclus dans l'itin&eacute;raire seront
+      verrouill&eacute;s.</p>
+
+      <p>Pour vous aider &agrave; s&eacute;lectionner un ensemble
+      d'appareils de voie pour verrouiller ou d&eacute;verrouiller,
+      un itin&eacute;raire peut &ecirc;tre verrouill&eacute; ou
+      d&eacute;verrouill&eacute;. Dans la fen&ecirc;tre
+      &eacute;diter l'itin&eacute;raire, un verrou commandant en
+      option l'aiguillage est disponible. Vous pouvez utiliser la
+      commande de verrouillage de l'aiguillage pour activer ou
+      d&eacute;sactiver la fonction de verrouillage
+      itin&eacute;raire depuis une ic&ocirc;ne du panneau
+      d'aiguillage, un aiguillage TCO ou un aiguillage
+      fant&ocirc;me. Une aiguillage fant&ocirc;me est un aiguillage
+      qui peut &ecirc;tre consult&eacute; par votre pupitre, mais
+      n'existe pas r&eacute;ellement sur votre r&eacute;seau.</p>
+
+      <p>Pour plus d'informations sur comment configurer les
+      aiguillages devant &ecirc;tre verrouill&eacute;s S'il vous
+      pla&icirc;t voir la <a href=
+      "TurnoutTable.shtml#Turnout%20lock%20feature">Page Table
+      Aiguillage</a>.</p><!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

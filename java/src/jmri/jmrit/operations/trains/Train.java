@@ -8,6 +8,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PanelMenu;
@@ -2106,7 +2107,7 @@ public class Train implements java.beans.PropertyChangeListener {
      *
      * @return Road and number of caboose.
      */
-    public String getCabooseRoadAndNumber() {
+    public @Nonnull String getCabooseRoadAndNumber() {
         String cabooseRoadNumber = NONE;
         RouteLocation rl = getCurrentLocation();
         List<RollingStock> cars = CarManager.instance().getByTrainList(this);
@@ -2780,8 +2781,8 @@ public class Train implements java.beans.PropertyChangeListener {
             } else {
                 setStatusCode(getOldStatusCode()); // restore previous train status
             }
-            setDirtyAndFirePropertyChange(TRAIN_MODIFIED_CHANGED_PROPERTY, old, modified); // NOI18N
         }
+        setDirtyAndFirePropertyChange(TRAIN_MODIFIED_CHANGED_PROPERTY, null, modified); // NOI18N
     }
 
     public boolean isModified() {

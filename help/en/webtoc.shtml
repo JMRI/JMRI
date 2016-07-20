@@ -319,13 +319,13 @@
 <ul>
      
 <li>
-<a href="manual/DecoderPro3/Programmer_Setup.shtml#newloco">Set Up </a>
+<a href="">Set Up </a>
 <ul></ul>
 </li>
 
      
 <li>
-<a href="manual/DecoderPro3/Programmer_Setup.shtml#newloco">Choose Decoder </a>
+<a href="">Choose Decoder </a>
 <ul></ul>
 </li>
 
@@ -372,7 +372,7 @@
 
      
 <li>
-<a href="manual/DecoderPro3/Basic_BasicPane.shtml#DoMore">What Next? </a>
+<a href="">What Next? </a>
 <ul></ul>
 </li>
 
@@ -829,7 +829,7 @@
 
    
 <li>
-<a href="html/tools/Blocks.shtml#addBlock">Add/Edit Blocks </a>
+<a href="">Add/Edit Blocks </a>
 <ul></ul>
 </li>
 
@@ -1709,7 +1709,43 @@
 
    
 <li>
+<a href="html/doc/Technical/Names.shtml">Names and Naming </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/doc/Technical/Patterns.shtml">Code Structure Patterns </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/doc/Technical/Swing.shtml">Swing Structure </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/doc/Technical/Threads.shtml">External Connection Structure </a>
+<ul></ul>
+</li>
+
+   
+<li>
 <a href="html/doc/Technical/Help.shtml">JavaHelp HowTo </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/doc/Technical/JavaDoc.shtml">Documentation with JavaDoc and UML </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/doc/Technical/JUnit.shtml">Unit testing with JUnit </a>
 <ul></ul>
 </li>
 

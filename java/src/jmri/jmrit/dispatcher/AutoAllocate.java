@@ -81,9 +81,6 @@ public class AutoAllocate {
             return;
         }
         _conUtil = _dispatcher.getLayoutEditor().getConnectivityUtil();
-        if (_conUtil == null) {
-            log.error("null ConnectivityUtil when constructing AutoAllocate");
-        }
     }
 
     // operational variables
@@ -730,7 +727,7 @@ public class AutoAllocate {
         Transit t = at.getTransit();
         if (!at.isTransitReversed()) {
             for (int i = seq; i <= t.getMaxSequence(); i++) {
-                for (int j = 0; j <= t.getSectionListBySeq(i).size(); j++) {
+                for (int j = 0; j < t.getSectionListBySeq(i).size(); j++) {
                     if (t.getSectionListBySeq(i).get(j) == s) {
                         return i;
                     }
@@ -738,7 +735,7 @@ public class AutoAllocate {
             }
         } else {
             for (int i = seq; i >= 0; i--) {
-                for (int j = 0; j <= t.getSectionListBySeq(i).size(); j++) {
+                for (int j = 0; j < t.getSectionListBySeq(i).size(); j++) {
                     if (t.getSectionListBySeq(i).get(j) == s) {
                         return i;
                     }

@@ -288,9 +288,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
                 return null;
             }
             sourcePoint = providePoint(facing, protecting, panel);
-            if (sourcePoint != null) {
-                sourcePoint.setRefObject(source);
-            }
+            sourcePoint.setRefObject(source);
         }
         return sourcePoint;
     }

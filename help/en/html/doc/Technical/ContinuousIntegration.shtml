@@ -38,9 +38,9 @@
       to remove existing ones.
 
       <p>The core of our system is a series of <a href=
-      "#jenkins">Jenkins</a> jobs that routinely build the code, run
-      checks, and creates downloadable installers. That means that
-      we can and do put changes into our users hands very
+      "#jenkins">Jenkins</a> jobs that routinely build the code,
+      run checks, and creates downloadable installers. That means
+      that we can and do put changes into our users hands very
       quickly.</p>
 
       <p>We also use two additioanl CI engines to test every change

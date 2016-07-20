@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.SocketTimeoutException;
 import jmri.InstanceManager;
 import jmri.implementation.QuietShutDownTask;
-import jmri.jmris.json.JSON;
 import jmri.jmris.json.JsonServerPreferences;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.StatusCode;

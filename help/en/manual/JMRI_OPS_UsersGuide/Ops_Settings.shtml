@@ -1,132 +1,344 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-<title>Operations-Settings</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>Operations-Settings</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<a name="Top"></a>
-<h1>Using JMRI&reg; to Operate Trains</h1>
-<h2>OperationsPro: Settings Window</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-<p><a href="Ops_Locations.shtml">Next</a></p>
-<p><a href="index.shtml#Main">Back to Index</a></p>
-</div>
+    <div id="mainContent">
+      <a name="Top"></a>
 
-<hr>
-<p class="important">The current JMRI OperationsPro Settings Help is <a href="../../package/jmri/jmrit/operations/Operations.shtml#Settings">here</a>.</p>
+      <h1>Using JMRI&#174; to Operate Trains</h1>
 
-<p>The <span style="font-weight: bold;">Operations Settings </span>Window is opened from DecoderPro&reg; &nbsp; <span style="font-weight: bold;">Tools</span>&nbsp;menu / <span style="font-weight: bold;">Operations</span>&nbsp;<img style="width: 20px; height: 9px;" alt="arrow" src="images/arrow.gif"> <span style="font-weight: bold;">Settings</span> &nbsp;or &nbsp;<span style="font-weight: bold;">Operations</span> menu / &nbsp;<span style="font-weight: bold;">Settings</span> if selected in &nbsp;<span style="font-weight: bold;">Operations Setting</span>&nbsp; window.<p style="text-align: center;"><img src="images/Ops_Setting01.png" alt="ops setting" height="608" width="778"></p><p><a style="font-weight: bold;" href="Ops_Settings_menubar.shtml">Menu Bar</a></p><p><span style="font-weight: bold;">Settings &nbsp;-- </span>describes your railroad to the operations program.</p><table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2"><tbody><tr align="center"><td colspan="2" rowspan="1"><img style="width: 800px; height: 156px;" alt="Name" src="images/Ops_Setting05.png"></td></tr><tr><td><strong>Railroad Name</strong>
-        <input name="textfield" id="textfield" type="text">      
-        <br>
-Enter the name of your railroad. This name will show up on your
-manifests You may use a different name for every train in your Roster.
-See <a href="Ops_Trains.shtml">Train Options</a> for details<strong>.<br>
-        </strong></td><td><strong>
-        Trains Travel 
-        <input name="checkbox" id="checkbox" checked="checked" type="checkbox">
-        North/South</strong>
-        <input name="checkbox2" id="checkbox2" checked="checked" type="checkbox">      
-        <strong>East/West</strong><br>
-If your railroad depicts trains traveling north and south select the
-"North/South" box, if your trains travel east and west select the
-"East/West" box. You must select at least one direction, and can if
-desired select both.</td></tr></tbody></table><table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2"><tbody><tr align="center"><td><img style="width: 800px; height: 132px;" alt="scale" src="images/Ops_Setting06.png"></td></tr><tr><td><strong>Scale</strong><br>
-Select the radio button for the scale of your railroad. This will be
-used in calculating scale feet when you enter actual inches. Select the scale you are modeling. This
-is useful when you enter the length of cars and tracks. You can enter
-the number of actual inches and the program will convert to scale feet.
-Append a double quote to the length when entering actual inches. The
-program will also automatically assign the proper NMRA weight for a car
-based on scale and length. When Meters is set as the <a href="#unit">Unit of Length</a>, input as "123cm" so actual centimeters will be converted into scale Meters.</td>
-</tr></tbody></table>
+      <h2>OperationsPro: Settings Window</h2>
 
-<table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2"><tbody>
-<tr align="center"><td colspan="4" rowspan="1"><img style="width: 800px; height: 120px;" alt="length" src="images/Ops_Setting07.png"></td></tr>
-<tr><td style="vertical-align: top;"><strong>Maximum Train Length (ft)</strong>
-          <input name="textfield2" id="textfield2" type="text"> 
-          <br>
-This field provides the maximum default train length between cities.
-Later you can override this length if you wish a shorter train between
-any two Locations. A 1000 foot train can carry approximately 20 cars,
-and is of course dependent on the car lengths assigned to the train.</td><td style="vertical-align: top;"><strong>
-          Maximum Locos per Train</strong>
-          <input name="textfield3" id="textfield3" type="text">
-          <br>
-Now set the maximum number of Locomotives that you want the program to
-assign to a train. If you don't want the program assigning Locomotives, set
-this value to 0.</td>
-<td style="vertical-align: top;"><strong>Switch Time (minutes)</strong>
-          <input name="textfield4" id="textfield4" type="text">
-</td>
-<td style="vertical-align: top;"><strong>Travel Time (minutes)</strong>
-          <input name="textfield5" id="textfield5" type="text">
-          <br>
-OperationsPro when generating Switch Lists for the various Locations on
-your railroad, will estimate the arrival times for your Trains based on
-the Train's departure time and the switch and travel times. Enter the
-average number of minutes it takes to drop or pickup a car on your
-railroad. Then enter the average amount of time in minutes it takes to
-travel from one Location to the another. Later when you create a <strong><a href="Ops_Routes.shtml">Route</a></strong> 
-          you will be able to increase or decrease the Train's travel time between any two Locations</td></tr></tbody></table><table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2"><tbody><tr align="center"><td colspan="3" rowspan="1"><img style="width: 800px; height: 137px;" alt="car types" src="images/Ops_Setting08.png"></td></tr><tr><td style="vertical-align: top; width: 33%;"><p><strong>Car Types</strong>
-        </p>
-        
-        <input name="radio" id="radio" value="radio" checked="checked" type="radio">
-        <strong>Descriptive </strong>
-        <input name="radio2" id="radio2" value="radio2" type="radio">
-        <strong>AAR Codes</strong><br>
-        The program has two sets of car types for you to use. <strong>Descriptive </strong>provides type names like <strong>Boxcar </strong>and <strong>Tankcar</strong>, and <strong>AAR</strong> provides type  names like <strong>XM</strong> and <strong>T</strong> for boxcars and tank cars respectively. Select the one that you prefer</td><td style="vertical-align: top; width: 33%;"><strong><a name="unit"></a>Unit of Length  
-        <br><br><input name="radio5" id="radio5" value="radio5" checked="checked" type="radio">
-        Feet 
-        <input name="radio6" id="radio6" value="radio6" type="radio">
-        Meters</strong><br></td>
-        <td style="vertical-align: top;"><strong>Optional Year Modeled</strong>
-          <input name="textfield7" id="textfield7" type="text">
-          <br><br>
-          You can optionally enter the year you want printed on your train manifest.</td>
-         </tr></tbody>
-         
-         </table><table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2"><tbody><tr align="center"><td colspan="4" rowspan="1"><img style="width: 797px; height: 153px;" alt="options" src="images/Ops_Setting09.png"></td></tr>
-         <tr><td style="width: 30%;"><span name="options" id="options" style="font-weight: bold;">Options</span><br><input name="checkbox3" id="checkbox3" checked="checked" type="checkbox">
-<strong>Add Operations Menu to Main Menu</strong><br>
-When selected, and saved, the Operations menu will be added to the main
-menu bar the next time you start JMRI. To remove it, go through the
-same procedure&#8230; in the Settings window uncheck the box, &#8220;Save&#8221; the
-change and restart DecoderPro&reg;.<br><p><img style="width: 300px; height: 245px;" alt="setting" src="images/Ops_Setting02.png"><br></p></td><td style="vertical-align: top; width: 20%;"><input name="checkbox4" id="checkbox4" type="checkbox">
-        <strong>Close Windows on Save</strong></td><td style="vertical-align: top; width: 10%;"><strong><input name="checkbox12" id="checkbox12" checked="checked" type="checkbox"><span style="font-weight: bold;">
-        </span></strong><span style="font-weight: bold;"> Auto Save</span></td><td style="vertical-align: top; width: 10%; font-weight: bold;"><small><input name="checkbox13" id="checkbox13" checked="checked" type="checkbox">
-        </small>Auto Backup</td></tr></tbody></table><table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2"><tbody><tr align="center"><td><img style="width: 800px; height: 132px;" alt="panel options" src="images/Ops_Setting10.png"></td></tr><tr><td><strong>Panel options</strong> will not be covered in this manual at this time. Panels are normally created as a part of PanelPro&trade;</td></tr></tbody></table><table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2"><tbody><tr align="center"><td><img style="width: 799px; height: 196px;" alt="icon colors" src="images/Ops_Setting11.png"></td></tr><tr><td><strong>Icon Colors</strong>  Not covered here and normally used with PanelPro</td></tr></tbody></table><table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2"><tbody><tr align="center"><td colspan="3" rowspan="1"><img style="width: 791px; height: 101px;" alt="buttons" src="images/Ops_Setting12.png"></td></tr><tr><td style="vertical-align: top;">The <span style="font-weight: bold;">Restore</span> button will prompt you to select which set of backup files you wish to use to
-recover your operation files. You must quit and restart DecoderPro&reg; to
-complete the restoration of the operation files.</td><td style="vertical-align: top;">The <span style="font-weight: bold;">Backup</span> button will store a copy of the operation files in a  new  directory in operations called <strong>backups</strong>,
-and then stores the operation files in a directory that is based on the
-day you created the backup. For example, if today was November 21,
-2008, the program will create a backup directory named <strong>2008_11_21</strong>.</td>
-<td style="vertical-align: top;">When you're finished with the settings window, press the <span style="font-weight: bold;">Save</span> button to  store the setting in a file called <strong>Operations.xml.</strong> You can find this  file in your JMRI directory in a folder called <strong>operations</strong>. The program  will also create a backup file each time you press the <span style="font-weight: bold;">Save</span> button
-</td></tr></tbody>
-</table>
-<hr>
-	  
-<div align="right">
-  <p><a href="Ops_Locations.shtml">Next</a></p>
-  <p><a href="index.shtml#Main">Back to Index</a></p>
-</div>
-	  
-  <!--#include virtual="/Footer" -->
-</div>
-</div>
+      <div align="right">
+        <p><a href="Ops_Locations.shtml">Next</a></p>
+
+        <p><a href="index.shtml#Main">Back to Index</a></p>
+      </div>
+      <hr>
+
+      <p class="important">The current JMRI OperationsPro Settings
+      Help is <a href=
+      "../../package/jmri/jmrit/operations/Operations.shtml#Settings">
+      here</a>.</p>
+
+      <p>The <span style="font-weight: bold;">Operations
+      Settings</span> Window is opened from DecoderPro&#174;
+      <span style="font-weight: bold;">Tools</span> menu /
+      <span style="font-weight: bold;">Operations</span>
+      <img style="width: 20px; height: 9px;" alt="arrow" src=
+      "images/arrow.gif"> <span style=
+      "font-weight: bold;">Settings</span> or <span style=
+      "font-weight: bold;">Operations</span> menu / <span style=
+      "font-weight: bold;">Settings</span> if selected in
+      <span style="font-weight: bold;">Operations Setting</span>
+      window.</p>
+
+      <p style="text-align: center;"><img src=
+      "images/Ops_Setting01.png" alt="ops setting" height="608"
+      width="778"></p>
+
+      <p><a style="font-weight: bold;" href=
+      "Ops_Settings_menubar.shtml">Menu Bar</a></p>
+
+      <p><span style="font-weight: bold;">Settings --</span>
+      describes your railroad to the operations program.</p>
+
+      <table style="text-align: left; width: 100%;" border="0"
+      cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr align="center">
+            <td colspan="2" rowspan="1"><img style=
+            "width: 800px; height: 156px;" alt="Name" src=
+            "images/Ops_Setting05.png"></td>
+          </tr>
+
+          <tr>
+            <td><strong>Railroad Name</strong> <input name=
+            "textfield" id="textfield" type="text"><br>
+            Enter the name of your railroad. This name will show up
+            on your manifests You may use a different name for
+            every train in your Roster. See <a href=
+            "Ops_Trains.shtml">Train Options</a> for
+            details<strong>.<br></strong></td>
+
+            <td><strong>Trains Travel <input name="checkbox" id=
+            "checkbox" checked="checked" type="checkbox">
+            North/South</strong> <input name="checkbox2" id=
+            "checkbox2" checked="checked" type="checkbox">
+            <strong>East/West</strong><br>
+            If your railroad depicts trains traveling north and
+            south select the "North/South" box, if your trains
+            travel east and west select the "East/West" box. You
+            must select at least one direction, and can if desired
+            select both.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table style="text-align: left; width: 100%;" border="0"
+      cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr align="center">
+            <td><img style="width: 800px; height: 132px;" alt=
+            "scale" src="images/Ops_Setting06.png"></td>
+          </tr>
+
+          <tr>
+            <td><strong>Scale</strong><br>
+            Select the radio button for the scale of your railroad.
+            This will be used in calculating scale feet when you
+            enter actual inches. Select the scale you are modeling.
+            This is useful when you enter the length of cars and
+            tracks. You can enter the number of actual inches and
+            the program will convert to scale feet. Append a double
+            quote to the length when entering actual inches. The
+            program will also automatically assign the proper NMRA
+            weight for a car based on scale and length. When Meters
+            is set as the <a href="#unit">Unit of Length</a>, input
+            as "123cm" so actual centimeters will be converted into
+            scale Meters.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table style="text-align: left; width: 100%;" border="0"
+      cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr align="center">
+            <td colspan="4" rowspan="1"><img style=
+            "width: 800px; height: 120px;" alt="length" src=
+            "images/Ops_Setting07.png"></td>
+          </tr>
+
+          <tr>
+            <td style="vertical-align: top;"><strong>Maximum Train
+            Length (ft)</strong> <input name="textfield2" id=
+            "textfield2" type="text"><br>
+            This field provides the maximum default train length
+            between cities. Later you can override this length if
+            you wish a shorter train between any two Locations. A
+            1000 foot train can carry approximately 20 cars, and is
+            of course dependent on the car lengths assigned to the
+            train.</td>
+
+            <td style="vertical-align: top;"><strong>Maximum Locos
+            per Train</strong> <input name="textfield3" id=
+            "textfield3" type="text"><br>
+            Now set the maximum number of Locomotives that you want
+            the program to assign to a train. If you don't want the
+            program assigning Locomotives, set this value to
+            0.</td>
+
+            <td style="vertical-align: top;"><strong>Switch Time
+            (minutes)</strong> <input name="textfield4" id=
+            "textfield4" type="text"></td>
+
+            <td style="vertical-align: top;"><strong>Travel Time
+            (minutes)</strong> <input name="textfield5" id=
+            "textfield5" type="text"><br>
+            OperationsPro when generating Switch Lists for the
+            various Locations on your railroad, will estimate the
+            arrival times for your Trains based on the Train's
+            departure time and the switch and travel times. Enter
+            the average number of minutes it takes to drop or
+            pickup a car on your railroad. Then enter the average
+            amount of time in minutes it takes to travel from one
+            Location to the another. Later when you create a
+            <strong><a href="Ops_Routes.shtml">Route</a></strong>
+            you will be able to increase or decrease the Train's
+            travel time between any two Locations</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table style="text-align: left; width: 100%;" border="0"
+      cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr align="center">
+            <td colspan="3" rowspan="1"><img style=
+            "width: 800px; height: 137px;" alt="car types" src=
+            "images/Ops_Setting08.png"></td>
+          </tr>
+
+          <tr>
+            <td style="vertical-align: top; width: 33%;">
+              <p><strong>Car Types</strong></p><input name="radio"
+              id="radio" value="radio" checked="checked" type=
+              "radio"> <strong>Descriptive</strong> <input name=
+              "radio2" id="radio2" value="radio2" type="radio">
+              <strong>AAR Codes</strong><br>
+              The program has two sets of car types for you to use.
+              <strong>Descriptive</strong> provides type names like
+              <strong>Boxcar</strong> and <strong>Tankcar</strong>,
+              and <strong>AAR</strong> provides type names like
+              <strong>XM</strong> and <strong>T</strong> for
+              boxcars and tank cars respectively. Select the one
+              that you prefer
+            </td>
+
+            <td style="vertical-align: top; width: 33%;">
+            <strong><a name="unit"></a>Unit of Length<br>
+            <br>
+            <input name="radio5" id="radio5" value="radio5"
+            checked="checked" type="radio"> Feet <input name=
+            "radio6" id="radio6" value="radio6" type="radio">
+            Meters</strong><br></td>
+
+            <td style="vertical-align: top;"><strong>Optional Year
+            Modeled</strong> <input name="textfield7" id=
+            "textfield7" type="text"><br>
+            <br>
+            You can optionally enter the year you want printed on
+            your train manifest.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table style="text-align: left; width: 100%;" border="0"
+      cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr align="center">
+            <td colspan="4" rowspan="1"><img style=
+            "width: 797px; height: 153px;" alt="options" src=
+            "images/Ops_Setting09.png"></td>
+          </tr>
+
+          <tr>
+            <td style="width: 30%;">
+              <span name="options" id="options" style=
+              "font-weight: bold;">Options</span><br>
+              <input name="checkbox3" id="checkbox3" checked=
+              "checked" type="checkbox"> <strong>Add Operations
+              Menu to Main Menu</strong><br>
+              When selected, and saved, the Operations menu will be
+              added to the main menu bar the next time you start
+              JMRI. To remove it, go through the same
+              procedure&#8230; in the Settings window uncheck the
+              box, "Save" the change and restart
+              DecoderPro&#174;.<br>
+
+              <p><img style="width: 300px; height: 245px;" alt=
+              "setting" src="images/Ops_Setting02.png"><br></p>
+            </td>
+
+            <td style="vertical-align: top; width: 20%;">
+            <input name="checkbox4" id="checkbox4" type="checkbox">
+            <strong>Close Windows on Save</strong></td>
+
+            <td style="vertical-align: top; width: 10%;">
+            <strong><input name="checkbox12" id="checkbox12"
+            checked="checked" type="checkbox"></strong>
+            <span style="font-weight: bold;">Auto Save</span></td>
+
+            <td style=
+            "vertical-align: top; width: 10%; font-weight: bold;">
+            <small><input name="checkbox13" id="checkbox13"
+            checked="checked" type="checkbox"></small> Auto
+            Backup</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table style="text-align: left; width: 100%;" border="0"
+      cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr align="center">
+            <td><img style="width: 800px; height: 132px;" alt=
+            "panel options" src="images/Ops_Setting10.png"></td>
+          </tr>
+
+          <tr>
+            <td><strong>Panel options</strong> will not be covered
+            in this manual at this time. Panels are normally
+            created as a part of PanelPro&#8482;</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table style="text-align: left; width: 100%;" border="0"
+      cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr align="center">
+            <td><img style="width: 799px; height: 196px;" alt=
+            "icon colors" src="images/Ops_Setting11.png"></td>
+          </tr>
+
+          <tr>
+            <td><strong>Icon Colors</strong> Not covered here and
+            normally used with PanelPro</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table style="text-align: left; width: 100%;" border="0"
+      cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr align="center">
+            <td colspan="3" rowspan="1"><img style=
+            "width: 791px; height: 101px;" alt="buttons" src=
+            "images/Ops_Setting12.png"></td>
+          </tr>
+
+          <tr>
+            <td style="vertical-align: top;">The <span style=
+            "font-weight: bold;">Restore</span> button will prompt
+            you to select which set of backup files you wish to use
+            to recover your operation files. You must quit and
+            restart DecoderPro&#174; to complete the restoration of
+            the operation files.</td>
+
+            <td style="vertical-align: top;">The <span style=
+            "font-weight: bold;">Backup</span> button will store a
+            copy of the operation files in a new directory in
+            operations called <strong>backups</strong>, and then
+            stores the operation files in a directory that is based
+            on the day you created the backup. For example, if
+            today was November 21, 2008, the program will create a
+            backup directory named
+            <strong>2008_11_21</strong>.</td>
+
+            <td style="vertical-align: top;">When you're finished
+            with the settings window, press the <span style=
+            "font-weight: bold;">Save</span> button to store the
+            setting in a file called
+            <strong>Operations.xml.</strong> You can find this file
+            in your JMRI directory in a folder called
+            <strong>operations</strong>. The program will also
+            create a backup file each time you press the
+            <span style="font-weight: bold;">Save</span>
+            button</td>
+          </tr>
+        </tbody>
+      </table>
+      <hr>
+
+      <div align="right">
+        <p><a href="Ops_Locations.shtml">Next</a></p>
+
+        <p><a href="index.shtml#Main">Back to Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

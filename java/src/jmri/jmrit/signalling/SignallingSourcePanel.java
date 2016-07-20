@@ -30,14 +30,8 @@ import org.slf4j.LoggerFactory;
  * Frame for Signal Mast Add / Edit Panel
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version $Revision$
  */
 public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4060876707415116653L;
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
 

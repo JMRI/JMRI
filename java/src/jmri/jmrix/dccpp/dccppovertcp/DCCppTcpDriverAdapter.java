@@ -10,10 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implements SerialPortAdapter for the LocoNetOverTcp system network
+ * Implements SerialPortAdapter for the DCCppOverTcp system network
  * connection.
  * <P>
- * This connects a Loconet via a telnet connection. Normally controlled by the
+ * This connects a DCC++ via a telnet connection. Normally controlled by the
  * DCCppTcpDriverFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003
@@ -35,7 +35,7 @@ public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements
     }
 
     /**
-     * set up all of the other objects to operate with a LocoNet connected via
+     * set up all of the other objects to operate with a DCC++ connected via
      * this class.
      */
     public void configure() {

@@ -11,11 +11,6 @@ import jmri.PowerManager;
  */
 public class PowerButtonAction extends javax.swing.AbstractAction implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2336270044595139511L;
-
     public PowerButtonAction(String title) {
         super(title);
         checkManager();
@@ -56,7 +51,7 @@ public class PowerButtonAction extends javax.swing.AbstractAction implements jav
     public void actionPerformed(java.awt.event.ActionEvent e) {
         try {
             // alternate power state, updating name
-            PowerManager p = jmri.InstanceManager.getDefault(jmri.PowerManager.class);
+            PowerManager p = jmri.InstanceManager.getOptionalDefault(jmri.PowerManager.class);
             if (p == null) {
                 return;
             }

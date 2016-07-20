@@ -1,62 +1,92 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>Decoder Pro Manual: Getting Started</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>Decoder Pro Manual: Getting Started</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<a NAME="Top"></a>
-<h1><img src="images/Logo.gif" alt="JMRI DecoderPro Logo" width="163" height="117" vspace="15" border="10" class="BOXIT"></h1>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h1>Getting Started with DecoderPro&reg;</h1>
-<h2>What is DCC?</h2>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<div align="right">
-<p><a href="Start_DCC_Systems.shtml">Next</a>
-<p><a href="index.shtml#GettingStarted">Back to Index</a>
-</div>
+      <h1><img src="images/Logo.gif" alt="JMRI DecoderPro Logo"
+      width="163" height="117" vspace="15" border="10" class=
+      "BOXIT"></h1>
 
-<hr>
+      <h1>Getting Started with DecoderPro&reg;</h1>
 
-<p>
-In short, DCC is Digital Command Control, a system for operating model
-railroads in a more prototypical manner. Each locomotive contains a tiny,
-specialized controller. These controllers (decoders) accept digital commands over a network (the rails) addressed to them and interprets them to control the locomotive's speed, direction, lighting effects, sound, and other functions. Each decoder responds only to those commands addressed to it. Not every decoder will have functions beyond basic throttle commands available. Although there are NMRA&reg; standards for the format of communication (allowing the decoders from different manufacturers to work on the same railroad), beyond that there is considerable variety in the functions supported and the implementation of those functions.
-<p>
-Just like any other controller, decoders must be programmed by the user
-to reach their full potential. While they come with basic "default" programs,
-most users will want to customize the decoder address, motor control, lights,
-sound, and other functions to meet their specific needs. You do so by editing
-<b>CV</b>s, or <b>Configuration Variables</b>, in the decoder. Some CVs use values ranging from 0 to 255, others use their space in the decoder's memory as
-a bank of 8 on/off switches. While this lets you do a lot with very little
-memory, it can get very complex for those of us that are not on speaking
-terms with binary code.
-<p>
-Decoder Pro attempts to help overcome the inevitable complexity of this
-system by providing a clear, usable, user friendly <span class="ACCENT">open
-source</span> software solution for programming these on-board decoders.
-Programming panel designs are written in <b>XML</b>, (a close relative
-of HTML) and can be modified or even created from scratch by users with
-even a passing familiarity with the format without previous XML experience. 
-<hr>
-<div align=right>
-<p><a href="Start_DCC_Systems.shtml">Next</a><a href="Basic_Programming.shtml"></a>
-<p><a href="index.shtml#GettingStarted">Back to Index</a>
-</div>
+      <h2>What is DCC?</h2>
 
-<!--#include virtual="/Footer" -->
+      <div align="right">
+        <p><a href="Start_DCC_Systems.shtml">Next</a></p>
+
+        <p><a href="index.shtml#GettingStarted">Back to
+        Index</a></p>
+      </div>
+      <hr>
+
+      <p>In short, DCC is Digital Command Control, a system for
+      operating model railroads in a more prototypical manner. Each
+      locomotive contains a tiny, specialized controller. These
+      controllers (decoders) accept digital commands over a network
+      (the rails) addressed to them and interprets them to control
+      the locomotive's speed, direction, lighting effects, sound,
+      and other functions. Each decoder responds only to those
+      commands addressed to it. Not every decoder will have
+      functions beyond basic throttle commands available. Although
+      there are NMRA&reg; standards for the format of communication
+      (allowing the decoders from different manufacturers to work
+      on the same railroad), beyond that there is considerable
+      variety in the functions supported and the implementation of
+      those functions.</p>
+
+      <p>Just like any other controller, decoders must be
+      programmed by the user to reach their full potential. While
+      they come with basic "default" programs, most users will want
+      to customize the decoder address, motor control, lights,
+      sound, and other functions to meet their specific needs. You
+      do so by editing <b>CV</b>s, or <b>Configuration
+      Variables</b>, in the decoder. Some CVs use values ranging
+      from 0 to 255, others use their space in the decoder's memory
+      as a bank of 8 on/off switches. While this lets you do a lot
+      with very little memory, it can get very complex for those of
+      us that are not on speaking terms with binary code.</p>
+
+      <p>Decoder Pro attempts to help overcome the inevitable
+      complexity of this system by providing a clear, usable, user
+      friendly <span class="ACCENT">open source</span> software
+      solution for programming these on-board decoders. Programming
+      panel designs are written in <b>XML</b>, (a close relative of
+      HTML) and can be modified or even created from scratch by
+      users with even a passing familiarity with the format without
+      previous XML experience.</p>
+      <hr>
+
+      <div align="right">
+        <p><a href="Start_DCC_Systems.shtml">Next</a><a href=
+        "Basic_Programming.shtml"></a></p>
+
+        <p><a href="index.shtml#GettingStarted">Back to
+        Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

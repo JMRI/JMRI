@@ -83,11 +83,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         if (InstanceManager.getOptionalDefault(jmri.BlockManager.class) != null) {
             Block block = InstanceManager.getDefault(jmri.BlockManager.class).
                     provideBlock(pName);
-            if (block != null) {
-                setBlock(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, block));
-            } else {
-                log.error("Block '" + pName + "' not available, icon won't see changes");
-            }
+            setBlock(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, block));
         } else {
             log.error("No Block Manager for this protocol, icon won't see changes");
         }

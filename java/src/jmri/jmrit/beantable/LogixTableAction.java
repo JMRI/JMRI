@@ -115,8 +115,8 @@ public class LogixTableAction extends AbstractTableAction {
         // set up managers - no need to use InstanceManager since both managers are
         // Default only (internal). We use InstanceManager to get managers for
         // compatibility with other facilities.
-        _logixManager = InstanceManager.getDefault(jmri.LogixManager.class);
-        _conditionalManager = InstanceManager.getDefault(jmri.ConditionalManager.class);
+        _logixManager = InstanceManager.getOptionalDefault(jmri.LogixManager.class);
+        _conditionalManager = InstanceManager.getOptionalDefault(jmri.ConditionalManager.class);
         // disable ourself if there is no Logix manager or no Conditional manager available
         if ((_logixManager == null) || (_conditionalManager == null)) {
             setEnabled(false);
@@ -4659,14 +4659,13 @@ public class LogixTableAction extends AbstractTableAction {
         Sensor s = null;
         if (name != null) {
             if (name.length() > 0) {
-                s = InstanceManager.sensorManagerInstance().getByUserName(name);
+                s = InstanceManager.getDefault(jmri.SensorManager.class).getByUserName(name);
                 if (s != null) {
                     return name;
                 }
             }
-            s = InstanceManager.sensorManagerInstance().getBySystemName(name);
+            s = InstanceManager.getDefault(jmri.SensorManager.class).getBySystemName(name);
         }
-        s = InstanceManager.sensorManagerInstance().getBySystemName(name);
         if (s == null) {
             messageInvalidActionItemName(name, "Sensor"); //NOI18N
             return null;

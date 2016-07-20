@@ -90,7 +90,7 @@ public class SimpleClockFrame extends JmriJFrame
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
         // Determine current state of the clock
-        clock = InstanceManager.getDefault(jmri.Timebase.class);
+        clock = InstanceManager.getOptionalDefault(jmri.Timebase.class);
         if (clock == null) {
             // could not initialize clock
             log.error("Could not obtain a Timebase instance.");
