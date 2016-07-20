@@ -1817,9 +1817,9 @@ public class LRouteTableAction extends AbstractTableAction {
             if (tSize > 1) {
                 antecedent.append("(");
             }
-            antecedent.append(Bundle.getMessage("rowAbrev").trim() + "1"); // rowAbrev = "R" in English
+            antecedent.append("R1"); //NOI18N
             for (int i = 1; i < tSize; i++) {
-                antecedent.append(" " + Bundle.getMessage("LogicOR") + " " + Bundle.getMessage("rowAbrev").trim() + (i + 1));
+                antecedent.append(" " + Bundle.getMessage("LogicOR") + " R" + (i + 1)); //NOI18N
             }
             if (tSize > 1) {
                 antecedent.append(")");
@@ -1838,9 +1838,9 @@ public class LRouteTableAction extends AbstractTableAction {
             if (vSize > 1) {
                 antecedent.append("(");
             }
-            antecedent.append(Bundle.getMessage("LogicNOT") + " " + Bundle.getMessage("rowAbrev").trim() + (1 + tSize)); // rowAbrev = "R" in English
+            antecedent.append(Bundle.getMessage("LogicNOT") + " R" + (1 + tSize)); //NOI18N
             for (int i = 1; i < vSize; i++) {
-                antecedent.append(" " + Bundle.getMessage("LogicAND") + " " + Bundle.getMessage("LogicNOT") + " " + Bundle.getMessage("rowAbrev").trim() + (i + 1 + tSize));
+                antecedent.append(" " + Bundle.getMessage("LogicAND") + " " + Bundle.getMessage("LogicNOT") + " R" + (i + 1 + tSize)); //NOI18N
             }
             if (vSize > 1) {
                 antecedent.append(")");

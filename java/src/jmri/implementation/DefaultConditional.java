@@ -438,7 +438,7 @@ public class DefaultConditional extends AbstractNamedBean
             argsUsed.or(dp.argsUsed);
         } else {
             // cannot be '('.  must be either leftArg or notleftArg
-            if (s.charAt(i) == Bundle.getMessage("rowAbrev").charAt(0)) { // compare i18n key value instead of just 'R'
+            if (s.charAt(i) == 'R') { //NOI18N
                 try {
                     k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
                     i += 2;
@@ -454,14 +454,14 @@ public class DefaultConditional extends AbstractNamedBean
                 i++;
                 argsUsed.set(k - 1);
             } else if (Bundle.getMessage("LogicNOT").equals(s.substring(i, i + (Bundle.getMessage("LogicNOT").length())))) { // compare the right length after i18n
-                i += 3;
+                i += Bundle.getMessage("LogicNOT").length(); // was: 3;
                 //not leftArg
                 if (s.charAt(i) == '(') {
                     dp = parseCalculate(s.substring(++i), variableList);
                     leftArg = dp.result;
                     i += dp.indexCount;
                     argsUsed.or(dp.argsUsed);
-                } else if (s.charAt(i) == Bundle.getMessage("rowAbrev").charAt(0)) { // compare i18n key value instead of just 'R'
+                } else if (s.charAt(i) == 'R') { //NOI18N
                     try {
                         k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
                         i += 2;
@@ -491,10 +491,10 @@ public class DefaultConditional extends AbstractNamedBean
             if (s.charAt(i) != ')') {
                 // must be either AND or OR
                 if (Bundle.getMessage("LogicAND").equals(s.substring(i, i + (Bundle.getMessage("LogicAND").length())))) { // compare the right length after i18n
-                    i += 3;
+                    i += Bundle.getMessage("LogicAND").length(); // EN AND: 3;
                     oper = OPERATOR_AND;
                 } else if (Bundle.getMessage("LogicOR").equals(s.substring(i, i + (Bundle.getMessage("LogicOR").length())))) { // compare the right length after i18n
-                    i += 2;
+                    i += Bundle.getMessage("LogicOR").length(); // EN OR: 2;
                     oper = OPERATOR_OR;
                 } else {
                     throw new JmriException(java.text.MessageFormat.format(
@@ -507,7 +507,7 @@ public class DefaultConditional extends AbstractNamedBean
                     argsUsed.or(dp.argsUsed);
                 } else {
                     // cannot be '('.  must be either rightArg or notRightArg
-                    if (s.charAt(i) == Bundle.getMessage("rowAbrev").charAt(0)) { // compare i18n key value instead of just 'R'
+                    if (s.charAt(i) == 'R') { //NOI18N
                         try {
                             k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
                             i += 2;
@@ -523,14 +523,14 @@ public class DefaultConditional extends AbstractNamedBean
                         i++;
                         argsUsed.set(k - 1);
                     } else if ((i + 3) < s.length() && Bundle.getMessage("LogicNOT").equals(s.substring(i, i + (Bundle.getMessage("LogicNOT").length())))) { // compare the right length after i18n
-                        i += 3;
+                        i += Bundle.getMessage("LogicNOT").length(); // EN NOT: 3;
                         //not rightArg
                         if (s.charAt(i) == '(') {
                             dp = parseCalculate(s.substring(++i), variableList);
                             rightArg = dp.result;
                             i += dp.indexCount;
                             argsUsed.or(dp.argsUsed);
-                        } else if (s.charAt(i) == Bundle.getMessage("rowAbrev").charAt(0)) { // compare i18n key value instead of just 'R'
+                        } else if (s.charAt(i) == 'R') { //NOI18N
                             try {
                                 k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
                                 i += 2;

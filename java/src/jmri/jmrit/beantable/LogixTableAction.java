@@ -2198,7 +2198,7 @@ public class LogixTableAction extends AbstractTableAction {
         String str = "";
         if (_variableList.size() != 0) {
             String not = Bundle.getMessage("LogicNOT").toLowerCase();
-            String row = Bundle.getMessage("rowAbrev").trim();
+            String row = "R"; //NOI18N
             String and = " " + Bundle.getMessage("LogicAND").toLowerCase() + " ";
             String or = " " + Bundle.getMessage("LogicOR").toLowerCase() + " ";
             if (_variableList.get(0).isNegated()) {
@@ -2239,7 +2239,7 @@ public class LogixTableAction extends AbstractTableAction {
                 _antecedent = _antecedent + " " + Bundle.getMessage("LogicAND").toLowerCase() + " ";
             }
         }
-        _antecedent = _antecedent + Bundle.getMessage("rowAbrev").trim() + _variableList.size();
+        _antecedent = _antecedent + "R" + _variableList.size(); //NOI18N
         _antecedentField.setText(_antecedent);
     }
 
@@ -5238,12 +5238,12 @@ public class LogixTableAction extends AbstractTableAction {
             ConditionalVariable variable = _variableList.get(r);
             switch (c) {
                 case ROWNUM_COLUMN:
-                    return (Bundle.getMessage("rowAbrev").trim() + (r + 1));
+                    return ("R" + (r + 1)); //NOI18N
                 case AND_COLUMN:
-                    if (r == 0 || _logicType == Conditional.MIXED) {
+                    if (r == 0) { //removed: || _logicType == Conditional.MIXED
                         return "";
                     }
-                    return variable.getOpernString();
+                    return variable.getOpernString(); // also display Operand selection when set to Mixed
                 case NOT_COLUMN:
                     if (variable.isNegated()) {
                         return Bundle.getMessage("LogicNOT");
