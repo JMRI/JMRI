@@ -13,7 +13,13 @@ import org.junit.runners.Suite;
    SprogSystemConnectionMemoTest.class,
    SprogTrafficControllerTest.class,
    SprogMessageTest.class,
-   SprogCSStreamPortControllerTest.class
+   SprogCSStreamPortControllerTest.class,
+   SprogPowerManagerTest.class,
+   SprogTurnoutManagerTest.class,
+   SprogCommandStationTest.class,
+   jmri.jmrix.sprog.pi.PackageTest.class,
+   jmri.jmrix.sprog.serialdriver.PackageTest.class,
+   jmri.jmrix.sprog.sprogCS.PackageTest.class
 })
 public class PackageTest {
 }
