@@ -25,7 +25,7 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.valueOf(systemName.substring(2)).intValue();
         Turnout t;
-        if (jmri.jmrix.sprog.ActiveFlagCS.isActive()) {
+        if (_memo.getSprogMode() == SprogConstants.SprogMode.OPS ) {
             t = new SprogCSTurnout(addr,_memo);
         } else {
             t = new SprogTurnout(addr,_memo);
