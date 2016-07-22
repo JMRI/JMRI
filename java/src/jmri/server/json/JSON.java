@@ -1,8 +1,8 @@
 package jmri.server.json;
 
 /**
- * Common constants used in the JMRI JSON protocol starting with protocol
- * version 4.0.
+ * Common and utility constants used in the JMRI JSON protocol starting with
+ * protocol version 4.0.
  *
  * @author Randall Wood (C) 2013, 2014, 2016
  * @see jmri.jmris.json.JSON
@@ -307,13 +307,21 @@ public final class JSON {
      */
     public static final String TRACK_COLOR = "trackColor"; // NOI18N
     /**
-     * {@value #BLOCK_OCCUPIED_COLOR}
+     * {@value #OCCUPIED_COLOR}
      */
-    public static final String BLOCK_OCCUPIED_COLOR = "blockOccupiedColor"; // NOI18N
+    public static final String OCCUPIED_COLOR = "occupiedColor"; // NOI18N
     /**
-     * {@value #BLOCK_EXTRA_COLOR}
+     * {@value #EXTRA_COLOR}
      */
-    public static final String BLOCK_EXTRA_COLOR = "blockExtraColor"; // NOI18N
+    public static final String EXTRA_COLOR = "extraColor"; // NOI18N
+    /**
+    * {@value #OCCUPANCY_SENSOR}
+    */
+   public static final String OCCUPANCY_SENSOR = "occupancySensor"; // NOI18N
+   /**
+   * {@value #OCCUPIED_SENSE}
+   */
+  public static final String OCCUPIED_SENSE = "occupiedSense"; // NOI18N
 
     /* JSON operations tokens */
     /**
@@ -627,8 +635,8 @@ public final class JSON {
     /**
      * {@value #ADD}
      *
-     * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER}, this is an entry that has been
-     * added to the roster.
+     * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER},
+     * this is an entry that has been added to the roster.
      *
      * @since 1.1
      */
@@ -639,8 +647,8 @@ public final class JSON {
      * In operations, this indicates the dropping or setting out of a car or
      * engine.
      *
-     * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER}, this is an entry that has been
-     * removed from the roster.
+     * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER},
+     * this is an entry that has been removed from the roster.
      *
      * @since 1.1
      */
@@ -803,7 +811,7 @@ public final class JSON {
      * JSON State (an unsigned integer)
      */
 
- /* Common state */
+    /* Common state */
     /**
      * {@value #UNKNOWN}
      * <p>

@@ -13,6 +13,7 @@ import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
 import jmri.jmrix.sprog.SprogTrafficController;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,9 +81,11 @@ abstract public class SprogUpdateFrame
     int blockLen = 0;
 
     protected SprogTrafficController tc = null;
+    protected SprogSystemConnectionMemo _memo = null;
 
-    public SprogUpdateFrame() {
+    public SprogUpdateFrame(SprogSystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
     protected String title() {
@@ -91,12 +94,13 @@ abstract public class SprogUpdateFrame
 
     protected void init() {
         // connect to the TrafficManager
-        tc = SprogTrafficController.instance();
+        tc = _memo.getSprogTrafficController();
         tc.setSprogState(SprogState.NORMAL);
     }
 
     public void dispose() {
         tc = null;
+        _memo = null;
         super.dispose();
     }
 

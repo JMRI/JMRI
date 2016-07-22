@@ -396,7 +396,7 @@
             <fileset dir="${resourcedir}" includes="*.gif"/>
         </copy>
         <copy todir="${target}">
-            <fileset dir="${source}" includes="**/*.properties"/>
+            <fileset dir="${source}" includes="**/*.properties,**/*.js"/>
             <fileset dir="${source}" includes="META-INF/**"/>
         </copy>
     </target>

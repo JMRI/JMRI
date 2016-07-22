@@ -148,23 +148,20 @@ Alternately, you can create a "classes" directory, and compile your Java class i
 In that case, it should end up in:
 
 <pre style="font-family: monospace;">
-
 classes/MyCode.class
-</code></pre>
+</pre>
 
 if you've specified no code in your package, or 
 
 <pre style="font-family: monospace;">
-
 classes/MyCode.class
-</code></pre>
+</pre>
 
 or
 
 <pre style="font-family: monospace;">
-
 classes/jmri/jmrit/automat/SampleAutomaton.class
-</code></pre>
+</pre>
 
 as an example of how code in a specific package gets stored.
 <p>
@@ -173,17 +170,15 @@ Open a Script Output window (so you can see errors) from the Panels menu,
 then a Script Entry window, enter:
 
 <pre style="font-family: monospace;">
-
 MyCode().start()
-</code></pre>
+</pre>
 
 or
 
 <pre style="font-family: monospace;">
-
 import jmri.jmrit.automat
 jmri.jmrit.automat.SampleAutomaton().start()
-</code></pre>
+</pre>
 
 and hit Execute. The 2nd line creates an instance of your class and tells it to start running. 
 <p>

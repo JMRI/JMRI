@@ -52,9 +52,8 @@ Malheureusement, nous ne pouvons pas donner des r&#232;gles pr&#233;cises, comme
  <br>
  Pour ce faire, changer la deuxi&#232;me ligne du fichier en:
  <pre style="font-family: monospace;">
-
   &lt;xml-stylesheet href = "http://jmri.org/xml/XSLT/panelfile.xsl"type = "text/xsl"&gt;
- </code></pre></li>
+</pre></li>
  <li>
  Placez le fichier feuille de style dans le m&#234;me endroit que votre fichier de panneau, et
  dire au navigateur de l'utiliser.
@@ -64,9 +63,8 @@ Malheureusement, nous ne pouvons pas donner des r&#232;gles pr&#233;cises, comme
  Placez une copie de ce fichier dans le m&#234;me r&#233;pertoire que le fichier de panneau que vous souhaitez afficher.
  Puis changez la deuxi&#232;me ligne de votre fichier de panneau en:
  <pre style="font-family: monospace;">
-
  &lt; xml-stylesheet href = "panelfile.xsl" type = "text/xsl"&gt;
- </code></pre></li>
+</pre></li>
  </ul>
 <p>
 Ne pas modifier la premi&#232;re ligne!

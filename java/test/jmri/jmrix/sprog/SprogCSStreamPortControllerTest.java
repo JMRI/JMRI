@@ -4,20 +4,23 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 
 /**
  * SprogCSStreamPortControllerTest.java
  *
  * Description:	tests for the jmri.jmrix.sprog.SprogCSStreamPortController class
  *
- * @author	Paul Bender
+ * @author	Paul Bender Copyright (C) 2014-2016
  */
-public class SprogCSStreamPortControllerTest extends TestCase {
+public class SprogCSStreamPortControllerTest{
 
+    @Test
     public void testCtor() {
 
         try {
@@ -34,31 +37,14 @@ public class SprogCSStreamPortControllerTest extends TestCase {
         }
     }
 
-    // from here down is testing infrastructure
-    public SprogCSStreamPortControllerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SprogCSStreamPortControllerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SprogCSStreamPortControllerTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
-        super.setUp();
     }
 
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         apps.tests.Log4JFixture.tearDown();
     }
 

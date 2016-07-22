@@ -1,37 +1,33 @@
 // JsonServlet.java
 package jmri.web.servlet.json;
 
-import static jmri.jmris.json.JSON.CAR;
-import static jmri.jmris.json.JSON.CARS;
-import static jmri.jmris.json.JSON.CONSIST;
-import static jmri.jmris.json.JSON.CONSISTS;
-import static jmri.jmris.json.JSON.DATA;
-import static jmri.jmris.json.JSON.ENGINE;
-import static jmri.jmris.json.JSON.ENGINES;
-import static jmri.jmris.json.JSON.FORMAT;
-import static jmri.jmris.json.JSON.HELLO;
-import static jmri.jmris.json.JSON.LOCATION;
-import static jmri.jmris.json.JSON.LOCATIONS;
-import static jmri.jmris.json.JSON.METADATA;
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.NETWORK_SERVICES;
-import static jmri.jmris.json.JSON.NODE;
-import static jmri.jmris.json.JSON.PANELS;
-import static jmri.jmris.json.JSON.RAILROAD;
-import static jmri.jmris.json.JSON.REPORTER;
-import static jmri.jmris.json.JSON.REPORTERS;
-import static jmri.jmris.json.JSON.SENSOR;
-import static jmri.jmris.json.JSON.SENSORS;
-import static jmri.jmris.json.JSON.SIGNAL_HEAD;
-import static jmri.jmris.json.JSON.SIGNAL_HEADS;
-import static jmri.jmris.json.JSON.SIGNAL_MAST;
-import static jmri.jmris.json.JSON.SIGNAL_MASTS;
-import static jmri.jmris.json.JSON.STATE;
-import static jmri.jmris.json.JSON.SYSTEM_CONNECTIONS;
-import static jmri.jmris.json.JSON.TRAIN;
-import static jmri.jmris.json.JSON.TRAINS;
-import static jmri.jmris.json.JSON.VALUE;
-import static jmri.jmris.json.JSON.XML;
+import static jmri.server.json.JSON.CAR;
+import static jmri.server.json.JSON.CARS;
+import static jmri.server.json.JSON.CONSIST;
+import static jmri.server.json.JSON.CONSISTS;
+import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JSON.ENGINE;
+import static jmri.server.json.JSON.ENGINES;
+import static jmri.server.json.JSON.FORMAT;
+import static jmri.server.json.JSON.LOCATION;
+import static jmri.server.json.JSON.LOCATIONS;
+import static jmri.server.json.JSON.METADATA;
+import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.PANELS;
+import static jmri.server.json.JSON.RAILROAD;
+import static jmri.server.json.JSON.REPORTER;
+import static jmri.server.json.JSON.REPORTERS;
+import static jmri.server.json.JSON.SENSOR;
+import static jmri.server.json.JSON.SENSORS;
+import static jmri.server.json.JSON.SIGNAL_HEAD;
+import static jmri.server.json.JSON.SIGNAL_HEADS;
+import static jmri.server.json.JSON.SIGNAL_MAST;
+import static jmri.server.json.JSON.SIGNAL_MASTS;
+import static jmri.server.json.JSON.STATE;
+import static jmri.server.json.JSON.TRAIN;
+import static jmri.server.json.JSON.TRAINS;
+import static jmri.server.json.JSON.VALUE;
+import static jmri.server.json.JSON.XML;
 import static jmri.server.json.JsonException.CODE;
 import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
 import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
@@ -51,7 +47,6 @@ import java.util.ServiceLoader;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import jmri.jmris.json.JsonServerPreferences;
 import jmri.jmris.json.JsonUtil;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
@@ -207,18 +202,6 @@ public class JsonServlet extends WebSocketServlet {
                         case TRAINS:
                             reply = JsonUtil.getTrains(request.getLocale());
                             break;
-                        case HELLO:
-                            reply = JsonUtil.getHello(request.getLocale(), JsonServerPreferences.getDefault().getHeartbeatInterval());
-                            break;
-                        case NETWORK_SERVICES:
-                            reply = JsonUtil.getNetworkServices(request.getLocale());
-                            break;
-                        case SYSTEM_CONNECTIONS:
-                            reply = JsonUtil.getSystemConnections(request.getLocale());
-                            break;
-                        case NODE:
-                            reply = JsonUtil.getNode(request.getLocale());
-                            break;
                         default:
                             if (this.services.get(type) != null) {
                                 ArrayNode array = this.mapper.createArrayNode();
@@ -247,7 +230,7 @@ public class JsonServlet extends WebSocketServlet {
                             }
                             if (reply == null) {
                                 log.warn("Type {} unknown.", type);
-                                reply = JsonUtil.getUnknown(request.getLocale(), type);
+                                throw new JsonException(404, Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
                             }
                             break;
                     }
@@ -264,9 +247,6 @@ public class JsonServlet extends WebSocketServlet {
                             break;
                         case LOCATION:
                             reply = JsonUtil.getLocation(request.getLocale(), name);
-                            break;
-                        case METADATA:
-                            reply = JsonUtil.getMetadata(request.getLocale(), name);
                             break;
                         case REPORTER:
                             reply = JsonUtil.getReporter(request.getLocale(), name);
@@ -311,7 +291,7 @@ public class JsonServlet extends WebSocketServlet {
                             }
                             if (reply == null) {
                                 log.warn("Requested type '{}' unknown.", type);
-                                reply = JsonUtil.getUnknown(request.getLocale(), type);
+                                throw new JsonException(404, Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
                             }
                             break;
                     }
@@ -433,7 +413,7 @@ public class JsonServlet extends WebSocketServlet {
                             }
                             if (reply == null) {
                                 log.warn("Type {} unknown.", type);
-                                reply = JsonUtil.getUnknown(request.getLocale(), type);
+                                throw new JsonException(404, Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
                             }
                             break;
                     }
@@ -531,7 +511,7 @@ public class JsonServlet extends WebSocketServlet {
                     }
                 } else {
                     log.warn("Type {} unknown.", type);
-                    reply = JsonUtil.getUnknown(request.getLocale(), type);
+                    throw new JsonException(404, Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type));
                 }
             } else {
                 log.warn("Type not specified.");

@@ -1,88 +1,95 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-<!-- Copyright Me 2008 -->
-<!-- $Id$ -->
-<title>JMRI: Memories</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Me 2008 -->
+  <!-- $Id$ -->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: Memories</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header" -->
 
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h1> 
-JMRI: Memory Variables Documentation
-</h1>
+    <div id="mainContent">
+      <h1>JMRI: Memory Variables Documentation</h1>A JMRI memory
+      variable can hold any type of object. It's really up to user
+      code what to put in them, and how to manipulate them.
 
-A JMRI memory variable can hold any type of object.  It's really up to 
-user code what to put in them, and how to manipulate them.
+      <h2>The Memory Variable Table</h2>The <a href=
+      "../../package/jmri/jmrit/beantable/MemoryTable.shtml">Memory
+      Table</a> lets you see what memories have been defined, and
+      what value they currently contain. The table will ask the
+      contents of the memory to display itself, so an image or icon
+      will show as a picture in the table; most other things will
+      show as as string. You can type a new string value into a
+      memory, or <a href=
+      "../../package/jmri/jmrit/beantable/MemoryAddEdit.shtml">create
+      a new memory variable</a>.
 
-<h2>The Memory Variable Table</h2>
-The 
-<a href="../../package/jmri/jmrit/beantable/MemoryTable.shtml">Memory Table</a>
-lets you see what memories have been defined, and what value
-they currently contain.  The table will ask the contents of the memory
-to display itself, so an image or icon will show as a picture in the table;
-most other things will show as as string. You can type a new string value
-into a memory, or 
-<a href="../../package/jmri/jmrit/beantable/MemoryAddEdit.shtml">create a new memory variable</a>.
+      <h2>Using Memories With Logix</h2>A Logix can test a memory
+      for particular contents, and set the contents of a memory to
+      whatever string is needed. This lets you use a memory as a
+      status indicator, counter or just about anything else you can
+      imagine. Because of their user interface, Logix generally
+      only put string values into memory variables.
 
-<h2>Using Memories With Logix</h2>
-A Logix can test a memory for particular contents, and set the contents of 
-a memory to whatever string is needed.  This lets you use a memory as a status indicator,
-counter or just about anything else you can imagine. Because of their user
-interface, Logix generally only put string values into memory variables.
+      <h2>Displaying a Memory Variable on a Panel</h2>The contents
+      of a memory can be displayed on a <a href=
+      "../../package/jmri/jmrit/display/PanelEditor.shtml">panel</a>.
+      Usually, the memory will try to display its contents
+      directly. If the contents are an icon, image or string, the
+      contents will be shown directly. As a special case, if the
+      contents of the memory are "null" (the memory contains no
+      object), a red X icon is displayed. This lets you see and
+      position the memory on the panel. If the memory contains the
+      zero-length string "", that's an object, and it will be
+      displayed as blank space.
 
-<h2>Displaying a Memory Variable on a Panel</h2>
-The contents of a memory can be displayed on a 
-<a href="../../package/jmri/jmrit/display/PanelEditor.shtml">panel</a>.  Usually, the memory will try to display its
-contents directly.  If the contents are an icon, image or string, the contents
-will be shown directly.  As a special case, if the contents of the memory
-are "null" (the memory contains no object), a red X icon is displayed.
-This lets you see and position the memory on the panel.  If the 
-memory contains the zero-length string "", that's an object, and it will
-be displayed as blank space.
-<p>
-You can customize the appearance of text in the icon via its pop-up menu.
-<p>
-You can also define a series of icons to be displayed in place of the 
-memories own content's if you'd like. For an example of how this is
-done, please see the 
-<a href="http://jmri.org/xml/samples/MemoryIconExample.xml">sample XML file</a>.
-Use your browser's "view source" command, or download that file to see how it's done.
-Basically, the XML browser file has a "memoryicon" element that carries various information
-about where to put the icon, whether it can be selected, etc.
-Within that element, you can define "memorystate" elements that 
-define what icon to show when the memory has a specific value:
-<pre style="font-family: monospace;">
+      <p>You can customize the appearance of text in the icon via
+      its pop-up menu.</p>
 
+      <p>You can also define a series of icons to be displayed in
+      place of the memories own content's if you'd like. For an
+      example of how this is done, please see the <a href=
+      "http://jmri.org/xml/samples/MemoryIconExample.xml">sample
+      XML file</a>. Use your browser's "view source" command, or
+      download that file to see how it's done. Basically, the XML
+      browser file has a "memoryicon" element that carries various
+      information about where to put the icon, whether it can be
+      selected, etc. Within that element, you can define
+      "memorystate" elements that define what icon to show when the
+      memory has a specific value:</p>
+      <pre style="font-family: monospace;">
     &lt;memoryicon memory="IM20" defaulticon="resources/icons/misc/Question-black.gif"&gt;
       &lt;memorystate value="9" icon="resource:resources/icons/misc/Nixie/M9B.gif" /&gt;
       &lt;memorystate value="8" icon="resource:resources/icons/misc/Nixie/M8B.gif" /&gt;
     &lt;/memoryicon&gt;
-</code></pre>
-(That example has been simplified by omitting some stuff from the memoryicon element)
-In the example, the two memorystate elements ensure that if the 
-memory contains "9" or "8", certain images will be shown, otherwise 
-a default black question mark icon will be shown.
-<p>
-Unfortunately, JMRI doesn't have a nice GUI tool for defining the 
-icons displayed when using a memory icon this way. You have to edit the XML file 
-by hand, following one of the examples.
+</pre>(That example has been simplified by omitting some stuff from
+the memoryicon element) In the example, the two memorystate
+elements ensure that if the memory contains "9" or "8", certain
+images will be shown, otherwise a default black question mark icon
+will be shown.
 
-<!--#include virtual="/Footer" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+      <p>Unfortunately, JMRI doesn't have a nice GUI tool for
+      defining the icons displayed when using a memory icon this
+      way. You have to edit the XML file by hand, following one of
+      the examples. <!--#include virtual="/Footer" --></p>
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

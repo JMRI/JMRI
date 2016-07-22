@@ -140,8 +140,11 @@ public abstract class AbstractAudioManager extends AbstractManager
         s = createNewAudio(systemName, userName);
 
         // save in the maps
-        if (!(s == null)) {
+        if (s != null) {
             register(s);
+        } else {
+            // must have failed to create
+            throw new IllegalArgumentException("can't create audio with System Name \""+systemName+"\"");
         }
 
         return s;

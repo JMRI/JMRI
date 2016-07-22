@@ -48,7 +48,9 @@ function usage() {
 Usage: $( basename $0 ) [--help] [OPTIONS]
   -c CONFIG, --config=CONFIG     Start JMRI with configuration CONFIG
   --cp:a=CLASSPATH               Append specified JARs to the classpath
+                                 Multiple JARs are separated with colons (:)
   --cp:p=CLASSPATH               Prepend specified JARs to the classpath
+                                 Multiple JARs are separated with colons (:)
   -d, --debug                    Add verbose output to this script
   -JOPTION                       Pass the option OPTION to the JVM
   -p PROFILE, --profile=PROFILE  Start JMRI with the profile PROFILE
@@ -63,11 +65,11 @@ function parse_args() {
     while [ $# -gt 0 ] ; do
         case "${1}" in
             # append to classpath
-            --cp:a) post_classpath="${2}" ; shift ;;
-            --cp:a=*) post_classpath="${1#*=}" ;;
+            --cp:a) post_classpath="${post_classpath}:${2}" ; shift ;;
+            --cp:a=*) post_classpath="${post_classpath}:${1#*=}" ;;
             # prepend to classpath
-            --cp:p) pre_classpath="${2}" ; shift ;;
-            --cp:p=*) pre_classpath="${1#*=}" ;;
+            --cp:p) pre_classpath="${pre_classpath}:${2}" ; shift ;;
+            --cp:p=*) pre_classpath="${pre_classpath}:${1#*=}" ;;
             # use named configuration
             -c|--config) CONFIGNAME="$2" ; shift ;;
             --config=*) CONFIGNAME="${1#*=}" ;;
@@ -216,7 +218,7 @@ if [ -f "${settingsdir}/jmri.conf" ] ; then
 fi
 
 # process arguments, stored arguments first, so CLI arguments can override
-parse_args $default_options
+parse_args "$default_options"
 parse_args $JMRI_OPTIONS # support JMRI_OPTIONS if someone is using it
 parse_args $@
 
@@ -260,7 +262,7 @@ if [ -z "${JAVA_HOME}" ] ; then
         if [ -x "${JAVA_HOME}/bin/java" ] ; then
             JAVACMD="${JAVA_HOME}/bin/java"
             # Test if java is present and version 1.8 or 1.9
-            if [[ -x "${JAVACMD}" && "$( ${JAVACMD} -version 2>&1 )" =~ 1.[89] ]] ; then
+            if [[ -x "${JAVACMD}" && "$( "${JAVACMD}" -version 2>&1 )" =~ 1.[89] ]] ; then
                 JAVA_HOME=""
             fi
         fi
@@ -387,18 +389,20 @@ fi
 # build classpath dynamically
 CP=""
 if [ -n "${pre_classpath}" ] ; then
+    pre_classpath="${pre_classpath#:}"
     CP="${pre_classpath}:"
 fi
 CP="${CP}.:classes:java/classes:jmri.jar"
 # add contents of lib
 CP="${CP}:$( ls -m ${LIBDIR}/*.jar | tr -d ' \n' | tr ',' ':' )"
 
-if [ -d /System/Library/Java ] ; then
-    CP="${CP}":/System/Library/Java
-fi
 if [ -n "${post_classpath}" ] ; then
+    post_classpath="${post_classpath#:}"
     CP="${CP}:${post_classpath}"
 fi
+
+# remove any "\ " escaped spaces, since these are needed for bash, but not java
+CP="${CP//\\ / }"
 
 [ -n "${DEBUG}" ] && echo "CLASSPATH: '${CP}'"
 

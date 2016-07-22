@@ -35,13 +35,11 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
     private SprogState sprogState = SprogState.NORMAL;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
-    // Ignore FindBugs warnings as there can only be one instance at present
-    public SprogTrafficController() {
-        if (log.isDebugEnabled()) {
-            log.debug("setting instance: " + this);
-        }
-        self = this;
+    //public SprogTrafficController() {
+    //}
+
+    public SprogTrafficController(SprogSystemConnectionMemo adaptermemo) {
+       memo = adaptermemo;
     }
 
 // The methods to implement the SprogInterface
@@ -75,14 +73,14 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         this.sprogState = s;
         if (s == SprogState.V4BOOTMODE) {
             // enable flow control - required for sprog v4 bootloader
-            SerialDriverAdapter.instance().setHandshake(SerialPort.FLOWCONTROL_RTSCTS_IN
+            getController().setHandshake(SerialPort.FLOWCONTROL_RTSCTS_IN
                     | SerialPort.FLOWCONTROL_RTSCTS_OUT);
 
         } else {
             // disable flow control
             //AJB - removed Jan 2010 - this stops SPROG from sending. Could cause problems with
             //serial Sprogs, but I have no way of testing: 
-            //SerialDriverAdapter.instance().setHandshake(0);
+            //getController().setHandshake(0);
         }
         if (log.isDebugEnabled()) {
             log.debug("Setting sprogState " + s);
@@ -194,7 +192,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
     }
 
-    // methods to connect/disconnect to a source of data in a LnPortController
+    // methods to connect/disconnect to a source of data in a SprogPortController
     private AbstractPortController controller = null;
 
     /**
@@ -207,6 +205,14 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             log.warn("connectPort: connect called while connected");
         }
         controller = p;
+    }
+
+
+    /**
+     * return the port controller, as an SerialDriverAdapter.
+     */
+    protected SerialDriverAdapter getController(){
+       return (SerialDriverAdapter)controller;
     }
 
     /**
@@ -231,13 +237,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
      */
     @Deprecated
     static public SprogTrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new SprogTrafficController object");
-            }
-            self = new SprogTrafficController();
-        }
-        return self;
+        return null;
     }
 
     static volatile protected SprogTrafficController self = null;
@@ -282,6 +282,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
                 break;
             case SerialPortEvent.DATA_AVAILABLE:
+                log.debug("Data Available");
                 handleOneIncomingReply();
                 break;
         }

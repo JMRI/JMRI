@@ -44,7 +44,7 @@ infos sur les modes de pr&#233;f&#233;rence et de l'organisation, voir
 <pre style="font-family: monospace;">
 
 &lt;xs:element name="someData" minOccurs="0" maxOccurs="1"&gt;
-</code></pre>
+</pre>
 
 Cela ne veut pas pr&#233;ciser les frappe. Si vous souhaitez par exemple faire respecter les entier:
 
@@ -57,7 +57,7 @@ Cela ne veut pas pr&#233;ciser les frappe. Si vous souhaitez par exemple faire r
     &lt;/xs:simpleContent&gt;
   &lt;/xs:complexType&gt;
 &lt;/xs:element&gt;
-</code></pre>
+</pre>
 
 <h2>El&#233;ment avec seulement des attributs, pas de contenu</h2>
 
@@ -72,7 +72,7 @@ Forme privil&#233;gi&#233;es Store Venitien:
   &lt;xs:attribute name="foo" /&gt;
   &lt;xs:attribute name="bar" /&gt;
 &lt;/xs:complexType&gt;
-</code></pre>
+</pre>
 
 Peut aussi &#234;tre combin&#233; si vous pensez qu'il est peu probable qu'il soit
 utilis&#233; ailleur:
@@ -86,7 +86,7 @@ utilis&#233; ailleur:
     &lt;xs:attribute name="bar" /&gt;
   &lt;/xs:complexType&gt;
 &lt;/xs:element&gt;
-</code></pre>
+</pre>
 
 <h2>El&#233;ment avec du contenu  texte et des attributs</h2>
 
@@ -102,7 +102,7 @@ utilis&#233; ailleur:
     &lt;/xs:simpleContent&gt;
   &lt;/xs:complexType&gt;
 &lt;/xs:element&gt;
-</code></pre>
+</pre>
 
 <h2>Limiter un attribut pour certaines valeurs</h2>
 
@@ -122,21 +122,20 @@ qui peux &#234;tre r&#233;utilis&#233;. Ceux-ci sont en xml/schema/types/general
     &lt;xs:enumeration value="no"/&gt;
   &lt;/xs:restriction&gt;
 &lt;/xs:simpleType&gt;
-</code></pre>
+</pre>
 
 Puis le mettre sur un attribut est simple:
 
 <pre style="font-family: monospace;">
 
 &lt;xs:attribute name="opsOnly" type="yesNoType"/&gt;
-</code></pre>
+</pre>
 
 <h2>El&#233;ment avec le contenu du texte restreint</h2>
 
 Pas un attribut, un &#233;l&#233;ment:
 
 <pre style="font-family: monospace;">
-
 &lt;xs:element name="relation"&gt;
   &lt;xs:simpleType&gt;
     &lt;xs:restriction base="xs:string"&gt;
@@ -147,7 +146,7 @@ Pas un attribut, un &#233;l&#233;ment:
     &lt;/xs:restriction&gt;
   &lt;/xs:simpleType&gt;
 &lt;/xs:element&gt;
-</code></pre>
+</pre>
 
 <h2>Groupes d'Attribut </h2>
 
@@ -156,7 +155,6 @@ lus et &#233;crits ainsi que par une routine de service commune.
 Exemple de d&#233;finition:
 
 <pre style="font-family: monospace;">
-
 &lt;xs:attributeGroup name="EditorCommonAttributesGroup"&gt;
   &lt;xs:annotation&gt;
     &lt;xs:documentation&gt;
@@ -171,14 +169,13 @@ Exemple de d&#233;finition:
   &lt;xs:attribute name="level" type="xs:int" /&gt;
   &lt;xs:attribute name="forcecontroloff" type="trueFalseType" default="false" /&gt;
 &lt;/xs:attributeGroup&gt;
-</code></pre>
+</pre>
 
 par exemple l'utilisation, dans certains type plus tard:
 
 <pre style="font-family: monospace;">
-
 &lt;xs:attributeGroup ref="EditorCommonAttributesGroup" /&gt;
-</code></pre>
+</pre>
 
 <!--#include virtual="/Footer" -->
 
