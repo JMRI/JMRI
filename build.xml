@@ -2034,4 +2034,25 @@
         <echo message="new release branch ${branch-name} created"/>
     </target>
 
+    <!-- CI Test runners -->
+    <target name="travis-ci" description="Parallel execution of CI tasks on Travis CI">
+        <parallel threadCount="4"> <!-- allow up to four tasks at once -->
+            <ant target="checklineends" />
+            <ant target="checknonascii" />
+            <sequential>
+                <ant target="compile-generated-source" />
+                <parallel>
+                    <ant target="javadoc" />
+                    <ant target="ci-test-travis" />
+                </parallel>
+            </sequential>
+        </parallel>
+    </target>
+    
+    <target name="appveyor" description="Parallel execution of CI tasks on Appveyor">
+        <parallel threadCount="4"> <!-- allow up to four tasks at once -->
+            <ant target="checkPropertiesFiles" />
+            <ant target="ci-test-appveyor" />
+        </parallel>
+    </target>
 </project>

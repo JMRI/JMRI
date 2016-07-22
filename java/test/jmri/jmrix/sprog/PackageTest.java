@@ -16,7 +16,10 @@ import org.junit.runners.Suite;
    SprogCSStreamPortControllerTest.class,
    SprogPowerManagerTest.class,
    SprogTurnoutManagerTest.class,
+   SprogTurnoutTest.class,
+   SprogCSTurnoutTest.class,
    SprogCommandStationTest.class,
+   SprogConnectionTypeListTest.class,
    jmri.jmrix.sprog.pi.PackageTest.class,
    jmri.jmrix.sprog.serialdriver.PackageTest.class,
    jmri.jmrix.sprog.sprogCS.PackageTest.class

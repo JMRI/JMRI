@@ -39,9 +39,6 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
         rcvNotice = new Thread(new rcvCheck(input, control));
         rcvNotice.start();
 
-        // declare up
-        ActiveFlag.setActive();
-
     }
 
     /**
