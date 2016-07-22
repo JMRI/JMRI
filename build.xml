@@ -2040,8 +2040,11 @@
             <ant target="checklineends" />
             <ant target="checknonascii" />
             <sequential>
-                <ant target="javadoc" />
-                <ant target="ci-test-travis" />
+                <ant target="compile-generated-source" />
+                <parallel>
+                    <ant target="javadoc" />
+                    <ant target="ci-test-travis" />
+                </parallel>
             </sequential>
         </parallel>
     </target>
