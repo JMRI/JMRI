@@ -686,14 +686,14 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     protected HashMap<Integer, NamedIcon> cloneMap(HashMap<Integer, NamedIcon> map,
             SensorIcon pos) {
-        HashMap<Integer, NamedIcon> clone = new HashMap<Integer, NamedIcon>();
+        HashMap<Integer, NamedIcon> clone = new HashMap<>();
         if (map != null) {
             Iterator<Entry<Integer, NamedIcon>> it = map.entrySet().iterator();
             while (it.hasNext()) {
                 Entry<Integer, NamedIcon> entry = it.next();
                 clone.put(entry.getKey(), cloneIcon(entry.getValue(), pos));
                 if (pos != null) {
-                    pos.setIcon(pos._state2nameMap.get(entry.getKey()), _iconMap.get(entry.getKey()));
+                    pos.setIcon(pos._state2nameMap.get(entry.getKey()), _iconMap.get(entry.getKey().toString()));
                 }
             }
         }
