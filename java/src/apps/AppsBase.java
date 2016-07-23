@@ -48,7 +48,7 @@ public abstract class AppsBase {
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT",
             justification = "not a library pattern")
-    private final static String configFilename = "/JmriConfig3.xml";
+    private final static String configFilename = System.getProperty("org.jmri.Apps.configFilename", "/JmriConfig3.xml");
     protected boolean configOK;
     protected boolean configDeferredLoadOK;
     protected boolean preferenceFileExists;
@@ -276,21 +276,19 @@ public abstract class AppsBase {
         if (sharedConfig != null) {
             // sharedConfigs do not need deferred loads
             configDeferredLoadOK = true;
+        } else // To avoid possible locks, deferred load should be
+        // performed on the Swing thread
+        if (SwingUtilities.isEventDispatchThread()) {
+            configDeferredLoadOK = doDeferredLoad(file);
         } else {
-        // To avoid possible locks, deferred load should be
-            // performed on the Swing thread
-            if (SwingUtilities.isEventDispatchThread()) {
-                configDeferredLoadOK = doDeferredLoad(file);
-            } else {
-                try {
-                    // Use invokeAndWait method as we don't want to
-                    // return until deferred load is completed
-                    SwingUtilities.invokeAndWait(() -> {
-                        configDeferredLoadOK = doDeferredLoad(file);
-                    });
-                } catch (InterruptedException | InvocationTargetException ex) {
-                    log.error("Exception creating system console frame: " + ex);
-                }
+            try {
+                // Use invokeAndWait method as we don't want to
+                // return until deferred load is completed
+                SwingUtilities.invokeAndWait(() -> {
+                    configDeferredLoadOK = doDeferredLoad(file);
+                });
+            } catch (InterruptedException | InvocationTargetException ex) {
+                log.error("Exception creating system console frame: " + ex);
             }
         }
         if (sharedConfig == null && configOK == true && configDeferredLoadOK == true) {
@@ -395,8 +393,11 @@ public abstract class AppsBase {
      * @param args Argument array from the main routine
      */
     static protected void setConfigFilename(String def, String[] args) {
+        // skip if org.jmri.Apps.configFilename is set
+        if (System.getProperty("org.jmri.Apps.configFilename") != null) {
+            return;
+        }
         // save the configuration filename if present on the command line
-
         if (args.length >= 1 && args[0] != null && !args[0].equals("") && !args[0].contains("=")) {
             def = args[0];
             log.debug("Config file was specified as: " + args[0]);
