@@ -55,6 +55,7 @@ TODO            text
 # These files are binary and should be left untouched
 # (binary is a macro for -text -diff)
 *.app           binary
+*.bat           binary
 *.class         binary
 *.dll           binary
 *.dylib         binary

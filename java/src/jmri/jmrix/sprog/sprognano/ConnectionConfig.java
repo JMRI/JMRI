@@ -47,7 +47,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     protected void setInstance() {
-        adapter = SprogNanoSerialDriverAdapter.instance();
+        if(adapter == null) {
+           adapter = new SprogNanoSerialDriverAdapter();
+        }
     }
 }
 
