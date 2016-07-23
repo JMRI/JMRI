@@ -2,7 +2,9 @@
 #
 # Script to start a JMRI class directly, e.g during development
 #
-# First argument is fully=qualified class name.
+# First argument is a fully-qualified class name. Any standard JMRI POSIX
+# launcher options may precede the first argument. Run this script with the
+# --help option for details.
 #
 # If the class has a main() method, that's launched.  This works
 # for running e.g. early-JUnit test classes, and applications
@@ -11,19 +13,18 @@
 # If there is no main() method found in the named class, an
 # org.junit.runner.JUnitCore runner is asked to try to run the
 # class as JUnit4 tests. 
-# 
-# All this is done by using a script similar to (originally
-# identical to) the JMRI POSIX launcher, which invokes a
-# bespoke jmri.util.junit.TestClassMainMethod class.
 #
-# Note that, unlike running JUnit tests from Ant, 
-# this currently doesn't set the jmri.prefsdir system property
-# to "temp". Running tests in Ant does that, which causes
-# them to use a custom preferences directory.  You can
-# do that manually via (or similar)
-#  setenv JMRI_OPTIONS "-Djmri.prefsdir=${PWD}/temp ${JMRI_OPTIONS}"
+# This works by calling .run.sh, which is generated from the JMRI POSIX launcher
+# by running 'ant run-sh'
 #
-# Made from the DecoderPro script, January 2010
+# By default this script sets the JMRI settings: dir to the directory "temp" in
+# the directory its run from. Pass the option --settingsdir="" to use the JMRI
+# default location. local.conf in the directory this script is run from is
+# copied to jmri.conf in the settings: dir if the settings: dir is not "" and
+# local.conf is newer than jmri.conf.
+#
+# Note that this script may mangle arguments with unescaped spaces. This can be
+# avoided by writing spaces in arguments as "\ ".
 #
 # If you need to add any additional Java options or defines,
 # include them in the JMRI_OPTIONS environment variable
@@ -50,130 +51,45 @@
 #
 # For more information, please see
 # http://jmri.org/install/ShellScripts.shtml
-#
 
-SYSLIBPATH=
+# assume ant is in the path, and silence output
+ant run-sh 1>/dev/null
+result=$?
+if [ $result -ne 0 ] ; then
+    echo "ant run-sh failed."
+    exit $result
+fi
 
-if [ -z "$OS" ]
-then
-    # start finding the architecture specific library directories
-    OS=`uname -s`
-
-    # normalize to match our standard names
-    if [ "$OS" = "Linux" ]
-    then
-      OS="linux"
+# set the default settings dir to $( dirname 0 )/temp, but allow it to be
+# overridden
+settingsdir="$( dirname 0 )/temp"
+found_settingsdir="no"
+for opt in "$@"; do
+    if [ "${found_settingsdir}" = "yes" ]; then
+        # --settingsdir /path/to/... part 2
+        settingsdir="$opt"
+        break
+    elif [ "$opt" = "--settingsdir" ]; then
+        # --settingsdir /path/to/... part 1
+        found_settingsdir="yes"
+    elif [[ "$opt" =~ "--settingsdir=" ]]; then
+        # --settingsdir=/path/to/...
+        settingsdir="${opt#*=}"
+        break;
     fi
+done
 
-    if [ "$OS" = "Darwin" ]
-    then
-      OS="macosx"
-    fi
+# if settingsdir is not empty (using JMRI default), and local.conf is newer than
+# jmri.conf, copy local.conf to jmri.conf
+if [ ! -z "${settingsdir}" -a "$( dirname $0 )/local.conf" -nt "${settingsdir}/jmri.conf" ] ; then
+    mkdir -p "${settingsdir}"
+    cp "$( dirname $0 )/local.conf" "${settingsdir}/jmri.conf"
 fi
 
-if [ -d "lib/$OS" ]
-then
-  SYSLIBPATH="lib/$OS"
+# if --settingsdir="" was passed, allow run.sh to use JMRI default, otherwise
+# prepend the option token to ensure run.sh sets the settings dir correctly
+if [ -n "$settingsdir" ] ; then
+    settingsdir="--settingsdir=${settingsdir}"
 fi
 
-# one or another of these commands should return a useful value, except that sometimes
-# it is spelled funny (e,g, amd64, not x86_64).  
-
-if [ -z "$ARCH" ]
-then
-    for cmd in "arch" "uname -i" "uname -p"
-    do
-      ARCH=`$cmd 2>/dev/null`
-      if [ -n "$ARCH" ]
-      then
-	    if [ "$ARCH" = "amd64" ]
-	    then
-	      ARCH="x86_64"
-	    fi
-
-	    if [ "$ARCH" = "i686" ]
-	    then
-	      ARCH="i386"
-	    fi
-
-	    if [ -d "lib/$OS/$ARCH" ]
-	    then
-	       SYSLIBPATH="lib/$OS/$ARCH:$SYSLIBPATH"
-
-	       # we're only interested in ONE of these values, so as soon as we find a supported
-	       # architecture directory, continue processing and start up the program
-	       break
-	    fi
-      fi
-    done
-fi
-
-
-# define the class to be invoked
-CLASSNAME=$1
-
-# set DEBUG to anything to see debugging output
-# DEBUG=yes
-
-# if JMRI_HOME is defined, go there, else
-# change directory to where the script is located
-if [ "${JMRI_HOME}" ]
-then
-    cd "${JMRI_HOME}"
-else 
-    cd `dirname $0`
-fi
-[ "${DEBUG}" ] && echo "PWD: '${PWD}'"
-
-# build classpath dynamically
-CP=".:classes:java/classes"
-# list of jar files in home, not counting jmri.jar
-LOCALJARFILES=`ls *.jar | grep -v jmri.jar | tr "\n" ":"`
-if [ ${LOCALJARFILES} ]
-then 
-  CP="${CP}:${LOCALJARFILES}"
-fi
-# add jmri.jar
-CP="${CP}:jmri.jar"
-# and contents of lib
-CP="${CP}:`ls -m lib/*.jar | tr -d ' \n' | tr ',' ':'`"
-# add a stand-in for ${ant.home}/lib/ant.jar
-CP="${CP}:/usr/share/ant/lib/ant.jar"
-
-[ "${DEBUG}" ] && echo "CLASSPATH: '${CP}'"
-
-# create the option string
-#
-# Add JVM and RMI options to user options, if any
-OPTIONS="${JMRI_OPTIONS} -noverify"
-OPTIONS="${OPTIONS} -Djava.security.policy=lib/security.policy"
-OPTIONS="${OPTIONS} -Djava.rmi.server.codebase=file:java/classes/"
-OPTIONS="${OPTIONS} -Djava.library.path=.:lib:$SYSLIBPATH"
-# ddraw is disabled to get around Swing performance problems in Java 1.5.0
-OPTIONS="${OPTIONS} -Dsun.java2d.noddraw"
-# memory start and max limits
-OPTIONS="${OPTIONS} -Xms30m"
-OPTIONS="${OPTIONS} -Xmx640m"
-
-# RXTX options (only works in some versions)
-OPTIONS="${OPTIONS} -Dgnu.io.rxtx.NoVersionOutput=true"
-[ "${DEBUG}" ] && echo "OPTIONS: '${OPTIONS}'"
-
-if [ -n "$JMRI_SERIAL_PORTS" ]
-then
-  JMRI_SERIAL_PORTS="$JMRI_SERIAL_PORTS,"
-fi
-
-# locate alternate serial ports
-ALTPORTS=`(echo $JMRI_SERIAL_PORTS; ls -fm /dev/ttyUSB* /dev/ttyACM* 2>/dev/null ) | tr -d " \n" | tr "," ":"`
-if [ "${ALTPORTS}" ]
-then
-  ALTPORTS=-Dgnu.io.rxtx.SerialPorts=${ALTPORTS}
-fi
-[ "${DEBUG}" ] && echo "ALTPORTS: '${ALTPORTS}'"
-
-[ "${DEBUG}" ] && echo java ${OPTIONS} "${ALTPORTS}" -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
-java ${OPTIONS} ${ALTPORTS} -cp "${CP}" jmri.util.junit.TestClassMainMethod "${CLASSNAME}" $2 $3
-
-
-
+$( dirname $0 )/.run.sh "$settingsdir" $@

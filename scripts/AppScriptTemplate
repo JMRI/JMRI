@@ -1,11 +1,14 @@
 #! /bin/bash
 #
-# Script to start a JMRI @VERSION@ application
+# Script to start a JMRI @VERSION@ application.
 #
 # This script is used for both all POSIX operating systems including Linux
-# and macOS / OS X application bundles
+# and macOS / OS X application bundles.
 #
-# If you need to add any additional Java options or persistent command line
+# If you need to specify an option with spaces in it, escape the spaces with a
+# leading backslash like "\ ".
+#
+# If you need to add any persistent Java options or persistent command line
 # arguments, include them in the "default_options" statement in the file
 # jmri.conf in the settings directory.
 #
@@ -14,9 +17,9 @@
 # - all other: ${HOME}/.jmri
 #
 # The settings directory can be set to a non-standard location using the
-# "--settingsdir /path/to/my/settings" command line option (unlike all other
+# "--settingsdir=/path/to/my/settings" command line option (unlike all other
 # options, this one cannot be set in the jmri.conf file, since it determines
-# where the jmri.conf file will be read from).
+# from where the jmri.conf file is read).
 #
 # If your serial ports are not in the default list, include them in the
 # command line argument --serial-ports separated by commas:
@@ -45,7 +48,7 @@ set -u
 # display valid arguments
 function usage() {
     cat <<EOM
-Usage: $( basename $0 ) [--help] [OPTIONS]
+Usage: $( basename $0 ) [--help] [OPTIONS] [--] [ARGUMENTS]
   -c CONFIG, --config=CONFIG     Start JMRI with configuration CONFIG
   --cp:a=CLASSPATH               Append specified JARs to the classpath
                                  Multiple JARs are separated with colons (:)
@@ -53,9 +56,12 @@ Usage: $( basename $0 ) [--help] [OPTIONS]
                                  Multiple JARs are separated with colons (:)
   -d, --debug                    Add verbose output to this script
   -JOPTION                       Pass the option OPTION to the JVM
+  -m MAIN, --main=MAIN           Use main() method in class MAIN to start JMRI
   -p PROFILE, --profile=PROFILE  Start JMRI with the profile PROFILE
   --serial-ports=SERIAL_PORTS    Use the serial ports in SERIAL_PORTS
   --settingsdir=SETTINGS_DIR     Use SETTINGS_DIR as the settings directory
+  --                             Do not process anything following as an option,
+                                 even if it matches one of the above options
 EOM
 }
 
@@ -82,12 +88,22 @@ function parse_args() {
             -J-Xmx*) jmri_xmx="${1#-J}" ;;
             # JVM arguments other than max memory
             -J*) jmri_options="${jmri_options} ${1#-J}" ;;
+            # main class
+            -m|--main) CLASSNAME="$2" ; shift ;;
+            --main=*) CLASSNAME="${1#*=}" ;;
             # JMRI configuration profile
             -p|--profile) jmri_options="${jmri_options} -Dorg.jmri.profile=$2" ; shift ;;
             --profile=*) jmri_options="${jmri_options} -Dorg.jmri.profile=${1#*=}" ;;
             # serial ports
             --serial-ports) JMRI_SERIAL_PORTS="${2}" ;;
             --serial-ports=*) JMRI_SERIAL_PORTS="${1#*=}" ; shift ;;
+            # ignore and do not pass the settingsdir argument
+            --settingsdir) shift ;;
+            --settingsdir=*) ;;
+            # everything after this is to be passed to JMRI
+            --) ARGS="${ARGS} $@" ; break ;;
+            # pass anything else on to JMRI
+            *) ARGS="${ARGS} ${1}" ;;
         esac
         shift
     done
@@ -160,6 +176,10 @@ CONFIGFILE=""
 # Installation locations
 JAVA_HOME=${JAVA_HOME:-}
 JMRI_HOME=${JMRI_HOME:-}
+BUNDLEDIR=""
+
+# Set default arguments
+ARGS=
 
 # set DEBUG to any non-empty string to see debugging output
 DEBUG=${DEBUG:-}
@@ -168,7 +188,7 @@ DEBUG=${DEBUG:-}
 pre_classpath=""
 post_classpath=""
 
-# set the OS (can be overridden in enviroment for debugging and development)
+# set the OS (can be overridden in environment for debugging and development)
 # this value is used to find OS-specific libraries, so it gets normalized
 # in following case statement
 OS=${OS:-}
@@ -182,7 +202,6 @@ case "${OS}" in
     macosx|Darwin*)
         settingsdir="${HOME}/Library/Preferences/JMRI"
         OS="macosx"
-        DEBUG="yes" # default to on, so always available in Console.app
         ;;
     Linux*)
         settingsdir="${HOME}/.jmri"
@@ -308,12 +327,16 @@ export JAVA_HOME
 
 # define JMRI_HOME if it is not defined
 if [ -z "${JMRI_HOME}" ] ; then
+    JMRI_HOME="${SCRIPTDIR}"
     if [ "$OS" = "macosx" ] ; then
         # on OS X, the .app bundle is assumed to reside in the default JMRI_HOME
         BUNDLEDIR=$(cd "${SCRIPTDIR}/../.." && pwd)
-        JMRI_HOME=$(cd "${BUNDLEDIR}/.." && pwd)
-    else
-        JMRI_HOME="$SCRIPTDIR"
+        if [ -f "${BUNDLEDIR}/Contents/MacOS/StartJMRI" ] ; then
+            JMRI_HOME=$(cd "${BUNDLEDIR}/.." && pwd)
+            DEBUG="yes" # default to on, so always available in Console.app
+        else
+            BUNDLEDIR=""
+        fi
     fi
 fi
 
@@ -410,7 +433,7 @@ CP="${CP//\\ / }"
 
 # configuration file name is 1st argument.
 # If not provided, build config file name dynamically
-if [ "$OS" = "macosx" ] ; then
+if [ "$OS" = "macosx" -a -n "${BUNDLEDIR}" ] ; then
     # OS X can have spaces in the application name
     APPNAME=$( basename -s .app "${BUNDLEDIR}" )
 else
@@ -419,13 +442,14 @@ fi
 
 [ -n "${DEBUG}" ] && echo "APPNAME: '${APPNAME}'"
 
-# we only process a config file name when the application is
-# NOT the default one this script was built for.
-if [ "$APPNAME" != "$DEFAULT_APP_NAME" ] ; then
+# Process a config file name if passed as an option or when the application is
+# NOT the default one this script was built for and pass it as a Java property
+# so that scripts expecting another argument as the first one get that instead
+if [ "$APPNAME" != "$DEFAULT_APP_NAME" -o -n "${CONFIGNAME}" ] ; then
     if [ -z "${CONFIGNAME}" ] ; then
         CONFIGNAME=$( echo $APPNAME | tr -d '[:space:]' | tr -d '=' )
     fi
-    CONFIGFILE="config=${CONFIGNAME}Config.xml"
+    CONFIGFILE="-Dorg.jmri.Apps.configFilename=${CONFIGNAME}Config.xml"
     [ -n "${DEBUG}" ] && echo "CONFIGFILE: '${CONFIGFILE}'"
 fi
 
@@ -442,7 +466,7 @@ if [ "$OS" = "macosx" ] ; then
     if [ -f "${BUNDLEDIR}/Contents/Resources/@ICON@.icns" ] ; then
         APPICON="${BUNDLEDIR}/Contents/Resources/@ICON@.icns"
     else
-        APPICON=$( find "${BUNDLEDIR}" | grep -s -m 1 icns )
+        APPICON=$( find "${BUNDLEDIR}" 2>/dev/null | grep -s -m 1 icns )
     fi
 fi
 
@@ -486,9 +510,9 @@ EXIT_STATUS=${RESTART_CODE}
 while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ] ; do
 
     if [ "$OS" = "macosx" ] ; then
-        "${JAVACMD}" "${DOCK_OPTIONS[@]}" ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
+        "${JAVACMD}" "${DOCK_OPTIONS[@]}" ${OPTIONS} ${ALTPORTS} ${CONFIGFILE} -cp "${CP}" "${CLASSNAME}" ${ARGS}
     else
-        "${JAVACMD}" ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
+        "${JAVACMD}" ${OPTIONS} ${ALTPORTS} ${CONFIGFILE} -cp "${CP}" "${CLASSNAME}" ${ARGS}
     fi
 
     EXIT_STATUS=$?

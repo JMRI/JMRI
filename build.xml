@@ -380,6 +380,7 @@
             <fileset file="junit-results.xml"/>
             <fileset file="jmri-fb.html"/>
             <fileset file="jacoco.exec"/>
+            <fileset file=".run.sh"/>
         </delete>
         <ant dir="xml/XSLT" target="clean" inheritAll="false"  />
     </target>
@@ -827,6 +828,12 @@
             <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
+    </target>
+
+    <target name="run-sh" description="Create run.sh in SCM root">
+        <make-startup-script script.name=".run.sh"
+                             script.class="jmri.util.junit.TestClassMainMethod"
+                             dest="${basedir}/.run.sh"/>
     </target>
 
     <!-- This is a set of targets used to start up the various JMRI applications

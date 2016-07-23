@@ -29,11 +29,13 @@ session.log
 /xml/XSLT/properties
 /xml/XSLT/xml
 /xml/XSLT/pages
+.run.sh
 
 # private / per-user configuration files
 /nbproject/private
 /.idea/workspace.xml
 local.properties
+local.conf
 *.original~
 .metadata
 RemoteSystemsTempFiles
