@@ -101,7 +101,7 @@ function parse_args() {
             --settingsdir) shift ;;
             --settingsdir=*) ;;
             # everything after this is to be passed to JMRI
-            --) ARGS="${ARGS} $@" break ;;
+            --) ARGS="${ARGS} $@" ; break ;;
             # pass anything else on to JMRI
             *) ARGS="${ARGS} ${1}" ;;
         esac
