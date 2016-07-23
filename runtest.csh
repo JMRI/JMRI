@@ -2,7 +2,9 @@
 #
 # Script to start a JMRI class directly, e.g during development
 #
-# First argument is fully=qualified class name.
+# First argument is a fully-qualified class name. Any standard JMRI POSIX
+# launcher options may precede the first argument. Run this script with the
+# --help option for details.
 #
 # If the class has a main() method, that's launched.  This works
 # for running e.g. early-JUnit test classes, and applications
@@ -14,6 +16,10 @@
 #
 # This works by calling run.sh, which is generated from the JMRI POSIX launcher
 # by running 'ant run-sh'
+#
+# By default this script sets the JMRI settings: dir to the directory "temp" in
+# the directory its run from. Pass the option --settingsdir="" to use the JMRI
+# default location.
 #
 # Note that this script may mangle arguments with unescaped spaces. This can be
 # avoided by writing spaces in arguments as "\ ".
@@ -45,11 +51,35 @@
 # http://jmri.org/install/ShellScripts.shtml
 
 # assume ant is in the path, and silence output
-ant run-sh 2>/dev/null
+ant run-sh 1>/dev/null
 result=$?
 if [ $result -ne 0 ] ; then
-    echo "ant run-sh failed. please run independently to determine why."
+    echo "ant run-sh failed."
     exit $result
 fi
 
-$( dirname $0 )/run.sh $@
+# set the default settings dir to $( dirname 0 )/temp, but allow it to be
+# overridden
+settingsdir="$( dirname 0 )/temp"
+found_settingsdir="no"
+for opt in "$@"; do
+    if [ "${found_settingsdir}" = "yes" ]; then
+        # --settingsdir /path/to/... part 2
+        settingsdir="$opt"
+        break
+    elif [ "$opt" = "--settingsdir" ]; then
+        # --settingsdir /path/to/... part 1
+        found_settingsdir="yes"
+    elif [[ "$opt" =~ "--settingsdir=" ]]; then
+        # --settingsdir=/path/to/...
+        settingsdir="${opt#*=}"
+        break;
+    fi
+done
+# if --settingsdir="" was passed, allow run.sh to use JMRI default, otherwise
+# prepend the option token to ensure run.sh sets the settings dir correctly
+if [ -n "$settingsdir" ] ; then
+    settingsdir="--settingsdir=${settingsdir}"
+fi
+
+$( dirname $0 )/run.sh "$settingsdir" $@
