@@ -98,6 +98,7 @@ function parse_args() {
             --serial-ports) JMRI_SERIAL_PORTS="${2}" ;;
             --serial-ports=*) JMRI_SERIAL_PORTS="${1#*=}" ; shift ;;
             # ignore and do not pass the settingsdir argument
+            --settingsdir) shift ;;
             --settingsdir=*) ;;
             # everything after this is to be passed to JMRI
             --) ARGS="${ARGS} $@" break ;;
