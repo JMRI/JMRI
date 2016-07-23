@@ -52,19 +52,20 @@
 # For more information, please see
 # http://jmri.org/install/ShellScripts.shtml
 
+dirname="$( dirname $0 )"
 # assume ant is in the path, and silence output
-ant run-sh 1>/dev/null
-result=$?
-if [ $result -ne 0 ] ; then
-    echo "ant run-sh failed."
-    exit $result
+if [ "${dirname}/scripts/AppScriptTemplate" -nt "${dirname}/.run.sh" ] ; then
+    ant run-sh
+    result=$?
+    if [ $result -ne 0 ] ; then
+        exit $result
+    fi
 fi
 
-testdir="$( dirname 0 )/test"
-# set the default settings dir to $( dirname 0 )/temp, but allow it to be
+# set the default settings dir to ${dirname}/temp, but allow it to be
 # overridden
-settingsdir="${testdir}"
-prefsdir="$( dirname 0 )/temp"
+settingsdir="${dirname}/test"
+prefsdir="${dirname}/temp"
 found_settingsdir="no"
 for opt in "$@"; do
     if [ "${found_settingsdir}" = "yes" ]; then
@@ -92,4 +93,4 @@ if [ -n "$prefsdir" ] ; then
     prefsdir="-Dorg.jmri.Apps.configFilename=${prefsdir}"
 fi
 
-"$( dirname $0 )/.run.sh" "$settingsdir" "$prefsdir" $@
+"${dirname}/.run.sh" "$settingsdir" "$prefsdir" $@
