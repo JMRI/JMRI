@@ -19,7 +19,9 @@
 #
 # By default this script sets the JMRI settings: dir to the directory "temp" in
 # the directory its run from. Pass the option --settingsdir="" to use the JMRI
-# default location.
+# default location. local.conf in the directory this script is run from is
+# copied to jmri.conf in the settings: dir if the settings: dir is not "" and
+# local.conf is newer than jmri.conf.
 #
 # Note that this script may mangle arguments with unescaped spaces. This can be
 # avoided by writing spaces in arguments as "\ ".
@@ -76,6 +78,13 @@ for opt in "$@"; do
         break;
     fi
 done
+
+# if settingsdir is not empty (using JMRI default), and local.conf is newer than
+# jmri.conf, copy local.conf to jmri.conf
+if [ ! -z "${settingsdir}" -a "$( dirname $0 )/local.conf" -nt "${settingsdir}/jmri.conf" ] ; then
+    cp "$( dirname $0 )/local.conf" "${settingsdir}/jmri.conf"
+fi
+
 # if --settingsdir="" was passed, allow run.sh to use JMRI default, otherwise
 # prepend the option token to ensure run.sh sets the settings dir correctly
 if [ -n "$settingsdir" ] ; then
