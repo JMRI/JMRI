@@ -50,7 +50,7 @@
 # xprop -root -remove _MOTIF_DEFAULT_BINDINGS
 #
 # For more information, please see
-# http://jmri.org/install/ShellScripts.shtml
+# http://jmri.org/help/en/html/doc/Technical/StartUpScripts.shtml
 
 dirname="$( dirname $0 )"
 # assume ant is in the path, and silence output
