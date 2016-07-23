@@ -55,7 +55,7 @@ Usage: $( basename $0 ) [--help] [OPTIONS] [--] [ARGUMENTS]
   --cp:p=CLASSPATH               Prepend specified JARs to the classpath
                                  Multiple JARs are separated with colons (:)
   -d, --debug                    Add verbose output to this script
-  -DOPTION                       Set the Java System property OPTION
+  -DPROPERTY                     Set the Java System property PROPERTY
   -JOPTION                       Pass the option OPTION to the JVM
   -m MAIN, --main=MAIN           Use main() method in class MAIN to start JMRI
   -p PROFILE, --profile=PROFILE  Start JMRI with the profile PROFILE
