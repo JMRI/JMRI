@@ -14,7 +14,7 @@
 # org.junit.runner.JUnitCore runner is asked to try to run the
 # class as JUnit4 tests. 
 #
-# This works by calling run.sh, which is generated from the JMRI POSIX launcher
+# This works by calling .run.sh, which is generated from the JMRI POSIX launcher
 # by running 'ant run-sh'
 #
 # By default this script sets the JMRI settings: dir to the directory "temp" in
@@ -82,6 +82,7 @@ done
 # if settingsdir is not empty (using JMRI default), and local.conf is newer than
 # jmri.conf, copy local.conf to jmri.conf
 if [ ! -z "${settingsdir}" -a "$( dirname $0 )/local.conf" -nt "${settingsdir}/jmri.conf" ] ; then
+    mkdir -p "${settingsdir}"
     cp "$( dirname $0 )/local.conf" "${settingsdir}/jmri.conf"
 fi
 
