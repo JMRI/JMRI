@@ -732,14 +732,14 @@ public class LayoutSlip extends LayoutTurnout {
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
-            JLabel turnoutNameLabel = new JLabel(rb.getString("Turnout") + " A " + rb.getString("Name"));
+            JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " A " + rb.getString("Name"));
             turnoutAComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DISPLAYNAME);
             panel1.add(turnoutNameLabel);
             panel1.add(turnoutAComboBox);
             contentPane.add(panel1);
             JPanel panel1a = new JPanel();
             panel1a.setLayout(new FlowLayout());
-            JLabel turnoutBNameLabel = new JLabel(rb.getString("Turnout") + " B " + rb.getString("Name"));
+            JLabel turnoutBNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " B " + rb.getString("Name"));
             turnoutBComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getTurnoutB(), JmriBeanComboBox.DISPLAYNAME);
             panel1a.add(turnoutBNameLabel);
             panel1a.add(turnoutBComboBox);
@@ -748,8 +748,8 @@ public class LayoutSlip extends LayoutTurnout {
             panel2.setLayout(new GridLayout(0, 3, 2, 2));
 
             panel2.add(new Label("   "));
-            panel2.add(new Label(rb.getString("Turnout") + " A:"));
-            panel2.add(new Label(rb.getString("Turnout") + " B:"));
+            panel2.add(new Label(Bundle.getMessage("BeanNameTurnout") + " A:"));
+            panel2.add(new Label(Bundle.getMessage("BeanNameTurnout") + " B:"));
             for (Entry<Integer, TurnoutState> ts : turnoutStates.entrySet()) {
                 SampleStates draw = new SampleStates(ts.getKey());
                 draw.repaint();

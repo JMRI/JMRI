@@ -1993,7 +1993,7 @@ public class LayoutTurnout {
             if (getTurnout() == null) {
                 popup.add(rb.getString("NoTurnout"));
             } else {
-                popup.add(rb.getString("Turnout") + ": " + turnoutName);
+                popup.add(Bundle.getMessage("BeanNameTurnout") + ": " + turnoutName);
             }
             // Rotate if there are no track connections
             if ((connectA == null) && (connectB == null)
@@ -2449,7 +2449,7 @@ public class LayoutTurnout {
             // setup turnout name
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
-            JLabel turnoutNameLabel = new JLabel(rb.getString("Turnout") + " " + rb.getString("Name"));
+            JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " " + rb.getString("Name"));
             panel1.add(turnoutNameLabel);
             panel1.add(turnoutNameField);
             turnoutNameField.setToolTipText(rb.getString("EditTurnoutNameHint"));
@@ -2474,7 +2474,7 @@ public class LayoutTurnout {
             }
             panel1a.add(additionalTurnout);
             contentPane.add(panel1a);
-            secondTurnoutLabel = new JLabel(rb.getString("Supporting") + rb.getString("Turnout") + " " + rb.getString("Name"));
+            secondTurnoutLabel = new JLabel(rb.getString("Supporting") + Bundle.getMessage("BeanNameTurnout") + " " + rb.getString("Name"));
             secondTurnoutLabel.setEnabled(false);
             secondTurnoutComboBox.setEnabled(false);
             JPanel panel1b = new JPanel();

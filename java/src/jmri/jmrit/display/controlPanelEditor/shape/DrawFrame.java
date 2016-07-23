@@ -361,7 +361,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
             return i;
         } catch (NumberFormatException nfe) {
             JOptionPane.showMessageDialog(this, nfe,
-                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return value;
         }
     }

@@ -98,8 +98,8 @@ public class RouteTableAction extends AbstractTableAction {
                 Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getClosedText(),
                 Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getThrownText(),
                 Bundle.getMessage("OnConditionChange"),
-                "Veto Closed",
-                "Veto Thrown"
+                "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),
+                "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateThrown")
         };
         lockTurnoutInputModes = new String[]{
                 Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getClosedText(),
@@ -2023,8 +2023,8 @@ public class RouteTableAction extends AbstractTableAction {
             Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SensorStateActive"),
             Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SensorStateInactive"),
             Bundle.getMessage("OnConditionChange"),
-            "Veto" + " " + Bundle.getMessage("SensorStateActive"),
-            "Veto" + " " + Bundle.getMessage("SensorStateInactive")
+            "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("SensorStateActive"),
+            "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("SensorStateInactive")
     };
     private static int[] sensorInputModeValues = new int[]{Route.ONACTIVE, Route.ONINACTIVE, Route.ONCHANGE,
         Route.VETOACTIVE, Route.VETOINACTIVE};
@@ -2041,8 +2041,8 @@ public class RouteTableAction extends AbstractTableAction {
             Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),
             Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("TurnoutStateThrown"),
             Bundle.getMessage("OnConditionChange"),
-            "Veto" + " " + Bundle.getMessage("TurnoutStateClosed"),
-            "Veto" + " " + Bundle.getMessage("TurnoutStateThrown")
+            "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),
+            "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateThrown")
     };
     private static String[] lockTurnoutInputModes = new String[]{
             Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),

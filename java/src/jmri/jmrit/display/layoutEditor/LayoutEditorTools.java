@@ -161,11 +161,11 @@ public class LayoutEditorTools {
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
             if (turnoutFromMenu) {
-                JLabel turnoutNameLabel = new JLabel(rb.getString("Turnout") + " "
+                JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " "
                         + rb.getString("Name") + " : " + layoutTurnout.getTurnoutName());
                 panel1.add(turnoutNameLabel);
             } else {
-                JLabel turnoutNameLabel = new JLabel(rb.getString("Turnout") + " "
+                JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " "
                         + rb.getString("Name"));
                 panel1.add(turnoutNameLabel);
                 panel1.add(turnoutNameField);
@@ -261,14 +261,14 @@ public class LayoutEditorTools {
             });
             changeSignalIcon.setToolTipText(rb.getString("ChangeSignalIconHint"));
             panel6.add(new JLabel("  "));
-            panel6.add(setSignalsDone = new JButton(rb.getString("Done")));
+            panel6.add(setSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSignalsDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setSignalsDonePressed(e);
                 }
             });
             setSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
-            panel6.add(setSignalsCancel = new JButton(rb.getString("Cancel")));
+            panel6.add(setSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSignalsCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setSignalsCancelPressed(e);
@@ -2046,14 +2046,14 @@ public class LayoutEditorTools {
             });
             changeSignalAtBoundaryIcon.setToolTipText(rb.getString("ChangeSignalIconHint"));
             panel6.add(new JLabel("  "));
-            panel6.add(setSignalsAtBoundaryDone = new JButton(rb.getString("Done")));
+            panel6.add(setSignalsAtBoundaryDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSignalsAtBoundaryDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setSignalsAtBoundaryDonePressed(e);
                 }
             });
             setSignalsAtBoundaryDone.setToolTipText(rb.getString("SignalDoneHint"));
-            panel6.add(setSignalsAtBoundaryCancel = new JButton(rb.getString("Cancel")));
+            panel6.add(setSignalsAtBoundaryCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSignalsAtBoundaryCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setSignalsAtBoundaryCancelPressed(e);
@@ -2558,7 +2558,7 @@ public class LayoutEditorTools {
         if (!getTurnoutInformation(true)) {
             return;
         }
-        xoverTurnoutNameLabel.setText(rb.getString("Turnout") + " "
+        xoverTurnoutNameLabel.setText(Bundle.getMessage("BeanNameTurnout") + " "
                 + rb.getString("Name") + " : " + xoverTurnoutName);
         xoverType = layoutTurnout.getTurnoutType();
         if (setSignalsAtXoverOpen) {
@@ -2737,14 +2737,14 @@ public class LayoutEditorTools {
             });
             changeXoverSignalIcon.setToolTipText(rb.getString("ChangeSignalIconHint"));
             panel6.add(new JLabel("  "));
-            panel6.add(setXoverSignalsDone = new JButton(rb.getString("Done")));
+            panel6.add(setXoverSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setXoverSignalsDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setXoverSignalsDonePressed(e);
                 }
             });
             setXoverSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
-            panel6.add(setXoverSignalsCancel = new JButton(rb.getString("Cancel")));
+            panel6.add(setXoverSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setXoverSignalsCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setXoverSignalsCancelPressed(e);
@@ -3781,14 +3781,14 @@ public class LayoutEditorTools {
             });
             changeXingSignalIcon.setToolTipText(rb.getString("ChangeSignalIconHint"));
             panel6.add(new JLabel("  "));
-            panel6.add(setXingSignalsDone = new JButton(rb.getString("Done")));
+            panel6.add(setXingSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setXingSignalsDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setXingSignalsDonePressed(e);
                 }
             });
             setXingSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
-            panel6.add(setXingSignalsCancel = new JButton(rb.getString("Cancel")));
+            panel6.add(setXingSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setXingSignalsCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setXingSignalsCancelPressed(e);
@@ -4513,7 +4513,7 @@ public class LayoutEditorTools {
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
-            JLabel turnout1NameLabel = new JLabel(rb.getString("Turnout") + " 1 "
+            JLabel turnout1NameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " 1 "
                     + rb.getString("Name"));
             panel1.add(turnout1NameLabel);
             panel1.add(turnout1NameField);
@@ -4521,7 +4521,7 @@ public class LayoutEditorTools {
             theContentPane.add(panel1);
             JPanel panel11 = new JPanel();
             panel11.setLayout(new FlowLayout());
-            JLabel turnout2NameLabel = new JLabel(rb.getString("Turnout") + " 2 "
+            JLabel turnout2NameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " 2 "
                     + rb.getString("Name"));
             panel11.add(turnout2NameLabel);
             panel11.add(turnout2NameField);
@@ -4545,7 +4545,7 @@ public class LayoutEditorTools {
             // Signal heads located at turnout 1			
             JPanel panel21x = new JPanel();
             panel21x.setLayout(new FlowLayout());
-            panel21x.add(new JLabel(rb.getString("SignalLocated") + " " + rb.getString("Turnout") + " 1 - "
+            panel21x.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " 1 - "
                     + rb.getString("ContinuingTrack")));
             theContentPane.add(panel21x);
             JPanel panel21 = new JPanel();
@@ -4580,7 +4580,7 @@ public class LayoutEditorTools {
             theContentPane.add(panel24);
             JPanel panel31x = new JPanel();
             panel31x.setLayout(new FlowLayout());
-            panel31x.add(new JLabel(rb.getString("SignalLocated") + " " + rb.getString("Turnout") + " 1 - "
+            panel31x.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " 1 - "
                     + rb.getString("DivergingTrack")));
             theContentPane.add(panel31x);
             JPanel panel31 = new JPanel();
@@ -4617,7 +4617,7 @@ public class LayoutEditorTools {
             // Signal heads located at turnout 2			
             JPanel panel41x = new JPanel();
             panel41x.setLayout(new FlowLayout());
-            panel41x.add(new JLabel(rb.getString("SignalLocated") + " " + rb.getString("Turnout") + " 2 - "
+            panel41x.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " 2 - "
                     + rb.getString("ContinuingTrack")));
             theContentPane.add(panel41x);
             JPanel panel41 = new JPanel();
@@ -4652,7 +4652,7 @@ public class LayoutEditorTools {
             theContentPane.add(panel44);
             JPanel panel51x = new JPanel();
             panel51x.setLayout(new FlowLayout());
-            panel51x.add(new JLabel(rb.getString("SignalLocated") + " " + rb.getString("Turnout") + " 2 - "
+            panel51x.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " 2 - "
                     + rb.getString("DivergingTrack")));
             theContentPane.add(panel51x);
             JPanel panel51 = new JPanel();
@@ -4696,14 +4696,14 @@ public class LayoutEditorTools {
             });
             changeTToTSignalIcon.setToolTipText(rb.getString("ChangeSignalIconHint"));
             panel6.add(new JLabel("  "));
-            panel6.add(setTToTSignalsDone = new JButton(rb.getString("Done")));
+            panel6.add(setTToTSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setTToTSignalsDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setTToTSignalsDonePressed(e);
                 }
             });
             setTToTSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
-            panel6.add(setTToTSignalsCancel = new JButton(rb.getString("Cancel")));
+            panel6.add(setTToTSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setTToTSignalsCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setTToTSignalsCancelPressed(e);
@@ -6114,7 +6114,7 @@ public class LayoutEditorTools {
             // Signal heads located at turnout A
             JPanel panel20 = new JPanel();
             panel20.setLayout(new FlowLayout());
-            panel20.add(new JLabel(rb.getString("SignalLocated") + " " + rb.getString("Turnout") + " A "));
+            panel20.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " A "));
             theContentPane.add(panel20);
             JPanel panel21 = new JPanel();
             panel21.setLayout(new FlowLayout());
@@ -6183,7 +6183,7 @@ public class LayoutEditorTools {
             // Signal heads located at turnout B
             JPanel panel40 = new JPanel();
             panel40.setLayout(new FlowLayout());
-            panel40.add(new JLabel(rb.getString("SignalLocated") + " " + rb.getString("Turnout") + " B "));
+            panel40.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " B "));
             theContentPane.add(panel40);
             JPanel panel41 = new JPanel();
             panel41.setLayout(new FlowLayout());
@@ -6227,14 +6227,14 @@ public class LayoutEditorTools {
             });
             change3WaySignalIcon.setToolTipText(rb.getString("ChangeSignalIconHint"));
             panel6.add(new JLabel("  "));
-            panel6.add(set3WaySignalsDone = new JButton(rb.getString("Done")));
+            panel6.add(set3WaySignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
             set3WaySignalsDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     set3WaySignalsDonePressed(e);
                 }
             });
             set3WaySignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
-            panel6.add(set3WaySignalsCancel = new JButton(rb.getString("Cancel")));
+            panel6.add(set3WaySignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             set3WaySignalsCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     set3WaySignalsCancelPressed(e);
@@ -7441,14 +7441,14 @@ public class LayoutEditorTools {
             });
             changeSensorAtBoundaryIcon.setToolTipText(rb.getString("ChangeSensorIconHint"));
             panel6.add(new JLabel("  "));
-            panel6.add(setSensorsAtBoundaryDone = new JButton(rb.getString("Done")));
+            panel6.add(setSensorsAtBoundaryDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSensorsAtBoundaryDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setSensorsAtBoundaryDonePressed(e);
                 }
             });
             setSensorsAtBoundaryDone.setToolTipText(rb.getString("SensorDoneHint"));
-            panel6.add(setSensorsAtBoundaryCancel = new JButton(rb.getString("Cancel")));
+            panel6.add(setSensorsAtBoundaryCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSensorsAtBoundaryCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setSensorsAtBoundaryCancelPressed(e);
@@ -7970,14 +7970,14 @@ public class LayoutEditorTools {
             theContentPane.add(main, BorderLayout.CENTER);
             JPanel panel6 = new JPanel();
             panel6.setLayout(new FlowLayout());
-            panel6.add(setSignalMastsAtBoundaryDone = new JButton(rb.getString("Done")));
+            panel6.add(setSignalMastsAtBoundaryDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSignalMastsAtBoundaryDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setSignalMastsAtBoundaryDonePressed(e);
                 }
             });
             setSignalMastsAtBoundaryDone.setToolTipText(rb.getString("SignalMastDoneHint"));
-            panel6.add(setSignalMastsAtBoundaryCancel = new JButton(rb.getString("Cancel")));
+            panel6.add(setSignalMastsAtBoundaryCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSignalMastsAtBoundaryCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setSignalMastsAtBoundaryCancelPressed(e);
@@ -9071,7 +9071,7 @@ public class LayoutEditorTools {
             turnoutSignalMastC = new BeanDetails("SignalMast", jmri.InstanceManager.getDefault(jmri.SignalMastManager.class));
             turnoutSignalMastD = new BeanDetails("SignalMast", jmri.InstanceManager.getDefault(jmri.SignalMastManager.class));
             if (turnoutMastFromMenu) {
-                JLabel turnoutMastNameLabel = new JLabel(rb.getString("Turnout") + " "
+                JLabel turnoutMastNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " "
                         + rb.getString("Name") + " : " + layoutTurnout.getTurnoutName());
                 panel1.add(turnoutMastNameLabel);
                 turnoutSignalMastA.setTextField(layoutTurnout.getSignalAMastName());
@@ -9079,7 +9079,7 @@ public class LayoutEditorTools {
                 turnoutSignalMastC.setTextField(layoutTurnout.getSignalCMastName());
                 turnoutSignalMastD.setTextField(layoutTurnout.getSignalDMastName());
             } else {
-                JLabel turnoutMastNameLabel = new JLabel(rb.getString("Turnout") + " "
+                JLabel turnoutMastNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " "
                         + rb.getString("Name"));
                 panel1.add(turnoutMastNameLabel);
                 panel1.add(turnoutMastNameField);
@@ -9133,14 +9133,14 @@ public class LayoutEditorTools {
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
             JPanel panel6 = new JPanel();
             panel6.add(new JLabel("  "));
-            panel6.add(setSignalMastsDone = new JButton(rb.getString("Done")));
+            panel6.add(setSignalMastsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSignalMastsDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setSignalMastsDonePressed(e);
                 }
             });
             setSignalMastsDone.setToolTipText(rb.getString("SignalDoneHint"));
-            panel6.add(setSignalMastsCancel = new JButton(rb.getString("Cancel")));
+            panel6.add(setSignalMastsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSignalMastsCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setSignalMastsCancelPressed(e);
@@ -9642,7 +9642,7 @@ public class LayoutEditorTools {
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
-            JLabel shTitle = new JLabel(rb.getString("SignalMast"));
+            JLabel shTitle = new JLabel(Bundle.getMessage("BeanNameSignalMast"));
             panel2.add(shTitle);
             panel2.add(new JLabel("   "));
             panel2.add(getSavedSlipSignalMasts = new JButton(rb.getString("GetSaved")));
@@ -9688,14 +9688,14 @@ public class LayoutEditorTools {
             panel6.setLayout(new FlowLayout());
 
             panel6.add(new JLabel("  "));
-            panel6.add(setSlipSignalMastsDone = new JButton(rb.getString("Done")));
+            panel6.add(setSlipSignalMastsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSlipSignalMastsDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setSlipSignalMastsDonePressed(e);
                 }
             });
             setSlipSignalMastsDone.setToolTipText(rb.getString("SignalDoneHint"));
-            panel6.add(setSlipSignalMastsCancel = new JButton(rb.getString("Cancel")));
+            panel6.add(setSlipSignalMastsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSlipSignalMastsCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setSlipSignalMastsCancelPressed(e);
@@ -10142,7 +10142,7 @@ public class LayoutEditorTools {
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
-            JLabel shTitle = new JLabel(rb.getString("SignalMast"));
+            JLabel shTitle = new JLabel(Bundle.getMessage("BeanNameSignalMast"));
             panel2.add(shTitle);
             panel2.add(new JLabel("   "));
             panel2.add(getSavedXingSignalMasts = new JButton(rb.getString("GetSaved")));
@@ -10188,14 +10188,14 @@ public class LayoutEditorTools {
             panel6.setLayout(new FlowLayout());
 
             panel6.add(new JLabel("  "));
-            panel6.add(setXingSignalMastsDone = new JButton(rb.getString("Done")));
+            panel6.add(setXingSignalMastsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setXingSignalMastsDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setXingSignalMastsDonePressed(e);
                 }
             });
             setXingSignalMastsDone.setToolTipText(rb.getString("SignalDoneHint"));
-            panel6.add(setXingSignalMastsCancel = new JButton(rb.getString("Cancel")));
+            panel6.add(setXingSignalMastsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setXingSignalMastsCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setXingSignalMastsCancelPressed(e);
@@ -10616,7 +10616,7 @@ public class LayoutEditorTools {
             turnoutSensorD = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
 
             if (turnoutSensorFromMenu) {
-                JLabel turnoutSensorNameLabel = new JLabel(rb.getString("Turnout") + " "
+                JLabel turnoutSensorNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " "
                         + rb.getString("Name") + " : " + layoutTurnout.getTurnoutName());
                 panel1.add(turnoutSensorNameLabel);
                 turnoutSensorA.setTextField(layoutTurnout.getSensorAName());
@@ -10624,7 +10624,7 @@ public class LayoutEditorTools {
                 turnoutSensorC.setTextField(layoutTurnout.getSensorCName());
                 turnoutSensorD.setTextField(layoutTurnout.getSensorDName());
             } else {
-                JLabel turnoutSensorNameLabel = new JLabel(rb.getString("Turnout") + " "
+                JLabel turnoutSensorNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " "
                         + rb.getString("Name"));
                 panel1.add(turnoutSensorNameLabel);
                 panel1.add(turnoutSensorNameField);
@@ -10686,14 +10686,14 @@ public class LayoutEditorTools {
             });
             changeSensorIcon.setToolTipText(rb.getString("ChangeSensorIconHint"));
             panel6.add(new JLabel("  "));
-            panel6.add(setSensorsDone = new JButton(rb.getString("Done")));
+            panel6.add(setSensorsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSensorsDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setSensorsDonePressed(e);
                 }
             });
             setSensorsDone.setToolTipText(rb.getString("SensorDoneHint"));
-            panel6.add(setSensorsCancel = new JButton(rb.getString("Cancel")));
+            panel6.add(setSensorsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSensorsCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setSensorsCancelPressed(e);
@@ -11169,7 +11169,7 @@ public class LayoutEditorTools {
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
-            JLabel shTitle = new JLabel(rb.getString("Sensor"));
+            JLabel shTitle = new JLabel(Bundle.getMessage("BeanNameSensor"));
             panel2.add(shTitle);
             panel2.add(new JLabel("   "));
             panel2.add(getSavedXingSensors = new JButton(rb.getString("GetSaved")));
@@ -11222,14 +11222,14 @@ public class LayoutEditorTools {
             changeSensorXingIcon.setToolTipText(rb.getString("ChangeSensorIconHint"));
 
             panel6.add(new JLabel("  "));
-            panel6.add(setXingSensorsDone = new JButton(rb.getString("Done")));
+            panel6.add(setXingSensorsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setXingSensorsDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setXingSensorsDonePressed(e);
                 }
             });
             setXingSensorsDone.setToolTipText(rb.getString("SensorDoneHint"));
-            panel6.add(setXingSensorsCancel = new JButton(rb.getString("Cancel")));
+            panel6.add(setXingSensorsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setXingSensorsCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setXingSensorsCancelPressed(e);
@@ -11697,7 +11697,7 @@ public class LayoutEditorTools {
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
-            JLabel shTitle = new JLabel(rb.getString("Sensor"));
+            JLabel shTitle = new JLabel(Bundle.getMessage("BeanNameSensor"));
             panel2.add(shTitle);
             panel2.add(new JLabel("   "));
             panel2.add(getSavedSlipSensors = new JButton(rb.getString("GetSaved")));
@@ -11759,14 +11759,14 @@ public class LayoutEditorTools {
             changeSensorSlipIcon.setToolTipText(rb.getString("ChangeSensorIconHint"));
 
             panel6.add(new JLabel("  "));
-            panel6.add(setSlipSensorsDone = new JButton(rb.getString("Done")));
+            panel6.add(setSlipSensorsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSlipSensorsDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setSlipSensorsDonePressed(e);
                 }
             });
             setSlipSensorsDone.setToolTipText(rb.getString("SensorDoneHint"));
-            panel6.add(setSlipSensorsCancel = new JButton(rb.getString("Cancel")));
+            panel6.add(setSlipSensorsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSlipSensorsCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setSlipSensorsCancelPressed(e);
@@ -12344,7 +12344,7 @@ public class LayoutEditorTools {
             // Signal heads located at turnout 1			
             JPanel panel21x = new JPanel();
             panel21x.setLayout(new FlowLayout());
-            panel21x.add(new JLabel(rb.getString("SignalLocated") + " " + rb.getString("Turnout") + " 1 - "
+            panel21x.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " 1 - "
                     + rb.getString("ContinuingTrack")));
             theContentPane.add(panel21x);
             JPanel panel21 = new JPanel();
@@ -12379,7 +12379,7 @@ public class LayoutEditorTools {
             theContentPane.add(panel24);
             JPanel panel31x = new JPanel();
             panel31x.setLayout(new FlowLayout());
-            panel31x.add(new JLabel(rb.getString("SignalLocated") + " " + rb.getString("Turnout") + " 1 - "
+            panel31x.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " 1 - "
                     + rb.getString("DivergingTrack")));
             theContentPane.add(panel31x);
             JPanel panel31 = new JPanel();
@@ -12422,7 +12422,7 @@ public class LayoutEditorTools {
             // Signal heads located at turnout 2			
             JPanel panel41x = new JPanel();
             panel41x.setLayout(new FlowLayout());
-            panel41x.add(new JLabel(rb.getString("SignalLocated") + " " + rb.getString("Turnout") + " 2 - "
+            panel41x.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " 2 - "
                     + rb.getString("ContinuingTrack")));
             theContentPane.add(panel41x);
             JPanel panel41 = new JPanel();
@@ -12460,7 +12460,7 @@ public class LayoutEditorTools {
             theContentPane.add(dblSlipC2SigPanel);
             JPanel panel51x = new JPanel();
             panel51x.setLayout(new FlowLayout());
-            panel51x.add(new JLabel(rb.getString("SignalLocated") + " " + rb.getString("Turnout") + " 2 - "
+            panel51x.add(new JLabel(rb.getString("SignalLocated") + " " + Bundle.getMessage("BeanNameTurnout") + " 2 - "
                     + rb.getString("DivergingTrack")));
             theContentPane.add(panel51x);
             JPanel panel51 = new JPanel();
@@ -12504,14 +12504,14 @@ public class LayoutEditorTools {
             });
             changeTToTSignalIcon.setToolTipText(rb.getString("ChangeSignalIconHint"));
             panel6.add(new JLabel("  "));
-            panel6.add(setSlipSignalsDone = new JButton(rb.getString("Done")));
+            panel6.add(setSlipSignalsDone = new JButton(Bundle.getMessage("ButtonDone")));
             setSlipSignalsDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setSlipSignalsDonePressed(e);
                 }
             });
             setSlipSignalsDone.setToolTipText(rb.getString("SignalDoneHint"));
-            panel6.add(setSlipSignalsCancel = new JButton(rb.getString("Cancel")));
+            panel6.add(setSlipSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSlipSignalsCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setSlipSignalsCancelPressed(e);

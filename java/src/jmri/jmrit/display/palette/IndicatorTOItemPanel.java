@@ -131,7 +131,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         if (ItemPalette.getLevel4Family(_itemType, _family) != null) {
             JOptionPane.showMessageDialog(_paletteFrame,
                     Bundle.getMessage("DuplicateFamilyName", _family, _itemType),
-                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             // make sure name does not duplicate a known name
             _family = null;
         }
@@ -350,7 +350,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             if (family.equals(iter.next())) {
                 JOptionPane.showMessageDialog(_paletteFrame,
                         Bundle.getMessage("DuplicateFamilyName", family, _itemType),
-                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return false;
             }
         }
@@ -521,7 +521,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             NamedBean bean = getNamedBean();
             if (bean == null) {
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("noRowSelected"),
-                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }
 

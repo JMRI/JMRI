@@ -124,7 +124,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         if (allIconsMap == null) {
             JOptionPane.showMessageDialog(_paletteFrame,
                     Bundle.getMessage("FamilyNotFound", _itemType, _family),
-                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return null;
         }
         if (_table == null || _table.getSelectedRow() < 0) {
@@ -192,7 +192,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
             NamedBean bean = getNamedBean();
             if (bean == null) {
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("noRowSelected"),
-                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }
 

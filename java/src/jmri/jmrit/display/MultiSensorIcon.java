@@ -273,7 +273,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         if (selections == null || selections.size() < positions.length) {
             JOptionPane.showMessageDialog(_paletteFrame,
                     Bundle.getMessage("NeedPosition", positions.length),
-                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return;
         }
         if (iconMap != null) {

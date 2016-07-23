@@ -820,27 +820,27 @@ public class ConditionalVariable {
     public static String getItemTypeString(int t) {
         switch (t) {
             case Conditional.ITEM_TYPE_SENSOR:
-                return (rbx.getString("Sensor"));
+                return (Bundle.getMessage("BeanNameSensor"));
             case Conditional.ITEM_TYPE_TURNOUT:
-                return (rbx.getString("Turnout"));
+                return (Bundle.getMessage("BeanNameTurnout"));
             case Conditional.ITEM_TYPE_LIGHT:
-                return (rbx.getString("Light"));
+                return (Bundle.getMessage("BeanNameLight"));
             case Conditional.ITEM_TYPE_SIGNALHEAD:
-                return (rbx.getString("SignalHead"));
+                return (Bundle.getMessage("BeanNameSignalHead"));
             case Conditional.ITEM_TYPE_SIGNALMAST:
-                return (rbx.getString("SignalMast"));
+                return (Bundle.getMessage("BeanNameSignalMast"));
             case Conditional.ITEM_TYPE_MEMORY:
-                return (rbx.getString("Memory"));
+                return (Bundle.getMessage("BeanNameMemory"));
             case Conditional.ITEM_TYPE_CONDITIONAL:
-                return (rbx.getString("Conditional"));
+                return (Bundle.getMessage("BeanNameConditional"));
             case Conditional.ITEM_TYPE_WARRANT:
-                return (rbx.getString("Warrant"));
+                return (Bundle.getMessage("BeanNameWarrant"));
             case Conditional.ITEM_TYPE_CLOCK:
                 return (rbx.getString("FastClock"));
             case Conditional.ITEM_TYPE_OBLOCK:
-                return (rbx.getString("OBlock"));
+                return (Bundle.getMessage("BeanNameOBlock"));
             case Conditional.ITEM_TYPE_ENTRYEXIT:
-                return (rbx.getString("EntryExit"));
+                return (Bundle.getMessage("EntryExit"));
         }
         return "";
     }
@@ -1078,21 +1078,21 @@ public class ConditionalVariable {
         switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                        new Object[]{rbx.getString("Sensor"), getName(), type});
+                        new Object[]{Bundle.getMessage("BeanNameSensor"), getName(), type});
             case Conditional.ITEM_TYPE_TURNOUT:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                        new Object[]{rbx.getString("Turnout"), getName(), type});
+                        new Object[]{Bundle.getMessage("BeanNameTurnout"), getName(), type});
             case Conditional.ITEM_TYPE_LIGHT:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                        new Object[]{rbx.getString("Light"), getName(), type});
+                        new Object[]{Bundle.getMessage("BeanNameLight"), getName(), type});
             case Conditional.ITEM_TYPE_SIGNALHEAD:
                 if ((_type == Conditional.TYPE_SIGNAL_HEAD_LIT)
                         || (_type == Conditional.TYPE_SIGNAL_HEAD_HELD)) {
                     return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                            new Object[]{rbx.getString("SignalHead"), getName(), type});
+                            new Object[]{Bundle.getMessage("BeanNameSignalHead"), getName(), type});
                 } else {
                     return java.text.MessageFormat.format(rbx.getString("SignalHeadStateDescrpt"),
-                            new Object[]{rbx.getString("SignalHead"), getName(), type});
+                            new Object[]{Bundle.getMessage("BeanNameSignalHead"), getName(), type});
                 }
             case Conditional.ITEM_TYPE_SIGNALMAST:
                 if ((_type == Conditional.TYPE_SIGNAL_MAST_LIT)

@@ -175,7 +175,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
                 _addTableDialog.dispose();
             } catch (IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(_paletteFrame, ex.getMessage(),
-                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             }
         }
         _sysNametext.setText("");
@@ -284,7 +284,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             NamedBean bean = getNamedBean();
             if (bean == null) {
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("noRowSelected"),
-                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }
 

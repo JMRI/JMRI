@@ -249,7 +249,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         if (_iconMap.get(name) != null) {
             JOptionPane.showMessageDialog(this,
                     Bundle.getMessage("DuplicateIconName", name),
-                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             name = setIconName(name);
             if (name == null || _iconMap.get(name) != null) {
                 return;
@@ -291,7 +291,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         while (_iconMap.get(name) != null) {
             JOptionPane.showMessageDialog(this,
                     Bundle.getMessage("DuplicateIconName", name),
-                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             name = JOptionPane.showInputDialog(this,
                     Bundle.getMessage("NoIconName"), name);
             if (name == null || name.trim().length() == 0) {
