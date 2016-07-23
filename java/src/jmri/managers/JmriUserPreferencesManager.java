@@ -1349,7 +1349,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         this.saveSimplePreferenceState();
         this.saveTableColumnPreferences();
         this.saveWindowDetails();
-        this.dirty = false;
+        this.resetChangeMade();
     }
 
     protected final static class ComboBoxLastSelection {
