@@ -98,7 +98,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected String _roadName = "";
     protected String _roadNumber = "";
     protected String _mfg = "";
-    protected String _owner = ((InstanceManager.getDefault(RosterConfigManager.class) == null) ? 
+    protected String _owner = ((InstanceManager.getOptionalDefault(RosterConfigManager.class) == null) ? 
                                 "" :
                                 InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner());
     protected String _model = "";
@@ -604,7 +604,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             // This is generally the best we can do without parsing the decoder file now
             // but may give the wrong answer in some cases (low value long addresses on NCE)
 
-            jmri.ThrottleManager tf = jmri.InstanceManager.throttleManagerInstance();
+            jmri.ThrottleManager tf = jmri.InstanceManager.getOptionalDefault(jmri.ThrottleManager.class);
             int address;
             try {
                 address = Integer.parseInt(_dccAddress);

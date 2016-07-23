@@ -39,7 +39,7 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
     private float metersPerUnit = 1.0f;
     private long timeOfLastPositionCheck = 0;
 
-    private static final AudioFactory activeAudioFactory = InstanceManager.audioManagerInstance().getActiveAudioFactory();
+    private static final AudioFactory activeAudioFactory = InstanceManager.getDefault(jmri.AudioManager.class).getActiveAudioFactory();
 
     /**
      * Abstract constructor for new AudioListener with system name

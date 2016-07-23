@@ -31,10 +31,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TrackRoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2432450380175043238L;
     Location _location = null;
     Track _track = null;
 

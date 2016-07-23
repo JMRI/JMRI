@@ -5,6 +5,7 @@ import jmri.Sensor;
 import jmri.jmrix.AbstractNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Manage the C/MRI serial-specific Sensor implementation.
@@ -35,15 +36,18 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      */
     static final int SENSORSPERUA = 1000;
 
-    public SerialSensorManager() {
+    private CMRISystemConnectionMemo _memo = null;
+
+    public SerialSensorManager(CMRISystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
     /**
      * Return the C/MRI system letter
      */
     public String getSystemPrefix() {
-        return "C";
+        return _memo.getSystemPrefix();
     }
 
     /**
@@ -87,7 +91,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         }
 
         // ensure that a corresponding Serial Node exists
-        SerialNode node = (SerialNode) SerialAddress.getNodeFromSystemName(sName);
+        SerialNode node = (SerialNode) SerialAddress.getNodeFromSystemName(sName,_memo.getTrafficController());
         if (node == null) {
             log.warn("Sensor " + sName + " refers to an undefined Serial Node.");
             return s;
@@ -109,7 +113,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      */
     public void reply(SerialReply r) {
         // determine which node
-        SerialNode node = (SerialNode) SerialTrafficController.instance().getNodeFromAddress(r.getUA());
+        SerialNode node = (SerialNode) _memo.getTrafficController().getNodeFromAddress(r.getUA());
         if (node != null) {
             node.markChanges(r);
         }
@@ -132,7 +136,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                 log.debug("system name is " + sName);
                 if ((sName.charAt(0) == 'C') && (sName.charAt(1) == 'S')) {
                     // This is a C/MRI Sensor
-                    tNode = SerialAddress.getNodeFromSystemName(sName);
+                    tNode = SerialAddress.getNodeFromSystemName(sName,_memo.getTrafficController());
                     if (tNode == node) {
                         // This sensor is for this new Serial Node - register it
                         node.registerSensor(getBySystemName(sName),
@@ -152,17 +156,9 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Deprecated
     static public SerialSensorManager instance() {
-        if (_instance == null) {
-            _instance = new SerialSensorManager();
-        }
-        return _instance;
+        return null;
     }
 
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static SerialSensorManager _instance = null;
 
     public boolean allowMultipleAdditions(String systemName) {
         return true;

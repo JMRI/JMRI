@@ -1,4 +1,3 @@
-// ImageIndexEditor.java
 package jmri.jmrit.catalog;
 
 import java.awt.datatransfer.DataFlavor;
@@ -46,10 +45,6 @@ import org.slf4j.LoggerFactory;
  */
 public final class ImageIndexEditor extends JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8308930846582782285L;
     CatalogPanel _catalog;
     CatalogPanel _index;
 
@@ -154,7 +149,7 @@ public final class ImageIndexEditor extends JmriJFrame {
 
     public static final synchronized void indexChanged(boolean changed) {
         _indexChanged = changed;
-        if (jmri.InstanceManager.shutDownManagerInstance() != null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
             if (changed) {
                 if (_shutDownTask == null) {
                     _shutDownTask = new SwingShutDownTask("PanelPro Save default icon check",
@@ -169,7 +164,7 @@ public final class ImageIndexEditor extends JmriJFrame {
                                     return true;
                                 }
                             };
-                    jmri.InstanceManager.shutDownManagerInstance().register(_shutDownTask);
+                    jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(_shutDownTask);
                 }
             }
         }
@@ -215,16 +210,16 @@ public final class ImageIndexEditor extends JmriJFrame {
     private JPanel makeCatalogPanel() {
         _catalog = new CatalogPanel("defaultCatalog", "selectNode");
         _catalog.init(false);
-        CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
+        CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         List<String> sysNames = manager.getSystemNameList();
-        if (sysNames != null) {
-            for (int i = 0; i < sysNames.size(); i++) {
-                String systemName = sysNames.get(i);
-                if (systemName.startsWith("IF")) {
-                    _catalog.addTree(manager.getBySystemName(systemName));
-                }
+
+        for (int i = 0; i < sysNames.size(); i++) {
+            String systemName = sysNames.get(i);
+            if (systemName.startsWith("IF")) {
+                _catalog.addTree(manager.getBySystemName(systemName));
             }
         }
+
         _catalog.createNewBranch("IFJAR", "Program Directory", "resources");
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "resources");
         _catalog.createNewBranch("IFPREF", "Preferences Directory", FileUtil.getUserFilesPath() + "resources");
@@ -236,17 +231,17 @@ public final class ImageIndexEditor extends JmriJFrame {
         _index.init(true);
 
         boolean found = false;
-        CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
+        CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         List<String> sysNames = manager.getSystemNameList();
-        if (sysNames != null) {
-            for (int i = 0; i < sysNames.size(); i++) {
-                String systemName = sysNames.get(i);
-                if (systemName.startsWith("IX")) {
-                    _index.addTree(manager.getBySystemName(systemName));
-                    found = true;
-                }
+
+        for (int i = 0; i < sysNames.size(); i++) {
+            String systemName = sysNames.get(i);
+            if (systemName.startsWith("IX")) {
+                _index.addTree(manager.getBySystemName(systemName));
+                found = true;
             }
         }
+
         if (!found) {
             _index.createNewBranch("IXII", Bundle.getMessage("ImageIndexRoot"), "ImageIndexRoot");
         }

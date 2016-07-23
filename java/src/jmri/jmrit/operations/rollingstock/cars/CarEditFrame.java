@@ -1,4 +1,3 @@
-// CarEditFrame.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.Dimension;
@@ -33,7 +32,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of car
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2014
- * @version $Revision: 29493 $
  */
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
     
@@ -290,7 +288,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         }
     
         // row 22
-        if (Setup.isRfidEnabled() && jmri.InstanceManager.getDefault(jmri.IdTagManager.class) != null) {
+        if (Setup.isRfidEnabled() && jmri.InstanceManager.getOptionalDefault(jmri.IdTagManager.class) != null) {
             JPanel pRfid = new JPanel();
             pRfid.setLayout(new GridBagLayout());
             pRfid.setBorder(BorderFactory.createTitledBorder(Setup.getRfidLabel()));

@@ -100,12 +100,11 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
      * @param pName Used as a system/user name to lookup the Memory object
      */
     public void setMemory(String pName) {
-        if (InstanceManager.memoryManagerInstance() != null) {
-            Memory memory = InstanceManager.memoryManagerInstance().
-                    provideMemory(pName);
-            if (memory != null) {
+        if (InstanceManager.getOptionalDefault(jmri.MemoryManager.class) != null) {
+            try {
+                Memory memory = InstanceManager.memoryManagerInstance().provideMemory(pName);
                 setMemory(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, memory));
-            } else {
+            } catch (IllegalArgumentException e) {
                 log.error("Memory '" + pName + "' not available, icon won't see changes");
             }
         } else {
@@ -233,8 +232,8 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                 }
             });
             //don't like the idea of refering specifically to the layout block manager for this, but it has to be done if we are to allow the panel editor to also assign trains to block, when used with a layouteditor
-            if ((InstanceManager.sectionManagerInstance().getSystemNameList().size()) > 0 && jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getBlockWithMemoryAssigned(getMemory()) != null) {
-                final jmri.jmrit.dispatcher.DispatcherFrame df = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
+            if ((InstanceManager.getDefault(jmri.SectionManager.class).getSystemNameList().size()) > 0 && jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getBlockWithMemoryAssigned(getMemory()) != null) {
+                final jmri.jmrit.dispatcher.DispatcherFrame df = jmri.InstanceManager.getOptionalDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
                 if (df != null) {
                     final jmri.jmrit.dispatcher.ActiveTrain at = df.getActiveTrainForRoster(re);
                     if (at != null) {

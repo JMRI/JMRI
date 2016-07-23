@@ -85,7 +85,7 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         // enabled.  When the Run/Stop button is enabled, the layout will have to be changed
         aspect = (4.5 * 24.) / 32.; // used to be 4.5??
 
-        // listen for changes to the timebase parameters
+        // listen for changes to the Timebase parameters
 	meter.addPropertyChangeListener(this);
         //clock.addPropertyChangeListener(this);
 

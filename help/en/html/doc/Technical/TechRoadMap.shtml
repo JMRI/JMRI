@@ -1,143 +1,235 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
+
 <html lang="en">
 <head>
-    <TITLE>
- 	JMRI: Technology Road Map
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code road map">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Technology Road Map</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI technical code road map">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head><!--#include virtual="/Header" -->
 
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+      <h1>JMRI: Technology Road Map</h1>This page is the road map
+      for JMRI's future develpoment, including changes to our use
+      of Java technologies. It is maintained and updated through
+      continuing discussion on the <a href=
+      "http://sourceforge.net/mailarchive/forum.php?forum_name=jmri-developers">
+      jmri-developers mailing list</a>.
 
-	<div id="mainContent">
+      <p>There's also a <a href="TechRoadMapOlder.shtml">page
+      containing the history</a>, particularly the saga of how we
+      moved forward to Java 1.6 and Java 1.8 across a series of
+      platform-related changes.</p>
 
-<H1>JMRI: Technology Road Map</H1>
-
-This page is the road map for JMRI's future develpoment, 
-including changes to our use of 
-Java technologies.  It is maintained and updated through
-continuing discussion on the 
-<a href="http://sourceforge.net/mailarchive/forum.php?forum_name=jmri-developers">jmri-developers mailing list</a>.
-
-<p>
-There's also a
-<a href="TechRoadMapOlder.shtml">page containing the history</a>, particularly the saga of how we moved 
-forward to Java 1.6 and Java 1.8 across a series of platform-related changes.
-
-<h2>JMRI Releases</h2>
-
-This section describes the (notional)
-plans for JMRI releases in the future.
-<!--<P>
+      <h2>JMRI Releases</h2>This section describes the (notional)
+      plans for JMRI releases in the future. <!--<P>
 Note that there's been no decision on when a "4.0" version is warranted, so these are described as 3.* numbers.
 In the past, we went from 2.13 (test) to 2.14 (production) to 2.99 (test) to 3.0 (production), so that numbering
 system might be used again.-->
 
-<p>
+      <table border="1">
+        <tr>
+          <th>Release</th>
 
-<table border="1">
-<tr><th>Release</th><th>Description</th>                                    <th>Date</th>   <td>JRE</td>    <td>JDK</td></tr>
-<tr><td>3.11.*</td><td>Development series </td>                             <td></td>       <td>1.8</td>    <td>1.8</td></tr>
-<tr><td>4.0</td><td>Production version, culmination of 3.11.* series </td>  <td>July 2015 <b>(done)</b></td>
-                                                                                            <td>1.8</td>    <td>1.8</td></tr>
-<tr><td>4.1.*</td><td>Development series </td>                              <td></td>       <td>1.8</td>    <td>1.8</td></tr>
-<tr><td>4.2</td><td>Production version, culmination of 4.1.* series </td>   <td>December 2015 <b>(done)</b></td>
-                                                                                            <td>1.8</td>    <td>1.8</td></tr>
-<tr><td>4.3.*</td><td>Development series </td>                              <td></td>       <td>1.8</td>    <td>1.8</td></tr>
-<tr><td>4.4</td><td>Production version, culmination of 4.3.* series </td>   <td>Early Summer 2016 </td>
-                                                                                            <td>1.8</td>    <td>1.8</td></tr>
-<tr><td>4.5.*</td><td>Development series </td>                              <td></td>       <td>1.8</td>    <td>1.8</td></tr>
-<tr><td>4.6</td><td>Production version, culmination of 4.5.* series </td>   <td>Late Fall 2016 </td>
-                                                                                            <td>1.8</td>    <td>1.8</td></tr>
+          <th>Description</th>
 
-</table>
+          <th>Date</th>
 
+          <td>JRE</td>
 
-<h4>JMRI during and after 2016</h4>
+          <td>JDK</td>
+        </tr>
 
-The 4.1.* series of test releases in Fall 2015 continued with Java 1.8
-and the same set of included libraries.  
-The following 4.3.* series, in Spring 2016, will continue with Java 1.8, but may
-involve other updates.
+        <tr>
+          <td>3.11.*</td>
 
-<ul>
+          <td>Development series</td>
 
-<li>The library for the included <a href="../../web">Jetty web server</a> will be updated to version 9.3.6.
+          <td></td>
 
-<li>At some point, we have to migrate away from <a href="Help.shtml">JavaHelp and JHelpDev</a>.
-At a minimum, we'll need to
-<a href="http://weblogs.java.net/blog/brinkley/archive/2004/11/javahelp_v20_02.html">replace the renderer</a>.
-There are 
-<a href="http://stackoverflow.com/questions/9900110/javahelp-viewers-or-alternatives">several alternative help systems</a> available.
-<a href="http://www.oracle.com/technetwork/topics/index-083946.html">Oracle Help</a>
-might be a good choice. DocBook as a tool for generating multiple documentation forms is also being considered.
+          <td>1.8</td>
 
-<li>At some point, we have to update JUnit to the current <a href="http://junit.org">JUnit 4 release</a>, currently 4.12.
-Among other improvements, this will allow use of the 
-Java <a href="http://stackoverflow.com/questions/3806173/assert-keyword-in-java">assert keyword</a>. We'll
-need to establish some conventions for how to use that.
+          <td>1.8</td>
+        </tr>
 
-<li>USB access technology has advanced a lot since support for some basic libraries was added to 
-JMRI.  At some point, we should replace those early library versions, but it will break some user scripts.
+        <tr>
+          <td>4.0</td>
 
-<li>Our <a href="Logging.shtml">logging methodology</a> is now a hybrid of native logging (in some included libraries), 
-Log4J (our original solution) and SLF4J (the most recent addition). It's likely that we'll eventually simplify that.
+          <td>Production version, culmination of 3.11.* series</td>
 
-</ul>
+          <td>July 2015 <b>(done)</b></td>
 
-<h3>Java Release and Operating System Support</h3>
+          <td>1.8</td>
 
-More information on Java releases and the operating systems
-that support them is on a 
-<a href="JVMCapabilities.shtml">separate page</a>.
+          <td>1.8</td>
+        </tr>
 
-<P>
+        <tr>
+          <td>4.1.*</td>
 
-<h2>Migration Notes</h2>
+          <td>Development series</td>
 
-This is a section of notes for various code migrations that are in progress
-or contemplated. See also the related section on the 
-<a href="JVMCapabilities.shtml ">migration to Java 1.8</a>.
+          <td></td>
 
-<h3 id="jdom2" name="jdom2">From JDOM 1 to JDOM 2</h3>
+          <td>1.8</td>
 
-JMRI 3.11 moved from JDOM version 1 to JDOM version 2.  This involved
-a new jdom-2.0.5.jar file (in place of the earlier jdom.jar), changes to 
-startup and build control files, and some required code changes:
-<ul>
-<li>JDOM 2 classes are in the org.jdom2 package instead of org.jdom.  This 
-required some changes to import statements and class-references in the source code.
-<li>The default output formatting is different, requiring minor changes in e.g. the XmlFile
-class output routines.
-</ul>
+          <td>1.8</td>
+        </tr>
 
-In addition, JDOM 2 uses generics in it's input parameters and return values.  This
-means you can remove (now redundant) casts in many places.  Jenkins will warn about those.
+        <tr>
+          <td>4.2</td>
 
+          <td>Production version, culmination of 4.1.* series</td>
 
-<!--#include virtual="/Footer" -->
+          <td>December 2015 <b>(done)</b></td>
 
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+          <td>1.8</td>
+
+          <td>1.8</td>
+        </tr>
+
+        <tr>
+          <td>4.3.*</td>
+
+          <td>Development series</td>
+
+          <td></td>
+
+          <td>1.8</td>
+
+          <td>1.8</td>
+        </tr>
+
+        <tr>
+          <td>4.4</td>
+
+          <td>Production version, culmination of 4.3.* series</td>
+
+          <td>Early Summer 2016</td>
+
+          <td>1.8</td>
+
+          <td>1.8</td>
+        </tr>
+
+        <tr>
+          <td>4.5.*</td>
+
+          <td>Development series</td>
+
+          <td></td>
+
+          <td>1.8</td>
+
+          <td>1.8</td>
+        </tr>
+
+        <tr>
+          <td>4.6</td>
+
+          <td>Production version, culmination of 4.5.* series</td>
+
+          <td>Late Fall 2016</td>
+
+          <td>1.8</td>
+
+          <td>1.8</td>
+        </tr>
+      </table>
+
+      <h4>JMRI during and after 2016</h4>The 4.1.* series of test
+      releases in Fall 2015 continued with Java 1.8 and the same
+      set of included libraries. The following 4.3.* series, in
+      Spring 2016, will continue with Java 1.8, but may involve
+      other updates.
+
+      <ul>
+        <li>The library for the included <a href="../../web">Jetty
+        web server</a> will be updated to version 9.3.6.</li>
+
+        <li>At some point, we have to migrate away from <a href=
+        "Help.shtml">JavaHelp and JHelpDev</a>. At a minimum, we'll
+        need to <a href=
+        "http://weblogs.java.net/blog/brinkley/archive/2004/11/javahelp_v20_02.html">
+        replace the renderer</a>. There are <a href=
+        "http://stackoverflow.com/questions/9900110/javahelp-viewers-or-alternatives">
+        several alternative help systems</a> available. <a href=
+        "http://www.oracle.com/technetwork/topics/index-083946.html">
+        Oracle Help</a> might be a good choice. DocBook as a tool
+        for generating multiple documentation forms is also being
+        considered.</li>
+
+        <li>At some point, we have to update JUnit to the current
+        <a href="http://junit.org">JUnit 4 release</a>, currently
+        4.12. Among other improvements, this will allow use of the
+        Java <a href=
+        "http://stackoverflow.com/questions/3806173/assert-keyword-in-java">
+        assert keyword</a>. We'll need to establish some
+        conventions for how to use that.</li>
+
+        <li>USB access technology has advanced a lot since support
+        for some basic libraries was added to JMRI. At some point,
+        we should replace those early library versions, but it will
+        break some user scripts.</li>
+
+        <li>Our <a href="Logging.shtml">logging methodology</a> is
+        now a hybrid of native logging (in some included
+        libraries), Log4J (our original solution) and SLF4J (the
+        most recent addition). It's likely that we'll eventually
+        simplify that.</li>
+      </ul>
+
+      <h3>Java Release and Operating System Support</h3>More
+      information on Java releases and the operating systems that
+      support them is on a <a href="JVMCapabilities.shtml">separate
+      page</a>.
+
+      <h2>Migration Notes</h2>This is a section of notes for
+      various code migrations that are in progress or contemplated.
+      See also the related section on the <a href=
+      "JVMCapabilities.shtml">migration to Java 1.8</a>.
+
+      <h3 id="jdom2" name="jdom2">From JDOM 1 to JDOM 2</h3>JMRI
+      3.11 moved from JDOM version 1 to JDOM version 2. This
+      involved a new jdom-2.0.5.jar file (in place of the earlier
+      jdom.jar), changes to startup and build control files, and
+      some required code changes:
+
+      <ul>
+        <li>JDOM 2 classes are in the org.jdom2 package instead of
+        org.jdom. This required some changes to import statements
+        and class-references in the source code.</li>
+
+        <li>The default output formatting is different, requiring
+        minor changes in e.g. the XmlFile class output
+        routines.</li>
+      </ul>In addition, JDOM 2 uses generics in it's input
+      parameters and return values. This means you can remove (now
+      redundant) casts in many places. Jenkins will warn about
+      those. <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-

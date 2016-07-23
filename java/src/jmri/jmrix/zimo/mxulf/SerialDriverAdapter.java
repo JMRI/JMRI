@@ -190,9 +190,6 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
 
         // start operation
         packets.startThreads();
-
-        jmri.jmrix.zimo.ActiveFlag.setActive();
-
     }
 
 // base class methods for the ZimoPortController interface

@@ -26,11 +26,6 @@ import org.slf4j.LoggerFactory;
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6804454611283948123L;
-
     EngineManager manager = EngineManager.instance(); // There is only one manager
 
     // Defines the columns

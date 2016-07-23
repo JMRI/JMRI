@@ -5,7 +5,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.beans.Bean;
-import jmri.jmris.json.JSON;
+import jmri.server.json.JSON;
+import jmri.server.json.power.JsonPowerServiceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +30,7 @@ public class JsonClientPowerManager extends Bean implements PowerManager, JsonCl
     public void setPower(int v) throws JmriException {
         this.power = PowerManager.UNKNOWN; // while waiting for reply
         ObjectNode root = this.trafficController.mapper.createObjectNode();
-        root.put(JSON.TYPE, JSON.POWER);
+        root.put(JSON.TYPE, JsonPowerServiceFactory.POWER);
         ObjectNode data = root.putObject(JSON.DATA);
         switch (v) {
             case PowerManager.OFF:
@@ -73,7 +74,7 @@ public class JsonClientPowerManager extends Bean implements PowerManager, JsonCl
 
     @Override
     public void reply(JsonClientReply reply) {
-        if (reply.getMessage().path(JSON.TYPE).asText().equals(JSON.POWER)) {
+        if (reply.getMessage().path(JSON.TYPE).asText().equals(JsonPowerServiceFactory.POWER)) {
             this.reply(reply.getData());
         }
     }

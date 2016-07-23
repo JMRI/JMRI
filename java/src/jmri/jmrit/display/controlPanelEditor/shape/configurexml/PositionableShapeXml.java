@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.PositionableShape objects
  *
  * @author Pete Cressman Copyright: Copyright (c) 2012
- * @version $Revision: 1 $
  */
 public class PositionableShapeXml extends AbstractXmlAdapter {
 

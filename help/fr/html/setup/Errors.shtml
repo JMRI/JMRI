@@ -1,61 +1,75 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="fr">
 <head>
-<!-- UpDated by Blorec Herv&#233; le 2013-09-09-->
-<title>JMRI: Codes et Messages d'Erreurs</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- UpDated by Blorec Herv&#233; le 2013-09-09-->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: Codes et Messages d'Erreurs</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<!-- Page Body -->
-<h1> 
-<a name="erreurs">JMRI: Codes et Messages d'Erreurs</a>
-</h1>
+    <div id="mainContent">
+      <!-- Page Body -->
 
-<dl>
+      <h1><a name="erreurs" id="erreurs">JMRI: Codes et Messages
+      d'Erreurs</a></h1>
 
-<dt>301
-<dd>Pas de Locomotive d&#233;tect&#233;e
+      <dl>
+        <dt>301</dt>
 
-<dt>302
-<dd>Programmateur occup&#233;.
-<dt>303
-<dd>Op&#233;ration Requise non impl&#233;ment&#233;e dans la station de commande.
+        <dd>Pas de Locomotive d&eacute;tect&eacute;e</dd>
 
-<dt>304
-<dd>Annul&#233; par l'utilisateur.
+        <dt>302</dt>
 
-<dt>305
-<dd>Confirmation d'&#233;chec
+        <dd>Programmateur occup&eacute;.</dd>
 
-<dt>306
-<dd>Temps de dialogue d&#233;pass&#233; avec la station de commande.
+        <dt>303</dt>
 
-<dt>307
-<dd>Erreur Inconnue.
+        <dd>Op&eacute;ration Requise non impl&eacute;ment&eacute;e
+        dans la station de commande.</dd>
 
-<dt>308
-<dd>Pas d'acquittement depuis la locomotive.
+        <dt>304</dt>
 
-<dt>309
-<dd>Court Circuit sur la voie de Programmation.
+        <dd>Annul&eacute; par l'utilisateur.</dd>
 
-</dl>
-    
-			<!--#include virtual="/Footer" -->
-</div>
-</div>
+        <dt>305</dt>
+
+        <dd>Confirmation d'&eacute;chec</dd>
+
+        <dt>306</dt>
+
+        <dd>Temps de dialogue d&eacute;pass&eacute; avec la station
+        de commande.</dd>
+
+        <dt>307</dt>
+
+        <dd>Erreur Inconnue.</dd>
+
+        <dt>308</dt>
+
+        <dd>Pas d'acquittement depuis la locomotive.</dd>
+
+        <dt>309</dt>
+
+        <dd>Court Circuit sur la voie de Programmation.</dd>
+      </dl><!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

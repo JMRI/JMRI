@@ -65,17 +65,17 @@ public class DccSignalMast extends AbstractSignalMast {
         } else {
             String commandStationPrefix = parts[0].substring(0, parts[0].indexOf("$") - 1);
             java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
-            if (connList != null) {
-                for (int x = 0; x < connList.size(); x++) {
-                    jmri.CommandStation station = connList.get(x);
-                    if (station.getSystemPrefix().equals(commandStationPrefix)) {
-                        c = station;
-                        break;
-                    }
+
+            for (int x = 0; x < connList.size(); x++) {
+                jmri.CommandStation station = connList.get(x);
+                if (station.getSystemPrefix().equals(commandStationPrefix)) {
+                    c = station;
+                    break;
                 }
             }
+
             if (c == null) {
-                c = InstanceManager.commandStationInstance();
+                c = InstanceManager.getOptionalDefault(CommandStation.class);
                 log.error("No match against the command station for " + parts[0] + ", so will use the default");
             }
         }
@@ -191,8 +191,8 @@ public class DccSignalMast extends AbstractSignalMast {
     protected int dccSignalDecoderAddress;
 
     public static String isDCCAddressUsed(int addr) {
-        for (String val : InstanceManager.signalMastManagerInstance().getSystemNameList()) {
-            SignalMast mast = InstanceManager.signalMastManagerInstance().getSignalMast(val);
+        for (String val : InstanceManager.getDefault(jmri.SignalMastManager.class).getSystemNameList()) {
+            SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(val);
             if (mast instanceof jmri.implementation.DccSignalMast) {
                 if (((DccSignalMast) mast).getDccSignalMastAddress() == addr) {
                     return ((DccSignalMast) mast).getDisplayName();

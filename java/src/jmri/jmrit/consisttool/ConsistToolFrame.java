@@ -1,4 +1,3 @@
-// ConsistToolFrame.java
 package jmri.jmrit.consisttool;
 
 import java.awt.FlowLayout;
@@ -33,14 +32,9 @@ import org.slf4j.LoggerFactory;
  * Frame object for manipulating consists.
  *
  * @author Paul Bender Copyright (C) 2003-2008
- * @version $Revision$
  */
 public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.ConsistListener, jmri.ConsistListListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7572352658600799471L;
     final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.consisttool.ConsistTool");
     // GUI member declarations
     JLabel textAdrLabel = new JLabel();

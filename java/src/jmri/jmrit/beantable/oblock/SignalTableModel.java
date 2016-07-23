@@ -16,7 +16,6 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version $Revision$
  */
 import java.beans.PropertyChangeEvent;
 import java.text.ParseException;
@@ -38,7 +37,6 @@ import org.slf4j.LoggerFactory;
 
 public class SignalTableModel extends AbstractTableModel {
 
-    private static final long serialVersionUID = 1150140866074591437L;
     public static final int NAME_COLUMN = 0;
     public static final int FROM_BLOCK_COLUMN = 1;
     public static final int PORTAL_COLUMN = 2;

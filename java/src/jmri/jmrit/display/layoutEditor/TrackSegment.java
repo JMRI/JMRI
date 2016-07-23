@@ -238,7 +238,7 @@ public class TrackSegment {
     }
 
     public LayoutBlock getLayoutBlock() {
-        if ((block == null) && (blockName != null) && (blockName != "")) {
+        if ((block == null) && (blockName != null) && (!blockName.equals(""))) {
             block = layoutEditor.provideLayoutBlock(blockName);
         }
         return block;

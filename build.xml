@@ -32,7 +32,13 @@
     <!--                                                                                 -->
     <!-- Things you might want to set:                                                   -->
     <!--    # Your SourceForge ID (used for JavaDocs, distribution) if different         -->
-    <!--    sourceforge.userid=                                                          -->               
+    <!--    sourceforge.userid=                                                          -->
+    <!--    # JVM arguments to pass to the JVM running the JMRI application              -->
+    <!--    jvm.args=                                                                    -->
+    <!--    # paths to append to the classpath                                           -->
+    <!--    cp.append=                                                                    -->
+    <!--    # paths to prepend to the classpath                                           -->
+    <!--    cp.prepend=                                                                    -->
     <!--    # The directory where Findbugs is installed                                  -->
     <!--    findbugs.home=                                                               -->
     <!--    # You can specify a DecoderPro/PanelPro config file at runtime               -->
@@ -62,7 +68,7 @@
     <!--    release.official=false                  -->
     <!--    nsis.home=/opt/nsis/nsis-2.46/          -->
     <!-- in its "invoke ant" step                   -->
-    
+
     <property name="release.build_user" value="${user.name}"/>
 
     <property name="release" value="${release.major}.${release.minor}.${release.build}"/>
@@ -101,6 +107,22 @@
         <not><isset property="nsis.home"/></not>
     </condition>
 
+    <condition property="jvm.args" value="">
+        <not>
+            <isset property="jvm.args"/>
+        </not>
+    </condition>
+    <condition property="cp.append" value="">
+        <not>
+            <isset property="cp.append"/>
+        </not>
+    </condition>
+    <condition property="cp.prepend" value="">
+        <not>
+            <isset property="cp.prepend"/>
+        </not>
+    </condition>
+
     <!-- set global properties for this build -->
     <property name="dist"         value="${basedir}/dist"/>
     <property name="jartarget"    value="${basedir}"/>
@@ -116,7 +138,7 @@
     <property name="templatedir"  value="${javadir}/template"/>
     <property name="tmptarget"    value="${javadir}/tmp"/>
     <property name="lineendtmp"   value="${tmptarget}/lineend"/>
-    <property name="tempdir"      value="${basedir}/tempdir"/>    <!-- actual tmp files -->
+    <property name="tempdir"      value="${basedir}/temp"/>    <!-- actual tmp files -->
     <property name="java.debugging" value="yes" />
 
     <!-- location for all generated java code -->
@@ -182,7 +204,7 @@
         <pathelement location="${libdir}/beansbinding-1.2.1.jar"/>
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
-   
+
     <!-- jars needed for i18n testing only -->
     <path id="i18n.class.path">
         <pathelement location="${ant.home}/lib/ant.jar"/>
@@ -205,9 +227,11 @@
 
     <!-- path to run regular executables -->
     <path id="project.class.path">
+        <pathelement path="${cp.prepend}"/>   <!-- prepended by user -->
         <pathelement location="${jartarget}"/>
         <path        refid="runtime.class.path"/>
         <pathelement location="${target}/"/>  <!-- last to check for name collisions -->
+        <pathelement path="${cp.append}"/>    <!-- appended by user -->
     </path>
 
     <!-- path to run tests -->
@@ -216,7 +240,7 @@
         <path   refid="compile.class.path"/>
         <pathelement location="${target}/"/>  <!-- last to check for name collisions -->
     </path>
-    
+
     <macrodef name="quiet">
         <element name="body" implicit="yes"/>
         <sequential>
@@ -225,7 +249,7 @@
                 //echo = JMRI.createTask("echo");
                 //echo.setMessage(Object.prototype.toString.call(project.getBuildListeners().firstElement()));
                 //echo.perform();
-                
+
                 // Only attempt to quiet if the top logger is the default Ant logger
                 // This avoids errors when e.g. NetBeans has injected it's own logger ([object org.apache.tools.ant.module.bridge.impl.NbBuildLogger])
                 if (Object.prototype.toString.call(project.getBuildListeners().firstElement()) == "[object org.apache.tools.ant.DefaultLogger]") {
@@ -351,10 +375,13 @@
             <fileset dir="${genjavasrcdir}"/>
             <fileset file="${javadir}/manifest"/>
             <fileset dir="${tempdir}"/>
+            <fileset file="findbugs.html"/>
             <fileset file="findbugs.xml"/>
             <fileset file="junit-results.xml"/>
             <fileset file="jmri-fb.html"/>
             <fileset file="jacoco.exec"/>
+            <fileset file=".run.sh"/>
+            <fileset file="test"/>
         </delete>
         <ant dir="xml/XSLT" target="clean" inheritAll="false"  />
     </target>
@@ -371,7 +398,7 @@
             <fileset dir="${resourcedir}" includes="*.gif"/>
         </copy>
         <copy todir="${target}">
-            <fileset dir="${source}" includes="**/*.properties"/>
+            <fileset dir="${source}" includes="**/*.properties,**/*.js"/>
             <fileset dir="${source}" includes="META-INF/**"/>
         </copy>
     </target>
@@ -504,7 +531,7 @@
         <!-- Compile the java code from ${source} into ${target} allowing lots of deprecations!-->
         <!-- The following is copied from the -java-compile-internal target -->
         <!-- Eventually, we want to turn deprecation warnings "on" and remove this target's Xmax parameters -->
-        <javac compiler="modern" 
+        <javac compiler="modern"
                srcdir="${source}"
                destdir="${target}"
                source="${source_version}"
@@ -514,7 +541,7 @@
                deprecation="on"
                debug="${java.debugging}">
             <classpath refid="compile.class.path"/>
-            <compilerarg value="-Xlint:-unchecked"/> 
+            <compilerarg value="-Xlint:-unchecked"/>
             <compilerarg value="-Xmaxwarns"/><compilerarg value="2000"/><!-- change from default 100 warnings -->
         </javac>
     </target>
@@ -547,7 +574,7 @@
     <target name="-pre-single-test">
         <fail unless="test.includes">Must select some files in the IDE or set test.includes</fail>
         <condition property="test.isTest">
-            <matches pattern=".*Test$" string="${test.includes}" /> 
+            <matches pattern=".*Test$" string="${test.includes}" />
         </condition>
     </target>
     <target depends="-pre-single-test" if="test.isTest" name="-test-single-test">
@@ -562,6 +589,7 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>
@@ -702,21 +730,21 @@
             </or>
             </and>
         </condition>
-     
+
         <condition property="baseArch" value="armv6l">
             <and>
                 <os family="unix" />
                 <equals arg1="${os.arch}" arg2='arm' />
             </and>
         </condition>
-     
+
         <property name="arch.lib.path" value="${libdir}/${baseOS}/${baseArch}:${libdir}/${baseOS}"/>
         <echo message="arch.lib.path ${arch.lib.path}"/>
     </target>
 
 
     <!-- the two targets in the depends are correct: only one will run, depending upon ${debugger} -->
-    
+
     <!-- Internal target to run a given JMRI application, under the debugger if the debugger property is set -->
     <target name="-run-jmri-application" depends="-normal-jmri-application,-debug-jmri-application">
         <echo>${application.classname} finished with return code ${application.returncode}</echo>
@@ -765,6 +793,7 @@
             <!-- <jvmarg value="-verbose"/> -->
             <!-- <jvmarg value="-verbosegc"/> -->
             <!-- <jvmarg value="-Xloggc:memory.vgc"/> --><!-- for JTune -->
+            <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
     </target>
@@ -797,8 +826,15 @@
             <!-- <jvmarg value="-verbosegc"/> -->
             <!-- <jvmarg value="-Xloggc:memory.vgc"/> -->
             <!-- for JTune -->
+            <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
+    </target>
+
+    <target name="run-sh" description="Create run.sh in SCM root">
+        <make-startup-script script.name=".run.sh"
+                             script.class="jmri.util.junit.TestClassMainMethod"
+                             dest="${basedir}/.run.sh"/>
     </target>
 
     <!-- This is a set of targets used to start up the various JMRI applications
@@ -898,7 +934,7 @@
     <!-- ============================================================================= -->
     <!-- I18N testing section                                                          -->
     <!-- ============================================================================= -->
-    
+
 
     <!-- Force false language/country to check I8N -->
     <target name="locale"
@@ -947,7 +983,7 @@
     <!-- ============================================================================= -->
     <!-- NetBeans targets: profiling et al                                             -->
     <!-- ============================================================================= -->
-    
+
 
     <!-- Note if modifying the profile target, please be sure to up date the -->
     <!-- NetBeans IDE profile target in this file -->
@@ -990,6 +1026,7 @@
        <!-- <jvmarg value="-verbose"/> -->
        <!-- <jvmarg value="-verbosegc"/> -->
        <!-- <jvmarg value="-Xloggc:memory.vgc"/> --> <!-- for JTune -->
+            <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
     </target>
@@ -1010,6 +1047,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
     </target>
@@ -1058,13 +1096,13 @@
       <exec executable="sh" outputproperty="checklineeds.files">
         <arg value="-c" />
         <arg value="find xml help java/src java/test jython -not -type d -exec file '{}' ';' | grep CRLF" />
-      </exec>      
-      
+      </exec>
+
       <fail message="${checklineeds.files}">
         <condition>
           <length string="${checklineeds.files}" when="greater" length="0" />
-        </condition>     
-      </fail> 
+        </condition>
+      </fail>
     </target>
 
     <!-- end of file-checking targets -->
@@ -1122,8 +1160,10 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
             <sysproperty key="jmri.headlesstest" value="true"/>
+            <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
     </target>
@@ -1135,6 +1175,7 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <sysproperty key="java.awt.headless" value="true"/>
@@ -1157,13 +1198,13 @@
           <executiondata>
               <file file="jacoco.exec" />
           </executiondata>
- 
+
           <structure name="AntTestReporting">
               <classfiles>
                  <fileset refid="jacocofileset"/>
               </classfiles>
           </structure>
- 
+
           <html destdir="${coveragetarget}" />
        </jacoco:report>
     </target>
@@ -1174,6 +1215,7 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>
@@ -1195,9 +1237,12 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>
+
+            <jvmarg value="-Xmx640m"/>
 
             <test name="apps.tests.AllTest">
                 <formatter usefile="no" type="brief"/>
@@ -1217,6 +1262,7 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>
@@ -1246,19 +1292,22 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
 
     </target>
 
     <target name="logalltest" depends="tests, runtime-library-selection" description="run headless test suite">
-        <jacoco:coverage destfile="jacoco.exec">
+        <jacoco:coverage destfile="jacoco.exec" excludes="org.slf4j.*">
         <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>
@@ -1279,13 +1328,13 @@
           <executiondata>
               <file file="jacoco.exec" />
           </executiondata>
- 
+
           <structure name="AntTestReporting">
               <classfiles>
                  <fileset refid="jacocofileset"/>
               </classfiles>
           </structure>
- 
+
           <html destdir="${coveragetarget}" />
        </jacoco:report>
     </target>
@@ -1342,7 +1391,7 @@
                      includes="xml/,resources/,help/,web/,jython/"
                      excludes="help/en/manual/**" />
           <manifest>
-            <attribute name="Main-Class" value="jmri.Version"/> 
+            <attribute name="Main-Class" value="jmri.Version"/>
             <attribute name="Class-Path" value="${jar.classpath}"/>
             <section name="jmri">
               <attribute name="Specification-Title" value="Java Model Railroad Interface Classes"/>
@@ -1514,14 +1563,14 @@
                        <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=26788&type=12" width="120" height="30" border="0" alt="Get JMRI Model Railroad Interface at SourceForge.net. Fast, secure and Free Open Source software downloads"/></a>
                 ]]>
             </bottom>
-            <link href="http://docs.oracle.com/javase/8/docs/api/"/> 
+            <link href="http://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://download.oracle.com/javase/8/docs/api/"/>
             <link href="http://java.sun.com/products/javacomm/reference/api/"/>
             <link href="http://users.frii.com/jarvi/rxtx/doc/"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="http://javacsv.sourceforge.net/"/> <!-- A -->
             <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.0.6"/>
-            <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>  
+            <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
             <link href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/"/>
             <link href="http://www.openlcb.org/trunk/prototypes/java/doc/"/>
@@ -1584,7 +1633,7 @@
               <equals arg1="${decoderindex.returncode}" arg2="0"/>
             </not>
           </condition>
-        </fail> 
+        </fail>
         <fixcrlf file="${decoderindex.file}"/>
         <move file="${decoderindex.file}" todir="xml" />
     </target>
@@ -1626,9 +1675,9 @@
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
                   excludeFilter=".findbugs.xml"
-                  
+
                   effort="max"
-                  reportLevel="low"                  
+                  reportLevel="low"
                   >
             <sourcePath path="${source}/"/>
             <class location="${jartarget}/jmri.jar"/>
@@ -1722,7 +1771,7 @@
             <fileset dir="${scriptdir}/WinInstallFiles"
                      includes="*"/>
             <fileset dir="."
-                     includes="python.properties"/>
+                     includes="python.properties,jmri.conf"/>
         </copy>
         <mkdir dir="${dist.windows}/JMRI/lib"/>
         <copy todir="${dist.windows}/JMRI/lib" flatten="true">
@@ -1762,7 +1811,7 @@
             <fileset dir="scripts"
                      includes="default.lcf,COPYING"/>
             <fileset dir="."
-                     includes="python.properties"/>
+                     includes="python.properties,jmri.conf"/>
         </copy>
         <mkdir dir="${dist.macosx}/JMRI/lib"/>
         <copy todir="${dist.macosx}/JMRI/lib" flatten="true">
@@ -1817,7 +1866,7 @@
             <fileset dir="${scriptdir}"
                      includes="default.lcf,COPYING"/>
             <fileset dir="."
-                     includes="python.properties"/>
+                     includes="python.properties,jmri.conf"/>
         </copy>
         <mkdir dir="${dist.linux}/JMRI/lib"/>
         <copy todir="${dist.linux}/JMRI/lib" flatten="true">
@@ -1862,7 +1911,7 @@
         <attribute name="script.icon" default="use script.name"/> <!-- if set to JMRI, app-specifc icons will not be used -->
         <sequential>
             <copy todir="${dist.apps}/@{script.name}.app">
-                <fileset dir="${scriptdir}/MacOSXapps/V2/TemplateApp.app"/>
+                <fileset dir="${scriptdir}/MacOSXapps/TemplateApp.app"/>
                 <filterset>
                     <filter token="NAME" value="@{script.name}"/>
                     <filter token="CLASS" value="@{script.class}"/>
@@ -1874,9 +1923,9 @@
                 <first>
                     <restrict>
                         <filelist>
-                            <file name="${scriptdir}/MacOSXapps/V2/icons/@{script.icon}.icns"/>
-                            <file name="${scriptdir}/MacOSXapps/V2/icons/@{script.name}.icns"/>
-                            <file name="${scriptdir}/MacOSXapps/V2/icons/JMRI.icns"/>
+                            <file name="${scriptdir}/MacOSXapps/icons/@{script.icon}.icns"/>
+                            <file name="${scriptdir}/MacOSXapps/icons/@{script.name}.icns"/>
+                            <file name="${scriptdir}/MacOSXapps/icons/JMRI.icns"/>
                         </filelist>
                         <exists/>
                     </restrict>
@@ -1936,7 +1985,7 @@
     <property name="jmri.repository.url" value="https://github.com/JMRI/JMRI.git"/>
 
     <property name="branch-name" value="release-${release}" />
-    
+
     <!-- several steps are involved in creating a new test release
     branch from the head of the master branch.  This target intends to manage as
     many of them as possible -->
@@ -1969,7 +2018,7 @@
             <arg value="checkout"/>
             <arg value="master"/>
         </exec>
-        
+
         <!-- in the master release.properties file, increment
         the release.build value in order to point to the NEW next
         release (the one after the one we're creating now) -->
@@ -1993,4 +2042,25 @@
         <echo message="new release branch ${branch-name} created"/>
     </target>
 
+    <!-- CI Test runners -->
+    <target name="travis-ci" description="Parallel execution of CI tasks on Travis CI">
+        <parallel threadCount="4"> <!-- allow up to four tasks at once -->
+            <ant target="checklineends" />
+            <ant target="checknonascii" />
+            <sequential>
+                <ant target="compile-generated-source" />
+                <parallel>
+                    <ant target="javadoc" />
+                    <ant target="ci-test-travis" />
+                </parallel>
+            </sequential>
+        </parallel>
+    </target>
+    
+    <target name="appveyor" description="Parallel execution of CI tasks on Appveyor">
+        <parallel threadCount="4"> <!-- allow up to four tasks at once -->
+            <ant target="checkPropertiesFiles" />
+            <ant target="ci-test-appveyor" />
+        </parallel>
+    </target>
 </project>

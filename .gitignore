@@ -2,6 +2,7 @@
 jmri.jar
 /dist
 java/docs
+/target
 
 # test artifacts
 junit-results.xml
@@ -28,12 +29,17 @@ session.log
 /xml/XSLT/properties
 /xml/XSLT/xml
 /xml/XSLT/pages
+.run.sh
 
 # private / per-user configuration files
 /nbproject/private
 /.idea/workspace.xml
 local.properties
+/test
+/test/jmri.conf
 *.original~
+.metadata
+RemoteSystemsTempFiles
 
 # CATS source, sometimes present for test
 /java/src/cats

@@ -1,14 +1,19 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-<title>Basic Throttle window usage</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<meta name="keywords" content="JMRI decoderpro dcc nmra throttlepro">
-<meta name="Description" content="Throttle documentation for JMRI project">
-<meta name="Author" content="Lionel Jeanson">
-<meta name="Language" content="EN">
-<meta name="Robots" content="Index, Follow">
-
+  <title>Basic Throttle window usage</title>
+  <meta name="keywords" content=
+  "JMRI decoderpro dcc nmra throttlepro">
+  <meta name="Description" content=
+  "Throttle documentation for JMRI project">
+  <meta name="Author" content="Lionel Jeanson">
+  <meta name="Language" content="EN">
+  <meta name="Robots" content="Index, Follow">
   <meta name="Revisit-After" content="7 Days">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -16,256 +21,264 @@
   <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
   <!-- or change them to reflect your alternative logo -->
   <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<h1>Using the Throttle Pane</h1>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<img src="images/BasicThrottleWindow.png" alt="BasicThrottleWindow.png"><br>
+    <div id="mainContent">
+      <h1>Using the Throttle Pane</h1><img src=
+      "images/BasicThrottleWindow.png" alt=
+      "BasicThrottleWindow.png"><br>
 
-<h2>Basic structure of a Throttle Window</h2>
+      <h2>Basic structure of a Throttle Window</h2>There are three
+      panels (or sub-windows) associated with each Throttle window.
+      These are identified as:<br>
 
-There are three panels (or sub-windows) associated with each Throttle
-window. These are identified as:<br>
+      <ul>
+        <li>Control Panel - contains a throttle slider to control
+        the speed of the loco, a forward and reverse selector, an
+        Emergency Stop action button, and an Idle action button
+        (mostly used for sound equipped decoders).</li>
 
-<ul>
-	<li>Control Panel &#8212; contains a throttle slider to control the speed
-	of the loco, a forward and reverse selector, an Emergency Stop action
-	button, and an Idle action button (mostly used for sound equipped
-	decoders).</li>
-	<li>Function Panel &#8212; is used to associate the function buttons with
-	the active output functions of the decoder.</li>
-	<li>Address Panel &#8212; is used to identify the decoder's address, and to
-	dispatch or release the identified address.</li>
-</ul>
+        <li>Function Panel - is used to associate the function
+        buttons with the active output functions of the
+        decoder.</li>
 
-Note that these three panels are actually windows defined within an
-overall window, each of these panels contain their own "minimize" and
-"close" buttons &#8212; as well as can also be resized. You can actually
-minimize one or more of these panels within the Throttle window. When
-one of these subwindows is closed, is can be reopened through <a href="ThrottleWindowMenus.shtml">the View menu</a>.<br>
+        <li>Address Panel - is used to identify the decoder's
+        address, and to dispatch or release the identified
+        address.</li>
+      </ul>Note that these three panels are actually windows
+      defined within an overall window, each of these panels
+      contain their own "minimize" and "close" buttons - as well as
+      can also be resized. You can actually minimize one or more of
+      these panels within the Throttle window. When one of these
+      subwindows is closed, is can be reopened through <a href=
+      "ThrottleWindowMenus.shtml">the View menu</a>.<br>
+      <br>
+      For details about usage of the <a href=
+      "ThrottleWindowMenus.shtml">Throttle window menus, see
+      there</a>.<br>
+      For details about usage of the <a href=
+      "ThrottleToolBar.shtml">Throttle window toolbar, see
+      there</a>.<br>
+      For details about usage of the <a href=
+      "ThrottlesPreferencesPane.shtml">Throttles Preferences, see
+      there</a>.<br>
+      <br>
+      For <a href="AdvancedThrottleControl.shtml">advanced control
+      of a Throttle, see there</a>.<br>
+      <br>
 
-<br>
-For details about usage of the <a href="ThrottleWindowMenus.shtml">Throttle
-window menus, see there</a>.
-<br>
-For details about usage of the <a href="ThrottleToolBar.shtml">Throttle
-window toolbar, see there</a>.
-<br>
-For details about usage of the <a href="ThrottlesPreferencesPane.shtml">Throttles Preferences, see there</a>.<br>
-<br>
-For <a href="AdvancedThrottleControl.shtml">advanced control of a Throttle, see there</a>.<br>
+      <h2>Address Panel - Assign a Decoder Address to a
+      Throttle</h2>The first thing that needs to happen before any
+      options or buttons in the window become active, is to assign
+      a decoder's address in the "Address Panel". There are two
+      ways that this can be accomplished.<br>
+      <br>
+      Manually enter the decoder's address in the large text box or
+      select an existing Roster entry though the drop down menu,
+      then click on the "Set" button.<br>
+      When manually entering an address, be sure to click on the
+      Set button. Without this step, all throttle actions remain
+      disabled.<br>
+      <br>
+      Note that there is an option in the <a href=
+      "ThrottlesPreferencesPane.shtml">Throttles Preferences
+      Pane</a> that will enable an automatic look back in the
+      roster DB when an address is entered, and eventually trigger
+      an automatic set up of the full throttle if any matching
+      Roster entry is found.<br>
+      <br>
+      After an address is selected, all other controls and options
+      in the throttle window will be enabled:<br>
 
-<br>
+      <ul>
+        <li>Dispatch - releases the decoder address back to the
+        command station in a "dispatch" mode. Usually, only one
+        address can be in dispatch state at the command station -
+        all others are either "in use" or "idle" (released). The
+        controls and options in the throttle window will become
+        disabled until another address is "Set".</li>
 
-<h2>Address Panel - Assign a Decoder Address to a Throttle</h2>
+        <li>Release - releases the decoder address back to the
+        command station as "no longer needed". The controls and
+        options in the throttle window will become disabled until
+        another address is "Set".</li>
 
-The first thing that needs to happen before any options or buttons in
-the window become active, is to assign a decoder's address in the
-"Address Panel". There are two ways that this can be accomplished.<br>
+        <li>Program - opens an ops-mode (programming on the main)
+        DecoderPro programmer for the selected locomotive. It's
+        only active when a roster entry has been selected on the
+        throttle.</li>
+      </ul>
 
-<br>
+      <h2>Control Panel - Let's Run a Train</h2>Now that you have
+      established an address for the throttle, you should be able
+      to run the train on your layout (if your layout is active and
+      the address you entered is valid to a locomotive on the
+      track). You do this using the "Control Panel".<br>
 
-Manually enter the decoder's address in the large text box or select an
-existing Roster entry though the drop down menu, then click on the "Set"
-button.<br>
+      <ul>
+        <li>The slider will control the throttle speed.</li>
 
-When manually entering an address, be sure to click on the Set button.
-Without this step, all throttle actions remain disabled.<br>
-<br>
-Note that there is an option in the <a href="ThrottlesPreferencesPane.shtml">Throttles Preferences Pane</a>
-that will enable an automatic look back in the roster DB when&nbsp; an
-address is entered, and eventually trigger an automatic set up of the
-full throttle if any matching Roster entry is found.<br>
+        <li>The Forward and Reverse button its direction.</li>
 
-<br>
+        <li>The STOP! button will send a emergency stop (DCC speed
+        to -1) message to the locomotive.</li>
 
-After an address is selected, all other controls and options in the
-throttle window will be enabled:<br>
-<ul>
-  <li>
+        <li>The Idle one will stop the locomotive smoothly (DCC
+        speed to 0) (if the decoder has acceleration or braking
+        rates enabled, the loco will speed up or slow down
+        accordingly. If no momentum values are enabled, the loco
+        will speed up or slow down abruptly.).</li>
+      </ul>Beware of where you click with your mouse pointer in the
+      Control Panel. If you click anywhere near the slider, your
+      loco may take off on you unexpectedly (more on this below).
+      If you click anywhere on the words "Forward" or "Reverse",
+      you might change current train direction.<br>
+      <br>
 
-Dispatch &#8212; releases the decoder address back to the command station in
-a "dispatch" mode. Usually, only one address can be in dispatch state
-at the command station &#8212; all others are either "in use" or "idle"
-(released). The controls and options in the throttle window will become
-disabled until another address is "Set".</li>
-  <li>
+      <h3>Control Panel config pane</h3><img src=
+      "images/ControlPanelPreferences.png" alt=
+      "ControlPanelPreferences.png"><br>
+      This pane if accessible by right clicking in the Control
+      Panel pane and opening Properties menu entry<br>
+      <br>
 
-Release &#8212; releases the decoder address back to the command station as
-"no longer needed". The controls and options in the throttle window
-will become disabled until another address is "Set".</li>
-  <li>Program &#8212;&nbsp;
+      <h2>The Function Panel</h2>The Function Panel has 28 function
+      buttons available for each throttle. Most decoders currently
+      don't handle 28 functions. The function panel displays the
+      buttons in two groups, press the "*" button in the lower left
+      corner to see the second set of function buttons.<br>
+      <br>
+      Clicking on the function buttons correlate to pressing the
+      same function button on a hand-held throttle. The F0 function
+      is normally used for the lights.<br>
+      <br>
+      This is the basic functionality of the Function Panel. All
+      buttons function like an on/off toggle - click once to turn
+      "on"; click again to turn "off".<br>
+      <br>
 
-opens an
-ops-mode (programming on the main) DecoderPro programmer 
-for the selected locomotive. It's only active when
-a roster entry has been selected on the throttle.</li>
-</ul>
+      <h3>Function Button config pane</h3><img src=
+      "images/FunctionButtonProperties.png" alt=
+      "FunctionButtonProperties.png"><br>
+      This pane if accessible by right clicking in the AddressPanel
+      pane, on a specific Function Button and opening Properties
+      menu entry.<br>
+      <br>
+      Note that for Throttles that have an associated Roster, it is
+      better to define these settings in the <a href=
+      "RostersMediaPane.shtml">Function label pane</a> in
+      DecoderPro (however if you change them here, you can still
+      export these changes to the Roster through the <a href=
+      "ThrottleWindowMenus.shtml">Export to Roster</a> menu
+      entry).<br>
 
+      <ul>
+        <li>Function Number - associates the button with a function
+        number</li>
 
-<h2>Control Panel - Let's Run a Train</h2>
+        <li>Text - customizable button label text</li>
 
-Now that you have established an address for the throttle, you should
-be able to run the train on your layout (if your layout is active and
-the address you entered is valid to a locomotive on the track). You do
-this using the "Control Panel".<br>
+        <li>Font Size - size of text displayed on button</li>
 
-<ul>
+        <li>Lockable - identifies whether the button acts as an
+        "on/off" toggle switch; or as a momentary switch</li>
 
-  <li>The slider will control the throttle speed.</li>
-  <li>The Forward and Reverse button its direction. </li>
-  <li>The STOP! button will send a emergency stop (DCC speed to -1)
-message to the locomotive.</li>
-  <li>The Idle one will stop the locomotive smoothly (DCC speed to 0)
-(if the decoder has acceleration or braking rates enabled, the loco
-will speed up or slow down accordingly. If no momentum values are
-enabled, the loco will speed up or slow down abruptly.).</li>
-</ul>
+        <li>Visible - identifies whether the button is visible in
+        the Function Panel window</li>
+      </ul>By default, the Function Number is associated with the
+      button number that you initially right-clicked on. For
+      example, in the figures shown above, function number "3" (F3)
+      is being edited. It is recommended that you leave this number
+      as is, however, you can change this to a different function
+      number if you really wish. An example of why you might want
+      to do this is if you really want the "lights" button - which
+      is usually F0 (located as the last/bottom button by default)
+      - to be located as the first button in the Function
+      Panel.<br>
+      <br>
+      <span style="font-weight: bold;">Warning!</span> If any
+      modifications are done to the "Function Number" field, verify
+      to make sure that no two buttons are assigned the same
+      function number - some unwanted consequences may occur.<br>
+      <br>
+      The Text field will be the most welcome and modified field.
+      By default, it is set similar to hand-held throttles:
+      F1...F2...F3...etc. The content of the field is pretty much
+      open to the imagination, however, there is going to be a
+      point where the length of the text is not going to fit on the
+      button. The Font Size field is available to also assist in
+      getting the wanted text to fit on the button. A little
+      experimentation will be required here to determine what looks
+      good for you - and what will fit.<br>
+      The Lockable check box may be a little confusing at first.
+      When enabled - as it is by default - it simply means that
+      when the button is clicked on, it will "lock" itself in
+      either an "on" state or an "off" state. In other words, the
+      button will act as a toggle switch - click once to turn the
+      function "on"; click again to turn the function "off". The
+      opposite of this action is what happens when the check box is
+      disabled. Then the button acts like a momentary switch -
+      supplying a momentary "on" command for as long as the mouse
+      button is clicked and held over the button. When the mouse
+      button is released, an "off" command is sent to the function.
+      A good example of where one might want to use this is when
+      customizing a throttle setup for a sound decoder. The
+      horn/whistle is closer to functional when this option is
+      disabled. Depending on the speed of the computer system and
+      the DCC system, short and quick click and releases would
+      provide a short blast of the horn or whistle. Holding down
+      the button a little longer would produce a longer held blast
+      of the whistle.<br>
+      The Visible check box allows for the "removal" of unwanted
+      buttons. By default, all function buttons are enabled as
+      "visible" so that they can obviously be seen. But if there is
+      only a single function being used - for example the "lights"
+      (F0) - then this option does provide the ability to "hide"
+      all of the other buttons.<br>
+      <span style="font-weight: bold;">Warning!</span> Disabling
+      the "Visible" check box should be one of the last steps
+      performed during this customization process. The reason for
+      this is that once the button is marked as "invisible" (by
+      removing the check box), it is indeed invisible to the user
+      and therefore can't be right-clicked on with the mouse in
+      order to get the "Edit Function Button" window back. To make
+      all buttons visible select <a href=
+      "ThrottleWindowMenus.shtml">"View-&gt;Show All Function
+      Buttons."</a><br>
 
-Beware of where you click with your mouse pointer in the Control Panel.
-If you click anywhere near the slider, your loco may take off on you
-unexpectedly (more on this below). If you click anywhere on the words
-"Forward" or "Reverse", you might change current train direction.<br>
-
-<br>
-
-<h3>Control Panel config pane</h3>
-
-<img src="images/ControlPanelPreferences.png" alt="ControlPanelPreferences.png"><br>
-
-This pane if accessible by right clicking in the Control Panel pane and
-opening Properties menu entry<br>
-
-<br>
-
-<h2>The Function Panel</h2>
-
-The Function Panel has 28 function buttons available for each throttle.
-Most decoders currently don't handle 28 functions. The function panel
-displays the buttons in two groups, press the "*" button in the lower
-left corner to see the second set of function buttons.<br>
-
-<br>
-
-Clicking on the function buttons correlate to pressing the same
-function button on a hand-held throttle. The F0 function is normally
-used for the lights.<br>
-
-<br>
-
-This is the basic functionality of the Function Panel. All buttons
-function like an on/off toggle &#8212; click once to turn "on"; click again
-to turn "off".<br>
-
-<br>
-
-<h3>Function Button config pane</h3>
-
-<img src="images/FunctionButtonProperties.png" alt="FunctionButtonProperties.png"><br>
-
-This pane if accessible by right clicking in the AddressPanel pane, on
-a specific Function Button and opening Properties menu entry.<br>
-<br>
-Note that for Throttles that have an associated Roster, it is better to
-define these settings in the <a href="RostersMediaPane.shtml">Function label pane</a> in DecoderPro (however if you change them here, you can still export these changes to the Roster through the <a href="ThrottleWindowMenus.shtml">Export to Roster</a> menu entry).<br>
-
-<ul>
-	<li>Function Number &#8212; associates the button with a function number</li>
-	<li>Text &#8212; customizable button label text</li>
-	<li>Font Size &#8212; size of text displayed on button</li>
-	<li>Lockable &#8212; identifies whether the button acts as an "on/off"
-	toggle switch; or as a momentary switch</li>
-	<li>Visible &#8212; identifies whether the button is visible in the
-	Function Panel window</li>
-</ul>
-
-By default, the Function Number is associated with the button number
-that you initially right-clicked on. For example, in the figures shown
-above, function number "3" (F3) is being edited. It is recommended that
-you leave this number as is, however, you can change this to a
-different function number if you really wish. An example of why you
-might want to do this is if you really want the "lights" button &#8212; which
-is usually F0 (located as the last/bottom button by default) &#8212; to be
-located as the first button in the Function Panel.<br>
-
-<br>
-
-<span style="font-weight: bold;">Warning!</span> If any modifications
-are done to the "Function Number" field, verify to make sure that no
-two buttons are assigned the same function number &#8212; some unwanted
-consequences may occur.<br>
-
-<br>
-
-The Text field will be the most welcome and modified field. By default,
-it is set similar to hand-held throttles: F1...F2...F3...etc. The
-content of the field is pretty much open to the imagination, however,
-there is going to be a point where the length of the text is not going
-to fit on the button. The Font Size field is available to also assist
-in getting the wanted text to fit on the button. A little
-experimentation will be required here to determine what looks good for
-you &#8212; and what will fit.<br>
-
-The Lockable check box may be a little confusing at first. When enabled
-&#8212; as it is by default &#8212; it simply means that when the button is clicked
-on, it will "lock" itself in either an "on" state or an "off" state. In
-other words, the button will act as a toggle switch &#8212; click once to
-turn the function "on"; click again to turn the function "off". The
-opposite of this action is what happens when the check box is disabled.
-Then the button acts like a momentary switch &#8212; supplying a momentary
-"on" command for as long as the mouse button is clicked and held over the button. When the mouse button is released, an "off"
-command is sent to the function. A good example of where one might want
-to use this is when customizing a throttle setup for a sound decoder.
-The horn/whistle is closer to functional when this option is disabled.
-Depending on the speed of the computer system and the DCC system, short
-and quick click and releases would provide a short blast of the horn or
-whistle. Holding down the button a little longer would produce a longer
-held blast of the whistle.<br>
-
-The Visible check box allows for the "removal" of unwanted buttons. By
-default, all function buttons are enabled as "visible" so that they can
-obviously be seen. But if there is only a single function being used &#8212;
-for example the "lights" (F0) &#8212; then this option does provide the
-ability to "hide" all of the other buttons.<br>
-
-<span style="font-weight: bold;">Warning!</span> Disabling
-the "Visible" check box should be one of the last steps performed
-during this customization process. The reason for this is that once the
-button is marked as "invisible" (by removing the check box), it is
-indeed invisible to the user and therefore can't be right-clicked on
-with the mouse in order to get the "Edit Function Button" window back.
-To make all buttons visible select <a href="ThrottleWindowMenus.shtml">"View-&gt;Show
-All Function Buttons."</a><br>
-
-<h2>Jynstruments</h2>
-See <a href="../scripting/Jynstruments.shtml">there for more informations about Jynstruments</a>.<br>
-<br>
-The Throttle Window is Jynstrumentable, particularly with more advanced function controls.<br>
-<br>
-At the moment <a href="http://jmri.org/jython/Jynstruments/ThrottleFrame/">3 sample Jynstruments are delivered</a>,
-one for Light, one for Horn and one for Whistle (function 0, 1 and 2).
-But this is only a sample, have a look at the code and customize at
-will for your specific decoder needs.<br>
-
-<span style="font-style: italic;">Note that Throttle Window toolbar is
-Jynstrumentable too, so here we drop the Jynstruments on the window content</span><span style="font-style: italic;">
-itself, not on the toolbar.
-</span>
-
-<!--#include virtual="/Footer" -->
-
-      </div><!-- closes #mainContent-->
-    </div> <!-- closes #mBody-->
+      <h2>Jynstruments</h2>See <a href=
+      "../scripting/Jynstruments.shtml">there for more informations
+      about Jynstruments</a>.<br>
+      <br>
+      The Throttle Window is Jynstrumentable, particularly with
+      more advanced function controls.<br>
+      <br>
+      At the moment <a href=
+      "http://jmri.org/jython/Jynstruments/ThrottleFrame/">3 sample
+      Jynstruments are delivered</a>, one for Light, one for Horn
+      and one for Whistle (function 0, 1 and 2). But this is only a
+      sample, have a look at the code and customize at will for
+      your specific decoder needs.<br>
+      <span style="font-style: italic;">Note that Throttle Window
+      toolbar is Jynstrumentable too, so here we drop the
+      Jynstruments on the window content</span><span style=
+      "font-style: italic;">itself, not on the toolbar.</span> 
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

@@ -30,18 +30,8 @@ public class SprogNanoSerialDriverAdapter
      */
     @Deprecated
     static public SprogNanoSerialDriverAdapter instance() {
-        if (mInstance == null) {
-            SprogNanoSerialDriverAdapter m = new SprogNanoSerialDriverAdapter();
-            m.setManufacturer(jmri.jmrix.sprog.SprogConnectionTypeList.SPROG);
-            mInstance = m;
-        }
-        return mInstance;
+        return null;
     }
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static volatile SprogNanoSerialDriverAdapter mInstance = null;
 
     static Logger log = LoggerFactory.getLogger(SprogNanoSerialDriverAdapter.class.getName());
 

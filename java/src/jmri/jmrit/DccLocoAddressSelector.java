@@ -37,7 +37,7 @@ public class DccLocoAddressSelector extends JPanel {
 
     public DccLocoAddressSelector() {
         super();
-        if ((InstanceManager.throttleManagerInstance() != null)
+        if ((InstanceManager.getOptionalDefault(jmri.ThrottleManager.class) != null)
                 && !InstanceManager.throttleManagerInstance().addressTypeUnique()) {
             configureBox(InstanceManager.throttleManagerInstance().getAddressTypes());
         } else {
@@ -89,7 +89,7 @@ public class DccLocoAddressSelector extends JPanel {
 
         // ask the Throttle Manager to handle this!
         LocoAddress.Protocol protocol;
-        if (InstanceManager.throttleManagerInstance() != null) {
+        if (InstanceManager.getOptionalDefault(jmri.ThrottleManager.class) != null) {
             protocol = InstanceManager.throttleManagerInstance().getProtocolFromString((String) box.getSelectedItem());
             return (DccLocoAddress) InstanceManager.throttleManagerInstance().getAddress(text.getText(), protocol);
         }
@@ -109,7 +109,7 @@ public class DccLocoAddressSelector extends JPanel {
                 box.setSelectedItem(jmri.LocoAddress.Protocol.OPENLCB.getPeopleName());
             } else {
                 text.setText("" + a.getNumber());
-                if (InstanceManager.throttleManagerInstance() != null) {
+                if (InstanceManager.getOptionalDefault(jmri.ThrottleManager.class) != null) {
                     box.setSelectedItem(InstanceManager.throttleManagerInstance().getAddressTypeString(a.getProtocol()));
                 } else {
                     box.setSelectedItem(a.getProtocol().getPeopleName());
@@ -160,7 +160,7 @@ public class DccLocoAddressSelector extends JPanel {
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         p.add(text);
         if (!locked
-                || ((InstanceManager.throttleManagerInstance() != null)
+                || ((InstanceManager.getOptionalDefault(jmri.ThrottleManager.class) != null)
                 && !InstanceManager.throttleManagerInstance().addressTypeUnique())) {
             p.add(box);
         }

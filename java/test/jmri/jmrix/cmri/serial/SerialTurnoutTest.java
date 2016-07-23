@@ -13,14 +13,17 @@ import junit.framework.TestSuite;
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 
+    private jmri.jmrix.cmri.CMRISystemConnectionMemo memo = null;
     private SerialTrafficControlScaffold tcis = null;
-    private SerialNode n = new SerialNode();
+    private SerialNode n = null;
 
     public void setUp() {
         // prepare an interface
         tcis = new SerialTrafficControlScaffold();
-        n = new SerialNode(0, SerialNode.SMINI);
-        t = new SerialTurnout("CT4", "t4");
+        memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
+        memo.setTrafficController(tcis);
+        n = new SerialNode(0, SerialNode.SMINI,tcis);
+        t = new SerialTurnout("CT4", "t4",memo);
         Assert.assertNotNull("exists", n);
     }
 

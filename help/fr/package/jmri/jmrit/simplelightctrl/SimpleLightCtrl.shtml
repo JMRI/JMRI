@@ -27,7 +27,7 @@
 <H1>Commande Lumi&#232;re </H1>
 
 Entrez le nom du syst&#232;me de lumi&#232;re 
-que vous souhaitez commander dans la bo&#238;te &#224 droite de "lumi&#232;re".
+que vous souhaitez commander dans la bo&#238;te &#224; droite de "lumi&#232;re".
 Par exemple, entrer 678 et en appuyant sur le bouton ON ou OFF
 , vous devriez &#234;tre en mesure de changer l'&#233;tat de la lumi&#232;re num&#233;ro 678
 sur le r&#233;seau. Un autre exemple, un nom de lumi&#232;re valable pour les appareils du syst&#232;me PowerLine
@@ -55,28 +55,28 @@ lumi&#232;re sur le r&#233;seau. Voir "
 <DD>La Lumi&#232;re est au maximum d'intensit&#233; si l'intensit&#233; variable est prise en charge, ou On. </Dd>
 <DT> Interm&#233;diaire </DT>
 <DD>
-L'intensit&#233; lumineuse se situe entre 0 et 100% et l'intensit&#233; du courant est &#233;gale &#224
+L'intensit&#233; lumineuse se situe entre 0 et 100% et l'intensit&#233; du courant est &#233;gale &#224;
 l'intensit&#233; cible.
 </Dd>
 <DT> Transition sup&#233;rieur </DT>
 <DD>
-L'intensit&#233; de la cible est plus &#233;lev&#233;e que l'intensit&#233; du courant et la lumi&#232;re ajust&#233;e &#224 chaque minute rapide selon la valeur du Temps de Transition.
+L'intensit&#233; de la cible est plus &#233;lev&#233;e que l'intensit&#233; du courant et la lumi&#232;re ajust&#233;e &#224; chaque minute rapide selon la valeur du Temps de Transition.
 </dd>
 <DT> Transition Basse </DT>
 <DD>
-L'intensit&#233; de la cible est plus faible que l'intensit&#233; du courant et la lumi&#232;re est ajust&#233;e &#224 chaque
+L'intensit&#233; de la cible est plus faible que l'intensit&#233; du courant et la lumi&#232;re est ajust&#233;e &#224; chaque
  minute rapide selon la valeur du Temps de Transition.
 </Dd>
  <DT>La transition Vers Le Maximum On </DT>
 <DD>
 L'intensit&#233; de la cible est plus &#233;lev&#233;e que l'intensit&#233; du courant,
-et sup&#233;rieure ou &#233;gale &#224 l'intensit&#233; maximale et la lumi&#232;re est ajust&#233;e
-&#224 chaque minute rapide selon la valeur du Temps de Transition.
+et sup&#233;rieure ou &#233;gale &#224; l'intensit&#233; maximale et la lumi&#232;re est ajust&#233;e
+&#224; chaque minute rapide selon la valeur du Temps de Transition.
 </ Dd>
 <DT>La transition vers le Minimum Off </DT>
 <DD>
 L'intensit&#233; de la cible est plus faible que l'intensit&#233; du courant,
-et inf&#233;rieure ou &#233;gale &#224 l'intensit&#233; minimale et la lumi&#232;re est ajust&#233;e &#224
+et inf&#233;rieure ou &#233;gale &#224; l'intensit&#233; minimale et la lumi&#232;re est ajust&#233;e &#224;
 chaque minute rapide selon la valeur Temps de Transition.
 </Dd>
 </DL>
@@ -86,9 +86,9 @@ chaque minute rapide selon la valeur Temps de Transition.
 <DD>
 <DL>
 <DT> Activ&#233;e: </DT>
-<DD> La lumi&#232;re va r&#233;pondre &#224 son type de commande automatique. </Dd>
+<DD> La lumi&#232;re va r&#233;pondre &#224; son type de commande automatique. </Dd>
 <DT>Variable: </DT>
-<DT>La Lumi&#232;re peut &#234;tre command&#233;e &#224 des valeurs comprises entre 0% et 100%. </Dd>
+<DT>La Lumi&#232;re peut &#234;tre command&#233;e &#224; des valeurs comprises entre 0% et 100%. </Dd>
 <DT>Transition: </DT>
 <DD>Les changements d'intensit&#233; vont utiliser le temps de transition ppour &#233;voluer
 entre l'intensit&#233; du courant et la cible.
@@ -103,30 +103,30 @@ entre l'intensit&#233; du courant et la cible.
 <DD> Appuyez sur ce bouton pour &#233;teindre la lumi&#232;re. </Dd>
 
 <DT>Changer d'Intensit&#233; </DT>
-<DD> Entrez une nouvelle valeur pour la lumi&#232;re (0% &#224 100%) et en appuyant sur
-ce bouton r&#233;gler l'intensit&#233; &#224 la nouvelle cible.
+<DD> Entrez une nouvelle valeur pour la lumi&#232;re (0% &#224; 100%) et en appuyant sur
+ce bouton r&#233;gler l'intensit&#233; &#224; la nouvelle cible.
 Si le transitoire est pris en charge si vous utilisez le temps de transition
  pour le calcul de la vitesse pour passer de l'intensit&#233; du courant
-&#224 l'intensit&#233; de la nouvelle cible
+&#224; l'intensit&#233; de la nouvelle cible
 	</DD>
 	
 <DT> Intensit&#233; minimale: </DT>
-<DD> Une valeur 0 &#224 100 (pour cent) qui d&#233;finit la plus faible quantit&#233; de lumi&#232;re qui
+<DD> Une valeur 0 &#224; 100 (pour cent) qui d&#233;finit la plus faible quantit&#233; de lumi&#232;re qui
 sera de sortie par une commande DIM.
 Une commande non explicite ignorera cette valeur.
 <Dd>
 
 <DT>Intensit&#233; maximale: </DT>
-<DD> Une valeur 0 &#224 100 (pour cent) qui d&#233;finit le montant maximal de la lumi&#232;re qui
+<DD> Une valeur 0 &#224; 100 (pour cent) qui d&#233;finit le montant maximal de la lumi&#232;re qui
 sera en sortie par une commande DIM.
 Une commande non explicite ignorera cette valeur.
 </Dd>
 
 <DT>Temps de transition: </DT>
 <DD>
-Nombre de minutes pour passer de 0% &#224 100% d'intensit&#233;.
+Nombre de minutes pour passer de 0% &#224; 100% d'intensit&#233;.
 Une valeur de z&#233;ro r&#232;glera l'appareil pour changer l'intensit&#233; d'un r&#233;glage
-&#224 l'intensit&#233; du nouveaux r&#233;glage aussi vite que l'appareil est en mesure de le faire.
+&#224; l'intensit&#233; du nouveaux r&#233;glage aussi vite que l'appareil est en mesure de le faire.
 	</DD>
 </DL>
 

@@ -1,4 +1,3 @@
-// QuitHandler.java
 package jmri.plaf.macosx;
 
 import java.util.EventObject;
@@ -7,7 +6,7 @@ import java.util.EventObject;
  * A QuitHandler responds to externally initiated attempts to quit JMRI apps on
  * Mac OS X.
  *
- * @author rhwood
+ * @author Randall Wood (c) 2011
  */
 public interface QuitHandler {
 

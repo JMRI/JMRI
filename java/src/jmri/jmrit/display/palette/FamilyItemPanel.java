@@ -353,7 +353,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _familyButtonGroup.add(button);
         }
         familyPanel.add(buttonPanel);
-        if (_family != family && setDefault) {
+        if (setDefault && !_family.equals(family)) {
             _family = family;       // let last family be the selected one
             if (button != null) {
                 button.setSelected(true);

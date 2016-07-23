@@ -1,131 +1,281 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
-<title>JMRI: How to set up Signaling in JMRI</title>
-<META name="Author" content="Bob Jacobsen">
-<META name="Author" content="Egbert Broerse">
-	<META name="Date.Modified" content="20151002"/>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- $Id$ -->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: How to set up Signaling in JMRI</title>
+  <meta name="Author" content="Bob Jacobsen">
+  <meta name="Author" content="Egbert Broerse">
+  <meta name="Date.Modified" content="20151002"><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
-<!-- Page Body -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h1>JMRI: Signaling Quickstart</h1>
-	<p class=subtitle>The following step by step instructions describe in detail how to set up Signaling in JMRI.</p>
-<ul>
-	<li><a href="#7steps">JMRI Signaling in 7 steps</a></li>
-	<li><a href="#magic">Magic SignalMan Set Up</a></li>
-</ul>
-	
-<a name="7steps"><h2>Start to use JMRI Signaling in 7 steps</h2></a>
-	<p>Thanks to Suzie Tall.</p>
-<!-- Listing from JMRI Group, March 4, 2014 -->
-<h3>Steps</h3>
-<ol>
-	<li>Launch PanelPro and from the Tools > Tables > Turnouts menu add the turnouts on your layout to the <a href="../Turnouts.shtml">Turnout Table</a>.</li>
+    <div id="mainContent">
+      <!-- Page Body -->
 
-	<li>Next add the physical signals you installed on the layout to the <a href="SignalMasts.shtml">Signal Mast Table</a>: 
-<ol>
-	<li>The easiest way: if you are using an accessory decoder that can drive the Signal Masts natively and supports the NMRA Standard 9.2.1 Extended Accessory Protocol (<a href="http://www.nmra.org/sites/default/files/s-9.2.1_2012_07.pdf">PDF</a>) just add the Signal Mast using the 'DCC Signal Mast Decoder driver' and when prompted, input the Aspect numbers configured in your decoder against each Aspect. Decoders like the <a href="http://signalist.co.uk">Signalist SC1</a> have different Signal Mast types preconfigured and you just select the correct table with a CV and get the Aspect numbers from the manual. 
-	Other decoders will need some setting up to define the Aspects to be displayed to an Aspect number. See your decoder manual for what to do here.</li>
-	<li>If you have more basic signal decoders (the Digitrax SE8c for example) or a command station that does not support the Extended Accessory Protocol (Lenz for example) you will first have to configure the individual Signal Heads that make up each Signal Mast in the Signal Head Table and then go to the Signal Mast Table, add the appropriate Signal Mast Type (eg. AAR-2 Triple Head Searchlight) and configure it using the Signal Head Controlled Mast driver, adding in the Signal Heads that you have previously defined. </li>
-		</ol>
-Pick one of the available 
-<a href="../../../../../xml/signals/">Signaling Systems</a>, such as 
-<a href="../../../../../xml/signals/AAR-1946/aspects.xml">AAR-2</a> in our example, and stick with that. 
-It is a bit of a faff but not too much work. (For more information on the 
-individual signaling systems distributed with JMRI, see 
-<a href="../../../../../xml/signals/">this page</a>; for more info on how this works, see the page on 
-<a href="AspectSignaling.shtml">aspect signaling</a>)</li>
-	
-	</li>
+      <h1>JMRI: Signaling Quickstart</h1>
 
-<li>Go back to the front screen of PanelPro and from the Panel > New... menu create a new panel with <a href="#editor">Layout Editor</a> and draw your track plan.</li>
+      <p class="subtitle">The following step by step instructions
+      describe in detail how to set up Signaling in JMRI.</p>
 
-	<li>Right click on the Turnouts and anchor points on the panel where you want signals and choose 'Set SignalMasts'. You can then choose from the list of Signal Masts that you entered in the Signal Mast Table for each possible location. Not all anchorpoints or turnouts will have a full complement of signals.<br/>
-You will probably have some locations (e.g. in a hidden section) where you do not have a physical signal but in the real prototype there would be one - in these cases just add a Virtual signal of the appropriate type by using a Virtual connection type in the <a href="SignalMasts.shtml">Signal Mast Table</a>.</li>
+      <ul>
+        <li><a href="#7steps">JMRI Signaling in 7 steps</a></li>
 
-<li>Right click on each signal and click 'Signal Mast Logic > Discover'. JMRI will then magically create all the required logic to set the aspect of that signal, based on the turnouts and aspects of the next signals on all possible routes.</li>
+        <li><a href="#magic">Magic SignalMan Set Up</a></li>
+      </ul><a name="7steps"></a>
 
-<li>Add your sensors to the Sensor Table to any Blocks that have physical block detector feedback on the layout and assign each Sensor to its layout Block. Skip this bit if you are not using block detection and just setting the signals manually to hold behind the train.</li>
+      <h2>Start to use JMRI Signaling in 7 steps</h2>
 
-<li>Run the trains and watch the signals change following your chosen rules. Note that there has been no need to refer to the rulebook and no need to create Logix or anything like that. It is just a case of inputting your layout configuration, Signaling System (AAR-2 in our example) and hardware.</li>
-	</ol>
-	
-<h3>Notes</h3>
-<ul>
-	<li>The nitty-gritty of using the <a name="editor" href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a> is not explained here, but you will soon get the hang of it and that is the hardest bit. It takes less time to create a working layout panel for the average layout than it took to type this up so that shows how easy it is to start with Signaling with JMRI.</li>
-	<li>You might start with software signals on a panel only, gradually adding signal decoders and model signals on the layout. When you have decided on the hardware solution and signal System to adopt, you can build the full definitions from the start. Otherwise use the Virtual signal type and replace them with a new Signal Masts later.</li>
-	<li>Watch out when disabling Aspects. Not all Signaling Systems are able to deal with key Aspects being disabled because it is not always possible to include an alternative in the aspect mapping for some masts (e.g. when the alternative aspect has the same speed and divergence settings). Don't be surprised if when disabling an aspect the alternative that is displayed is "Stop". So, disabling should be done with care. If you want to disable aspects it is usually best to configure the Layout Editor so that the offending aspects will not appear because the track conditions will not allow it by using speeds on blocks and so on.</li>
-	<li>If you prefer the flexibility of the Control Panel Editor for duplicating specific prototype panels you can still use Aspect Signaling and its Signal Mast Logic. You will just need to add some items manually.</li>
-			</ul>
-<!-- Listing from JMRI Group, March 4, 2014 -->	
-<a name="magic"><h2>Magic SignalMan Set Up</h2></a>
-	<p>Thanks to Jim Duncan.</p>
+      <p>Thanks to Suzie Tall.</p>
+      <!-- Listing from JMRI Group, March 4, 2014 -->
 
-	<p>With Dick Bronson's new <a href="http://www.rr-cirkits.com">SignalMan hardware</a> all you need to do is:<p/>
-<ol>
-	<li>Choose the signal system (searchlight, color light, PRR, B&amp;O, etc.).</li>
+      <h3>Steps</h3>
 
-	<li>Create a new Signal Mast by clicking the "Add" button at the bottom of the Signal Mast Table.<br/>
-		Do NOT try to define individual Signal Heads. You do this when you assign which ports are lit as you setup the programming on the boards in the field!</li>
+      <ol>
+        <li>Launch PanelPro and from the Tools &gt; Tables &gt;
+        Turnouts menu add the turnouts on your layout to the
+        <a href="../Turnouts.shtml">Turnout Table</a>.</li>
 
-<li>Define what aspects the mast is allowed to display.</li>
-<li>Set up the signal connections:
-<ul>
-	<li>Choose the Block the signal protects</li>
-	<li>Select the next signal down the line:
-		<ul>
-			<li>If there is one route only:
-		<ul>
-	<li>Select the next Signal down the line that each signal protects</li>
-		</ul></li>
-<li>If there is more than one route past signal:
-	<ul>
-		<li>Select the Turnout and Thrown/Closed state</li>
-		<li>Select block protected for given route</li>
-		<li>Select signal protected on this route</li>
-		<li>Repeat for all possible routes past this signal</li>
-	</ul></li>
-	</ul></li>
-	</ul>
-	<li>Program your board to respond to the signal number sent on the control line:
-<ul>
-		<li>Define the ports lit for each Signal Aspect:
-<ul>
-<li>Select Signal Aspect to display from pull down list in the decoder file</li>
-<li>Select Port (head and lamp, e.g. H1R, H2G, etc.)</li>
-<li>Repeat for all aspects that the Signal is allowed to display</li>
-			</ul></li></ul>
-<li>Load the programming to the SignalMan board.</li>
-<li>Connect your hardware signals.</li>
-<li>Open the <b>Tools > Tables > SignalMasts</b> menu, go through each Signal Aspect and observe signal behavior to check your programming and connections<br/>
-Hint: It's easier to reprogram the board than it is to change the wiring connections!</li>
-	</ol>
-	
-<h3>Notes</h3>
-<ul>
-	<li>That's about as basic as it gets! This will work for all of the Panel Editor types.</li>
-	<li>Do NOT try to use the auto-block feature with a panel created in Panel Editor. It'll just sit there and make you wait forever and not do anything so it's actually easier to do all the route logic yourself!</li>
-	</ul>
-	
-	<p>Back to the <a href="index.shtml">Signaling main help page</a>.</p>
-<!--#include virtual="/Footer" -->
+        <li>Next add the physical signals you installed on the
+        layout to the <a href="SignalMasts.shtml">Signal Mast
+        Table</a>:
 
+          <ol>
+            <li>The easiest way: if you are using an accessory
+            decoder that can drive the Signal Masts natively and
+            supports the NMRA Standard 9.2.1 Extended Accessory
+            Protocol (<a href=
+            "http://www.nmra.org/sites/default/files/s-9.2.1_2012_07.pdf">PDF</a>)
+            just add the Signal Mast using the 'DCC Signal Mast
+            Decoder driver' and when prompted, input the Aspect
+            numbers configured in your decoder against each Aspect.
+            Decoders like the <a href=
+            "http://signalist.co.uk">Signalist SC1</a> have
+            different Signal Mast types preconfigured and you just
+            select the correct table with a CV and get the Aspect
+            numbers from the manual. Other decoders will need some
+            setting up to define the Aspects to be displayed to an
+            Aspect number. See your decoder manual for what to do
+            here.</li>
+
+            <li>If you have more basic signal decoders (the
+            Digitrax SE8c for example) or a command station that
+            does not support the Extended Accessory Protocol (Lenz
+            for example) you will first have to configure the
+            individual Signal Heads that make up each Signal Mast
+            in the Signal Head Table and then go to the Signal Mast
+            Table, add the appropriate Signal Mast Type (eg. AAR-2
+            Triple Head Searchlight) and configure it using the
+            Signal Head Controlled Mast driver, adding in the
+            Signal Heads that you have previously defined.</li>
+          </ol>Pick one of the available <a href=
+          "../../../../../xml/signals/">Signaling Systems</a>, such
+          as <a href=
+          "../../../../../xml/signals/AAR-1946/aspects.xml">AAR-2</a>
+          in our example, and stick with that. It is a bit of a
+          faff but not too much work. (For more information on the
+          individual signaling systems distributed with JMRI, see
+          <a href="../../../../../xml/signals/">this page</a>; for
+          more info on how this works, see the page on <a href=
+          "AspectSignaling.shtml">aspect signaling</a>)
+        </li>
+
+        <li>Go back to the front screen of PanelPro and from the
+        Panel &gt; New... menu create a new panel with <a href=
+        "#editor">Layout Editor</a> and draw your track plan.</li>
+
+        <li>Right click on the Turnouts and anchor points on the
+        panel where you want signals and choose 'Set SignalMasts'.
+        You can then choose from the list of Signal Masts that you
+        entered in the Signal Mast Table for each possible
+        location. Not all anchorpoints or turnouts will have a full
+        complement of signals.<br>
+        You will probably have some locations (e.g. in a hidden
+        section) where you do not have a physical signal but in the
+        real prototype there would be one - in these cases just add
+        a Virtual signal of the appropriate type by using a Virtual
+        connection type in the <a href="SignalMasts.shtml">Signal
+        Mast Table</a>.</li>
+
+        <li>Right click on each signal and click 'Signal Mast Logic
+        &gt; Discover'. JMRI will then magically create all the
+        required logic to set the aspect of that signal, based on
+        the turnouts and aspects of the next signals on all
+        possible routes.</li>
+
+        <li>Add your sensors to the Sensor Table to any Blocks that
+        have physical block detector feedback on the layout and
+        assign each Sensor to its layout Block. Skip this bit if
+        you are not using block detection and just setting the
+        signals manually to hold behind the train.</li>
+
+        <li>Run the trains and watch the signals change following
+        your chosen rules. Note that there has been no need to
+        refer to the rulebook and no need to create Logix or
+        anything like that. It is just a case of inputting your
+        layout configuration, Signaling System (AAR-2 in our
+        example) and hardware.</li>
+      </ol>
+
+      <h3>Notes</h3>
+
+      <ul>
+        <li>The nitty-gritty of using the <a name="editor" href=
+        "../../../package/jmri/jmrit/display/LayoutEditor.shtml"
+        id="editor">Layout Editor</a> is not explained here, but
+        you will soon get the hang of it and that is the hardest
+        bit. It takes less time to create a working layout panel
+        for the average layout than it took to type this up so that
+        shows how easy it is to start with Signaling with
+        JMRI.</li>
+
+        <li>You might start with software signals on a panel only,
+        gradually adding signal decoders and model signals on the
+        layout. When you have decided on the hardware solution and
+        signal System to adopt, you can build the full definitions
+        from the start. Otherwise use the Virtual signal type and
+        replace them with a new Signal Masts later.</li>
+
+        <li>Watch out when disabling Aspects. Not all Signaling
+        Systems are able to deal with key Aspects being disabled
+        because it is not always possible to include an alternative
+        in the aspect mapping for some masts (e.g. when the
+        alternative aspect has the same speed and divergence
+        settings). Don't be surprised if when disabling an aspect
+        the alternative that is displayed is "Stop". So, disabling
+        should be done with care. If you want to disable aspects it
+        is usually best to configure the Layout Editor so that the
+        offending aspects will not appear because the track
+        conditions will not allow it by using speeds on blocks and
+        so on.</li>
+
+        <li>If you prefer the flexibility of the Control Panel
+        Editor for duplicating specific prototype panels you can
+        still use Aspect Signaling and its Signal Mast Logic. You
+        will just need to add some items manually.</li>
+      </ul><!-- Listing from JMRI Group, March 4, 2014 --><a name=
+      "magic" id="magic"></a>
+
+      <h2>Magic SignalMan Set Up</h2>
+
+      <p>Thanks to Jim Duncan.</p>
+
+      <p>With Dick Bronson's new <a href=
+      "http://www.rr-cirkits.com">SignalMan hardware</a> all you
+      need to do is:</p>
+
+      <ol>
+        <li>Choose the signal system (searchlight, color light,
+        PRR, B&amp;O, etc.).</li>
+
+        <li>Create a new Signal Mast by clicking the "Add" button
+        at the bottom of the Signal Mast Table.<br>
+        Do NOT try to define individual Signal Heads. You do this
+        when you assign which ports are lit as you setup the
+        programming on the boards in the field!</li>
+
+        <li>Define what aspects the mast is allowed to
+        display.</li>
+
+        <li>Set up the signal connections:
+
+          <ul>
+            <li>Choose the Block the signal protects</li>
+
+            <li>Select the next signal down the line:
+
+              <ul>
+                <li>If there is one route only:
+
+                  <ul>
+                    <li>Select the next Signal down the line that
+                    each signal protects</li>
+                  </ul>
+                </li>
+
+                <li>If there is more than one route past signal:
+
+                  <ul>
+                    <li>Select the Turnout and Thrown/Closed
+                    state</li>
+
+                    <li>Select block protected for given route</li>
+
+                    <li>Select signal protected on this route</li>
+
+                    <li>Repeat for all possible routes past this
+                    signal</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+        <li>Program your board to respond to the signal number sent
+        on the control line:
+
+          <ul>
+            <li>Define the ports lit for each Signal Aspect:
+
+              <ul>
+                <li>Select Signal Aspect to display from pull down
+                list in the decoder file</li>
+
+                <li>Select Port (head and lamp, e.g. H1R, H2G,
+                etc.)</li>
+
+                <li>Repeat for all aspects that the Signal is
+                allowed to display</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+        <li>Load the programming to the SignalMan board.</li>
+
+        <li>Connect your hardware signals.</li>
+
+        <li>Open the <b>Tools &gt; Tables &gt; SignalMasts</b>
+        menu, go through each Signal Aspect and observe signal
+        behavior to check your programming and connections<br>
+        Hint: It's easier to reprogram the board than it is to
+        change the wiring connections!</li>
+      </ol>
+
+      <h3>Notes</h3>
+
+      <ul>
+        <li>That's about as basic as it gets! This will work for
+        all of the Panel Editor types.</li>
+
+        <li>Do NOT try to use the auto-block feature with a panel
+        created in Panel Editor. It'll just sit there and make you
+        wait forever and not do anything so it's actually easier to
+        do all the route logic yourself!</li>
+      </ul>
+
+      <p>Back to the <a href="index.shtml">Signaling main help
+      page</a>.</p><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
-  </div> <!-- closes #mBody-->
+  </div><!-- closes #mBody-->
+</body>
 </html>

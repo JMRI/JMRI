@@ -1,16 +1,16 @@
 package jmri.jmris.json;
 
-import static jmri.jmris.json.JSON.ASPECT_DARK;
-import static jmri.jmris.json.JSON.ASPECT_HELD;
-import static jmri.jmris.json.JSON.ASPECT_UNKNOWN;
-import static jmri.jmris.json.JSON.CODE;
-import static jmri.jmris.json.JSON.DATA;
-import static jmri.jmris.json.JSON.ERROR;
-import static jmri.jmris.json.JSON.MESSAGE;
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.SIGNAL_MAST;
-import static jmri.jmris.json.JSON.STATE;
-import static jmri.jmris.json.JSON.TYPE;
+import static jmri.server.json.JSON.ASPECT_DARK;
+import static jmri.server.json.JSON.ASPECT_HELD;
+import static jmri.server.json.JSON.ASPECT_UNKNOWN;
+import static jmri.server.json.JsonException.CODE;
+import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JsonException.ERROR;
+import static jmri.server.json.JsonException.MESSAGE;
+import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.SIGNAL_MAST;
+import static jmri.server.json.JSON.STATE;
+import static jmri.server.json.JSON.TYPE;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -77,7 +77,7 @@ public class JsonSignalMastServer extends AbstractSignalMastServer {
         String name = data.path(NAME).asText();
         String state = data.path(STATE).asText();
         if ("".equals(state)) {  //if not passed, retrieve current and respond
-            SignalMast sm = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+            SignalMast sm = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
             try {
                 state = sm.getAspect();
                 if (state == null) {

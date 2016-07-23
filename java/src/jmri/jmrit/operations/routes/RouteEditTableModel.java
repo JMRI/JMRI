@@ -35,10 +35,6 @@ import org.slf4j.LoggerFactory;
  */
 public class RouteEditTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4770884408356323253L;
     // Defines the columns
     private static final int ID_COLUMN = 0;
     private static final int NAME_COLUMN = ID_COLUMN + 1;
