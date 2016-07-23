@@ -830,9 +830,9 @@
     </target>
 
     <target name="run-sh" description="Create run.sh in SCM root">
-        <make-startup-script script.name="run.sh"
+        <make-startup-script script.name=".run.sh"
                              script.class="jmri.util.junit.TestClassMainMethod"
-                             dest="${basedir}/run.sh"/>
+                             dest="${basedir}/.run.sh"/>
     </target>
 
     <!-- This is a set of targets used to start up the various JMRI applications

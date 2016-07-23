@@ -82,4 +82,4 @@ if [ -n "$settingsdir" ] ; then
     settingsdir="--settingsdir=${settingsdir}"
 fi
 
-$( dirname $0 )/run.sh "$settingsdir" $@
+$( dirname $0 )/.run.sh "$settingsdir" $@
