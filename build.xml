@@ -381,6 +381,7 @@
             <fileset file="jmri-fb.html"/>
             <fileset file="jacoco.exec"/>
             <fileset file=".run.sh"/>
+            <fileset file="test"/>
         </delete>
         <ant dir="xml/XSLT" target="clean" inheritAll="false"  />
     </target>

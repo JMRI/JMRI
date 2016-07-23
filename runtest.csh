@@ -19,12 +19,12 @@
 #
 # By default this script sets the JMRI settings: dir to the directory "temp" in
 # the directory its run from. Pass the option --settingsdir="" to use the JMRI
-# default location. local.conf in the directory this script is run from is
-# copied to jmri.conf in the settings: dir if the settings: dir is not "" and
-# local.conf is newer than jmri.conf.
+# default location. test/jmri.conf in the directory this script is run from is
+# used to pull any persistent settings unless --settingsdir=... is specified.
 #
 # Note that this script may mangle arguments with unescaped spaces. This can be
-# avoided by writing spaces in arguments as "\ ".
+# avoided by writing spaces in arguments as "arg\ with\ spaces" or by wrapping
+# arguments with spaces in extra, escaped quotes like "\"arg with spaces\"".
 #
 # If you need to add any additional Java options or defines,
 # include them in the JMRI_OPTIONS environment variable
@@ -50,24 +50,28 @@
 # xprop -root -remove _MOTIF_DEFAULT_BINDINGS
 #
 # For more information, please see
-# http://jmri.org/install/ShellScripts.shtml
+# http://jmri.org/help/en/html/doc/Technical/StartUpScripts.shtml
 
+dirname="$( dirname $0 )"
 # assume ant is in the path, and silence output
-ant run-sh 1>/dev/null
-result=$?
-if [ $result -ne 0 ] ; then
-    echo "ant run-sh failed."
-    exit $result
+if [ "${dirname}/scripts/AppScriptTemplate" -nt "${dirname}/.run.sh" ] ; then
+    ant run-sh
+    result=$?
+    if [ $result -ne 0 ] ; then
+        exit $result
+    fi
 fi
 
-# set the default settings dir to $( dirname 0 )/temp, but allow it to be
+# set the default settings dir to ${dirname}/temp, but allow it to be
 # overridden
-settingsdir="$( dirname 0 )/temp"
+settingsdir="${dirname}/test"
+prefsdir="${dirname}/temp"
 found_settingsdir="no"
 for opt in "$@"; do
     if [ "${found_settingsdir}" = "yes" ]; then
         # --settingsdir /path/to/... part 2
         settingsdir="$opt"
+        prefsdir="$settingsdir"
         break
     elif [ "$opt" = "--settingsdir" ]; then
         # --settingsdir /path/to/... part 1
@@ -75,21 +79,18 @@ for opt in "$@"; do
     elif [[ "$opt" =~ "--settingsdir=" ]]; then
         # --settingsdir=/path/to/...
         settingsdir="${opt#*=}"
+        prefsdir="$settingsdir"
         break;
     fi
 done
-
-# if settingsdir is not empty (using JMRI default), and local.conf is newer than
-# jmri.conf, copy local.conf to jmri.conf
-if [ ! -z "${settingsdir}" -a "$( dirname $0 )/local.conf" -nt "${settingsdir}/jmri.conf" ] ; then
-    mkdir -p "${settingsdir}"
-    cp "$( dirname $0 )/local.conf" "${settingsdir}/jmri.conf"
-fi
 
 # if --settingsdir="" was passed, allow run.sh to use JMRI default, otherwise
 # prepend the option token to ensure run.sh sets the settings dir correctly
 if [ -n "$settingsdir" ] ; then
     settingsdir="--settingsdir=${settingsdir}"
 fi
+if [ -n "$prefsdir" ] ; then
+    prefsdir="-Dorg.jmri.Apps.configFilename=${prefsdir}"
+fi
 
-$( dirname $0 )/.run.sh "$settingsdir" $@
+"${dirname}/.run.sh" "$settingsdir" "$prefsdir" $@
