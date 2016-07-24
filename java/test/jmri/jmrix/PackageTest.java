@@ -59,7 +59,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.pricom.PackageTest.suite());
         suite.addTest(jmri.jmrix.qsi.PackageTest.suite());
         suite.addTest(jmri.jmrix.rps.PackageTest.suite());
-        suite.addTest(jmri.jmrix.sprog.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.sprog.PackageTest.class));
         suite.addTest(jmri.jmrix.secsi.PackageTest.suite());
         suite.addTest(jmri.jmrix.tams.PackageTest.suite());
         suite.addTest(jmri.jmrix.tmcc.PackageTest.suite());

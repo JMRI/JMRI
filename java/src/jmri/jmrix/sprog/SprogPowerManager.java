@@ -19,7 +19,7 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
     public SprogPowerManager(SprogSystemConnectionMemo memo) {
         super(memo);
         // connect to the TrafficManager
-        trafficController = SprogTrafficController.instance();
+        trafficController = memo.getSprogTrafficController();
         trafficController.addSprogListener(this);
     }
 
