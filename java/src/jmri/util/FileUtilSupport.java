@@ -347,6 +347,7 @@ public class FileUtilSupport extends Bean {
      * @param filename the name to test
      * @return true if filename is portable
      */
+    @SuppressWarnings("deprecation")
     public boolean isPortableFilename(String filename) {
         return (filename.startsWith(PROGRAM)
                 || filename.startsWith(HOME)
@@ -577,6 +578,7 @@ public class FileUtilSupport extends Bean {
      * @param path the path to find
      * @return URL of portable or absolute path
      */
+    @SuppressWarnings("deprecation")
     public URI findExternalFilename(String path) {
         log.debug("Finding external path {}", path);
         if (this.isPortableFilename(path)) {
@@ -1239,6 +1241,7 @@ public class FileUtilSupport extends Bean {
      * @return Canonical path to use, or null if one cannot be found.
      * @since 2.7.2
      */
+    @SuppressWarnings("deprecation")
     private String pathFromPortablePath(@Nonnull String path) {
         if (path.startsWith(PROGRAM)) {
             if (new File(path.substring(PROGRAM.length())).isAbsolute()) {

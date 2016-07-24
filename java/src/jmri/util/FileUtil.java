@@ -49,7 +49,7 @@ public final class FileUtil {
      * Replaced with {@link #PROGRAM}.
      *
      * @see #PROGRAM
-     * @deprecated
+     * @deprecated since 2.13.1
      */
     @Deprecated
     static public final String RESOURCE = "resource:"; // NOI18N
@@ -57,7 +57,7 @@ public final class FileUtil {
      * Replaced with {@link #PREFERENCES}.
      *
      * @see #PREFERENCES
-     * @deprecated
+     * @deprecated since 2.13.1
      */
     @Deprecated
     static public final String FILE = "file:"; // NOI18N
