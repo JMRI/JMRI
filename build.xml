@@ -380,6 +380,8 @@
             <fileset file="junit-results.xml"/>
             <fileset file="jmri-fb.html"/>
             <fileset file="jacoco.exec"/>
+            <fileset file=".run.sh"/>
+            <fileset file="test"/>
         </delete>
         <ant dir="xml/XSLT" target="clean" inheritAll="false"  />
     </target>
@@ -827,6 +829,12 @@
             <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
+    </target>
+
+    <target name="run-sh" description="Create run.sh in SCM root">
+        <make-startup-script script.name=".run.sh"
+                             script.class="jmri.util.junit.TestClassMainMethod"
+                             dest="${basedir}/.run.sh"/>
     </target>
 
     <!-- This is a set of targets used to start up the various JMRI applications
@@ -2034,4 +2042,25 @@
         <echo message="new release branch ${branch-name} created"/>
     </target>
 
+    <!-- CI Test runners -->
+    <target name="travis-ci" description="Parallel execution of CI tasks on Travis CI">
+        <parallel threadCount="4"> <!-- allow up to four tasks at once -->
+            <ant target="checklineends" />
+            <ant target="checknonascii" />
+            <sequential>
+                <ant target="compile-generated-source" />
+                <parallel>
+                    <ant target="javadoc" />
+                    <ant target="ci-test-travis" />
+                </parallel>
+            </sequential>
+        </parallel>
+    </target>
+    
+    <target name="appveyor" description="Parallel execution of CI tasks on Appveyor">
+        <parallel threadCount="4"> <!-- allow up to four tasks at once -->
+            <ant target="checkPropertiesFiles" />
+            <ant target="ci-test-appveyor" />
+        </parallel>
+    </target>
 </project>
