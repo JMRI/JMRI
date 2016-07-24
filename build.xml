@@ -357,10 +357,10 @@
     <target name="realclean"
             description="remove all non-respository files from a build"
             depends="clean">
-        <delete quiet="true">
-            <fileset dir="temp"/>
+        <delete includeEmptyDirs="true" quiet="true">
             <fileset dir="lib/cachedir"/>
             <fileset dir="${coveragetarget}"/>
+            <fileset file=".run.sh"/>
         </delete>
     </target>
 
@@ -380,8 +380,6 @@
             <fileset file="junit-results.xml"/>
             <fileset file="jmri-fb.html"/>
             <fileset file="jacoco.exec"/>
-            <fileset file=".run.sh"/>
-            <fileset file="test"/>
         </delete>
         <ant dir="xml/XSLT" target="clean" inheritAll="false"  />
     </target>

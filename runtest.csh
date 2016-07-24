@@ -90,7 +90,7 @@ if [ -n "$settingsdir" ] ; then
     settingsdir="--settingsdir=${settingsdir}"
 fi
 if [ -n "$prefsdir" ] ; then
-    prefsdir="-Dorg.jmri.Apps.configFilename=${prefsdir}"
+    prefsdir="-Djmri.prefsdir=${prefsdir}"
 fi
 
 "${dirname}/.run.sh" "$settingsdir" "$prefsdir" $@
