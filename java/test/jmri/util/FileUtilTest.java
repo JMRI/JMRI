@@ -12,12 +12,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.util.FileUtil class.
@@ -28,19 +26,21 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2003, 2009
  */
-public class FileUtilTest extends TestCase {
+public class FileUtilTest {
 
     private File programTestFile;
     private File preferencesTestFile;
 
     // tests of internal to external mapping
     // relative file with no prefix: Leave relative in system-specific form
+    @Test
     public void testGEFRel() {
         String name = FileUtil.getExternalFilename("resources/non-existant-file-foo");
-        Assert.assertEquals("resources" + File.separator + "non-existant-file-foo", name); 
+        Assert.assertEquals("resources" + File.separator + "non-existant-file-foo", name);
     }
 
     // relative file with no prefix: Leave relative in system-specific form
+    @Test
     public void testGEFAbs() {
         File f = new File("resources/non-existant-file-foo");
         String name = FileUtil.getExternalFilename(f.getAbsolutePath());
@@ -48,12 +48,14 @@ public class FileUtilTest extends TestCase {
     }
 
     // resource: prefix with relative path, convert to relative in system-specific form
+    @Test
     public void testGEFResourceRel() {
         String name = FileUtil.getExternalFilename("resource:resources/non-existant-file-foo");
         Assert.assertEquals(new File("resources/non-existant-file-foo").getAbsolutePath(), name);
     }
 
     // resource: prefix with absolute path, convert to absolute in system-specific form
+    @Test
     public void testGEFResourceAbs() {
         File f = new File("resources/non-existant-file-foo");
         String name = FileUtil.getExternalFilename("resource:" + f.getAbsolutePath());
@@ -61,12 +63,14 @@ public class FileUtilTest extends TestCase {
     }
 
     // program: prefix with relative path, convert to relative in system-specific form
+    @Test
     public void testGEFProgramRel() {
         String name = FileUtil.getExternalFilename("program:jython");
         Assert.assertEquals(new File("jython").getAbsolutePath(), name);
     }
 
     // program: prefix with absolute path, convert to absolute in system-specific form
+    @Test
     public void testGEFProgramAbs() {
         File f = new File("resources/non-existant-file-foo");
         String name = FileUtil.getExternalFilename("program:" + f.getAbsolutePath());
@@ -74,12 +78,14 @@ public class FileUtilTest extends TestCase {
     }
 
     // preference: prefix with relative path, convert to absolute in system-specific form
+    @Test
     public void testGEFPrefRel() {
         String name = FileUtil.getExternalFilename("preference:non-existant-file-foo");
         Assert.assertEquals(FileUtil.getUserFilesPath() + "non-existant-file-foo", name);
     }
 
     // preference: prefix with absolute path, convert to absolute in system-specific form
+    @Test
     public void testGEFPrefAbs() {
         File f = new File("resources/non-existant-file-foo");
         String name = FileUtil.getExternalFilename("preference:" + f.getAbsolutePath());
@@ -87,12 +93,14 @@ public class FileUtilTest extends TestCase {
     }
 
     // file: prefix with relative path, convert to absolute in system-specific form
+    @Test
     public void testGEFFileRel() {
         String name = FileUtil.getExternalFilename("file:non-existant-file-foo");
         Assert.assertEquals(new File(FileUtil.getUserFilesPath() + "resources" + File.separator + "non-existant-file-foo").getAbsolutePath(), name);
     }
 
     // file: prefix with absolute path, convert to absolute in system-specific form
+    @Test
     public void testGEFFileAbs() {
         File f = new File("resources/non-existant-file-foo");
         String name = FileUtil.getExternalFilename("file:" + f.getAbsolutePath());
@@ -100,12 +108,14 @@ public class FileUtilTest extends TestCase {
     }
 
     // home: prefix with relative path, convert to absolute in system-specific form
+    @Test
     public void testGEFHomeRel() {
         String name = FileUtil.getExternalFilename("home:non-existant-file-foo");
         Assert.assertEquals(System.getProperty("user.home") + File.separator + "non-existant-file-foo", name);
     }
 
     // home: prefix with absolute path, convert to absolute in system-specific form
+    @Test
     public void testGEFHomeAbs() {
         File f = new File("resources/non-existant-file-foo");
         String name = FileUtil.getExternalFilename("home:" + f.getAbsolutePath());
@@ -114,43 +124,48 @@ public class FileUtilTest extends TestCase {
 
     // tests of external to internal mapping
     @SuppressWarnings("unused")
+    @Test
     public void testGetpfPreferenceF() throws IOException {
         File f = new File(FileUtil.getUserFilesPath() + "non-existant-file-foo");
         String name = FileUtil.getPortableFilename(f);
         Assert.assertEquals("preference:non-existant-file-foo", name);
     }
 
+    @Test
     public void testGetpfPreferenceS() {
         String name = FileUtil.getPortableFilename("preference:non-existant-file-foo");
         Assert.assertEquals("preference:non-existant-file-foo", name);
     }
 
     @SuppressWarnings("unused")
+    @Test
     public void testGetpfResourceF() throws IOException {
         File f = new File(FileUtil.getUserFilesPath() + "resources" + File.separator + "non-existant-file-foo");
         String name = FileUtil.getPortableFilename(f);
         Assert.assertEquals("preference:resources/non-existant-file-foo", name);
     }
 
+    @Test
     public void testGetpfResourceS() {
         String name = FileUtil.getPortableFilename("resource:resources/non-existant-file-foo");
         Assert.assertEquals("program:resources/non-existant-file-foo", name);
     }
 
-    @SuppressWarnings("unused")
+    @Test
     public void testGetpfPrefF() throws IOException {
         File f = new File(FileUtil.getUserFilesPath() + "resources" + File.separator + "non-existant-file-foo");
         String name = FileUtil.getPortableFilename(f);
         Assert.assertEquals("preference:resources/non-existant-file-foo", name);
     }
 
-    @SuppressWarnings("unused")
+    @Test
     public void testGetpfProgramF() throws IOException {
         File f = new File("resources" + File.separator + "non-existant-file-foo");
         String name = FileUtil.getPortableFilename(f);
         Assert.assertEquals("program:resources/non-existant-file-foo", name);
     }
 
+    @Test
     public void testGetpfProgramS() {
         String name = FileUtil.getPortableFilename("program:resources/non-existant-file-foo");
         Assert.assertEquals("program:resources/non-existant-file-foo", name);
@@ -159,27 +174,32 @@ public class FileUtilTest extends TestCase {
     /*
      * Test a real directory. It should end with a separator.
      */
+    @Test
     public void testGetpfProgramDirS() {
         String name = FileUtil.getPortableFilename("program:resources/icons");
         Assert.assertEquals("program:resources/icons/", name);
     }
 
+    @Test
     public void testGetpfFileS() {
         String name = FileUtil.getPortableFilename("file:non-existant-file-foo");
         Assert.assertEquals("preference:resources/non-existant-file-foo", name);
     }
 
+    @Test
     public void testGetpfFileS2() {
         String name = FileUtil.getPortableFilename("resource:resources/non-existant-file-foo");
         Assert.assertEquals("program:resources/non-existant-file-foo", name);
     }
 
+    @Test
     public void testGetpfHomeS() {
         String name = FileUtil.getPortableFilename("home:non-existant-file-foo");
         Assert.assertEquals("home:non-existant-file-foo", name);
     }
 
     @SuppressWarnings("unused")
+    @Test
     public void testGetpfHomeF() throws IOException {
         File f = new File(System.getProperty("user.home") + File.separator + "resources" + File.separator + "non-existant-file-foo");
         String name = FileUtil.getPortableFilename(f);
@@ -194,12 +214,14 @@ public class FileUtilTest extends TestCase {
      * other prefixes.
      */
     // relative file with no prefix: Should become null
+    @Test
     public void testGAFRel() {
         String name = FileUtil.getAbsoluteFilename("resources/non-existant-file-foo");
         Assert.assertEquals(null, name);
     }
 
     // absolute file: Should become canonical path
+    @Test
     public void testGAFAbs() throws IOException {
         File f = new File("resources/non-existant-file-foo");
         String name = FileUtil.getAbsoluteFilename(f.getAbsolutePath());
@@ -207,12 +229,14 @@ public class FileUtilTest extends TestCase {
     }
 
     // program: prefix with relative path, convert to relative in system-specific form
+    @Test
     public void testGAFProgRel() throws IOException {
         String name = FileUtil.getAbsoluteFilename(FileUtil.PROGRAM + "jython");
         Assert.assertEquals(new File("jython").getCanonicalPath(), name);
     }
 
     // program: prefix with absolute path, convert to absolute in system-specific form
+    @Test
     public void testGAFProgAbs() throws IOException {
         File f = new File("resources/non-existant-file-foo");
         String name = FileUtil.getAbsoluteFilename(FileUtil.PROGRAM + f.getAbsolutePath());
@@ -220,12 +244,14 @@ public class FileUtilTest extends TestCase {
     }
 
     // preference: prefix with relative path, convert to absolute in system-specific form
+    @Test
     public void testGAFPrefRel() throws IOException {
         String name = FileUtil.getAbsoluteFilename(FileUtil.PREFERENCES + "non-existant-file-foo");
         Assert.assertEquals(new File(FileUtil.getUserFilesPath() + "non-existant-file-foo").getCanonicalPath(), name);
     }
 
     // preference: prefix with absolute path, convert to absolute in system-specific form
+    @Test
     public void testGAFPrefAbs() throws IOException {
         File f = new File("resources/non-existant-file-foo");
         String name = FileUtil.getAbsoluteFilename(FileUtil.PREFERENCES + f.getAbsolutePath());
@@ -233,18 +259,21 @@ public class FileUtilTest extends TestCase {
     }
 
     // home: prefix with relative path, convert to absolute in system-specific form
+    @Test
     public void testGAFHomeRel() throws IOException {
         String name = FileUtil.getAbsoluteFilename(FileUtil.HOME + "non-existant-file-foo");
         Assert.assertEquals(new File(System.getProperty("user.home") + File.separator + "non-existant-file-foo").getCanonicalPath(), name);
     }
 
     // home: prefix with absolute path, convert to absolute in system-specific form
+    @Test
     public void testGAFHomeAbs() throws IOException {
         File f = new File("resources/non-existant-file-foo");
         String name = FileUtil.getAbsoluteFilename(FileUtil.HOME + f.getAbsolutePath());
         Assert.assertEquals(f.getCanonicalPath(), name);
     }
 
+    @Test
     public void testCopyFile() throws FileNotFoundException {
         File src = FileUtil.getFile(FileUtil.getAbsoluteFilename("program:default.lcf"));
         File dest = new File(FileUtil.getAbsoluteFilename("program:fileUtilTest.lcf"));
@@ -263,12 +292,14 @@ public class FileUtilTest extends TestCase {
             }
             s.close();
         } catch (IOException ex) {
-            log.error("Unable to copy");
+            FileUtil.delete(dest);
+            Assert.fail("Unable to copy");
         }
         FileUtil.delete(dest);
         Assert.assertTrue(sl.equals(dl));
     }
 
+    @Test
     public void testCopyDirectoryToExistingDirectory() throws FileNotFoundException, IOException {
         File src = FileUtil.getFile(FileUtil.getAbsoluteFilename("program:web/fonts"));
         File dest = Files.createTempDirectory("FileUtilTest").toFile();
@@ -281,6 +312,7 @@ public class FileUtilTest extends TestCase {
         Assert.assertTrue(Arrays.equals(srcFiles, destFiles));
     }
 
+    @Test
     public void testDeleteFile() throws IOException {
         File file = File.createTempFile("FileUtilTest", null);
         FileUtil.copy(FileUtil.getFile(FileUtil.getAbsoluteFilename("program:default.lcf")), file);
@@ -288,6 +320,7 @@ public class FileUtilTest extends TestCase {
         Assert.assertFalse(file.exists());
     }
 
+    @Test
     public void testAppendTextToFile() throws IOException {
         File file = File.createTempFile("FileUtilTest", null);
         String text = "jmri.util.FileUtil#appendTextToFile";
@@ -296,6 +329,7 @@ public class FileUtilTest extends TestCase {
         Assert.assertEquals(text, lines.get(0));
     }
 
+    @Test
     public void testFindURIPath() {
         URI uri = this.programTestFile.toURI();
         Assert.assertNotNull(uri);
@@ -309,6 +343,7 @@ public class FileUtilTest extends TestCase {
         Assert.assertNull(FileUtil.findURI(FileUtil.PROGRAM + this.preferencesTestFile.getName()));
     }
 
+    @Test
     public void testFindURIPathLocation() {
         URI uri = this.programTestFile.toURI();
         Assert.assertNotNull(uri);
@@ -322,6 +357,7 @@ public class FileUtilTest extends TestCase {
         Assert.assertNull(FileUtil.findURI(this.preferencesTestFile.getName(), FileUtil.Location.INSTALLED));
     }
 
+    @Test
     public void testFindURIPathSearchPaths() {
         URI uri = this.programTestFile.toURI();
         Assert.assertNotNull(uri);
@@ -335,6 +371,7 @@ public class FileUtilTest extends TestCase {
         Assert.assertEquals(uri, FileUtil.findURI(this.preferencesTestFile.getName(), new String[]{FileUtil.getProgramPath()}));
     }
 
+    @Test
     public void testFindExternalFilename() {
         URI uri = this.programTestFile.toURI();
         Assert.assertNotNull(uri);
@@ -348,36 +385,17 @@ public class FileUtilTest extends TestCase {
         Assert.assertNull(FileUtil.findExternalFilename(FileUtil.PROGRAM + this.preferencesTestFile.getName()));
     }
 
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         this.programTestFile = new File(UUID.randomUUID().toString());
         this.programTestFile.createNewFile();
         this.preferencesTestFile = new File(FileUtil.getProfilePath() + UUID.randomUUID().toString());
         this.preferencesTestFile.createNewFile();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         this.programTestFile.delete();
         this.preferencesTestFile.delete();
     }
-
-    // from here down is testing infrastructure
-    public FileUtilTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", FileUtilTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(FileUtilTest.class);
-        return suite;
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(FileUtilTest.class.getName());
 }
