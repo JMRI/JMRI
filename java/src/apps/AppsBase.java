@@ -58,6 +58,8 @@ public abstract class AppsBase {
     /**
      * Initial actions before frame is created, invoked in the applications
      * main() routine.
+     *
+     * @param applicationName The application name as presented to the user
      */
     static public void preInit(String applicationName) {
         Log4JUtil.initLogging();
@@ -77,6 +79,10 @@ public abstract class AppsBase {
 
     /**
      * Create and initialize the application object.
+     *
+     * @param applicationName user-visible name of application
+     * @param configFileDef   default config filename
+     * @param args            arguments passed to application at launch
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SC_START_IN_CTOR",
             justification = "The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage")
@@ -278,17 +284,19 @@ public abstract class AppsBase {
             configDeferredLoadOK = true;
         } else // To avoid possible locks, deferred load should be
         // performed on the Swing thread
-        if (SwingUtilities.isEventDispatchThread()) {
-            configDeferredLoadOK = doDeferredLoad(file);
-        } else {
-            try {
-                // Use invokeAndWait method as we don't want to
-                // return until deferred load is completed
-                SwingUtilities.invokeAndWait(() -> {
-                    configDeferredLoadOK = doDeferredLoad(file);
-                });
-            } catch (InterruptedException | InvocationTargetException ex) {
-                log.error("Exception creating system console frame: " + ex);
+        {
+            if (SwingUtilities.isEventDispatchThread()) {
+                configDeferredLoadOK = doDeferredLoad(file);
+            } else {
+                try {
+                    // Use invokeAndWait method as we don't want to
+                    // return until deferred load is completed
+                    SwingUtilities.invokeAndWait(() -> {
+                        configDeferredLoadOK = doDeferredLoad(file);
+                    });
+                } catch (InterruptedException | InvocationTargetException ex) {
+                    log.error("Exception creating system console frame: " + ex);
+                }
             }
         }
         if (sharedConfig == null && configOK == true && configDeferredLoadOK == true) {
@@ -441,6 +449,9 @@ public abstract class AppsBase {
 
     /**
      * The application decided to quit, handle that.
+     *
+     * @return true if successfully ran all shutdown tasks and can quit; false
+     *         otherwise
      */
     static public boolean handleQuit() {
         log.debug("Start handleQuit");
@@ -454,6 +465,9 @@ public abstract class AppsBase {
 
     /**
      * The application decided to restart, handle that.
+     *
+     * @return true if successfully ran all shutdown tasks and can quit; false
+     *         otherwise
      */
     static public boolean handleRestart() {
         log.debug("Start handleRestart");
