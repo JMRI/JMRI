@@ -47,10 +47,8 @@ public class JmriJInternalFrameInterface implements jmri.util.swing.WindowInterf
             bar = new JMenuBar();
         }
         List<JMenu> list = child.getMenus();
-        if (list != null) {
-            for (JMenu menu : list) {
-                bar.add(menu);
-            }
+        for (JMenu menu : list) {
+            bar.add(menu);
         }
 
         // add help menu if requested; this is similar

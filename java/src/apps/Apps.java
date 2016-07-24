@@ -664,6 +664,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * <PRE>
      *    menuBar.add(new jmri.jmrix.SystemsMenu());
      * </PRE>
+     *
+     * @param menuBar the menu bar to add systems to
+     * @param wi      the containing WindowInterface
      */
     protected void systemsMenu(JMenuBar menuBar, WindowInterface wi) {
         ActiveSystemsMenu.addItems(menuBar);
@@ -741,6 +744,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     /**
      * Returns the ID for the main window's help, which is application specific
+     *
+     * @return help identifier for main window
      */
     protected String mainWindowHelpID() {
         return "package.apps.Apps";
@@ -1054,6 +1059,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     /**
      * The application decided to quit, handle that.
+     *
+     * @return true if successfully ran all shutdown tasks and can quit; false
+     *         otherwise
      */
     static public boolean handleQuit() {
         return AppsBase.handleQuit();
@@ -1061,6 +1069,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     /**
      * The application decided to restart, handle that.
+     *
+     * @return true if successfully ran all shutdown tasks and can quit; false
+     *         otherwise
      */
     static public boolean handleRestart() {
         return AppsBase.handleRestart();
@@ -1175,6 +1186,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * This method needs to be refactored, but it's in use (2/2014) by CATS so
      * can't easily be changed right away.
      *
+     * @param name Program/application name as known by the user
+     * @return The output of {@link Log4JUtil#startupInfo(java.lang.String)}
      * @deprecated Since 3.7.1, use {@link #setStartupInfo(java.lang.String) }
      * plus {@link Log4JUtil#startupInfo(java.lang.String) }
      */
