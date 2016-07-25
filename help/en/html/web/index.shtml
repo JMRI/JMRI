@@ -77,10 +77,12 @@
         <dd><dl>
                 <dt>Disable Frames</dt>
                 <dd>Disable the frame server. Disabling the frame server
-                    disables most other preferences.</dd>
+                    disables most other preferences. The frame server is
+                    disabled by default.</dd>
                 <dt>Use Panels Instead</dt>
                 <dd>If the frame server is disabled, requests for frames can be
-                    redirected to <a href="PanelServlet.shtml">panels</a>.</dd> 
+                    redirected to <a href="PanelServlet.shtml">panels</a>.
+                    Redirection to panels is enabled by default.</dd> 
                 <dt>Click Delay</dt>
                 <dd>Wait the specified number of seconds after a click
                     on the window (frame) image before refreshing the image.</dd>

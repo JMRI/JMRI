@@ -57,7 +57,7 @@ public class WebServerPreferences extends Bean {
     private boolean allowRemoteConfig = false;
     private boolean readonlyPower = true;
     private int port = 12080;
-    private boolean disableFrames = false;
+    private boolean disableFrames = true;
     private boolean redirectFramesToPanels = true;
     private static Logger log = LoggerFactory.getLogger(WebServerPreferences.class.getName());
 
