@@ -21,6 +21,9 @@
 <!-- version 2.0 - For Tsunami2 defintions (Michael Mosher)                 -->
 <!--               Moved some CVs to Econami files, as not in Tsuname2,     -->
 <!--               so that this file can be used for Tsunami2 as well       -->
+<!-- version 2.1 - Move Light Effect CVs to separate file                   -->
+<!--               New enums for CV247 (Alain Le Marchand)                  -->
+<!-- version 2.2 - CV57 & 58 bit 6 & 7 set to 1 (Michael Mosher)            -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
@@ -66,10 +69,6 @@
         <label>CV Lock Enable</label>
       </variable>
       <!-- Lighting Configuration follows -->
-      <variable item="Headlight F0(f) Effect Selection" CV="49" mask="XXXVVVVV" default="1" tooltip="Determines the effect generated from the headlight">
-        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumEffect.xml"/>
-        <label>Headlight F0(f) Effect Selection</label>
-      </variable>
       <variable item="Headlight F0(f) Phase Selection" CV="49" mask="XXVXXXXX" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
         <label>Headlight F0(f) Phase Selection</label>
@@ -81,10 +80,6 @@
       <variable item="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" default="0" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Headlight F0(f) Light Type</label>
-      </variable>
-      <variable item="Backup Light F0(r) Effect Selection" CV="50" mask="XXXVVVVV" default="1" tooltip="Determines the effect generated from the backup light">
-        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumEffect.xml"/>
-        <label>Backup Light F0(r) Effect Selection</label>
       </variable>
       <variable item="Backup Light F0(r) Phase Selection" CV="50" mask="XXVXXXXX" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
@@ -98,10 +93,6 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Backup Light F0(r) Light Type</label>
       </variable>
-      <variable item="FX5 Effect Selection" CV="51" mask="XXXVVVVV" default="0" minOut="3" tooltip="Determines the effect generated from the FX3 light output">
-        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumEffect.xml"/>
-        <label>FX3 Effect Selection</label>
-      </variable>
       <variable item="FX5 Phase Selection" CV="51" mask="XXVXXXXX" minOut="3" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
         <label>FX3 Phase Selection</label>
@@ -113,10 +104,6 @@
       <variable item="FX5 Light Type" CV="51" mask="VXXXXXXX" default="0" minOut="3" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>FX3 Light Type</label>
-      </variable>
-      <variable item="FX6 Effect Selection" CV="52" mask="XXXVVVVV" default="0" minOut="4" tooltip="Determines the effect generated from the FX4 light output">
-        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumEffect.xml"/>
-        <label>FX4 Effect Selection</label>
       </variable>
       <variable item="FX6 Phase Selection" CV="52" mask="XXVXXXXX" minOut="4" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
@@ -130,10 +117,6 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>FX4 Light Type</label>
       </variable>
-      <variable item="FX5B Effect Selection" CV="53" mask="XXXVVVVV" default="0" minOut="5" tooltip="Determines the second effect associated with the FX5 light output">
-        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumEffect.xml"/>
-        <label>FX5 Effect Selection</label>
-      </variable>
       <variable item="FX5B Phase Selection" CV="53" mask="XXVXXXXX" default="0" minOut="5"  tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
         <label>FX5 Phase Selection</label>
@@ -145,10 +128,6 @@
       <variable item="FX5B Light Type" CV="53" mask="VXXXXXXX" default="0" minOut="5"  tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>FX5 Light Type</label>
-      </variable>
-      <variable item="FX6B Effect Selection" CV="54" mask="XXXVVVVV" default="0" minOut="6"  tooltip="Determines the second effect associated with the FX6 light output">
-        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumEffect.xml"/>
-        <label>FX6 Effect Selection</label>
       </variable>
       <variable item="FX6B Phase Selection" CV="54" mask="XXVXXXXX" default="0" minOut="6"  tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
@@ -186,6 +165,12 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6 Forward Directional Control</label>
       </variable>
+      <variable item="None1 Forward Directional Control" CV="57" mask="XVXXXXXX" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+      </variable>
+      <variable item="None2 Forward Directional Control" CV="57" mask="VXXXXXXX" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+      </variable>
       <variable item="Headlight F0(f) Reverse Directional Control" CV="58" mask="XXXXXXXV" default="0" minOut="1" tooltip="Check to enable F0(f) function output in Reverse direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Headlight F0(f) Reverse Directional Control</label>
@@ -209,6 +194,12 @@
       <variable item="FX6B Reverse Directional Control" CV="58" mask="XXVXXXXX" default="1" minOut="6"  tooltip="Check to enable FX6 function output in Reverse direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6 Reverse Directional Control</label>
+      </variable>
+      <variable item="None1 Reverse Directional Control" CV="58" mask="XVXXXXXX" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+      </variable>
+      <variable item="None2 Reverse Directional Control" CV="58" mask="VXXXXXXX" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
       </variable>
       <variable item="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="2" tooltip="Sets the overall flash rate of the Hyperlight effects, 0 is fast, 15 is slow">
         <decVal max="15"/>
@@ -428,7 +419,7 @@
       <variable CV="215" mask="VVVVVVVV" item="EMF Option 4" default="150" tooltip="Sets the back-EMF reference voltage by 0.1 volt increments, A value of 0 indicates that track voltage is used">
         <decVal/>
         <label>BEMF Reference Voltage (0-255)</label>
-      </variable>   
+      </variable>
       <variable CV="216" mask="VVVVVVVV" item="Motor Option 1" default="0" tooltip="&lt;html&gt;Determines the speed step at which voltage is first applied to the motor output to put the locomotive into motion.&lt;br&gt; Not included in Econami software releases prior to version 1.3&lt;/html&gt;">
         <decVal max="127"/>
         <label>Motor Speed Step Deadband (0-127)</label>
@@ -736,24 +727,59 @@
               <label>Consist Address Active For F28</label>
         </variable>
         <variable CV="247" mask="XXXXXXXV" item="Consist Automatic Effects - FWDD" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-              <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
+          <enumVal>
+            <enumChoice>
+              <choice>Effect Function Controlled</choice>
+            </enumChoice>
+            <enumChoice>
+              <choice>Effect Active moving forward</choice>
+            </enumChoice>
+          </enumVal>
+           <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
         </variable>
         <variable CV="247" mask="XXXXXXVX" item="Consist Automatic Effects - REVD" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-              <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
+          <enumVal>
+            <enumChoice>
+              <choice>Effect Function Controlled</choice>
+            </enumChoice>
+            <enumChoice>
+              <choice>Effect Active moving reverse</choice>
+            </enumChoice>
+          </enumVal>
+          <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
         </variable>
         <variable CV="247" mask="XXXXXVXX" item="Consist Automatic Effects - FWDS" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-              <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
+          <enumVal>
+            <enumChoice>
+              <choice>Effect Function Controlled</choice>
+            </enumChoice>
+            <enumChoice>
+              <choice>Effect Active stopped forward</choice>
+            </enumChoice>
+          </enumVal>
+          <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
         </variable>
         <variable CV="247" mask="XXXXVXXX" item="Consist Automatic Effects - REVS" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-              <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
+          <enumVal>
+            <enumChoice>
+              <choice>Effect Function Controlled</choice>
+            </enumChoice>
+            <enumChoice>
+              <choice>Effect Active stopped reverse</choice>
+            </enumChoice>
+          </enumVal>
+          <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
         </variable>
         <variable CV="247" mask="XXXVXXXX" item="Consist Automatic Effects - ESTP" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-              <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
+          <enumVal>
+            <enumChoice>
+              <choice>E-Brake sound FX enabled</choice>
+            </enumChoice>
+            <enumChoice>
+              <choice>ESTP effects enabled</choice>
+            </enumChoice>
+          </enumVal>
+          <tooltip>&lt;html&gt;Sets the status of automatic effects when in emergency stop.&lt;br&gt; Emergency Stop (ESTP) effects defined on Function Map&lt;/html&gt;</tooltip>
         </variable>
 	  <variable CV="1.257" item="Extended Function Map Headlight" default="0">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>

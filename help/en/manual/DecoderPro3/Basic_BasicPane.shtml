@@ -1,156 +1,220 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>Basic Programming</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>Basic Programming</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<a name="Top"></a>
-<h1>The Basic Programmer</h1>
-<h2>Basic Pane</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-  <p><a href="Basic_Start.shtml"> Previous |</a></p>
-<p><a href="index.shtml#Basic%20Programmer">Back to Index</a></p>
-</div>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<hr>
-<p>You may have noticed that at the  top of the window are Two tabs: <strong>Roster Entry</strong> and <strong>Basic</strong>.  We have completed the <strong>Roster Entry</strong> pane of the Program window, now,  click on the <strong>Basic</strong> tab to change panes to continue with programming your  decoder. The<strong> Basic</strong>
-pane will be displayed and look similar to the following illustration:
-Many panes in the programmer contain decoder dependent features, as a
-result what you see may not exactly agree with what you see here. Only
-those variables that your decoder can implement will be shown. </p>
-<p>Below is a screen for OEM decoder that is used in the<strong> Athearn FP-45</strong> locomotive.shown in factory settings, which is normally address 3<br>
-.<img src="images/Basic_Program.png" alt="basic pane" height="557" width="642"></p>
-<div align="center"></div>
-<p>You will see three options you can change, highlighted in  yellow: </p>
-<ol> 
-<li>The decoder address (should be unique among your locomotives,
-unless you are operating several as a set) often the locomotive number
-is used.</li>
-  <li>Two radio buttons that let you toggle between 2 digit  (one byte, "Normal") or 4 digit <br>
-(two byte, "Extended") addressing </li>
+      <h1>The Basic Programmer</h1>
 
- <li> Analog operation (enables the decoder to run under  regular DC voltage/analog <br>
-control) Enable Analog Operation with caution, as some decoders will
-jump to full speed resulting in a &#8220;Runaway locomotive&#8221; if they are
-enabled for Analog Operation and encounter power spikes on a DCC
-digital signal. They seem to get confused, and revert to Analog
-operation and use the full track voltage DCC power to take off and
-GO!&nbsp; There is no stopping them without removing layout
-power.&nbsp; Very disturbing to your operating mates, but better than
-running into them at full tilt. </li>
-</ol>
-<ol>
-  <p>To enable Analog (old style DC, some vendors refer to this
-as dual mode) Operation select the appropriate entry from the drop-down
-list. </p>
-</ol>
-<p>The yellow highlighting indicates  these options are "probable" settings and have not been 
-confirmed from the decoder. Settings that have been changed by the user and  have not 
-been written back to the decoder appear in a orange color. You will see  examples of <br>
-this throughout the manual. </p>
-<a name="ReadData" id="ReadData"></a>
-To read the actual settings for these options (and IF your system and
-installed decoder will allow readback of decoder values), click on the <strong>
-<input name="button" id="button" value="Read full sheet" type="button">
-</strong>. The individual settings  will turn red while they are in the process of 
-  being read (clever, eh?), and will turn white once the  values have been read successfully 
-  from the decoder. Once again, Decoder Pro must play  "Twenty Questions" to get this 
-information, and sometimes even has to ask a couple of  times. 
-  <p>
-Be patient, especially with older computers. At the very bottom of the
-pane (where it says "idle") you will see a running account of exactly
-what DecoderPro is doing, for example, the specific CV being read. </p>
-<p> Again, the
-  <input name="button2" id="button2" value="Read full sheet" type="button"><strong> </strong>and <strong>
-  <input name="button3" id="button3" value="Read all sheets" type="button">
-  </strong>functions are  dependent on your command station. If 
-  your system does not have the capability to read CVs,  then these buttons will not be 
-  available. </p>
-<p><a name="EnterEditData" id="EnterEditData"></a>If you wish to change
-the address of the locomotive, type in the new address. To turn on or
-off 4 digit addressing, select the desired radio button. .&nbsp; Be
-sure that the address type agrees with the number of characters in the
-address.&nbsp;</p>
-<p> When you are finished, click on 
-  <input name="button4" id="button4" value="Write full sheet" type="button">
-to  write the new values in the decoder. </p>
-  <p><a name="WriteData" id="WriteData"></a>Writing
-usually takes much less time than reading, because the value can be
-sent directly. As the write operation proceeds, the data will change
-from yellow to white. If there is difficulty writing to the decoder,
-the data will change to red. The software will automatically keep
-trying until the write operation is successful. In some instances the
-system will &#8220;time-out&#8221; after a certain number of tries without an
-acknowledgement from the decoder.&nbsp; This does not necessarily mean
-that the values have not been written, just that the program has not
-received an acknowledgement. This can be due to &nbsp;the
-locomotive moving and getting on dirty track so that it can&#8217;t pulse
-back, or possibly because the command station or decoder cannot read
-back.&nbsp; Try moving the loco and try again.&nbsp; If it is a command
-station or decoder read-back issue, try the loco on the mainline and
-see if the programming was successful. </p>
-  <p><a name="SaveData" id="SaveData"></a>
-  To finish this "basic" programming of a  decoder, click once more on the <strong>Roster Entry</strong> tab, You will see that the  address field has now been filled in, so  you can now 
-  click on the <strong>
-  <input name="button5" id="button5" value="Save to roster" type="button">
-</strong>. Your new decoder  settings have now been written not only 
-  to the decoder, but also saved to a computer file where  they may be recalled in the future. </p>
-<p>I have programmed the address for this locomotive and clicked on the
-Write full sheet button to send the address to the command station to
-program the decoder. Note that the status line keeps you updated as to
-what is writing and should finish with OK, which is good or an error
-message which usually meant the write was not completed. All the
-entries are now in white color as they match the decoder.</p>
-<p align="center"><img src="images/Basic_Address.png" alt="basic address" height="556" width="636"><br>
-</p>
-<p> Now that we have entered the Roster data and set the desired
-address, lets return to DecoderPro Main window by closing the
-Programming window.</p>
-<p>Notice that we now have a list of all the locomotives programmed so far that are in our roster.</p>
-<p><img style="width: 900px; height: 425px;" alt="main" src="images/Main_01b_main.png"><br></p>
-<p><a name="DoMore"></a>What we&#8217;ve done so far is what is available in
-the Basic mode of programming in DecoderPro. Which is basically put
-Locomotive in the roster and assign an address. A good place to
-start for new folks or at a club.&nbsp; It&#8217;s hard to go wrong, but you
-can change the loco address and add it the roster, which are the two
-most often needed actions with programming. <br>
-  <br> The classic
-DecoderPro offered a number of modes, most of which were often
-redundant and confusing showing how the user could edit the underlying
-file to make special application programming modes. The Comprehensive
-Programmer was the most popular for a long time until Advanced came
-along with added features.&nbsp; So now they&#8217;ve been combined in
-DecoderPro. Thus the Comprehensive Programmer with added Advanced
-features is the only other programmer that DecoderPro offers. <br>
-  Since we&#8217;ve already covered <strong>Basic</strong>,  let's explore the DecoderPro <a href="Comp_Setup_Roster.shtml">Comprehensive  Programmer</a>! </p>
-<p>Select the Locomotive that you want to program in Comprehensive Programmer, then double click on selection to open Programmer.</p>
-<p>At the bottom of the window is the  <a href="RosterMedia.shtml">Labels &amp; Media</a> and<a href="dp3_Main_Throttle.shtml">Throttle</a>
-buttons. Use these buttons to set up the Icon photos for your roster
-entries and to set-up the Function Labels on the software throttle
-included in JMRI. Click the links that we&#8217;ve included and take a
-look.</p>
+      <h2>Basic Pane</h2>
 
-<div align="right">
-  <p><a href="Basic_Start.shtml">Previous |</a></p>
-<p><a href="index.shtml#Basic%20Programmer">Back to Index</a></p>
-</div>
+      <div align="right">
+        <p><a href="Basic_Start.shtml">Previous |</a></p>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
- </body>
+        <p><a href="index.shtml#Basic%20Programmer">Back to
+        Index</a></p>
+      </div>
+      <hr>
+
+      <p>You may have noticed that at the top of the window are Two
+      tabs: <strong>Roster Entry</strong> and
+      <strong>Basic</strong>. We have completed the <strong>Roster
+      Entry</strong> pane of the Program window, now, click on the
+      <strong>Basic</strong> tab to change panes to continue with
+      programming your decoder. The <strong>Basic</strong> pane
+      will be displayed and look similar to the following
+      illustration: Many panes in the programmer contain decoder
+      dependent features, as a result what you see may not exactly
+      agree with what you see here. Only those variables that your
+      decoder can implement will be shown.</p>
+
+      <p>Below is a screen for OEM decoder that is used in the
+      <strong>Athearn FP-45</strong> locomotive.shown in factory
+      settings, which is normally address 3<br>
+      .<img src="images/Basic_Program.png" alt="basic pane" height=
+      "557" width="642"></p>
+
+      <div align="center"></div>
+
+      <p>You will see three options you can change, highlighted in
+      yellow:</p>
+
+      <ol>
+        <li>The decoder address (should be unique among your
+        locomotives, unless you are operating several as a set)
+        often the locomotive number is used.</li>
+
+        <li>Two radio buttons that let you toggle between 2 digit
+        (one byte, "Normal") or 4 digit<br>
+        (two byte, "Extended") addressing</li>
+
+        <li>Analog operation (enables the decoder to run under
+        regular DC voltage/analog<br>
+        control) Enable Analog Operation with caution, as some
+        decoders will jump to full speed resulting in a "Runaway
+        locomotive" if they are enabled for Analog Operation and
+        encounter power spikes on a DCC digital signal. They seem
+        to get confused, and revert to Analog operation and use the
+        full track voltage DCC power to take off and GO! There is
+        no stopping them without removing layout power. Very
+        disturbing to your operating mates, but better than running
+        into them at full tilt.</li>
+      </ol>
+
+      <div style="margin-left: 2em">
+        <p>To enable Analog (old style DC, some vendors refer to
+        this as dual mode) Operation select the appropriate entry
+        from the drop-down list.</p>
+      </div>
+
+      <p>The yellow highlighting indicates these options are
+      "probable" settings and have not been confirmed from the
+      decoder. Settings that have been changed by the user and have
+      not been written back to the decoder appear in a orange
+      color. You will see examples of<br>
+      this throughout the manual.</p><a name="ReadData" id=
+      "ReadData"></a> To read the actual settings for these options
+      (and IF your system and installed decoder will allow readback
+      of decoder values), click on the <strong><input name="button"
+      id="button" value="Read full sheet" type="button"></strong> .
+      The individual settings will turn red while they are in the
+      process of being read (clever, eh?), and will turn white once
+      the values have been read successfully from the decoder. Once
+      again, Decoder Pro must play "Twenty Questions" to get this
+      information, and sometimes even has to ask a couple of times.
+
+      <p>Be patient, especially with older computers. At the very
+      bottom of the pane (where it says "idle") you will see a
+      running account of exactly what DecoderPro is doing, for
+      example, the specific CV being read.</p>
+
+      <p>Again, the <input name="button2" id="button2" value=
+      "Read full sheet" type="button"> and <strong><input name=
+      "button3" id="button3" value="Read all sheets" type=
+      "button"></strong> functions are dependent on your command
+      station. If your system does not have the capability to read
+      CVs, then these buttons will not be available.</p>
+
+      <p><a name="EnterEditData" id="EnterEditData"></a>If you wish
+      to change the address of the locomotive, type in the new
+      address. To turn on or off 4 digit addressing, select the
+      desired radio button. . Be sure that the address type agrees
+      with the number of characters in the address.</p>
+
+      <p>When you are finished, click on <input name="button4" id=
+      "button4" value="Write full sheet" type="button"> to write
+      the new values in the decoder.</p>
+
+      <p><a name="WriteData" id="WriteData"></a>Writing usually
+      takes much less time than reading, because the value can be
+      sent directly. As the write operation proceeds, the data will
+      change from yellow to white. If there is difficulty writing
+      to the decoder, the data will change to red. The software
+      will automatically keep trying until the write operation is
+      successful. In some instances the system will "time-out"
+      after a certain number of tries without an acknowledgement
+      from the decoder. This does not necessarily mean that the
+      values have not been written, just that the program has not
+      received an acknowledgement. This can be due to the
+      locomotive moving and getting on dirty track so that it can't
+      pulse back, or possibly because the command station or
+      decoder cannot read back. Try moving the loco and try again.
+      If it is a command station or decoder read-back issue, try
+      the loco on the mainline and see if the programming was
+      successful.</p>
+
+      <p><a name="SaveData" id="SaveData"></a> To finish this
+      "basic" programming of a decoder, click once more on the
+      <strong>Roster Entry</strong> tab, You will see that the
+      address field has now been filled in, so you can now click on
+      the <strong><input name="button5" id="button5" value=
+      "Save to roster" type="button"></strong> . Your new decoder
+      settings have now been written not only to the decoder, but
+      also saved to a computer file where they may be recalled in
+      the future.</p>
+
+      <p>I have programmed the address for this locomotive and
+      clicked on the Write full sheet button to send the address to
+      the command station to program the decoder. Note that the
+      status line keeps you updated as to what is writing and
+      should finish with OK, which is good or an error message
+      which usually meant the write was not completed. All the
+      entries are now in white color as they match the decoder.</p>
+
+      <p align="center"><img src="images/Basic_Address.png" alt=
+      "basic address" height="556" width="636"><br></p>
+
+      <p>Now that we have entered the Roster data and set the
+      desired address, lets return to DecoderPro Main window by
+      closing the Programming window.</p>
+
+      <p>Notice that we now have a list of all the locomotives
+      programmed so far that are in our roster.</p>
+
+      <p><img style="width: 900px; height: 425px;" alt="main" src=
+      "images/Main_01b_main.png"><br></p>
+
+      <p><a name="DoMore" id="DoMore"></a>What we've done so far is
+      what is available in the Basic mode of programming in
+      DecoderPro. Which is basically put Locomotive in the roster
+      and assign an address. A good place to start for new folks or
+      at a club. It's hard to go wrong, but you can change the loco
+      address and add it the roster, which are the two most often
+      needed actions with programming.<br>
+      <br>
+      The classic DecoderPro offered a number of modes, most of
+      which were often redundant and confusing showing how the user
+      could edit the underlying file to make special application
+      programming modes. The Comprehensive Programmer was the most
+      popular for a long time until Advanced came along with added
+      features. So now they've been combined in DecoderPro. Thus
+      the Comprehensive Programmer with added Advanced features is
+      the only other programmer that DecoderPro offers.<br>
+      Since we've already covered <strong>Basic</strong>, let's
+      explore the DecoderPro <a href=
+      "Comp_Setup_Roster.shtml">Comprehensive Programmer</a>!</p>
+
+      <p>Select the Locomotive that you want to program in
+      Comprehensive Programmer, then double click on selection to
+      open Programmer.</p>
+
+      <p>At the bottom of the window is the <a href=
+      "RosterMedia.shtml">Labels &amp; Media</a> and<a href=
+      "dp3_Main_Throttle.shtml">Throttle</a> buttons. Use these
+      buttons to set up the Icon photos for your roster entries and
+      to set-up the Function Labels on the software throttle
+      included in JMRI. Click the links that we've included and
+      take a look.</p>
+
+      <div align="right">
+        <p><a href="Basic_Start.shtml">Previous |</a></p>
+
+        <p><a href="index.shtml#Basic%20Programmer">Back to
+        Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
 </html>

@@ -1,4 +1,3 @@
-//AbstractReporterServer.java
 package jmri.jmris;
 
 import java.beans.PropertyChangeEvent;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2010
  * @author Randall Wood Copyright (C) 2013
- * @version $Revision$
  */
 abstract public class AbstractReporterServer {
 
@@ -40,19 +38,19 @@ abstract public class AbstractReporterServer {
     synchronized protected void addReporterToList(String reporterName) {
         if (!reporters.containsKey(reporterName)) {
             reporters.put(reporterName, new ReporterListener(reporterName));
-            InstanceManager.reporterManagerInstance().getReporter(reporterName).addPropertyChangeListener(reporters.get(reporterName));
+            InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(reporterName).addPropertyChangeListener(reporters.get(reporterName));
         }
     }
 
     synchronized protected void removeReporterFromList(String reporterName) {
         if (reporters.containsKey(reporterName)) {
-            InstanceManager.reporterManagerInstance().getReporter(reporterName).removePropertyChangeListener(reporters.get(reporterName));
+            InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(reporterName).removePropertyChangeListener(reporters.get(reporterName));
             reporters.remove(reporterName);
         }
     }
 
-    public Reporter initReporter(String reporterName) {
-        Reporter reporter = InstanceManager.reporterManagerInstance().provideReporter(reporterName);
+    public Reporter initReporter(String reporterName) throws IllegalArgumentException {
+        Reporter reporter = InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter(reporterName);
         this.addReporterToList(reporterName);
         return reporter;
     }
@@ -68,7 +66,7 @@ abstract public class AbstractReporterServer {
         // load address from reporterAddrTextField
         try {
             addReporterToList(reporterName);
-            reporter = InstanceManager.reporterManagerInstance().getReporter(reporterName);
+            reporter = InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(reporterName);
             if (reporter == null) {
                 log.error("Reporter {} is not available", reporterName);
             } else {
@@ -91,7 +89,7 @@ abstract public class AbstractReporterServer {
 
         ReporterListener(String reporterName) {
             name = reporterName;
-            reporter = InstanceManager.reporterManagerInstance().getReporter(reporterName);
+            reporter = InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(reporterName);
         }
 
         // update state as state of reporter changes

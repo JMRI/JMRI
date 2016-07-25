@@ -3,7 +3,7 @@ package jmri.jmrit.operations.automation;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

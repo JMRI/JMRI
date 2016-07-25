@@ -26,7 +26,6 @@ import jmri.util.swing.WindowInterface;
 public class FullBackupExportAction
         extends JmriAbstractAction {
 
-    private static final long serialVersionUID = 1L;
     // parent component for GUI
 
     public FullBackupExportAction(String s, WindowInterface wi) {
@@ -81,7 +80,7 @@ public class FullBackupExportAction
             }
 
             // Now the full roster entry
-            copyFileToStream(Roster.defaultRosterFilename(), null, zipper, null);
+            copyFileToStream(Roster.getDefault().getRosterIndexPath(), null, zipper, null);
 
             zipper.setComment("Roster file saved from DecoderPro " + jmri.Version.name());
 

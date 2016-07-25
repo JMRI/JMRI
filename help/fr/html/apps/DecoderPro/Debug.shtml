@@ -2,9 +2,8 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!--  $Id: Debug.shtml 21896 2012-12-19 12:12:05Z rhwood  -->
  <!--Translated by Herv&#233; Blorec le 2013-08-30 -->
-<title>JMRI: DecoderPro User Guide - Debugging</title>
+<title>JMRI: DecoderPro User Guide - D&#233;bogage</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -17,41 +16,40 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<H1>Guide Utilisateur DecoderPro - D&#233;bogage</H1>
+<h1>Guide Utilisateur DecoderPro - D&#233;bogage</h1>
 
-<DL>
-<dt class=left>Pendant que le programme s'ex&#233;cute</dt>
-<dd class=first>
+<dl>
+<dt class="left">Pendant que le programme s'ex&#233;cute</dt>
+<dd class="first">
 <p>Pendant que le programme s'ex&#233;cute,
 l'information de d&#233;bogage est imprim&#233;e sur une "sortie standard", qui est &#225; diff&#233;rent endroits suivant le syst&#232;me d'exploitation que vous utilisez et comment vous d&#233;marrez le programme. Sur un Macintosh classique, Elle apparait dans une fen&#234;tre qui est cr&#233;&#233;e avec le premier message d'erreur. Avec Mac OS X, elle peut apparaitre dans une nouvelle fen&#234;tre, ou vous pouvez devoir lancer l'application  "Console" pour la voir. Sur Windows, Vous devez ex&#233;cuter des fichiers batch  "Debug" pour voir les messages d'erreur; regardez les dans le r&#233;pertoire applications.</p>
 
-<p>L'erreur de connexion est contr&#244;ler par le fichier"default.lcf". Il y a un lots de commentaires sur ce que signifient les termes vari&#233;s. Si vous n'aimez pas les messages reli&#233;s &#225; un fichier, changer la ligne.</p>
+<p>L'erreur de connexion est contr&#244;ler par le fichier "default.lcf". Il y a un lots de commentaires sur ce que signifient les termes vari&#233;s. Si vous n'aimez pas les messages reli&#233;s &#225; un fichier, changer la ligne.</p>
 
-<p class=example>
+<p class="example">
 log4j.rootCategory= WARN, A1
 </p>
 <p>Pour inclure la destination enregistrement suppl&#233;mentaire "R":
-<p class=example>
+<p class="example">
 log4j.rootCategory= WARN, A1,R
 </p>
 <p>R est d&#233;fini plus tard dans default.lcf comme connexion pour le fichier "example.log" .
 Vous pouvez aussi obtenir beaucoup d'informations additionnelles sur ce que fait le programme en r&#233;glant le niveau de connexion soit &#225; INFO ou DEBUG par exemple. </p>
 
-<p class=example>
+<p class="example">
 log4j.rootCategory= INFO, A1
 </p>
 
 <p>Notez que le niveau DEBUG sortira beaucoup d'informations,et ralentira significativement l'ex&#233;cution du programme. Il est possible aussi de requ&#233;rir plus d'informations juste sur des parties du programme, mais dans l'optique que cela vous soit utile vous devrez passer du temps &#225; apprendre au sujet des parties internes.</p>
 </dd>
 
-<dt class=left>D&#233;bogage des probl&#232;mes avec les fichiers XML</dt>
+<dt class="left">D&#233;bogage des probl&#232;mes avec les fichiers XML</dt>
 <dd>
 <p>Quand un fichier XML ne peut pas &#234;tre analyser, vous obtiendrez des messages d'erreur difficiles &#225; comprendre. La partie la plus importante de ceci est le num&#233;ro de ligne. Utilisez le pour commencer &#225; voir le probl&#232;me. 
-
 
 <p>Vous pourriez &#234;tre capable d'obtenir de meilleures informations en essayant d'ouvrir le fichier avec Internet Explorer. Les informations de d&#233;bogage qu'il fournit sont g&#233;n&#233;ralement plus d&#233;taill&#233;es que celles fournit par les routines XML dans les librairies JDOM utilis&#233;es par JMRI et DecoderPRo.</p>
 
@@ -60,8 +58,7 @@ log4j.rootCategory= INFO, A1
 </p>
 
 </dd>
-</DL>
-
+</dl>
     
 <!--#include virtual="/Footer" -->
 </div>

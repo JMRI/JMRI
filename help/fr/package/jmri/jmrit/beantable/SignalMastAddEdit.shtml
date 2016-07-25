@@ -1,51 +1,85 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 <!-- $Id$ -->
 <!-- UpDated by Herv&#233; Blorec 2013-10-12-->
+
 <html lang="fr">
 <head>
- <TITLE>
-      JMRI: Adding Signal Masts
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Signal Mast Add">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Adding Signal Masts</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI help Signal Mast Add">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Ajout M&acirc;ts de signaux</h1><a href=
+      "SignalMastAdd.png"><img src="SignalMastAdd.png" align=
+      "right" width="208" height="85" hspace="0" vspace="0" alt=
+      "Simple Signal Logic panel figure "></a>
 
-<H1>Ajout M&#226;ts de signaux
-</H1>
+      <p>Les M&acirc;ts de signalisation sont construits sur la
+      base de diff&eacute;rents syst&egrave;mes de signalisation et
+      les m&acirc;ts pris en charge dans les syst&egrave;mes.</p>
 
-<A Href="SignalMastAdd.png"> <IMG SRC = "SignalMastAdd.png" ALIGN = RIGHT WIDTH = "208" height = "85" hspace = "0" vspace = "0" alt = "Simple Signal Logic panel figure "> </a>
+      <p>Dans la fen&ecirc;tre Ajout, vous devez d'abord
+      s&eacute;lectionner le syst&egrave;me de signalisation
+      prototypique surlequel le m&acirc;t doit &ecirc;tre
+      bas&eacute;, suivi par le m&acirc;t &agrave;
+      l'int&eacute;rieur de ce syst&egrave;me.</p>
 
-<p>
-Les M&#226;ts de signalisation sont construits sur la base de diff&#233;rents syst&#232;mes de signalisation et les m&#226;ts pris en charge dans les syst&#232;mes .
-<p>
-Dans la fen&#234;tre Ajout, vous devez d'abord s&#233;lectionner le syst&#232;me de signalisation prototypique surlequel le m&#226;t doit &#234;tre bas&#233;, suivi par le m&#226;t &#224; l'int&#233;rieur de ce syst&#232;me.
-<p>
-Le m&#226;t peut alors &#234;tre construit de trois fa&#231;ons diff&#233;rentes selon le mat&#233;riel utilis&#233; .
-<ul>
-<li> T&#234;tes Signal</li >
-Les T&#234;tes Signal individuelles sont utilis&#233;es pour repr&#233;senter chaque t&#234;te de signal sur le m&#226;t . La t&#234;te de signal sera en accord avec la gestion  des mutation de l'aspect suivant l'&#233;tat du m&#226;t de signalisation .
-Si chaque t&#234;te de signal qui a &#233;t&#233; configur&#233;e sur le m&#226;t, une liste d&#233;roulante appara&#238;t pour vous pour choisir la t&#234;te de signal qui va commander la t&#234;te de ce m&#226;t.
-<li>L'aiguillage Pilot&#233; </li>
-C'est pour du mat&#233;riel sp&#233;cifique qui permet de commander tout l'aspect d'un m&#226;t de signalisation bas&#233; sur la position d'un aiguillage. Ce qui sera &#224; r&#233;gler ici d&#233;pendra du mat&#233;riel utilis&#233; .
-<li> virtuel < /li>
-Ce m&#226;t ne commande pas directement tout le mat&#233;riel relatif &#224; un m&#226;t de signalisation. Son utilisation est id&#233;al pour o&#249; un m&#226;t physique ne serait pas pr&#233;sent sur le chemin de fer, comme un heurtoir, ou &#224;
-marquer la fin d'une section de signalisation de la voie et le d&#233;but du territoire sans information.
+      <p>Le m&acirc;t peut alors &ecirc;tre construit de trois
+      fa&ccedil;ons diff&eacute;rentes selon le mat&eacute;riel
+      utilis&eacute;.</p>
 
-<!--#include virtual="/Footer" -->
+      <ul>
+        <li>T&ecirc;tes Signal</li>
+
+        <li style="list-style: none">Les T&ecirc;tes Signal
+        individuelles sont utilis&eacute;es pour repr&eacute;senter
+        chaque t&ecirc;te de signal sur le m&acirc;t. La t&ecirc;te
+        de signal sera en accord avec la gestion des mutation de
+        l'aspect suivant l'&eacute;tat du m&acirc;t de
+        signalisation. Si chaque t&ecirc;te de signal qui a
+        &eacute;t&eacute; configur&eacute;e sur le m&acirc;t, une
+        liste d&eacute;roulante appara&icirc;t pour vous pour
+        choisir la t&ecirc;te de signal qui va commander la
+        t&ecirc;te de ce m&acirc;t.</li>
+
+        <li>L'aiguillage Pilot&eacute;</li>
+
+        <li style="list-style: none">C'est pour du mat&eacute;riel
+        sp&eacute;cifique qui permet de commander tout l'aspect
+        d'un m&acirc;t de signalisation bas&eacute; sur la position
+        d'un aiguillage. Ce qui sera &agrave; r&eacute;gler ici
+        d&eacute;pendra du mat&eacute;riel utilis&eacute;.</li>
+
+        <li>virtuel &lt; /li&gt; Ce m&acirc;t ne commande pas
+        directement tout le mat&eacute;riel relatif &agrave; un
+        m&acirc;t de signalisation. Son utilisation est
+        id&eacute;al pour o&ugrave; un m&acirc;t physique ne serait
+        pas pr&eacute;sent sur le chemin de fer, comme un heurtoir,
+        ou &agrave; marquer la fin d'une section de signalisation
+        de la voie et le d&eacute;but du territoire sans
+        information. <!--#include virtual="/Footer" --></li>
+      </ul>
+    </div>
+  </div>
 </body>
 </html>
-

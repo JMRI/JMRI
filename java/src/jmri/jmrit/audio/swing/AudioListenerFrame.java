@@ -141,7 +141,7 @@ public class AudioListenerFrame extends AbstractAudioFrame {
         String sName = sysName.getText().toUpperCase();
         AudioListener l;
         try {
-            l = (AudioListener) InstanceManager.audioManagerInstance().provideAudio(sName);
+            l = (AudioListener) InstanceManager.getDefault(jmri.AudioManager.class).provideAudio(sName);
             l.setUserName(user);
             l.setPosition(position.getValue());
             l.setVelocity(velocity.getValue());
@@ -151,7 +151,7 @@ public class AudioListenerFrame extends AbstractAudioFrame {
 
             // Notify changes
             model.fireTableDataChanged();
-        } catch (AudioException ex) {
+        } catch (AudioException | IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("AudioCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
         }
     }

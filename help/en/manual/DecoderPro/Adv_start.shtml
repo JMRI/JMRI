@@ -1,58 +1,94 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head>
-<title>Basic Programming</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>Basic Programming</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<a name="Top"></a>
-<h1><a name="Top">Advanced Programmer</a></h1>
-<h2>Roster Entry</h2>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<div align="right">
-<p><a href="Adv_FunctionLabel.shtml">Next</a><a href="Comp_Setup_Roster.shtml"></a></p>
-<p><a href="index.shtml#AdvanceProgram">Back to Index</a></p>
-</div>
+      <h1><a name="Top" id="Top">Advanced Programmer</a></h1>
 
-<hr>
-<p>From the main DecoderPro window, select whether you want Service or
-Operations Mode programming. For this demonstration we have
-chosen <strong>Service  Mode (programming track) Programmer.</strong> When
-the Service Mode Programmer starts the Setup window opens. This section
-will only cover new items that are enabled by the Advanced Programmer,
-refer to <a href="index.shtml#Advanced%20Programmer">Comprehensive Programmer</a> for all other tabs.</p>
-<div align="center">
-  <p><img style="width: 518px; height: 495px;" alt="advanced roster" src="images/Adv_01_Roster_Set-Up.png"><br></p>
-  <p align="left">In the <strong>Programmer format</strong> drop-down box at the bottom of the window select the <strong>Advanced</strong>
-programmer. If you wish for the Advanced programmer to be your default
-for all future DecoderPro sessions you may set this up by editing your <a href="Start_Preferences.shtml">Preferences</a> in the main DecoderPro window.</p>
-  <p align="left">Next,
-Select the decoder you wish to program, if you have not already done
-so.&nbsp; This is done just &nbsp;as you would in the <a href="Basic_Programming.shtml#Setting%20Up">Comprehensive programmer.</a>&nbsp;&nbsp; </p>
-  <p align="left">Now click on the Open  Programmer button to get to the Advanced Programmer Screen.&nbsp;</p>
-  <p align="center"><img style="width: 636px; height: 598px;" src="images/Adv_02_Roster.png" alt="advanced roster"></p>
-  <p align="left">Note the Advanced Programmer has two new TABS, <strong>Function Labels</strong> and <strong>Roster Media</strong>,  all other TABS are the same as those available (depending upon decoder) in Comprehensive programmer.</p>
-</div>
+      <h2>Roster Entry</h2>
 
-<div align="right">
-  <p><a href="Adv_FunctionLabel.shtml">Next</a><a href="Comp_Setup_Roster.shtml"></a></p>
-<p><a href="index.shtml#AdvanceProgram">Back to Index</a></p>
-</div>
+      <div align="right">
+        <p><a href="Adv_FunctionLabel.shtml">Next</a><a href=
+        "Comp_Setup_Roster.shtml"></a></p>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
- </body>
+        <p><a href="index.shtml#AdvanceProgram">Back to
+        Index</a></p>
+      </div>
+      <hr>
+
+      <p>From the main DecoderPro window, select whether you want
+      Service or Operations Mode programming. For this
+      demonstration we have chosen <strong>Service Mode
+      (programming track) Programmer.</strong> When the Service
+      Mode Programmer starts the Setup window opens. This section
+      will only cover new items that are enabled by the Advanced
+      Programmer, refer to <a href=
+      "index.shtml#Advanced%20Programmer">Comprehensive
+      Programmer</a> for all other tabs.</p>
+
+      <div align="center">
+        <p><img style="width: 518px; height: 495px;" alt=
+        "advanced roster" src=
+        "images/Adv_01_Roster_Set-Up.png"><br></p>
+
+        <p align="left">In the <strong>Programmer format</strong>
+        drop-down box at the bottom of the window select the
+        <strong>Advanced</strong> programmer. If you wish for the
+        Advanced programmer to be your default for all future
+        DecoderPro sessions you may set this up by editing your
+        <a href="Start_Preferences.shtml">Preferences</a> in the
+        main DecoderPro window.</p>
+
+        <p align="left">Next, Select the decoder you wish to
+        program, if you have not already done so. This is done just
+        as you would in the <a href=
+        "Basic_Programming.shtml#Setting%20Up">Comprehensive
+        programmer.</a></p>
+
+        <p align="left">Now click on the Open Programmer button to
+        get to the Advanced Programmer Screen.</p>
+
+        <p align="center"><img style="width: 636px; height: 598px;"
+        src="images/Adv_02_Roster.png" alt="advanced roster"></p>
+
+        <p align="left">Note the Advanced Programmer has two new
+        TABS, <strong>Function Labels</strong> and <strong>Roster
+        Media</strong>, all other TABS are the same as those
+        available (depending upon decoder) in Comprehensive
+        programmer.</p>
+      </div>
+
+      <div align="right">
+        <p><a href="Adv_FunctionLabel.shtml">Next</a><a href=
+        "Comp_Setup_Roster.shtml"></a></p>
+
+        <p><a href="index.shtml#AdvanceProgram">Back to
+        Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
 </html>

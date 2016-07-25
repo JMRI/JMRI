@@ -32,6 +32,7 @@ public class PackageTest extends TestCase {
         suite.addTest(NamedBeanTest.suite());
 
         // implementations
+        suite.addTest(AbstractSensorTest.suite());
         suite.addTest(AccessoryOpsModeProgrammerFacadeTest.suite());
         suite.addTest(AddressedHighCvProgrammerFacadeTest.suite());
         suite.addTest(DccSignalHeadTest.suite());
@@ -53,6 +54,8 @@ public class PackageTest extends TestCase {
         suite.addTest(SingleTurnoutSignalHeadTest.suite());
         suite.addTest(TwoIndexTcsProgrammerFacadeTest.suite());
         suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DccConsistTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NmraConsistTest.class));
 
         // sub-packages
         suite.addTest(jmri.implementation.swing.PackageTest.suite());

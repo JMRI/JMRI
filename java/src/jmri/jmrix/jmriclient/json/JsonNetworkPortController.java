@@ -2,7 +2,6 @@ package jmri.jmrix.jmriclient.json;
 
 import jmri.jmris.json.JsonServerPreferences;
 import jmri.jmrix.AbstractNetworkPortController;
-import jmri.jmrix.jmriclient.ActiveFlag;
 
 /**
  *
@@ -21,9 +20,6 @@ public class JsonNetworkPortController extends AbstractNetworkPortController {
         JsonClientTrafficController control = new JsonClientTrafficController();
         control.connectPort(this);
         this.getSystemConnectionMemo().setTrafficController(control);
-
-        // mark OK for menus
-        ActiveFlag.setActive();
     }
 
     @Override

@@ -182,15 +182,10 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
      */
     public void configure() {
         // connect to the traffic controller
-        SerialTrafficController.instance().connectPort(this);
-
-        jmri.InstanceManager.setTurnoutManager(jmri.jmrix.cmri.serial.SerialTurnoutManager.instance());
-        jmri.InstanceManager.setLightManager(jmri.jmrix.cmri.serial.SerialLightManager.instance());
-
-        SerialSensorManager s;
-        jmri.InstanceManager.setSensorManager(s = jmri.jmrix.cmri.serial.SerialSensorManager.instance());
-        SerialTrafficController.instance().setSensorManager(s);
-        jmri.jmrix.cmri.serial.ActiveFlag.setActive();
+        SerialTrafficController tc = new SerialTrafficController();
+        tc.connectPort(this);
+        ((CMRISystemConnectionMemo)getSystemConnectionMemo()).setTrafficController(tc);
+        ((CMRISystemConnectionMemo)getSystemConnectionMemo()).configureManagers();
     }
 
     // base class methods for the SerialPortController interface
@@ -266,12 +261,20 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     private boolean opened = false;
     InputStream serialStream = null;
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public SerialDriverAdapter instance() {
         if (mInstance == null) {
             mInstance = new SerialDriverAdapter();
         }
         return mInstance;
     }
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static SerialDriverAdapter mInstance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());

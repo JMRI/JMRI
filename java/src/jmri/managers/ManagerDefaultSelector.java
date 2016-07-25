@@ -145,9 +145,6 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
     public void configure() {
         log.debug("configure defaults into InstanceManager");
         List<SystemConnectionMemo> connList = InstanceManager.getList(SystemConnectionMemo.class);
-        if (connList == null) {
-            return; // nothing to do 
-        }
         for (Class<?> c : defaults.keySet()) {
             // 'c' is the class to load
             String connectionName = this.defaults.get(c);
@@ -170,12 +167,12 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
             if (!found) {
                 log.debug("!found, so resetting");
                 String currentName = null;
-                if (c == ThrottleManager.class && InstanceManager.throttleManagerInstance() != null) {
+                if (c == ThrottleManager.class && InstanceManager.getOptionalDefault(jmri.ThrottleManager.class) != null) {
                     currentName = InstanceManager.throttleManagerInstance().getUserName();
-                } else if (c == PowerManager.class && InstanceManager.powerManagerInstance() != null) {
-                    currentName = InstanceManager.powerManagerInstance().getUserName();
-                } else if (c == ProgrammerManager.class && InstanceManager.programmerManagerInstance() != null) {
-                    currentName = InstanceManager.programmerManagerInstance().getUserName();
+                } else if (c == PowerManager.class && InstanceManager.getOptionalDefault(jmri.PowerManager.class) != null) {
+                    currentName = InstanceManager.getDefault(jmri.PowerManager.class).getUserName();
+                } else if (c == ProgrammerManager.class && InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) != null) {
+                    currentName = InstanceManager.getDefault(jmri.ProgrammerManager.class).getUserName();
                 }
                 if (currentName != null) {
                     log.warn("The configured " + connectionName + " for " + c + " can not be found so will use the default " + currentName);
@@ -215,7 +212,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                 log.info("Unable to read preferences for Default Selector.");
             }
             this.configure();
-            InstanceManager.configureManagerInstance().registerPref(this); // allow ProfileConfig.xml to be written correctly
+            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(this); // allow ProfileConfig.xml to be written correctly
             this.setInitialized(profile, true);
         }
     }

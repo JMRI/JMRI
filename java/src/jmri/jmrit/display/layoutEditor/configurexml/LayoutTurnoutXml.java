@@ -1,4 +1,3 @@
-// jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml.java
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.geom.Point2D;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision$
  */
 public class LayoutTurnoutXml extends AbstractXmlAdapter {
 
@@ -152,7 +150,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         element.setAttribute("xd", "" + coords.getX());
         element.setAttribute("yd", "" + coords.getY());
         element.setAttribute("ver", "" + p.getVersion());
-        element.setAttribute("class", "jmri.jmrit.display.configurexml.LayoutTurnoutXml");
+        element.setAttribute("class", getClass().getName());
         return element;
     }
 

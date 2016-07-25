@@ -1413,7 +1413,8 @@ public class Track {
             log.debug("Rolling stock ({}) not accepted at location ({}, {}) no room!", rs.toString(), getLocation()
                     .getName(), getName()); // NOI18N
             return MessageFormat.format(Bundle.getMessage("lengthIssue"), new Object[]{LENGTH, length,
-                Setup.getLengthUnit().toLowerCase(), getLength() - (getUsedLength() + getReserved())});
+                    Setup.getLengthUnit().toLowerCase(),
+                    getLength() - (getUsedLength() * (100 - getIgnoreUsedLengthPercentage()) / 100 + getReserved())});
         }
         return OKAY;
     }
@@ -1837,7 +1838,7 @@ public class Track {
             return SCHEDULE + " (" + getScheduleName() + ") " + Bundle.getMessage("requestCar") + " " + TYPE + " ("
                     + si.getTypeName() + ") " + LOAD + " (" + si.getReceiveLoadName() + ")";
         }
-        if (car.getScheduleItemId().equals(Car.NONE) && !si.getRandom().equals(ScheduleItem.NONE)) {
+        if (!car.getScheduleItemId().equals(si.getId()) && !si.getRandom().equals(ScheduleItem.NONE)) {
             try {
                 int value = Integer.parseInt(si.getRandom());
                 double random = 100 * Math.random();

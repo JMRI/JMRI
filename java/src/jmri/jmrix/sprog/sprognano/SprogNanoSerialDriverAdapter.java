@@ -1,8 +1,6 @@
-// SprogNanoSerialDriverAdapter.java
 package jmri.jmrix.sprog.sprognano;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
-import jmri.jmrix.sprog.SprogTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * any other options at configuration time.
  *
  * @author	Andrew Crosland Copyright (C) 2016
- * @version	$Revision$
  */
 public class SprogNanoSerialDriverAdapter
         extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
@@ -28,18 +25,14 @@ public class SprogNanoSerialDriverAdapter
         this.getSystemConnectionMemo().setUserName("SPROG Nano Command Station");
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public SprogNanoSerialDriverAdapter instance() {
-        if (mInstance == null) {
-            SprogNanoSerialDriverAdapter m = new SprogNanoSerialDriverAdapter();
-            m.setManufacturer(jmri.jmrix.sprog.SprogConnectionTypeList.SPROG);
-            mInstance = m;
-        }
-        return mInstance;
+        return null;
     }
-    static volatile SprogNanoSerialDriverAdapter mInstance = null;
 
     static Logger log = LoggerFactory.getLogger(SprogNanoSerialDriverAdapter.class.getName());
 
 }
-
-/* @(#)SprogNanoSerialDriverAdapter.java */

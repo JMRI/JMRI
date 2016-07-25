@@ -1,4 +1,3 @@
-// AutomatTableFrame.java
 package jmri.jmrit.automat.monitor;
 
 import java.util.ResourceBundle;
@@ -12,14 +11,9 @@ import jmri.util.JTableUtil;
  * Frame providing a table of Automat instances
  *
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version	$Revision$
  */
 public class AutomatTableFrame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6052436715378143786L;
     AutomatTableDataModel dataModel;
     JTable dataTable;
     JScrollPane dataScroll;

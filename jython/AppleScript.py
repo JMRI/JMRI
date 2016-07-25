@@ -1,35 +1,32 @@
-# This is an example script for invoking an AppleScript from
-# JMRI on Mac OS X.
+# Demonstration of invoking osascript (using AppleScript) from JMRI on Mac OS X.
 #
-# Author: Bob Jacobsen, Copyright 2008
+# Author: Bob Jacobsen, Copyright 2008, 2016
 # Part of the JMRI distribution
-#
-# Adapted from <http://www.oreilly.com/pub/a/mac/2003/02/25/apple_scripting.html>
-#
 
 import jmri
 
-# import the AppleScript utility classes
-import com.apple.cocoa.application.NSApplication
-import com.apple.cocoa.foundation.NSAppleScript
-import com.apple.cocoa.foundation.NSMutableDictionary
+# osascript is an external command, so we need to use Popen to call it and PIPE
+# to get its input and output
+from subprocess import Popen, PIPE
 
-# Our sample AppleScript tells the Finder to make a new folder called
-# "untitled folder" on the Desktop.  Yes, that's not an important thing
-# to do, but it's a good example.
+# define a method for running osascript
+# takes two arguments:
+#   a script (required)
+#   an array of arguments to pass to the script (optional)
+def osascript(scpt, args=[]):
+    # create an osascript process
+    p = Popen(['osascript', '-'] + args, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    # execute the script
+    stdout, stderr = p.communicate(scpt)
+    # return its output
+    return stdout
 
+# sample - note extensive use of quoting and \ characters to get lines right
 script = \
-"tell application \"Finder\"\n"+ \
-"  make new folder at desktop\n"+ \
+"tell application \"Finder\"\n" + \
+"  make new folder at desktop\n" + \
 "end tell\n"
 
-# Create an NSAppleScript object to execute our script
-myScript = com.apple.cocoa.foundation.NSAppleScript(script);
-
-# Create a dictionary to hold any errors that are
-# encountered during script execution
-errors = com.apple.cocoa.foundation.NSMutableDictionary()
-
-# Execute the script!
-myScript.execute(errors)
+# Execute the sample
+osascript(script)
 

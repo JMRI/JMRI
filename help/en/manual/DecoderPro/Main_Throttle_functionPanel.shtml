@@ -1,82 +1,156 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
 
+  <title>DecoderPro Throttle</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
 
-
-
-<title>DecoderPro Throttle</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<a name="Top"></a>
-<h1>DecoderPro&reg; Main Window</h1>
-<h1>JMRI&reg; Throttle Window - Function Panel</h1>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<div align="right">
-<p><a href="Main_Throttle.shtml">Back </a></p>
-</div>
+      <h1>DecoderPro&reg; Main Window</h1>
 
-<hr>
-<h4>Throttle Function Panel</h4>
-<table border="0" cellpadding="1" cellspacing="1" width="90%">
-  <tbody><tr>
-    <td colspan="2" rowspan="1" width="44%"><p>The <strong>Throttle Function Panel</strong>
-allows you to select the decoder functions from F0 through F15 on first
-overlay and F16 through F28 on second overlay. Many new Sound decoders
-use up to 28 functions.. use the <input name="button11" id="button11" value="*" type="submit">
-      to toggle between the two overlays</p><p style="text-align: center;"><img src="images/Main_Throttle_Function.png" alt="Throttle function panel" height="248" width="281"></p>
-      <p>If you&nbsp;have entered <a href="Adv_FunctionLabel.shtml"><strong>Function labels</strong>, </a> the label text will  appear on the throttle Function buttons.</p><p style="text-align: center;"><img style="width: 427px; height: 254px;" alt="labels" src="images/Main_Throttle_Function_Labels.png"></p>
-      <p>Another way to change the labels on the function buttons, is to right click on the button that you want to edit, the word <strong>Properties..</strong> is displayed and when clicked on, an <strong>Edit Function Button</strong> dialog box will be displayed.</p>
-      <p>&nbsp;</p></td>
-    
-  </tr>
-  <tr>
-    <td align="left" valign="top"><img src="images/Main_Throttle_FunctionEdit.png" alt="Function edit" height="257" width="229"></td>
-    <td align="left" valign="top" width="56%"><p><strong>Edit Function Button </strong>allows you to edit the text displayed on the button and the function assigned.</p>
-      <p><strong>Function Number:</strong> text box to set the function assigned to the button. </p>
-      <p style="color: rgb(255, 102, 102);"><strong>Warning!!! </strong>Make sure you do not assign the same function  number to more than one button, otherwise, undesirable results may occur</p>
-      <p><strong>Text:</strong> the text you want displayed on the button.</p>
-      <p><strong>Font Size:</strong> Select the font size in points.</p>
-      <p>
-        <input name="checkbox4" id="checkbox4" checked="checked" type="checkbox">
-        <strong>Lockable</strong> - locks the function when button is clicked. eg makes the button a push  on / push off button.</p>
-      <p>
-        <input name="checkbox5" id="checkbox5" checked="checked" type="checkbox">
-        <strong>Visible</strong> - makes the button visible.  When unchecked the button will not show in the panel. To restore use the <strong>View</strong> menu and select <strong>Show All Function Buttons</strong> option.</p>
-      <p><strong>Function off icon</strong>:</p>
-      <p>
-        <input name="textfield2" id="textfield2" size="5" type="text">
-        Drag and drop icon of your choice into the box. To remove icon right click and click on Remove.</p>
-      <p><strong>Function on icon:</strong></p>
-      <p>
-        <input name="textfield3" id="textfield3" size="5" type="text">
-        Drag and drop icon of your choice into the box. To remove icon right click and click on Remove.</p>
-      <p><strong>
-        <input name="button12" id="button12" value="OK" type="submit">
-      </strong> sets all the values edited.</p>
-      <p><strong>
-        <input name="button13" id="button13" value="Cancel" type="submit">
-      </strong> exits dialog without change.</p>
-      <p>You can use the <strong>Save</strong> button on the <a href="Main_Throttle_addressPanel.shtml"><strong>Address Panel</strong></a>to save the edited functions to your locomotives Roster entry.</p></td>
-  </tr>
-</tbody></table>
+      <h1>JMRI&reg; Throttle Window - Function Panel</h1>
 
-  <div align="right"><a href="#Top"></a></div>
-<hr>
-<div align="right">
-<p><a href="Main_Throttle.shtml">Back </a></p>
-</div>
+      <div align="right">
+        <p><a href="Main_Throttle.shtml">Back</a></p>
+      </div>
+      <hr>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
+      <h4>Throttle Function Panel</h4>
+
+      <table border="0" cellpadding="1" cellspacing="1" width=
+      "90%">
+        <tbody>
+          <tr>
+            <td colspan="2" rowspan="1" width="44%">
+              <p>The <strong>Throttle Function Panel</strong>
+              allows you to select the decoder functions from F0
+              through F15 on first overlay and F16 through F28 on
+              second overlay. Many new Sound decoders use up to 28
+              functions.. use the <input name="button11" id=
+              "button11" value="*" type="submit"> to toggle between
+              the two overlays</p>
+
+              <p style="text-align: center;"><img src=
+              "images/Main_Throttle_Function.png" alt=
+              "Throttle function panel" height="248" width=
+              "281"></p>
+
+              <p>If you have entered <a href=
+              "Adv_FunctionLabel.shtml"><strong>Function
+              labels</strong>,</a> the label text will appear on
+              the throttle Function buttons.</p>
+
+              <p style="text-align: center;"><img style=
+              "width: 427px; height: 254px;" alt="labels" src=
+              "images/Main_Throttle_Function_Labels.png"></p>
+
+              <p>Another way to change the labels on the function
+              buttons, is to right click on the button that you
+              want to edit, the word <strong>Properties..</strong>
+              is displayed and when clicked on, an <strong>Edit
+              Function Button</strong> dialog box will be
+              displayed.</p>
+            </td>
+          </tr>
+
+          <tr>
+            <td align="left" valign="top"><img src=
+            "images/Main_Throttle_FunctionEdit.png" alt=
+            "Function edit" height="257" width="229"></td>
+
+            <td align="left" valign="top" width="56%">
+              <p><strong>Edit Function Button</strong> allows you
+              to edit the text displayed on the button and the
+              function assigned.</p>
+
+              <p><strong>Function Number:</strong> text box to set
+              the function assigned to the button.</p>
+
+              <p style="color: rgb(255, 102, 102);">
+              <strong>Warning!!!</strong> Make sure you do not
+              assign the same function number to more than one
+              button, otherwise, undesirable results may occur</p>
+
+              <p><strong>Text:</strong> the text you want displayed
+              on the button.</p>
+
+              <p><strong>Font Size:</strong> Select the font size
+              in points.</p>
+
+              <p><input name="checkbox4" id="checkbox4" checked=
+              "checked" type="checkbox"> <strong>Lockable</strong>
+              - locks the function when button is clicked. eg makes
+              the button a push on / push off button.</p>
+
+              <p><input name="checkbox5" id="checkbox5" checked=
+              "checked" type="checkbox"> <strong>Visible</strong> -
+              makes the button visible. When unchecked the button
+              will not show in the panel. To restore use the
+              <strong>View</strong> menu and select <strong>Show
+              All Function Buttons</strong> option.</p>
+
+              <p><strong>Function off icon</strong>:</p>
+
+              <p><input name="textfield2" id="textfield2" size="5"
+              type="text"> Drag and drop icon of your choice into
+              the box. To remove icon right click and click on
+              Remove.</p>
+
+              <p><strong>Function on icon:</strong></p>
+
+              <p><input name="textfield3" id="textfield3" size="5"
+              type="text"> Drag and drop icon of your choice into
+              the box. To remove icon right click and click on
+              Remove.</p>
+
+              <p><strong><input name="button12" id="button12"
+              value="OK" type="submit"></strong> sets all the
+              values edited.</p>
+
+              <p><strong><input name="button13" id="button13"
+              value="Cancel" type="submit"></strong> exits dialog
+              without change.</p>
+
+              <p>You can use the <strong>Save</strong> button on
+              the <a href=
+              "Main_Throttle_addressPanel.shtml"><strong>Address
+              Panel</strong></a>to save the edited functions to
+              your locomotives Roster entry.</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div align="right">
+        <a href="#Top"></a>
+      </div>
+      <hr>
+
+      <div align="right">
+        <p><a href="Main_Throttle.shtml">Back</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

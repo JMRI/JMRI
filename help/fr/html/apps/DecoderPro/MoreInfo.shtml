@@ -2,7 +2,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <!-- Translated by Blorec Herv&#233; le 2013-09-25-->
 <title>JMRI: DecoderPro In Depth</title>
 
@@ -17,25 +16,23 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-
-<H1>DecoderPro - D&#233;tails</H1>
+<h1>DecoderPro - D&#233;tails</h1>
 
 <p>Cette page fournit des renseignements sur la fa&#231;on dont le programmateur DecoderPro symbolique fonctionne. Pour plus de d&#233;tails internes sur JMRI, s'il vous pla&#238;t voir les pages techniques, qui sont encore en cours d'&#233;laboration.</p>
 
 <dl>
-<dt class=left>Fichiers de Configuration</dt>
-<dd class=first>
+<dt class="left">Fichiers de Configuration</dt>
+<dd class="first">
 <p>
 Il existe deux types de fichiers de configuration:
 <ul>
 <li> Fichiers de Configuration D&#233;codeur - Ceux-ci portent la description d'un type particulier de d&#233;codeur, et contr&#241;lent le programmateur qui affiche les informations des variables.
 <li> Fichiers de Configuration Locomotive - Ceux-ci portent les informations sp&#233;cifiques sur une seule locomotive.
 </ul>
-</p>
 
 <p>
 Le programmeur peut lire n'importe quel type de fichier. Si vous s&#233;lectionnez un fichier d&#233;codeur apr&#232;s avoir cliqu&#233; sur Lire le fichier, le programmateur sera mis en place avec les variables, options, etc pour ce type. Les valeurs seront vides, parce que que le programmateur ne sait rien sur ce qui a &#233;t&#233; programm&#233; dans un d&#233;codeur sp&#233;cifique.</p>
@@ -49,13 +46,13 @@ Le programmeur peut lire n'importe quel type de fichier. Si vous s&#233;lectionn
 Vous pouvez &#233;galement modifier un fichier si vous pr&#233;f&#233;rez des noms diff&#233;rents, un regroupement de diff&#233;rentes options, ou si vous ne voulez voir que certaines options que vous n'utilisez pas. Un simple &#233;diteur de texte peut cr&#233;er ces fichiers facilement, comme le format n'a pas de champs de longueur fixe, de caract&#232;res sp&#233;ciaux, etc Il y a aussi de puissants outils de XML dans le domaine public qui font qu'il est tr&#232;s facile de g&#233;rer un grand nombre de fichiers d&#233;codeur.</p>
 </dd>
 
-<dt class=left>Variables</dt>
+<dt class="left">Variables</dt>
 <dd>
 <p>Une "variable" d&#233;finit la valeur qui sera charg&#233;e dans tout ou partie d'un
 CV. Par exemple, une variable peut &#234;tre d&#233;finie qui d&#233;finit la valeur des trois
 bits les plus significatifs de la CV 47. Si il y a plusieurs options configur&#233;es dans
 un seul CV, ces informations sont assur&#233;es par des variables distinctes.
-Actuellement, il existe plusieurs types de variables:
+Actuellement, il existe plusieurs types de variables:</p>
 <ul>
 <LI> Decimal - nombres entr&#233;s dans la notation habituelle d&#233;cimale. Ce sont les adresses courtes, les tensions de d&#233;marrage, etc.
 <LI> Enum (&#233;num&#233;r&#233;) - choisir parmi un ensemble d'options. Elles peuvent &#234;tre utilis&#233;es
@@ -70,10 +67,10 @@ raisons, la possibilit&#233; est pr&#233;sente.
 <LI> Speed table - pas encore vraiment au point, ce type de variable est
 destin&#233;e &#224; fournir un tableau des tables graphiques des vitesses, que vous pouvez faire glisser autour pour
 configurer comme vous le souhaitez.
-</ul></p>
+</ul>
 </dd>
 
-<dt class=left> Communication, Programmateur: &#233;tats</dt>
+<dt class="left"> Communication, Programmateur: &#233;tats</dt>
 <dd>
 <p>La communication avec la station de commande/programmeur, permettant la lecture et
 &#233;criture du d&#233;codeur, n'est effectu&#233;e que lorsque les boutons "Lecture" ou "&#201;criture" sont press&#233;s.
@@ -90,10 +87,10 @@ le programme n'a pas confiance dans la valeur, est ce vraiment celle que vous vo
 </ul></p>
 </dd>
 
-<dt class=left>Impression</dt>
+<dt class="left">Impression</dt>
 <dd>
-<p>Vous pouvez imprimer les informations de la locomotive courante depuis la fen&#234;tre du programmateur
-. Dans le menu "Fichier ...", s&#233;lectionnez "Imprimer ...", et de remplir le
+<p>Vous pouvez imprimer les informations de la locomotive courante depuis la fen&#234;tre du programmateur.
+ Dans le menu "Fichier...", s&#233;lectionnez "Imprimer...", et de remplir le
 bo&#238;te de dialogue qui se pr&#233;sente.</p>
 
 <p>L'impression est format&#233;e par le format de programmation actuellement s&#233;lectionn&#233;e, afin que l'information de tous les onglets soit imprim&#233;e. Vous obtenez une impression plus courte  des valeurs les plus importantes lorsque vous imprimez &#224; partir du format "de base", et une liste de tout lorsque vous utilisez le format "complet".. </p>

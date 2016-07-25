@@ -333,7 +333,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        _toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        _toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         _toolMenu.add(new TrackLoadEditAction(this));
         _toolMenu.add(new TrackRoadEditAction(this));
         _toolMenu.add(new TrackEditCommentsAction(this));
@@ -636,7 +636,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
                 int feet = (int) (inches * Setup.getScaleRatio() / 12);
                 length = Integer.toString(feet);
             } catch (NumberFormatException e) {
-                log.error("Can not convert from inches to feet");
+//                log.error("Can not convert from inches to feet");
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertFeet"), Bundle
                         .getMessage("ErrorTrackLength"), JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -649,7 +649,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
                 int meter = (int) (cm * Setup.getScaleRatio() / 100);
                 length = Integer.toString(meter);
             } catch (NumberFormatException e) {
-                log.error("Can not convert from cm to meters");
+//                log.error("Can not convert from cm to meters");
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertMeter"), Bundle
                         .getMessage("ErrorTrackLength"), JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -668,14 +668,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
                 return false;
             }
         } catch (NumberFormatException e) {
-            log.error("Track length not an integer");
+//            log.error("Track length not an integer");
             JOptionPane.showMessageDialog(this, Bundle.getMessage("TrackMustBeNumber"), Bundle
                     .getMessage("ErrorTrackLength"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         // track length can not be less than than the sum of used and reserved length
         if (trackLength != track.getLength() && trackLength < track.getUsedLength() + track.getReserved()) {
-            log.error("Track length can not be less than used and reserved");
+//            log.warn("Track length should not be less than used and reserved");
             JOptionPane.showMessageDialog(this, Bundle.getMessage("TrackMustBeGreater"), Bundle
                     .getMessage("ErrorTrackLength"), JOptionPane.ERROR_MESSAGE);
             // does the user want to force the track length?

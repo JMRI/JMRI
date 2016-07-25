@@ -1,6 +1,5 @@
 package jmri.jmrit.beantable;
 
-import java.util.ResourceBundle;
 import jmri.Conditional;
 import jmri.InstanceManager;
 import jmri.Light;
@@ -217,16 +216,16 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase {
             assertNotNull(i + "th Turnout is null!", t);
             Light l = InstanceManager.lightManagerInstance().newLight("IL" + (i), "Light" + i);
             assertNotNull(i + "th Light is null!", l);
-            Conditional c = InstanceManager.conditionalManagerInstance().createNewConditional("C" + i, "Conditional" + i);
+            Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional("C" + i, "Conditional" + i);
             assertNotNull(i + "th Conditional is null!", c);
             Memory m = InstanceManager.memoryManagerInstance().provideMemory("IMemory" + i);
             assertNotNull(i + "th Memory is null!", m);
             SignalHead sh = new jmri.implementation.VirtualSignalHead("Signal" + i);
             assertNotNull(i + "th SignalHead is null!", sh);
-            InstanceManager.signalHeadManagerInstance().register(sh);
+            InstanceManager.getDefault(jmri.SignalHeadManager.class).register(sh);
             Route r = new jmri.implementation.DefaultRoute("Route" + i);
             assertNotNull(i + "th Route is null!", r);
-            InstanceManager.routeManagerInstance().register(r);
+            InstanceManager.getDefault(jmri.RouteManager.class).register(r);
         }
     }
 

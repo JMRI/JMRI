@@ -1,7 +1,7 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

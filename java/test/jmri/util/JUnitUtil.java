@@ -212,63 +212,64 @@ public class JUnitUtil {
         // routes need turnouts, so ensure the turnout manager is initialized
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        // now done automatically by InstanceManager's autoinit
         InstanceManager.getDefault(RouteManager.class);
     }
     
     public static void initMemoryManager() {
         MemoryManager m = new DefaultMemoryManager();
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.MEMORIES);
+        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.MEMORIES);
         }
     }
 
     public static void initReporterManager() {
         ReporterManager m = new InternalReporterManager();
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.REPORTERS);
+        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.REPORTERS);
         }
     }
 
     public static void initOBlockManager() {
         OBlockManager b = new OBlockManager();
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(b, jmri.Manager.OBLOCKS);
+        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(b, jmri.Manager.OBLOCKS);
         }
     }
 
     public static void initWarrantManager() {
         WarrantManager w = new WarrantManager();
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(w, jmri.Manager.WARRANTS);
+        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(w, jmri.Manager.WARRANTS);
         }
     }
 
     public static void initSignalMastLogicManager() {
         SignalMastLogicManager w = new DefaultSignalMastLogicManager();
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(w, jmri.Manager.SIGNALMASTLOGICS);
+        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(w, jmri.Manager.SIGNALMASTLOGICS);
         }
     }
 
     public static void initLayoutBlockManager() {
         LayoutBlockManager w = new LayoutBlockManager();
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(w, jmri.Manager.LAYOUTBLOCKS);
+        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(w, jmri.Manager.LAYOUTBLOCKS);
         }
     }
 
     public static void initSectionManager() {
         jmri.SectionManager w = new jmri.SectionManager();
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(w, jmri.Manager.SECTIONS);
+        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(w, jmri.Manager.SECTIONS);
         }
     }
 
     public static void initInternalSignalHeadManager() {
         SignalHeadManager m = new AbstractSignalHeadManager();
         InstanceManager.setSignalHeadManager(m);
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.SIGNALHEADS);
+        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.SIGNALHEADS);
         }
     }
 
@@ -288,20 +289,20 @@ public class JUnitUtil {
 
     public static void initLogixManager() {
         LogixManager m = new DefaultLogixManager();
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.LOGIXS);
+        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.LOGIXS);
         }
     }
 
     public static void initConditionalManager() {
         ConditionalManager m = new DefaultConditionalManager();
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.CONDITIONALS);
+        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.CONDITIONALS);
         }
     }
     
     public static void initShutDownManager() {
-        if (InstanceManager.getDefault(ShutDownManager.class) == null) {
+        if (InstanceManager.getOptionalDefault(ShutDownManager.class) == null) {
             InstanceManager.setDefault(ShutDownManager.class, new MockShutDownManager());
         }
     }

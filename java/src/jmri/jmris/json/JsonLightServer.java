@@ -7,10 +7,11 @@ import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.AbstractLightServer;
 import jmri.jmris.JmriConnection;
-import static jmri.jmris.json.JSON.LIGHT;
-import static jmri.jmris.json.JSON.METHOD;
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.PUT;
+import jmri.server.json.JsonException;
+import static jmri.server.json.JSON.LIGHT;
+import static jmri.server.json.JSON.METHOD;
+import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.PUT;
 
 /**
  * JSON Server interface between the JMRI light manager and a network connection

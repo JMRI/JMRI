@@ -73,8 +73,8 @@ public class LRouteTableAction extends AbstractTableAction {
      */
     public LRouteTableAction(String s) {
         super(s);
-        _logixManager = InstanceManager.logixManagerInstance();
-        _conditionalManager = InstanceManager.conditionalManagerInstance();
+        _logixManager = InstanceManager.getOptionalDefault(jmri.LogixManager.class);
+        _conditionalManager = InstanceManager.getOptionalDefault(jmri.ConditionalManager.class);
         // disable ourself if there is no Logix manager or no Conditional manager available
         if ((_logixManager == null) || (_conditionalManager == null)) {
             setEnabled(false);
@@ -388,7 +388,7 @@ public class LRouteTableAction extends AbstractTableAction {
             inputTS.add(new RouteInputLight(systemName, userName));
             outputTS.add(new RouteOutputLight(systemName, userName));
         }
-        jmri.SignalHeadManager shm = InstanceManager.signalHeadManagerInstance();
+        jmri.SignalHeadManager shm = InstanceManager.getDefault(jmri.SignalHeadManager.class);
         systemNameList = shm.getSystemNameList();
         iter = systemNameList.iterator();
         while (iter.hasNext()) {
@@ -1271,7 +1271,7 @@ public class LRouteTableAction extends AbstractTableAction {
     void showMessage(String msg) {
 
         javax.swing.JOptionPane.showMessageDialog(
-                _addFrame, rbx.getString(msg), rbx.getString("Warn"),
+                _addFrame, rbx.getString(msg), Bundle.getMessage("WarningTitle"),
                 javax.swing.JOptionPane.WARNING_MESSAGE);
     }
 
@@ -1744,7 +1744,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 javax.swing.JOptionPane.showMessageDialog(
                         _addFrame, java.text.MessageFormat.format(rbx.getString("NoAlign"),
                                 new Object[]{name, sensor.getAlignType()}),
-                        rbx.getString("Warn"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
             }
         }
         ///////////////// Make Lock Conditional //////////////////////////

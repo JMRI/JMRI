@@ -1,4 +1,3 @@
-// EasyDccSystemConnectionMemo.java
 package jmri.jmrix.easydcc;
 
 import java.util.ResourceBundle;
@@ -14,7 +13,6 @@ import jmri.ThrottleManager;
  * activate their particular system.
  *
  * @author	Bob Jacobsen Copyright (C) 2010 Kevin Dickerson
- * @version $Revision$
  */
 public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -244,6 +242,3 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         super.dispose();
     }
 }
-
-
-/* @(#)InternalSystemConnectionMemo.java */

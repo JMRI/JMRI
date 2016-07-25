@@ -1,9 +1,9 @@
 package jmri.web.servlet.operations;
 
-import static jmri.jmris.json.JSON.CODE;
-import static jmri.jmris.json.JSON.DATA;
-import static jmri.jmris.json.JSON.LOCATION;
-import static jmri.jmris.json.JSON.NULL;
+import static jmri.server.json.JsonException.CODE;
+import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JSON.LOCATION;
+import static jmri.server.json.JSON.NULL;
 import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
 import static jmri.web.servlet.ServletUtil.UTF8;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
@@ -17,8 +17,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import jmri.jmris.json.JSON;
-import jmri.jmris.json.JsonException;
+import jmri.server.json.JSON;
+import jmri.server.json.JsonException;
 import jmri.jmris.json.JsonUtil;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;

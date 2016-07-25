@@ -42,10 +42,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CarsTableFrame extends OperationsFrame implements TableModelListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5469624100056817632L;
     CarsTableModel carsTableModel;
     JTable carsTable;
     boolean showAllCars;
@@ -252,7 +248,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new CarRosterMenu(Bundle.getMessage("TitleCarRoster"), CarRosterMenu.MAINMENU, this));
         toolMenu.add(new ShowCheckboxesCarsTableAction(carsTableModel));
         toolMenu.add(new ResetCheckboxesCarsTableAction(carsTableModel));

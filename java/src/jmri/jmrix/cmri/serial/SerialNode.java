@@ -77,8 +77,8 @@ public class SerialNode extends AbstractNode {
      * is used, actual node address must be set using setNodeAddress, and actual
      * node type using 'setNodeType'
      */
-    public SerialNode() {
-        this(0, SMINI);
+    public SerialNode(SerialTrafficController tc) {
+        this(0, SMINI,tc);
     }
 
     /**
@@ -86,7 +86,7 @@ public class SerialNode extends AbstractNode {
      * address - Address of node on CMRI serial bus (0-127) type - SMINI,
      * USIC_SUSIC,
      */
-    public SerialNode(int address, int type) {
+    public SerialNode(int address, int type,SerialTrafficController tc) {
         // set address and type and check validity
         setNodeAddress(address);
         setNodeType(type);
@@ -112,7 +112,7 @@ public class SerialNode extends AbstractNode {
         setMustSend();
         hasActiveSensors = false;
         // register this node
-        SerialTrafficController.instance().registerNode(this);
+        tc.registerNode(this);
     }
 
     public int getNum2LSearchLights() {

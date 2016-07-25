@@ -1,50 +1,78 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>Decoder Definition - Getting Started</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>Decoder Definition - Getting Started</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<a NAME="Top"></a>
-<h1>Decoder Definition</h1>
-<h2>Getting Started</h2>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<div align="right">
-<p><a href="Dcode_Format.shtml">Next</a></p>
-<p><a href="index.shtml#DecoderDefinition">Back to Index</a></p>
-</div>
+      <h1>Decoder Definition</h1>
 
-<hr>
-<h4>Getting Started on a decoder definition</h4>
-<p>In this part of the manual we will  introduce you to the process of creating a file to describe a new decoder. You  might benefit from reading the other sections of the DecoderPro user guide to  get background information, especially the XML introduction 
-<a href="http://jmri.org/help/en/html/doc/Technical/XmlUsage.shtml" target="_blank">Intro to XML  files</a> 
-and the section on what the configuration files contain 
-<a href="http://jmri.org/xml/DTD/" target="_blank">Configuration  files</a> .</p>
-<p>The easiest way to create a configuration  file is to modify an existing one, so that you can follow the format.&nbsp; The decoder definition is configured per the 
-<a href="http://jmri.org/xml/DTD/" target="_blank">decoder-config.dtd.</a> (most of you will not be interested in this dtd, if you are open in a text editor).</p>
-<p>To get started, locate a decoder definition XML file that is close to the new decoder that you would like to define. .&nbsp; If you don&rsquo;t know what is &ldquo;close&rdquo;, well don&rsquo;t sweat it.&nbsp; Let&rsquo;s just move on to looking at a definition  file and you&rsquo;ll get a feel about what we&rsquo;re talking about.</p>
-<hr>
+      <h2>Getting Started</h2>
 
-<div align="right">
-<p><a href="Dcode_Format.shtml">Next</a></p>
-<p><a href="index.shtml#DecoderDefinition">Back to Index</a><a href="index.shtml#Main"></a></p>
-</div>
+      <div align="right">
+        <p><a href="Dcode_Format.shtml">Next</a></p>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
+        <p><a href="index.shtml#DecoderDefinition">Back to
+        Index</a></p>
+      </div>
+      <hr>
+
+      <h4>Getting Started on a decoder definition</h4>
+
+      <p>In this part of the manual we will introduce you to the
+      process of creating a file to describe a new decoder. You
+      might benefit from reading the other sections of the
+      DecoderPro user guide to get background information,
+      especially the XML introduction <a href=
+      "http://jmri.org/help/en/html/doc/Technical/XmlUsage.shtml"
+      target="_blank">Intro to XML files</a> and the section on
+      what the configuration files contain <a href=
+      "http://jmri.org/xml/DTD/" target="_blank">Configuration
+      files</a> .</p>
+
+      <p>The easiest way to create a configuration file is to
+      modify an existing one, so that you can follow the format.
+      The decoder definition is configured per the <a href=
+      "http://jmri.org/xml/DTD/" target=
+      "_blank">decoder-config.dtd.</a> (most of you will not be
+      interested in this dtd, if you are open in a text
+      editor).</p>
+
+      <p>To get started, locate a decoder definition XML file that
+      is close to the new decoder that you would like to define. .
+      If you don't know what is "close", well don't sweat it. Let's
+      just move on to looking at a definition file and you'll get a
+      feel about what we're talking about.</p>
+      <hr>
+
+      <div align="right">
+        <p><a href="Dcode_Format.shtml">Next</a></p>
+
+        <p><a href="index.shtml#DecoderDefinition">Back to
+        Index</a><a href="index.shtml#Main"></a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

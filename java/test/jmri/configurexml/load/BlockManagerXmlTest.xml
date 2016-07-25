@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/xml/XSLT/panelfile-2-9-6.xsl"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
     <major>3</major>
-    <minor>1</minor>
-    <test>1</test>
-    <modifier>.3</modifier>
+    <minor>8</minor>
+    <test>0</test>
+    <modifier />
   </jmriversion>
   <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
@@ -56,6 +56,9 @@
     <sensor systemName="ISBO9" inverted="false" userName="blocksouthsidingoccupied">
       <systemName>ISBO9</systemName>
       <userName>blocksouthsidingoccupied</userName>
+    </sensor>
+    <sensor systemName="ISCLOCKRUNNING" inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
     </sensor>
     <sensor systemName="ISSDIRF1" inverted="false">
       <systemName>ISSDIRF1</systemName>
@@ -205,6 +208,8 @@
   <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">
     <operations automate="false">
       <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
     </operations>
     <defaultclosedspeed>Normal</defaultclosedspeed>
     <defaultthrownspeed>Restricted</defaultthrownspeed>
@@ -281,6 +286,12 @@
     <memory systemName="IM:AUTO:0012" userName="blockwestsidingmemory">
       <systemName>IM:AUTO:0012</systemName>
       <userName>blockwestsidingmemory</userName>
+    </memory>
+    <memory systemName="IMCURRENTTIME" value="10:26 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory systemName="IMRATEFACTOR" value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
     </memory>
   </memories>
   <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
@@ -568,58 +579,9 @@
       </path>
     </block>
   </blocks>
-  <layoutblocks class="jmri.jmrit.display.configurexml.LayoutBlockManagerXml">
-    <layoutblock systemName="ILB1" userName="blocknorthwest" occupancysensor="blocknorthwestoccupied" occupiedsense="2" trackcolor="darkGray" occupiedcolor="blue" extracolor="yellow" memory="blocknorthwestmemory">
-      <systemName>ILB1</systemName>
-      <userName>blocknorthwest</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB10" userName="blocksouthwest" occupancysensor="blocksouthwestoccupied" occupiedsense="2" trackcolor="black" occupiedcolor="black" extracolor="black" memory="blocksouthwestmemory">
-      <systemName>ILB10</systemName>
-      <userName>blocksouthwest</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB11" userName="blockwest" occupancysensor="blockwestoccupied" occupiedsense="2" trackcolor="black" occupiedcolor="black" extracolor="black" memory="blockwestmemory">
-      <systemName>ILB11</systemName>
-      <userName>blockwest</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB12" userName="blockwestsiding" occupancysensor="blockwestsidingoccupied" occupiedsense="2" trackcolor="black" occupiedcolor="black" extracolor="black" memory="blockwestsidingmemory">
-      <systemName>ILB12</systemName>
-      <userName>blockwestsiding</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB2" userName="blocknorth" occupancysensor="blocknorthoccupied" occupiedsense="2" trackcolor="darkGray" occupiedcolor="blue" extracolor="yellow" memory="blocknorthmemory">
-      <systemName>ILB2</systemName>
-      <userName>blocknorth</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB3" userName="blocknorthsiding" occupancysensor="blocknorthsidingoccupied" occupiedsense="2" trackcolor="darkGray" occupiedcolor="blue" extracolor="yellow" memory="blocknorthsidingmemory">
-      <systemName>ILB3</systemName>
-      <userName>blocknorthsiding</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB4" userName="blocknortheast" occupancysensor="blocknortheastoccupied" occupiedsense="2" trackcolor="darkGray" occupiedcolor="blue" extracolor="yellow" memory="blocknortheastmemory">
-      <systemName>ILB4</systemName>
-      <userName>blocknortheast</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB5" userName="blockeast" occupancysensor="blockeastoccupied" occupiedsense="2" trackcolor="darkGray" occupiedcolor="blue" extracolor="yellow" memory="blockeastmemory">
-      <systemName>ILB5</systemName>
-      <userName>blockeast</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB6" userName="blockeastsiding" occupancysensor="blockeastsidingoccupied" occupiedsense="2" trackcolor="black" occupiedcolor="black" extracolor="black" memory="blockeastsidingmemory">
-      <systemName>ILB6</systemName>
-      <userName>blockeastsiding</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB7" userName="blocksoutheast" occupancysensor="blocksoutheastoccupied" occupiedsense="2" trackcolor="black" occupiedcolor="black" extracolor="black" memory="blocksoutheastmemory">
-      <systemName>ILB7</systemName>
-      <userName>blocksoutheast</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB8" userName="blocksouth" occupancysensor="blocksouthoccupied" occupiedsense="2" trackcolor="darkGray" occupiedcolor="blue" extracolor="yellow" memory="blocksouthmemory">
-      <systemName>ILB8</systemName>
-      <userName>blocksouth</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB9" userName="blocksouthsiding" occupancysensor="blocksouthsidingoccupied" occupiedsense="2" trackcolor="darkGray" occupiedcolor="blue" extracolor="yellow" memory="blocksouthsidingmemory">
-      <systemName>ILB9</systemName>
-      <userName>blocksouthsiding</userName>
-    </layoutblock>
-  </layoutblocks>
+  <layoutblocks class="jmri.jmrit.display.configurexml.LayoutBlockManagerXml" />
   <sections class="jmri.configurexml.SectionManagerXml">
-    <section systemName="IY:AUTO:0001" userName="NorthWest" fsensorname="ISSDIRF1" rsensorname="ISSDIRR1" fstopsensorname="ISSSTOPF1" rstopsensorname="ISSSTOPR1">
+    <section systemName="IY:AUTO:0001" userName="NorthWest" creationtype="userdefined" fstopsensorname="ISSSTOPF1" rstopsensorname="ISSSTOPR1" fsensorname="ISSDIRF1" rsensorname="ISSDIRR1">
       <userName>NorthWest</userName>
       <blockentry sName="IB1" order="0" />
       <entrypoint fromblock="IB11" toblock="IB1" direction="4" fixed="no" fromblockdirection="North" />
@@ -627,19 +589,19 @@
       <entrypoint fromblock="IB2" toblock="IB1" direction="8" fixed="no" fromblockdirection="West" />
       <entrypoint fromblock="IB3" toblock="IB1" direction="8" fixed="no" fromblockdirection="West" />
     </section>
-    <section systemName="IY:AUTO:0002" userName="North" fsensorname="ISSDIRF2" rsensorname="ISSDIRR2" fstopsensorname="ISSSTOPF2" rstopsensorname="ISSSTOPR2">
+    <section systemName="IY:AUTO:0002" userName="North" creationtype="userdefined" fstopsensorname="ISSSTOPF2" rstopsensorname="ISSSTOPR2" fsensorname="ISSDIRF2" rsensorname="ISSDIRR2">
       <userName>North</userName>
       <blockentry sName="IB2" order="0" />
       <entrypoint fromblock="IB1" toblock="IB2" direction="4" fixed="no" fromblockdirection="East" />
       <entrypoint fromblock="IB4" toblock="IB2" direction="8" fixed="no" fromblockdirection="West" />
     </section>
-    <section systemName="IY:AUTO:0003" userName="NorthSiding" fsensorname="ISSDIRF3" rsensorname="ISSDIRR3" fstopsensorname="ISSSTOPF3" rstopsensorname="ISSSTOPR3">
+    <section systemName="IY:AUTO:0003" userName="NorthSiding" creationtype="userdefined" fstopsensorname="ISSSTOPF3" rstopsensorname="ISSSTOPR3" fsensorname="ISSDIRF3" rsensorname="ISSDIRR3">
       <userName>NorthSiding</userName>
       <blockentry sName="IB3" order="0" />
       <entrypoint fromblock="IB1" toblock="IB3" direction="4" fixed="no" fromblockdirection="East" />
       <entrypoint fromblock="IB4" toblock="IB3" direction="8" fixed="no" fromblockdirection="West" />
     </section>
-    <section systemName="IY:AUTO:0004" userName="NorthEast" fsensorname="ISSDIRF4" rsensorname="ISSDIRR4" fstopsensorname="ISSSTOPF4" rstopsensorname="ISSSTOPR4">
+    <section systemName="IY:AUTO:0004" userName="NorthEast" creationtype="userdefined" fstopsensorname="ISSSTOPF4" rstopsensorname="ISSSTOPR4" fsensorname="ISSDIRF4" rsensorname="ISSDIRR4">
       <userName>NorthEast</userName>
       <blockentry sName="IB4" order="0" />
       <entrypoint fromblock="IB2" toblock="IB4" direction="4" fixed="no" fromblockdirection="East" />
@@ -647,19 +609,19 @@
       <entrypoint fromblock="IB5" toblock="IB4" direction="8" fixed="no" fromblockdirection="North" />
       <entrypoint fromblock="IB6" toblock="IB4" direction="8" fixed="no" fromblockdirection="North" />
     </section>
-    <section systemName="IY:AUTO:0005" userName="East" fsensorname="ISSDIRF5" rsensorname="ISSDIRR5" fstopsensorname="ISSSTOPF5" rstopsensorname="ISSSTOPR5">
+    <section systemName="IY:AUTO:0005" userName="East" creationtype="userdefined" fstopsensorname="ISSSTOPF5" rstopsensorname="ISSSTOPR5" fsensorname="ISSDIRF5" rsensorname="ISSDIRR5">
       <userName>East</userName>
       <blockentry sName="IB5" order="0" />
       <entrypoint fromblock="IB4" toblock="IB5" direction="4" fixed="no" fromblockdirection="South" />
       <entrypoint fromblock="IB7" toblock="IB5" direction="8" fixed="no" fromblockdirection="North" />
     </section>
-    <section systemName="IY:AUTO:0006" userName="EastSiding" fsensorname="ISSDIRF6" rsensorname="ISSDIRR6" fstopsensorname="ISSSTOPF6" rstopsensorname="ISSSTOPR6">
+    <section systemName="IY:AUTO:0006" userName="EastSiding" creationtype="userdefined" fstopsensorname="ISSSTOPF6" rstopsensorname="ISSSTOPR6" fsensorname="ISSDIRF6" rsensorname="ISSDIRR6">
       <userName>EastSiding</userName>
       <blockentry sName="IB6" order="0" />
       <entrypoint fromblock="IB4" toblock="IB6" direction="4" fixed="no" fromblockdirection="South" />
       <entrypoint fromblock="IB7" toblock="IB6" direction="8" fixed="no" fromblockdirection="North" />
     </section>
-    <section systemName="IY:AUTO:0007" userName="SouthEast" fsensorname="ISSDIRF7" rsensorname="ISSDIRR7" fstopsensorname="ISSSTOPF7" rstopsensorname="ISSSTOPR7">
+    <section systemName="IY:AUTO:0007" userName="SouthEast" creationtype="userdefined" fstopsensorname="ISSSTOPF7" rstopsensorname="ISSSTOPR7" fsensorname="ISSDIRF7" rsensorname="ISSDIRR7">
       <userName>SouthEast</userName>
       <blockentry sName="IB7" order="0" />
       <entrypoint fromblock="IB5" toblock="IB7" direction="4" fixed="no" fromblockdirection="South" />
@@ -667,19 +629,19 @@
       <entrypoint fromblock="IB8" toblock="IB7" direction="8" fixed="no" fromblockdirection="East" />
       <entrypoint fromblock="IB9" toblock="IB7" direction="8" fixed="no" fromblockdirection="East" />
     </section>
-    <section systemName="IY:AUTO:0008" userName="South" fsensorname="ISSDIRF8" rsensorname="ISSDIRR8" fstopsensorname="ISSSTOPF8" rstopsensorname="ISSSTOPR8">
+    <section systemName="IY:AUTO:0008" userName="South" creationtype="userdefined" fstopsensorname="ISSSTOPF8" rstopsensorname="ISSSTOPR8" fsensorname="ISSDIRF8" rsensorname="ISSDIRR8">
       <userName>South</userName>
       <blockentry sName="IB8" order="0" />
       <entrypoint fromblock="IB7" toblock="IB8" direction="4" fixed="no" fromblockdirection="West" />
       <entrypoint fromblock="IB10" toblock="IB8" direction="8" fixed="no" fromblockdirection="East" />
     </section>
-    <section systemName="IY:AUTO:0009" userName="SouthSiding" fsensorname="ISSDIRF9" rsensorname="ISSDIRR9" fstopsensorname="ISSSTOPF9" rstopsensorname="ISSSTOPR9">
+    <section systemName="IY:AUTO:0009" userName="SouthSiding" creationtype="userdefined" fstopsensorname="ISSSTOPF9" rstopsensorname="ISSSTOPR9" fsensorname="ISSDIRF9" rsensorname="ISSDIRR9">
       <userName>SouthSiding</userName>
       <blockentry sName="IB9" order="0" />
       <entrypoint fromblock="IB7" toblock="IB9" direction="4" fixed="no" fromblockdirection="West" />
       <entrypoint fromblock="IB10" toblock="IB9" direction="8" fixed="no" fromblockdirection="East" />
     </section>
-    <section systemName="IY:AUTO:0010" userName="SouthWest" fsensorname="ISSDIRF10" rsensorname="ISSDIRR10" fstopsensorname="ISSSTOPF10" rstopsensorname="ISSSTOPR10">
+    <section systemName="IY:AUTO:0010" userName="SouthWest" creationtype="userdefined" fstopsensorname="ISSSTOPF10" rstopsensorname="ISSSTOPR10" fsensorname="ISSDIRF10" rsensorname="ISSDIRR10">
       <userName>SouthWest</userName>
       <blockentry sName="IB10" order="0" />
       <entrypoint fromblock="IB8" toblock="IB10" direction="4" fixed="no" fromblockdirection="West" />
@@ -687,13 +649,13 @@
       <entrypoint fromblock="IB11" toblock="IB10" direction="8" fixed="no" fromblockdirection="South" />
       <entrypoint fromblock="IB12" toblock="IB10" direction="8" fixed="no" fromblockdirection="South" />
     </section>
-    <section systemName="IY:AUTO:0011" userName="West" fsensorname="ISSDIRF11" rsensorname="ISSDIRR11" fstopsensorname="ISSSTOPF11" rstopsensorname="ISSSTOPR11">
+    <section systemName="IY:AUTO:0011" userName="West" creationtype="userdefined" fstopsensorname="ISSSTOPF11" rstopsensorname="ISSSTOPR11" fsensorname="ISSDIRF11" rsensorname="ISSDIRR11">
       <userName>West</userName>
       <blockentry sName="IB11" order="0" />
       <entrypoint fromblock="IB10" toblock="IB11" direction="4" fixed="no" fromblockdirection="North" />
       <entrypoint fromblock="IB1" toblock="IB11" direction="8" fixed="no" fromblockdirection="South" />
     </section>
-    <section systemName="IY:AUTO:0012" userName="WestSiding" fsensorname="ISSDIRF12" rsensorname="ISSDIRR12" fstopsensorname="ISSSTOPF12" rstopsensorname="ISSSTOPR12">
+    <section systemName="IY:AUTO:0012" userName="WestSiding" creationtype="userdefined" fstopsensorname="ISSSTOPF12" rstopsensorname="ISSSTOPR12" fsensorname="ISSDIRF12" rsensorname="ISSDIRR12">
       <userName>WestSiding</userName>
       <blockentry sName="IB12" order="0" />
       <entrypoint fromblock="IB10" toblock="IB12" direction="4" fixed="no" fromblockdirection="North" />
@@ -703,56 +665,86 @@
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Jun 17 22:26:06 PDT 2016" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Sun Jan 22 14:45:24 EST 2012</date>
-      <filename>DecoderPro version 20120122-1945-Bob starts under Java 1.6.0_22 at Sun Jan 22 14:45:24 EST 2012</filename>
+      <date>Fri Jun 17 22:26:05 PDT 2016</date>
+      <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Sun Jan 22 14:45:24 EST 2012</date>
-      <filename>UserPrefsDecoderProConfig2.xml</filename>
+      <date>Fri Jun 17 22:26:05 PDT 2016</date>
+      <filename>/Users/jake/Library/Preferences/JMRI/LocoNet_Simulator/UserPrefsProfileConfig.xml</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Sun Jan 22 14:45:46 EST 2012</date>
-      <filename>aaaae12.xml</filename>
+      <date>Fri Jun 17 22:26:07 PDT 2016</date>
+      <filename>/Users/jake/Library/Preferences/JMRI/LocoNet_Simulator/ProfileConfig.xml</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Fri Jun 17 22:26:17 PDT 2016</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/BlockManagerXmlTest.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Sun Jan 22 14:34:10 EST 2012</date>
-          <filename>DecoderPro version 20120122-1933-Bob starts under Java 1.6.0_22 at Sun Jan 22 14:34:10 EST 2012</filename>
+          <date>Sun Jan 22 14:45:24 EST 2012</date>
+          <filename>DecoderPro version 20120122-1945-Bob starts under Java 1.6.0_22 at Sun Jan 22 14:45:24 EST 2012</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Sun Jan 22 14:34:10 EST 2012</date>
+          <date>Sun Jan 22 14:45:24 EST 2012</date>
           <filename>UserPrefsDecoderProConfig2.xml</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Sun Jan 22 14:34:34 EST 2012</date>
-          <filename>aaaae10.xml</filename>
+          <date>Sun Jan 22 14:45:46 EST 2012</date>
+          <filename>aaaae12.xml</filename>
           <filehistory>
             <operation>
+              <type>app</type>
+              <date>Sun Jan 22 14:34:10 EST 2012</date>
+              <filename>DecoderPro version 20120122-1933-Bob starts under Java 1.6.0_22 at Sun Jan 22 14:34:10 EST 2012</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Sun Jan 22 14:34:10 EST 2012</date>
+              <filename>UserPrefsDecoderProConfig2.xml</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Sun Jan 22 14:34:34 EST 2012</date>
+              <filename>aaaae10.xml</filename>
+              <filehistory>
+                <operation>
+                  <type>Store</type>
+                  <date>Sun Jan 22 13:33:02 EST 2012</date>
+                  <filename />
+                </operation>
+              </filehistory>
+            </operation>
+            <operation>
               <type>Store</type>
-              <date>Sun Jan 22 13:33:02 EST 2012</date>
+              <date>Sun Jan 22 14:36:43 EST 2012</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Sun Jan 22 14:36:43 EST 2012</date>
+          <date>Sun Jan 22 14:59:13 EST 2012</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sun Jan 22 14:59:13 EST 2012</date>
+      <date>Fri Jun 17 22:26:25 PDT 2016</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 20120122-1945-Bob on Sun Jan 22 14:59:13 EST 2012 $Id$-->
+  <!--Written by JMRI version 3.8-r26527 on Fri Jun 17 22:26:25 PDT 2016 $Id: XmlFile.java 26283 2014-06-12 04:24:18Z jacobsen $-->
 </layout-config>
+

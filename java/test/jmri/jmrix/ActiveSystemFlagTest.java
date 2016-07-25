@@ -19,8 +19,8 @@ public class ActiveSystemFlagTest extends TestCase {
     }
 
     public void testActive() throws Exception {
-        jmri.jmrix.loconet.ActiveFlag.setActive();
-        Assert.assertTrue(ActiveSystemFlag.isActive("jmri.jmrix.loconet"));
+        jmri.jmrix.grapevine.ActiveFlag.setActive();
+        Assert.assertTrue(ActiveSystemFlag.isActive("jmri.jmrix.grapevine"));
     }
 
     public void testNoSystem() throws Exception {

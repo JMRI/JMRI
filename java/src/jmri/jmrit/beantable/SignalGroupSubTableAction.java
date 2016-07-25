@@ -114,7 +114,7 @@ public class SignalGroupSubTableAction {
     }
 
     int signalStateFromBox(JComboBox<String> box) {
-        SignalHead sig = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(curSignal);
+        SignalHead sig = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(curSignal);
         int result;
         String mode;
         if (sig != null) {
@@ -133,7 +133,7 @@ public class SignalGroupSubTableAction {
     }
 
     void setSignalStateBox(int mode, JComboBox<String> box) {
-        SignalHead sig = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(curSignal);
+        SignalHead sig = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(curSignal);
         String result = jmri.util.StringUtil.getNameFromState(mode, sig.getValidStates(), sig.getValidStateNames());
         box.setSelectedItem(result);
     }
@@ -191,8 +191,8 @@ public class SignalGroupSubTableAction {
     void editSignal(SignalGroup g, String signal) {
         curSignalGroup = g;
         curSignal = signal;
-        curSignalHead = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(curSignal);
-        //SignalHead sig = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(curSignal);
+        curSignalHead = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(curSignal);
+        //SignalHead sig = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(curSignal);
 
         _OnAppearance = new JComboBox<String>(curSignalHead.getValidStateNames());
         _OffAppearance = new JComboBox<String>(curSignalHead.getValidStateNames());
@@ -248,7 +248,7 @@ public class SignalGroupSubTableAction {
 
             contentPane.add(p);
             if (curSignalHead.getClass().getName().contains("SingleTurnoutSignalHead")) {
-                jmri.implementation.SingleTurnoutSignalHead Signal = (jmri.implementation.SingleTurnoutSignalHead) InstanceManager.signalHeadManagerInstance().getBySystemName(curSignal);
+                jmri.implementation.SingleTurnoutSignalHead Signal = (jmri.implementation.SingleTurnoutSignalHead) InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(curSignal);
                 if ((g.getSignalHeadOnState(curSignalHead) == 0x00) && (g.getSignalHeadOffState(curSignalHead) == 0x00)) {
                     g.setSignalHeadOnState(curSignalHead, Signal.getOnAppearance());
                     g.setSignalHeadOffState(curSignalHead, Signal.getOffAppearance());
@@ -788,8 +788,8 @@ public class SignalGroupSubTableAction {
             Bundle.getMessage("ColumnUserName"),
             Bundle.getMessage("Include"),
             Bundle.getMessage("ColumnLabelSetState")};
-    private static String SET_TO_ACTIVE = rbx.getString("SensorActive");
-    private static String SET_TO_INACTIVE = rbx.getString("SensorInactive");
+    private static String SET_TO_ACTIVE = Bundle.getMessage("SensorStateActive");
+    private static String SET_TO_INACTIVE = Bundle.getMessage("SensorStateInactive");
     private static String SET_TO_CLOSED = InstanceManager.turnoutManagerInstance().getClosedText();
     private static String SET_TO_THROWN = InstanceManager.turnoutManagerInstance().getThrownText();
 

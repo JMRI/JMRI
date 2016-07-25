@@ -1,30 +1,29 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!--  $Id$ -->
 <!-- Updated by Blorec Herv&#233; le 2013-05-06--> 
  <html lang="fr">
 <head>
     <TITLE>
- 	JMRI: Use of JavaDoc and UML
+ 	JMRI: Utilisation de JavaDoc et UML
     </TITLE>
     <META content="Bob Jacobsen" name=Author>
     <meta name="keywords" content="JMRI technical code ">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1
-">
+    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
 
-<H1>JMRI: Utilisation de JavaDoc et UML</H1>
+<h1>JMRI: Utilisation de JavaDoc et UML</h1>
 
 La biblioth&#232;que JMRI fournit la majorit&#233; de ses Documentation de l'API via
 <a href="http://java.sun.com/j2se/javadoc/writingdoccomments/"> JavaDoc </a>
@@ -49,8 +48,7 @@ la r&#233;f&#233;rence </a>.
 
 <p>
 Traditionnellement, les packages Java dans JMRI ont utilis&#233; les fichiers
-<code> package.html </code> pour contenir un paquet de documentation de niveau n&#233;cessaire
-.
+<code> package.html </code> pour contenir un paquet de documentation de niveau n&#233;cessaire.
 Il est maintenant recommand&#233; <a href="http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#packagecomment">
 que tout paquet Java</a> significatif contienne un
 <a href="http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#packagecomment">
@@ -89,8 +87,6 @@ Ceci est fait automatiquement par le <a href="ContinuousIntegration.shtml">syst&
 
 
 <h3>Diagrammes Manuel <h3>
-
-
 
 <!--#include virtual="/Footer" -->
 

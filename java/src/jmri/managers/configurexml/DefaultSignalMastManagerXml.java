@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Handle XML configuration for a DefaultSignalMastManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision$
  */
 public class DefaultSignalMastManagerXml
         extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -97,14 +96,18 @@ public class DefaultSignalMastManagerXml
             if (e.getAttribute("class") == null) {
                 SignalMast m;
                 String sys = getSystemName(e);
-                m = InstanceManager.signalMastManagerInstance()
-                        .provideSignalMast(sys);
+                try {
+                    m = InstanceManager.getDefault(jmri.SignalMastManager.class)
+                            .provideSignalMast(sys);
 
-                if (getUserName(e) != null) {
-                    m.setUserName(getUserName(e));
+                    if (getUserName(e) != null) {
+                        m.setUserName(getUserName(e));
+                    }
+
+                    loadCommon(m, e);
+                } catch (IllegalArgumentException ex) {
+                    log.warn("Failed to provide SignalMast \"{}\" in load", sys);
                 }
-
-                loadCommon(m, e);
             } else {
                 String adapterName = e.getAttribute("class").getValue();
                 log.debug("load via " + adapterName);
@@ -172,7 +175,7 @@ public class DefaultSignalMastManagerXml
 
         list = shared.getChildren("signalmastrepeater");
         if (list != null) {
-            DefaultSignalMastManager m = (DefaultSignalMastManager) InstanceManager.signalMastManagerInstance();
+            DefaultSignalMastManager m = (DefaultSignalMastManager) InstanceManager.getDefault(jmri.SignalMastManager.class);
             for (int i = 0; i < list.size(); i++) {
                 Element e = list.get(i);
                 String masterName = e.getChild("masterMast").getText();
@@ -204,7 +207,7 @@ public class DefaultSignalMastManagerXml
     }
 
     public int loadOrder() {
-        return InstanceManager.signalMastManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(jmri.SignalMastManager.class).getXMLOrder();
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastManagerXml.class.getName());

@@ -32,9 +32,9 @@ public class SRCPTrafficController extends AbstractMRTrafficController
 
     public SRCPTrafficController() {
         super();
-        try {
-            jmri.InstanceManager.shutDownManagerInstance().register(this);
-        } catch (java.lang.NullPointerException npe) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(this);
+        } else {
             if (log.isDebugEnabled()) {
                 log.debug("attempted to register shutdown task, but shutdown manager is null");
             }
@@ -244,7 +244,9 @@ public class SRCPTrafficController extends AbstractMRTrafficController
      *
      * @return The registered SRCPTrafficController instance for general use, if
      *         need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public SRCPTrafficController instance() {
         if (self == null) {
             if (log.isDebugEnabled()) {
@@ -259,6 +261,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
+    @Override
     protected void setInstance() {
         self = this;
     }

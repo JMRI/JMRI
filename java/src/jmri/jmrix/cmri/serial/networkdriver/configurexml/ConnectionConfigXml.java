@@ -1,6 +1,7 @@
 package jmri.jmrix.cmri.serial.networkdriver.configurexml;
 
 import java.util.List;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.networkdriver.ConnectionConfig;
@@ -46,7 +47,8 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     protected void extendElement(Element e) {
-        SerialNode node = (SerialNode) SerialTrafficController.instance().getNode(0);
+        SerialTrafficController tc = ((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController();
+        SerialNode node = (SerialNode) tc.getNode(0);
         int index = 1;
         while (node != null) {
             // add node as an element
@@ -71,7 +73,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             n.addContent(makeParameter("cardtypelocation", "" + value));
 
             // look for the next node
-            node = (SerialNode) SerialTrafficController.instance().getNode(index);
+            node = (SerialNode) tc.getNode(index);
             index++;
         }
     }
@@ -102,7 +104,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             String ctl = findParmValue(n, "cardtypelocation");
 
             // create node (they register themselves)
-            SerialNode node = new SerialNode(addr, type);
+            SerialNode node = new SerialNode(addr, type,((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController());
             node.setNumBitsPerCard(bpc);
             node.setTransmissionDelay(delay);
             node.setNum2LSearchLights(num2l);
@@ -117,7 +119,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             }
 
             // Trigger initialization of this Node to reflect these parameters
-            SerialTrafficController.instance().initializeSerialNode(node);
+            ((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController().initializeSerialNode(node);
         }
     }
 

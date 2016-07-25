@@ -28,9 +28,9 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the TrainBuilder class 
@@ -2638,7 +2638,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         b2 = cmanager.newCar("CP", "81234568");
         b2.setTypeName("Boxcar");
         b2.setLength("40");
-        // b2.setLoad("E");
         b2.setMoves(5);
         Assert.assertEquals("Bob Test Car CP81234568 Length", "40", b2.getLength());
         Assert.assertEquals("Bob Test Car CP81234568 Load", "E", b2.getLoadName());

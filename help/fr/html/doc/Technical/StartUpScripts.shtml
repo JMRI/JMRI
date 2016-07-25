@@ -2,12 +2,11 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <!-- UpDated by Blorec Herv&#233; le 2013-09-08-->
 <title>JMRI: Startup Scripts</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -19,6 +18,7 @@
 
 <BODY>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
     <div id="mainContent">
 
@@ -46,7 +46,7 @@ soit au moins mettre un commentaire dans les autres pour
 d&#233;crire comment ils diff&#232;rent maintenant.
 
 <a name="linux">
-<h2>Linux</h2></a>
+</a><h2>Linux</h2>
 
 La distributions JMRI  pour Linux contient les shell (bash) scripts
 pour chacune des applications principales: DecoderPro, PanelPro, etc
@@ -55,7 +55,7 @@ Ils sont tous structur&#233;s de la m&#234;me fa&#231;on.
 <h3>D&#233;tails</h3>
 
 Dans cette section, nous d&#233;crivons bri&#232;vement ce que fait chaque section du script.
-<dl>
+<div>
 <dt> CLASSNAME
 <dd> Pour rendre le script plus facile &#224; maintenir, le nom de la principale
 classe est d&#233;fini au d&#233;but.
@@ -143,7 +143,7 @@ pour &#234;tre une liste de noms s&#233;par&#233; par des virgules.
 </ dl>
 
 <a name="macosx"> 
-<h2> Mac OS X</h2></a>
+</a><h2> Mac OS X</h2>
 Les Distributions JMRI pour Mac OS X contiennentt des kits d'applications
 pour chacune des applications princpales: DecoderPro, PanelPro, etc
 Ceux-ci fournissent des ic&#244;nes d'application famili&#232;res pour l'utilisateur.
@@ -161,9 +161,9 @@ JMRI a enregistr&#233; cinq signatures d'applications:
 <dl>
 <dt>JMRD<dd>DecoderPro
 <dt>JMRP<dd>PanelPro
-<dt>JMRI<dd>JmriDemo
+<dt>JMRI<dd>JmriDemo (n'est plus utilis&#233;)
 <dt>JMRL<dd>LocoTools (n'est plus utilis&#233;)
-<dt>JMRC<dd>Cornwall demo
+<dt>JMRC<dd>Cornwall demo (n'est plus utilis&#233;)
 </dl>
 
 <h3>Details des Scripts</h3>
@@ -234,7 +234,7 @@ les param&#232;tres n&#233;cessaires aux noms des programmes, fixant des limites
 
 
 <a name="windows">
-<h2>Windows</h2></a>
+</a><h2>Windows</h2>
 
 Jusqu'&#224; et y compris la version JMRI 2.3.2 , le fichiers Windows.bat a juste cr&#233;er une commande java d&#233;fini et l'a ex&#233;cut&#233;e.
 <p> Depuis la version  JMRI 2.3.3, le fichier individuel Windows.bat appelle maintenant un petit lanceur application, LaunchJMRI.exe..
@@ -305,8 +305,8 @@ Ceci vous permet de d&#233;poser des fichiers jar dans le r&#233;pertoire d'inst
 
 <dt> Java Command
 <dd> Enfin, le lanceur met tout cela ensemble dans une commande java, qui l'ex&#233;cute
-
 </dl>
+
 <h3> Raccourcis du Menu D&#233;marrer et les Ic&#244;nes du Bureau</h3>
 Dans une installation de JMRI par d&#233;faut, un certain nombre de raccourcis sont cr&#233;&#233;s dans le menu D&#233;marrer, avec les ic&#244;nes du Bureau pour DecoderPro et PanelPro.
 <h4> Raccourcis du Menu D&#233;marrer</h4>
@@ -348,6 +348,7 @@ Lancer par exemple des raccourcis de menus pour DecoderPro (en supposant JMRI es
  <dt>Ic&#244;ne
  <dd>"C:\Program Files\JMRI\decpro5.ico"
 </dl>
+
 <h4>Les Ic&#244;nes du Bureau</h4>
 Les Ic&#244;nes de bureau pour DecoderPro et PanelPro sont cr&#233;&#233;es dans l'installation par d&#233;faut - au moment de l'installation une ic&#244;ne peut &#233;galement &#234;tre cr&#233;&#233;e sur le bureau en option pour l'application SoundPro.
 <p>
@@ -371,14 +372,14 @@ La structure de cr&#233;ation des Ic&#244;nes du bureau est semblable &#224; cel
  <dt>Icon
  <dd>"C:\Program Files\JMRI\decpro5.ico"
 </dl>
-<!-- <p>
-
-<p>
+<!--
 (Cet article a besoin d'informations sur la fa&#231;on dont les ic&#244;nes et les raccourcis travaillent.
 Le programme d'installation InstallerVISE fait quelque chose pour associer une ic&#244;ne
 et de mettre deux raccourcis sur le bureau)-->
 
 
 <!--#include virtual="/Footer" -->
+ </div>
+     </div>
 </body>
 </html>

@@ -1,17 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- Translated  by Blorec Hervé le 2011-10-30-->
 <html lang="en">
 <head>
  <TITLE>
       JMRI: Digitrax Downloader
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <META name="keywords" content="JMRI help digitrax downloader">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <meta http-equiv=Content-Type content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -34,24 +32,26 @@ pour s'assurer qu'il  peut être téléchargé dans le matériel qui l'attend.
 <p>
 Notez que ce n'est pas le même que 
 <a  href="../soundloader/LoaderFrame.shtml">L'outil de Téléchargement</a>, qui
-est utilisé avec un PR2 ou PR3 pour charger des projets solides dans un nouveau décodeur sonore Digitrax
-.
+est utilisé avec un PR2 ou PR3 pour charger des projets solides dans un nouveau décodeur sonore Digitrax.
 <p>
 Pour utiliser cet outil:
-<ul>
-<li> Cliquez sur le bouton Sélectionner et sélectionnez le fichier. dmf vous souhaitez télécharger.
-<li> Cliquez sur Lire le fichier pour lire le fichier dans le programme et vérifier son contenu
-<li> Seulement si demandé par Digitrax, modifier les différentes valeurs dans 
-Les champs de contrôle (ce n'est pas nécessaire habituellement)
-<li> Cliquez sur Télécharger pour charger le firmware. Cela va prendre un peu de temps, de sorte
-il ya la barre de progression sous les boutons.
-<li> Si désiré, cliquez sur Vérifier pour vérifier le contenu. Cela prend aussi du temps
-tout.
-</ ul>
+    <ul>
+    <li> Cliquez sur le bouton Sélectionner et sélectionnez le fichier. dmf vous souhaitez télécharger.
+    <li> Cliquez sur Lire le fichier pour lire le fichier dans le programme et vérifier son contenu
+    <li> Seulement si demandé par Digitrax, modifier les différentes valeurs dans
+    Les champs de contrôle (ce n'est pas nécessaire habituellement)
+    <li> Cliquez sur Télécharger pour charger le firmware. Cela va prendre un peu de temps, de sorte
+    il ya la barre de progression sous les boutons.
+    <li> Si désiré, cliquez sur Vérifier pour vérifier le contenu. Cela prend aussi du temps
+    tout.
+    </ul>
 <p>
-(Ceci est la page d'aide help/en/ help pagejmri/jmrix/loconet/downloader/LoaderFrame)
+(Ceci est la page d'aide help/en/help pagejmri/jmrix/loconet/downloader/LoaderFrame)
+</p>
 
 <!--#include virtual="/Footer" -->
+        </div>
+      </div>
 </body>
 </html>
 

@@ -74,7 +74,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     SignalMast destMast;
     SignalMastLogic sml;
 
-    SignalMastManager smm = InstanceManager.signalMastManagerInstance();
+    SignalMastManager smm = InstanceManager.getDefault(jmri.SignalMastManager.class);
 
     jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
@@ -91,7 +91,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         if (source != null) {
             this.sourceMast = source;
-            this.sml = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(source);
+            this.sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(source);
             fixedSourceMastLabel = new JLabel(sourceMast.getDisplayName());
             if (dest != null) {
                 frame.setTitle(source.getDisplayName() + " to " + dest.getDisplayName());
@@ -351,7 +351,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         JPanel blockPanel = new JPanel();
         blockPanel.setLayout(new BoxLayout(blockPanel, BoxLayout.Y_AXIS));
 
-        jmri.BlockManager bm = jmri.InstanceManager.blockManagerInstance();
+        jmri.BlockManager bm = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
         List<String> systemNameList = bm.getSystemNameList();
         _manualBlockList = new ArrayList<ManualBlockList>(systemNameList.size());
         Iterator<String> iter = systemNameList.iterator();
@@ -683,7 +683,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         JPanel SignalMastPanel = new JPanel();
         SignalMastPanel.setLayout(new BoxLayout(SignalMastPanel, BoxLayout.Y_AXIS));
 
-        jmri.SignalMastManager bm = jmri.InstanceManager.signalMastManagerInstance();
+        jmri.SignalMastManager bm = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
         List<String> systemNameList = bm.getSystemNameList();
         _manualSignalMastList = new ArrayList<ManualSignalMastList>(systemNameList.size());
         Iterator<String> iter = systemNameList.iterator();
@@ -804,7 +804,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
 
         if (sml == null) {
-            sml = InstanceManager.signalMastLogicManagerInstance().newSignalMastLogic(sourceMast);
+            sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).newSignalMastLogic(sourceMast);
             sml.setDestinationMast(destMast);
             fixedSourceMastLabel.setText(sourceMast.getDisplayName());
             fixedDestMastLabel.setText(destMast.getDisplayName());
@@ -837,7 +837,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
         Hashtable<Block, Integer> hashBlocks = new Hashtable<Block, Integer>();
         for (int i = 0; i < _includedManualBlockList.size(); i++) {
-            Block blk = jmri.InstanceManager.blockManagerInstance().getBlock(_includedManualBlockList.get(i).getSysName());
+            Block blk = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getBlock(_includedManualBlockList.get(i).getSysName());
             hashBlocks.put(blk, _includedManualBlockList.get(i).getState());
         }
         sml.setBlocks(hashBlocks, destMast);
@@ -986,8 +986,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
     private boolean showAll = true;   // false indicates show only included items
 
-    private static String SET_TO_ACTIVE = rb.getString("SensorActive");
-    private static String SET_TO_INACTIVE = rb.getString("SensorInactive");
+    private static String SET_TO_ACTIVE = Bundle.getMessage("SensorStateActive");
+    private static String SET_TO_INACTIVE = Bundle.getMessage("SensorStateInactive");
     private static String SET_TO_CLOSED = jmri.InstanceManager.turnoutManagerInstance().getClosedText();
     private static String SET_TO_THROWN = jmri.InstanceManager.turnoutManagerInstance().getThrownText();
 
@@ -1028,7 +1028,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         for (int i = _manualBlockList.size() - 1; i >= 0; i--) {
             ManualBlockList block = _manualBlockList.get(i);
             String tSysName = block.getSysName();
-            Block blk = InstanceManager.blockManagerInstance().getBlock(tSysName);
+            Block blk = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(tSysName);
             if (sml.isBlockIncluded(blk, destMast)) {
                 block.setIncluded(true);
                 block.setState(sml.getBlockState(blk, destMast));
@@ -1332,12 +1332,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     abstract class TableModel extends AbstractTableModel implements PropertyChangeListener {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7361250471794011296L;
-
         public Class<?> getColumnClass(int c) {
             if (c == INCLUDE_COLUMN) {
                 return Boolean.class;
@@ -1387,14 +1381,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     class BlockModel extends TableModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -7997858302507580484L;
-
         BlockModel() {
-            jmri.InstanceManager.blockManagerInstance().addPropertyChangeListener(this);
+            jmri.InstanceManager.getDefault(jmri.BlockManager.class).addPropertyChangeListener(this);
         }
 
         public int getRowCount() {
@@ -1476,11 +1464,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
     class TurnoutModel extends TableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8155668809998527577L;
-
         TurnoutModel() {
             jmri.InstanceManager.turnoutManagerInstance().addPropertyChangeListener(this);
         }
@@ -1538,12 +1521,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
      * Set up table for selecting Sensors and Sensor State
      */
     class SensorModel extends TableModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1976471188325126562L;
-
         SensorModel() {
             InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
         }
@@ -1604,13 +1581,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
     class SignalMastModel extends TableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3218114528313492508L;
-
         SignalMastModel() {
-            jmri.InstanceManager.signalMastManagerInstance().addPropertyChangeListener(this);
+            jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).addPropertyChangeListener(this);
         }
 
         public int getRowCount() {
@@ -1643,7 +1615,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
 
         public String getValue(String name) {
-            return InstanceManager.signalMastManagerInstance().getBySystemName(name).getAspect();
+            return InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name).getAspect();
         }
 
         public String getColumnName(int col) {
@@ -1681,11 +1653,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         protected JTable makeJTable(TableSorter srtr) {
             this.sorter = srtr;
             return new JTable(sorter) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 5719838067969573916L;
-
                 public boolean editCellAt(int row, int column, java.util.EventObject e) {
                     boolean res = super.editCellAt(row, column, e);
                     java.awt.Component c = this.getEditorComponent();
@@ -1737,7 +1704,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                     Vector<String> retval = boxMap.get(sorter.getValueAt(row, SNAME_COLUMN));
                     if (retval == null) {
                         // create a new one with right aspects
-                        Vector<String> v = InstanceManager.signalMastManagerInstance()
+                        Vector<String> v = InstanceManager.getDefault(jmri.SignalMastManager.class)
                                 .getSignalMast((String) sorter.getValueAt(row, SNAME_COLUMN)).getValidAspects();
                         v.add(0, "");
                         retval = v;
@@ -1752,11 +1719,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     abstract class AutoTableModel extends AbstractTableModel implements PropertyChangeListener {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -272666720986232529L;
 
         AutoTableModel() {
             smlValid();
@@ -1804,12 +1766,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     class AutoBlockModel extends AutoTableModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -1271144423340776473L;
-
         AutoBlockModel() {
             if (sml != null) {
                 sml.addPropertyChangeListener(this);
@@ -1881,11 +1837,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
     class AutoTurnoutModel extends AutoTableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3406404811666081205L;
-
         AutoTurnoutModel() {
             super();
         }
@@ -1917,12 +1868,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     class AutoMastModel extends AutoTableModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6641207901154262227L;
-
         AutoMastModel() {
             super();
         }
@@ -1954,24 +1899,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     public static class MyComboBoxEditor extends DefaultCellEditor {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5009970368789179788L;
-
         public MyComboBoxEditor(Vector<String> items) {
             super(new JComboBox<String>(items));
         }
     }
 
     public static class MyComboBoxRenderer extends JComboBox<String> implements TableCellRenderer {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1441539863361877122L;
-
         public MyComboBoxRenderer(Vector<String> items) {
             super(items);
         }
@@ -1995,4 +1928,3 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     private final static Logger log = LoggerFactory.getLogger(SignallingPanel.class.getName());
 }
 
-/* @(#)StatusPane.java */

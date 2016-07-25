@@ -197,8 +197,8 @@ public class LayoutEditorFindItems {
 
     }
 
-    public LayoutTurnout findLayoutTurnoutBySignalMast(String signalMastName) {
-        return findLayoutTurnoutByBean(jmri.InstanceManager.signalMastManagerInstance().provideSignalMast(signalMastName));
+    public LayoutTurnout findLayoutTurnoutBySignalMast(String signalMastName) throws IllegalArgumentException {
+        return findLayoutTurnoutByBean(jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMastName));
     }
 
     public LayoutTurnout findLayoutTurnoutByBean(NamedBean bean) {
@@ -271,15 +271,15 @@ public class LayoutEditorFindItems {
         return null;
     }
 
-    public LayoutTurnout findLayoutTurnoutBySensor(String sensorName) {
+    public LayoutTurnout findLayoutTurnoutBySensor(String sensorName) throws IllegalArgumentException {
         return findLayoutTurnoutByBean(jmri.InstanceManager.sensorManagerInstance().provideSensor(sensorName));
     }
 
-    public LevelXing findLevelXingBySignalMast(String signalMastName) {
-        return findLevelXingByBean(jmri.InstanceManager.signalMastManagerInstance().provideSignalMast(signalMastName));
+    public LevelXing findLevelXingBySignalMast(String signalMastName) throws IllegalArgumentException {
+        return findLevelXingByBean(jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMastName));
     }
 
-    public LevelXing findLevelXingBySensor(String sensorName) {
+    public LevelXing findLevelXingBySensor(String sensorName) throws IllegalArgumentException {
         return findLevelXingByBean(jmri.InstanceManager.sensorManagerInstance().provideSensor(sensorName));
     }
 
@@ -394,11 +394,11 @@ public class LayoutEditorFindItems {
         return null;
     }
 
-    public LayoutSlip findLayoutSlipBySignalMast(String signalMastName) {
-        return findLayoutSlipByBean(jmri.InstanceManager.signalMastManagerInstance().provideSignalMast(signalMastName));
+    public LayoutSlip findLayoutSlipBySignalMast(String signalMastName) throws IllegalArgumentException {
+        return findLayoutSlipByBean(jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMastName));
     }
 
-    public LayoutSlip findLayoutSlipBySensor(String sensorName) {
+    public LayoutSlip findLayoutSlipBySensor(String sensorName) throws IllegalArgumentException {
         return findLayoutSlipByBean(jmri.InstanceManager.sensorManagerInstance().provideSensor(sensorName));
     }
 

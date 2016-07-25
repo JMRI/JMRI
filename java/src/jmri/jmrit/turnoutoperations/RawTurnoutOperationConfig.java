@@ -1,6 +1,3 @@
-/**
- *
- */
 package jmri.jmrit.turnoutoperations;
 
 import jmri.TurnoutOperation;
@@ -13,12 +10,6 @@ import jmri.TurnoutOperation;
  *
  */
 public class RawTurnoutOperationConfig extends CommonTurnoutOperationConfig {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4748428194151474727L;
-
     /**
      * Create the config JPanel, if there is one, to configure this operation
      * type

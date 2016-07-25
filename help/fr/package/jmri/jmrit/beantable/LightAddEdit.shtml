@@ -1,234 +1,405 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
 <!-- UpDated by Herv&#233; Blorec 2013-10-11-->
+
 <html lang="fr">
 <head>
- <TITLE>
-      JMRI: Adding/Editing Lights
- </TITLE>
-    <META http-equiv=Content-Type content="text/html;charset=iso-8859-1"> 
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Light Add Edit">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Adding/Editing Lights</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI help Light Add Edit">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-    
+      <h1>Ajouter/&eacute;diter Lumi&egrave;res</h1><a name=
+      "addLight" id="addLight"></a>
 
+      <h2>Ajout d'une Nouvelle Lumi&egrave;re</h2>Pour ajouter une
+      nouvelle lumi&egrave;re, suivez cette proc&eacute;dure:
 
-<H1>Ajouter/&#233;diter Lumi&#232;res</H1>
+      <ol>
+        <li>
+          <p>Cliquez <b>Lumi&egrave;res</b> dans le sous-menu
+          <b>Tableaux</b> du menu <b>Outils</b> pour faire
+          appara&icirc;tre le Tableau <b><a href=
+          "Lights.shtml">Lumi&egrave;re</a></b> et cliquez sur le
+          bouton <b>Ajouter ...</b> au bas du <b>Tableau
+          lumi&egrave;re</b> pour mettre en place la version
+          "Ajouter" de la fen&ecirc;tre <b>Ajouter/&eacute;diter
+          Lumi&egrave;re</b>.</p><img src="LightAddFrame.jpg"
+          height="399" width="575">
+        </li>
 
+        <li>S&eacute;lectionnez un <b>Syst&egrave;me:</b> si votre
+        r&eacute;seau est connect&eacute;e &agrave; plus d'un
+        syst&egrave;me ou si cr&eacute;ation d'une lumi&egrave;re
+        interne. Ensuite, entrez l'<b>Adresse Mat&eacute;rielle
+        :</b> de votre nouvelle Lumi&egrave;re
+        (g&eacute;n&eacute;ralement un certain nombre). Ceci est
+        l'adresse que JMRI enverra &agrave; votre syst&egrave;me
+        lors de la commutation de la Lumi&egrave;re. De cette
+        information, le programme va se faire un <b>Nom
+        Syst&egrave;me</b> dans la convention JMRI,
+        appropri&eacute; pour une lumi&egrave;re dans le
+        syst&egrave;me s&eacute;lectionn&eacute; &agrave; l'aide de
+        l'adresse indiqu&eacute;e.Des Exemples de noms de
+        syst&egrave;me valides sont: CL1004, et LL401, en supposant
+        que vous ayez le mat&eacute;riel pour les bits de sorties
+        adress&eacute;es en num&eacute;rique.</li>
 
-<a name="addLight"><H2>Ajout d'une Nouvelle Lumi&#232;re </H2></a>
-Pour ajouter une nouvelle lumi&#232;re, suivez cette proc&#233;dure:
-<ol>
-<li><p>Cliquez <b>Lumi&#232;res</b> dans le sous-menu <b>Tableaux</b> du menu
-<b>Outils</b>  pour faire appara&#238;tre
-le Tableau <b><a href="Lights.shtml"> Lumi&#232;re</a></b> et cliquez sur le bouton 
-<b>Ajouter ...</b> au bas du <b>Tableau lumi&#232;re</b> pour mettre en place la version
-"Ajouter" de la fen&#234;tre <b>Ajouter/&#233;diter Lumi&#232;re</b> .</p>
-<img src="LightAddFrame.jpg" height="399" width="575">
-<p><li> S&#233;lectionnez un <b>Syst&#232;me:</b> si votre r&#233;seau est connect&#233;e &#224; plus
-d'un syst&#232;me ou si cr&#233;ation d'une lumi&#232;re interne. Ensuite, entrez l'<b>Adresse Mat&#233;rielle :</b> de votre nouvelle Lumi&#232;re (g&#233;n&#233;ralement un certain nombre). Ceci est
-l'adresse que JMRI enverra &#224; votre syst&#232;me lors de la commutation de la Lumi&#232;re.
-De cette information, le programme va se faire un <b>Nom Syst&#232;me</b> dans la
-convention JMRI, appropri&#233; pour une lumi&#232;re dans le syst&#232;me s&#233;lectionn&#233; &#224; l'aide de
-l'adresse indiqu&#233;e.Des Exemples de noms de syst&#232;me valides sont: CL1004, et LL401,
-en supposant que vous ayez le mat&#233;riel pour les bits de sorties adress&#233;es en num&#233;rique.</p>
-</Li>
-<p> <li> Entrez un nom utilisateur. Toute cha&#238;ne de caract&#232;res qui est diff&#233;rent
-du nom utilisateur des Lumi&#232;res  sera accept&#233;e, mais il est
-sage d'utiliser une cha&#238;ne qui d&#233;crit l'utilisation pr&#233;vue de la Lumi&#232;re. L'entr&#233;e
-d'un nom utilisateur est facultative.</p>
-</Li>
-<p> <li> Si vous voulez entrer une commande pour votre nouvelle Lumi&#232;re, cliquez sur le bouton
-<b>Ajouter Commande</b>, et entrez votre choix dans la fen&#234;tre
-<b>Ajouter/&#233;diter Commande Lumi&#232;re</b> qui appara&#238;t. Vous pouvez entrer autant de
-Commandes d'&#233;clairage que vous souhaitez. Plus d'informations sur les commandes lumi&#232;re est
-<A HREF="#lightcontrol"> ci-dessous</a>.</P>
-</Li>
-<p> <li> Chaque Commande de Lumi&#232;re est affich&#233;e dans le tableau commande Lumi&#232;re. Le <b>Type de Commande</b>est montr&#233; sur la gauche, suivi d'une <b>Description </b> 
-du m&#233;canisme de commande. Ils sont suivis par un bouton <b>Modifier</b> et un bouton <b>Supprimer</b> 
-. Cliquez <b>Modifier</b> pour ramener la fen&#234;tre <b>Ajouter/&#233;diter Commande Lumi&#232;re</b> 
- permettant des changements de la sp&#233;cification de commande. Cliquez <b>Supprimer</b> 
-pour supprimer une Commande Lumi&#232;re.</p>
-</Li>
-<p> <li> Suit la zone des notes de la fen&#234;tre Ajouter/&#233;diter Lumi&#232;re. C'est ici que sont les
- les instructions et les messages d'erreur qui apparaissent lorsque vous cr&#233;ez ou modifiez
-une lumi&#232;re. Il faut toujours v&#233;rifier ce domaine pour voir si les choses se passent comme pr&#233;vues.</P>
-</Li>
-<p> <li> Cliquez sur le bouton <b>Cr&#233;er</b>  situ&#233; au bas de la fen&#234;tre.
-Si tout va bien, un message indiquant "Nouvelle Lumi&#232;re ajout&#233;e ..." sera
-affich&#233; dans la zone des notes. S'il y a des probl&#232;mes avec quoi que ce soit, une erreur ou
-message d'avertissement sera affich&#233; dans la zone des notes; vous devez alors
-corriger l'erreur et cliquez sur <b>Cr&#233;er</b> &#224; nouveau.</p>
-<p>-OU-</p>
-<p> Cliquez sur le bouton <b>Annuler</b> pour fermer la fen&#234;tre sans cr&#233;er 
- de lumi&#232;res.</p>
-	</li>
-</ol>
+        <li>Entrez un nom utilisateur. Toute cha&icirc;ne de
+        caract&egrave;res qui est diff&eacute;rent du nom
+        utilisateur des Lumi&egrave;res sera accept&eacute;e, mais
+        il est sage d'utiliser une cha&icirc;ne qui d&eacute;crit
+        l'utilisation pr&eacute;vue de la Lumi&egrave;re.
+        L'entr&eacute;e d'un nom utilisateur est facultative.</li>
 
-<H2><a  name="addLight"> Ajout de plusieurs nouveaux Lumi&#232;res en une Seule Fois</H2></a>
-Si le <b>Syst&#232;me</b>  s&#233;lectionn&#233;: supporte l'ajout de multiples Lumi&#232;res &#224; la fois, la fen&#234;tre
-<b>Ajouter/&#233;diter Lumi&#232;re</b>  affiche deux &#233;l&#233;ments suppl&#233;mentaires, comme le montre
-ci-dessous:</p>
-<p><Img src="LightAddManyFrame.png" height="399" width="622"></p>
-<p>L'ajout de plusieurs nouvelles lumi&#232;res &#224; la fois est facultatif. Si vous voulez seulement ajouter une
-nouvelle Lumi&#232;re, ignorer la case &#224; cocher  <b>Ajouter une gamme s&#233;quentielle</b> et le
-<b>Nombre d'entr&#233;e &#224; Ajouter:</b> . Si vous souhaitez ajouter plusieurs nouvelles lumi&#232;res avec
-des adresses mat&#233;rielles s&#233;quentielles, cliquez sur la case &#224; cocher <b>Ajouter une gamme s&#233;quentielle</b> 
-Lorsque cette case est coch&#233;e, le <b>Nombre d'entr&#233;e &#224; Ajouter:</b> est actif. Entrez le
-nombre d'entr&#233;es s&#233;quentielles que vous voulez ajouter. Entrez d'autres &#233;l&#233;ments pour la premi&#232;re
-Lumi&#232;re, en suivant la proc&#233;dure ci-dessus, et cliquez sur le bouton Cr&#233;er. Si l'une des
-adresses demand&#233;es n'est pas disponible (pr&#233;c&#233;demment attribu&#233; &#224; une Lumi&#232;re ou un
-Aiguillage), un message appara&#238;tra dans la zone des notes, et aucune lumi&#232;re nouvelle ne sera
-cr&#233;&#233;. Si tout est v&#233;rifi&#233;, les lumi&#232;res demand&#233;e seront cr&#233;&#233;es, et un
-message appara&#238;tra dans la zone des notes</p>
-<p> Ajouter des lumi&#232;res multiples &#224; la fois est destin&#233; &#224; assister les d&#233;codeurs stationnaires
-qui n&#233;cessitent plusieurs adresses en s&#233;quence. En cons&#233;quence, les restrictions
-applicables lors de la cr&#233;ation de plusieurs lumi&#232;res &#224; la fois. Notez les points suivants:</p>
-<ul>
-<p><li> Les adresses doivent &#234;tre num&#233;riques - seuls les nombres sont autoris&#233;s dans l'
-adresse mat&#233;rielle.</p></li>
-<p><li> Les adresses des Lumi&#232;res cr&#233;&#233; doivent &#234;tre cons&#233;cutives.</p></li>
-<p><li> Toutes les adresses demand&#233;es doivent &#234;tre disponibles, c'est &#224; dire, non
-affect&#233;es actuellement &#224; une Lumi&#232;re ou un Aiguillage.</p></li>
-<p><li> Si un nom utilisateur est entr&#233;, chacune des Lumi&#232;res cr&#233;ra
-ce nom utilisateur avec "+1", "+2", etc, annex&#233;.</p></li>
-<p><li> Les &#233;l&#233;ments entr&#233;s de Commande de Lumi&#232;re et des &#233;l&#233;ments d'Intensit&#233; Variable seront
-affect&#233;s &#224; la premi&#232;re lumi&#232;re cr&#233;&#233;e, et non aux Lumi&#232;res ult&#233;rieures. Ces
-&#233;l&#233;ments peuvent &#234;tre ajout&#233;s par &#233;dition (voir ci-dessous).</p></li>
-</Ul>
+        <li>Si vous voulez entrer une commande pour votre nouvelle
+        Lumi&egrave;re, cliquez sur le bouton <b>Ajouter
+        Commande</b>, et entrez votre choix dans la fen&ecirc;tre
+        <b>Ajouter/&eacute;diter Commande Lumi&egrave;re</b> qui
+        appara&icirc;t. Vous pouvez entrer autant de Commandes
+        d'&eacute;clairage que vous souhaitez. Plus d'informations
+        sur les commandes lumi&egrave;re est <a href=
+        "#lightcontrol">ci-dessous</a>.</li>
 
-<h2> Modification d'une Lumi&#232;re existante</h2>
-Pour modifier une lumi&#232;re existante, suivez cette proc&#233;dure:
-<ol>
-<p><li> &#233;dition d' une Lumi&#232;re existante, cliquez sur le bouton <b>Modifier</b> d'une Lumi&#232;re 
-dans le <a href="LightTable.shtml">Tableau Lumi&#232;re</a> pour faire appara&#238;tre la version
-"&#233;dition"  de la fen&#234;tre.<b>Ajouter/&#233;diter Lumi&#232;re</b> </p>
-<img src="Light&#233;ditWindow.jpg" height="361" width="575">
-</Li>
-<li><p> Le <b>Nom Syst&#232;me:</b> de la Lumi&#232;re est affich&#233; en haut de
-la fen&#234;tre et ne peut pas &#234;tre chang&#233;. Le <b>Nom Utilisateur:</b> peut &#234;tre chang&#233;
-soit ici ou dans le Tableau Lumi&#232;re. La commande de la Lumi&#232;re et les zones de notes
-sont les m&#234;mes que ci-dessus.</p>
-</Li>
-<p><li> Apr&#232;s avoir modifi&#233; les informations de Lumi&#232;re, cliquez sur <b>Mise &#224; Jours</b> 
-pour changer la Lumi&#232;re s&#233;lectionn&#233;e. S'il y a le moindre probl&#232;me, une erreur ou un
-message d'avertissement sera affich&#233; dans la zone des notes, et la mise &#224; jour est
-arr&#234;t&#233; pour vous permettre de corriger l'erreur et cliquez sur <b>Mise &#224; Jours</b> &#224; nouveau. Si
-tout va bien, la lumi&#232;re est modifi&#233;e et la fen&#234;tre <b>Ajouter/&#233;diter Lumi&#232;re</b> 
-est clotur&#233;e.</p>
-<p>-OU-</p>
-<p>Cliquez <b>Annuler</b> pour quitter le mode &#233;dition sans changer la Lumi&#232;re
-s&#233;lectionn&#233;e. Si la fen&#234;tre <b>Ajouter/&#233;diter Lumi&#232;re</b> est rejet&#233;e (ferm&#233;e)
-alors  dans le mode &#233;dition, <b>Annuler</b> est automatiquement s&#233;lectionn&#233;, et aucune
-modification n'est apport&#233;e &#224; la lumi&#232;re s&#233;lectionn&#233;e.</p>
-</li>
-</ol>
+        <li>Chaque Commande de Lumi&egrave;re est affich&eacute;e
+        dans le tableau commande Lumi&egrave;re. Le <b>Type de
+        Commande</b>est montr&eacute; sur la gauche, suivi d'une
+        <b>Description</b> du m&eacute;canisme de commande. Ils
+        sont suivis par un bouton <b>Modifier</b> et un bouton
+        <b>Supprimer</b> . Cliquez <b>Modifier</b> pour ramener la
+        fen&ecirc;tre <b>Ajouter/&eacute;diter Commande
+        Lumi&egrave;re</b> permettant des changements de la
+        sp&eacute;cification de commande. Cliquez <b>Supprimer</b>
+        pour supprimer une Commande Lumi&egrave;re.</li>
 
-<a name="lightcontrol"> <H2>Options de Commande Automatis&#233; pour Lumi&#232;res</H2></a>
+        <li>Suit la zone des notes de la fen&ecirc;tre
+        Ajouter/&eacute;diter Lumi&egrave;re. C'est ici que sont
+        les les instructions et les messages d'erreur qui
+        apparaissent lorsque vous cr&eacute;ez ou modifiez une
+        lumi&egrave;re. Il faut toujours v&eacute;rifier ce domaine
+        pour voir si les choses se passent comme
+        pr&eacute;vues.</li>
 
-<p>  La fen&#234;tre <b>Ajouter/&#233;diter commande Limi&#232;re</b>  est utilis&#233;e pour sp&#233;cifier un commande de la lumi&#232;re.
-Le fonctionnement d'une lumi&#232;re peut &#234;tre contr&#244;l&#233;e par les moyens suivants:
-<ul>
-<p> <li><b>Par Capteur</b>  - La lumi&#232;re sera transform&#233; <b>ON</b> lorsque le capteur
-change &#224; actifs ou inactifs, selon le choix
-<b>Sens pour ON</b>  fait dans le menu contextuel, et il sera transform&#233; <b>OFF</b>, lorsque le
-Capteur renverse l'&#233;tat. Sp&#233;cifiez le capteur en entrant son nom
-(Nom  syst&#232;me ou nom utilisateur) dans le <b>Nom du Capteur</b>. Cette option a
-un certain nombre d'utilisations, y compris l'&#233;tablissement d'une lumi&#232;re de TCO pour suivre l'Occupation des Cantons.
- C'est utile, par exemple, pour la surveillance de la position du train dans 
-une coulisse.</p>
-<img src="LightAddFrameSensor.png" height="190" width="365">
-</Li>
-<p> <li> Par l'Horloge Rapide</b>  - La lumi&#232;re sera bascul&#233;e <b>ON</b> lorsque l'horloge 
-atteint l'heure indiqu&#233;e dans <b>Le Temps ON </b> et sera rebascul&#233;e <b>OFF</b> 
-lorsque l'horloge rapide atteint le temps entr&#233; en <b>Temps Off</b>. Les temps
-sont entr&#233;s dans le format"hh: mm", o&#249; "hh" sont des heures et "mm" sont des minutes d'une horloge
-24 heures . Une utilisation de cette option est d'activer et de d&#233;sactiver l'&#233;clairage des paysages
-, les lumi&#232;res de rue, lumi&#232;res des maison, etc pour simuler la p&#233;riode nocturne sur le r&#233;seau
-.</P>
-<img src="lightAddFastClock.png" height="174" width="500">
-</Li>
-<p> <li> Par Statut Aiguillage</b>  - La lumi&#232;re sera bascul&#233;e <b>ON</b> lorsque le
-changements de l'aiguillage sera Droit  ou D&#233;vi&#233;, selon le choix fait dans le menu contextuel pour l'<b>&#233;tat pour ON</b> , et il sera <b>OFF</b> , quand l'aiguillage
-inverse son statut. Sp&#233;cifiez l'aiguillage en entrant son nom
-(Nom syst&#232;me ou nom utilisateur) dans le <b>Nom Aiguillage</b>. Cette option peut
-&#234;tre utilis&#233;e pour d&#233;finir une lumi&#232;re du TCO pour suivre l'&#233;tat d'un aiguillage.
-C'est utile, par exemple, pour surveiller l'&#233;tat des aiguillages cach&#233;s.
-</P>
-<img src="LightAddFrameTurnout.png" height="181" width="382">
-</Li>
-<li><p><b>Par Temps ON</b>  - La lumi&#232;re sera chang&#233; <b>ON</b> lorsque le capteur d&#233;clencheur 
-sera actif, et il sera bascul&#233; <b>OFF</b>, lorsque le temps sp&#233;cifi&#233;
- s'est &#233;coul&#233;. Sp&#233;cifiez le capteur d&#233;clencheur  en entrant son nom
-(Nom syst&#232;me ou nom utilisateur) dans le <b>Nom du Capteur de D&#233;clenchement</b>. Entrez
-le temps d'allumage de la Lumi&#232;re en millisecondes dans le champ <b>ON</b> 
-. Cette option a un certain nombre d'utilisations, elle a &#233;t&#233; initialement con&#231;u pour
-enclencher un d&#233;coupleur &#233;lectromagn&#233;tiques en r&#233;ponse &#224; un bouton poussoir ,
-mais il peut &#233;galement &#234;tre utilis&#233; pour d'autres types d'animation de r&#233;seau, par exemple,
-pour commander la sonnerie d'un passage &#224; niveau quand un train entre dans un canton.</p>
-<img src="LightAddFrameTimed.png" height="186" width="382">
-</Li>
-<p> <li> par Deux Capteurs</b>  - La lumi&#232;re sera bascul&#233;e <b>ON</b> lors du
- changements des deux capteurs soit &#224;, actifs ou inactifs selon le
-choix fait pour le <b>Sens pour ON</b> dans le menu contextuel, et elle sera bascul&#233;e
- <b>OFF</b>, lorsque les deux capteurs sont dans l'&#233;tat inverse.
-Sp&#233;cifiez chaque capteur en entrant son nom (nom syst&#232;me ou nom utilisateur) dans
-le <b>Nom du Capteur</b>. L'ordre d'entr&#233;e n'a pas d'importance. Cette option
-a de multiples utilisations, telles que le commande des points de passages avec des point capteurs qui
-d&#233;tectent  quand un train passe. En pla&#231;ant deux d&#233;tecteurs ponctuels, un &#224; chaque extr&#233;mit&#233;
-d'un pont, un bruit de  grondement  peut &#234;tre jou&#233; pendant que le train
- traverse le pont.</p>
-<img src="LightAddTwoSensor.png" height="186" width="371">
-</Li>
-	</ul>
-<a name="cautions"><H2> Pr&#233;cautions pour le commande des Lumi&#232;res </H2></a>
-<ul>
-<p><li> Si vous avez besoin d'entrer un nom de capteur ou un nom d'aiguillage, vous devez entrer le nom
-(Nom  syst&#232;me ou nom utilisateur) d'un capteur existant ou d'un aiguillage . Le capteur ou
-l'aiguillage doivent &#234;tre soit dans le tableau Capteur ou dans le tableau Aiguillage.</p>
-</Li>
-<p><li> Si vous entrez un nom utilisateur pour sp&#233;cifier un capteur ou un aiguillage, soyez tr&#232;s prudent &#224; propos du changement du  nom utilisateur de votre capteur ou de votre aiguillage . Un simple
-changement de nom utilisateur pourrait casser vos d&#233;finitions de commande de la lumi&#232;re.</p>
-</Li>
-<p><li> Si vous entrez plusieurs commandes de lumi&#232;re pour la m&#234;me lumi&#232;re, il est possible
-que les commandes lumi&#232;re puissent entrer en conflit ou se chevaucher les uns avec les autres, produisant
-des r&#233;sultats &#233;tranges.  <b>L'utilisateur est doit s'assurer que les commandes d'&#233;clairage
-n'entrent pas en conflit.</b> </p>
-</Li>
-</Ul>
+        <li>Cliquez sur le bouton <b>Cr&eacute;er</b> situ&eacute;
+        au bas de la fen&ecirc;tre. Si tout va bien, un message
+        indiquant "Nouvelle Lumi&egrave;re ajout&eacute;e ..." sera
+        affich&eacute; dans la zone des notes. S'il y a des
+        probl&egrave;mes avec quoi que ce soit, une erreur ou
+        message d'avertissement sera affich&eacute; dans la zone
+        des notes; vous devez alors corriger l'erreur et cliquez
+        sur <b>Cr&eacute;er</b> &agrave; nouveau.
 
-<H2><a  name="varLight">Travailler avec des lumi&#232;res &#224; intensit&#233; variable</H2></a>
-Si le <b>Syst&#232;me</b> s&#233;lectionn&#233;: supporte Lumi&#232;res avec une intensit&#233; variable, la fen&#234;tre
- <b>Ajouter/Modifier Lumi&#232;re</b> affiche la zone <b>Intensit&#233; Variable</b> 
- indiqu&#233;e dessous lorsque vous ajoutez une lumi&#232;re:</p>
-<p><img  src="LightAddVariable.png" height="445" width="776"></p>
-<p>Les Syst&#232;mes, comme PowerLine( courant porteur CPL), supportent aussi bien les lumi&#232;res &#224; intensit&#233; variable que les lumi&#232;res avec une intensit&#233; fixe. Si vous ajoutez une lumi&#232;re avec l'intensit&#233; fixe, c'est &#224; dire un interrupteur ON/OFF, ignorer les &#233;l&#233;ments de la zone<b>Intensit&#233; Variable</b>. Lors de l'&#233;dition d'un simple ON/OFF lumi&#232;re, les &#233;l&#233;ments de la zone
- <b>Intensit&#233; Variable</b> ne sont pas pertinents et ne sont pas affich&#233;s.</p>
-<p> L'intensit&#233; d'une lumi&#232;re est repr&#233;sent&#233;e en interne par la gamme de 0,0
-&#224; 1,0, avec 1,0 la plus brillante. Les Limites d'intensit&#233; sont entr&#233;s sous forme de pourcentages,
-de 0 &#224; 100, dans l'intensit&#233; minimale et les champs d'intensit&#233; maximale.
-Parce que le mat&#233;riel lumi&#232;re r&#233;el a seulement une r&#233;solution finie, la valeur d'intensit&#233;
- est mapp&#233;e au plus proche du r&#233;glage accept&#233;.</p>
-<p> Chaque lumi&#232;re a une <b>Intensit&#233; Cible</b> propre qui peut &#234;tre r&#233;gl&#233;e directement.
-Tenter de d&#233;finir l'<b>Intensit&#233; Cible</b> en dehors de l'intervalle <b>Intensit&#233; Minimum &#224; l'Intensit&#233; Maximum
-</b> se traduira par l'<b>Intensit&#233; Cible </b> fix&#233;e &#224; la limite pertinente.</P>
+          <p>-OU-</p>
 
-<p>
+          <p>Cliquez sur le bouton <b>Annuler</b> pour fermer la
+          fen&ecirc;tre sans cr&eacute;er de lumi&egrave;res.</p>
+        </li>
+      </ol>
 
-<!--#include virtual="/Footer" -->
+      <h2><a name="addLight" id="addLight">Ajout de plusieurs
+      nouveaux Lumi&egrave;res en une Seule Fois</a></h2><a name=
+      "addLight" id="addLight">Si le <b>Syst&egrave;me</b>
+      s&eacute;lectionn&eacute;: supporte l'ajout de multiples
+      Lumi&egrave;res &agrave; la fois, la fen&ecirc;tre
+      <b>Ajouter/&eacute;diter Lumi&egrave;re</b> affiche deux
+      &eacute;l&eacute;ments suppl&eacute;mentaires, comme le
+      montre ci-dessous:<br>
+      <br></a>
+
+      <p><img src="LightAddManyFrame.png" height="399" width=
+      "622"></p>
+
+      <p>L'ajout de plusieurs nouvelles lumi&egrave;res &agrave; la
+      fois est facultatif. Si vous voulez seulement ajouter une
+      nouvelle Lumi&egrave;re, ignorer la case &agrave; cocher
+      <b>Ajouter une gamme s&eacute;quentielle</b> et le <b>Nombre
+      d'entr&eacute;e &agrave; Ajouter:</b> . Si vous souhaitez
+      ajouter plusieurs nouvelles lumi&egrave;res avec des adresses
+      mat&eacute;rielles s&eacute;quentielles, cliquez sur la case
+      &agrave; cocher <b>Ajouter une gamme s&eacute;quentielle</b>
+      Lorsque cette case est coch&eacute;e, le <b>Nombre
+      d'entr&eacute;e &agrave; Ajouter:</b> est actif. Entrez le
+      nombre d'entr&eacute;es s&eacute;quentielles que vous voulez
+      ajouter. Entrez d'autres &eacute;l&eacute;ments pour la
+      premi&egrave;re Lumi&egrave;re, en suivant la
+      proc&eacute;dure ci-dessus, et cliquez sur le bouton
+      Cr&eacute;er. Si l'une des adresses demand&eacute;es n'est
+      pas disponible (pr&eacute;c&eacute;demment attribu&eacute;
+      &agrave; une Lumi&egrave;re ou un Aiguillage), un message
+      appara&icirc;tra dans la zone des notes, et aucune
+      lumi&egrave;re nouvelle ne sera cr&eacute;&eacute;. Si tout
+      est v&eacute;rifi&eacute;, les lumi&egrave;res
+      demand&eacute;e seront cr&eacute;&eacute;es, et un message
+      appara&icirc;tra dans la zone des notes</p>
+
+      <p>Ajouter des lumi&egrave;res multiples &agrave; la fois est
+      destin&eacute; &agrave; assister les d&eacute;codeurs
+      stationnaires qui n&eacute;cessitent plusieurs adresses en
+      s&eacute;quence. En cons&eacute;quence, les restrictions
+      applicables lors de la cr&eacute;ation de plusieurs
+      lumi&egrave;res &agrave; la fois. Notez les points
+      suivants:</p>
+
+      <ul>
+        <li>Les adresses doivent &ecirc;tre num&eacute;riques -
+        seuls les nombres sont autoris&eacute;s dans l' adresse
+        mat&eacute;rielle.</li>
+
+        <li>Les adresses des Lumi&egrave;res cr&eacute;&eacute;
+        doivent &ecirc;tre cons&eacute;cutives.</li>
+
+        <li>Toutes les adresses demand&eacute;es doivent &ecirc;tre
+        disponibles, c'est &agrave; dire, non affect&eacute;es
+        actuellement &agrave; une Lumi&egrave;re ou un
+        Aiguillage.</li>
+
+        <li>Si un nom utilisateur est entr&eacute;, chacune des
+        Lumi&egrave;res cr&eacute;ra ce nom utilisateur avec "+1",
+        "+2", etc, annex&eacute;.</li>
+
+        <li>Les &eacute;l&eacute;ments entr&eacute;s de Commande de
+        Lumi&egrave;re et des &eacute;l&eacute;ments
+        d'Intensit&eacute; Variable seront affect&eacute;s &agrave;
+        la premi&egrave;re lumi&egrave;re cr&eacute;&eacute;e, et
+        non aux Lumi&egrave;res ult&eacute;rieures. Ces
+        &eacute;l&eacute;ments peuvent &ecirc;tre ajout&eacute;s
+        par &eacute;dition (voir ci-dessous).</li>
+      </ul>
+
+      <h2>Modification d'une Lumi&egrave;re existante</h2>Pour
+      modifier une lumi&egrave;re existante, suivez cette
+      proc&eacute;dure:
+
+      <ol>
+        <li>&eacute;dition d' une Lumi&egrave;re existante, cliquez
+        sur le bouton <b>Modifier</b> d'une Lumi&egrave;re dans le
+        <a href="LightTable.shtml">Tableau Lumi&egrave;re</a> pour
+        faire appara&icirc;tre la version "&eacute;dition" de la
+        fen&ecirc;tre.<b>Ajouter/&eacute;diter Lumi&egrave;re</b>
+        <img src="Light%C3%A9ditWindow.jpg" height="361" width=
+        "575"></li>
+
+        <li>
+          <p>Le <b>Nom Syst&egrave;me:</b> de la Lumi&egrave;re est
+          affich&eacute; en haut de la fen&ecirc;tre et ne peut pas
+          &ecirc;tre chang&eacute;. Le <b>Nom Utilisateur:</b> peut
+          &ecirc;tre chang&eacute; soit ici ou dans le Tableau
+          Lumi&egrave;re. La commande de la Lumi&egrave;re et les
+          zones de notes sont les m&ecirc;mes que ci-dessus.</p>
+        </li>
+
+        <li>Apr&egrave;s avoir modifi&eacute; les informations de
+        Lumi&egrave;re, cliquez sur <b>Mise &agrave; Jours</b> pour
+        changer la Lumi&egrave;re s&eacute;lectionn&eacute;e. S'il
+        y a le moindre probl&egrave;me, une erreur ou un message
+        d'avertissement sera affich&eacute; dans la zone des notes,
+        et la mise &agrave; jour est arr&ecirc;t&eacute; pour vous
+        permettre de corriger l'erreur et cliquez sur <b>Mise
+        &agrave; Jours</b> &agrave; nouveau. Si tout va bien, la
+        lumi&egrave;re est modifi&eacute;e et la fen&ecirc;tre <b>
+          Ajouter/&eacute;diter Lumi&egrave;re</b> est
+          clotur&eacute;e.
+
+          <p>-OU-</p>
+
+          <p>Cliquez <b>Annuler</b> pour quitter le mode
+          &eacute;dition sans changer la Lumi&egrave;re
+          s&eacute;lectionn&eacute;e. Si la fen&ecirc;tre
+          <b>Ajouter/&eacute;diter Lumi&egrave;re</b> est
+          rejet&eacute;e (ferm&eacute;e) alors dans le mode
+          &eacute;dition, <b>Annuler</b> est automatiquement
+          s&eacute;lectionn&eacute;, et aucune modification n'est
+          apport&eacute;e &agrave; la lumi&egrave;re
+          s&eacute;lectionn&eacute;e.</p>
+        </li>
+      </ol><a name="lightcontrol" id="lightcontrol"></a>
+
+      <h2>Options de Commande Automatis&eacute; pour
+      Lumi&egrave;res</h2>
+
+      <p>La fen&ecirc;tre <b>Ajouter/&eacute;diter commande
+      Limi&egrave;re</b> est utilis&eacute;e pour sp&eacute;cifier
+      un commande de la lumi&egrave;re. Le fonctionnement d'une
+      lumi&egrave;re peut &ecirc;tre contr&ocirc;l&eacute;e par les
+      moyens suivants:</p>
+
+      <ul>
+        <li><b>Par Capteur</b> - La lumi&egrave;re sera
+        transform&eacute; <b>ON</b> lorsque le capteur change
+        &agrave; actifs ou inactifs, selon le choix <b>Sens pour
+        ON</b> fait dans le menu contextuel, et il sera
+        transform&eacute; <b>OFF</b>, lorsque le Capteur renverse
+        l'&eacute;tat. Sp&eacute;cifiez le capteur en entrant son
+        nom (Nom syst&egrave;me ou nom utilisateur) dans le <b>Nom
+        du Capteur</b>. Cette option a un certain nombre
+        d'utilisations, y compris l'&eacute;tablissement d'une
+        lumi&egrave;re de TCO pour suivre l'Occupation des Cantons.
+        C'est utile, par exemple, pour la surveillance de la
+        position du train dans une coulisse.<img src=
+        "LightAddFrameSensor.png" height="190" width="365"></li>
+
+        <li>Par l'Horloge Rapide - La lumi&egrave;re sera
+        bascul&eacute;e <b>ON</b> lorsque l'horloge atteint l'heure
+        indiqu&eacute;e dans <b>Le Temps ON</b> et sera
+        rebascul&eacute;e <b>OFF</b> lorsque l'horloge rapide
+        atteint le temps entr&eacute; en <b>Temps Off</b>. Les
+        temps sont entr&eacute;s dans le format"hh: mm", o&ugrave;
+        "hh" sont des heures et "mm" sont des minutes d'une horloge
+        24 heures . Une utilisation de cette option est d'activer
+        et de d&eacute;sactiver l'&eacute;clairage des paysages ,
+        les lumi&egrave;res de rue, lumi&egrave;res des maison, etc
+        pour simuler la p&eacute;riode nocturne sur le
+        r&eacute;seau .<img src="lightAddFastClock.png" height=
+        "174" width="500"></li>
+
+        <li>Par Statut Aiguillage - La lumi&egrave;re sera
+        bascul&eacute;e <b>ON</b> lorsque le changements de
+        l'aiguillage sera Droit ou D&eacute;vi&eacute;, selon le
+        choix fait dans le menu contextuel pour l'<b>&eacute;tat
+        pour ON</b> , et il sera <b>OFF</b> , quand l'aiguillage
+        inverse son statut. Sp&eacute;cifiez l'aiguillage en
+        entrant son nom (Nom syst&egrave;me ou nom utilisateur)
+        dans le <b>Nom Aiguillage</b>. Cette option peut &ecirc;tre
+        utilis&eacute;e pour d&eacute;finir une lumi&egrave;re du
+        TCO pour suivre l'&eacute;tat d'un aiguillage. C'est utile,
+        par exemple, pour surveiller l'&eacute;tat des aiguillages
+        cach&eacute;s. <img src="LightAddFrameTurnout.png" height=
+        "181" width="382"></li>
+
+        <li>
+          <p><b>Par Temps ON</b> - La lumi&egrave;re sera
+          chang&eacute; <b>ON</b> lorsque le capteur
+          d&eacute;clencheur sera actif, et il sera bascul&eacute;
+          <b>OFF</b>, lorsque le temps sp&eacute;cifi&eacute; s'est
+          &eacute;coul&eacute;. Sp&eacute;cifiez le capteur
+          d&eacute;clencheur en entrant son nom (Nom syst&egrave;me
+          ou nom utilisateur) dans le <b>Nom du Capteur de
+          D&eacute;clenchement</b>. Entrez le temps d'allumage de
+          la Lumi&egrave;re en millisecondes dans le champ
+          <b>ON</b> . Cette option a un certain nombre
+          d'utilisations, elle a &eacute;t&eacute; initialement
+          con&ccedil;u pour enclencher un d&eacute;coupleur
+          &eacute;lectromagn&eacute;tiques en r&eacute;ponse
+          &agrave; un bouton poussoir , mais il peut
+          &eacute;galement &ecirc;tre utilis&eacute; pour d'autres
+          types d'animation de r&eacute;seau, par exemple, pour
+          commander la sonnerie d'un passage &agrave; niveau quand
+          un train entre dans un canton.</p><img src=
+          "LightAddFrameTimed.png" height="186" width="382">
+        </li>
+
+        <li>par Deux Capteurs - La lumi&egrave;re sera
+        bascul&eacute;e <b>ON</b> lors du changements des deux
+        capteurs soit &agrave;, actifs ou inactifs selon le choix
+        fait pour le <b>Sens pour ON</b> dans le menu contextuel,
+        et elle sera bascul&eacute;e <b>OFF</b>, lorsque les deux
+        capteurs sont dans l'&eacute;tat inverse. Sp&eacute;cifiez
+        chaque capteur en entrant son nom (nom syst&egrave;me ou
+        nom utilisateur) dans le <b>Nom du Capteur</b>. L'ordre
+        d'entr&eacute;e n'a pas d'importance. Cette option a de
+        multiples utilisations, telles que le commande des points
+        de passages avec des point capteurs qui d&eacute;tectent
+        quand un train passe. En pla&ccedil;ant deux
+        d&eacute;tecteurs ponctuels, un &agrave; chaque
+        extr&eacute;mit&eacute; d'un pont, un bruit de grondement
+        peut &ecirc;tre jou&eacute; pendant que le train traverse
+        le pont.<img src="LightAddTwoSensor.png" height="186"
+        width="371"></li>
+      </ul><a name="cautions" id="cautions"></a>
+
+      <h2>Pr&eacute;cautions pour le commande des
+      Lumi&egrave;res</h2>
+
+      <ul>
+        <li>Si vous avez besoin d'entrer un nom de capteur ou un
+        nom d'aiguillage, vous devez entrer le nom (Nom
+        syst&egrave;me ou nom utilisateur) d'un capteur existant ou
+        d'un aiguillage. Le capteur ou l'aiguillage doivent
+        &ecirc;tre soit dans le tableau Capteur ou dans le tableau
+        Aiguillage.</li>
+
+        <li>Si vous entrez un nom utilisateur pour sp&eacute;cifier
+        un capteur ou un aiguillage, soyez tr&egrave;s prudent
+        &agrave; propos du changement du nom utilisateur de votre
+        capteur ou de votre aiguillage. Un simple changement de nom
+        utilisateur pourrait casser vos d&eacute;finitions de
+        commande de la lumi&egrave;re.</li>
+
+        <li>Si vous entrez plusieurs commandes de lumi&egrave;re
+        pour la m&ecirc;me lumi&egrave;re, il est possible que les
+        commandes lumi&egrave;re puissent entrer en conflit ou se
+        chevaucher les uns avec les autres, produisant des
+        r&eacute;sultats &eacute;tranges. <b>L'utilisateur est doit
+        s'assurer que les commandes d'&eacute;clairage n'entrent
+        pas en conflit.</b></li>
+      </ul>
+
+      <h2><a name="varLight" id="varLight">Travailler avec des
+      lumi&egrave;res &agrave; intensit&eacute;
+      variable</a></h2><a name="varLight" id="varLight">Si le
+      <b>Syst&egrave;me</b> s&eacute;lectionn&eacute;: supporte
+      Lumi&egrave;res avec une intensit&eacute; variable, la
+      fen&ecirc;tre <b>Ajouter/Modifier Lumi&egrave;re</b> affiche
+      la zone <b>Intensit&eacute; Variable</b> indiqu&eacute;e
+      dessous lorsque vous ajoutez une lumi&egrave;re:<br>
+      <br></a>
+
+      <p><img src="LightAddVariable.png" height="445" width=
+      "776"></p>
+
+      <p>Les Syst&egrave;mes, comme PowerLine( courant porteur
+      CPL), supportent aussi bien les lumi&egrave;res &agrave;
+      intensit&eacute; variable que les lumi&egrave;res avec une
+      intensit&eacute; fixe. Si vous ajoutez une lumi&egrave;re
+      avec l'intensit&eacute; fixe, c'est &agrave; dire un
+      interrupteur ON/OFF, ignorer les &eacute;l&eacute;ments de la
+      zone<b>Intensit&eacute; Variable</b>. Lors de
+      l'&eacute;dition d'un simple ON/OFF lumi&egrave;re, les
+      &eacute;l&eacute;ments de la zone <b>Intensit&eacute;
+      Variable</b> ne sont pas pertinents et ne sont pas
+      affich&eacute;s.</p>
+
+      <p>L'intensit&eacute; d'une lumi&egrave;re est
+      repr&eacute;sent&eacute;e en interne par la gamme de 0,0
+      &agrave; 1,0, avec 1,0 la plus brillante. Les Limites
+      d'intensit&eacute; sont entr&eacute;s sous forme de
+      pourcentages, de 0 &agrave; 100, dans l'intensit&eacute;
+      minimale et les champs d'intensit&eacute; maximale. Parce que
+      le mat&eacute;riel lumi&egrave;re r&eacute;el a seulement une
+      r&eacute;solution finie, la valeur d'intensit&eacute; est
+      mapp&eacute;e au plus proche du r&eacute;glage
+      accept&eacute;.</p>
+
+      <p>Chaque lumi&egrave;re a une <b>Intensit&eacute; Cible</b>
+      propre qui peut &ecirc;tre r&eacute;gl&eacute;e directement.
+      Tenter de d&eacute;finir l'<b>Intensit&eacute; Cible</b> en
+      dehors de l'intervalle <b>Intensit&eacute; Minimum &agrave;
+      l'Intensit&eacute; Maximum</b> se traduira par
+      l'<b>Intensit&eacute; Cible</b> fix&eacute;e &agrave; la
+      limite pertinente.</p>
+
+      <p><!--#include virtual="/Footer" --></p>
+    </div>
+  </div>
 </body>
 </html>
-

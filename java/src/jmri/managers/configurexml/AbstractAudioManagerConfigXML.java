@@ -290,7 +290,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
     @SuppressWarnings("unchecked")
     public void loadAudio(Element audio) {
 
-        AudioManager am = InstanceManager.audioManagerInstance();
+        AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
 
         // Count number of loaded Audio objects
         int loadedObjects = 0;
@@ -535,7 +535,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 
     @Override
     public int loadOrder() {
-        return InstanceManager.audioManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(jmri.AudioManager.class).getXMLOrder();
     }
 
     private static final Logger log = LoggerFactory.getLogger(AbstractAudioManagerConfigXML.class.getName());

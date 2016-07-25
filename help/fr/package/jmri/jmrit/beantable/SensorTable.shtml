@@ -1,104 +1,147 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
 <!-- UpDated by Herv&#233; Blorec 2013-10-11-->
-<HTML LANG="fr">
-<HEAD>
-<TITLE>JMRI: Sensor Table Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META NAME="keywords" CONTENT="JMRI help Sensor Table">
 
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<BODY>
-<!--#include virtual="/Header" -->
+  <title>JMRI: Sensor Table Help</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta name="keywords" content="JMRI help Sensor Table">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Le Tableau Capteur</h1>
 
-<H1> Le Tableau Capteur</H1>
+      <p>Cette table contient une liste des capteurs qui existent
+      pour ce panneau.</p>
 
-<P> Cette table contient une liste des capteurs qui existent pour ce
-panneau.
+      <h2>Colonnes Tableau Capteur</h2>
 
-<H2>Colonnes Tableau Capteur</H2>
+      <dl>
+        <dt>Nom Utilisateur</dt>
 
-<DL>
-<DT>Nom Utilisateur </DT>
-<DD> Vous pouvez directement saisir ou modifier le champ "Nom Utilisateur" pour un
-capteur existant.</dd>
+        <dd>Vous pouvez directement saisir ou modifier le champ
+        "Nom Utilisateur" pour un capteur existant.</dd>
 
-<DT> &#233;tat</DT>
-<DD> Appuyer sur le bouton "&#233;tat" va changer l'&#233;tat d'un
-capteur existant.</dd>
+        <dt>&eacute;tat</dt>
 
-<DT> Supprimer</DT>
-<DD>
-Appuyer le bouton "Supprimer" supprimera le capteur du
-tableau.
-<p>
-Notez que cela ne supprime pas le capteur de tous les fichiers que vous avez
-sauvegard&#233;s qui le contiennent Si vous chargez un de ces fichiers, peut-&#234;tre
-lorsque vous red&#233;marrez le programme, le capteur va r&#233;appara&#238;tre.
-Vous devez utiliser l'option  "Stocker dans un fichier" dans le menu"Fichier"
-pour enregistrer de nouvelles versions de tous les fichiers qui contiennent ce capteur.
-</Dd>
+        <dd>Appuyer sur le bouton "&eacute;tat" va changer
+        l'&eacute;tat d'un capteur existant.</dd>
 
-<DT> Invers&#233;</DT>
-<DD> Quand elle est coch&#233;e, la commande du capteur et le statut sont invers&#233;. 
-Par exemple, un capteur invers&#233; signifie que lorsque le r&#233;seau envoie une
-commande "actif" du capteur, il devient "inactif" pour JMRI.</dd>
+        <dt>Supprimer</dt>
 
- <DT>Utilisez Retard Global</DT>
-<DD> Quand elle est coch&#233;e, le capteur va utiliser les valeurs sp&#233;cifi&#233;es dans le syst&#232;me de
- "AntiRebond&#166; d&#233;faut .." option de menu pour toute la dur&#233;e o&#249; le syst&#232;me attend
- avant d'enregistre le changement d'&#233;tat.
-<a HREF="#Debounce"><p> Voir le Capteur AntiRebond ci-dessous</A>
-</Dd>
- <DT> Retard actif/Retard inactif</DT>
-<DD> Sp&#233;cifiez la dur&#233;e du temps en millisecondes pendant lequel le syst&#232;me attend avant
-l'enregistrement du changement d'&#233;tat d'un capteur.
-<a HREF="#Debounce"><p> Voir Capteur AntiRebond ci-dessous</A></dd>
+        <dd>
+          Appuyer le bouton "Supprimer" supprimera le capteur du
+          tableau.
 
-</DL>
+          <p>Notez que cela ne supprime pas le capteur de tous les
+          fichiers que vous avez sauvegard&eacute;s qui le
+          contiennent Si vous chargez un de ces fichiers,
+          peut-&ecirc;tre lorsque vous red&eacute;marrez le
+          programme, le capteur va r&eacute;appara&icirc;tre. Vous
+          devez utiliser l'option "Stocker dans un fichier" dans le
+          menu"Fichier" pour enregistrer de nouvelles versions de
+          tous les fichiers qui contiennent ce capteur.</p>
+        </dd>
 
-</DL>
+        <dt>Invers&eacute;</dt>
 
-<H2>Commandes Tableau Capteur</H2>
+        <dd>Quand elle est coch&eacute;e, la commande du capteur et
+        le statut sont invers&eacute;. Par exemple, un capteur
+        invers&eacute; signifie que lorsque le r&eacute;seau envoie
+        une commande "actif" du capteur, il devient "inactif" pour
+        JMRI.</dd>
 
-Il y a aussi un bouton au bas de la Table Capteur
+        <dt>Utilisez Retard Global</dt>
 
-<DL>
-<DT>Ajouter</DT>
-<DD> Appuyez sur ce bouton pour ajouter un nouveau capteur. Pour plus d'informations, voir
- <A HREF="SensorAddEdit.shtml"> Ajouter/&#233;diter Capteurs</A>.</Dd>
-</ DL>
-<H2> <A NAME="Debounce"></A> Capteur AntiRebond</H2>
-<p> L'installation d'un  Capteur Antirebond est l&#224; pour aider &#224; pr&#233;venir les faux d&#233;clenchements d'un capteur
-et le d&#233;clenchement d'autres &#233;v&#233;nements dans le syst&#232;me. <br>
-Ces faux d&#233;clenchements pourrait &#234;tre d&#249; &#224; un zone de la voie sale ou des interf&#233;rences &#233;lectriques.
+        <dd>
+          Quand elle est coch&eacute;e, le capteur va utiliser les
+          valeurs sp&eacute;cifi&eacute;es dans le syst&egrave;me
+          de "AntiRebond&brvbar; d&eacute;faut" option de menu pour
+          toute la dur&eacute;e o&ugrave; le syst&egrave;me attend
+          avant d'enregistre le changement d'&eacute;tat. <a href=
+          "#Debounce"></a>
 
-<p> L'installation vous permet d'assigner une dur&#233;e en millisecondes avant que le changement
-soit enregistr&#233; avec le reste du syst&#232;me. Si apr&#232;s cette p&#233;riode l'&#233;tat n'a
-pas chang&#233; alors l'&#233;tat du capteur sera transmis au reste du syst&#232;me. <br>
+          <p>Voir le Capteur AntiRebond ci-dessous</p>
+        </dd>
 
-Toutefois, si l'&#233;tat des capteurs est diff&#233;rent apr&#232;s que la temporisation soit termin&#233;e, alors le
-syst&#232;me va red&#233;marrer le processus, cette fois apr&#232;s que le minuteur ait termin&#233;, il 
-v&#233;rifiera si l'&#233;tat du capteur est dans le m&#234;me &#233;tat qu'il &#233;tait avant qu'il ait red&#233;marr&#233;
-le processus. Si ce n'est pas le cas , le processus est relanc&#233; &#224; nouveau jusqu'&#224; ce que l'&#233;tat soit le m&#234;me
-avant et apr&#232;s que le chronom&#232;tre ait &#233;t&#233; lanc&#233;.
+        <dt>Retard actif/Retard inactif</dt>
 
-    
-    
-    </DD>
-<!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
+        <dd>
+          Sp&eacute;cifiez la dur&eacute;e du temps en
+          millisecondes pendant lequel le syst&egrave;me attend
+          avant l'enregistrement du changement d'&eacute;tat d'un
+          capteur. <a href="#Debounce"></a>
 
+          <p>Voir Capteur AntiRebond ci-dessous</p>
+        </dd>
+      </dl>
+
+      <h2>Commandes Tableau Capteur</h2>Il y a aussi un bouton au
+      bas de la Table Capteur
+
+      <dl>
+        <dt>Ajouter</dt>
+
+        <dd>Appuyez sur ce bouton pour ajouter un nouveau capteur.
+        Pour plus d'informations, voir <a href=
+        "SensorAddEdit.shtml">Ajouter/&eacute;diter
+        Capteurs</a>.</dd>
+
+        <dt>&lt;/ DL&gt;</dt>
+
+        <dd>
+          <h2><a name="Debounce" id="Debounce"></a> Capteur
+          AntiRebond</h2>
+
+          <p>L'installation d'un Capteur Antirebond est l&agrave;
+          pour aider &agrave; pr&eacute;venir les faux
+          d&eacute;clenchements d'un capteur et le
+          d&eacute;clenchement d'autres &eacute;v&eacute;nements
+          dans le syst&egrave;me.<br>
+          Ces faux d&eacute;clenchements pourrait &ecirc;tre
+          d&ugrave; &agrave; un zone de la voie sale ou des
+          interf&eacute;rences &eacute;lectriques.</p>
+
+          <p>L'installation vous permet d'assigner une dur&eacute;e
+          en millisecondes avant que le changement soit
+          enregistr&eacute; avec le reste du syst&egrave;me. Si
+          apr&egrave;s cette p&eacute;riode l'&eacute;tat n'a pas
+          chang&eacute; alors l'&eacute;tat du capteur sera
+          transmis au reste du syst&egrave;me.<br>
+          Toutefois, si l'&eacute;tat des capteurs est
+          diff&eacute;rent apr&egrave;s que la temporisation soit
+          termin&eacute;e, alors le syst&egrave;me va
+          red&eacute;marrer le processus, cette fois apr&egrave;s
+          que le minuteur ait termin&eacute;, il v&eacute;rifiera
+          si l'&eacute;tat du capteur est dans le m&ecirc;me
+          &eacute;tat qu'il &eacute;tait avant qu'il ait
+          red&eacute;marr&eacute; le processus. Si ce n'est pas le
+          cas , le processus est relanc&eacute; &agrave; nouveau
+          jusqu'&agrave; ce que l'&eacute;tat soit le m&ecirc;me
+          avant et apr&egrave;s que le chronom&egrave;tre ait
+          &eacute;t&eacute; lanc&eacute;.</p>
+        </dd><!--#include virtual="/Footer" -->
+      </dl>
+    </div>
+  </div>
+</body>
+</html>

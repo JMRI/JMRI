@@ -167,7 +167,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             if (Setup.isRfidEnabled()) {
                 // setup the Reader dropdown.
                 readerSelector.addItem(""); // add an empty entry.
-                for (jmri.NamedBean r : jmri.InstanceManager.reporterManagerInstance().getNamedBeanList()) {
+                for (jmri.NamedBean r : jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getNamedBeanList()) {
                     readerSelector.addItem(((Reporter) r).getDisplayName());
                 }
 
@@ -297,9 +297,10 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new TrackCopyAction(this));
         toolMenu.add(new ChangeTracksTypeAction(this));
+        toolMenu.add(new ShowTrackMovesAction());
         toolMenu.add(new ModifyLocationsAction(Bundle.getMessage("TitleModifyLocation"), _location));
         toolMenu.add(new ModifyLocationsCarLoadsAction(_location));
         if (_location != null && _location.getLocationOps() == Location.NORMAL) {
@@ -462,13 +463,26 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         if (!checkName(Bundle.getMessage("save"))) {
             return;
         }
+        // stop table editing so "Moves" are properly saved
+        if (spurTable.isEditing()) {
+            spurTable.getCellEditor().stopCellEditing();
+        }
+        if (yardTable.isEditing()) {
+            yardTable.getCellEditor().stopCellEditing();
+        }
+        if (interchangeTable.isEditing()) {
+            interchangeTable.getCellEditor().stopCellEditing();
+        }
+        if (stagingTable.isEditing()) {
+            stagingTable.getCellEditor().stopCellEditing();
+        }
         _location.setName(locationNameTextField.getText());
         _location.setComment(commentTextArea.getText());
         if (Setup.isRfidEnabled() &&
                 readerSelector.getSelectedItem() != null &&
                 !((String) readerSelector.getSelectedItem()).equals("")) {
             _location.setReporter(
-                    jmri.InstanceManager.reporterManagerInstance()
+                    jmri.InstanceManager.getDefault(jmri.ReporterManager.class)
                             .getReporter((String) readerSelector.getSelectedItem()));
         } else if (Setup.isRfidEnabled() &&
                 readerSelector.getSelectedItem() != null &&

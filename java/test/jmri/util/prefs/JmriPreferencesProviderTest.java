@@ -50,8 +50,8 @@ public class JmriPreferencesProviderTest extends TestCase {
     public void testFindProvider() throws IOException {
         String id = Long.toString((new Date()).getTime());
         Profile p = new Profile(this.getName(), id, new File(this.workspace.toFile(), id));
-        JmriPreferencesProvider shared = JmriPreferencesProvider.findProvider(p, true);
-        JmriPreferencesProvider privat = JmriPreferencesProvider.findProvider(p, false);
+        JmriPreferencesProvider shared = JmriPreferencesProvider.findProvider(p.getPath(), true);
+        JmriPreferencesProvider privat = JmriPreferencesProvider.findProvider(p.getPath(), false);
         assertNotNull(shared);
         assertNotNull(privat);
         assertNotSame(shared, privat);
@@ -91,7 +91,7 @@ public class JmriPreferencesProviderTest extends TestCase {
     public void testIsFirstUse() throws IOException {
         String id = Long.toString((new Date()).getTime());
         Profile project = new Profile(this.getName(), id, new File(this.workspace.toFile(), id));
-        JmriPreferencesProvider shared = JmriPreferencesProvider.findProvider(project, true);
+        JmriPreferencesProvider shared = JmriPreferencesProvider.findProvider(project.getPath(), true);
         assertEquals(shared.isFirstUse(), true);
         Preferences prefs = shared.getPreferences(this.getClass());
         prefs.put("test", "test");
@@ -100,7 +100,7 @@ public class JmriPreferencesProviderTest extends TestCase {
         } catch (BackingStoreException ex) {
             assertNull(ex);
         }
-        shared = new JmriPreferencesProvider(project, true);
+        shared = new JmriPreferencesProvider(project.getPath(), true);
         assertEquals(shared.isFirstUse(), false);
     }
 

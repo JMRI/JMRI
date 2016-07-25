@@ -26,7 +26,7 @@
 </head>
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 <h1>Entr&#233;e du Menu Outils R&#233;gulateur</h1>

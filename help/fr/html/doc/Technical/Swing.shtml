@@ -1,12 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!--  $Id$ -->
 <!-- UpDated by Blorec Herv&#233; 2013-09-08--> 
 <html lang="fr">
 <head>
     <TITLE>
  	JMRI: Use of Swing
    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code standards recommendation Swing">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -17,6 +16,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -25,6 +25,7 @@
 </head>
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
@@ -64,7 +65,7 @@ Le paquet
 
 D'abord le 'ctor' s'ex&#233;cute, puis initComponents. Cette deuxi&#232;me
 partie devrait &#234;tre le lieu pour les connexions &#224; d'autres composants,
-où tous les objets de niveau inf&#233;rieur ont &#233;t&#233; cr&#233;&#233;s. (sous-classes pour
+o&ugrave; tous les objets de niveau inf&#233;rieur ont &#233;t&#233; cr&#233;&#233;s. (sous-classes pour
 des syst&#232;mes particuliers peuvent avoir par exemple des m&#233;thodes plus initComponents,
 appel&#233; plus tard)
 <p>

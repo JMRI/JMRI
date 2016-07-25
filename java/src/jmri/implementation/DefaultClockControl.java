@@ -1,4 +1,3 @@
-// DefaultClockControl.java
 package jmri.implementation;
 
 import java.util.Date;
@@ -16,7 +15,6 @@ import jmri.InstanceManager;
  * with no hardware fast clock.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version $Revision$
  */
 public class DefaultClockControl implements ClockControl {
 
@@ -80,7 +78,7 @@ public class DefaultClockControl implements ClockControl {
     }
 
     public double getRate() {
-        return InstanceManager.timebaseInstance().getRate();
+        return InstanceManager.getDefault(jmri.Timebase.class).getRate();
     }
 
     /**
@@ -92,7 +90,7 @@ public class DefaultClockControl implements ClockControl {
     }
 
     public Date getTime() {
-        return InstanceManager.timebaseInstance().getTime();
+        return InstanceManager.getDefault(jmri.Timebase.class).getTime();
     }
 
     /**
@@ -119,5 +117,3 @@ public class DefaultClockControl implements ClockControl {
         return;
     }
 }
-
-/* @(#)DefaultClockControl.java */

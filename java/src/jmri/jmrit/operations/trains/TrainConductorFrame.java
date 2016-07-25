@@ -31,7 +31,7 @@ public class TrainConductorFrame extends OperationsFrame {
         // build menu
         JMenuBar menuBar = new JMenuBar();
         if (train != null) {
-            JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+            JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
             toolMenu.add(new ShowCarsInTrainAction(Bundle.getMessage("MenuItemShowCarsInTrain"), train));
             menuBar.add(toolMenu);
         }

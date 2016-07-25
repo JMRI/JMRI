@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.net.SocketTimeoutException;
 import jmri.InstanceManager;
 import jmri.implementation.QuietShutDownTask;
-import jmri.jmris.json.JSON;
 import jmri.jmris.json.JsonServerPreferences;
 import org.eclipse.jetty.websocket.api.Session;
+import org.eclipse.jetty.websocket.api.StatusCode;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketError;
@@ -29,42 +29,42 @@ public class JsonWebSocket {
     @OnWebSocketConnect
     public void onOpen(Session sn) {
         log.debug("Opening connection");
-        this.connection = new JsonConnection(sn);
-        sn.setIdleTimeout((long) (JsonServerPreferences.getDefault().getHeartbeatInterval() * 1.1));
-        this.handler = new JsonClientHandler(this.connection);
-        this.shutDownTask = new QuietShutDownTask("Close open web socket") { // NOI18N
-            @Override
-            public boolean execute() {
-                try {
-                    JsonWebSocket.this.getConnection().sendMessage(JsonWebSocket.this.getConnection().getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.GOODBYE));
-                } catch (IOException e) {
-                    log.warn("Unable to send goodbye while closing socket.\nError was {}", e.getMessage());
-                }
-                JsonWebSocket.this.getConnection().getSession().close();
-                return true;
-            }
-        };
         try {
+            this.connection = new JsonConnection(sn);
+            sn.setIdleTimeout((long) (JsonServerPreferences.getDefault().getHeartbeatInterval() * 1.1));
+            this.handler = new JsonClientHandler(this.connection);
+            this.shutDownTask = new QuietShutDownTask("Close open web socket") { // NOI18N
+                @Override
+                public boolean execute() {
+                    try {
+                        JsonWebSocket.this.getConnection().sendMessage(JsonWebSocket.this.getConnection().getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.GOODBYE));
+                    } catch (IOException e) {
+                        log.warn("Unable to send goodbye while closing socket.\nError was {}", e.getMessage());
+                    }
+                    JsonWebSocket.this.getConnection().getSession().close();
+                    return true;
+                }
+            };
             log.debug("Sending hello");
             this.handler.sendHello(JsonServerPreferences.getDefault().getHeartbeatInterval());
         } catch (IOException e) {
             log.warn("Error opening WebSocket:\n{}", e.getMessage());
             sn.close();
         }
-        InstanceManager.shutDownManagerInstance().register(this.shutDownTask);
+        InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
     }
 
     @OnWebSocketClose
     public void onClose(int i, String string) {
         log.debug("Closing connection because {} ({})", string, i);
         this.handler.dispose();
-        InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
+        InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
     }
 
     @OnWebSocketError
     public void onError(Throwable thrwbl) {
         if (thrwbl instanceof SocketTimeoutException) {
-            log.error(thrwbl.getMessage());
+            this.connection.getSession().close(StatusCode.NO_CLOSE, thrwbl.getMessage());
         } else {
             log.error(thrwbl.getMessage(), thrwbl);
         }
@@ -77,7 +77,7 @@ public class JsonWebSocket {
         } catch (IOException e) {
             log.error("Error on WebSocket message:\n{}", e.getMessage());
             this.connection.getSession().close();
-            InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
+            InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
         }
     }
 

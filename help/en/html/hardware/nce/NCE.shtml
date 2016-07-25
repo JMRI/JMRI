@@ -310,7 +310,7 @@ system from the preference menu for reliable operation.</p>
 	</ul>
 
 <a name="usblimitations">
-<h4>NCE USB Interface Limitations</h4></a>
+</a><h4>NCE USB Interface Limitations</h4>
 
 <p>The NCE USB Interface doesn't support all of the current JMRI
 features and functions. Some of the restrictions are based on the type
@@ -351,7 +351,7 @@ limitation when connected to a Power Pro.</p> -->
 </dl>
 
 <a name="troubleShoot">
-<h2>Troubleshooting</h2></a>
+</a><h2>Troubleshooting</h2>
 <p>
 When the connection to your NCE is okay and your NCE system is powered
 up, after starting PanelPro you should see the following JMRI Startup screen:

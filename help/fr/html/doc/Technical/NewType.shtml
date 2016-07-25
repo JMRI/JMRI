@@ -1,33 +1,27 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Blorec Herv&#233;  2013-09-08--> 
 <html lang="fr">
 <head>
     <TITLE>
  	JMRI: Adding A New Data Type
    </TITLE>
-    <META content="Bob Jacoben" name=Author>
+    <META content="Bob Jacoben" name="Author">
     <meta name="keywords" content="JMRI technical type add">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
 <!-- Style -->
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
-	    <!-- ------------- -->
-	    <!-- Page Contents --> <!-- Required -->
-	    <!-- ------------- -->
 
 	    <H1>JMRI: Ajouter un Nouveau Type de Donn&#233;es</H1>
 

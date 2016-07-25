@@ -68,6 +68,12 @@
       <authorinitials>MJM</authorinitials>
       <revremark>Adjusted after creation of Tsunami2 defintions</revremark>
     </revision>
+    <revision>
+    <revnumber>2.1</revnumber>
+      <date>2016-06-04</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Separate ECO CVs for Light Effects</revremark>
+    </revision>
   </revhistory>
   <version author="Michael Mosher" version="1" lastUpdated="20150725"/>
   <version author="Alain Le Marchand" version="1.1" lastUpdated="20150726"/>
@@ -75,6 +81,7 @@
   <version author="Michael Mosher" version="1.3" lastUpdated="20160104"/>
   <version author="Michael Mosher" version="1.4" lastUpdated="20160202"/>
   <version author="Michael Mosher" version="2" lastUpdated="20160529"/>
+  <version author="Alain Le Marchand" version="2.1" lastUpdated="20160604"/>
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Econami Diesel" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Econami Diesel decoders">
@@ -264,6 +271,7 @@
     <!-- Configuration Variable (CV) information follows -->
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOCV.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOCVLightEffect.xml"/>
       <!-- Function Mapping follows -->
       <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>

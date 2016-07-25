@@ -140,12 +140,12 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             setNamedSensor(null);
             return false;
         }
-        if (InstanceManager.sensorManagerInstance() != null) {
-            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
-            if (sensor != null) {
+        if (InstanceManager.getOptionalDefault(jmri.SensorManager.class) != null) {
+            try {
+                Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
                 setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
                 return true;
-            } else {
+            } catch (IllegalArgumentException ex) {
                 setNamedSensor(null);
                 log.error("Sensor '" + pName + "' not available");
             }
@@ -308,9 +308,13 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      * @param value The new Object resident in this block, or null if none.
      */
     public void setValue(Object value) {
-        Object old = _value;
-        _value = value;
-        firePropertyChange("value", old, _value);
+        //ignore if unchanged
+        if (value != _value) {
+            log.debug("Block {} value changed from '{}' to '{}'",getSystemName(), _value, value);
+            Object old = _value;
+            _value = value;
+            firePropertyChange("value", old, _value);
+        }
     }
 
     public Object getValue() {
@@ -318,10 +322,14 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
     }
 
     public void setDirection(int direction) {
-        int oldDirection = _direction;
-        _direction = direction;
-        // this is a bound parameter
-        firePropertyChange("direction", Integer.valueOf(oldDirection), Integer.valueOf(direction));
+        //ignore if unchanged
+        if (direction != _direction) {
+            log.debug("Block {} direction changed from {} to {}",getSystemName(), Path.decodeDirection(_direction), Path.decodeDirection(direction));
+            int oldDirection = _direction;
+            _direction = direction;
+            // this is a bound parameter
+            firePropertyChange("direction", Integer.valueOf(oldDirection), Integer.valueOf(direction));
+        }
     }
 
     public int getDirection() {
@@ -340,7 +348,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      * block is barred, so traffic flow is bi-directional.
      */
     public void addBlockDenyList(String pName) {
-        Block blk = jmri.InstanceManager.blockManagerInstance().getBlock(pName);
+        Block blk = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getBlock(pName);
         NamedBeanHandle<Block> namedBlock = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, blk);
         if (!blockDenyList.contains(namedBlock)) {
             blockDenyList.add(namedBlock);
@@ -419,7 +427,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         }
         String speed = _blockSpeed;
         if (_blockSpeed.equals("Global")) {
-            speed = InstanceManager.blockManagerInstance().getDefaultSpeed();
+            speed = InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed();
         }
 
         try {
@@ -438,7 +446,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
 
     public String getBlockSpeed() {
         if (_blockSpeed.equals("Global")) {
-            return ("Use Global " + InstanceManager.blockManagerInstance().getDefaultSpeed());
+            return ("Use Global " + InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed());
         }
         return _blockSpeed;
     }
@@ -640,6 +648,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         if (getState() == OCCUPIED) {
             return;
         }
+        log.debug("Block {} goes OCCUPIED", getSystemName());
         ResetCandidateEntrancePaths();
         // index through the paths, counting
         int count = 0;
@@ -684,59 +693,59 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
                 // normal case, transfer value object 
                 setValue(next.getBlock().getValue());
                 setDirection(next.getFromBlockDirection());
-                if (log.isDebugEnabled()) {
-                    log.debug("Block " + getSystemName() + " gets new value from " + next.getBlock().getSystemName() + ", direction=" + Path.decodeDirection(getDirection()));
-                }
+                log.debug("Block {} gets new value '{}' from {}, direction={}",
+                        getSystemName(), 
+                        next.getBlock().getValue(),
+                        next.getBlock().getSystemName(),
+                        Path.decodeDirection(getDirection()));
             } else if (next == null) {
-                log.error("unexpected next==null processing signal in block " + getSystemName());
+                log.error("unexpected next==null processing block " + getSystemName());
             } else if (next.getBlock() == null) {
-                log.error("unexpected next.getBlock()=null processing signal in block " + getSystemName());
+                log.error("unexpected next.getBlock()=null processing block " + getSystemName());
             }
         } else {  // count > 1, check for one with proper direction
             // this time, count ones with proper direction
-            if (log.isDebugEnabled()) {
-                log.debug("Block " + getSystemName() + "- count of active linked blocks = " + count);
-            }
+            log.debug("Block {} has {} active linked blocks, comparing directions" , getSystemName(), count);
             next = null;
             count = 0;
             for (int i = 0; i < currPathCnt; i++) {
-                if (isSet[i] && isActive[i] && (pDir[i] == pFromDir[i])) {
-                    count++;
-                    next = pList[i];
-                }
-            }
-            if (next == null) {
-                if (log.isDebugEnabled()) {
-                    log.debug("next is null!");
+                if (isSet[i] && isActive[i]) {  //only consider active reachable blocks
+                    log.debug("comparing {} ({}) to {} ({})", 
+                            pList[i].getBlock().getDisplayName(),Path.decodeDirection(pDir[i]),
+                            getSystemName(),Path.decodeDirection(pFromDir[i]));                    
+                    if ((pDir[i] & pFromDir[i])>0) { //use bitwise comparison to support combination directions such as "North, West"
+                        count++;
+                        next = pList[i];
+                    }
                 }
             }
             if (next == null) {
                 for (int i = 0; i < currPathCnt; i++) {
-                   if (isSet[i] && isActive[i]) {
-                       count++;
-                       next = pList[i];
-                   }  
+                    if (isSet[i] && isActive[i]) {
+                        count++;
+                        next = pList[i];
+                    }  
                 }
             }
             if (next != null && count == 1) {
-                // found one block with proper direction, assume that
+                // found one block with proper direction, use it
                 setValue(next.getBlock().getValue());
                 setDirection(next.getFromBlockDirection());
-                if (log.isDebugEnabled()) {
-                    log.debug("Block " + getSystemName() + " with direction " + Path.decodeDirection(getDirection()) + " gets new value from " + next.getBlock().getSystemName() + ", direction=" + Path.decodeDirection(getDirection()));
-                }
+                log.debug("Block {} gets new value '{}' from {}, direction {}", 
+                		getSystemName(), next.getBlock().getValue(),
+                		next.getBlock().getSystemName(), Path.decodeDirection(getDirection()));
             } else {
                 // no unique path with correct direction - this happens frequently from noise in block detectors!!
                 log.warn("count of " + count + " ACTIVE neightbors with proper direction can't be handled for block " + getSystemName() 
-                                + " but maybe it can be determined when an other block becomes free");
+                        + " but maybe it can be determined when another block becomes free");
                 pListOfPossibleEntrancePaths = new Path[currPathCnt];
                 CntOfPossibleEntrancePaths = 0;
                 for (int i = 0; i < currPathCnt; i++) {
                     if (isSet[i] && isActive[i]) {
                         pListOfPossibleEntrancePaths[CntOfPossibleEntrancePaths] = pList[i];
                         CntOfPossibleEntrancePaths++;
-            }
-        }
+                    }
+                }
             }
         }
         setState(OCCUPIED);
@@ -749,6 +758,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      * (this is largely a copy of the 'Search' part of the logic from
      * goingActive())
      */
+    
     public Path findFromPath() {
         // index through the paths, counting
         int count = 0;
@@ -793,9 +803,14 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             next = null;
             count = 0;
             for (int i = 0; i < currPathCnt; i++) {
-                if (isSet[i] && isActive[i] && (pDir[i] == pFromDir[i])) {
-                    count++;
-                    next = pList[i];
+                if (isSet[i] && isActive[i]) {  //only consider active reachable blocks
+                    log.debug("comparing {} ({}) to {} ({})", 
+                            pList[i].getBlock().getDisplayName(),Path.decodeDirection(pDir[i]),
+                            getSystemName(),Path.decodeDirection(pFromDir[i]));
+                    if ((pDir[i] & pFromDir[i])>0) { //use bitwise comparison to support combination directions such as "North, West"
+                        count++;
+                        next = pList[i];
+                    }
                 }
             }
             if (next == null) {
@@ -816,9 +831,9 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         }
         return (next);
     }
-
+    
     /*
-     * This allows the layout block to inform any listerners to the block that the higher level layout block has been set to "useExtraColor" which is an 
+     * This allows the layout block to inform any listeners to the block that the higher level layout block has been set to "useExtraColor" which is an 
      * indication that it has been allocated to a section by the AutoDispatcher.  The value set is not retained in any form by the block, it is purely to
      * trigger a propertyChangeEvent.
      */
@@ -834,7 +849,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
     /**
      * Parse a given string and return the LocoAddress value that is presumed
      * stored within it based on this object's protocol. The Class Block
-     * implementationd defers to its associated Reporter, if it exists.
+     * implementation defers to its associated Reporter, if it exists.
      *
      * @param rep String to be parsed
      * @return LocoAddress address parsed from string, or null if this Block

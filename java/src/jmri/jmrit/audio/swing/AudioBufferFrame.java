@@ -262,9 +262,10 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         String sName = sysName.getText().toUpperCase();
         AudioBuffer b;
         try {
-            AudioManager am = InstanceManager.audioManagerInstance();
-            b = (AudioBuffer) am.provideAudio(sName);
-            if (b == null) {
+            AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
+            try {
+                b = (AudioBuffer) am.provideAudio(sName);
+            } catch (IllegalArgumentException ex) {
                 throw new AudioException("Problem creating buffer");
             }
             if (newBuffer && am.getByUserName(user) != null) {

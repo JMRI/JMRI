@@ -72,9 +72,17 @@ public class SimpleSensorServer extends AbstractSensorServer {
             setSensorActive(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
         } else {
             // default case, return status for this sensor/
-            Sensor sensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(statusString.substring(index).toUpperCase());
-            sendStatus(statusString.substring(index).toUpperCase(), sensor.getKnownState());
-
+            String sensorName = statusString.substring(index,statusString.length()-1).toUpperCase(); // remove the \n
+            if( sensorName.contains(" ") ){
+                // remove anything following the space.
+                sensorName = sensorName.substring(0,sensorName.indexOf(" "));
+            }
+            try {
+                Sensor sensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+                sendStatus(sensorName, sensor.getKnownState());
+            } catch (IllegalArgumentException ex) {
+                log.warn("Failed to provide Sensor \"{}\" in sendStatus", sensorName);
+            }
         }
     }
 

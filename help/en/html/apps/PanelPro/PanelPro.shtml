@@ -15,7 +15,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+<div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -101,7 +101,7 @@ There's also an example of using PanelPro for
 Rodney Black's <a href="http://cats4ctc.org/">CATS</a>
 application is another tool for creating modern-style Control Panels.
 
-<a name="pe"><h2>The Panel Editor</h2></a>
+<a name="pe"></a><h2>The Panel Editor</h2>
 <a href="../../../images/CornwallPanelLit.gif"><img src="../../../images/CornwallPanelLit.gif" alt="screen shot of Cornwall panel" width="333" height="200" hspace="0" vspace="0"></a>
 
 <p>
@@ -266,13 +266,13 @@ change color to indicate whether the track is occupied.  The
 procedure for doing that is described on a 
 <a href="ColorTrack.shtml">separate page</a>.
 
-<a name="cpe"><h2>The Control Panel Editor</h2></a>
+<a name="cpe"></a><h2>The Control Panel Editor</h2>
 <p><b>Control Panel Editor</b> is simply an alternative view and controller with the same content data as <b>Panel Editor</b>. Control Panel Editor allows you to edit a Panel using menus instead of a separate editing window.</p>
 <p>
 For more information, see the 
 <a href="../../../package/jmri/jmrit/display/ControlPanelEditor.shtml">Control Panel Editor help page</a>.
 
-<a name="le"><h2>The Layout Editor</h2></a>
+<a name="le"></a><h2>The Layout Editor</h2>
 
 <a href="../../../package/jmri/jmrit/display/images/EnhancedPanel.gif">
 <img src="../../../package/jmri/jmrit/display/images/EnhancedPanel.gif" align="right" alt="screen shot of layout editor panel" width="296" height="86" hspace="0" vspace="0"></a>

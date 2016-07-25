@@ -1,252 +1,388 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ --> -->
-<!--UpDated by Herv&#233; Blorec le 2013-09-03 -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- UpDated by Herv&#233; Blorec le 2013-09-03 -->
+
 <html lang="fr">
 <head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <TITLE>
- 	JMRI: Building with Eclipse
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta nameiso-8859-1="keywords" content="JMRI technical code Eclipse">
-
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for Stu req letter grade Psych 199. Letter from instructor in favor; confirmed with instructor. Approved.Stu req letter grade Psych 199. Letter from instructor in favor; confirmed with instructor. Approved.Stu req letter grade Psych 199. Letter from instructor in favor; confirmed with instructor. Approved. the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1
-iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Building with Eclipse</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI technical code Eclipse">
+  <!-- Style -->
+  <meta http-equiv="content-type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
+<body>
+  <div>
+    <!--#include virtual="/Header" -->
 
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+    <div id="mBody">
+      <!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
-	    <!-- -------- -->
-	    <!--  Teaser  --> <!-- Optional -->
-	    <!-- -------- -->
+      <div id="mainContent">
+        <h1>JMRI: Construction avec Eclipse</h1>
 
+        <p>Eclipse (disponible &agrave; <a href=
+        "http://www.eclipse.org">www.eclipse.org</a> ) fait une
+        excellente plate-forme pour travailler avec JMRI.</p>
 
-	    <H1>JMRI: Construction avec Eclipse</H1>
+        <p>Eclipse est un environnement complexe. Si vous
+        &ecirc;tes d&eacute;j&agrave; familier avec les IDE comme
+        Microsoft Visual Studio, il ne sera pas trop difficile de
+        s'y habituer, mais il vaut vraiment la peine d'acheter un
+        manuel (par exemple <a href=
+        "http://www.amazon.com/exec/obidos/tg/detail/-/0321305027/qid=1124158635">
+        Le guide du d&eacute;veloppeur Java pour Eclipse</a> ).</p>
 
-    <p>Eclipse (disponible &#224; <a href="http://www.eclipse.org">  www.eclipse.org </a>) fait une excellente plate-forme pour travailler avec JMRI.</p>
-     <p> Eclipse est un environnement complexe. Si vous &#234;tes d&#233;j&#224; familier
-     avec les IDE comme Microsoft Visual Studio, il ne sera pas trop difficile de s'y habituer,
-     mais il vaut vraiment la peine d'acheter un manuel (par exemple
-     <a href="http://www.amazon.com/exec/obidos/tg/detail/-/0321305027/qid=1124158635"> Le guide du d&#233;veloppeur Java pour Eclipse </a>).
-</p>
-<P> Les d&#233;veloppeurs JMRI utilisent Subversion (SVN) pour le contr&#244;le de la source &#224; partir depuis
-Juillet 2011. Auparavant, nous utilisions CVS pour le contr&#244;le de la source, et l'utilisation de CVS
-n'est plus support&#233;. Si vous utilisez d&#233;j&#224; Eclipse et CVS, il est fortement recommand&#233; que vous t&#233;l&#233;chargiez la derni&#232;re version d'Eclipse et de cr&#233;er un nouvel espace de travail avant d'utiliser SVN pour r&#233;cup&#233;rer les derniers fichiers. </P>
+        <p>Les d&eacute;veloppeurs JMRI utilisent Subversion (SVN)
+        pour le contr&ocirc;le de la source &agrave; partir depuis
+        Juillet 2011. Auparavant, nous utilisions CVS pour le
+        contr&ocirc;le de la source, et l'utilisation de CVS n'est
+        plus support&eacute;. Si vous utilisez d&eacute;j&agrave;
+        Eclipse et CVS, il est fortement recommand&eacute; que vous
+        t&eacute;l&eacute;chargiez la derni&egrave;re version
+        d'Eclipse et de cr&eacute;er un nouvel espace de travail
+        avant d'utiliser SVN pour r&eacute;cup&eacute;rer les
+        derniers fichiers.</p>
 
-<P> Ces instructions ont &#233;t&#233; d&#233;velopp&#233;es et test&#233;es avec "Eclipse IDE for Java Developers" version "Indigo Release".
-<P> Noter &#233;galement que, au moment de la r&#233;daction de ce document d'aide que JMRI n&#233;cessite  JAVA version 6. Vous devez confirmer
-que JRE 6 est l'environnement d'ex&#233;cution Java par d&#233;faut.
+        <p>Ces instructions ont &eacute;t&eacute;
+        d&eacute;velopp&eacute;es et test&eacute;es avec "Eclipse
+        IDE for Java Developers" version "Indigo Release".</p>
 
-<h2>Mise en place d'Eclipse pour la construction de JMRI en utilisant Subversion</h2>
+        <p>Noter &eacute;galement que, au moment de la
+        r&eacute;daction de ce document d'aide que JMRI
+        n&eacute;cessite JAVA version 6. Vous devez confirmer que
+        JRE 6 est l'environnement d'ex&eacute;cution Java par
+        d&eacute;faut.</p>
 
-L'Eclipse Standard t&#233;l&#233;charg&#233;e n'a pas le plugin subversion
-activ&#233;. Pour installer subversion proc&#233;dez comme suit:
+        <h2>Mise en place d'Eclipse pour la construction de JMRI en
+        utilisant Subversion</h2>L'Eclipse Standard
+        t&eacute;l&eacute;charg&eacute;e n'a pas le plugin
+        subversion activ&eacute;. Pour installer subversion
+        proc&eacute;dez comme suit:
 
-<OL>
-  <LI>Ouvrir Eclipse.</LI>
-  <LI>Depuis la barre du menu principls&#233;lectionnez "Help" puis "Install Software..."</LI>
-  <LI>Maintenant, cliquez sur le lien "Sites Software Disponibles "..</LI>
-  <LI>S&#233;lectionnez "http://download.eclipse.org/technology/subversive/0.7/update-site/" et ensuite pressez le bouton " Enable" suivi de "OK". Ceci vous retournera la fen&#234;tre Install.</LI>
-    <LI>Si le lien ci-dessus n'apparait pas dans la liste des sites disponibles, bous pouvez entrer manuellement l'adresse compl&#232;te du sitedans la fen&#234;tre texte "Work with:".
-  <LI>Maintenant s&#233;lectionnez "http://download.eclipse.org/technology/subversive/0.7/update-site/" dans le menu s&#233;lection "Work with:", et ensuite s&#233;lectionnez toutes les cases, suivi d'une pression sur lr bouton "Next", et terminez l'installation de SVN comme demand&#233; par le programme.</LI>
-  <LI>Il vous sera demand&#233; de red&#233;marrer le programme, faites le, et ensuite terminez l'intallation de Subversion en s&#233;lectionnant un ou des connecteurs, et encore il vous sera demand&#233; de red&#233;marrer le programme quand l'installation des connecteurs est termin&#233;e .</LI>
- </OL>
+        <ol>
+          <li>Ouvrir Eclipse.</li>
 
- <h2>Obtenir la Source JMRI en utilisant Subversion</h2>
+          <li>Depuis la barre du menu principls&eacute;lectionnez
+          "Help" puis "Install Software..."</li>
 
-Pour obtenir le code source depuis SourceForge en utilisant, voous devez faire ce qui suit :
+          <li>Maintenant, cliquez sur le lien "Sites Software
+          Disponibles "..</li>
 
- <OL>
-  <LI>Ouvrez Eclipse.</LI>
-  <LI>Depuis la barre de menu principal s&#233;lectionnez "File" puis "Import..."</LI>
-  <LI>Cliquez sur "SVN" puis "Project from SVN" puis "Next"</LI>
-  <LI>Maintenant cr&#233;er un nouvel emplacement r&#233;pertoire et entrez cet URL pour acc&#232;s en lecture seule::
-   "svn://svn.code.sf.net/p/jmri/code/trunk/jmri".</LI>
-  <P>Si vous avez une ID SourceForge et un mot de passe, entrer l'URL suivant avec votre ID utilisateurdans le chemin du nom: "svn+ssh://user_id@svn.code.sf.net/p/jmri/code/trunk/jmri". Puis, quand demand&#233; soumettre votre identifiant et votre mot de passe.</P>
-  <LI>Cliquez "Next"puis "Finish"</LI>
-  <LI>Vous devriez voir maintenant une fen&#234;tre appel&#233;e "Check Out As", cliquez ""Finish"</LI>
-  <LI>Si tout est bon, le "check out" commencera. Il pourrait prendre un certain temps pour t&#233;l&#233;charger tous les
-    fichiers JMRI.</LI>
- </OL>
+          <li>S&eacute;lectionnez
+          "http://download.eclipse.org/technology/subversive/0.7/update-site/"
+          et ensuite pressez le bouton " Enable" suivi de "OK".
+          Ceci vous retournera la fen&ecirc;tre Install.</li>
 
- <P>Apr&#232;s que le t&#233;l&#233;chargement soit termin&#233;, l' Eclipse Package Explorer
-devrait ressembler &#224; ceci:</P>
-<img src="images/EclipsePackageExplorer.png">
-<P>Apr&#232;s le t&#233;l&#233;chargement est termin&#233;, Eclipse signalera une
-erreur: Project "jmri" est manquant comme requis dans le dossier source:"java/tmp '.
-Ce probl&#232;me sera r&#233;solu en ex&#233;cutant la construction "Ant" comme d&#233;crit ci-dessous.
- 
-<h2>Construire et ex&#233;cuter JMRI en utilisant Ant</h2>
+          <li>Si le lien ci-dessus n'apparait pas dans la liste des
+          sites disponibles, bous pouvez entrer manuellement
+          l'adresse compl&egrave;te du sitedans la fen&ecirc;tre
+          texte "Work with:".</li>
 
-Nous recommandons que vous essayez avant et g&#233;n&#233;rez et ex&#233;cutez l'une des
-applications au sein d'Eclipse que vous ex&#233;cutez le build.xml de Ant au sein d'Eclipse. Ce sera
-de cr&#233;er les r&#233;pertoires n&#233;cessaires, charger certaines ic&#244;nes de ressources, et cr&#233;er des fichiers Java n&#233;cessaires &#224; l'aide de
-JavaCC. Pour ex&#233;cuter le build.xml de Ant vous devez faire ce qui suit:
-<OL>
-<li>Ant necessite un  JDK (Java Development Kit) afin d'ex&#233;cuter le fichier fourni "build.xml". Le t&#233;l&#233;chargement d'Eclipse
- n'inclut pas un JDK, vous devez t&#233;l&#233;charger et installer un JDK, puis configurer Ant &#224;
-utiliser le JDK. 
-<li>Voici un lien pour le site Oracle site qui vous fournira un JDK: 
-<P><a href= "http://www.oracle.com/technetwork/java/javase/downloads/index.html">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a></P></li>
-<li>S&#233;lectionnez le fichier build.xml &#224; l'aide de Package Explorer, puis cliquez-droit et un menu devrait
-appara&#238;tre. </ li>
-<li> Maintenant, s&#233;lectionnez "Run As" puis "2 Ant Build".</li>
-<Li>Assurez-vous que sous l'onglet Menu JRE vous avez s&#233;lectionn&#233; un JDK.</Li>
-<!-- <LI>S&#233;lectionnez "Targets", puis s&#233;lectionnez "copy resource files", laissez les autres cibles s&#233;lectionn&#233;es.</LI> -->
-<LI>Maintenant, appuyez sur le bouton "Ex&#233;cuter", ce qui devrait commencer le "Ant build" .
-</OL>
+          <li>Maintenant s&eacute;lectionnez
+          "http://download.eclipse.org/technology/subversive/0.7/update-site/"
+          dans le menu s&eacute;lection "Work with:", et ensuite
+          s&eacute;lectionnez toutes les cases, suivi d'une
+          pression sur lr bouton "Next", et terminez l'installation
+          de SVN comme demand&eacute; par le programme.</li>
 
-<P>Si la construction de Ant &#233;choue, le plus probable, c'est parce que vous avez besoin d'un JDK (Java
-Development Kit) plut&#244;t que d'un JRE (Java Runtime Environment) qui est
-la valeur par d&#233;faut. Pour modifier le JRE, s&#233;lectionnez"Run as" "2 Ant Build" et une nouvelle
-fen&#234;tre devrait appara&#238;tre. S&#233;lectionnez l'onglet "JRE". Le changement de JRE, s&#233;lectionnez
-le bouton radio "JRE s&#233;par&#233;e:" , puis appuyez sur le bouton "JRE install&#233;s"
-. Si vous ne voyez pas un JDK, vous devez en ajouter un.</P>
+          <li>Il vous sera demand&eacute; de red&eacute;marrer le
+          programme, faites le, et ensuite terminez l'intallation
+          de Subversion en s&eacute;lectionnant un ou des
+          connecteurs, et encore il vous sera demand&eacute; de
+          red&eacute;marrer le programme quand l'installation des
+          connecteurs est termin&eacute;e .</li>
+        </ol>
 
-<P>si la construction de Ant r&#233;ussit, vous pouvez d&#233;sormais lancer une des applications JMRI de Ant, et cr&#233;er un fichier jmri.jar
-si vous le souhaitez. Utilisez la fonction "2 Ant Build" et dans la fen&#234;tre, s&#233;lectionnez l'onglet "Targets", et
-utiliser la case appropri&#233;e pour g&#233;n&#233;rer ce que vous voulez.</P>
+        <h2>Obtenir la Source JMRI en utilisant Subversion</h2>Pour
+        obtenir le code source depuis SourceForge en utilisant,
+        voous devez faire ce qui suit :
 
-<h2>Construire et ex&#233;cuter JMRI en utilisant Eclipse</h2>
+        <ol>
+          <li>Ouvrez Eclipse.</li>
 
- <P>Apr&#232;s avoir termin&#233; la fconstruction de Ant comme d&#233;crit ci-dessus, vous devez actualiser le r&#233;pertoire jmri.
-   Faites un clic droit sur le nom du r&#233;pertoire jmri et s&#233;lectionnez "Refresh". L'op&#233;ration de r&#233;g&#233;n&#233;ration doit d&#233;clencher
-   une construction de l'espace de travail et la construction devrait se terminer sans erreur..
- 
- <P>Au d&#233;but de 2012, le chemin de compilation JMRI a une r&#233;f&#233;rence de la biblioth&#232;que pour "JRE6" qui est une version Java
-   6. Lorsque vous installez JRE soyez s&#251;r et nommez-le "JRE6" ou vous obtiendrez un message d'erreur indiquant
-   que la r&#233;f&#233;rence &#224; JRE6 est introuvable .
-  
- <P>Pour ex&#233;cuter une application faire comme suit:</P>
- 
-<ol>
+          <li>Depuis la barre de menu principal s&eacute;lectionnez
+          "File" puis "Import..."</li>
 
-  <LI>Vous devez configurer le niveau de conformit&#233; du compilateur de Java 1.6. s&#233;lectionn&#233; dans la principale
-    barre de contr&#244;le "window-> Preferences", puis s&#233;lectionnez "Java-> Compiler" Ajuster le niveau de conformit&#233; du compilateur
-     &#224; 1,6.
- 
-  <LI> Ensuite, vous devez configurer le compilateur Java pour ne pas nettoyer les dossiers de sortie, autrement
-    certains des fichiers de ressources qui sont charg&#233;s par la construction Ant dispara&#238;tront. Pour arr&#234;ter le nettoyage,
-    s&#233;lectionnez "Java-> Compiler-> Building". Dans la fen&#234;tre Building d&#233;cochez la case "Scrub output folders
-   when cleaning projects", puis"OK".</LI>
+          <li>Cliquez sur "SVN" puis "Project from SVN" puis
+          "Next"</li>
 
-  <LI>Puis ex&#233;cuter encore Ant pour charger les dossiers de sortie.</LI>
+          <li>Maintenant cr&eacute;er un nouvel emplacement
+          r&eacute;pertoire et entrez cet URL pour acc&egrave;s en
+          lecture seule::
+          "svn://svn.code.sf.net/p/jmri/code/trunk/jmri".</li>
 
-  <LI>Depuis le menu "Run", s&#233;electionnez "Run Configurations..." Nous allons utiliser la fen&#234;tre qui s'ouvre pour
-    Configurer les programme (s) &#224; ex&#233;cuter. (Si le menu Ex&#233;cuter n'a pas d' entr&#233;e "Run Configurations ..."
-    , assurez-vous que vous avez s&#233;lectionn&#233; le r&#233;pertoire java dans le volet de navigation ci-dessus-menus Eclipse sont
-    contextuels)</LI>
+          <li style="list-style: none">
+            <p>Si vous avez une ID SourceForge et un mot de passe,
+            entrer l'URL suivant avec votre ID utilisateurdans le
+            chemin du nom:
+            "svn+ssh://user_id@svn.code.sf.net/p/jmri/code/trunk/jmri".
+            Puis, quand demand&eacute; soumettre votre identifiant
+            et votre mot de passe.</p>
+          </li>
 
-  <LI>Sur le c&#244;t&#233; gauche, s&#233;lectionnez "Java Application", puis appuyez sur l'ic&#244;ne "New" au-dessus. L'ic&#244;ne ressemble &#224; un document avec un signe plus sur la partie sup&#233;rieure droite..</LI>
+          <li>Cliquez "Next"puis "Finish"</li>
 
-  <LI>Vous devriez maintenant avoir un nouvel onglet "Main" en surbrillance. Au-del&#224;, remplacer "New_configuration"
-    par "DecoderPro". Ci-dessous, entrez "jmri" ​​(minuscules importante) pour "Project" et
-    "apps.DecoderPro.DecoderPro" pour "Main class:".</LI>
+          <li>Vous devriez voir maintenant une fen&ecirc;tre
+          appel&eacute;e "Check Out As", cliquez ""Finish"</li>
 
-  <LI>S&#233;lectionnez l'onglet "Arguments", et sous arguments VM entrer (Vous devriez probablement couper et coller): <BR> <PRE>
+          <li>Si tout est bon, le "check out" commencera. Il
+          pourrait prendre un certain temps pour
+          t&eacute;l&eacute;charger tous les fichiers JMRI.</li>
+        </ol>
+
+        <p>Apr&egrave;s que le t&eacute;l&eacute;chargement soit
+        termin&eacute;, l' Eclipse Package Explorer devrait
+        ressembler &agrave; ceci:</p><img src=
+        "images/EclipsePackageExplorer.png">
+
+        <p>Apr&egrave;s le t&eacute;l&eacute;chargement est
+        termin&eacute;, Eclipse signalera une erreur: Project
+        "jmri" est manquant comme requis dans le dossier
+        source:"java/tmp '. Ce probl&egrave;me sera r&eacute;solu
+        en ex&eacute;cutant la construction "Ant" comme
+        d&eacute;crit ci-dessous.</p>
+
+        <h2>Construire et ex&eacute;cuter JMRI en utilisant
+        Ant</h2>Nous recommandons que vous essayez avant et
+        g&eacute;n&eacute;rez et ex&eacute;cutez l'une des
+        applications au sein d'Eclipse que vous ex&eacute;cutez le
+        build.xml de Ant au sein d'Eclipse. Ce sera de cr&eacute;er
+        les r&eacute;pertoires n&eacute;cessaires, charger
+        certaines ic&ocirc;nes de ressources, et cr&eacute;er des
+        fichiers Java n&eacute;cessaires &agrave; l'aide de JavaCC.
+        Pour ex&eacute;cuter le build.xml de Ant vous devez faire
+        ce qui suit:
+
+        <ol>
+          <li>Ant necessite un JDK (Java Development Kit) afin
+          d'ex&eacute;cuter le fichier fourni "build.xml". Le
+          t&eacute;l&eacute;chargement d'Eclipse n'inclut pas un
+          JDK, vous devez t&eacute;l&eacute;charger et installer un
+          JDK, puis configurer Ant &agrave; utiliser le JDK.</li>
+
+          <li>Voici un lien pour le site Oracle site qui vous
+          fournira un JDK:
+
+            <p><a href=
+            "http://www.oracle.com/technetwork/java/javase/downloads/index.html">
+            http://www.oracle.com/technetwork/java/javase/downloads/index.html</a></p>
+          </li>
+
+          <li>S&eacute;lectionnez le fichier build.xml &agrave;
+          l'aide de Package Explorer, puis cliquez-droit et un menu
+          devrait appara&icirc;tre.</li>
+
+          <li>Maintenant, s&eacute;lectionnez "Run As" puis "2 Ant
+          Build".</li>
+
+          <li>Assurez-vous que sous l'onglet Menu JRE vous avez
+          s&eacute;lectionn&eacute; un JDK.</li>
+          <!-- <LI>S&#233;lectionnez "Targets", puis s&#233;lectionnez "copy resource files", laissez les autres cibles s&#233;lectionn&#233;es.</LI> -->
+
+          <li>Maintenant, appuyez sur le bouton "Ex&eacute;cuter",
+          ce qui devrait commencer le "Ant build" .</li>
+        </ol>
+
+        <p>Si la construction de Ant &eacute;choue, le plus
+        probable, c'est parce que vous avez besoin d'un JDK (Java
+        Development Kit) plut&ocirc;t que d'un JRE (Java Runtime
+        Environment) qui est la valeur par d&eacute;faut. Pour
+        modifier le JRE, s&eacute;lectionnez"Run as" "2 Ant Build"
+        et une nouvelle fen&ecirc;tre devrait appara&icirc;tre.
+        S&eacute;lectionnez l'onglet "JRE". Le changement de JRE,
+        s&eacute;lectionnez le bouton radio "JRE
+        s&eacute;par&eacute;e:" , puis appuyez sur le bouton "JRE
+        install&eacute;s" . Si vous ne voyez pas un JDK, vous devez
+        en ajouter un.</p>
+
+        <p>si la construction de Ant r&eacute;ussit, vous pouvez
+        d&eacute;sormais lancer une des applications JMRI de Ant,
+        et cr&eacute;er un fichier jmri.jar si vous le souhaitez.
+        Utilisez la fonction "2 Ant Build" et dans la
+        fen&ecirc;tre, s&eacute;lectionnez l'onglet "Targets", et
+        utiliser la case appropri&eacute;e pour
+        g&eacute;n&eacute;rer ce que vous voulez.</p>
+
+        <h2>Construire et ex&eacute;cuter JMRI en utilisant
+        Eclipse</h2>
+
+        <p>Apr&egrave;s avoir termin&eacute; la fconstruction de
+        Ant comme d&eacute;crit ci-dessus, vous devez actualiser le
+        r&eacute;pertoire jmri. Faites un clic droit sur le nom du
+        r&eacute;pertoire jmri et s&eacute;lectionnez "Refresh".
+        L'op&eacute;ration de r&eacute;g&eacute;n&eacute;ration
+        doit d&eacute;clencher une construction de l'espace de
+        travail et la construction devrait se terminer sans
+        erreur..</p>
+
+        <p>Au d&eacute;but de 2012, le chemin de compilation JMRI a
+        une r&eacute;f&eacute;rence de la biblioth&egrave;que pour
+        "JRE6" qui est une version Java 6. Lorsque vous installez
+        JRE soyez s&ucirc;r et nommez-le "JRE6" ou vous obtiendrez
+        un message d'erreur indiquant que la
+        r&eacute;f&eacute;rence &agrave; JRE6 est introuvable .</p>
+
+        <p>Pour ex&eacute;cuter une application faire comme
+        suit:</p>
+
+        <ol>
+          <li>Vous devez configurer le niveau de conformit&eacute;
+          du compilateur de Java 1.6. s&eacute;lectionn&eacute;
+          dans la principale barre de contr&ocirc;le "window-&gt;
+          Preferences", puis s&eacute;lectionnez "Java-&gt;
+          Compiler" Ajuster le niveau de conformit&eacute; du
+          compilateur &agrave; 1,6.</li>
+
+          <li>Ensuite, vous devez configurer le compilateur Java
+          pour ne pas nettoyer les dossiers de sortie, autrement
+          certains des fichiers de ressources qui sont
+          charg&eacute;s par la construction Ant
+          dispara&icirc;tront. Pour arr&ecirc;ter le nettoyage,
+          s&eacute;lectionnez "Java-&gt; Compiler-&gt; Building".
+          Dans la fen&ecirc;tre Building d&eacute;cochez la case
+          "Scrub output folders when cleaning projects",
+          puis"OK".</li>
+
+          <li>Puis ex&eacute;cuter encore Ant pour charger les
+          dossiers de sortie.</li>
+
+          <li>Depuis le menu "Run", s&eacute;electionnez "Run
+          Configurations..." Nous allons utiliser la fen&ecirc;tre
+          qui s'ouvre pour Configurer les programme (s) &agrave;
+          ex&eacute;cuter. (Si le menu Ex&eacute;cuter n'a pas d'
+          entr&eacute;e "Run Configurations ..." , assurez-vous que
+          vous avez s&eacute;lectionn&eacute; le r&eacute;pertoire
+          java dans le volet de navigation ci-dessus-menus Eclipse
+          sont contextuels)</li>
+
+          <li>Sur le c&ocirc;t&eacute; gauche, s&eacute;lectionnez
+          "Java Application", puis appuyez sur l'ic&ocirc;ne "New"
+          au-dessus. L'ic&ocirc;ne ressemble &agrave; un document
+          avec un signe plus sur la partie sup&eacute;rieure
+          droite..</li>
+
+          <li>Vous devriez maintenant avoir un nouvel onglet "Main"
+          en surbrillance. Au-del&agrave;, remplacer
+          "New_configuration" par "DecoderPro". Ci-dessous, entrez
+          "jmri"
+          &acirc;&euro;&lsaquo;&acirc;&euro;&lsaquo;(minuscules
+          importante) pour "Project" et
+          "apps.DecoderPro.DecoderPro" pour "Main class:".</li>
+
+          <li>S&eacute;lectionnez l'onglet "Arguments", et sous
+          arguments VM entrer (Vous devriez probablement couper et
+          coller):<br>
+            <pre>
 -Xms10m
 -Xmx300m
 -Djava.security.policy=lib/security.policy 
 -Dapple.laf.useScreenMenuBar=true
-</PRE> Si vous utilisez un syst&#232;me Windows 32 bits ajouter le chemin de la biblioth&#232;que: <PRE>
+</pre>Si vous utilisez un syst&egrave;me Windows 32 bits ajouter le
+chemin de la biblioth&egrave;que:
+            <pre>
 -Djava.library.path=.;lib;lib/windows/x86 
-</PRE> Notez que si vous utilisez un syst&#232;me Windows 64 bits modifier le chemin de la biblioth&#232;que pour: <PRE>
+</pre>Notez que si vous utilisez un syst&egrave;me Windows 64 bits
+modifier le chemin de la biblioth&egrave;que pour:
+            <pre>
 -Djava.library.path=.;lib;lib/windows/x64
-</PRE>
-  </LI>
+</pre>
+          </li>
 
-  <LI>En option, s&#233;lectionnez l'onglet "Common", la section"Display in favorites menu",
-         cochez les cases &#224; c&#244;t&#233; de "Run" et "Debug"</LI>
-    
-    <LI>Si vous souhaitez cr&#233;er des objectifs pour  rendre facile l'ex&#233;cution de PanelPro et AllTests, r&#233;p&#233;tez les &#233;tapes ci-dessus
-         pour cr&#233;er un nouveau "Java Application"
-         sauf sp&#233;cification "apps.PanelPro.PanelPro" et
-         "apps.tests.AllTest" respectivement..</LI>  
-        
-    <LI>Cliquez sur "Apply" puis "Close" (Vous pouvez cliquer sur "Run" &#224; ce stade, mais
-         nous avons un peu plus &#224; faire</LI>
-        
-    <LI>Vous devriez maintenant &#234;tre de retour &#224; votre vue du navigateur habituel Eclipse,
-         o&#249; la plupart des travaux de d&#233;veloppement se font. Pour voir notamment
-         java, d&#233;veloppez le dossier "java" &#224; gauche, puis
-         le dossier "src", naviguer vers le fichier que vous souhaitez. 
-        
-    <LI>Pour ex&#233;cuter DecoderPro, s&#233;lectionnez la rubrique "Run History" dans le menu "Run" . Une fois que vous avez fait cela une fois, il vous suffit de cliquer sur l'ic&#244;ne "Run" dans la barre d'outils pour relancer le dernier programme.
-        
-    </ol>
-    
-    <H2>JavaCC</H2>
+          <li>En option, s&eacute;lectionnez l'onglet "Common", la
+          section"Display in favorites menu", cochez les cases
+          &agrave; c&ocirc;t&eacute; de "Run" et "Debug"</li>
 
-En Mars 2010 les d&#233;veloppeurs JMRI  ont commenc&#233; &#224; utiliser JavaCC (Java Compiler
-Compiler) pour g&#233;n&#233;rer du code. Actuellement, le compilateur place la sortie
-fichiers dans le r&#233;pertoire "tmp" sous "java". La meilleure fa&#231;on de cr&#233;er et
-remplir le r&#233;pertoire "tmp" est d'utiliser la construction "ant".
+          <li>Si vous souhaitez cr&eacute;er des objectifs pour
+          rendre facile l'ex&eacute;cution de PanelPro et AllTests,
+          r&eacute;p&eacute;tez les &eacute;tapes ci-dessus pour
+          cr&eacute;er un nouveau "Java Application" sauf
+          sp&eacute;cification "apps.PanelPro.PanelPro" et
+          "apps.tests.AllTest" respectivement..</li>
 
-<H2>Installation de JavaCC</H2>
+          <li>Cliquez sur "Apply" puis "Close" (Vous pouvez cliquer
+          sur "Run" &agrave; ce stade, mais nous avons un peu plus
+          &agrave; faire</li>
 
-Au lieu d'utiliser la construction "ant" pour remplir le r&#233;pertoire "tmp", vous pouvez installer le plug-in
-JavaCC. Voici les &#233;tapes:
-<P>
-1) T&#233;l&#233;charger le plugin Eclipse JavaCC suivant les instructions donn&#233;es ici:
-<A HREF="http://eclipse-javacc.sourceforge.net"> http://eclipse-javacc.sourceforge.net </A>
-<p>
-2) Apr&#232;s avoir red&#233;marr&#233; Eclipse, clic droit sur le r&#233;pertoire java dans le "Project Explorer" ou Navigator et s&#233;lectionnez
-    Options JavaCC.
-<p>
-3) Dans l'onglet Options JavaCC, entrez le r&#233;pertoire de sortie pour &#234;tre
-    java/tmp/jmri/jmris/srcp//parser
-<p>
-4) Sur la page options JJTree , entrez le r&#233;pertoire de sortie pour &#234;tre
-    java/tmp/jmri/jmris/srcp/parser
-<p>
-5) Confirmez que le "Java Build Path" inclut le r&#233;pertoire tmp (voir Project Properties).
+          <li>Vous devriez maintenant &ecirc;tre de retour &agrave;
+          votre vue du navigateur habituel Eclipse, o&ugrave; la
+          plupart des travaux de d&eacute;veloppement se font. Pour
+          voir notamment java, d&eacute;veloppez le dossier "java"
+          &agrave; gauche, puis le dossier "src", naviguer vers le
+          fichier que vous souhaitez.</li>
 
-<H2>Erreurs de Compilation et Avertissements</H2>
+          <li>Pour ex&eacute;cuter DecoderPro, s&eacute;lectionnez
+          la rubrique "Run History" dans le menu "Run" . Une fois
+          que vous avez fait cela une fois, il vous suffit de
+          cliquer sur l'ic&ocirc;ne "Run" dans la barre d'outils
+          pour relancer le dernier programme.</li>
+        </ol>
 
-La configuration par d&#233;faut du Compilateur Eclipse g&#233;n&#232;re de nombreux avertissements inutiles. Vous pouvez ajuster les avertissements pour les faire correspondre aux captures d'&#233;cran
-ci-dessous en allant &#224; Window-> Preferences et s&#233;lectionnez "Java-> Complier-> Errors/Warnings" 
+        <h2>JavaCC</h2>En Mars 2010 les d&eacute;veloppeurs JMRI
+        ont commenc&eacute; &agrave; utiliser JavaCC (Java Compiler
+        Compiler) pour g&eacute;n&eacute;rer du code. Actuellement,
+        le compilateur place la sortie fichiers dans le
+        r&eacute;pertoire "tmp" sous "java". La meilleure
+        fa&ccedil;on de cr&eacute;er et remplir le
+        r&eacute;pertoire "tmp" est d'utiliser la construction
+        "ant".
 
-<P>
-<img src="images/ErrorsWarningsCodeStyle.png">
-</P>
-<P>
-<img src="images/ErrorsWarningsPotential.png">
-</P>
-<P>
-<img src="images/ErrorsWarningsName.png">
-</P>
-<P>
-<img src="images/ErrorsWarningsUnnecessary.png">
-</P>
-<P>
-<img src="images/ErrorsWarningsAnnotations.png">
-</P>
+        <h2>Installation de JavaCC</h2>Au lieu d'utiliser la
+        construction "ant" pour remplir le r&eacute;pertoire "tmp",
+        vous pouvez installer le plug-in JavaCC. Voici les
+        &eacute;tapes:
 
-<!--#include virtual="/Footer" -->
+        <p>1) T&eacute;l&eacute;charger le plugin Eclipse JavaCC
+        suivant les instructions donn&eacute;es ici: <a href=
+        "http://eclipse-javacc.sourceforge.net">http://eclipse-javacc.sourceforge.net</a></p>
 
-      </div>
-      <!-- closes #mainContent-->
-    <!-- closes #mBody-->
+        <p>2) Apr&egrave;s avoir red&eacute;marr&eacute; Eclipse,
+        clic droit sur le r&eacute;pertoire java dans le "Project
+        Explorer" ou Navigator et s&eacute;lectionnez Options
+        JavaCC.</p>
 
+        <p>3) Dans l'onglet Options JavaCC, entrez le
+        r&eacute;pertoire de sortie pour &ecirc;tre
+        java/tmp/jmri/jmris/srcp//parser</p>
+
+        <p>4) Sur la page options JJTree , entrez le
+        r&eacute;pertoire de sortie pour &ecirc;tre
+        java/tmp/jmri/jmris/srcp/parser</p>
+
+        <p>5) Confirmez que le "Java Build Path" inclut le
+        r&eacute;pertoire tmp (voir Project Properties).</p>
+
+        <h2>Erreurs de Compilation et Avertissements</h2>La
+        configuration par d&eacute;faut du Compilateur Eclipse
+        g&eacute;n&egrave;re de nombreux avertissements inutiles.
+        Vous pouvez ajuster les avertissements pour les faire
+        correspondre aux captures d'&eacute;cran ci-dessous en
+        allant &agrave; Window-&gt; Preferences et
+        s&eacute;lectionnez "Java-&gt; Complier-&gt;
+        Errors/Warnings"
+
+        <p><img src="images/ErrorsWarningsCodeStyle.png"></p>
+
+        <p><img src="images/ErrorsWarningsPotential.png"></p>
+
+        <p><img src="images/ErrorsWarningsName.png"></p>
+
+        <p><img src="images/ErrorsWarningsUnnecessary.png"></p>
+
+        <p><img src="images/ErrorsWarningsAnnotations.png"></p>
+        <!--#include virtual="/Footer" -->
+      </div><!-- closes #mainContent-->
+    </div><!-- closes #mBody-->
+  </div>
 </body>
-
-</body>
-
 </html>
-   

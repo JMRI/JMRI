@@ -9,6 +9,10 @@ import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import javax.annotation.CheckReturnValue;
+
 /**
  * Basic Implementation of a BlockManager.
  * <P>
@@ -38,37 +42,46 @@ public class BlockManager extends AbstractManager
     public BlockManager() {
         super();
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.reporterManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.getDefault(jmri.ReporterManager.class).addVetoableChangeListener(this);
     }
 
+    @Override
+    @CheckReturnValue
     public int getXMLOrder() {
         return Manager.BLOCKS;
     }
 
-    public String getSystemPrefix() {
+    @Override
+    @CheckReturnValue
+    public @Nonnull String getSystemPrefix() {
         return "I";
     }
 
+    @Override
+    @CheckReturnValue
     public char typeLetter() {
         return 'B';
     }
 
     private boolean saveBlockPath = true;
 
-    public boolean savePathInfo() {
+    @CheckReturnValue
+    public boolean isSavedPathInfo() {
         return saveBlockPath;
     }
 
-    public void savePathInfo(boolean save) {
+    public void setSavedPathInfo(boolean save) {
         saveBlockPath = save;
     }
 
     /**
-     * Method to create a new Block if it does not exist Returns null if a Block
+     * Method to create a new Block only if it does not exist 
+     * @return null if a Block
      * with the same systemName or userName already exists, or if there is
      * trouble creating a new Block.
      */
-    public Block createNewBlock(String systemName, String userName) {
+    public @CheckForNull Block createNewBlock(@Nonnull String systemName, @CheckForNull String userName) 
+                throws IllegalArgumentException {
         // Check that Block does not already exist
         Block r;
         if (userName != null && !userName.equals("")) {
@@ -107,7 +120,14 @@ public class BlockManager extends AbstractManager
         return r;
     }
 
-    public Block createNewBlock(String userName) {
+    /**
+     * Method to create a new Block using an automatically incrementing
+     * system name.
+     * @return null if a Block
+     * with the same systemName or userName already exists, or if there is
+     * trouble creating a new Block.
+     */
+    public @CheckForNull Block createNewBlock(@Nonnull String userName) {
         int nextAutoBlockRef = lastAutoBlockRef + 1;
         StringBuilder b = new StringBuilder("IB:AUTO:");
         String nextNumber = paddedNumber.format(nextAutoBlockRef);
@@ -115,16 +135,24 @@ public class BlockManager extends AbstractManager
         return createNewBlock(b.toString(), userName);
     }
 
-    public Block provideBlock(String name) {
+    /**
+     * If the Block exists, return it, otherwise create a new one and return it.
+     * If the argument starts with the system prefix and type letter, usually "IB",
+     * then the argument is considered a system name, otherwise it's considered
+     * a user name and a system name is automatically created.
+     * @return never null
+     */
+    public @Nonnull Block provideBlock(@Nonnull String name)  {
         Block b = getBlock(name);
         if (b != null) {
             return b;
         }
         if (name.startsWith(getSystemPrefix() + typeLetter())) {
-            return createNewBlock(name, null);
+            b = createNewBlock(name, null);
         } else {
-            return createNewBlock(makeSystemName(name), null);
+            b = createNewBlock(makeSystemName(name), null);
         }
+        return b;
     }
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");
@@ -136,7 +164,8 @@ public class BlockManager extends AbstractManager
      * User Name. If this fails looks up assuming that name is a System Name. If
      * both fail, returns null.
      */
-    public Block getBlock(String name) {
+    @CheckReturnValue
+    public @CheckForNull Block getBlock(@Nonnull String name) {
         Block r = getByUserName(name);
         if (r != null) {
             return r;
@@ -144,16 +173,19 @@ public class BlockManager extends AbstractManager
         return getBySystemName(name);
     }
 
-    public Block getBySystemName(String name) {
+    @CheckReturnValue
+    public @CheckForNull Block getBySystemName(@Nonnull String name) {
         String key = name.toUpperCase();
         return (Block) _tsys.get(key);
     }
 
-    public Block getByUserName(String key) {
+    @CheckReturnValue
+    public @CheckForNull Block getByUserName(@Nonnull String key) {
         return (Block) _tuser.get(key);
     }
 
-    public Block getByDisplayName(String key) {
+    @CheckReturnValue
+    public @CheckForNull Block getByDisplayName(@Nonnull String key) {
         // First try to find it in the user list.
         // If that fails, look it up in the system list
         Block retv = this.getByUserName(key);
@@ -166,7 +198,7 @@ public class BlockManager extends AbstractManager
 
     static BlockManager _instance = null;
 
-    static public BlockManager instance() {
+    static public @CheckForNull BlockManager instance() {
         if (_instance == null) {
             _instance = new BlockManager();
         }
@@ -175,11 +207,10 @@ public class BlockManager extends AbstractManager
 
     String defaultSpeed = "Normal";
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_PARAM_DEREF", justification = "We are validating user input however the value is stored in its original format")
-    public void setDefaultSpeed(String speed) throws JmriException {
-        if (speed == null) {
-            throw new JmriException("Value of requested default thrown speed can not be null");
-        }
+    /**
+     * @throws IllegalArgumentException if provided speed is invalid
+     */
+    public void setDefaultSpeed(@Nonnull String speed) {
         if (defaultSpeed.equals(speed)) {
             return;
         }
@@ -190,7 +221,7 @@ public class BlockManager extends AbstractManager
             try {
                 jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
             } catch (Exception ex) {
-                throw new JmriException("Value of requested default block speed is not valid");
+                throw new IllegalArgumentException("Value of requested default block speed \""+speed+"\" is not valid");
             }
         }
         String oldSpeed = defaultSpeed;
@@ -198,11 +229,14 @@ public class BlockManager extends AbstractManager
         firePropertyChange("DefaultBlockSpeedChange", oldSpeed, speed);
     }
 
-    public String getDefaultSpeed() {
+    @CheckReturnValue
+    public @Nonnull String getDefaultSpeed() {
         return defaultSpeed;
     }
 
-    public String getBeanTypeHandled() {
+    @Override
+    @CheckReturnValue
+    public @Nonnull String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameBlock");
     }
     
@@ -214,7 +248,8 @@ public class BlockManager extends AbstractManager
      * @param re the roster entry
      * @return list of block system names
      */
-    public List<Block> getBlocksOccupiedByRosterEntry(RosterEntry re) {
+    @CheckReturnValue
+    public @Nonnull List<Block> getBlocksOccupiedByRosterEntry(@Nonnull RosterEntry re) {
         List<Block> blockList = new ArrayList<>();
         
         for (String sysName : getSystemNameList()) {

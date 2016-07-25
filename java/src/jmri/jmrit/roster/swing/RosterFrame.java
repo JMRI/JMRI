@@ -212,6 +212,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      * For use when the DP3 window is called from another JMRI instance, set
      * this to prevent the DP3 from shutting down JMRI when the window is
      * closed.
+     *
+     * @param quitAllowed true if closing window should quit application; false
+     *                    otherwise
      */
     protected void allowQuit(boolean quitAllowed) {
         if (allowQuit != quitAllowed) {
@@ -1162,6 +1165,11 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     /**
      * Identify locomotive complete, act on it by setting the GUI. This will
      * fire "GUI changed" events which will reset the decoder GUI.
+     *
+     * @param dccAddress address of locomotive
+     * @param isLong     true if address is long; false if short
+     * @param mfgId      manufacturer id as in decoder
+     * @param modelId    model id as in decoder
      */
     protected void selectLoco(int dccAddress, boolean isLong, int mfgId, int modelId) {
         // raise the button again
@@ -1229,8 +1237,12 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     /**
      * Simple method to change over the progDebugger buttons, this should be
      * implemented button with the buttons in their own class etc, but this will
-     * work for now. Basic button is button Id 1, comprehensive button is button
-     * id 2
+     * work for now.
+     *
+     * @param buttonId   1 or 2; use 1 for basic programmer; 2 for comprehensive
+     *                   programmer
+     * @param programmer name of programmer
+     * @param buttonText button title
      */
     public void setProgrammerLaunch(int buttonId, String programmer, String buttonText) {
         if (buttonId == 1) {
@@ -1339,12 +1351,12 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             programmer = modePanel.getProgrammer();
         }
         if (programmer == null) {
-            GlobalProgrammerManager gpm = InstanceManager.getDefault(GlobalProgrammerManager.class);
+            GlobalProgrammerManager gpm = InstanceManager.getOptionalDefault(GlobalProgrammerManager.class);
             if (gpm != null) {
                 programmer = gpm.getGlobalProgrammer();
                 log.warn("Selector did not provide a programmer, attempt to use GlobalProgrammerManager default: {}", programmer);
             } else {
-                ProgrammerManager dpm = InstanceManager.programmerManagerInstance();
+                ProgrammerManager dpm = InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class);
                 if (dpm != null) {
                     programmer = dpm.getGlobalProgrammer();
                     log.warn("Selector did not provide a programmer, attempt to use InstanceManager default: {}", programmer);
@@ -1369,7 +1381,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             protected void done(int dccAddress) {
                 // if Done, updated the selected decoder
                 // on the GUI thread, right now
-                jmri.util.ThreadingUtil.runOnGUI(()->{
+                jmri.util.ThreadingUtil.runOnGUI(() -> {
                     who.selectLoco(dccAddress, !shortAddr, cv8val, cv7val);
                 });
             }
@@ -1377,7 +1389,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             @Override
             protected void message(String m) {
                 // on the GUI thread, right now
-                jmri.util.ThreadingUtil.runOnGUI(()->{
+                jmri.util.ThreadingUtil.runOnGUI(() -> {
                     statusField.setText(m);
                 });
             }
@@ -1412,7 +1424,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                     }
                 };
             } else if (service.isSelected()) {
-                progFrame = new PaneServiceProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", modePanel.getProgrammer()) {};
+                progFrame = new PaneServiceProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", modePanel.getProgrammer()) {
+                };
             } else if (ops.isSelected()) {
                 int address = Integer.parseInt(re.getDccAddress());
                 boolean longAddr = re.isLongAddress();
@@ -1510,7 +1523,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         ConnectionConfig oldOpsMode = opsModeProCon;
 
         // Find the connection that goes with the global programmer
-        GlobalProgrammerManager gpm = InstanceManager.getDefault(GlobalProgrammerManager.class);
+        GlobalProgrammerManager gpm = InstanceManager.getOptionalDefault(GlobalProgrammerManager.class);
         if (gpm != null) {
             String serviceModeProgrammerName = gpm.getUserName();
             for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
@@ -1521,7 +1534,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
 
         // Find the connection that goes with the addressed programmer
-        AddressedProgrammerManager apm = InstanceManager.getDefault(AddressedProgrammerManager.class);
+        AddressedProgrammerManager apm = InstanceManager.getOptionalDefault(AddressedProgrammerManager.class);
         if (apm != null) {
             String opsModeProgrammerName = apm.getUserName();
             for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
@@ -1672,6 +1685,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     static class CopyRosterItem extends CopyRosterItemAction {
+
         CopyRosterItem(String pName, Component pWho, RosterEntry re) {
             super(pName, pWho);
             setExistingEntry(re);

@@ -15,6 +15,7 @@ import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
@@ -43,7 +44,6 @@ import org.slf4j.LoggerFactory;
  * Initial implementation only handles the setting up of turnouts on a path.
  *
  * @author Kevin Dickerson Copyright (C) 2011
- * @version	$Revision: 19923 $
  */
 public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDefault {
 
@@ -115,8 +115,8 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     public int turnoutSetDelay = 0;
 
     public EntryExitPairs() {
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerUser(this);
+        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerUser(this);
         }
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
 
@@ -230,11 +230,6 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         return getBeanBySystemName(name);
     }
 
-    @Deprecated
-    public char systemLetter() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     public String getSystemPrefix() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -293,9 +288,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
                 return null;
             }
             sourcePoint = providePoint(facing, protecting, panel);
-            if (sourcePoint != null) {
-                sourcePoint.setRefObject(source);
-            }
+            sourcePoint.setRefObject(source);
         }
         return sourcePoint;
     }
@@ -661,7 +654,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
 
     }
 
-    jmri.SignalMastLogicManager smlm = InstanceManager.signalMastLogicManagerInstance();
+    jmri.SignalMastLogicManager smlm = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
 
     public final static int CANCELROUTE = 0;
     public final static int CLEARROUTE = 1;

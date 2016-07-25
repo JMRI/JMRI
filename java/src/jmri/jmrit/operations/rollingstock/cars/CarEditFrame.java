@@ -1,4 +1,3 @@
-// CarEditFrame.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.Dimension;
@@ -33,7 +32,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of car
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2014
- * @version $Revision: 29493 $
  */
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
     
@@ -110,6 +108,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         super(Bundle.getMessage("TitleCarAdd"));
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Checks for null")
     @Override
     public void initComponents() {
         // the following code sets the frame's initial state
@@ -287,9 +286,9 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
             addItem(pValue, valueTextField, 1, 0);
             pOptional.add(pValue);
         }
-
+    
         // row 22
-        if (Setup.isRfidEnabled()) {
+        if (Setup.isRfidEnabled() && jmri.InstanceManager.getOptionalDefault(jmri.IdTagManager.class) != null) {
             JPanel pRfid = new JPanel();
             pRfid.setLayout(new GridBagLayout());
             pRfid.setBorder(BorderFactory.createTitledBorder(Setup.getRfidLabel()));
@@ -347,7 +346,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 
         // build menu
         // JMenuBar menuBar = new JMenuBar();
-        // JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        // JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         // menuBar.add(toolMenu);
         // setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_CarsEdit", true); // NOI18N

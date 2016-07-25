@@ -35,10 +35,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LocationsByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5286439226672099226L;
     LocationManager manager;
     String Empty = "            ";
 
@@ -140,7 +136,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new PrintLocationsByCarTypesAction(Bundle.getMessage("MenuItemPrintByType"), new Frame(), false,
                 this));
         toolMenu.add(new PrintLocationsByCarTypesAction(Bundle.getMessage("MenuItemPreviewByType"), new Frame(), true,

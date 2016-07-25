@@ -1,3 +1,4 @@
+// SignalMast.java
 package jmri;
 
 import java.util.Vector;
@@ -7,7 +8,7 @@ import java.util.Vector;
  * treated as a single signal. (Imagine several heads attached to a single mast,
  * though other implementations are possible)
  * <P>
- * A mast presents an Aspect, as that's a composite of the appearance of the
+ * A mast presents an Aspect, as that's a composite of the appearance(s) of the
  * entire signal.
  * <P>
  * This class has three bound parameters:

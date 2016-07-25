@@ -1,4 +1,3 @@
-// SerialTurnoutManager.java
 package jmri.jmrix.cmri.serial;
 
 import jmri.JmriException;
@@ -6,6 +5,7 @@ import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Implement turnout manager for CMRI serial systems
@@ -13,16 +13,17 @@ import org.slf4j.LoggerFactory;
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision$
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
-    public SerialTurnoutManager() {
+    CMRISystemConnectionMemo _memo = null;
 
+    public SerialTurnoutManager(CMRISystemConnectionMemo memo) {
+       _memo = memo;
     }
 
     public String getSystemPrefix() {
-        return "C";
+        return _memo.getSystemPrefix();
     }
 
     public Turnout createNewTurnout(String systemName, String userName) {
@@ -64,10 +65,10 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         }
 
         // create the turnout
-        t = new SerialTurnout(sName, userName);
+        t = new SerialTurnout(sName, userName,_memo);
 
         // does system name correspond to configured hardware
-        if (!SerialAddress.validSystemNameConfig(sName, 'T')) {
+        if (!SerialAddress.validSystemNameConfig(sName, 'T',_memo.getTrafficController())) {
             // system name does not correspond to configured hardware
             log.warn("Turnout '" + sName + "' refers to an undefined Serial Node.");
         }
@@ -199,13 +200,13 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
                 javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
     }
 
+    /**
+     * @deprecated JMRI Since 4.5.1 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public SerialTurnoutManager instance() {
-        if (_instance == null) {
-            _instance = new SerialTurnoutManager();
-        }
-        return _instance;
+        return null;
     }
-    static SerialTurnoutManager _instance = null;
 
     //Turnout format is more than a simple format.
     public boolean allowMultipleAdditions(String systemName) {

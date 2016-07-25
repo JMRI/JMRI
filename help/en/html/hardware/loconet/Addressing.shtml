@@ -37,7 +37,7 @@ LocoNet&reg; systems address input Sensors and output Turnouts using numbers.
 This page describes how those numbers are defined in JMRI, and how they relate
 to the numbers in other (hardware) systems.
 
-<a name="turnout" id="turnout"></a>
+<a name="turnout"></a>
 <h2>Addressing LocoNet Turnouts</h2>
 <p>
 Inside packets on the LocoNet, output Turnouts are addressed with numbers from 0 to 4095.
@@ -60,7 +60,7 @@ confusion somewhere, given the way this was set up.
 <p>Additional information on Turnouts and the Turnout Table may be found at the
     <a href="../../tools/Turnouts.shtml">main Turnouts page</a>.</p>
 
-<a name="sensor" id="sensor"></a>
+<a name="sensor"></a>
 <h2>Addressing LocoNet Sensors</h2>
 
 Inside packets on the LocoNet, Sensors are addressed with numbers from 0 to 4095.
@@ -121,7 +121,7 @@ If it's the switch input, you add one more to that:
 <p>Additional information on Sensors and the Sensor Table may be found at the
     <a href="../../tools/Sensors.shtml">main Sensors page</a>.</p>
 
-<a name="transponding" id="transponding"></a><h2>Addressing Transponding</h2>
+<a name="transponding"></a><h2>Addressing Transponding</h2>
 
 <p>Digitrax Transponding is handled via the Reporter mechanism
 in JMRI.  Reporters gather information from the layout and make it
@@ -168,7 +168,7 @@ available when it changes.  JMRI refers to Reporters using the System Name
         <tr align="center"><td>H</td><td>LR4095</td></tr>
     </table>
 
-<a name="reporter" id="reporter"></a>
+<a name="reporter"></a>
 <h3>The Reporter Table</h3>
 <p>The JMRI Reporter Table shows a list of all Reporters JMRI is aware of. JMRI 
     creates an entry in this table for each new Transponding zone for which it sees a 
@@ -182,7 +182,7 @@ available when it changes.  JMRI refers to Reporters using the System Name
 <p>Additional information on Reporters and the Reporter Table may be found at the
     <a href="../../tools/Reporters.shtml">main Reporter page</a>.</p>
 
-<a name="SVs" id="SVs"></a>
+<a name="SVs"></a>
 <h2>Addressing LocoNet device System Variables (SVs)</h2>
 (The following was first fully available in
 <a href="http://jmri.org/releasenotes/jmri4.1.2.shtml">JMRI 4.1.2</a>. Versions before
@@ -250,11 +250,11 @@ You can use all of the DecoderPro tools to manage a board using the LocoNet SV p
 if you provide an appropriate definition file.  These are in the same format as a 
 decoder definition file, except that to specify the LocoNet SV Version 2 protocol you modify the
 "programming" element to looks like:
-<code><pre>
+<pre style="font-family: monospace;">
     &lt;programming direct="no" paged="no" register="no" ops="no"&gt;
         &lt;mode&gt;LOCONETSV2MODE&lt;/mode&gt;
     &lt;/programming&gt;
-</pre></code>
+</pre>
 <p>LocoNet SV Version 1 protocol is the same exception you specify LOCONETSV1MODE.
  For more information, see the 
  <a href="">schema definition file</a>.

@@ -1,7 +1,7 @@
 package apps.startup.configurexml;
 
 import apps.StartupActionsManager;
-import apps.StartupModel;
+import apps.startup.StartupModel;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import org.jdom2.Element;
@@ -31,7 +31,7 @@ public class StartupActionsPreferencesPanelXml extends AbstractXmlAdapter {
     @Override
     public Element store(Object o) {
         for (StartupModel model : InstanceManager.getDefault(StartupActionsManager.class).getActions()) {
-            InstanceManager.configureManagerInstance().registerPref(model);
+            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(model);
         }
         return null;
     }

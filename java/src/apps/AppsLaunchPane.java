@@ -1,16 +1,12 @@
 package apps;
 
-import apps.startup.StartupActionModelUtil;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.text.MessageFormat;
-import java.util.Enumeration;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -56,11 +52,6 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
         jmri.Application.setLogo(logo());
         jmri.Application.setURL(line2());
 
-        // Add actions to abstractActionModel
-        // Done here as initial non-GUI initialisation is completed
-        // and UI L&F has been set
-        addToActionModel();
-
         // populate GUI
         log.debug("Start UI");
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -72,18 +63,12 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
 
     }
 
+    /**
+     * @deprecated since 4.5.1
+     */
+    @Deprecated
     protected final void addToActionModel() {
-        StartupActionModelUtil util = InstanceManager.getDefault(StartupActionModelUtil.class);
-        ResourceBundle actionList = ResourceBundle.getBundle("apps.ActionListBundle");
-        Enumeration<String> e = actionList.getKeys();
-        while (e.hasMoreElements()) {
-            String key = e.nextElement();
-            try {
-                util.addAction(key, actionList.getString(key));
-            } catch (ClassNotFoundException ex) {
-                log.error("Did not find class \"{}\"", key);
-            }
-        }
+        // StartupActionModelUtil populates itself, so do nothing
     }
 
     /**
@@ -289,50 +274,6 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
     static JComponent _buttonSpace = null;
 
     /**
-     * @deprecated as of 2.13.3, directly access the connection configuration
-     * from the instance list
-     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
-     */
-    @Deprecated
-    static public String getConnection1() {
-        return MessageFormat.format(Bundle.getMessage("ConnectionCredit"),
-                new Object[]{AppConfigBase.getConnection(0), AppConfigBase.getPort(0), AppConfigBase.getManufacturerName(0)});
-    }
-
-    /**
-     * @deprecated as of 2.13.3, directly access the connection configuration
-     * from the instance list
-     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
-     */
-    @Deprecated
-    static public String getConnection2() {
-        return MessageFormat.format(Bundle.getMessage("ConnectionCredit"),
-                new Object[]{AppConfigBase.getConnection(1), AppConfigBase.getPort(1), AppConfigBase.getManufacturerName(1)});
-    }
-
-    /**
-     * @deprecated as of 2.13.3, directly access the connection configuration
-     * from the instance list
-     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
-     */
-    @Deprecated
-    static public String getConnection3() {
-        return MessageFormat.format(Bundle.getMessage("ConnectionCredit"),
-                new Object[]{AppConfigBase.getConnection(2), AppConfigBase.getPort(2), AppConfigBase.getManufacturerName(2)});
-    }
-
-    /**
-     * @deprecated as of 2.13.3, directly access the connection configuration
-     * from the instance list
-     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
-     */
-    @Deprecated
-    static public String getConnection4() {
-        return MessageFormat.format(Bundle.getMessage("ConnectionCredit"),
-                new Object[]{AppConfigBase.getConnection(3), AppConfigBase.getPort(3), AppConfigBase.getManufacturerName(3)});
-    }
-
-    /**
      * Set up the configuration file name at startup.
      * <P>
      * The Configuration File name variable holds the name used to load the
@@ -353,6 +294,10 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
      * @param args Argument array from the main routine
      */
     static protected void setConfigFilename(String def, String[] args) {
+        // if the property org.jmri.Apps.configFilename was set, skip
+        if (System.getProperty("org.jmri.Apps.configFilename") != null) {
+            return;
+        }
         // save the configuration filename if present on the command line
         if (args.length >= 1 && args[0] != null && !args[0].contains("=")) {
             def = args[0];

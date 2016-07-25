@@ -67,7 +67,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager
                     + ";" + ((userName == null) ? "null" : userName));
         }
         // is system name in correct format?
-        if (!systemName.startsWith(getSystemPrefix() + typeLetter())) {
+        if (!systemName.startsWith(getSystemPrefix() + typeLetter()) 
+                || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
             log.error("Invalid system name for turnout: " + systemName
                     + " needed " + getSystemPrefix() + typeLetter());
             throw new IllegalArgumentException("Invalid system name for turnout: " + systemName
@@ -191,7 +192,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
      * they will be tried in the order specified.
      */
     public String[] getValidOperationTypes() {
-        if (jmri.InstanceManager.commandStationInstance() != null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.CommandStation.class) != null) {
             return new String[]{"Sensor", "Raw", "NoFeedback"};
         } else {
             return new String[]{"Sensor", "NoFeedback"};
