@@ -443,8 +443,17 @@ public class FileUtilSupport extends Bean {
     public String getPreferencesPath() {
         // return jmri.prefsdir property if present
         String jmriPrefsDir = System.getProperty("jmri.prefsdir", ""); // NOI18N
-        if (!jmriPrefsDir.isEmpty() && !jmriPrefsDir.endsWith(File.separator)) {
-            return jmriPrefsDir + File.separator;
+        if (!jmriPrefsDir.isEmpty()) {
+            try {
+                return new File(jmriPrefsDir).getCanonicalPath() + File.separator;
+            } catch (IOException ex) {
+                // use System.err because logging at this point will fail
+                // since this method is called to setup logging
+                System.err.println("Unable to locate settings dir \"" + jmriPrefsDir + "\"");
+                if (!jmriPrefsDir.endsWith(File.separator)) {
+                    return jmriPrefsDir + File.separator;
+                }
+            }
         }
         String result;
         switch (SystemType.getType()) {
