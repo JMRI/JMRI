@@ -23,6 +23,8 @@ import javax.swing.JTable;
  * <p>
  * Column attributes (order, visibility, and width) are persisted by listening
  * to changes in the {@link javax.swing.table.TableColumnModel} of the table.
+ * Column visibility is persisted only if the TableColumnModel is assignable
+ * from {@link jmri.util.swing.XTableColumnModel}.
  *
  * @author Randall Wood Copyright (C) 2016
  */
