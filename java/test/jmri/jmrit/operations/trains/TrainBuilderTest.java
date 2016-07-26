@@ -61,12 +61,12 @@ public class TrainBuilderTest extends OperationsTestCase {
     private EngineTypes et;
     private EngineModels em;
 
-    public void CtorTest(){
+    public void testCtor(){
         TrainBuilder tb = new TrainBuilder();
         Assert.assertNotNull("Train Builder Constructor",tb);
     }
 
-    public void noRouteBuildTest() {
+    public void testNoRouteBuild() {
         resetManagers();
         Train train = tmanager.newTrain("Test");
         // build train without a route, should fail
@@ -76,7 +76,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Train build failed", Train.CODE_BUILD_FAILED, train.getStatusCode());
     }
 
-    public void noRouteLocationsBuildTest() {
+    public void testNoRouteLocationsBuild() {
         resetManagers();
         Train train = tmanager.newTrain("Test");
 
