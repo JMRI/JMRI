@@ -77,7 +77,9 @@ public class FileUtilSupport extends Bean {
      * of returning null (as File would). Use {@link #getURI(java.lang.String) }
      * or {@link #getURL(java.lang.String) } instead of this method if possible.
      *
+     * @param path the path to find
      * @return {@link java.io.File} at path
+     * @throws java.io.FileNotFoundException if path cannot be found
      * @see #getURI(java.lang.String)
      * @see #getURL(java.lang.String)
      */
@@ -94,7 +96,9 @@ public class FileUtilSupport extends Bean {
      * {@link java.io.FileNotFoundException} if the file cannot be found instead
      * of returning null (as File would).
      *
+     * @param path the path to find
      * @return {@link java.io.File} at path
+     * @throws java.io.FileNotFoundException if path cannot be found
      * @see #getFile(java.lang.String)
      * @see #getURL(java.lang.String)
      */
@@ -107,7 +111,9 @@ public class FileUtilSupport extends Bean {
      * {@link java.io.FileNotFoundException} if the URL cannot be found instead
      * of returning null.
      *
+     * @param path the path to find
      * @return {@link java.net.URL} at path
+     * @throws java.io.FileNotFoundException if path cannot be found
      * @see #getFile(java.lang.String)
      * @see #getURI(java.lang.String)
      */
@@ -180,6 +186,7 @@ public class FileUtilSupport extends Bean {
     /**
      * Convert a portable filename into an absolute filename.
      *
+     * @param path the portable filename
      * @return An absolute filename
      */
     public String getAbsoluteFilename(String path) {
@@ -337,8 +344,10 @@ public class FileUtilSupport extends Bean {
      * Note that this method may return a false positive if the filename is a
      * file: URL.
      *
+     * @param filename the name to test
      * @return true if filename is portable
      */
+    @SuppressWarnings("deprecation")
     public boolean isPortableFilename(String filename) {
         return (filename.startsWith(PROGRAM)
                 || filename.startsWith(HOME)
@@ -434,8 +443,17 @@ public class FileUtilSupport extends Bean {
     public String getPreferencesPath() {
         // return jmri.prefsdir property if present
         String jmriPrefsDir = System.getProperty("jmri.prefsdir", ""); // NOI18N
-        if (!jmriPrefsDir.isEmpty() && !jmriPrefsDir.endsWith(File.separator)) {
-            return jmriPrefsDir + File.separator;
+        if (!jmriPrefsDir.isEmpty()) {
+            try {
+                return new File(jmriPrefsDir).getCanonicalPath() + File.separator;
+            } catch (IOException ex) {
+                // use System.err because logging at this point will fail
+                // since this method is called to setup logging
+                System.err.println("Unable to locate settings dir \"" + jmriPrefsDir + "\"");
+                if (!jmriPrefsDir.endsWith(File.separator)) {
+                    return jmriPrefsDir + File.separator;
+                }
+            }
         }
         String result;
         switch (SystemType.getType()) {
@@ -478,6 +496,7 @@ public class FileUtilSupport extends Bean {
      * Convenience method that calls
      * {@link FileUtil#setProgramPath(java.io.File)} with the passed in path.
      *
+     * @param path the path to the JMRI installation
      */
     public void setProgramPath(String path) {
         this.setProgramPath(new File(path));
@@ -491,6 +510,7 @@ public class FileUtilSupport extends Bean {
      * loading JMRI (prior to loading any other JMRI code) to be meaningfully
      * used.
      *
+     * @param path the path to the JMRI installation
      */
     public void setProgramPath(File path) {
         String old = this.programPath;
@@ -564,8 +584,10 @@ public class FileUtilSupport extends Bean {
      * Get the URL of a portable filename if it can be located using
      * {@link #findURL(java.lang.String)}
      *
+     * @param path the path to find
      * @return URL of portable or absolute path
      */
+    @SuppressWarnings("deprecation")
     public URI findExternalFilename(String path) {
         log.debug("Finding external path {}", path);
         if (this.isPortableFilename(path)) {
@@ -890,8 +912,8 @@ public class FileUtilSupport extends Bean {
      * <ol><li>{@link FileUtil.Location#ALL} will not place any limits on the
      * search</li><li>{@link FileUtil.Location#NONE} effectively requires that
      * <code>path</code> be a portable
-     * pathname</li><li>{@link FileUtil.Location#INSTALLED} limits the search to the
-     * {@link FileUtil#PROGRAM} directory and JARs in the class
+     * pathname</li><li>{@link FileUtil.Location#INSTALLED} limits the search to
+     * the {@link FileUtil#PROGRAM} directory and JARs in the class
      * path</li><li>{@link FileUtil.Location#USER} limits the search to the
      * {@link FileUtil#PROFILE} directory</li></ol>
      *
@@ -918,6 +940,7 @@ public class FileUtilSupport extends Bean {
     /**
      * Return the {@link java.net.URI} for a given URL
      *
+     * @param url the URL
      * @return a URI or null if the conversion would have caused a
      *         {@link java.net.URISyntaxException}
      */
@@ -982,6 +1005,7 @@ public class FileUtilSupport extends Bean {
      *
      * @param file The text file.
      * @return The contents of the file.
+     * @throws java.io.IOException if the file cannot be read
      */
     public String readFile(File file) throws IOException {
         return this.readURL(this.fileToURL(file));
@@ -993,6 +1017,7 @@ public class FileUtilSupport extends Bean {
      *
      * @param url The text URL.
      * @return The contents of the file.
+     * @throws java.io.IOException if the URL cannot be read
      */
     public String readURL(URL url) throws IOException {
         try {
@@ -1032,6 +1057,7 @@ public class FileUtilSupport extends Bean {
      * Create a directory if required. Any parent directories will also be
      * created.
      *
+     * @param path directory to create
      */
     public void createDirectory(String path) {
         this.createDirectory(new File(path));
@@ -1041,6 +1067,7 @@ public class FileUtilSupport extends Bean {
      * Create a directory if required. Any parent directories will also be
      * created.
      *
+     * @param dir directory to create
      */
     public void createDirectory(File dir) {
         if (!dir.exists()) {
@@ -1056,6 +1083,7 @@ public class FileUtilSupport extends Bean {
      * {@link java.nio.file.Files#delete(java.nio.file.Path)} or
      * {@link java.nio.file.Files#deleteIfExists(java.nio.file.Path)} for files.
      *
+     * @param path path to delete
      * @return true if path was deleted, false otherwise
      */
     @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
@@ -1074,7 +1102,9 @@ public class FileUtilSupport extends Bean {
      * {@link java.nio.file.Files#copy(java.nio.file.Path, java.io.OutputStream)}
      * for files.
      *
-     * @param dest must be the file, not the destination directory.
+     * @param source the file or directory to copy
+     * @param dest   must be the file or directory, not the containing directory
+     * @throws java.io.IOException if file cannot be copied
      */
     public void copy(File source, File dest) throws IOException {
         if (!source.exists()) {
@@ -1137,19 +1167,22 @@ public class FileUtilSupport extends Bean {
      * four revisions are retained. The lowest numbered revision is the most
      * recent.
      *
+     * @param file the file to backup
+     * @throws java.io.IOException if a backup cannot be created
      */
     public void backup(File file) throws IOException {
         this.rotate(file, 4, "bak");
     }
 
     /**
-     * Rotate a file.
+     * Rotate a file and its backups, retaining only a set number of backups.
      *
-     * @param file      The file to rotate
-     * @param max       A positive integer
+     * @param file      the file to rotate
+     * @param max       maximum number of backups to retain
      * @param extension The extension to use for the rotations. If null or an
      *                  empty string, the rotation number is used as the
      *                  extension.
+     * @throws java.io.IOException      if a backup cannot be created
      * @throws IllegalArgumentException if max is less than one
      * @see #backup(java.io.File)
      */
@@ -1217,6 +1250,7 @@ public class FileUtilSupport extends Bean {
      * @return Canonical path to use, or null if one cannot be found.
      * @since 2.7.2
      */
+    @SuppressWarnings("deprecation")
     private String pathFromPortablePath(@Nonnull String path) {
         if (path.startsWith(PROGRAM)) {
             if (new File(path.substring(PROGRAM.length())).isAbsolute()) {
