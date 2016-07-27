@@ -1,13 +1,14 @@
-package jmri.jmrix.dcc4pc;
+package jmri.jmrix.rfid.networkdriver;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   jmri.jmrix.dcc4pc.serialdriver.PackageTest.class
+   ConnectionConfigTest.class
 })
 /**
  * Tests for the jmri.jmrix.pi package
