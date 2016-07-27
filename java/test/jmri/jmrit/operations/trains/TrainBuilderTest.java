@@ -98,6 +98,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         train.setRoute(route);
         train.reset();
         new TrainBuilder().build(train);
+        Assert.assertFalse("Train should not build, no locations", train.isBuilt());
+        Assert.assertEquals("Train build failed", Train.CODE_BUILD_FAILED, train.getStatusCode());
 
         // now add a location to the route
         Location depart = lmanager.newLocation("depart");
@@ -111,7 +113,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         lmanager.deregister(depart);
         train.reset();
         new TrainBuilder().build(train);
-        Assert.assertFalse("Train should not build, location deleted", train.isBuilt());
+        Assert.assertFalse("Train should not build, departure location deleted", train.isBuilt());
         Assert.assertEquals("Train build failed", Train.CODE_BUILD_FAILED, train.getStatusCode());
 
         // recreate location
