@@ -29,9 +29,9 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations Trains class Last manually cross-checked on 20090131
@@ -340,7 +340,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertTrue("Train now accepts (EXCLUDELOADS) Load name WOOD", train1.acceptsLoadName("WOOD"));
     }
 
-    public void noRouteBuildTest(){
+    public void testNoRouteBuild(){
         TrainManager tmanager = TrainManager.instance();
 
         // disable build messages
@@ -356,7 +356,7 @@ public class TrainTest extends OperationsTestCase {
 
     }
 
-    public void noRouteLocationBuildTest() {
+    public void testRouteLocationBuild() {
         TrainManager tmanager = TrainManager.instance();
         RouteManager rmanager = RouteManager.instance();
 //        LocationManager lmanager = LocationManager.instance();

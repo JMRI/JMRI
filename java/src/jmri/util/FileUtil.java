@@ -8,8 +8,6 @@ import java.net.URI;
 import java.net.URL;
 import java.util.jar.JarFile;
 import javax.annotation.Nonnull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Common utility methods for working with Files.
@@ -51,7 +49,7 @@ public final class FileUtil {
      * Replaced with {@link #PROGRAM}.
      *
      * @see #PROGRAM
-     * @deprecated
+     * @deprecated since 2.13.1
      */
     @Deprecated
     static public final String RESOURCE = "resource:"; // NOI18N
@@ -59,7 +57,7 @@ public final class FileUtil {
      * Replaced with {@link #PREFERENCES}.
      *
      * @see #PREFERENCES
-     * @deprecated
+     * @deprecated since 2.13.1
      */
     @Deprecated
     static public final String FILE = "file:"; // NOI18N
@@ -67,8 +65,6 @@ public final class FileUtil {
      * The portable file path component separator.
      */
     static public final char SEPARATOR = '/'; // NOI18N
-    // initialize logging
-    private static final Logger log = LoggerFactory.getLogger(FileUtil.class);
 
     /**
      * The types of locations to use when falling back on default locations in {@link #findURL(java.lang.String, java.lang.String...)
@@ -85,7 +81,9 @@ public final class FileUtil {
      * of returning null (as File would). Use {@link #getURI(java.lang.String) }
      * or {@link #getURL(java.lang.String) } instead of this method if possible.
      *
+     * @param path the path to find
      * @return {@link java.io.File} at path
+     * @throws java.io.FileNotFoundException if path cannot be found
      * @see #getURI(java.lang.String)
      * @see #getURL(java.lang.String)
      */
@@ -98,7 +96,9 @@ public final class FileUtil {
      * {@link java.io.FileNotFoundException} if the file cannot be found instead
      * of returning null (as File would).
      *
+     * @param path the path to find
      * @return {@link java.io.File} at path
+     * @throws java.io.FileNotFoundException if path cannot be found
      * @see #getFile(java.lang.String)
      * @see #getURL(java.lang.String)
      */
@@ -111,7 +111,9 @@ public final class FileUtil {
      * {@link java.io.FileNotFoundException} if the URL cannot be found instead
      * of returning null.
      *
+     * @param path the path to find
      * @return {@link java.net.URL} at path
+     * @throws java.io.FileNotFoundException if path cannot be found
      * @see #getFile(java.lang.String)
      * @see #getURI(java.lang.String)
      */
@@ -171,6 +173,7 @@ public final class FileUtil {
     /**
      * Convert a portable filename into an absolute filename.
      *
+     * @param path the portable filename
      * @return An absolute filename
      */
     static public String getAbsoluteFilename(String path) {
@@ -268,6 +271,7 @@ public final class FileUtil {
      * Note that this method may return a false positive if the filename is a
      * file: URL.
      *
+     * @param filename the name to test
      * @return true if filename is portable
      */
     static public boolean isPortableFilename(String filename) {
@@ -362,6 +366,7 @@ public final class FileUtil {
      * Convenience method that calls
      * {@link FileUtil#setProgramPath(java.io.File)} with the passed in path.
      *
+     * @param path the path to the JMRI installation
      */
     static public void setProgramPath(String path) {
         FileUtilSupport.getDefault().setProgramPath(new File(path));
@@ -375,6 +380,7 @@ public final class FileUtil {
      * loading JMRI (prior to loading any other JMRI code) to be meaningfully
      * used.
      *
+     * @param path the path to the JMRI installation
      */
     static public void setProgramPath(File path) {
         FileUtilSupport.getDefault().setProgramPath(path);
@@ -384,6 +390,7 @@ public final class FileUtil {
      * Get the URL of a portable filename if it can be located using
      * {@link #findURL(java.lang.String)}
      *
+     * @param path the path to find
      * @return URL of portable or absolute path
      */
     static public URI findExternalFilename(String path) {
@@ -654,6 +661,7 @@ public final class FileUtil {
     /**
      * Return the {@link java.net.URI} for a given URL
      *
+     * @param url the URL
      * @return a URI or null if the conversion would have caused a
      *         {@link java.net.URISyntaxException}
      */
@@ -715,6 +723,7 @@ public final class FileUtil {
      *
      * @param file The text file.
      * @return The contents of the file.
+     * @throws java.io.IOException if the file cannot be read
      */
     public static String readFile(File file) throws IOException {
         return FileUtil.readURL(FileUtil.fileToURL(file));
@@ -726,6 +735,7 @@ public final class FileUtil {
      *
      * @param url The text URL.
      * @return The contents of the file.
+     * @throws java.io.IOException if the URL cannot be read
      */
     public static String readURL(URL url) throws IOException {
         return FileUtilSupport.getDefault().readURL(url);
@@ -745,6 +755,7 @@ public final class FileUtil {
      * Create a directory if required. Any parent directories will also be
      * created.
      *
+     * @param path directory to create
      */
     public static void createDirectory(String path) {
         FileUtilSupport.getDefault().createDirectory(path);
@@ -754,6 +765,7 @@ public final class FileUtil {
      * Create a directory if required. Any parent directories will also be
      * created.
      *
+     * @param dir directory to create
      */
     public static void createDirectory(File dir) {
         FileUtilSupport.getDefault().createDirectory(dir);
@@ -764,6 +776,7 @@ public final class FileUtil {
      * {@link java.nio.file.Files#delete(java.nio.file.Path)} or
      * {@link java.nio.file.Files#deleteIfExists(java.nio.file.Path)} for files.
      *
+     * @param path path to delete
      * @return true if path was deleted, false otherwise
      */
     public static boolean delete(File path) {
@@ -775,7 +788,9 @@ public final class FileUtil {
      * {@link java.nio.file.Files#copy(java.nio.file.Path, java.io.OutputStream)}
      * for files.
      *
-     * @param dest must be the file, not the destination directory.
+     * @param source the file or directory to copy
+     * @param dest   must be the file or directory, not the containing directory
+     * @throws java.io.IOException if file cannot be copied
      */
     public static void copy(File source, File dest) throws IOException {
         FileUtilSupport.getDefault().copy(source, dest);
@@ -794,8 +809,13 @@ public final class FileUtil {
     }
 
     /**
-     * Backup a file.
+     * Backup a file. The backup is in the same location as the original file,
+     * has the extension <code>.bak</code> appended to the file name, and up to
+     * four revisions are retained. The lowest numbered revision is the most
+     * recent.
      *
+     * @param file the file to backup
+     * @throws java.io.IOException if a backup cannot be created
      * @see jmri.util.FileUtilSupport#backup(java.io.File)
      */
     public static void backup(File file) throws IOException {
@@ -803,11 +823,18 @@ public final class FileUtil {
     }
 
     /**
-     * Rotate a file
+     * Rotate a file and its backups, retaining only a set number of backups.
      *
+     * @param file      the file to rotate
+     * @param max       maximum number of backups to retain
+     * @param extension The extension to use for the rotations. If null or an
+     *                  empty string, the rotation number is used as the
+     *                  extension.
+     * @throws java.io.IOException if a backup cannot be created
+     * @throws IllegalArgumentException if max is less than one
      * @see jmri.util.FileUtilSupport#rotate(java.io.File, int,
      * java.lang.String)
-     * @see backup
+     * @see jmri.util.FileUtilSupport#backup(java.io.File) 
      */
     public static void rotate(File file, int max, String extension) throws IOException {
         FileUtilSupport.getDefault().rotate(file, max, extension);

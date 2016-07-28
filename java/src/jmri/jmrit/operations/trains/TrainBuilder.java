@@ -3383,7 +3383,7 @@ public class TrainBuilder extends TrainCommon {
                 || car.getFinalDestination() != null) {
             log.debug("No load generation for car ({}) isAddCustomLoadsAnyStagingTrackEnabled: " // NOI18N
                     +
-                    (car.getTrack().isAddCustomLoadsAnySpurEnabled() ? "true" : "false") // NOI18N
+                    (car.getTrack().isAddCustomLoadsAnyStagingTrackEnabled() ? "true" : "false") // NOI18N
                     +
                     ", car load ({}) destination ({}) final destination ({})", // NOI18N
                     car.toString(), car.getLoadName(), car.getDestinationName(), car.getFinalDestinationName());
@@ -3421,7 +3421,7 @@ public class TrainBuilder extends TrainCommon {
                 continue;
             }
             if (_terminateStageTrack != null && track.getLocation() == _terminateStageTrack.getLocation()) {
-                log.debug("Train doesn't terminate to staging track {} at terminal {}", track.getName(), track
+                log.debug("Train doesn't terminate to staging track ({}) at terminal ({})", track.getName(), track
                         .getLocation().getName());
                 continue;
             }
