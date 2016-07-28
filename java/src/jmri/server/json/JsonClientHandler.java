@@ -21,7 +21,6 @@ import static jmri.server.json.JSON.SIGNAL_HEAD;
 import static jmri.server.json.JSON.SIGNAL_HEADS;
 import static jmri.server.json.JSON.SIGNAL_MAST;
 import static jmri.server.json.JSON.SIGNAL_MASTS;
-import static jmri.server.json.JSON.THROTTLE;
 import static jmri.server.json.JSON.TRAIN;
 import static jmri.server.json.JSON.TRAINS;
 import static jmri.server.json.JSON.TYPE;
@@ -42,7 +41,6 @@ import jmri.jmris.json.JsonProgrammerServer;
 import jmri.jmris.json.JsonReporterServer;
 import jmri.jmris.json.JsonSignalHeadServer;
 import jmri.jmris.json.JsonSignalMastServer;
-import jmri.jmris.json.JsonThrottleServer;
 import jmri.jmris.json.JsonUtil;
 import jmri.spi.JsonServiceFactory;
 import org.slf4j.Logger;
@@ -56,7 +54,6 @@ public class JsonClientHandler {
     private final JsonReporterServer reporterServer;
     private final JsonSignalHeadServer signalHeadServer;
     private final JsonSignalMastServer signalMastServer;
-    private final JsonThrottleServer throttleServer;
     private final JsonConnection connection;
     private final HashMap<String, HashSet<JsonSocketService>> services = new HashMap<>();
     private static final Logger log = LoggerFactory.getLogger(JsonClientHandler.class);
@@ -69,7 +66,6 @@ public class JsonClientHandler {
         this.reporterServer = new JsonReporterServer(this.connection);
         this.signalHeadServer = new JsonSignalHeadServer(this.connection);
         this.signalMastServer = new JsonSignalMastServer(this.connection);
-        this.throttleServer = new JsonThrottleServer(this.connection);
         for (JsonServiceFactory factory : ServiceLoader.load(JsonServiceFactory.class)) {
             for (String type : factory.getTypes()) {
                 JsonSocketService service = factory.getSocketService(connection);
@@ -86,7 +82,6 @@ public class JsonClientHandler {
     }
 
     public void dispose() {
-        this.throttleServer.dispose();
         this.consistServer.dispose();
         this.operationsServer.dispose();
         this.programmerServer.dispose();
@@ -225,9 +220,6 @@ public class JsonClientHandler {
                         break;
                     case REPORTER:
                         this.reporterServer.parseRequest(this.connection.getLocale(), data);
-                        break;
-                    case THROTTLE:
-                        this.throttleServer.parseRequest(this.connection.getLocale(), data);
                         break;
                     case TRAIN:
                         this.operationsServer.parseTrainRequest(this.connection.getLocale(), data);
