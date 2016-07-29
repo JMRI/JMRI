@@ -636,8 +636,9 @@ red, the train will stop in the current Section (see below). If the facing signa
 is green or flashing green, the train will run at its <i>maximum allowed speed</i>. 
 If the facing signal is yellow or flashing yellow, the train will run at a reduced speed 
 of 35% of the allowable speed range. </p>
-<p>If using SignalMasts, the lesser of the SignalMast indicated speed vs. the 
-Block speed is used. This allows you to specify maximum speeds for specific trackage.</p> 
+<p>If using SignalMasts, the speed between two SignalMasts is set to the lesser 
+of the SignalMast indicated speed vs. the Block and Turnout speed for that path. 
+This allows you to specify maximum speeds for specific trackage.</p> 
 <p>When an Auto Active Train is created, a default <i>maximum allowed speed</i> is 
 specified as a fraction of the allowable speed range. Each new speed value is 
 compared to the <i>maximum allowed speed</i>, and reduced if necessary. This allows 
@@ -701,10 +702,12 @@ Editor panel selected in Dispatcher's Options window. The Layout Editor panel
 acts as a connectivity database, supplying connectivity information as needed to 
 Dispatcher or the Auto Active Train's <i>virtual engineer</i>.</p>
 </li>
-<li><p>Hardware signals on the layout need not be physically present, but signals and signal 
+<li><p>
+Auto Active Trains follow signals, requiring signals as part of the Layout Editor panel.
+Hardware signals on the layout need not be physically present, but signals and signal 
 logic (Either SignalHeads &amp; SSL or SignalMasts &amp; SML) must be configured in the 
-Layout Editor panel. Auto Active Trains follow signals, requiring signals on the 
-Layout Editor panel.</p>
+Layout Editor panel, and must be connected to the track at the proper block 
+transition points.</p>
 </li>
 <li><p>Sections and Transits must be set up for the layout. This is also required 
 for manual running of Active Trains. Sections must be configured so that Sections 
@@ -723,12 +726,13 @@ Use of these tools to set up signal logic is strongly recommended.
 When checking for direction sensors in signal logic, Dispatcher 
 looks in the SSL of each signal head (see below). 
 If signal logic is set up without use of the Layout Editor tools, make sure each 
-SSL or SML is configured correctly</p> 
+SSL or SML is configured correctly.</p> 
 </li>
-<li><p>All Sections should be configured with direction Sensors. When an Auto Active 
-Train is created, Dispatcher will check that direction Sensors are present and 
-are configured in signal logic of signals in all Sections of the Transit (SSL only). 
-Dispatcher will place direction Sensors in (SSL Only) signal logic if they are not found. 
+<li><p>(SSL Only) All Sections must be configured with direction Sensors. 
+When an Auto Active Train is created, 
+Dispatcher will check that direction Sensors are present and 
+are configured in signal logic of signals in all Sections of the Transit. 
+Dispatcher will place direction Sensors in signal logic if they are not found. 
 <b>Note:</b> Direction Sensors may be cleared from signal logic using a tool in 
 the Section Table when not running automatic trains.</p>
 </li>
