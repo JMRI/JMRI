@@ -1878,11 +1878,12 @@ public class TrainBuilder extends TrainCommon {
             if (blockId.equals("") || _numOfBlocks.get(blockId) == 1) {
                 break; // done
             }
-            RouteLocation rld = getLocationWithMaximumMoves(routeList, blockId); // get the location with the greatest
-            // number of moves
+            // get the location with the greatest number of moves
+            RouteLocation rld = getLocationWithMaximumMoves(routeList, blockId); 
             if (rld == null) {
                 break; // done
-            } // check to see if there are enough moves for all of the cars departing staging
+            } 
+            // check to see if there are enough moves for all of the cars departing staging
             if (rld.getMaxCarMoves() > _numOfBlocks.get(blockId)) {
                 // remove the largest block and maximum moves RouteLocation from the lists
                 _numOfBlocks.remove(blockId);
@@ -1937,7 +1938,7 @@ public class TrainBuilder extends TrainCommon {
                 }
             } else {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("blockDestNotEnoughMoves"),
-                        new Object[]{rl.getName(), blockId}));
+                        new Object[]{rld.getName(), blockId}));
                 _numOfBlocks.remove(blockId); // block is too large for any stop along this train's route
             }
         }
@@ -1968,6 +1969,9 @@ public class TrainBuilder extends TrainCommon {
         RouteLocation rlMax = null;
         int maxMoves = 0;
         for (RouteLocation rl : routeList) {
+            if (rl == _train.getTrainDepartsRouteLocation()) {
+                continue;
+            }
             if (rl.getMaxCarMoves() - rl.getCarMoves() > maxMoves) {
                 maxMoves = rl.getMaxCarMoves() - rl.getCarMoves();
                 rlMax = rl;
