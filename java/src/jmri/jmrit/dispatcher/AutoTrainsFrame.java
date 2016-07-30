@@ -1,4 +1,3 @@
-// AutoTrainsFrame.java
 package jmri.jmrit.dispatcher;
 
 import java.awt.Container;
@@ -43,14 +42,8 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Dave Duchamp Copyright (C) 2010
- * @version	$Revision$
  */
 public class AutoTrainsFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5083159503596027291L;
 
     public AutoTrainsFrame(DispatcherFrame disp) {
         super(false, true);
@@ -173,7 +166,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         } else {
             sb.append("(rev)");
         }
-        //Only repack if the test size has increased.
+        //Only repack if the text size has increased.
         if (status.getText().length() < sb.toString().length()) {
             status.setText(sb.toString());
             autoTrainsFrame.pack();
@@ -381,6 +374,10 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                             || (at.getStatus() == ActiveTrain.WAITING)) {
                         aat.setSpeedBySignal();
                     }
+                } else if (at.getStatus() == ActiveTrain.DONE) {
+                    // restart
+                    at.allocateAFresh();
+                    at.restart();
                 } else {
                     // stop
                     aat.getAutoEngineer().setHalt(true);
@@ -514,6 +511,10 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                     stopButton.setText(rb.getString("ResumeButton"));
                     stopButton.setToolTipText(rb.getString("ResumeButtonHint"));
                     _resumeAutoRunningButtons.get(i).setVisible(false);
+                } else if (at.getStatus() == ActiveTrain.DONE) {
+                    stopButton.setText(rb.getString("RestartButton"));
+                    stopButton.setToolTipText(rb.getString("RestartButtonHint"));
+                    _resumeAutoRunningButtons.get(i).setVisible(false);
                 } else if (at.getStatus() == ActiveTrain.WORKING) {
                     stopButton.setVisible(false);
                 } else {
@@ -538,6 +539,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                     _forwardButtons.get(i).setVisible(false);
                     _reverseButtons.get(i).setVisible(false);
                     _speedSliders.get(i).setVisible(true);
+                    _throttleStatus.get(i).setVisible(true);
                 } else {
                     manualButton.setText(rb.getString("ToAutoButton"));
                     manualButton.setToolTipText(rb.getString("ToAutoButtonHint"));

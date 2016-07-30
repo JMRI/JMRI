@@ -399,7 +399,7 @@ public class LayoutEditorTools {
             } else if (assigned != A2) {
 // need to figure out what to do in this case.			
             }
-        } else if (throatDivergingHead == null) {
+        } else {   // throatDivergingHead is always null here
             removeSignalHeadFromPanel(layoutTurnout.getSignalA2Name());
             layoutTurnout.setSignalA2Name("");
         }
@@ -1076,7 +1076,7 @@ public class LayoutEditorTools {
             }
             return null;
         }
-        SignalHead head = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(str);
+        SignalHead head = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(str);
         if (head == null) {
             JOptionPane.showMessageDialog(frame,
                     java.text.MessageFormat.format(rb.getString("SignalsError4"),
@@ -1098,7 +1098,7 @@ public class LayoutEditorTools {
         if ((str == null) || (str.equals(""))) {
             return null;
         }
-        return (jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(str));
+        return (jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(str));
     }
 
     /**
@@ -1257,13 +1257,11 @@ public class LayoutEditorTools {
         }
         for (int i = 0; i < layoutEditor.pointList.size(); i++) {
             PositionablePoint po = layoutEditor.pointList.get(i);
-            if ((po.getEastBoundSignal() != null)
-                    && (po.getEastBoundSignal().equals(sName) || ((uName != null)
+            if (    (po.getEastBoundSignal().equals(sName) || ((uName != null)
                     && (po.getEastBoundSignal().equals(uName))))) {
                 return true;
             }
-            if ((po.getWestBoundSignal() != null)
-                    && (po.getWestBoundSignal().equals(sName) || ((uName != null)
+            if (    (po.getWestBoundSignal().equals(sName) || ((uName != null)
                     && (po.getWestBoundSignal().equals(uName))))) {
                 return true;
             }
@@ -1351,14 +1349,10 @@ public class LayoutEditorTools {
         }
         for (int i = 0; i < layoutEditor.pointList.size(); i++) {
             PositionablePoint po = layoutEditor.pointList.get(i);
-            if ((po.getEastBoundSignal() != null)
-                    && (po.getEastBoundSignal().equals(sName) || ((uName != null)
-                    && (po.getEastBoundSignal().equals(uName))))) {
+            if (po.getEastBoundSignal().equals(sName) || po.getEastBoundSignal().equals(uName)) {
                 po.setEastBoundSignal("");
             }
-            if ((po.getWestBoundSignal() != null)
-                    && (po.getWestBoundSignal().equals(sName) || ((uName != null)
-                    && (po.getWestBoundSignal().equals(uName))))) {
+            if (po.getWestBoundSignal().equals(sName) || po.getWestBoundSignal().equals(uName)) {
                 po.setWestBoundSignal("");
             }
         }
@@ -1395,7 +1389,7 @@ public class LayoutEditorTools {
         if ((signalName == null) || (signalName.length() < 1)) {
             return;
         }
-        SignalHead head = jmri.InstanceManager.signalHeadManagerInstance().
+        SignalHead head = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
                 getSignalHead(signalName);
         removeAssignment(head);
         layoutEditor.removeSignalHead(head);
@@ -1496,10 +1490,10 @@ public class LayoutEditorTools {
                     } else {
                         signalName = p.getEastBoundSignal();
                     }
-                    if ((signalName == null) || (signalName.equals(""))) {
+                    if (signalName.equals("")) {
                         return null;
                     }
-                    return jmri.InstanceManager.signalHeadManagerInstance().
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
                             getSignalHead(signalName);
                 }
                 obj = p;
@@ -1508,7 +1502,7 @@ public class LayoutEditorTools {
                 LayoutTurnout to = (LayoutTurnout) connect;
                 String signalName = to.getSignalA2Name();
                 if ((!(signalName == null)) && (!(signalName.equals("")))) {
-                    auxSignal = jmri.InstanceManager.signalHeadManagerInstance().
+                    auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
                             getSignalHead(signalName);
                 }
                 signalName = to.getSignalA1Name();
@@ -1523,7 +1517,7 @@ public class LayoutEditorTools {
                     warnOfSkippedTurnout(frame, to.getTurnoutName(), headName);
                     obj = to;
                 } else {
-                    return jmri.InstanceManager.signalHeadManagerInstance().
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
                             getSignalHead(signalName);
                 }
             } else if (type == LayoutEditor.TURNOUT_B) {
@@ -1534,7 +1528,7 @@ public class LayoutEditorTools {
                     signalName = to.getSignalC2Name();
                 }
                 if ((!(signalName == null)) && (!(signalName.equals("")))) {
-                    auxSignal = jmri.InstanceManager.signalHeadManagerInstance().
+                    auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
                             getSignalHead(signalName);
                 }
                 if (to.getContinuingSense() == Turnout.CLOSED) {
@@ -1553,8 +1547,7 @@ public class LayoutEditorTools {
                     warnOfSkippedTurnout(frame, to.getTurnoutName(), headName);
                     obj = to;
                 } else {
-                    return jmri.InstanceManager.signalHeadManagerInstance().
-                            getSignalHead(signalName);
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
                 }
             } else if (type == LayoutEditor.TURNOUT_C) {
                 // Reached turnout diverging, should be signalled
@@ -1563,8 +1556,8 @@ public class LayoutEditorTools {
                 if (to.getContinuingSense() == Turnout.THROWN) {
                     signalName = to.getSignalB2Name();
                 }
-                if ((!(signalName == null)) && (!(signalName.equals("")))) {
-                    auxSignal = jmri.InstanceManager.signalHeadManagerInstance().
+                if ((signalName != null) && !signalName.equals("") ) {
+                    auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
                             getSignalHead(signalName);
                 }
                 if (to.getContinuingSense() == Turnout.CLOSED) {
@@ -1583,7 +1576,7 @@ public class LayoutEditorTools {
                     warnOfSkippedTurnout(frame, to.getTurnoutName(), headName);
                     obj = to;
                 } else {
-                    return jmri.InstanceManager.signalHeadManagerInstance().
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
                             getSignalHead(signalName);
                 }
             } else if (type == LayoutEditor.TURNOUT_D) {
@@ -1591,7 +1584,7 @@ public class LayoutEditorTools {
                 LayoutTurnout to = (LayoutTurnout) connect;
                 String signalName = to.getSignalD2Name();
                 if ((!(signalName == null)) && (!(signalName.equals("")))) {
-                    auxSignal = jmri.InstanceManager.signalHeadManagerInstance().
+                    auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
                             getSignalHead(signalName);
                 }
                 signalName = to.getSignalD1Name();
@@ -1606,7 +1599,7 @@ public class LayoutEditorTools {
                     warnOfSkippedTurnout(frame, to.getTurnoutName(), headName);
                     obj = to;
                 } else {
-                    return jmri.InstanceManager.signalHeadManagerInstance().
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
                             getSignalHead(signalName);
                 }
             } else if (type == LayoutEditor.LEVEL_XING_A) {
@@ -1614,7 +1607,7 @@ public class LayoutEditorTools {
                 LevelXing x = (LevelXing) connect;
                 String signalName = x.getSignalAName();
                 if ((signalName != null) && (!signalName.equals(""))) {
-                    return jmri.InstanceManager.signalHeadManagerInstance().
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
                             getSignalHead(signalName);
                 }
                 t = (TrackSegment) x.getConnectC();
@@ -1630,7 +1623,7 @@ public class LayoutEditorTools {
                 LevelXing x = (LevelXing) connect;
                 String signalName = x.getSignalBName();
                 if ((signalName != null) && (!signalName.equals(""))) {
-                    return jmri.InstanceManager.signalHeadManagerInstance().
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
                             getSignalHead(signalName);
                 }
                 t = (TrackSegment) x.getConnectD();
@@ -1646,7 +1639,7 @@ public class LayoutEditorTools {
                 LevelXing x = (LevelXing) connect;
                 String signalName = x.getSignalCName();
                 if ((signalName != null) && (!signalName.equals(""))) {
-                    return jmri.InstanceManager.signalHeadManagerInstance().
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
                             getSignalHead(signalName);
                 }
                 t = (TrackSegment) x.getConnectA();
@@ -1662,7 +1655,7 @@ public class LayoutEditorTools {
                 LevelXing x = (LevelXing) connect;
                 String signalName = x.getSignalDName();
                 if ((signalName != null) && (!signalName.equals(""))) {
-                    return jmri.InstanceManager.signalHeadManagerInstance().
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
                             getSignalHead(signalName);
                 }
                 t = (TrackSegment) x.getConnectB();
@@ -1677,7 +1670,7 @@ public class LayoutEditorTools {
                 LayoutSlip sl = (LayoutSlip) connect;
                 String signalName = sl.getSignalA2Name();
                 if ((!(signalName == null)) && (!(signalName.equals("")))) {
-                    auxSignal = jmri.InstanceManager.signalHeadManagerInstance().
+                    auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
                             getSignalHead(signalName);
                 }
                 signalName = sl.getSignalA1Name();
@@ -1692,7 +1685,7 @@ public class LayoutEditorTools {
                     warnOfSkippedTurnout(frame, sl.getTurnoutName(), headName);
                     obj = sl;
                 } else {
-                    return jmri.InstanceManager.signalHeadManagerInstance().
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
                             getSignalHead(signalName);
                 }
             } else if (type == LayoutEditor.SLIP_B) {
@@ -1701,7 +1694,7 @@ public class LayoutEditorTools {
                 if (sl.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
                     signalName = sl.getSignalB2Name();
                     if ((!(signalName == null)) && (!(signalName.equals("")))) {
-                        auxSignal = jmri.InstanceManager.signalHeadManagerInstance().
+                        auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
                                 getSignalHead(signalName);
                     }
                 }
@@ -1717,7 +1710,7 @@ public class LayoutEditorTools {
                     warnOfSkippedTurnout(frame, sl.getTurnoutName(), headName);
                     obj = sl;
                 } else {
-                    return jmri.InstanceManager.signalHeadManagerInstance().
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
                             getSignalHead(signalName);
                 }
             } else if (type == LayoutEditor.SLIP_C) {
@@ -1726,7 +1719,7 @@ public class LayoutEditorTools {
                 if (sl.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
                     signalName = sl.getSignalC2Name();
                     if ((!(signalName == null)) && (!(signalName.equals("")))) {
-                        auxSignal = jmri.InstanceManager.signalHeadManagerInstance().
+                        auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
                                 getSignalHead(signalName);
                     }
                 }
@@ -1742,14 +1735,14 @@ public class LayoutEditorTools {
                     warnOfSkippedTurnout(frame, sl.getTurnoutName(), headName);
                     obj = sl;
                 } else {
-                    return jmri.InstanceManager.signalHeadManagerInstance().
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
                             getSignalHead(signalName);
                 }
             } else if (type == LayoutEditor.SLIP_D) {
                 LayoutSlip sl = (LayoutSlip) connect;
                 String signalName = sl.getSignalD2Name();
                 if ((!(signalName == null)) && (!(signalName.equals("")))) {
-                    auxSignal = jmri.InstanceManager.signalHeadManagerInstance().
+                    auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
                             getSignalHead(signalName);
                 }
                 signalName = sl.getSignalD1Name();
@@ -1764,7 +1757,7 @@ public class LayoutEditorTools {
                     warnOfSkippedTurnout(frame, sl.getTurnoutName(), headName);
                     obj = sl;
                 } else {
-                    return jmri.InstanceManager.signalHeadManagerInstance().
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
                             getSignalHead(signalName);
                 }
             } else if (type >= LayoutEditor.TURNTABLE_RAY_OFFSET) {
@@ -2878,7 +2871,7 @@ public class LayoutEditorTools {
             } else if (assigned != A2) {
 // need to figure out what to do in this case.			
             }
-        } else if (a2Head == null) {
+        } else { // a2Head known to be null here
             removeSignalHeadFromPanel(layoutTurnout.getSignalA2Name());
             layoutTurnout.setSignalA2Name("");
         }
@@ -2965,7 +2958,7 @@ public class LayoutEditorTools {
             } else if (assigned != B2) {
 // need to figure out what to do in this case.			
             }
-        } else if (b2Head == null) {
+        } else { // b2Head known to be null here
             removeSignalHeadFromPanel(layoutTurnout.getSignalB2Name());
             layoutTurnout.setSignalB2Name("");
         }
@@ -3052,7 +3045,7 @@ public class LayoutEditorTools {
             } else if (assigned != C2) {
 // need to figure out what to do in this case.			
             }
-        } else if (c2Head == null) {
+        } else { // c2Head known to be null here
             removeSignalHeadFromPanel(layoutTurnout.getSignalC2Name());
             layoutTurnout.setSignalC2Name("");
         }
@@ -3139,7 +3132,7 @@ public class LayoutEditorTools {
             } else if (assigned != D2) {
 // need to figure out what to do in this case.			
             }
-        } else if (d2Head == null) {
+        } else { // d2Head known to be null here
             removeSignalHeadFromPanel(layoutTurnout.getSignalD2Name());
             layoutTurnout.setSignalD2Name("");
         }
@@ -4760,7 +4753,7 @@ public class LayoutEditorTools {
         if (str.equals("")) {
             // turnout 1 not entered, test turnout 2
             str = turnout2NameField.getText().trim();
-            if ((str == null) || (str.equals(""))) {
+            if (str.equals("")) {
                 // no entries in turnout fields 
                 JOptionPane.showMessageDialog(setSignalsAtTToTFrame, rb.getString("SignalsError1"),
                         rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
@@ -4838,7 +4831,7 @@ public class LayoutEditorTools {
             turnout1NameField.setText(str);
             // have turnout 1 and layout turnout 1 - was something entered for turnout 2
             str = turnout2NameField.getText().trim();
-            if ((str == null) || (str.equals(""))) {
+            if (str.equals("")) {
                 // no entry for turnout 2
                 connectorTrack = (TrackSegment) layoutTurnout1.getConnectA();
                 if (connectorTrack == null) {
@@ -5056,7 +5049,7 @@ public class LayoutEditorTools {
             } else if (assigned != B2) {
 // need to figure out what to do in this case.			
             }
-        } else if (a2TToTHead == null) {
+        } else { // a2TToTHead known to be null here
             removeSignalHeadFromPanel(layoutTurnout1.getSignalB2Name());
             layoutTurnout1.setSignalB2Name("");
         }
@@ -5151,7 +5144,7 @@ public class LayoutEditorTools {
             } else if (assigned != C2) {
 // need to figure out what to do in this case.			
             }
-        } else if (b2TToTHead == null) {
+        } else { // b2TToTHead known to be null here
             removeSignalHeadFromPanel(layoutTurnout1.getSignalC2Name());
             layoutTurnout1.setSignalC2Name("");
         }
@@ -5247,7 +5240,7 @@ public class LayoutEditorTools {
             } else if (assigned != B2) {
 // need to figure out what to do in this case.			
             }
-        } else if (c2TToTHead == null) {
+        } else { // c2TToTHead known to be null here
             removeSignalHeadFromPanel(layoutTurnout2.getSignalB2Name());
             layoutTurnout2.setSignalB2Name("");
         }
@@ -5342,7 +5335,7 @@ public class LayoutEditorTools {
             } else if (assigned != C2) {
 // need to figure out what to do in this case.			
             }
-        } else if (d2TToTHead == null) {
+        } else { // d2TToTHead known to be null here
             removeSignalHeadFromPanel(layoutTurnout2.getSignalC2Name());
             layoutTurnout2.setSignalC2Name("");
         }
@@ -5903,15 +5896,15 @@ public class LayoutEditorTools {
             log.error("Trouble creating sensor " + sensorName + " while setting up Logix.");
             return "";
         }
-        if (InstanceManager.logixManagerInstance().getBySystemName(logixName) == null) {
+        if (InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(logixName) == null) {
             // Logix does not exist, create it
-            Logix x = InstanceManager.logixManagerInstance().createNewLogix(logixName, "");
+            Logix x = InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix(logixName, "");
             if (x == null) {
                 log.error("Trouble creating logix " + logixName + " while setting up signal logic.");
                 return "";
             }
             String cName = x.getSystemName() + "C1";
-            Conditional c = InstanceManager.conditionalManagerInstance().
+            Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).
                     createNewConditional(cName, "");
             if (c == null) {
                 log.error("Trouble creating conditional " + cName + " while setting up Logix.");
@@ -6289,7 +6282,7 @@ public class LayoutEditorTools {
         if (str.equals("")) {
             // turnout A not entered, test turnout B
             str = turnoutBNameField.getText().trim();
-            if ((str == null) || (str.equals(""))) {
+            if (str.equals("")) {
                 // no entries in turnout fields 
                 JOptionPane.showMessageDialog(setSignalsAt3WayFrame, rb.getString("SignalsError1"),
                         rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
@@ -6367,7 +6360,7 @@ public class LayoutEditorTools {
             turnoutANameField.setText(str);
             // have turnout A and layout turnout A - was something entered for turnout B
             str = turnoutBNameField.getText().trim();
-            if ((str == null) || (str.equals(""))) {
+            if (str.equals("")) {
                 // no entry for turnout B
                 connectorTrack = (TrackSegment) layoutTurnoutA.getConnectB();
                 if (connectorTrack == null) {
@@ -6579,7 +6572,7 @@ public class LayoutEditorTools {
             } else if (assigned != A2) {
 // need to figure out what to do in this case.			
             }
-        } else if (a23WayHead == null) {
+        } else {  // a23WayHead is always null here
             removeSignalHeadFromPanel(layoutTurnoutA.getSignalA2Name());
             layoutTurnoutA.setSignalA2Name("");
         }
@@ -6624,7 +6617,7 @@ public class LayoutEditorTools {
             } else if (assigned != A3) {
 // need to figure out what to do in this case.			
             }
-        } else if (a33WayHead == null) {
+        } else {  // a23WayHead is always null here
             removeSignalHeadFromPanel(layoutTurnoutA.getSignalA3Name());
             layoutTurnoutA.setSignalA3Name("");
         }
@@ -7530,13 +7523,13 @@ public class LayoutEditorTools {
         for (PositionablePoint po : layoutEditor.pointList) {
             //We allow the same sensor to be allocated in both directions.
             if (po != boundary) {
-                if ((po.getEastBoundSensor() != null) && po.getEastBoundSensor() == sensor) {
+                if (po.getEastBoundSensor() == sensor) {
                     if (!sensorAssignedElseWhere(sensor.getDisplayName())) {
                         return true;
                     }
 
                 }
-                if ((po.getWestBoundSensorName() != null) && po.getWestBoundSensor() == sensor) {
+                if (po.getWestBoundSensor() == sensor) {
                     if (!sensorAssignedElseWhere(sensor.getDisplayName())) {
                         return true;
                     }
@@ -7880,8 +7873,8 @@ public class LayoutEditorTools {
         }
         // Initialize if needed
         if (setSignalMastsAtBoundaryFrame == null) {
-            eastSignalMast = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
-            westSignalMast = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
+            eastSignalMast = new BeanDetails("SignalMast", jmri.InstanceManager.getDefault(jmri.SignalMastManager.class));
+            westSignalMast = new BeanDetails("SignalMast", jmri.InstanceManager.getDefault(jmri.SignalMastManager.class));
             setSignalMastsAtBoundaryFrame = new JmriJFrame(rb.getString("SignalMastsAtBoundary"), false, true);
             setSignalMastsAtBoundaryFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalMastsAtBoundary", true);
             setSignalMastsAtBoundaryFrame.setLocation(70, 30);
@@ -8027,7 +8020,7 @@ public class LayoutEditorTools {
             }
             return null;
         }
-        SignalMast head = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(str);
+        SignalMast head = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(str);
         if (head == null) {
             JOptionPane.showMessageDialog(frame,
                     java.text.MessageFormat.format(rb.getString("SignalMastsError4"),
@@ -8250,7 +8243,7 @@ public class LayoutEditorTools {
         SignalMast block2BoundSignalMast = getSignalMastFromEntry(westSignalMast.getText(), false, setSignalMastsAtBoundaryFrame);
 
         if (block1BoundSignalMast == null) {
-            if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(oldBlock1SignalMast)) {
+            if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.getDefault(jmri.SignalMastLogicManager.class).isSignalMastUsed(oldBlock1SignalMast)) {
                 SignallingGuiTools.removeSignalMastLogic(setSignalMastsAtBoundaryFrame, oldBlock1SignalMast);
             }
 
@@ -8259,7 +8252,7 @@ public class LayoutEditorTools {
             boundary.setEastBoundSignalMast("");
         }
         if (block2BoundSignalMast == null) {
-            if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(oldBlock2SignalMast)) {
+            if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.getDefault(jmri.SignalMastLogicManager.class).isSignalMastUsed(oldBlock2SignalMast)) {
                 SignallingGuiTools.removeSignalMastLogic(setSignalMastsAtBoundaryFrame, oldBlock2SignalMast);
             }
 
@@ -8389,7 +8382,7 @@ public class LayoutEditorTools {
 
     public void updateBoundaryBasedSignalMastLogic(SignalMast oldBlock1SignalMast, SignalMast oldBlock2SignalMast,
             SignalMast block1BoundSignalMast, SignalMast block2BoundSignalMast) {
-        jmri.SignalMastLogicManager smlm = InstanceManager.signalMastLogicManagerInstance();
+        jmri.SignalMastLogicManager smlm = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
         boolean old1Used = smlm.isSignalMastUsed(oldBlock1SignalMast);
         boolean old2Used = smlm.isSignalMastUsed(oldBlock2SignalMast);
         //Just check that the old ones are used in logics somewhere.
@@ -9073,10 +9066,10 @@ public class LayoutEditorTools {
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
-            turnoutSignalMastA = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
-            turnoutSignalMastB = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
-            turnoutSignalMastC = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
-            turnoutSignalMastD = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
+            turnoutSignalMastA = new BeanDetails("SignalMast", jmri.InstanceManager.getDefault(jmri.SignalMastManager.class));
+            turnoutSignalMastB = new BeanDetails("SignalMast", jmri.InstanceManager.getDefault(jmri.SignalMastManager.class));
+            turnoutSignalMastC = new BeanDetails("SignalMast", jmri.InstanceManager.getDefault(jmri.SignalMastManager.class));
+            turnoutSignalMastD = new BeanDetails("SignalMast", jmri.InstanceManager.getDefault(jmri.SignalMastManager.class));
             if (turnoutMastFromMenu) {
                 JLabel turnoutMastNameLabel = new JLabel(rb.getString("Turnout") + " "
                         + rb.getString("Name") + " : " + layoutTurnout.getTurnoutName());
@@ -9271,14 +9264,10 @@ public class LayoutEditorTools {
         }
         for (int i = 0; i < layoutEditor.pointList.size(); i++) {
             PositionablePoint po = layoutEditor.pointList.get(i);
-            if ((po.getEastBoundSignalMastName() != null)
-                    && (po.getEastBoundSignalMastName().equals(sName) || ((uName != null)
-                    && (po.getEastBoundSignalMastName().equals(uName))))) {
+            if (po.getEastBoundSignalMastName().equals(sName) || po.getEastBoundSignalMastName().equals(uName)) {
                 po.setEastBoundSignalMast("");
             }
-            if ((po.getWestBoundSignalMastName() != null)
-                    && (po.getWestBoundSignalMastName().equals(sName) || ((uName != null)
-                    && (po.getWestBoundSignalMastName().equals(uName))))) {
+            if (po.getWestBoundSignalMastName().equals(sName) || po.getWestBoundSignalMastName().equals(uName)) {
                 po.setWestBoundSignalMast("");
             }
         }
@@ -9611,10 +9600,10 @@ public class LayoutEditorTools {
         }
         // Initialize if needed
         if (signalMastsAtSlipFrame == null) {
-            slipSignalMastA = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
-            slipSignalMastB = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
-            slipSignalMastC = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
-            slipSignalMastD = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
+            slipSignalMastA = new BeanDetails("SignalMast", jmri.InstanceManager.getDefault(jmri.SignalMastManager.class));
+            slipSignalMastB = new BeanDetails("SignalMast", jmri.InstanceManager.getDefault(jmri.SignalMastManager.class));
+            slipSignalMastC = new BeanDetails("SignalMast", jmri.InstanceManager.getDefault(jmri.SignalMastManager.class));
+            slipSignalMastD = new BeanDetails("SignalMast", jmri.InstanceManager.getDefault(jmri.SignalMastManager.class));
 
             signalMastsAtSlipFrame = new JmriJFrame(rb.getString("SignalMastsAtLayoutSlip"), false, true);
             signalMastsAtSlipFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtLayoutSlip", true);
@@ -10106,10 +10095,10 @@ public class LayoutEditorTools {
         }
         // Initialize if needed
         if (signalMastsAtXingFrame == null) {
-            xingSignalMastA = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
-            xingSignalMastB = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
-            xingSignalMastC = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
-            xingSignalMastD = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
+            xingSignalMastA = new BeanDetails("SignalMast", jmri.InstanceManager.getDefault(jmri.SignalMastManager.class));
+            xingSignalMastB = new BeanDetails("SignalMast", jmri.InstanceManager.getDefault(jmri.SignalMastManager.class));
+            xingSignalMastC = new BeanDetails("SignalMast", jmri.InstanceManager.getDefault(jmri.SignalMastManager.class));
+            xingSignalMastD = new BeanDetails("SignalMast", jmri.InstanceManager.getDefault(jmri.SignalMastManager.class));
 
             signalMastsAtXingFrame = new JmriJFrame(rb.getString("SignalMastsAtLevelXing"), false, true);
             signalMastsAtXingFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtLevelXing", true);
@@ -12687,7 +12676,7 @@ public class LayoutEditorTools {
             } else if (assigned != B2) {
 // need to figure out what to do in this case.			
             }
-        } else if (a2SlipHead == null) {
+        } else { // a2SlipHead known to be null here
             removeSignalHeadFromPanel(layoutSlip.getSignalA2Name());
             layoutSlip.setSignalB2Name("");
         }
@@ -12767,7 +12756,7 @@ public class LayoutEditorTools {
                 } else if (assigned != C2) {
                     // need to figure out what to do in this case.			
                 }
-            } else if (b2SlipHead == null) {
+            } else { // b2SlipHead known to be null here
                 removeSignalHeadFromPanel(layoutSlip.getSignalB2Name());
                 layoutSlip.setSignalB2Name("");
             }
@@ -12856,7 +12845,7 @@ public class LayoutEditorTools {
                 } else if (assigned != B2) {
                     // need to figure out what to do in this case.			
                 }
-            } else if (c2SlipHead == null) {
+            } else { // c2SlipHead known to be null here
                 removeSignalHeadFromPanel(layoutSlip.getSignalC2Name());
                 layoutSlip.setSignalC2Name("");
             }
@@ -12943,7 +12932,7 @@ public class LayoutEditorTools {
             } else if (assigned != C2) {
 // need to figure out what to do in this case.			
             }
-        } else if (d2SlipHead == null) {
+        } else { // d2SlipHead known to be null here
             removeSignalHeadFromPanel(layoutSlip.getSignalD2Name());
             layoutSlip.setSignalD2Name("");
         }
@@ -13233,9 +13222,9 @@ public class LayoutEditorTools {
             return "";
         }
         boolean newConditional = false;
-        Logix x = InstanceManager.logixManagerInstance().getBySystemName(logixName);
+        Logix x = InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(logixName);
         if (x == null) {
-            x = InstanceManager.logixManagerInstance().createNewLogix(logixName, "");
+            x = InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix(logixName, "");
             newConditional = true;
             if (x == null) {
                 log.error("Trouble creating logix " + logixName + " while setting up signal logic.");
@@ -13246,9 +13235,9 @@ public class LayoutEditorTools {
         x.deActivateLogix();
         String cName = logixName + "C" + number;
 
-        Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(cName);
+        Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(cName);
         if (c == null) {
-            c = InstanceManager.conditionalManagerInstance().
+            c = InstanceManager.getDefault(jmri.ConditionalManager.class).
                     createNewConditional(cName, "");
             newConditional = true;
             if (c == null) {

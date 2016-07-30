@@ -20,8 +20,7 @@ import org.slf4j.LoggerFactory;
  * JPanel to create a new Sensor
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @deprecated Replaced by
- * {@link jmri.jmrit.beantable.AddNewHardwareDevicePanel}
+ * @deprecated Replaced by {@link jmri.jmrit.beantable.AddNewHardwareDevicePanel}
  */
 @Deprecated
 public class AddSensorPanel extends jmri.util.swing.JmriPanel {
@@ -208,7 +207,7 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
             }
             if (user != null && !user.equals("") && (jmri.InstanceManager.sensorManagerInstance().getByUserName(user) == null)) {
                 s.setUserName(user);
-            } else if (jmri.InstanceManager.sensorManagerInstance().getByUserName(user) != null && !p.getPreferenceState(AddSensorPanel.class.getName(), "duplicateUserName")) {
+            } else if (user != null && !user.equals("") && jmri.InstanceManager.sensorManagerInstance().getByUserName(user) != null && !p.getPreferenceState(AddSensorPanel.class.getName(), "duplicateUserName")) {
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showErrorMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", AddSensorPanel.class.getName(), "duplicateUserName", false, true);
             }
@@ -228,6 +227,3 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
 
     private final static Logger log = LoggerFactory.getLogger(AddSensorPanel.class.getName());
 }
-
-
-/* @(#)AddSensorPanel.java */

@@ -41,7 +41,7 @@ public class PackageTest extends TestCase {
         //suite.addTest(jmri.jmrix.cmri.serial.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.cmri.PackageTest.class));
         suite.addTest(jmri.jmrix.dcc.PackageTest.suite());
-        suite.addTest(jmri.jmrix.dcc4pc.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.dcc4pc.PackageTest.class));
         suite.addTest(jmri.jmrix.direct.PackageTest.suite());
         suite.addTest(jmri.jmrix.easydcc.PackageTest.suite());
         suite.addTest(jmri.jmrix.grapevine.PackageTest.suite());
@@ -59,7 +59,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.pricom.PackageTest.suite());
         suite.addTest(jmri.jmrix.qsi.PackageTest.suite());
         suite.addTest(jmri.jmrix.rps.PackageTest.suite());
-        suite.addTest(jmri.jmrix.sprog.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.sprog.PackageTest.class));
         suite.addTest(jmri.jmrix.secsi.PackageTest.suite());
         suite.addTest(jmri.jmrix.tams.PackageTest.suite());
         suite.addTest(jmri.jmrix.tmcc.PackageTest.suite());

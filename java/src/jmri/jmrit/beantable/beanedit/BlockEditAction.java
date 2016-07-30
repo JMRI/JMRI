@@ -72,7 +72,7 @@ public class BlockEditAction extends BeanEditAction {
         BeanItemPanel reporter = new BeanItemPanel();
         reporter.setName(Bundle.getMessage("BeanNameReporter"));
 
-        reporterField = new JmriBeanComboBox(InstanceManager.reporterManagerInstance(), ((Block) bean).getReporter(), JmriBeanComboBox.DISPLAYNAME);
+        reporterField = new JmriBeanComboBox(InstanceManager.getDefault(jmri.ReporterManager.class), ((Block) bean).getReporter(), JmriBeanComboBox.DISPLAYNAME);
         reporterField.setFirstItemBlank(true);
 
         reporter.addItem(new BeanEditItem(reporterField, Bundle.getMessage("BeanNameReporter"), Bundle.getMessage("BlockReporterText")));
@@ -108,7 +108,7 @@ public class BlockEditAction extends BeanEditAction {
             }
         });
         bei.add(reporter);
-        if (jmri.InstanceManager.getDefault(jmri.ReporterManager.class) == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ReporterManager.class) == null) {
             setEnabled(false);
         }
         return reporter;

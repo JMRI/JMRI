@@ -105,7 +105,7 @@ public class BlockContentsIconXml extends PositionableLabelXml {
 
         loadTextInfo(l, element);
 
-        Block m = jmri.InstanceManager.blockManagerInstance().getBlock(name);
+        Block m = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getBlock(name);
         if (m != null) {
             l.setBlock(name);
         } else {

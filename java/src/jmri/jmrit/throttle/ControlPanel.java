@@ -676,44 +676,40 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         spinnerPanel = new JPanel();
         spinnerPanel.setLayout(new GridBagLayout());
 
-        if (speedSpinner != null) {
-            spinnerPanel.add(speedSpinner, constraints);
-        }
+        spinnerPanel.add(speedSpinner, constraints);
 
         speedControlPanel.add(spinnerPanel);
 
         // remove old actions
-        if (speedSpinner != null) {
-            speedSpinner.addChangeListener(
-                    new ChangeListener() {
-                        public void stateChanged(ChangeEvent e) {
-                            if (!internalAdjust) {
-                                //if (!speedSpinner.getValueIsAdjusting())
-                                //{
-                                float newSpeed = ((Integer) speedSpinner.getValue()).floatValue() / (intSpeedSteps * 1.0f);
-                                if (log.isDebugEnabled()) {
-                                    log.debug("stateChanged: spinner pos: " + speedSpinner.getValue() + " speed: " + newSpeed);
-                                }
-                                if (throttle != null) {
-                                    if (spinnerPanel.isVisible()) {
-                                        throttle.setSpeedSetting(newSpeed);
-                                    }
-                                    speedSlider.setValue(((Integer) speedSpinner.getValue()).intValue());
-                                    if (speedSliderContinuous != null) {
-                                        if (forwardButton.isSelected()) {
-                                            speedSliderContinuous.setValue(((Integer) speedSpinner.getValue()).intValue());
-                                        } else {
-                                            speedSliderContinuous.setValue(-((Integer) speedSpinner.getValue()).intValue());
-                                        }
-                                    }
-                                } else {
-                                    log.warn("no throttle object in stateChanged, ignoring change of speed to " + newSpeed);
-                                }
-                                //}
+        speedSpinner.addChangeListener(
+                new ChangeListener() {
+                    public void stateChanged(ChangeEvent e) {
+                        if (!internalAdjust) {
+                            //if (!speedSpinner.getValueIsAdjusting())
+                            //{
+                            float newSpeed = ((Integer) speedSpinner.getValue()).floatValue() / (intSpeedSteps * 1.0f);
+                            if (log.isDebugEnabled()) {
+                                log.debug("stateChanged: spinner pos: " + speedSpinner.getValue() + " speed: " + newSpeed);
                             }
+                            if (throttle != null) {
+                                if (spinnerPanel.isVisible()) {
+                                    throttle.setSpeedSetting(newSpeed);
+                                }
+                                speedSlider.setValue(((Integer) speedSpinner.getValue()).intValue());
+                                if (speedSliderContinuous != null) {
+                                    if (forwardButton.isSelected()) {
+                                        speedSliderContinuous.setValue(((Integer) speedSpinner.getValue()).intValue());
+                                    } else {
+                                        speedSliderContinuous.setValue(-((Integer) speedSpinner.getValue()).intValue());
+                                    }
+                                }
+                            } else {
+                                log.warn("no throttle object in stateChanged, ignoring change of speed to " + newSpeed);
+                            }
+                            //}
                         }
-                    });
-        }
+                    }
+                });
 
         ButtonGroup speedStepButtons = new ButtonGroup();
         speedStepButtons.add(SpeedStep128Button);

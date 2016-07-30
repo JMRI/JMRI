@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * GUI to define OBlocks
- * <P>
  * <hr>
  * This file is part of JMRI.
  * <P>

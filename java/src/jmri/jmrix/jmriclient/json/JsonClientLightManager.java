@@ -2,7 +2,7 @@ package jmri.jmrix.jmriclient.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import jmri.Light;
-import jmri.jmris.json.JSON;
+import jmri.server.json.JSON;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -19,7 +19,7 @@ import java.util.Date;
  * specific hardware implementations may not need.
  * <P>
  * All Clock Control modules communicate with the internal clock and the master
- * JMRI Timebase, using methods of the Timebase interface.
+ * JMRI timebase, using methods of the Timebase interface.
  * <hr>
  * This file is part of JMRI.
  * <P>

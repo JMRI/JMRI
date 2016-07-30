@@ -465,10 +465,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class TurnoutPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7013117956249797371L;
         TurnoutManager manager;
 
         TurnoutPickModel() {
@@ -495,10 +491,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class SensorPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -5449473524170410469L;
         SensorManager manager;
 
         SensorPickModel() {
@@ -525,10 +517,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class MultiSensorPickModel extends SensorPickModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5378755836882039735L;
         private HashMap<Integer, String> _position = new HashMap<Integer, String>();
 
         MultiSensorPickModel() {
@@ -551,10 +539,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class SignalHeadPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2036689134503776495L;
         SignalHeadManager manager;
 
         SignalHeadPickModel() {
@@ -562,7 +546,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
 
         public Manager getManager() {
-            manager = InstanceManager.signalHeadManagerInstance();
+            manager = InstanceManager.getDefault(jmri.SignalHeadManager.class);
             return manager;
         }
 
@@ -585,10 +569,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class SignalMastPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2376422980165819407L;
         SignalMastManager manager;
 
         SignalMastPickModel() {
@@ -596,7 +576,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
 
         public Manager getManager() {
-            manager = InstanceManager.signalMastManagerInstance();
+            manager = InstanceManager.getDefault(jmri.SignalMastManager.class);
             return manager;
         }
 
@@ -619,10 +599,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class MemoryPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 554967330577788658L;
         MemoryManager manager;
 
         MemoryPickModel() {
@@ -649,10 +625,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class BlockPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 6772550115260370075L;
         BlockManager manager;
 
         BlockPickModel() {
@@ -660,7 +632,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
 
         public Manager getManager() {
-            manager = InstanceManager.blockManagerInstance();
+            manager = InstanceManager.getDefault(jmri.BlockManager.class);
             return manager;
         }
 
@@ -679,10 +651,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class ReporterPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -8225533577316449385L;
         ReporterManager manager;
 
         ReporterPickModel() {
@@ -690,7 +658,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
 
         public Manager getManager() {
-            manager = InstanceManager.reporterManagerInstance();
+            manager = InstanceManager.getDefault(jmri.ReporterManager.class);
             return manager;
         }
 
@@ -709,10 +677,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class LightPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2563996274392877385L;
         LightManager manager;
 
         LightPickModel() {
@@ -739,10 +703,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class OBlockPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -8891253867640053650L;
         OBlockManager manager;
 
         OBlockPickModel() {
@@ -769,10 +729,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class WarrantPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 233304766160346957L;
         WarrantManager manager;
 
         WarrantPickModel() {
@@ -799,10 +755,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class ConditionalPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1850772979922233034L;
         ConditionalManager manager;
 
         ConditionalPickModel() {
@@ -810,7 +762,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
 
         public Manager getManager() {
-            manager = InstanceManager.conditionalManagerInstance();
+            manager = InstanceManager.getDefault(jmri.ConditionalManager.class);
             return manager;
         }
 
@@ -849,10 +801,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class EntryExitPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -1274360959113717578L;
         EntryExitPairs manager;
 
         EntryExitPickModel() {

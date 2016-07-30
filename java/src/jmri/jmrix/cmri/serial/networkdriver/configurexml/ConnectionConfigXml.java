@@ -47,7 +47,8 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     protected void extendElement(Element e) {
-        SerialNode node = (SerialNode) SerialTrafficController.instance().getNode(0);
+        SerialTrafficController tc = ((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController();
+        SerialNode node = (SerialNode) tc.getNode(0);
         int index = 1;
         while (node != null) {
             // add node as an element
@@ -72,7 +73,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             n.addContent(makeParameter("cardtypelocation", "" + value));
 
             // look for the next node
-            node = (SerialNode) SerialTrafficController.instance().getNode(index);
+            node = (SerialNode) tc.getNode(index);
             index++;
         }
     }
@@ -118,7 +119,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             }
 
             // Trigger initialization of this Node to reflect these parameters
-            SerialTrafficController.instance().initializeSerialNode(node);
+            ((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController().initializeSerialNode(node);
         }
     }
 

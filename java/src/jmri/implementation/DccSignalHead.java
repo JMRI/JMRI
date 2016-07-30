@@ -72,11 +72,11 @@ public class DccSignalHead extends AbstractSignalHead {
             }
 
             if (c == null) {
-                c = InstanceManager.commandStationInstance();
+                c = InstanceManager.getOptionalDefault(CommandStation.class);
                 log.error("No match against the command station for " + sys + ", so will use the default");
             }
         } else {
-            c = InstanceManager.commandStationInstance();
+            c = InstanceManager.getOptionalDefault(CommandStation.class);
             if ((sys.length() > 2) && ((sys.charAt(1) == 'H') || (sys.charAt(1) == 'h'))) {
                 dccSignalDecoderAddress = Integer.parseInt(sys.substring(2, sys.length()));
             } else {

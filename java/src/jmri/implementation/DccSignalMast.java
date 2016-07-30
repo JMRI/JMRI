@@ -75,7 +75,7 @@ public class DccSignalMast extends AbstractSignalMast {
             }
 
             if (c == null) {
-                c = InstanceManager.commandStationInstance();
+                c = InstanceManager.getOptionalDefault(CommandStation.class);
                 log.error("No match against the command station for " + parts[0] + ", so will use the default");
             }
         }
@@ -191,8 +191,8 @@ public class DccSignalMast extends AbstractSignalMast {
     protected int dccSignalDecoderAddress;
 
     public static String isDCCAddressUsed(int addr) {
-        for (String val : InstanceManager.signalMastManagerInstance().getSystemNameList()) {
-            SignalMast mast = InstanceManager.signalMastManagerInstance().getSignalMast(val);
+        for (String val : InstanceManager.getDefault(jmri.SignalMastManager.class).getSystemNameList()) {
+            SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(val);
             if (mast instanceof jmri.implementation.DccSignalMast) {
                 if (((DccSignalMast) mast).getDccSignalMastAddress() == addr) {
                     return ((DccSignalMast) mast).getDisplayName();

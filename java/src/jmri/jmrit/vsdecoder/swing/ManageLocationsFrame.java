@@ -337,7 +337,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         }
 
         HashMap<String, PhysicalLocation> data = reporterModel.getDataMap();
-        ReporterManager mgr = jmri.InstanceManager.reporterManagerInstance();
+        ReporterManager mgr = jmri.InstanceManager.getDefault(jmri.ReporterManager.class);
         for (String s : data.keySet()) {
             log.debug("Reporter: " + s + " Location: " + data.get(s));
             Reporter r = mgr.getByDisplayName(s);
@@ -345,7 +345,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         }
 
         data = blockModel.getDataMap();
-        BlockManager bmgr = jmri.InstanceManager.blockManagerInstance();
+        BlockManager bmgr = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
         for (String s : data.keySet()) {
             log.debug("Block: " + s + " Location: " + data.get(s));
             Block b = bmgr.getByDisplayName(s);

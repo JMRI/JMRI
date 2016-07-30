@@ -1,36 +1,45 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="fr">
 <head>
-<!--  Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
-<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-11--> 
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!--  Copyright ($Author$) 2009 -->
+  <!-- $Id$ -->
+  <!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-11-->
 
-<title>JMRI: Signal Group Table</title>
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: Signal Group Table</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
- 
-<h1> JMRI: Cadre Logique du Signal de Source </h1>
-De cette fen&#234;tre, vous pouvez voir toutes les logiques signal qui affectent l'aspect du
- m&#226;t de signal, tout en &#233;tant capable d'&#233;diter chaque logique. <br>
-Si l'&#233;diteur de r&#233;seau est utilis&#233;, il est possible de d&#233;couvrir automatiquement toutes
-les logiques M&#226;t Signal bas&#233;es sur le panneau.
-<p>
-Ceci est la page d'aide help/fr/package/jmri/jmrit/signalling/SignallingSourceFrame.shtml
-<p>
-<p>
-<!--#include virtual="/Footer" -->
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Cadre Logique du Signal de Source</h1>De cette
+      fen&ecirc;tre, vous pouvez voir toutes les logiques signal
+      qui affectent l'aspect du m&acirc;t de signal, tout en
+      &eacute;tant capable d'&eacute;diter chaque logique.<br>
+      Si l'&eacute;diteur de r&eacute;seau est utilis&eacute;, il
+      est possible de d&eacute;couvrir automatiquement toutes les
+      logiques M&acirc;t Signal bas&eacute;es sur le panneau.
+
+      <p>Ceci est la page d'aide
+      help/fr/package/jmri/jmrit/signalling/SignallingSourceFrame.shtml</p>
+
+      <p><!--#include virtual="/Footer" --></p>
+    </div>
+  </div>
 </body>
 </html>

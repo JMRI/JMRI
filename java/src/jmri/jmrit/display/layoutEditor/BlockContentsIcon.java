@@ -1,23 +1,20 @@
 package jmri.jmrit.display.layoutEditor;
 
-/**
- * An icon to display a status of a Block Object.<P>
- */
 import javax.swing.JOptionPane;
 import jmri.Block;
 import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// This is the same name as display.BlockContentsIcon, it follows 
-// on from the MemoryIcon
+/**
+ * An icon to display a status of a Block Object.<P>
+ *
+ * This is the same name as display.BlockContentsIcon, it follows 
+ * on from the MemoryIcon
+ */
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5596807754781580059L;
     String defaultText = " ";
 
     public BlockContentsIcon(String s, LayoutEditor panel) {

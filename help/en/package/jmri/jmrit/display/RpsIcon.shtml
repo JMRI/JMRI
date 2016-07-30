@@ -209,7 +209,7 @@ so one approach is to search for that. It will look something like (it'll probab
             sxscale="11.849106591612951" syscale="-11.889381744148094" 
             sxorigin="41" syorigin="768" 
             class="jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
-</code></pre>
+</pre>
 <li>To make the icon track a specific transmitter, enter the transmitter's ID as a "filter" attribute.  For example, to 
 have it track transmitter 5510, change the line to:
 <pre style="font-family: monospace;">
@@ -221,7 +221,7 @@ have it track transmitter 5510, change the line to:
             xscale="11.849106591612951" syscale="-11.889381744148094" 
             sxorigin="41" syorigin="768" 
             class="jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
-</code></pre>
+</pre>
 <li>The "active" and "error" attributes are the icons to be displayed when the system is 
 getting good readings and not getting good readings, respectively. 
 You can change these to the location of any icon file you'd like.

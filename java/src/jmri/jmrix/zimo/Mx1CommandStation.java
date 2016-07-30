@@ -1,6 +1,3 @@
-/*
- * Mx1CommandStation.java
- */
 package jmri.jmrix.zimo;
 
 import org.slf4j.Logger;
@@ -10,7 +7,6 @@ import org.slf4j.LoggerFactory;
  * Defines standard operations for Dcc command stations.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  *
  * Adapted by Sip Bosch for use with Zimo Mx-1
  *
@@ -184,8 +180,4 @@ public class Mx1CommandStation implements jmri.jmrix.DccCommandStation {
     }
 
     private final static Logger log = LoggerFactory.getLogger(Mx1CommandStation.class.getName());
-
 }
-
-
-/* @(#)Mx1CommandStation.java */

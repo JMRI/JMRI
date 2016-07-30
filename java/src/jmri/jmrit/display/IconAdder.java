@@ -125,7 +125,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     }
 
     public void initDefaultIcons() {
-        CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
+        CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         CatalogTree tree = manager.getBySystemName("NXDI");
         if (tree != null) {
             CatalogTreeNode node = tree.getRoot();
@@ -702,7 +702,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
      * If icons are changed, update global tree
      */
     private void updateCatalogTree() {
-        CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
+        CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         // unfiltered, xml-stored, default icon tree
         CatalogTree tree = manager.getBySystemName("NXDI");
         if (tree == null) {	// build a new Default Icons tree

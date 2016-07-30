@@ -192,7 +192,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
      * they will be tried in the order specified.
      */
     public String[] getValidOperationTypes() {
-        if (jmri.InstanceManager.commandStationInstance() != null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.CommandStation.class) != null) {
             return new String[]{"Sensor", "Raw", "NoFeedback"};
         } else {
             return new String[]{"Sensor", "NoFeedback"};

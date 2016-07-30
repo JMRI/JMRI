@@ -44,7 +44,7 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
      */
     @SuppressWarnings("LeakingThisInConstructor")
     public ThrottlesPreferencesPane() {
-        if (InstanceManager.getDefault(ThrottlesPreferences.class) == null) {
+        if (InstanceManager.getOptionalDefault(ThrottlesPreferences.class) == null) {
             InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
         }
         ThrottlesPreferences tp = InstanceManager.getDefault(ThrottlesPreferences.class);

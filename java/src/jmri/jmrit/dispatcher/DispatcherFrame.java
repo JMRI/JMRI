@@ -79,16 +79,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         initializeOptions();
         openDispatcherWindow();
         autoTurnouts = new AutoTurnouts(this);
-        if (autoTurnouts == null) {
-            log.error("Failed to create AutoTurnouts object when constructing Dispatcher");
-        }
         if (_LE != null) {
             autoAllocate = new AutoAllocate(this);
-            if (autoAllocate == null) {
-                log.error("Failed to create AutoAllocate object when constructing Dispatcher");
-            }
         }
-        InstanceManager.sectionManagerInstance().initializeBlockingSensors();
+        InstanceManager.getDefault(jmri.SectionManager.class).initializeBlockingSensors();
         getActiveTrainFrame();
 
         if (fastClock == null) {
@@ -137,7 +131,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             = new ArrayList<java.beans.PropertyChangeListener>();
     private ArrayList<ActiveTrain> delayedTrains = new ArrayList<ActiveTrain>();  // list of delayed Active Trains
     private ArrayList<ActiveTrain> restartingTrainsList = new ArrayList<ActiveTrain>();  // list of Active Trains with restart requests
-    private TransitManager transitManager = InstanceManager.transitManagerInstance();
+    private TransitManager transitManager = InstanceManager.getDefault(jmri.TransitManager.class);
     private ArrayList<AllocationRequest> allocationRequests = new ArrayList<AllocationRequest>();  // List of AllocatedRequest objects
     private ArrayList<AllocatedSection> allocatedSections = new ArrayList<AllocatedSection>();  // List of AllocatedSection objects
     private boolean optionsRead = false;
@@ -149,9 +143,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     public ActivateTrainFrame getActiveTrainFrame() {
         if (atFrame == null) {
             atFrame = new ActivateTrainFrame(this);
-            if (atFrame == null) {
-                log.error("Failed to create ActivateTrainFrame object when constructing Dispatcher");
-            }
         }
         return atFrame;
     }
@@ -165,7 +156,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         newTrainActive = boo;
     }
     private AutoTrainsFrame _autoTrainsFrame = null;
-    private Timebase fastClock = InstanceManager.timebaseInstance();
+    private Timebase fastClock = InstanceManager.getOptionalDefault(jmri.Timebase.class);
     private Sensor fastClockSensor = InstanceManager.sensorManagerInstance().provideSensor("ISCLOCKRUNNING");
     private transient java.beans.PropertyChangeListener minuteChangeListener = null;
 
@@ -567,9 +558,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         ActiveTrain at = activeTrainsList.get(atSelectedIndex);
         //Transit t = at.getTransit();
         ArrayList<AllocatedSection> allocatedSectionList = at.getAllocatedSectionList();
-        ArrayList<String> allSections = (ArrayList<String>) InstanceManager.sectionManagerInstance().getSystemNameList();
+        ArrayList<String> allSections = (ArrayList<String>) InstanceManager.getDefault(jmri.SectionManager.class).getSystemNameList();
         for (int j = 0; j < allSections.size(); j++) {
-            Section s = InstanceManager.sectionManagerInstance().getSection(allSections.get(j));
+            Section s = InstanceManager.getDefault(jmri.SectionManager.class).getSection(allSections.get(j));
             if (s.getState() == Section.FREE) {
                 // not already allocated, check connectivity to this train's allocated sections
                 boolean connected = false;
@@ -886,7 +877,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             log.error("Train source is invalid - " + tSource + " - cannot create an Active Train");
             return null;
         }
-        Block startBlock = InstanceManager.blockManagerInstance().getBlock(startBlockName);
+        Block startBlock = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(startBlockName);
         if (startBlock == null) {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(rb.getString(
@@ -928,7 +919,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             log.error("Invalid sequence number '" + startBlockSectionSequenceNumber + "' when attempting to create an Active Train");
             return null;
         }
-        Block endBlock = InstanceManager.blockManagerInstance().getBlock(endBlockName);
+        Block endBlock = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(endBlockName);
         if ((endBlock == null) || (!t.containsBlock(endBlock))) {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(rb.getString(
@@ -1405,7 +1396,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                     property = "reverseMast";
                 }
                 if (ar.getSection().getProperty(property) != null) {
-                    SignalMast endMast = InstanceManager.signalMastManagerInstance().getSignalMast(ar.getSection().getProperty(property).toString());
+                    SignalMast endMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(ar.getSection().getProperty(property).toString());
                     if (endMast != null) {
                         if (endMast.getHeld()) {
                             mastHeldAtSection = ar.getSection();
@@ -1459,7 +1450,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                         } else {
                             if (mastHeldAtSection == null) {
                                 if (se.getProperty(property) != null) {
-                                    SignalMast endMast = InstanceManager.signalMastManagerInstance().getSignalMast(se.getProperty(property).toString());
+                                    SignalMast endMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(se.getProperty(property).toString());
                                     if (endMast != null && endMast.getHeld()) {
                                         mastHeldAtSection = se;
                                     }
@@ -1582,7 +1573,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 property = "reverseMast";
             }
             if (s.getProperty(property) != null) {
-                SignalMast toHold = InstanceManager.signalMastManagerInstance().getSignalMast(s.getProperty(property).toString());
+                SignalMast toHold = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(s.getProperty(property).toString());
                 if (toHold != null) {
                     if (!toHold.getHeld()) {
                         heldMasts.add(new HeldMastDetails(toHold, at));
@@ -1593,7 +1584,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             }
 
             if (at.getLastAllocatedSection() != null && at.getLastAllocatedSection().getProperty(property) != null) {
-                SignalMast toRelease = InstanceManager.signalMastManagerInstance().getSignalMast(at.getLastAllocatedSection().getProperty(property).toString());
+                SignalMast toRelease = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(at.getLastAllocatedSection().getProperty(property).toString());
                 if (toRelease != null && isMastHeldByDispatcher(toRelease, at)) {
                     removeHeldMast(toRelease, at);
                     //heldMasts.remove(toRelease);
@@ -1853,6 +1844,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                                         }
                                     }
                                     if (foundOne) {
+                                        log.debug("{}: releasing {}", at.getTrainName(), as.getSectionName());                                
                                         releaseAllocatedSection(as, false);
                                     }
                                 }

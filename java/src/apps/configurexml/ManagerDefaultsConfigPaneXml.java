@@ -23,7 +23,7 @@ public class ManagerDefaultsConfigPaneXml extends jmri.configurexml.AbstractXmlA
      * @return null after others arranged
      */
     public Element store(Object o) {
-        InstanceManager.configureManagerInstance().registerPref(InstanceManager.getDefault(ManagerDefaultSelector.class));
+        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(InstanceManager.getDefault(ManagerDefaultSelector.class));
         return null;
     }
 
