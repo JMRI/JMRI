@@ -1,0 +1,337 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<title>JMRI: Building with IntelliJ IDEA</title>
+<meta name="author" content="Egbert Broerse">
+<meta name="keywords" content="JMRI technical code IntelliJ IDEA 15 2016 IDE">
+<!-- Translated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-28 -->
+<!--#include virtual="/Style" -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+<div id="mainContent">
+	<!-- -------- -->
+	<!--  Teaser  -->
+	<!-- Optional -->
+	<!-- -------- -->
+
+
+<h1>JMRI: Construction avec IntelliJ IDEA</h1>
+
+	<p>
+		IntelliJ IDEA Community Edition (disponible depuis <a href="https://www.jetbrains.com/idea/">www.jetbrains.com/idea/</a>)
+		est une grande plateforme pour travailler avec JMRI et Java sur OS X, Windows et *nix.</p>
+
+<ul class="snav"><!-- TOC -->
+<li><a href="#install">Installation</a>
+<li><a href="#getgit">Obtenir Git</a>
+<li><a href="#ijprojectwin">La fen&#234;tre Projet</a>
+<li><a href="#push">Pousser les changements</a>
+<li><a href="#more">Plus</a>
+</ul>
+
+	<p>
+		Les d&#233;veloppeurs JMRI utilisent Git pour le contr&#244;le de source. Le contr&#244;le de source utilisant Git
+		est inclus comme un &#233;l&#233;ment du t&#233;l&#233;chargement IntelliJ IDEA. Plus d'information
+		sur l'obtention de la source JMRI voir <a
+			href="getgitcode.shtml">JMRI: Obtention du Code</a>.
+	</p>
+	<p>Ces instructions sont d&#233;velopp&#233;es et test&#233;es par l'utilisation de IntelliJ IDEA 15 et 16 Community Edition (libre).</p>
+
+	<a name="install"></a>
+<h2>Installation de IntelliJ IDEA</h2>
+ <h3>Pr&#233;parations</h3>
+	<ol>
+		<li>Allez &#224; <a href="https://github.com/">GitHub.com</a> et cr&#233;er un compte.
+		<li>sur le site web GitHub, allez sur le r&#233;f&#233;rentielI JMRI/JMRI et "Fork" le 
+		r&#233;f&#233;rentiel JMRI sur votre propre copie. Pour faire ceci, connectez-vous &#224; votre compte sur
+		<a href="https://github.com/">GitHub.com</a> et placez-vous sur le
+		r&#233;pertoire JMRI <a href="https://github.com/JMRI/JMRI">https://github.com/JMRI/JMRI</a>.
+		Dans le coin en haut &#224; droite de la page, vous trouverezun bouton
+		libell&#233; "Fork". Pressez le bouton "Fork" pour cr&#233;er votre propre 
+		r&#233;pertoire de la source JMRI.
+		( Voir <a href="getgitcode.shtml#get">Obtenir le Code</a> ).
+  </ol>
+	<p>Apr&#232;s le t&#233;l&#233;chargement et l'ex&#233;cution de l'installateur pour votre OS, configurez l'application IntelliJ comme suit:<br>
+	
+<h3>D&#233;finir vmoptions</h3>
+	<h4>Sur OS X</h4>
+		<ul>
+		<li>Ouvrir IntelliJ
+		<li>Depuis le menu Help, selectionnez "Edit Custom VM Options":<br>
+		<a href="images/IntelliJ/IjVMOptionsMenu.png">
+		<img src="images/IntelliJ/IjVMOptionsMenu.png" width="251" height="170" alt="IntelliJ Edit vmoptions menu"></a></li>
+		<li>Dans la boite de dialogue, r&#233;pondez "Yes" pour cr&#233;er une copie du fichier vmoptions de l'application:<br>
+		<a href="images/IntelliJ/IjVMOptionsDialog.png">
+		<img src="images/IntelliJ/IjVMOptionsDialog.png" width="248" height="97" alt="IntelliJ Edit vmoptions dialog"></a></li>
+		<li>Ajoutez la ligne "-Didea.native2ascii.lowercase=true" au contenu de ce fichier et s&#233;lectionnez Save All depuis le menu File:<br>
+		<a href="images/IntelliJ/IjVMOptions.png">
+		<img src="images/IntelliJ/IjVMOptions.png" width="240" height="114" alt="IntelliJ Edit vmoptions"></a></li>
+		<li>IntelliJ 2016 est maintenant pr&#234;t &#224; &#234;tre utilis&#233; pour le d&#233;veloppement de JMRI. Le fichier vmoptions est stock&#233; dans<code>&tilde;/Users/Preferences/IdeaIC2016.1/</code><br>
+		Mais dans la version 15, IntelliJ sur OS X ne nommait pas correctement ce fichier vmoptions ( <a href="https://youtrack.jetbrains.com/issue/IDEA-150830#tab=Linked%20Issues">read more</a>).<br>
+		Pour corriger ceci, fermez IntelliJ 15 et dans le localisateur allez au dossier <code>&tilde;/Library/Preferences/IdeaIC15/</code>.<br>
+		Renommez le nouveau fichier cr&#233;&#233; <code>idea64.vmoptions</code> en <code>idea.vmoptions</code> ( enlevant efficacement la partie"64" ).</li>
+	  </ul>
+  
+	<h4>Sur Windows et *nix</h4>
+		<ul>
+		<li>Depuis le menu d'Aide, s&#233;lectionnez "Edit Custom VM Options".</li> 
+		<li>Ajoutez la ligne "-Didea.native2ascii.lowercase=true" au contenu de ce fichier et s&#233;lectionnez Save All depuis le menu File.<br>
+		Il sera sauv&#233; &#224; son emplacement sous le r&#233;pertoire utilisateur. C'est <code>$HOME/.IdeaICXX/idea$BITS.vmoptions</code> pour *nix et <code>%USERPROFILE%\.IdeaICXX\idea%BITS%.exe.vmoptions</code> pour Windows (XX = le num&#233;ro de version, BITS = the chip version installed).</li>
+		</ul>
+	<p>Si l'environnement de variable IDEA_VM_OPTIONS est d&#233;fini, ou un fichier *.vmoptions existe, alors ce fichier est utilis&#233; au lieu du fichier localis&#233; dans le dossier d'installationin de IntelliJ IDEA.</p>
+	
+	<p>Plus d'information sur la d&#233;finitions de ces importantes vmoptions est disponible sur le <a href="https://www.jetbrains.com/idea/help/tuning-intellij-idea.html">site web Idea</a>.<br>
+	Note: Si vous avez un doute sur comment d&#233;finir ceci au niveau du projet au lieu de bricoler avec les param&#232;tres locaux de l'application, SVP contactez les <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">utilisateurs JMRI</a> Yahoo group.</p>
+	
+<h3>D&#233;finir les Pr&#233;f&#233;rences</h3>
+<p>D&#233;marrer IntelliJ et choisir "Preferences" depuis le menu application (OS X) ou le menu Edit (Win).</p>
+	<ol>
+	<li>Depuis l'&#201;diteur -&gt;onglet File Encodings, cochez "Transparent native-to-ascii conversion":<br>
+			<a href="images/IntelliJ/IjPrefsFileEncodings.png">
+		  <img src="images/IntelliJ/IjPrefsFileEncodings.png" width="516" height="263" alt="IntelliJ encoding prefs"></a></li>
+	<li>Depuis le Contr&#244;le de Version -&gt; onglet GitHub, entrez "github.com" comme Host et entrez vos Identifiants:<br>
+			<a href="images/IntelliJ/IjPrefsGitLogin.png">
+		  <img src="images/IntelliJ/IjPrefsGitLogin.png" width="375" height="243" alt="IntelliJ build Git Login prefs"></a></li>
+	<li>Depuis le Build, Execution, Deployment -&gt; onglet Java Compiler, s&#233;lectionnez "1.8" comme la Project bytecode version:<br>
+			<a href="images/IntelliJ/IjPrefsJava18.png">
+		  <img src="images/IntelliJ/IjPrefsJava18.png" width="408" height="263" alt="IntelliJ build java SDK prefs"></a></li>
+	<li>Cliquez OK pour cloturer les Preferences.</li>
+	</ol>
+
+<a name="getgit"></a>
+	<h2>Obtention de la source JMRI en utilisant Git</h2>
+	<p>Pour obtenir le code source depuis GitHub dans IntelliJ, suivre ces &#233;tapes:
+		<ol>
+		<li>Ouvrir IntelliJ.</li>
+		<li>Depuis la barre de menu principale s&#233;lectionnez File -&gt; New -&gt; Project from Version Control -&gt; GitHub<br>
+		<a href="images/IntelliJ/IjImportMenu.png">
+	  <img src="images/IntelliJ/IjImportMenu.png" width="366" height="100" alt="IntelliJ Git import pane"></a>
+		<li>Si vous &#234;tes invit&#233;, entrez vos nom utilisateur et Mot de Passe pour GitHub dans le champ authentification et cliquez "Login":<br>
+		<a href="images/IntelliJ/IjLoginGit.png">
+	  <img src="images/IntelliJ/IjLoginGit.png" width="200" height="110" alt="IntelliJ git login"></a>
+		<li>Le volet duplication Repository  doit appara&#238;tre maintenant. S&#233;lectionnez un URL de R&#233;pertoire Gitdepuis votre compte et pointez vers votre dossier r&#233;pertoire local comme "R&#233;pertoire Parent":<br>
+		<a href="images/IntelliJ/IjCloneRepo.png">
+	  <img src="images/IntelliJ/IjCloneRepo.png" width="313" height="100" alt="IntelliJ Git import pane3"></a><br>
+	  Optionnellement  "Test" en haut &#224; droite pour v&#233;rifier votre connexion:<br>
+		<a href="images/IntelliJ/IjCloneTest.png">
+	  <img src="images/IntelliJ/IjCloneTest.png" width="315" height="100" alt="IntelliJ Git import pane3"></a><br> 
+	  </li>
+		<li>Cliquez "Clone" et suivez la progression dans l'indicateur en bas de la fen&#234;tre Project:<br>
+		<a href="images/IntelliJ/IjCloningProgress.png">
+	  <img src="images/IntelliJ/IjCloningProgress.png" width="410" height="37" alt="IntelliJ Git clone progress"></a>
+		<li>Dans le volet qui s'ouvre apr&#232;s que le t&#233;l&#233;chargement soit termin&#233;, v&#233;rifiez l'emplacement sur le disque,<br>
+		confirmez le nom du projet ( comme l'original ex: "JMRI" ) et cliquez "Next":<br>
+		<a href="images/IntelliJ/IjImportProject1.png">
+	  <img src="images/IntelliJ/IjImportProject1.png" width="396" height="97" alt="IntelliJ Git import pane1"></a>
+		<li>S&#233;lectionnez "Create project from existing sources" et cliquez encore "Next":<br>
+		<a href="images/IntelliJ/IjImportProject2.png">
+	  <img src="images/IntelliJ/IjImportProject2.png" width="396" height="123" alt="IntelliJ Git import pane2"></a>
+		<li>Cliquez "Mark all" et puis "Finish":<br>
+		<a href="images/IntelliJ/IjImportProject3.png">
+	  <img src="images/IntelliJ/IjImportProject3.png" width="396" height="119" alt="IntelliJ Git import pane3"></a>
+		</ol>
+	<p>Ceci ajoutera JMRI &#224; la fen&#234;tre IntelliJ Project.
+
+<a name="ijprojectwin"></a>
+<h2>La fenêtre Project</h2>
+
+	<p>Apr&#232;s que la duplication est termin&#233;e, la fen&#234;tre IntelliJ Project
+		devrait ressembler &#224; ceci ( exemple OS X ):<br>
+	<a href="images/IntelliJ/IjProjectPanel.png">
+	<img src="images/IntelliJ/IjProjectPanel.png" width="342" height="372" alt="IntelliJ main project window"></a></p>
+  <p>Le long des bords de la fen&#234;tre, il y a plusieurs groupes d'outils, les plus souvent utilis&#233;s sont les suivants:
+	  <ol>
+	  <li>l'onglet <strong>Project</strong> sur la gauche
+	  <li>le r&#233;pertoire <strong>JMRI</strong>  dans la moiti&#233; gauche
+	  <li>l'onglet <strong>Ant Build</strong> sur la droite et
+	  <li>l'onglet <strong>Version Control</strong> en bas.
+    <li>le <strong>Git: master</strong> dans le bas &#224; droite, montrant la Branche ("master") actuelle avec un menu pour changer pour une autre Branche.
+	  </ol
+	<p>Vous pouvez aussi acc&#233;der &#224; ce panneau depuis menu....Branches principales VCS -&gt; Git -&gt; Branches... menu ou clic-droit sur le dossie JMRI Project et s&#233;lection de Git -&gt; Repository -&gt; Branches...<br>
+	<a href="images/IntelliJ/IjGitRepoMenu.png">
+	<img src="images/IntelliJ/IjGitRepoMenu.png" width="407" height="142" alt="IntelliJ Project Git context menu"></a>
+	</p>
+	<p>Pour r&#233;cup&#233;rer une autre Branche depuis le r&#233;pertoire distant, s&#233;lectionnez son nom sous la rubrique «Branches &#224; distance", clic-droit et s&#233;lectionnez "Checkout as new local branch":<br>
+	<a href="images/IntelliJ/IjNewBranch.png">
+	<img src="images/IntelliJ/IjNewBranch.png" width="292" height="236" alt="IntelliJ checkout branch"></a></p>
+	<p>quand l'information depuis la nouvelle Branche est t&#233;l&#233;charg&#233;e, le Centre des Messages confirmera:<br>
+	<a href="images/IntelliJ/IjNewBranchMsg.png">
+	<img src="images/IntelliJ/IjNewBranchMsg.png" width="312" height="50" alt="IntelliJ checkout branch OK"></a></p>
+
+<h3>Faire des Changements</h3>
+	<p>Pour travailler sur le code JMRI, d&#233;marrez toujours une nouvelle Branche, ainsi votre "master" personnel restera intact.<br>
+	Pour cr&#233;er une nouvelle Branche dans IntelliJ, depuis le volet <strong>Git Branch</strong>, s&#233;lectionnez "New Branch":<br>
+	<a href="images/IntelliJ/IjGitBranches.png">
+	<img src="images/IntelliJ/IjGitBranches.png" width="323" height="172" alt="IntelliJ main project window"></a><br>
+	Fournir un nom exemple: <code>my-dialog-2</code> et cliquez OK.<br>
+	Note: Le d&#233;marrage de votre nom de Branche avec une combinaison de deux lettres le fera se d&#233;marquer de la longue liste beaucoup mieux qu'un nom comme <code>patch-1</code>. </p>
+
+<a name="setant"><h2>Construction et ex&#233;cution de JMRI par l'utilisation de Ant</h2></a>
+  <p>
+	Nous recommandons qu'avant d'essayer de construitre et d'ex&#233;cuter une des
+	applications au sein d'IntelliJ, vous ex&#233;cutiez Ant Build -&gt; &lt;cible par D&#233;faut&gt; en premier. Ceci cr&#233;era les r&#233;pertoires de travail n&#233;cessaires, chargera quelques ressources,
+	ic&#244;nes, et cr&#233;ra les fichiers Java n&#233;cessaires. Pour ex&#233;cuter <code>ant build.xml</code> faire comme suit:
+
+	  <ol>
+		<li>Ant n&#233;cessite un JDK (Java Development Kit) en ordre pour ex&#233;cuter le
+		fichier fournit "build.xml". Le t&#233;l&#233;chargement IntelliJ IDEA 15 vient avec un
+		JDK, mais vous devez configurer ant pour utiliser le bon JDK.<br>
+		Pour v&#233;rifier que le JDK est configur&#233; pour java 1.8, ouvrez l'onglet Ant Build [1],
+		cliquez sur un fichier dans la liste Ant Build [3] et s&#233;lectionnez le bouton Properties [2] en haut &#224; droite du volet:<br>
+		<a href="images/IntelliJ/IjAntPropertiesOpen.png">
+		<img src="images/IntelliJ/IjAntPropertiesOpen.png" width="340" height="196" alt="IntelliJ Ant menu"></a>			
+		</li>
+		<li>S&#233;lectionnez <strong>1.8</strong> comme "Run under JDK" si pas d&#233;j&#224; d&#233;fini<br>
+		<a href="images/IntelliJ/IjAntBuildFilePropertiesPane.png">
+		<img src="images/IntelliJ/IjAntBuildFilePropertiesPane.png" width="318" height="175" alt="IntelliJ Ant Settings"></a><br>
+		Cliquez "OK" et sauvegarder votre JMRI Project (Cmd-S/Ctrl-S).</li>
+		<li>S&#233;lectionnez le fichier &lt;Default target&gt; dans la liste Ant Build, clic-droit, et s&#233;lectionnez "Run", ou cliquez le bouton triangle vert "Run" en haut du volet.
+		Ceci devrait d&#233;marrer le ant build. Suivez les messages dans le journal des &#201;v&#233;nements qui apparaissent &#224; partir du bord inf&#233;rieur de la fen&#234;tre Project.</li>
+		</ol>
+
+	<p>Si le ant build est r&#233;ussi, vous pouvez lancer plusieurs
+		 applications JMRI depuis l'onglet Ant Build.</p>
+
+	<a name="build"></a>
+	<h3>Construction et ex&#233;cution de JMRI avec IntelliJ</h3>
+		
+	<p>Pour ex&#233;cuter une application, soit<p>
+  	<ol>
+		<li>Depuis la barre de menu principal ouvrez le menu "Build" et s&#233;lectionnez un paquet JMRI comme <code>panelpro</code> ou
+		<li>Ouvrez l'onglet Ant Build et depuis la list "Ant Build", cliquez-droit sur le paquet d&#233;sir&#233;r exemple: <code>decoderpro</code> et s&#233;lectionnez "Run Target".
+    </ol>
+  <p>Note: Les deux premiers "JMRI" d&#233;finis construiront les fichiers JHelpDev TOC &amp; Index respectivement en Anglais et en Fran&#231;ais. Passez votre souris sur eux et lire l'info-bulle pour apprendre qui est qui.</p
+  <p>La Console Message Center listera toutes les &#233;tapes du processus de construction, apr&#232;s quoi une ic&#244;ne Java s'ouvrira avec l'application s'ex&#233;cutant avec toutes vos nouvelles modifications ( Sauvegard&#233;es ).</p>
+<!-- &#224; faire: &#233;crire des instructions pour les configurations? -->
+
+	<a name="push"></a>
+	<h2>Pousser ( Push ) les changement sur votre branche GitHub</h2>
+<p>
+	La pratique standard pour obtenir que vos changements soient inclus dans le r&#233;pertoire 
+	principal du code JMRI est de les "transmettre" ( commit ) vers votre r&#233;pertoire local
+	p&#233;riodiquement et, quand c'est pr&#234;t &#224; &#234;tre enti&#232;rement publi&#233;, "Tirer" ( Push ) un jeu complet de "Transmissions" ( Commits )
+	vers votre propre r&#233;pertoire distant sur GitHub, et finalement
+	faire une "Requ&#234;te Tirer" ( Pull Request ) pour les maintenanciers pour "Tirer" ( Pull ) vos changements dans le r&#233;pertoire 
+	principal JMRI.<br>
+	Quand le travail se fait sur plus d'un ordinateur ou diff&#233;rents IDEs, Committing et Pushing rendent vos nouveau changements disponibles sur les autres ordinateurs.<br>
+	Voir la <a href="GitFAQ.shtml">JMRI: Git FAQ</a> "D&#233;finition d'un environnement Git pour des 
+	D&#233;veloppeurs JMRI" pour plus d'information.
+	
+
+<h3>Tirage ( Pulling )</h3>
+	<p>Il est aussi de bonne practique de "Tirer" ( Pull ) tous les r&#233;cents changement
+	depuis le r&#233;pertoire principal JMRI avant de r&#233;aliser vos transmissionss ( Commits ). Apr&#232;s un "tirer"
+	"pull" votre espace de travail et &#233;ventuellement votre r&#233;pertoire distant GitHub
+	seront synchronis&#233;s avec le r&#233;pertoire principale JMRI et vous verrez les travaux r&#233;cents effectu&#233;s par d'autres. Pour r&#233;aliser un "Tirage":
+		<ul>
+		<li>S&#233;lectionnez votre projet ex:. <strong>JMRI</strong> dans l'onglet Project, clic-droit et s&#233;lectionnez "Git" -&gt; "Repository" -&gt; "Pull..." depuis le menu contextuel:<br>
+		<a href="images/IntelliJ/IjGitPullMenu.png">
+		<img src="images/IntelliJ/IjGitPullMenu.png" width="408" height="117" alt="IntelliJ Pull"></a>			
+		</li>
+		<li>Vous pouvez avoir &#224; confirmer l'origine de votre r&#233;pertoire distant, dans notre cas "JMRI/JMRI":<br>
+		<a href="images/IntelliJ/IjGitRemoteConfig.png">
+		<img src="images/IntelliJ/IjGitRemoteConfig.png" width="203" height="74" alt="IntelliJ Pull options"></a>			
+		</li>
+ 		<li>S&#233;lectionnez la Branche distante appropri&#233;e &#224; fusionner depuis la liste ( vous pouvez aussi "Tirer" une Branche suppl&#233;mentaire pour commuter plus tard ),
+		Cliquez "Pull" et r&#233;pondez comment vous voulez combiner les nouvelles donn&#233;es dans le r&#233;pertoire local existant :<br>
+		<a href="images/IntelliJ/IjPullOptionsdialog.png">
+		<img src="images/IntelliJ/IjPullOptionsdialog.png" width="256" height="107" alt="IntelliJ Pull options"></a>			
+		</li> 
+    </ul>
+
+<h3>Pousser ( Pushing ) </h3>
+	<p>Pousser ( "Push" ) vers votre Branche GitHub:
+		<ul>
+		<li>Premi&#232;rement, transmettez (commit) vos changements dans votre r&#233;pertoire local sur votre ordinateur.<br>
+		Pour transmettre un ensemble de changements, choisir "Save All" depuis le menu Edit, s&#233;lectionnez votre projet ex: <strong>JMRI</strong> dans l'onglet Project, clic-droitk
+		et s&#233;lectionnez "Git" -&gt; "Commit Directory..." depuis le menu contextuel:<br>
+		<a href="images/IntelliJ/IjCommitMenu1.png">
+		<img src="images/IntelliJ/IjCommitMenu1.png" width="345" height="372" alt="IntelliJ Commit menu"></a>			
+		</li>
+		<li>Dans le volet Commit Changes, entrez un Commit Message [1] d&#233;crivant vos changements/correctif ( la ligne 1 doit &#234;tre utilis&#233;e comme titre court, ajoutez plus de d&#233;tails depuis la ligne 2 ).<br>
+		S&#233;lectionnez le fichier [2] que vous souhaitez livrer et d&#233;s&#233;lectionnez ceux que vous ne voulez pas.<br>
+		Choisissez votre nom depuis la liste comme Auteur [3]:<br>
+		<a href="images/IntelliJ/IjCommitPush2.png">
+		<img src="images/IntelliJ/IjCommitPush2.png" width="361" height="284" alt="IntelliJ Commit"></a>			
+		<li>Cliquez le bouton "Commit"  [4] pour ajouter vos modifications sauvegard&#233;es &#224; la branche locale GitHub...</li>
+		<li>Ou survolez le bouton Commit et choisir "Commit and Push..." pour continuer &#224; "Pousser" cet ensemble de changements depuis votre r&#233;pertoire locale vers
+		votre r&#233;pertoire &#224; distance sur GitHub juste apr&#232;s la transmission (ainsi d'autres peuvent y acc&#233;der et
+		l'&#233;tudier pour une inclusion dans JMRI).<br>
+		<a href="images/IntelliJ/IjCommitPush.png">
+		<img src="images/IntelliJ/IjCommitPush.png" width="362" height="197" alt="IntelliJ Commit and Push"></a>									
+		<li>Dans le volet Push Commits, revoyez votre description et cliquez "Push".</li>
+		<li>Pour "pousser" votre r&#233;pertoire GitHub apr&#232;s une tranmission locale, s&#233;lectionnez juste "Push..." depuis le menu "VCS" Git:<br>
+	  <a href="images/IntelliJ/IjGitPushOptions.png">
+	  <img src="images/IntelliJ/IjGitPushOptions.png" width="300" height="279" alt="IntelliJ Push options"></a>
+	  </li>
+	  </ul>
+										
+	<p>Avant que vous puissiez "Pousser" vos changements dans GitHub pour la premi&#232;re fois,
+	vous devez <a href="gitdeveloper.shtml#repo">cr&#233;er votre propre 	
+		r&#233;pertoire GitHub</a> (que vous avez d&#233;j&#224; fait <a href="#install">&#224; l'&#233;tape 1</a>).</p>
+
+<h3>Trucs</h3>
+<h4>Modifier les fichiers .properties</h4>
+	<p class="important">Soyez s&#251;r que vous avez configur&#233; IntelliJ pour convertir les caract&#232;res sp&#233;ciaux utilisant les <strong>minuscules</strong> pour l'encodage des chaines, ainsi alors seulement vos modifications seront accept&#233;es pour la fusion dans JMRI.<br>
+	<p>Pour modifier facilement les fichiers Resource Bundle .properties files, contenant les traductions en diff&#233;rentes langues, clic-droit sur un de ces dossiers (ferm&#233;s) dans la liste des fichier Project  et s&#233;lectionnez "Jump to Source":<br>
+	<a href="images/IntelliJ/IjResourceJump.png">
+	<img src="images/IntelliJ/IjResourceJump.png" width="267" height="139" alt="IntelliJ Bundle edit menu"></a>
+	<p>Ceci ouvrir une fen&#234;tre avec une liste de mots cl&#233;s cod&#233;s sur la gauche et une boite texte pour toutes les traductions &#224; droite:<br>
+	<a href="images/IntelliJ/IjEditProperties.png">
+	<img src="images/IntelliJ/IjEditProperties.png" width="480" height="260" alt="IntelliJ Bundle edit window"></a>
+<h4>R&#233;initiliser HEAD</h4>
+	<p>Quand lors de test de votre application vous concluez que vous aimeriez enlever le dernier couple de Commits, IntelliJ vous donne l'option de r&#233;initialiser graphiquement votre HEAD.<br>
+	Pour ce faire, ouvrez l'onglet "Version Control" -&gt; "Log" en bas &#224; gauche de la fen&#234;tre Project pour voir un "Track Plan" de l'historique de votre Branche, tout le chemin de retour vers les diff&#233;rentes parties qui ont fait JMRI:<br>
+	<a href="images/IntelliJ/IjVersionControlPane.png">
+	<img src="images/IntelliJ/IjVersionControlPane.png" width="634" height="161" alt="IntelliJ VCS tab"></a>
+	</p>
+	<p>Cliquez sur n'importe quelle ligne pour voir les changements qui ont &#233;t&#233; "Transmis" &#224; ce point dans le temps (list&#233; &#224; droite).<br>
+	Pour r&#233;initialiser votre r&#233;pertoire ( HEAD ) de retour &#224; un certain point, Clic-droit sur la ligne correspondante et s&#233;lectionnez Reset Current Branch to Here...".<br>
+	<a href="images/IntelliJ/IjResetBranchTo.png">
+	<img src="images/IntelliJ/IjResetBranchTo.png" width="172" height="197" alt="IntelliJ History reset"></a>
+	<br>
+	Confirmez la mani&#232;re que vous voulez pour sauvegarder ou jeter vos "transmissions" apr&#232;s ce point de dialogue :<br>
+	<a href="images/IntelliJ/IjResetBranchDialog.png">
+	<img src="images/IntelliJ/IjResetBranchDialog.png" width="234" height="149" alt="IntelliJ Reset HEAD dialog"></a>
+  </p>
+<h4>Mot de Passe Principal</h4>
+	<p>Pour stocker en toute s&#233;curit&#233; votre login GitHub, vous pourriez &#234;tre invit&#233; r&#233;guli&#232;rement &#224; le d&#233;verrouiller:<br>
+	<a href="images/IntelliJ/IjMasterPasswd.png">
+	<img src="images/IntelliJ/IjMasterPasswd.png" width="232" height="110" alt="IntelliJ Git Master Pwd dialog"></a>
+  </p>
+
+<h3>Faire une Requ&#234;te de tirage ( Pull Request )</h3>
+	<p>Finalement, quand c'est pr&#234;t, soumettez un "Pull Request" au r&#233;pertoire principale du code JMRI sur
+	le site web GitHub ansi les maintenanciers de JMRI peuvent &#233;tudi&#233;s vos changements propos&#233;s et les fusionn&#233;s dans le r&#233;pertoire maitre JMRI 
+	<p>Pour faire un PR &#224; partir de IntelliJ IDEA, s&#233;lectionnez "Create Pull Request" depuis le menu "VCS" -&gt; Git menu (c'es le dernier &#233;l&#233;ment, support&#233;é par le plug in Git ).<br>
+	<a href="images/IntelliJ/IjGitPRCreate.png">
+	<img src="images/IntelliJ/IjGitPRCreate.png" width="265" height="120" alt="IntelliJ Git Create PR"></a>
+
+	<p>
+	Pour faire un PR ( Pull Request ) depuis le site web GitHub en dehord de IntelliJ - commencez en vous connectant au <a href="http://github.com">site web
+	GitHub</a>, s&#233;lectionnez votre r&#233;pertoire &amp; branch et cliquez sur le 
+	<a href="gitdeveloper.shtml#pull">Bouton Pull Request</a>. Pour plus d'information,
+	voir la page <a href="gitdeveloper.shtml#pull">Git Developer Help</a>.</p>
+
+<!-- to do suppress errors
+	<a name="errors"></a>
+	<h2>Compiler Errors and Warnings</h2>
+
+	The default IntelliJ compiler configuration may produce some unnecessary
+	warnings. You can adjust the warnings to match the screen shots as
+	shown below by going to Window -&gt; Preferences and selecting
+	"Java -&gt; Compiler -&gt; Errors/Warnings".
+	-->
+
+	<a name="more"></a><h2>Aide suppl&#233;mentaire</h2>
+	<p>Voir la r&#233;f&#233;rence web <a href="https://www.jetbrains.com/idea/help/reference.html">IntelliJ IDEA</a> et autres <a href="https://www.jetbrains.com/idea/help/using-online-resources.html">ressources</a> pour plus d'information sur l'utilisation de cet IDE.
+
+  <!--#include virtual="/Footer" -->
+
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>
