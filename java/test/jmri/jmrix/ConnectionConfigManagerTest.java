@@ -35,9 +35,11 @@ public class ConnectionConfigManagerTest {
     private Path workspace;
     public final static String MFG1 = "Mfg1";
     public final static String MFG2 = "Mfg2";
+    public final static String MFG3 = "Mfg3";
     public final static String TYPE_A = "TypeA";
     public final static String TYPE_B = "TypeB";
     public final static String TYPE_C = "TypeC";
+    public final static String TYPE_D = "TypeD";
     private final static Logger log = LoggerFactory.getLogger(ConnectionConfigManagerTest.class);
 
     @BeforeClass
@@ -75,20 +77,40 @@ public class ConnectionConfigManagerTest {
     }
 
     @Test
+    public void testGetConnectionManufacturers_String() {
+        ConnectionConfigManager instance = new ConnectionConfigManager();
+        String[] result = instance.getConnectionManufacturers(TYPE_A);
+        Assert.assertEquals(1, result.length);
+        Assert.assertEquals(MFG1, result[0]);
+        result = instance.getConnectionManufacturers(TYPE_D);
+        Assert.assertEquals(2, result.length);
+        List<String> types = Arrays.asList(result);
+        Assert.assertTrue(types.contains(MFG2));
+        Assert.assertTrue(types.contains(MFG3));
+        JUnitUtil.resetInstanceManager();
+    }
+
+    @Test
     public void testGetConnectionTypes() {
         ConnectionConfigManager instance = new ConnectionConfigManager();
         // Internal
         String[] result = instance.getConnectionTypes(InternalConnectionTypeList.NONE);
         Assert.assertEquals(1, result.length);
         Assert.assertEquals("jmri.jmrix.internal.ConnectionConfig", result[0]);
+        // MFG3
+        result = instance.getConnectionTypes(MFG3);
+        Assert.assertEquals(1, result.length);
+        Assert.assertEquals(TYPE_D, result[0]);
         // MFG2
         result = instance.getConnectionTypes(MFG2);
-        Assert.assertEquals(1, result.length);
+        Assert.assertEquals(2, result.length);
         Assert.assertEquals(TYPE_C, result[0]);
+        Assert.assertEquals(TYPE_D, result[1]);
         // MFG1
         result = instance.getConnectionTypes(MFG1);
         Assert.assertEquals(2, result.length);
         Assert.assertEquals(TYPE_A, result[0]);
+        Assert.assertEquals(TYPE_B, result[1]);
         JUnitUtil.resetInstanceManager();
     }
 

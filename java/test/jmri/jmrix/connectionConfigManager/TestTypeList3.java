@@ -1,7 +1,6 @@
 package jmri.jmrix.connectionConfigManager;
 
-import static jmri.jmrix.ConnectionConfigManagerTest.MFG2;
-import static jmri.jmrix.ConnectionConfigManagerTest.TYPE_C;
+import static jmri.jmrix.ConnectionConfigManagerTest.MFG3;
 import static jmri.jmrix.ConnectionConfigManagerTest.TYPE_D;
 
 import jmri.jmrix.ConnectionTypeList;
@@ -11,16 +10,16 @@ import jmri.jmrix.ConnectionTypeList;
  *
  * @author Randall Wood (C) 2016
  */
-public class TestTypeList2 implements ConnectionTypeList {
+public class TestTypeList3 implements ConnectionTypeList {
 
     @Override
     public String[] getAvailableProtocolClasses() {
-        return new String[]{TYPE_C, TYPE_D};
+        return new String[]{TYPE_D};
     }
 
     @Override
     public String[] getManufacturers() {
-        return new String[]{MFG2};
+        return new String[]{MFG3};
     }
 
 }

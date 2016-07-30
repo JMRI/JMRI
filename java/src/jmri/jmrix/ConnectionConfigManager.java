@@ -242,13 +242,13 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
     }
 
     /**
-     * Get the manufacturer that is supported by a connection type.
+     * Get the manufacturer that is supported by a connection type. If there are
+     * multiple manufacturers supported by connectionType, returns only the
+     * first manufacturer.
      *
      * @param connectionType the class name of a connection type.
-     * @return the supported manufacturer. If there are multiple manufacturers
-     *         supported by connectionType, returns only the first manufacturer.
-     *         Returns null if no manufacturer is associated with the
-     *         connectionType.
+     * @return the supported manufacturer. Returns null if no manufacturer is
+     *         associated with the connectionType.
      */
     @CheckForNull
     public String getConnectionManufacturer(@Nonnull String connectionType) {
@@ -260,6 +260,27 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
             }
         }
         return null;
+    }
+
+    /**
+     * Get the list of all known manufacturers that a single connection type
+     * supports.
+     *
+     * @param connectionType the class name of a connection type.
+     * @return an Array of supported manufacturers. Returns an empty Array if no
+     *         manufacturer is associated with the connectionType.
+     */
+    @Nonnull
+    public String[] getConnectionManufacturers(@Nonnull String connectionType) {
+        ArrayList<String> manufacturers = new ArrayList<>();
+        for (String manufacturer : this.getConnectionManufacturers()) {
+            for (String manufacturerType : this.getConnectionTypes(manufacturer)) {
+                if (connectionType.equals(manufacturerType)) {
+                    manufacturers.add(manufacturer);
+                }
+            }
+        }
+        return manufacturers.toArray(new String[manufacturers.size()]);
     }
 
     /**
