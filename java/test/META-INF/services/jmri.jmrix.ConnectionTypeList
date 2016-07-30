@@ -1,0 +1,6 @@
+# Providers of System Connections type lists for Unit Testing
+# These are fake system connection types with no real systems behind them
+# Order is Insignificant
+jmri.jmrix.connectionConfigManager.TestTypeList1A
+jmri.jmrix.connectionConfigManager.TestTypeList1B
+jmri.jmrix.connectionConfigManager.TestTypeList2
