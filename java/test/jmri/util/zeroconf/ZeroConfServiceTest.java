@@ -1,37 +1,209 @@
 package jmri.util.zeroconf;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.util.Collection;
+import java.util.HashMap;
+import javax.jmdns.ServiceInfo;
+import jmri.util.JUnitUtil;
+import jmri.web.server.WebServerPreferences;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * Tests for the ZeroConfService class
  *
  * @author Paul Bender Copyright (C) 2014
+ * @author Randall Wood Copyright (C) 2016
  */
-public class ZeroConfServiceTest extends TestCase {
+public class ZeroConfServiceTest {
 
-    public void testCreate() {
-        ZeroConfService zcs = ZeroConfService.create("_http._tcp.local.", 12345);
-        Assert.assertNotNull(zcs);
+    private static final String HTTP = "_http._tcp.local.";
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
     }
 
-    // from here down is testing infrastructure
-    public ZeroConfServiceTest(String s) {
-        super(s);
+    @AfterClass
+    public static void tearDownClass() throws Exception {
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {ZeroConfServiceTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Before
+    public void setUp() throws Exception {
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(ZeroConfServiceTest.class);
-        return suite;
+    @After
+    public void tearDown() throws Exception {
+        ZeroConfService.stopAll();
+        JUnitUtil.waitFor(() -> {
+            return (ZeroConfService.allServices().isEmpty());
+        }, "Stopping all ZeroConf Services");
+    }
+
+    /**
+     * Test of create method, of class ZeroConfService.
+     */
+    @Test
+    public void testCreate_String_int() {
+        ZeroConfService result = ZeroConfService.create(HTTP, 9999);
+        Assert.assertNotNull(result);
+        Assert.assertEquals(WebServerPreferences.getDefault().getRailRoadName(), result.name());
+    }
+
+    /**
+     * Test of create method, of class ZeroConfService.
+     */
+    @Test
+    public void testCreate_3args() {
+        HashMap<String, String> properties = new HashMap<>();
+        ZeroConfService result = ZeroConfService.create(HTTP, 9999, properties);
+        Assert.assertNotNull(result);
+        Assert.assertEquals(WebServerPreferences.getDefault().getRailRoadName(), result.name());
+    }
+
+    /**
+     * Test of create method, of class ZeroConfService.
+     */
+    @Test
+    public void testCreate_6args() {
+        String name = "my name"; // NOI18N
+        HashMap<String, String> properties = new HashMap<>();
+        ZeroConfService result = ZeroConfService.create(HTTP, name, 9999, 1, 1, properties);
+        Assert.assertNotNull(result);
+        Assert.assertEquals(name, result.name());
+    }
+
+    /**
+     * Test of key method, of class ZeroConfService.
+     */
+    @Test
+    public void testKey_0args() {
+        String name = "my_name";
+        ZeroConfService instance = ZeroConfService.create(HTTP, name, 9999, 0, 0, new HashMap<>());
+        String result = instance.key();
+        Assert.assertEquals(name + "." + HTTP, result);
+    }
+
+    /**
+     * Test of key method, of class ZeroConfService.
+     */
+    @Test
+    public void testKey_String_String() {
+        String result = ZeroConfService.key("THAT", "THIS");
+        Assert.assertEquals("this.that", result);
+    }
+
+    /**
+     * Test of name method, of class ZeroConfService.
+     */
+    @Test
+    public void testName() {
+        ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
+        Assert.assertEquals(WebServerPreferences.getDefault().getRailRoadName(), instance.name());
+    }
+
+    /**
+     * Test of type method, of class ZeroConfService.
+     */
+    @Test
+    public void testType() {
+        ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
+        Assert.assertEquals(HTTP, instance.type());
+    }
+
+    /**
+     * Test of serviceInfo method, of class ZeroConfService.
+     */
+    @Test
+    public void testServiceInfo() {
+        ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
+        ServiceInfo result = instance.serviceInfo();
+        Assert.assertNotNull(result);
+        Assert.assertTrue(result instanceof ServiceInfo);
+    }
+
+    /**
+     * Test of isPublished method, of class ZeroConfService.
+     */
+    @Test
+    public void testIsPublished() {
+        ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
+        Assert.assertFalse(instance.isPublished());
+    }
+
+    /**
+     * Test of publish method, of class ZeroConfService.
+     */
+    @Test
+    public void testPublish() {
+        ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
+        Assert.assertFalse(instance.isPublished());
+        // can fail if platform does not release earlier stopped service within 15 seconds
+        instance.publish();
+        Assume.assumeTrue("Publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
+            return instance.isPublished() == true;
+        }));
+        Assert.assertTrue(instance.isPublished());
+    }
+
+    /**
+     * Test of stop method, of class ZeroConfService.
+     */
+    @Test
+    public void testStop() {
+        ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
+        Assert.assertFalse(instance.isPublished());
+        instance.publish();
+        JUnitUtil.waitFor(() -> {
+            return instance.isPublished() == true;
+        }, "Publishing ZeroConf Service");
+        Assert.assertTrue(instance.isPublished());
+        instance.stop();
+        JUnitUtil.waitFor(() -> {
+            return instance.isPublished() == false;
+        }, "Stopping ZeroConf Service");
+        Assert.assertFalse(instance.isPublished());
+    }
+
+    /**
+     * Test of stopAll method, of class ZeroConfService.
+     */
+    @Test
+    public void testStopAll() {
+        ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
+        Assert.assertFalse(instance.isPublished());
+        // can fail if platform does not release earlier stopped service within 15 seconds
+        instance.publish();
+        Assume.assumeTrue("Publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
+            return instance.isPublished() == true;
+        }));
+        Assert.assertTrue(instance.isPublished());
+        ZeroConfService.stopAll();
+        JUnitUtil.waitFor(() -> {
+            return instance.isPublished() == false;
+        }, "Stopping ZeroConf Service");
+        Assert.assertFalse(instance.isPublished());
+    }
+
+    /**
+     * Test of allServices method, of class ZeroConfService.
+     */
+    @Test
+    public void testAllServices() {
+        Collection<ZeroConfService> result = ZeroConfService.allServices();
+        Assert.assertEquals(0, result.size());
+        ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
+        result = ZeroConfService.allServices();
+        Assert.assertEquals(0, result.size());
+        instance.publish();
+        JUnitUtil.waitFor(() -> {
+            return instance.isPublished() == true;
+        }, "Publishing ZeroConf Service");
+        result = ZeroConfService.allServices();
+        Assert.assertEquals(1, result.size());
     }
 
 }
