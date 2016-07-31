@@ -137,6 +137,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(server.getConnection().getLocale(), "ErrorThrottleUnableToGetThrottle", address));
             }
             manager.put(address, throttle);
+            manager.put(throttle, server);
             manager.attachListener(address, throttle);
             return throttle;
         }
