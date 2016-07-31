@@ -1,5 +1,10 @@
 package jmri.server.json.throttle;
 
+import static jmri.server.json.JSON.ID;
+import static jmri.server.json.JSON.IS_LONG_ADDRESS;
+import static jmri.server.json.JSON.STATUS;
+import static jmri.server.json.roster.JsonRoster.ROSTER_ENTRY;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -15,10 +20,6 @@ import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.Throttle;
 import jmri.ThrottleListener;
-import static jmri.server.json.JSON.ID;
-import static jmri.server.json.JSON.IS_LONG_ADDRESS;
-import static jmri.server.json.roster.JsonRoster.ROSTER_ENTRY;
-import static jmri.server.json.JSON.STATUS;
 import jmri.jmrit.roster.Roster;
 import jmri.server.json.JsonException;
 import org.slf4j.Logger;
@@ -86,12 +87,12 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
      * Creates a new JsonThrottle or returns an existing one if the request is
      * for an existing throttle.
      *
-     * data can contain either a string {@link jmri.server.json.JSON#ID} node containing the ID
-     * of a {@link jmri.jmrit.roster.RosterEntry} or an integer
-     * {@link jmri.server.json.JSON#ADDRESS} node. If data contains an ADDRESS, the ID node is
-     * ignored. The ADDRESS may be accompanied by a boolean
-     * {@link jmri.server.json.JSON#IS_LONG_ADDRESS} node specifying the type of address, if
-     * IS_LONG_ADDRESS is not specified, the inverse of {@link jmri.ThrottleManager#canBeShortAddress(int)
+     * data can contain either a string {@link jmri.server.json.JSON#ID} node
+     * containing the ID of a {@link jmri.jmrit.roster.RosterEntry} or an
+     * integer {@link jmri.server.json.JSON#ADDRESS} node. If data contains an
+     * ADDRESS, the ID node is ignored. The ADDRESS may be accompanied by a
+     * boolean {@link jmri.server.json.JSON#IS_LONG_ADDRESS} node specifying the
+     * type of address, if IS_LONG_ADDRESS is not specified, the inverse of {@link jmri.ThrottleManager#canBeShortAddress(int)
      * } is used as the "best guess" of the address length.
      *
      * @param throttleId The client's identity token for this throttle
@@ -297,11 +298,9 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     }
 
     public void sendMessage(ObjectNode data) {
-        log.debug("Sending {}", data);
-        JsonThrottleManager manager = JsonThrottleManager.getDefault();
-        for (JsonThrottleSocketService server : manager.getServers(this).toArray(new JsonThrottleSocketService[manager.getServers(this).size()])) {
+        JsonThrottleManager.getDefault().getServers(this).stream().forEach((server) -> {
             this.sendMessage(data, server);
-        }
+        });
     }
 
     public void sendMessage(ObjectNode data, JsonThrottleSocketService server) {
