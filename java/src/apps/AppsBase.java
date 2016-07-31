@@ -48,7 +48,7 @@ public abstract class AppsBase {
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT",
             justification = "not a library pattern")
-    private final static String configFilename = "/JmriConfig3.xml";
+    private final static String configFilename = System.getProperty("org.jmri.Apps.configFilename", "/JmriConfig3.xml");
     protected boolean configOK;
     protected boolean configDeferredLoadOK;
     protected boolean preferenceFileExists;
@@ -58,6 +58,8 @@ public abstract class AppsBase {
     /**
      * Initial actions before frame is created, invoked in the applications
      * main() routine.
+     *
+     * @param applicationName The application name as presented to the user
      */
     static public void preInit(String applicationName) {
         Log4JUtil.initLogging();
@@ -77,6 +79,10 @@ public abstract class AppsBase {
 
     /**
      * Create and initialize the application object.
+     *
+     * @param applicationName user-visible name of application
+     * @param configFileDef   default config filename
+     * @param args            arguments passed to application at launch
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SC_START_IN_CTOR",
             justification = "The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage")
@@ -276,9 +282,9 @@ public abstract class AppsBase {
         if (sharedConfig != null) {
             // sharedConfigs do not need deferred loads
             configDeferredLoadOK = true;
-        } else {
-        // To avoid possible locks, deferred load should be
-            // performed on the Swing thread
+        } else // To avoid possible locks, deferred load should be
+        // performed on the Swing thread
+        {
             if (SwingUtilities.isEventDispatchThread()) {
                 configDeferredLoadOK = doDeferredLoad(file);
             } else {
@@ -395,8 +401,11 @@ public abstract class AppsBase {
      * @param args Argument array from the main routine
      */
     static protected void setConfigFilename(String def, String[] args) {
+        // skip if org.jmri.Apps.configFilename is set
+        if (System.getProperty("org.jmri.Apps.configFilename") != null) {
+            return;
+        }
         // save the configuration filename if present on the command line
-
         if (args.length >= 1 && args[0] != null && !args[0].equals("") && !args[0].contains("=")) {
             def = args[0];
             log.debug("Config file was specified as: " + args[0]);
@@ -440,6 +449,9 @@ public abstract class AppsBase {
 
     /**
      * The application decided to quit, handle that.
+     *
+     * @return true if successfully ran all shutdown tasks and can quit; false
+     *         otherwise
      */
     static public boolean handleQuit() {
         log.debug("Start handleQuit");
@@ -453,6 +465,9 @@ public abstract class AppsBase {
 
     /**
      * The application decided to restart, handle that.
+     *
+     * @return true if successfully ran all shutdown tasks and can quit; false
+     *         otherwise
      */
     static public boolean handleRestart() {
         log.debug("Start handleRestart");
