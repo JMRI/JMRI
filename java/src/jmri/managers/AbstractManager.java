@@ -5,6 +5,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import javax.annotation.Nonnull;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -38,8 +39,8 @@ abstract public class AbstractManager
      */
     protected void registerSelf() {
         log.debug("registerSelf for config of type {}", getClass());
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(this, getXMLOrder());
+        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerConfig(this, getXMLOrder());
             log.debug("registering for config of type {}", getClass());
         }
     }
@@ -53,8 +54,8 @@ abstract public class AbstractManager
     // abstract methods to be extended by subclasses
     // to free resources when no longer used
     public void dispose() {
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().deregister(this);
+        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).deregister(this);
         }
         _tsys.clear();
         _tuser.clear();

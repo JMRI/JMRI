@@ -1,58 +1,107 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>DecoderPro Throttle</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>DecoderPro Throttle</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<a name="Top"></a>
-<h1>DecoderPro&reg; Main Window</h1>
-<h2>JMRI&reg; Throttle Window - Toolbar</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-<p><a href="dp3_Main_Throttle.shtml">Back </a></p>
-</div>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<hr>
-<img src="images/Main_Throttle_toolbar.png" width="515" height="118" alt="throttle toolbar">
-<p>The Throttle toolbar is enabled from the <a href="Start_Preferences.shtml" target="_blank">Throttles Preferences Pane</a></p>
-<ul>
-  <p>Use Throttles preferences window to set the desired preferences.</p>
-  <p align="center"><img src="images/Main_Tool01.png" width="700" height="427" alt="Throttle pref"></p>
-</ul>
-<p>When it is enabled, a Throttle Window can host a set of Throttles. You can browse through these throttles: Add a new Throttle in that Throttle Window. Once the number of Throttles in a Throttle Window is greater than one, Next and Previous Icons are enabled. </p>
-<ul>
-  <li> <img src="images/Main_Throttle_toolbar_new.png" width="51" height="45" alt="new"> Open a new Throttle Window</li>
-  <li> <img src="images/Main_Throttle_toolbar_close_current.png" width="43" height="50" alt="close"> Closes the current Throttle Window</li>
-  <li><img src="images/Main_Throttle_toolbar_previous_loco.png" width="44" height="44" alt="previous loco"> Return to Previous running Locomotive. </li>
-  <li><img src="images/Main_Throttle_toolbar_previous.png" width="44" height="44" alt="previous"> Goes to previous throttle.</li>
-  <li><img src="images/Main_Throttle_toolbar_next.png" width="46" height="43" alt="next throttle"> Goes to next throttle</li>
-  <li><img src="images/Main_Throttle_toolbar_next_loco.png" width="45" height="45" alt="next loco"> Goes to next running locomotive</li>
-  <li><img src="images/Main_Throttle_toolbar_stop.png" width="44" height="48" alt="stop"> Issues an emergency stop command to all locomotives under JMRI control.</li>
-  <li><img src="images/Main_Throttle_toolbar_power.png" width="45" height="48" alt="power"> Controls track power on or off, if supported.</li>
-  <li><img src="images/Main_Throttle_toolbar_edit.png" width="50" height="49" alt="edit">Switch to or revert from Edit Throttle mode.</li>
-  <li><img src="images/Main_Throttle_toolbar_list.png" width="48" height="51" alt="listr"> Opens the <a href="dp3_Main_Throttle_List.shtml">Local JMRI Window</a></li>
-</ul>
+      <h1>DecoderPro&reg; Main Window</h1>
 
-<div align="right">
-<a href="dp3_Main_Throttle.shtml">Back </a>
-</div>
+      <h2>JMRI&reg; Throttle Window - Toolbar</h2>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
- </body>
+      <div align="right">
+        <p><a href="dp3_Main_Throttle.shtml">Back</a></p>
+      </div>
+      <hr>
+      <img src="images/Main_Throttle_toolbar.png" width="515"
+      height="118" alt="throttle toolbar">
+
+      <p>The Throttle toolbar is enabled from the <a href=
+      "Start_Preferences.shtml" target="_blank">Throttles
+      Preferences Pane</a></p>
+
+      <div style="margin-left: 2em">
+        <p>Use Throttles preferences window to set the desired
+        preferences.</p>
+
+        <p align="center"><img src="images/Main_Tool01.png" width=
+        "700" height="427" alt="Throttle pref"></p>
+      </div>
+
+      <p>When it is enabled, a Throttle Window can host a set of
+      Throttles. You can browse through these throttles: Add a new
+      Throttle in that Throttle Window. Once the number of
+      Throttles in a Throttle Window is greater than one, Next and
+      Previous Icons are enabled.</p>
+
+      <ul>
+        <li><img src="images/Main_Throttle_toolbar_new.png" width=
+        "51" height="45" alt="new"> Open a new Throttle Window</li>
+
+        <li><img src=
+        "images/Main_Throttle_toolbar_close_current.png" width="43"
+        height="50" alt="close"> Closes the current Throttle
+        Window</li>
+
+        <li><img src=
+        "images/Main_Throttle_toolbar_previous_loco.png" width="44"
+        height="44" alt="previous loco"> Return to Previous running
+        Locomotive.</li>
+
+        <li><img src="images/Main_Throttle_toolbar_previous.png"
+        width="44" height="44" alt="previous"> Goes to previous
+        throttle.</li>
+
+        <li><img src="images/Main_Throttle_toolbar_next.png" width=
+        "46" height="43" alt="next throttle"> Goes to next
+        throttle</li>
+
+        <li><img src="images/Main_Throttle_toolbar_next_loco.png"
+        width="45" height="45" alt="next loco"> Goes to next
+        running locomotive</li>
+
+        <li><img src="images/Main_Throttle_toolbar_stop.png" width=
+        "44" height="48" alt="stop"> Issues an emergency stop
+        command to all locomotives under JMRI control.</li>
+
+        <li><img src="images/Main_Throttle_toolbar_power.png"
+        width="45" height="48" alt="power"> Controls track power on
+        or off, if supported.</li>
+
+        <li><img src="images/Main_Throttle_toolbar_edit.png" width=
+        "50" height="49" alt="edit">Switch to or revert from Edit
+        Throttle mode.</li>
+
+        <li><img src="images/Main_Throttle_toolbar_list.png" width=
+        "48" height="51" alt="listr"> Opens the <a href=
+        "dp3_Main_Throttle_List.shtml">Local JMRI Window</a></li>
+      </ul>
+
+      <div align="right">
+        <a href="dp3_Main_Throttle.shtml">Back</a>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
 </html>

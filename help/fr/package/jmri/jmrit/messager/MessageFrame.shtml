@@ -1,37 +1,38 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="fr">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- $Id$ -->
+  <!-- UpDated by Herv&#233; Blorec bzh56420@yahoo.fr 2013-11-04-->
 
-<!-- $Id$ -->
-<!-- UpDated by Herv&#233; Blorec bzh56420@yahoo.fr 2013-11-04--> 
-<title>JMRI: Send Throttle Message</title>
+  <title>JMRI: Send Throttle Message</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
 
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
+<body>
+  <!--#include virtual="/Header" -->
 
-<BODY>
-<!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>JMRI:Envoi de Message Au R&eacute;gulateur</h1>JMRI a une
+      capacit&eacute; limit&eacute;e pour envoyer des messages
+      &agrave; un r&eacute;gulateur &agrave; main.
 
-<h1> 
-JMRI:Envoi de Message Au R&#233;gulateur
-</h1>
-JMRI a une capacit&#233; limit&#233;e pour envoyer des messages &#224; un r&#233;gulateur &#224; main.
-
-
-<p>
-Ceci est la page d'aide help/fr/package/jmri/jmrit/.messager.MessageFrame.
-    
-<!--#include virtual="/Footer" -->
+      <p>Ceci est la page d'aide
+      help/fr/package/jmri/jmrit/.messager.MessageFrame. 
+      <!--#include virtual="/Footer" --></p>
+    </div>
+  </div>
 </body>
 </html>

@@ -1,23 +1,5 @@
 package jmri.jmrit.beantable.oblock;
 
-/**
- * GUI to define OBlocks
- * <P>
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
- *
- * @author	Pete Cressman (C) 2010
- * @version $Revision$
- */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.ParseException;
@@ -44,15 +26,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * GUI to define OBlocks
+ * <P>
  * Duplicates the JTable model for BlockTableAction and adds a column for the
  * occupancy sensor. Configured for use within an internal frame.
+ *
+ * @author	Pete Cressman (C) 2010
  */
 public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4782167334919251464L;
     static public final int SYSNAMECOL = 0;
     static public final int USERNAMECOL = 1;
     static public final int COMMENTCOL = 2;
@@ -424,7 +406,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                     if (tempRow[REPORTERCOL] != null) {
                         Reporter rep = null;
                         try {
-                            rep = InstanceManager.reporterManagerInstance().getReporter(tempRow[REPORTERCOL]);
+                            rep = InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(tempRow[REPORTERCOL]);
                             if (rep != null) {
                                 block.setReporter(rep);
                                 block.setReportingCurrent(tempRow[REPORT_CURRENTCOL].equals(Bundle.getMessage("Current")));
@@ -574,7 +556,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
             case REPORTERCOL:
                 Reporter rep = null;
                 try {
-                    rep = InstanceManager.reporterManagerInstance().getReporter((String) value);
+                    rep = InstanceManager.getDefault(jmri.ReporterManager.class).getReporter((String) value);
                     if (rep != null) {
                         block.setReporter(rep);
                         fireTableRowsUpdated(row, row);

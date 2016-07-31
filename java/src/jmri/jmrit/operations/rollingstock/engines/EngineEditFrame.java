@@ -1,4 +1,3 @@
-// EngineEditFrame.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.Dimension;
@@ -31,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of engine
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision$
  */
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -227,7 +225,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
         }
 
         // row 20
-        if (Setup.isRfidEnabled() && jmri.InstanceManager.getDefault(jmri.IdTagManager.class) != null) {
+        if (Setup.isRfidEnabled() && jmri.InstanceManager.getOptionalDefault(jmri.IdTagManager.class) != null) {
             JPanel pRfid = new JPanel();
             pRfid.setLayout(new GridBagLayout());
             pRfid.setBorder(BorderFactory.createTitledBorder(Setup.getRfidLabel()));

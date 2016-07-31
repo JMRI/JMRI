@@ -55,7 +55,7 @@ et des r&#233;f&#233;rences d'objets dans ce genre de configuration.
 </OL>
 
 <a name="type">
-<H2>El&#233;ments avec des noms</h2></a>
+</a><h2>El&#233;ments avec des noms</h2>
 Il y a un certain nombre de choses qui peuvent avoir besoin des noms:
 <UL>
 <LI>Aspects pour les signaux
@@ -209,7 +209,7 @@ est mise en oeuvre sur trois sorties diff&#233;rentes, LT1, LT2 et LT3, l'objet 
 pourrait &#234;tre appel&#233; IH3.
 
 <a name="special">
-<h2>Convention de D&#233;signation pour un usage automatique</h2></a>
+</a><h2>Convention de D&#233;signation pour un usage automatique</h2>
 
 Certaines constructions de niveau sup&#233;rieur cr&#233;ent leurs propres &#233;l&#233;ments. Par exemple, un
 "Groupe Capteur"

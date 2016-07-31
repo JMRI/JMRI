@@ -1,17 +1,15 @@
 package jmri.util;
 
+import java.awt.Color;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import java.awt.Color;
-
 /**
  * Tests for the jmri.util.ColorUtil class.
  *
  * @author	Paul Bender Copyright 2016
- * @version	$Revision$
  */
 public class ColorUtilTest extends TestCase {
 
@@ -136,6 +134,31 @@ public class ColorUtilTest extends TestCase {
     public void testColorFromTrack() {
         Assert.assertNull("track from null", ColorUtil.stringToColor("track"));
     }
+
+    public void testHexStringFromMagenta() {
+        Assert.assertEquals("hex string from magenta", ColorUtil.colorToHexString(Color.MAGENTA), "#FF00FF");
+    }
+
+    public void testHexStringFromNull() {
+        Assert.assertNull("hex string from null", ColorUtil.colorToHexString(null));
+    }
+
+    public void testColorNameForMagenta() {
+        Assert.assertEquals("color name for magenta", ColorUtil.colorToColorName(Color.MAGENTA), "magenta");
+    }
+
+    public void testColorNameForFFCCFF() {
+        Assert.assertEquals("color name for #FFCCFF", ColorUtil.colorToColorName(new Color(255, 204, 255)), "#FFCCFF");
+    }
+
+    public void testColorNameForFF00FF() {
+        Assert.assertEquals("color name for #FF00FF", ColorUtil.colorToColorName(new Color(255, 0, 255)), "magenta");
+    }
+
+    public void testColorNameFromNull() {
+        Assert.assertNull("color name from null", ColorUtil.colorToColorName(null));
+    }
+
 
     // from here down is infrastructure
 

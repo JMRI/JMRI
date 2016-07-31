@@ -1,10 +1,10 @@
-// SprogPacketGenAction.java
 package jmri.jmrix.sprog.packetgen;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
  * Swing action to create and register a SprogPacketGenFrame object
@@ -14,17 +14,15 @@ import org.slf4j.LoggerFactory;
  */
 public class SprogPacketGenAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4279427035479187090L;
+    private SprogSystemConnectionMemo _memo;
 
-    public SprogPacketGenAction(String s) {
+    public SprogPacketGenAction(String s,SprogSystemConnectionMemo memo) {
         super(s);
+        _memo = memo;
     }
 
     public void actionPerformed(ActionEvent e) {
-        SprogPacketGenFrame f = new SprogPacketGenFrame();
+        SprogPacketGenFrame f = new SprogPacketGenFrame(_memo);
         try {
             f.initComponents();
         } catch (Exception ex) {

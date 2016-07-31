@@ -1,4 +1,3 @@
-// EcosTurnoutManager.java
 package jmri.jmrix.ecos;
 
 import java.awt.Component;
@@ -16,6 +15,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import jmri.ConfigureManager;
 import jmri.Turnout;
 import jmri.jmrix.ecos.utilities.GetEcosObjectNumber;
 import jmri.jmrix.ecos.utilities.RemoveObjectFromEcos;
@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * System names are "UTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision$
  */
 public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         implements EcosListener {
@@ -613,8 +612,8 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
             tc.sendEcosMessage(em, this);
         }
 
-        if (jmri.InstanceManager.configureManagerInstance() != null) {
-            jmri.InstanceManager.configureManagerInstance().deregister(this);
+        if (jmri.InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+            jmri.InstanceManager.getDefault(ConfigureManager.class).deregister(this);
         }
         _tecos.clear();
     }
@@ -669,5 +668,3 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
 
     private final static Logger log = LoggerFactory.getLogger(EcosTurnoutManager.class.getName());
 }
-
-/* @(#)EcosTurnoutManager.java */

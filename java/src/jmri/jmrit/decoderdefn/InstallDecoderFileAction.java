@@ -1,4 +1,3 @@
-// InstallDecoderFileAction.java
 package jmri.jmrit.decoderdefn;
 
 import java.io.File;
@@ -14,15 +13,9 @@ import org.slf4j.LoggerFactory;
  * Install decoder definition from local file.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  */
 public class InstallDecoderFileAction extends InstallDecoderURLAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8029283743478939558L;
 
     public InstallDecoderFileAction(String s, WindowInterface wi) {
         super(s, wi);

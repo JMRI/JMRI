@@ -18,7 +18,7 @@
 
 <h1>Adding/Editing Lights</h1>
 
-<a name="addLight"><h2>Adding a new Light</h2></a>
+<a name="addLight"></a><h2>Adding a new Light</h2>
 To add a new Light, follow this procedure:
 <ol>
 	<li><p>Click <b>Lights</b> in the <b>Tables</b> submenu of the 
@@ -69,7 +69,7 @@ more Lights.</p>
 	</li>
 </ol>
 
-<a name="addLight"><h2>Adding several new Lights at Once</h2></a>
+<a name="addLight"></a><h2>Adding several new Lights at Once</h2>
 If the selected <b>System:</b> supports adding multiple Lights at once, 
 the <b>Add/Edit Light</b> window will display two additional items, as shown 
 below: </p>
@@ -128,7 +128,7 @@ the "Edit" version of the <b>Add/Edit Light</b> pane.</p>
 	</li>
 </ol>
 
-<a name="lightcontrol"><h2>Automated Control Options for Lights</h2></a>
+<a name="lightcontrol"></a><h2>Automated Control Options for Lights</h2>
 
 <p> The <b>Add/Edit Light Control</b> window is used to specify a Light control. 
 The operation of a Light can be controlled in the following ways:
@@ -186,7 +186,7 @@ The operation of a Light can be controlled in the following ways:
 	<img src="LightAddTwoSensor.jpg" height="179" width="333">
 	</li>
 	</ul>
-<a name="cautions"><h2>Light Control Cautions</h2></a>
+<a name="cautions"></a><h2>Light Control Cautions</h2>
 <ul>
 	<li><p>If you need to enter a Sensor name or a Turnout name, you must enter the name 
 	(System Name or User Name) of an existing Sensor or Turnout. The Sensor or 
@@ -203,7 +203,7 @@ The operation of a Light can be controlled in the following ways:
 	</li>
 </ul>
 
-<a name="varLight"><h2>Working with Variable Intensity Lights</h2></a>
+<a name="varLight"></a><h2>Working with Variable Intensity Lights</h2>
 If the selected <b>System:</b> supports Lights with variable intensity, 
 the <b>Add/Edit Light</b> window will display the <b>Variable Intensity</b> 
 area shown below when adding a Light: </p>

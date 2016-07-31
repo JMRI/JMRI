@@ -25,6 +25,7 @@ public class SprogThrottle extends AbstractThrottle {
      */
     public SprogThrottle(SprogSystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
+        station = memo.getCommandStation();
 
         // cache settings.
         this.speedSetting = 0;
@@ -46,7 +47,7 @@ public class SprogThrottle extends AbstractThrottle {
 
     }
 
-    SprogCommandStation station = new SprogCommandStation();
+    SprogCommandStation station = null;
 
     DccLocoAddress address;
 
@@ -127,10 +128,10 @@ public class SprogThrottle extends AbstractThrottle {
         int mode = address.isLongAddress()
                 ? SprogConstants.LONG_ADD : 0;
         try {
-            mode |= (InstanceManager.powerManagerInstance().getPower() == SprogPowerManager.ON)
+            mode |= (InstanceManager.getDefault(jmri.PowerManager.class).getPower() == SprogPowerManager.ON)
                     ? SprogConstants.POWER_BIT : 0;
         } catch (Exception e) {
-            log.error("Exception from InstanceManager.powerManagerInstance(): " + e);
+            log.error("Exception from InstanceManager.getDefault(jmri.PowerManager.class): " + e);
         }
         if (log.isDebugEnabled()) {
             log.debug("Speed Step Mode Change to Mode: " + Mode
@@ -151,7 +152,7 @@ public class SprogThrottle extends AbstractThrottle {
             speedIncrement = SPEED_STEP_128_INCREMENT;
         }
         m = new SprogMessage("M h" + Integer.toHexString(mode));
-        SprogTrafficController.instance().sendSprogMessage(m, null);
+        ((SprogSystemConnectionMemo)adapterMemo).getSprogTrafficController().sendSprogMessage(m, null);
         if ((speedStepMode != Mode) && (Mode != DccThrottle.SpeedStepMode27)) {
             notifyPropertyChangeListener("SpeedSteps", this.speedStepMode,
                     this.speedStepMode = Mode);
@@ -200,7 +201,7 @@ public class SprogThrottle extends AbstractThrottle {
                 m.setElement(i++, step.charAt(j));
             }
 
-            SprogTrafficController.instance().sendSprogMessage(m, null);
+            ((SprogSystemConnectionMemo)adapterMemo).getSprogTrafficController().sendSprogMessage(m, null);
             if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
                 notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
             }
@@ -233,7 +234,7 @@ public class SprogThrottle extends AbstractThrottle {
                 m.setElement(i++, step.charAt(j));
             }
 
-            SprogTrafficController.instance().sendSprogMessage(m, null);
+            ((SprogSystemConnectionMemo)adapterMemo).getSprogTrafficController().sendSprogMessage(m, null);
             if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
                 notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
             }

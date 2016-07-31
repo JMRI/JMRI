@@ -2,7 +2,6 @@ package jmri.managers;
 
 /**
  * Mock Implementation for the User Preferences Manager.
- * <P>
  *
  * @see jmri.UserMessageManager
  * @see jmri.managers.DefaultUserMessagePreferences
@@ -12,7 +11,7 @@ package jmri.managers;
 public class TestUserPreferencesManager extends JmriUserPreferencesManager {
 
     public TestUserPreferencesManager() {
-        if (jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class) == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class) == null) {
             //We add this to the instanceManager so that other components can access the preferences
             //We need to make sure that this is registered before we do the read
             jmri.InstanceManager.store(this, jmri.UserPreferencesManager.class);

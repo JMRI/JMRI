@@ -1,4 +1,3 @@
-// AddSensorPanel.java
 package jmri.jmrit.signalling;
 
 import java.awt.Color;
@@ -41,14 +40,9 @@ import org.slf4j.LoggerFactory;
  * JPanel to create a new JMRI devices HiJacked to serve other beantable tables.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.2 $
  */
 public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4871721972825766572L;
     JComboBox<String> selectPanel = new JComboBox<String>();
     JComboBox<String> fromPoint = new JComboBox<String>();
     JComboBox<String> toPoint = new JComboBox<String>();
@@ -689,6 +683,3 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
 
     private final static Logger log = LoggerFactory.getLogger(AddEntryExitPairPanel.class.getName());
 }
-
-
-/* @(#)AddNewHardwareDevicePanel.java */

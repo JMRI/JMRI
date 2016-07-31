@@ -1,5 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated  by Blorec Herv&#233;  2013-09-10-->
 <html lang="fr">
 <head>
@@ -60,9 +59,9 @@ aiguillages, nous utilisons la documentation de num&#233;rotation pour d&#233;fi
 La fa&#231;on la plus simple de trouver les bon num&#233;ros pour un canton donn&#233; est d'ouvrir une fen&#234;tre, "LocoNet moniteur", et d&#233;poser une
 locomotive sur le canton qui vous &#234;tes int&#233;resse Vous verrez les Message LocoNet, avec les nombre, dans la fen&#234;tre qui ressemble &#224;
 quelque chose comme ceci:
-<PRE>
+<pre style="font-family: monospace;">
     "General sensor input report: contact 161 (DS54 switch 81 Aux input) (BDL16 11,1) is Hi"
-</code></pre>
+</pre>
 
 Le num&#233;ro de contact, 161 dans ce cas, est l'adresse du capteur. Le pr&#233;fixe est LS pour obtenir, le nom du capteur, par exemple LS161 dans ce cas.
 <P>

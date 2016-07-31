@@ -1,4 +1,3 @@
-// DualDecoderToolAction.java
 package jmri.jmrit.dualdecoder;
 
 import java.awt.event.ActionEvent;
@@ -29,12 +28,10 @@ public class DualDecoderToolAction extends JmriAbstractAction {
 
         // disable ourself if programming is not possible
         boolean enabled = false;
-        if ((InstanceManager.getList(GlobalProgrammerManager.class) != null)
-                && (InstanceManager.getList(GlobalProgrammerManager.class).size() > 0)) {
+        if (InstanceManager.getList(GlobalProgrammerManager.class).size() > 0) {
             enabled = true;
         }
-        if ((InstanceManager.getList(AddressedProgrammerManager.class) != null)
-                && (InstanceManager.getList(AddressedProgrammerManager.class).size() > 0)) {
+        if (InstanceManager.getList(AddressedProgrammerManager.class).size() > 0) {
             enabled = true;
         }
 
@@ -54,5 +51,3 @@ public class DualDecoderToolAction extends JmriAbstractAction {
     public jmri.util.swing.JmriPanel makePanel() { return null; } // not used by this classes actionPerformed, not migrated to new form yet
 
 }
-
-/* @(#)DualDecoderToolAction.java */

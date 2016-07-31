@@ -1,75 +1,114 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>Decoder Pro Manual: Getting Started</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
-<head>
+  <title>Decoder Pro Manual: Getting Started</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<a name="Top"></a>
-<h1>Getting Started with DecoderPro&reg;</h1>
-<h2>How do I start the DecoderPro program for New User?</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-<p><a href="Start_DecoderPro.shtml">Back</a></p>
-</div>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<hr>
-<p>
-  For First Time or totally new Install. Once you have downloaded the JMRI software and installed it, simply
-open the program in the usual manner for your operating system. An icon for DecoderPro should be installed on your Desktop.<br>
-<img src="images/decoderpro3_icon.png" alt="icon" height="64" width="88">
-</p><p>DecoderPro may be opened by double click on the Desktop icon
-and the DecoderPro initial screen as shown below will be displayed on
-completion of startup for a brand new install with no settings stored
-in your computer.
-</p><p>First time install start screen
-</p><p><img src="images/newUser_01.png" alt="new" height="410" width="710"></p>
-<p>Press the 
-  <input name="Button" id="button" value="Next&gt;" type="button"> 
-starts the wizard.</p>
-<p><img src="images/newUser_02.png" alt="wizard" height="410" width="710"></p>
-<p>Press the
-  <input name="button" id="button2" value="Next&gt;" type="button"> 
-to continue</p>
-<p><img src="images/newUser_03.png" alt="wizard" height="410" width="710"> </p>
-<p>Select your system and other options for your system will be shown.</p>
-<p><img style="width: 710px; height: 410px;" src="images/newUser_04.png" alt="wizaard"></p>
-<p>Select your system connection.</p>
-<p><img src="images/newUser_05.png" alt="wizard" height="400" width="700"></p>
-<p>Select your Serial port and Command station type.</p>
-<p><img src="images/newUser_06.png" alt="wizard" height="400" width="700"></p>
-<p>Next Connection Prefix and Connection Name, At this time leave as default.</p>
-<p>Press the
-  <input name="button2" id="button3" value="Next&gt;" type="button">
-</p>
-<p><img src="images/newUser_07.png" alt="wizard" height="400" width="700"> </p>
-<p>Press the
-  <input name="button3" id="button4" value="Finish" type="button">
-</p>
-<p>The DecoderPro main window is displayed with instructions for Getting Started:</p>
-<p><img src="images/newUser_08.png" alt="new start" height="351" width="600"></p>
-<p>When you want to set up the other preferences at this time, go to Edit -&gt; 
-<a href="Start_Preferences.shtml">Preferences</a>.
-A pane will  come up that allows  you to set up the system for your particular configuration.</p>
-<hr>
-<div align="right">
-<p><a href="Start_DecoderPro.shtml">Back </a></p></div>
+      <h1>Getting Started with DecoderPro&reg;</h1>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
- </body>
+      <h2>How do I start the DecoderPro program for New User?</h2>
+
+      <div align="right">
+        <p><a href="Start_DecoderPro.shtml">Back</a></p>
+      </div>
+      <hr>
+
+      <p>For First Time or totally new Install. Once you have
+      downloaded the JMRI software and installed it, simply open
+      the program in the usual manner for your operating system. An
+      icon for DecoderPro should be installed on your Desktop.<br>
+      <img src="images/decoderpro3_icon.png" alt="icon" height="64"
+      width="88"></p>
+
+      <p>DecoderPro may be opened by double click on the Desktop
+      icon and the DecoderPro initial screen as shown below will be
+      displayed on completion of startup for a brand new install
+      with no settings stored in your computer.</p>
+
+      <p>First time install start screen</p>
+
+      <p><img src="images/newUser_01.png" alt="new" height="410"
+      width="710"></p>
+
+      <p>Press the <input name="Button" id="button" value=
+      "Next&gt;" type="button"> starts the wizard.</p>
+
+      <p><img src="images/newUser_02.png" alt="wizard" height="410"
+      width="710"></p>
+
+      <p>Press the <input name="button" id="button2" value=
+      "Next&gt;" type="button"> to continue</p>
+
+      <p><img src="images/newUser_03.png" alt="wizard" height="410"
+      width="710"></p>
+
+      <p>Select your system and other options for your system will
+      be shown.</p>
+
+      <p><img style="width: 710px; height: 410px;" src=
+      "images/newUser_04.png" alt="wizaard"></p>
+
+      <p>Select your system connection.</p>
+
+      <p><img src="images/newUser_05.png" alt="wizard" height="400"
+      width="700"></p>
+
+      <p>Select your Serial port and Command station type.</p>
+
+      <p><img src="images/newUser_06.png" alt="wizard" height="400"
+      width="700"></p>
+
+      <p>Next Connection Prefix and Connection Name, At this time
+      leave as default.</p>
+
+      <p>Press the <input name="button2" id="button3" value=
+      "Next&gt;" type="button"></p>
+
+      <p><img src="images/newUser_07.png" alt="wizard" height="400"
+      width="700"></p>
+
+      <p>Press the <input name="button3" id="button4" value=
+      "Finish" type="button"></p>
+
+      <p>The DecoderPro main window is displayed with instructions
+      for Getting Started:</p>
+
+      <p><img src="images/newUser_08.png" alt="new start" height=
+      "351" width="600"></p>
+
+      <p>When you want to set up the other preferences at this
+      time, go to Edit -&gt; <a href=
+      "Start_Preferences.shtml">Preferences</a>. A pane will come
+      up that allows you to set up the system for your particular
+      configuration.</p>
+      <hr>
+
+      <div align="right">
+        <p><a href="Start_DecoderPro.shtml">Back</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
 </html>

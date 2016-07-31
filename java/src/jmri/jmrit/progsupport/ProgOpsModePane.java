@@ -1,4 +1,3 @@
-// ProgOpsModePane.java
 package jmri.jmrit.progsupport;
 
 import java.awt.event.ActionListener;
@@ -33,10 +32,6 @@ import org.slf4j.LoggerFactory;
 public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeListener, ActionListener {
 
     // GUI member declarations
-    /**
-     *
-     */
-    private static final long serialVersionUID = 165989491869394147L;
     ButtonGroup modeGroup = new ButtonGroup();
     HashMap<ProgrammingMode, JRadioButton> buttonMap = new HashMap<ProgrammingMode, JRadioButton>();
     JComboBox<AddressedProgrammerManager> progBox;

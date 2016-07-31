@@ -1,4 +1,3 @@
-// BeanTableFrame.java
 package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 
 import java.util.ResourceBundle;
@@ -16,14 +15,8 @@ import jmri.util.com.sun.TableSorter;
  * Provide a table of block route entries as a JmriJPanel
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision$
  */
 public class LayoutBlockRouteTable extends jmri.util.swing.JmriPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3294825239330691900L;
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 

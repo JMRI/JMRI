@@ -35,6 +35,10 @@
     <!--    sourceforge.userid=                                                          -->
     <!--    # JVM arguments to pass to the JVM running the JMRI application              -->
     <!--    jvm.args=                                                                    -->
+    <!--    # paths to append to the classpath                                           -->
+    <!--    cp.append=                                                                    -->
+    <!--    # paths to prepend to the classpath                                           -->
+    <!--    cp.prepend=                                                                    -->
     <!--    # The directory where Findbugs is installed                                  -->
     <!--    findbugs.home=                                                               -->
     <!--    # You can specify a DecoderPro/PanelPro config file at runtime               -->
@@ -106,6 +110,16 @@
     <condition property="jvm.args" value="">
         <not>
             <isset property="jvm.args"/>
+        </not>
+    </condition>
+    <condition property="cp.append" value="">
+        <not>
+            <isset property="cp.append"/>
+        </not>
+    </condition>
+    <condition property="cp.prepend" value="">
+        <not>
+            <isset property="cp.prepend"/>
         </not>
     </condition>
 
@@ -213,9 +227,11 @@
 
     <!-- path to run regular executables -->
     <path id="project.class.path">
+        <pathelement path="${cp.prepend}"/>   <!-- prepended by user -->
         <pathelement location="${jartarget}"/>
         <path        refid="runtime.class.path"/>
         <pathelement location="${target}/"/>  <!-- last to check for name collisions -->
+        <pathelement path="${cp.append}"/>    <!-- appended by user -->
     </path>
 
     <!-- path to run tests -->
@@ -341,10 +357,10 @@
     <target name="realclean"
             description="remove all non-respository files from a build"
             depends="clean">
-        <delete quiet="true">
-            <fileset dir="temp"/>
+        <delete includeEmptyDirs="true" quiet="true">
             <fileset dir="lib/cachedir"/>
             <fileset dir="${coveragetarget}"/>
+            <fileset file=".run.sh"/>
         </delete>
     </target>
 
@@ -380,7 +396,7 @@
             <fileset dir="${resourcedir}" includes="*.gif"/>
         </copy>
         <copy todir="${target}">
-            <fileset dir="${source}" includes="**/*.properties"/>
+            <fileset dir="${source}" includes="**/*.properties,**/*.js"/>
             <fileset dir="${source}" includes="META-INF/**"/>
         </copy>
     </target>
@@ -811,6 +827,12 @@
             <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
+    </target>
+
+    <target name="run-sh" description="Create run.sh in SCM root">
+        <make-startup-script script.name=".run.sh"
+                             script.class="jmri.util.junit.TestClassMainMethod"
+                             dest="${basedir}/.run.sh"/>
     </target>
 
     <!-- This is a set of targets used to start up the various JMRI applications
@@ -1277,7 +1299,7 @@
     </target>
 
     <target name="logalltest" depends="tests, runtime-library-selection" description="run headless test suite">
-        <jacoco:coverage destfile="jacoco.exec">
+        <jacoco:coverage destfile="jacoco.exec" excludes="org.slf4j.*">
         <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -2018,4 +2040,25 @@
         <echo message="new release branch ${branch-name} created"/>
     </target>
 
+    <!-- CI Test runners -->
+    <target name="travis-ci" description="Parallel execution of CI tasks on Travis CI">
+        <parallel threadCount="4"> <!-- allow up to four tasks at once -->
+            <ant target="checklineends" />
+            <ant target="checknonascii" />
+            <sequential>
+                <ant target="compile-generated-source" />
+                <parallel>
+                    <ant target="javadoc" />
+                    <ant target="ci-test-travis" />
+                </parallel>
+            </sequential>
+        </parallel>
+    </target>
+    
+    <target name="appveyor" description="Parallel execution of CI tasks on Appveyor">
+        <parallel threadCount="4"> <!-- allow up to four tasks at once -->
+            <ant target="checkPropertiesFiles" />
+            <ant target="ci-test-appveyor" />
+        </parallel>
+    </target>
 </project>

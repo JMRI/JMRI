@@ -10,6 +10,9 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.jmrit.automat.Siglet;
+
+import javax.annotation.Nonnull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -130,7 +133,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      * Create a default object, without contents.
      */
     public BlockBossLogic() {
-        jmri.InstanceManager.signalHeadManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).addVetoableChangeListener(this);
         jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
@@ -146,10 +149,10 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         if (log.isTraceEnabled()) {
             log.trace("Create BBL " + name);
         }
-        jmri.InstanceManager.signalHeadManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).addVetoableChangeListener(this);
         jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
-        driveSignal = nbhm.getNamedBeanHandle(name, InstanceManager.signalHeadManagerInstance().getSignalHead(name));
+        driveSignal = nbhm.getNamedBeanHandle(name, InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name));
         if (driveSignal.getBean() == null) {
             log.warn(rb.getString("Signal_") + name + rb.getString("_was_not_found!"));
         }
@@ -321,7 +324,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             watchedSignal1 = null;
             return;
         }
-        watchedSignal1 = nbhm.getNamedBeanHandle(name, InstanceManager.signalHeadManagerInstance().getSignalHead(name));
+        watchedSignal1 = nbhm.getNamedBeanHandle(name, InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name));
         if (watchedSignal1.getBean() == null) {
             log.warn(rb.getString("Signal_") + name + rb.getString("_was_not_found!"));
         }
@@ -345,7 +348,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             watchedSignal1Alt = null;
             return;
         }
-        watchedSignal1Alt = nbhm.getNamedBeanHandle(name, InstanceManager.signalHeadManagerInstance().getSignalHead(name));
+        watchedSignal1Alt = nbhm.getNamedBeanHandle(name, InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name));
         if (watchedSignal1Alt.getBean() == null) {
             log.warn(rb.getString("Signal_") + name + rb.getString("_was_not_found!"));
         }
@@ -369,7 +372,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             watchedSignal2 = null;
             return;
         }
-        watchedSignal2 = nbhm.getNamedBeanHandle(name, InstanceManager.signalHeadManagerInstance().getSignalHead(name));
+        watchedSignal2 = nbhm.getNamedBeanHandle(name, InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name));
         if (watchedSignal2.getBean() == null) {
             log.warn(rb.getString("Signal_") + name + rb.getString("_was_not_found!"));
         }
@@ -392,7 +395,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             watchedSignal2Alt = null;
             return;
         }
-        watchedSignal2Alt = nbhm.getNamedBeanHandle(name, InstanceManager.signalHeadManagerInstance().getSignalHead(name));
+        watchedSignal2Alt = nbhm.getNamedBeanHandle(name, InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name));
         if (watchedSignal2Alt.getBean() == null) {
             log.warn(rb.getString("Signal_") + name + rb.getString("_was_not_found!"));
         }
@@ -1101,7 +1104,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     private static void setup() {
         if (bblList == null) {
             bblList = new ArrayList<BlockBossLogic>();
-            InstanceManager.configureManagerInstance().registerConfig(new BlockBossLogic(), jmri.Manager.BLOCKBOSS);
+            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerConfig(new BlockBossLogic(), jmri.Manager.BLOCKBOSS);
         }
     }
 
@@ -1119,7 +1122,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      * @return never null
      */
     public static BlockBossLogic getStoppedObject(String signal) {
-        return getStoppedObject(InstanceManager.signalHeadManagerInstance().getSignalHead(signal));
+        return getStoppedObject(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signal));
     }
 
     /**
@@ -1151,19 +1154,30 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the BlockBossLogic item governing a specific signal.
+     * Return the BlockBossLogic item governing a specific signal head located from its name.
      * <P>
      * Unlike {@link BlockBossLogic#getStoppedObject(String signal)} this does
      * not remove the object from being used.
      *
-     * @param signal system name
-     * @return never null
+     * @param signal SignalHead system or user name
+     * @return never null - creates new object if none exists
      */
-    public static BlockBossLogic getExisting(String signal) {
-        return getExisting(InstanceManager.signalHeadManagerInstance().getSignalHead(signal));
+    @Nonnull
+    public static BlockBossLogic getExisting(@Nonnull String signal) {
+        return getExisting(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signal));
     }
 
-    public static BlockBossLogic getExisting(SignalHead sh) {
+    /**
+     * Return the BlockBossLogic item governing a specific signal head object.
+     * <P>
+     * Unlike {@link BlockBossLogic#getStoppedObject(String signal)} this does
+     * not remove the object from being used.
+     *
+     * @param sh Existing SignalHead object
+     * @return never null - creates new object if none exists
+     */
+    @Nonnull
+    public static BlockBossLogic getExisting(@Nonnull SignalHead sh) {
         setup();
 
         for (BlockBossLogic bbl : bblList) {

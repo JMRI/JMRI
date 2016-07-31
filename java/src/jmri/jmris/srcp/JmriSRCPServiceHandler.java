@@ -1,4 +1,3 @@
-// JmriSRCPServiceHandler.java
 package jmri.jmris.srcp;
 
 /**
@@ -10,14 +9,13 @@ package jmri.jmris.srcp;
  * return.
  *
  * @author Paul Bender Copyright (C) 2014
- * @version $Revision$
  *
  */
 public class JmriSRCPServiceHandler extends jmri.jmris.ServiceHandler {
 
     public JmriSRCPServiceHandler(int port) {
         super();
-        _session_number = port + (jmri.InstanceManager.timebaseInstance().getTime().getTime());
+        _session_number = port + (jmri.InstanceManager.getDefault(jmri.Timebase.class).getTime().getTime());
     }
 
     public long getSessionNumber() {

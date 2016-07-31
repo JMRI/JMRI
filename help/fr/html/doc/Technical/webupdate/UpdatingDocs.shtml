@@ -63,7 +63,7 @@ Pour ajouter une pause entre les paragraphes, par exemple, pour ajouter
 un nouveau paragraphe, vous ins&eacute;rez un &quot;balise&quot;
 qui indique au navigateur JMRI o&ugrave; ins&eacute;rer une rupture de paragraphe rupture: &lt;p&gt;.
 
-<a name="screenshots"><h2>Cr&eacute;ation d&apos;images de captures d&apos;&eacute;cran</h2></a>
+<a name="screenshots"></a><h2>Cr&eacute;ation d&apos;images de captures d&apos;&eacute;cran</h2>
 <h3>Pour Windows</h3>
 
 Pour capturer une photo d&apos;&eacute;cran dans Windows, commencez par mettre en place la fen&ecirc;tre qui d&eacute;tient

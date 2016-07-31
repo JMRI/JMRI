@@ -112,7 +112,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 } catch (InterruptedException ex) {
                     restartcount++;
                 } catch (java.lang.reflect.InvocationTargetException ex) {
-                    log.error("failed to start debounced Sensor update for "+getDisplayName() );
+                    log.error("failed to start debounced Sensor update for \"{}\" due to {}", getDisplayName(), ex.getCause() );
                 }
             }
         };
@@ -137,7 +137,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                     thr.interrupt();
                 }
                 if ((restartcount != 0) && (restartcount % 10 == 0)) {
-                    log.warn("Sensor " + getDisplayName() + " state keeps flapping " + restartcount);
+                    log.warn("Sensor \"{}\" state keeps flapping: {}", getDisplayName(), restartcount);
                 }
                 firePropertyChange("RawState", Integer.valueOf(oldRawState), Integer.valueOf(s));
                 sensorDebounce();
@@ -173,7 +173,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 }
 
                 if ((restartcount != 0) && (restartcount % 10 == 0)) {
-                    log.warn("Sensor " + getDisplayName() + " state keeps flapping " + restartcount);
+                    log.warn("Sensor \"{}\" state keeps flapping: {}", getDisplayName(), restartcount);
                 }
                 firePropertyChange("RawState", Integer.valueOf(oldRawState), Integer.valueOf(s));
                 sensorDebounce();

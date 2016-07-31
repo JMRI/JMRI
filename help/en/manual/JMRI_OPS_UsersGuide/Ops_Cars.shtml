@@ -1,88 +1,131 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>JMRI OperationsPro - Cars window</title>
-  
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI OperationsPro - Cars window</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header" -->
 
-<div id="mainContent"><a name="Top"></a>
-<h1>Using JMRI&reg; to Operate Trains</h1>
-<h2>OperationsPro: Cars window</h1>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-<p><a href="Ops_Locations.shtml">Previous </a> | <a href="Ops_Engines.shtml">Next</a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
-</div>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<hr>
-<p>This window is opened from the main PanelPro/DecoderPro&reg; <strong>Tools</strong> menu, or from its Operations
-menu; and alternatively from <strong>Location</strong> pane <strong>Tools</strong>
-menu, <strong>Show Cars</strong> and various windows' <strong>Operations</strong> menus.</p>
-<p>The Cars window allows you to view and edit your Car Roster or add a Car by
-entering a Car's Number, Road, Type and Length. The program will
-automatically calculate the Car's weight based on length and the scale
-you are modeling. Optionally the Car's Color, Build date, Load and
-Owner can be added. You may want to switch a group of Cars as a unit,
-then you may create a "Kernel". You can assign any number of Cars to a
-Kernel but the type of the first Car assigned will be used by the
-program to determine if the Kernel is allowed at a Location. The entire
-length of the Kernel is used to determine if the Cars in the Kernel
-will fit at a Location.<br>
-Note that the program also includes space for each Car's
-couplers when calculating the length of a Kernel.</p>
-<p>The complete Cars Roster is displayed:</p>
-<p><img src="images/Ops_location_showCars.png" alt="show cars" height="486" width="900"></p>
+      <h1>Using JMRI&reg; to Operate Trains</h1>
 
-<h4>To the right of each Car entry</h4>
-<p> <input name="button6" id="button6" value="Set" type="button">
-opens the <strong><a href="Ops_Locations_setCars.shtml">Set Car Location</a></strong> window.</p>
-<p> <input name="button7" id="button7" value="Edit" type="button">
-opens the <a href="Ops_AddCars.shtml"><strong>Edit Car</strong></a> window,
-similar to the <strong>Add Car</strong> window.</p>
+      <h2>OperationsPro: Cars window</h2>
 
-<h4>Bottom of the panel</h4>
-<p>A series of radio buttons that allow you to select the sort order. Also the total number of Cars is displayed.</p>
-<p><input name="button2" id="button2" value="Add" type="button"> 
-opens the <strong><a href="Ops_AddCars.shtml">Add Car</a></strong> 
-window and allows you to add a new Car to your Roster.</p>
-<p> <input name="button3" id="button3" value="Save" type="button"> 
-saves the Car Roster to disk.</p>
+      <div align="right">
+        <p><a href="Ops_Locations.shtml">Previous</a> | <a href=
+        "Ops_Engines.shtml">Next</a></p>
 
-<p><input name="button4" id="button4" value="Find" type="button"> <input name="textfield" id="textfield" size="10" type="text">
-Used to find a Car by its Road Number. The wild card "*" (without quotes) may be used 
-when entering a car number.</p>
-<p>For example, if you want to find all the
-Cars with a Number ending in ...345 , enter *345 and each time you press on <input name="button5" id="button5" value="Find" type="button">
-the next Car with the ...345 ending will be displayed.</p>
+        <p><a href="index.shtml#Operations">Back to Index</a></p>
+      </div>
+      <hr>
 
-<!-- New in version 3.10 -->
-<div style="margin:40px; padding:10px; background-color:#eee;">New in v3.6: More compact Roster sorting
-<p>Instead of 14 identical Radio buttons, a more compact grouping of sort buttons fills the bottom of the pane. Clicking one of the buttons inside a grey rectangle hides the other items in the group and sorts the Roster. Selecting "Color" would hide the "Load" column and vice versa.</p>
-<img src="images/Ops_Cars413.png" alt="Cars Roster pane v3.8 with new Sort buttons" height="211" width="878">
-</div>
-<!-- End of New -->
+      <p>This window is opened from the main
+      PanelPro/DecoderPro&reg; <strong>Tools</strong> menu, or from
+      its Operations menu; and alternatively from
+      <strong>Location</strong> pane <strong>Tools</strong> menu,
+      <strong>Show Cars</strong> and various windows'
+      <strong>Operations</strong> menus.</p>
 
-<h3><a href="Ops_Cars_Menu.shtml">Cars panel menu bar</a></h3>
+      <p>The Cars window allows you to view and edit your Car
+      Roster or add a Car by entering a Car's Number, Road, Type
+      and Length. The program will automatically calculate the
+      Car's weight based on length and the scale you are modeling.
+      Optionally the Car's Color, Build date, Load and Owner can be
+      added. You may want to switch a group of Cars as a unit, then
+      you may create a "Kernel". You can assign any number of Cars
+      to a Kernel but the type of the first Car assigned will be
+      used by the program to determine if the Kernel is allowed at
+      a Location. The entire length of the Kernel is used to
+      determine if the Cars in the Kernel will fit at a
+      Location.<br>
+      Note that the program also includes space for each Car's
+      couplers when calculating the length of a Kernel.</p>
 
-<div align="right">
-<p><a href="Ops_Locations.shtml">Previous </a> | <a href="Ops_Engines.shtml">Next</a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
-</div>
-<!--#include virtual="/Footer" -->
+      <p>The complete Cars Roster is displayed:</p>
 
-</div>
-</div>
+      <p><img src="images/Ops_location_showCars.png" alt=
+      "show cars" height="486" width="900"></p>
+
+      <h4>To the right of each Car entry</h4>
+
+      <p><input name="button6" id="button6" value="Set" type=
+      "button"> opens the <strong><a href=
+      "Ops_Locations_setCars.shtml">Set Car Location</a></strong>
+      window.</p>
+
+      <p><input name="button7" id="button7" value="Edit" type=
+      "button"> opens the <a href="Ops_AddCars.shtml"><strong>Edit
+      Car</strong></a> window, similar to the <strong>Add
+      Car</strong> window.</p>
+
+      <h4>Bottom of the panel</h4>
+
+      <p>A series of radio buttons that allow you to select the
+      sort order. Also the total number of Cars is displayed.</p>
+
+      <p><input name="button2" id="button2" value="Add" type=
+      "button"> opens the <strong><a href="Ops_AddCars.shtml">Add
+      Car</a></strong> window and allows you to add a new Car to
+      your Roster.</p>
+
+      <p><input name="button3" id="button3" value="Save" type=
+      "button"> saves the Car Roster to disk.</p>
+
+      <p><input name="button4" id="button4" value="Find" type=
+      "button"> <input name="textfield" id="textfield" size="10"
+      type="text"> Used to find a Car by its Road Number. The wild
+      card "*" (without quotes) may be used when entering a car
+      number.</p>
+
+      <p>For example, if you want to find all the Cars with a
+      Number ending in ...345 , enter *345 and each time you press
+      on <input name="button5" id="button5" value="Find" type=
+      "button"> the next Car with the ...345 ending will be
+      displayed.</p><!-- New in version 3.10 -->
+
+      <div style=
+      "margin:40px; padding:10px; background-color:#eee;">
+        New in v3.6: More compact Roster sorting
+
+        <p>Instead of 14 identical Radio buttons, a more compact
+        grouping of sort buttons fills the bottom of the pane.
+        Clicking one of the buttons inside a grey rectangle hides
+        the other items in the group and sorts the Roster.
+        Selecting "Color" would hide the "Load" column and vice
+        versa.</p><img src="images/Ops_Cars413.png" alt=
+        "Cars Roster pane v3.8 with new Sort buttons" height="211"
+        width="878">
+      </div><!-- End of New -->
+
+      <h3><a href="Ops_Cars_Menu.shtml">Cars panel menu
+      bar</a></h3>
+
+      <div align="right">
+        <p><a href="Ops_Locations.shtml">Previous</a> | <a href=
+        "Ops_Engines.shtml">Next</a></p>
+
+        <p><a href="index.shtml#Operations">Back to Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

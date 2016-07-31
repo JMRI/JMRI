@@ -103,15 +103,13 @@ public class AddSignalMastPanel extends JPanel {
         signalMastDriver = new JComboBox<String>(new String[]{
             Bundle.getMessage("HeadCtlMast"), Bundle.getMessage("TurnCtlMast"), Bundle.getMessage("VirtualMast"), Bundle.getMessage("MatrixCtlMast")
         });
-        // Only allow the creation of DCC SignalMast if a command station instance is present, otherwise it will not work, so no point in adding it.
-        if (jmri.InstanceManager.getList(jmri.CommandStation.class) != null) {
-            signalMastDriver.addItem(Bundle.getMessage("DCCMast"));
-            java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
-            for (int x = 0; x < connList.size(); x++) {
-                if (connList.get(x) instanceof jmri.jmrix.loconet.SlotManager) {
-                    signalMastDriver.addItem(Bundle.getMessage("LNCPMast"));
-                    break;
-                }
+
+        signalMastDriver.addItem(Bundle.getMessage("DCCMast"));
+        java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
+        for (int x = 0; x < connList.size(); x++) {
+            if (connList.get(x) instanceof jmri.jmrix.loconet.SlotManager) {
+                signalMastDriver.addItem(Bundle.getMessage("LNCPMast"));
+                break;
             }
         }
 
@@ -238,7 +236,7 @@ public class AddSignalMastPanel extends JPanel {
         });
 
         // load the list of signal systems
-        SignalSystemManager man = InstanceManager.signalSystemManagerInstance();
+        SignalSystemManager man = InstanceManager.getDefault(jmri.SignalSystemManager.class);
         String[] names = man.getSystemNameArray();
         for (int i = 0; i < names.length; i++) {
             sigSysBox.addItem(man.getSystem(names[i]).getUserName());
@@ -419,19 +417,19 @@ public class AddSignalMastPanel extends JPanel {
             columnChoice.setSelectedIndex(bitNum - 1); // index of items in list starts counting at 0 while "1" is displayed
             columnChoice.setEnabled(false);
             // fill in the names of the outputs from mast:
-            if (xmast.getOutputName(1) != null && !xmast.getOutputName(1).equals("")) {
+            if (!xmast.getOutputName(1).equals("")) {
                 turnoutBox1.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(xmast.getOutputName(1))); // load input into turnoutBox1
             }
-            if (bitNum > 1 && xmast.getOutputName(2) != null && !xmast.getOutputName(2).equals("")){
+            if (bitNum > 1 && !xmast.getOutputName(2).equals("")){
                 turnoutBox2.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(xmast.getOutputName(2))); // load input into turnoutBox2
             }
-            if (bitNum > 2 && xmast.getOutputName(3) != null && !xmast.getOutputName(3).equals("")) {
+            if (bitNum > 2 && !xmast.getOutputName(3).equals("")) {
                 turnoutBox3.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(xmast.getOutputName(3))); // load input into turnoutBox3
             }
-            if (bitNum > 3 && xmast.getOutputName(4) != null && !xmast.getOutputName(4).equals("")){
+            if (bitNum > 3 && !xmast.getOutputName(4).equals("")){
                 turnoutBox4.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(xmast.getOutputName(4))); // load input into turnoutBox4
             }
-            if (bitNum > 4 && xmast.getOutputName(5) != null && !xmast.getOutputName(5).equals("")){
+            if (bitNum > 4 && !xmast.getOutputName(5).equals("")){
                 turnoutBox5.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(xmast.getOutputName(5))); // load input into turnoutBox5
             }
             if (xmast.resetPreviousStates()) {
@@ -593,7 +591,7 @@ public class AddSignalMastPanel extends JPanel {
         mastBox.removeAllItems();
         try {
             mastNames = new ArrayList<File>();
-            SignalSystemManager man = InstanceManager.signalSystemManagerInstance();
+            SignalSystemManager man = InstanceManager.getDefault(jmri.SignalSystemManager.class);
 
             // get the signals system name from the user name in combo box
             String u = (String) sigSysBox.getSelectedItem();
@@ -687,7 +685,7 @@ public class AddSignalMastPanel extends JPanel {
         signalHeadPanel.removeAll();
         signalHeadPanel.setLayout(new jmri.util.javaworld.GridLayout2(count + 1, 1));
         for (int i = 0; i < count; i++) {
-            JmriBeanComboBox head = new JmriBeanComboBox(InstanceManager.signalHeadManagerInstance());
+            JmriBeanComboBox head = new JmriBeanComboBox(InstanceManager.getDefault(jmri.SignalHeadManager.class));
             head.excludeItems(alreadyUsed);
             headList.add(head);
             signalHeadPanel.add(head);
@@ -729,14 +727,14 @@ public class AddSignalMastPanel extends JPanel {
                 }
                 String name = build.toString();
                 log.debug("add signal: " + name);
-                SignalMast m = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+                SignalMast m = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
                 if (m != null) {
                     JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(Bundle.getMessage("DuplicateMast"),
                             new Object[]{m.getDisplayName()}), Bundle.getMessage("DuplicateMastTitle"), JOptionPane.INFORMATION_MESSAGE);
                     return;
                 }
                 try {
-                    m = InstanceManager.signalMastManagerInstance().provideSignalMast(name);
+                    m = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(name);
                 } catch (IllegalArgumentException ex) {
                     // user input no good
                     handleCreateException(name);
@@ -774,7 +772,7 @@ public class AddSignalMastPanel extends JPanel {
                 if (!user.equals("")) {
                     turnMast.setUserName(user);
                 }
-                InstanceManager.signalMastManagerInstance().register(turnMast);
+                InstanceManager.getDefault(jmri.SignalMastManager.class).register(turnMast);
                 turnMast.setAllowUnLit(allowUnLit.isSelected());
                 if (allowUnLit.isSelected()) {
                     turnMast.setUnLitTurnout(turnoutUnLitBox.getDisplayName(), turnoutStateValues[turnoutUnLitState.getSelectedIndex()]);
@@ -788,7 +786,7 @@ public class AddSignalMastPanel extends JPanel {
                 if (!user.equals("")) {
                     virtMast.setUserName(user);
                 }
-                InstanceManager.signalMastManagerInstance().register(virtMast);
+                InstanceManager.getDefault(jmri.SignalMastManager.class).register(virtMast);
 
                 for (String aspect : disabledAspects.keySet()) {
                     if (disabledAspects.get(aspect).isSelected()) {
@@ -838,11 +836,11 @@ public class AddSignalMastPanel extends JPanel {
                 if (allowUnLit.isSelected()) {
                     dccMast.setUnlitId(Integer.parseInt(unLitAspectField.getText()));
                 }
-                InstanceManager.signalMastManagerInstance().register(dccMast);
+                InstanceManager.getDefault(jmri.SignalMastManager.class).register(dccMast);
             } else if (Bundle.getMessage("MatrixCtlMast").equals(signalMastDriver.getSelectedItem())) {
                 // Create was pressed for new mast, check all boxes are filled
                 if (turnoutBox1.getDisplayName() == "" || (bitNum > 1 && turnoutBox2.getDisplayName() == "") || (bitNum > 2 && turnoutBox3.getDisplayName() == "") ||
-                        (bitNum > 3 && turnoutBox4.getDisplayName() == "") || (bitNum > 4 && turnoutBox5.getDisplayName() == "")) {
+                        (bitNum > 3 && turnoutBox4.getDisplayName().equals("")) || (bitNum > 4 && turnoutBox5.getDisplayName().equals(""))) {
                     //error dialog
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("MatrixOutputEmpty", mastname),
                             Bundle.getMessage("WarningTitle"),
@@ -905,7 +903,7 @@ public class AddSignalMastPanel extends JPanel {
                     matrixMast.setUserName(user);
                 }
                 prefs.addComboBoxLastSelection(matrixBitNumSelectionCombo, (String) columnChoice.getSelectedItem()); // store bitNum pref
-                InstanceManager.signalMastManagerInstance().register(matrixMast);
+                InstanceManager.getDefault(jmri.SignalMastManager.class).register(matrixMast);
             }
 
             prefs.addComboBoxLastSelection(systemSelectionCombo, (String) sigSysBox.getSelectedItem());
@@ -1034,7 +1032,7 @@ public class AddSignalMastPanel extends JPanel {
     boolean checkUserName(String nam) {
         if (!((nam == null) || (nam.equals("")))) {
             // user name changed, check if new name already exists
-            NamedBean nB = InstanceManager.signalMastManagerInstance().getByUserName(nam);
+            NamedBean nB = InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName(nam);
             if (nB != null) {
                 log.error("User Name is not unique " + nam);
                 String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + nam)});
@@ -1044,7 +1042,7 @@ public class AddSignalMastPanel extends JPanel {
                 return false;
             }
             //Check to ensure that the username doesn't exist as a systemname.
-            nB = InstanceManager.signalMastManagerInstance().getBySystemName(nam);
+            nB = InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(nam);
             if (nB != null) {
                 log.error("User Name is not unique " + nam + " It already exists as a System name");
                 String msg = Bundle.getMessage("WarningUserNameAsSystem", new Object[]{("" + nam)});
@@ -1349,7 +1347,7 @@ public class AddSignalMastPanel extends JPanel {
         mastType = mastType.substring(11, mastType.indexOf(".xml"));
         jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
         java.util.Enumeration<String> aspects = sigMap.getAspects();
-        SignalSystem sigsys = InstanceManager.signalSystemManagerInstance().getSystem(sigsysname);
+        SignalSystem sigsys = InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem(sigsysname);
         while (aspects.hasMoreElements()) {
             String aspect = aspects.nextElement();
             DCCAspectPanel aPanel = new DCCAspectPanel(aspect);
@@ -1443,19 +1441,19 @@ public class AddSignalMastPanel extends JPanel {
 
     JComboBox<String> copyFromMastSelection() {
         JComboBox<String> mastSelect = new JComboBox<String>();
-        List<String> names = InstanceManager.signalMastManagerInstance().getSystemNameList();
+        List<String> names = InstanceManager.getDefault(jmri.SignalMastManager.class).getSystemNameList();
         for (String name : names) {
             if ((Bundle.getMessage("DCCMast").equals(signalMastDriver.getSelectedItem())) || (Bundle.getMessage("LNCPMast").equals(signalMastDriver.getSelectedItem()))) {
-                if ((InstanceManager.signalMastManagerInstance().getNamedBean(name) instanceof DccSignalMast)
-                        && InstanceManager.signalMastManagerInstance().getSignalMast(name).getSignalSystem().getSystemName().equals(sigsysname)
-                        && !InstanceManager.signalMastManagerInstance().getNamedBean(name).getDisplayName().equals(userName.getText())) { // don't copy yourself
-                            mastSelect.addItem(InstanceManager.signalMastManagerInstance().getNamedBean(name).getDisplayName());
+                if ((InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(name) instanceof DccSignalMast)
+                        && InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name).getSignalSystem().getSystemName().equals(sigsysname)
+                        && !InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(name).getDisplayName().equals(userName.getText())) { // don't copy yourself
+                            mastSelect.addItem(InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(name).getDisplayName());
                 }
             } else if ((Bundle.getMessage("MatrixCtlMast").equals(signalMastDriver.getSelectedItem()))) {
-                if ((InstanceManager.signalMastManagerInstance().getNamedBean(name) instanceof MatrixSignalMast)
-                        && InstanceManager.signalMastManagerInstance().getSignalMast(name).getSignalSystem().getSystemName().equals(sigsysname)
-                        && !InstanceManager.signalMastManagerInstance().getNamedBean(name).getDisplayName().equals(userName.getText())) { // don't copy yourself
-                            mastSelect.addItem(InstanceManager.signalMastManagerInstance().getNamedBean(name).getDisplayName());
+                if ((InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(name) instanceof MatrixSignalMast)
+                        && InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name).getSignalSystem().getSystemName().equals(sigsysname)
+                        && !InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(name).getDisplayName().equals(userName.getText())) { // don't copy yourself
+                            mastSelect.addItem(InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(name).getDisplayName());
                 }
             }
         }
@@ -1483,7 +1481,7 @@ public class AddSignalMastPanel extends JPanel {
     }
 
     void copyFromAnotherDCCMastAspect(String strMast) {
-        DccSignalMast mast = (DccSignalMast) InstanceManager.signalMastManagerInstance().getNamedBean(strMast);
+        DccSignalMast mast = (DccSignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(strMast);
         for (String aspect : dccAspect.keySet()) {
             if (mast.isAspectDisabled(aspect)) {
                 dccAspect.get(aspect).setAspectDisabled(true);
@@ -1647,7 +1645,7 @@ public class AddSignalMastPanel extends JPanel {
         mastType = mastType.substring(11, mastType.indexOf(".xml"));
         jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
         java.util.Enumeration<String> aspects = sigMap.getAspects();
-        SignalSystem sigsys = InstanceManager.signalSystemManagerInstance().getSystem(sigsysname);
+        SignalSystem sigsys = InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem(sigsysname);
         while (aspects.hasMoreElements()) {
             String aspect = aspects.nextElement();
             MatrixAspectPanel aspectpanel = new MatrixAspectPanel(aspect);
@@ -1835,7 +1833,7 @@ public class AddSignalMastPanel extends JPanel {
     }*/
 
     void copyFromAnotherMatrixMastAspect(String strMast) {
-        MatrixSignalMast mast = (MatrixSignalMast) InstanceManager.signalMastManagerInstance().getNamedBean(strMast);
+        MatrixSignalMast mast = (MatrixSignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(strMast);
         if (bitNum != mast.getBitNum()) {
             int i = JOptionPane.showConfirmDialog(null, Bundle.getMessage("MatrixColWarning", mast.getBitNum(), bitNum),
                     Bundle.getMessage("MatrixColWarningTitle"),
@@ -1872,7 +1870,7 @@ public class AddSignalMastPanel extends JPanel {
         mastType = mastType.substring(11, mastType.indexOf(".xml"));
         jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
         java.util.Enumeration<String> aspects = sigMap.getAspects();
-        SignalSystem sigsys = InstanceManager.signalSystemManagerInstance().getSystem(sigsysname);
+        SignalSystem sigsys = InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem(sigsysname);
         while (aspects.hasMoreElements()) {
             String aspect = aspects.nextElement();
             MatrixAspectPanel aspectpanel = new MatrixAspectPanel(aspect, bitString); // build 1 line, picking up bitString

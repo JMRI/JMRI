@@ -195,8 +195,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 NOTE: joal.jar is currently replaced by an own-built version with modifications to correct the load of WAV files with appended metadata - see [GitHub PR](https://github.com/sgothel/joal/pull/15) for details of modifications.
 
 ##### jmdns.jar 
-- Version 3.4.1, 429,083 bytes, 2011-08-25
-- from http://sourceforge.net/projects/jmdns
+- Version 3.5.0  July 2, 2016
+- from https://github.com/jmdns/jmdns/releases
 
 ##### jakarta-regexp-1.5.jar
 

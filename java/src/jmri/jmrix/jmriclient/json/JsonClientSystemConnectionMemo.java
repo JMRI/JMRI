@@ -5,7 +5,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.LightManager;
 import jmri.PowerManager;
-import jmri.jmris.json.JSON;
+import jmri.server.json.JSON;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.jmriclient.json.swing.JsonClientComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;

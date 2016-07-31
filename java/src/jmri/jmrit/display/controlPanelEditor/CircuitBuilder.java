@@ -54,7 +54,6 @@ import org.slf4j.LoggerFactory;
 /**
  * <P>
  * @author Pete Cressman Copyright: Copyright (c) 2011
- * @version $Revision: 21062 $
  *
  */
 public class CircuitBuilder {

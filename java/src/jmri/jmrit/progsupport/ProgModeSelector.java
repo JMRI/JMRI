@@ -1,4 +1,3 @@
-// ProgModeSelector.java
 package jmri.jmrit.progsupport;
 
 import jmri.Programmer;
@@ -18,14 +17,8 @@ import jmri.Programmer;
  * that a ProgModeSelector object can disconnect its listeners.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public abstract class ProgModeSelector extends javax.swing.JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6631676711791506851L;
 
     /**
      * Get the configured programmer

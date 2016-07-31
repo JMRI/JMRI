@@ -1339,7 +1339,7 @@ public class Location implements java.beans.PropertyChangeListener {
         if (e.getAttribute(Xml.READER) != null) {
             @SuppressWarnings("unchecked")
             Reporter r = jmri.InstanceManager
-                    .reporterManagerInstance()
+                    .getDefault(jmri.ReporterManager.class)
                     .provideReporter(
                             e.getAttribute(Xml.READER).getValue());
             setReporter(r);
@@ -1414,8 +1414,10 @@ public class Location implements java.beans.PropertyChangeListener {
             }
         }
         e.addContent(eTypes);
-        if (_physicalLocation != null) {
-            e.setAttribute(Xml.PHYSICAL_LOCATION, _physicalLocation.toString());
+        
+        // save physical location if not default
+        if (getPhysicalLocation() != null && !getPhysicalLocation().equals(PhysicalLocation.Origin)) {
+            e.setAttribute(Xml.PHYSICAL_LOCATION, getPhysicalLocation().toString());
         }
 
         e.setAttribute(Xml.COMMENT, getComment());

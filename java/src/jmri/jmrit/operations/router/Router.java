@@ -42,7 +42,7 @@ public class Router extends TrainCommon {
 
     protected static final String STATUS_NOT_THIS_TRAIN = Bundle.getMessage("RouterTrain");
     protected static final String STATUS_NOT_ABLE = Bundle.getMessage("RouterNotAble");
-    protected static final String STATUS_CAR_AT_DESINATION = Bundle.getMessage("RouterCarAtDestination");
+    public static final String STATUS_CAR_AT_DESINATION = Bundle.getMessage("RouterCarAtDestination");
     // protected static final String STATUS_NO_TRAINS = Bundle.getMessage("RouterNoTrains");
     protected static final String STATUS_ROUTER_DISABLED = Bundle.getMessage("RouterDisabled");
 

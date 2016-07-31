@@ -792,7 +792,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 //get maximum speed for the route between current and next signalmasts
                 float smLogicSpeed = -1.0f;
                 String smDestinationName = "unknown";
-                jmri.SignalMastLogic smLogic = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(_controllingSignalMast);
+                jmri.SignalMastLogic smLogic = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(_controllingSignalMast);
                 if (smLogic != null) {
                     SignalMast smDestination = smLogic.getActiveDestination();
                     if (smDestination != null) {
@@ -806,7 +806,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     speed = smLogicSpeed;
                 }
 
-                log.debug("{}: {}({}) {}({}) Dest: {} max: {}", 
+                log.debug("{}: {}({}) {}({}), Dest: {}, path max: {}", 
                         _activeTrain.getTrainName(), 
                         _controllingSignalMast.getDisplayName(), displayedAspect, aspectSpeedStr, aspectSpeed, 
                         smDestinationName, (int) smLogicSpeed);
@@ -1337,7 +1337,7 @@ public class AutoActiveTrain implements ThrottleListener {
             _activeTrain.setStatus(ActiveTrain.PAUSED);
             if (keepGoing) {
                 // wait for specified fast clock time
-                Timebase _clock = InstanceManager.timebaseInstance();
+                Timebase _clock = InstanceManager.getDefault(jmri.Timebase.class);
                 java.beans.PropertyChangeListener _clockListener = null;
                 _clock.addMinuteChangeListener(_clockListener
                         = new java.beans.PropertyChangeListener() {
