@@ -565,7 +565,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     /**
      * For item popups in Control Panel Editor
      */
-    protected void makePalettteFrame(String title) {
+    protected void makePaletteFrame(String title) {
         jmri.jmrit.display.palette.ItemPalette.loadIcons(_editor);
 
         _paletteFrame = new jmri.util.JmriJFrame(title, false, false);

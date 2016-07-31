@@ -131,7 +131,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     // add update button to  bottom1Panel
     private void addUpdateButtonToBottom(ActionListener doneAction) {
 
-        _updateButton = new JButton(Bundle.getMessage("updateButton"));
+        _updateButton = new JButton(Bundle.getMessage("updateButton")); // custom update label
         _updateButton.addActionListener(doneAction);
         _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
         _bottom1Panel.add(_updateButton);

@@ -416,7 +416,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     }
 
     protected void editItem() {
-        makePalettteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("IndicatorTO")));
+        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("IndicatorTO")));
         _TOPanel = new IndicatorTOItemPanel(_paletteFrame, "IndicatorTO", _iconFamily,
                 PickListModel.turnoutPickModelInstance(), _editor);
         ActionListener updateAction = new ActionListener() {

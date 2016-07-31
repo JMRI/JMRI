@@ -395,7 +395,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     protected void editItem() {
-        makePalettteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSignalHead")));
+        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSignalHead")));
         _itemPanel = new SignalHeadItemPanel(_paletteFrame, "SignalHead", getFamily(),
                 PickListModel.signalHeadPickModelInstance(), _editor);
         ActionListener updateAction = new ActionListener() {

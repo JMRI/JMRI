@@ -1175,7 +1175,7 @@ public class CircuitBuilder {
         _editor.toFront();
         _editor.repaint();
         if (pos instanceof TurnoutIcon) {
-            makePalettteFrame("IndicatorTO");
+            makePaletteFrame("IndicatorTO");
             _trackTOPanel = new IndicatorTOItemPanel(_convertFrame, "IndicatorTO", null, null, _editor);
             ActionListener updateAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -1185,7 +1185,7 @@ public class CircuitBuilder {
             _trackTOPanel.init(updateAction);
             _convertDialog.add(_trackTOPanel);
         } else {
-            makePalettteFrame("IndicatorTrack");
+            makePaletteFrame("IndicatorTrack");
             _trackPanel = new IndicatorItemPanel(_convertFrame, "IndicatorTrack", null, _editor);
             ActionListener updateAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -1200,7 +1200,7 @@ public class CircuitBuilder {
         _editor.repaint();
     }
 
-    private void makePalettteFrame(String title) {
+    private void makePaletteFrame(String title) {
         jmri.jmrit.display.palette.ItemPalette.loadIcons(_editor);
         _convertDialog = new JDialog(_editor, java.text.MessageFormat.format(
                 Bundle.getMessage("EditItem"), Bundle.getMessage(title)), true);

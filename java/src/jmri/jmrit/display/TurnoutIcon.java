@@ -357,7 +357,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     TableItemPanel _itemPanel;
 
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Turnout"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameTurnout"));
         popup.add(new javax.swing.AbstractAction(txt) {
             /**
              *
@@ -372,7 +372,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     }
 
     protected void editItem() {
-        makePalettteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Turnout")));
+        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameTurnout")));
         _itemPanel = new TableItemPanel(_paletteFrame, "Turnout", _iconFamily,
                 PickListModel.turnoutPickModelInstance(), _editor);
         ActionListener updateAction = new ActionListener() {
@@ -427,7 +427,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     }
 
     public boolean setEditIconMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Turnout"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameTurnout"));
         popup.add(new javax.swing.AbstractAction(txt) {
             /**
              *

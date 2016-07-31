@@ -69,7 +69,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             _detectPanel = new DetectionPanel(this);
             add(_detectPanel, 1);
             add(_iconFamilyPanel, 2);
-            _buttonPostion = 2;
+            _buttonPosition = 2;
         }
     }
 
@@ -80,7 +80,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     public void init(ActionListener doneAction) {
         super.init(doneAction);
         add(_iconFamilyPanel, 0);
-        _buttonPostion = 0;
+        _buttonPosition = 0;
     }
 
     /**
@@ -95,7 +95,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         _detectPanel = new DetectionPanel(this);
         add(_detectPanel, 1);
         add(_iconFamilyPanel, 2);
-        _buttonPostion = 2;
+        _buttonPosition = 2;
     }
 
     /**
@@ -439,7 +439,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             removeIconFamiliesPanel();
         }
         initIconFamiliesPanel();
-        add(_iconFamilyPanel, _buttonPostion);
+        add(_iconFamilyPanel, _buttonPosition);
         showIcons();
         _iconFamilyPanel.invalidate();
         invalidate();

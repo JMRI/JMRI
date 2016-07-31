@@ -193,7 +193,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     protected void makeIconMenu() {
         _iconMenu = new JMenu(Bundle.getMessage("MenuIcon"));
         _menuBar.add(_iconMenu, 0);
-        JMenuItem mi = new JMenuItem(Bundle.getMessage("MenuItemItemPallette"));
+        JMenuItem mi = new JMenuItem(Bundle.getMessage("MenuItemItemPalette"));
         mi.addActionListener(new ActionListener() {
             Editor editor;
             ActionListener init(Editor ed) {
@@ -203,7 +203,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (_itemPalette==null) {
-                    _itemPalette = new ItemPalette(Bundle.getMessage("MenuItemItemPallette"), editor);
+                    _itemPalette = new ItemPalette(Bundle.getMessage("MenuItemItemPalette"), editor);
                 }
                 _itemPalette.setVisible(true);
             }
