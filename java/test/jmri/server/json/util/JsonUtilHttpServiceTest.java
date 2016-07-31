@@ -21,6 +21,7 @@ import jmri.web.server.WebServerPreferences;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -58,13 +59,17 @@ public class JsonUtilHttpServiceTest {
     @After
     public void tearDown() {
         JUnitUtil.resetInstanceManager();
+        ZeroConfService.stopAll();
     }
 
     /**
      * Test of doGet method, of class JsonUtilHttpService.
+     *
+     * @throws jmri.server.json.JsonException if test fails in an unexpected
+     *                                        manner
      */
     @Test
-    public void testDoGet() throws Exception {
+    public void testDoGet() throws JsonException {
         Locale locale = Locale.ENGLISH;
         ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
@@ -73,10 +78,17 @@ public class JsonUtilHttpServiceTest {
         Assert.assertEquals(instance.getMetadata(locale, Metadata.JMRIVERCANON), instance.doGet(JSON.METADATA, Metadata.JMRIVERCANON, locale));
         Assert.assertEquals(instance.getMetadata(locale), instance.doGet(JSON.METADATA, null, locale));
         Assert.assertEquals(instance.getNode(locale), instance.doGet(JSON.NODE, null, locale));
-        Assert.assertEquals(instance.getNetworkService(locale, JSON.ZEROCONF_SERVICE_TYPE), instance.doGet(JSON.NETWORK_SERVICE, JSON.ZEROCONF_SERVICE_TYPE, locale));
         Assert.assertEquals(instance.getNetworkServices(locale), instance.doGet(JSON.NETWORK_SERVICE, null, locale));
         Assert.assertEquals(instance.getNetworkServices(locale), instance.doGet(JSON.NETWORK_SERVICES, null, locale));
         JsonException exception = null;
+        try {
+            instance.doGet(JSON.NETWORK_SERVICE, JSON.ZEROCONF_SERVICE_TYPE, locale);
+        } catch (JsonException ex) {
+            exception = ex;
+        }
+        Assert.assertNotNull(exception);
+        Assert.assertEquals(HttpServletResponse.SC_NOT_FOUND, exception.getCode());
+        exception = null;
         try {
             instance.doGet("INVALID TYPE TOKEN", null, locale);
         } catch (JsonException ex) {
@@ -84,13 +96,22 @@ public class JsonUtilHttpServiceTest {
         }
         Assert.assertNotNull(exception);
         Assert.assertEquals(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, exception.getCode());
+        ZeroConfService service = ZeroConfService.create(JSON.ZEROCONF_SERVICE_TYPE, 9999);
+        service.publish();
+        Assume.assumeTrue("Publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
+            return service.isPublished() == true;
+        }));
+        Assert.assertEquals(instance.getNetworkService(locale, JSON.ZEROCONF_SERVICE_TYPE), instance.doGet(JSON.NETWORK_SERVICE, JSON.ZEROCONF_SERVICE_TYPE, locale));
     }
 
     /**
      * Test of doGetList method, of class JsonUtilHttpService.
+     *
+     * @throws jmri.server.json.JsonException if test fails in an unexpected
+     *                                        manner
      */
     @Test
-    public void testDoGetList() throws Exception {
+    public void testDoGetList() throws JsonException {
         Locale locale = Locale.ENGLISH;
         ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
@@ -200,9 +221,9 @@ public class JsonUtilHttpServiceTest {
         // publish a service
         ZeroConfService service = ZeroConfService.create(JSON.ZEROCONF_SERVICE_TYPE, 9999);
         service.publish();
-        JUnitUtil.waitFor(() -> {
+        Assume.assumeTrue("Published ZeroConf Service", JUnitUtil.waitFor(() -> {
             return service.isPublished() == true;
-        }, "Publishing ZeroConf Service");
+        }));
         result = instance.getNetworkServices(locale);
         Assert.assertEquals(1, result.size());
         Assert.assertEquals(JSON.NETWORK_SERVICE, result.get(0).path(JSON.TYPE).asText());
@@ -247,6 +268,46 @@ public class JsonUtilHttpServiceTest {
         Assert.assertEquals("I", connection.path(JSON.DATA).path(JSON.PREFIX).asText());
         Assert.assertTrue(connection.path(JSON.DATA).path(JSON.NAME).isNull());
         Assert.assertTrue(connection.path(JSON.DATA).path(JSON.MFG).isNull());
+    }
+
+    /**
+     * Test of getNetworkService method, of class JsonUtilHttpService.
+     *
+     * @throws jmri.server.json.JsonException if test fails in an unexpected
+     *                                        manner
+     */
+    @Test
+    public void testGetNetworkService() throws JsonException {
+        Locale locale = Locale.ENGLISH;
+        ObjectMapper mapper = new ObjectMapper();
+        JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
+        JsonNode result = null;
+        // non-existant service
+        JsonException exception = null;
+        try {
+            result = instance.getNetworkService(locale, "non-existant-service"); // NOI18N
+        } catch (JsonException ex) {
+            exception = ex;
+        }
+        Assert.assertNull(result);
+        Assert.assertNotNull(exception);
+        Assert.assertEquals(HttpServletResponse.SC_NOT_FOUND, exception.getCode());
+        // published service
+        ZeroConfService service = ZeroConfService.create(JSON.ZEROCONF_SERVICE_TYPE, 9999);
+        service.publish();
+        Assume.assumeTrue("Published ZeroConf Service", JUnitUtil.waitFor(() -> {
+            return service.isPublished() == true;
+        }));
+        result = instance.getNetworkService(locale, JSON.ZEROCONF_SERVICE_TYPE);
+        Assert.assertEquals(JSON.NETWORK_SERVICE, result.path(JSON.TYPE).asText());
+        JsonNode data = result.path(JSON.DATA);
+        Assert.assertFalse(data.isMissingNode());
+        Assert.assertEquals(WebServerPreferences.getDefault().getRailRoadName(), data.path(JSON.NAME).asText());
+        Assert.assertEquals(9999, data.path(JSON.PORT).asInt());
+        Assert.assertEquals(JSON.ZEROCONF_SERVICE_TYPE, data.path(JSON.TYPE).asText());
+        Assert.assertEquals(NodeIdentity.identity(), data.path(JSON.NODE).asText());
+        Assert.assertEquals(Metadata.getBySystemName(Metadata.JMRIVERCANON), data.path("jmri").asText());
+        Assert.assertEquals(Metadata.getBySystemName(Metadata.JMRIVERSION), data.path("version").asText());
     }
 
 }
