@@ -310,4 +310,18 @@ public class JsonUtilHttpServiceTest {
         Assert.assertEquals(Metadata.getBySystemName(Metadata.JMRIVERSION), data.path("version").asText());
     }
 
+    /**
+     * Test of getRailroad method, of class JsonUtilHttpService.
+     */
+    @Test
+    public void testGetRailroad() {
+        Locale locale = Locale.ENGLISH;
+        ObjectMapper mapper = new ObjectMapper();
+        JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
+        JsonNode result = instance.getRailroad(locale);
+        Assert.assertEquals(JSON.RAILROAD, result.path(JSON.TYPE).asText());
+        JsonNode data = result.path(JSON.DATA);
+        Assert.assertEquals(WebServerPreferences.getDefault().getRailRoadName(), data.path(JSON.NAME).asText());
+    }
+
 }
