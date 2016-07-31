@@ -11,14 +11,10 @@ import static jmri.server.json.JSON.ENGINES;
 import static jmri.server.json.JSON.FORMAT;
 import static jmri.server.json.JSON.LOCATION;
 import static jmri.server.json.JSON.LOCATIONS;
-import static jmri.server.json.JSON.METADATA;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PANELS;
-import static jmri.server.json.JSON.RAILROAD;
 import static jmri.server.json.JSON.REPORTER;
 import static jmri.server.json.JSON.REPORTERS;
-import static jmri.server.json.JSON.SENSOR;
-import static jmri.server.json.JSON.SENSORS;
 import static jmri.server.json.JSON.SIGNAL_HEAD;
 import static jmri.server.json.JSON.SIGNAL_HEADS;
 import static jmri.server.json.JSON.SIGNAL_MAST;
@@ -178,20 +174,11 @@ public class JsonServlet extends WebSocketServlet {
                         case LOCATIONS:
                             reply = JsonUtil.getLocations(request.getLocale());
                             break;
-                        case METADATA:
-                            reply = JsonUtil.getMetadata(request.getLocale());
-                            break;
                         case PANELS:
                             reply = JsonUtil.getPanels(request.getLocale(), (request.getParameter(FORMAT) != null) ? request.getParameter(FORMAT) : XML);
                             break;
-                        case RAILROAD:
-                            reply = JsonUtil.getRailroad(request.getLocale());
-                            break;
                         case REPORTERS:
                             reply = JsonUtil.getReporters(request.getLocale());
-                            break;
-                        case SENSORS:
-                            reply = JsonUtil.getSensors(request.getLocale());
                             break;
                         case SIGNAL_HEADS:
                             reply = JsonUtil.getSignalHeads(request.getLocale());
@@ -250,9 +237,6 @@ public class JsonServlet extends WebSocketServlet {
                             break;
                         case REPORTER:
                             reply = JsonUtil.getReporter(request.getLocale(), name);
-                            break;
-                        case SENSOR:
-                            reply = JsonUtil.getSensor(request.getLocale(), name);
                             break;
                         case SIGNAL_HEAD:
                             reply = JsonUtil.getSignalHead(request.getLocale(), name);
@@ -368,10 +352,6 @@ public class JsonServlet extends WebSocketServlet {
                             JsonUtil.setReporter(request.getLocale(), name, data);
                             reply = JsonUtil.getReporter(request.getLocale(), name);
                             break;
-                        case SENSOR:
-                            JsonUtil.setSensor(request.getLocale(), name, data);
-                            reply = JsonUtil.getSensor(request.getLocale(), name);
-                            break;
                         case SIGNAL_HEAD:
                             JsonUtil.setSignalHead(request.getLocale(), name, data);
                             reply = JsonUtil.getSignalHead(request.getLocale(), name);
@@ -472,10 +452,6 @@ public class JsonServlet extends WebSocketServlet {
                         case REPORTER:
                             JsonUtil.putReporter(request.getLocale(), name, data);
                             reply = JsonUtil.getReporter(request.getLocale(), name);
-                            break;
-                        case SENSOR:
-                            JsonUtil.putSensor(request.getLocale(), name, data);
-                            reply = JsonUtil.getSensor(request.getLocale(), name);
                             break;
                         default:
                             if (this.services.get(type) != null) {

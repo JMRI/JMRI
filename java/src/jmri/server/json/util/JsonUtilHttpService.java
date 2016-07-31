@@ -51,6 +51,8 @@ public class JsonUtilHttpService extends JsonHttpService {
                 return this.getNetworkService(locale, name);
             case JSON.NODE:
                 return this.getNode(locale);
+            case JSON.RAILROAD:
+                return this.getRailroad(locale);
             case JSON.SYSTEM_CONNECTIONS:
                 return this.getSystemConnections(locale);
             default:
@@ -202,6 +204,21 @@ public class JsonUtilHttpService extends JsonHttpService {
             nodes.add(node);
         });
         data.put(JSON.FORMER_NODES, nodes);
+        return root;
+    }
+
+    /**
+     * Send a JSON {@link jmri.server.json.JSON#NODE} message containing the
+     * Railroad from the Railroad Name preferences.
+     *
+     * @param locale the client's Locale
+     * @return the JSON railroad name message
+     */
+    public JsonNode getRailroad(Locale locale) {
+        ObjectNode root = mapper.createObjectNode();
+        root.put(JSON.TYPE, JSON.RAILROAD);
+        ObjectNode data = root.putObject(JSON.DATA);
+        data.put(JSON.NAME, WebServerPreferences.getDefault().getRailRoadName());
         return root;
     }
 

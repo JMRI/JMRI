@@ -1,5 +1,9 @@
 package jmri.server.json.throttle;
 
+import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JSON.TYPE;
+import static jmri.server.json.throttle.JsonThrottle.THROTTLE;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
@@ -7,12 +11,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.JmriException;
-import static jmri.server.json.JSON.DATA;
-import static jmri.server.json.JSON.TYPE;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
-import static jmri.server.json.throttle.JsonThrottle.THROTTLE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +26,7 @@ public class JsonThrottleSocketService extends JsonSocketService {
     private final HashMap<String, JsonThrottle> throttles = new HashMap<>();
     private final HashMap<JsonThrottle, String> throttleIds = new HashMap<>();
     private final static Logger log = LoggerFactory.getLogger(JsonThrottleSocketService.class);
-    
+
     public JsonThrottleSocketService(JsonConnection connection) {
         super(connection);
     }
@@ -34,7 +35,7 @@ public class JsonThrottleSocketService extends JsonSocketService {
     public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
         log.debug("Processing {}", data);
         String id = data.path(THROTTLE).asText();
-        if ("".equals(id)) { // NOI18N
+        if (id.isEmpty()) {
             throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorThrottleId")); // NOI18N
         }
         JsonThrottle throttle = this.throttles.get(id);
