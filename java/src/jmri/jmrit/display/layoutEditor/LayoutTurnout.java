@@ -1993,7 +1993,7 @@ public class LayoutTurnout {
             if (getTurnout() == null) {
                 popup.add(rb.getString("NoTurnout"));
             } else {
-                popup.add(rb.getString("Turnout") + ": " + turnoutName);
+                popup.add(Bundle.getMessage("BeanNameTurnout") + ": " + turnoutName);
             }
             // Rotate if there are no track connections
             if ((connectA == null) && (connectB == null)
@@ -2056,7 +2056,7 @@ public class LayoutTurnout {
             if (blockName.equals("")) {
                 popup.add(rb.getString("NoBlock"));
             } else {
-                popup.add(rb.getString("Block") + ": " + getLayoutBlock().getID());
+                popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getID());
             }
             if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
                 // check if extra blocks have been entered
@@ -2086,7 +2086,7 @@ public class LayoutTurnout {
                     setUpDefaultSize();
                 }
             });
-            popup.add(new AbstractAction(rb.getString("Edit")) {
+            popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 /**
                  *
                  */
@@ -2449,7 +2449,7 @@ public class LayoutTurnout {
             // setup turnout name
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
-            JLabel turnoutNameLabel = new JLabel(rb.getString("Turnout") + " " + rb.getString("Name"));
+            JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " " + rb.getString("Name"));
             panel1.add(turnoutNameLabel);
             panel1.add(turnoutNameField);
             turnoutNameField.setToolTipText(rb.getString("EditTurnoutNameHint"));
@@ -2474,7 +2474,7 @@ public class LayoutTurnout {
             }
             panel1a.add(additionalTurnout);
             contentPane.add(panel1a);
-            secondTurnoutLabel = new JLabel(rb.getString("Supporting") + rb.getString("Turnout") + " " + rb.getString("Name"));
+            secondTurnoutLabel = new JLabel(rb.getString("Supporting") + Bundle.getMessage("BeanNameTurnout") + " " + rb.getString("Name"));
             secondTurnoutLabel.setEnabled(false);
             secondTurnoutComboBox.setEnabled(false);
             JPanel panel1b = new JPanel();
@@ -2504,7 +2504,7 @@ public class LayoutTurnout {
             contentPane.add(panel33);
 
             TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-            border.setTitle(rb.getString("Block"));
+            border.setTitle(Bundle.getMessage("BeanNameBlock"));
             // setup block name
             JPanel panel2 = new JPanel();
             panel2.setBorder(border);
@@ -2522,7 +2522,7 @@ public class LayoutTurnout {
                 JPanel panel21 = new JPanel();
                 panel21.setLayout(new FlowLayout());
                 TitledBorder borderblk2 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-                borderblk2.setTitle(rb.getString("Block") + " 2");
+                borderblk2.setTitle(Bundle.getMessage("BeanNameBlock") + " 2");
                 panel21.setBorder(borderblk2);
                 panel21.add(blockBNameField);
                 blockBNameField.setToolTipText(rb.getString("EditBlockBNameHint"));
@@ -2539,7 +2539,7 @@ public class LayoutTurnout {
                 JPanel panel22 = new JPanel();
                 panel22.setLayout(new FlowLayout());
                 TitledBorder borderblk3 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-                borderblk3.setTitle(rb.getString("Block") + " 3");
+                borderblk3.setTitle(Bundle.getMessage("BeanNameBlock") + " 3");
                 panel22.setBorder(borderblk3);
                 panel22.add(blockCNameField);
                 blockCNameField.setToolTipText(rb.getString("EditBlockCNameHint"));
@@ -2555,7 +2555,7 @@ public class LayoutTurnout {
                 JPanel panel23 = new JPanel();
                 panel23.setLayout(new FlowLayout());
                 TitledBorder borderblk4 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-                borderblk4.setTitle(rb.getString("Block") + " 4");
+                borderblk4.setTitle(Bundle.getMessage("BeanNameBlock") + " 4");
                 panel23.setBorder(borderblk4);
                 panel23.add(blockDNameField);
                 blockDNameField.setToolTipText(rb.getString("EditBlockDNameHint"));
@@ -2575,7 +2575,7 @@ public class LayoutTurnout {
 
             turnoutEditBlock.setToolTipText(rb.getString("EditBlockHint"));
             // Done
-            panel5.add(turnoutEditDone = new JButton(rb.getString("Done")));
+            panel5.add(turnoutEditDone = new JButton(Bundle.getMessage("ButtonDone")));
             turnoutEditDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     turnoutEditDonePressed(e);
@@ -2583,7 +2583,7 @@ public class LayoutTurnout {
             });
             turnoutEditDone.setToolTipText(rb.getString("DoneHint"));
             // Cancel
-            panel5.add(turnoutEditCancel = new JButton(rb.getString("Cancel")));
+            panel5.add(turnoutEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             turnoutEditCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     turnoutEditCancelPressed(e);

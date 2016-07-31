@@ -476,7 +476,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     }
 
     public boolean setEditIconMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Memory"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameMemory"));
         popup.add(new AbstractAction(txt) {
             public void actionPerformed(ActionEvent e) {
                 edit();

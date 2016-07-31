@@ -2418,9 +2418,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             if (add) {
-                txt = java.text.MessageFormat.format(Bundle.getMessage("addItenToPanel"), Bundle.getMessage(name));
+                txt = java.text.MessageFormat.format(Bundle.getMessage("addItemToPanel"), Bundle.getMessage(name));
             } else {
-                txt = java.text.MessageFormat.format(Bundle.getMessage("editItenInPanel"), Bundle.getMessage(name));
+                txt = java.text.MessageFormat.format(Bundle.getMessage("editItemInPanel"), Bundle.getMessage(name));
             }
             p.add(new JLabel(txt));
             if (table) {
@@ -2885,7 +2885,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             });
             panel0.add(doneButton);
 
-            JButton cancelButton = new JButton(Bundle.getMessage("Cancel"));
+            JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
             cancelButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent a) {

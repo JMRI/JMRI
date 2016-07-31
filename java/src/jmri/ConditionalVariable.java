@@ -820,27 +820,27 @@ public class ConditionalVariable {
     public static String getItemTypeString(int t) {
         switch (t) {
             case Conditional.ITEM_TYPE_SENSOR:
-                return (rbx.getString("Sensor"));
+                return (rbean.getString("BeanNameSensor"));
             case Conditional.ITEM_TYPE_TURNOUT:
-                return (rbx.getString("Turnout"));
+                return (rbean.getString("BeanNameTurnout"));
             case Conditional.ITEM_TYPE_LIGHT:
-                return (rbx.getString("Light"));
+                return (rbean.getString("BeanNameLight"));
             case Conditional.ITEM_TYPE_SIGNALHEAD:
-                return (rbx.getString("SignalHead"));
+                return (rbean.getString("BeanNameSignalHead"));
             case Conditional.ITEM_TYPE_SIGNALMAST:
-                return (rbx.getString("SignalMast"));
+                return (rbean.getString("BeanNameSignalMast"));
             case Conditional.ITEM_TYPE_MEMORY:
-                return (rbx.getString("Memory"));
+                return (rbean.getString("BeanNameMemory"));
             case Conditional.ITEM_TYPE_CONDITIONAL:
-                return (rbx.getString("Conditional"));
+                return (rbean.getString("BeanNameConditional"));
             case Conditional.ITEM_TYPE_WARRANT:
-                return (rbx.getString("Warrant"));
+                return (rbean.getString("BeanNameWarrant"));
             case Conditional.ITEM_TYPE_CLOCK:
                 return (rbx.getString("FastClock"));
             case Conditional.ITEM_TYPE_OBLOCK:
-                return (rbx.getString("OBlock"));
+                return (rbean.getString("BeanNameOBlock"));
             case Conditional.ITEM_TYPE_ENTRYEXIT:
-                return (rbx.getString("EntryExit"));
+                return (rbean.getString("EntryExit"));
         }
         return "";
     }
@@ -1078,45 +1078,45 @@ public class ConditionalVariable {
         switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                        new Object[]{rbx.getString("Sensor"), getName(), type});
+                        new Object[]{rbean.getString("BeanNameSensor"), getName(), type});
             case Conditional.ITEM_TYPE_TURNOUT:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                        new Object[]{rbx.getString("Turnout"), getName(), type});
+                        new Object[]{rbean.getString("BeanNameTurnout"), getName(), type});
             case Conditional.ITEM_TYPE_LIGHT:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                        new Object[]{rbx.getString("Light"), getName(), type});
+                        new Object[]{rbean.getString("BeanNameLight"), getName(), type});
             case Conditional.ITEM_TYPE_SIGNALHEAD:
                 if ((_type == Conditional.TYPE_SIGNAL_HEAD_LIT)
                         || (_type == Conditional.TYPE_SIGNAL_HEAD_HELD)) {
                     return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                            new Object[]{rbx.getString("SignalHead"), getName(), type});
+                            new Object[]{rbean.getString("BeanNameSignalHead"), getName(), type});
                 } else {
                     return java.text.MessageFormat.format(rbx.getString("SignalHeadStateDescrpt"),
-                            new Object[]{rbx.getString("SignalHead"), getName(), type});
+                            new Object[]{rbean.getString("BeanNameSignalHead"), getName(), type});
                 }
             case Conditional.ITEM_TYPE_SIGNALMAST:
                 if ((_type == Conditional.TYPE_SIGNAL_MAST_LIT)
                         || (_type == Conditional.TYPE_SIGNAL_MAST_HELD)) {
                     return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                            new Object[]{rbx.getString("SignalMast"), getName(), type});
+                            new Object[]{rbean.getString("BeanNameSignalMast"), getName(), type});
                 } else {
                     return java.text.MessageFormat.format(rbx.getString("SignalMastStateDescrpt"),
-                            new Object[]{rbx.getString("SignalMast"), getName(), _dataString});
+                            new Object[]{rbean.getString("BeanNameSignalMast"), getName(), _dataString});
                 }
             case Conditional.ITEM_TYPE_MEMORY:
                 if ((_type == Conditional.TYPE_MEMORY_EQUALS)
                         || (_type == Conditional.TYPE_MEMORY_EQUALS_INSENSITIVE)) {
                     return java.text.MessageFormat.format(rbx.getString("MemoryValueDescrpt"),
-                            new Object[]{rbx.getString("Memory"), getName(),
+                            new Object[]{rbean.getString("BeanNameMemory"), getName(),
                                 getCompareSymbols(_num1), _dataString});
                 } else {
                     return java.text.MessageFormat.format(rbx.getString("MemoryCompareDescrpt"),
-                            new Object[]{rbx.getString("Memory"), getName(),
+                            new Object[]{rbean.getString("BeanNameMemory"), getName(),
                                 getCompareSymbols(_num1), _dataString});
                 }
             case Conditional.ITEM_TYPE_CONDITIONAL:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                        new Object[]{rbx.getString("Conditional"), getName(), type});
+                        new Object[]{rbean.getString("BeanNameConditional"), getName(), type});
             case Conditional.ITEM_TYPE_WARRANT:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
                         new Object[]{rbx.getString("WarrantRoute"), getName(), type});
@@ -1130,7 +1130,7 @@ public class ConditionalVariable {
                         new Object[]{rbx.getString("OBlockStatus"), getName(), _dataString});
             case Conditional.ITEM_TYPE_ENTRYEXIT:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                        new Object[]{rbx.getString("EntryExit"), getBean().getUserName(), type});
+                        new Object[]{rbean.getString("EntryExit"), getBean().getUserName(), type});
             case Conditional.TYPE_NONE:
                 return getName() + " type " + type;
         }

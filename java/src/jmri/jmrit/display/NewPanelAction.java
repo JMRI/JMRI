@@ -29,7 +29,7 @@ public class NewPanelAction extends AbstractAction {
                 Bundle.getMessage("ChoiceText1") + "\n" + Bundle.getMessage("ChoiceText2") + "\n"
                 + Bundle.getMessage("ChoiceText3"), Bundle.getMessage("ChooseEditor"),
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                new Object[]{Bundle.getMessage("Cancel"), Bundle.getMessage("LayoutEditor"),
+                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("LayoutEditor"),
                     Bundle.getMessage("PanelEditor")},
                 Bundle.getMessage("PanelEditor"));
         if (response == 1) {

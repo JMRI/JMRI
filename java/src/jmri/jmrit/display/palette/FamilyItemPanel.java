@@ -39,8 +39,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
     protected JPanel _iconPanel;     // panel contained in _iconFamilyPanel - all icons in family
     protected JPanel _dragIconPanel; // contained in _iconFamilyPanel - to drag to control panel
     protected boolean _supressDragging;
-    protected int _buttonPostion = 0;
-    JPanel _bottom1Panel;  // Typically _showIconsButton and editIconsButton 
+    protected int _buttonPosition = 0;
+    JPanel _bottom1Panel;  // Typically _showIconsButton and _editIconsButton
     JPanel _bottom2Panel;  // createIconFamilyButton - when all families have been deleted 
     JButton _showIconsButton;
     JButton _editIconsButton;
@@ -299,7 +299,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             removeIconFamiliesPanel();
         }
         initIconFamiliesPanel();
-        add(_iconFamilyPanel, _buttonPostion);
+        add(_iconFamilyPanel, _buttonPosition);
         hideIcons();
         _iconFamilyPanel.invalidate();
         invalidate();
@@ -558,7 +558,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         newFamilyButton.setToolTipText(Bundle.getMessage("ToolTipAddFamily"));
         panel.add(newFamilyButton);
 
-        JButton cancelButton = new JButton(Bundle.getMessage("cancelButton"));
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateFamiliesPanel();

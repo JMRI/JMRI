@@ -162,7 +162,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     }
 
     public boolean setEditIconMenu(javax.swing.JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Memory"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameMemory"));
         popup.add(new javax.swing.AbstractAction(txt) {
             /**
              *

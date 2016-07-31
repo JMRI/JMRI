@@ -105,7 +105,7 @@ public class SensorTextEdit extends JmriJFrame {
         okButton.setVisible(true);
         okButton.setToolTipText(rb.getString("SetButtonToolTipSensor"));
 
-        cancelButton.setText(rb.getString("Cancel"));
+        cancelButton.setText(Bundle.getMessage("ButtonCancel"));
         cancelButton.setVisible(true);
         cancelButton.setToolTipText(rb.getString("CancelButtonToolTipSensor"));
 

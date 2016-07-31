@@ -37,12 +37,14 @@ public abstract class ItemPanel extends JPanel {
     protected String _itemType;
     protected Editor _editor;
     protected boolean _initialized = false;    // Has init() been run
-    protected boolean _update = false;    // Editing existing icon, do not allow icon dragging. set in init()
+    protected boolean _update = false;    // Editing existing icon, do not allow icon dragging. Set in init()
     JTextField _linkName = new JTextField(30);
 
     /**
      * Constructor for all table types. When item is a bean, the itemType is the
      * name key for the item in jmri.NamedBeanBundle.properties
+     * This is actually not true at present, i.e. key = BeanNameTurnout but _itemType = Turnout
+     * (this prohibits using the JMRI-wide translation) TODO split type and Bundle-key
      */
     public ItemPanel(JmriJFrame parentFrame, String type, Editor editor) {
         _paletteFrame = parentFrame;

@@ -209,7 +209,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private JCheckBox blockContentsBox = new JCheckBox("Block Contents");
     private JTextField blockContents = new JTextField(8);
-    private JCheckBox memoryBox = new JCheckBox(rb.getString("Memory"));
+    private JCheckBox memoryBox = new JCheckBox(Bundle.getMessage("BeanNameMemory"));
     private JTextField textMemory = new JTextField(8);
 
     private JCheckBox iconLabelBox = new JCheckBox(rb.getString("IconLabel"));
@@ -549,7 +549,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         top1.add(new JLabel(" y:"));
         top1.add(yLabel);
         // add turnout items
-        top1.add(new JLabel("    " + rb.getString("Turnout") + ": "));
+        top1.add(new JLabel("    " + Bundle.getMessage("BeanNameTurnout") + ": "));
         top1.add(new JLabel(rb.getString("Name")));
         top1.add(nextTurnout);
         nextTurnout.setToolTipText(rb.getString("TurnoutNameToolTip"));
@@ -978,7 +978,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         });
 
-        JMenuItem entryExitItem = new JMenuItem("Entry Exit" + "...");
+        JMenuItem entryExitItem = new JMenuItem(Bundle.getMessage("EntryExit") + "...");
         toolsMenu.add(entryExitItem);
         entryExitItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -992,7 +992,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     protected JMenu setupOptionMenu(JMenuBar menuBar) {
-        JMenu optionMenu = new JMenu(rbx.getString("Options"));
+        JMenu optionMenu = new JMenu(Bundle.getMessage("MenuOptions"));
         optionMenu.setMnemonic(stringsToVTCodes.get(rb.getString("OptionsMnemonic")));
         menuBar.add(optionMenu);
         // edit mode item
@@ -1851,7 +1851,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
-            panel5.add(trackWidthDone = new JButton(rb.getString("Done")));
+            panel5.add(trackWidthDone = new JButton(Bundle.getMessage("ButtonDone")));
             trackWidthDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     trackWidthDonePressed(e);
@@ -1859,7 +1859,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             });
             trackWidthDone.setToolTipText(rb.getString("DoneHint"));
             // Cancel
-            panel5.add(trackWidthCancel = new JButton(rb.getString("Cancel")));
+            panel5.add(trackWidthCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             trackWidthCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     trackWidthCancelPressed(e);
@@ -2002,7 +2002,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             });
             reporterDone.setToolTipText(rb.getString("ReporterDoneHint"));
             // Cancel
-            panel5.add(reporterCancel = new JButton(rb.getString("Cancel")));
+            panel5.add(reporterCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             reporterCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     reporterCancelPressed(e);
@@ -2181,7 +2181,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             });
             scaleTrackDiagramDone.setToolTipText(rb.getString("ScaleTranslateHint"));
-            panel5.add(scaleTrackDiagramCancel = new JButton(rb.getString("Cancel")));
+            panel5.add(scaleTrackDiagramCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             scaleTrackDiagramCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     scaleTrackDiagramCancelPressed(e);
@@ -2420,7 +2420,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             });
             moveSelectionDone.setToolTipText(rb.getString("MoveSelectionHint"));
-            panel5.add(moveSelectionCancel = new JButton(rb.getString("Cancel")));
+            panel5.add(moveSelectionCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             moveSelectionCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     moveSelectionCancelPressed(e);

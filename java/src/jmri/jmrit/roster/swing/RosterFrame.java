@@ -145,7 +145,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     int clickDelay = 0;
-    JRadioButtonMenuItem contextEdit = new JRadioButtonMenuItem(Bundle.getMessage("Edit"));
+    JRadioButtonMenuItem contextEdit = new JRadioButtonMenuItem(Bundle.getMessage("ButtonEdit"));
     JRadioButtonMenuItem contextOps = new JRadioButtonMenuItem(Bundle.getMessage("ProgrammingOnMain"));
     JRadioButtonMenuItem contextService = new JRadioButtonMenuItem(Bundle.getMessage("ProgrammingTrack"));
     JTextPane dateUpdated = new JTextPane();

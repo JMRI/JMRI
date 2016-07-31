@@ -85,7 +85,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     JLabel textEngine = new JLabel(Bundle.getMessage("Engines"));
 
     // major buttons
-    JButton editButton = new JButton(Bundle.getMessage("Edit"));	// edit route
+    JButton editButton = new JButton(Bundle.getMessage("ButtonEdit"));	// edit route
     JButton clearButton = new JButton(Bundle.getMessage("Clear"));
     JButton setButton = new JButton(Bundle.getMessage("Select"));
     JButton resetButton = new JButton(Bundle.getMessage("ResetTrain"));

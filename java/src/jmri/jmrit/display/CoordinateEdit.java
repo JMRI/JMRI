@@ -259,7 +259,7 @@ public class CoordinateEdit extends JmriJFrame {
         okButton.setText(Bundle.getMessage("Set"));
         okButton.setVisible(true);
 
-        cancelButton.setText(Bundle.getMessage("Cancel"));
+        cancelButton.setText(Bundle.getMessage("ButtonCancel"));
         cancelButton.setVisible(true);
 
         Dimension dim = (new JButton("XXXXXXXX")).getPreferredSize();

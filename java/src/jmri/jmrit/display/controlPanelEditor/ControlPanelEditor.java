@@ -521,7 +521,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
      * getClipGroup() {} below.
      */
     protected void makeEditMenu() {
-        _editMenu = new JMenu("Edit");
+        _editMenu = new JMenu(Bundle.getMessage("ButtonEdit"));
         _menuBar.add(_editMenu, 0);
         _editMenu.setMnemonic(KeyEvent.VK_E);
         /*

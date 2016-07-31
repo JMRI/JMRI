@@ -393,7 +393,7 @@ public class TrackSegment {
         if (blockName.equals("")) {
             popup.add(rb.getString("NoBlock"));
         } else {
-            popup.add(rb.getString("Block") + ": " + getLayoutBlock().getID());
+            popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getID());
         }
         if (hidden) {
             popup.add(rb.getString("Hidden"));
@@ -401,7 +401,7 @@ public class TrackSegment {
             popup.add(rb.getString("NotHidden"));
         }
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
-        popup.add(new AbstractAction(rb.getString("Edit")) {
+        popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
             /**
              *
              */
@@ -630,7 +630,7 @@ public class TrackSegment {
                 }
             });
             segmentEditBlock.setToolTipText(rb.getString("EditBlockHint"));
-            panel5.add(segmentEditDone = new JButton(rb.getString("Done")));
+            panel5.add(segmentEditDone = new JButton(Bundle.getMessage("ButtonDone")));
             segmentEditDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     segmentEditDonePressed(e);
@@ -638,7 +638,7 @@ public class TrackSegment {
             });
             segmentEditDone.setToolTipText(rb.getString("DoneHint"));
             // Cancel
-            panel5.add(segmentEditCancel = new JButton(rb.getString("Cancel")));
+            panel5.add(segmentEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             segmentEditCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     segmentEditCancelPressed(e);

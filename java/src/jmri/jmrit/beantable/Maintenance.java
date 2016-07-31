@@ -1254,7 +1254,7 @@ public class Maintenance {
                 } else if (o.getClass().getName().equals("jmri.jmrit.display.SignalHeadIcon")) {
                     name = ((jmri.jmrit.display.SignalHeadIcon) o).getSignalHead().getSystemName();
                     String line = MessageFormat.format(rbm.getString("PanelReference"),
-                            new Object[]{"\t", rbm.getString("SignalHead")});
+                            new Object[]{"\t", Bundle.getMessage("BeanNameSignalHead")});
                     if (testName(name, found, names, line1, null, line, tempText)) {
                         found = true;
                         referenceCount++;

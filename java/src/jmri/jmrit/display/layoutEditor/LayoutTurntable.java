@@ -396,7 +396,7 @@ public class LayoutTurntable {
         }
         popup.add(rb.getString("Turntable"));
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
-        popup.add(new AbstractAction(rb.getString("Edit")) {
+        popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
             /**
              *
              */
@@ -554,7 +554,7 @@ public class LayoutTurntable {
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
-            panel5.add(turntableEditDone = new JButton(rb.getString("Done")));
+            panel5.add(turntableEditDone = new JButton(Bundle.getMessage("ButtonDone")));
             turntableEditDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     turntableEditDonePressed(e);
@@ -562,7 +562,7 @@ public class LayoutTurntable {
             });
             turntableEditDone.setToolTipText(rb.getString("DoneHint"));
             // Cancel
-            panel5.add(turntableEditCancel = new JButton(rb.getString("Cancel")));
+            panel5.add(turntableEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             turntableEditCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     turntableEditCancelPressed(e);

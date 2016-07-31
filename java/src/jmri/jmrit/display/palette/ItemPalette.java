@@ -377,37 +377,37 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         ItemPanel itemPanel = new TableItemPanel(palette, "Turnout", null,
                 PickListModel.turnoutPickModelInstance(), editor);
         itemPanel.init();		// show panel on start
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Turnout"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNameTurnout"));
         _tabIndex.put("Turnout", itemPanel);
 
         itemPanel = new TableItemPanel(palette, "Sensor", null,
                 PickListModel.sensorPickModelInstance(), editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Sensor"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNameSensor"));
         _tabIndex.put("Sensor", itemPanel);
 
         itemPanel = new SignalHeadItemPanel(palette, "SignalHead", null,
                 PickListModel.signalHeadPickModelInstance(), editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("SignalHead"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNameSignalHead"));
         _tabIndex.put("SignalHead", itemPanel);
 
         itemPanel = new SignalMastItemPanel(palette, "SignalMast", null,
                 PickListModel.signalMastPickModelInstance(), editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("SignalMast"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNameSignalMast"));
         _tabIndex.put("SignalMast", itemPanel);
 
         itemPanel = new MemoryItemPanel(palette, "Memory", null,
                 PickListModel.memoryPickModelInstance(), editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Memory"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNameMemory"));
         _tabIndex.put("Memory", itemPanel);
 
         itemPanel = new ReporterItemPanel(palette, "Reporter", null,
                 PickListModel.reporterPickModelInstance(), editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Reporter"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNameReporter"));
         _tabIndex.put("Reporter", itemPanel);
 
         itemPanel = new TableItemPanel(palette, "Light", null,
                 PickListModel.lightPickModelInstance(), editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Light"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNameLight"));
         _tabIndex.put("Light", itemPanel);
 
         itemPanel = new MultiSensorItemPanel(palette, "MultiSensor", null,
@@ -446,7 +446,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         _tabIndex.put("IndicatorTO", itemPanel);
 
         itemPanel = new PortalItemPanel(palette, "Portal", null, editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Portal"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNamePortal"));
         _tabIndex.put("Portal", itemPanel);
 
         _tabPane.addChangeListener(palette);
