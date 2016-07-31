@@ -222,7 +222,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     /**
      * Cannot set _runOnET until current NOOP command completes
      *
-     * @param set
+     * @param set true to run on elapsed time calculations only, false to consider other inputs
      */
     protected void setRunOnET(Boolean set) {
         log.debug("setRunOnET {} command #{} warrant {}", set, _idxCurrentCommand, _warrant.getDisplayName());
