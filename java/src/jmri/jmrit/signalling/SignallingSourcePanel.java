@@ -48,7 +48,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         super();
         sml = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sourceMast);
         this.sourceMast = sourceMast;
-        fixedSourceMastLabel = new JLabel(sourceMast.getDisplayName());
+        fixedSourceMastLabel = new JLabel(rb.getString("SourceMast") + " " + sourceMast.getDisplayName());
         if (sml != null) {
             _signalMastList = sml.getDestinationList();
         }
@@ -258,10 +258,10 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         @Override
         public String getColumnName(int col) {
             if (col == USERNAME_COLUMN) {
-                return Bundle.getMessage("ColumnUserName");
+                return rb.getString("ColumnUserName");
             }
             if (col == SYSNAME_COLUMN) {
-                return Bundle.getMessage("ColumnSystemName");
+                return rb.getString("DestMast");
             }
             if (col == ACTIVE_COLUMN) {
                 return rb.getString("ColumnActive");

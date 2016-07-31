@@ -702,8 +702,15 @@ public class Car extends RollingStock {
         }
     }
 
+    /*
+     * Don't set return address if in staging with the same RWE address and
+     * don't set return address if at the RWE address
+     */
     private void setReturnWhenEmpty() {
-        if (getReturnWhenEmptyDestination() != null) {
+        if (getReturnWhenEmptyDestination() != null &&
+                (getLocation() != getReturnWhenEmptyDestination() ||
+                        (!getReturnWhenEmptyDestination().isStaging() &&
+                                getTrack() != getReturnWhenEmptyDestTrack()))) {
             setFinalDestination(getReturnWhenEmptyDestination());
             if (getReturnWhenEmptyDestTrack() != null) {
                 setFinalDestinationTrack(getReturnWhenEmptyDestTrack());
