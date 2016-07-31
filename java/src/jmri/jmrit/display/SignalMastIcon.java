@@ -422,7 +422,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     SignalMastItemPanel _itemPanel;
 
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("SignalMast"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSignalMast"));
         popup.add(new AbstractAction(txt) {
             /**
              *
@@ -437,7 +437,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     }
 
     protected void editItem() {
-        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("SignalMast")));
+        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSignalMast")));
         _itemPanel = new SignalMastItemPanel(_paletteFrame, "SignalMast", getFamily(),
                 PickListModel.signalMastPickModelInstance(), _editor);
         ActionListener updateAction = new ActionListener() {
