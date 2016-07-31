@@ -122,7 +122,6 @@ public class ZeroConfServiceTest {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
         ServiceInfo result = instance.serviceInfo();
         Assert.assertNotNull(result);
-        Assert.assertTrue(result instanceof ServiceInfo);
     }
 
     /**
