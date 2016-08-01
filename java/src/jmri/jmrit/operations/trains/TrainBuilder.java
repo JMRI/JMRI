@@ -2473,7 +2473,7 @@ public class TrainBuilder extends TrainCommon {
             }
         }
         // now adjust train length and weight for each location that engines are in the train
-        finishAddRsToTrain(engine, rl, rld, track, length, weightTons);
+        finishAddRsToTrain(engine, rl, rld, length, weightTons);
     }
 
     /**
@@ -2537,11 +2537,11 @@ public class TrainBuilder extends TrainCommon {
             rld.setCarMoves(rld.getCarMoves() + 1);
         }
         // now adjust train length and weight for each location that car is in the train
-        finishAddRsToTrain(car, rl, rld, track, length, weightTons);
+        finishAddRsToTrain(car, rl, rld, length, weightTons);
         return;
     }
 
-    private void finishAddRsToTrain(RollingStock rs, RouteLocation rl, RouteLocation rld, Track track, int length,
+    private void finishAddRsToTrain(RollingStock rs, RouteLocation rl, RouteLocation rld, int length,
             int weightTons) {
         // notify that locations have been modified when build done
         // allows automation actions to run properly
@@ -4719,7 +4719,7 @@ public class TrainBuilder extends TrainCommon {
         // save lead engine's rl, and rld
         RouteLocation rl = leadEngine.getRouteLocation();
         RouteLocation rld = leadEngine.getRouteDestination();
-        leadEngine.reset(); // remove this engine from the train
+        removeRollingStockFromTrain(leadEngine);
         _engineList.add(0, leadEngine); // put engine back into the pool
         _train.setLeadEngine(null);
         if (hpNeeded <= 0) {
@@ -4744,6 +4744,24 @@ public class TrainBuilder extends TrainCommon {
         if (_train.getLeadEngine() == null && !_train.isBuildConsistEnabled()) {
             throw new BuildFailedException(Bundle.getMessage("buildErrorEngHp"));
         }
+    }
+    
+    private void removeRollingStockFromTrain(RollingStock rs) {  
+        // adjust train length and weight for each location that the rolling stock is in the train
+        boolean inTrain = false;
+        for (RouteLocation routeLocation : _routeList) {
+            if (rs.getRouteLocation() == routeLocation) {
+                inTrain = true;
+            }
+            if (rs.getRouteDestination() == routeLocation) {
+                break;
+            }
+            if (inTrain) {
+                routeLocation.setTrainLength(routeLocation.getTrainLength() - rs.getTotalLength()); // couplers are included
+                routeLocation.setTrainWeight(routeLocation.getTrainWeight() - rs.getAdjustedWeightTons());
+            }
+        }
+        rs.reset(); // remove this rolling stock from the train
     }
 
     /**
