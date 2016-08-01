@@ -28,6 +28,21 @@
       <display item="ESU V4 Function Settings General Slider 3" layout="above" label=""/>
       <display item="ESU V4 Function Settings General Slider 3" layout="above" format="hslider"/>
     </row>
+    <row>
+      <display item="ESU V4 Function Settings General Slider 4" layout="above" label=""/>
+      <display item="ESU V4 Function Settings General Slider 4" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Function Settings General Slider 5" layout="above" label=""/>
+      <display item="ESU V4 Function Settings General Slider 5" layout="above" format="hslider"/>
+    </row>
+    <row>
+      <display item="ESU V4 Function Settings General Slider 6" layout="above" label=""/>
+      <display item="ESU V4 Function Settings General Slider 6" layout="above" format="hslider"/>
+    </row>
     <label>
       <text> </text>
     </label>
