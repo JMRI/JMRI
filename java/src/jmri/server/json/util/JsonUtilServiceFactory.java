@@ -21,6 +21,7 @@ public class JsonUtilServiceFactory implements JsonServiceFactory {
             JSON.NETWORK_SERVICES,
             JSON.NODE,
             JSON.PING,
+            JSON.RAILROAD,
             JSON.SYSTEM_CONNECTIONS};
     }
 
