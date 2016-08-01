@@ -229,7 +229,7 @@ public class JsonClientHandler {
                         if (!data.path(LOCALE).isMissingNode()) {
                             this.connection.setLocale(Locale.forLanguageTag(data.path(LOCALE).asText()));
                         }
-                    // fall through to default action
+                    //$FALL-THROUGH$ to default action
                     default:
                         if (this.services.get(type) != null) {
                             for (JsonSocketService service : this.services.get(type)) {
