@@ -100,8 +100,10 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
      * @param server     The server requesting this throttle on behalf of a
      *                   client
      * @return The throttle
+     * @throws jmri.server.json.JsonException if unable to get the requested
+     *                                        {@link jmri.Throttle} 
      */
-    public static JsonThrottle getThrottle(String throttleId, JsonNode data, JsonThrottleSocketService server) throws JsonException, IOException {
+    public static JsonThrottle getThrottle(String throttleId, JsonNode data, JsonThrottleSocketService server) throws JsonException {
         DccLocoAddress address = null;
         Locale locale = server.getConnection().getLocale();
         JsonThrottleManager manager = JsonThrottleManager.getDefault();
@@ -116,7 +118,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
             }
         } else if (!data.path(ID).isMissingNode()) {
             try {
-                address = Roster.instance().getEntryForId(data.path(ID).asText()).getDccLocoAddress();
+                address = Roster.getDefault().getEntryForId(data.path(ID).asText()).getDccLocoAddress();
             } catch (NullPointerException ex) {
                 log.warn("Roster entry \"{}\" does not exist.", data.path(ID).asText());
                 throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorThrottleRosterEntry", data.path(ID).asText())); // NOI18N
