@@ -14,11 +14,13 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Alain Le Marchand" version="1.0" lastUpdated="20160731"/>
+  <version author="Alain Le Marchand" version="1.1" lastUpdated="20160802"/>
   <!-- ver1.0 created from "ESU LokPilot Standard V1.0" version 1.2 -->
   <!-- ESU manual: 50708, 50709 Digital car interior lighting, en, Date: 23.04.15, Version: 2 -->
+  <!-- ver1.1 renamed family as per discussion https://github.com/JMRI/JMRI/pull/1724 -->
   <decoder>
-    <family name="ESU Digital Car-Interior lighting" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
-      <model model="Interior lighting - Warm-white" numOuts="3" maxInputVolts="24 V" maxTotalCurrent="25mA" formFactor="HO" productID="16777316" comment="&lt;html&gt;Ref.50708 &quot;Warm-white&quot;&lt;br&gt; Digital LED lighting strip with integrated Digital decoder and taillight, 255mm, 11 LEDs&lt;br&gt; For gauge N,TT, H0&lt;br&gt;&lt;/html&gt;">
+    <family name="ESU Miscellaneous decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
+      <model model="Car interior lighting - Warm-white" numOuts="3" maxInputVolts="24 V" maxTotalCurrent="25mA" formFactor="HO" productID="16777316" comment="&lt;html&gt;Ref.50708 &quot;Warm-white&quot;&lt;br&gt; Digital LED lighting strip with integrated Digital decoder and taillight, 255mm, 11 LEDs&lt;br&gt; For gauge N,TT, H0&lt;br&gt;&lt;/html&gt;">
         <output name="1" label="Front|Light" maxcurrent="20 mA"/>
         <output name="2" label="Rear|Light"/>
         <output name="3" label="AUX|1" maxcurrent="100 mA"/>
@@ -29,7 +31,7 @@
         <output name="8" label="Group E|LEDs 10-11"/>
         <size length="255" width="7" height="N/A" units="mm"/>
       </model>
-      <model model="Interior lighting - Yellow" numOuts="3" maxInputVolts="24 V" maxTotalCurrent="25mA" formFactor="HO" productID="16777316" comment="&lt;html&gt;Ref.50709 &quot;Yellow&quot;&lt;br&gt; Digital LED lighting strip with integrated Digital decoder and taillight, 255mm, 11 LEDs&lt;br&gt; For gauge N,TT, H0&lt;br&gt;&lt;/html&gt;">
+      <model model="Car interior lighting - Yellow" numOuts="3" maxInputVolts="24 V" maxTotalCurrent="25mA" formFactor="HO" productID="16777316" comment="&lt;html&gt;Ref.50709 &quot;Yellow&quot;&lt;br&gt; Digital LED lighting strip with integrated Digital decoder and taillight, 255mm, 11 LEDs&lt;br&gt; For gauge N,TT, H0&lt;br&gt;&lt;/html&gt;">
         <output name="1" label="Front|Light" maxcurrent="20 mA"/>
         <output name="2" label="Rear|Light"/>
         <output name="3" label="AUX|1" maxcurrent="100 mA"/>
