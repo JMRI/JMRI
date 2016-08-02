@@ -6695,7 +6695,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         rte1.addLocation(harvard);
         RouteLocation rlArlington = rte1.addLocation(arlington);
         rte1.addLocation(boston);
-        RouteLocation rlChelmsford = rte1.addLocation(chelmsford);
+        rte1.addLocation(chelmsford);
         rte1.addLocation(westford);
 
         // add grade to route
