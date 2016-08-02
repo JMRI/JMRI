@@ -44,10 +44,7 @@
       platform-related changes.</p>
 
       <h2>JMRI Releases</h2>This section describes the (notional)
-      plans for JMRI releases in the future. <!--<P>
-Note that there's been no decision on when a "4.0" version is warranted, so these are described as 3.* numbers.
-In the past, we went from 2.13 (test) to 2.14 (production) to 2.99 (test) to 3.0 (production), so that numbering
-system might be used again.-->
+      plans for JMRI releases in the future. 
 
       <table border="1">
         <tr>
@@ -160,14 +157,12 @@ system might be used again.-->
       </table>
 
       <h4>JMRI during and after 2016</h4>The 4.1.* series of test
-      releases in Fall 2015 continued with Java 1.8 and the same
-      set of included libraries. The following 4.3.* series, in
-      Spring 2016, will continue with Java 1.8, but may involve
+      releases in Fall 2015 and the 4.3.* series in Spring 2016
+      continued with Java 1.8. The following 4.5.* series, in
+      Fall 2016, continued with Java 1.8, but may involve
       other updates.
 
       <ul>
-        <li>The library for the included <a href="../../web">Jetty
-        web server</a> will be updated to version 9.3.6.</li>
 
         <li>At some point, we have to migrate away from <a href=
         "Help.shtml">JavaHelp and JHelpDev</a>. At a minimum, we'll
@@ -181,13 +176,14 @@ system might be used again.-->
         for generating multiple documentation forms is also being
         considered.</li>
 
-        <li>At some point, we have to update JUnit to the current
+        <li>JUnit has been migrated to the current
         <a href="http://junit.org">JUnit 4 release</a>, currently
-        4.12. Among other improvements, this will allow use of the
+        4.12. Among other improvements, this can allow use of the
         Java <a href=
         "http://stackoverflow.com/questions/3806173/assert-keyword-in-java">
-        assert keyword</a>. We'll need to establish some
-        conventions for how to use that.</li>
+        assert keyword</a>. We're working on how best to use 
+        the new capabilities, see the 
+        <a href="JUnit.shtml#junit4">JMRI JUnit page</a>.</li>
 
         <li>USB access technology has advanced a lot since support
         for some basic libraries was added to JMRI. At some point,
@@ -228,7 +224,9 @@ system might be used again.-->
       </ul>In addition, JDOM 2 uses generics in it's input
       parameters and return values. This means you can remove (now
       redundant) casts in many places. Jenkins will warn about
-      those. <!--#include virtual="/Footer" -->
+      those. 
+      
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
