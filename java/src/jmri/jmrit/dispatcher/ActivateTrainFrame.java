@@ -697,7 +697,8 @@ public class ActivateTrainFrame {
         at.setDepartureTimeMin(departureTimeMinutes);
         at.setRestartDelay(delayRestartMinutes);
         at.setDelaySensor((jmri.Sensor) delaySensor.getSelectedBean());
-        if (_dispatcher.isFastClockTimeGE(departureTimeHours, departureTimeMinutes) && delayedStart != ActiveTrain.SENSORDELAY) {
+        if ((_dispatcher.isFastClockTimeGE(departureTimeHours, departureTimeMinutes) && delayedStart != ActiveTrain.SENSORDELAY) || 
+                delayedStart==ActiveTrain.NODELAY) {
             at.setStarted();
         }
         at.setRestartDelaySensor((jmri.Sensor) delayReStartSensor.getSelectedBean());
