@@ -4715,6 +4715,10 @@ public class TrainBuilder extends TrainCommon {
         }
     }
 
+    /*
+     * Removes engine from train and attempts to replace it with one that meets
+     * the HP requirements of the train.
+     */
     private void findNewEngine(int hpNeeded, Engine leadEngine) throws BuildFailedException {
         // save lead engine's rl, and rld
         RouteLocation rl = leadEngine.getRouteLocation();
@@ -4735,9 +4739,11 @@ public class TrainBuilder extends TrainCommon {
                     continue;
                 int engineHp = engine.getHpInteger();
                 if (engineHp > hpNeeded && engineHp <= hpMax) {
-                    log.debug("Loco ({}) has the required HP ({})", engine.toString(), engine.getHp());
-                    if (setLocoDestination(engine, rl, rld, null))
+                    addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildLocoHasRequiredHp"),
+                            new Object[]{engine.toString(), engine.getHp(), hpNeeded}));
+                    if (setLocoDestination(engine, rl, rld, null)) {
                         break hpLoop;
+                    }
                 }
             }
         }
@@ -4838,6 +4844,7 @@ public class TrainBuilder extends TrainCommon {
                                 new Object[]{weight, hp, rl.getGrade(), hpt, hptMinimum, rl.getName(), rl.getId()}));
                         addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainRequiresAddHp"),
                                 new Object[]{addHp, rl.getName(), hptMinimum}));
+                        addLine(_buildReport, SEVEN, BLANK_LINE);
                     }
                 }
             }
@@ -4891,11 +4898,12 @@ public class TrainBuilder extends TrainCommon {
                 break; // done
             }
             if (numberLocos < Setup.getMaxNumberEngines()) {
-                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildContinueAddLocos"),
+                addLine(_buildReport, FIVE, BLANK_LINE);
+                addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildContinueAddLocos"),
                         new Object[]{(hpAvailable + extraHpNeeded - currentHp), rlNeedHp.getName(), rld.getName(),
                                 numberLocos}));
             } else {
-                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildMaxNumberLocoAssigned"),
+                addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildMaxNumberLocoAssigned"),
                         new Object[]{Setup.getMaxNumberEngines()}));
             }
         }
