@@ -2,8 +2,12 @@ package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
+import jmri.Block;
 import jmri.NamedBeanHandle;
+import jmri.Path;
+import jmri.Section;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +44,7 @@ import org.slf4j.LoggerFactory;
  *                  to resume running. (automatic trains only)
  *       STOPPED - Train was stopped by the dispatcher. Dispatcher must resume. (automatic trains only)
  *       DONE -  Train has completed its transit of the layout and is ready to be terminated 
- *                  by the dispatcher. 
+ *                  by the dispatcher, or Restart pressed to repeat the automated run.
  * Status is a bound property.
  * <P>
  * The ActiveTrain status should maintained (setStatus) by the running class, or if running 
@@ -172,6 +176,7 @@ public class ActiveTrain {
         public final static int NODELAY = 0x00;
         public final static int TIMEDDELAY = 0x01;
         public final static int SENSORDELAY = 0x02;
+
         private int mDelayedRestart = NODELAY;
         private int mDelayedStart = NODELAY;
     private int mDepartureTimeHr = 8;
@@ -675,6 +680,75 @@ public class ActiveTrain {
         }
         return list;
     }
+
+    /**
+     * Returns list of all Blocks occupied by or allocated to this train. 
+     * They are in order from the tail of the train to the head 
+     * of the train then on to the forward-most allocated block.
+     * Note that unoccupied blocks can exist before and after the occupied
+     * blocks.
+     * TODO: doesn't handle reversing of adjacent mult-block sections well
+     */
+    public java.util.ArrayList<Block> getBlockList() {
+        ArrayList<Block> list = new ArrayList<Block>();
+        for (int i = 0; i < mAllocatedSections.size(); i++) { // loop thru allocated sections, then all blocks for each section
+            Section s = mAllocatedSections.get(i).getSection();
+            ArrayList<Block> bl = s.getBlockList();
+            if (bl.size() > 1) { //sections with multiple blocks need extra logic
+                
+                boolean blocksConnected = true;
+                //determine if blocks should be added in forward or reverse order based on connectivity
+                if (i==0) { //for first section, compare last block to first of next section
+                    if (!connected(bl.get(bl.size()-1), mAllocatedSections.get(i+1).getSection().getBlockList().get(0))) {
+                        blocksConnected = false;
+                    }                    
+                } else { //not first section, check for connectivity between last block in list, and first block in this section
+                    if (!connected(list.get(list.size()-1), bl.get(0))) { //last block is not connected to first block, add reverse
+                        blocksConnected = false;
+                    }
+                }
+                if (blocksConnected) { //blocks were connected, so add to outgoing in forward order
+                    for (int j = 0; j < bl.size();j++) {
+                        Block b = bl.get(j);
+                        list.add(b);
+                        log.trace("block {} ({}) added to list for Section {} (fwd)", b.getDisplayName(),
+                                (b.getState()==Block.OCCUPIED?"OCCUPIED":"UNOCCUPIED"),
+                                s.getDisplayName());
+                    }
+                } else { //not connected, add in reverse order
+                    for (int j = bl.size()-1; j >= 0;j--) {
+                        Block b = bl.get(j);
+                        list.add(b);
+                        log.trace("block {} ({}) added to list for Section {} (rev)", b.getDisplayName(),
+                                (b.getState()==Block.OCCUPIED?"OCCUPIED":"UNOCCUPIED"),
+                                s.getDisplayName());
+                    }                    
+                }
+                
+            } else { //single block sections are simply added to the outgoing list 
+                Block b = bl.get(0);
+                list.add(b);                                                
+                log.trace("block {} ({}) added to list for Section {} (one)", b.getDisplayName(),
+                        (b.getState()==Block.OCCUPIED?"OCCUPIED":"UNOCCUPIED"),
+                        s.getDisplayName());
+            }
+        }
+        return list;
+    }
+
+    /* copied from Section.java */
+    private boolean connected(Block b1, Block b2) {
+        if ((b1 != null) && (b2 != null)) {
+            List<Path> paths = b1.getPaths();
+            for (int i = 0; i < paths.size(); i++) {
+                if (paths.get(i).getBlock() == b2) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
     public jmri.Section getLastAllocatedSection() {
         return mLastAllocatedSection;
