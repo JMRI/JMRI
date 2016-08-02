@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
 import jmri.Block;
+import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
@@ -34,7 +35,7 @@ public class JsonBlockHttpService extends JsonHttpService {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, BLOCK);
         ObjectNode data = root.putObject(DATA);
-        Block block = InstanceManager.blockManagerInstance().getBlock(name);
+        Block block = InstanceManager.getDefault(BlockManager.class).getBlock(name);
         if (block == null) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", BLOCK, name));
         }
@@ -51,7 +52,7 @@ public class JsonBlockHttpService extends JsonHttpService {
 
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Block block = InstanceManager.blockManagerInstance().getBlock(name);
+        Block block = InstanceManager.getDefault(BlockManager.class).getBlock(name);
         if (block == null) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", BLOCK, name));
         }
@@ -74,7 +75,7 @@ public class JsonBlockHttpService extends JsonHttpService {
     @Override
     public JsonNode doPut(String type, String name, JsonNode data, Locale locale) throws JsonException {
         try {
-            InstanceManager.blockManagerInstance().provideBlock(name);
+        InstanceManager.getDefault(BlockManager.class).provideBlock(name);
         } catch (Exception ex) {
             throw new JsonException(500, Bundle.getMessage(locale, "ErrorCreatingObject", BLOCK, name));
         }
@@ -84,7 +85,7 @@ public class JsonBlockHttpService extends JsonHttpService {
     @Override
     public JsonNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
-        for (String name : InstanceManager.blockManagerInstance().getSystemNameList()) {
+        for (String name : InstanceManager.getDefault(BlockManager.class).getSystemNameList()) {
             root.add(this.doGet(BLOCK, name, locale));
         }
         return root;
