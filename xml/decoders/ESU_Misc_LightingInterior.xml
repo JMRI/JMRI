@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!--Copyright (C) JMRI 2003, 2004, 2008, 2016 All rights reserved -->
+<!--$Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="1.0" lastUpdated="20160731"/>
+  <version author="Alain Le Marchand" version="1.1" lastUpdated="20160802"/>
+  <!-- ver1.0   created from "ESU LokPilot Standard V1.0" version 1.2 -->
+  <!--          ESU manual: 50708, 50709 Digital car interior lighting, en, Date: 23.04.15, Version: 2 -->
+  <!-- ver1.1   renamed family as per discussion https://github.com/JMRI/JMRI/pull/1724 -->
+  <!--          single entry for both model                                             -->
+  <decoder>
+    <family name="ESU Miscellaneous decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
+      <model model="Car interior lighting" numOuts="3" maxInputVolts="24 V" maxTotalCurrent="25mA" formFactor="HO" productID="16777316" comment="&lt;html&gt;Ref.50708 &quot;Warm-white&quot;&lt;br&gt; Ref.50709 &quot;Yellow&quot;&lt;br&gt;Digital LED lighting strip with integrated Digital decoder and taillight, 255mm, 11 LEDs&lt;br&gt; For gauge N,TT, H0&lt;br&gt;&lt;/html&gt;">
+        <output name="1" label="Front|Light" maxcurrent="20 mA"/>
+        <output name="2" label="Rear|Light"/>
+        <output name="3" label="AUX|1" maxcurrent="100 mA"/>
+        <output name="4" label="Group A|LEDs 1-3"/>
+        <output name="5" label="Group B|LEDs 4-5"/>
+        <output name="6" label="Group C|LEDs 6-7"/>
+        <output name="7" label="Group D|LEDs 8-9"/>
+        <output name="8" label="Group E|LEDs 10-11"/>
+        <size length="255" width="7" height="N/A" units="mm"/>
+      </model>
+      <functionlabels>
+        <functionlabel num="0" lockable="true">Rear light</functionlabel>
+        <functionlabel num="1" lockable="true">AUX 1</functionlabel>
+        <functionlabel num="2" lockable="true">All LEDs</functionlabel>
+        <functionlabel num="3" lockable="true">LEDs 1-3</functionlabel>
+        <functionlabel num="4" lockable="true">LEDs 4-5</functionlabel>
+        <functionlabel num="5" lockable="true">LEDs 6-7</functionlabel>
+        <functionlabel num="6" lockable="true">LEDs 8-9</functionlabel>
+        <functionlabel num="7" lockable="true">LEDs 10-11</functionlabel>
+      </functionlabels>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes">
+      <capability>
+        <name>High Access via Double Index</name>
+        <parameter name="Max Regular CV address">256</parameter>
+        <parameter name="High Address CV">96</parameter>
+        <parameter name="Low Address CV">97</parameter>
+        <parameter name="Access Register CV">99</parameter>
+        <parameter name="Modulo">100</parameter>
+      </capability>
+      <capability>
+        <name>Indexed CV access</name>
+        <parameter name="PI">31</parameter>
+        <parameter name="SI">32</parameter>
+        <parameter name="cvFirst">false</parameter>
+      </capability>
+    </programming>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="7" readOnly="yes" default="000" item="Decoder Version">
+        <decVal/>
+        <label>Software Version Number</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+        <tooltip>The decoder version number (read only)</tooltip>
+      </variable>
+      <variable CV="8" readOnly="yes" default="151" item="Manufacturer">
+        <decVal/>
+        <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+        <tooltip>The manufacturer's ID number (read only)</tooltip>
+      </variable>
+      <!-- Decoder Lock - not in ESU documentation for this model -->
+      <variable CV="15" mask="XXXXVVVV" item="ESU V4 Advanced Decoder Lock Option 2" default="0" tooltip="Set this to match value below and decoder will unlock">
+        <decVal max="16"/>
+        <label>Decoder Lock ID number</label>
+      </variable>
+      <variable CV="16" mask="XXXXVVVV" item="ESU V4 Advanced Decoder Lock Option 3" default="0" tooltip="Set this to decoder type: 1=motor, 2=sound, 3=function, etc.">
+        <decVal max="16"/>
+        <label>Preset Lock ID number</label>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <!-- Railcom - not in ESU documentation for this model -->
+      <variable CV="28" mask="XXXXXXXV" item="ESU V4 Advanced RailCom Option 3" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>RailCom Channel 1 Address Broadcast</label>
+      </variable>
+      <variable CV="28" mask="XXXXXXVX" item="ESU V4 Advanced RailCom Option 4" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>RailCom Channel 2 Data Transmission</label>
+      </variable>
+      <variable CV="28" mask="VXXXXXXX" item="ESU V4 Advanced RailCom Option 2" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>RailCom Plus Auto Loco Recognition</label>
+      </variable>
+      <!-- Regular CV29 information -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <!-- Railcom - not in ESU documentation for this model -->
+      <variable CV="29" mask="XXXXVXXX" default="1" item="ESU V4 Advanced RailCom Option 1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>RailCom Enable</label>
+      </variable>
+      <!-- ESU Advanced options -->
+      <variable item="ESU V4 Advanced Protocols Option 1" CV="49" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Marklin Second address</label>
+        <label xml:lang="de">Maerklin 2. Adresse ausgeschaltet</label>
+        <label xml:lang="fr">Seconde adresse Marklin </label>
+      </variable>
+      <variable CV="49" mask="XXXVXXXX" default="1" item="ESU V4 Adavanced Speed Step Option 1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Automatic Speed Step Detection</label>
+        <label xml:lang="de">Auto Fahrstufenerkennung</label>
+      </variable>
+      <!-- Indexed variables - not in ESU documentation for this model -->
+      <variable item="Index register H" CV="31" default="1">
+        <decVal/>
+        <label>Index register H</label>
+      </variable>
+      <variable item="Index register L" CV="32" default="0">
+        <decVal/>
+        <label>Index register L</label>
+      </variable>
+      <!-- Function Mapping in a fragment file -->
+      <xi:include href="http://jmri.org/xml/decoders/esu/lightIntFnMapCVs.xml"/>
+      <!-- Function Settings -->
+      <variable CV="59" default="0" item="ESU V4 Function Settings General Slider 3">
+        <decVal min="0" max="64"/>
+        <label>Delay lower limit</label>
+        <label xml:lang="de">Einschaltverz. untere Schranke</label>
+        <tooltip>Minimal value of switch-ON. Delay Multiple of 0.25 Sec.</tooltip>
+        <tooltip xml:lang="de">Minimalwert der Einschaltverzögerung. Vielfaches von 0,25 Sek.</tooltip>
+      </variable>
+      <variable CV="60" default="8" item="ESU V4 Function Settings General Slider 4">
+        <decVal min="0" max="64"/>
+        <label>Delay upper limit</label>
+        <label xml:lang="de">Einschaltverz. obere Schranke</label>
+        <tooltip>Maximal value of switch-ON. Delay Multiple of 0.25 Sec.</tooltip>
+        <tooltip xml:lang="de">Maximalwert der Einschaltverzögerung. Vielfaches von 0,25 Sek.</tooltip>
+      </variable>
+      <variable CV="61" default="10" item="ESU V4 Function Settings General Slider 5">
+        <decVal min="0" max="64"/>
+        <label>Random time lower limit</label>
+        <label xml:lang="de">Zufallszeit untere Schranke</label>
+        <tooltip>Minimum time on for output, using random timing. Multiple of 0.25 Sec.</tooltip>
+        <tooltip xml:lang="de">Minimalzeit, die der Ausgang mindestens anbleibt bei zufälliger Zeitsteuerung. Vielfaches von 0,25 Sek.</tooltip>
+      </variable>
+      <variable CV="62" default="20" item="ESU V4 Function Settings General Slider 6">
+        <decVal min="0" max="64"/>
+        <label>Random time upper limit</label>
+        <label xml:lang="de">Zufallszeit obere Schranke</label>
+        <tooltip>Maximum time on for output, using random timing. Multiple of 0.25 Sec.</tooltip>
+        <tooltip xml:lang="de">Maximalzeit, die der Ausgang mindestens anbleibt bei zufälliger Zeitsteuerung. Vielfaches von 0,25 Sek.</tooltip>
+      </variable>
+      <variable CV="63" default="2" item="ESU V4 Function Settings General Slider 2">
+        <decVal min="0" max="15"/>
+        <label>Start flash number Neon</label>
+        <label xml:lang="de">Startblinkanzahl Neon</label>
+        <tooltip>Number of start flashes for Neon light simulation</tooltip>
+        <tooltip xml:lang="de">Anzahl der Einschaltblinker bei der Neonlicht-Simulation</tooltip>
+      </variable>
+      <variable CV="112" default="16" item="ESU V4 Function Settings General Slider 1">
+        <decVal min="4" max="64"/>
+        <label>Rate for Blinking Effects</label>
+        <label xml:lang="de">Blinkfrequenz</label>
+        <tooltip>Blinking frequency of Strobe and Flash effects. Unit is 0.0655 seconds</tooltip>
+        <tooltip xml:lang="de">Periodendauer aller Blinkeffekte als vielfaches von 0,065 Sek.</tooltip>
+      </variable>
+      <!-- Function Outputs -->
+      <variable CV="113" default="1" item="ESU V4 Function Output 1 effect generated" mask="XXVVVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/esu/lightIntlightEnum.xml"/>
+        <label>Headlight Mode</label>
+        <label xml:lang="de">Spitzenlicht Modus</label>
+        <tooltip>&lt;html&gt;- Dimmer: Fast light on and off.&lt;br&gt; - Zoom:   Slow dimming of lights off and on.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;- Dimmer: Licht wird schnell ein- und ausgeschaltet.&lt;br&gt; - Zoom:   Licht langsam Auf- und Abblenden.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="113" default="7" item="ESU V4 Function Output 1 Slider 5" mask="XXXXXVVV">
+        <decVal max="7"/>
+        <label>Brightness</label>
+        <label xml:lang="de">Helligkeit</label>
+      </variable>
+      <variable CV="113" default="0" item="ESU V4 Function Output 1 Check 1" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Switch-on delay</label>
+        <label xml:lang="de">Einschaltverzögerung</label>
+        <tooltip>&lt;html&gt;Determine whether the light output switches on immediately or delayed.&lt;br&gt; The exact time of the delay is randomly determined each time within the limits defined in CVs 59 and 60.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang sofort oder verzögert eingeschaltet werden soll.&lt;br&gt; Die genaue Zeit der Einschaltverzögerung wird jedes mal zufällig innerhalb der in den CVs 59 und 60 definierten Schranken bestimmt.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="113" default="0" item="ESU V4 Function Output 1 Check 2" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Random light</label>
+        <label xml:lang="de">Zufallslicht</label>
+        <tooltip>&lt;html&gt;Determine whether the light output whether, after switching via a function key, later goes randomly off again and later back on.&lt;br&gt; When and for how long the output is then turned off, respectively on, is determined by CVs 61 and 62.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang nach dem Einschalten per Funktionstaste in der Folgezeit zufällig wieder aus- und später wieder eingeschaltet werden soll.&lt;br&gt; Wann und für wie lange der Ausgang dann jeweils ausgeschaltet wird, kann mit Hilfe der CVs 61 und 62 bestimmt werden.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="114" default="1" item="ESU V4 Function Output 2 effect generated" mask="XXVVVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/esu/lightIntlightEnum.xml"/>
+        <label>Rearlight Mode</label>
+        <label xml:lang="de">Schlusslicht Modus</label>
+        <tooltip>&lt;html&gt;- Dimmer: Fast light on and off.&lt;br&gt; - Zoom:   Slow dimming of lights off and on.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;- Dimmer: Licht wird schnell ein- und ausgeschaltet.&lt;br&gt; - Zoom:   Licht langsam Auf- und Abblenden.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="114" default="7" item="ESU V4 Function Output 2 Slider 5" mask="XXXXXVVV">
+        <decVal max="7"/>
+        <label>Brightness</label>
+        <label xml:lang="de">Helligkeit</label>
+      </variable>
+      <variable CV="114" default="0" item="ESU V4 Function Output 2 Check 1" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Switch-on delay</label>
+        <label xml:lang="de">Einschaltverzögerung</label>
+        <tooltip>&lt;html&gt;Determine whether the light output switches on immediately or delayed.&lt;br&gt; The exact time of the delay is randomly determined each time within the limits defined in CVs 59 and 60.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang sofort oder verzögert eingeschaltet werden soll.&lt;br&gt; Die genaue Zeit der Einschaltverzögerung wird jedes mal zufällig innerhalb der in den CVs 59 und 60 definierten Schranken bestimmt.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="114" default="0" item="ESU V4 Function Output 2 Check 2" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Random light</label>
+        <label xml:lang="de">Zufallslicht</label>
+        <tooltip>&lt;html&gt;Determine whether the light output whether, after switching via a function key, later goes randomly off again and later back on.&lt;br&gt; When and for how long the output is then turned off, respectively on, is determined by CVs 61 and 62.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang nach dem Einschalten per Funktionstaste in der Folgezeit zufällig wieder aus- und später wieder eingeschaltet werden soll.&lt;br&gt; Wann und für wie lange der Ausgang dann jeweils ausgeschaltet wird, kann mit Hilfe der CVs 61 und 62 bestimmt werden.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="115" default="1" item="ESU V4 Function Output 3 effect generated" mask="XXVVVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/esu/lightIntlightEnum.xml"/>
+        <label>AUX1 Mode</label>
+        <label xml:lang="de">AUX1 Modus</label>
+        <tooltip>&lt;html&gt;- Dimmer: Fast light on and off.&lt;br&gt; - Zoom:   Slow dimming of lights off and on.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;- Dimmer: Licht wird schnell ein- und ausgeschaltet.&lt;br&gt; - Zoom:   Licht langsam Auf- und Abblenden.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="115" default="7" item="ESU V4 Function Output 3 Slider 5" mask="XXXXXVVV">
+        <decVal max="7"/>
+        <label>Brightness</label>
+        <label xml:lang="de">Helligkeit</label>
+      </variable>
+      <variable CV="115" default="0" item="ESU V4 Function Output 3 Check 1" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Switch-on delay</label>
+        <label xml:lang="de">Einschaltverzögerung</label>
+        <tooltip>&lt;html&gt;Determine whether the light output switches on immediately or delayed.&lt;br&gt; The exact time of the delay is randomly determined each time within the limits defined in CVs 59 and 60.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang sofort oder verzögert eingeschaltet werden soll.&lt;br&gt; Die genaue Zeit der Einschaltverzögerung wird jedes mal zufällig innerhalb der in den CVs 59 und 60 definierten Schranken bestimmt.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="115" default="0" item="ESU V4 Function Output 3 Check 2" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Random light</label>
+        <label xml:lang="de">Zufallslicht</label>
+        <tooltip>&lt;html&gt;Determine whether the light output whether, after switching via a function key, later goes randomly off again and later back on.&lt;br&gt; When and for how long the output is then turned off, respectively on, is determined by CVs 61 and 62.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang nach dem Einschalten per Funktionstaste in der Folgezeit zufällig wieder aus- und später wieder eingeschaltet werden soll.&lt;br&gt; Wann und für wie lange der Ausgang dann jeweils ausgeschaltet wird, kann mit Hilfe der CVs 61 und 62 bestimmt werden.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="116" default="1" item="ESU V4 Function Output 4 effect generated" mask="XXVVVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/esu/lightIntlightEnum.xml"/>
+        <label>Group A (LEDs 1-3) Mode</label>
+        <label xml:lang="de">Gruppe A (LEDs 1-3) Modus</label>
+        <tooltip>&lt;html&gt;- Dimmer: Fast light on and off.&lt;br&gt; - Zoom:   Slow dimming of lights off and on.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;- Dimmer: Licht wird schnell ein- und ausgeschaltet.&lt;br&gt; - Zoom:   Licht langsam Auf- und Abblenden.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="116" default="7" item="ESU V4 Function Output 4 Slider 5" mask="XXXXXVVV">
+        <decVal max="7"/>
+        <label>Brightness</label>
+        <label xml:lang="de">Helligkeit</label>
+      </variable>
+      <variable CV="116" default="0" item="ESU V4 Function Output 4 Check 1" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Switch-on delay</label>
+        <label xml:lang="de">Einschaltverzögerung</label>
+        <tooltip>&lt;html&gt;Determine whether the light output switches on immediately or delayed.&lt;br&gt; The exact time of the delay is randomly determined each time within the limits defined in CVs 59 and 60.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang sofort oder verzögert eingeschaltet werden soll.&lt;br&gt; Die genaue Zeit der Einschaltverzögerung wird jedes mal zufällig innerhalb der in den CVs 59 und 60 definierten Schranken bestimmt.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="116" default="0" item="ESU V4 Function Output 4 Check 2" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Random light</label>
+        <label xml:lang="de">Zufallslicht</label>
+        <tooltip>&lt;html&gt;Determine whether the light output whether, after switching via a function key, later goes randomly off again and later back on.&lt;br&gt; When and for how long the output is then turned off, respectively on, is determined by CVs 61 and 62.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang nach dem Einschalten per Funktionstaste in der Folgezeit zufällig wieder aus- und später wieder eingeschaltet werden soll.&lt;br&gt; Wann und für wie lange der Ausgang dann jeweils ausgeschaltet wird, kann mit Hilfe der CVs 61 und 62 bestimmt werden.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="117" default="1" item="ESU V4 Function Output 5 effect generated" mask="XXVVVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/esu/lightIntlightEnum.xml"/>
+        <label>Group B (LEDs 4-5) Mode</label>
+        <label xml:lang="de">Gruppe B (LEDs 4-5) Modus</label>
+        <tooltip>&lt;html&gt;- Dimmer: Fast light on and off.&lt;br&gt; - Zoom:   Slow dimming of lights off and on.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;- Dimmer: Licht wird schnell ein- und ausgeschaltet.&lt;br&gt; - Zoom:   Licht langsam Auf- und Abblenden.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="117" default="7" item="ESU V4 Function Output 5 Slider 5" mask="XXXXXVVV">
+        <decVal max="7"/>
+        <label>Brightness</label>
+        <label xml:lang="de">Helligkeit</label>
+      </variable>
+      <variable CV="117" default="0" item="ESU V4 Function Output 5 Check 1" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Switch-on delay</label>
+        <label xml:lang="de">Einschaltverzögerung</label>
+        <tooltip>&lt;html&gt;Determine whether the light output switches on immediately or delayed.&lt;br&gt; The exact time of the delay is randomly determined each time within the limits defined in CVs 59 and 60.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang sofort oder verzögert eingeschaltet werden soll.&lt;br&gt; Die genaue Zeit der Einschaltverzögerung wird jedes mal zufällig innerhalb der in den CVs 59 und 60 definierten Schranken bestimmt.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="117" default="0" item="ESU V4 Function Output 5 Check 2" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Random light</label>
+        <label xml:lang="de">Zufallslicht</label>
+        <tooltip>&lt;html&gt;Determine whether the light output whether, after switching via a function key, later goes randomly off again and later back on.&lt;br&gt; When and for how long the output is then turned off, respectively on, is determined by CVs 61 and 62.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang nach dem Einschalten per Funktionstaste in der Folgezeit zufällig wieder aus- und später wieder eingeschaltet werden soll.&lt;br&gt; Wann und für wie lange der Ausgang dann jeweils ausgeschaltet wird, kann mit Hilfe der CVs 61 und 62 bestimmt werden.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="118" default="1" item="ESU V4 Function Output 6 effect generated" mask="XXVVVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/esu/lightIntlightEnum.xml"/>
+        <label>Group C (LEDs 6-7) Mode</label>
+        <label xml:lang="de">Gruppe C (LEDs 6-7) Modus</label>
+        <tooltip>&lt;html&gt;- Dimmer: Fast light on and off.&lt;br&gt; - Zoom:   Slow dimming of lights off and on.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;- Dimmer: Licht wird schnell ein- und ausgeschaltet.&lt;br&gt; - Zoom:   Licht langsam Auf- und Abblenden.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="118" default="7" item="ESU V4 Function Output 6 Slider 5" mask="XXXXXVVV">
+        <decVal max="7"/>
+        <label>Brightness</label>
+        <label xml:lang="de">Helligkeit</label>
+      </variable>
+      <variable CV="118" default="0" item="ESU V4 Function Output 6 Check 1" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Switch-on delay</label>
+        <label xml:lang="de">Einschaltverzögerung</label>
+        <tooltip>&lt;html&gt;Determine whether the light output switches on immediately or delayed.&lt;br&gt; The exact time of the delay is randomly determined each time within the limits defined in CVs 59 and 60.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang sofort oder verzögert eingeschaltet werden soll.&lt;br&gt; Die genaue Zeit der Einschaltverzögerung wird jedes mal zufällig innerhalb der in den CVs 59 und 60 definierten Schranken bestimmt.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="118" default="0" item="ESU V4 Function Output 6 Check 2" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Random light</label>
+        <label xml:lang="de">Zufallslicht</label>
+        <tooltip>&lt;html&gt;Determine whether the light output whether, after switching via a function key, later goes randomly off again and later back on.&lt;br&gt; When and for how long the output is then turned off, respectively on, is determined by CVs 61 and 62.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang nach dem Einschalten per Funktionstaste in der Folgezeit zufällig wieder aus- und später wieder eingeschaltet werden soll.&lt;br&gt; Wann und für wie lange der Ausgang dann jeweils ausgeschaltet wird, kann mit Hilfe der CVs 61 und 62 bestimmt werden.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="119" default="1" item="ESU V4 Function Output 7 effect generated" mask="XXVVVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/esu/lightIntlightEnum.xml"/>
+        <label>Group D (LEDs 8-9) Mode</label>
+        <label xml:lang="de">Gruppe D (LEDs 8-9) Modus</label>
+        <tooltip>&lt;html&gt;- Dimmer: Fast light on and off.&lt;br&gt; - Zoom:   Slow dimming of lights off and on.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;- Dimmer: Licht wird schnell ein- und ausgeschaltet.&lt;br&gt; - Zoom:   Licht langsam Auf- und Abblenden.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="119" default="7" item="ESU V4 Function Output 7 Slider 5" mask="XXXXXVVV">
+        <decVal max="7"/>
+        <label>Brightness</label>
+        <label xml:lang="de">Helligkeit</label>
+      </variable>
+      <variable CV="119" default="0" item="ESU V4 Function Output 7 Check 1" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Switch-on delay</label>
+        <label xml:lang="de">Einschaltverzögerung</label>
+        <tooltip>&lt;html&gt;Determine whether the light output switches on immediately or delayed.&lt;br&gt; The exact time of the delay is randomly determined each time within the limits defined in CVs 59 and 60.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang sofort oder verzögert eingeschaltet werden soll.&lt;br&gt; Die genaue Zeit der Einschaltverzögerung wird jedes mal zufällig innerhalb der in den CVs 59 und 60 definierten Schranken bestimmt.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="119" default="0" item="ESU V4 Function Output 7 Check 2" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Random light</label>
+        <label xml:lang="de">Zufallslicht</label>
+        <tooltip>&lt;html&gt;Determine whether the light output whether, after switching via a function key, later goes randomly off again and later back on.&lt;br&gt; When and for how long the output is then turned off, respectively on, is determined by CVs 61 and 62.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang nach dem Einschalten per Funktionstaste in der Folgezeit zufällig wieder aus- und später wieder eingeschaltet werden soll.&lt;br&gt; Wann und für wie lange der Ausgang dann jeweils ausgeschaltet wird, kann mit Hilfe der CVs 61 und 62 bestimmt werden.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="120" default="1" item="ESU V4 Function Output 8 effect generated" mask="XXVVVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/esu/lightIntlightEnum.xml"/>
+        <label>Group E (LEDs 10-11) Mode</label>
+        <label xml:lang="de">Gruppe E (LEDs 10-11) Modus</label>
+        <tooltip>&lt;html&gt;- Dimmer: Fast light on and off.&lt;br&gt; - Zoom:   Slow dimming of lights off and on.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;- Dimmer: Licht wird schnell ein- und ausgeschaltet.&lt;br&gt; - Zoom:   Licht langsam Auf- und Abblenden.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="120" default="7" item="ESU V4 Function Output 8 Slider 5" mask="XXXXXVVV">
+        <decVal max="7"/>
+        <label>Brightness</label>
+        <label xml:lang="de">Helligkeit</label>
+      </variable>
+      <variable CV="120" default="0" item="ESU V4 Function Output 8 Check 1" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Switch-on delay</label>
+        <label xml:lang="de">Einschaltverzögerung</label>
+        <tooltip>&lt;html&gt;Determine whether the light output switches on immediately or delayed.&lt;br&gt; The exact time of the delay is randomly determined each time within the limits defined in CVs 59 and 60.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang sofort oder verzögert eingeschaltet werden soll.&lt;br&gt; Die genaue Zeit der Einschaltverzögerung wird jedes mal zufällig innerhalb der in den CVs 59 und 60 definierten Schranken bestimmt.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="120" default="0" item="ESU V4 Function Output 8 Check 2" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Random light</label>
+        <label xml:lang="de">Zufallslicht</label>
+        <tooltip>&lt;html&gt;Determine whether the light output whether, after switching via a function key, later goes randomly off again and later back on.&lt;br&gt; When and for how long the output is then turned off, respectively on, is determined by CVs 61 and 62.&lt;br&gt;&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Bestimmt, ob der Ausgang nach dem Einschalten per Funktionstaste in der Folgezeit zufällig wieder aus- und später wieder eingeschaltet werden soll.&lt;br&gt; Wann und für wie lange der Ausgang dann jeweils ausgeschaltet wird, kann mit Hilfe der CVs 61 und 62 bestimmt werden.&lt;br&gt;&lt;/html&gt;</tooltip>
+      </variable>
+      <!-- Indexed variables - not in ESU documentation for this model -->
+      <constant item="PICV" default="31" comment="CV used for Primary Index"/>
+      <constant item="SICV" default="32" comment="CV used for Secondary Index"/>
+      <!-- Firmware Version - not in ESU documentation for this model -->
+      <variable CV="0.255.285" readOnly="yes" item="Firmware Build Number">
+        <splitVal highCV="0.255.286"/>
+        <label>Firmware Build Number</label>
+      </variable>
+      <variable CV="0.255.287" readOnly="yes" item="Firmware Minor Version">
+        <decVal/>
+        <label>Firmware Minor Version</label>
+      </variable>
+      <variable CV="0.255.288" readOnly="yes" item="Firmware Major Version">
+        <decVal/>
+        <label>Firmware Major Version</label>
+      </variable>
+      <!-- Decoder Information -->
+<!--       <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoCVs.xml"/> -->
+<!--       <xi:include href="http://jmri.org/xml/decoders/esu/v4testCVs.xml"/> -->
+   </variables>
+    <resets>
+      <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8"/>
+    </resets>
+  </decoder>
+<!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4lightsPane.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4advancedPane.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4fnSetPane.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
+<!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4readMePane.xml"/> -->
+</decoder-config>
