@@ -134,6 +134,7 @@
     <property name="coveragetarget" value="${basedir}/coveragereport"/>
     <property name="source"       value="${javadir}/src"/>
     <property name="target"       value="${javadir}/classes"/>
+    <property name="testtarget"   value="${javadir}/test-classes"/>
     <property name="test"         value="${javadir}/test"/>
     <property name="templatedir"  value="${javadir}/template"/>
     <property name="tmptarget"    value="${javadir}/tmp"/>
@@ -230,7 +231,7 @@
         <pathelement path="${cp.prepend}"/>   <!-- prepended by user -->
         <pathelement location="${jartarget}"/>
         <path        refid="runtime.class.path"/>
-        <pathelement location="${target}/"/>  <!-- last to check for name collisions -->
+        <pathelement location="${target}/"/>  <!-- after declared jars to check for name collisions -->
         <pathelement path="${cp.append}"/>    <!-- appended by user -->
     </path>
 
@@ -238,7 +239,8 @@
     <path id="test.class.path">
         <pathelement location="${jartarget}"/>
         <path   refid="compile.class.path"/>
-        <pathelement location="${target}/"/>  <!-- last to check for name collisions -->
+        <pathelement location="${target}/"/>  <!-- after declared jars to check for name collisions -->
+        <pathelement location="${testtarget}"/> <!-- test resources in classpath that collide with stock resources -->
     </path>
 
     <macrodef name="quiet">
@@ -371,6 +373,7 @@
             <fileset file="${jartarget}/jmri.jar"/>
             <fileset dir="${doctarget}"/>
             <fileset dir="${target}"/>
+            <fileset dir="${testtarget}"/>
             <fileset dir="${dist}"/>
             <fileset dir="${genjavasrcdir}"/>
             <fileset file="${javadir}/manifest"/>
@@ -564,8 +567,11 @@
         <antcall target="-java-compile-internal">
             <param name="java.source.directory" value="${test}"/>
         </antcall>
-        <copy todir="${target}">
+        <!-- Copy resources into ${testtarget} so they coexist with identical
+             resources in ${target} (this is important for the Java ServiceLoader -->
+        <copy todir="${testtarget}">
             <fileset dir="${test}" includes="**/*.properties"/>
+            <fileset dir="${test}" includes="META-INF/**"/>
         </copy>
     </target>
 

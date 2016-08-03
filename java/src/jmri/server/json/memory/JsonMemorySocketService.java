@@ -1,5 +1,10 @@
 package jmri.server.json.memory;
 
+import static jmri.server.json.JSON.METHOD;
+import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.PUT;
+import static jmri.server.json.memory.JsonMemoryServiceFactory.MEMORY;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -10,13 +15,9 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Memory;
 import jmri.MemoryManager;
-import static jmri.server.json.JSON.METHOD;
-import static jmri.server.json.JSON.NAME;
-import static jmri.server.json.JSON.PUT;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
-import static jmri.server.json.memory.JsonMemoryServiceFactory.MEMORY;
 
 /**
  *
@@ -44,9 +45,11 @@ public class JsonMemorySocketService extends JsonSocketService {
         }
         if (!this.memories.containsKey(name)) {
             Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(name);
-            MemoryListener listener = new MemoryListener(memory);
-            memory.addPropertyChangeListener(listener);
-            this.memories.put(name, listener);
+            if (memory != null) {
+                MemoryListener listener = new MemoryListener(memory);
+                memory.addPropertyChangeListener(listener);
+                this.memories.put(name, listener);
+            }
         }
     }
 
