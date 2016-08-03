@@ -20,6 +20,7 @@ session.log
 /java/classes
 /java/tmp
 /java/doc
+/java/test-classes/
 *.class
 /temp
 .pydevproject
