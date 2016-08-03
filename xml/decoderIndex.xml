@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.5.1ish-201607090459-jake-R0323b9d on Fri Jul 08 21:59:24 PDT 2016 $Id$-->
-  <decoderIndex version="754">
+  <!--Written by JMRI version 4.5.2ish-201608030247-heap-R437895a on Wed Aug 03 12:48:39 AEST 2016 $Id$-->
+  <decoderIndex version="756">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -5431,6 +5431,29 @@
           <soundlabel num="25">Random sounds</soundlabel>
           <soundlabel num="26">Automatic brake sound</soundlabel>
         </soundlabels>
+      </family>
+      <family name="ESU Miscellaneous decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_Misc_LightingInterior.xml">
+        <model model="Car interior lighting" numOuts="3" maxInputVolts="24 V" maxTotalCurrent="25mA" formFactor="HO" productID="16777316" comment="&lt;html&gt;Ref.50708 &quot;Warm-white&quot;&lt;br&gt; Ref.50709 &quot;Yellow&quot;&lt;br&gt;Digital LED lighting strip with integrated Digital decoder and taillight, 255mm, 11 LEDs&lt;br&gt; For gauge N,TT, H0&lt;br&gt;&lt;/html&gt;">
+          <output name="1" label="Front|Light" maxcurrent="20 mA" />
+          <output name="2" label="Rear|Light" />
+          <output name="3" label="AUX|1" maxcurrent="100 mA" />
+          <output name="4" label="Group A|LEDs 1-3" />
+          <output name="5" label="Group B|LEDs 4-5" />
+          <output name="6" label="Group C|LEDs 6-7" />
+          <output name="7" label="Group D|LEDs 8-9" />
+          <output name="8" label="Group E|LEDs 10-11" />
+          <size length="255" width="7" height="N/A" units="mm" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Rear light</functionlabel>
+          <functionlabel num="1" lockable="true">AUX 1</functionlabel>
+          <functionlabel num="2" lockable="true">All LEDs</functionlabel>
+          <functionlabel num="3" lockable="true">LEDs 1-3</functionlabel>
+          <functionlabel num="4" lockable="true">LEDs 4-5</functionlabel>
+          <functionlabel num="5" lockable="true">LEDs 6-7</functionlabel>
+          <functionlabel num="6" lockable="true">LEDs 8-9</functionlabel>
+          <functionlabel num="7" lockable="true">LEDs 10-11</functionlabel>
+        </functionlabels>
       </family>
       <family name="ESU Roco 10745" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255" file="ESU_Roco_10745_old.xml">
         <model model="Roco 10745 old" maxInputVolts="25 V" maxMotorCurrent="0.7 A" maxTotalCurrent="1.05 A" numOuts="3" numFns="5" formFactor="HO" connector="NMRAmedium">
