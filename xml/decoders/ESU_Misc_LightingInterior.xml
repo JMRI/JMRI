@@ -21,7 +21,7 @@
   <!--          single entry for both model                                             -->
   <decoder>
     <family name="ESU Miscellaneous decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
-      <model model="Car interior lighting" numOuts="3" maxInputVolts="24 V" maxTotalCurrent="25mA" formFactor="HO" productID="16777316" comment="&lt;html&gt;Ref.50708 &quot;Warm-white&quot;&lt;br&gt; Ref.50709 &quot;Yellow&quot;&lt;br&gt;Digital LED lighting strip with integrated Digital decoder and taillight, 255mm, 11 LEDs&lt;br&gt; For gauge N,TT, H0&lt;br&gt;&lt;/html&gt;">
+      <model model="ESU digital interior light" numOuts="3" maxInputVolts="24 V" maxTotalCurrent="25mA" formFactor="HO" productID="16777316" comment="&lt;html&gt;Ref.50708 &quot;Warm-white&quot;&lt;br&gt; Ref.50709 &quot;Yellow&quot;&lt;br&gt;Digital LED lighting strip with integrated Digital decoder and taillight, 255mm, 11 LEDs&lt;br&gt; For gauge N,TT, H0&lt;br&gt;&lt;/html&gt;">
         <output name="1" label="Front|Light" maxcurrent="20 mA"/>
         <output name="2" label="Rear|Light"/>
         <output name="3" label="AUX|1" maxcurrent="100 mA"/>
