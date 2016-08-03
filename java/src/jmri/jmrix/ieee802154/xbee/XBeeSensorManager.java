@@ -1,8 +1,8 @@
 package jmri.jmrix.ieee802154.xbee;
 
 import com.rapplogic.xbee.api.ApiId;
-import com.rapplogic.xbee.api.RemoteAtResponse;
-import com.rapplogic.xbee.api.XBeeAddress64;
+import com.digi.xbee.api.packet.common.RemoteATCommandResponsePacket;
+import com.digi.xbee.api.models.XBee64BitAddress;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -97,7 +97,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
             com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse ioSample
                     = (com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse) response;
 
-            XBeeAddress64 xBeeAddr = ioSample.getRemoteAddress64();
+            XBee64BitAddress xBeeAddr = ioSample.getRemoteAddress64();
             XBeeNode node = (XBeeNode) tc.getNodeFromAddress(xBeeAddr.getAddress());
 
             // series 2 xbees can go up to 12.  We'll leave it at 8 like
@@ -109,8 +109,8 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
                     tc.sendXBeeMessage(XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(), i), this);
                 }
             }
-        } else if (response instanceof RemoteAtResponse) {
-            RemoteAtResponse atResp = (RemoteAtResponse) response;
+        } else if (response instanceof RemoteATCommandResponsePacket) {
+            RemoteATCommandResponsePacket atResp = (RemoteATCommandResponsePacket) response;
             // check to see if this is a Dx responsponse.
             for (int i = 0; i < 7; i++) {
                 String cmd = "D" + i;

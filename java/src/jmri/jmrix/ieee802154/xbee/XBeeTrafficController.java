@@ -1,10 +1,10 @@
 // XBeeTrafficController
 package jmri.jmrix.ieee802154.xbee;
 
-import com.rapplogic.xbee.api.AtCommandResponse;
+import com.digi.xbee.api.models.ATCommandResponsePacket;
 import com.rapplogic.xbee.api.XBee;
-import com.rapplogic.xbee.api.XBeeException;
-import com.rapplogic.xbee.api.XBeeResponse;
+import com.digi.xbee.api.exceptions.XBeeException;
+import com.digi.xbee.api.packet.common.ReceivePacket;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -187,20 +187,20 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         // before we forward this on to the listeners, handle
         // responses that may modify how the message is interpreted.
         try {
-            // set the hardware type from a response to an "HV" AtCommandResponse
-            if (response instanceof AtCommandResponse
-                    && ((AtCommandResponse) response).getCommand().equals("HV")) {
+            // set the hardware type from a response to an "HV" ATCommandResponsePacket
+            if (response instanceof ATCommandResponsePacket
+                    && ((ATCommandResponsePacket) response).getCommand().equals("HV")) {
                 setSeries(com.rapplogic.xbee.api.HardwareVersion.parse(
-                        (com.rapplogic.xbee.api.AtCommandResponse) response));
+                        (ATCommandResponsePacket) response));
             }
-        } catch (com.rapplogic.xbee.api.XBeeException xbe) {
+        } catch (XBeeException xbe) {
             setSeries(com.rapplogic.xbee.api.HardwareVersion.RadioType.UNKNOWN);
         }
 
-        // set the firmware version after a "VR" AtCommandResponse
-        if (response instanceof AtCommandResponse
-                && ((AtCommandResponse) response).getCommand().equals("VR")) {
-            setVersion(((com.rapplogic.xbee.api.AtCommandResponse) response).getValue());
+        // set the firmware version after a "VR" ATCommandResponsePacket
+        if (response instanceof ATCommandResponsePacket
+                && ((ATCommandResponsePacket) response).getCommand().equals("VR")) {
+            setVersion(((ATCommandResponsePacket) response).getValue());
         }
 
         //if(response.isError()) {

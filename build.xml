@@ -191,7 +191,7 @@
         <pathelement location="${libdir}/slf4j-api-1.7.13.jar"/>
         <pathelement location="${libdir}/slf4j-log4j12-1.7.13.jar"/>
         <pathelement location="${libdir}/jul-to-slf4j-1.7.13.jar"/>
-        <pathelement location="${libdir}/xbee-api-0.9.jar"/>
+        <pathelement location="${libdir}/xbjlib-1.1.1.jar"/>
         <pathelement location="${libdir}/pi4j-core.jar"/>
         <pathelement location="${libdir}/pi4j-device.jar"/>
         <pathelement location="${libdir}/pi4j-gpio-extension.jar"/>

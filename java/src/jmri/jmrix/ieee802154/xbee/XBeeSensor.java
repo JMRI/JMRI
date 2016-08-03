@@ -2,7 +2,7 @@
 package jmri.jmrix.ieee802154.xbee;
 
 import com.rapplogic.xbee.api.ApiId;
-import com.rapplogic.xbee.api.RemoteAtResponse;
+import com.digi.xbee.api.packet.common.RemoteAtCommandResponsePacket;
 import com.rapplogic.xbee.api.wpan.IoSample;
 import com.rapplogic.xbee.api.wpan.RxResponseIoSample;
 import com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse;
@@ -168,8 +168,8 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
                 // not what we expected
                 log.debug("Ignoring mystery packet " + response.toString());
             }
-        } else if (response instanceof RemoteAtResponse) {
-            RemoteAtResponse atResp = (RemoteAtResponse) response;
+        } else if (response instanceof RemoteATCommandResponsePacket) {
+            RemoteATCommandResponsePacket atResp = (RemoteATCommandResponsePacket) response;
             XBeeNode sourcenode = (XBeeNode) tc.getNodeFromAddress(atResp.getRemoteAddress64().getAddress());
             if (node.equals(sourcenode)) {
                 if (atResp.getCommand().equals("IS")) {

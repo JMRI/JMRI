@@ -1,7 +1,7 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import com.rapplogic.xbee.api.XBeeAddress16;
-import com.rapplogic.xbee.api.XBeeAddress64;
+import com.digi.xbee.api.models.XBee16BitAddress;
+import com.digi.xbee.api.models.XBee64BitAddress;
 import com.rapplogic.xbee.api.XBeeResponse;
 import com.rapplogic.xbee.api.wpan.RxResponse16;
 import com.rapplogic.xbee.api.wpan.RxResponse64;
@@ -35,13 +35,13 @@ final public class XBeeIOStream extends AbstractPortController implements XBeeLi
     // sent to the XBee.
     private Thread sourceThread;
 
-    private XBeeAddress16 nodeAddress16 = null;
-    private XBeeAddress64 nodeAddress64 = null;
+    private XBee16BitAddress nodeAddress16 = null;
+    private XBee64BitAddress nodeAddress64 = null;
 
     public XBeeIOStream(XBeeNode node, XBeeTrafficController tc) {
         super(tc.getAdapterMemo());
-        nodeAddress16 = node.getXBeeAddress16();
-        nodeAddress64 = node.getXBeeAddress64();
+        nodeAddress16 = node.getXBee16BitAddress();
+        nodeAddress64 = node.getXBee64BitAddress();
         try {
             PipedOutputStream tempPipeI = new PipedOutputStream();
             pout = new DataOutputStream(tempPipeI);
@@ -208,7 +208,7 @@ final public class XBeeIOStream extends AbstractPortController implements XBeeLi
                     msg = XBeeMessage.getRemoteTransmissionRequest(node.getPreferedTransmitAddress(), dataArray);
                 } else {
                     // create a series 2 (ZNet) message for the data.
-                    msg = XBeeMessage.getZNetTransmissionRequest(node.getXBeeAddress64(), dataArray);
+                    msg = XBeeMessage.getZNetTransmissionRequest(node.getXBee64BitAddress(), dataArray);
                 }
 
             } catch (java.io.IOException e) {

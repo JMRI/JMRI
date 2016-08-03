@@ -1,8 +1,8 @@
 // XBeeNode.java
 package jmri.jmrix.ieee802154.xbee;
 
-import com.rapplogic.xbee.api.XBeeAddress16;
-import com.rapplogic.xbee.api.XBeeAddress64;
+import com.digi.xbee.api.models.XBee16BitAddress;
+import com.digi.xbee.api.models.XBee64BitAddress;
 import java.util.HashMap;
 import jmri.NamedBean;
 import jmri.jmrix.AbstractMRListener;
@@ -125,18 +125,18 @@ public class XBeeNode extends IEEE802154Node {
     }
 
     /*
-     *  Convert the 16 bit user address to an XBeeAddress16 object.
+     *  Convert the 16 bit user address to an XBee16BitAddress object.
      */
-    public XBeeAddress16 getXBeeAddress16() {
-        return new XBeeAddress16(getUserAddress()[0],
+    public XBee16BitAddress getXBee16BitAddress() {
+        return new XBee16BitAddress(getUserAddress()[0],
                 getUserAddress()[1]);
     }
 
     /*
-     *  Convert the 64 bit address to an XBeeAddress64 object.
+     *  Convert the 64 bit address to an XBee64BitAddress object.
      */
-    public XBeeAddress64 getXBeeAddress64() {
-        return new XBeeAddress64(getGlobalAddress()[0],
+    public XBee64BitAddress getXBee64BitAddress() {
+        return new XBee64BitAddress(getGlobalAddress()[0],
                 getGlobalAddress()[1],
                 getGlobalAddress()[2],
                 getGlobalAddress()[3],
@@ -226,8 +226,8 @@ public class XBeeNode extends IEEE802154Node {
     public String getPreferedName() {
         if (!Identifier.equals("")) {
             return Identifier;
-        } else if (!(getXBeeAddress16().equals(XBeeAddress16.BROADCAST))
-                && !(getXBeeAddress16().equals(XBeeAddress16.ZNET_BROADCAST))) {
+        } else if (!(getXBee16BitAddress().equals(XBee16BitAddress.BROADCAST_ADDRESS))
+                && !(getXBee16BitAddress().equals(XBee16BitAddress.UNKNOWN_ADDRESS))) {
             return jmri.util.StringUtil.hexStringFromBytes(useraddress);
         } else {
             return jmri.util.StringUtil.hexStringFromBytes(globaladdress);
@@ -243,11 +243,11 @@ public class XBeeNode extends IEEE802154Node {
      *
      */
     public com.rapplogic.xbee.api.XBeeAddress getPreferedTransmitAddress() {
-        if (!(getXBeeAddress16().equals(XBeeAddress16.BROADCAST))
-                && !(getXBeeAddress16().equals(XBeeAddress16.ZNET_BROADCAST))) {
-            return getXBeeAddress16();
+        if (!(getXBee16BitAddress().equals(XBee16BitAddress.BROADCAST))
+                && !(getXBee16BitAddress().equals(XBee16BitAddress.ZNET_BROADCAST))) {
+            return getXBee16BitAddress();
         } else {
-            return getXBeeAddress64();
+            return getXBee64BitAddress();
         }
     }
 

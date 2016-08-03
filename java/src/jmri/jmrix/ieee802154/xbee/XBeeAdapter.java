@@ -1,6 +1,6 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import com.rapplogic.xbee.XBeeConnection;
+import com.digi.xbee.api.connection.IConnectionInterface;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2013
  */
-public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter implements jmri.jmrix.SerialPortAdapter, XBeeConnection, SerialPortEventListener {
+public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter implements jmri.jmrix.SerialPortAdapter, IConnectionInterface, SerialPortEventListener {
 
     public XBeeAdapter() {
         super(new XBeeConnectionMemo());

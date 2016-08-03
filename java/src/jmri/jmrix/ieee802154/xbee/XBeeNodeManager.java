@@ -1,7 +1,7 @@
 /* XBeeNodeManager.java */
 package jmri.jmrix.ieee802154.xbee;
 
-import com.rapplogic.xbee.api.AtCommandResponse;
+import com.digi.xbee.api.models.ATCommandResponse;
 import com.rapplogic.xbee.api.XBeeResponse;
 import com.rapplogic.xbee.api.wpan.WpanNodeDiscover;
 import com.rapplogic.xbee.api.zigbee.ZBNodeDiscover;
@@ -116,7 +116,7 @@ public class XBeeNodeManager implements XBeeListener {
             // check to see if the node sending this message is one we know
             // about.  If not, add it to the list of nodes.
             com.rapplogic.xbee.api.XBeeAddress xaddr = ((com.rapplogic.xbee.api.wpan.RxBaseResponse) response).getSourceAddress();
-            if (xaddr instanceof com.rapplogic.xbee.api.XBeeAddress16) {
+            if (xaddr instanceof com.digi.xbee.api.models.XBee16BitAddress) {
                 XBeeNode node = (XBeeNode) xtc.getNodeFromAddress(xaddr.getAddress());
                 if (node == null) {
                     // the node does not exist, we're adding a new one.
@@ -124,7 +124,7 @@ public class XBeeNodeManager implements XBeeListener {
                     // register the node with the traffic controller
                     xtc.registerNode(node);
                     // update the node information.
-                    node.setNodeAddress(((com.rapplogic.xbee.api.XBeeAddress16) xaddr).get16BitValue());
+                    node.setNodeAddress(((com.digi.xbee.api.models.XBee16BitAddress) xaddr).get16BitValue());
                     int ad16i[] = xaddr.getAddress();
                     byte ad16b[] = node.getUserAddress();
                     for (int i = 0; i < 2; i++) {
@@ -150,8 +150,8 @@ public class XBeeNodeManager implements XBeeListener {
             }
         } else if (response instanceof com.rapplogic.xbee.api.zigbee.ZNetRxBaseResponse) {
             // can't cast the message to RxBaseResponse, try ZNetRxBaseREsponse
-            com.rapplogic.xbee.api.XBeeAddress64 xaddr64 = ((com.rapplogic.xbee.api.zigbee.ZNetRxBaseResponse) response).getRemoteAddress64();
-            com.rapplogic.xbee.api.XBeeAddress16 xaddr16 = ((com.rapplogic.xbee.api.zigbee.ZNetRxBaseResponse) response).getRemoteAddress16();
+            com.digi.xbee.api.models.XBee64BitAddress xaddr64 = ((com.rapplogic.xbee.api.zigbee.ZNetRxBaseResponse) response).getRemoteAddress64();
+            com.digi.xbee.api.models.XBee16BitAddress xaddr16 = ((com.rapplogic.xbee.api.zigbee.ZNetRxBaseResponse) response).getRemoteAddress16();
             XBeeNode node = (XBeeNode) xtc.getNodeFromAddress(xaddr64.getAddress());
             if (node == null) {
                 // the node does not exist, we're adding a new one.
