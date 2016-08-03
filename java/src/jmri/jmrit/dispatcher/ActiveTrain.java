@@ -699,7 +699,8 @@ public class ActiveTrain {
                 boolean blocksConnected = true;
                 //determine if blocks should be added in forward or reverse order based on connectivity
                 if (i==0) { //for first section, compare last block to first of next section
-                    if (!connected(bl.get(bl.size()-1), mAllocatedSections.get(i+1).getSection().getBlockList().get(0))) {
+                    if (mAllocatedSections.size() > 1 &&  //only one section, assume forward
+                            !connected(bl.get(bl.size()-1), mAllocatedSections.get(i+1).getSection().getBlockList().get(0))) {
                         blocksConnected = false;
                     }                    
                 } else { //not first section, check for connectivity between last block in list, and first block in this section
