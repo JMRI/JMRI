@@ -15,6 +15,7 @@ import java.util.UUID;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -383,6 +384,11 @@ public class FileUtilTest {
         Assert.assertEquals(uri, FileUtil.findExternalFilename(this.preferencesTestFile.getName()));
         Assert.assertEquals(uri, FileUtil.findExternalFilename(FileUtil.PREFERENCES + this.preferencesTestFile.getName()));
         Assert.assertNull(FileUtil.findExternalFilename(FileUtil.PROGRAM + this.preferencesTestFile.getName()));
+    }
+
+    @BeforeClass
+    public static void setUpClass() {
+        new File(FileUtil.getProfilePath()).mkdir();
     }
 
     @Before
