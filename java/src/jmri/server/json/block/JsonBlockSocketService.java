@@ -46,9 +46,11 @@ public class JsonBlockSocketService extends JsonSocketService {
         }
         if (!this.blocks.containsKey(name)) {
             Block block = InstanceManager.getDefault(BlockManager.class).getBlock(name);
-            BlockListener listener = new BlockListener(block);
-            block.addPropertyChangeListener(listener);
-            this.blocks.put(name, listener);
+            if (block != null) {
+                BlockListener listener = new BlockListener(block);
+                block.addPropertyChangeListener(listener);
+                this.blocks.put(name, listener);
+            }
         }
     }
 

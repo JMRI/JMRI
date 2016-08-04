@@ -33,7 +33,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.AbstractMRReplyTest.suite());
         suite.addTest(new TestSuite(jmri.jmrix.AbstractThrottleTest.class));
         suite.addTest(jmri.jmrix.BundleTest.suite());
-        suite.addTest(jmri.jmrix.ConnectionConfigManagerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ConnectionConfigManagerTest.class));
 
         suite.addTest(jmri.jmrix.acela.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.bachrus.PackageTest.class));

@@ -241,9 +241,8 @@ public class JsonUtilHttpService extends JsonHttpService {
                 root.add(connection);
             }
         }
-        InstanceManager.getList(SystemConnectionMemo.class).stream().map((instance)
-                -> (SystemConnectionMemo) instance).filter((memo)
-                -> (!memo.getDisabled() && !prefixes.contains(memo.getSystemPrefix()))).forEach((memo) -> {
+        InstanceManager.getList(SystemConnectionMemo.class).stream().map((instance) -> instance)
+                .filter((memo) -> (!memo.getDisabled() && !prefixes.contains(memo.getSystemPrefix()))).forEach((memo) -> {
             ObjectNode connection = mapper.createObjectNode().put(JSON.TYPE, JSON.SYSTEM_CONNECTION);
             ObjectNode data = connection.putObject(JSON.DATA);
             data.put(JSON.NAME, memo.getUserName());
