@@ -36,7 +36,7 @@ public class SoundTest {
         Assume.assumeFalse(Boolean.getBoolean("jmri.headlesstest"));
         try {
             AudioSystem.getClip();
-        } catch (LineUnavailableException ex) {
+        } catch (IllegalArgumentException | LineUnavailableException ex) {
             Assume.assumeNoException("Unable to initialize AudioSystem", ex);
         }
         Sound instance = new Sound("program:resources/sounds/Button.wav");
@@ -52,7 +52,7 @@ public class SoundTest {
         Assume.assumeFalse(Boolean.getBoolean("jmri.headlesstest"));
         try {
             AudioSystem.getClip();
-        } catch (LineUnavailableException ex) {
+        } catch (IllegalArgumentException | LineUnavailableException ex) {
             Assume.assumeNoException("Unable to initialize AudioSystem", ex);
         }
         Sound instance = new Sound("program:resources/sounds/bell_stroke.wav");
@@ -68,7 +68,7 @@ public class SoundTest {
         Assume.assumeFalse(Boolean.getBoolean("jmri.headlesstest"));
         try {
             AudioSystem.getClip();
-        } catch (LineUnavailableException ex) {
+        } catch (IllegalArgumentException | LineUnavailableException ex) {
             Assume.assumeNoException("Unable to initialize AudioSystem", ex);
         }
         Sound instance = new Sound("program:resources/sounds/RlyClick.wav");
