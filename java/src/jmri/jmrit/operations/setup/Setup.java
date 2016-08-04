@@ -2707,7 +2707,7 @@ public class Setup {
                 if (log.isDebugEnabled()) {
                     log.debug("manifest file save option: " + enable);
                 }
-                setSaveTrainManifestsEnabled(enable.equals(Xml.TRUE));
+                saveTrainManifests = enable.equals(Xml.TRUE);
             }
         }
         if ((operations.getChild(Xml.BUILD_OPTIONS) != null)) {
