@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233; le 2013-09-06-->
+<!-- UpDated by Blorec Herv&#233; le 2016-08-04-->
 <html lang="fr">
 <head>
     <TITLE>
@@ -33,14 +33,20 @@
 
 	    <H1>JMRI: Caract&#233;ristiques Java sp&#233;cifique &#224; la version</H1>
 
-Cette page contient des informations sur la compatibilit&#233; et les fonctionnalit&#233;s des diff&#233;rentes Versions de Java. Nous utilisons 
-cette information pour d&#233;cider de notre <a href="TechRoadMap.shtml"> feuille de route </a> pour les versions futures de JMRI.
+Cette page contient des informations sur 
+la compatibilit&#233; et les fonctionnalit&#233;s des diff&#233;rentes 
+Versions de Java. Nous utilisons 
+cette information pour d&#233;cider de notre 
+<a href="TechRoadMap.shtml"> feuille de route </a> 
+pour les versions futures de JMRI.
 
  <h2>Capacit&#233;s </h2>
 
-Cette section r&#233;pertorie les nouvelles fonctions de Java, et quelles Version de Java firent leurs premi&#232;res apparitions. 
-La colonne "JDK" indique le premier Java Development Kit qui pourrait rassembler les fonctionnalit&#233;s, la colonne "JRE"
-indique l'environnement d'ex&#233;cution d'abord que pourrait ex&#233;cuter la fonctionnalit&#233;, y compris la JVM et les biblioth&#232;que de soutien.
+Cette section r&#233;pertorie les nouvelles fonctions de Java, et quelles Version de Java 
+firent leurs premi&#232;res apparitions. La colonne "JDK" indique le premier 
+Java Development Kit qui pourrait rassembler les fonctionnalit&#233;s, la colonne "JRE"
+indique l'environnement d'ex&#233;cution d'abord que pourrait ex&#233;cuter la fonctionnalit&#233;, 
+y compris la JVM et les biblioth&#232;que de soutien.
 <P>
 <table border="1">
 <tr><th>Entit&#233;</th>        <th>JDK</th>    <th>JRE</th></tr>
@@ -67,36 +73,178 @@ indique l'environnement d'ex&#233;cution d'abord que pourrait ex&#233;cuter la f
 <tr><td>generics</td>       <td>1.5</td>    <td>1.5</td></tr>
 <tr><td>Desktop class</td>  <td>1.6</td>    <td>1.6</td></tr>
 <tr><td>Browser integration</td><td>1.6</td><td>1.6</td></tr>
+<tr><td>JDOM2 (generics)</td><td>1.6</td><td>1.6</td></tr>
 <tr><td>Toolbars</td>       <td>1.6</td><td>1.6</td></tr>
 <tr><td>JTable Sorting</td> <td>1.6</td><td>1.6</td></tr>
 <tr><td>Webstart compatibility</td> <td>1.6</td><td>1.6</td></tr>
+<tr><td>Generics for Swing classes</td> <td>1.7</td><td>1.7</td></tr>
+<tr><td>NIO improves .zip file access</td> <td>1.7</td><td>1.7</td></tr>
+<tr><td>I18N I/O improvements</td> <td>1.7</td><td>1.7</td></tr>
+<tr><td>Memory use and <br/>GC improvements<br/>(better performance)</td> <td>1.7</td><td>1.7</td></tr>
+<tr><td>Jetty Version 9</td> <td>1.7</td><td>1.7</td></tr>
+<tr><td>JUnit 4 and the <br/><code>assert</code> keyword</td> <td>1.7</td><td>1.7</td></tr>
 </table>
 (* Indique qu'une librairie compatible est utilis&#233;e pour la premi&#232;re version)
 
 <h2>Disponibilit&#233; JRE</h2>
 
-Cette section &#233;num&#232;re les version disponible les plus r&#233;centes de Java Runtime pour  diff&#233;rentes versions du syst&#232;me d'exploitation. 
-S'il vous pla&#238;t noter que tous les  utilisateurs de ce syst&#232;me d'exploitation n'auront pas fait les mis &#224; jour vers cette version de Java;
+Cette section &#233;num&#232;re les version disponible les plus r&#233;centes de Java Runtime 
+pour  diff&#233;rentes versions du syst&#232;me d'exploitation. S'il vous pla&#238;t noter que 
+tous les  utilisateurs de ce syst&#232;me d'exploitation n'auront pas fait les mise &#224; jour vers cette version de Java;
 beaucoup utilisent une version plus ancienne.
-Pour information suppl&#233;mentaire
+
 <P>
 <table border="1">
 <tr><th>OS et plateforme</th><th>Dernier JRE</th></tr>
 <tr><td>Linux</td><td>(1.6?)</td></tr>
-<tr><td>Windows Vista</td><td>1.6</td></tr>
-<tr><td>Windows XP</td><td>1.6</td></tr>for additional information
-<tr><td>Mac OS X 10.4 et ult&#233;rieur sur intel</td><td>1.6</td></tr>
-<tr><td>Mac OS X 10.3 et ult&#233;rieur sur PowerPC</td><td>1.5</td></tr>
-<tr><td>Windows 98 (2nfor additional informationd Ed)</td><td>1.5-11</td></tr>
-<tr><td>Windows 98</td><td>1.4.2_14</td></tr>
-<tr><td>Windows 95</td><td>1.3.1_20</td></tr>
-<tr><td>OS/2</td><td>1.3</td></tr>
+<tr><td>Win 8 (32-bit)                      </td><td>1.8</td></tr>
+<tr><td>Win 7 (32-bit)                      </td><td>1.8</td></tr>
+<tr><td>Win Vista (32-bit)                  </td><td>1.8</td></tr>
+<tr><td>Win Server 2008 (32-bit)            </td><td>1.8</td></tr>
+<tr><td>Win Web Server 2008 (32-bit)        </td><td>1.6</td></tr>
+<tr><td>Win 2000 (32-bit)                   </td><td>1.6</td></tr>
+<tr><td>Win Server 2003 (32-bit)            </td><td>1.6</td></tr>
+<tr><td>Win 8 (64-bit)                      </td><td>1.8</td></tr>
+<tr><td>Win Server 2012 (64-bit)            </td><td>1.8</td></tr>
+<tr><td>Win Server 2012 R2 (64-bit)         </td><td>1.8</td></tr>
+<tr><td>Win 7 (64-bit)                      </td><td>1.8</td></tr>
+<tr><td>Win Server 2008 R2 (64-bit)         </td><td>1.8</td></tr>
+<tr><td>Win Server 2008 (64-bit)            </td><td>1.7</td></tr>
+<tr><td>Win Web Server 2008 R2 (64-bit)     </td><td>1.6</td></tr>
+<tr><td>Win Vista (64-bit)                  </td><td>1.8</td></tr>
+<tr><td>Win 2003 (64-bit)                   </td><td>1.6</td></tr>
+<tr><td>Windows XP                          </td><td>1.8<br><a href="https://www.java.com/en/download/faq/winxp.xml">Unofficial<br>Support</a></td></tr>
+<tr><td>Windows 98 (2nd Ed)                 </td><td>1.5-11</td></tr>
+<tr><td>Windows 98                          </td><td>1.4.2_14</td></tr>
+<tr><td>Windows 95                          </td><td>1.3.1_20</td></tr>
+
+<tr><td>Mac OS X 10.8.3 and later on Intel</td><td>1.8</td></tr>
+<tr><td>Mac OS X 10.7.3 and later on Intel</td><td>1.7</td></tr>
+<tr><td>Mac OS X 10.5.8 and later on Intel</td><td>1.6 (Apple JVM)</td></tr>
+<tr><td>Mac OS X 10.5.7 and earlier on Intel</td><td>1.5 (Apple JVM)</td></tr>
+<tr><td>Mac OS X 10.3 and later on PowerPC</td><td>1.5 (Apple JVM)</td></tr>
 <tr><td>MacOS "Classic"</td><td>1.1.8</td></tr>
+<tr><td>OS/2</td><td>1.3</td></tr>
 </table>
 <P>
-voir le  
-<A HREF="http://java.sun.com/getjava">site Java Sun</a>
-pour plus d'nformation.
+Voir la page de t&#233;l&#233;chargement 
+<a href="http://java.com/en/download/manual.jsp">Java.com pour tous les syst&#232;mes d'exploitation </a> et<br>
+information sur les <a href="https://www.java.com/en/download/help/sysreq.xml">Versions Java les Configurations mat&#233;rielles</a>.</p>
+<p> Les combinaison suivantes des versions JMRI- Java- Syst&#232;mes d'Exploitation &#233;taientt bas&#233;es sur des D&#233;veloppeurs sources Oracles et Syst&#232;mes d'Exploitation. C'est traduit des instruction d'installation des Syst&#232;mes d'Exploitation (suivre les hyperliens dans les en-t&#234;tes OS)
+
+	<table border="1">
+	<tbody>
+	<tr><th>JMRI</th>
+	<th>Java</th>
+	<th><a href="http://jmri.org/install/MacOSX.shtml#sysreq">OS X</a></th>
+	<th><a href="http://jmri.org/install/WindowsNew.shtml#sysreq">Windows</a></th>
+	<th><a href="http://jmri.org/install/Linux.shtml#sysreq">Linux</a></th>
+	<th><a href="http://jmri.org/install/Ubuntu.shtml#sysreq">Ubuntu</a></th>
+	<th><a href="http://jmri.org/install/Raspbian.shtml#sysreq">Raspbian</a></th>
+	</tr>
+	<tr><td>4.2</td>
+	<td>1.8</td>
+	<td>10.8.3+ Mountain Lion</td>
+	<td>Win7 SP1/8/10, Vista SP2, (XP)</td>
+	<td>5.5+</td>
+	<td>12.04+</td>
+	<td>14.04LTS</td>
+	</tr>
+	<tr><td>3.10.1</td>
+	<td>1.7</td>
+	<td>10.7.3 Lion</td>
+	<td>Win7 SP1/8/10, Vista SP2, (XP)</td>
+	<td>5.5+</td>
+	<td>12.04</td>
+	<td>12.04</td>
+	</tr>
+	<tr><td>3.10.1</td>
+	<td>1.6</td>
+	<td>10.6 Snow Leopard (JVM6)</td>
+	<td>Win2003, Win2000 (x86)</td>
+	<td>5.5</td>
+	<td>10.4</td>
+	<td>N/A</td>
+	</tr>
+	<tr><td>2.14.1</td>
+	<td>1.5</td>
+	<td>10.5.7 Leopard (JVM5)</td>
+	<td>Vista SP1, Win2000 SP3, Win8.x (x64)</td>
+	<td> </td>
+	<td>9.04</td>
+	<td>N/A</td>
+	</tr>
+	<tr><td>2.8</td>
+	<td>1.5</td>
+	<td>10.4 Tiger</td>
+	<td>Win98 (2nd Ed), XP, ME</td>
+	<td> </td>
+	<td> </td>
+	<td>N/A</td>
+	</tr>
+	<tr><td>2.2</td>
+	<td>1.5</td>
+	<td>10.3 Panther</td>
+	<td>Win98, ME</td>
+	<td>N/A</td>
+	<td>N/A</td>
+	<td>N/A</td>
+	</tr>
+	<tr><td></td>
+	<td>1.3.1</td>
+	<td>10.3 Panther</td>
+	<td>Win95, Win98</td>
+	<td>N/A</td>
+	<td>N/A</td>
+	<td>N/A</td>
+	</tr>
+	<tr><td>1.6</td>
+	<td>1.1.8</td>
+	<td>MacOS9.1 (MRJ)</td>
+	<td>Win95, Win98</td>
+	<td>N/A</td>
+	<td>N/A</td>
+	<td>N/A</td>
+	</tr>
+	</tbody>
+	</table> 
+
+<h2 id="JDK8">&#201;volution vers Java 1.8 depuis 1.6</h2>
+Cette section aborde, &#224; peu pr&#232;s en ordre d&#233;croissant d'importance,
+le processus de migration de Java 1.6 vers Java 1.8.
+
+<h3>G&#233;n&#233;riques, Swing et JComboBox</h3>
+Java 1.8 introduit des g&#233;n&#233;riques pour les objets Swing. Le plus commun 
+est JComboBox.Cette ligne de Java 1.6:
+<pre><code>
+    JComboBox box = new JComboBox();
+</code></pre>
+d&#233;crit la cr&#233;ation d'un JComboBox qui s&#233;lectionne les &#233;l&#233;ments ( Objets ) g&#233;n&#233;riques.
+Dans Java 1.8, la JComboBox d&#233;tient et s&#233;lectionne les objets d'un type sp&#233;cifique, habituellement
+String. C'est &#233;crit:
+<pre><code>
+    JComboBox&lt;String&gt; box = new JComboBox&lt;&gt;();
+</code></pre>
+parce que la JComboBox peut contenir actuellement des objets d'autres types. ( Comment cela peut
+se produire? Si la case est modifiable, et que quelqu'un entre  un autre type )
+Pour &#233;viter le cas, un idiome plus robuste est:
+<pre><code>
+    String result = box.getItemAt(progBox.getSelectedIndex());
+</code></pre>
+
+<h3>JavaDoc et doclint</h3>
+
+Java 1.8 ex&#233;cute par d&#233;faut le
+<a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/javadoc.html#CHDFDACB">doclint</a> doclet qui fait JavaDoc. 
+Par d&#233;faut , il est
+<a href="http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html">tr&#232;s agressif</a>
+sur les erreurs possibles.
+Les constructions bas&#233;es sur Ant d&#233;sactivent certains des termes 
+de contr&#244;le avec:
+<pre><code>
+-Xdoclint:all,-missing,-accessibility,-html,-syntax
+</code></pre>
+pour laisser tomber les tests pour les balises JavaDoc manquantes et certaines erreurs HTML b&#233;nignes. ( Pour l'instant ).
 
 <!--#include virtual="/Footer" -->
 
@@ -104,4 +252,3 @@ pour plus d'nformation.
 	</div> <!-- closes #mBody-->
 </body>
 </html>
-
