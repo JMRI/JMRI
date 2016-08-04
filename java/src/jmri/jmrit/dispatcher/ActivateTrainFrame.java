@@ -612,6 +612,14 @@ public class ActivateTrainFrame {
             trainName = (String) trainSelectBox.getSelectedItem();
             RosterEntry r = trainBoxList.get(index);
             dccAddress = r.getDccAddress();
+            if (!isAddressFree(r.getDccLocoAddress().getNumber())) {
+                // DCC address is already in use by an Active Train
+                JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
+                        "Error40", dccAddress), Bundle.getMessage("ErrorTitle"),
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             tSource = ActiveTrain.ROSTER;
 
             if (trainTypeBox.getSelectedIndex() != 0
@@ -660,6 +668,13 @@ public class ActivateTrainFrame {
             if ((address < 1) || (address > 9999)) {
                 JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage("Error23"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (!isAddressFree(address)) {
+                // DCC address is already in use by an Active Train
+                JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
+                        "Error40", address), Bundle.getMessage("ErrorTitle"),
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
             tSource = ActiveTrain.USER;
@@ -771,7 +786,8 @@ public class ActivateTrainFrame {
                 for (int i = 0; i < l.size(); i++) {
                     RosterEntry r = l.get(i);
                     String rName = r.titleString();
-                    if (isTrainFree(rName)) {
+                    int rAddr = r.getDccLocoAddress().getNumber();
+                    if (isTrainFree(rName) && isAddressFree(rAddr)) {
                         trainBoxList.add(r);
                         trainSelectBox.addItem(rName);
                     }
@@ -800,9 +816,9 @@ public class ActivateTrainFrame {
                 for (int i = 0; i < trains.size(); i++) {
                     Train t = trains.get(i);
                     if (t != null) {
-                        String rName = t.getName();
-                        if (isTrainFree(rName)) {
-                            trainSelectBox.addItem(rName);
+                        String tName = t.getName();
+                        if (isTrainFree(tName)) {
+                            trainSelectBox.addItem(tName);
                         }
                     }
                 }
@@ -817,6 +833,16 @@ public class ActivateTrainFrame {
         for (int j = 0; j < _ActiveTrainsList.size(); j++) {
             ActiveTrain at = _ActiveTrainsList.get(j);
             if (rName.equals(at.getTrainName())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isAddressFree(int addr) {
+        for (int j = 0; j < _ActiveTrainsList.size(); j++) {
+            ActiveTrain at = _ActiveTrainsList.get(j);
+            if (addr == Integer.parseInt(at.getDccAddress())) {
                 return false;
             }
         }
