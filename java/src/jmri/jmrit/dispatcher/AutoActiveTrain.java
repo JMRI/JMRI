@@ -231,9 +231,14 @@ public class AutoActiveTrain implements ThrottleListener {
         _stoppingUsingSpeedProfile = false;
         
         // get decoder address
-        _address = Integer.valueOf(_activeTrain.getDccAddress()).intValue();
+        try {
+            _address = Integer.valueOf(_activeTrain.getDccAddress()).intValue();
+        } catch (NumberFormatException ex) {
+            log.warn("invalid dcc address '{}' for {}", _activeTrain.getDccAddress(), _activeTrain.getTrainName());
+            return false;
+        }
         if ((_address < 1) || (_address > 9999)) {
-            log.warn("invalid dcc address for " + _activeTrain.getTrainName());
+            log.warn("invalid dcc address '{}' for {}", _activeTrain.getDccAddress(), _activeTrain.getTrainName());
             return false;
         }
         // request a throttle for automatic operation, throttle returned via callback below
