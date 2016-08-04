@@ -127,23 +127,23 @@ public class XBeeNode extends IEEE802154Node {
     /*
      *  Convert the 16 bit user address to an XBee16BitAddress object.
      */
-    public XBee16BitAddress getXBee16BitAddress() {
-        return new XBee16BitAddress(getUserAddress()[0],
-                getUserAddress()[1]);
+    public XBee16BitAddress getXBeeAddress16() {
+        return new XBee16BitAddress(0xff & getUserAddress()[0],
+                0xff & getUserAddress()[1]);
     }
 
     /*
      *  Convert the 64 bit address to an XBee64BitAddress object.
      */
-    public XBee64BitAddress getXBee64BitAddress() {
-        return new XBee64BitAddress(getGlobalAddress()[0],
-                getGlobalAddress()[1],
-                getGlobalAddress()[2],
-                getGlobalAddress()[3],
-                getGlobalAddress()[4],
-                getGlobalAddress()[5],
-                getGlobalAddress()[6],
-                getGlobalAddress()[7]);
+    public XBee64BitAddress getXBeeAddress64() {
+        return new XBee64BitAddress(0xff & getGlobalAddress()[0],
+                0xff & getGlobalAddress()[1],
+                0xff & getGlobalAddress()[2],
+                0xff & getGlobalAddress()[3],
+                0xff & getGlobalAddress()[4],
+                0xff & getGlobalAddress()[5],
+                0xff & getGlobalAddress()[6],
+                0xff & getGlobalAddress()[7]);
     }
 
     /**
@@ -243,11 +243,11 @@ public class XBeeNode extends IEEE802154Node {
      *
      */
     public com.rapplogic.xbee.api.XBeeAddress getPreferedTransmitAddress() {
-        if (!(getXBee16BitAddress().equals(XBee16BitAddress.BROADCAST))
-                && !(getXBee16BitAddress().equals(XBee16BitAddress.ZNET_BROADCAST))) {
-            return getXBee16BitAddress();
+        if (!(getXBeeAddress16().equals(XBeeAddress16.BROADCAST))
+                && !(getXBeeAddress16().equals(XBeeAddress16.ZNET_BROADCAST))) {
+            return getXBeeAddress16();
         } else {
-            return getXBee64BitAddress();
+            return getXBeeAddress64();
         }
     }
 
