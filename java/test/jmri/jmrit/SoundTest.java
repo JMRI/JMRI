@@ -1,44 +1,91 @@
 package jmri.jmrit;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import apps.tests.Log4JFixture;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.LineUnavailableException;
+import org.junit.After;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Tests for the Sound class.
- * <P>
- * Note: This makes noise!
  *
- * @author	Bob Jacobsen Copyright 2006, 2016
+ * @author Randall Wood (C) 2016
  */
-public class SoundTest extends TestCase {
+public class SoundTest {
 
-    public void testLoadAndPlay() {
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-        
-            String name = "bottle-open.wav";
-            Sound snd = new Sound(name);
-            snd.play();
-            
-        }    
+    private static final Logger log = LoggerFactory.getLogger(SoundTest.class);
+
+    @Before
+    public void setUp() {
+        Log4JFixture.setUp();
     }
 
-    // from here down is testing infrastructure
-    public SoundTest(String s) {
-        super(s);
+    @After
+    public void tearDown() {
+        Log4JFixture.tearDown();
+    }
+    
+    /**
+     * Test of play method, of class Sound.
+     */
+    @Test
+    public void testPlay() {
+        Assume.assumeFalse(Boolean.getBoolean("jmri.headlesstest"));
+        try {
+            AudioSystem.getClip();
+        } catch (LineUnavailableException ex) {
+            Assume.assumeNoException("Unable to initialize AudioSystem", ex);
+        }
+        Sound instance = new Sound("program:resources/sounds/Button.wav");
+        instance.play();
+        log.info("Button pressed sound played once.");
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SoundTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    /**
+     * Test of loop method, of class Sound.
+     */
+    @Test
+    public void testLoopInt() {
+        Assume.assumeFalse(Boolean.getBoolean("jmri.headlesstest"));
+        try {
+            AudioSystem.getClip();
+        } catch (LineUnavailableException ex) {
+            Assume.assumeNoException("Unable to initialize AudioSystem", ex);
+        }
+        Sound instance = new Sound("program:resources/sounds/bell_stroke.wav");
+        instance.loop(2);
+        log.info("Bell stroke sounded twice.");
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SoundTest.class);
-        return suite;
+    /**
+     * Test of stop method, of class Sound.
+     */
+    @Test
+    public void testStop() {
+        Assume.assumeFalse(Boolean.getBoolean("jmri.headlesstest"));
+        try {
+            AudioSystem.getClip();
+        } catch (LineUnavailableException ex) {
+            Assume.assumeNoException("Unable to initialize AudioSystem", ex);
+        }
+        Sound instance = new Sound("program:resources/sounds/RlyClick.wav");
+        instance.loop();
+        Runnable waiter = new Runnable() {
+            @Override
+            public synchronized void run() {
+                try {
+                    this.wait(500);
+                } catch (InterruptedException ex) {
+                    log.error("Waiter interrupted.");
+                }
+            }
+        };
+        waiter.run();
+        instance.stop();
+        log.info("Repeated relay clicks played.");
     }
 
-    // static private Logger log = LoggerFactory.getLogger(SoundTest.class.getName());
 }
