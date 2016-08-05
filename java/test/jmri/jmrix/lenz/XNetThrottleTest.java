@@ -1,19 +1,21 @@
 package jmri.jmrix.lenz;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * XNetThrottleTest.java
  *
  * Description:	tests for the jmri.jmrix.lenz.XNetThrottle class
  *
- * @author	Paul Bender
+ * @author	Paul Bender Copyright (C) 2008-2016
  */
-public class XNetThrottleTest extends TestCase {
-
+public class XNetThrottleTest{
+ 
+    @Test(timeout=1000)
     public void testCtor() {
         // infrastructure objects
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
@@ -23,6 +25,7 @@ public class XNetThrottleTest extends TestCase {
     }
 
     // Test the constructor with an address specified.
+    @Test(timeout=1000)
     public void testCtorWithArg() throws Exception {
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
@@ -30,6 +33,7 @@ public class XNetThrottleTest extends TestCase {
     }
 
     // Test the initilization sequence.
+    @Test(timeout=1000)
     public void testInitSequence() throws Exception {
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         int n = tc.outbound.size();
@@ -80,8 +84,10 @@ public class XNetThrottleTest extends TestCase {
 
     }
 
+    @Test(timeout=1000)
     public void testSendStatusInformationRequest() throws Exception {
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
         XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
@@ -103,6 +109,25 @@ public class XNetThrottleTest extends TestCase {
 
         // which we're going to get a request for function momentary status in response to.
         // We're just going to make sure this is there and respond with not supported.
+
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+        
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+	// Sending the not supported message should make the throttle send a 
+        // request for the high function status information.  
+        // We're just going to make sure this is there and respond with not supported.
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
         // outbound size to change.
@@ -120,7 +145,6 @@ public class XNetThrottleTest extends TestCase {
 
 	// Sending the not supported message should make the throttle change
         // state to idle, and then we can test what we really want to.
-
         // in this case, we are sending a status information request.
 
         t.sendStatusInformationRequest();
@@ -145,8 +169,10 @@ public class XNetThrottleTest extends TestCase {
 
     }
 
+    @Test(timeout=1000)
     public void testSendFunctionStatusInformationRequest() throws Exception {
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
         XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
@@ -183,6 +209,25 @@ public class XNetThrottleTest extends TestCase {
 
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+	// Sending the not supported message should make the throttle send a 
+        // request for the high function status information.  
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
 
 	// Sending the not supported message should make the throttle change
         // state to idle, and then we can test what we really want to.
@@ -211,8 +256,10 @@ public class XNetThrottleTest extends TestCase {
 
     }
 
+    @Test(timeout=1000)
     public void testSendFunctionGroup1() throws Exception {
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
         XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
@@ -249,6 +296,25 @@ public class XNetThrottleTest extends TestCase {
 
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+	// Sending the not supported message should make the throttle send a 
+        // request for the high function status information.  
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
 
 	// Sending the not supported message should make the throttle change
         // state to idle, and then we can test what we really want to.
@@ -275,8 +341,10 @@ public class XNetThrottleTest extends TestCase {
 
     }
 
+    @Test(timeout=1000)
     public void testSendFunctionGroup2() throws Exception {
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
         XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
@@ -314,6 +382,26 @@ public class XNetThrottleTest extends TestCase {
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
+
+	// Sending the not supported message should make the throttle send a 
+        // request for the high function status information.  
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+
 	// Sending the not supported message should make the throttle change
         // state to idle, and then we can test what we really want to.
 
@@ -339,6 +427,7 @@ public class XNetThrottleTest extends TestCase {
 
     }
 
+    @Test(timeout=1000)
     public void testSendFunctionGroup3() throws Exception {
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         int n = tc.outbound.size();
@@ -403,6 +492,7 @@ public class XNetThrottleTest extends TestCase {
 
     }
 
+    @Test(timeout=1000)
    public void testSendFunctionGroup4() throws Exception {
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         int n = tc.outbound.size();
@@ -472,6 +562,7 @@ public class XNetThrottleTest extends TestCase {
 
     }
 
+    @Test(timeout=1000)
     public void testSendFunctionGroup5() throws Exception {
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         int n = tc.outbound.size();
@@ -540,8 +631,10 @@ public class XNetThrottleTest extends TestCase {
 
     }
 
+    @Test(timeout=1000)
     public void testSendMomentaryFunctionGroup1() throws Exception {
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
         XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
@@ -578,6 +671,25 @@ public class XNetThrottleTest extends TestCase {
 
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+	// Sending the not supported message should make the throttle send a 
+        // request for the high function status information.  
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
 
 	// Sending the not supported message should make the throttle change
         // state to idle, and then we can test what we really want to.
@@ -604,8 +716,10 @@ public class XNetThrottleTest extends TestCase {
 
     }
 
+    @Test(timeout=1000)
     public void testSendMomentaryFunctionGroup2() throws Exception {
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
         XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
@@ -642,6 +756,25 @@ public class XNetThrottleTest extends TestCase {
 
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+	// Sending the not supported message should make the throttle send a 
+        // request for the high function status information.  
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
 
 	// Sending the not supported message should make the throttle change
         // state to idle, and then we can test what we really want to.
@@ -668,8 +801,10 @@ public class XNetThrottleTest extends TestCase {
 
     }
 
+    @Test(timeout=1000)
     public void testSendMomentaryFunctionGroup3() throws Exception {
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
         XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
@@ -706,6 +841,25 @@ public class XNetThrottleTest extends TestCase {
 
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+	// Sending the not supported message should make the throttle send a 
+        // request for the high function status information.  
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
 
 	// Sending the not supported message should make the throttle change
         // state to idle, and then we can test what we really want to.
@@ -732,8 +886,10 @@ public class XNetThrottleTest extends TestCase {
 
     }
 
+    @Test(timeout=1000)
    public void testSendMomentaryFunctionGroup4() throws Exception {
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
         XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
@@ -770,6 +926,25 @@ public class XNetThrottleTest extends TestCase {
 
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+	// Sending the not supported message should make the throttle send a 
+        // request for the high function status information.  
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
 
 	// Sending the not supported message should make the throttle change
         // state to idle, and then we can test what we really want to.
@@ -801,8 +976,10 @@ public class XNetThrottleTest extends TestCase {
 
     }
 
+    @Test(timeout=1000)
     public void testSendMomentaryFunctionGroup5() throws Exception {
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
         XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
@@ -840,6 +1017,25 @@ public class XNetThrottleTest extends TestCase {
         // consume the error messge.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
+	// Sending the not supported message should make the throttle send a 
+        // request for the high function status information.  
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+
 	// Sending the not supported message should make the throttle change
         // state to idle, and then we can test what we really want to.
 
@@ -869,64 +1065,45 @@ public class XNetThrottleTest extends TestCase {
 
     }
 
-
-
-
-
+    @Test(timeout=1000)
     public void testGetDccAddress(){
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
-        assertEquals("XNetThrottle getDccAddress()",3,t.getDccAddress());
+        Assert.assertEquals("XNetThrottle getDccAddress()",3,t.getDccAddress());
     }
 
+    @Test(timeout=1000)
     public void testGetDccAddressLow(){
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
-        assertEquals("XNetThrottle getDccAddressLow()",3,t.getDccAddressLow());
+        Assert.assertEquals("XNetThrottle getDccAddressLow()",3,t.getDccAddressLow());
     }
 
+    @Test(timeout=1000)
     public void testGetDccAddressHigh(){
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
-        assertEquals("XNetThrottle getDccAddressHigh()",0,t.getDccAddressHigh());
+        Assert.assertEquals("XNetThrottle getDccAddressHigh()",0,t.getDccAddressHigh());
     }
 
+    @Test(timeout=1000)
     public void testGetLocoAddress(){
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
-        assertEquals("XNetThrottle getLocoAddress()",
+        Assert.assertEquals("XNetThrottle getLocoAddress()",
                      new jmri.DccLocoAddress(3,false),t.getLocoAddress());
     }
 
 
 
-    // from here down is testing infrastructure
-    public XNetThrottleTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XNetThrottleTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XNetThrottleTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
-        super.setUp();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         apps.tests.Log4JFixture.tearDown();
     }
 
