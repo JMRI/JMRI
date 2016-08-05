@@ -496,6 +496,7 @@
         <attribute name="javac.source"/>
         <attribute name="javac.target" default="${target}"/>
         <attribute name="javac.deprecation" default="${deprecation}"/>
+        <attribute name="javac.classpath" default="compile.class.path"/>
         <sequential>
             <mkdir dir="@{javac.target}"/> <!-- ensure destdir exists -->
             <javac compiler="modern"
@@ -507,7 +508,7 @@
                    fork="true"
                    deprecation="@{javac.deprecation}"
                    debug="${java.debugging}">
-                <classpath refid="compile.class.path"/>
+                <classpath refid="@{javac.classpath}"/>
                 <compilerarg value="-Xlint:-unchecked"/>  <!-- off during 1.8 migration -->
             </javac>
         </sequential>
@@ -566,7 +567,7 @@
             description="compile test classes"
             depends="debug">
         <!-- Compile the test java code from ${source} into ${target} -->
-        <java-compile javac.source="${test}" javac.target="${testtarget}"/>
+        <java-compile javac.source="${test}" javac.target="${testtarget}" javac.classpath="test.class.path"/>
         <!-- Copy resources into ${testtarget} so they coexist with identical
              resources in ${target} (this is important for the Java ServiceLoader -->
         <copy todir="${testtarget}">
