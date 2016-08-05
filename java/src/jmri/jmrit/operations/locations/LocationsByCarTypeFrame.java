@@ -61,7 +61,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
     JComboBox<String> typeComboBox = CarTypes.instance().getComboBox();
 
     // selected location
-    Location location;
+    Location _location;
 
     public LocationsByCarTypeFrame() {
         super();
@@ -73,12 +73,12 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
     }
 
     public void initComponents(Location location) {
-        this.location = location;
+        this._location = location;
         initComponents(NONE);
     }
 
     public void initComponents(Location location, String carType) {
-        this.location = location;
+        this._location = location;
         initComponents(carType);
     }
 
@@ -149,7 +149,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
         pack();
         setMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight250));
         setSize(getWidth() + 25, getHeight()); // make a bit wider to eliminate scroll bar
-        if (location != null) {
+        if (_location != null) {
             setTitle(Bundle.getMessage("TitleModifyLocation"));
         } else {
             setTitle(Bundle.getMessage("TitleModifyLocations"));
@@ -227,10 +227,14 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
         if (copyCheckBox.isSelected()) {
             carType = textCarType.getText();
         }
+        // did the location get deleted?
+        if (_location != null && manager.getLocationByName(_location.getName()) == null) {
+            _location = null;
+        }
         List<Location> locations = manager.getLocationsByNameList();
         for (Location loc : locations) {
             // show only one location?
-            if (location != null && location != loc) {
+            if (_location != null && _location != loc) {
                 continue;
             }
             loc.addPropertyChangeListener(this);

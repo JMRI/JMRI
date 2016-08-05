@@ -66,7 +66,7 @@ public class TrainBuilderTest extends OperationsTestCase {
     }
 
     public void testNoRouteBuild() {
-        Train train = tmanager.newTrain("Test");
+        Train train = tmanager.newTrain("TestNoRouteBuild");
         // build train without a route, should fail
         train.reset();
         new TrainBuilder().build(train);
@@ -75,7 +75,7 @@ public class TrainBuilderTest extends OperationsTestCase {
     }
 
     public void testNoRouteLocationsBuild() {
-        Train train = tmanager.newTrain("Test");
+        Train train = tmanager.newTrain("TestNoRouteLocationsBuild");
 
         // now add a route that doesn't have any locations
         Route route = rmanager.newRoute("TestRoute");
@@ -87,7 +87,7 @@ public class TrainBuilderTest extends OperationsTestCase {
     }
 
     public void testRouteLocationsBuild() {
-        Train train = tmanager.newTrain("Test");
+        Train train = tmanager.newTrain("TestRouteLocationsBuild");
 
         // now add a route that doesn't have any locations
         Route route = rmanager.newRoute("TestRoute");
@@ -167,7 +167,7 @@ public class TrainBuilderTest extends OperationsTestCase {
     }
 
     public void testRouteRandomFeature() {
-        Train train = tmanager.newTrain("TestRandom");
+        Train train = tmanager.newTrain("TestRouteRandomFeature");
 
         // Create a three location route
         Route route = rmanager.newRoute("TestRouteRandom");
@@ -219,7 +219,7 @@ public class TrainBuilderTest extends OperationsTestCase {
     }
 
     public void testBuildRequiresCars() {
-        Train train = tmanager.newTrain("Test");
+        Train train = tmanager.newTrain("TestBuildRequiresCars");
 
         // now add a route that doesn't have any locations
         Route route = rmanager.newRoute("TestRoute");
@@ -252,7 +252,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // This test uses the maximum length of a train in route
         Setup.setMaxTrainLength(1000);
 
-        Train train = tmanager.newTrain("AutoEngineTest");
+        Train train = tmanager.newTrain("TestAutoEnginesBuildFailNoEngines");
         train.setNumberEngines(Train.AUTO);
 
         Route route = rmanager.newRoute("AutoEngineTest");
@@ -286,7 +286,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // This test uses the maximum length of a train in route
         Setup.setMaxTrainLength(1000);
 
-        Train train = tmanager.newTrain("AutoEngineTest");
+        Train train = tmanager.newTrain("TestAutoEnginesSingleEngine");
         train.setNumberEngines(Train.AUTO);
 
         Route route = rmanager.newRoute("AutoEngineTest");
@@ -333,7 +333,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // This test uses the maximum length of a train in route
         Setup.setMaxTrainLength(1000);
 
-        Train train = tmanager.newTrain("AutoEngineTest");
+        Train train = tmanager.newTrain("TestAutoEnginesTwoEngines");
         train.setNumberEngines(Train.AUTO);
 
         Route route = rmanager.newRoute("AutoEngineTest");
@@ -398,7 +398,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Setup.setMaxTrainLength(1000);
         Setup.setMaxNumberEngines(6);
 
-        Train train = tmanager.newTrain("AutoEngineTest");
+        Train train = tmanager.newTrain("TestAutoEnginesGrade");
         train.setNumberEngines(Train.AUTO);
 
         Route route = rmanager.newRoute("AutoEngineTest");
@@ -463,7 +463,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // this has nothing to do with this test other than test coverage
         Setup.setComment("Test consists from Single Locos");
 
-        Train train = tmanager.newTrain("TestConsists");
+        Train train = tmanager.newTrain("TestBuildConsistFromSingleLocos");
 
         // Create a three location route
         Route route = rmanager.newRoute("TestRouteRandom");
@@ -525,7 +525,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // This test uses the maximum length of a train in route
         Setup.setMaxTrainLength(1000);
 
-        Train train = tmanager.newTrain("AutoEngineTest");
+        Train train = tmanager.newTrain("TestMaxEngines");
         train.setNumberEngines(Train.AUTO);
 
         Route route = rmanager.newRoute("AutoEngineTest");
@@ -724,7 +724,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         rl5.setPickUpAllowed(false); // don't include cars at destination
 
         // define the train
-        Train t1 = tmanager.newTrain("FF");
+        Train t1 = tmanager.newTrain("TestSidingsYards");
         t1.setRoute(r1);
 
         t1.reset();
@@ -2877,14 +2877,14 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // Create trains used
         Train train1;
-        train1 = tmanager.newTrain("MET");
+        train1 = tmanager.newTrain("TestStagingtoStaging2");
         train1.setRoute(rte1);
         train1.setNumberEngines("1");
         train1.setRequirements(Train.CABOOSE);
         // train1.addTypeName("Diesel");
         // train1.addTypeName("Boxcar");
         // train1.addTypeName("Caboose");
-        Assert.assertEquals("Bob Test Train train1 Name", "MET", train1.getName());
+        Assert.assertEquals("Bob Test Train train1 Name", "TestStagingtoStaging2", train1.getName());
         Assert.assertEquals("Bob Test Train train1 Departs Name", "Midtown", train1.getTrainDepartsName());
         Assert.assertEquals("Bob Test Train train1 Terminates Name", "Eastend", train1
                 .getTrainTerminatesName());
@@ -3310,12 +3310,12 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Staging Route Location rte1rln3 Seq", 3, rte1rln3.getSequenceId());
 
         // Create trains used
-        Train train1 = tmanager.newTrain("MET");
+        Train train1 = tmanager.newTrain("TestStagingtoStagingCustomLoads");
         train1.setRoute(rte1);
         train1.setNumberEngines("1");
         train1.setRequirements(Train.CABOOSE);
 
-        Assert.assertEquals("Staging Train train1 Name", "MET", train1.getName());
+        Assert.assertEquals("Staging Train train1 Name", "TestStagingtoStagingCustomLoads", train1.getName());
         Assert.assertEquals("Staging Train train1 Departs Name", "Westend", train1.getTrainDepartsName());
         Assert.assertEquals("Staging Train train1 Terminates Name", "Eastend", train1
                 .getTrainTerminatesName());
@@ -3423,7 +3423,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         RouteLocation rl1 = rte1.addLocation(loc1);
 
         // Create train
-        Train train1 = tmanager.newTrain("Local Train");
+        Train train1 = tmanager.newTrain("TestLocal");
         train1.setRoute(rte1);
         // Flat Car isn't registered yet so add it now
         train1.addTypeName("Flat Car");
@@ -4009,7 +4009,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // Create train
         Train train1;
-        train1 = tmanager.newTrain("NWNC");
+        train1 = tmanager.newTrain("TestScheduleLoads");
         train1.setRoute(rte1);
 
         // Set up 13 cars
@@ -5083,7 +5083,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         rl3.setTrainIconY(150);
 
         // Create train
-        Train train1 = tmanager.newTrain("HTB");
+        Train train1 = tmanager.newTrain("TestCaboose");
         train1.setRoute(rte1);
 
         // Place cars
@@ -5812,7 +5812,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         rl2.setPickUpAllowed(false);
 
         // Create train
-        Train train1 = tmanager.newTrain("Harvard to Chelmsford");
+        Train train1 = tmanager.newTrain("TestTrainBuildOptions");
         train1.setRoute(rte1);
 
         // train skips Boston
@@ -6040,7 +6040,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         rte1.addLocation(westford); // staging
 
         // Create train
-        Train train1 = tmanager.newTrain("Harvard to Westford Staging");
+        Train train1 = tmanager.newTrain("TestCarBlockingFromStaging");
         train1.setRoute(rte1);
         train1.setRequirements(Train.CABOOSE);
 
@@ -6383,7 +6383,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         rte1.addLocation(westford);
 
         // Create train
-        Train train1 = tmanager.newTrain("Test Engine Changes Harvard to Westford");
+        Train train1 = tmanager.newTrain("TestEngineChanges");
         train1.setRoute(rte1);
 
         // depart with 2 engines
@@ -6518,7 +6518,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         rte1.addLocation(westford);
 
         // Create train
-        Train train1 = tmanager.newTrain("Test Caboose Changes Harvard to Westford");
+        Train train1 = tmanager.newTrain("TestCabooseChanges");
         train1.setRoute(rte1);
 
         // depart with caboose
@@ -6621,7 +6621,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
     public void testAutoHP() {
 
-        Assert.assertEquals("confirm default of 1 HPT", 1 , Setup.getHorsePowerPerTon());
+        Assert.assertEquals("confirm default of 1 HPT", 1, Setup.getHorsePowerPerTon());
 
         EngineTypes et = new EngineTypes();
         et.addName("Diesel");
@@ -6702,7 +6702,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         rlArlington.setGrade(1.0);
 
         // Create train
-        Train train1 = tmanager.newTrain("Test Engine Changes Harvard to Westford");
+        Train train1 = tmanager.newTrain("TestAutoHP");
         train1.setRoute(rte1);
         train1.setSendCarsToTerminalEnabled(true); // send all car pulls to terminal
 
@@ -6954,7 +6954,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         rte1.addLocation(loc5);
 
         // Create train
-        Train train1 = tmanager.newTrain("Harvard to Westford Aggressive");
+        Train train1 = tmanager.newTrain("TestAggressiveBuildOption");
         train1.setRoute(rte1);
 
         // Place cars
