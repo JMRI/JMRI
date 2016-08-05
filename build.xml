@@ -565,9 +565,7 @@
             description="compile test classes"
             depends="debug">
         <!-- Compile the test java code from ${source} into ${target} -->
-        <antcall target="-java-compile-internal">
-            <param name="java.source.directory" value="${test}"/>
-        </antcall>
+        <java-compile javac.source="${test}" javac.target="${testtarget}"/>
         <!-- Copy resources into ${testtarget} so they coexist with identical
              resources in ${target} (this is important for the Java ServiceLoader -->
         <copy todir="${testtarget}">
