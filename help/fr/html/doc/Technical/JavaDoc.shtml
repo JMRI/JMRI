@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!--  $Id$ -->
-<!-- Updated by Blorec Herv&#233; le 2013-05-06--> 
+<!-- Updated by Blorec Herv&#233; le 2016-08-05--> 
  <html lang="fr">
 <head>
     <TITLE>
@@ -32,8 +32,9 @@ et
 <a href="http://en.wikipedia.org/wiki/Unified_Modeling_Language"> UML </a>.
 
 <p>
-Nous utilisons &#233;galement les <a href="http://java.sun.com/docs/books/tutorial/java/javaOO/annotations.html"> annotations </a>
-Java pour documenter la structure de notre code.
+
+Nous utilisons &#233;galement les <a href="http://java.sun.com/docs/books/tutorial/java/javaOO/annotations.html"> annotations Java </a>
+pour documenter la structure de notre code.
 
 <p>
 Nous utilisons les <a href="http://www.umlgraph.org"> umLGraph </a> doclet pour cr&#233;er automatiquement les diagrammes UML dans
@@ -41,49 +42,117 @@ nos pages JavaDoc.
 
 <h2>JavaDoc pour les D&#233;veloppeurs</h2>
 
-Le <a href="http://java.sun.com/j2se/javadoc/writingdoccomments/"> tutoriel JavaDoc  </a>
-est une bonne chose, mais un peu long, introduction <a Href="http://java.sun.com/j2se/javadoc/writingdoccomments/"> pour JavaDoc </a>.
+Le 
+<a href="http://java.sun.com/j2se/javadoc/writingdoccomments/"> tutoriel JavaDoc  </a>
+est une bonne, mais un peu longue, 
+<a Href="http://java.sun.com/j2se/javadoc/writingdoccomments/">introduction pour JavaDoc </a>.
 Un bref r&#233;sum&#233; de la mise en forme et les &#233;tiquettes peut &#234;tre trouv&#233;e dans
-<a href="http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#documentationcomments">
-la r&#233;f&#233;rence </a>.
+<a href="http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#documentationcomments">la r&#233;f&#233;rence </a>.
 
 <p>
-Traditionnellement, les packages Java dans JMRI ont utilis&#233; les fichiers
-<code> package.html </code> pour contenir un paquet de documentation de niveau n&#233;cessaire
-.
+Traditionnellement, les packages Java dans JMRI ont utilis&#233; 
+les fichiers <code>package.html</code> pour contenir un paquet de documentation de niveau n&#233;cessaire.
 Il est maintenant recommand&#233; <a href="http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#packagecomment">
 que tout paquet Java</a> significatif contienne un
 <a href="http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#packagecomment">
 fichier pour cela</a>.
 Seuls quelques-uns d'entre eux ont &#233;t&#233; inclus dans JMRI jusqu'ici, et
-ce n'est pas une grande priorit&#233; de remplacer les fichiers <code> package.html </code>  existants,
-mais de nouveaux packages devraient inclure une <code> package-info.java </code>
-copi&#233; &#224; partir <code> java/package-info.java </code>.
+ce n'est pas une grande priorit&#233; de remplacer les fichiers <code>package.html</code>  existants,
+mais de nouveaux packages devraient inclure une <code>package-info.java</code>
+copi&#233; &#224; partir <code>java/package-info.java</code>.
 
 <p>
 Une belle discussion sur la fa&#231;on d'utiliser le label "obsol&#232;te"
 dans la documentation est disponible dans
  <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/javadoc/deprecation/deprecation.html">"Comment et Quand rendre obsol&#232;te la page API </a>.
 
+<p>
+Le contenu de JavaDoc est interpr&#233;t&#233; comme du HTML 4.01, HTML 4.01 devrait donc &#234;tre valide. Si ce n'est pas le cas,
+il ne sera probablement pas afficher correctement quand quelqu'un voudra comprendre votre code, il est donc dans 
+votre int&#233;r&#234;t d'obtenir des commentaires JavaDoc correctes.
+<p>
+Par exemple, vous devez g&#233;rer correctement les caract&#232;res &amp; et &lt;, exemple: pour montrer un type g&#233;n&#233;rique.
+Pour le faire, placez le test dans des blocs {@literal...} ou {@code}.
+<p>
+Vous devez aussi (parfois) mettre fin &#224; vos balises de paragraphe pour d&#233;marrer un autre type d'&#233;l&#233;ment, exemple: listes:
+<code><pre>
+ * Certains textes qui forme un paragraphe
+ * &lt;p&gt;
+ * Un peu plus de texte. 
+ * &lt;p&gt;
+ * Dernier texte, d&#233;marrez la liste. Notez la balise  fin de paragraphe.
+ * &lt;/p&gt;&lt;ul&gt;
+ *    &lt;li&gt;Liste &#233;l&#233;ment
+ * &lt;/ul&gt;
+</pre></code>
+Notez que HTML 4.01 demande que les balises de paragraphes se terminent avec  &lt;/p&gt;, et que vous ne pouvez pas avoir une liste &#224; l'int&#233;rieur du paragraphe.
+<p>
+Quelques messages d'erreurs et leurs traductions:
+<dl>"malformed HTML"</dt><dt>"bad HTML entity"</dt><dd>Probablement usage des caract&#232;res &amp;, &lt; ou &gt; sur la ligne indiqu&#233;e</dd>
+<dt>"bad use of '&gt;'"</dt><dd>Probablement mauvais utilisation de '&gt;' comme caract&#232;re, exemple A -&gt; B. Si oui, remplacer par "&amp; gt;" ou envelopper la ligne avec @literal </ dd> 
+</dl>
+
+Finalement, notez que cette ligne JavaDoc est malform&#233;e:
+<code><pre>
+ * @param foo
+</pre></code>
+parce qu'il ne comprend pas un texte explicatif. La ligne devrait ressembler davantage &#224; &#231;a:
+<code><pre>
+ * @param foo Holds the latest Bar instance
+</pre></code>
+ou juste oubli&#233;.
+
+<p>
+Nous sommes en train de supprimer la classe "accessibilit&#233;" des erreurs JavaDoc, qui est
+surtout de fournir des informations suppl&#233;mentaires sur les tables et les images, et la classe manquante des 
+erreurs, qui balises si un @param ou @return ne sont pas fournis dans tous les endroits qui auraient 
+re&#231;u des commentaires. Il y en a tellement que ce n'est pas pratique de les &#233;tiqueter.
+
+<p>
+Pour un r&#233;sum&#233; des erreurs courantes JavaDoc dans le code, voir:
+<a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/lastBuild/warnings3Result/">Travail de construction Jenkins</a>.
+
 <h2>UML et UmlGraph pour les D&#233;veloppeurs</h2>
 
-UML est un langage large et profond pour d&#233;crire la structure, la conception et le comportement des syst&#232;mes informatiques. 
-JMRI utilise principalement les diagrammes de classes UML pour documenter sa structure.
+UML est un langage large et profond pour d&#233;crire la 
+structure, la conception et le comportement des syst&#232;mes informatiques. 
+JMRI utilise principalement 
+les diagrammes de classes UML 
+pour documenter sa structure.
 
-De nombreux tutoriels UML sont disponibles sur le web. En particulier, un bon point de d&#233;part est l'
-<a href="http://www.objectmentor.com/resources/articles/umlClassDiagrams.pdf"> introduction &#224; la classe diagrammes Object Mentor  </a>.
+De nombreux tutoriels UML sont disponibles sur le web. En particulier, 
+un bon point de d&#233;part est l'
+<a href="http://www.objectmentor.com/resources/articles/umlClassDiagrams.pdf">introduction &#224; la classe diagrammes Object Mentor  </a>.
 Pour plus de d&#233;tails, s'il vous pla&#238;t voir
 <a href="http://web.archive.org/web/20110704185440/http://atlas.kennesaw.edu/~dbraun/csis4650/A&D/UML_tutorial/class.htm"> le cours Atlas UML </a> 
 ou
 <a href="http://edn.embarcadero.com/article/31863"> introduction &#224; Embarcadero Software </a>.
 
+Notre processus Ant JavaDoc fait des diagrammes de classe basique automatiquement.
+Pour un exemple, voir le:
+<a href="http://jmri.org/JavaDoc/doc/jmri/Sensor.html">Interface Sensor JavaDoc</a>, 
+puis cliquez "Show UML Class Diagram link" pour voir le
+<a href="http://jmri.org/JavaDoc/doc/jmri/Sensor.png">diagramme de classes noy&#233; dedans</a>.
+
+Pour un exemple plus complexe voir:
+<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/progsupport/ProgModeSelector.html">ProgModeSelector class JavaDoc</a>
+puis cliquez  "Show UML Class Diagram link" pour voir le
+<a href="http://jmri.org/JavaDoc/doc/jmri/Sensor.png">diagramme de classes noy&#233; dedans</a>.
+
+<p>vous pouvez aussi d&#233;finir des diagrammes UML personnalis&#233;s en utilisant
+<a href="http://plantuml.com">PlantUML</a>.
+Pour un exemple de syntaxe source pour d&#233;finir des diagrammes d'&#233;tat et de s&#233;quence, voir le fichier
+<a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/lenz/XNetProgrammer.java#L32">java/src/jmri/jmrix/lenz/XNetProgrammer.java</a>.
+les diagrammes r&#233;sultant sont visible dans la
+<a href ="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/lenz/XNetProgrammer.html">sortie JavaDoc</a>.
+
 <h2>Processus</h2>
 
 Le norme JMRI de construction Ant fournit trois objectifs de documentation:
 <dl>
-<dt> <dd> javadoc -Cr&#233;er des JavaDocs texte dans le r&#233;pertoire local doc/. Ouvrirdoc/index.html pour l'acc&#232;s.
-<dd> <dt> javadoc-uml -Cr&#233;er des diagrammes UML et JavaDocs dans le r&#233;pertoire local doc/. Ouvrir doc/index.html pour l'acc&#232;s.
-<dd> <dt> uploadjavadoc  -Envoyer la documentation actuelle dans le r&#233;pertoire local doc/ sur le site web jmri.org.
+<dt>javadoc<dd>Cr&#233;er des textes JavaDoc dans le r&#233;pertoire local doc/. Ouvrir doc/index.html pour l'acc&#232;s.
+<dd>javadoc-uml<dd>Cr&#233;er des diagrammes UML et JavaDocs dans le r&#233;pertoire local doc/. Ouvrir doc/index.html pour l'acc&#232;s.
+<dd>uploadjavadoc<dd>Envoyer la documentation actuelle dans le r&#233;pertoire local doc/ sur le site web jmri.org.
 Ceci est fait automatiquement par le <a href="ContinuousIntegration.shtml">syst&#232;me CI </a>de sorte que vous n'avez g&#233;n&#233;ralement pas besoin de vous en occuper
 </dl>
 
@@ -98,4 +167,3 @@ Ceci est fait automatiquement par le <a href="ContinuousIntegration.shtml">syst&
 	</div> <!-- closes #mBody-->
 </body>
 </html>
-
