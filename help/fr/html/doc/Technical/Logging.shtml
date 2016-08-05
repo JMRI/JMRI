@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233; le 2013-09-06-->
+<!-- UpDated by Blorec Herv&#233; le 2016-08-05-->
   <html lang="fr">
 <head>
     <TITLE>
@@ -42,107 +42,133 @@ Pour d'autres d&#233;tails internes sur JMRI , s'il vous pla&#238;t voir les
 <A HREF="../Technical/index.shtml" NAME="technical pages"> pages techniques  </A>.
 
 <P>
-JMRI utilise le 
-<A HREF="http://jakarta.apache.org/log4j/docs/index.html"> Log4J Jakarta,</a>
- un ensemble d'enregistrement de mesures au cours du fonctionnement du programme.
-<P>
-Log4J offre plusieurs niveaux de messages:
-<UL>
-<LI>Erreur
-<LI>Attention
-<LI> Info - Information sommaire en fonctionnement normal
-<LI> Debug - informations sur le fonctionnement interne du programme.
-Il y en a beaucoup , et tourner sur tous peut ralentir le
-programme de fa&#231;on significative.
-</UL>
-<P>
-Par convention, les applications JMRI vont tenter d'initialiser
-Log4J &#224; l'aide d'un fichier "default.lcf". Les distributions JMRI
-contiennent une version de ce fichier avec
-de nombreux commentaires. (Ce fichier doit &#234;tre dans le «Program Directory»,
-qui peut &#234;tre trouv&#233; en s&#233;lectionnant le bouton "Localisation"  dans la barre de menu de la fen&#234;tre decoderPro))
+JMRI utilise le paquet Jakarta
+<A HREF="https://logging.apache.org/log4j/1.2/index.html">Log4J</a>
+pour g&#233;rer les enregistrements depuis les classes individuelles. sp&#233;cifiquement, 
+depuis l'&#233;t&#233; 2015, nous utilisons la version 1.2.15; ce n'est pas la plus r&#233;cente!
+nous l'utilisons via le syst&#232;me:
+<a href="http://www.slf4j.org">SLF4J</a>. ( Pour les librairies 
+qui utilisent le syst&#232;m" java.util.loggind, exemple: jmDNS, nous utilisons ausssi l'adaptateur jul-to-slf4j )
+
+<a name="levels" id="levels"></a><h3>Niveaux d'Enregistrement</h3>
+Cette combinaisons fournit plusieurs niveaux d'enegistrement
+<table border="1">
+<tr><th>Niveau</th><th>Fragment Code</th><th>Utilisation</th></tr>
+<tr><td>ERREUR</td><td>log.error(..)</td><td>Indique que l'op&#233;ration d&#233;sir&#233;e n'a pas r&#233;ussi et et devrait expliquer pourquoi.
+															ERROR est destin&#233;e &#224; &#234;tre utilis&#233; uniquement pour les graves probl&#232;mes qui demandent
+															plus d'attention &#224; chaque fois qu'ils surviennent, typiquement indication d'une possible
+															faute dans JMRI lui-m&#234;me.</td></tr> 
+<tr><td>ATTENTION</td><td>log.warn(..)</td><td>Le programme fonctionne toujours, en quelque sorte, mais quelque chose a mal fonctionn&#233;;
+															souvent utilis&#233; pour dire "Cette op&#233;ration peut ne pas avoir fait tout ce que vous vouliez".
+															Utilisez WARN lorsque la cause du probl&#232;me est une entr&#233;e utilisateur incorrecte.</td></tr>
+<tr><td>INFO</td><td>log.info(..)</td><td>Routines messages que vous voulez voir en fonctionnement normal. Gardez les &#224; un minimum 
+														s'il vous pla&#238;t, il ne devrait pas y en avoir apr&#232;s que le programme a d&#233;marr&#233;.</td></tr>
+<tr><td>DEBOGAGE</td><td>log.debug(..)</td><td>Messages d&#233;taill&#233;s, Utilis&#233;s seulement pout le d&#233;bogage. Il y en a beaucoup , et les activer
+															  tous peut ralentir le programme de mani&#232;re significative.</Td></tr>
+<tr><td>TRACE</td><td>log.debug(..)</td><td>Messages tr&#232;s d&#233;taill&#233;s, plus encore que DEBUG, utilis&#233; 
+															pour le d&#233;bogage volumineux (exemple: tous les caract&#232;res dans une transmissions) qui 
+															devrait normalement &#234;tre d&#233;sactiv&#233;, m&#234;me lors du d&#233;bogage. 
+                                           	Typiquement seulement allum&#233; pour une classe &#224; la fois en raison de probl&#232;mes de volume 
+															et de performance.</td></tr>
+</table>
+
+<a name="config" id="config"></a><h3>Configuration</h3>
+Par convention, les applications JMRI attendront pour initialiser
+Log4J utilisant le fichier de contr&#244;le de connexion:
+"<a href="https://github.com/JMRI/JMRI/blob/master/default.lcf">default.lcf</a>"
+JMRI qui contient une version du fichier defaut.lcf avec de nombreux commentaires.
+( Ce fichier doit &#234;tre imp&#233;rativement dans le "R&#233;pertoire Program", qui peut &#234;tre 
+trouv&#233; en s&#233;lectionnant l'&#233;l&#233;mment "Emplacement" dans le menu Aide principal )
+Le reste de cette section d&#233;crit le contenu d'un fichier de contr&#244;le de connexion 
+utilisant le contenu du fichier default.lcf comme exemple.
 
 <p>
-Si vous changer la ligne
+La ligne:
 <PRE>
- 	log4j.rootCategory=DEBUG, A1
-</pre>
-par
-<PRE>
- log4j.rootCategory=DEBUG, A1, R
+ log4j.rootCategory= INFO, A1, T, R
 </PRE>
-les entr&#233;es du Rapport seront r&#233;dirig&#233;es &#224; la fois vers la "console"
-par "A 1 ", et un fichier par "R". 
-<P>
-Le fichier "default.lcf" d&#233;termine la destination et le format des messages enregistr&#233;s. Par d&#233;faut, vous obtenez des lignes qui ressemblent &#224;:
+contr&#244;le o&#249; va la sortie connexion. Plus tard dans le fichier,
+il y a des indices A1, T et R d&#233;finis qui &#233;crivent les messages vers:
 
-<CODE><PRE>
-514668 [AWT-EventQueue-0] WARN jmri.jmrit.powerpanel.PowerPane  -Aucune instance du gestionnaire de puissance trouv&#233;s, panneau non actif 
-</PRE></CODE>
-Les colonnes sont:
 <ul>
-<li><CODE>514668 - temps en millisecondes depuis le d&#233;marrage du programme</CODE>
-<li><CODE>[AWT-EventQueue-0] - Le lien qui a &#233;mis le message, utile si vous avez cr&#233;&#233; un dans un script</CODE>
-<li><CODE>WARN - la gravit&#233; du message</CODE>
-<li><CODE>jmri.jmrit.powerpanel.PowerPane - l'endroit dans le code (nom de classe) qui a &#233;mis le message</CODE>
-<li><CODE>Aucune instance du gestionnaire de puissance trouv&#233;e, panneau non actif - le message lui-m&#234;me</CODE>
-</UL>
-<P>
+<li>A1 - la console sur l'ordinateur local, r&#233;ellement stdout/stderr, qui est aussi
+	 	   disponible via l'&#233;l&#233;ment Console du menu Aide JMRI.
+<li>R - un simple fichier. Par d&#233;faut, il est appel&#233; "session.log". Celui-ci d&#233;marre 
+		  &#224; chaque fois que JMRI est relanc&#233;
+<li>T - un jeu de fichiers tournants. Le fichier actuel est appel&#233; "messages.log".
+		  Quand il atteint 2 MB, il tourne pour un nouveau fichier. Les deux versions les plus anciennes sont gard&#233;es
+		  Notez que cela se poursuit &#224; travers le red&#233;marrage du programme, de sorte que vous pouvez voir 
+		  tous les messages enregistr&#233;s au d&#233;but ou &#224; la fin du programme. 
+</ul>
 
-Pour Rapporter
-&#224; partir d'une classe nomm&#233;e MyClass, ajoutez ceci &#224; la fin du fichier de class:
+Les fichiers sont stock&#233;s dans un r&#233;pertoire sp&#233;cifi&#233; par les param&#232;tres de jmri.log.path
+qui est point&#233; par d&#233;faut vers le sous r&#233;pertoire log dans le r&#233;pertoire preferences
+
+<p>
+Le fichier "default.lcf" d&#233;termine aussi le format de la sortie par le r&#233;glage des param&#232;tres du "circuit".
+<pre><CODE>
+log4j.appender.R.layout=org.apache.log4j.PatternLayout<br/>
+log4j.appender.R.layout.ConversionPattern=%d{ISO8601} %-37.37c{2} %-5p - %m [%t]%n
+</CODE></pre>
+
+<p>
+Un exemple de ce format par d&#233;faut:
+<pre><CODE>
+2015-10-28 20:31:52,307 jmri.jmrit.powerpanel.PowerPane  WARN - No power manager instance found, panel not active [AWT-EventQueue-0]
+</CODE></pre>
+Les colonnes sont: 
+<ul>
+<li><CODE>2015-10-28 20:31:52,307</CODE> - Heure locale &#224; laquelle le message a &#233;t&#233; enregistr&#233;
+<li><CODE>jmri.jmrit.powerpanel.PowerPane</CODE> - l'emplacement dans le code ( nom de la classe ) qui a &#233;mit le message.
+<li><CODE>WARN</CODE> - s&#233;v&#233;rit&#233; du message
+<li><CODE>No power manager instance found, panel not active</CODE> - le message lui-m&#234;me.
+<li><CODE>[AWT-EventQueue-0]</CODE> - nom de la t&#226;che qui a &#233;mit le message.
+</UL
+
+<a name="code" id="code"></a><h3>Codage</h3>
+Pour enregistrer des messages 
+&#224; partir d'une classe nomm&#233;e MyClass, ajoutez &#224; la fin du fichier de classe .java: 
 <pre><code>
-	private static final Logger log = LoggerFactory.getLogger(MyClass.class());
+	private static final Logger log = LoggerFactory.getLogger(MyClass.class);
 </code></pre>
-<p>et ajouter des importations pour org.slf4j.Logger et org.slf4j.LoggerFactory dans votre section importations:</p>
-<code><PRE>
-  import org.slf4j.Logger;
-  import org.slf4j.LoggerFactory;
-</code></PRE>
+<p>et ajoutez des importations pour org.slf4j.Logger et org.slf4j.LoggerFactory dans votre section importation:</p>
+</code></pre>
+        import org.slf4j.Logger;<br/>
+        import org.slf4j.LoggerFactory;
+</code></pre>
+Il est &#233;galement OK de combiner ceux-ci suivant cette forme :
+<pre><code>
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MyClass.class);
+</code></pre>
+<p>
+(Si l'enregistrement est retir&#233; (par exemple comment&#233;), il est OK pour commenter la d&#233;finition de l'enregistrement 
+de sorte qu'il peut &#234;tre facilement rajout&#233; plus tard. )
 
-Puis pour chaque message &#224; Rapporter ins&#233;rer une ligne comme:</p>
+<p>Pour chaque message &#224; enregistrer, inserez une ligne comme;
 <pre><code>
 	log.debug("message");
 </code></pre>
-<P>
-Les message qui ne seront pas seulement une cha&#238;ne explicite,devront utiliser
-cette forme &#224; la place:</p>
-<PRE>><code>
-	log.debug("message");
-</code></pre>
-<p>Les messages qui ne sont pas juste une cha&#238;ne explicite devrait utiliser ce formulaire &#224; la place de variables:</p>
-<code><pre>
+<p>Les messages qui ne sont pas juste une cha&#238;ne explicites doivent utiliser cette forme &#224; la place des variables:</p>
+<pre><code>
 	log.debug("Found {}", numberEntries);
-</code></pre>	
-<p> Au cas o&#249; il serait co&#251;teux en calcul de passer un param&#232;tre dans le Rapport, utilisez le formulaire ci-dessous
-de sorte que le programme ne perd pas de temps avec le calcul des param&#232;tres (dans ce
-cas, appeler numberEntries () et concat&#233;ner les cha&#238;nes): </p>
+</code></pre>
+Les op&#233;rations de cha&#238;ne pour construire le message r&#233;el d'erreur (dans ce cas, la combinaison "Found" et l'argument 
+numberEntries) ne sont fait que si le message va &#234;tre stock&#233; dans les journaux, ce qui permet d'&#233;conomiser beaucoup 
+de temps lors de l'ex&#233;cution normale (non-debug ) .
+
+<P>Si c'est informatiquement co&#251;teux de passer un param&#232;tre dans le journal, utilisez le formulaire ci-dessous 
+pour que le programme ne perde pas de temps en calcul de param&#232;tres (dans ce cas, 
+appeler numberEntries () pour obtenir une valeur pour passer &#224; l'appel de fonction): </p>
 <pre><code>
         if (log.isDebugEnabled()) {
             log.debug("Found {}", numberEntries());
-        }Par convention, les applications JMRI va tenter d'initialiser
-Log4J l'aide d'un fichier "default.lcf". Les distributions JMRI
-contenir une version de ce fichier avec
-commentaires détaillés. (Ce fichier doit être dans le répertoire "Program",
-qui peut être trouvé en sélectionnant l'option «Lieux» dans le menu principal de l'aide)
+        }
 </code></pre>
-<p>Les exceptions doivent être Rapport&#233;es sous cette forme:</p>
+<p>Les exceptions devraient &#234;tre enregistr&#233;es comme: </p>
 <pre><code>
-	  log.error(exception.getLocalizedMessage(), exception);
+        log.error("my local text"+exception.getLocalizedMessage(), exception);
 </code></pre>
-
-<h3>Niveaux de Message</h3>
-<table border="1">
-<tr><th>Level</th><th>Fragment de Code</th><th>Utilisation</th></tr>
-<tr><td>DEBUG</td><td>log.debug(..)</td><td>Messages d&#233;taill&#233;s, utilis&#233; dans le d&#233;bogage</td></tr>
-<tr><td>INFO</td><td>log.info(..)</td><td>Messages de routine que vous pouvez voir en fonctionnement normal</td></tr>
-<tr><td>Warn</td><td>log.warn(..)</td><td>Le programme est encore en exploitation, en quelque sorte, mais quelque chose doit &#234;tre examin&#233;</td></tr>
-<tr><td>ERROR</td><td>log.error(..)</td><td>Indique que l'op&#233;ration souhait&#233;e ne va pas se produire, et explique pourquoi</td></tr>Par convention, les applications JMRI va tenter d'initialiser
-Log4J l'aide d'un fichier "default.lcf". Les distributions JMRI
-contenir une version de ce fichier avec
-commentaires détaillés. (Ce fichier doit être dans le répertoire "Program",
-qui peut être trouvé en sélectionnant l'option «Lieux» dans le menu principal de l'aide)
-</table>
+pour inclure la description lisible de l'utilisateur depuis l'exception elle-m&#234;me, ainsi que toutes ses informations de retra&#231;age.
 
 <!--#include virtual="/Footer" -->
 
@@ -150,4 +176,3 @@ qui peut être trouvé en sélectionnant l'option «Lieux» dans le menu princip
 	</div> <!-- closes #mBody-->
 </body>
 </html>
-
