@@ -7,6 +7,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManagerXml;
@@ -21,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2015
  * @version $Revision$
  */
-public class PrintSavedTrainManifestAction extends AbstractAction {
+public class PrintSavedTrainManifestAction extends AbstractAction implements java.beans.PropertyChangeListener {
 
     private final static Logger log = LoggerFactory.getLogger(PrintSavedTrainManifestAction.class.getName());
 
@@ -30,14 +31,24 @@ public class PrintSavedTrainManifestAction extends AbstractAction {
         _isPreview = isPreview;
         _train = train;
         setEnabled(Setup.isSaveTrainManifestsEnabled());
+        Setup.addPropertyChangeListener(this);
     }
 
     /**
      * Variable to set whether this is to be printed or previewed
      */
     boolean _isPreview;
-
     Train _train;
+
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+        if (Control.SHOW_PROPERTY) {
+            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+                    .getNewValue());
+        }
+        if (e.getPropertyName().equals(Setup.SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE)) {
+            setEnabled(Setup.isSaveTrainManifestsEnabled());
+        }
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {

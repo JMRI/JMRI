@@ -51,7 +51,6 @@ public class TransitSectionAction {
     /**
      * Constants designating the "what" (the action to be taken) of the Action
      */
-    public static final int NUM_WHATS = 13; // Must correspond to the number of entries below
     public static final int PAUSE = 1;    // pause for the number of fast minutes in mDataWhat (e.g. station stop)
     public static final int SETMAXSPEED = 2; // set maximum train speed to value entered
     public static final int SETCURRENTSPEED = 3; // set current speed to target speed immediately - no ramping
@@ -67,7 +66,10 @@ public class TransitSectionAction {
     public static final int LOCOFUNCTION = 11;  // execute the specified decoder function
     public static final int SETSENSORACTIVE = 12; // set specified sensor active (offers access to Logix)
     public static final int SETSENSORINACTIVE = 13; // set specified sensor inactive
-    // other action 'whats" may be defined here
+    public static final int HOLDSIGNAL = 14;    // set specified signalhead or signalmast to HELD
+    public static final int RELEASESIGNAL = 15; // set specified signalhead or signalmast to NOT HELD
+    public static final int NUM_WHATS = 15; // Must correspond to the number of entries above 
+    // other action 'whats" may be defined here, increment NUM_WHATS to match
 
     /**
      * Main constructor method

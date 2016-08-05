@@ -5,6 +5,10 @@ import java.util.ResourceBundle;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Sensor;
+import jmri.SignalHead;
+import jmri.SignalHeadManager;
+import jmri.SignalMast;
+import jmri.SignalMastManager;
 import jmri.TransitSection;
 import jmri.TransitSectionAction;
 import org.slf4j.Logger;
@@ -471,6 +475,44 @@ public class AutoTrainAction {
                     log.error("Could not find Sensor " + tsa.getStringWhat());
                 } else {
                     log.error("Sensor not specified for Action");
+                }
+                break;
+            case TransitSectionAction.HOLDSIGNAL:
+                // set specified signalhead or signalmast to HELD
+                SignalMast sm = null;
+                SignalHead sh = null;
+                String sName = tsa.getStringWhat();
+                sm = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(sName);
+                if (sm == null) {
+                    sh = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(sName);
+                    if (sh == null) {
+                        log.error("{}: Could not find SignalMast or SignalHead named '{}'", _activeTrain.getTrainName(), sName);
+                    } else {
+                        log.debug("{}: setting signalHead '{}' to HELD", _activeTrain.getTrainName(), sName);
+                        sh.setHeld(true);
+                    }
+                } else {
+                    log.debug("{}: setting signalMast '{}' to HELD", _activeTrain.getTrainName(), sName);
+                    sm.setHeld(true);                    
+                }
+                break;
+            case TransitSectionAction.RELEASESIGNAL:
+                // set specified signalhead or signalmast to NOT HELD
+                sm = null;
+                sh = null;
+                sName = tsa.getStringWhat();
+                sm = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(sName);
+                if (sm == null) {
+                    sh = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(sName);
+                    if (sh == null) {
+                        log.error("{}: Could not find SignalMast or SignalHead named '{}'", _activeTrain.getTrainName(), sName);
+                    } else {
+                        log.debug("{}: setting signalHead '{}' to NOT HELD", _activeTrain.getTrainName(), sName);
+                        sh.setHeld(false);
+                    }
+                } else {
+                    log.debug("{}: setting signalMast '{}' to NOT HELD", _activeTrain.getTrainName(), sName);
+                    sm.setHeld(false);                    
                 }
                 break;
             default:

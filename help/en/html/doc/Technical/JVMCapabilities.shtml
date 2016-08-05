@@ -29,239 +29,60 @@
       contains information about the compatibility and features of
       various Java versions. We use this information to decide on
       our <a href="TechRoadMap.shtml">road map</a> for future JMRI
-      versions.
+      versions. (This page is a bit long, and perhaps 
+      overdue for a "historical" page)
 
       <h2>Capabilities</h2>This section lists new Java
       capabilities, and which Java version they first appeared in.
       The "JDK" column shows the first Java Development Kit that
       could compile the feature; the "JRE" column lists the first
       runtime environment that could run the feature, including the
-      needed JVM and library support.
+      needed JVM and library support. 
 
       <table border="1">
         <tr>
           <th>Feature</th>
-
           <th>JDK</th>
-
           <th>JRE</th>
         </tr>
 
         <tr>
-          <td>Collections</td>
-
-          <td>1.3</td>
-
-          <td>1.3</td>
+          <td> HiDPI graphics support  for Windows and Linux users.
+          Probably "just works" with JRE update, unless something in JMRI breaks on Java 9 on Windows 
+          (Currently support using very large fonts as a workaround, but it quickly breaks as text overlaps widget boundaries)</td>
+          <td>1.9</td>
+          <td>1.9</td>
         </tr>
 
         <tr>
-          <td>Java2D</td>
-
-          <td>1.3</td>
-
-          <td>1.3</td>
+          <td>It seems that MacOS X (macOS) users will lose
+          the use of the OS X App menu for About, Preferences, and (critically) Quit handling on that platform</td>
+          <td>1.9</td>
+          <td>1.9</td>
         </tr>
 
         <tr>
-          <td>Printing update</td>
-
-          <td>1.3</td>
-
-          <td>1.3</td>
-        </tr>
-
-        <tr>
-          <td>JUnit 3.8</td>
-
-          <td>1.3</td>
-
-          <td>1.3</td>
-        </tr>
-
-        <tr>
-          <td>JDOM 1.0</td>
-
-          <td>1.4</td>
-
-          <td>1.3</td>
-        </tr>
-
-        <tr>
-          <td>Java regexp</td>
-
-          <td>1.4</td>
-
-          <td>1.4</td>
-        </tr>
-
-        <tr>
-          <td>Java3D</td>
-
-          <td>1.4</td>
-
-          <td>1.4</td>
-        </tr>
-
-        <tr>
-          <td>JavaHelp update</td>
-
-          <td>1.4</td>
-
-          <td>1.4</td>
-        </tr>
-
-        <tr>
-          <td>Drag and Drop</td>
-
-          <td>1.4 (additional<br>
-          improvements in 1.6)</td>
-
-          <td>1.4, 1.6</td>
-        </tr>
-
-        <tr>
-          <td>Logging API</td>
-
-          <td>1.4 (additional<br>
-          improvements in 1.6)</td>
-
-          <td>1.4, 1.6</td>
-        </tr>
-
-        <tr>
-          <td>XML catalog resolver</td>
-
-          <td>1.3?</td>
-
-          <td>1.4?</td>
-        </tr>
-
-        <tr>
-          <td>Annotations</td>
-
-          <td>1.5</td>
-
-          <td>1.3</td>
-        </tr>
-
-        <tr>
-          <td>JavaMail</td>
-
-          <td>1.5</td>
-
-          <td>1.3</td>
-        </tr>
-
-        <tr>
-          <td>JUnit 4.0</td>
-
-          <td>1.5</td>
-
-          <td>1.3</td>
-        </tr>
-
-        <tr>
-          <td>SwingWorker</td>
-
-          <td>1.5</td>
-
-          <td>1.5 (*1.4)</td>
-        </tr>
-
-        <tr>
-          <td>JSpinner</td>
-
-          <td>1.5</td>
-
-          <td>1.5</td>
-        </tr>
-
-        <tr>
-          <td>Enums</td>
-
-          <td>1.5</td>
-
-          <td>1.5</td>
-        </tr>
-
-        <tr>
-          <td>printf, Formatter</td>
-
-          <td>1.5</td>
-
-          <td>1.5</td>
-        </tr>
-
-        <tr>
-          <td>generics</td>
-
-          <td>1.5</td>
-
-          <td>1.5</td>
-        </tr>
-
-        <tr>
-          <td>Desktop class</td>
-
-          <td>1.6</td>
-
-          <td>1.6</td>
-        </tr>
-
-        <tr>
-          <td>JDOM2 (generics)</td>
-
-          <td>1.6</td>
-
-          <td>1.6</td>
-        </tr>
-
-        <tr>
-          <td>Toolbars</td>
-
-          <td>1.6</td>
-
-          <td>1.6</td>
-        </tr>
-
-        <tr>
-          <td>JTable Sorting</td>
-
-          <td>1.6</td>
-
-          <td>1.6</td>
-        </tr>
-
-        <tr>
-          <td>Webstart compatibility</td>
-
-          <td>1.6</td>
-
-          <td>1.6</td>
+          <td>It seems that MacOS X (macOS) users will lose
+          Applescript scripting</td>
+          <td>1.9</td>
+          <td>1.9</td>
         </tr>
 
         <tr>
           <td>Generics for Swing classes</td>
-
           <td>1.7</td>
-
           <td>1.7</td>
         </tr>
 
         <tr>
           <td>NIO improves .zip file access</td>
-
           <td>1.7</td>
-
           <td>1.7</td>
         </tr>
 
         <tr>
           <td>I18N I/O improvements</td>
-
           <td>1.7</td>
-
           <td>1.7</td>
         </tr>
 
@@ -269,30 +90,179 @@
           <td>Memory use and<br>
           GC improvements<br>
           (better performance)</td>
-
           <td>1.7</td>
-
           <td>1.7</td>
         </tr>
 
         <tr>
           <td>Jetty Version 9</td>
-
           <td>1.7</td>
-
           <td>1.7</td>
         </tr>
 
         <tr>
           <td>JUnit 4 and the<br>
           <code>assert</code> keyword</td>
-
           <td>1.7</td>
-
           <td>1.7</td>
         </tr>
+
+
+        <tr>
+          <td>Desktop class</td>
+          <td>1.6</td>
+          <td>1.6</td>
+        </tr>
+
+        <tr>
+          <td>JDOM2 (generics)</td>
+          <td>1.6</td>
+          <td>1.6</td>
+        </tr>
+
+        <tr>
+          <td>Toolbars</td>
+          <td>1.6</td>
+          <td>1.6</td>
+        </tr>
+
+        <tr>
+          <td>JTable Sorting</td>
+          <td>1.6</td>
+          <td>1.6</td>
+        </tr>
+
+        <tr>
+          <td>Webstart compatibility</td>
+          <td>1.6</td>
+          <td>1.6</td>
+        </tr>
+
+
+        <tr>
+          <td>SwingWorker</td>
+          <td>1.5</td>
+          <td>1.5 (*1.4)</td>
+        </tr>
+
+        <tr>
+          <td>JSpinner</td>
+          <td>1.5</td>
+          <td>1.5</td>
+        </tr>
+
+        <tr>
+          <td>Enums</td>
+          <td>1.5</td>
+          <td>1.5</td>
+        </tr>
+
+        <tr>
+          <td>printf, Formatter</td>
+          <td>1.5</td>
+          <td>1.5</td>
+        </tr>
+
+        <tr>
+          <td>generics</td>
+          <td>1.5</td>
+          <td>1.5</td>
+        </tr>
+
+        <tr>
+          <td>Annotations</td>
+          <td>1.5</td>
+          <td>1.3</td>
+        </tr>
+
+        <tr>
+          <td>JavaMail</td>
+          <td>1.5</td>
+          <td>1.3</td>
+        </tr>
+
+        <tr>
+          <td>JUnit 4.0</td>
+          <td>1.5</td>
+          <td>1.3</td>
+        </tr>
+
+        <tr>
+          <td>JDOM 1.0</td>
+          <td>1.4</td>
+          <td>1.3</td>
+        </tr>
+
+        <tr>
+          <td>Java regexp</td>
+          <td>1.4</td>
+          <td>1.4</td>
+        </tr>
+
+        <tr>
+          <td>Java3D</td>
+          <td>1.4</td>
+          <td>1.4</td>
+        </tr>
+
+        <tr>
+          <td>JavaHelp update</td>
+          <td>1.4</td>
+          <td>1.4</td>
+        </tr>
+        
+        <tr>
+          <td>Drag and Drop</td>
+
+          <td>1.4 (additional<br>
+          improvements in 1.6)</td>
+          <td>1.4, 1.6</td>
+        </tr>
+
+        <tr>
+          <td>Logging API</td>
+          <td>1.4 (additional<br>
+          improvements in 1.6)</td>
+          <td>1.4, 1.6</td>
+        </tr>
+
+        <tr>
+          <td>XML catalog resolver</td>
+          <td>1.3?</td>
+          <td>1.4?</td>
+        </tr>
+
+        <tr>
+          <td>Collections</td>
+          <td>1.3</td>
+          <td>1.3</td>
+        </tr>
+
+        <tr>
+          <td>Java2D</td>
+          <td>1.3</td>
+          <td>1.3</td>
+        </tr>
+
+        <tr>
+          <td>Printing update</td>
+          <td>1.3</td>
+          <td>1.3</td>
+        </tr>
+
+        <tr>
+          <td>JUnit 3.8</td>
+          <td>1.3</td>
+          <td>1.3</td>
+        </tr>
+
+
+
       </table>(* indicates that a compatibility library is used in
       the early version)
+
+
+
 
       <h2>JRE availability</h2>This section lists the most recent
       Java Runtime version available for various operating system

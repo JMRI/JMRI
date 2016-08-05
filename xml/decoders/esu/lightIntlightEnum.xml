@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="Dimmer" value="0">
+    <choice>Dimmer</choice>
+    <choice xml:lang="de">Dimmer</choice>
+    <choice xml:lang="it">Dimmer</choice>
+  </enumChoice>
+  <enumChoice choice="Zoom" value="1">
+    <choice>Zoom</choice>
+    <choice xml:lang="de">Zoom</choice>
+    <choice xml:lang="it">Zoom</choice>
+  </enumChoice>
+  <enumChoice choice="Neon light" value="2">
+    <choice>Neon light</choice>
+    <choice xml:lang="de">Neonlampe</choice>
+    <choice xml:lang="it">Luce Neon</choice>
+  </enumChoice>
+  <enumChoice choice="Defective neon" value="3">
+    <choice>Defective neon light</choice>
+    <choice xml:lang="de">Defekte Neonlampe</choice>
+    <choice xml:lang="it">Defective Luce Neon</choice>
+  </enumChoice>
+  <enumChoice choice="Flash light (phase 1)" value="4">
+    <choice>Flash light (phase 1)</choice>
+    <choice xml:lang="de">Blinklicht (Phase 1)</choice>
+    <choice xml:lang="it">Luce a Flash (fase 1)</choice>
+  </enumChoice>
+  <enumChoice choice="Flash light (phase 2)" value="5">
+    <choice>Flash light (phase 2)</choice>
+    <choice xml:lang="de">Blinklicht (Phase 2)</choice>
+    <choice xml:lang="it">Luce a Flash (fase 2)</choice>
+  </enumChoice>
+  <enumChoice choice="Strobe" value="6">
+    <choice>Strobe</choice>
+    <choice xml:lang="de">Strobe</choice>
+    <choice xml:lang="it">Strobe</choice>
+  </enumChoice>
+  <enumChoice choice="Flickering" value="7">
+    <choice>Flickering light</choice>
+    <choice xml:lang="de">Flackerlicht</choice>
+    <choice xml:lang="it">Flickering light</choice>
+  </enumChoice>
+</enumVal>
