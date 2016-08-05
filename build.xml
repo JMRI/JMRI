@@ -486,27 +486,33 @@
          compilation - normal code, generated code and tests -->
 
     <target name="-java-compile-internal"> <!-- Internal target for compiling Java source from a specified directory -->
-        <javac compiler="modern"
-               srcdir="${java.source.directory}"
-               destdir="${target}"
-               source="${source_version}"
-               target="${jre_version}"
-               includeantruntime="false"
-               fork="true"
-               deprecation="${deprecation}"
-               debug="${java.debugging}">
-            <classpath refid="compile.class.path"/>
-            <compilerarg value="-Xlint:-unchecked"/>  <!-- off during 1.8 migration -->
-        </javac>
+        <java-compile javac.source="${java.source.directory}" javac.target="${target}" />
     </target>
 
+    <macrodef name="java-compile">
+        <attribute name="javac.source"/>
+        <attribute name="javac.target" default="${target}"/>
+        <attribute name="javac.deprecation" default="${deprecation}"/>
+        <sequential>
+            <javac compiler="modern"
+                   srcdir="@{javac.source}"
+                   destdir="@{javac.target}"
+                   source="${source_version}"
+                   target="${jre_version}"
+                   includeantruntime="false"
+                   fork="true"
+                   deprecation="@{javac.deprecation}"
+                   debug="${java.debugging}">
+                <classpath refid="compile.class.path"/>
+                <compilerarg value="-Xlint:-unchecked"/>  <!-- off during 1.8 migration -->
+            </javac>
+        </sequential>
+    </macrodef>
 
     <target name="compile-generated-source"
             depends="javacc, update-template-code"><!-- compile all generated Java source; internal target -->
         <!-- Compile the java code from ${genjavasrcdir} into ${target} -->
-        <antcall target="-java-compile-internal">
-            <param name="java.source.directory" value="${genjavasrcdir}"/>
-        </antcall>
+        <java-compile javac.source="${genjavasrcdir}"/>
         <copy todir="${target}/jmri" overwrite="true">
             <fileset dir="${genjavasrcdir}/jmri" includes="*.properties"/>
         </copy>
@@ -517,10 +523,7 @@
             description="compile source, omitting tests"
             depends="init, copyfiles, compile-generated-source">
         <!-- Compile the java code from ${source} into ${target} -->
-        <antcall target="-java-compile-internal">
-            <param name="java.source.directory" value="${source}"/>
-            <param name="deprecation" value="${deprecation}"/>
-        </antcall>
+        <java-compile javac.source="${source}"/>
     </target>
 
     <target name="ci-compile-deprecations"
@@ -551,9 +554,7 @@
             description="compile source with debugging on, omitting tests"
             depends="init, javacc, copyfiles, compile-generated-source">
         <!-- Compile the java code from ${source} into ${target} -->
-        <antcall target="-java-compile-internal">
-            <param name="java.source.directory" value="${source}"/>
-        </antcall>
+        <java-compile javac.source="${source}"/>
     </target>
 
 
