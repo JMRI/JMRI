@@ -128,22 +128,22 @@ public class XBeeNode extends IEEE802154Node {
      *  Convert the 16 bit user address to an XBeeAddress16 object.
      */
     public XBeeAddress16 getXBeeAddress16() {
-        return new XBeeAddress16(getUserAddress()[0],
-                getUserAddress()[1]);
+        return new XBeeAddress16(0xff & getUserAddress()[0],
+                0xff & getUserAddress()[1]);
     }
 
     /*
      *  Convert the 64 bit address to an XBeeAddress64 object.
      */
     public XBeeAddress64 getXBeeAddress64() {
-        return new XBeeAddress64(getGlobalAddress()[0],
-                getGlobalAddress()[1],
-                getGlobalAddress()[2],
-                getGlobalAddress()[3],
-                getGlobalAddress()[4],
-                getGlobalAddress()[5],
-                getGlobalAddress()[6],
-                getGlobalAddress()[7]);
+        return new XBeeAddress64(0xff & getGlobalAddress()[0],
+                0xff & getGlobalAddress()[1],
+                0xff & getGlobalAddress()[2],
+                0xff & getGlobalAddress()[3],
+                0xff & getGlobalAddress()[4],
+                0xff & getGlobalAddress()[5],
+                0xff & getGlobalAddress()[6],
+                0xff & getGlobalAddress()[7]);
     }
 
     /**
