@@ -113,16 +113,23 @@ public class XBeeTurnout extends AbstractTurnout {
      */
     protected void forwardCommandChangeToLayout(int s) {
         // get message 
-        XBeeMessage message = XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(), pin, s == Turnout.THROWN);
+        XBeeMessage message = XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(), pin, (s == Turnout.THROWN) ^ getInverted());
         // send the message
         tc.sendXBeeMessage(message, null);
         if (pin2 >= 0) {
-            XBeeMessage message2 = XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(), pin2, s == Turnout.CLOSED);
+            XBeeMessage message2 = XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(), pin2, (s == Turnout.CLOSED) ^ getInverted());
             // send the message
             tc.sendXBeeMessage(message2, null);
         }
     }
 
+    /**
+     * XBee turnouts do support inversion
+     */
+    public boolean canInvert() {
+        return true;
+    }
+    
     protected void turnoutPushbuttonLockout(boolean locked) {
     }
 
