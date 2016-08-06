@@ -6659,7 +6659,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             int selectedValue = JOptionPane.showOptionDialog(this,
                     usage, rb.getString("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"), rb.getString("ButtonCancel")}, rb.getString("ButtonYes"));
+                    new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"), Bundle.getMessage("ButtonCancel")}, rb.getString("ButtonYes"));
             if (selectedValue == 1) {
                 return (true); // return leaving the references in place but allow the icon to be deleted.
             }

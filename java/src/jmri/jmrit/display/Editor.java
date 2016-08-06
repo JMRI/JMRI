@@ -2413,25 +2413,42 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     protected JFrameItem makeAddIconFrame(String name, boolean add, boolean table, IconAdder editor) {
         log.debug("makeAddIconFrame for {}, add= {}, table= ", name, add, table);
         String txt;
+        String BundleName;
         JFrameItem frame = new JFrameItem(name, editor);
+        // use NamedBeanBundle property for basic beans like "Turnout" I18N
+        if ("Sensor".equals(name)) {
+            BundleName = "BeanNameSensor";
+        } else if ("SignalHead".equals(name)) {
+            BundleName = "BeanNameSignalHead";
+        } else if ("SignalMast".equals(name)) {
+            BundleName = "BeanNameSignalMast";
+        } else if ("Memory".equals(name)) {
+            BundleName = "BeanNameMemory";
+        } else if ("Reporter".equals(name)) {
+            BundleName = "BeanNameReporter";
+        } else if ("Light".equals(name)) {
+            BundleName = "BeanNameLight";
+        } else {
+            BundleName = name;
+        }
         if (editor != null) {
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             if (add) {
-                txt = java.text.MessageFormat.format(Bundle.getMessage("addItemToPanel"), Bundle.getMessage(name));
+                txt = java.text.MessageFormat.format(Bundle.getMessage("addItemToPanel"), Bundle.getMessage(BundleName));
             } else {
-                txt = java.text.MessageFormat.format(Bundle.getMessage("editItemInPanel"), Bundle.getMessage(name));
+                txt = java.text.MessageFormat.format(Bundle.getMessage("editItemInPanel"), Bundle.getMessage(BundleName));
             }
             p.add(new JLabel(txt));
             if (table) {
-                txt = java.text.MessageFormat.format(Bundle.getMessage("TableSelect"), Bundle.getMessage(name),
+                txt = java.text.MessageFormat.format(Bundle.getMessage("TableSelect"), Bundle.getMessage(BundleName),
                         (add ? Bundle.getMessage("ButtonAddIcon") : Bundle.getMessage("ButtonUpdateIcon")));
             } else {
                 if ("MultiSensor".equals(name)) {
                     txt = java.text.MessageFormat.format(Bundle.getMessage("SelectMultiSensor"),
                             (add ? Bundle.getMessage("ButtonAddIcon") : Bundle.getMessage("ButtonUpdateIcon")));
                 } else {
-                    txt = java.text.MessageFormat.format(Bundle.getMessage("IconSelect"), Bundle.getMessage(name),
+                    txt = java.text.MessageFormat.format(Bundle.getMessage("IconSelect"), Bundle.getMessage(BundleName),
                             (add ? Bundle.getMessage("ButtonAddIcon") : Bundle.getMessage("ButtonUpdateIcon")));
                 }
             }
@@ -2497,13 +2514,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 });
             }
         } else {
-            log.error("No icon editor specified for {}", name);
+            log.error("No icon editor specified for {}", name); //NOI18N
         }
         if (add) {
-            txt = java.text.MessageFormat.format(Bundle.getMessage("AddItem"), Bundle.getMessage(name));
+            txt = java.text.MessageFormat.format(Bundle.getMessage("AddItem"), Bundle.getMessage(BundleName));
             _iconEditorFrame.put(name, frame);
         } else {
-            txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage(name));
+            txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage(BundleName));
         }
         frame.setTitle(txt + " (" + getTitle() + ")");
         frame.pack();

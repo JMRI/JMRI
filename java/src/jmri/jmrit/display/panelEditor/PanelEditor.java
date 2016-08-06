@@ -290,7 +290,7 @@ public class PanelEditor extends Editor implements ItemListener {
         _addIconBox.addItem(new ComboBoxItem("RightTurnout"));
         _addIconBox.addItem(new ComboBoxItem("LeftTurnout"));
         _addIconBox.addItem(new ComboBoxItem("SlipTOEditor"));
-        _addIconBox.addItem(new ComboBoxItem("Sensor"));
+        _addIconBox.addItem(new ComboBoxItem("Sensor")); // NOI18N
         _addIconBox.addItem(new ComboBoxItem("SignalHead"));
         _addIconBox.addItem(new ComboBoxItem("SignalMast"));
         _addIconBox.addItem(new ComboBoxItem("Memory"));
@@ -467,6 +467,7 @@ public class PanelEditor extends Editor implements ItemListener {
     static class ComboBoxItem {
 
         String name;
+        String BundleName;
 
         ComboBoxItem(String n) {
             name = n;
@@ -478,7 +479,24 @@ public class PanelEditor extends Editor implements ItemListener {
 
         @Override
         public String toString() {
-            return Bundle.getMessage(name);
+            // I18N split Bundle name
+            // use NamedBeanBundle property for basic beans like "Turnout" I18N
+            if ("Sensor".equals(name)) {
+                BundleName = "BeanNameSensor";
+            } else if ("SignalHead".equals(name)) {
+                BundleName = "BeanNameSignalHead";
+            } else if ("SignalMast".equals(name)) {
+                BundleName = "BeanNameSignalMast";
+            } else if ("Memory".equals(name)) {
+                BundleName = "BeanNameMemory";
+            } else if ("Reporter".equals(name)) {
+                BundleName = "BeanNameReporter";
+            } else if ("Light".equals(name)) {
+                BundleName = "BeanNameLight";
+            } else {
+                BundleName = name;
+            }
+            return Bundle.getMessage(name); // TODO use NamedBeanBundle property for basic beans like "Turnout" I18N
         }
     }
 
@@ -1078,7 +1096,7 @@ public class PanelEditor extends Editor implements ItemListener {
         addItemPopUp(new ComboBoxItem("RightTurnout"), _add);
         addItemPopUp(new ComboBoxItem("LeftTurnout"), _add);
         addItemPopUp(new ComboBoxItem("SlipTOEditor"), _add);
-        addItemPopUp(new ComboBoxItem("Sensor"), _add);
+        addItemPopUp(new ComboBoxItem("Sensor"), _add); // NOI18N
         addItemPopUp(new ComboBoxItem("SignalHead"), _add);
         addItemPopUp(new ComboBoxItem("SignalMast"), _add);
         addItemPopUp(new ComboBoxItem("Memory"), _add);

@@ -64,7 +64,7 @@ public class IconDialog extends ItemDialog {
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         if (iconMap != null) {
             _iconMap = clone(iconMap);
-            makeDoneButtonPanel(buttonPanel, "doneButton");
+            makeDoneButtonPanel(buttonPanel, "ButtonDone");
         } else {
             _iconMap = ItemPanel.makeNewIconMap(type);
             makeDoneButtonPanel(buttonPanel, "addNewFamily");
@@ -127,7 +127,7 @@ public class IconDialog extends ItemDialog {
         });
         panel.add(doneButton);
 
-        JButton cancelButton = new JButton(Bundle.getMessage("cancelButton"));
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 dispose();

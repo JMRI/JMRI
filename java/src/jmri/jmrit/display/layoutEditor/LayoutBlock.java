@@ -649,8 +649,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                                             new Object[]{blockName, tPanel.getLayoutName(),
                                                 panel.getLayoutName()}), rb.getString("WarningTitle"),
                                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-                                    null, new Object[]{rb.getString("ButtonOK"),
-                                        rb.getString("ButtonOKPlus")}, rb.getString("ButtonOK"));
+                                    null, new Object[]{Bundle.getMessage("ButtonOK"),
+                                        rb.getString("ButtonOKPlus")}, Bundle.getMessage("ButtonOK"));
                             if (response != 0) // user elected to disable messages
                             {
                                 InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).turnOffWarning();
@@ -1372,8 +1372,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                                         new Object[]{blockName, tPanel.getLayoutName(),
                                             panel.getLayoutName()}), rb.getString("WarningTitle"),
                                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-                                null, new Object[]{rb.getString("ButtonOK"),
-                                    rb.getString("ButtonOKPlus")}, rb.getString("ButtonOK"));
+                                null, new Object[]{Bundle.getMessage("ButtonOK"),
+                                    rb.getString("ButtonOKPlus")}, Bundle.getMessage("ButtonOK"));
                         if (response != 0) // user elected to disable messages
                         {
                             InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).turnOffWarning();
@@ -2207,8 +2207,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                                         new Object[]{blockName, tPanel.getLayoutName(),
                                             panel.getLayoutName()}), rb.getString("WarningTitle"),
                                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-                                null, new Object[]{rb.getString("ButtonOK"),
-                                    rb.getString("ButtonOKPlus")}, rb.getString("ButtonOK"));
+                                null, new Object[]{Bundle.getMessage("ButtonOK"),
+                                    rb.getString("ButtonOKPlus")}, Bundle.getMessage("ButtonOK"));
                         if (response != 0) // user elected to disable messages
                         {
                             InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).turnOffWarning();

@@ -347,6 +347,9 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         return familyTOMap;
     }
 
+    /**
+     * Build the Control Panel Editor tabbed Item Panel frame & menus
+     */
     public ItemPalette(String title, Editor editor) {
         super(title, true, true);
 //        long t = System.currentTimeMillis();
@@ -370,6 +373,9 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         pack();
     }
 
+    /**
+     * Add the tabs on the the Control Panel Editor
+     */
     static void buildTabPane(ItemPalette palette, Editor editor) {
         _tabPane = new JTabbedPane();
         _tabIndex = new HashMap<String, ItemPanel>();
@@ -417,24 +423,24 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
 
         ItemPanel iconPanel = new IconItemPanel(palette, "Icon", editor);
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Icon"));
-        _tabIndex.put("Icon", itemPanel);
+        _tabIndex.put("Icon", iconPanel); // changed from "itemPanel"
 
         iconPanel = new BackgroundItemPanel(palette, "Background", editor);
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Background"));
-        _tabIndex.put("Background", itemPanel);
+        _tabIndex.put("Background", iconPanel);
 
         iconPanel = new TextItemPanel(palette, "Text", editor);
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Text"));
-        _tabIndex.put("Text", itemPanel);
+        _tabIndex.put("Text", iconPanel);
 
         iconPanel = new RPSItemPanel(palette, "RPSReporter", null, editor);
 //        itemPanel.init();		// show panel on start
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("RPSReporter"));
-        _tabIndex.put("RPSReporter", itemPanel);
+        _tabIndex.put("RPSReporter", iconPanel);
 
         iconPanel = new ClockItemPanel(palette, "FastClock", editor);
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("FastClock"));
-        _tabIndex.put("FastClock", itemPanel);
+        _tabIndex.put("FastClock", iconPanel);
 
         itemPanel = new IndicatorItemPanel(palette, "IndicatorTrack", null, editor);
         _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("IndicatorTrack"));
@@ -696,6 +702,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     static public String convertText(String name) {
         String cName = null;
         try {
+            // NOI18N
             cName = Bundle.getMessage(name);
         } catch (java.util.MissingResourceException mre) {
             try {

@@ -12100,6 +12100,7 @@ public class LayoutEditorTools {
 
     static class BeanDetails {
 
+        String BundleName;
         String beanString;
         JLabel textLabel;
 
@@ -12122,7 +12123,17 @@ public class LayoutEditorTools {
         BeanDetails(String beanType, jmri.Manager manager) {
             beanCombo = new JmriBeanComboBox(manager);
             beanCombo.setFirstItemBlank(true);
-            beanString = rb.getString(beanType);
+            // I18N translate from type (Sensor) to BeanNameSensor
+            // to use NamedBeanBundle property
+            if ("Sensor".equals(beanType)) {
+                BundleName = "BeanNameSensor";
+            } else if ("SignalMast".equals(beanType)) {
+                BundleName = "BeanNameSignalMast";
+            } else {
+                log.error("Unexpected value for BeanDetails");
+                BundleName = beanType;
+            }
+            beanString = rbean.getString(BundleName);
             textLabel = new JLabel(beanString);
             this.manager = manager;
             //this.beanType = beanType;

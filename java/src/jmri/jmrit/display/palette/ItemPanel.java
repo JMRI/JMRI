@@ -20,7 +20,9 @@ import org.slf4j.LoggerFactory;
 * Devices such as these have sets of icons to display their various states.
  * such sets are called a "family" in the code. These devices then may have sets
  * of families to provide the user with a choice of the icon set to use for a
- * particular device. The subclass FamilyItemPanel.java and its subclasses
+ * particular device.
+ * These sets/families are defined in an xml file stored as xml/defaultPanelIcons.xml
+ * The subclass FamilyItemPanel.java and its subclasses
  * handles these devices.
  * 
 * Other devices, e.g. backgrounds or memory, may use only one or no icon to
@@ -49,12 +51,13 @@ public abstract class ItemPanel extends JPanel {
     public ItemPanel(JmriJFrame parentFrame, String type, Editor editor) {
         _paletteFrame = parentFrame;
         _itemType = type;
+        // TODO when calling _itemType: use existing NamedBeanBundle property for basic beans like "Turnout", Sensor etc. I18N
         _editor = editor;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
     /**
-     * Initializes panel for selecting a new control panel item or for updating
+     * Initializes panel for selecting a new Control Panel item or for updating
      * an existing item. Adds table if item is a bean. i.e. customizes for the
      * item type
      */
@@ -91,7 +94,7 @@ public abstract class ItemPanel extends JPanel {
         "BeanStateInconsistent", "BeanStateUnknown"};
     static final String[] SENSOR = {"SensorStateActive", "SensorStateInactive",
         "BeanStateInconsistent", "BeanStateUnknown"};
-    static final String[] SIGNAL = {"SignalHeadStateRed", "SignalHeadStateYellow",
+    static final String[] SIGNALHEAD = {"SignalHeadStateRed", "SignalHeadStateYellow",
         "SignalHeadStateGreen", "SignalHeadStateDark",
         "SignalHeadStateHeld", "SignalHeadStateLunar",
         "SignalHeadStateFlashingRed", "SignalHeadStateFlashingYellow",
@@ -100,7 +103,7 @@ public abstract class ItemPanel extends JPanel {
         "BeanStateInconsistent", "BeanStateUnknown"};
     static final String[] MULTISENSOR = {"SensorStateInactive", "BeanStateInconsistent",
         "BeanStateUnknown", "first", "second", "third"};
-
+    // SIGNALMAST family is empty for now
     static final String[] RPSREPORTER = {"active", "error"};
     static final String[] ICON = {"Icon"};
     static final String[] BACKGROUND = {"Background"};
@@ -115,7 +118,7 @@ public abstract class ItemPanel extends JPanel {
         } else if (type.equals("Sensor")) {
             return SENSOR;
         } else if (type.equals("SignalHead")) {
-            return SIGNAL;
+            return SIGNALHEAD;
         } else if (type.equals("Light")) {
             return LIGHT;
         } else if (type.equals("MultiSensor")) {
@@ -154,6 +157,7 @@ public abstract class ItemPanel extends JPanel {
         for (int i = 0; i < names.length; i++) {
             if (map.get(names[i]) == null) {
                 NamedIcon icon = new jmri.jmrit.catalog.NamedIcon(redX, redX);
+                // store RedX as default icon if icon not set
                 map.put(names[i], icon);
             }
         }
