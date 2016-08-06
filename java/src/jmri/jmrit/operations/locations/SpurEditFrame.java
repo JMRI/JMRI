@@ -1,6 +1,7 @@
 // SpurEditFrame.java
 package jmri.jmrit.operations.locations;
 
+import java.awt.Color;
 import java.awt.GridBagLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -42,6 +43,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         addItem(panelSchedule, comboBoxSchedules, 0, 0);
         addItem(panelSchedule, editScheduleButton, 1, 0);
         addItem(panelSchedule, textSchError, 2, 0);
+        textSchError.setForeground(Color.RED);
 
         super.initComponents(location, track);
 
