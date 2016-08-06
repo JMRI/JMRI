@@ -563,6 +563,63 @@ public class XNetThrottleTest{
     }
 
     @Test(timeout=1000)
+    public void testSendFunctionGroup4V35() throws Exception {
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        int n = tc.outbound.size();
+        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+        //The first thing on the outbound queue should be a request for status.
+
+        // And the response to this is a message with the status.
+        XNetReply m = new XNetReply();
+        m.setElement(0, 0xE4);
+        m.setElement(1, 0x04);
+        m.setElement(2, 0x00);
+        m.setElement(3, 0x00);
+        m.setElement(4, 0x00);
+        m.setElement(5, 0xE0);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // which we're going to get a request for function momentary status in response to.
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        // And the response to this message with the status.
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+	// Sending the not supported message should make the throttle change
+        // state to idle, and then we can test what we really want to.
+
+        // in this case, we are sending function group 4.
+
+        t.sendFunctionGroup4();
+        int count=0;
+        while (n == tc.outbound.size() && count < 1000) {
+          count++;
+        } 
+
+        // if the loop exited early, we sent the message, and we
+        // shouldn't do that in this case.
+        Assert.assertEquals("loop exited",1000,count);
+
+    }
+
+    @Test(timeout=1000)
     public void testSendFunctionGroup5() throws Exception {
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         int n = tc.outbound.size();
@@ -628,6 +685,64 @@ public class XNetThrottleTest{
         n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
+
+    }
+
+    @Test(timeout=1000)
+    public void testSendFunctionGroup5v35() throws Exception {
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        int n = tc.outbound.size();
+        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+        //The first thing on the outbound queue should be a request for status.
+
+        // And the response to this is a message with the status.
+        XNetReply m = new XNetReply();
+        m.setElement(0, 0xE4);
+        m.setElement(1, 0x04);
+        m.setElement(2, 0x00);
+        m.setElement(3, 0x00);
+        m.setElement(4, 0x00);
+        m.setElement(5, 0xE0);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // which we're going to get a request for function momentary status in response to.
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        // And the response to this message with the status.
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+	// Sending the not supported message should make the throttle change
+        // state to idle, and then we can test what we really want to.
+
+        // in this case, we are sending function group 5.
+
+        t.sendFunctionGroup5();
+
+        int count=0;
+        while (n == tc.outbound.size() && count < 1000) {
+          count++;
+        } 
+
+        // if the loop exited early, we sent the message, and we
+        // shouldn't do that in this case.
+        Assert.assertEquals("loop exited",1000,count);
 
     }
 
