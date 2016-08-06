@@ -46,7 +46,7 @@ public class JsonWebSocket {
                 }
             };
             log.debug("Sending hello");
-            this.handler.sendHello(JsonServerPreferences.getDefault().getHeartbeatInterval());
+            this.handler.onMessage(JsonClientHandler.HELLO_MSG);
         } catch (IOException e) {
             log.warn("Error opening WebSocket:\n{}", e.getMessage());
             sn.close();
