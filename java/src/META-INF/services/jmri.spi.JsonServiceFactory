@@ -5,6 +5,7 @@ jmri.server.json.layoutblock.JsonLayoutBlockServiceFactory
 jmri.server.json.light.JsonLightServiceFactory
 jmri.server.json.memory.JsonMemoryServiceFactory
 jmri.server.json.power.JsonPowerServiceFactory
+jmri.server.json.reporter.JsonReporterServiceFactory
 jmri.server.json.roster.JsonRosterServiceFactory
 jmri.server.json.route.JsonRouteServiceFactory
 jmri.server.json.sensor.JsonSensorServiceFactory

@@ -15,8 +15,6 @@ import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.PANELS;
 import static jmri.server.json.JSON.PING;
 import static jmri.server.json.JSON.PROGRAMMER;
-import static jmri.server.json.JSON.REPORTER;
-import static jmri.server.json.JSON.REPORTERS;
 import static jmri.server.json.JSON.SIGNAL_HEAD;
 import static jmri.server.json.JSON.SIGNAL_HEADS;
 import static jmri.server.json.JSON.SIGNAL_MAST;
@@ -185,9 +183,6 @@ public class JsonClientHandler {
                     case PANELS:
                         reply = JsonUtil.getPanels(this.connection.getLocale(), (data.path(FORMAT).isMissingNode()) ? XML : data.path(FORMAT).asText());
                         break;
-                    case REPORTERS:
-                        reply = JsonUtil.getReporters(this.connection.getLocale());
-                        break;
                     case SIGNAL_HEADS:
                         reply = JsonUtil.getSignalHeads(this.connection.getLocale());
                         break;
@@ -223,9 +218,6 @@ public class JsonClientHandler {
                         break;
                     case SIGNAL_MAST:
                         this.signalMastServer.parseRequest(this.connection.getLocale(), data);
-                        break;
-                    case REPORTER:
-                        this.reporterServer.parseRequest(this.connection.getLocale(), data);
                         break;
                     case TRAIN:
                         this.operationsServer.parseTrainRequest(this.connection.getLocale(), data);
