@@ -1,8 +1,10 @@
 package jmri.jmrit.operations.automation.actions;
 
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
+import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +30,7 @@ public class RunTrainAction extends Action {
                 finishAction(false);
                 return;
             }
-            if (!TrainCustomManifest.manifestCreatorFileExists()) {
+            if (!TrainCustomManifest.fileExists()) {
                 log.warn("Manifest creator file not found!, directory name: {}, file name: {}", TrainCustomManifest
                         .getDirectoryName(), TrainCustomManifest.getFileName());
                 finishAction(false);
@@ -47,7 +49,18 @@ public class RunTrainAction extends Action {
                 return;
             }
             setRunning(true);
-            new TrainCustomManifest().checkProcessComplete(); // this will wait thread
+            // this can wait thread
+            if (!new TrainCustomSwitchList().checkProcessReady()) {
+                log.warn(
+                        "Timeout waiting for excel switch list program to complete previous opeation, timeout value: {} seconds",
+                        Control.excelWaitTime);                
+            }
+            // the next line can wait thread
+            if (!new TrainCustomManifest().checkProcessReady()) {
+                log.warn(
+                        "Timeout waiting for excel manifest program to complete previous opeation, train ({}), timeout value: {} seconds",
+                        train.getName(), Control.excelWaitTime);
+            }
             TrainCustomManifest.addCVSFile(train.createCSVManifestFile());
             boolean status = TrainCustomManifest.process();
             if (status) {

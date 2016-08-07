@@ -520,8 +520,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     @Override
-    public Object getValueAt(int row, int col) {
-        if (row >= sysList.size()) {
+    public synchronized Object getValueAt(int row, int col) {
+        if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
         Car car = (Car) sysList.get(row);
@@ -614,7 +614,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     CarSetFrame csf = null;
 
     @Override
-    public void setValueAt(Object value, int row, int col) {
+    public synchronized void setValueAt(Object value, int row, int col) {
         Car car = (Car) sysList.get(row);
         switch (col) {
             case SELECT_COLUMN:

@@ -172,7 +172,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 
     @Override
     public synchronized Object getValueAt(int row, int col) {
-        if (row >= sysList.size()) {
+        if (row >= getRowCount()) {
             return "ERROR unknown " + row; // NOI18N
         }
         Route route = sysList.get(row);
@@ -200,7 +200,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     @Override
-    public void setValueAt(Object value, int row, int col) {
+    public synchronized void setValueAt(Object value, int row, int col) {
         switch (col) {
             case EDIT_COLUMN:
                 editRoute(row);

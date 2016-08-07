@@ -9,6 +9,7 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCsvSwitchLists;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainSwitchLists;
+import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +60,18 @@ public class RunSwitchListChangesAction extends Action {
             setRunning(true);
             TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
             TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
-            new TrainCustomSwitchList().checkProcessComplete(); // this can wait thread
+            // this can wait thread
+            if (!new TrainCustomManifest().checkProcessReady()) {
+                log.warn(
+                        "Timeout waiting for excel manifest program to complete previous opeation, timeout value: {} seconds",
+                        Control.excelWaitTime);
+            }
+            // this can wait thread
+            if (!new TrainCustomSwitchList().checkProcessReady()) {
+                log.warn(
+                        "Timeout waiting for excel switch list program to complete previous opeation, timeout value: {} seconds",
+                        Control.excelWaitTime);                
+            }
             for (Location location : LocationManager.instance().getLocationsByNameList()) {
                 if (location.isSwitchListEnabled() &&
                         (!isChanged || (isChanged && location.getStatus().equals(Location.MODIFIED)))) {

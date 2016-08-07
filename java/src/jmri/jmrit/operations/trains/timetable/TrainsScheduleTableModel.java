@@ -184,7 +184,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 
     @Override
     public synchronized Object getValueAt(int row, int col) {
-        if (row >= sysList.size()) {
+        if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
         Train train = sysList.get(row);

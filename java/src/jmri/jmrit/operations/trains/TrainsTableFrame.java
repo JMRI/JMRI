@@ -369,7 +369,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         }
         if (ae.getSource() == runFileButton) {
             // Processes the CSV Manifest files using an external custom program.
-            if (!TrainCustomManifest.manifestCreatorFileExists()) {
+            if (!TrainCustomManifest.fileExists()) {
                 log.warn("Manifest creator file not found!, directory name: " + TrainCustomManifest.getDirectoryName()
                         + ", file name: " + TrainCustomManifest.getFileName()); // NOI18N
                 JOptionPane.showMessageDialog(this, MessageFormat.format(

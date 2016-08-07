@@ -44,7 +44,7 @@ public class SetupExcelProgramManifestFrame extends SetupExcelProgramFrame {
         TrainCustomManifest.setFileName(fileNameTextField.getText());
 
         if (ae.getSource() == testButton) {
-            if (TrainCustomManifest.manifestCreatorFileExists()) {
+            if (TrainCustomManifest.fileExists()) {
                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("DirectoryNameFileName"),
                         new Object[]{TrainCustomManifest.getDirectoryName(), TrainCustomManifest.getFileName()}),
                         Bundle.getMessage("ManifestCreatorFound"), JOptionPane.INFORMATION_MESSAGE);

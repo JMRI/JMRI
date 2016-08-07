@@ -98,7 +98,7 @@ public class TrainCustomManifest {
         // JOptionPane.ERROR_MESSAGE);
         // return false;
         // }
-        if (!manifestCreatorFileExists()) {
+        if (!fileExists()) {
             return false;
         }
 
@@ -122,13 +122,13 @@ public class TrainCustomManifest {
         return true;
     }
 
-    public static boolean manifestCreatorFileExists() {
+    public static boolean fileExists() {
         File file = new File(OperationsManager.getInstance().getFile(getDirectoryName()), getFileName());
         return file.exists();
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT")
-    public void checkProcessComplete() {
+    public boolean checkProcessReady() {
         if (alive) {
             int loopCount = Control.excelWaitTime; // number of seconds to wait
             while (loopCount > 0 && alive) {
@@ -143,6 +143,7 @@ public class TrainCustomManifest {
                 }
             }
         }
+        return !alive;
     }
 
     public static boolean isProcessAlive() {

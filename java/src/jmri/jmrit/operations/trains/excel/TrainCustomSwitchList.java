@@ -10,6 +10,7 @@ import jmri.util.FileUtil;
 import jmri.util.SystemType;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
+import org.python.jline.internal.Log;
 
 public class TrainCustomSwitchList {
 
@@ -134,7 +135,7 @@ public class TrainCustomSwitchList {
     }
     
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT")
-    public void checkProcessComplete() {
+    public boolean checkProcessReady() {
         if (alive) {
             int loopCount = Control.excelWaitTime; // number of seconds to wait
             while (loopCount > 0 && alive) {
@@ -149,6 +150,7 @@ public class TrainCustomSwitchList {
                 }
             }
         }
+        return !alive;
     }
     
     public static boolean isProcessAlive() {
@@ -162,7 +164,9 @@ public class TrainCustomSwitchList {
     static boolean alive = false;
     public static void waitForProcessToComplete(int waitTimeSeconds) throws InterruptedException {
         synchronized (process) {
+            Log.debug("Waiting for custom switch list to complete");
             process.waitFor(waitTimeSeconds, TimeUnit.SECONDS);
+            Log.debug("Custom switch list complete!");
         }
         alive = false;
     }

@@ -264,8 +264,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
 
     @Override
-    public Object getValueAt(int row, int col) {
-        if (row >= _list.size()) {
+    public synchronized Object getValueAt(int row, int col) {
+        if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
         ScheduleItem si = _list.get(row);
@@ -314,7 +314,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
 
     @Override
-    public void setValueAt(Object value, int row, int col) {
+    public synchronized void setValueAt(Object value, int row, int col) {
         if (value == null) {
             log.debug("Warning schedule table row {} still in edit", row);
             return;

@@ -252,7 +252,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     @Override
-    public void setValueAt(Object value, int row, int col) {
+    public synchronized void setValueAt(Object value, int row, int col) {
         switch (col) {
             case ACTIONCOLUMN:
                 launchYardmaster(row);
