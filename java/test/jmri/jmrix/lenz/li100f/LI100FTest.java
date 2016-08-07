@@ -26,6 +26,7 @@ public class LI100FTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.lenz.li100f.LI100FTest");  // no tests in this class itself
         suite.addTest(new TestSuite(LI100AdapterTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
         return suite;
     }
 

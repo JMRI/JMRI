@@ -26,6 +26,7 @@ public class XNetSimulatorTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.lenz.xnetsimulator.XNetSimulatorTest");  // no tests in this class itself
         suite.addTest(new TestSuite(XNetSimulatorAdapterTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
         return suite;
     }
 
