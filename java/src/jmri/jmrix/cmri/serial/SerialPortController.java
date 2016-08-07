@@ -1,4 +1,3 @@
-// SerialPortController.java
 package jmri.jmrix.cmri.serial;
 
 import java.io.DataInputStream;
@@ -9,7 +8,6 @@ import jmri.jmrix.SystemConnectionMemo;
  * Abstract base for classes representing a CMRI communications port
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPortController {
     // base class. Implementations will provide InputStream and OutputStream
@@ -28,6 +26,3 @@ public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPort
     // check that this object is ready to operate
     public abstract boolean status();
 }
-
-
-/* @(#)SerialPortController.java */

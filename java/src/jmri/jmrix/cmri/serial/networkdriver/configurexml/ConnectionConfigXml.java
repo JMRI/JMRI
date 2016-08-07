@@ -22,7 +22,6 @@ import org.jdom2.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2015
  * @author kcameron Copyright (C) 2010 added multiple connections
- * @version $Revision: 28746 $
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 

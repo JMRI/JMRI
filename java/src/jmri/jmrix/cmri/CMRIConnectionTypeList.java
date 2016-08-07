@@ -1,4 +1,3 @@
-// CMRIConnectionTypeList.java
 package jmri.jmrix.cmri;
 
 /**
@@ -6,7 +5,6 @@ package jmri.jmrix.cmri;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
  *
  */
 public class CMRIConnectionTypeList implements jmri.jmrix.ConnectionTypeList {

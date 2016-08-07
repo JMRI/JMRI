@@ -1,4 +1,3 @@
-// SerialLightManagerXml.java
 package jmri.jmrix.cmri.serial.configurexml;
 
 import jmri.jmrix.cmri.serial.SerialLightManager;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Based on SerialTurnoutManagerXml.java
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision$
  */
 public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 

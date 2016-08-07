@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * JUnit tests for the SerialAddress utility class.
  *
  * @author	Dave Duchamp Copyright 2004
- * @version	$Revision$
  */
 public class SerialAddressTest extends TestCase {
 
