@@ -1,6 +1,7 @@
 // TrainsEditFrame.java
 package jmri.jmrit.operations.trains;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
@@ -880,6 +881,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         if (route != null) {
             if (!route.getStatus().equals(Route.OKAY)) {
                 textRouteStatus.setText(route.getStatus());
+                textRouteStatus.setForeground(Color.RED);
             }
             List<RouteLocation> routeList = route.getLocationsBySequenceList();
             for (int i = 0; i < routeList.size(); i++) {
