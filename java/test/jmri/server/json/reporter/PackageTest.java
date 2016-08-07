@@ -1,4 +1,4 @@
-package jmri.server;
+package jmri.server.json.reporter;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -11,7 +11,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
     BundleTest.class,
-    jmri.server.json.PackageTest.class
+    JsonReporterHttpServiceTest.class,
+    JsonReporterSocketServiceTest.class
 })
 public class PackageTest {
 }

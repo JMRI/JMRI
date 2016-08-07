@@ -59,7 +59,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.web.PackageTest.suite());
         suite.addTest(jmri.jmris.PackageTest.suite());
         suite.addTest(jmri.profile.PackageTest.suite());
-        suite.addTest(jmri.server.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.server.PackageTest.class));
         suite.addTest(jmri.script.PackageTest.suite());
         return suite;
     }
