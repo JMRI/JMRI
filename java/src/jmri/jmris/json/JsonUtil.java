@@ -1,11 +1,14 @@
 package jmri.jmris.json;
 
-import static jmri.server.json.JSON.*;
 import static jmri.jmrit.operations.trains.TrainCommon.splitString;
+import static jmri.server.json.JSON.*;
 import static jmri.server.json.JsonException.CODE;
 import static jmri.server.json.JsonException.ERROR;
 import static jmri.server.json.JsonException.MESSAGE;
 import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
+import static jmri.server.json.reporter.JsonReporter.LAST_REPORT;
+import static jmri.server.json.reporter.JsonReporter.REPORT;
+import static jmri.server.json.reporter.JsonReporter.REPORTER;
 import static jmri.server.json.roster.JsonRoster.ROSTER;
 import static jmri.server.json.roster.JsonRoster.ROSTER_ENTRY;
 import static jmri.server.json.roster.JsonRoster.ROSTER_GROUP;
