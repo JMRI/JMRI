@@ -341,7 +341,7 @@
   <variable item="F1(r) controls output 2" CV="47" mask="XXXXXXVX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
   </variable>
-  <variable item="F1(r) controls output 3" CV="47" mask="XXXXXVXX" default="0">
+  <variable item="F1(r) controls output 3" CV="47" mask="XXXXXVXX" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
   </variable>
   <variable item="F1(r) controls output 4" CV="47" mask="XXXXVXXX" default="0">

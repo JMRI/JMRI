@@ -151,7 +151,8 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
             if (value != JOptionPane.YES_OPTION) {
                 value = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
                         .getMessage("UpdateTrainIconRoute"), new Object[]{_route.getName()}), Bundle
-                        .getMessage("DoYouWantThisRoute"), JOptionPane.YES_NO_OPTION);
+                                .getMessage("DoYouWantThisRoute"),
+                        JOptionPane.YES_NO_OPTION);
             }
             if (value == JOptionPane.YES_OPTION) {
                 saveButton.setEnabled(true);
@@ -309,7 +310,9 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
     @Override
     public void dispose() {
         removeIcons();
-        _route.removePropertyChangeListener(this);
+        if (_route != null) {
+            _route.removePropertyChangeListener(this);
+        }
         if (_rl != null) {
             _rl.removePropertyChangeListener(this);
         }
@@ -319,7 +322,8 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
-            log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue());
+            log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(),
+                    e.getNewValue());
         }
         if (e.getSource().equals(_route)) {
             updateRoute();

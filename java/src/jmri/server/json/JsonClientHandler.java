@@ -48,6 +48,12 @@ import org.slf4j.LoggerFactory;
 
 public class JsonClientHandler {
 
+    /**
+     * When used as a parameter to
+     * {@link #onMessage(java.lang.String)}, will cause a
+     * {@value jmri.server.json.JSON#HELLO} message to be sent to the client.
+     */
+    public static final String HELLO_MSG = "{\"" + JSON.TYPE + "\":\"" + JSON.HELLO + "\"}";
     private final JsonConsistServer consistServer;
     private final JsonOperationsServer operationsServer;
     private final JsonProgrammerServer programmerServer;
@@ -258,13 +264,14 @@ public class JsonClientHandler {
     /**
      *
      * @param heartbeat seconds until heartbeat must be received before breaking
-     *                  connection to client.
+     *                  connection to client; currently ignored
      * @throws IOException if communications broken with client
-     * @deprecated since 4.5.2 without direct replacement
+     * @deprecated since 4.5.2; use {@link #onMessage(java.lang.String)} with
+     * the parameter {@link #HELLO_MSG} instead
      */
     @Deprecated
     public void sendHello(int heartbeat) throws IOException {
-        this.connection.sendMessage(JsonUtil.getHello(this.connection.getLocale(), heartbeat));
+        this.onMessage(HELLO_MSG);
     }
 
     private void sendErrorMessage(int code, String message) throws IOException {
