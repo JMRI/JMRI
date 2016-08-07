@@ -202,7 +202,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     sample.setBackground(color);
                     sample.setOpaque(true);
                 }
-                doPopupUtility("Active", ACTIVE_FONT, sample, _util, true);
+                doPopupUtility("SensorStateActive", ACTIVE_FONT, sample, _util, true);
 
                 sample = new PositionableLabel(si.getInactiveText(), _editor);
                 sample.setForeground(si.getTextInActive());
@@ -211,7 +211,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     sample.setBackground(color);
                     sample.setOpaque(true);
                 }
-                doPopupUtility("InActive", INACTIVE_FONT, sample, _util, true);
+                doPopupUtility("SensorStateInactive", INACTIVE_FONT, sample, _util, true);
 
                 sample = new PositionableLabel(si.getUnknownText(), _editor);
                 sample.setForeground(si.getTextUnknown());
@@ -220,7 +220,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     sample.setBackground(color);
                     sample.setOpaque(true);
                 }
-                doPopupUtility("Unknown", UNKOWN_FONT, sample, _util, true);
+                doPopupUtility("BeanStateUnknown", UNKOWN_FONT, sample, _util, true);
 
                 sample = new PositionableLabel(si.getInconsistentText(), _editor);
                 sample.setForeground(si.getTextInconsistent());
@@ -229,7 +229,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     sample.setBackground(color);
                     sample.setOpaque(true);
                 }
-                doPopupUtility("Inconsistent", INCONSISTENT_FONT, sample, _util, true);
+                doPopupUtility("BeanStateInconsistent", INCONSISTENT_FONT, sample, _util, true);
             }
         } else { // not a SensorIcon
             PositionableLabel sample = new PositionableLabel(text, _editor);
