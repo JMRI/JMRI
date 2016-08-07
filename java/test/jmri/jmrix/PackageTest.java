@@ -45,6 +45,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.direct.PackageTest.suite());
         suite.addTest(jmri.jmrix.easydcc.PackageTest.suite());
         suite.addTest(jmri.jmrix.grapevine.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.internal.PackageTest.class));
         suite.addTest(jmri.jmrix.jmriclient.PackageTest.suite());
         suite.addTest(jmri.jmrix.lenz.PackageTest.suite());
         suite.addTest(jmri.jmrix.loconet.PackageTest.suite());

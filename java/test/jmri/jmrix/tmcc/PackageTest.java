@@ -32,6 +32,7 @@ public class PackageTest extends TestCase {
         suite.addTest(SerialReplyTest.suite());
         suite.addTest(SerialTrafficControllerTest.suite());
         suite.addTest(SerialAddressTest.suite());
+ 	suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.tmcc.serialdriver.PackageTest.class));
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.tmcc.serialmon.SerialMonFrameTest.suite());
         }
