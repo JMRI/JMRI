@@ -48,6 +48,8 @@ public interface Reporter extends NamedBean {
      * current report available. If there is a current report, both this and the
      * current report will be equal. If nothing has ever been reported, this
      * will return a null object.
+     *
+     * @return the last report or null
      */
     public Object getLastReport();
 
@@ -55,6 +57,8 @@ public interface Reporter extends NamedBean {
      * Query the current report. If there is no current report available (e.g.
      * the reporting hardware says no information is currently available) this
      * will return a null object.
+     *
+     * @return the current report or null
      */
     public Object getCurrentReport();
 
@@ -66,13 +70,16 @@ public interface Reporter extends NamedBean {
      * classes. But there are occasionally reasons to set it from inside the
      * program, e.g. debugging via entering values in the Reporter Table. Hence
      * provision of this method.
+     *
+     * @param r the report
      */
     public void setReport(Object r);
 
     /**
-     * Provide an int form of the last report.
+     * Provide an integer form of the last report.
      *
      */
+    @Override
     public int getState();
 
 }
