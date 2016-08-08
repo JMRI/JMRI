@@ -343,8 +343,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     }
 
     @Override
-    public Object getValueAt(int row, int col) {
-        if (row >= sysList.size()) {
+    public synchronized Object getValueAt(int row, int col) {
+        if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
         Engine eng = (Engine) sysList.get(row);
@@ -423,7 +423,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     EngineSetFrame engineSetFrame = null;
 
     @Override
-    public void setValueAt(Object value, int row, int col) {
+    public synchronized void setValueAt(Object value, int row, int col) {
         Engine engine = (Engine) sysList.get(row);
         switch (col) {
             case SET_COLUMN:
