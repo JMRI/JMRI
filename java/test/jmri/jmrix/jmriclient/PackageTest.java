@@ -8,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.jmriclient package
  *
  * @author	Bob Jacobsen
- * @version	$Revision: 18472 $
  */
 public class PackageTest extends TestCase {
 
@@ -38,8 +37,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(JMRIClientSystemConnectionMemoTest.class));
         suite.addTest(new TestSuite(JMRIClientPowerManagerTest.class));
         suite.addTest(BundleTest.suite());
-
-        // if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.jmriclient.networkdriver.PackageTest.class));
+// if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
         // there are currently no swing tests.
         // }
         return suite;
