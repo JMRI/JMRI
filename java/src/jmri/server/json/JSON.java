@@ -191,10 +191,6 @@ public final class JSON {
      */
     public static final String PANELS = "panels"; // NOI18N
     /**
-     * {@value #REPORTERS}
-     */
-    public static final String REPORTERS = "reporters"; // NOI18N
-    /**
      * {@value #ROUTES}
      */
     public static final String ROUTES = "routes"; // NOI18N
@@ -282,10 +278,6 @@ public final class JSON {
      * {@value #SIGNAL_MAST}
      */
     public static final String SIGNAL_MAST = "signalMast"; // NOI18N
-    /**
-     * {@value #REPORTER}
-     */
-    public static final String REPORTER = "reporter"; // NOI18N
     /**
      * {@value #THROTTLE}
      */
@@ -412,16 +404,6 @@ public final class JSON {
      * {@value #WRITE}
      */
     public static final String WRITE = "write"; // NOI18N
-
-    /* JSON reporter tokens */
-    /**
-     * {@value #REPORT}
-     */
-    public static final String REPORT = "report"; // NOI18N
-    /**
-     * {@value #LAST_REPORT}
-     */
-    public static final String LAST_REPORT = "lastReport"; // NOI18N
 
     /* JSON roster and car/engine (operations) tokens */
     /**
