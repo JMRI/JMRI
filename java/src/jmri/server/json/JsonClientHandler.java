@@ -5,14 +5,12 @@ import static jmri.server.json.JSON.CONSIST;
 import static jmri.server.json.JSON.CONSISTS;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.ENGINES;
-import static jmri.server.json.JSON.FORMAT;
 import static jmri.server.json.JSON.GOODBYE;
 import static jmri.server.json.JSON.HELLO;
 import static jmri.server.json.JSON.LIST;
 import static jmri.server.json.JSON.LOCALE;
 import static jmri.server.json.JSON.LOCATIONS;
 import static jmri.server.json.JSON.METHOD;
-import static jmri.server.json.JSON.PANELS;
 import static jmri.server.json.JSON.PING;
 import static jmri.server.json.JSON.PROGRAMMER;
 import static jmri.server.json.JSON.SIGNAL_HEAD;
@@ -22,7 +20,6 @@ import static jmri.server.json.JSON.SIGNAL_MASTS;
 import static jmri.server.json.JSON.TRAIN;
 import static jmri.server.json.JSON.TRAINS;
 import static jmri.server.json.JSON.TYPE;
-import static jmri.server.json.JSON.XML;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -179,9 +176,6 @@ public class JsonClientHandler {
                         break;
                     case LOCATIONS:
                         reply = JsonUtil.getLocations(this.connection.getLocale());
-                        break;
-                    case PANELS:
-                        reply = JsonUtil.getPanels(this.connection.getLocale(), (data.path(FORMAT).isMissingNode()) ? XML : data.path(FORMAT).asText());
                         break;
                     case SIGNAL_HEADS:
                         reply = JsonUtil.getSignalHeads(this.connection.getLocale());
