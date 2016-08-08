@@ -45,6 +45,10 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.nce.BundleTest.suite());
         suite.addTest(jmri.jmrix.nce.clockmon.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(NceConsistTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.nce.networkdriver.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.nce.usbdriver.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.nce.serialdriver.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.nce.simulator.PackageTest.class));
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.nce.ncemon.NceMonPanelTest.suite());
             suite.addTest(jmri.jmrix.nce.packetgen.NcePacketGenPanelTest.suite());

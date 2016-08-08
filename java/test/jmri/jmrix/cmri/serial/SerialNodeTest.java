@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen Copyright 2003
  * @author	Dave Duchamp multi-node extensions 2003
- * @version	$Revision$
  */
 public class SerialNodeTest extends TestCase {
 

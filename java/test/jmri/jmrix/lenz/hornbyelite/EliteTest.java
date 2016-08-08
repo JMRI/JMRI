@@ -34,6 +34,7 @@ public class EliteTest extends TestCase {
         suite.addTest(new TestSuite(EliteXNetTurnoutTest.class));
         suite.addTest(new TestSuite(EliteXNetTurnoutManagerTest.class));
         suite.addTest(new TestSuite(EliteXNetProgrammerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
         return suite;
     }
 

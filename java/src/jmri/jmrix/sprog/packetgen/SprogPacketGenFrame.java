@@ -1,30 +1,27 @@
-// SprogPacketGenFrame.java
 package jmri.jmrix.sprog.packetgen;
 
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogTrafficController;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
  * Frame for user input of Sprog messages.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2010
- * @version	$Revision$
  */
 public class SprogPacketGenFrame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 641828887730689784L;
+    private SprogSystemConnectionMemo _memo = null;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
-    public SprogPacketGenFrame() {
+    public SprogPacketGenFrame(SprogSystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
     public void initComponents() throws Exception {
@@ -64,7 +61,7 @@ public class SprogPacketGenFrame extends jmri.util.JmriJFrame {
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         SprogMessage m = new SprogMessage(packetTextField.getText());
-        SprogTrafficController.instance().sendSprogMessage(m);
+        _memo.getSprogTrafficController().sendSprogMessage(m);
     }
 
 }

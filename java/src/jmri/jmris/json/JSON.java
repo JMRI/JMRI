@@ -2,6 +2,7 @@ package jmri.jmris.json;
 
 import jmri.server.json.JsonException;
 import jmri.server.json.power.JsonPowerServiceFactory;
+import jmri.server.json.reporter.JsonReporter;
 import jmri.server.json.roster.JsonRoster;
 import jmri.server.json.sensor.JsonSensorServiceFactory;
 import jmri.server.json.throttle.JsonThrottle;
@@ -225,7 +226,7 @@ public final class JSON {
     /**
      * {@value #REPORTERS}
      */
-    public static final String REPORTERS = "reporters"; // NOI18N
+    public static final String REPORTERS = JsonReporter.REPORTERS; // NOI18N
     /**
      * {@value #ROSTER}
      *
@@ -351,7 +352,7 @@ public final class JSON {
     /**
      * {@value #REPORTER}
      */
-    public static final String REPORTER = "reporter"; // NOI18N
+    public static final String REPORTER = JsonReporter.REPORTER; // NOI18N
     /**
      * {@value #ROSTER_ENTRY}
      *
@@ -473,11 +474,11 @@ public final class JSON {
     /**
      * {@value #REPORT}
      */
-    public static final String REPORT = "report"; // NOI18N
+    public static final String REPORT = JsonReporter.REPORT; // NOI18N
     /**
      * {@value #LAST_REPORT}
      */
-    public static final String LAST_REPORT = "lastReport"; // NOI18N
+    public static final String LAST_REPORT = JsonReporter.LAST_REPORT; // NOI18N
 
     /* JSON roster and car/engine (operations) tokens */
     /**

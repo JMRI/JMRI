@@ -1,30 +1,27 @@
-// SprogConsoleAction.java
 package jmri.jmrix.sprog.console;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
  * Swing action to create and register a SprogConsoleFrame object
  *
  * @author	Andrew Crosland Copyright (C) 2008
- * @version	$Revision$
  */
 public class SprogConsoleAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3259877478074718099L;
+    private SprogSystemConnectionMemo _memo;
 
-    public SprogConsoleAction(String s) {
+    public SprogConsoleAction(String s,SprogSystemConnectionMemo memo) {
         super(s);
+        _memo = memo;
     }
 
     public void actionPerformed(ActionEvent e) {
-        SprogConsoleFrame f = new SprogConsoleFrame();
+        SprogConsoleFrame f = new SprogConsoleFrame(_memo);
         try {
             f.initComponents();
         } catch (Exception ex) {

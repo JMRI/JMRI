@@ -25,9 +25,18 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
-        adapter = SprogNanoSerialDriverAdapter.instance();
+        if (adapter == null) {
+            adapter = new SprogNanoSerialDriverAdapter();
+        }
     }
+
+    @Override
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig) object).getAdapter();
+    }
+
 
     @Override
     protected void register() {
