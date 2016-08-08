@@ -723,7 +723,7 @@ environment.
             <li><a href="http://junit.sourceforge.net/javadoc/org/junit/Assume.html">Assumptions</a>
                     - to conditionally ignore a test. For example, a test that would fail in a headless environment 
                     can be ignored in headless mode if the first line of the test method is:<br>
-                    <code>Assume.assumeTrue(!GraphicsEnvironment.isHeadless());</code>
+                    <code>Assume.assumeFalse(GraphicsEnvironment.isHeadless());</code>
         </ul>
 
         <p><a href="https://github.com/rhwood/JMRI/blob/12a4b433fb704c3454480fdc576def16f0271b2c/java/test/jmri/server/json/roster/JsonRosterHttpServiceTest.java">Example of JUnit4 test</a>
