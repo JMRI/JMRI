@@ -295,7 +295,7 @@ public class CircuitBuilder {
         }
         if (!WarrantTableAction.showPathPortalErrors()) {
             JOptionPane.showMessageDialog(_editCircuitFrame,
-                    Bundle.getMessage("blocksEtcOK"), Bundle.getMessage("OK"),
+                    Bundle.getMessage("blocksEtcOK"), Bundle.getMessage("ButtonOK"),
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -619,9 +619,9 @@ public class CircuitBuilder {
         c.gridx = 0;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.EAST;
-        p.add(new JLabel(Bundle.getMessage("SystemName")), c);
+        p.add(new JLabel(Bundle.getMessage("ColumnSystemName")), c);
         c.gridy = 1;
-        p.add(new JLabel(Bundle.getMessage("UserName")), c);
+        p.add(new JLabel(Bundle.getMessage("ColumnUserName")), c);
         c.gridx = 1;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.WEST;

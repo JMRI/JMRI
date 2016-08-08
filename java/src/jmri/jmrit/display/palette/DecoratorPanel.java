@@ -202,7 +202,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     sample.setBackground(color);
                     sample.setOpaque(true);
                 }
-                doPopupUtility("SensorStateActive", ACTIVE_FONT, sample, _util, true);
+                doPopupUtility("Active", ACTIVE_FONT, sample, _util, true);
 
                 sample = new PositionableLabel(si.getInactiveText(), _editor);
                 sample.setForeground(si.getTextInActive());
@@ -211,7 +211,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     sample.setBackground(color);
                     sample.setOpaque(true);
                 }
-                doPopupUtility("SensorStateInactive", INACTIVE_FONT, sample, _util, true);
+                doPopupUtility("InActive", INACTIVE_FONT, sample, _util, true);
 
                 sample = new PositionableLabel(si.getUnknownText(), _editor);
                 sample.setForeground(si.getTextUnknown());
@@ -220,7 +220,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     sample.setBackground(color);
                     sample.setOpaque(true);
                 }
-                doPopupUtility("BeanStateUnknown", UNKOWN_FONT, sample, _util, true);
+                doPopupUtility("Unknown", UNKOWN_FONT, sample, _util, true);
 
                 sample = new PositionableLabel(si.getInconsistentText(), _editor);
                 sample.setForeground(si.getTextInconsistent());
@@ -229,7 +229,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     sample.setBackground(color);
                     sample.setOpaque(true);
                 }
-                doPopupUtility("BeanStateInconsistent", INCONSISTENT_FONT, sample, _util, true);
+                doPopupUtility("Inconsistent", INCONSISTENT_FONT, sample, _util, true);
             }
         } else { // not a SensorIcon
             PositionableLabel sample = new PositionableLabel(text, _editor);
@@ -348,9 +348,23 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         this.add(colorPanel);
     }
 
+    String BundleCaption = null;
+
     private JPanel makeTextPanel(String caption, JLabel sample, int state, boolean addTextField) {
         JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage(caption)));
+        // use NamedBeanBundle property for basic beans like "Turnout" I18N
+        if ("Active".equals(caption)) {
+            BundleCaption = "SensorStateActive";
+        } else if ("InActive".equals(caption)) {
+            BundleCaption = "SensorStateInactive";
+        } else if ("Unknown".equals(caption)) {
+            BundleCaption = "BeanStateUnknown";
+        } else if ("Inconsistent".equals(caption)) {
+            BundleCaption = "BeanStateInconsistent";
+        } else {
+            BundleCaption = caption;
+        }
+        panel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage(BundleCaption)));
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JPanel p = new JPanel();
         if (addTextField) {

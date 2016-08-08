@@ -99,7 +99,7 @@ public abstract class Action {
     }
 
     public String getActionSuccessfulString() {
-        return Bundle.getMessage("OK");
+        return Bundle.getMessage("ButtonOK");
     }
 
     public String getActionFailedString() {

@@ -599,12 +599,12 @@ public class CoordinateEdit extends JmriJFrame {
         PositionableLabel pLabel = (PositionableLabel) pl;
         oldStr = pLabel.getUnRotatedText();
         textX = new javax.swing.JLabel();
-        textX.setText("Text= ");
+        textX.setText(Bundle.getMessage("textLabel") + ":");
         textX.setVisible(true);
 
         xTextField = new javax.swing.JTextField(15);
         xTextField.setText(pLabel.getUnRotatedText());
-        xTextField.setToolTipText("Enter Text");
+        xTextField.setToolTipText(Bundle.getMessage("TooltipEnterText"));
 
         getContentPane().setLayout(new GridBagLayout());
         addTextItems();
@@ -623,7 +623,7 @@ public class CoordinateEdit extends JmriJFrame {
                     pp.updateSize();
                     dispose();
                 } else {
-                    xTextField.setText("Item disappears with null text!");
+                    xTextField.setText(Bundle.getMessage("warningNullText"));
                 }
             }
         });

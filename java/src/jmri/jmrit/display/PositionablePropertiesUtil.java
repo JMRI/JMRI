@@ -66,7 +66,7 @@ public class PositionablePropertiesUtil {
         //exampleHolder.add(example);
         JPanel tmp = new JPanel();
 
-        JButton cancel = new JButton("ButtonCancel");
+        JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
         cancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 undoChanges();
@@ -85,14 +85,14 @@ public class PositionablePropertiesUtil {
         JPanel _buttonArea = new JPanel();
         _buttonArea.add(cancel);
 
-        JButton applyButton = new JButton("ButtonApply");
+        JButton applyButton = new JButton(Bundle.getMessage("ButtonApply"));
         _buttonArea.add(applyButton);
         applyButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 fontApply();
             }
         });
-        JButton okButton = new JButton("Okay");
+        JButton okButton = new JButton(Bundle.getMessage("ButtonOK"));
         _buttonArea.add(okButton);
         okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
