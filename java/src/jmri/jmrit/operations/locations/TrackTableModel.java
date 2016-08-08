@@ -271,8 +271,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     }
 
     @Override
-    public Object getValueAt(int row, int col) {
-        if (row >= tracksList.size()) {
+    public synchronized Object getValueAt(int row, int col) {
+        if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
         Track track = tracksList.get(row);
@@ -375,7 +375,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     }
 
     @Override
-    public void setValueAt(Object value, int row, int col) {
+    public synchronized void setValueAt(Object value, int row, int col) {
         switch (col) {
             case EDIT_COLUMN:
                 editTrack(row);
