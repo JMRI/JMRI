@@ -1,8 +1,8 @@
 package jmri.server.json;
 
 /**
- * Common constants used in the JMRI JSON protocol starting with protocol
- * version 4.0.
+ * Common and utility constants used in the JMRI JSON protocol starting with
+ * protocol version 4.0.
  *
  * @author Randall Wood (C) 2013, 2014, 2016
  * @see jmri.jmris.json.JSON
@@ -635,8 +635,8 @@ public final class JSON {
     /**
      * {@value #ADD}
      *
-     * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER}, this is an entry that has been
-     * added to the roster.
+     * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER},
+     * this is an entry that has been added to the roster.
      *
      * @since 1.1
      */
@@ -647,8 +647,8 @@ public final class JSON {
      * In operations, this indicates the dropping or setting out of a car or
      * engine.
      *
-     * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER}, this is an entry that has been
-     * removed from the roster.
+     * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER},
+     * this is an entry that has been removed from the roster.
      *
      * @since 1.1
      */
@@ -811,7 +811,7 @@ public final class JSON {
      * JSON State (an unsigned integer)
      */
 
- /* Common state */
+    /* Common state */
     /**
      * {@value #UNKNOWN}
      * <p>

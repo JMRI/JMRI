@@ -1,10 +1,10 @@
 package jmri.jmris.json;
 
-import static jmri.jmris.json.JSON.ADD;
-import static jmri.jmris.json.JSON.DATA;
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.ROSTER;
-import static jmri.jmris.json.JSON.TYPE;
+import static jmri.server.json.JSON.ADD;
+import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.roster.JsonRoster.ROSTER;
+import static jmri.server.json.JSON.TYPE;
 import static jmri.jmrit.roster.Roster.REMOVE;
 
 import com.fasterxml.jackson.databind.JsonNode;

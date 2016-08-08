@@ -1,4 +1,3 @@
-// SerialNode.java
 package jmri.jmrix.cmri.serial;
 
 import jmri.JmriException;
@@ -1181,5 +1180,3 @@ public class SerialNode extends AbstractNode {
 
     private final static Logger log = LoggerFactory.getLogger(SerialNode.class.getName());
 }
-
-/* @(#)SerialNode.java */

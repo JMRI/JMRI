@@ -451,6 +451,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         interchangeModel.initTable(interchangeTable, location);
         stagingModel.initTable(stagingTable, location);
         _location = location;
+        _location.addPropertyChangeListener(this);
         // enable check boxes
         updateCheckboxes();
         // enableCheckboxes(true);

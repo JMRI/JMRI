@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-import jmri.jmris.json.JSON;
+import jmri.server.json.JSON;
 import jmri.jmris.json.JsonUtil;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;

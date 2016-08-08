@@ -33,7 +33,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.AbstractMRReplyTest.suite());
         suite.addTest(new TestSuite(jmri.jmrix.AbstractThrottleTest.class));
         suite.addTest(jmri.jmrix.BundleTest.suite());
-        suite.addTest(jmri.jmrix.ConnectionConfigManagerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ConnectionConfigManagerTest.class));
 
         suite.addTest(jmri.jmrix.acela.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.bachrus.PackageTest.class));
@@ -41,10 +41,11 @@ public class PackageTest extends TestCase {
         //suite.addTest(jmri.jmrix.cmri.serial.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.cmri.PackageTest.class));
         suite.addTest(jmri.jmrix.dcc.PackageTest.suite());
-        suite.addTest(jmri.jmrix.dcc4pc.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.dcc4pc.PackageTest.class));
         suite.addTest(jmri.jmrix.direct.PackageTest.suite());
         suite.addTest(jmri.jmrix.easydcc.PackageTest.suite());
         suite.addTest(jmri.jmrix.grapevine.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.internal.PackageTest.class));
         suite.addTest(jmri.jmrix.jmriclient.PackageTest.suite());
         suite.addTest(jmri.jmrix.lenz.PackageTest.suite());
         suite.addTest(jmri.jmrix.loconet.PackageTest.suite());
@@ -59,7 +60,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.pricom.PackageTest.suite());
         suite.addTest(jmri.jmrix.qsi.PackageTest.suite());
         suite.addTest(jmri.jmrix.rps.PackageTest.suite());
-        suite.addTest(jmri.jmrix.sprog.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.sprog.PackageTest.class));
         suite.addTest(jmri.jmrix.secsi.PackageTest.suite());
         suite.addTest(jmri.jmrix.tams.PackageTest.suite());
         suite.addTest(jmri.jmrix.tmcc.PackageTest.suite());

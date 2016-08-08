@@ -294,6 +294,10 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
      * @param args Argument array from the main routine
      */
     static protected void setConfigFilename(String def, String[] args) {
+        // if the property org.jmri.Apps.configFilename was set, skip
+        if (System.getProperty("org.jmri.Apps.configFilename") != null) {
+            return;
+        }
         // save the configuration filename if present on the command line
         if (args.length >= 1 && args[0] != null && !args[0].contains("=")) {
             def = args[0];

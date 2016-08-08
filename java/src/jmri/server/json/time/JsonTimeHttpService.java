@@ -22,7 +22,7 @@ import jmri.server.json.JsonHttpService;
  *
  * @author Randall Wood
  */
-class JsonTimeHttpService extends JsonHttpService {
+public class JsonTimeHttpService extends JsonHttpService {
 
     public JsonTimeHttpService(ObjectMapper mapper) {
         super(mapper);

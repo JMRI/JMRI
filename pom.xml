@@ -23,10 +23,7 @@
                                 <configuration>
                                     <target>
                                         <ant antfile="${basedir}/build.xml">
-                                            <target name="checklineends"/>
-                                            <target name="checknonascii"/>
-                                            <target name="javadoc"/>
-                                            <target name="ci-test-travis"/>
+                                            <target name="travis-ci"/>
                                         </ant>
                                     </target>
                                 </configuration>
@@ -54,8 +51,7 @@
                                 <configuration>
                                     <target>
                                         <ant antfile="${basedir}/build.xml">
-                                            <target name="checkPropertiesFiles"/>
-                                            <target name="ci-test-appveyor"/>
+                                            <target name="appveyor"/>
                                         </ant>
                                     </target>
                                 </configuration>

@@ -41,6 +41,8 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     protected void extendElement(Element e) {
+        SerialTrafficController tc = ((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController();
+        SerialNode node = (SerialNode) tc.getNode(0);
         SerialNode plNode = (SerialNode) SerialTrafficController.instance().getNode(0);
         String polllist = "";
         int index = 1;
@@ -63,7 +65,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         {
             // add node as an element
             Element n = new Element("node");
-            n.setAttribute("name",""+node.getNodeAddress());
+            n.setAttribute("name", "" + node.getNodeAddress());
             e.addContent(n);
             // add parameters to the node as needed
             n.addContent(makeParameter("nodetype", "" + node.getNodeType()));
@@ -255,7 +257,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
            }
                           
             // Trigger initialization of this Node to reflect these parameters
-            SerialTrafficController.instance().initializeSerialNode(node);
+            ((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController().initializeSerialNode(node);
         }
     }
 

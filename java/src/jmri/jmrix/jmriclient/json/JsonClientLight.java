@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import jmri.Light;
 import jmri.implementation.AbstractLight;
-import jmri.jmris.json.JSON;
+import jmri.server.json.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

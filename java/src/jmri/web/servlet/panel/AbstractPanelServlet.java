@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.JComponent;
-import jmri.jmris.json.JSON;
+import jmri.server.json.JSON;
 import jmri.jmris.json.JsonUtil;
 import jmri.jmrit.display.Editor;
 import jmri.util.FileUtil;

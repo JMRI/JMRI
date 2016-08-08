@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.SocketTimeoutException;
 import jmri.InstanceManager;
 import jmri.implementation.QuietShutDownTask;
-import jmri.jmris.json.JSON;
 import jmri.jmris.json.JsonServerPreferences;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.StatusCode;
@@ -47,7 +46,7 @@ public class JsonWebSocket {
                 }
             };
             log.debug("Sending hello");
-            this.handler.sendHello(JsonServerPreferences.getDefault().getHeartbeatInterval());
+            this.handler.onMessage(JsonClientHandler.HELLO_MSG);
         } catch (IOException e) {
             log.warn("Error opening WebSocket:\n{}", e.getMessage());
             sn.close();

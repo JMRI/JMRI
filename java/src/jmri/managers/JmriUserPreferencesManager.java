@@ -116,6 +116,9 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     @Override
     public synchronized void allowSave() {
         this.allowSave = true;
+        if (this.dirty) {
+            this.savePreferences();
+        }
     }
 
     @Override
@@ -131,7 +134,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     /**
      * This is used to remember the last selected state of a checkBox and thus
      * allow that checkBox to be set to a true state when it is next
-     * initialised. This can also be used anywhere else that a simple yes/no,
+     * initialized. This can also be used anywhere else that a simple yes/no,
      * true/false type preference needs to be stored.
      *
      * It should not be used for remembering if a user wants to suppress a
@@ -295,7 +298,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * should start with the package name (package.Class) for the primary using
      * class.
      *
-     * @param name  A unique identifer for preference.
+     * @param name A unique identifer for preference.
      */
     @Override
     public void setSessionPreferenceState(String name, boolean state) {
@@ -1346,9 +1349,10 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         this.saveSimplePreferenceState();
         this.saveTableColumnPreferences();
         this.saveWindowDetails();
+        this.resetChangeMade();
     }
 
-    private static class ComboBoxLastSelection {
+    protected final static class ComboBoxLastSelection {
 
         String comboBoxName = null;
         String lastValue = null;
@@ -1373,14 +1377,14 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     /**
-     * Holds details about the speific class.
+     * Holds details about the specific class.
      */
-    protected static class ClassPreferences {
+    protected final static class ClassPreferences {
 
         String classDescription;
 
-        ArrayList<MultipleChoice> multipleChoiceList = new ArrayList<MultipleChoice>();
-        ArrayList<PreferenceList> preferenceList = new ArrayList<PreferenceList>();
+        ArrayList<MultipleChoice> multipleChoiceList = new ArrayList<>();
+        ArrayList<PreferenceList> preferenceList = new ArrayList<>();
 
         ClassPreferences() {
         }
@@ -1434,7 +1438,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         }
     }
 
-    static class MultipleChoice {
+    protected final static class MultipleChoice {
 
         HashMap<Integer, String> options;
         String optionDescription;
@@ -1458,9 +1462,9 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         }
 
         void setValue(String value) {
-            for (Object o : options.keySet()) {
+            for (Integer o : options.keySet()) {
                 if (options.get(o).equals(value)) {
-                    this.value = (Integer) o;
+                    this.value = o;
                 }
             }
         }
@@ -1496,7 +1500,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     }
 
-    static class PreferenceList {
+    protected final static class PreferenceList {
 
         // need to fill this with bits to get a meaning full description.
         boolean set = false;
@@ -1539,7 +1543,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     }
 
-    static class WindowLocations {
+    protected final static class WindowLocations {
 
         Point xyLocation = new Point(0, 0);
         Dimension size = new Dimension(0, 0);
@@ -1587,7 +1591,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
             parameters.put(key, value);
         }
 
-        Object getProperty(Object key) {
+        Object getProperty(String key) {
             return parameters.get(key);
         }
 
@@ -1599,7 +1603,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     }
 
-    static class TableColumnPreferences {
+    protected final static class TableColumnPreferences {
 
         int order;
         int width;

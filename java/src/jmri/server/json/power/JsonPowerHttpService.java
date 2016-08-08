@@ -1,11 +1,11 @@
 package jmri.server.json.power;
 
-import static jmri.jmris.json.JSON.DATA;
-import static jmri.jmris.json.JSON.OFF;
-import static jmri.jmris.json.JSON.ON;
-import static jmri.jmris.json.JSON.STATE;
-import static jmri.jmris.json.JSON.TYPE;
-import static jmri.jmris.json.JSON.UNKNOWN;
+import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JSON.OFF;
+import static jmri.server.json.JSON.ON;
+import static jmri.server.json.JSON.STATE;
+import static jmri.server.json.JSON.TYPE;
+import static jmri.server.json.JSON.UNKNOWN;
 import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
 
 import com.fasterxml.jackson.databind.JsonNode;
