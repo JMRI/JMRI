@@ -1,4 +1,3 @@
-// SerialNode.java
 package jmri.jmrix.cmri.serial;
 
 import jmri.JmriException;
@@ -27,7 +26,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision$
  */
 public class SerialNode extends AbstractNode {
 
@@ -855,5 +853,3 @@ public class SerialNode extends AbstractNode {
 
     private final static Logger log = LoggerFactory.getLogger(SerialNode.class.getName());
 }
-
-/* @(#)SerialNode.java */
