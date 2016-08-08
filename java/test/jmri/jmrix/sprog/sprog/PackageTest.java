@@ -1,4 +1,4 @@
-package jmri.jmrix.sprog.sprogCS;
+package jmri.jmrix.sprog.sprog;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -10,7 +10,6 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   SprogCSSerialDriverAdapterTest.class,
    ConnectionConfigTest.class
 })
 public class PackageTest {
