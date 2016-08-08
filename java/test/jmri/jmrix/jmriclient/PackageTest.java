@@ -8,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.jmriclient package
  *
  * @author	Bob Jacobsen
- * @version	$Revision: 18472 $
  */
 public class PackageTest extends TestCase {
 
