@@ -30,9 +30,9 @@ public class RunTrainAction extends Action {
                 finishAction(false);
                 return;
             }
-            if (!TrainCustomManifest.fileExists()) {
-                log.warn("Manifest creator file not found!, directory name: {}, file name: {}", TrainCustomManifest
-                        .getDirectoryName(), TrainCustomManifest.getFileName());
+            if (!TrainCustomManifest.instance().excelFileExists()) {
+                log.warn("Manifest creator file not found!, directory name: {}, file name: {}", TrainCustomManifest.instance()
+                        .getDirectoryName(), TrainCustomManifest.instance().getFileName());
                 finishAction(false);
                 return;
             }
@@ -52,20 +52,20 @@ public class RunTrainAction extends Action {
             // this can wait thread
             if (!new TrainCustomSwitchList().checkProcessReady()) {
                 log.warn(
-                        "Timeout waiting for excel switch list program to complete previous opeation, timeout value: {} seconds",
-                        Control.excelWaitTime);                
+                        "Timeout waiting for excel switch list program to complete previous opeation, train ({}), timeout value: {} seconds",
+                        train.getName(), Control.excelWaitTime);
             }
-            // the next line can wait thread
+            // this can wait thread
             if (!new TrainCustomManifest().checkProcessReady()) {
                 log.warn(
                         "Timeout waiting for excel manifest program to complete previous opeation, train ({}), timeout value: {} seconds",
                         train.getName(), Control.excelWaitTime);
             }
-            TrainCustomManifest.addCVSFile(train.createCSVManifestFile());
-            boolean status = TrainCustomManifest.process();
+            TrainCustomManifest.instance().addCVSFile(train.createCSVManifestFile());
+            boolean status = TrainCustomManifest.instance().process();
             if (status) {
                 try {
-                    status = TrainCustomManifest.waitForProcessToComplete(); // wait for process to complete or timeout
+                    status = TrainCustomManifest.instance().waitForProcessToComplete(); // wait for process to complete or timeout
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

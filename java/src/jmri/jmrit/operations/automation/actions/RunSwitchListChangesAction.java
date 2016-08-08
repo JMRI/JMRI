@@ -51,9 +51,9 @@ public class RunSwitchListChangesAction extends Action {
                 return;
             }
             // we do need one of these!
-            if (!TrainCustomSwitchList.manifestCreatorFileExists()) {
-                log.warn("Manifest creator file not found!, directory name: {}, file name: {}", TrainCustomSwitchList
-                        .getDirectoryName(), TrainCustomSwitchList.getFileName());
+            if (!TrainCustomSwitchList.instance().excelFileExists()) {
+                log.warn("Manifest creator file not found!, directory name: {}, file name: {}", TrainCustomSwitchList.instance()
+                        .getDirectoryName(), TrainCustomSwitchList.instance().getFileName());
                 finishAction(false);
                 return;
             }
@@ -85,15 +85,14 @@ public class RunSwitchListChangesAction extends Action {
                         finishAction(false);
                         return;
                     }
-                    TrainCustomSwitchList.addCVSFile(csvFile);
+                    TrainCustomSwitchList.instance().addCVSFile(csvFile);
                 }
             }
             // Processes the CSV Manifest files using an external custom program.
-            int fileCount = TrainCustomSwitchList.getFileCount();
-            boolean status = TrainCustomSwitchList.process();
+            boolean status = TrainCustomSwitchList.instance().process();
             if (status) {
                 try {
-                    TrainCustomSwitchList.waitForProcessToComplete(Control.excelWaitTime * fileCount); // wait up to 60 seconds per file
+                    status = TrainCustomSwitchList.instance().waitForProcessToComplete(); // wait up to 60 seconds per file
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

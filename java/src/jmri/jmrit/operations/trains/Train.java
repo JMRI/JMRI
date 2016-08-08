@@ -3049,12 +3049,12 @@ public class Train implements java.beans.PropertyChangeListener {
             return false;
         }
         // Set up to process the CSV file by the external Manifest program
-        TrainCustomManifest.addCVSFile(file);
-        if (!TrainCustomManifest.process()) {
-            if (!TrainCustomManifest.fileExists()) {
+        TrainCustomManifest.instance().addCVSFile(file);
+        if (!TrainCustomManifest.instance().process()) {
+            if (!TrainCustomManifest.instance().excelFileExists()) {
                 JOptionPane.showMessageDialog(null, MessageFormat.format(
                         Bundle.getMessage("LoadDirectoryNameFileName"), new Object[]{
-                                TrainCustomManifest.getDirectoryName(), TrainCustomManifest.getFileName()}),
+                                TrainCustomManifest.instance().getDirectoryName(), TrainCustomManifest.instance().getFileName()}),
                         Bundle
                                 .getMessage("ManifestCreatorNotFound"),
                         JOptionPane.ERROR_MESSAGE);
