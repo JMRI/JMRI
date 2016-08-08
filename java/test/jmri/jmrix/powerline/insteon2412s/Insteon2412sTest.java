@@ -29,6 +29,7 @@ public class Insteon2412sTest extends TestCase {
         suite.addTest(SpecificMessageTest.suite());
         suite.addTest(SpecificReplyTest.suite());
         suite.addTest(SpecificTrafficControllerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
         return suite;
     }
 
