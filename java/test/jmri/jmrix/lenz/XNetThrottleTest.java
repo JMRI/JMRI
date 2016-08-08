@@ -257,6 +257,180 @@ public class XNetThrottleTest{
     }
 
     @Test(timeout=1000)
+    public void testSendFunctionHighStatusInformationRequest() throws Exception {
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
+        int n = tc.outbound.size();
+        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+        //The first thing on the outbound queue should be a request for status.
+
+        // And the response to this is a message with the status.
+        XNetReply m = new XNetReply();
+        m.setElement(0, 0xE4);
+        m.setElement(1, 0x04);
+        m.setElement(2, 0x00);
+        m.setElement(3, 0x00);
+        m.setElement(4, 0x00);
+        m.setElement(5, 0xE0);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // which we're going to get a request for function momentary status in response to.
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        // And the response to this message with the status.
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+	// Sending the not supported message should make the throttle send a 
+        // request for the high function status information.  
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+
+	// Sending the not supported message should make the throttle change
+        // state to idle, and then we can test what we really want to.
+
+        // in this case, we are sending a status information request.
+
+        t.sendFunctionHighInformationRequest();
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        //The first thing on the outbound queue should be a request for status.
+        Assert.assertEquals("Throttle Information Request Message", "E3 09 00 03 E9", tc.outbound.elementAt(n).toString());
+
+        // And the response to this message with the status.
+        m = new XNetReply();
+        m.setElement(0, 0xE3);
+        m.setElement(1, 0x52);
+        m.setElement(2, 0x00);
+        m.setElement(3, 0x00);
+        m.setElement(4, 0xB3);
+
+        n = tc.outbound.size();
+        t.message(m);
+        // which sets the status back state back to idle..
+
+    }
+
+    @Test(timeout=1000)
+    public void testSendFunctionHighMomentaryStatusRequest() throws Exception {
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
+        int n = tc.outbound.size();
+        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+        //The first thing on the outbound queue should be a request for status.
+
+        // And the response to this is a message with the status.
+        XNetReply m = new XNetReply();
+        m.setElement(0, 0xE4);
+        m.setElement(1, 0x04);
+        m.setElement(2, 0x00);
+        m.setElement(3, 0x00);
+        m.setElement(4, 0x00);
+        m.setElement(5, 0xE0);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // which we're going to get a request for function momentary status in response to.
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        // And the response to this message with the status.
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+	// Sending the not supported message should make the throttle send a 
+        // request for the high function status information.  
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+
+	// Sending the not supported message should make the throttle change
+        // state to idle, and then we can test what we really want to.
+
+        // in this case, we are sending a status information request.
+
+        t.sendFunctionHighMomentaryStatusRequest();
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        //The first thing on the outbound queue should be a request for status.
+        Assert.assertEquals("Throttle Information Request Message", "E3 08 00 03 E8", tc.outbound.elementAt(n).toString());
+
+        // And the response to this message with the status.
+        m = new XNetReply();
+        m.setElement(0, 0xE3);
+        m.setElement(1, 0x51);
+        m.setElement(2, 0x00);
+        m.setElement(3, 0x00);
+        m.setElement(4, 0xB3);
+
+        n = tc.outbound.size();
+        t.message(m);
+        // which sets the status back state back to idle..
+    }
+
+
+    @Test(timeout=1000)
     public void testSendFunctionGroup1() throws Exception {
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
@@ -1209,6 +1383,266 @@ public class XNetThrottleTest{
                      new jmri.DccLocoAddress(3,false),t.getLocoAddress());
     }
 
+    @Test(timeout=1000)
+    public void setReverse() throws Exception {
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
+        int n = tc.outbound.size();
+        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+        //The first thing on the outbound queue should be a request for status.
+
+        // And the response to this is a message with the status.
+        XNetReply m = new XNetReply();
+        m.setElement(0, 0xE4);
+        m.setElement(1, 0x04);
+        m.setElement(2, 0x00);
+        m.setElement(3, 0x00);
+        m.setElement(4, 0x00);
+        m.setElement(5, 0xE0);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // which we're going to get a request for function momentary status in response to.
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        // And the response to this message with the status.
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+	// Sending the not supported message should make the throttle send a 
+        // request for the high function status information.  
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+
+	// Sending the not supported message should make the throttle change
+        // state to idle, and then we can test what we really want to.
+
+        // in this case, we are sending a request to change the direction.
+
+        t.setIsForward(false);
+
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        //The first thing on the outbound queue should be a throttle set speed message.
+        Assert.assertEquals("Throttle Set Speed Message", "E4 13 00 03 00 F4", tc.outbound.elementAt(n).toString());
+
+        // And the response to this message is a command successfully received message.
+        m = new XNetReply();
+        m.setElement(0, 0x01);
+        m.setElement(1, 0x04);
+        m.setElement(2, 0x05);
+
+        n = tc.outbound.size();
+        t.message(m);
+        // which sets the status back state back to idle..
+
+        // and finaly, verify that getIsForward() returns false, like we set it.
+        Assert.assertFalse("Direction Set",t.getIsForward());
+    }
+
+    @Test(timeout=1000)
+    public void setForward() throws Exception {
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
+        int n = tc.outbound.size();
+        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+        //The first thing on the outbound queue should be a request for status.
+
+        // And the response to this is a message with the status.
+        XNetReply m = new XNetReply();
+        m.setElement(0, 0xE4);
+        m.setElement(1, 0x04);
+        m.setElement(2, 0x00);
+        m.setElement(3, 0x00);
+        m.setElement(4, 0x00);
+        m.setElement(5, 0xE0);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // which we're going to get a request for function momentary status in response to.
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        // And the response to this message with the status.
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+	// Sending the not supported message should make the throttle send a 
+        // request for the high function status information.  
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+
+	// Sending the not supported message should make the throttle change
+        // state to idle, and then we can test what we really want to.
+
+        // in this case, we are sending a request to change the direction.
+
+        t.setIsForward(true);
+
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        //The first thing on the outbound queue should be a throttle set speed message.
+        Assert.assertEquals("Throttle Set Speed Message", "E4 13 00 03 80 74", tc.outbound.elementAt(n).toString());
+
+        // And the response to this message is a command successfully received message.
+        m = new XNetReply();
+        m.setElement(0, 0x01);
+        m.setElement(1, 0x04);
+        m.setElement(2, 0x05);
+
+        n = tc.outbound.size();
+        t.message(m);
+        // which sets the status back state back to idle..
+
+        // and finaly, verify that getIsForward() returns false, like we set it.
+        Assert.assertTrue("Direction Set",t.getIsForward());
+    }
+
+    @Test(timeout=1000)
+    public void sendEmergencyStop() throws Exception {
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
+        int n = tc.outbound.size();
+        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+        //The first thing on the outbound queue should be a request for status.
+
+        // And the response to this is a message with the status.
+        XNetReply m = new XNetReply();
+        m.setElement(0, 0xE4);
+        m.setElement(1, 0x04);
+        m.setElement(2, 0x00);
+        m.setElement(3, 0x00);
+        m.setElement(4, 0x00);
+        m.setElement(5, 0xE0);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // which we're going to get a request for function momentary status in response to.
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        // And the response to this message with the status.
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+	// Sending the not supported message should make the throttle send a 
+        // request for the high function status information.  
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+
+	// Sending the not supported message should make the throttle change
+        // state to idle, and then we can test what we really want to.
+
+        // in this case, we are sending an emergency stop message.
+
+        t.sendEmergencyStop();
+
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        //The first thing on the outbound queue should be a throttle set speed message.
+        Assert.assertEquals("Throttle Emergency Stop Message", "92 00 03 91", tc.outbound.elementAt(n).toString());
+
+        // And the response to this message is a command successfully received message.
+        m = new XNetReply();
+        m.setElement(0, 0x01);
+        m.setElement(1, 0x04);
+        m.setElement(2, 0x05);
+
+        n = tc.outbound.size();
+        t.message(m);
+        // which sets the status back state back to idle..
+    }
 
 
     // The minimal setup for log4J
