@@ -21,7 +21,6 @@ import jmri.server.json.JsonSocketService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  *
  * @author mstevetodd Copyright (C) 2016 (copied from JsonMemorySocketService)
@@ -81,8 +80,8 @@ public class JsonLayoutBlockSocketService extends JsonSocketService {
         @Override
         public void propertyChange(PropertyChangeEvent e) {
             if (e.getPropertyName().equals("redraw")) {
-//                log.debug("{} property '{}' changed from '{}' to '{}'", this.layoutBlock.getUserName(), 
-//                        e.getPropertyName(), e.getOldValue(), e.getNewValue());
+                log.debug("{} property '{}' changed from '{}' to '{}'", this.layoutBlock.getUserName(),
+                        e.getPropertyName(), e.getOldValue(), e.getNewValue());
                 try {
                     try {
                         connection.sendMessage(service.doGet(LAYOUTBLOCK, this.layoutBlock.getSystemName(), locale));

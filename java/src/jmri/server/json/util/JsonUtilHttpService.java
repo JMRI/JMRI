@@ -51,6 +51,8 @@ public class JsonUtilHttpService extends JsonHttpService {
                 return this.getNetworkService(locale, name);
             case JSON.NODE:
                 return this.getNode(locale);
+            case JSON.RAILROAD:
+                return this.getRailroad(locale);
             case JSON.SYSTEM_CONNECTIONS:
                 return this.getSystemConnections(locale);
             default:
@@ -206,6 +208,21 @@ public class JsonUtilHttpService extends JsonHttpService {
     }
 
     /**
+     * Send a JSON {@link jmri.server.json.JSON#NODE} message containing the
+     * Railroad from the Railroad Name preferences.
+     *
+     * @param locale the client's Locale
+     * @return the JSON railroad name message
+     */
+    public JsonNode getRailroad(Locale locale) {
+        ObjectNode root = mapper.createObjectNode();
+        root.put(JSON.TYPE, JSON.RAILROAD);
+        ObjectNode data = root.putObject(JSON.DATA);
+        data.put(JSON.NAME, WebServerPreferences.getDefault().getRailRoadName());
+        return root;
+    }
+
+    /**
      *
      * @param locale the client's Locale.
      * @return the JSON networkServices message.
@@ -224,9 +241,8 @@ public class JsonUtilHttpService extends JsonHttpService {
                 root.add(connection);
             }
         }
-        InstanceManager.getList(SystemConnectionMemo.class).stream().map((instance)
-                -> (SystemConnectionMemo) instance).filter((memo)
-                -> (!memo.getDisabled() && !prefixes.contains(memo.getSystemPrefix()))).forEach((memo) -> {
+        InstanceManager.getList(SystemConnectionMemo.class).stream().map((instance) -> instance)
+                .filter((memo) -> (!memo.getDisabled() && !prefixes.contains(memo.getSystemPrefix()))).forEach((memo) -> {
             ObjectNode connection = mapper.createObjectNode().put(JSON.TYPE, JSON.SYSTEM_CONNECTION);
             ObjectNode data = connection.putObject(JSON.DATA);
             data.put(JSON.NAME, memo.getUserName());

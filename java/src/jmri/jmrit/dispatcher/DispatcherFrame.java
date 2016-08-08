@@ -1844,6 +1844,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                                         }
                                     }
                                     if (foundOne) {
+                                        log.debug("{}: releasing {}", at.getTrainName(), as.getSectionName());                                
                                         releaseAllocatedSection(as, false);
                                     }
                                 }

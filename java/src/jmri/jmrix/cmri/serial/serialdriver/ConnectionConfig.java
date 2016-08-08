@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.cmri.serial.serialdriver;
 
 import java.util.ResourceBundle;
@@ -12,7 +11,6 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
  * SerialDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @version	$Revision$
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
