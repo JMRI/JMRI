@@ -50,7 +50,7 @@
           <td> HiDPI graphics support  for Windows and Linux users.
           Probably "just works" with JRE update, unless something in JMRI breaks on Java 9 on Windows 
           (Currently support using very large fonts as a workaround, but it quickly breaks as text overlaps widget boundaries)</td>
-          <td>1.9</td>
+          <td>1.8?</td>
           <td>1.9</td>
         </tr>
 
@@ -277,6 +277,9 @@
       and therefore it is no longer a supported platform." Google
       finds numerous pages that show how to install Java 1.7 on XP
       or XP SP2.</p>
+      
+      <p>Java 9 is not released yet, but pre-release information is
+      available on the <a href="https://jdk9.java.net/jdk9_supported_platforms.html">supported platforms page</a>.
 
       <table border="1">
         <tr>
