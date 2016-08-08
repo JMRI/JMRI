@@ -1092,11 +1092,11 @@ public class PanelEditor extends Editor implements ItemListener {
         if (!isEditable()) {
             return;
         }
-        JMenu _add = new JMenu("Add Item"/*Bundle.getMessage("FontBackgroundColor")*/);
+        JMenu _add = new JMenu("Add Item"); // NOI18N
         addItemPopUp(new ComboBoxItem("RightTurnout"), _add);
         addItemPopUp(new ComboBoxItem("LeftTurnout"), _add);
         addItemPopUp(new ComboBoxItem("SlipTOEditor"), _add);
-        addItemPopUp(new ComboBoxItem("Sensor"), _add); // NOI18N
+        addItemPopUp(new ComboBoxItem("Sensor"), _add);
         addItemPopUp(new ComboBoxItem("SignalHead"), _add);
         addItemPopUp(new ComboBoxItem("SignalMast"), _add);
         addItemPopUp(new ComboBoxItem("Memory"), _add);

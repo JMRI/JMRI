@@ -205,7 +205,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             if (ItemPalette.getIconMap(_itemType, _family) != null) {
 //                JOptionPane.showMessageDialog(_paletteFrame, 
 //                        Bundle.getMessage("DuplicateFamilyName", _family, _itemType), 
-//                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+//                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 // make sure name does not duplicate a known name
                 _family = null;
             }
@@ -605,7 +605,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             if (family.equals(iter.next())) {
                 JOptionPane.showMessageDialog(_paletteFrame,
                         Bundle.getMessage("DuplicateFamilyName", family, _itemType),
-                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return false;
             }
         }

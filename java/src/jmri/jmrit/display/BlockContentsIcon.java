@@ -332,7 +332,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         if (getBlock().getValue() != null) {
             newBlock.setText(getBlock().getValue().toString());
         }
-        Object[] options = {"Cancel", "OK", newBlock};
+        Object[] options = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), newBlock};
         int retval = JOptionPane.showOptionDialog(this,
                 Bundle.getMessage("EditCurrentBlockValue"), namedBlock.getName(),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
