@@ -134,6 +134,7 @@
     <property name="coveragetarget" value="${basedir}/coveragereport"/>
     <property name="source"       value="${javadir}/src"/>
     <property name="target"       value="${javadir}/classes"/>
+    <property name="testtarget"   value="${javadir}/test-classes"/>
     <property name="test"         value="${javadir}/test"/>
     <property name="templatedir"  value="${javadir}/template"/>
     <property name="tmptarget"    value="${javadir}/tmp"/>
@@ -230,7 +231,7 @@
         <pathelement path="${cp.prepend}"/>   <!-- prepended by user -->
         <pathelement location="${jartarget}"/>
         <path        refid="runtime.class.path"/>
-        <pathelement location="${target}/"/>  <!-- last to check for name collisions -->
+        <pathelement location="${target}/"/>  <!-- after declared jars to check for name collisions -->
         <pathelement path="${cp.append}"/>    <!-- appended by user -->
     </path>
 
@@ -238,7 +239,8 @@
     <path id="test.class.path">
         <pathelement location="${jartarget}"/>
         <path   refid="compile.class.path"/>
-        <pathelement location="${target}/"/>  <!-- last to check for name collisions -->
+        <pathelement location="${target}/"/>  <!-- after declared jars to check for name collisions -->
+        <pathelement location="${testtarget}"/> <!-- test resources in classpath that collide with stock resources -->
     </path>
 
     <macrodef name="quiet">
@@ -371,6 +373,7 @@
             <fileset file="${jartarget}/jmri.jar"/>
             <fileset dir="${doctarget}"/>
             <fileset dir="${target}"/>
+            <fileset dir="${testtarget}"/>
             <fileset dir="${dist}"/>
             <fileset dir="${genjavasrcdir}"/>
             <fileset file="${javadir}/manifest"/>
@@ -484,29 +487,37 @@
 
     <!-- this one target handles the compiler processing for all of the JDK based
          compilation - normal code, generated code and tests -->
-
+    <!-- use the java-compile macro instead -->
     <target name="-java-compile-internal"> <!-- Internal target for compiling Java source from a specified directory -->
-        <javac compiler="modern"
-               srcdir="${java.source.directory}"
-               destdir="${target}"
-               source="${source_version}"
-               target="${jre_version}"
-               includeantruntime="false"
-               fork="true"
-               deprecation="${deprecation}"
-               debug="${java.debugging}">
-            <classpath refid="compile.class.path"/>
-            <compilerarg value="-Xlint:-unchecked"/>  <!-- off during 1.8 migration -->
-        </javac>
+        <java-compile javac.source="${java.source.directory}" javac.target="${target}" />
     </target>
 
+    <macrodef name="java-compile">
+        <attribute name="javac.source"/>
+        <attribute name="javac.target" default="${target}"/>
+        <attribute name="javac.deprecation" default="${deprecation}"/>
+        <attribute name="javac.classpath" default="compile.class.path"/>
+        <sequential>
+            <mkdir dir="@{javac.target}"/> <!-- ensure destdir exists -->
+            <javac compiler="modern"
+                   srcdir="@{javac.source}"
+                   destdir="@{javac.target}"
+                   source="${source_version}"
+                   target="${jre_version}"
+                   includeantruntime="false"
+                   fork="true"
+                   deprecation="@{javac.deprecation}"
+                   debug="${java.debugging}">
+                <classpath refid="@{javac.classpath}"/>
+                <compilerarg value="-Xlint:-unchecked"/>  <!-- off during 1.8 migration -->
+            </javac>
+        </sequential>
+    </macrodef>
 
     <target name="compile-generated-source"
             depends="javacc, update-template-code"><!-- compile all generated Java source; internal target -->
         <!-- Compile the java code from ${genjavasrcdir} into ${target} -->
-        <antcall target="-java-compile-internal">
-            <param name="java.source.directory" value="${genjavasrcdir}"/>
-        </antcall>
+        <java-compile javac.source="${genjavasrcdir}"/>
         <copy todir="${target}/jmri" overwrite="true">
             <fileset dir="${genjavasrcdir}/jmri" includes="*.properties"/>
         </copy>
@@ -517,10 +528,7 @@
             description="compile source, omitting tests"
             depends="init, copyfiles, compile-generated-source">
         <!-- Compile the java code from ${source} into ${target} -->
-        <antcall target="-java-compile-internal">
-            <param name="java.source.directory" value="${source}"/>
-            <param name="deprecation" value="${deprecation}"/>
-        </antcall>
+        <java-compile javac.source="${source}"/>
     </target>
 
     <target name="ci-compile-deprecations"
@@ -551,9 +559,7 @@
             description="compile source with debugging on, omitting tests"
             depends="init, javacc, copyfiles, compile-generated-source">
         <!-- Compile the java code from ${source} into ${target} -->
-        <antcall target="-java-compile-internal">
-            <param name="java.source.directory" value="${source}"/>
-        </antcall>
+        <java-compile javac.source="${source}"/>
     </target>
 
 
@@ -561,11 +567,12 @@
             description="compile test classes"
             depends="debug">
         <!-- Compile the test java code from ${source} into ${target} -->
-        <antcall target="-java-compile-internal">
-            <param name="java.source.directory" value="${test}"/>
-        </antcall>
-        <copy todir="${target}">
+        <java-compile javac.source="${test}" javac.target="${testtarget}" javac.classpath="test.class.path"/>
+        <!-- Copy resources into ${testtarget} so they coexist with identical
+             resources in ${target} (this is important for the Java ServiceLoader -->
+        <copy todir="${testtarget}">
             <fileset dir="${test}" includes="**/*.properties"/>
+            <fileset dir="${test}" includes="META-INF/**"/>
         </copy>
     </target>
 
@@ -2043,13 +2050,13 @@
     <!-- CI Test runners -->
     <target name="travis-ci" description="Parallel execution of CI tasks on Travis CI">
         <parallel threadCount="4"> <!-- allow up to four tasks at once -->
-            <ant target="checklineends" />
-            <ant target="checknonascii" />
+            <antcall target="checklineends" />
+            <antcall target="checknonascii" />
             <sequential>
-                <ant target="compile-generated-source" />
+                <antcall target="compile-generated-source" />
                 <parallel>
-                    <ant target="javadoc" />
-                    <ant target="ci-test-travis" />
+                    <antcall target="javadoc" />
+                    <antcall target="ci-test-travis" />
                 </parallel>
             </sequential>
         </parallel>
@@ -2057,8 +2064,8 @@
     
     <target name="appveyor" description="Parallel execution of CI tasks on Appveyor">
         <parallel threadCount="4"> <!-- allow up to four tasks at once -->
-            <ant target="checkPropertiesFiles" />
-            <ant target="ci-test-appveyor" />
+            <antcall target="checkPropertiesFiles" />
+            <antcall target="ci-test-appveyor" />
         </parallel>
     </target>
 </project>

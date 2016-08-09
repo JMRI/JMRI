@@ -239,8 +239,8 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     @Override
-    public Object getValueAt(int row, int col) {
-        if (row >= _list.size()) {
+    public synchronized Object getValueAt(int row, int col) {
+        if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
         AutomationItem item = _list.get(row);
@@ -281,7 +281,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     @Override
-    public void setValueAt(Object value, int row, int col) {
+    public synchronized void setValueAt(Object value, int row, int col) {
         if (value == null) {
             log.debug("Warning automation table row {} still in edit", row);
             return;

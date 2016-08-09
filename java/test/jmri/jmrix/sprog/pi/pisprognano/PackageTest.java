@@ -10,7 +10,8 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   PiSprogNanoSerialDriverAdapterTest.class
+   PiSprogNanoSerialDriverAdapterTest.class,
+   ConnectionConfigTest.class
 })
 public class PackageTest {
 }

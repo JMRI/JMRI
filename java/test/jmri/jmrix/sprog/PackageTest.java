@@ -22,6 +22,7 @@ import org.junit.runners.Suite;
    SprogConnectionTypeListTest.class,
    jmri.jmrix.sprog.pi.PackageTest.class,
    jmri.jmrix.sprog.serialdriver.PackageTest.class,
+   jmri.jmrix.sprog.sprog.PackageTest.class,
    jmri.jmrix.sprog.sprogCS.PackageTest.class
 })
 public class PackageTest {
