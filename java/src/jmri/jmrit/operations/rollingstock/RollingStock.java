@@ -64,6 +64,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     protected int _moves = 0;
     protected String _lastLocationId = LOCATION_UNKNOWN; // the rollingstock's last location id
     protected int _blocking = DEFAULT_BLOCKING_ORDER;
+    
+    private IdTag _tag = null;
+    private PropertyChangeListener _tagListener = null;
 
     public static final String LOCATION_UNKNOWN = "0";
 
@@ -757,17 +760,41 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         }
     }
 
-    private IdTag _tag = null;
-    private PropertyChangeListener _tagListener = null;
-
     public String getRfid() {
         return _rfid;
+    }
+    
+    /**
+     * Sets the RFID for this rolling stock.
+     * 
+     * @param id 12 character RFID string.
+     */
+    public void setRfid(String id) {
+        String old = _rfid;
+        if (id != null && !id.equals(old)) {
+            _rfid = id;
+            log.debug("Changing IdTag for {} to {}", toString(), id);
+            try {
+                IdTag tag = InstanceManager.getDefault(IdTagManager.class).getIdTag(id.toUpperCase());
+                log.debug("Tag {} Found", tag.toString());
+                setIdTag(tag);
+            } catch (NullPointerException e) {
+                log.error("Tag {} Not Found", id);
+            }
+            setDirtyAndFirePropertyChange("rolling stock rfid", old, id); // NOI18N
+        }
     }
 
     public IdTag getIdTag() {
         return _tag;
     }
 
+    /**
+     * Sets the id tag for this rolling stock. The id tag isn't saved, ut the
+     * RFID is.
+     * 
+     * @param tag the id tag
+     */
     public void setIdTag(IdTag tag) {
         if (_tag != null)
             _tag.removePropertyChangeListener(_tagListener);
@@ -804,26 +831,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         }
         if (_tag != null)
             _tag.addPropertyChangeListener(_tagListener);
-    }
-
-    /**
-     * Sets the RFID for this rolling stock.
-     * 
-     * @param id 12 character RFID string.
-     */
-    public void setRfid(String id) {
-        String old = _rfid;
-        _rfid = id;
-        log.debug("Changing IdTag for {} to {}", toString(), id);
-        if (!old.equals(id))
-            setDirtyAndFirePropertyChange("rolling stock rfid", old, id); // NOI18N
-        try {
-            IdTag tag = InstanceManager.getDefault(IdTagManager.class).getIdTag(id.toUpperCase());
-            log.debug("Tag {} Found", tag.toString());
-            setIdTag(tag);
-        } catch (NullPointerException e) {
-            log.error("Tag {} Not Found", id);
-        }
     }
 
     /**
@@ -1064,8 +1071,8 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         CarRoads.instance().removePropertyChangeListener(this);
         CarOwners.instance().removePropertyChangeListener(this);
         CarColors.instance().removePropertyChangeListener(this);
-        if (_tag != null) {
-            _tag.removePropertyChangeListener(_tagListener);
+        if (getIdTag() != null) {
+            getIdTag().removePropertyChangeListener(_tagListener);
         }
     }
 
