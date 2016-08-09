@@ -1,4 +1,3 @@
-// SerialReply.java
 package jmri.jmrix.cmri.serial;
 
 
@@ -63,5 +62,3 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
     }
 
 }
-
-/* @(#)SerialReply.java */

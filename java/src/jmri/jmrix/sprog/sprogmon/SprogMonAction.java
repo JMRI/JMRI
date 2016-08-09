@@ -1,31 +1,28 @@
-//SprogMonAction.java
 package jmri.jmrix.sprog.sprogmon;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
  * Swing action to create and register a SprogMonFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class SprogMonAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8764899139164410382L;
+    private SprogSystemConnectionMemo _memo = null;
 
-    public SprogMonAction(String s) {
+    public SprogMonAction(String s,SprogSystemConnectionMemo memo) {
         super(s);
+        _memo = memo;
     }
 
     public void actionPerformed(ActionEvent e) {
         // create a SprogMonFrame
-        SprogMonFrame f = new SprogMonFrame();
+        SprogMonFrame f = new SprogMonFrame(_memo);
         try {
             f.initComponents();
         } catch (Exception ex) {

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
  * Swing action to create and register a SprogIIUpdateFrame object
@@ -12,8 +13,8 @@ import org.slf4j.LoggerFactory;
  */
 public class SprogIIUpdateAction extends SprogUpdateAction {
 
-    public SprogIIUpdateAction(String s) {
-        super(s);
+    public SprogIIUpdateAction(String s,SprogSystemConnectionMemo memo) {
+        super(s,memo);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -25,7 +26,7 @@ public class SprogIIUpdateAction extends SprogUpdateAction {
                 "SPROG II Firmware Update", JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[0])) {
             // create a SprogIIUpdateFrame
-            SprogIIUpdateFrame f = new SprogIIUpdateFrame();
+            SprogIIUpdateFrame f = new SprogIIUpdateFrame(_memo);
             try {
                 f.initComponents();
             } catch (Exception ex) {

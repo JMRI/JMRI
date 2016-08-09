@@ -37,18 +37,8 @@ public class PiSprogOneCSSerialDriverAdapter
      */
     @Deprecated
     static public PiSprogOneCSSerialDriverAdapter instance() {
-        if (mInstance == null) {
-            PiSprogOneCSSerialDriverAdapter m = new PiSprogOneCSSerialDriverAdapter();
-            m.setManufacturer(jmri.jmrix.sprog.SprogConnectionTypeList.SPROG);
-            mInstance = m;
-        }
-        return mInstance;
+        return null;
     }
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static volatile PiSprogOneCSSerialDriverAdapter mInstance = null;
 
     static Logger log = LoggerFactory.getLogger(PiSprogOneCSSerialDriverAdapter.class.getName());
 

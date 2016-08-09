@@ -9,7 +9,6 @@ import javax.swing.AbstractAction;
  * CMRI Serial monitor packet filter
  * 
  * @author                      Chuck Catania  2016
- * @version
  */
 public class SerialFilterAction extends AbstractAction {
 

@@ -107,6 +107,11 @@
         itself to the console. On OS X, this is always on, and
         debugging output is available through the Console.app.</dd>
 
+        <dt><code>-D<em>PROPERTY</em></code></dt>
+
+        <dd>Pass a Java System Property to the Java Virtual
+        Machine. This will be available to the JMRI application while running.</dd>
+
         <dt><code>-J<em>OPTION</em></code></dt>
 
         <dd>Pass a complete Java option to the Java Virtual
@@ -146,6 +151,10 @@
             <dd><code>${HOME}/Library/Preferences/JMRI</code></dd>
           </dl>
         </dd>
+        
+        <dt><code>--help</code></dt>
+        
+        <dd>Print a consise list of all options the launcher handles.</dd>
       </dl>
 
       <p>If you need to set one or more of these parameters

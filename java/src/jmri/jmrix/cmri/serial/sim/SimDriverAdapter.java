@@ -45,7 +45,7 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
 
     public void configure() {
         // install a traffic controller that doesn't time out
-        new SerialTrafficController() {
+        SerialTrafficController tc = new SerialTrafficController() {
             // timeout doesn't do anything
             @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
                     justification = "only until multi-connect update done")
@@ -59,7 +59,8 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
         };
 
         // connect to the traffic controller
-        SerialTrafficController.instance().connectPort(this);
+        tc.connectPort(this);
+        ((CMRISystemConnectionMemo)getSystemConnectionMemo()).setTrafficController(tc);
         ((CMRISystemConnectionMemo)getSystemConnectionMemo()).configureManagers();
 
     }

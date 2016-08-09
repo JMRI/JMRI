@@ -1,12 +1,12 @@
 package jmri.jmris.json;
 
-import static jmri.jmris.json.JSON.ADDRESS;
-import static jmri.jmris.json.JSON.DATA;
-import static jmri.jmris.json.JSON.DELETE;
-import static jmri.jmris.json.JSON.IS_LONG_ADDRESS;
-import static jmri.jmris.json.JSON.METHOD;
-import static jmri.jmris.json.JSON.PUT;
-import static jmri.jmris.json.JSON.STATUS;
+import static jmri.server.json.JSON.ADDRESS;
+import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JSON.DELETE;
+import static jmri.server.json.JSON.IS_LONG_ADDRESS;
+import static jmri.server.json.JSON.METHOD;
+import static jmri.server.json.JSON.PUT;
+import static jmri.server.json.JSON.STATUS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

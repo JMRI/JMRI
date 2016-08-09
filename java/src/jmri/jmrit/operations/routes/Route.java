@@ -45,6 +45,8 @@ public class Route implements java.beans.PropertyChangeListener {
     public static final String OKAY = Bundle.getMessage("Okay");
     public static final String ORPHAN = Bundle.getMessage("Orphan");
     public static final String ERROR = Bundle.getMessage("Error");
+    
+    public static final int START = 1; // add location at start of route
 
     public Route(String id, String name) {
         log.debug("New route ({}) id: {}", name, id);
@@ -113,16 +115,16 @@ public class Route implements java.beans.PropertyChangeListener {
 
     /**
      * Add a route location at a specific place (sequence) in the route
-     * Allowable sequence numbers are 0 to max size of route;
+     * Allowable sequence numbers are 1 to max size of route;
      *
      * @return route location
      */
     public RouteLocation addLocation(Location location, int sequence) {
         RouteLocation rl = addLocation(location);
-        if (sequence < 0 || sequence > _routeHashTable.size()) {
+        if (sequence < 1 || sequence > _routeHashTable.size()) {
             return rl;
         }
-        for (int i = 0; i < _routeHashTable.size() - sequence - 1; i++) {
+        for (int i = 0; i < _routeHashTable.size() - sequence; i++) {
             moveLocationUp(rl);
         }
         return rl;
@@ -177,8 +179,8 @@ public class Route implements java.beans.PropertyChangeListener {
     private void resequenceIds() {
         List<RouteLocation> routeList = getLocationsBySequenceList();
         for (int i = 0; i < routeList.size(); i++) {
-            routeList.get(i).setSequenceId(i + 1); // start sequence numbers at 1
-            _sequenceNum = i;
+            _sequenceNum = i + 1; // start sequence numbers at 1
+            routeList.get(i).setSequenceId(_sequenceNum);            
         }
     }
 

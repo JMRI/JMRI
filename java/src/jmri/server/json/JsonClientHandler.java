@@ -5,34 +5,21 @@ import static jmri.server.json.JSON.CONSIST;
 import static jmri.server.json.JSON.CONSISTS;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.ENGINES;
-import static jmri.server.json.JSON.FORMAT;
 import static jmri.server.json.JSON.GOODBYE;
 import static jmri.server.json.JSON.HELLO;
-import static jmri.server.json.JSON.LIGHTS;
 import static jmri.server.json.JSON.LIST;
 import static jmri.server.json.JSON.LOCALE;
 import static jmri.server.json.JSON.LOCATIONS;
-import static jmri.server.json.JSON.MEMORIES;
-import static jmri.server.json.JSON.METADATA;
 import static jmri.server.json.JSON.METHOD;
-import static jmri.server.json.JSON.NAME;
-import static jmri.server.json.JSON.NETWORK_SERVICES;
-import static jmri.server.json.JSON.PANELS;
 import static jmri.server.json.JSON.PING;
-import static jmri.server.json.JSON.PONG;
 import static jmri.server.json.JSON.PROGRAMMER;
-import static jmri.server.json.JSON.REPORTER;
-import static jmri.server.json.JSON.REPORTERS;
 import static jmri.server.json.JSON.SIGNAL_HEAD;
 import static jmri.server.json.JSON.SIGNAL_HEADS;
 import static jmri.server.json.JSON.SIGNAL_MAST;
 import static jmri.server.json.JSON.SIGNAL_MASTS;
-import static jmri.server.json.JSON.SYSTEM_CONNECTIONS;
-import static jmri.server.json.JSON.THROTTLE;
 import static jmri.server.json.JSON.TRAIN;
 import static jmri.server.json.JSON.TRAINS;
 import static jmri.server.json.JSON.TYPE;
-import static jmri.server.json.JSON.XML;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -47,10 +34,8 @@ import jmri.jmris.json.JsonConsistServer;
 import jmri.jmris.json.JsonOperationsServer;
 import jmri.jmris.json.JsonProgrammerServer;
 import jmri.jmris.json.JsonReporterServer;
-import jmri.jmris.json.JsonServerPreferences;
 import jmri.jmris.json.JsonSignalHeadServer;
 import jmri.jmris.json.JsonSignalMastServer;
-import jmri.jmris.json.JsonThrottleServer;
 import jmri.jmris.json.JsonUtil;
 import jmri.spi.JsonServiceFactory;
 import org.slf4j.Logger;
@@ -58,13 +43,18 @@ import org.slf4j.LoggerFactory;
 
 public class JsonClientHandler {
 
+    /**
+     * When used as a parameter to
+     * {@link #onMessage(java.lang.String)}, will cause a
+     * {@value jmri.server.json.JSON#HELLO} message to be sent to the client.
+     */
+    public static final String HELLO_MSG = "{\"" + JSON.TYPE + "\":\"" + JSON.HELLO + "\"}";
     private final JsonConsistServer consistServer;
     private final JsonOperationsServer operationsServer;
     private final JsonProgrammerServer programmerServer;
     private final JsonReporterServer reporterServer;
     private final JsonSignalHeadServer signalHeadServer;
     private final JsonSignalMastServer signalMastServer;
-    private final JsonThrottleServer throttleServer;
     private final JsonConnection connection;
     private final HashMap<String, HashSet<JsonSocketService>> services = new HashMap<>();
     private static final Logger log = LoggerFactory.getLogger(JsonClientHandler.class);
@@ -77,7 +67,6 @@ public class JsonClientHandler {
         this.reporterServer = new JsonReporterServer(this.connection);
         this.signalHeadServer = new JsonSignalHeadServer(this.connection);
         this.signalMastServer = new JsonSignalMastServer(this.connection);
-        this.throttleServer = new JsonThrottleServer(this.connection);
         for (JsonServiceFactory factory : ServiceLoader.load(JsonServiceFactory.class)) {
             for (String type : factory.getTypes()) {
                 JsonSocketService service = factory.getSocketService(connection);
@@ -94,7 +83,6 @@ public class JsonClientHandler {
     }
 
     public void dispose() {
-        this.throttleServer.dispose();
         this.consistServer.dispose();
         this.operationsServer.dispose();
         this.programmerServer.dispose();
@@ -134,6 +122,8 @@ public class JsonClientHandler {
      * off in the form: <code>{"type":"goodbye"}</code> to which an identical
      * response is sent before the connection gets closed.</li></ul>
      *
+     * @param string the message
+     * @throws java.io.IOException if communications with the client is broken
      */
     public void onMessage(String string) throws IOException {
         log.debug("Received from client: {}", string);
@@ -150,6 +140,8 @@ public class JsonClientHandler {
      *
      * See {@link #onMessage(java.lang.String) } for expected JSON objects.
      *
+     * @param root the JSON node.
+     * @throws java.io.IOException if communications is broken with the client.
      * @see #onMessage(java.lang.String)
      */
     public void onMessage(JsonNode root) throws IOException {
@@ -163,17 +155,13 @@ public class JsonClientHandler {
                 ((ObjectNode) data).put(METHOD, root.path(METHOD).asText());
             }
             log.debug("Processing {} with {}", type, data);
-            if (type.equals(PING)) {
-                this.connection.sendMessage(this.connection.getObjectMapper().createObjectNode().put(TYPE, PONG));
-            } else if (type.equals(GOODBYE)) {
-                this.connection.sendMessage(this.connection.getObjectMapper().createObjectNode().put(TYPE, GOODBYE));
-                this.connection.close();
-            } else if (type.equals(HELLO)) {
-                this.receiveHello(data);
-                this.sendHello(JsonServerPreferences.getDefault().getHeartbeatInterval());
-            } else if (type.equals(LOCALE)) {
-                this.receiveHello(data);
-            } else if (type.equals(LIST)) {
+            if ((type.equals(HELLO) || type.equals(PING) || type.equals(GOODBYE))
+                    && data.isMissingNode()) {
+                // these messages are not required to have a data payload,
+                // so create one if the message did not contain one
+                data = this.connection.getObjectMapper().createObjectNode();
+            }
+            if (type.equals(LIST)) {
                 JsonNode reply;
                 String list = root.path(LIST).asText();
                 switch (list) {
@@ -186,23 +174,8 @@ public class JsonClientHandler {
                     case ENGINES:
                         reply = JsonUtil.getEngines(this.connection.getLocale());
                         break;
-                    case LIGHTS:
-                        reply = JsonUtil.getLights(this.connection.getLocale());
-                        break;
                     case LOCATIONS:
                         reply = JsonUtil.getLocations(this.connection.getLocale());
-                        break;
-                    case METADATA:
-                        reply = JsonUtil.getMetadata(this.connection.getLocale());
-                        break;
-                    case MEMORIES:
-                        reply = JsonUtil.getMemories(this.connection.getLocale());
-                        break;
-                    case PANELS:
-                        reply = JsonUtil.getPanels(this.connection.getLocale(), (data.path(FORMAT).isMissingNode()) ? XML : data.path(FORMAT).asText());
-                        break;
-                    case REPORTERS:
-                        reply = JsonUtil.getReporters(this.connection.getLocale());
                         break;
                     case SIGNAL_HEADS:
                         reply = JsonUtil.getSignalHeads(this.connection.getLocale());
@@ -212,12 +185,6 @@ public class JsonClientHandler {
                         break;
                     case TRAINS:
                         reply = JsonUtil.getTrains(this.connection.getLocale());
-                        break;
-                    case NETWORK_SERVICES:
-                        reply = JsonUtil.getNetworkServices(this.connection.getLocale());
-                        break;
-                    case SYSTEM_CONNECTIONS:
-                        reply = JsonUtil.getSystemConnections(this.connection.getLocale());
                         break;
                     default:
                         if (this.services.get(list) != null) {
@@ -237,9 +204,6 @@ public class JsonClientHandler {
                     case CONSIST:
                         this.consistServer.parseRequest(this.connection.getLocale(), data);
                         break;
-                    case METADATA:
-                        this.connection.sendMessage(JsonUtil.getMetadata(this.connection.getLocale(), data.path(NAME).asText()));
-                        break;
                     case PROGRAMMER:
                         this.programmerServer.parseRequest(this.connection.getLocale(), data);
                         break;
@@ -249,15 +213,15 @@ public class JsonClientHandler {
                     case SIGNAL_MAST:
                         this.signalMastServer.parseRequest(this.connection.getLocale(), data);
                         break;
-                    case REPORTER:
-                        this.reporterServer.parseRequest(this.connection.getLocale(), data);
-                        break;
-                    case THROTTLE:
-                        this.throttleServer.parseRequest(this.connection.getLocale(), data);
-                        break;
                     case TRAIN:
                         this.operationsServer.parseTrainRequest(this.connection.getLocale(), data);
                         break;
+                    case HELLO:
+                    case LOCALE:
+                        if (!data.path(LOCALE).isMissingNode()) {
+                            this.connection.setLocale(Locale.forLanguageTag(data.path(LOCALE).asText()));
+                        }
+                    //$FALL-THROUGH$ to default action
                     default:
                         if (this.services.get(type) != null) {
                             for (JsonSocketService service : this.services.get(type)) {
@@ -272,6 +236,10 @@ public class JsonClientHandler {
             } else {
                 this.sendErrorMessage(400, Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"));
             }
+            if (type.equals(GOODBYE)) {
+                // close the connection if GOODBYE is received.
+                this.connection.close();
+            }
         } catch (JmriException je) {
             this.sendErrorMessage(500, Bundle.getMessage(this.connection.getLocale(), "ErrorUnsupportedOperation", je.getLocalizedMessage()));
         } catch (JsonException je) {
@@ -279,14 +247,17 @@ public class JsonClientHandler {
         }
     }
 
-    private void receiveHello(JsonNode data) {
-        if (!data.path(LOCALE).isMissingNode()) {
-            this.connection.setLocale(Locale.forLanguageTag(data.path(LOCALE).asText()));
-        }
-    }
-
+    /**
+     *
+     * @param heartbeat seconds until heartbeat must be received before breaking
+     *                  connection to client; currently ignored
+     * @throws IOException if communications broken with client
+     * @deprecated since 4.5.2; use {@link #onMessage(java.lang.String)} with
+     * the parameter {@link #HELLO_MSG} instead
+     */
+    @Deprecated
     public void sendHello(int heartbeat) throws IOException {
-        this.connection.sendMessage(JsonUtil.getHello(this.connection.getLocale(), heartbeat));
+        this.onMessage(HELLO_MSG);
     }
 
     private void sendErrorMessage(int code, String message) throws IOException {

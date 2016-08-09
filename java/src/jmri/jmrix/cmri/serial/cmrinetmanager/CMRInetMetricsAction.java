@@ -7,7 +7,6 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
  * CMRInet Network Metrics
  * 
  * @author                      Chuck Catania  2016
- * @version
  */
 public class CMRInetMetricsAction extends AbstractAction {
 

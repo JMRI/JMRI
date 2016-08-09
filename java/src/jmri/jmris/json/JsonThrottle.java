@@ -1,19 +1,19 @@
 package jmri.jmris.json;
 
-import static jmri.jmris.json.JSON.ADDRESS;
-import static jmri.jmris.json.JSON.CLIENTS;
-import static jmri.jmris.json.JSON.ESTOP;
-import static jmri.jmris.json.JSON.F;
-import static jmri.jmris.json.JSON.FORWARD;
-import static jmri.jmris.json.JSON.ID;
-import static jmri.jmris.json.JSON.IDLE;
-import static jmri.jmris.json.JSON.IS_LONG_ADDRESS;
-import static jmri.jmris.json.JSON.RELEASE;
-import static jmri.jmris.json.JSON.ROSTER_ENTRY;
-import static jmri.jmris.json.JSON.SPEED;
-import static jmri.jmris.json.JSON.SPEED_STEPS;
-import static jmri.jmris.json.JSON.STATUS;
-import static jmri.jmris.json.JSON.THROTTLE;
+import static jmri.server.json.JSON.ADDRESS;
+import static jmri.server.json.JSON.CLIENTS;
+import static jmri.server.json.JSON.ESTOP;
+import static jmri.server.json.JSON.F;
+import static jmri.server.json.JSON.FORWARD;
+import static jmri.server.json.JSON.ID;
+import static jmri.server.json.JSON.IDLE;
+import static jmri.server.json.JSON.IS_LONG_ADDRESS;
+import static jmri.server.json.JSON.RELEASE;
+import static jmri.server.json.roster.JsonRoster.ROSTER_ENTRY;
+import static jmri.server.json.JSON.SPEED;
+import static jmri.server.json.JSON.SPEED_STEPS;
+import static jmri.server.json.JSON.STATUS;
+import static jmri.server.json.JSON.THROTTLE;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,8 +1,8 @@
 package jmri.server.json;
 
 /**
- * Common constants used in the JMRI JSON protocol starting with protocol
- * version 4.0.
+ * Common and utility constants used in the JMRI JSON protocol starting with
+ * protocol version 4.0.
  *
  * @author Randall Wood (C) 2013, 2014, 2016
  * @see jmri.jmris.json.JSON
@@ -191,10 +191,6 @@ public final class JSON {
      */
     public static final String PANELS = "panels"; // NOI18N
     /**
-     * {@value #REPORTERS}
-     */
-    public static final String REPORTERS = "reporters"; // NOI18N
-    /**
      * {@value #ROUTES}
      */
     public static final String ROUTES = "routes"; // NOI18N
@@ -282,10 +278,6 @@ public final class JSON {
      * {@value #SIGNAL_MAST}
      */
     public static final String SIGNAL_MAST = "signalMast"; // NOI18N
-    /**
-     * {@value #REPORTER}
-     */
-    public static final String REPORTER = "reporter"; // NOI18N
     /**
      * {@value #THROTTLE}
      */
@@ -412,16 +404,6 @@ public final class JSON {
      * {@value #WRITE}
      */
     public static final String WRITE = "write"; // NOI18N
-
-    /* JSON reporter tokens */
-    /**
-     * {@value #REPORT}
-     */
-    public static final String REPORT = "report"; // NOI18N
-    /**
-     * {@value #LAST_REPORT}
-     */
-    public static final String LAST_REPORT = "lastReport"; // NOI18N
 
     /* JSON roster and car/engine (operations) tokens */
     /**
@@ -635,8 +617,8 @@ public final class JSON {
     /**
      * {@value #ADD}
      *
-     * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER}, this is an entry that has been
-     * added to the roster.
+     * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER},
+     * this is an entry that has been added to the roster.
      *
      * @since 1.1
      */
@@ -647,8 +629,8 @@ public final class JSON {
      * In operations, this indicates the dropping or setting out of a car or
      * engine.
      *
-     * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER}, this is an entry that has been
-     * removed from the roster.
+     * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER},
+     * this is an entry that has been removed from the roster.
      *
      * @since 1.1
      */
@@ -811,7 +793,7 @@ public final class JSON {
      * JSON State (an unsigned integer)
      */
 
- /* Common state */
+    /* Common state */
     /**
      * {@value #UNKNOWN}
      * <p>

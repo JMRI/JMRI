@@ -4,7 +4,6 @@ import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-// import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
 import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
@@ -45,8 +44,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         JButton b = new JButton("Configure CMRInet nodes");
         details.add(b);
 
-//      b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));					
         b.addActionListener(new NodeConfigManagerAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
+        if (!additionalItems.contains(b)) {
+            additionalItems.add(b);
+        }
+        super.loadDetails(details);
+
     }
 
     @Override

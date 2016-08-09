@@ -323,6 +323,7 @@ public class Setup {
     public static final String MANIFEST_CSV_PROPERTY_CHANGE = "setupManifestCSVChange"; //  NOI18N
     public static final String REAL_TIME_PROPERTY_CHANGE = "setupSwitchListRealTime"; //  NOI18N
     public static final String SHOW_TRACK_MOVES_PROPERTY_CHANGE = "setupShowTrackMoves"; //  NOI18N
+    public static final String SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE = "saveTrainManifestChange"; //  NOI18N
 
     public static boolean isMainMenuEnabled() {
         OperationsSetupXml.instance(); // load file
@@ -1085,7 +1086,9 @@ public class Setup {
     }
 
     public static void setSaveTrainManifestsEnabled(boolean enable) {
+        boolean old = saveTrainManifests;
         saveTrainManifests = enable;
+        setDirtyAndFirePropertyChange(SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE, old, enable);
     }
 
     public static String getPickupEnginePrefix() {
@@ -2704,7 +2707,7 @@ public class Setup {
                 if (log.isDebugEnabled()) {
                     log.debug("manifest file save option: " + enable);
                 }
-                setSaveTrainManifestsEnabled(enable.equals(Xml.TRUE));
+                saveTrainManifests = enable.equals(Xml.TRUE);
             }
         }
         if ((operations.getChild(Xml.BUILD_OPTIONS) != null)) {

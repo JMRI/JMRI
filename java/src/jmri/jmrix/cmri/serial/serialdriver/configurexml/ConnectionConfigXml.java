@@ -41,7 +41,8 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     protected void extendElement(Element e) {
-        SerialNode plNode = (SerialNode) SerialTrafficController.instance().getNode(0);
+        SerialTrafficController tc = ((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController();
+        SerialNode plNode = (SerialNode) tc.getNode(0);
         String polllist = "";
         int index = 1;
      
@@ -49,7 +50,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         {
           if (index != 1) polllist = polllist+",";
           polllist = polllist + Integer.toString(plNode.getNodeAddress());
-          plNode = (SerialNode) SerialTrafficController.instance().getNode(index);
+          plNode = (SerialNode) tc.getNode(index);
           index ++;
         }
         
@@ -58,12 +59,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         e.addContent(l);
 
         index = 1;
-        SerialNode node = (SerialNode) SerialTrafficController.instance().getNode(0);
+        SerialNode node = (SerialNode) tc.getNode(0);
         while (node != null) 
         {
             // add node as an element
             Element n = new Element("node");
-            n.setAttribute("name",""+node.getNodeAddress());
+            n.setAttribute("name", "" + node.getNodeAddress());
             e.addContent(n);
             // add parameters to the node as needed
             n.addContent(makeParameter("nodetype", "" + node.getNodeType()));
@@ -106,7 +107,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             n.addContent(makeParameter("cmrinodedesc",""+node.getcmriNodeDesc()));
            
              // look for the next node
-            node = (SerialNode) SerialTrafficController.instance().getNode(index);
+            node = (SerialNode) tc.getNode(index);
             index++;
         }
  //       log.info("Saved Configured Nodes "+(index-1));
@@ -132,6 +133,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     @SuppressWarnings("unchecked")
 	protected void unpackElement(Element e) 
     {
+        SerialTrafficController tc = ((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController();
 
         // --------------------------------------
         // Load the poll list sequence if present
@@ -148,7 +150,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                     StringTokenizer nodes = new StringTokenizer(pseq," ,");
                     while(nodes.hasMoreTokens())
                     {
-                      SerialTrafficController.instance().cmriNetPollList.add(Integer.parseInt(nodes.nextToken()));
+                      tc.cmriNetPollList.add(Integer.parseInt(nodes.nextToken()));
                     }
                  }
             }
@@ -156,7 +158,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         
         // Load the node specific parameters
         // ---------------------------------
-        int pollListSize = SerialTrafficController.instance().cmriNetPollList.size();
+        int pollListSize = tc.cmriNetPollList.size();
         int nextPollPos = pollListSize+1;        
         
         List<Element> l = e.getChildren("node");
@@ -197,7 +199,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             {
                 for (pls=0; pls<pollListSize; pls++)
                 {
-                 if (SerialTrafficController.instance().cmriNetPollList.get(pls) == node.getNodeAddress())
+                 if (tc.cmriNetPollList.get(pls) == node.getNodeAddress())
                  {
                   node.setPollListPosition(pls+1);
                   assigned = true;
@@ -255,7 +257,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
            }
                           
             // Trigger initialization of this Node to reflect these parameters
-            SerialTrafficController.instance().initializeSerialNode(node);
+            ((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController().initializeSerialNode(node);
         }
     }
 

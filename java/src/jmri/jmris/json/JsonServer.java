@@ -1,10 +1,10 @@
 package jmri.jmris.json;
 
-import static jmri.jmris.json.JSON.GOODBYE;
-import static jmri.jmris.json.JSON.JSON;
-import static jmri.jmris.json.JSON.JSON_PROTOCOL_VERSION;
-import static jmri.jmris.json.JSON.TYPE;
-import static jmri.jmris.json.JSON.ZEROCONF_SERVICE_TYPE;
+import static jmri.server.json.JSON.GOODBYE;
+import static jmri.server.json.JSON.JSON;
+import static jmri.server.json.JSON.JSON_PROTOCOL_VERSION;
+import static jmri.server.json.JSON.TYPE;
+import static jmri.server.json.JSON.ZEROCONF_SERVICE_TYPE;
 
 import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -90,7 +90,7 @@ public class JsonServer extends JmriServer {
         JsonClientHandler handler = new JsonClientHandler(new JsonConnection(outStream));
 
         // Start by sending a welcome message
-        handler.sendHello(this.timeout);
+        handler.onMessage(JsonClientHandler.HELLO_MSG);
 
         while (true) {
             try {

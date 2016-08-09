@@ -432,7 +432,6 @@ public abstract class AbstractMonFrame extends JmriJFrame {
     }
     /**
      * Toggle the packet logging function with one button
-     * @param e 
      */
     public synchronized void logButtonActionPerformed(java.awt.event.ActionEvent e) {
         // start logging by creating the stream
