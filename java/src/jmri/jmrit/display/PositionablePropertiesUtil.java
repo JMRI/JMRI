@@ -236,7 +236,7 @@ public class PositionablePropertiesUtil {
         } else {
             _justificationCombo.setSelectedIndex(2);
         }
-        justificationPanel.add(new JLabel("Justification"));
+        justificationPanel.add(new JLabel(Bundle.getMessage("Justification")));
         justificationPanel.add(_justificationCombo);
         _textPanel.add(justificationPanel);
 

@@ -447,7 +447,7 @@ public class DefaultConditionalAction implements ConditionalAction {
             case Conditional.ITEM_TYPE_AUDIO:
                 return (Bundle.getMessage("BeanNameAudio"));
             case Conditional.ITEM_TYPE_SCRIPT:
-                return (Bundle.getMessage("BeanNameScript"));
+                return (rbx.getString("Script"));
             case Conditional.ITEM_TYPE_OTHER:
                 return (rbx.getString("Other"));
         }

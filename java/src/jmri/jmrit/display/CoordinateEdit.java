@@ -274,10 +274,10 @@ public class CoordinateEdit extends JmriJFrame {
         oldY = pl.getY();
 
         textX = new javax.swing.JLabel();
-        textX.setText("x= " + pl.getX());
+        textX.setText("X = " + pl.getX());
         textX.setVisible(true);
         textY = new javax.swing.JLabel();
-        textY.setText("y= " + pl.getY());
+        textY.setText("Y = " + pl.getY());
         textY.setVisible(true);
 
         SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 10000, 1);
@@ -286,8 +286,8 @@ public class CoordinateEdit extends JmriJFrame {
                 int x = ((Number) spinX.getValue()).intValue();
                 int y = ((Number) spinY.getValue()).intValue();
                 pl.setLocation(x, y);
-                textX.setText("x= " + pl.getX());
-                textY.setText("y= " + pl.getY());
+                textX.setText("X = " + pl.getX());
+                textY.setText("Y = " + pl.getY());
             }
         };
         spinX = new javax.swing.JSpinner(model);
@@ -313,8 +313,8 @@ public class CoordinateEdit extends JmriJFrame {
                 int x = ((Number) spinX.getValue()).intValue();
                 int y = ((Number) spinY.getValue()).intValue();
                 pl.setLocation(x, y);
-                textX.setText("x= " + pl.getX());
-                textY.setText("y= " + pl.getY());
+                textX.setText("X = " + pl.getX());
+                textY.setText("Y = " + pl.getY());
                 dispose();
             }
         });
@@ -332,7 +332,7 @@ public class CoordinateEdit extends JmriJFrame {
     public void initSetLevel() {
         oldX = pl.getDisplayLevel();
         textX = new javax.swing.JLabel();
-        textX.setText("level= " + pl.getDisplayLevel());
+        textX.setText("Level = " + pl.getDisplayLevel());
         textX.setVisible(true);
 
         SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 10, 1);
@@ -350,7 +350,7 @@ public class CoordinateEdit extends JmriJFrame {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 int l = ((Number) spinX.getValue()).intValue();
                 pl.getEditor().setSelectionsDisplayLevel(l, pl);
-                textX.setText("level= " + l);
+                textX.setText("Level = " + l);
                 dispose();
             }
         });
@@ -400,7 +400,7 @@ public class CoordinateEdit extends JmriJFrame {
         oldX = util.getBorderSize();
 
         textX = new javax.swing.JLabel();
-        textX.setText("Border= " + util.getBorderSize());
+        textX.setText("Border = " + util.getBorderSize());
         textX.setVisible(true);
 
         SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 1000, 1);
@@ -420,7 +420,7 @@ public class CoordinateEdit extends JmriJFrame {
                 PositionablePopupUtil util = pl.getPopupUtility();
                 util.setBorderSize(l);
                 pl.getEditor().setAttributes(util, pl);
-                textX.setText("Border= " + l);
+                textX.setText("Border = " + l);
                 dispose();
             }
         });
@@ -438,7 +438,7 @@ public class CoordinateEdit extends JmriJFrame {
         oldX = util.getMargin();
 
         textX = new javax.swing.JLabel();
-        textX.setText("Margin= " + util.getMargin());
+        textX.setText("Margin = " + util.getMargin());
         textX.setVisible(true);
 
         SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 1000, 1);
@@ -458,7 +458,7 @@ public class CoordinateEdit extends JmriJFrame {
                 PositionablePopupUtil util = pl.getPopupUtility();
                 pl.getPopupUtility().setMargin(l);
                 pl.getEditor().setAttributes(util, pl);
-                textX.setText("Margin= " + l);
+                textX.setText("Margin = " + l);
                 dispose();
             }
         });
@@ -477,10 +477,10 @@ public class CoordinateEdit extends JmriJFrame {
         oldY = util.getFixedWidth();
 
         textX = new javax.swing.JLabel();
-        textX.setText("Height= " + util.getFixedHeight());
+        textX.setText("Height = " + util.getFixedHeight());
         textX.setVisible(true);
         textY = new javax.swing.JLabel();
-        textY.setText("Width= " + util.getFixedWidth());
+        textY.setText("Width = " + util.getFixedWidth());
         textY.setVisible(true);
 
         SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 1000, 1);
@@ -507,8 +507,8 @@ public class CoordinateEdit extends JmriJFrame {
                 PositionablePopupUtil util = pl.getPopupUtility();
                 util.setFixedSize(width, height);
                 pl.getEditor().setAttributes(util, pl);
-                textX.setText("Height= " + util.getFixedHeight());
-                textY.setText("Width= " + util.getFixedWidth());
+                textX.setText("Height = " + util.getFixedHeight());
+                textY.setText("Width = " + util.getFixedWidth());
                 dispose();
             }
         });

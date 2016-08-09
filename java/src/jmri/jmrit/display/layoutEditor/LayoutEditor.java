@@ -653,10 +653,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         top4.add(nextSensor);
         nextSensor.setToolTipText(rb.getString("SensorIconToolTip"));
         sensorIconEditor = new MultiIconEditor(4);
-        sensorIconEditor.setIcon(0, "Active:", "resources/icons/smallschematics/tracksegments/circuit-occupied.gif");
-        sensorIconEditor.setIcon(1, "Inactive", "resources/icons/smallschematics/tracksegments/circuit-empty.gif");
-        sensorIconEditor.setIcon(2, "Inconsistent:", "resources/icons/smallschematics/tracksegments/circuit-error.gif");
-        sensorIconEditor.setIcon(3, "Unknown:", "resources/icons/smallschematics/tracksegments/circuit-error.gif");
+        sensorIconEditor.setIcon(0, Bundle.getMessage("SensorStateActive") + ":", "resources/icons/smallschematics/tracksegments/circuit-occupied.gif");
+        sensorIconEditor.setIcon(1, Bundle.getMessage("SensorStateInactive") + ":", "resources/icons/smallschematics/tracksegments/circuit-empty.gif");
+        sensorIconEditor.setIcon(2, Bundle.getMessage("BeanStateInconsistent") + ":", "resources/icons/smallschematics/tracksegments/circuit-error.gif");
+        sensorIconEditor.setIcon(3, Bundle.getMessage("BeanStateUnknown") + ":", "resources/icons/smallschematics/tracksegments/circuit-error.gif");
         sensorIconEditor.complete();
         sensorFrame = new JFrame(rb.getString("EditSensorIcons"));
         sensorFrame.getContentPane().add(new JLabel("  " + rb.getString("IconChangeInfo") + "  "), BorderLayout.NORTH);
@@ -4872,7 +4872,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private void deleteSelectedItems() {
         if (!noWarnGlobalDelete) {
             int selectedValue = JOptionPane.showOptionDialog(this,
-                    rb.getString("Question6"), rb.getString("WarningTitle"),
+                    rb.getString("Question6"), Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                     new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
                         rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
@@ -6657,7 +6657,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (usage != null) {
             usage = "<html>" + usage + "</html>";
             int selectedValue = JOptionPane.showOptionDialog(this,
-                    usage, rb.getString("WarningTitle"),
+                    usage, Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                     new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"), Bundle.getMessage("ButtonCancel")}, rb.getString("ButtonYes"));
             if (selectedValue == 1) {
@@ -6705,7 +6705,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (o.getConnect1() != null || o.getConnect2() != null) {
             if (!noWarnPositionablePoint) {
                 int selectedValue = JOptionPane.showOptionDialog(this,
-                        rb.getString("Question2"), rb.getString("WarningTitle"),
+                        rb.getString("Question2"), Bundle.getMessage("WarningTitle"),
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                         new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
                             rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
@@ -6757,7 +6757,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // First verify with the user that this is really wanted
         if (!noWarnLayoutTurnout) {
             int selectedValue = JOptionPane.showOptionDialog(this,
-                    rb.getString("Question1r"), rb.getString("WarningTitle"),
+                    rb.getString("Question1r"), Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                     new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
                         rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
@@ -6849,7 +6849,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // First verify with the user that this is really wanted
         if (!noWarnLevelXing) {
             int selectedValue = JOptionPane.showOptionDialog(this,
-                    rb.getString("Question3r"), rb.getString("WarningTitle"),
+                    rb.getString("Question3r"), Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                     new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
                         rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
@@ -6918,7 +6918,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // First verify with the user that this is really wanted
         if (!noWarnSlip) {
             int selectedValue = JOptionPane.showOptionDialog(this,
-                    rb.getString("Question5r"), rb.getString("WarningTitle"),
+                    rb.getString("Question5r"), Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                     new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
                         rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
@@ -6984,7 +6984,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // First verify with the user that this is really wanted
         if (!noWarnTurntable) {
             int selectedValue = JOptionPane.showOptionDialog(this,
-                    rb.getString("Question4r"), rb.getString("WarningTitle"),
+                    rb.getString("Question4r"), Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                     new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
                         rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
