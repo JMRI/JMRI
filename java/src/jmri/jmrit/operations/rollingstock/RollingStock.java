@@ -64,6 +64,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     protected int _moves = 0;
     protected String _lastLocationId = LOCATION_UNKNOWN; // the rollingstock's last location id
     protected int _blocking = DEFAULT_BLOCKING_ORDER;
+    
+    private IdTag _tag = null;
+    private PropertyChangeListener _tagListener = null;
 
     public static final String LOCATION_UNKNOWN = "0";
 
@@ -757,9 +760,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         }
     }
 
-    private IdTag _tag = null;
-    private PropertyChangeListener _tagListener = null;
-
     public String getRfid() {
         return _rfid;
     }
@@ -771,8 +771,8 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      */
     public void setRfid(String id) {
         String old = _rfid;
-        _rfid = id;
-        if (!old.equals(id)) {
+        if (id != null && !id.equals(old)) {
+            _rfid = id;
             log.debug("Changing IdTag for {} to {}", toString(), id);
             try {
                 IdTag tag = InstanceManager.getDefault(IdTagManager.class).getIdTag(id.toUpperCase());
@@ -789,15 +789,16 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         return _tag;
     }
 
+    /**
+     * Sets the id tag for this rolling stock. The id tag isn't saved, ut the
+     * RFID is.
+     * 
+     * @param tag the id tag
+     */
     public void setIdTag(IdTag tag) {
-        IdTag oldTag = _tag;
         if (_tag != null)
             _tag.removePropertyChangeListener(_tagListener);
         _tag = tag;
-        if (oldTag != _tag) {
-            setRfid(_tag.getUserName());
-            setDirtyAndFirePropertyChange("rolling stock idTag", oldTag, tag); // NOI18N
-        }
         if (_tagListener == null) {
             // store the tag listener so we can reuse it and 
             // dispose of it as necessary.
@@ -1070,8 +1071,8 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         CarRoads.instance().removePropertyChangeListener(this);
         CarOwners.instance().removePropertyChangeListener(this);
         CarColors.instance().removePropertyChangeListener(this);
-        if (_tag != null) {
-            _tag.removePropertyChangeListener(_tagListener);
+        if (getIdTag() != null) {
+            getIdTag().removePropertyChangeListener(_tagListener);
         }
     }
 
