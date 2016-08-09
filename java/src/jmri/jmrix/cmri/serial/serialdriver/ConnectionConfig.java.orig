@@ -4,6 +4,7 @@ import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+// import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
 import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
@@ -11,8 +12,12 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
  * Definition of objects to handle configuring a layout connection via an C/MRI
  * SerialDriverAdapter object.
  *
+<<<<<<< HEAD
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
  * @author	Chuck Catania  Copyright (C) 2014
+=======
+ * @author Bob Jacobsen Copyright (C) 2001, 2003
+>>>>>>> 09e833069f1a140c683ea4baa1cb9cd31d00603d
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -44,12 +49,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         JButton b = new JButton("Configure CMRInet nodes");
         details.add(b);
 
+//      b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));					
         b.addActionListener(new NodeConfigManagerAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
-        if (!additionalItems.contains(b)) {
-            additionalItems.add(b);
-        }
-        super.loadDetails(details);
-
     }
 
     @Override

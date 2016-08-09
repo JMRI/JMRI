@@ -1,0 +1,33 @@
+# ListBundle.properties
+#
+<<<<<<< HEAD
+# Revision $Revision: 17977 $
+#
+=======
+>>>>>>> 09e833069f1a140c683ea4baa1cb9cd31d00603d
+# Default properties for the jmri.jmrix.cmri.serial.assignment window
+
+WindowTitle = Lista de asignaciones C/MRI
+
+NodePanelName = Nodo C/MRI
+NodeBoxLabel = Nodo:
+NodeBoxTip = Elija un nodo configurado
+ShowInputButton = Ver bits de entrada
+ShowInputTip = Pulse para ver las asignaciones de los bits de entrada
+ShowOutputButton = Ver bits de salida
+ShowOutputTip = Pulse para ver las asignaciones de los bits de salida
+InputBitsAnd = bits de entrada y
+OutputBits = bits de salida
+BitsPerCard = bits por tarjeta
+NoNodesError = ERROR - no se encuentran nodos C/MRI.
+
+AssignmentPanelInputName = Asignaciones de entrada
+AssignmentPanelOutputName = Asignaciones de salida
+HeadingBit = Bit
+HeadingAddress = Direccion
+HeadingSystemName = Nombre de sistema
+HeadingUserName = Nombre de usuario
+AssignmentFree = - libre -
+
+PrintButtonText = Imprimir
+PrintButtonTip = Imprimir las asignaciones que se muestran arriba

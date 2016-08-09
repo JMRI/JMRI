@@ -1,0 +1,18 @@
+# CMRIBundle.properties
+#
+<<<<<<< HEAD
+# Revision $Revision: 17977 $
+#
+=======
+>>>>>>> 09e833069f1a140c683ea4baa1cb9cd31d00603d
+# Default properties for the jmri.jmrix.cmri menu
+#
+# Translated by Alfredo Sola <alfredos@users.sf.net> on 20040826
+#
+
+MenuCMRI = CMRI
+
+MenuItemCommandMonitor = Monitor de CMRI
+MenuItemSendCommand = Enviar comando
+MenuItemDiagnostics = Diagnosticar
+MenuItemAssignments = Listar asignaciones

@@ -23,8 +23,11 @@ import org.slf4j.LoggerFactory;
  * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
+<<<<<<< HEAD
  * @author Chuck Catania Copyright: Copyright (c) 2014, 2015, 2016
  * @version $Revision: 17977 $
+=======
+>>>>>>> 09e833069f1a140c683ea4baa1cb9cd31d00603d
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -41,16 +44,20 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     protected void extendElement(Element e) {
-        SerialTrafficController tc = ((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController();
-        SerialNode plNode = (SerialNode) tc.getNode(0);
+<<<<<<< HEAD
+        SerialNode plNode = (SerialNode) SerialTrafficController.instance().getNode(0);
         String polllist = "";
+=======
+        SerialTrafficController tc = ((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController();
+        SerialNode node = (SerialNode) tc.getNode(0);
+>>>>>>> 09e833069f1a140c683ea4baa1cb9cd31d00603d
         int index = 1;
      
         while(plNode != null)
         {
           if (index != 1) polllist = polllist+",";
           polllist = polllist + Integer.toString(plNode.getNodeAddress());
-          plNode = (SerialNode) tc.getNode(index);
+          plNode = (SerialNode) SerialTrafficController.instance().getNode(index);
           index ++;
         }
         
@@ -59,12 +66,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         e.addContent(l);
 
         index = 1;
-        SerialNode node = (SerialNode) tc.getNode(0);
+        SerialNode node = (SerialNode) SerialTrafficController.instance().getNode(0);
         while (node != null) 
         {
             // add node as an element
             Element n = new Element("node");
-            n.setAttribute("name", "" + node.getNodeAddress());
+            n.setAttribute("name",""+node.getNodeAddress());
             e.addContent(n);
             // add parameters to the node as needed
             n.addContent(makeParameter("nodetype", "" + node.getNodeType()));
@@ -81,6 +88,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             for (int i = 0; i < node.getCardTypeLocation().length; i++) {
                 value = value + Integer.toHexString(node.getCardTypeLocation()[i] & 0xF);
             }
+<<<<<<< HEAD
             n.addContent(makeParameter("cardtypelocation", ""+value));
             
             // CMRInet Options
@@ -107,7 +115,13 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             n.addContent(makeParameter("cmrinodedesc",""+node.getcmriNodeDesc()));
            
              // look for the next node
+            node = (SerialNode) SerialTrafficController.instance().getNode(index);
+=======
+            n.addContent(makeParameter("cardtypelocation", "" + value));
+
+            // look for the next node
             node = (SerialNode) tc.getNode(index);
+>>>>>>> 09e833069f1a140c683ea4baa1cb9cd31d00603d
             index++;
         }
  //       log.info("Saved Configured Nodes "+(index-1));
@@ -133,7 +147,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     @SuppressWarnings("unchecked")
 	protected void unpackElement(Element e) 
     {
-        SerialTrafficController tc = ((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController();
 
         // --------------------------------------
         // Load the poll list sequence if present
@@ -150,7 +163,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                     StringTokenizer nodes = new StringTokenizer(pseq," ,");
                     while(nodes.hasMoreTokens())
                     {
-                      tc.cmriNetPollList.add(Integer.parseInt(nodes.nextToken()));
+                      SerialTrafficController.instance().cmriNetPollList.add(Integer.parseInt(nodes.nextToken()));
                     }
                  }
             }
@@ -158,7 +171,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         
         // Load the node specific parameters
         // ---------------------------------
-        int pollListSize = tc.cmriNetPollList.size();
+        int pollListSize = SerialTrafficController.instance().cmriNetPollList.size();
         int nextPollPos = pollListSize+1;        
         
         List<Element> l = e.getChildren("node");
@@ -199,7 +212,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             {
                 for (pls=0; pls<pollListSize; pls++)
                 {
-                 if (tc.cmriNetPollList.get(pls) == node.getNodeAddress())
+                 if (SerialTrafficController.instance().cmriNetPollList.get(pls) == node.getNodeAddress())
                  {
                   node.setPollListPosition(pls+1);
                   assigned = true;

@@ -1,0 +1,15 @@
+# CMRIBundle.properties
+<<<<<<< HEAD
+#
+# Revision $Revision: 17977 $
+=======
+>>>>>>> 09e833069f1a140c683ea4baa1cb9cd31d00603d
+# by Simon Ginsburg
+# German properties for the jmri.jmrix.cmri menu
+
+MenuCMRI    = CMRI
+
+MenuItemCommandMonitor      = CMRI Monitor
+MenuItemSendCommand         = Sende Befehl
+MenuItemDiagnostics         = Aktiviere Diagnose
+MenuItemAssignments         = Auflistung Zuweisungen
