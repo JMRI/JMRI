@@ -763,15 +763,41 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     public String getRfid() {
         return _rfid;
     }
+    
+    /**
+     * Sets the RFID for this rolling stock.
+     * 
+     * @param id 12 character RFID string.
+     */
+    public void setRfid(String id) {
+        String old = _rfid;
+        _rfid = id;
+        if (!old.equals(id)) {
+            log.debug("Changing IdTag for {} to {}", toString(), id);
+            try {
+                IdTag tag = InstanceManager.getDefault(IdTagManager.class).getIdTag(id.toUpperCase());
+                log.debug("Tag {} Found", tag.toString());
+                setIdTag(tag);
+            } catch (NullPointerException e) {
+                log.error("Tag {} Not Found", id);
+            }
+            setDirtyAndFirePropertyChange("rolling stock rfid", old, id); // NOI18N
+        }
+    }
 
     public IdTag getIdTag() {
         return _tag;
     }
 
     public void setIdTag(IdTag tag) {
+        IdTag oldTag = _tag;
         if (_tag != null)
             _tag.removePropertyChangeListener(_tagListener);
         _tag = tag;
+        if (oldTag != _tag) {
+            setRfid(_tag.getUserName());
+            setDirtyAndFirePropertyChange("rolling stock idTag", oldTag, tag); // NOI18N
+        }
         if (_tagListener == null) {
             // store the tag listener so we can reuse it and 
             // dispose of it as necessary.
@@ -804,26 +830,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         }
         if (_tag != null)
             _tag.addPropertyChangeListener(_tagListener);
-    }
-
-    /**
-     * Sets the RFID for this rolling stock.
-     * 
-     * @param id 12 character RFID string.
-     */
-    public void setRfid(String id) {
-        String old = _rfid;
-        _rfid = id;
-        log.debug("Changing IdTag for {} to {}", toString(), id);
-        if (!old.equals(id))
-            setDirtyAndFirePropertyChange("rolling stock rfid", old, id); // NOI18N
-        try {
-            IdTag tag = InstanceManager.getDefault(IdTagManager.class).getIdTag(id.toUpperCase());
-            log.debug("Tag {} Found", tag.toString());
-            setIdTag(tag);
-        } catch (NullPointerException e) {
-            log.error("Tag {} Not Found", id);
-        }
     }
 
     /**
