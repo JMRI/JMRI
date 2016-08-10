@@ -65,9 +65,11 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     protected String _lastLocationId = LOCATION_UNKNOWN; // the rollingstock's last location id
     protected int _blocking = DEFAULT_BLOCKING_ORDER;
     
-    private IdTag _tag = null;
-    private PropertyChangeListener _tagListener = null;
-
+    protected IdTag _tag = null;
+    protected PropertyChangeListener _tagListener = null;
+    protected Location _whereLastSeen = null; // location reported by tag reader
+    protected Date _whenLastSeen = null; // date reported by tag reader
+    
     public static final String LOCATION_UNKNOWN = "0";
 
     protected int number = 0; // used by rolling stock manager for sort by number
@@ -813,7 +815,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
                         if (e.getNewValue() != null) {
                             Location newLocation = locationManager.getLocationByReporter((jmri.Reporter) e.getNewValue());
                             if (newLocation != getLocation())
-                                setLocation(newLocation, null);
+                                setWhereLastSeen(newLocation);
                         }
                     }
                     if (e.getPropertyName().equals("whenLastSeen")) {
@@ -823,7 +825,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
                         // the actual location changes.
                         if (e.getNewValue() != null) {
                             Date newDate = ((Date) e.getNewValue());
-                            setLastDate(newDate);
+                            setWhenLastSeen(newDate);
                         }
                     }
                 }
@@ -832,6 +834,86 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         if (_tag != null)
             _tag.addPropertyChangeListener(_tagListener);
     }
+    
+    public String getWhereLastSeenName() {
+        if (_whereLastSeen != null) {
+            return _whereLastSeen.getName();
+        }
+        return NONE;
+    }
+    
+    public Location getWhereLastSeen() {
+        return _whereLastSeen;
+    }
+    
+    public void setWhereLastSeen(Location newLocation) {
+        Location old = _whereLastSeen;
+        _whereLastSeen = newLocation;
+        if (old != newLocation) {
+            setDirtyAndFirePropertyChange("rolling stock whereLastSeen", old, newLocation); // NOI18N
+        }
+    }
+    
+    public Date getWhenLastSeen() {
+        return _whenLastSeen;
+    }
+    
+    public void setWhenLastSeen(Date newDate) {
+        Date old = _whenLastSeen;
+        _whenLastSeen = newDate;
+        if (old != newDate) {
+            setDirtyAndFirePropertyChange("rolling stock whenLastSeen", old, newDate); // NOI18N
+        }
+    }
+    
+    /**
+     * Provides the last date when this rolling stock was moved, or was reset
+     * from a built train, as a string.
+     *
+     * @return date
+     */
+    public String getWhenLastSeenDate() {
+        if (_whenLastSeen == null) {
+            return NONE; // return an empty string for the default date.
+        }
+        SimpleDateFormat format =
+                new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");  // NOI18N
+        return format.format(_whenLastSeen);
+    }
+    
+    /**
+     * Sets the last date when this rolling stock was detected by a reporter.
+     *
+     * @param date MM/dd/yyyy HH:mm:ss
+     */
+    public void setWhenLastSeen(String date) {
+        if (date.equals(NONE)) {
+            return; // there was no date specified.
+        }
+        Date oldDate = _whenLastSeen;
+        // create a date object from the value.
+        try {
+            // try the new format (with seconds).
+            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");  // NOI18N
+            _whenLastSeen = formatter.parse(date);
+        } catch (java.text.ParseException pe0) {
+            // try the old 12 hour format (no seconds).
+            try {
+                SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mmaa");  // NOI18N
+                _whenLastSeen = formatter.parse(date);
+            } catch (java.text.ParseException pe1) {
+                try {
+                    // try 24hour clock.
+                    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");  // NOI18N
+                    _whenLastSeen = formatter.parse(date);
+                } catch (java.text.ParseException pe2) {
+                    log.warn("Not able to parse date: {} for rolling stock ({})", date, toString());
+                    _whenLastSeen = oldDate; // set the date back to what it was before
+                }
+            }
+        }
+    }
+
 
     /**
      * Provides the last date when this rolling stock was moved, or was reset
@@ -840,8 +922,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      * @return date
      */
     public String getLastDate() {
-        if (_lastDate.equals((new java.util.GregorianCalendar()).getGregorianChange()))
+        if (_lastDate.equals((new java.util.GregorianCalendar()).getGregorianChange())) {
             return NONE; // return an empty string for the default date.
+        }
         SimpleDateFormat format =
                 new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");  // NOI18N
         return format.format(_lastDate);
@@ -1171,6 +1254,12 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute(Xml.RFID)) != null) {
             setRfid(a.getValue());
         }
+        if ((a = e.getAttribute(Xml.RFID_WHERE_LAST_SEEN)) != null) {
+            _whereLastSeen = locationManager.getLocationById(a.getValue());
+        }
+        if ((a = e.getAttribute(Xml.RFID_WHEN_LAST_SEEN)) != null) {
+            setWhenLastSeen(a.getValue()); // uses the setWhenLastSeen(String) method.
+        }
         if ((a = e.getAttribute(Xml.LOC_UNKNOWN)) != null) {
             _locationUnknown = a.getValue().equals(Xml.TRUE);
         }
@@ -1263,6 +1352,12 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         }
         if (!getRfid().equals(NONE)) {
             e.setAttribute(Xml.RFID, getRfid());
+            if (getWhereLastSeen() != null) {
+                e.setAttribute(Xml.RFID_WHERE_LAST_SEEN, getWhereLastSeen().getId());
+            }
+            if (getWhenLastSeen() != null) {
+                e.setAttribute(Xml.RFID_WHEN_LAST_SEEN, getWhenLastSeenDate());
+            }
         }
         if (isLocationUnknown()) {
             e.setAttribute(Xml.LOC_UNKNOWN, isLocationUnknown() ? Xml.TRUE : Xml.FALSE);
