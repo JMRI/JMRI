@@ -212,7 +212,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     }
 
     // Default engines frame table column widths, starts with Number column and ends with Edit
-    private int[] _enginesTableColumnWidths = {60, 60, 65, 50, 65, 35, 75, 190, 190, 140, 190, 65, 50, 65, 70};
+    private int[] _enginesTableColumnWidths = {60, 60, 65, 50, 65, 35, 75, 190, 190, 140, 190, 65, 50, 50, 50, 50, 100, 130, 65, 70};
 
     void initTable() {
         // Use XTableColumnModel so we can control which columns are visible
