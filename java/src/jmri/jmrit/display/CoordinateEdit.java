@@ -256,7 +256,7 @@ public class CoordinateEdit extends JmriJFrame {
             nameText.setText(java.text.MessageFormat.format(Bundle.getMessage("namelabel"), pos.getNameString()));
             nameText.setVisible(true);
         }
-        okButton.setText(Bundle.getMessage("Set"));
+        okButton.setText(Bundle.getMessage("ButtonSet"));
         okButton.setVisible(true);
 
         cancelButton.setText(Bundle.getMessage("ButtonCancel"));

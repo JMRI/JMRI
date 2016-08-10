@@ -124,7 +124,7 @@ public class SlipTurnoutTextEdit extends JmriJFrame {
             }
         }
 
-        okButton.setText(Bundle.getMessage("Set"));
+        okButton.setText(Bundle.getMessage("ButtonSet"));
         okButton.setVisible(true);
         okButton.setToolTipText(Bundle.getMessage("SetButtonToolTip"));
 
