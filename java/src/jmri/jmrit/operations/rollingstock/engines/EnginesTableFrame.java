@@ -213,43 +213,43 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
         if (ae.getSource() == sortByNumber) {
-            enginesModel.setSort(enginesModel.SORTBYNUMBER);
+            enginesModel.setSort(enginesModel.SORTBY_NUMBER);
         }
         if (ae.getSource() == sortByRoad) {
-            enginesModel.setSort(enginesModel.SORTBYROAD);
+            enginesModel.setSort(enginesModel.SORTBY_ROAD);
         }
         if (ae.getSource() == sortByModel) {
-            enginesModel.setSort(enginesModel.SORTBYMODEL);
+            enginesModel.setSort(enginesModel.SORTBY_MODEL);
         }
         if (ae.getSource() == sortByConsist) {
-            enginesModel.setSort(enginesModel.SORTBYCONSIST);
+            enginesModel.setSort(enginesModel.SORTBY_CONSIST);
         }
         if (ae.getSource() == sortByLocation) {
-            enginesModel.setSort(enginesModel.SORTBYLOCATION);
+            enginesModel.setSort(enginesModel.SORTBY_LOCATION);
         }
         if (ae.getSource() == sortByDestination) {
-            enginesModel.setSort(enginesModel.SORTBYDESTINATION);
+            enginesModel.setSort(enginesModel.SORTBY_DESTINATION);
         }
         if (ae.getSource() == sortByTrain) {
-            enginesModel.setSort(enginesModel.SORTBYTRAIN);
+            enginesModel.setSort(enginesModel.SORTBY_TRAIN);
         }
         if (ae.getSource() == sortByMoves) {
-            enginesModel.setSort(enginesModel.SORTBYMOVES);
+            enginesModel.setSort(enginesModel.SORTBY_MOVES);
         }
         if (ae.getSource() == sortByBuilt) {
-            enginesModel.setSort(enginesModel.SORTBYBUILT);
+            enginesModel.setSort(enginesModel.SORTBY_BUILT);
         }
         if (ae.getSource() == sortByOwner) {
-            enginesModel.setSort(enginesModel.SORTBYOWNER);
+            enginesModel.setSort(enginesModel.SORTBY_OWNER);
         }
         if (ae.getSource() == sortByValue) {
-            enginesModel.setSort(enginesModel.SORTBYVALUE);
+            enginesModel.setSort(enginesModel.SORTBY_VALUE);
         }
         if (ae.getSource() == sortByRfid) {
-            enginesModel.setSort(enginesModel.SORTBYRFID);
+            enginesModel.setSort(enginesModel.SORTBY_RFID);
         }
         if (ae.getSource() == sortByLast) {
-            enginesModel.setSort(enginesModel.SORTBYLAST);
+            enginesModel.setSort(enginesModel.SORTBY_LAST);
         }
         // clear any sorts by column
         clearTableSort(enginesTable);
