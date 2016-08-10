@@ -47,7 +47,7 @@ import org.slf4j.MDC;
  * Block.
  * <P>
  * The name of each Layout Block is the same as that of the corresponding block
- * as defined in Layout Editor . A corresponding JMRI Block object is created
+ * as defined in Layout Editor. A corresponding JMRI Block object is created
  * when a LayoutBlock is created. The JMRI Block uses the name of the block
  * defined in Layout Editor as its user name and a unique IBnnn system name. The
  * JMRI Block object and its associated Path objects are useful in tracking a
@@ -58,7 +58,7 @@ import org.slf4j.MDC;
  * Block object. If the value contains a train name, for example, displaying
  * Memory objects associated with LayoutBlocks, and displayed near each Layout
  * Block can follow a train around the layout, displaying its name when it is in
- * the .	LayoutBlock.
+ * the LayoutBlock.
  * <P>
  * LayoutBlocks are "cross-panel", similar to sensors and turnouts. A
  * LayoutBlock may be used by more than one Layout Editor panel simultaneously.
@@ -329,7 +329,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             JOptionPane.showMessageDialog(openFrame,
                     java.text.MessageFormat.format(rb.getString("Error7"),
                             new Object[]{sensorName}),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return null;
         }
         if (!sensorName.equals(s.getUserName())) {
@@ -647,7 +647,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                             int response = JOptionPane.showOptionDialog(null,
                                     java.text.MessageFormat.format(rb.getString("Warn1"),
                                             new Object[]{blockName, tPanel.getLayoutName(),
-                                                panel.getLayoutName()}), rb.getString("WarningTitle"),
+                                                panel.getLayoutName()}), Bundle.getMessage("WarningTitle"),
                                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                                     null, new Object[]{Bundle.getMessage("ButtonOK"),
                                         rb.getString("ButtonOKPlus")}, Bundle.getMessage("ButtonOK"));
@@ -1043,7 +1043,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             layout.setName("Layout Editor");
 
             layout.addItem(new BeanEditItem(new JLabel("" + useCount), rb.getString("UseCount"), null));
-            layout.addItem(new BeanEditItem(memoryNameField, rb.getString("MemoryVariable"), rb.getString("MemoryVariableTip")));
+            layout.addItem(new BeanEditItem(memoryNameField, Bundle.getMessage("BeanNameMemory"), rb.getString("MemoryVariableTip")));
 
             senseBox.removeAllItems();
             senseBox.addItem(Bundle.getMessage("SensorStateActive"));
@@ -1206,7 +1206,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
      */
     String[] colorText = {"Black", "DarkGray", "Gray",
         "LightGray", "White", "Red", "Pink", "Orange",
-        "Yellow", "Green", "Blue", "Magenta", "Cyan"};
+        "Yellow", "Green", "Blue", "Magenta", "Cyan"}; // NOI18N
     Color[] colorCode = {Color.black, Color.darkGray, Color.gray,
         Color.lightGray, Color.white, Color.red, Color.pink, Color.orange,
         Color.yellow, Color.green, Color.blue, Color.magenta, Color.cyan};
@@ -1215,7 +1215,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     private void initializeColorCombo(JComboBox<String> colorCombo) {
         colorCombo.removeAllItems();
         for (int i = 0; i < numColors; i++) {
-            colorCombo.addItem(rb.getString(colorText[i]));
+            colorCombo.addItem(rb.getString(colorText[i])); // TODO use higher level Bundle, remove duplicates
+            // Colors are also in Operations-, Display, EntryExitBundles
         }
     }
 
@@ -1370,7 +1371,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                         int response = JOptionPane.showOptionDialog(null,
                                 java.text.MessageFormat.format(rb.getString("Warn1"),
                                         new Object[]{blockName, tPanel.getLayoutName(),
-                                            panel.getLayoutName()}), rb.getString("WarningTitle"),
+                                            panel.getLayoutName()}), Bundle.getMessage("WarningTitle"),
                                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                                 null, new Object[]{Bundle.getMessage("ButtonOK"),
                                     rb.getString("ButtonOKPlus")}, Bundle.getMessage("ButtonOK"));
@@ -2205,7 +2206,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                         int response = JOptionPane.showOptionDialog(null,
                                 java.text.MessageFormat.format(rb.getString("Warn1"),
                                         new Object[]{blockName, tPanel.getLayoutName(),
-                                            panel.getLayoutName()}), rb.getString("WarningTitle"),
+                                            panel.getLayoutName()}), Bundle.getMessage("WarningTitle"),
                                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                                 null, new Object[]{Bundle.getMessage("ButtonOK"),
                                     rb.getString("ButtonOKPlus")}, Bundle.getMessage("ButtonOK"));

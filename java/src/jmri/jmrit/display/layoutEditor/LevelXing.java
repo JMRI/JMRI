@@ -1280,7 +1280,7 @@ public class LevelXing {
         if (blockAC == null) {
             JOptionPane.showMessageDialog(editLevelXingFrame,
                     rb.getString("Error1"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         blockAC.editLayoutBlock(editLevelXingFrame);
@@ -1319,7 +1319,7 @@ public class LevelXing {
         if (blockBD == null) {
             JOptionPane.showMessageDialog(editLevelXingFrame,
                     rb.getString("Error1"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         blockBD.editLayoutBlock(editLevelXingFrame);

@@ -6126,7 +6126,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 rot = Double.parseDouble(s);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, rb.getString("Error3") + " "
-                        + e, rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                        + e, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
@@ -6200,7 +6200,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 rot = Double.parseDouble(s);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, rb.getString("Error3") + " "
-                        + e, rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                        + e, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
@@ -6283,7 +6283,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     JOptionPane.showMessageDialog(openPane,
                             java.text.MessageFormat.format(rb.getString("Error4"),
                                     new Object[]{turnoutName}),
-                            rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
             }
@@ -6293,7 +6293,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     JOptionPane.showMessageDialog(openPane,
                             java.text.MessageFormat.format(rb.getString("Error4"),
                                     new Object[]{turnoutName}),
-                            rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
             }
@@ -6305,7 +6305,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     JOptionPane.showMessageDialog(openPane,
                             java.text.MessageFormat.format(rb.getString("Error4"),
                                     new Object[]{turnoutName}),
-                            rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
             }
@@ -6315,7 +6315,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     JOptionPane.showMessageDialog(openPane,
                             java.text.MessageFormat.format(rb.getString("Error4"),
                                     new Object[]{turnoutName}),
-                            rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
             }
@@ -6327,7 +6327,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             JOptionPane.showMessageDialog(openPane,
                     java.text.MessageFormat.format(rb.getString("Error8"),
                             new Object[]{turnoutName}),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -6659,7 +6659,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             int selectedValue = JOptionPane.showOptionDialog(this,
                     usage, Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"), Bundle.getMessage("ButtonCancel")}, rb.getString("ButtonYes"));
+                    new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
+                            Bundle.getMessage("ButtonCancel")}, rb.getString("ButtonYes"));
             if (selectedValue == 1) {
                 return (true); // return leaving the references in place but allow the icon to be deleted.
             }
@@ -7179,7 +7180,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     void addSensor() {
         if ((nextSensor.getText()).trim().length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error10"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         SensorIcon l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
@@ -7232,7 +7233,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             JOptionPane.showMessageDialog(thisPanel,
                     java.text.MessageFormat.format(rb.getString("Error9"),
                             new Object[]{tName}),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         // create and set up signal icon
@@ -7313,7 +7314,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             JOptionPane.showMessageDialog(thisPanel,
                     java.text.MessageFormat.format(rb.getString("Error9"),
                             new Object[]{tName}),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         // create and set up signal icon
@@ -7395,7 +7396,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     void addMemory() {
         if ((textMemory.getText()).trim().length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error11"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         MemoryIcon l = new MemoryIcon("   ", this);
@@ -7419,7 +7420,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     void addBlockContents() {
         if ((blockContents.getText()).trim().length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error11"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         BlockContentsIcon l = new BlockContentsIcon("   ", this);

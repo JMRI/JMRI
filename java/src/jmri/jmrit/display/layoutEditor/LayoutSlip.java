@@ -574,7 +574,7 @@ public class LayoutSlip extends LayoutTurnout {
                                 rot = Double.parseDouble(newAngle);
                             } catch (Exception e) {
                                 JOptionPane.showMessageDialog(layoutEditor, rb.getString("Error3")
-                                        + " " + e, rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                                        + " " + e, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                                 error = true;
                                 newAngle = "";
                             }

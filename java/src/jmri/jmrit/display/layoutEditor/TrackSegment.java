@@ -692,7 +692,7 @@ public class TrackSegment {
         if (block == null) {
             JOptionPane.showMessageDialog(editTrackSegmentFrame,
                     rb.getString("Error1"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         block.editLayoutBlock(editTrackSegmentFrame);

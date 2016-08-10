@@ -2018,7 +2018,7 @@ public class LayoutTurnout {
                                 rot = Double.parseDouble(newAngle);
                             } catch (Exception e) {
                                 JOptionPane.showMessageDialog(layoutEditor, rb.getString("Error3")
-                                        + " " + e, rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                                        + " " + e, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                                 error = true;
                                 newAngle = "";
                             }
@@ -2656,7 +2656,7 @@ public class LayoutTurnout {
         if (block == null) {
             JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
                     rb.getString("Error1"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         block.editLayoutBlock(editLayoutTurnoutFrame);
@@ -2691,7 +2691,7 @@ public class LayoutTurnout {
         if (blockB == null) {
             JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
                     rb.getString("Error1"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         blockB.editLayoutBlock(editLayoutTurnoutFrame);
@@ -2726,7 +2726,7 @@ public class LayoutTurnout {
         if (blockC == null) {
             JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
                     rb.getString("Error1"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         blockC.editLayoutBlock(editLayoutTurnoutFrame);
@@ -2761,7 +2761,7 @@ public class LayoutTurnout {
         if (blockD == null) {
             JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
                     rb.getString("Error1"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         blockD.editLayoutBlock(editLayoutTurnoutFrame);

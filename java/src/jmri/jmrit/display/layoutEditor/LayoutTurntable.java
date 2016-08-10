@@ -622,7 +622,7 @@ public class LayoutTurntable {
             ang = Float.parseFloat(angleField.getText());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(editTurntableFrame, rb.getString("EntryError") + ": "
-                    + e + rb.getString("TryAgain"), rb.getString("Error"),
+                    + e + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -638,7 +638,7 @@ public class LayoutTurntable {
             ang = Float.parseFloat(angleField.getText());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(editTurntableFrame, rb.getString("EntryError") + ": "
-                    + e + rb.getString("TryAgain"), rb.getString("Error"),
+                    + e + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -654,7 +654,7 @@ public class LayoutTurntable {
         }
         if (bestDel > 30.0) {
             JOptionPane.showMessageDialog(editTurntableFrame, rb.getString("Error13"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         deleteRay(closest);
@@ -688,7 +688,7 @@ public class LayoutTurntable {
                 rad = Float.parseFloat(str);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(editTurntableFrame, rb.getString("EntryError") + ": "
-                        + e + rb.getString("TryAgain"), rb.getString("Error"),
+                        + e + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -906,7 +906,7 @@ public class LayoutTurntable {
                                     Float.parseFloat(angle.getText());
                                 } catch (Exception ex) {
                                     JOptionPane.showMessageDialog(editTurntableFrame, rb.getString("EntryError") + ": "
-                                            + ex + rb.getString("TryAgain"), rb.getString("Error"),
+                                            + ex + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
                                             JOptionPane.ERROR_MESSAGE);
                                     return;
                                 }
@@ -965,7 +965,7 @@ public class LayoutTurntable {
         void delete() {
             int n = JOptionPane.showConfirmDialog(null,
                     rb.getString("Question7"),
-                    rb.getString("WarningTitle"),
+                    Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_OPTION);
             if (n == JOptionPane.NO_OPTION) {
                 return;
