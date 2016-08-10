@@ -1492,7 +1492,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create a new group from the JDOM group Element
      *
      * @param element     element containing group contents
-     * @param showStdName ???
+     * @param showStdName show the name following the rules for the <em>nameFmt</em> element
      * @param modelElem   element containing the decoder model
      * @return a panel containing the group
      */
@@ -1644,8 +1644,8 @@ public class PaneProgPane extends javax.swing.JPanel
      * @param element     element containing group contents
      * @param c           the panel to create the grid in
      * @param g           the layout manager for the panel
-     * @param globs       ???
-     * @param showStdName ???
+     * @param globs       properties to configure g
+     * @param showStdName show the name following the rules for the <em>nameFmt</em> element
      * @param modelElem   element containing the decoder model
      */
     protected void newGridGroup(Element element, final JPanel c, GridBagLayout g, GridGlobals globs, boolean showStdName, Element modelElem) {
@@ -1703,7 +1703,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create a single column from the JDOM column Element.
      *
      * @param element     element containing column contents
-     * @param showStdName ???
+     * @param showStdName show the name following the rules for the <em>nameFmt</em> element
      * @param modelElem   element containing the decoder model
      * @return a panel containing the group
      */
@@ -1852,7 +1852,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create a single row from the JDOM column Element
      *
      * @param element     element containing row contents
-     * @param showStdName ???
+     * @param showStdName show the name following the rules for the <em>nameFmt</em> element
      * @param modelElem   element containing the decoder model
      * @return a panel containing the group
      */
@@ -2002,7 +2002,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create a grid from the JDOM Element.
      *
      * @param element     element containing group contents
-     * @param showStdName ???
+     * @param showStdName show the name following the rules for the <em>nameFmt</em> element
      * @param modelElem   element containing the decoder model
      * @return a panel containing the group
      */
@@ -2075,9 +2075,9 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create a grid item from the JDOM Element
      *
      * @param element     element containing grid item contents
-     * @param showStdName ???
+     * @param showStdName show the name following the rules for the <em>nameFmt</em> element
      * @param modelElem   element containing the decoder model
-     * @param globs       ???
+     * @param globs       properties to configure the layout
      * @return a panel containing the group
      */
     public JPanel newGridItem(Element element, boolean showStdName, Element modelElem, GridGlobals globs) {
@@ -2521,7 +2521,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * @param col         column to insert label into
      * @param g           panel layout manager
      * @param cs          constraints on layout manager
-     * @param showStdName ???
+     * @param showStdName show the name following the rules for the <em>nameFmt</em> element
      */
     public void newVariable(Element var, JComponent col,
             GridBagLayout g, GridBagConstraints cs, boolean showStdName) {
