@@ -3116,7 +3116,7 @@ public class LogixTableAction extends AbstractTableAction {
     JFileChooser defaultFileChooser = null;
 
     /**
-     * Responds to the Set button in the Edit Action window action section.
+     * Responds to the (...) Set button in the Edit Action window action section.
      */
     void setFileLocation(ActionEvent e) {
         ConditionalAction action = _actionList.get(_curActionRowNumber);
