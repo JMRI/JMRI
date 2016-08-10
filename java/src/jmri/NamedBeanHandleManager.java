@@ -178,11 +178,6 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
     protected void registerSelf() {
     }
 
-    @Override
-    public char systemLetter() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     public String getSystemPrefix() {
         throw new UnsupportedOperationException("Not supported yet.");
     }

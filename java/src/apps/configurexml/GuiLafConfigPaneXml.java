@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * Instead, this interacts directly with Swing and the default Locale.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2010
- * @see jmri.GuiLafConfigPane
+ * @see apps.GuiLafConfigPane
  * @since 2.9.5
  */
 public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
@@ -102,7 +102,7 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setNonStandardMouseEvent(nonStandardMouseEvent);
         }
         GuiLafConfigPane g = new GuiLafConfigPane();
-        jmri.InstanceManager.configureManagerInstance().registerPref(g);
+        jmri.InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(g);
 
         Attribute fontsize = shared.getAttribute("fontsize");
         if (fontsize != null) {

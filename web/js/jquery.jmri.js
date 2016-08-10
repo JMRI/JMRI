@@ -14,6 +14,8 @@
  * goodbye(data)
  * light(name, state, data)
  * memory(name, value, data)
+ * block(name, value, data)
+ * layoutBlock(name, value, data)
  * power(state)
  * railroad(name)
  * reporter(name, value, data)
@@ -69,6 +71,10 @@
             jmri.light = function(name, state, data) {
             };
             jmri.memory = function(name, value, data) {
+            };
+            jmri.block = function(name, value, data) {
+            };
+            jmri.layoutBlock = function(name, value, data) {
             };
             jmri.power = function(state) {
             };
@@ -157,10 +163,66 @@
                     });
                 }
             };
+            jmri.getBlock = function(name) {
+                if (jmri.socket) {
+                    jmri.socket.send("block", {name: name});
+                } else {
+                    $.getJSON(jmri.url + "block/" + name, function(json) {
+                        jmri.block(json.data.name, json.data.value, json.data);
+                    });
+                }
+            };
+            jmri.setBlock = function(name, value) {
+                if (jmri.socket) {
+                    jmri.socket.send("block", {name: name, value: value});
+                } else {
+                    $.ajax({
+                        url: jmri.url + "block/" + name,
+                        type: "POST",
+                        data: JSON.stringify({value: value}),
+                        contentType: "application/json; charset=utf-8",
+                        success: function(json) {
+                            jmri.block(json.data.name, json.data.value, json.data);
+                            jmri.getBlock(json.data.name, json.data.value);
+                        }
+                    });
+                }
+            };
+            jmri.getLayoutBlock = function(name) {
+                if (jmri.socket) {
+                    jmri.socket.send("layoutBlock", {name: name});
+                } else {
+                    $.getJSON(jmri.url + "layoutBlock/" + name, function(json) {
+                        jmri.layoutBlock(json.data.name, json.data.value, json.data);
+                    });
+                }
+            };
+            jmri.setLayoutBlock = function(name, value) {
+                if (jmri.socket) {
+                    jmri.socket.send("layoutBlock", {name: name, value: value});
+                } else {
+                    $.ajax({
+                        url: jmri.url + "layoutBlock/" + name,
+                        type: "POST",
+                        data: JSON.stringify({value: value}),
+                        contentType: "application/json; charset=utf-8",
+                        success: function(json) {
+                            jmri.layoutBlock(json.data.name, json.data.value, json.data);
+                            jmri.getLayoutBlock(json.data.name, json.data.value);
+                        }
+                    });
+                }
+            };
             jmri.getObject = function(type, name) {
                 switch (type) {
                     case "light":
                         jmri.getLight(name);
+                        break;
+                    case "block":
+                        jmri.getBlock(name);
+                        break;
+                    case "layoutBlock":
+                        jmri.getLayoutBlock(name);
                         break;
                     case "memory":
                         jmri.getMemory(name);
@@ -192,6 +254,12 @@
                         break;
                     case "memory":
                         jmri.setMemory(name, state);
+                        break;
+                    case "block":
+                        jmri.setBlock(name, state);
+                        break;
+                    case "layoutBlock":
+                        jmri.setLayoutBlock(name, state);
                         break;
                     case "rosterEntry":
                         jmri.setRosterEntry(name, state);
@@ -488,34 +556,9 @@
                                     jmri.log("Reconnecting from failed reconnection attempt.");
                                 }
                                 jmri.reconnect();
-                                jmri.reconnectPoller = setInterval(jmri.pollReconnectionAttempt, 1000);
                             }, jmri.reconnectDelay);
                 } else {
                     jmri.failedReconnect();
-                }
-            };
-            jmri.pollReconnectionAttempt = function() {
-                // socket.readyState 0 == CONNECTING
-                // socket.readyState 1 == OPEN
-                if (!jmri.socket || (jmri.socket.readyState !== 1 && jmri.socket.readyState !== 0)) {
-                    // No socket or socket is CLOSED or CLOSING
-                    jmri.log("Reconnection attempt " + jmri.reconnectAttempts + " failed.");
-                    jmri.log("Will retry in " + (jmri.reconnectAttempts + 1) * 15 + " seconds.");
-                    clearInterval(jmri.reconnectPoller);
-                    jmri.attemptReconnection();
-                } else if (jmri.socket.readyState === 0) {
-                    // socket is CONNECTING
-                    if (jmri.reconnectPolls < 60) {
-                        jmri.reconnectPolls++;
-                        jmri.log("Reconnection attempt " + jmri.reconnectAttempts + " pending.");
-                    } else {
-                        jmri.reconnectPolls = 0;
-                        jmri.socket = null;
-                    }
-                } else {
-                    // socket is OPEN
-                    clearInterval(jmri.reconnectPoller);
-                    jmri.didReconnect();
                 }
             };
             jmri.reconnect = function() {
@@ -528,6 +571,7 @@
                     close: function(e) {
                         jmri.log("Closed WebSocket " + ((e.wasClean) ? "cleanly" : "unexpectedly") + " (" + e.code + "): " + e.reason);
                         clearInterval(jmri.heartbeatInterval);
+                        jmri.socket.close();
                         jmri.socket = null;
                         jmri.close(e);
                         jmri.attemptReconnection();
@@ -557,6 +601,12 @@
                         },
                         light: function(e) {
                             jmri.light(e.data.name, e.data.state, e.data);
+                        },
+                        block: function(e) {
+                            jmri.block(e.data.name, e.data.value, e.data);
+                        },
+                        layoutBlock: function(e) {
+                            jmri.layoutBlock(e.data.name, e.data.value, e.data);
                         },
                         memory: function(e) {
                             jmri.memory(e.data.name, e.data.value, e.data);

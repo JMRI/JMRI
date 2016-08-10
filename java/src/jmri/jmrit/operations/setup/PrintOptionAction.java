@@ -14,11 +14,6 @@ import javax.swing.AbstractAction;
  */
 public class PrintOptionAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3517810572798192308L;
-
     public PrintOptionAction() {
         this(Bundle.getMessage("TitlePrintOptions"));
     }

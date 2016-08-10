@@ -129,7 +129,6 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
                 prefsAction.actionPerformed(null);
             }
         }
-        addToActionModel();
 
         Runnable r = new Runnable() {
 

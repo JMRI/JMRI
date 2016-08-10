@@ -1,4 +1,3 @@
-// LIUSBEthernetAdapter.java
 package jmri.jmrix.dccpp.network;
 
 import java.util.ResourceBundle;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
 o*
  * @author	Paul Bender (C) 2011-2013
  * @author      Mark Underwood (C) 2015
- * @version	$Revision$
  */
 public class DCCppEthernetAdapter extends DCCppNetworkPortController {
 
@@ -86,9 +84,6 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
         this.getSystemConnectionMemo().setDCCppTrafficController(packets);
 
         new DCCppInitializationManager(this.getSystemConnectionMemo());
-
-        jmri.jmrix.dccpp.ActiveFlag.setActive();
-
     }
 
     /**

@@ -12,11 +12,6 @@ import javax.swing.AbstractAction;
  */
 public class ShowTrainsServingLocationAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3320805739334775139L;
-
     public ShowTrainsServingLocationAction(String title, Location location, Track track) {
         super(title);
         _location = location;

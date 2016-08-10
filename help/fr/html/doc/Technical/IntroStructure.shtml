@@ -1,36 +1,29 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- Updated by Blorec Herv&#233; le 2013-09-06--> 
 <html lang="fr">
 <head>
     <TITLE>
- 	JMRI: Introduction to JMRI Library Structure  
+ 	JMRI: Introduction &#224; la Structure
     </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code ">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset= iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+    <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
-<!--#include virtual="/Header" -->Introduction to JMRI Library Structure
+<body>
+<!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
 
-<H1>JMRI: Introduction &#224; la Structure de la Librairie de JMRI</H1>
+<h1>JMRI: Introduction &#224; la Structure de la Librairie de JMRI</h1>
 
 Parce que nous nous attendons &#224; avoir des interfaces diff&#233;rentes dans le paquet jmrix, les outils JMRI ne cr&#233;ez pas directement 
 les objets d'interface dont ils ont besoin. Plut&#244;t, ils demandent des exemples d'interfaces. Pour les interfaces dans le package jmri, 
@@ -95,8 +88,6 @@ En gros:
 <P>
 L'utilisation intensive du pattern Factory via des objets que nous appelons "gestionnaire" des objets.</dl>
 
-
-     
 <h3>Exemple: un Aiguillage</h3>
 Aiguillages impliquent:
 <UL>
@@ -110,8 +101,6 @@ ceci offre la mise en oeuvre de base .
 <P>
 Pour obtenir une exemple d'Aiguillage sp&#233;cifique qui repr&#233;sente quelque chose sur le r&#233;seau, vous faite une demande au TurnoutManager. 
 Il s'agit &#233;galement d'une interface, avec une impl&#233;mentation semblable du mod&#232;le. </UL>
-
-
 
 <!--#include virtual="/Footer" -->
 

@@ -686,7 +686,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         }
 
         public String getColumnName(int col) {
-            return columnNames[col].toString();
+            return columnNames[col];
         }
 
         public int getRowCount() {
@@ -838,7 +838,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         }
 
         public String getColumnName(int col) {
-            return columnNames[col].toString();
+            return columnNames[col];
         }
 
         public int getRowCount() {
@@ -991,7 +991,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         }
 
         public String getColumnName(int col) {
-            return columnNames[col].toString();
+            return columnNames[col];
         }
 
         public int getRowCount() {

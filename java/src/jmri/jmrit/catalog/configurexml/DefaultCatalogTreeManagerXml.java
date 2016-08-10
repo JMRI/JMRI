@@ -43,7 +43,7 @@ public class DefaultCatalogTreeManagerXml extends XmlFile /* extends jmri.config
         if (log.isDebugEnabled()) {
             log.debug("entered writeCatalogTreeValues");
         }
-        CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
+        CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         List<String> trees = manager.getSystemNameList();
         boolean found = false;
         Iterator<String> iter = manager.getSystemNameList().iterator();
@@ -110,7 +110,7 @@ public class DefaultCatalogTreeManagerXml extends XmlFile /* extends jmri.config
      * @param trees List of contents
      */
     public void store(Element cat, List<String> trees) {
-        CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
+        CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         cat.setAttribute("class", "jmri.jmrit.catalog.DefaultCatalogTreeManagerConfigXML");
         Iterator<String> iter = trees.iterator();
         while (iter.hasNext()) {
@@ -184,7 +184,7 @@ public class DefaultCatalogTreeManagerXml extends XmlFile /* extends jmri.config
         if (log.isDebugEnabled()) {
             log.debug("entered readCatalogTrees");
         }
-        //CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
+        //CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         try {
             // check if file exists
             if (checkFile(defaultFileName)) {
@@ -225,7 +225,7 @@ public class DefaultCatalogTreeManagerXml extends XmlFile /* extends jmri.config
         if (log.isDebugEnabled()) {
             log.debug("loadCatalogTrees: found " + catList.size() + " CatalogTree objects");
         }
-        CatalogTreeManager mgr = InstanceManager.catalogTreeManagerInstance();
+        CatalogTreeManager mgr = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
 
         for (int i = 0; i < catList.size(); i++) {
             Element elem = catList.get(i);

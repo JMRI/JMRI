@@ -23,10 +23,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SchedulesTableFrame extends OperationsFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3345422286868959830L;
     SchedulesTableModel schedulesModel = new SchedulesTableModel();
     javax.swing.JTable schedulesTable = new javax.swing.JTable(schedulesModel);
     JScrollPane schedulesPane;
@@ -81,7 +77,7 @@ public class SchedulesTableFrame extends OperationsFrame {
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new ScheduleCopyAction());
         toolMenu.add(new SchedulesByLoadAction(Bundle.getMessage("MenuItemShowSchedulesByLoad")));
         toolMenu.add(new SchedulesResetHitsAction(Bundle.getMessage("MenuItemResetHits")));

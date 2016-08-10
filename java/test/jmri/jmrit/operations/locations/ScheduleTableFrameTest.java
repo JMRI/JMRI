@@ -2,7 +2,7 @@
 package jmri.jmrit.operations.locations;
 
 import jmri.jmrit.operations.OperationsSwingTestCase;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

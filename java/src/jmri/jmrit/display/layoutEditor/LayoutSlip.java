@@ -57,7 +57,6 @@ import org.slf4j.LoggerFactory;
  * are placed here by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 19729 $
  */
 public class LayoutSlip extends LayoutTurnout {
 
@@ -1063,18 +1062,14 @@ public class LayoutSlip extends LayoutTurnout {
             }
             // get new block, or null if block has been removed
             blockName = blockNameField.getText().trim();
-            //if ( (blockName!=null) && (blockName.length()>0)) {
-            block = layoutEditor.provideLayoutBlock(blockName);
 
-            if (block == null) {
+            try { 
+                block = layoutEditor.provideLayoutBlock(blockName);
+
+            } catch (IllegalArgumentException ex) {
                 blockName = "";
                 blockNameField.setText("");
             }
-            //}
-            //else {
-            //	block = null;
-            //	blockName = "";
-            //}
             needRedraw = true;
             layoutEditor.auxTools.setBlockConnectivityChanged();
             needsBlockUpdate = true;
@@ -1141,7 +1136,7 @@ public class LayoutSlip extends LayoutTurnout {
         if (signalMast == null) {
             return;
         }
-        InstanceManager.signalMastLogicManagerInstance().disableLayoutEditorUse(signalMast);
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).disableLayoutEditorUse(signalMast);
     }
 
     boolean active = true;

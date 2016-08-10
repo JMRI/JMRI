@@ -147,6 +147,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                     try {
                         bean = InstanceManager.sensorManagerInstance().provideSensor(devName);
                     } catch (IllegalArgumentException e) {
+                        bean = null;
                         log.error("invalid sensor name= \"" + _deviceName + "\" in conditional action");
                     }
                     break;
@@ -154,49 +155,64 @@ public class DefaultConditionalAction implements ConditionalAction {
                     try {
                         bean = InstanceManager.turnoutManagerInstance().provideTurnout(devName);
                     } catch (IllegalArgumentException e) {
+                        bean = null;
                         log.error("invalid turnout name= \"" + _deviceName + "\" in conditional action");
                     }
                     break;
                 case Conditional.ITEM_TYPE_MEMORY:
-                    bean = InstanceManager.memoryManagerInstance().provideMemory(devName);
-                    if (bean == null) {
+                    try {
+                        bean = InstanceManager.memoryManagerInstance().provideMemory(devName);
+                    } catch (IllegalArgumentException e) {
+                        bean = null;
                         log.error("invalid memory name= \"" + _deviceName + "\" in conditional action");
                     }
                     break;
                 case Conditional.ITEM_TYPE_LIGHT:
-                    bean = InstanceManager.lightManagerInstance().getLight(devName);
-                    if (bean == null) {
+                    try {
+                        bean = InstanceManager.lightManagerInstance().getLight(devName);
+                    } catch (IllegalArgumentException e) {
+                        bean = null;
                         log.error("invalid light name= \"" + _deviceName + "\" in conditional action");
                     }
                     break;
                 case Conditional.ITEM_TYPE_SIGNALMAST:
-                    bean = InstanceManager.signalMastManagerInstance().provideSignalMast(devName);
-                    if (bean == null) {
+                    try {
+                        bean = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(devName);
+                    } catch (IllegalArgumentException e) {
+                        bean = null;
                         log.error("invalid signal mast name= \"" + _deviceName + "\" in conditional action");
                     }
                     break;
                 case Conditional.ITEM_TYPE_SIGNALHEAD:
-                    bean = InstanceManager.signalHeadManagerInstance().getSignalHead(devName);
-                    if (bean == null) {
+                    try {
+                        bean = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(devName);
+                    } catch (IllegalArgumentException e) {
+                        bean = null;
                         log.error("invalid signal head name= \"" + _deviceName + "\" in conditional action");
                     }
                     break;
                 case Conditional.ITEM_TYPE_WARRANT:
-                    bean = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
-                    if (bean == null) {
+                    try {
+                        bean = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
+                    } catch (IllegalArgumentException e) {
+                        bean = null;
                         log.error("invalid Warrant name= \"" + _deviceName + "\" in conditional action");
                     }
                     break;
                 case Conditional.ITEM_TYPE_OBLOCK:
-                    bean = InstanceManager.getDefault(OBlockManager.class).getOBlock(devName);
-                    if (bean == null) {
+                    try {
+                        bean = InstanceManager.getDefault(OBlockManager.class).getOBlock(devName);
+                    } catch (IllegalArgumentException e) {
+                        bean = null;
                         log.error("invalid OBlock name= \"" + _deviceName + "\" in conditional action");
                     }
                     break;
                 default:
                     if (getType() == Conditional.ACTION_TRIGGER_ROUTE) {
-                        bean = InstanceManager.getDefault(RouteManager.class).getRoute(devName);
-                        if (bean == null) {
+                        try {
+                            bean = InstanceManager.getDefault(RouteManager.class).getRoute(devName);
+                        } catch (IllegalArgumentException e) {
+                            bean = null;
                             log.error("invalid Route name= \"" + _deviceName + "\" in conditional action");
                         }
                     }
@@ -601,9 +617,9 @@ public class DefaultConditionalAction implements ConditionalAction {
             return Turnout.CLOSED;
         } else if (str.equals(rbx.getString("TurnoutThrown"))) {
             return Turnout.THROWN;
-        } else if (str.equals(rbx.getString("SensorActive"))) {
+        } else if (str.equals(Bundle.getMessage("SensorStateActive"))) {
             return Sensor.ACTIVE;
-        } else if (str.equals(rbx.getString("SensorInactive"))) {
+        } else if (str.equals(Bundle.getMessage("SensorStateInactive"))) {
             return Sensor.INACTIVE;
         } else if (str.equals(rbx.getString("LightOn"))) {
             return Light.ON;
@@ -678,9 +694,9 @@ public class DefaultConditionalAction implements ConditionalAction {
             case Conditional.ACTION_DELAYED_SENSOR:
             case Conditional.ACTION_RESET_DELAYED_SENSOR:
                 if (data == Sensor.ACTIVE) {
-                    return (rbx.getString("SensorActive"));
+                    return (Bundle.getMessage("SensorStateActive"));
                 } else if (data == Sensor.INACTIVE) {
-                    return (rbx.getString("SensorInactive"));
+                    return (Bundle.getMessage("SensorStateInactive"));
                 } else if (data == Route.TOGGLE) {
                     return (rbx.getString("Toggle"));
                 }

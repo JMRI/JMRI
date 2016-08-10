@@ -1,18 +1,17 @@
 <!-- Sidebar -->
 <hr class="hide">
-<div id="mBody">
 <div id="side"> <!-- Block of text on left side of page -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<!-- info only: <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1"> -->
 <!-- Translated  by Blorec Herv&#233; le 2013-09-25 --> 
-<dl class=toc>
-<html lang="fr">
-<dt><h3>Information DispatcherPro</h3></dt><DD><UL>
+<dl class="toc">
+
+<dt><h3>Information DispatcherPro</h3></dt><DD>
+<UL>
 <LI><A HREF="../../tools/Signalling/index.shtml">Signaux</a>
 </UL>
 
-
-<dt><h3>Autres Infos Utiles</h3></dt><DD><UL>
-
+<dt><h3>Autres Infos Utiles</h3></dt><DD>
+<UL>
 <LI><a HREF="../../tools/Sensors.shtml">Capteurs</a>
 <LI><A HREF="../../tools/Routes.shtml">Itin&#233;raires</a>
 <LI><A HREF="../../tools/fastclock/index.shtml">Horloges Rapides</a>

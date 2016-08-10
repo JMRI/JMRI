@@ -88,19 +88,19 @@ Il va ressembler à (à noter la seconde ligne "port de connexion"):
 <p>
 &lt!DOCTYPE layout-config SYSTEM "layout-config-2-1-7.dtd">
 <p>
-&lt layout-config>
+&lt; layout-config>
 <p>
-  &lt connection port="COM5" speed="57,600 baud" option1="" option2="DCS100 (Chief)" class="jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml" />
+  &lt; connection port="COM5" speed="57,600 baud" option1="" option2="DCS100 (Chief)" class="jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml" />
 <p>
-  &lt gui LAFclass="Metal" class="jmri.configurexml.GuiLafConfigPaneXml" LocaleLanguage="en" LocaleCountry="CA" LocaleVariant="" />
+  &lt; gui LAFclass="Metal" class="jmri.configurexml.GuiLafConfigPaneXml" LocaleLanguage="en" LocaleCountry="CA" LocaleVariant="" />
 <p>
-  &lt programmer defaultFile="Basic" verifyBeforeWrite="no" class="jmri.jmrit.symbolicprog.configurexml.ProgrammerConfigPaneXml" />
+  &lt; programmer defaultFile="Basic" verifyBeforeWrite="no" class="jmri.jmrit.symbolicprog.configurexml.ProgrammerConfigPaneXml" />
 <p>
-  &lt connection port="COM4" speed="9,600 bps" option1="" option2="" class="jmri.jmrix.acela.serialdriver.configurexml.ConnectionConfigXml" />
+  &lt; connection port="COM4" speed="9,600 bps" option1="" option2="" class="jmri.jmrix.acela.serialdriver.configurexml.ConnectionConfigXml" />
 <p>
   &lt!--Written by JMRI version 2.2 on Mon Jul 28 20:58:27 EDT 2008 $Id$-->
 <p>
-&lt/layout-config>
+&lt;/layout-config>
 <h3>Laissez JMRI découvrir votre configuration réseau CTI Acela
 </H3>
 Redémarrez JMRI (DecoderPro ou PanelPro ou JmriDemo). Si vous avez spécifié le bon port série à l'étape précédente, alors le logiciel JMRI doitt se connecter au réseau CTI Acela, réinitialiser le nœud Acela puis interroger le réseau CTI Acela  et découvrir quels modules (un module JMRI s'appelle un nœud) vous avez et dans quel ordre.
@@ -125,165 +125,165 @@ Il ressemblera à (notez les lignes après le second "port de connexion" ligne):
 <p>
 &lt!DOCTYPE layout-config SYSTEM "layout-config-2-1-7.dtd">
 <p>
-&lt layout-config>
+&lt; layout-config>
 <p>
-  &lt connection port="COM5" speed="57,600 baud" option1="" option2="DCS100 (Chief)" class="jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml" />
+  &lt; connection port="COM5" speed="57,600 baud" option1="" option2="DCS100 (Chief)" class="jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml" />
 <p>
-  &lt gui LAFclass="Metal" class="jmri.configurexml.GuiLafConfigPaneXml" LocaleLanguage="en" LocaleCountry="CA" LocaleVariant="" />
+  &lt; gui LAFclass="Metal" class="jmri.configurexml.GuiLafConfigPaneXml" LocaleLanguage="en" LocaleCountry="CA" LocaleVariant="" />
 <p>
-  &lt programmer defaultFile="Basic" verifyBeforeWrite="no" class="jmri.jmrit.symbolicprog.configurexml.ProgrammerConfigPaneXml" />
+  &lt; programmer defaultFile="Basic" verifyBeforeWrite="no" class="jmri.jmrit.symbolicprog.configurexml.ProgrammerConfigPaneXml" />
 <p>
-  &lt connection port="COM4" speed="9,600 bps" option1="" option2="" class="jmri.jmrix.acela.serialdriver.configurexml.ConnectionConfigXml" />
+  &lt; connection port="COM4" speed="9,600 bps" option1="" option2="" class="jmri.jmrix.acela.serialdriver.configurexml.ConnectionConfigXml" />
 <p>
-    &lt node name="0">
+    &lt; node name="0">
 <p>
-      &lt parameter name="nodetype">AC&lt/parameter>
+      &lt; parameter name="nodetype">AC&lt;/parameter>
 <p>
-    &lt/node>
+    &lt;/node>
 <p>
-    &lt node name="1">
+    &lt; node name="1">
 <p>
-      &lt parameter name="nodetype">TB&lt/parameter>
+      &lt; parameter name="nodetype">TB&lt;/parameter>
 <p>
-      &lt parameter name="sensortype0">CG&lt/parameter>
+      &lt; parameter name="sensortype0">CG&lt;/parameter>
 <p>
-      &lt parameter name="sensorpolarity0">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity0">INV&lt;/parameter>
 <p>
-      &lt parameter name="sensorthreshold0">4&lt/parameter>
+      &lt; parameter name="sensorthreshold0">4&lt;/parameter>
 <p>
-      &lt parameter name="sensortype1">CG&lt/parameter>
+      &lt; parameter name="sensortype1">CG&lt;/parameter>
 <p>
-      &lt parameter name="sensorpolarity1">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity1">INV&lt;/parameter>
 <p>
-      &lt parameter name="sensorthreshold1">4&lt/parameter>
+      &lt; parameter name="sensorthreshold1">4&lt;/parameter>
 <p>
-      &lt parameter name="sensortype2">CG&lt/parameter>
+      &lt; parameter name="sensortype2">CG&lt;/parameter>
 <p>
-      &lt parameter name="sensorpolarity2">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity2">INV&lt;/parameter>
 <p>
-      &lt parameter name="sensorthreshold2">4&lt/parameter>
+      &lt; parameter name="sensorthreshold2">4&lt;/parameter>
 <p>
-      &lt parameter name="sensortype3">CG&lt/parameter>
+      &lt; parameter name="sensortype3">CG&lt;/parameter>
 <p>
-      &lt parameter name="sensorpolarity3">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity3">INV&lt;/parameter>
 <p>
-      &lt parameter name="sensorthreshold3">4&lt/parameter>
+      &lt; parameter name="sensorthreshold3">4&lt;/parameter>
 <p>
-      &lt parameter name="outputwired0">NO&lt/parameter>
+      &lt; parameter name="outputwired0">NO&lt;/parameter>
 <p>
-      &lt parameter name="outputinit0">OFF&lt/parameter>
+      &lt; parameter name="outputinit0">OFF&lt;/parameter>
 <p>
-      &lt parameter name="outputwired1">NO&lt/parameter>
+      &lt; parameter name="outputwired1">NO&lt;/parameter>
 <p>
-      &lt parameter name="outputinit1">OFF&lt/parameter>
+      &lt; parameter name="outputinit1">OFF&lt;/parameter>
 <p>
-      &lt parameter name="outputwired2">NO&lt/parameter>
+      &lt; parameter name="outputwired2">NO&lt;/parameter>
 <p>
-      &lt parameter name="outputinit2">OFF&lt/parameter>
+      &lt; parameter name="outputinit2">OFF&lt;/parameter>
 <p>
-      &lt parameter name="outputwired3">NO&lt/parameter>
+      &lt; parameter name="outputwired3">NO&lt;/parameter>
 <p>
-      &lt parameter name="outputinit3">OFF&lt/parameter>
+      &lt; parameter name="outputinit3">OFF&lt;/parameter>
 <p>
-    &lt/node>
+    &lt;/node>
 <p>
-    &lt node name="2">
+    &lt; node name="2">
 <p>
-      &lt parameter name="nodetype">WM&lt/parameter>
+      &lt; parameter name="nodetype">WM&lt;/parameter>
 <p>
-      &lt parameter name="sensortype0">CG&lt/parameter>
+      &lt; parameter name="sensortype0">CG&lt;/parameter>
 <p>
-      &lt parameter name="sensorpolarity0">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity0">INV&lt;/parameter>
 <p>
-      &lt parameter name="sensorthreshold0">4&lt/parameter>
+      &lt; parameter name="sensorthreshold0">4&lt;/parameter>
 <p>
-      &lt parameter name="sensortype1">CG&lt/parameter>
+      &lt; parameter name="sensortype1">CG&lt;/parameter>
 <p>
-      &lt parameter name="sensorpolarity1">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity1">INV&lt;/parameter>
 <p>
-      &lt parameter name="sensorthreshold1">4&lt/parameter>
+      &lt; parameter name="sensorthreshold1">4&lt;/parameter>
 <p>
-      &lt parameter name="sensortype2">CG&lt/parameter>
+      &lt; parameter name="sensortype2">CG&lt;/parameter>
 <p>
-      &lt parameter name="sensorpolarity2">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity2">INV&lt;/parameter>
 <p>
-      &lt parameter name="sensorthreshold2">4&lt/parameter>
+      &lt; parameter name="sensorthreshold2">4&lt;/parameter>
 <p>
-      &lt parameter name="sensortype3">CG&lt/parameter>
+      &lt; parameter name="sensortype3">CG&lt;/parameter>
 <p>
-      &lt parameter name="sensorpolarity3">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity3">INV&lt;/parameter>
 <p>
-      &lt parameter name="sensorthreshold3">4&lt/parameter>
+      &lt; parameter name="sensorthreshold3">4&lt;/parameter>
 <p>
-      &lt parameter name="sensortype4">CG&lt/parameter>
+      &lt; parameter name="sensortype4">CG&lt;/parameter>
 <p>
-      &lt parameter name="sensorpolarity4">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity4">INV&lt;/parameter>
 <p>
-      &lt parameter name="sensorthreshold4">4&lt/parameter>
+      &lt; parameter name="sensorthreshold4">4&lt;/parameter>
 <p>
-      &lt parameter name="sensortype5">CG&lt/parameter>
+      &lt; parameter name="sensortype5">CG&lt;/parameter>
 <p>
-      &lt parameter name="sensorpolarity5">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity5">INV&lt;/parameter>
 <p>
-      &lt parameter name="sensorthreshold5">4&lt/parameter>
+      &lt; parameter name="sensorthreshold5">4&lt;/parameter>
 <p>
-      &lt parameter name="sensortype6">CG&lt/parameter>
+      &lt; parameter name="sensortype6">CG&lt;/parameter>
 <p>
-      &lt parameter name="sensorpolarity6">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity6">INV&lt;/parameter>
 <p>
-      &lt parameter name="sensorthreshold6">4&lt/parameter>
+      &lt; parameter name="sensorthreshold6">4&lt;/parameter>
 <p>
-      &lt parameter name="sensortype7">CG&lt/parameter>
+      &lt; parameter name="sensortype7">CG&lt;/parameter>
 <p>
-      &lt parameter name="sensorpolarity7">INV&lt/parameter>
+      &lt; parameter name="sensorpolarity7">INV&lt;/parameter>
 <p>
-      &lt parameter name="sensorthreshold7">4&lt/parameter>
+      &lt; parameter name="sensorthreshold7">4&lt;/parameter>
 <p>
-    &lt/node>
+    &lt;/node>
 <p>
-    &lt node name="3">
+    &lt; node name="3">
 <p>
-      &lt parameter name="nodetype">YM&lt/parameter>
+      &lt; parameter name="nodetype">YM&lt;/parameter>
 <p>
-      &lt parameter name="outputinit0">OFF&lt/parameter>
+      &lt; parameter name="outputinit0">OFF&lt;/parameter>
 <p>
-      &lt parameter name="outputinit1">OFF&lt/parameter>
+      &lt; parameter name="outputinit1">OFF&lt;/parameter>
 <p>
-      &lt parameter name="outputinit2">OFF&lt/parameter>
+      &lt; parameter name="outputinit2">OFF&lt;/parameter>
 <p>
-      &lt parameter name="outputinit3">OFF&lt/parameter>
+      &lt; parameter name="outputinit3">OFF&lt;/parameter>
 <p>
-      &lt parameter name="outputinit4">OFF&lt/parameter>
+      &lt; parameter name="outputinit4">OFF&lt;/parameter>
 <p>
-      &lt parameter name="outputinit5">ACT&lt/parameter>
+      &lt; parameter name="outputinit5">ACT&lt;/parameter>
 <p>
-      &lt parameter name="outputinit6">OFF&lt/parameter>
+      &lt; parameter name="outputinit6">OFF&lt;/parameter>
 <p>
-      &lt parameter name="outputinit7">ACT&lt/parameter>
+      &lt; parameter name="outputinit7">ACT&lt;/parameter>
 <p>
-      &lt parameter name="outputinit8">OFF&lt/parameter>
+      &lt; parameter name="outputinit8">OFF&lt;/parameter>
 <p>
-      &lt parameter name="outputinit9">OFF&lt/parameter>
+      &lt; parameter name="outputinit9">OFF&lt;/parameter>
 <p>
-      &lt parameter name="outputinit10">OFF&lt/parameter>
+      &lt; parameter name="outputinit10">OFF&lt;/parameter>
 <p>
-      &lt parameter name="outputinit11">OFF&lt/parameter>
+      &lt; parameter name="outputinit11">OFF&lt;/parameter>
 <p>
-      &lt parameter name="outputinit12">OFF&lt/parameter>
+      &lt; parameter name="outputinit12">OFF&lt;/parameter>
 <p>
-      &lt parameter name="outputinit13">OFF&lt/parameter>
+      &lt; parameter name="outputinit13">OFF&lt;/parameter>
 <p>
-      &lt parameter name="outputinit14">OFF&lt/parameter>
+      &lt; parameter name="outputinit14">OFF&lt;/parameter>
 <p>
-      &lt parameter name="outputinit15">OFF&lt/parameter>
+      &lt; parameter name="outputinit15">OFF&lt;/parameter>
 <p>
-    &lt/node>
+    &lt;/node>
 <p>
-  &lt/connection>
+  &lt;/connection>
 <p>
   &lt!--Written by JMRI version 2.2 on Mon Jul 28 20:58:27 EDT 2008 $Id$-->
 <p>
-&lt/layout-config>
+&lt;/layout-config>
 <p>
 
 Vous pouvez toujours revenir à cet état par l'effacement de votre fichier de configuration et répéter ces deux étapes.

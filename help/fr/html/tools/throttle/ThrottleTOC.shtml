@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
+
 <!-- Translated by Herv&#233; Blorec 2013-10-04 -->
 <html lang="fr">
 <head>
@@ -27,6 +27,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
@@ -39,7 +40,7 @@
   <li>La <a href="ThrottleWindowMenus.shtml">Menu Fen&#234;tre R&#233;gulateur</a></li>
   <li>La <a href="ThrottleToolBar.shtml">Fen&#234;tre barre d'outils R&#233;gulateur</a></li>
   <li>La <a href="AdvancedThrottleControl.shtml">Fen&#234;tre Commandes R&#233;gulateur</a></li>
-  <li>La <a href="ThrottlesListWindow.shtml">Fen�tre Liste R�gulateur</a></li>
+  <li>La <a href="ThrottlesListWindow.shtml">Fen&egrave;tre Liste R&eacute;gulateur</a></li>
   <li>Le <a href="ThrottlesPreferencesPane.shtml">Volet des pr&#233;f&#233;rences R&#233;gulateur
   </a></li>
 </ul>
@@ -89,7 +90,7 @@
   <dt>1. <a href="ThrottleChapter2.shtml#AddressPanel"
   title="Assign a Decoder Address to a Throttle Window">Assigner une Adresse D&#233;codeur &#224; une Fen&#234;tre R&#233;gulateur</a></dt>
   <dt>2. <a href="ThrottleChapter2.shtml#ControlPanel"
-  title="Control Panel � Let's Run a Train">Panneau de Commande &#8212; Lan&#231;ons un Train</a></dt>
+  title="Control Panel - Let's Run a Train">Panneau de Commande &#8212; Lan&#231;ons un Train</a></dt>
   <dir>
   </dir>
   <dt>a. <a href="ThrottleChapter2.shtml#StandardActions"

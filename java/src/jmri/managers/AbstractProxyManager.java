@@ -123,7 +123,7 @@ abstract public class AbstractProxyManager implements Manager {
      *
      * @return Never null under normal circumstances
      */
-    protected NamedBean provideNamedBean(String name) {
+    protected NamedBean provideNamedBean(String name) throws IllegalArgumentException {
         // make sure internal present
         initInternal();
 
@@ -337,17 +337,6 @@ abstract public class AbstractProxyManager implements Manager {
         } catch (IndexOutOfBoundsException ie) {
             return "?";
         }
-    }
-
-    /**
-     * Provide 1st char of systemPrefix for now
-     *
-     * @deprecated
-     */
-    @Deprecated
-    @Override
-    public char systemLetter() {
-        return getSystemPrefix().charAt(0);
     }
 
     /**

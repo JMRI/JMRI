@@ -122,5 +122,3 @@ public class XNetLightManager extends AbstractLightManager {
     private final static Logger log = LoggerFactory.getLogger(XNetLightManager.class.getName());
 
 }
-
-/* @(#)XNetLightManager.java */

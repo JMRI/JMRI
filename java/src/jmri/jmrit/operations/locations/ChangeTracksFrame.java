@@ -26,10 +26,6 @@ import org.slf4j.LoggerFactory;
  */
 class ChangeTracksFrame extends OperationsFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6478467506871775174L;
     // radio buttons
     JRadioButton spurRadioButton = new JRadioButton(Bundle.getMessage("Spur"));
     JRadioButton yardRadioButton = new JRadioButton(Bundle.getMessage("Yard"));

@@ -73,7 +73,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     BeanSelectCreatePanel sensorBPanel = new BeanSelectCreatePanel(InstanceManager.sensorManagerInstance(), null);
 
     // Block sensor
-    BeanSelectCreatePanel blockCPanel = new BeanSelectCreatePanel(InstanceManager.blockManagerInstance(), null);
+    BeanSelectCreatePanel blockCPanel = new BeanSelectCreatePanel(InstanceManager.getDefault(jmri.BlockManager.class), null);
     BeanSelectCreatePanel sensorCPanel = new BeanSelectCreatePanel(InstanceManager.sensorManagerInstance(), null);
 
     RosterEntryComboBox reBox = new RosterEntryComboBox();

@@ -1,14 +1,3 @@
-// This file is part of JMRI.
-//
-// JMRI is free software; you can redistribute it and/or modify it under
-// the terms of version 2 of the GNU General Public License as published
-// by the Free Software Foundation. See the "COPYING" file for a copy
-// of this license.
-//
-// JMRI is distributed in the hope that it will be useful, but WITHOUT
-// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-// for more details.
 package jmri.implementation;
 
 import java.util.HashMap;
@@ -41,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * The FLASH appearances are expected to be implemented in the decoder.
  *
  * @author Alex Shepherd Copyright (c) 2008
- * @version $Revision$
  */
 public class DccSignalHead extends AbstractSignalHead {
 
@@ -74,21 +62,21 @@ public class DccSignalHead extends AbstractSignalHead {
             dccSignalDecoderAddress = Integer.parseInt(sys.substring(sys.indexOf("$") + 1, sys.length()));
             String commandStationPrefix = sys.substring(0, sys.indexOf("$") - 1);
             java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
-            if (connList != null) {
-                for (int x = 0; x < connList.size(); x++) {
-                    jmri.CommandStation station = connList.get(x);
-                    if (station.getSystemPrefix().equals(commandStationPrefix)) {
-                        c = station;
-                        break;
-                    }
+
+            for (int x = 0; x < connList.size(); x++) {
+                jmri.CommandStation station = connList.get(x);
+                if (station.getSystemPrefix().equals(commandStationPrefix)) {
+                    c = station;
+                    break;
                 }
             }
+
             if (c == null) {
-                c = InstanceManager.commandStationInstance();
+                c = InstanceManager.getOptionalDefault(CommandStation.class);
                 log.error("No match against the command station for " + sys + ", so will use the default");
             }
         } else {
-            c = InstanceManager.commandStationInstance();
+            c = InstanceManager.getOptionalDefault(CommandStation.class);
             if ((sys.length() > 2) && ((sys.charAt(1) == 'H') || (sys.charAt(1) == 'h'))) {
                 dccSignalDecoderAddress = Integer.parseInt(sys.substring(2, sys.length()));
             } else {

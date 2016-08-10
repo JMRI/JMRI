@@ -29,7 +29,7 @@ public class DefaultSignalAppearanceMapTest extends TestCase {
             SignalSystemTestUtil.createMockSystem();
 
             // check that mock (test directory) system is present
-            InstanceManager.signalMastManagerInstance()
+            InstanceManager.getDefault(jmri.SignalMastManager.class)
                     .provideSignalMast("IF$shsm:" + SignalSystemTestUtil.getMockSystemName() + ":one-searchlight:h1");
 
         } finally {
@@ -38,7 +38,7 @@ public class DefaultSignalAppearanceMapTest extends TestCase {
     }
 
     public void testDefaultMap() {
-        SignalMast s = InstanceManager.signalMastManagerInstance().provideSignalMast("IF$shsm:basic:one-searchlight:h1");
+        SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast("IF$shsm:basic:one-searchlight:h1");
         DefaultSignalAppearanceMap t = (DefaultSignalAppearanceMap) s.getAppearanceMap();
         t.loadDefaults();
 
@@ -54,7 +54,7 @@ public class DefaultSignalAppearanceMapTest extends TestCase {
         Assert.assertEquals("Clear is GREEN", SignalHead.GREEN,
                 h1.getAppearance());
 
-        InstanceManager.signalMastManagerInstance().deregister(s);
+        InstanceManager.getDefault(jmri.SignalMastManager.class).deregister(s);
         s.dispose();
     }
 
@@ -95,7 +95,7 @@ public class DefaultSignalAppearanceMapTest extends TestCase {
         Assert.assertEquals("biff 2 is GREEN", SignalHead.GREEN,
                 h2.getAppearance());
 
-        InstanceManager.signalMastManagerInstance().deregister(s);
+        InstanceManager.getDefault(jmri.SignalMastManager.class).deregister(s);
         s.dispose();
     }
 
@@ -140,14 +140,14 @@ public class DefaultSignalAppearanceMapTest extends TestCase {
         l2 = new ArrayList<NamedBeanHandle<SignalHead>>();
         l2.add(new NamedBeanHandle<SignalHead>("h1", h1));
         l2.add(new NamedBeanHandle<SignalHead>("h2", h2));
-        InstanceManager.signalHeadManagerInstance().register(h1);
-        InstanceManager.signalHeadManagerInstance().register(h2);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h1);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h2);
     }
 
     protected void tearDown() {
-        InstanceManager.signalHeadManagerInstance().deregister(h1);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).deregister(h1);
         h1.dispose();
-        InstanceManager.signalHeadManagerInstance().deregister(h2);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).deregister(h2);
         h2.dispose();
         apps.tests.Log4JFixture.tearDown();
     }

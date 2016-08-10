@@ -209,8 +209,6 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         tc.connectPort(this);
         // Configure the form of serial address validation for this connection
 //        adaptermemo.setSerialAddress(new jmri.jmrix.ieee802154.SerialAddress(adaptermemo));
-        // declare up
-        jmri.jmrix.ieee802154.ActiveFlag.setActive();
     }
 
     /**

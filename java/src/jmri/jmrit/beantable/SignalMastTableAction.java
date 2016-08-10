@@ -99,7 +99,7 @@ public class SignalMastTableAction extends AbstractTableAction {
 
     public void setMenuBar(BeanTableFrame f) {
         JMenuBar menuBar = f.getJMenuBar();
-        JMenu pathMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu pathMenu = new JMenu(Bundle.getMessage("MenuTools"));
         menuBar.add(pathMenu);
         JMenuItem item = new JMenuItem(Bundle.getMessage("MenuItemRepeaters"));
         pathMenu.add(item);

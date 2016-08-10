@@ -27,7 +27,6 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.zimo.PackageTest");  // no tests in this class itself
 
         suite.addTest(jmri.jmrix.zimo.swing.PackageTest.suite());
-
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
         }
 

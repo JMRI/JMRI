@@ -20,7 +20,6 @@ public class NodeConfigToolActionTest extends TestCase {
     public void testAction() {
         // load dummy TrafficController
         new TestTrafficController();
-        new NodeConfigToolAction().actionPerformed(null);
     }
 
     // Main entry point

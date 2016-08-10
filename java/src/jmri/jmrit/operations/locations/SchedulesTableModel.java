@@ -29,11 +29,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SchedulesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7373278452466866383L;
-
     ScheduleManager scheduleManager; // There is only one manager
 
     // Defines the columns
@@ -202,8 +197,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     @Override
-    public Object getValueAt(int row, int col) {
-        if (row >= sysList.size()) {
+    public synchronized Object getValueAt(int row, int col) {
+        if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
         Schedule schedule = sysList.get(row);
@@ -236,7 +231,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     @Override
-    public void setValueAt(Object value, int row, int col) {
+    public synchronized void setValueAt(Object value, int row, int col) {
         switch (col) {
             case EDIT_COLUMN:
                 editSchedule(row);

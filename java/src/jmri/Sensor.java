@@ -1,6 +1,6 @@
 package jmri;
 
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 
 /**
  * General input device representation. Often subclassed for specific types of
@@ -65,12 +65,12 @@ public interface Sensor extends NamedBean {
     /**
      * Request a call-back when the bound KnownState property changes.
      */
-    public void addPropertyChangeListener(@Nullable java.beans.PropertyChangeListener l);
+    public void addPropertyChangeListener(@CheckForNull java.beans.PropertyChangeListener l);
 
     /**
      * Remove a request for a call-back when a bound property changes.
      */
-    public void removePropertyChangeListener(@Nullable java.beans.PropertyChangeListener l);
+    public void removePropertyChangeListener(@CheckForNull java.beans.PropertyChangeListener l);
 
     /**
      * Remove references to and from this object, so that it can eventually be
@@ -127,12 +127,12 @@ public interface Sensor extends NamedBean {
      * the reporter against the sensor should be done when the sensor is
      * created. This information is not saved.
      */
-    public void setReporter(@Nullable Reporter re);
+    public void setReporter(@CheckForNull Reporter re);
 
     /**
      * Retrieve the reporter assocated with this sensor if there is one.
      * <p>
      * returns null if there is no direct reporter.
      */
-    public @Nullable Reporter getReporter();
+    public @CheckForNull Reporter getReporter();
 }

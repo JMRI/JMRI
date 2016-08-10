@@ -15,7 +15,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+<div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -58,9 +58,9 @@ have different requirements.  But there are two things you can try:
 	Tell the browser to pick it up from a JMRI web server.
 	<p>
 	To do this, change the second line of the file to:
-	<code><pre>
+	<pre style="font-family: monospace;">
 	&lt;?xml-stylesheet href="http://jmri.org/xml/XSLT/panelfile.xsl" type="text/xsl"?&gt;
-	</pre></code>
+	</pre>
 	<li>
 	Put the stylesheet file in the same place as your panel file, and
 	tell the browser to use it.
@@ -72,9 +72,9 @@ have different requirements.  But there are two things you can try:
 	Put a copy of that file in the same directory as the panel file
 	you want to display.
 	Then change the second line of your panel file to:
-	<code><pre>
+	<pre style="font-family: monospace;">
 	&lt;?xml-stylesheet href="panelfile.xsl" type="text/xsl"?&gt;
-	</pre></code>
+	</pre>
 	</ul>
 <p>
 Don't change the first line!

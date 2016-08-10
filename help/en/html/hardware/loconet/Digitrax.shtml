@@ -3,7 +3,7 @@
 <head>
   <title>JMRI Hardware Support - Digitrax LocoNet</title>
     <meta name="keywords" content="Digitrax LocoNet LocoBuffer LocoBuffer-II
-          LocoBuffer-USB MS100 PR2 PR3 DCS100 DCS50 DCS51 DB150 JMRI">
+          LocoBuffer-USB MS100 PR2 PR3 DCS100 DCS240 DCS50 DCS51 DB150 JMRI">
 
   <!-- Style -->
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
@@ -72,6 +72,7 @@ station over the LocoNet&reg; using one of several types of <a href="#adapters">
   <li>DB150 Command Station/Booster</li>
   <li>DCS100 Command Station/Booster</li>
   <li>DCS200 Command Station/Booster</li>
+  <li>DCS240 Advanced Command Station/Booster</li>
   <li><a href="Uhlenbrock.shtml">Intellibox: The Uhlenbrock Central Unit</a></li>
   <li><a href="Uhlenbrock.shtml">Intellibox II or IB-Com</a></li>
   <li>DCC-Mux: DCC data combiner with built-in LocoNet command station </li>
@@ -84,7 +85,7 @@ station over the LocoNet&reg; using one of several types of <a href="#adapters">
     connection instead of a real LocoNet connection.  This is the "LocoNet 
     Simulator".</p>
 
-<a name="adapters" id="adapters"><h3>Computer Interfaces</h3></a>
+<a name="adapters"></a><h3>Computer Interfaces</h3>
 <p>To connect your computer to the LocoNet, and hence to the command station,
 you need one of the following adapters:</p>
 <ul>
@@ -95,6 +96,9 @@ you need one of the following adapters:</p>
   <li><a title="Digitrax Serial interface" href="MS100.shtml">MS-100</a></li>
   <li><a title="BT LocoBridge" href="BTLocoBridge.shtml">Bluetooth LocoBridge</a></li> 
 </ul>
+(Note: The Digitrax DSC240 has a built-in adapter that's similar to the Digitrax PR3;
+    if you have a DCS240, configure JMRI for it by selecting a PR3 connection type
+    and a DCS240 command station type)
 
 <p>Generally, any of these can be used with any type of computer to communicate
 with any type of command station. Currently, the LocoBuffer-USB and PR3 are the
@@ -505,8 +509,7 @@ for more information.
             <li><a href="MS100.shtml">Digitrax MS100</a> (Strongly not recommended)</li>
         </ul>
     </li>
-    <li><a href="LocoNetTools.shtml">JMRI's Tools for LocoNet&reg; Devices</a></li>
-    <li>LocoNet-related Tools
+    <li><a name="tools"></a>LocoNet-related Tools
         <ul>
             <li><a href="../../../package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">Monitor LocoNet</a></li>
             <li><a href="../../../package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml">Monitor Slots</a></li>
@@ -550,7 +553,7 @@ for more information.
         </ul>
     </li>    
 </ul>
-<a name="Support"><h3>Third Party/Support</h3></a>
+<a name="Support"></a><h3>Third Party/Support</h3>
 <p>Support for Digitrax hardware products is available through <a href="http://www.digitrax.com">
         Digitrax, Inc.</a> Digitrax product manuals may be found 
         <a href="http://www.digitrax.com/support/manuals/">here</a>.  

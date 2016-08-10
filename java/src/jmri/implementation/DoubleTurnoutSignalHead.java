@@ -1,4 +1,3 @@
-// DoubleTurnoutSignalHead.java
 package jmri.implementation;
 
 import jmri.NamedBeanHandle;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * changed via some other mechanism.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
- * @version	$Revision$
  */
 public class DoubleTurnoutSignalHead extends DefaultSignalHead implements java.beans.VetoableChangeListener {
 
@@ -123,5 +121,3 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead implements java.b
 
     private final static Logger log = LoggerFactory.getLogger(DoubleTurnoutSignalHead.class.getName());
 }
-
-/* @(#)DoubleTurnoutSignalHead.java */

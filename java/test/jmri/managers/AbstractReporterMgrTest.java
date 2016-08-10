@@ -64,6 +64,17 @@ public abstract class AbstractReporterMgrTest extends TestCase {
         Assert.assertTrue("provided same object ", t == t2);
     }
 
+    public void testProvideFailure() {
+        boolean correct = false;
+        try {
+            Reporter t = l.provideReporter("..");
+            Assert.fail("didn't throw");
+        } catch (IllegalArgumentException ex) {
+            correct = true;
+        }
+        Assert.assertTrue("Exception thrown properly", correct);        
+    }
+
     public void testReporterGetBySystemName() {
         // Try a successful one -- the one that was added in testReporterProvideReporter()
         Reporter t = l.getBySystemName(getSystemName(getNumToTest1()));

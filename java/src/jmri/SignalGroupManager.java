@@ -2,6 +2,10 @@ package jmri;
 
 import java.util.List;
 
+import javax.annotation.CheckReturnValue;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+
 /**
  * Interface for obtaining information about signal systems.
  * <p>
@@ -26,18 +30,17 @@ import java.util.List;
  */
 public interface SignalGroupManager extends Manager {
 
-    public SignalGroup getSignalGroup(String name);
+    public @CheckForNull SignalGroup getSignalGroup(@Nonnull String name);
 
-    public SignalGroup getBySystemName(String name);
+    public @CheckForNull SignalGroup getBySystemName(@Nonnull String name);
 
-    public SignalGroup getByUserName(String name);
+    public @CheckForNull SignalGroup getByUserName(@Nonnull String name);
 
-    //public SignalGroup provideSignalGroup(String systemName, String userName);
-    public SignalGroup newSignalGroup(String sys);
+    public @Nonnull SignalGroup newSignalGroup(@Nonnull String sys);
 
-    public SignalGroup provideSignalGroup(String systemName, String userName);
+    public @Nonnull SignalGroup provideSignalGroup(@Nonnull String systemName, String userName);
 
-    public List<String> getSystemNameList();
+    public @Nonnull List<String> getSystemNameList();
 
-    void deleteSignalGroup(SignalGroup s);
+    void deleteSignalGroup(@Nonnull SignalGroup s);
 }

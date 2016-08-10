@@ -1,4 +1,3 @@
-// AcelaTrafficController.java
 package jmri.jmrix.acela;
 
 import java.io.DataInputStream;
@@ -267,7 +266,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         if (needToInitAcelaNetwork) {
             if (needToCreateNodesState == 0) {
                 if (needToPollNodes) {
-                    new AcelaNode(0, AcelaNode.AC);
+                    new AcelaNode(0, AcelaNode.AC,this);
                     log.info("Created a new Acela Node [0] in order to poll Acela network: " + AcelaNode.AC);
                 }
                 curAcelaNodeIndex = SPECIALNODE;
@@ -394,27 +393,22 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
      *
      * @return The registered AcelaTrafficController instance for general use,
      *         if need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public AcelaTrafficController instance() {
-        // Bob C: This seems wrong
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new AcelaTrafficController object");
-            }
-            // Bob C: and the following line won't work in a static.
-            // self = this;
-            // So, ..., create a new one.
-            self = new AcelaTrafficController();
-        }
-        return self;
+        log.error("Deprecated method instance called");
+        return null;
     }
-
-    static volatile protected AcelaTrafficController self = null;
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
+    @Override
+    @Deprecated
     protected void setInstance() {
-        self = this;
+        // this is called from AbstractMRTrafficController, so suppress this
+        // error.
+        //log.error("Deprecated method setInstance called");
     }
 
     protected AbstractMRReply newReply() {

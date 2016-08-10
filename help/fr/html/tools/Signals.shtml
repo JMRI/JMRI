@@ -3,19 +3,16 @@
 <!-- $Id$ -->
 <html lang="fr">
 <head>
-   <TITLE>_ <META http-equiv=C<META http-eqontent-Type content="text/html; charset=iso-iso-8859-1">
+   <TITLE>
 JMRI: Signal Head Documentation
   </TITLE>
-   <META http-equiv=Content-Type content="text/html; charset=iso-iso-8859-1">
 
  <META content="Bob Jacobsen" name=Author>
- <META http-equiv=Cont<!--#include virtual="/Header" --><!--#include virtual="/Header" -->
 <meta name="keywords"
 
 	    content="turnout model railroad JMRI decoderpro panelpro">
 <!--#include virtual="/Header" --><!--#include virtual="/Header" -->
 <!-- Style-->
- <META http-equiv=Content-Type content="text/html; charset=iso-iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -28,7 +25,7 @@ JMRI: Signal Head Documentation
 <body>
 <div id="container">	JMRI: Signal Head Documentation
   </TITLE>
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
 
 <META content="Bob Jacobsen" name=Author
  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
@@ -48,6 +45,7 @@ JMRI: Signal Head Documentation
   <div id="container">
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
       <div id="mainContent">

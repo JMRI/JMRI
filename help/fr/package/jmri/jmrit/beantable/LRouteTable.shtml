@@ -1,84 +1,118 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- UpDated by Herv&#233; Blorec  2013-10-11-->
-<HTML LANG="fr">
-<HEAD>
-<TITLE>JMRI: LRoute Table Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Bob Jacobsen" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help LRoute Table">
 
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1"
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<BODY>
-<!--#include virtual="/Header" -->
+  <title>JMRI: Le Tableau L-Itin&eacute;raire</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI help LRoute Table">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>JMRI: Le Tableau L-Itin&eacute;raire</h1>
 
-<H1>Le Tableau L-Itin&#233;raire</H1>
+      <p>Un L-Itin&eacute;raire est une version plus
+      g&eacute;n&eacute;ralis&eacute;e d'un itin&eacute;raire mis
+      en &#399;uvre en tant que Logix. Il est destin&eacute;
+      &agrave; &ecirc;tre utilis&eacute; dans des situations
+      o&ugrave; des d&eacute;clenchements suppl&eacute;mentaires ou
+      actions sont souhait&eacute;s au-del&agrave; des
+      capacit&eacute;s des Itin&eacute;raires. Il peut &ecirc;tre
+      utilis&eacute; comme point de d&eacute;part pour cr&eacute;er
+      de nouveaux Logix. Le tableau L-Itin&eacute;raire fournit les
+      listes de s&eacute;lection des Capteurs, des Aiguillages,
+      Lumi&egrave;res et T&ecirc;tes de signal &agrave; partir
+      desquels les actions de sortie et les conditions de
+      d&eacute;clenchement peuvent &ecirc;tre choisies.</p>
 
-<P>Un L-Itin&#233;raire est une version plus g&#233;n&#233;ralis&#233;e d'un itin&#233;raire mis en &#399;uvre en tant que Logix.
-Il est destin&#233; &#224; &#234;tre utilis&#233; dans des situations o&#249; des d&#233;clenchements suppl&#233;mentaires ou actions sont
-souhait&#233;s au-del&#224; des capacit&#233;s des Itin&#233;raires. Il peut &#234;tre utilis&#233; comme point de d&#233;part pour
-cr&#233;er de nouveaux Logix. Le tableau L-Itin&#233;raire fournit les listes de s&#233;lection des Capteurs, des Aiguillages,
-Lumi&#232;res et T&#234;tes de signal &#224; partir desquels les actions de sortie et les conditions de d&#233;clenchement peuvent &#234;tre
-choisies.</p>
+      <p>Une fois que vous avez quelques aiguillages, capteurs,
+      t&ecirc;tes de signal et/ou des lumi&egrave;res de
+      g&eacute;rer, utiliser le bouton <b>Ajouter</b> dans le coin
+      inf&eacute;rieur gauche du Tableau L-Itin&eacute;raire pour
+      cr&eacute;er un nouvel itin&eacute;raire Logix. Une fois que
+      vous avez cr&eacute;&eacute; un itin&eacute;raire Logix, vous
+      pouvez ajouter d'autres capacit&eacute;s en l'&eacute;ditant
+      depuis le Tableau Logix.</p>
 
-<P> Une fois que vous avez quelques aiguillages, capteurs, t&#234;tes de signal et/ou des lumi&#232;res de g&#233;rer, utiliser le bouton
-<b> Ajouter</b> dans le coin inf&#233;rieur gauche du Tableau L-Itin&#233;raire  pour
-cr&#233;er un nouvel itin&#233;raire Logix. Une fois que vous avez cr&#233;&#233; un itin&#233;raire Logix, vous pouvez ajouter d'autres
-capacit&#233;s en l'&#233;ditant depuis le Tableau Logix.</p>
+      <p>Logix qui impl&eacute;mente le L-Itin&eacute;raire a son
+      nom syst&egrave;me pr&eacute;fix&eacute; par "RTX". Tous les
+      Logix avec ce pr&eacute;fixe sont affich&eacute;s dans le
+      tableau L-Itin&eacute;raire. S'il vous pla&icirc;t noter
+      qu'un "RTX" Logix qui a eu ces capacit&eacute;s
+      ajout&eacute;es avec Logix &eacute;dition ne peut pas
+      &ecirc;tre capable d'afficher ces capacit&eacute;s
+      additionnelles pour l'&eacute;dition de L-Itin&eacute;raire.
+      Une fois que l'&eacute;dition Logix est faite pour un
+      L-Itin&eacute;raire il est recommand&eacute; que les autre
+      &eacute;ditions soient faites &agrave; partir du tableau
+      Logix.</p>
 
-<p> Logix qui impl&#233;mente le L-Itin&#233;raire a son nom syst&#232;me pr&#233;fix&#233; par "RTX".
-Tous les Logix avec ce pr&#233;fixe sont affich&#233;s dans le tableau L-Itin&#233;raire. S'il vous pla&#238;t noter qu'un
-"RTX" Logix qui a eu ces capacit&#233;s ajout&#233;es avec
-Logix &#233;dition ne peut pas &#234;tre capable d'afficher
-ces capacit&#233;s additionnelles pour l'&#233;dition de L-Itin&#233;raire. Une fois que l'&#233;dition Logix est faite pour un
-L-Itin&#233;raire il est recommand&#233; que les autre &#233;ditions soient faites &#224; partir du tableau Logix.</p>
+      <h2>Colonnes Tableau L-Itin&eacute;raire</h2>
 
-<H2>Colonnes  Tableau L-Itin&#233;raire</H2>
+      <dl>
+        <dt>Nom Syst&egrave;me</dt>
 
-<DL>
-<DT>Nom Syst&#232;me </DT>
-<DD> Le Nom Syst&#232;me ne peut pas &#234;tre chang&#233; une fois entr&#233; dans le Tableau.
-Le bouton <b>Ajouter</b> situ&#233; dans le coin inf&#233;rieur gauche du Tableau 
-vous permet d'ajouter un nouvel L- Itin&#233;raire au Tableau.</dd>
+        <dd>Le Nom Syst&egrave;me ne peut pas &ecirc;tre
+        chang&eacute; une fois entr&eacute; dans le Tableau. Le
+        bouton <b>Ajouter</b> situ&eacute; dans le coin
+        inf&eacute;rieur gauche du Tableau vous permet d'ajouter un
+        nouvel L- Itin&eacute;raire au Tableau.</dd>
 
-<DT>Nom Utilisateur </DT>
-<DD> Vous pouvez directement saisir ou modifier le champ "Nom Utilisateur" pour un
-itin&#233;raire Logix existant</.dd>
+        <dt>Nom Utilisateur</dt>
 
-<DT> Activ&#233;</DT>
-<DD> Pour d&#233;sactiver un L-Itin&#233;raire &#224; partir de d&#233;clenchement, d&#233;cochez la case "Activ&#233;" 
-pour l'itin&#233;raire. Ceci d&#233;finit son Logix &#224; un &#233;tat d&#233;sactiv&#233;. Le L-Itin&#233;raire  peut
-&#234;tre activ&#233; ou d&#233;sactiv&#233; soit &#224; partir du Tableau ou du tableau L-Itin&#233;raire Logix.</dd>
- 
-<DT> Modifier</DT>
-<DD> Appuyez sur ce bouton pour modifier le L-Itin&#233;raire . Pour plus d'informations, voir: <a
-HREF = "LRouteAddEdit.shtml"> Ajout/Edition Litin&#233;raires</A>.</Dd>
-</DL>
+        <dd>Vous pouvez directement saisir ou modifier le champ
+        "Nom Utilisateur" pour un itin&eacute;raire Logix
+        existant</dd>
 
-<H3>Commandes du Tableau L-Itin&#233;raire</H3>
+        <dt>Activ&eacute;</dt>
 
-Il y a un bouton au bas du Tableau L-Itin&#233;raire
+        <dd>Pour d&eacute;sactiver un L-Itin&eacute;raire &agrave;
+        partir de d&eacute;clenchement, d&eacute;cochez la case
+        "Activ&eacute;" pour l'itin&eacute;raire. Ceci
+        d&eacute;finit son Logix &agrave; un &eacute;tat
+        d&eacute;sactiv&eacute;. Le L-Itin&eacute;raire peut
+        &ecirc;tre activ&eacute; ou d&eacute;sactiv&eacute; soit
+        &agrave; partir du Tableau ou du tableau
+        L-Itin&eacute;raire Logix.</dd>
 
-<DL>
-<DT> Ajouter</DT>
-<DD> Appuyez sur ce bouton pour ajouter un nouvel itin&#233;raire Logix. Pour plus d'informations, voir
-<A  HREF="LRouteAddEdit.shtml"> Ajouter/Editer L-Itin&#233;raires</A>.</Dd>
+        <dt>Modifier</dt>
 
+        <dd>Appuyez sur ce bouton pour modifier le
+        L-Itin&eacute;raire. Pour plus d'informations, voir:
+        <a href="LRouteAddEdit.shtml">Ajout/Edition
+        Litin&eacute;raires</a>.</dd>
+      </dl>
 
+      <h3>Commandes du Tableau L-Itin&eacute;raire</h3>
 
-<!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
+      <p>Il y a un bouton au bas du Tableau L-Itin&eacute;raire</p>
 
+      <dl>
+        <dt>Ajouter</dt>
+
+        <dd>Appuyez sur ce bouton pour ajouter un nouvel
+        itin&eacute;raire Logix. Pour plus d'informations, voir
+        <a href="LRouteAddEdit.shtml">Ajouter/Editer
+        L-Itin&eacute;raires</a>.</dd>
+      </dl><!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

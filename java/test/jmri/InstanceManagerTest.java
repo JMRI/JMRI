@@ -21,7 +21,7 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
 
         InstanceManager.store(m, jmri.PowerManager.class);
 
-        Assert.assertTrue("power manager present", InstanceManager.powerManagerInstance() == m);
+        Assert.assertTrue("power manager present", InstanceManager.getDefault(jmri.PowerManager.class) == m);
     }
 
     public void testSecondDefaultPowerManager() {
@@ -31,7 +31,7 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         InstanceManager.store(m1, jmri.PowerManager.class);
         InstanceManager.store(m2, jmri.PowerManager.class);
 
-        Assert.assertTrue("power manager present", InstanceManager.powerManagerInstance() == m2);
+        Assert.assertTrue("power manager present", InstanceManager.getDefault(jmri.PowerManager.class) == m2);
     }
 
     public void testDefaultProgrammerManagers() {
@@ -131,6 +131,7 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
     public void testAutoCreateNotOK() {
         NoAutoCreate obj = InstanceManager.getDefault(NoAutoCreate.class);
         Assert.assertNull(obj);
+        jmri.util.JUnitAppender.assertWarnMessage("getDefault found no default object for type \"jmri.InstanceManagerTest$NoAutoCreate\""); 
     }
 
     /**
@@ -140,26 +141,26 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         Assert.assertNotNull(InstanceManager.sensorManagerInstance());
         Assert.assertNotNull(InstanceManager.turnoutManagerInstance());
         Assert.assertNotNull(InstanceManager.lightManagerInstance());
-        Assert.assertNotNull(InstanceManager.signalHeadManagerInstance());
-        Assert.assertNotNull(InstanceManager.signalMastManagerInstance());
-        Assert.assertNotNull(InstanceManager.signalSystemManagerInstance());
-        Assert.assertNotNull(InstanceManager.signalGroupManagerInstance());
-        Assert.assertNotNull(InstanceManager.blockManagerInstance());
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalHeadManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalMastManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalSystemManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalGroupManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(WarrantManager.class));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance());
-        Assert.assertNotNull(InstanceManager.transitManagerInstance());
-        Assert.assertNotNull(InstanceManager.routeManagerInstance());
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.TransitManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.RouteManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class));
-        Assert.assertNotNull(InstanceManager.conditionalManagerInstance());
-        Assert.assertNotNull(InstanceManager.logixManagerInstance());
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.ConditionalManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.LogixManager.class));
         Assert.assertNotNull(InstanceManager.timebaseInstance());
-        Assert.assertNotNull(InstanceManager.clockControlInstance());
-        Assert.assertNotNull(InstanceManager.signalGroupManagerInstance());
-        Assert.assertNotNull(InstanceManager.reporterManagerInstance());
-        Assert.assertNotNull(InstanceManager.catalogTreeManagerInstance());
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.ClockControl.class));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalGroupManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.ReporterManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(CatalogTreeManager.class));
         Assert.assertNotNull(InstanceManager.memoryManagerInstance());
-        Assert.assertNotNull(InstanceManager.audioManagerInstance());
+        Assert.assertNotNull(InstanceManager.getDefault(AudioManager.class));
         Assert.assertNotNull(InstanceManager.rosterIconFactoryInstance());
     }
 

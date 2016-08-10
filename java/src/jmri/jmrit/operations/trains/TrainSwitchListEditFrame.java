@@ -1,4 +1,3 @@
-// TrainSwitchListEditFrame.java
 package jmri.jmrit.operations.trains;
 
 import java.awt.Dimension;
@@ -37,7 +36,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user selection of switch lists
  *
  * @author Dan Boudreau Copyright (C) 2008, 2012, 2013, 2014
- * @version $Revision$
  */
 public class TrainSwitchListEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -186,7 +184,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(
                 new SetupExcelProgramSwitchListFrameAction(Bundle.getMessage("MenuItemSetupExcelProgramSwitchList")));
         menuBar.add(toolMenu);
@@ -466,20 +464,20 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
                     return;
                 }
 
-                TrainCustomSwitchList.addCVSFile(csvFile);
+                TrainCustomSwitchList.instance().addCVSFile(csvFile);
             }
         }
         // Processes the CSV Manifest files using an external custom program.
-        if (!TrainCustomSwitchList.manifestCreatorFileExists()) {
-            log.warn("Manifest creator file not found!, directory name: {}, file name: {}", TrainCustomSwitchList
-                    .getDirectoryName(), TrainCustomSwitchList.getFileName());
+        if (!TrainCustomSwitchList.instance().excelFileExists()) {
+            log.warn("Manifest creator file not found!, directory name: {}, file name: {}", TrainCustomSwitchList.instance()
+                    .getDirectoryName(), TrainCustomSwitchList.instance().getFileName());
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LoadDirectoryNameFileName"),
-                    new Object[]{TrainCustomSwitchList.getDirectoryName(), TrainCustomSwitchList.getFileName()}),
+                    new Object[]{TrainCustomSwitchList.instance().getDirectoryName(), TrainCustomSwitchList.instance().getFileName()}),
                     Bundle.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         // Now run the user specified custom Switch List processor program
-        TrainCustomSwitchList.process();
+        TrainCustomSwitchList.instance().process();
         // set trains switch lists printed
         TrainManager.instance().setTrainsSwitchListStatus(Train.PRINTED);
     }

@@ -1,104 +1,189 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>
-DecoderPro&reg; Main Window
-</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>DecoderPro&reg; Main Window</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h1>DecoderPro&reg; Main Window</h1>
-<h2>RPS Menu</h2>
+    <div id="mainContent">
+      <h1>DecoderPro&reg; Main Window</h1>
 
-<div align="right">
-<p><a href="dp3_menubar.shtml">Back to Index</a><a href="Main_Menu.shtml#System"></a></p>
-</div>
+      <h2>RPS Menu</h2>
 
-<hr>
-<p><strong>RPS Monitor</strong></p>
-<blockquote>
-  <p>Opens the <a href="Main_Monitor_Window.shtml">Communications Monitor Window</a> and automatically displays the information that is being sent and received on the communications link between your computer and your DCC system.</p>
-</blockquote>
-<p><strong><a name="Receiver"></a>RPS Receiver Control</strong></p>
-<blockquote>
-  <p>Opens the <a href="#ReceiverControl">RPS Receiver Control </a>window, which will detect how many receivers it has and set up a table with the right number of rows.</p>
-</blockquote>
-<p><strong><a name="Polling"></a>RPS Polling Control</strong></p>
-<blockquote>
-  <p>Opens the <a href="#PollingControl">RPS Polling Control</a> window where you tell the RPS system which of your locomotives have RPS transmitters installed, and how often to talk to them.</p>
-</blockquote>
-<p><strong><a name="Debugger"></a>RPS Debugging Window</strong></p>
-<blockquote>
-  <p>Opens the <a href="#DebuggerWin">RPS Debugger</a> window that lets you look at information as it moves throught the RPS system.</p>
-</blockquote>
-<p><strong><a name="Tracking"></a>RPS Tracking Display</strong></p>
-<blockquote>
-  <p>Opens the <a href="#TrackingFrame">RPS Tracking </a>frame that displays two types of things, the measured positions and paths of RPS transmitters and the <em>detection regions</em> used for RPS blodks and sensors.</p>
-</blockquote>
-<p><strong><a name="Speed"></a>RPS Sound Speed Monitor</strong></p>
-<blockquote>
-  <p>Opens the <a href="#SpeedSound">RPS Sound Speed Contro</a>l window that lets you monitor and control the speed of sound used by the RPS system.</p>
-</blockquote>
-<p><img src="images/separator.png" alt="separator" width="190" height="4"></p>
-<p><strong><a name="Align"></a>RPS Alignment Tool</strong></p>
-<blockquote>
-  <p>Open the <a href="#RPSAlign">RPS Alignment</a> window that allows you to align the sensors.</p>
-</blockquote>
-<hr>
-<h4><a name="ReceiverControl"></a> RPS Receiver Control</h4>
-<p align="center"><img src="images/Main_RPS_RcvrCtrl.png" alt="RPS Receiver Control" width="585" height="261" border="4"></p>
-<div>
-  <div align="right">
-    <p><a href="#Receiver">Back</a></p>
-  </div>
-</div>
-<h4 align="left"><a name="PollingControl"></a> RPS Polling Control</h4>
-<p align="center"><img src="images/Main_RPS_Poll.png" alt="RPS Polling contorl" width="592" height="240" border="4"></p>
-<div>
-  <div align="right"><a href="#Polling">Back</a></div>
-</div>
-<h4 align="left"><a name="DebuggerWin"></a> RPS Debugger Window</h4>
-<p align="center"><img src="images/Main_RPS_Debugger.png" alt="RPS Debugger" width="372" height="339" border="4"></p>
-<div>
-  <div align="right"><a href="#Debugger">Back</a></div>
-</div>
-<h4 align="left"><a name="TrackingFrame"></a> RPS Tracking Frame</h4>
-<p align="center"><img src="images/Main_RPS_Tracking.png" alt="RPS Tracking" width="452" height="426" border="4"></p>
-<div>
-  <div align="right"><a href="#Tracking">Back</a></div>
-</div>
-<h4 align="left"><a name="SpeedSound"></a> RPS Sound Speed Control</h4>
-<p align="center"><img src="images/Main_RPS_SoundSpeed.png" alt="RPS Sound Speed Control" width="486" height="188"></p>
-<div>
-  <div align="right"><a href="#Speed">Back</a></div>
-</div>
-<h4 align="left"><a name="RPSAlign"></a> RPS Alignment</h4>
-<p align="center"><img src="images/Main_RPS_Align.png" alt="RPS Align " width="779" height="538" border="4"></p>
-<div>
-  <div align="right"><a href="#Align">Back</a></div>
-</div>
+      <div align="right">
+        <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
+        "Main_Menu.shtml#System"></a></p>
+      </div>
+      <hr>
 
-<hr>
+      <p><strong>RPS Monitor</strong></p>
 
-<div align="right">
-<p><a href="dp3_menubar.shtml">Back to Index</a><a href="Main_Menu.shtml#System"></a></p>
-</div>
+      <blockquote>
+        <p>Opens the <a href=
+        "Main_Monitor_Window.shtml">Communications Monitor
+        Window</a> and automatically displays the information that
+        is being sent and received on the communications link
+        between your computer and your DCC system.</p>
+      </blockquote>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
- </body>
+      <p><strong><a name="Receiver" id="Receiver"></a>RPS Receiver
+      Control</strong></p>
+
+      <blockquote>
+        <p>Opens the <a href="#ReceiverControl">RPS Receiver
+        Control</a> window, which will detect how many receivers it
+        has and set up a table with the right number of rows.</p>
+      </blockquote>
+
+      <p><strong><a name="Polling" id="Polling"></a>RPS Polling
+      Control</strong></p>
+
+      <blockquote>
+        <p>Opens the <a href="#PollingControl">RPS Polling
+        Control</a> window where you tell the RPS system which of
+        your locomotives have RPS transmitters installed, and how
+        often to talk to them.</p>
+      </blockquote>
+
+      <p><strong><a name="Debugger" id="Debugger"></a>RPS Debugging
+      Window</strong></p>
+
+      <blockquote>
+        <p>Opens the <a href="#DebuggerWin">RPS Debugger</a> window
+        that lets you look at information as it moves throught the
+        RPS system.</p>
+      </blockquote>
+
+      <p><strong><a name="Tracking" id="Tracking"></a>RPS Tracking
+      Display</strong></p>
+
+      <blockquote>
+        <p>Opens the <a href="#TrackingFrame">RPS Tracking</a>
+        frame that displays two types of things, the measured
+        positions and paths of RPS transmitters and the
+        <em>detection regions</em> used for RPS blodks and
+        sensors.</p>
+      </blockquote>
+
+      <p><strong><a name="Speed" id="Speed"></a>RPS Sound Speed
+      Monitor</strong></p>
+
+      <blockquote>
+        <p>Opens the <a href="#SpeedSound">RPS Sound Speed
+        Contro</a>l window that lets you monitor and control the
+        speed of sound used by the RPS system.</p>
+      </blockquote>
+
+      <p><img src="images/separator.png" alt="separator" width=
+      "190" height="4"></p>
+
+      <p><strong><a name="Align" id="Align"></a>RPS Alignment
+      Tool</strong></p>
+
+      <blockquote>
+        <p>Open the <a href="#RPSAlign">RPS Alignment</a> window
+        that allows you to align the sensors.</p>
+      </blockquote>
+      <hr>
+
+      <h4><a name="ReceiverControl" id="ReceiverControl"></a> RPS
+      Receiver Control</h4>
+
+      <p align="center"><img src="images/Main_RPS_RcvrCtrl.png"
+      alt="RPS Receiver Control" width="585" height="261" border=
+      "4"></p>
+
+      <div>
+        <div align="right">
+          <p><a href="#Receiver">Back</a></p>
+        </div>
+      </div>
+
+      <h4 align="left"><a name="PollingControl" id=
+      "PollingControl"></a> RPS Polling Control</h4>
+
+      <p align="center"><img src="images/Main_RPS_Poll.png" alt=
+      "RPS Polling contorl" width="592" height="240" border=
+      "4"></p>
+
+      <div>
+        <div align="right">
+          <a href="#Polling">Back</a>
+        </div>
+      </div>
+
+      <h4 align="left"><a name="DebuggerWin" id="DebuggerWin"></a>
+      RPS Debugger Window</h4>
+
+      <p align="center"><img src="images/Main_RPS_Debugger.png"
+      alt="RPS Debugger" width="372" height="339" border="4"></p>
+
+      <div>
+        <div align="right">
+          <a href="#Debugger">Back</a>
+        </div>
+      </div>
+
+      <h4 align="left"><a name="TrackingFrame" id=
+      "TrackingFrame"></a> RPS Tracking Frame</h4>
+
+      <p align="center"><img src="images/Main_RPS_Tracking.png"
+      alt="RPS Tracking" width="452" height="426" border="4"></p>
+
+      <div>
+        <div align="right">
+          <a href="#Tracking">Back</a>
+        </div>
+      </div>
+
+      <h4 align="left"><a name="SpeedSound" id="SpeedSound"></a>
+      RPS Sound Speed Control</h4>
+
+      <p align="center"><img src="images/Main_RPS_SoundSpeed.png"
+      alt="RPS Sound Speed Control" width="486" height="188"></p>
+
+      <div>
+        <div align="right">
+          <a href="#Speed">Back</a>
+        </div>
+      </div>
+
+      <h4 align="left"><a name="RPSAlign" id="RPSAlign"></a> RPS
+      Alignment</h4>
+
+      <p align="center"><img src="images/Main_RPS_Align.png" alt=
+      "RPS Align " width="779" height="538" border="4"></p>
+
+      <div>
+        <div align="right">
+          <a href="#Align">Back</a>
+        </div>
+      </div>
+      <hr>
+
+      <div align="right">
+        <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
+        "Main_Menu.shtml#System"></a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
 </html>

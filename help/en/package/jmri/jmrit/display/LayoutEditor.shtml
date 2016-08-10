@@ -23,9 +23,9 @@
 
 <h1>The Layout Editor</h1>
 
-<a name="contents"><h2>Contents</h2></a>
+<a name="contents"></a><h2>Contents</h2>
 
-This document describes Layout Editor and how to use Layout Editor to make 
+<p>This document describes Layout Editor and how to use Layout Editor to make 
 PanelPro panels. The document is divided into sections; click below to 
 jump to the named section. The minimum reading to get started is 
 <a href="#intro">Introduction to Layout Editor Panels</a> and 
@@ -54,10 +54,10 @@ sections in detail.</p>
 	<li><a href="#finish">Putting Finishing Touches on your Panel</a>
 </ul>
 
-<a name="intro"><h2>Introduction to Layout Editor Panels</h2>
+<a name="intro"></a><h2>Introduction to Layout Editor Panels</h2>
 
 
-<b>Layout Editor</b> supports the construction and display of PanelPro panels.
+<p><b>Layout Editor</b> supports the construction and display of PanelPro panels.
 <b>Layout Editor</b> is similar to the traditional PanelPro <b>Panel Editor</b>, 
 except it supports a drawn track diagram instead of an icon-based track
 diagram.  Because of the way it works, <b>Layout Editor</b> captures the
@@ -111,7 +111,7 @@ tutorial is available for download as a pdf file on the JMRI web site. See
 JMRI/PanelPro Layout Editor</b></a> 
 and its two associated demonstration .xml files.
 
-<a name="start"><h2>Getting Started with Layout Editor</h2>
+<a name="start"></a><h2>Getting Started with Layout Editor</h2>
 <p>
 To get familiar with the Layout Editor user interface, try the following:</p>
 <p>
@@ -182,8 +182,9 @@ diverging connection point by holding shift down, while pressing the mouse
 button on the diverging connection point and dragging to the end bumper. Your track
 diagram should look like the following:</p>
 <p>
-<a href="./images/OvalLayoutEditMode.gif"><img src="./images/OvalLayoutEditMode.gif" 
-align="center" width="563" height="169" hspace="0" vspace="0"></a>
+<a href="./images/OvalLayoutEditMode.gif">
+    <img src="./images/OvalLayoutEditMode.gif" align="middle" width="563" height="169" hspace="0" vspace="0" alt="Oval Layout Image">
+</a>
 <p>
 10. Select <b>Edit Mode</b> in the Options menu to hide the tool bar (and the 
 help bar) and see how your track diagram of a simple oval layout would look in a 
@@ -203,12 +204,12 @@ vertically or horizontally on your panel.</b> To make maximum use of these tools
 your panel with turnouts oriented vertically or horizontally (the orientation does 
 not have to be exact, just mostly vertical or mostly horizontal).</p>
 
-<a name="toolbar"><h2>Using the  Layout Editor Tool Bar</h2>
+<a name="toolbar"></a><h2>Using the  Layout Editor Tool Bar</h2>
 
-The tool bar is used to add items to a panel, and to provide information for the items
+<p>The tool bar is used to add items to a panel, and to provide information for the items
 added. The item to be added is selected using one of the following checkboxes in the tool 
 bar:</p>
-<p><ul>
+<ul>
 	<li><b>RH</b> - selects a right-handed turnout</li>
 	<li><b>LH</b> - selects a left-handed turnout</li>
 	<li><b>WYE</b> - selects a wye turnout</li>
@@ -234,7 +235,7 @@ bar:</p>
     <li><b>Signal Mast Icon</b> - selects a signal mast icon showing the signal mast whose name is 
 	entered on the right</li>
 	<li><b>Icon Label</b> - selects a general purpose icon</li>
-</ul></p>
+</ul>
 <p>
 The top ten items are used to create a track diagram, and are new with Layout Editor.
 The remaining six items are icon-based and are similar to corresponding icon items in 
@@ -242,7 +243,7 @@ Panel Editor.</p>
 <p>
 To add all items except Track Segment:
 </p>
-<p><ol>
+<ol>
 	<li>Select its check box (check boxes of the other items will automatically be 
 	deselected).</li>
 	<li>Enter any other information needed (see below).</li>
@@ -251,14 +252,14 @@ To add all items except Track Segment:
 	<li>Hold down the shift key.</li>
 	<li>Click the mouse (left-click).</li>
 	<li>Release the mouse, and then release the shift key.</li>
-</ol></p>
+</ol>
 <p>
 A Track Segment is a piece of straight track connecting two connection points (red 
 squares on a turnout, anchor point, end bumper, edge connector or level crossing).  Before you can
 add a Track Segment, two red connection points must be visible on the panel. To add 
 a Track Segment connecting two red connection points:
 </p>
-<p><ol>
+<ol>
 	<li>Select the Track Segment check box in the tool bar.</li>
 	<li>Enter any other information--all optional (see below).</li>
 	<li>Hold down the shift key.</li>
@@ -266,7 +267,7 @@ a Track Segment connecting two red connection points:
 	<li>Drag the mouse to the other connection point. The cursor shape changes 
 	when you're there.</li>
 	<li>Release the mouse, and then release the shift key.</li>
-</ol></p>
+</ol>
 <p>
 Check boxes and fields on the tool bar other than the fourteen enumerated above 
 are for entering information that will be applied to created items as they are
@@ -279,7 +280,7 @@ cursor over a field or check box to see its tool tip. Information entries are
 described below, along with which created items they apply to and whether they 
 are optional or required.
 </p>
-<p><ul>
+<ul>
 	<li><b>Turnout: Name</b> (field) - applies to RH, LH, WYE, Double Xover, 
 	RH Xover, LH Xover - Entry is optional. If a name is entered, it must 
 	correspond to a turnout in the Turnout Table.</li>
@@ -326,7 +327,7 @@ are optional or required.
 	automated tools in the Tools menu to place signal icons.</b> This item
 	is provided for those cases where those automated tools cannot place a 
 	signal icon where needed.</li>
-</ul></p>
+</ul>
 <p>
 When pressed, the <b>Change Icons...</b> button on the tool bar brings up an icon 
 editor for either sensor icons, signal icons, or general purpose icons, depending 
@@ -337,11 +338,11 @@ Signal Icons, Layout Editor defaults to the left-facing short icons found at
 background you may need to switch to white icons that are available in the same
 area, since the default icons have black borders.</p>
 
-<a name="filemenu"><h2>Using a Panel's File Menu</h2></a>
+<a name="filemenu"></a><h2>Using a Panel's File Menu</h2>
 
-The File menu provides for storing and deleting panels. 
+<p>The File menu provides for storing and deleting panels. 
 </p>
-<p><ul>
+<ul>
 	<li><b>Store panels...</b> - When this item is selected, a Save dialog is 
 	shown. When Save is selected in the Save dialog, all layout configuration 
 	information is written to disk, including information for all panels, both 
@@ -357,16 +358,16 @@ The File menu provides for storing and deleting panels.
 	a panel from your panel file, <b>Store panels...</b> must be selected after 
 	deleting that panel. <b>There is no undo for deletion.</b> Unless the panel has 
 	been saved to disk, it is gone after deletion.</li>
-</ul></p>
+</ul>
 
 
-<a name="option"><h2>Using Layout Editor's Options Menu</h2>
+<a name="option"></a><h2>Using Layout Editor's Options Menu</h2>
 
-The Options menu is used to set options, add items to the panel, and perform
+<p>The Options menu is used to set options, add items to the panel, and perform
 operations that do not happen very often during panel creation. Each Option menu 
 selection is described below.
 </p>
-<p><ul>
+<ul>
 	<li><b>Edit Mode</b> - When this item is checked, the tool bar is displayed 
 	at the top of the panel, and the track diagram displays connection points and
 	edit circles. Uncheck Edit Mode to hide the tool bar and the help bar if it 
@@ -464,16 +465,16 @@ selection is described below.
 	    When off, this leg is not drawn.  This makes the turnout position more visible when 
 	    the diverging angle is small.</li>
 	</ul>
-</ul></p>
+</ul>
 
-<a name="toolsmenu"><h2>Using Layout Editor's Tools Menu</h2>
+<a name="toolsmenu"></a><h2>Using Layout Editor's Tools Menu</h2>
 
-The Tools menu provides tools to aid in creation and editing of Layout Editor
+<p>The Tools menu provides tools to aid in creation and editing of Layout Editor
 panels. Using these automated procedures should reduce the time and effort needed
 to create your panel. Note: <b>Set Signals</b> tools only work correctly if 
 turnouts and block boundaries are oriented mostly vertically or mostly horizontally.
 </p>
-<p><ul>
+<ul>
 	<li><b>Scale/Translate Track Diagram...</b> - Selecting this item brings up 
 	a dialog that allows scaling and translation of the track diagram. (For more 
 	information on this item, see the help page for that dialog.)</li>
@@ -613,6 +614,7 @@ turnouts and block boundaries are oriented mostly vertically or mostly horizonta
 	selecting <b>Set Signals...</b> in the popup menu of either turnout will bring 
 	up this tool with both turnouts identified.  (For more information, see the 
 	help page for the Set Signals at Throat-to-Throat Turnouts dialog.)</li>
+	
     <li><b>Set Signals at a Slip</b> - This item provides an 
 	automated procedure for assigning signals at a single or double slip 
     It also provides for placing signal heads around the level crossing and 
@@ -632,7 +634,7 @@ turnouts and block boundaries are oriented mostly vertically or mostly horizonta
 	been assigned. After blocks have been assigned to the a slip, 
     this tool can be reached by selecting <b>Set Signals...</b> in the slips popup menu.
     (For more information, see the help page for the Set Signals at a Slip dialog.)</li>
-    </li>
+    
 	<li><b>Set Signals at 3-Way Turnout...</b> - This item provides an 
 	automated procedure for assigning signals to two turnouts used to model a 
 	3-way turnout in Layout Editor. A 3-way turnout is modeled by using two 
@@ -665,11 +667,11 @@ turnouts and block boundaries are oriented mostly vertically or mostly horizonta
 	with both turnouts identified. (For more information, see the help page for 
 	the Set Signals at 3-Way Turnouts window.)</li>
 
-</ul></p>
+</ul>
 
-<a name="zoommenu"><h2>Using Layout Editor's Zoom Menu</h2>
+<a name="zoommenu"></a><h2>Using Layout Editor's Zoom Menu</h2>
 
-The Zoom menu allows you to temporarily magnify a panel. The menu provides a 
+<p>The Zoom menu allows you to temporarily magnify a panel. The menu provides a 
 choice of several magnification factors, and a <b>No Zoom</b> item to return to 
 normal size. When a magnification 
 factor is selected the panel is magnified by that factor. Scroll bars are 
@@ -685,9 +687,9 @@ unmagnified panel. A panel may be saved while magnified.</p>
 When a panel is loaded, it always come up with <b>No Zoom</b> selected. Since 
 zooming is temporary, the zoom factor is not preserved when a panel is saved.</p>
 
-<a name="markermenu"><h2>Using Layout Editor's Marker Menu</h2>
+<a name="markermenu"></a><h2>Using Layout Editor's Marker Menu</h2>
 
-The Marker menu provides <b>Markers</b> that may be used to keep track of the 
+<p>The Marker menu provides <b>Markers</b> that may be used to keep track of the 
 location of trains on Layout Editor panels. Markers are small colored icons that 
 display a train ID, usually the locomotive number. When running trains, a marker 
 is created for each train, and that marker is moved around the panel as the train
@@ -701,7 +703,7 @@ repositioned, and removed at any time. The Marker menu and popup menus of
 individual Markers are always active. Markers that are present on a panel are 
 saved to disk when the panel is saved to disk.
 </p>
-<p><ul>
+<ul>
 	<li><b>Add loco...</b> - Selecting this item brings up a small window that 
 	allows a Marker to be created from an entered Loco ID. The Marker icon is 
 	not very large, so no more than 6 characters should be entered. Usually the 
@@ -723,11 +725,11 @@ saved to disk when the panel is saved to disk.
 	<li><b>Remove markers</b> - Selecting this item removes <b>all</b> markers from 
 	the Layout Editor panel.  This item may not be undone. Note: A single 
 	marker may be removed by selecting <b>Remove</b> in its popup menu.
-</ul></p>
+</ul>
 
-<a name="editing"><h2>Editing and Removing Items</h2>
+<a name="editing"></a><h2>Editing and Removing Items</h2>
 
-Every item on a panel has a popup menu. <b>Except for Markers, popup menus are only 
+<p>Every item on a panel has a popup menu. <b>Except for Markers, popup menus are only 
 active in edit mode.</b> To access the popup menu of an icon-based item (sensor icon, 
 signal icon, text label, memory label, multi-sensor, fast clock, icon label, marker, 
 recorder, or background): on Windows systems, right-click on the icon; on Macintosh 
@@ -786,9 +788,9 @@ Signals...</b> tools may be accessed via the Tools menu. These tools are briefly
 described above under <a href="#toolsmenu">Using Layout Editor's Tools Menu</a>, 
 and are discussed in detail on the help page of the tool's dialog window.</p>
 
-<a name="turnouts"><h2>Turnouts</h2>
+<a name="turnouts"></a><h2>Turnouts</h2>
 
-Layout Editor supports six different types of turnouts (track switches): right-
+<p>Layout Editor supports six different types of turnouts (track switches): right-
 handed (<b>RH</b>), left-handed (<b>LH</b>), wye (<b>WYE</b>), double 
 crossover (<b>Double Xover</b>), right-handed single crossover (<b>RH Xover</b>). 
 and left-handed single crossover (<b>LH Xover</b>). The
@@ -885,9 +887,9 @@ or <b>Block 4</b> entries are blank, the default block is used. Block connection
 points are numbered 1, 2, 3 and 4, proceeding from the upper left connection 
 point in a clockwise direction.</p>
 
-<a name="track"><h2>Track Segments and Connection Points</h2>
+<a name="track"></a><h2>Track Segments and Connection Points</h2>
 
-A <b>Track Segment</b> is a piece of straight track stretching between two
+<p>A <b>Track Segment</b> is a piece of straight track stretching between two
 connection points. Connection points are drawn as small red or green squares.
 Connection points are found on turnouts, anchor points, end bumpers, edge connectors, and 
 level crossings. Each turnout has three or four connection points, 
@@ -947,9 +949,9 @@ track segment is configured as (ie the edge connector becomes a block boundary).
 two track segments are going in the same direction.
 <p>
 
-<a name="xing"><h2>Level Crossings</h2>
+<a name="xing"></a><h2>Level Crossings</h2>
 
-A level crossing is a special piece of track that represents two tracks crossing
+<p>A level crossing is a special piece of track that represents two tracks crossing
 at grade. A level crossing is commonly referred to as a diamond. A level crossing 
 has four connection points, and two tracks, designated 1 and 2. When a level 
 crossing is created, track 1 is the horizontal track, and track 2 is the inclined 
@@ -972,9 +974,9 @@ be different from the block(s) of connected track segments; in this case, each
 level crossing connecting point where the block changes serves as a block 
 boundary. (Blocks are discussed more fully below.)</p>
 
-<a name="turn"><h2>Turntables</h2>
+<a name="turn"></a><h2>Turntables</h2>
 
-A Layout Editor turntable is a schematic representation of a turntable on the 
+<p>A Layout Editor turntable is a schematic representation of a turntable on the 
 layout. A turntable is drawn as a circle with a variable number of track 
 connections, called <i>ray tracks</i>. Each <i>ray track</i> is drawn 
 as a short stub track radiating from the turntable circle. A track segment 
@@ -1001,9 +1003,9 @@ changed, and provides for the addition and deletion of ray tracks. For more
 information on how to add and delete ray tracks, see the help page of the 
 Edit Turntable dialog.</p>
 
-<a name="background"><h2>Backgrounds</h2>
+<a name="background"></a><h2>Backgrounds</h2>
 
-Background images are not required for Layout Editor panels. Support for 
+<p>Background images are not required for Layout Editor panels. Support for 
 adding a background is provided for panels that require other than the 
 default Layout Editor background. Background images may be used simply to change 
 the color of the Layout Editor background, or for more sophisticated 
@@ -1044,9 +1046,9 @@ CTC panel, then finish by adding the right edge image. The advantages of
 building CTC backgrounds with slices are that 1) you can make virtually any 
 length CTC panel, and 2) the plates will be precisely located automatically.</p>
 
-<a name="block"><h2>Blocks</h2>
+<a name="block"></a><h2>Blocks</h2>
 
-Blocks are sections of track whose occupancy may be individually monitored. 
+<p>Blocks are sections of track whose occupancy may be individually monitored. 
 Dividing track into blocks is optional. Blocks set up in a track diagram 
 normally correspond to physical blocks on a layout. Block occupancy is indicated 
 by the state of an <i>occupancy sensor</i>. When a layout's track is divided 
@@ -1108,9 +1110,9 @@ and level crossings) that are assigned to a block. This count is displayed in
 the Create/Edit Block dialog as <b>Current Use Count:</b>. When panels are saved to
 disk, only those blocks with a use count greater than zero are saved.</p>
 
-<a name="tracking"><h2>Train Tracking</h2>
+<a name="tracking"></a><h2>Train Tracking</h2>
 
-<b>Train Tracking</b> is an animation technique that allows us to display 
+<p><b>Train Tracking</b> is an animation technique that allows us to display 
 dynamically which train is in an occupied 
 Block.  So, for one train, or for several trains transiting a layout at the same
 time, we can show where each train is at any given time. <b>Train Tracking</b> uses 
@@ -1137,8 +1139,8 @@ software to automatically save and restore Block contents <i>values</i> between 
 <p>
 If your panel is blocked and each block has a hardware occupancy sensor, to set 
 up Train Tracking do the following:
-<p>
-<UL> <li>
+
+<UL>
 <li>1. Place a Block Contents Label near each block in the panel.</li>
 <li>2. Open the Block Table, and enter the name of each train in the "Value" 
 column of the block it is occupying. <b>Remember to click somewhere outside the 
@@ -1154,9 +1156,9 @@ drawing wheels to ensure a block doesn't loose detection before the train
 enters the next block.
 </p>
 
-<a name="tips"><h2>Tips</h2>
+<a name="tips"></a><h2>Tips</h2>
 
-Because of the way a Layout Editor panel is refreshed, the drawn track schematic 
+<p>Because of the way a Layout Editor panel is refreshed, the drawn track schematic 
 will be on top of all icons and labels. It is possible to have a label or icon 
 appear to be "on top of" a section of track, as is commonly done in Panel Editor. 
 To create a break in visible track, without breaking connectivity, place an 
@@ -1185,18 +1187,18 @@ they just need to show up in the <b>Show Panel</b> submenu. So, for example, if
 you set up a Layout Editor panel for train tracking as described above, you can 
 track trains in a companion Panel Editor panel just by adding Block Contents Labels.</p>
 
-<a name="finish"><h2>Putting Finishing Touches on your Panel</h2>
+<a name="finish"></a><h2>Putting Finishing Touches on your Panel</h2>
 
-Below is an enhanced version of the simple oval panel constructed in  
+<p>Below is an enhanced version of the simple oval panel constructed in  
 <b>Getting Started with Layout Editor</b>. The general steps needed to get from 
 that starting panel to this panel are sketched below. The steps need not be done 
 in the exact same order presented. The presented order works, but variations are 
 possible to get to the same end point. This example is presented to illustrate 
 some of the things what can be done easily using Layout Editor. You may elect 
 to do more or less on your Layout Editor panels.</p>
-<a href="./images/OvalLayoutEditMode.gif"><img src="./images/EnhancedPanel.gif" 
-align="center" width="592" height="171" hspace="0" vspace="0"></a>
-<p>
+<a href="./images/OvalLayoutEditMode.gif">
+    <img src="./images/EnhancedPanel.gif" align="middle" width="592" height="171" hspace="0" vspace="0" alt="Enhanced Panel Image">
+</a>
 <ul>
 	<li>Turnouts from the Turnout Table were assigned to each turnout drawing 
 	using the <b>Edit...</b> item in each turnout's popup menu.</li>
@@ -1246,7 +1248,6 @@ align="center" width="592" height="171" hspace="0" vspace="0"></a>
 	turnout was clicked to set it to thrown, producing the panel shown above 
 	(with Edit Mode switched off in the Options menu).</li>
 </ul>
-</p>
 <p>
 You should be able to toggle your turnouts by clicking at their centers and 
 watch your signals change color. If you don't have hardware yet for your 

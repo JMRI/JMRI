@@ -65,7 +65,7 @@ public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         if (value != null) {
             FileUtil.setScriptsPath(value);
         }
-        jmri.InstanceManager.configureManagerInstance().registerPref(new FileLocationPane());
+        jmri.InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(new FileLocationPane());
         return result;
     }
 

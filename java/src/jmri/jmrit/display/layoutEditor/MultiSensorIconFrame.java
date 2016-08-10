@@ -22,7 +22,6 @@ import jmri.util.JmriJFrame;
  * but this is not enforced here. It should be.
  *
  * @author Bob Jacobsen Copyright (c) 2007
- * @version $Revision$
  */
 public class MultiSensorIconFrame extends JmriJFrame {
 

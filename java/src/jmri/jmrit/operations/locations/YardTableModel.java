@@ -16,11 +16,6 @@ import org.slf4j.LoggerFactory;
  */
 public class YardTableModel extends TrackTableModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7919234279596604386L;
-
     public YardTableModel() {
         super();
     }

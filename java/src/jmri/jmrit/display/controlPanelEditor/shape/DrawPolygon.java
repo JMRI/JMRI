@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 /**
  * <P>
  * @author Pete Cressman Copyright: Copyright (c) 2013
- * @version $Revision: 1 $
  *
  */
 public class DrawPolygon extends DrawFrame {

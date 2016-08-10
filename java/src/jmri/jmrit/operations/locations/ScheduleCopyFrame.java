@@ -25,11 +25,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ScheduleCopyFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5798102907541807915L;
-
     ScheduleManager scheduleManager = ScheduleManager.instance();
 
     // text field

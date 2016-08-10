@@ -112,14 +112,13 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
      */
     public void configure() {
 
-        this.getSystemConnectionMemo().setQsiTrafficController(QsiTrafficController.instance());
+        this.getSystemConnectionMemo().setQsiTrafficController(new QsiTrafficController());
         // connect to the traffic controller
-        QsiTrafficController.instance().connectPort(this);
+        this.getSystemConnectionMemo().getQsiTrafficController().connectPort(this);
 
-        //jmri.jmrix.qsi.QsiProgrammer.instance();  // create Programmer in InstanceManager
         this.getSystemConnectionMemo().configureManagers();
 
-        sinkThread = new Thread(QsiTrafficController.instance());
+        sinkThread = new Thread(this.getSystemConnectionMemo().getQsiTrafficController());
         sinkThread.start();
 
         // jmri.InstanceManager.setThrottleManager(new jmri.jmrix.qsi.QsiThrottleManager());
@@ -164,13 +163,17 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
     private boolean opened = false;
     InputStream serialStream = null;
 
-    static public SerialDriverAdapter instance() {
+    /*
+     * @deprecated since 4.5.1
+     */
+    @Deprecated
+    public SerialDriverAdapter instance() {
         if (mInstance == null) {
             mInstance = new SerialDriverAdapter();
         }
         return mInstance;
     }
-    static SerialDriverAdapter mInstance = null;
+    SerialDriverAdapter mInstance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 

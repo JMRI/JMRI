@@ -7,7 +7,7 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

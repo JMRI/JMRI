@@ -51,12 +51,13 @@
       <revremark>Revision in original 0NMRA.xml file</revremark>
     </revision>
   </revhistory>
-  <variable item="Vstart" CV="2" comment="A value of 255 corresponds to 100%">
+  <variable item="Vstart" CV="2">
     <decVal/>
     <label>Vstart</label>
     <label xml:lang="it">Volt Partenza</label>
     <label xml:lang="fr">V démarr.</label>
     <label xml:lang="de">Anfahrspannung</label>
+ 	<comment>A value of 255 corresponds to 100%</comment>
     <comment xml:lang="it">Un Valore di 255 corrisponde al 100%</comment>
     <comment xml:lang="de">Der Wert 255 entspricht 100%</comment>
   </variable>

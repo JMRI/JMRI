@@ -10,11 +10,6 @@ import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
  */
 public class Dcc4PcMenu extends JMenu {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4819102295260652770L;
-
     public Dcc4PcMenu(Dcc4PcSystemConnectionMemo memo) {
         super();
 
@@ -38,7 +33,7 @@ public class Dcc4PcMenu extends JMenu {
             }
         }
 
-        if (jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
             new jmri.jmrit.beantable.ListedTableFrame();
         }
     }

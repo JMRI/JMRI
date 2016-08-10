@@ -35,10 +35,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4077459319293039003L;
     ScheduleTableModel scheduleModel = new ScheduleTableModel();
     JTable scheduleTable = new JTable(scheduleModel);
     JScrollPane schedulePane;
@@ -197,7 +193,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         menuBar.add(toolMenu);
         toolMenu.add(new ScheduleCopyAction(schedule));
         toolMenu.add(new ScheduleOptionsAction(this));

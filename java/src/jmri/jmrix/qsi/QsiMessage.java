@@ -167,12 +167,17 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         return f;
     }
 
+    public String toString() {
+       QsiSystemConnectionMemo memo = jmri.InstanceManager.getDefault(jmri.jmrix.qsi.QsiSystemConnectionMemo.class);
+       return toString(memo.getQsiTrafficController());
+    }
+
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
-    public String toString() {
+    public String toString(QsiTrafficController controller) {
         String s = "";
-        if (!QsiTrafficController.instance().isSIIBootMode()) {
+        if (controller.isSIIBootMode()) {
             for (int i = 0; i < _nDataChars; i++) {
                 s += jmri.util.StringUtil.twoHexFromInt(_dataChars[i]) + " ";
             }

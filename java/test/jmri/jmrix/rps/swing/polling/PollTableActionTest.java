@@ -1,7 +1,6 @@
 package jmri.jmrix.rps.swing.polling;
 
 import javax.swing.JFrame;
-import jmri.util.JUnitUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;

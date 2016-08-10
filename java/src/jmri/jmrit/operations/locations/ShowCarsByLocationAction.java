@@ -14,11 +14,6 @@ import jmri.jmrit.operations.rollingstock.cars.CarsTableFrame;
  */
 public class ShowCarsByLocationAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3383744212033518858L;
-
     public ShowCarsByLocationAction(String s) {
         super(s);
     }

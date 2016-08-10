@@ -32,7 +32,6 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.BlockTest.suite());
         suite.addTest(jmri.BlockManagerTest.suite());
         suite.addTest(jmri.DccLocoAddressTest.suite());
-        suite.addTest(jmri.DccConsistTest.suite());
         suite.addTest(jmri.InstanceManagerTest.suite());
         suite.addTest(jmri.LightTest.suite());
         suite.addTest(jmri.NmraPacketTest.suite());
@@ -60,7 +59,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.web.PackageTest.suite());
         suite.addTest(jmri.jmris.PackageTest.suite());
         suite.addTest(jmri.profile.PackageTest.suite());
-        suite.addTest(jmri.server.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.server.PackageTest.class));
         suite.addTest(jmri.script.PackageTest.suite());
         return suite;
     }

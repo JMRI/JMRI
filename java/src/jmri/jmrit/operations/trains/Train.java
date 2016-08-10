@@ -1,4 +1,3 @@
-// Train.java
 package jmri.jmrit.operations.trains;
 
 import java.awt.Color;
@@ -9,6 +8,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PanelMenu;
@@ -48,7 +48,6 @@ import org.slf4j.LoggerFactory;
  *         2014, 2015
  *
  * @author Rodney Black Copyright (C) 2011
- * @version $Revision$
  */
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
         justification = "CarManager only provides Car Objects")  // NOI18N
@@ -2108,7 +2107,7 @@ public class Train implements java.beans.PropertyChangeListener {
      *
      * @return Road and number of caboose.
      */
-    public String getCabooseRoadAndNumber() {
+    public @Nonnull String getCabooseRoadAndNumber() {
         String cabooseRoadNumber = NONE;
         RouteLocation rl = getCurrentLocation();
         List<RollingStock> cars = CarManager.instance().getByTrainList(this);
@@ -2782,8 +2781,8 @@ public class Train implements java.beans.PropertyChangeListener {
             } else {
                 setStatusCode(getOldStatusCode()); // restore previous train status
             }
-            setDirtyAndFirePropertyChange(TRAIN_MODIFIED_CHANGED_PROPERTY, old, modified); // NOI18N
         }
+        setDirtyAndFirePropertyChange(TRAIN_MODIFIED_CHANGED_PROPERTY, null, modified); // NOI18N
     }
 
     public boolean isModified() {
@@ -3050,12 +3049,12 @@ public class Train implements java.beans.PropertyChangeListener {
             return false;
         }
         // Set up to process the CSV file by the external Manifest program
-        TrainCustomManifest.addCVSFile(file);
-        if (!TrainCustomManifest.process()) {
-            if (!TrainCustomManifest.manifestCreatorFileExists()) {
+        TrainCustomManifest.instance().addCVSFile(file);
+        if (!TrainCustomManifest.instance().process()) {
+            if (!TrainCustomManifest.instance().excelFileExists()) {
                 JOptionPane.showMessageDialog(null, MessageFormat.format(
                         Bundle.getMessage("LoadDirectoryNameFileName"), new Object[]{
-                                TrainCustomManifest.getDirectoryName(), TrainCustomManifest.getFileName()}),
+                                TrainCustomManifest.instance().getDirectoryName(), TrainCustomManifest.instance().getFileName()}),
                         Bundle
                                 .getMessage("ManifestCreatorNotFound"),
                         JOptionPane.ERROR_MESSAGE);
@@ -3149,6 +3148,10 @@ public class Train implements java.beans.PropertyChangeListener {
         log.debug("Move train (" + getName() + ")");
         if (getRoute() == null || getCurrentLocation() == null) {
             setBuilt(false); // break terminate loop
+            return;
+        }
+        if (!isBuilt()) {
+            log.error("ERROR attempt to move train ({}) that hasn't been built", getName());
             return;
         }
         RouteLocation rl = getCurrentLocation();
@@ -3369,7 +3372,7 @@ public class Train implements java.beans.PropertyChangeListener {
                     _trainIcon.setLocation(rl.getTrainIconX(), rl.getTrainIconY());
                 }
                 // add throttle if there's a throttle manager
-                if (jmri.InstanceManager.throttleManagerInstance() != null) {
+                if (jmri.InstanceManager.getOptionalDefault(jmri.ThrottleManager.class) != null) {
                     // add throttle if JMRI loco roster entry exist
                     RosterEntry entry = null;
                     if (getLeadEngine() != null) {
@@ -3427,7 +3430,6 @@ public class Train implements java.beans.PropertyChangeListener {
         }
     }
 
-    // LocationManager locationManager = LocationManager.instance();
     private void updateStatus(RouteLocation old, RouteLocation next) {
         if (next != null) {
             setStatusCode(CODE_TRAIN_EN_ROUTE);

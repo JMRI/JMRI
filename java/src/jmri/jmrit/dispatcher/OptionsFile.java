@@ -1,4 +1,3 @@
-// OptionsFile.java
 package jmri.jmrit.dispatcher;
 
 import java.io.File;
@@ -34,7 +33,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Dave Duchamp Copyright (C) 2008
- * @version	$Revision$
  */
 public class OptionsFile extends jmri.jmrit.XmlFile {
 
@@ -286,5 +284,3 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 
     private final static Logger log = LoggerFactory.getLogger(OptionsFile.class.getName());
 }
-
-/* @(#)OptionsFile.java */

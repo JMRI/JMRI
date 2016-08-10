@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.List;
 import javax.swing.JFrame;
 import jmri.configurexml.ConfigXmlManager;
-import jmri.jmris.json.JSON;
+import jmri.server.json.JSON;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import org.jdom2.Document;

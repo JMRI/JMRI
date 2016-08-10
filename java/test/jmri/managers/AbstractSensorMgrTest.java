@@ -68,6 +68,18 @@ public abstract class AbstractSensorMgrTest extends TestCase {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
+    public void testProvideFailure() {
+        boolean correct = false;
+        try {
+            Sensor t = l.provideSensor("");
+            Assert.fail("didn't throw");
+        } catch (IllegalArgumentException ex) {
+            correct = true;
+        }
+        Assert.assertTrue("Exception thrown properly", correct);  
+        jmri.util.JUnitAppender.assertWarnMessage("Invalid system name for sensor: IS needed IS");      
+    }
+
     public void testSingleObject() {
         // test that you always get the same representation
         Sensor t1 = l.newSensor(getSystemName(getNumToTest1()), "mine");

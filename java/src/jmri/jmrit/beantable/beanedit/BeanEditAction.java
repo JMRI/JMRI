@@ -1,4 +1,3 @@
-// BeanEditAction.java
 package jmri.jmrit.beantable.beanedit;
 
 import java.awt.BorderLayout;
@@ -40,14 +39,8 @@ import org.slf4j.LoggerFactory;
  * a bean object
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision: 17977 $
  */
 abstract class BeanEditAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8002894695517110179L;
 
     public BeanEditAction(String s) {
         super(s);
@@ -477,16 +470,12 @@ abstract class BeanEditAction extends AbstractAction {
         }
 
         public void setModel(NamedBean nb) {
-            if (nb.getPropertyKeys() != null) {
-                attributes = new Vector<KeyValueModel>(nb.getPropertyKeys().size());
-                Iterator<String> ite = nb.getPropertyKeys().iterator();
-                while (ite.hasNext()) {
-                    String key = ite.next();
-                    KeyValueModel kv = new KeyValueModel(key, nb.getProperty(key));
-                    attributes.add(kv);
-                }
-            } else {
-                attributes = new Vector<KeyValueModel>(0);
+            attributes = new Vector<KeyValueModel>(nb.getPropertyKeys().size());
+            Iterator<String> ite = nb.getPropertyKeys().iterator();
+            while (ite.hasNext()) {
+                String key = ite.next();
+                KeyValueModel kv = new KeyValueModel(key, nb.getProperty(key));
+                attributes.add(kv);
             }
             wasModified = false;
         }
@@ -498,18 +487,17 @@ abstract class BeanEditAction extends AbstractAction {
             for (int i = 0; i < attributes.size(); i++) {
                 KeyValueModel kv = attributes.get(i);
                 if ((kv.key != null) && // only update if key value defined, will do the remove to
-                        ((nb.getPropertyKeys() == null) || (nb.getProperty(kv.key) == null) || (!kv.value.equals(nb.getProperty(kv.key))))) {
+                        ((nb.getProperty(kv.key) == null) || (!kv.value.equals(nb.getProperty(kv.key))))) {
                     nb.setProperty(kv.key, kv.value);
                 }
             }
             //remove undefined keys
-            if (nb.getPropertyKeys() != null) {
-                Iterator<String> ite = nb.getPropertyKeys().iterator();
-                while (ite.hasNext()) {
-                    if (!keyExist(ite.next())) // not very efficient algorithm!
-                    {
-                        ite.remove();
-                    }
+
+            Iterator<String> ite = nb.getPropertyKeys().iterator();
+            while (ite.hasNext()) {
+                if (!keyExist(ite.next())) // not very efficient algorithm!
+                {
+                    ite.remove();
                 }
             }
             wasModified = false;

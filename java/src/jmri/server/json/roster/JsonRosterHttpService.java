@@ -40,7 +40,7 @@ import jmri.server.json.JsonHttpService;
  *
  * @author Randall Wood
  */
-class JsonRosterHttpService extends JsonHttpService {
+public class JsonRosterHttpService extends JsonHttpService {
 
     public JsonRosterHttpService(ObjectMapper mapper) {
         super(mapper);

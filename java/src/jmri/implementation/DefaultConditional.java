@@ -673,7 +673,7 @@ public class DefaultConditional extends AbstractNamedBean
                         }
                         break;
                     case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
-                        ConditionalManager cmg = jmri.InstanceManager.conditionalManagerInstance();
+                        ConditionalManager cmg = jmri.InstanceManager.getDefault(jmri.ConditionalManager.class);
                         java.util.Iterator<String> iter = cmg.getSystemNameList().iterator();
                         while (iter.hasNext()) {
                             String sname = iter.next();
@@ -815,7 +815,7 @@ public class DefaultConditional extends AbstractNamedBean
                         }
                         break;
                     case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
-                        ConditionalManager cm = jmri.InstanceManager.conditionalManagerInstance();
+                        ConditionalManager cm = jmri.InstanceManager.getDefault(jmri.ConditionalManager.class);
                         java.util.Iterator<String> itr = cm.getSystemNameList().iterator();
                         while (itr.hasNext()) {
                             String sname = itr.next();
@@ -909,7 +909,7 @@ public class DefaultConditional extends AbstractNamedBean
                         }
                         break;
                     case Conditional.ACTION_ENABLE_LOGIX:
-                        x = InstanceManager.logixManagerInstance().getLogix(devName);
+                        x = InstanceManager.getDefault(jmri.LogixManager.class).getLogix(devName);
                         if (x == null) {
                             errorList.add("invalid logix name in action - " + action.getDeviceName());
                         } else {
@@ -918,7 +918,7 @@ public class DefaultConditional extends AbstractNamedBean
                         }
                         break;
                     case Conditional.ACTION_DISABLE_LOGIX:
-                        x = InstanceManager.logixManagerInstance().getLogix(devName);
+                        x = InstanceManager.getDefault(jmri.LogixManager.class).getLogix(devName);
                         if (x == null) {
                             errorList.add("invalid logix name in action - " + action.getDeviceName());
                         } else {
@@ -943,23 +943,23 @@ public class DefaultConditional extends AbstractNamedBean
                         }
                         break;
                     case Conditional.ACTION_SET_FAST_CLOCK_TIME:
-                        Date date = InstanceManager.timebaseInstance().getTime();
+                        Date date = InstanceManager.getDefault(jmri.Timebase.class).getTime();
                         date.setHours(action.getActionData() / 60);
                         date.setMinutes(action.getActionData() - ((action.getActionData() / 60) * 60));
                         date.setSeconds(0);
-                        InstanceManager.timebaseInstance().userSetTime(date);
+                        InstanceManager.getDefault(jmri.Timebase.class).userSetTime(date);
                         actionCount++;
                         break;
                     case Conditional.ACTION_START_FAST_CLOCK:
-                        InstanceManager.timebaseInstance().setRun(true);
+                        InstanceManager.getDefault(jmri.Timebase.class).setRun(true);
                         actionCount++;
                         break;
                     case Conditional.ACTION_STOP_FAST_CLOCK:
-                        InstanceManager.timebaseInstance().setRun(false);
+                        InstanceManager.getDefault(jmri.Timebase.class).setRun(false);
                         actionCount++;
                         break;
                     case Conditional.ACTION_CONTROL_AUDIO:
-                        Audio audio = InstanceManager.audioManagerInstance().getAudio(devName);
+                        Audio audio = InstanceManager.getDefault(jmri.AudioManager.class).getAudio(devName);
                         if (audio.getSubType() == Audio.SOURCE) {
                             AudioSource audioSource = (AudioSource) audio;
                             switch (action.getActionData()) {

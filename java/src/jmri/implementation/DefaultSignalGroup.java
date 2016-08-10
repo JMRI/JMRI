@@ -61,9 +61,9 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
 
     public void setSignalMast(String pName) {
 
-        SignalMast mMast = InstanceManager.signalMastManagerInstance().getBySystemName(pName);
+        SignalMast mMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(pName);
         if (mMast == null) {
-            mMast = InstanceManager.signalMastManagerInstance().getByUserName(pName);
+            mMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName(pName);
         }
         if (mMast == null) {
             log.warn("did not find a SignalHead named " + pName);
@@ -149,9 +149,9 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
      */
 
     public void addSignalHead(String pName) {
-        SignalHead mHead = InstanceManager.signalHeadManagerInstance().getBySystemName(pName);
+        SignalHead mHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(pName);
         if (mHead == null) {
-            mHead = InstanceManager.signalHeadManagerInstance().getByUserName(pName);
+            mHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(pName);
         }
         if (mHead == null) {
             log.warn("did not find a SignalHead named " + pName);

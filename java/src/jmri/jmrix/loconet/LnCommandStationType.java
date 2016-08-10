@@ -33,6 +33,7 @@ public enum LnCommandStationType {
 
     //  enum value                 name                         canRead progEndOp   ThrottleManager      SlotManager
     COMMAND_STATION_DCS100("DCS100 (Chief)", true, false, "LnThrottleManager", "SlotManager"), // NOI18N
+    COMMAND_STATION_DCS240("DCS240 (Advanced Command Station)", true, false, "LnThrottleManager", "SlotManager"), // NOI18N
     COMMAND_STATION_DCS200("DCS200", true, false, "LnThrottleManager", "SlotManager"), // NOI18N
     COMMAND_STATION_DCS050("DCS50 (Zephyr)", true, false, "LnThrottleManager", "SlotManager"), // NOI18N
     COMMAND_STATION_DCS051("DCS51 (Zephyr Xtra)", true, false, "LnThrottleManager", "SlotManager"), // NOI18N

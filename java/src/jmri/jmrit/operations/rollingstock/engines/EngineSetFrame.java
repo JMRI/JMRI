@@ -17,11 +17,6 @@ import jmri.jmrit.operations.rollingstock.RollingStockSetFrame;
 public class EngineSetFrame extends RollingStockSetFrame implements
         java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7608591085014836578L;
-
     protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
 

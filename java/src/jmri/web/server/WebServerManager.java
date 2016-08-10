@@ -27,7 +27,7 @@ public class WebServerManager {
     private final static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
 
     private WebServerManager() {
-        if (InstanceManager.getDefault(WebServerPreferences.class) == null) {
+        if (InstanceManager.getOptionalDefault(WebServerPreferences.class) == null) {
             File webServerPrefsFile = new File(FileUtil.getUserFilesPath() + "networkServices" + File.separator + "WebServerPreferences.xml"); // NOI18N
             File miniServerPrefsFile = new File(FileUtil.getUserFilesPath() + "miniserver" + File.separator + "MiniServerPreferences.xml"); // NOI18N
             if (!webServerPrefsFile.exists() && miniServerPrefsFile.exists()) {
@@ -42,14 +42,14 @@ public class WebServerManager {
     }
 
     public static WebServerManager getInstance() {
-        if (InstanceManager.getDefault(WebServerManager.class) == null) {
+        if (InstanceManager.getOptionalDefault(WebServerManager.class) == null) {
             InstanceManager.setDefault(WebServerManager.class, new WebServerManager());
         }
         return InstanceManager.getDefault(WebServerManager.class);
     }
 
     public WebServerPreferences getPreferences() {
-        if (InstanceManager.getDefault(WebServerPreferences.class) == null) {
+        if (InstanceManager.getOptionalDefault(WebServerPreferences.class) == null) {
             InstanceManager.setDefault(WebServerPreferences.class, new WebServerPreferences());
         }
         return InstanceManager.getDefault(WebServerPreferences.class);
@@ -60,7 +60,7 @@ public class WebServerManager {
     }
 
     public WebServer getServer() {
-        if (InstanceManager.getDefault(WebServer.class) == null) {
+        if (InstanceManager.getOptionalDefault(WebServer.class) == null) {
             InstanceManager.setDefault(WebServer.class, new WebServer());
         }
         return InstanceManager.getDefault(WebServer.class);

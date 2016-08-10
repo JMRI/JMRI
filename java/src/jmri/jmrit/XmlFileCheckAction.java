@@ -4,10 +4,8 @@ import jmri.util.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

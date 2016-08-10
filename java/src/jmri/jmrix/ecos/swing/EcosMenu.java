@@ -12,11 +12,6 @@ import org.slf4j.LoggerFactory;
  */
 public class EcosMenu extends JMenu {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4469981554699046558L;
-
     public EcosMenu(EcosSystemConnectionMemo memo) {
         super();
 
@@ -40,7 +35,7 @@ public class EcosMenu extends JMenu {
             }
         }
 
-        if (jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
             try {
                 new jmri.jmrit.beantable.ListedTableFrame();
             } catch (java.lang.NullPointerException ex) {

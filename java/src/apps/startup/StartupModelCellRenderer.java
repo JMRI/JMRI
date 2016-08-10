@@ -1,6 +1,5 @@
 package apps.startup;
 
-import apps.StartupModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**

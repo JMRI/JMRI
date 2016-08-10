@@ -1,22 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- $Id$ -->
 <!-- UpDated by Blorec Herv&#233;  2013-09-10-->
 <title>JMRI: CTI Acela System Names</title>
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -146,9 +143,9 @@ Bouton "Enregistrer" sur la
 (sous Modifier dans le menu principal).
 <H3>Limitations</h3>
 
-<UL>
+<ul>
 <LI> CTI prend en charge un grand espace d'adressage pour les entr&#233;es et les sorties. JMRI limite actuellement cela &#224; 1024 entr&#233;es et 1024 sorties (&#233;quivalent &#224; 64 modules Sentry et 64 modules chef de triage). JMRI a actuellement ceci cod&#233; en dur - mais c'est juste une question de priorit&#233;s &#224; d&#233;signer.
-</ UL>
+</ul>
 
 <h2> Plus d'informations</h2>
 
@@ -156,5 +153,7 @@ Plus d'informations sur le mat&#233;riel Acela peut &#234;tre consult&#233;e sur
 <a href="http://www.cti-electronics.com/app_sw.htm"> site web CTI</a>.
 
 <!--#include virtual="/Footer" -->
+        </div>
+      </div>
 </body>
 </html>

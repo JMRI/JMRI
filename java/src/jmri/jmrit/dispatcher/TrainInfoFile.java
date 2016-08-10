@@ -1,4 +1,3 @@
-// TrainInfoFile.java
 package jmri.jmrit.dispatcher;
 
 import java.io.File;
@@ -31,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Dave Duchamp Copyright (C) 2009
- * @version	$Revision$
  */
 public class TrainInfoFile extends jmri.jmrit.XmlFile {
 
@@ -368,5 +366,3 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
     }
     private final static Logger log = LoggerFactory.getLogger(TrainInfoFile.class.getName());
 }
-
-/* @(#)TrainInfoFile.java */

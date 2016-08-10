@@ -24,6 +24,8 @@
 	<!-- CV248 to read only -->
 	<version author="Michael Mosher" version="8" lastUpdated="20150504"/>
 	<!-- remove BEMF control and dither -->
+	<version author="Michael Mosher" version="9" lastUpdated="20160608"/>
+	<!-- Fix whistle selection -->
 	<decoder>
 		<family name="WOW Sound" mfg="Train Control Systems" comment="TCS FW Starting Jan 2012">
 			<model show="no" model="WOWSound Steam" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="Wires"
@@ -1172,32 +1174,38 @@
 				<decVal max="65535"/>
 				<label>Cylinder cocks auto turn on time early</label>
 			</variable>
+			<variable item="First" CV="222" default="0" infoOnly="yes">
+				<enumVal>
+					<enumChoice choice="Alamo Michigan Plant"/>
+				</enumVal>
+				<label>For steam sound set 1, the first whistle is named</label>
+			</variable>
 			<variable item="Sound Option 1" CV="T2CV.4.8" default="0" tooltip="Rotate whistle function will change this setting">
 				<enumVal>
-				<enumChoice choice="Whistle Alamo Michigan Plant"/>
-				<enumChoice choice="Whistle PA 3 Chime"/>
-				<enumChoice choice="Whistle Kingsly 4 Chime"/>
-				<enumChoice choice="Whistle Reading 6 Chime 2"/>
-				<enumChoice choice="Whistle NPR 765"/>
-				<enumChoice choice="Whistle Reading 6 Chime"/>
-				<enumChoice choice="Whistle Reading Pacific G2"/>
-				<enumChoice choice="Whistle Reading Single Chime"/>
-				<enumChoice choice="Whistle Wabash 3 Chime"/>
-				<enumChoice choice="Whistle B &amp; O"/>
-				<enumChoice choice="Whistle Pennsy K4"/>
-				<enumChoice choice="Whistle NW Single Chime"/>
-				<enumChoice choice="Whistle Lunkenheimer 3 chime"/>
+				<enumChoice choice="Alamo Michigan Plant"/>
+				<enumChoice choice="PA 3 Chime"/>
+				<enumChoice choice="Kingsly 4 Chime"/>
+				<enumChoice choice="Reading 6 Chime 2"/>
+				<enumChoice choice="NPR 765"/>
+				<enumChoice choice="Reading 6 Chime"/>
+				<enumChoice choice="Reading Pacific G2"/>
+				<enumChoice choice="Reading Single Chime"/>
+				<enumChoice choice="Wabash 3 Chime"/>
+				<enumChoice choice="B &amp; O"/>
+				<enumChoice choice="Pennsy K4"/>
+				<enumChoice choice="NW Single Chime"/>
+				<enumChoice choice="Lunkenheimer 3 chime"/>
 				<enumChoice choice="Whistle 14"/>
-				<enumChoice choice="Whistle Lunkenheimer Single Note"/>
+				<enumChoice choice="Lunkenheimer Single Note"/>
 				<enumChoice choice="Whistle 16"/>
 				<enumChoice choice="Whistle 17"/>
-				<enumChoice choice="Whistle Hancock 3 Chime"/>
-				<enumChoice choice="Whistle Southern 6 Chime"/>
-				<enumChoice choice="Whistle Wabash 6 Chime"/>
-				<enumChoice choice="Whistle Santa Fe 6 Chime"/>
-				<enumChoice choice="Whistle NW single chime short bell"/>
-				<enumChoice choice="Whistle Great Northern 5 Chime"/>
-				<enumChoice choice="Horn Nathan K5LA"/>
+				<enumChoice choice="Hancock 3 Chime"/>
+				<enumChoice choice="Southern 6 Chime"/>
+				<enumChoice choice="Wabash 6 Chime"/>
+				<enumChoice choice="Santa Fe 6 Chime"/>
+				<enumChoice choice="NW single chime short bell"/>
+				<enumChoice choice="Great Northern 5 Chime"/>
+				<enumChoice choice="Nathan K5LA"/>
 				</enumVal>
 				<label>Default Whistle Set</label>
 			</variable>
@@ -1223,6 +1231,10 @@
 			<variable item="Sound Group 5 Checkbox 1" CV="T2CV.4.12" default="0" mask="XXXXXXXXXXXXXXXV" tooltip="very early decoders only">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
 				<label>Cam enable early</label>
+			</variable>
+			<variable item="Sound Setting 11" CV="T2CV.4.15" default="1"  tooltip="Divides the BEMF value by n^2, higher the number the lower the chuff volume/change from loads">
+				<decVal max="8"/>
+				<label>BEMF sensitivity</label>
 			</variable>
 			<xi:include href="http://jmri.org/xml/decoders/tcs/wowSteamCV.xml"/>
 		</variables>

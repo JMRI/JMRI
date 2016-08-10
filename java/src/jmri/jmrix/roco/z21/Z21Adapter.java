@@ -56,8 +56,6 @@ public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
         // start operation
         this.getSystemConnectionMemo().setTrafficController(packets);
         this.getSystemConnectionMemo().configureManagers();
-
-        jmri.jmrix.roco.z21.ActiveFlag.setActive();
     }
 
     @Override

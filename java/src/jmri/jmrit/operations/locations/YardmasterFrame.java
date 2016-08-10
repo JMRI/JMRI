@@ -29,7 +29,7 @@ public class YardmasterFrame extends OperationsFrame {
 
             // build menu
             JMenuBar menuBar = new JMenuBar();
-            JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+            JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
             toolMenu.add(new YardmasterByTrackAction(location));
             JMenuItem print = toolMenu.add(new PrintSwitchListAction(Bundle.getMessage("MenuItemPrint"), location,
                     false));

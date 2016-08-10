@@ -1,4 +1,3 @@
-// CarLoads.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Represents the loads that cars can have.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2014
- * @version $Revision$
  */
 public class CarLoads extends RollingStockAttribute {
 

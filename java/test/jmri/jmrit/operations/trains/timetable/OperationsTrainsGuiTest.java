@@ -10,7 +10,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.trains.TrainManager;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

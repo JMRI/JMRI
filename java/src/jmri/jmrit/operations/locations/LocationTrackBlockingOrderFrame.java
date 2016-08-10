@@ -27,10 +27,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LocationTrackBlockingOrderFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -820196357214001064L;
     LocationTrackBlockingOrderTableModel trackModel = new LocationTrackBlockingOrderTableModel();
     JTable trackTable = new JTable(trackModel);
     JScrollPane trackPane = new JScrollPane(trackTable);
@@ -101,7 +97,7 @@ public class LocationTrackBlockingOrderFrame extends OperationsFrame implements 
 
         // build menu
 //        JMenuBar menuBar = new JMenuBar();
-//        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+//        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
 //        menuBar.add(toolMenu);
 //        setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_TrackBlockingOrder", true); // NOI18N

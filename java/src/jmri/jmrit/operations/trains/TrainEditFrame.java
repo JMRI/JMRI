@@ -1,6 +1,7 @@
 // TrainsEditFrame.java
 package jmri.jmrit.operations.trains;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
@@ -358,7 +359,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new TrainEditBuildOptionsAction(Bundle.getMessage("MenuItemBuildOptions"), this));
         toolMenu.add(new TrainLoadOptionsAction(Bundle.getMessage("MenuItemLoadOptions"), this));
         toolMenu.add(new TrainRoadOptionsAction(Bundle.getMessage("MenuItemRoadOptions"), this));
@@ -880,6 +881,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         if (route != null) {
             if (!route.getStatus().equals(Route.OKAY)) {
                 textRouteStatus.setText(route.getStatus());
+                textRouteStatus.setForeground(Color.RED);
             }
             List<RouteLocation> routeList = route.getLocationsBySequenceList();
             for (int i = 0; i < routeList.size(); i++) {

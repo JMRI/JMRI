@@ -324,6 +324,8 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        // make large enough to easily move
+        setMinimumSize(new Dimension(250, 175));
         pack();
     }
 
@@ -358,6 +360,7 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        setMinimumSize(new Dimension(250, 175));
         pack();
     }
 

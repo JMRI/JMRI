@@ -40,9 +40,9 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(XNetTrafficControllerTest.class));
         suite.addTest(new TestSuite(XNetTrafficRouterTest.class));
         suite.addTest(new TestSuite(XNetSystemConnectionMemoTest.class));
-        suite.addTest(new TestSuite(XNetThrottleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XNetThrottleTest.class));
         suite.addTest(new TestSuite(XNetConsistManagerTest.class));
-        suite.addTest(new TestSuite(XNetConsistTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XNetConsistTest.class));
         suite.addTest(new TestSuite(XNetInitializationManagerTest.class));
         suite.addTest(new TestSuite(XNetProgrammerTest.class));
         suite.addTest(new TestSuite(XNetProgrammerManagerTest.class));

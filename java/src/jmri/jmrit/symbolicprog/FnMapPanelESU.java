@@ -79,10 +79,14 @@ import org.slf4j.LoggerFactory;
  * fly" by this class. Up to 5,120 variables are needed to populate the function
  * map. It is more efficient to create these in code than to use XML in the
  * decoder file. <strong>DO NOT</strong> specify them in the decoder file.</dd>
+ * <dd><br>
+ * The "tooltip" &amp; "label" attributes on a fnmapping variable are ignored.
+ * Expanded internationalized tooltips are generated in the code.
+ * </dd>
  * </dl>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Dave Heap Copyright (C) 2014
+ * @author	Dave Heap Copyright (C) 2016
  */
 public class FnMapPanelESU extends JPanel {
 
@@ -378,7 +382,7 @@ public class FnMapPanelESU extends JPanel {
 
                             // generate a fullItemName
                             String fullItemName = itemName[item][0];
-                            if (itemLabel[item] != "") {
+                            if ( !itemLabel[item].equals("")) {
                                 fullItemName = fullItemName + (": " + itemLabel[item]);
                             }
 
@@ -391,7 +395,7 @@ public class FnMapPanelESU extends JPanel {
                                 varComp = (JComponent) (_varModel.getRep(iVar, ""));
                             }
                             VariableValue var = _varModel.getVariable(iVar);
-                            varComp.setToolTipText(PaneProgPane.addCvDescription(("Row " + Integer.toString(iRow + 1) + ", " + fullItemName), var.getCvDescription(), var.getMask()));
+                            varComp.setToolTipText(PaneProgPane.addCvDescription((Bundle.getMessage("FnMapESURow") + " " + Integer.toString(iRow + 1) + ", " + fullItemName), var.getCvDescription(), var.getMask()));
                             if (cvObject == null) {
                                 cvObject = cvModel.allCvMap().get(thisCV); // case of new loco
                             }
@@ -463,7 +467,7 @@ public class FnMapPanelESU extends JPanel {
             saveAt(currentRow++, currentCol, new JLabel(Integer.toString(iRow + 1)));
         }  // end row loop
 
-        saveAt(ROW_LABEL_ROW, currentCol, new JLabel("Row"));
+        saveAt(ROW_LABEL_ROW, currentCol, new JLabel(Bundle.getMessage("FnMapESURow")));
         // tally used columns
         int currentBlock = -1;
         int blockStart = 0;

@@ -1,4 +1,3 @@
-// LogAction.java
 package jmri.jmrit.log;
 
 import java.awt.event.ActionEvent;
@@ -10,14 +9,8 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a LogFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
  */
 public class LogAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2009661892835759238L;
 
     public LogAction(String s) {
         super(s);

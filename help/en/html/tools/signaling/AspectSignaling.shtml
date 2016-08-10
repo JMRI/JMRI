@@ -1,248 +1,394 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<title>JMRI: Aspect Signaling</title>
-<meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-<meta name="Date.Modified" content="20151002"/>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: Aspect Signaling</title>
+  <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
+  <meta name="Date.Modified" content="20151002"><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div id="mainContent">
+    <div id="mainContent">
+      <h1>JMRI: Aspect Signaling</h1>
 
+      <p class="subtitle">Controlling model signals in a
+      prototypical manner</p><a href="images/Rule282.png"><img src=
+      "images/Rule282.png" height="241" width="159" align=
+      "right"></a> Protoypical signal systems present "<a href=
+      "index.shtml#aspect">Aspects</a>" to the engineer to tell him
+      how to run his train. The "Stop" aspect, for example, is
+      pretty simple: "Stop the train". The "Approach medium" aspect
+      indicates something more complicated: "Proceed approaching
+      next signal at medium speed". Each aspect has an associated
+      "indication", which is usually codified in a railroad's Rule
+      Book.
 
-<h1>JMRI: Aspect Signaling</h1>
-<p class=subtitle>
-Controlling model signals in a prototypical manner
-</p>
+      <p>The picture to the right shows an example, Rule 282 from
+      the 1946 AAR rule book (Aspect: Approach Medium).</p>
 
-<a href="images/Rule282.png">
-    <img src="images/Rule282.png" height="241" width="159" align="right">
-</a>
-	Protoypical signal systems present "<a href="index.shtml#aspect">Aspects</a>" to the engineer
-to tell him how to run his train. 
-The "Stop" aspect, for example, is pretty simple: "Stop the train".  
-The "Approach medium" aspect indicates something more complicated:
-"Proceed approaching next signal at medium speed".  
-Each aspect has an associated "indication", which is usually 
-	codified in a railroad's Rule Book.
-	<p>The picture to the right shows an example, Rule 282 from the 1946 AAR rule book (Aspect: Approach Medium).
+      <h2>JMRI Support for Aspect Signaling</h2>
 
-<h2>JMRI Support for Aspect Signaling</h2>
-	<p>A collection of plain instructions let you set up <a href="SignalingSetup.shtml">Signaling in 7 Quick Steps</a>.</p>
-	<p>Aspect Signaling is supported in JMRI using three of the Signaling Tools:</p>
-		
-<ul>
-<li><b><a href="SignalMasts.shtml">Signal Mast</a></b> objects represent an entire signal with one or more Signal Heads. A Signal Mast
-can operate all its Heads, as required to do full prototypical signaling based on aspects. When its Aspect is set to 
-	e.g. "Approach medium", JMRI handles the layout communication needed to make the signal on the layout display the right colors.<br/>
-<a href="../../../package/jmri/jmrit/beantable/SignalMasts.png">
-   <img src="../../../package/jmri/jmrit/beantable/SignalMasts.png" 
-        width="338" height="86" align="right"></a>
-Signal Masts are configured through the
-<a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Mast Table</a>. You add new ones with the "Add..."  button
-below the table, which takes you to the <a href="../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">"Add Signal Mast" window</a>.
-There you specify what kind of signaling system is to be used (see <a href="#systems">the list below</a>),
-the specific signal type eg. "double searchlight" or "double head dwarf" and which Signal Heads this Mast is going to drive.
-<br/>
-	You can add a Signal Mast icon in the Panel Editor by right clicking at any location and choosing "Add item > Signal Mast".<br/>
-	In Layout Editor enter the Signal Mast address and shift click on a turnout or anchor point on the panel where you want to place a Signal. The Signal Mast icon will display the images specified in the appearance definition for that particular Signal Mast type and system. The Signal icons displayed on your panel are part of a Signal System and they can't be changed individually by the user like Turnout icons.<br/> 
-	Image on the right: Rule 281 Signal Icons from the AAR-2 Signal System.	<!-- icons from AAR-2 xml appearance definition xml March 2014 --> <a href="http://jmri.org/xml/signals/AAR-1946/aspects.xml"><img src="images/AAR-2Clear.png" width="187" height="187" align="right" border="1"></a><br/>&nbsp;
-	</li> 
-<li><b><a href="SignalGroups.shtml">Signal Groups</a></b> are used to define a number of Signal Heads, where only one Signal Head can be illuminated at any given time, depending upon the state of the associated Signal Mast and a set of conditions.<br/>
-	Signal Groups would be used where additional indicators are used to support the main Signal Mast, such as Junction, Route or Speed displays. These indicators provide additional information to the driver (US: Engineer) that is not given by the main Signal Mast. Such indicators are frequently seen in European and UK signaling.</li>
-	
-<li>The <b><a href="SignalMastLogic.shtml">Signal Mast Logic</a></b> tool allows the Signaling Logic to be built up as pairs of conditionals between Signal Masts on the layout.
-The Signal Mast Logic will use the states of Blocks, Turnouts, Sensors and adjacent Signal Masts to determine what Aspect a Signal Mast should be displaying.
-		<br/>
-If the layout has been drawn up using the Layout Editor and Signal Masts have been placed on the panel using the various tools, then it is possible for all the Signal Mast Logic to be dynamically built, with little user intervention. For panels created with Control Panel Editor some of this information has to be entered manually.</li>
-	</ul>
-	<p><b><a href="SignalHeads.shtml">Signal Head</a></b> objects in JMRI are not aware of their position on a mast and the Signaling System they are part of, so as individual objects they can't show Signal Aspects. Individually they can only be set to specific <a href="index.shtml#appearance">Appearances</a> (colors), either from the Signal Head Table or via <a href="#logix">Logix</a>.</p>
+      <p>A collection of plain instructions let you set up <a href=
+      "SignalingSetup.shtml">Signaling in 7 Quick Steps</a>.</p>
 
-	<h3>How does it work?</h3>
-<p>In short, a set of files for the selected Signaling System contains the basic code to determine which combinations are available in the Signal Mast Logic tool.</br>
-In the xml/signals directory located in the JMRI program directory, there is a directory for every Signaling System that has been defined, with one "aspects.xml" file which lists all of the possible Aspects plus a number of "appearance..." files (i.e. <i>appearance-one-searchlight.xml</i>), each of which describes the possible Aspects based on one Signal Mast type. These essentially say "if the next signal has an 'x' aspect, then the current one needs to show a 'y' aspect" (<a href="DefineNewAspects.shtml">more details</a>).
-	</br>
-The Signal Mast Logic table is then used to check which Signal Mast pairs are active in the Signal Mast Logic and whether the Aspect should <i>not</i> be 'Stop'. This is done by looking at
-Turnout positions (if applicable), Block occupancy and - possibly - Sensors. On the Signal Masts tab you might even specify additional Signal Masts to watch, e.g. for an Interlocking. For any
-Signal Mast, there can be 1 to n destination Signal Masts, one of which is active based on the positions of Turnouts connecting the protected Blocks.
-	</br>
-If everything is OK, then the appropriate "appearance..." file for this Signal Mast type will be used by the Signal Mast Logic to assign a new Aspect based on the Aspect of
-the next Signal Mast.
-	</br>
-This covers the basic workings in a very high level overview. (Thanks to Dave Sand)</p>
+      <p>Aspect Signaling is supported in JMRI using three of the
+      Signaling Tools:</p>
 
-	<img src="images/Panel1Stop.png" width="185" height="135" border="1"> <img src="images/Panel2Approach.png" width="185" height="135" border="1"><br/>
-Signal 4B showing the "Stop" Aspect when sensor OD1 is Active (at left) and "Approach Diverging" when the block is empty (at right).
-	
-<a id="systems"><h2>Available Signaling Systems</h2></a>
-<!-- checked for JMRI version 3.6, April 2014 -->
-JMRI users have provided the following pre-defined Aspect Signaling Systems:
-<dl>
-<dt><a href="../../../../../xml/signals/basic/index.shtml">Basic</a>
-    <dd>A non-prototypical set of aspects and appearances that most 
-        model railroaders will understand easily.
-		
-<dt><a href="../../../../../xml/signals/AAR-1946/index.shtml">AAR-1946</a>
-    <dd>American Association of Railroads 1946 rule book
+      <ul>
+        <li><b><a href="SignalMasts.shtml">Signal Mast</a></b>
+        objects represent an entire signal with one or more Signal
+        Heads. A Signal Mast can operate all its Heads, as required
+        to do full prototypical signaling based on aspects. When
+        its Aspect is set to e.g. "Approach medium", JMRI handles
+        the layout communication needed to make the signal on the
+        layout display the right colors.<br>
+        <a href=
+        "../../../package/jmri/jmrit/beantable/SignalMasts.png"><img src="../../../package/jmri/jmrit/beantable/SignalMasts.png"
+        width="338" height="86" align="right"></a> Signal Masts are
+        configured through the <a href=
+        "../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">
+        Signal Mast Table</a>. You add new ones with the "Add..."
+        button below the table, which takes you to the <a href=
+        "../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">
+        "Add Signal Mast" window</a>. There you specify what kind
+        of signaling system is to be used (see <a href=
+        "#systems">the list below</a>), the specific signal type
+        eg. "double searchlight" or "double head dwarf" and which
+        Signal Heads this Mast is going to drive.<br>
+        You can add a Signal Mast icon in the Panel Editor by right
+        clicking at any location and choosing "Add item &gt; Signal
+        Mast".<br>
+        In Layout Editor enter the Signal Mast address and shift
+        click on a turnout or anchor point on the panel where you
+        want to place a Signal. The Signal Mast icon will display
+        the images specified in the appearance definition for that
+        particular Signal Mast type and system. The Signal icons
+        displayed on your panel are part of a Signal System and
+        they can't be changed individually by the user like Turnout
+        icons.<br>
+        Image on the right: Rule 281 Signal Icons from the AAR-2
+        Signal System. 
+        <!-- icons from AAR-2 xml appearance definition xml March 2014 -->
+         <a href=
+        "http://jmri.org/xml/signals/AAR-1946/aspects.xml"><img src="images/AAR-2Clear.png"
+        width="187" height="187" align="right" border=
+        "1"></a><br></li>
 
-<dt><a href="../../../../../xml/signals/Amtrak-2010/index.shtml">Amtrak-2010</a>
-    <dd>Amtrak Northeast Corridor Color Position Light signals
+        <li><b><a href="SignalGroups.shtml">Signal Groups</a></b>
+        are used to define a number of Signal Heads, where only one
+        Signal Head can be illuminated at any given time, depending
+        upon the state of the associated Signal Mast and a set of
+        conditions.<br>
+        Signal Groups would be used where additional indicators are
+        used to support the main Signal Mast, such as Junction,
+        Route or Speed displays. These indicators provide
+        additional information to the driver (US: Engineer) that is
+        not given by the main Signal Mast. Such indicators are
+        frequently seen in European and UK signaling.</li>
 
-<dt><a href="../../../../../xml/signals/B&O-1957/index.shtml">B&amp;O-1957</a>
-    <dd>1957 B&amp;O
-    <br>
-    (<i>Incomplete, not finished as of JMRI 3.10.</i>)
+        <li>The <b><a href="SignalMastLogic.shtml">Signal Mast
+        Logic</a></b> tool allows the Signaling Logic to be built
+        up as pairs of conditionals between Signal Masts on the
+        layout. The Signal Mast Logic will use the states of
+        Blocks, Turnouts, Sensors and adjacent Signal Masts to
+        determine what Aspect a Signal Mast should be
+        displaying.<br>
+        If the layout has been drawn up using the Layout Editor and
+        Signal Masts have been placed on the panel using the
+        various tools, then it is possible for all the Signal Mast
+        Logic to be dynamically built, with little user
+        intervention. For panels created with Control Panel Editor
+        some of this information has to be entered manually.</li>
+      </ul>
 
-<dt><a href="../../../../../xml/signals/B&O-2009/index.shtml">B&amp;O-2009</a>
-    <dd>2009 B&amp;O (CSX)
- 
-<dt><a href="../../../../../xml/signals/BN-1989/index.shtml">BN-1989</a>
-    <dd>Burlington Northern Oct. 1989 rule book
+      <p><b><a href="SignalHeads.shtml">Signal Head</a></b> objects
+      in JMRI are not aware of their position on a mast and the
+      Signaling System they are part of, so as individual objects
+      they can't show Signal Aspects. Individually they can only be
+      set to specific <a href=
+      "index.shtml#appearance">Appearances</a> (colors), either
+      from the Signal Head Table or via <a href=
+      "#logix">Logix</a>.</p>
 
-<dt><a href="../../../../../xml/signals/BNSF-1996/index.shtml">BNSF-1996</a>
-    <dd>BNSF Railway 1996 rule book
+      <h3>How does it work?</h3>
 
-<dt><a href="../../../../../xml/signals/BR-2003/index.shtml">BR-2003</a>
-    <dd>British Rail 2003 rule book
+      <p>In short, a set of files for the selected Signaling System
+      contains the basic code to determine which combinations are
+      available in the Signal Mast Logic tool.<br>
+      In the xml/signals directory located in the JMRI program
+      directory, there is a directory for every Signaling System
+      that has been defined, with one "aspects.xml" file which
+      lists all of the possible Aspects plus a number of
+      "appearance..." files (i.e.
+      <i>appearance-one-searchlight.xml</i>), each of which
+      describes the possible Aspects based on one Signal Mast type.
+      These essentially say "if the next signal has an 'x' aspect,
+      then the current one needs to show a 'y' aspect" (<a href=
+      "DefineNewAspects.shtml">more details</a>).<br>
+      The Signal Mast Logic table is then used to check which
+      Signal Mast pairs are active in the Signal Mast Logic and
+      whether the Aspect should <i>not</i> be 'Stop'. This is done
+      by looking at Turnout positions (if applicable), Block
+      occupancy and - possibly - Sensors. On the Signal Masts tab
+      you might even specify additional Signal Masts to watch, e.g.
+      for an Interlocking. For any Signal Mast, there can be 1 to n
+      destination Signal Masts, one of which is active based on the
+      positions of Turnouts connecting the protected Blocks.<br>
+      If everything is OK, then the appropriate "appearance..."
+      file for this Signal Mast type will be used by the Signal
+      Mast Logic to assign a new Aspect based on the Aspect of the
+      next Signal Mast.<br>
+      This covers the basic workings in a very high level overview.
+      (Thanks to Dave Sand)</p><img src="images/Panel1Stop.png"
+      width="185" height="135" border="1"> <img src=
+      "images/Panel2Approach.png" width="185" height="135" border=
+      "1"><br>
+      Signal 4B showing the "Stop" Aspect when sensor OD1 is Active
+      (at left) and "Approach Diverging" when the block is empty
+      (at right). <a id="systems" name="systems"></a>
 
-<dt><a href="../../../../../xml/signals/CFL-2014/index.shtml">CFL-2014</a>
-    <dd>Current (2014) Luxemburg railways (Societ&eacute; Nationale des Chemins de Fer Luxembourgeois)
+      <h2>Available Signaling Systems</h2>
+      <!-- checked for JMRI version 3.6, April 2014 -->
+      JMRI users have provided the following pre-defined Aspect
+      Signaling Systems:
 
-<dt><a href="../../../../../xml/signals/CROR-2008/index.shtml">CROR-2008</a>
-    <dd>Transport Canada (TC) 2008 O-0-93 rule book
+      <dl>
+        <dt><a href=
+        "../../../../../xml/signals/basic/index.shtml">Basic</a></dt>
 
-<dt><a href="../../../../../xml/signals/CSX-1998/index.shtml">CSX-1998</a>
-	<dd>CSX Transportation Signal Rules - 281-298, January 1998<br/>
-				(<i>Some errors in aspect mapping, not finished as of JMRI 3.10.</i>)
+        <dd>A non-prototypical set of aspects and appearances that
+        most model railroaders will understand easily.</dd>
 
-<dt><a href="../../../../../xml/signals/DB-HV-1969/index.shtml">DB HV 1969</a>
-	<dd>1969 Deutsche Bundesbahn "Einheitsbauform" Home Signal/Distant signal (Hauptsignal/Vorsignal) system revision<br/>
-		(<i>Missing aspect mapping, not finished as of JMRI 3.10.</i>)
+        <dt><a href=
+        "../../../../../xml/signals/AAR-1946/index.shtml">AAR-1946</a></dt>
 
-<dt><a href="../../../../../xml/signals/GWR-1931/index.shtml">GWR-1931</a>
-    <dd>Great Western Railway 1931 searchlight signals (British)
+        <dd>American Association of Railroads 1946 rule book</dd>
 
-<dt><a href="../../../../../xml/signals/InfraBel-2013/index.shtml">InfraBel-2013</a>
-    <dd>Belgian Railways, taken from Wikipedia, current as of 2013
+        <dt><a href=
+        "../../../../../xml/signals/Amtrak-2010/index.shtml">Amtrak-2010</a></dt>
 
-<dt><a href="../../../../../xml/signals/LMS-1932/index.shtml">LMS-1932</a>
-    <dd>Complete London, Midland and Scottish Railway speed signaling from 1932-1988 (British)
+        <dd>Amtrak Northeast Corridor Color Position Light
+        signals</dd>
 
-		<dt><a href="../../../../../xml/signals/NS-2008/index.shtml">NS-2008</a>
-    <dd>Norfolk Southern Corporation Operating rules book (NORAC)
+        <dt><a href=
+        "../../../../../xml/signals/B&amp;O-1957/index.shtml">B&amp;O-1957</a></dt>
 
-	<dt><a href="../../../../../xml/signals/NYCS-1937/index.shtml">NYCS-1937</a>
-    <dd>New York Central System 1937 rule book
-		    <br>
-    (<i>Missing aspect mapping, not finished as of JMRI 3.10.</i>)
+        <dd>1957 B&amp;O<br>
+        (<i>Incomplete, not finished as of JMRI 3.10.</i>)</dd>
 
-		<dt><a href="../../../../../xml/signals/NYC-1956/index.shtml">NYC-1956</a>
-    <dd>From the New York Central System publication "Rules of the Operating Department, Effective October 28, 1956."
+        <dt><a href=
+        "../../../../../xml/signals/B&amp;O-2009/index.shtml">B&amp;O-2009</a></dt>
 
-		<dt><a href="../../../../../xml/signals/ProRail-1954/index.shtml">ProRail-1954</a>
-    <dd>1954 Prorail rule book, still in use in 2015 (the Netherlands)
+        <dd>2009 B&amp;O (CSX)</dd>
 
-<dt><a href="../../../../../xml/signals/RG-1965/index.shtml">RG-1965</a>
-    <dd>1965 Rio Grande Rules of the Operating Department
+        <dt><a href=
+        "../../../../../xml/signals/BN-1989/index.shtml">BN-1989</a></dt>
 
-<dt><a href="../../../../../xml/signals/SLSF-1973/index.shtml">SLSF-1973</a>
-    <dd>St. Louis - San Francisco Railroad (Frisco) 1973 rule book
-    <br>(<i>Missing some icons, not finished as of JMRI 3.10.</i>)
+        <dd>Burlington Northern Oct. 1989 rule book</dd>
 
-		<dt><a href="../../../../../xml/signals/SPTCO-1930/index.shtml">SPTCO-1930</a>
-    <dd>Southern Pacific Railway and Transportation Company 1930 rule book
-    
-<dt><a href="../../../../../xml/signals/SPTCO-1960/index.shtml">SPTCO-1960</a>
-    <dd>Southern Pacific Railway and Transportation Company 1960 rule book
+        <dt><a href=
+        "../../../../../xml/signals/BNSF-1996/index.shtml">BNSF-1996</a></dt>
 
-	<dt><a href="../../../../../xml/signals/UP-2008/index.shtml">UP-2008</a>
-    <dd>Union Pacific Railroad 2008 rule book
-    <br>
-</dl>
-	
-	<p>The most current list of Aspect Signal Systems supported in JMRI can be found at <a href="http://jmri.org/xml/signals/">http://jmri.org/xml/signals/</a>.
+        <dd>BNSF Railway 1996 rule book</dd>
 
-	<p>To create your own Signaling System
-Definition follow these <a href="DefineNewAspects.shtml">Instructions</a>.
-If you do create a new definition for another prototype railroad or era, 
-after testing please contribute it back to the JMRI project so we 
-can distribute it with future releases of the project for
-others to use.  Like Decoder Definitions in DecoderPro, the
-more Signal System Definitions we have, the more useful the program
-becomes, and the more people spend time to improve it. We all
-win that way!
+        <dt><a href=
+        "../../../../../xml/signals/BR-2003/index.shtml">BR-2003</a></dt>
 
-<h2>Code Access to Aspect Information</h2>
+        <dd>British Rail 2003 rule book</dd>
 
-<h3><a name="logix">Logix</a></h3>
-	<p>
-Signal Masts can be both tested (in Conditionals) and 
-set (in Actions) via Logix.  When you're editing a Logix Conditional
-or Action, you have to type the Signal Mast name and hit enter/return
-so that the program can look up the available Aspects for that particular
-Signal Mast.
-		
-		<a name="mastscripting"><h3>Scripting</h3></a>	
-<p>
-	A program (in Java or Python) can get access to 
-Aspect information in two ways.  If the code has a reference to a specific Signal Mast &quot;m&quot;, it can use
-<code><pre>
+        <dt><a href=
+        "../../../../../xml/signals/CFL-2014/index.shtml">CFL-2014</a></dt>
+
+        <dd>Current (2014) Luxemburg railways (Societ&eacute;
+        Nationale des Chemins de Fer Luxembourgeois)</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/CROR-2008/index.shtml">CROR-2008</a></dt>
+
+        <dd>Transport Canada (TC) 2008 O-0-93 rule book</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/CSX-1998/index.shtml">CSX-1998</a></dt>
+
+        <dd>CSX Transportation Signal Rules - 281-298, January
+        1998<br>
+        (<i>Some errors in aspect mapping, not finished as of JMRI
+        3.10.</i>)</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/DB-HV-1969/index.shtml">DB HV
+        1969</a></dt>
+
+        <dd>1969 Deutsche Bundesbahn "Einheitsbauform" Home
+        Signal/Distant signal (Hauptsignal/Vorsignal) system
+        revision<br>
+        (<i>Missing aspect mapping, not finished as of JMRI
+        3.10.</i>)</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/GWR-1931/index.shtml">GWR-1931</a></dt>
+
+        <dd>Great Western Railway 1931 searchlight signals
+        (British)</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/InfraBel-2013/index.shtml">InfraBel-2013</a></dt>
+
+        <dd>Belgian Railways, taken from Wikipedia, current as of
+        2013</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/LMS-1932/index.shtml">LMS-1932</a></dt>
+
+        <dd>Complete London, Midland and Scottish Railway speed
+        signaling from 1932-1988 (British)</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/NS-2008/index.shtml">NS-2008</a></dt>
+
+        <dd>Norfolk Southern Corporation Operating rules book
+        (NORAC)</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/NYCS-1937/index.shtml">NYCS-1937</a></dt>
+
+        <dd>New York Central System 1937 rule book<br>
+        (<i>Missing aspect mapping, not finished as of JMRI
+        3.10.</i>)</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/NYC-1956/index.shtml">NYC-1956</a></dt>
+
+        <dd>From the New York Central System publication "Rules of
+        the Operating Department, Effective October 28, 1956."</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/ProRail-1954/index.shtml">ProRail-1954</a></dt>
+
+        <dd>1954 Prorail rule book, still in use in 2015 (the
+        Netherlands)</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/RG-1965/index.shtml">RG-1965</a></dt>
+
+        <dd>1965 Rio Grande Rules of the Operating Department</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/SLSF-1973/index.shtml">SLSF-1973</a></dt>
+
+        <dd>St. Louis - San Francisco Railroad (Frisco) 1973 rule
+        book<br>
+        (<i>Missing some icons, not finished as of JMRI
+        3.10.</i>)</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/SPTCO-1930/index.shtml">SPTCO-1930</a></dt>
+
+        <dd>Southern Pacific Railway and Transportation Company
+        1930 rule book</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/SPTCO-1960/index.shtml">SPTCO-1960</a></dt>
+
+        <dd>Southern Pacific Railway and Transportation Company
+        1960 rule book</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/UP-2008/index.shtml">UP-2008</a></dt>
+
+        <dd>Union Pacific Railroad 2008 rule book<br></dd>
+      </dl>
+
+      <p>The most current list of Aspect Signal Systems supported
+      in JMRI can be found at <a href=
+      "http://jmri.org/xml/signals/">http://jmri.org/xml/signals/</a>.</p>
+
+      <p>To create your own Signaling System Definition follow
+      these <a href="DefineNewAspects.shtml">Instructions</a>. If
+      you do create a new definition for another prototype railroad
+      or era, after testing please contribute it back to the JMRI
+      project so we can distribute it with future releases of the
+      project for others to use. Like Decoder Definitions in
+      DecoderPro, the more Signal System Definitions we have, the
+      more useful the program becomes, and the more people spend
+      time to improve it. We all win that way!</p>
+
+      <h2>Code Access to Aspect Information</h2>
+
+      <h3><a name="logix" id="logix">Logix</a></h3>
+
+      <p>Signal Masts can be both tested (in Conditionals) and set
+      (in Actions) via Logix. When you're editing a Logix
+      Conditional or Action, you have to type the Signal Mast name
+      and hit enter/return so that the program can look up the
+      available Aspects for that particular Signal Mast. <a name=
+      "mastscripting" id="mastscripting"></a></p>
+
+      <h3>Scripting</h3>
+
+      <p>A program (in Java or Python) can get access to Aspect
+      information in two ways. If the code has a reference to a
+      specific Signal Mast "m", it can use</p>
+      <pre style="font-family: monospace;">
    m.getValidAspects()
-</pre></code>
-to get the list of aspect names that this Signal Mast can display.
-The program can then access the Signal System definition with
-<code><pre>
+</pre>to get the list of aspect names that this Signal Mast can
+display. The program can then access the Signal System definition
+with
+      <pre style="font-family: monospace;">
    SignalSystem sys = m.getSignalSystem()
-</pre></code>
-and then enquire about properties of the aspect:
-<code><pre>
+</pre>and then enquire about properties of the aspect:
+      <pre style="font-family: monospace;">
    sys.getProperty("Clear","speed");
-</pre></code>
-where the first argument is the aspect name (use, for example,
-<code>m.getAspect()</code> to obtain the current one on the mast)
-and the second is a specific property.  
-Properties can be defined programmatically via e.g.
-<code>m.setProperty("Clear","speed","69");</code>
-or get loaded automatically from elements in the 
-<a href="DefineNewAspects.shtml">aspect.xml</a>
-file that defines the specific signal system.
+</pre>where the first argument is the aspect name (use, for
+example, <code>m.getAspect()</code> to obtain the current one on
+the mast) and the second is a specific property. Properties can be
+defined programmatically via e.g.
+<code>m.setProperty("Clear","speed","69");</code> or get loaded
+automatically from elements in the <a href=
+"DefineNewAspects.shtml">aspect.xml</a> file that defines the
+specific signal system.
 
-<p>
-In addition to the global properties for an Aspect, there
-can also be local properties to a specific Signal Mast type.
-An example of this is the default icon image:  The image for a 
-two-head Signal Mast is different from that for a one-head Signal Mast,
-even if they both represent "Clear".
-<p>
-To get those:
-<code><pre>
+      <p>In addition to the global properties for an Aspect, there
+      can also be local properties to a specific Signal Mast type.
+      An example of this is the default icon image: The image for a
+      two-head Signal Mast is different from that for a one-head
+      Signal Mast, even if they both represent "Clear".</p>
+
+      <p>To get those:</p>
+      <pre style="font-family: monospace;">
    m.getAppearanceMap().getProperty("Clear","imagelink");
-</pre></code>
-In words, this is saying "Get the Appeance info for this Signal Mast,
-and then check the imagelink property of the Clear aspect".
+</pre>In words, this is saying "Get the Appeance info for this
+Signal Mast, and then check the imagelink property of the Clear
+aspect".
 
-<p>
-Alternatively, if you know the name of the Signal System in use,
-a program can access it directly via the InstanceManager:
-<code><pre>
-   SignalSystem sys = InstanceManager.signalSystemManagerInstance().getSystem("basic");
-</pre></code>
+      <p>Alternatively, if you know the name of the Signal System
+      in use, a program can access it directly via the
+      InstanceManager:</p>
+      <pre style="font-family: monospace;">
+   SignalSystem sys = InstanceManager.getDefault(SignalSystemManager.class).getSystem("basic");
+</pre>
 
-	<p>Back to the <a href="index.shtml">Signaling main help page</a>.
-<!--#include virtual="/Footer" -->
+      <p>Back to the <a href="index.shtml">Signaling main help
+      page</a>. <!--#include virtual="/Footer" --></p>
+    </div>
+  </div>
 </body>
 </html>
-

@@ -153,7 +153,7 @@ Cochez <b> Ajouter Ic&#244;ne de Signal au TCO</b> pour demander que l'ic&#244;n
 outil ne peut placer une ic&#244;ne de signal sur un croisement que si la voie 1 (AC) est
 presque &#224; la verticale ou presque horizontale. Si ce n'est pas le cas, un message est imprim&#233;,
 et vous devez placer l'ic&#244;ne de signal manuellement en utilisant la barre d'outils de l'&#201;diteur de TCO.
-Peu importe</b>, le nom du signal qui est attribu&#233; &#224; la position du croisement .</p>
+Peu importe</b>, le nom du signal qui est attribu&#233; &#224; la position du croisement.</p>
 <p>
 Cochez <b> Configurer Logique</b> pour demander que l'outil mette en place une 
 Logique Signal Simple pour un signal. L'outil permettra de cr&#233;er la logique et 

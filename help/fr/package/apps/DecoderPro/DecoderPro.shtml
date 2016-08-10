@@ -1,17 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!--UpDated by Herv&#233; Blorec 2013-10-08-->
 <html lang="fr">
 <head>
  <TITLE>
-      JMRI: DecoderPro Main Window
+      JMRI: Fen&#234;tre Principale DecoderPro
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <META name="keywords" content="JMRI help preferences">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -24,12 +22,12 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>JMRI: Fen&#234;tre Principale DecoderPro </H1>
+<h1>JMRI: Fen&#234;tre Principale DecoderPro</h1>
 
 La fen&#234;tre principale DecoderPro vous donne acc&#232;s &#224; toutes les
-capacit&#233;s de JMRI.our plus d'informations sur
+capacit&#233;s de JMRI. Pour plus d'informations sur
 DecoderPro lui-m&#234;me, s'il vous pla&#238;t voir
-<a href="../../../manual/index.shtml"> le manuel en ligne DecoderPro </a>.
+<a href="../../../manual/index.shtml"> le manuel en ligne DecoderPro</a>.
 
 <p>
 Aide sur les menus sp&#233;cifiques:
@@ -38,19 +36,22 @@ Aide sur les menus sp&#233;cifiques:
 <li><a href="../../jmri/jmrit/ToolsMenu.shtml">Outils</a>
 <li><a href="../../../html/apps/DecoderPro/Roster.shtml#menu">Liste</a>
 <li><a href="../../jmri/jmrit/display/PanelMenuHelp.shtml">Panneaux</a>
-<li>(Le menu sp&#233;cifique &#224; votre connexion au r&#233;seau appara&#238;t ici))
+<li>(Le menu sp&#233;cifique &#224; votre connexion au r&#233;seau appara&#238;t ici)
 <li><a href="../../../package/jmri/jmrit/DebugMenu.shtml">Debogage</a>
-<li>Fen&#234;tre - Affiche les fen&#234;tres actuellement disponibles
-    <ul> 
-    <li>Minimiser -r&#233;duire la fen&#234;tre actuelle, elle se cache .
-</ul>
+<li>Fen&#234;tre
+    <ul>
+    <li>Affiche les fen&#234;tres actuellement disponibles
+    <li>Minimiser - r&#233;duire la fen&#234;tre actuelle, elle se cache.
+    </ul>
 <li>Aide
   <ul>
-  <li>Aide Fen&#234;tre - Ouvre une page d'aide sp&#233;cifique &#224; la fen&#234;tre courante. Pour la fen&#234;tre principale, c'est cette page.
+  <li>Aide Fen&#234;tre - Ouvre une page d'aide sp&#233;cifique &#224; la fen&#234;tre courante. Pour la fen&#234;tre principale,
+      c'est cette page.
   <li>Aide G&#233;n&#233;rale - Ouvre la page d'aide principale JMRI.
   <li>Licence - Affiche la licence JMRI.
   <li>Localisations - Montre o&#249; les r&#233;pertoires programm JMRI  et les pr&#233;f&#233;rences sont situ&#233;s
-  <li>Contexte - Affiche des informations sur votre configuration de JMRI qui pourraient &#234;tre utiles quand quelqu'un essaie d'aider &#224; r&#233;soudre un probl&#232;me..
+  <li>Contexte - Affiche des informations sur votre configuration de JMRI qui pourraient &#234;tre
+      utiles quand quelqu'un essaie d'aider &#224; r&#233;soudre un probl&#232;me.
   <li>T&#233;l&#233;charger Infos D&#233;bogage -  Ouvre une fen&#234;tre de t&#233;l&#233;chargement d'infos de d&#233;bogage.
   </ul>
 </ul>
@@ -61,8 +62,10 @@ Plus un lien vers l'aide &#224; l'&#233;criture dans un Programmateur Symbolique
 et un bouton Quitter qui termine le programme JMRI.
 
 <p>
-Ceci est la page d'aide apps.DecoderPro.DecoderPro.shtmlT
-<!--#include virtual="/Footer" -->
+Ceci est la page d'aide apps.DecoderPro.DecoderPro.shtml</p>
+
+        <!--#include virtual="/Footer" -->
+       </div>
+      </div>
 </body>
 </html>
-

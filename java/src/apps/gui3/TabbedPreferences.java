@@ -29,7 +29,6 @@ import javax.swing.event.ListSelectionEvent;
 import jmri.swing.PreferencesPanel;
 import jmri.swing.PreferencesSubPanel;
 import jmri.util.FileUtil;
-import jmri.util.ThreadingUtil;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

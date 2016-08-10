@@ -35,7 +35,7 @@ public class StoreXmlAllAction extends StoreXmlConfigAction {
         }
         
         // and finally store
-        boolean results = InstanceManager.configureManagerInstance().storeAll(file);
+        boolean results = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).storeAll(file);
         log.debug(results ? "store was successful" : "store failed");
         if (!results) {
             JOptionPane.showMessageDialog(null,

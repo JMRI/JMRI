@@ -193,7 +193,7 @@ can be adjusted (+/-) by the above <b>Length</b> amount, should that be desirabl
 Likewise, when the Signal indicates a Clear or increased speed from a stopped or reduced speed
 condition, the speed will be ramped up to the allowed or recorded speed. 
 
-<a name="oblockpath"><h3>Columns in Block-Path Tables</h3></a>
+<a name="oblockpath"></a><h3>Columns in Block-Path Tables</h3>
 Each Block in the Occupancy Block Table will have one or more Paths in it.  Pressing the <b>Paths</b> 
 button in a row of the Occupancy Block Table will open this table.  <i>Direction of the path
 is immaterial</i>.  'from' and 'to' do not have to correspond to any particular side
@@ -211,7 +211,7 @@ of the Block; they are just Portal names for the Path that traverses from
         save your configuration file to disk</li> 
 </ul>
 
-<a name="oblockpathturnout"><h3>Columns in Block-Path-Turnout Tables</h3></a>
+<a name="oblockpathturnout"></a><h3>Columns in Block-Path-Turnout Tables</h3>
 If the Path crosses a Turnout, then it is necessary to have the Turnout in the correct position
 in order to traverse the Path.  This table is used to define these settings (if the path does
 not cross any turnouts, this table is left empty). Note there will be lots of these tables, one

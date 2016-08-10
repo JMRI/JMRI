@@ -92,7 +92,7 @@ public class ProfileManager extends Bean {
      * InstanceManager is configured.
      *
      * @return the default ProfileManager.
-     * @deprecated Use {@link #getDefault() }.
+     * @deprecated since 3.11.8. Use {@link #getDefault()} instead.
      */
     @Deprecated
     public static ProfileManager defaultManager() {
@@ -602,6 +602,7 @@ public class ProfileManager extends Bean {
      * When a JMRI application is starting there are eight potential
      * Profile-related states requiring preparation to use profiles:
      * <table>
+     * <caption>Matrix of states determining if migration required.</caption>
      * <tr><th>Profile Catalog</th><th>Profile Config</th><th>App
      * Config</th><th>Action</th></tr>
      * <tr><td>YES</td><td>YES</td><td>YES</td><td>No preparation required -

@@ -39,11 +39,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TrackDestinationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -962898724870308907L;
-
     Track _track = null;
 
     LocationManager locationManager = LocationManager.instance();
@@ -175,7 +170,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 
         // build menu
         // JMenuBar menuBar = new JMenuBar();
-        // _toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        // _toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         // menuBar.add(_toolMenu);
         // setJMenuBar(menuBar);
         initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight500));

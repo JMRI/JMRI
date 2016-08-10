@@ -15,11 +15,6 @@ import javax.swing.AbstractAction;
  */
 public class EditSwitchListTextAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5992026885290650922L;
-
     public EditSwitchListTextAction() {
         this(Bundle.getMessage("TitleSwitchListText"));
     }

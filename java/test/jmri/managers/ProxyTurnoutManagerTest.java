@@ -53,6 +53,18 @@ public class ProxyTurnoutManagerTest extends TestCase {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
+    public void testProvideFailure() {
+        boolean correct = false;
+        try {
+            Turnout t = l.provideTurnout("");
+            Assert.fail("didn't throw");
+        } catch (IllegalArgumentException ex) {
+            correct = true;
+        }
+        Assert.assertTrue("Exception thrown properly", correct);
+        jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for turnout: JT needed JT");
+    }
+
     public void testSingleObject() {
         // test that you always get the same representation
         Turnout t1 = l.newTurnout(getSystemName(getNumToTest1()), "mine");

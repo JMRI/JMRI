@@ -1,32 +1,28 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: IconAdder.shtml 17977 2011-07-18 17:23:46Z zoo  -->
 <!--  UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-31-->
-<HTML LANG="fr">
-<HEAD>
-<TITLE>JMRI: Icon Editor Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<html LANG="fr">
+<head>
+<TITLE>JMRI: Les &#233;diteurs d'Ic&#244;nes</TITLE>
 <META CONTENT="Pete Cressman" NAME="Author">
 <META NAME="keywords" CONTENT="JMRI help Panel Editor">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Les &#233;diteurs d'Ic&#244;nes</H1>
+<h1>Les &#233;diteurs d'Ic&#244;nes</h1>
 
-<H2>Contenu des &#233;diteurs d'Ic&#244;ne</H2>
+<h2>Contenu des &#233;diteurs d'Ic&#244;ne</h2>
 
 <img src="AddPanel.png" align="RIGHT">
 <p> Cinq des &#233;diteurs d'Ic&#244;ne: (Aiguillage Droit, Aiguillage Gauche, Capteur, Signal, Multicapteurs)
@@ -104,35 +100,34 @@ vous utiliserez PanelPro en utilisant dans le menu l'Item <b>Index des Image Sto
 
 <H2>Menus &#233;diteur d'Ic&#244;nes</H2>
 
-<p> Le menu <b>Trouver des Ic&#244;nes</b> contient les &#233;l&#233;ments suivants:
+<p>Le menu <b>Trouver des Ic&#244;nes</b> contient les &#233;l&#233;ments suivants:
 <UL>
-        <LI> <b>Cr&#233;er/Modifier Index des images</b>. Ce menu ouvre une fen&#234;tre o&#249;
+        <LI><b>Cr&#233;er/Modifier Index des images</b>. Ce menu ouvre une fen&#234;tre o&#249;
         vous pouvez organiser les ic&#244;nes dans un sch&#233;ma qui les rend faciles &#224; trouver quand vous voulez
         utilisez un &#233;diteur d'ic&#244;nes. Voir la
          <a href="../catalog/ImageIndex.shtml"> page &#233;diteur d'Index d'Images</a>
-        pour comment utilis&#233; cet &#233;l&#233;ment de menu .</LI>
-       </p>
-        <LI> <b>Recherche de Fichier Syst&#232;me pour les Ic&#244;nes</b>. Cela ouvre un s&#233;lecteur de fichiers o&#249; vous pouvez ouvrir n'importe quel r&#233;pertoire qui a des fichiers image. S&#233;lectionnez n'importe quel r&#233;pertoire vu
+        pour comment utilis&#233; cet &#233;l&#233;ment de menu.</LI>
+        <LI><b>Recherche de Fichier Syst&#232;me pour les Ic&#244;nes</b>. Cela ouvre un s&#233;lecteur de fichiers o&#249; vous pouvez ouvrir n'importe quel r&#233;pertoire qui a des fichiers image. S&#233;lectionnez n'importe quel r&#233;pertoire vu
         par votre ordinateur et une recherche d'ic&#244;nes va commencer. Pour Cela visiter chaque sous/r&#233;pertoire
         dans ce r&#233;pertoire et quand il rencontre l'un des fichiers image, il va ouvrir une
         fen&#234;tre et essayer d'afficher toutes les images qu'il trouve. Remarque: Cela peut prendre <i>
         un certain temps.</i>
-        <p> Selon la quantit&#233; de m&#233;moire qui est n&#233;cessaire pour afficher tous les fichiers, l'une des
-        deux s&#233;quences suivantes d'&#233;v&#233;nements se produiront.</p>
+        <br>
+            Selon la quantit&#233; de m&#233;moire qui est n&#233;cessaire pour afficher tous les fichiers, l'une des
+        deux s&#233;quences suivantes d'&#233;v&#233;nements se produiront.</LI>
         <UL>
-        
-<LI> S'il y a suffisamment de m&#233;moire pour afficher les fichiers, la fen&#234;tre les affiche
+        <LI>S'il y a suffisamment de m&#233;moire pour afficher les fichiers, la fen&#234;tre les affiche
         avec les boutons radio pour ajuster leurs arri&#232;res-plans. En outre, trois
         boutons seront affich&#233;s au-dessus des images - <b>Ajouter au catalogue</b>,
         <b>Poursuivre la Recherche</b> et <b>Annuler</b>.
-        <UL>
-        <LI> L'appui sur <b>Ajouter au catalogue</b> fera de ce r&#233;pertoire un
-        des arbres dans le volet Catalogue. Dans ce cas, vous pouvez ensuite l'utiliser pour
-        s&#233;lectionner les ic&#244;nes pour changer les ic&#244;nes dans l'un des &#233;diteurs d'Ic&#244;ne.</LI>
-        <LI> L'appui sur <b>Poursuivre la Recherche</b> fera continuer la recherche dans le
-        r&#233;pertoire suivant trouv&#233; avec des fichiers image.</LI>
-        <LI> L'appui sur <b>Annuler</b> fermera la fen&#234;tre sans suite.</LI>
-       </UL>
+            <UL>
+            <LI> L'appui sur <b>Ajouter au catalogue</b> fera de ce r&#233;pertoire un
+            des arbres dans le volet Catalogue. Dans ce cas, vous pouvez ensuite l'utiliser pour
+            s&#233;lectionner les ic&#244;nes pour changer les ic&#244;nes dans l'un des &#233;diteurs d'Ic&#244;ne.</LI>
+            <LI> L'appui sur <b>Poursuivre la Recherche</b> fera continuer la recherche dans le
+            r&#233;pertoire suivant trouv&#233; avec des fichiers image.</LI>
+            <LI> L'appui sur <b>Annuler</b> fermera la fen&#234;tre sans suite.</LI>
+           </UL>
        </LI>
         <LI> S'il n'y a pas assez de m&#233;moire pour afficher tous les fichiers image trouv&#233;s dans le
         r&#233;pertoire, un message indiquera le nombre de fichiers qui peut &#234;tre affich&#233;. Pressez
@@ -141,20 +136,21 @@ vous utiliserez PanelPro en utilisant dans le menu l'Item <b>Index des Image Sto
         ou copier celles que vous voulez dans un autre r&#233;pertoire. Encore une fois pressez <b>OK</b>
         et la fen&#234;tre affichera ce qu'elle peut. Dans ce cas, les trois boutons
         sont <b>Voir Plus</b>, <b>Poursuivre la Recherche</b> et <b>Annuler</b>.
-        <UL>
-        <LI> L'appui sur <b>Voir Plus</b> affiche le prochain groupe de fichiers image
-        &#224; partir du r&#233;pertoire qu'elle est capable d'afficher.</LI>
-        <LI> L'appui sur <b>Poursuivre la Recherche</b> fera poursuivre la recherche sur le
-        r&#233;pertoire suivant trouv&#233; avec des fichiers image.</LI>
-        L'appui sur <LI> <b>Annuler</b> ferme la fen&#234;tre sans suite.</LI>
+            <UL>
+            <LI> L'appui sur <b>Voir Plus</b> affiche le prochain groupe de fichiers image
+            &#224; partir du r&#233;pertoire qu'elle est capable d'afficher.</LI>
+            <LI> L'appui sur <b>Poursuivre la Recherche</b> fera poursuivre la recherche sur le
+            r&#233;pertoire suivant trouv&#233; avec des fichiers image.</LI>
+            L'appui sur <LI> <b>Annuler</b> ferme la fen&#234;tre sans suite.</LI>
+           </UL>
+       Remarque ce dernier cas se produit g&#233;n&#233;ralement lorsque vous ouvrez
+        un r&#233;pertoire d'album de photos important.</LI>
        </UL>
-       <p> Remarque ce dernier cas se produit g&#233;n&#233;ralement lorsque vous ouvrez
-        un r&#233;pertoire d'album de photos important .</LI>
-       </UL>
-        <p> Ceci est une caract&#233;ristique a utilis&#233; avec parcimonie, mais de nombreuses ic&#244;nes int&#233;ressantes peuvent
+</UL>
+
+<p>Ceci est une caract&#233;ristique a utilis&#233; avec parcimonie, mais de nombreuses ic&#244;nes int&#233;ressantes peuvent
         &#234;tre trouv&#233;es, en particulier celles mises en cache par le navigateur. Vous pourriez avoir 
 un emploi pour elles.
-</UL>
       
 <H3>Faire de Nouvelles Ic&#244;nes Disponibles pour le Panneau</H3>
 
@@ -173,25 +169,29 @@ disponibles pour l'&#233;diteur de Panneau.</P>
          sous la rubrique "Annuaire Pr&#233;f&#233;rences" dans le Catalogue d'ic&#244;ne.</LI>
 </UL>
 
-<H3>Changer les ic&#244;nes par d&#233;faut </H3>
+<H3>Changer les ic&#244;nes par d&#233;faut</H3>
 
-<P> Les ic&#244;nes affich&#233;es lorsque vous ouvrez un &#233;diteur d'ic&#244;nes sont les ic&#244;nes par d&#233;faut. Vous pouvez
+<P>Les ic&#244;nes affich&#233;es lorsque vous ouvrez un &#233;diteur d'ic&#244;nes sont les ic&#244;nes par d&#233;faut. Vous pouvez
 modifier ces param&#232;tres par d&#233;faut par des ic&#244;nes stock&#233;es de votre choix pour l'affichage des ic&#244;nes par d&#233;faut pour chaque &#233;diteur d'Ic&#244;nes. </P>
 
 <UL>
          <LI> Apr&#232;s avoir modifi&#233; les ic&#244;nes en les faisant glisser les ic&#244;nes depuis le "volet catalogue" et
           en les d&#233;posant sur les ic&#244;nes par d&#233;faut, utilisez l'"Index Image Stock&#233;es" dans l'&#233;l&#233;ment de menu sous
           le menu "Fichier" sur la fen&#234;tre de l'&#233;diteur de Panneau. </LI>
-
          <LI> Alternativement, si vous fermez l'&#233;diteur d'Ic&#244;ne, vous serez invit&#233; &#224; un dialogue
          vous demandant si vous souhaitez enregistrer ces choix d'ic&#244;ne comme vos choix par d&#233;fauts. Ce dialogue 
          s'affiche &#233;galement si des modifications ont &#233;t&#233; apport&#233;es &#224; l'Index Image. La bo&#238;te de dialogue pr&#233;sente trois
          options:
          <UL>
-                 <LI> <b>Oui</b> -. Enregistrer les modifications qui ont &#233;t&#233; faites pour les ic&#244;nes par d&#233;faut ou l'index d'images </LI>    <LI> <b> Non</b> -. Et ne montrent plus d'invite sur les changements </LI>
-                 <LI> <b>Annuler</b> -. Pas maintenant, mais me demander plus tard </LI>
-         </Ul> </LI></UL>
+             <LI> <b>Oui</b> - Enregistrer les modifications qui ont &#233;t&#233; faites pour les ic&#244;nes par d&#233;faut ou l'index d'images </LI>
+             <LI> <b> Non</b> - Et ne montrent plus d'invite sur les changements </LI>
+             <LI> <b>Annuler</b> - Pas maintenant, mais me demander plus tard</LI>
+         </Ul>
+    </LI>
+</UL>
 
 <!--#include virtual="/Footer" -->
-</BODY>
-</HTML>pas 
+    </div>
+  </div>
+</body>
+</html>

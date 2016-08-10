@@ -7,7 +7,7 @@ package jmri.web.servlet.panel;
 import java.util.List;
 import javax.swing.JFrame;
 import jmri.configurexml.ConfigXmlManager;
-import jmri.jmris.json.JSON;
+import jmri.server.json.JSON;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import org.jdom2.Document;

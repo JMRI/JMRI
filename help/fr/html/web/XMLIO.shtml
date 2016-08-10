@@ -2,13 +2,11 @@
 <!-- Translated by Blorec Herv&#233; le 2012-01-23-->
 <html lang="fr">
 <head>
-<!-- Copyright 2008 -->
-<!-- $Id: XMLIO.shtml 21598 2012-11-07 19:44:52Z mstevetodd  -->
 <!-- Translated by Herv&#233; Blorec 2013-10-08 -->
 <title>JMRI: XML IO Servlet</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -18,7 +16,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -34,8 +32,8 @@ Le servlet vit dans le paquet
 , et fournit un acc&#232;s Web au
 <a href="http://jmri.org/JavaDoc/doc/jmri/web/xmlio/package-summary.html"> JMRI XML IO paquet</a>.
 Par d&#233;faut, le serveur web JMRI enverra tout URL qui commence par/xmlio &#224; ce servlet. Il liste tous les
-&#233;l&#233;ments connus d'un type sp&#233;cifi&#233;, accepte des changements de la valeur/&#233;tat ​​des &#233;l&#233;ments, et r&#233;pond avec
-valeur actuelle/&#233;tat ​​des &#233;l&#233;ments. Si envoy&#233; une liste d'&#233;l&#233;ments avec des valeurs actuelles, il "surveillera" les changements
+&#233;l&#233;ments connus d'un type sp&#233;cifi&#233;, accepte des changements de la valeur/&#233;tat des &#233;l&#233;ments, et r&#233;pond avec
+valeur actuelle/&#233;tat des &#233;l&#233;ments. Si envoy&#233; une liste d'&#233;l&#233;ments avec des valeurs actuelles, il "surveillera" les changements
 de tous ces &#233;l&#233;ments, retournant les valeurs nouvelles. </p>
 El&#233;ment types compl&#232;ments support&#233;s :<ul>
 <li>alimentation</li>
@@ -94,8 +92,8 @@ Le sch&#233;ma XML est d&#233;fini dans le
 
 Demande:
 
+<pre style="font-family: monospace;">
 
-<code><pre>
 &lt;xmlio&gt;
   &lt;item&gt;
     &lt;type&gt;turnout&lt;/type&gt;
@@ -110,9 +108,10 @@ Demande:
     &lt;name&gt;power&lt;/name&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</pre></code>
+</pre>
 
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xmlio&gt;
   &lt;item&gt;
     &lt;type&gt;turnout&lt;/type&gt;
@@ -130,7 +129,7 @@ Demande:
     &lt;value&gt;2&lt;/value&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</pre></code>
+</pre>
 
 La "valeur" &#233;l&#233;ment est ins&#233;r&#233;e dans la demande, et puis est
 retourn&#233;e comme r&#233;ponse. Vous pouvez simplement tourner autour de la r&#233;ponse et l'utiliser
@@ -142,16 +141,18 @@ la r&#233;ponse ne sera restitu&#233;e que lorsque l'un ou plusieurs des
 
 Demande:
 
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xmlio&gt;
   &lt;list&gt;
     &lt;type&gt;sensor&lt;/type&gt;
   &lt;/list&gt;
 &lt;/xmlio&gt;
-</pre></code>
+</pre>
 
 R&#233;ponse:
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xmlio&gt;
   &lt;item&gt;
     &lt;type&gt;sensor&lt;/type&gt;
@@ -169,8 +170,7 @@ R&#233;ponse:
     &lt;value&gt;2&lt;/value&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</pre></code>
-</Pre></code>
+</pre>
 
 La r&#233;ponse peut &#234;tre retourn&#233;e et utilis&#233;e comme la prochaine requ&#234;te.
 
@@ -178,7 +178,8 @@ La r&#233;ponse peut &#234;tre retourn&#233;e et utilis&#233;e comme la prochain
 
 Demande:
 
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xmlio&gt;
   &lt;item&gt;
     &lt;type&gt;turnout&lt;/type&gt;
@@ -186,10 +187,11 @@ Demande:
     &lt;set&gt;2&lt;/set&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</pre></code>
+</pre>
 
 R&#233;ponse:
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xmlio&gt;
   &lt;item&gt;
     &lt;type&gt;turnout&lt;/type&gt;
@@ -197,7 +199,7 @@ R&#233;ponse:
     &lt;value&gt;2&lt;/value&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</pre></code>
+</pre>
 
 L'&#233;l&#233;ment "set" de la demande r&#233;sulte de l'&#233;tat
  fix&#233; &#224; la valeur donn&#233;e, et puis est
@@ -213,31 +215,32 @@ soient propag&#233;es compl&#232;tement.
 
 <h3>Contr&#244;le un r&#233;gulateur</h3>
 Demande:
-<code><pre>
-&lt;turnout name="IT12" set="2" /&gt;
-</pre></code>
-R&#233;ponse:
-<code><pre>
-&lt;turnout name="IT12" value="2" /&gt;
-</pre></code>
+<pre style="font-family: monospace;">
 
-Un &#233;l&#233;ment <throttle>
+&lt;turnout name="IT12" set="2" /&gt;
+</pre>
+R&#233;ponse:
+<pre style="font-family: monospace;">
+
+&lt;turnout name="IT12" value="2" /&gt;
+</pre>
+
+Un &#233;l&#233;ment
 peut &#234;tre utilis&#233; pour contr&#244;ler un r&#233;gulateur via le
 ThrottleManager DCC par d&#233;faut. La premi&#232;re utilisation
 alloue le r&#233;gulateur, et tous les post&#233;rieurs utilisent
  les attributs pr&#233;sents:
 
 <code> <pre>
-<xmlio>
-    <throttle>
-        <adresse> 1234</address>
-        <vitesse> 0,75</vitesse>
-        <forward> true</forward>
-        <F3> False</F3>
-   </throttle>
-</Xmlio>
-
-</Pre></code>
+&lt;xmlio&gt;
+    &lt;throttle&gt;
+        &lt;adresse&gt; 1234&lt;/address&gt;
+  &lt;vitesse&gt; 0,75&lt;/vitesse&gt;
+  &lt;forward&gt; true&lt;/forward&gt;
+  &lt;F3&gt; False&lt;/F3&gt;
+   &lt;/throttle&gt;
+&lt;/Xmlio&gt;
+</pre>
 
 Un &#233;l&#233;ment r&#233;gulateur est retourn&#233; inchang&#233;.
 
@@ -248,12 +251,13 @@ Department of Distributed Systems, Universit&#233; d'Ulm,
 "Interactive Video and Remote Control via the World Wide Web",
 dans "Lecture Notes in Computer Science", Springer, Berlin, 1996.
 <br>
-Auparavant dans le volume 7, num&#233;ro 5 de "Märklin Digital Newsletter",
-Dr T Catherall Ed, Septembre/Octobre 1995,
+Auparavant dans le volume 7, num&#233;ro 5 de "M&auml;rklin Digital Newsletter",
+Dr T. Catherall Ed, Septembre/Octobre 1995,
 <a  href="http://web.archive.org/web/*/http://rr-vs.informatik.uni-ulm.de/rr/"> Page r&#233;f&#233;renc&#233;e</a>
 <a href="http://rr.informatik.tu-freiberg.de/index.php?con=home&sel=&lang=eng&js=1&"> r&#233;h&#233;berg&#233;e</a>.
 
-
 <!--#include virtual="/Footer" -->
+  </div>
+  </div>
 </body>
 </html>

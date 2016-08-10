@@ -1,4 +1,3 @@
-// ImportRosterItemAction.java
 package jmri.jmrit.roster;
 
 import java.awt.Component;
@@ -26,16 +25,10 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  * @see jmri.jmrit.roster.AbstractRosterItemAction
  * @see jmri.jmrit.XmlFile
  */
 public class ImportRosterItemAction extends AbstractRosterItemAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7656609516525647086L;
 
     public ImportRosterItemAction(String s, WindowInterface wi) {
         super(s, wi);

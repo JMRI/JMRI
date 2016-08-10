@@ -13,6 +13,7 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new pane file for SoundTraxx Econami                       -->
 <!-- version 2 - Additional items for SoundTraxx Tsunami2                   -->
+<!-- version 2.1 - Removed double display for Trolley Bell Automatic Effects-->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Function Map</name>
   <column>
@@ -817,32 +818,26 @@
 			<griditem gridx="0" gridy="38" anchor="LINE_END">
 				<display item="Extended Function Map Steam Generator" label="Steam Generator"/>
 				<display item="Extended Function Map Blowdown" label="Blowdown"/>
-				<display item="Extended Function Map Trolley Bell" label="Trolley Bell"/>
 			</griditem>
 			<griditem gridx="1" gridy="38" anchor="CENTER">
 				<display item="Steam Generator Automatic Effects - FWDD" label="" format="checkbox"/>
 				<display item="Blowdown Automatic Effects - FWDD" label="" format="checkbox"/>
-				<display item="Trolley Bell Automatic Effects - FWDD" label="" format="checkbox"/>
 			</griditem>
 			<griditem gridx="2" gridy="38" anchor="CENTER">
 				<display item="Steam Generator Automatic Effects - REVD" label="" format="checkbox"/>
 				<display item="Blowdown Automatic Effects - REVD" label="" format="checkbox"/>
-				<display item="Trolley Bell Automatic Effects - REVD" label="" format="checkbox"/>
 			</griditem>
 			<griditem gridx="3" gridy="38" anchor="CENTER">
 				<display item="Steam Generator Automatic Effects - FWDS" label="" format="checkbox"/>
 				<display item="Blowdown Automatic Effects - FWDS" label="" format="checkbox"/>
-				<display item="Trolley Bell Automatic Effects - FWDS" label="" format="checkbox"/>
 			</griditem>
 			<griditem gridx="4" gridy="38" anchor="CENTER">
 				<display item="Steam Generator Automatic Effects - REVS" label="" format="checkbox"/>
 				<display item="Blowdown Automatic Effects - REVS" label="" format="checkbox"/>
-				<display item="Trolley Bell Automatic Effects - REVS" label="" format="checkbox"/>
 			</griditem>
 			<griditem gridx="5" gridy="38" anchor="CENTER">
 				<display item="Steam Generator Automatic Effects - ESTP" label="" format="checkbox"/>
 				<display item="Blowdown Automatic Effects - ESTP" label="" format="checkbox"/>
-				<display item="Trolley Bell Automatic Effects - ESTP" label="" format="checkbox"/>
 			</griditem>
 			<griditem gridx="0" gridy="39" anchor="LINE_END">
 				<display item="Extended Function Map Fuel Loading" label="Fuel Loading"/>

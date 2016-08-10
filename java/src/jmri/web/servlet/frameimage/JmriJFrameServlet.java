@@ -1,7 +1,7 @@
 package jmri.web.servlet.frameimage;
 
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.URL;
+import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.URL;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -14,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -30,7 +31,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
-import jmri.jmris.json.JSON;
+import jmri.server.json.JSON;
 import jmri.jmris.json.JsonUtil;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
@@ -58,7 +59,6 @@ import org.slf4j.LoggerFactory;
  * Brown; may be freely used or adapted.
  *
  * @author Modifications by Bob Jacobsen Copyright 2005, 2006, 2008
- * @version $Revision$
  */
 public class JmriJFrameServlet extends HttpServlet {
 
@@ -215,7 +215,7 @@ public class JmriJFrameServlet extends HttpServlet {
         }
         JmriJFrame frame = null;
         String name = getFrameName(request.getRequestURI());
-        List<String> disallowedFrames = WebServerPreferences.getDefault().getDisallowedFrames();
+        List<String> disallowedFrames = Arrays.asList(WebServerPreferences.getDefault().getDisallowedFrames());
         if (name != null) {
             if (disallowedFrames.contains(name)) {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Frame [" + name + "] not allowed (check Preferences)");
@@ -253,8 +253,8 @@ public class JmriJFrameServlet extends HttpServlet {
     private void doHtml(JmriJFrame frame, HttpServletRequest request, HttpServletResponse response, Map<String, String[]> parameters) throws ServletException, IOException {
         Date now = new Date();
         boolean click = false;
-        boolean useAjax = WebServerPreferences.getDefault().useAjax();
-        boolean plain = WebServerPreferences.getDefault().isPlain();
+        boolean useAjax = WebServerPreferences.getDefault().isUseAjax();
+        boolean plain = WebServerPreferences.getDefault().isSimple();
         String clickRetryTime = Integer.toString(WebServerPreferences.getDefault().getClickDelay());
         String noclickRetryTime = Integer.toString(WebServerPreferences.getDefault().getRefreshDelay());
         boolean protect = false;
@@ -330,7 +330,7 @@ public class JmriJFrameServlet extends HttpServlet {
     }
 
     private void doList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<String> disallowedFrames = WebServerPreferences.getDefault().getDisallowedFrames();
+        List<String> disallowedFrames = Arrays.asList(WebServerPreferences.getDefault().getDisallowedFrames());
         String format = request.getParameter("format"); // NOI18N
         ObjectMapper mapper = new ObjectMapper();
         Date now = new Date();

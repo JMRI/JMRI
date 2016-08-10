@@ -27,8 +27,6 @@ public class DCCppStreamPortController extends jmri.jmrix.AbstractStreamPortCont
         this.getSystemConnectionMemo().setDCCppTrafficController(packets);
 
         new DCCppInitializationManager(this.getSystemConnectionMemo());
-
-        jmri.jmrix.lenz.ActiveFlag.setActive();
     }
 
     public DCCppSystemConnectionMemo getSystemConnectionMemo() {

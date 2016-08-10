@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.util.swing.FontComboUtil class.
  *
  * @author	Matthew Harris Copyright 2011
- * @version	$Revision$
  */
 public class FontComboUtilTest extends TestCase {
 

@@ -168,19 +168,6 @@ public class LenzCommandStationTest extends TestCase {
         Assert.assertEquals("hardware type: 2 software version: 54",c.getVersionString());
     }
 
-    public void testGetHasServiceMode() {
-        // test getting whether or not the CS has service mode.
-        LenzCommandStation c = new LenzCommandStation();
-        Assert.assertTrue(c.getHasServiceMode());  // always true for Lenz 
-                                                   // command stations.
-    }
-
-    public void testGetInServiceMode() {
-        // test whether or not the CS is in service mode.
-        LenzCommandStation c = new LenzCommandStation();
-        Assert.assertFalse(c.getInServiceMode());  // defaults to false.
-    }
-
     public void testIsOpsModePossible() {
         // test getting the command station version string.
         LenzCommandStation c = new LenzCommandStation();

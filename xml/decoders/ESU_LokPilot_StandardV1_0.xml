@@ -98,8 +98,8 @@
     </programming>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable CV="2" default="3" item="Vstart" tooltip="Determines the starting speed, range 1-63">
-        <decVal min="1" max="63"/>
+      <variable CV="2" default="3" item="Vstart" tooltip="Determines the starting speed, range 1-255">
+        <decVal min="1" max="255"/>
         <label>Starting Voltage</label>
         <label xml:lang="it">Volt Partenza</label>
         <label xml:lang="fr">V démarr.</label>
@@ -119,14 +119,14 @@
         <label xml:lang="fr">Décélération (0-255)</label>
         <label xml:lang="de">Bremszeit (0-255)</label>
       </variable>
-      <variable CV="5" default="64" item="Vhigh" tooltip="Maximum speed of locomotive, range 0-64">
-        <decVal min="0" max="64"/>
+      <variable CV="5" default="64" item="Vhigh" tooltip="Maximum speed of locomotive, range 1-64">
+        <decVal min="1" max="64"/>
         <label>Maximum Speed</label>
         <label xml:lang="it">Volt Massimi (0-64):</label>
         <label xml:lang="de">Höchstgeschwindigkeit</label>
       </variable>
       <variable item="Vmid" CV="6" default="22" comment="Range 1-64">
-        <decVal min="0" max="64"/>
+        <decVal min="1" max="64"/>
         <label>Vmid</label>
         <comment>Range 0-64</comment>
       </variable>

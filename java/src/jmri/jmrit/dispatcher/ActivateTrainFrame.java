@@ -1,4 +1,3 @@
-// ActivateTrainFrame.java 
 package jmri.jmrit.dispatcher;
 
 import java.awt.Container;
@@ -49,16 +48,12 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Dave Duchamp Copyright (C) 2009
- * @version	$Revision$
  */
 public class ActivateTrainFrame {
 
     public ActivateTrainFrame(DispatcherFrame d) {
         _dispatcher = d;
         _tiFile = new TrainInfoFile();
-        if (_tiFile == null) {
-            log.error("Failed to create TrainInfoFile object when constructing ActivateTrainFrame");
-        }
     }
 
     static final ResourceBundle rb = ResourceBundle
@@ -71,7 +66,7 @@ public class ActivateTrainFrame {
     private boolean _TrainsFromRoster = true;
     private boolean _TrainsFromTrains = false;
     private ArrayList<ActiveTrain> _ActiveTrainsList = null;
-    private TransitManager _TransitManager = InstanceManager.transitManagerInstance();
+    private TransitManager _TransitManager = InstanceManager.getDefault(jmri.TransitManager.class);
     private String _trainInfoName = "";
 
     // initiate train window variables
@@ -617,6 +612,14 @@ public class ActivateTrainFrame {
             trainName = (String) trainSelectBox.getSelectedItem();
             RosterEntry r = trainBoxList.get(index);
             dccAddress = r.getDccAddress();
+            if (!isAddressFree(r.getDccLocoAddress().getNumber())) {
+                // DCC address is already in use by an Active Train
+                JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
+                        "Error40", dccAddress), Bundle.getMessage("ErrorTitle"),
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             tSource = ActiveTrain.ROSTER;
 
             if (trainTypeBox.getSelectedIndex() != 0
@@ -667,6 +670,13 @@ public class ActivateTrainFrame {
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            if (!isAddressFree(address)) {
+                // DCC address is already in use by an Active Train
+                JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
+                        "Error40", address), Bundle.getMessage("ErrorTitle"),
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             tSource = ActiveTrain.USER;
         }
         int priority = 5;
@@ -702,7 +712,8 @@ public class ActivateTrainFrame {
         at.setDepartureTimeMin(departureTimeMinutes);
         at.setRestartDelay(delayRestartMinutes);
         at.setDelaySensor((jmri.Sensor) delaySensor.getSelectedBean());
-        if (_dispatcher.isFastClockTimeGE(departureTimeHours, departureTimeMinutes) && delayedStart != ActiveTrain.SENSORDELAY) {
+        if ((_dispatcher.isFastClockTimeGE(departureTimeHours, departureTimeMinutes) && delayedStart != ActiveTrain.SENSORDELAY) || 
+                delayedStart==ActiveTrain.NODELAY) {
             at.setStarted();
         }
         at.setRestartDelaySensor((jmri.Sensor) delayReStartSensor.getSelectedBean());
@@ -775,7 +786,8 @@ public class ActivateTrainFrame {
                 for (int i = 0; i < l.size(); i++) {
                     RosterEntry r = l.get(i);
                     String rName = r.titleString();
-                    if (isTrainFree(rName)) {
+                    int rAddr = r.getDccLocoAddress().getNumber();
+                    if (isTrainFree(rName) && isAddressFree(rAddr)) {
                         trainBoxList.add(r);
                         trainSelectBox.addItem(rName);
                     }
@@ -804,9 +816,9 @@ public class ActivateTrainFrame {
                 for (int i = 0; i < trains.size(); i++) {
                     Train t = trains.get(i);
                     if (t != null) {
-                        String rName = t.getName();
-                        if (isTrainFree(rName)) {
-                            trainSelectBox.addItem(rName);
+                        String tName = t.getName();
+                        if (isTrainFree(tName)) {
+                            trainSelectBox.addItem(tName);
                         }
                     }
                 }
@@ -821,6 +833,16 @@ public class ActivateTrainFrame {
         for (int j = 0; j < _ActiveTrainsList.size(); j++) {
             ActiveTrain at = _ActiveTrainsList.get(j);
             if (rName.equals(at.getTrainName())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isAddressFree(int addr) {
+        for (int j = 0; j < _ActiveTrainsList.size(); j++) {
+            ActiveTrain at = _ActiveTrainsList.get(j);
+            if (addr == Integer.parseInt(at.getDccAddress())) {
                 return false;
             }
         }
@@ -927,48 +949,47 @@ public class ActivateTrainFrame {
 
     private void saveTrainInfo(ActionEvent e) {
         TrainInfo info = dialogToTrainInfo();
-        if (info != null) {
-            // get file name
-            String eName = "";
-            eName = JOptionPane.showInputDialog(initiateFrame,
-                    Bundle.getMessage("EnterFileName") + " :", _trainInfoName);
-            if (eName.length() < 1) {
-                JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage("Error25"),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            String fileName = normalizeXmlFileName(eName);
-            _trainInfoName = fileName;
-            // check if train info file name is in use
-            String[] names = _tiFile.getTrainInfoFileNames();
-            if (names.length > 0) {
-                boolean found = false;
-                for (int i = 0; i < names.length; i++) {
-                    if (fileName.equals(names[i])) {
-                        found = true;
-                    }
-                }
-                if (found) {
-                    // file by that name is already present
-                    int selectedValue = JOptionPane.showOptionDialog(initiateFrame,
-                            Bundle.getMessage("Question3", fileName),
-                            Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE, null, new Object[]{Bundle.getMessage("FileYes"),
-                                Bundle.getMessage("FileNo")}, Bundle.getMessage("FileNo"));
-                    if (selectedValue == 1) {
-                        return;   // return without writing if "No" response
-                    }
+
+        // get file name
+        String eName = "";
+        eName = JOptionPane.showInputDialog(initiateFrame,
+                Bundle.getMessage("EnterFileName") + " :", _trainInfoName);
+        if (eName.length() < 1) {
+            JOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage("Error25"),
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String fileName = normalizeXmlFileName(eName);
+        _trainInfoName = fileName;
+        // check if train info file name is in use
+        String[] names = _tiFile.getTrainInfoFileNames();
+        if (names.length > 0) {
+            boolean found = false;
+            for (int i = 0; i < names.length; i++) {
+                if (fileName.equals(names[i])) {
+                    found = true;
                 }
             }
-            // write the Train Info file
-            try {
-                _tiFile.writeTrainInfo(info, fileName);
-            } //catch (org.jdom2.JDOMException jde) { 
-            //	log.error("JDOM exception writing Train Info: "+jde); 
-            //}                           
-            catch (java.io.IOException ioe) {
-                log.error("IO exception writing Train Info: " + ioe);
+            if (found) {
+                // file by that name is already present
+                int selectedValue = JOptionPane.showOptionDialog(initiateFrame,
+                        Bundle.getMessage("Question3", fileName),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null, new Object[]{Bundle.getMessage("FileYes"),
+                            Bundle.getMessage("FileNo")}, Bundle.getMessage("FileNo"));
+                if (selectedValue == 1) {
+                    return;   // return without writing if "No" response
+                }
             }
+        }
+        // write the Train Info file
+        try {
+            _tiFile.writeTrainInfo(info, fileName);
+        } //catch (org.jdom2.JDOMException jde) { 
+        //	log.error("JDOM exception writing Train Info: "+jde); 
+        //}                           
+        catch (java.io.IOException ioe) {
+            log.error("IO exception writing Train Info: " + ioe);
         }
     }
 

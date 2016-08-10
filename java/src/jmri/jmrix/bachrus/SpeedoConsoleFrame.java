@@ -1,4 +1,3 @@
-// SpeedoConsoleFrame.java
 package jmri.jmrix.bachrus;
 
 import java.awt.BorderLayout;
@@ -54,7 +53,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Andrew Crosland Copyright (C) 2010
  * @author	Dennis Miller Copyright (C) 2015
- * @version	$Revision$
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         ThrottleListener,
@@ -247,8 +245,11 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     SpeedoTrafficController tc = null;
     String replyString;
 
-    public SpeedoConsoleFrame() {
+    private SpeedoSystemConnectionMemo _memo = null;
+
+    public SpeedoConsoleFrame(SpeedoSystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
     protected String title() {
@@ -256,7 +257,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     }
 
     public void dispose() {
-        SpeedoTrafficController.instance().removeSpeedoListener(this);
+        _memo.getTrafficController().removeSpeedoListener(this);
         super.dispose();
     }
 
@@ -268,24 +269,19 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
         // What services do we have?
         dccServices = BASIC;
-        if (InstanceManager.programmerManagerInstance() != null
-                && InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
-            prog = InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+        if (InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) != null
+                && InstanceManager.getDefault(jmri.ProgrammerManager.class).isGlobalProgrammerAvailable()) {
+            prog = InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
             dccServices |= PROG;
         }
-        if (false /*jmri.InstanceManager.commandStationInstance() != null*/) {
-            // We'll use the command station to send explicit speed steps
-            commandStation = InstanceManager.commandStationInstance();
-            log.info("Using CommandStation interface for profiling");
-            dccServices |= COMMAND;
-        } else if (InstanceManager.throttleManagerInstance() != null) {
+        if (InstanceManager.getOptionalDefault(jmri.ThrottleManager.class) != null) {
             // otherwise we'll send speed commands
             log.info("Using Throttle interface for profiling");
             dccServices |= THROTTLE;
         }
 
-        if (InstanceManager.powerManagerInstance() != null) {
-            pm = InstanceManager.powerManagerInstance();
+        if (InstanceManager.getOptionalDefault(jmri.PowerManager.class) != null) {
+            pm = InstanceManager.getDefault(jmri.PowerManager.class);
             pm.addPropertyChangeListener(this);
         }
 
@@ -681,7 +677,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         }
 
         // connect to TrafficController
-        tc = SpeedoTrafficController.instance();
+        tc = _memo.getTrafficController();
         tc.addSpeedoListener(this);
 
         // add help menu to window

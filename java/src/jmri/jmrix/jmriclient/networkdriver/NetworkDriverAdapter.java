@@ -33,9 +33,6 @@ public class NetworkDriverAdapter extends JMRIClientPortController {
         control.connectPort(this);
         this.getSystemConnectionMemo().setJMRIClientTrafficController(control);
         this.getSystemConnectionMemo().configureManagers();
-
-        // mark OK for menus
-        jmri.jmrix.jmriclient.ActiveFlag.setActive();
     }
 
     public boolean status() {

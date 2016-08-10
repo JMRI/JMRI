@@ -9,7 +9,7 @@ import javax.jmdns.ServiceInfo;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JViewport;
-import jmri.jmris.json.JSON;
+import jmri.server.json.JSON;
 import jmri.jmrix.AbstractNetworkConnectionConfig;
 import jmri.jmrix.NetworkPortAdapter;
 import jmri.util.zeroconf.ZeroConfClient;
@@ -30,6 +30,7 @@ public class JsonNetworkConnectionConfig extends AbstractNetworkConnectionConfig
      * Constructor for an object being created while loading existing
      * preferences.
      *
+     * @param portAdapter The existing portAdapter
      */
     public JsonNetworkConnectionConfig(NetworkPortAdapter portAdapter) {
         super(portAdapter);

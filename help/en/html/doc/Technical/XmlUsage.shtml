@@ -1,83 +1,75 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-    <title>
- 	JMRI: XML Usage
-    </title>
-    <meta name="author" content="Bob Jacobsen">
-    <meta name="keywords" content="JMRI technical code xml usage">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <!--#include virtual="/Style" -->
+  <title>JMRI: XML Usage</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI technical code xml usage">
+  <!--#include virtual="/Style" -->
 </head>
+
 <body>
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header" -->
 
-	<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h1>JMRI: XML Usage</h1>
-<p>
-JMRI uses XML for a number of purposes: 
-to hold decoder definitions, for its
-<a href="XmlPersistance.shtml">persistance system</a>
-for configuration and panel information,
-and to create parts of the web site from other files.
-This page describes some aspects of this.
+    <div id="mainContent">
+      <h1>JMRI: XML Usage</h1>
 
-<h2>File Format Definitions</h2>
-<p>
-Starting with JMRI 2.9.4
-file formats are specified by XML Schema.
-Those XML Schema are described on a 
-<a href="XmlSchema.shtml">separate page</a>.
+      <p>JMRI uses XML for a number of purposes: to hold decoder
+      definitions, for its <a href=
+      "XmlPersistance.shtml">persistance system</a> for
+      configuration and panel information, and to create parts of
+      the web site from other files. This page describes some
+      aspects of this.</p>
 
-<p>
-Prior to that, DTDs were used. Reading those older files is 
-still supported.
+      <h2>File Format Definitions</h2>
 
-<p>
-Those schema and DTDs need to be available to the program when it
-reads the files, as they define the default values of missing
-attributes and other needed information.
+      <p>Starting with JMRI 2.9.4 file formats are specified by XML
+      Schema. Those XML Schema are described on a <a href=
+      "XmlSchema.shtml">separate page</a>.</p>
 
-<p>
-In the JMRI distributions, these are stored in the 
-<a href="/xml/schema">xml/schema</a> 
-and
-<a href="/xml/DTD">xml/DTD</a> 
-directories. 
+      <p>Prior to that, DTDs were used. Reading those older files
+      is still supported.</p>
 
-<p>
-JMRI writes all files to reference schema using 
-URLs such as "http://jmri.org/xml/schema/layout.xsd".
-When read by the program 
-this will automatically be handled properly by a custom resolver.
-When read by e.g. a web browser, the browser can get the schema from
-the main JMRI web servers when needed.
+      <p>Those schema and DTDs need to be available to the program
+      when it reads the files, as they define the default values of
+      missing attributes and other needed information.</p>
 
-<p>
-The DTDs were located from DOCTYPE definition statements
-in the XML files.  For historical reasons, these can 
-be in several formats. The complicated set of rules for
-mapping those to a directory location is described on a 
-<a href="XmlDtdUsage.shtml">separate page</a>.
+      <p>In the JMRI distributions, these are stored in the
+      <a href="/xml/schema">xml/schema</a> and <a href=
+      "/xml/DTD">xml/DTD</a> directories.</p>
 
-<h2>Other Information</h2>
-<p>
-JMRI XML files can generally be formatted and 
-viewed in web browsers. We control the formatting
-using XSLT transforms.  The process is described on a
-<a href="XmlView.shtml">separate page</a>.
+      <p>JMRI writes all files to reference schema using URLs such
+      as "http://jmri.org/xml/schema/layout.xsd". When read by the
+      program this will automatically be handled properly by a
+      custom resolver. When read by e.g. a web browser, the browser
+      can get the schema from the main JMRI web servers when
+      needed.</p>
 
-<p>
-XML files can be edited with a text editor, but 
-a dedicated editor can help a lot. We provide a 
-<a href="XmlEditors.shtml">list of editors</a>, along with a few comments on each.
+      <p>The DTDs were located from DOCTYPE definition statements
+      in the XML files. For historical reasons, these can be in
+      several formats. The complicated set of rules for mapping
+      those to a directory location is described on a <a href=
+      "XmlDtdUsage.shtml">separate page</a>.</p>
 
-<!--#include virtual="/Footer" -->
+      <h2>Other Information</h2>
 
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+      <p>JMRI XML files can generally be formatted and viewed in
+      web browsers. We control the formatting using XSLT
+      transforms. The process is described on a <a href=
+      "XmlView.shtml">separate page</a>.</p>
+
+      <p>XML files can be edited with a text editor, but a
+      dedicated editor can help a lot. We provide a <a href=
+      "XmlEditors.shtml">list of editors</a>, along with a few
+      comments on each. <!--#include virtual="/Footer" --></p>
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-

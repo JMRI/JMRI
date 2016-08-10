@@ -99,7 +99,6 @@ import org.slf4j.LoggerFactory;
  * required to be able to correctly interpret the use of signal heads.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision$
  */
 public class LayoutTurnout {
 
@@ -456,7 +455,7 @@ public class LayoutTurnout {
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalA1HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -478,7 +477,7 @@ public class LayoutTurnout {
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalA2HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -500,7 +499,7 @@ public class LayoutTurnout {
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalA3HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -522,7 +521,7 @@ public class LayoutTurnout {
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalB1HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -544,7 +543,7 @@ public class LayoutTurnout {
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalB2HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -566,7 +565,7 @@ public class LayoutTurnout {
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalC1HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -588,7 +587,7 @@ public class LayoutTurnout {
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalC2HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -610,7 +609,7 @@ public class LayoutTurnout {
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalD1HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -632,7 +631,7 @@ public class LayoutTurnout {
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalD2HeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -730,7 +729,7 @@ public class LayoutTurnout {
             return;
         }
 
-        SignalMast mast = InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
+        SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast);
         if (mast != null) {
             signalAMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
         } else {
@@ -759,7 +758,7 @@ public class LayoutTurnout {
             return;
         }
 
-        SignalMast mast = InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
+        SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast);
         if (mast != null) {
             signalBMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
         } else {
@@ -788,7 +787,7 @@ public class LayoutTurnout {
             return;
         }
 
-        SignalMast mast = InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
+        SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast);
         if (mast != null) {
             signalCMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
         } else {
@@ -817,7 +816,7 @@ public class LayoutTurnout {
             return;
         }
 
-        SignalMast mast = InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
+        SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast);
         if (mast != null) {
             signalDMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
         } else {
@@ -846,10 +845,10 @@ public class LayoutTurnout {
             return;
         }
 
-        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-        if (sensor != null) {
+        try {
+            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
             sensorANamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
-        } else {
+        } catch (IllegalArgumentException ex)  {
             sensorANamed = null;
         }
     }
@@ -874,10 +873,10 @@ public class LayoutTurnout {
             return;
         }
 
-        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-        if (sensor != null) {
+        try {
+            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
             sensorBNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
-        } else {
+        } catch (IllegalArgumentException ex)  {
             sensorBNamed = null;
         }
     }
@@ -902,10 +901,10 @@ public class LayoutTurnout {
             return;
         }
 
-        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-        if (sensor != null) {
+        try {
+            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
             sensorCNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
-        } else {
+        } catch (IllegalArgumentException ex)  {
             sensorCNamed = null;
         }
     }
@@ -930,10 +929,10 @@ public class LayoutTurnout {
             return;
         }
 
-        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-        if (sensor != null) {
+        try {
+            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
             sensorDNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
-        } else {
+        } catch (IllegalArgumentException ex)  {
             sensorDNamed = null;
         }
     }
@@ -2640,8 +2639,9 @@ public class LayoutTurnout {
             }
             // get new block, or null if block has been removed
             blockName = blockNameField.getText().trim();
-            block = layoutEditor.provideLayoutBlock(blockName);
-            if (block == null) {
+            try {
+                block = layoutEditor.provideLayoutBlock(blockName);
+            } catch (IllegalArgumentException ex) {
                 blockName = "";
             }
             // decrement use if block was already counted
@@ -2674,8 +2674,9 @@ public class LayoutTurnout {
             }
             // get new block, or null if block has been removed
             blockBName = blockBNameField.getText().trim();
-            blockB = layoutEditor.provideLayoutBlock(blockBName);
-            if (blockB == null) {
+            try {
+                blockB = layoutEditor.provideLayoutBlock(blockBName);
+            } catch (IllegalArgumentException ex) {
                 blockBName = "";
             }
             // decrement use if block was already counted
@@ -2708,8 +2709,9 @@ public class LayoutTurnout {
             }
             // get new block, or null if block has been removed
             blockCName = blockCNameField.getText().trim();
-            blockC = layoutEditor.provideLayoutBlock(blockCName);
-            if (blockC == null) {
+            try {
+                blockC = layoutEditor.provideLayoutBlock(blockCName);
+            } catch (IllegalArgumentException ex) {
                 blockCName = "";
             }
             // decrement use if block was already counted
@@ -2742,8 +2744,9 @@ public class LayoutTurnout {
             }
             // get new block, or null if block has been removed
             blockDName = blockDNameField.getText().trim();
-            blockD = layoutEditor.provideLayoutBlock(blockDName);
-            if (blockD == null) {
+            try {
+                blockD = layoutEditor.provideLayoutBlock(blockDName);
+            } catch (IllegalArgumentException ex) {
                 blockDName = "";
             }
             // decrement use if block was already counted
@@ -2820,8 +2823,9 @@ public class LayoutTurnout {
             }
             // get new block, or null if block has been removed
             blockName = blockNameField.getText().trim();
-            block = layoutEditor.provideLayoutBlock(blockName);
-            if (block == null) {
+            try {
+                block = layoutEditor.provideLayoutBlock(blockName);
+            } catch (IllegalArgumentException ex) {
                 blockName = "";
             }
             // decrement use if block was already counted
@@ -2842,8 +2846,9 @@ public class LayoutTurnout {
                 }
                 // get new block, or null if block has been removed
                 blockBName = blockBNameField.getText().trim();
-                blockB = layoutEditor.provideLayoutBlock(blockBName);
-                if (blockB == null) {
+                try {
+                    blockB = layoutEditor.provideLayoutBlock(blockBName);
+                } catch (IllegalArgumentException ex) {
                     blockBName = "";
                 }
                 // decrement use if block was already counted
@@ -2863,8 +2868,9 @@ public class LayoutTurnout {
                 }
                 // get new block, or null if block has been removed
                 blockCName = blockCNameField.getText().trim();
-                blockC = layoutEditor.provideLayoutBlock(blockCName);
-                if (blockC == null) {
+                try {
+                    blockC = layoutEditor.provideLayoutBlock(blockCName);
+                } catch (IllegalArgumentException ex) {
                     blockCName = "";
                 }
 
@@ -2885,8 +2891,9 @@ public class LayoutTurnout {
                 }
                 // get new block, or null if block has been removed
                 blockDName = blockDNameField.getText().trim();
-                blockD = layoutEditor.provideLayoutBlock(blockDName);
-                if (blockD == null) {
+                try {
+                    blockD = layoutEditor.provideLayoutBlock(blockDName);
+                } catch (IllegalArgumentException ex) {
                     blockDName = "";
                 }
                 // decrement use if block was already counted
@@ -3172,7 +3179,7 @@ public class LayoutTurnout {
         if (signalMast == null) {
             return;
         }
-        if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(signalMast)) {
+        if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.getDefault(jmri.SignalMastLogicManager.class).isSignalMastUsed(signalMast)) {
             SignallingGuiTools.removeSignalMastLogic(null, signalMast);
         }
     }

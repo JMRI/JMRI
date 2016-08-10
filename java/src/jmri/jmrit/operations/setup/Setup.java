@@ -316,11 +316,14 @@ public class Setup {
 
     private static boolean printCabooseLoad = false; // when true print caboose load
     private static boolean printPassengerLoad = false; // when true print passenger car load
+    private static boolean showTrackMoves = false; // when true show track moves in table
 
     // property changes
     public static final String SWITCH_LIST_CSV_PROPERTY_CHANGE = "setupSwitchListCSVChange"; //  NOI18N
     public static final String MANIFEST_CSV_PROPERTY_CHANGE = "setupManifestCSVChange"; //  NOI18N
     public static final String REAL_TIME_PROPERTY_CHANGE = "setupSwitchListRealTime"; //  NOI18N
+    public static final String SHOW_TRACK_MOVES_PROPERTY_CHANGE = "setupShowTrackMoves"; //  NOI18N
+    public static final String SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE = "saveTrainManifestChange"; //  NOI18N
 
     public static boolean isMainMenuEnabled() {
         OperationsSetupXml.instance(); // load file
@@ -892,6 +895,16 @@ public class Setup {
     public static boolean isPrintPassengerLoadEnabled() {
         return printPassengerLoad;
     }
+    
+    public static void setShowTrackMovesEnabled(boolean enable) {
+        boolean old = showTrackMoves;
+        showTrackMoves = enable;
+        setDirtyAndFirePropertyChange(SHOW_TRACK_MOVES_PROPERTY_CHANGE, old, enable);
+    }
+    
+    public static boolean isShowTrackMovesEnabled() {
+        return showTrackMoves;
+    }
 
     public static void setSwitchTime(int minutes) {
         carSwitchTime = minutes;
@@ -1073,7 +1086,9 @@ public class Setup {
     }
 
     public static void setSaveTrainManifestsEnabled(boolean enable) {
+        boolean old = saveTrainManifests;
         saveTrainManifests = enable;
+        setDirtyAndFirePropertyChange(SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE, old, enable);
     }
 
     public static String getPickupEnginePrefix() {
@@ -1983,6 +1998,9 @@ public class Setup {
 
         e.addContent(values = new Element(Xml.COMMENTS));
         values.setAttribute(Xml.MISPLACED_CARS, getMiaComment());
+        
+        e.addContent(values = new Element(Xml.DISPLAY));
+        values.setAttribute(Xml.SHOW_TRACK_MOVES, isShowTrackMovesEnabled() ? Xml.TRUE : Xml.FALSE);
 
         if (isVsdPhysicalLocationEnabled()) {
             e.addContent(values = new Element(Xml.VSD));
@@ -2689,7 +2707,7 @@ public class Setup {
                 if (log.isDebugEnabled()) {
                     log.debug("manifest file save option: " + enable);
                 }
-                setSaveTrainManifestsEnabled(enable.equals(Xml.TRUE));
+                saveTrainManifests = enable.equals(Xml.TRUE);
             }
         }
         if ((operations.getChild(Xml.BUILD_OPTIONS) != null)) {
@@ -2965,6 +2983,16 @@ public class Setup {
                     log.debug("Misplaced comment: " + comment);
                 }
                 setMiaComment(comment);
+            }
+        }
+        
+        if (operations.getChild(Xml.DISPLAY) != null) {
+            if ((a = operations.getChild(Xml.DISPLAY).getAttribute(Xml.SHOW_TRACK_MOVES)) != null) {
+                String enable = a.getValue();
+                if (log.isDebugEnabled()) {
+                    log.debug("show track moves: " + enable);
+                }
+                showTrackMoves = enable.equals(Xml.TRUE);
             }
         }
 

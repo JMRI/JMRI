@@ -9,7 +9,7 @@ import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.SignalHead;
-import jmri.jmris.json.JsonException;
+import jmri.server.json.JsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,14 +40,14 @@ abstract public class AbstractSignalHeadServer {
     synchronized protected void addSignalHeadToList(String signalHeadName) {
         if (!signalHeads.containsKey(signalHeadName)) {
             signalHeads.put(signalHeadName, new SignalHeadListener(signalHeadName));
-            InstanceManager.signalHeadManagerInstance().getSignalHead(signalHeadName).addPropertyChangeListener(signalHeads.get(signalHeadName));
+            InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHeadName).addPropertyChangeListener(signalHeads.get(signalHeadName));
             log.debug("Added listener to signalHead {}", signalHeadName);
         }
     }
 
     synchronized protected void removeSignalHeadFromList(String signalHeadName) {
         if (signalHeads.containsKey(signalHeadName)) {
-            InstanceManager.signalHeadManagerInstance().getSignalHead(signalHeadName).removePropertyChangeListener(signalHeads.get(signalHeadName));
+            InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHeadName).removePropertyChangeListener(signalHeads.get(signalHeadName));
             signalHeads.remove(signalHeadName);
         }
     }
@@ -60,7 +60,7 @@ abstract public class AbstractSignalHeadServer {
         SignalHead signalHead;
         try {
             addSignalHeadToList(signalHeadName);
-            signalHead = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHeadName);
+            signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHeadName);
             if (signalHead == null) {
                 // only log, since this may be from a remote system
                 log.error("SignalHead " + signalHeadName + " is not available.");
@@ -140,7 +140,7 @@ abstract public class AbstractSignalHeadServer {
 
     public void dispose() {
         for (Map.Entry<String, SignalHeadListener> signalHead : this.signalHeads.entrySet()) {
-            InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead.getKey()).removePropertyChangeListener(signalHead.getValue());
+            InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead.getKey()).removePropertyChangeListener(signalHead.getValue());
         }
         this.signalHeads.clear();
     }
@@ -152,7 +152,7 @@ abstract public class AbstractSignalHeadServer {
 
         SignalHeadListener(String signalHeadName) {
             name = signalHeadName;
-            signalHead = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHeadName);
+            signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHeadName);
         }
 
         // update state as state of signalHead changes

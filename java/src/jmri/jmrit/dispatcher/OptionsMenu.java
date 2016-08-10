@@ -1,4 +1,3 @@
-// OptionsMenu.java
 package jmri.jmrit.dispatcher;
 
 import java.awt.Container;
@@ -44,21 +43,15 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Dave Duchamp Copyright (C) 2008
- * @version	$Revision$
  */
 public class OptionsMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2060918292476729120L;
 
     static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.dispatcher.DispatcherBundle");
 
     public OptionsMenu(DispatcherFrame f) {
         dispatcher = f;
-        this.setText(rb.getString("OptionsMenuTitle"));
+        this.setText(Bundle.getMessage("MenuOptions"));
         autoDispatchItem = new JCheckBoxMenuItem(rb.getString("AutoDispatchItem"));
         this.add(autoDispatchItem);
         autoDispatchItem.addActionListener(new ActionListener() {
@@ -143,7 +136,7 @@ public class OptionsMenu extends JMenu {
 
     private void optionWindowRequested(ActionEvent e) {
         if (optionsFrame == null) {
-            optionsFrame = new JmriJFrame(rb.getString("OptionsMenuTitle"), false, true);
+            optionsFrame = new JmriJFrame(Bundle.getMessage("MenuOptions"), false, true);
             optionsFrame.addHelpMenu("package.jmri.jmrit.dispatcher.Options", true);
             optionsPane = optionsFrame.getContentPane();
             optionsPane.setLayout(new BoxLayout(optionsFrame.getContentPane(), BoxLayout.Y_AXIS));
@@ -373,7 +366,7 @@ public class OptionsMenu extends JMenu {
         if (autoTurnoutsCheckBox.isSelected() && ((layoutEditorList.size() == 0)
                 || (!useConnectivityCheckBox.isSelected()))) {
             JOptionPane.showMessageDialog(optionsFrame, rb.getString(
-                    "AutoTurnoutsWarn"), rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                    "AutoTurnoutsWarn"), Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
         }
         dispatcher.setShortActiveTrainNames(shortNameCheckBox.isSelected());
         dispatcher.setShortNameInBlock(nameInBlockCheckBox.isSelected());
@@ -442,5 +435,3 @@ public class OptionsMenu extends JMenu {
 
     private final static Logger log = LoggerFactory.getLogger(OptionsMenu.class.getName());
 }
-
-/* @(#)OptionsMenu.java */

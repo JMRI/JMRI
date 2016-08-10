@@ -1,17 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated  by Blorec Herv&#233;  2013-10-08--> 
 <html lang="fr">
 <head>
  <TITLE>
-      JMRI: Setting Preferences
+      JMRI: R&#233;glage des options
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help preferences">
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI help preferences">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -24,19 +22,20 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>JMRI:R&#233;glage des options JMRI </H1>
-
+<h1>JMRI: R&#233;glage des options</h1>
+<p>
 Cet &#233;cran d'aide s'ouvre automatiquement lorsque les pr&#233;f&#233;rences JMRI n'ont pas &#233;t&#233; r&#233;gl&#233;es, ou qu'il y avait une erreur de pr&#233;f&#233;rences quand le programme a &#233;t&#233; mis en service. Il vous guide &#224; travers les pr&#233;f&#233;rences de mise en fonctionnement de base.
-
+</p>
 <p>
 Une fois que les pr&#233;f&#233;rences sont d&#233;finies correctement, cet &#233;cran ne s'affichera plus. Le Volet d'Aide pour d&#233;finir les pr&#233;f&#233;rences est &#224; <a href="./AppConfigPanel.shtml">la page d'aide principale des pr&#233;f&#233;rences.</a>. Vous pouvez &#233;galement ouvrir le volet en s&#233;lectionnant "Fen&#234;tre Aide" dans le menu Aide de la fen&#234;tre des pr&#233;f&#233;rences.
+</p>
 <p>
-<p>
-<p>
-<p>
-This is the help\en\package\apps\AppConfixPanelErrorPage.shtml pane
+    Ceci est la page d'aide apps.AppConfixPanelErrorPage.shtml
+</p>
 
 <!--#include virtual="/Footer" -->
+        </div>
+      </div>
 </body>
 </html>
 

@@ -14,11 +14,6 @@ import javax.swing.AbstractAction;
  */
 public class TrackCopyAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -353491308526162622L;
-
     public TrackCopyAction(LocationEditFrame lef) {
         super(Bundle.getMessage("MenuItemCopyTrack"));
         _lef = lef;

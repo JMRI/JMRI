@@ -1,206 +1,249 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- Updatedted by Blorec Herv&#233;  2013-09-05-->  
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<!-- Updatedted by Blorec Herv&#233;  2013-09-05-->
+
 <html lang="fr">
 <head>
-    <TITLE>
- 	JMRI: Use of JavaHelp
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code Java Help JavaHelp ">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Use of JavaHelp</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content=
+  "JMRI technical code Java Help JavaHelp"><!-- Style -->
+  <meta http-equiv="content-type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+<body>
+  <!--#include virtual="/Header" -->
 
-	<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-		    <H1>JMRI:  Utiliser une Aide Java</H1>
+    <div id="mainContent">
+      <h1>JMRI: Utiliser une Aide Java</h1>Cette page parle des
+      aspects techniques de la fa&ccedil;on dont JMRI fournit des
+      informations d'aide &agrave; partir de JavaHelp et JHelpDev.
 
-Cette page parle des aspects techniques de la fa&#231;on dont JMRI fournit des informations d'aide
-&#224; partir de JavaHelp et JHelpDev.
+      <h2>Organisation des fichiers aide</h2>Les fichiers d'aide
+      sont situ&eacute;s dans le r&eacute;pertoire "help" dans le
+      r&eacute;pertoire de distribution JMRI.
 
+      <p>La copie originale de ceux-ci est stock&eacute;e dans le
+      module "help" . Cela signifie que pour obtenir votre propre
+      copie locale, il suffit de suivres les &eacute;tapes sur la
+      page <a href="getgitcode.shtml">obtention du code</a></p>
 
-<h2>Organisation des fichiers aide</h2>
+      <p>Dans ce cadre, tous les fichiers de langue Anglaise sont
+      situ&eacute;es dans le sous-r&eacute;pertoire "en".
+      Finalement, ce sera &agrave; vous d'internationaliser les
+      pages d'aide.</p>
 
-Les fichiers d'aide sont situ&#233;s dans le r&#233;pertoire "help" 
-dans le r&#233;pertoire de distribution JMRI.
+      <p>Dans ce cadre, il y a plusieurs arbres de fichiers:</p>
 
-<p>
-La copie originale de ceux-ci est stock&#233;e dans le module "help"
-. Cela signifie que pour obtenir votre propre copie locale, il suffit de suivres les &#233;tapes sur la page <a href="getgitcode.shtml">obtention du code</a>
+      <ul>
+        <li>Package - organis&eacute; comme l'arbre paquet source,
+        il contient les fichiers d'aide sp&eacute;cifiques au code
+        pour par exemple une fen&ecirc;tre particuli&egrave;re ou
+        d'un composant. Par exemple, une fen&ecirc;tre qui a
+        cr&eacute;&eacute; par
+        la<code>jmri.jmrit.speedometer.SpeedometerFrame</code>
+        classe (depuis le fichier
+        <code>src/jmri/jmrit/speed/SpeedometerFrame.java</code> )
+        devrait disposer de sa fen&ecirc;tre d'aide
+        sp&eacute;cifique dans un fichier de
+        <code>package/jmri/jmrit/speed/SpeedometerFrame.shtml</code>.</li>
 
-<P>
-Dans ce cadre, tous les fichiers de langue Anglaise sont situ&#233;es
-dans le sous-r&#233;pertoire "en". Finalement, ce sera &#224; vous
-d'internationaliser les pages d'aide.
-<P>
-Dans ce cadre, il y a plusieurs arbres de  fichiers:
-<UL>
-<LI> Package  - organis&#233; comme l'arbre paquet source,
-il contient les fichiers d'aide sp&#233;cifiques au code pour par exemple une 
-fen&#234;tre particuli&#232;re ou d'un composant. Par exemple, une fen&#234;tre qui a cr&#233;&#233;
-par la<code>jmri.jmrit.speedometer.SpeedometerFrame</code> classe
-(depuis le fichier <code>src/jmri/jmrit/speed/SpeedometerFrame.java </code>)
-devrait disposer de sa fen&#234;tre d'aide sp&#233;cifique dans un fichier de
-<code>package/jmri/jmrit/speed/SpeedometerFrame.shtml</code>.
-<LI> html - une description g&#233;n&#233;rale, des tutoriels, etc. 
-Ceux-ci organis&#233;es &#224; leur tour dans des r&#233;pertoires qui repr&#233;sentent des domaines g&#233;n&#233;raux.
-<LI> Manuel - une version du manuel DecoderPro reformat&#233;e pour une
-utilisation dans le syst&#232;me d'aide.
-</UL>
+        <li>html - une description g&eacute;n&eacute;rale, des
+        tutoriels, etc. Ceux-ci organis&eacute;es &agrave; leur
+        tour dans des r&eacute;pertoires qui repr&eacute;sentent
+        des domaines g&eacute;n&eacute;raux.</li>
 
-A long terme, nous voulons seulement deux branches dans cette structure: la partie "package" de l'arbre pour aider &#224; l'information qui est sp&#233;cifique &#224;
-un morceau de code particulier,
-et une autre partie de l'arbre pour plus d'informations g&#233;n&#233;rales.
-(C'est une question de religion si cette 2&#232;me partie devrait &#234;tre appel&#233;
-"html" ou "manuel "; l'essentiel est qu'on se retrouve avec un seul).
-Le web est cens&#233; &#234;tre un  <em>web </em>, avec de nombreux chemins &#224; suivre pour 
-atteindre le contenu. La deuxi&#232;me partie de l'arbre devrait &#233;galement &#234;tre organis&#233;
-comme "une page, un th&#232;me", avec des liens pour les connecter au besoin
+        <li>Manuel - une version du manuel DecoderPro
+        reformat&eacute;e pour une utilisation dans le
+        syst&egrave;me d'aide.</li>
+      </ul>A long terme, nous voulons seulement deux branches dans
+      cette structure: la partie "package" de l'arbre pour aider
+      &agrave; l'information qui est sp&eacute;cifique &agrave; un
+      morceau de code particulier, et une autre partie de l'arbre
+      pour plus d'informations g&eacute;n&eacute;rales. (C'est une
+      question de religion si cette 2&egrave;me partie devrait
+      &ecirc;tre appel&eacute; "html" ou "manuel "; l'essentiel est
+      qu'on se retrouve avec un seul). Le web est cens&eacute;
+      &ecirc;tre un <em>web</em> , avec de nombreux chemins
+      &agrave; suivre pour atteindre le contenu. La deuxi&egrave;me
+      partie de l'arbre devrait &eacute;galement &ecirc;tre
+      organis&eacute; comme "une page, un th&egrave;me", avec des
+      liens pour les connecter au besoin <a name="limitations" id=
+      "limitations"></a>
 
-<a name="limitations">
-<h3>Limitations de JavaHelp HTML</h3></a>
+      <h3>Limitations de JavaHelp HTML</h3>JavaHelp affiche " un
+      bon vieux HTML 4.0", sans fournir certains des sucre
+      syntaxique fourni par de nombreux navigateurs pour permettre
+      de pauvres rendus HTML. En particulier, il y a quelques
+      choses &agrave; surveiller.
 
-JavaHelp affiche " un bon vieux HTML 4.0", sans fournir certains des
-sucre syntaxique fourni par de nombreux navigateurs pour permettre de pauvres rendus HTML.
-En particulier, il y a quelques choses &#224; surveiller.
-<ul>
-<li>Les balises d'ancrage ne sont pas XML. Plus pr&#233;cis&#233;ment,
-<code><pre>
+      <ul>
+        <li>Les balises d'ancrage ne sont pas XML. Plus
+        pr&eacute;cis&eacute;ment,
+          <pre style="font-family: monospace;">
 &lt;a id="foo"/&gt;Foo!
-</pre></code>
-demande d'&#234;tre remplac&#233; par
-<code><pre>
+</pre>demande d'&ecirc;tre remplac&eacute; par
+          <pre style="font-family: monospace;">
 &lt;a id="foo"&gt;Foo!
-</pre></code>
-or
-<code><pre>
+</pre>or
+          <pre style="font-family: monospace;">
 &lt;a name="foo"&gt;Foo!&lt;/a&gt;
-</pre></code>
-L'indicateur que vous avez pour faire ceci c'est un &lt;
-caract&#232;re apparaissant juste par lui-m&#234;me sur la page rendue>.
+</pre>L'indicateur que vous avez pour faire ceci c'est un &lt;
+caract&egrave;re apparaissant juste par lui-m&ecirc;me sur la page
+rendue&gt;.
+        </li>
 
-<li> Points d'Ancrage a  aussi besoin d'utiliser l'attribut "name" plut&#244;t que l'attribut "id". Voir l'article ci-dessus pour un exemple.
+        <li>Points d'Ancrage a aussi besoin d'utiliser l'attribut
+        "name" plut&ocirc;t que l'attribut "id". Voir l'article
+        ci-dessus pour un exemple.</li>
 
-<li> Vous ne pouvez pas compter sur un endroit particulier pour vos fichiers
-sur la machine locale, aussi tous les liens vers les autres pages d'aide  doivent &#234;tre relatifs.
+        <li>Vous ne pouvez pas compter sur un endroit particulier
+        pour vos fichiers sur la machine locale, aussi tous les
+        liens vers les autres pages d'aide doivent &ecirc;tre
+        relatifs.</li>
 
-<li> les liens vers des pages Web en dehors du syst&#232;me d'aide de travail,
-mais JavaHelp ne peut pas afficher les fichiers PDF. Les Liens vers ceux-ci
-doivent &#234;tre repr&#233;sent&#233;s de fa&#231;on explicite comme des liens, afin qu'ils puissent &#234;tre copi&#233;s sur
-un navigateur Web ext&#233;rieur..
+        <li>les liens vers des pages Web en dehors du
+        syst&egrave;me d'aide de travail, mais JavaHelp ne peut pas
+        afficher les fichiers PDF. Les Liens vers ceux-ci doivent
+        &ecirc;tre repr&eacute;sent&eacute;s de fa&ccedil;on
+        explicite comme des liens, afin qu'ils puissent &ecirc;tre
+        copi&eacute;s sur un navigateur Web ext&eacute;rieur..</li>
+      </ul>
 
-</ul>
+      <h2>Acc&egrave;s Web &agrave; l'aide</h2>Il est g&eacute;nant
+      d'avoir &agrave; maintenir deux pages Web distinctes pour les
+      site web principaux et le syst&egrave;me d'aide. Pour
+      r&eacute;duire le besoin pour cela, nous utilisons un
+      formulaire particulier pour les pages web dans le
+      syst&egrave;me d'aide.
 
-<h2>Acc&#232;s Web &#224; l'aide </h2>
+      <ul>
+        <li>utilisation de l'extensions de fichiers ". shtml" de
+        telle sorte que les serveurs Web principaux recherchent les
+        fichiers pour <a href=
+        "http://httpd.apache.org/docs/1.3/howto/ssi.html">les
+        serveurs inclus</a> .</li>
 
-Il est g&#233;nant d'avoir &#224; maintenir deux pages Web distinctes pour les
-site web principaux et le syst&#232;me d'aide. Pour r&#233;duire le besoin pour cela, nous
-utilisons un formulaire particulier pour les pages web dans le syst&#232;me d'aide.
-<UL>
-<LI> utilisation de l'extensions de fichiers ". shtml"  de telle sorte que
-les serveurs Web principaux  recherchent les fichiers pour
-<A HREF="http://httpd.apache.org/docs/1.3/howto/ssi.html"> les serveurs inclus </a>.
-<li> Lorsque vous cr&#233;ez une nouvelle page, commencez par une copie
-soit du fichier mod&#232;le Aide/fr/TemplateBar.shtml ou de l'aide/fr/TemplatePlain.shtml
-, selon que vous souhaitez ou non inclure une "Sidebar"
-via un fichier du m&#234;me nom. Cela mettra en haut et en bas la
-mati&#232;re en place pour obtenir que la page s'affiche correctement.
-</UL>
+        <li>Lorsque vous cr&eacute;ez une nouvelle page, commencez
+        par une copie soit du fichier mod&egrave;le
+        Aide/fr/TemplateBar.shtml ou de
+        l'aide/fr/TemplatePlain.shtml , selon que vous souhaitez ou
+        non inclure une "Sidebar" via un fichier du m&ecirc;me nom.
+        Cela mettra en haut et en bas la mati&egrave;re en place
+        pour obtenir que la page s'affiche correctement.</li>
+      </ul>
 
-<h2> Acc&#232;s au code</h2>
+      <h2>Acc&egrave;s au code</h2>Dans le code JMRI,
+      l'acc&egrave;s au syst&egrave;me d'aide est obtenu via la
+      classe jmri.util.HelpUtil. (Pour des raisons historiques, il
+      y a un peu de code dans apps.Apps, mais vous devriez
+      l'ignorer).
 
-Dans le code JMRI, l'acc&#232;s au syst&#232;me d'aide est obtenu
-via la classe jmri.util.HelpUtil.
-(Pour des raisons historiques, il y a un peu de code
-dans apps.Apps, mais vous devriez l'ignorer).
-<P>
-La fa&#231;on la plus simple d'ajouter un menu d'aide &#224; un
-cadre est d'avoir soit un JmriJFrame (que vous
-devrez faire de toute fa&#231;on), et appel&#233; addHelpMenu (...)
-apr&#232;s que vous ayez construit les autres menus.
+      <p>La fa&ccedil;on la plus simple d'ajouter un menu d'aide
+      &agrave; un cadre est d'avoir soit un JmriJFrame (que vous
+      devrez faire de toute fa&ccedil;on), et appel&eacute;
+      addHelpMenu (...) apr&egrave;s que vous ayez construit les
+      autres menus.</p>
 
-<P>
-Par convention, nous utilisons une arborescence de fichiers similaire pour
-les fichiers de code source et d'aide. Par exemple,
-la <code>jmri.jmrit.simpleclock.SimpleClockFrame</code>
-classe h&#233;rite de JmriJFrame, et ajoute un menu d'aide avec la ligne
-<PRE>
-<CODE>
+      <p>Par convention, nous utilisons une arborescence de
+      fichiers similaire pour les fichiers de code source et
+      d'aide. Par exemple, la
+      <code>jmri.jmrit.simpleclock.SimpleClockFrame</code> classe
+      h&eacute;rite de JmriJFrame, et ajoute un menu d'aide avec la
+      ligne</p>
+      <pre>
+<code>
    addHelpMenu ("package.jmri.jmrit.simpleclock.SimpleClockFrame", true);
-</Code>
-</PRE>
-Le fichier d'aide est alors situ&#233;e &#224;
-<code>help/fr/package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml </code>.
-<P>
-Un certain nombre de fichiers d'aide ont &#233;t&#233; mis en place sans contenu;
-j'esp&#232;re que certains utilisateurs les modifierons et renverrons l'ascenseur.
+</code>
+</pre>Le fichier d'aide est alors situ&eacute;e &agrave; <code>
+      help/fr/package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml</code>
+      .
 
+      <p>Un certain nombre de fichiers d'aide ont &eacute;t&eacute;
+      mis en place sans contenu; j'esp&egrave;re que certains
+      utilisateurs les modifierons et renverrons l'ascenseur.</p>
 
-<h2> Cr&#233;ation des fichiers de contr&#244;le avec JHelpDev </h2>
+      <h2>Cr&eacute;ation des fichiers de contr&ocirc;le avec
+      JHelpDev</h2>JavaHelp utilise Divers fichiers XML pour
+      contr&ocirc;ler la fa&ccedil;on dont la table des
+      mati&egrave;res et l'index sont affich&eacute;s. Nous
+      cr&eacute;ons les <a href=
+      "http://jhelpdev.sourceforge.net/">JHelpDev</a>. S'il vous
+      pla&icirc;t ne pas les modifier manuellement.
 
-JavaHelp utilise Divers fichiers XML pour
-contr&#244;ler la fa&#231;on dont la table des mati&#232;res et l'index sont affich&#233;s.
-Nous cr&#233;ons les <A HREF="http://jhelpdev.sourceforge.net/"> JHelpDev</a>.
-S'il vous pla&#238;t ne pas les modifier manuellement.
+      <p>JHelpDev est maintenant inclut dans la distribution JMRI.
+      Pour utiliser cet outil:</p>
 
-<P>
-JHelpDev est maintenant inclut dans la distribution JMRI. Pour utiliser cet outil:
-<OL>
-<LI>Assurez-vous que vous avez ex&#233;cut&#233; "update" depuis SVN avant de commencer.</Li>
-<LI> D&#233;marrez l'outil en cliquant sur le fichier jhelpdev.jar. (Si cela ne fonctionne pas, essayez en
-ex&#233;cutant JHelpDev.csh ou JHelpDev.bat, selon le type d'ordinateur que vous avez) </li>
+      <ol>
+        <li>Assurez-vous que vous avez ex&eacute;cut&eacute;
+        "update" depuis SVN avant de commencer.</li>
 
-<LI> Une fois que la fen&#234;tre s'affiche, s&#233;lectionnez "Ouvrir un projet" dans le menu "Fichier". </Li>
+        <li>D&eacute;marrez l'outil en cliquant sur le fichier
+        jhelpdev.jar. (Si cela ne fonctionne pas, essayez en
+        ex&eacute;cutant JHelpDev.csh ou JHelpDev.bat, selon le
+        type d'ordinateur que vous avez)</li>
 
-<LI> Naviguez vers le r&#233;pertoire «help» dans votre copie extraite du code,
-puis le r&#233;pertoire "fr" dans ce cadre, puis s&#233;lectionnez le fichier "JHelpDev.xml"
-et cliquez sur «Ouvrir». </li>
+        <li>Une fois que la fen&ecirc;tre s'affiche,
+        s&eacute;lectionnez "Ouvrir un projet" dans le menu
+        "Fichier".</li>
 
-<LI> Cliquez sur "Cr&#233;er tout" pour recr&#233;er les maps, index, etc </li>
+        <li>Naviguez vers le r&eacute;pertoire
+        &Acirc;&laquo;help&Acirc;&raquo; dans votre copie extraite
+        du code, puis le r&eacute;pertoire "fr" dans ce cadre, puis
+        s&eacute;lectionnez le fichier "JHelpDev.xml" et cliquez
+        sur &Acirc;&laquo;Ouvrir&Acirc;&raquo;.</li>
 
-<li> Puis, de retour sur la ligne de commande et dans le r&#233;pertoire de help/fr, appelez
-"ant" pour cr&#233;er l'index Web et les pagesde la table des mati&#232;res  (Ou si vous utilisez
-Eclipse, faites un clic droit sur ​​le fichier help/fr/build.xml et s&#233;lectionnez Ex&#233;cuter en tant que construction Ant.) </li>
-</OL>
+        <li>Cliquez sur "Cr&eacute;er tout" pour recr&eacute;er les
+        maps, index, etc</li>
 
-<p>
-Les diff&#233;rents fichiers de contr&#244;le qui utilise JavaHelp sont stock&#233;s dans le d&#233;p&#244;t SVN,
-Donc, une fois que vous avez fait ce SVN va les montrer comme modifi&#233;.
-S'il vous pla&#238;t v&#233;rifier les lorsque vous v&#233;rifiez dans de nouveaux fichiers d'aide pour que les autres
-gens n'aient pas &#224; recr&#233;er les fichiers de contr&#244;le eux-m&#234;mes.
-<a href="http://jhelpdev.sourceforge.net/">site web JHelpDev</a>.
+        <li>Puis, de retour sur la ligne de commande et dans le
+        r&eacute;pertoire de help/fr, appelez "ant" pour
+        cr&eacute;er l'index Web et les pagesde la table des
+        mati&egrave;res (Ou si vous utilisez Eclipse, faites un
+        clic droit sur &acirc;&euro;&lsaquo;&acirc;&euro;&lsaquo;le
+        fichier help/fr/build.xml et s&eacute;lectionnez
+        Ex&eacute;cuter en tant que construction Ant.)</li>
+      </ol>
 
+      <p>Les diff&eacute;rents fichiers de contr&ocirc;le qui
+      utilise JavaHelp sont stock&eacute;s dans le
+      d&eacute;p&ocirc;t SVN, Donc, une fois que vous avez fait ce
+      SVN va les montrer comme modifi&eacute;. S'il vous
+      pla&icirc;t v&eacute;rifier les lorsque vous v&eacute;rifiez
+      dans de nouveaux fichiers d'aide pour que les autres gens
+      n'aient pas &agrave; recr&eacute;er les fichiers de
+      contr&ocirc;le eux-m&ecirc;mes. <a href=
+      "http://jhelpdev.sourceforge.net/">site web JHelpDev</a>.</p>
 
-<P>
-Vous pouvez &#233;galement utiliser l'outil &#224; ajouter &#224; la table des mati&#232;res, etc, si vous le souhaitez.
-Il ya plus d'informations sur la fa&#231;on de le faire sur le
-<a href="http://jhelpdev.sourceforge.net/"> site web JHelpDev </a>.
+      <p>Vous pouvez &eacute;galement utiliser l'outil &agrave;
+      ajouter &agrave; la table des mati&egrave;res, etc, si vous
+      le souhaitez. Il ya plus d'informations sur la fa&ccedil;on
+      de le faire sur le <a href=
+      "http://jhelpdev.sourceforge.net/">site web JHelpDev</a>
+      .</p>
 
-<h2> Mise &#224; jour du site JMRI.ORG </h2>
-Des changements pour les pages d'aide qui sont v&#233;rifi&#233;es dans le svn devrait appara&#238;tre automatiquement sur le site  JMRI.ORG
-apr&#232;s un court moment. Si cela ne fonctionne pas, vous pouvez visiter <a href="http://jmri.org/updateSVN.php" target=_new rel="nofollow"> [cette page] </a>
-pour pousser la mise &#224; jour plus loin .
-
-<!--#include virtual="/Footer" -->
-
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+      <h2>Mise &agrave; jour du site JMRI.ORG</h2>Des changements
+      pour les pages d'aide qui sont v&eacute;rifi&eacute;es dans
+      le svn devrait appara&icirc;tre automatiquement sur le site
+      JMRI.ORG apr&egrave;s un court moment. Si cela ne fonctionne
+      pas, vous pouvez visiter <a href=
+      "http://jmri.org/updateSVN.php" target="_new" rel=
+      "nofollow">[cette page]</a> pour pousser la mise &agrave;
+      jour plus loin . <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

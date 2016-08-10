@@ -2,7 +2,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <!-- Translated by Blorec Herv&#233; le 2013-09-01-->
 <title>JMRI: DecoderPro Tour</title>
 
@@ -17,21 +16,21 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<H1>Une Visite Rapide de DecoderPro</H1>
+<h1>Une Visite Rapide de DecoderPro</h1>
 
 <div class="image100w">
-<table border=0>
+<table>
 <TR>
-<TD VALIGN=top>
+<TD VALIGN="top">
 <a href="./images/DPStart.gif" ALT="DecoderPro welcome screen">
 <IMG SRC="./images/DPStart.gif" WIDTH="100" HEIGHT="50" ALT="DecoderPro welcome screen"></a>
 </TD>
 <TD>
-<H2>D&#233;marrage</H2>
+<h2>D&#233;marrage</h2>
 Lorsque vous ouvrez le programmateur, vous voyez cette fen&#234;tre. Cliquez sur le bouton
 "Program locomotive " pour commencer. (Cela suppose que vous &#234;tes d&#233;j&#224;
 <a href="../../hardware/index.shtml"> connect&#233; </a> &#224; votre ordinateur et qu'une locomotive
@@ -39,9 +38,8 @@ Lorsque vous ouvrez le programmateur, vous voyez cette fen&#234;tre. Cliquez sur
 </TD>
 </TR>
 
-
 <TR>
-<TD VALIGN=top>
+<TD VALIGN="top">
 <a href="./images/SelDecoder.gif" ALT="Decoder Identification">
 <IMG SRC="./images/SelDecoder.gif" WIDTH="100" HEIGHT="100" ALT="Decoder Identification"></a>
 </TD>
@@ -87,9 +85,8 @@ Pour cet exemple, nous s&#233;lectionnons le programmateur Comprehensive (Comple
 </TD>
 </TR>
 
-
 <TR>
-<TD VALIGN=top>
+<TD VALIGN="top">
 <a href="./images/BasicPaneY75.gif" ALT="Comprehensive Programmer">
 <IMG SRC="./images/BasicPaneY75.gif" WIDTH="100" HEIGHT="50" ALT="Comprehensive Programmer"></a>
 </TD>
@@ -122,14 +119,15 @@ ceci est repr&#233;sent&#233; en blanc pour indiquer que la valeur est digne de 
 </tr>
 
 <tr>
-<td valign=top>
+<td valign="top">
 <a href="./images/SpeedTableW75.gif" ALT="Speed table">
 <IMG SRC="./images/SpeedTableW75.gif" WIDTH="100" HEIGHT="100" ALT="Speed table"></a><br>
 <a href="./images/ModSpeedTable75.gif" ALT="Modified speed table">
 <IMG SRC="./images/ModSpeedTable75.gif" WIDTH="100" HEIGHT="100" ALT="Modified speed table"></a><br>
 </TD>
 <TD>
-<H2>Exemples</H2>
+
+<h2>Exemples</h2>
 <p>Par exemple, apr&#232;s un "Lire", les valeurs de la table de vitesse sont indiqu&#233;es en blanc 
 sur la premi&#232;re image, Alors que dans la seconde image il montre que lorsque vous modifiez 
 une valeur, elles sont marqu&#233;es en jaune. Faire une &#233;criture les remet &#224; blanc; faire une 
@@ -138,14 +136,14 @@ lecture va r&#233;initialiser la valeur &#224; la valeur dans le d&#233;codeur, 
 </TR>
 
 <TR>
-<TD VALIGN=top>
+<TD VALIGN="top">
 <a href="./images/FnMap.gif"  ALT="FuoderPro/Tour.shtmlnction Mappings">
 <IMG SRC="./images/FnMap.gif" WIDTH="100" HEIGHT="100" ALT="Function Mappings"></a>
 </TD>
 <TD>
 <H2>Interactions Complexes - Fonction Mapping (Cartographie)</H2>
 <p>
-Bien qu'avoir un nom pour un CV complet est agr&#233;able, où ceci aide r&#233;ellement, c'est avec 
+Bien qu'avoir un nom pour un CV complet est agr&#233;able, o&ugrave; ceci aide r&#233;ellement, c'est avec
 les options compliqu&#233;es de cartographie binaire. L'option Digitrax &#233;clairage FX, par exemple, 
 exiger la configuration de deux ensembles de bits en un seul CV.
 Un autre exemple est la configuration de la cartographie d'un d&#233;codeur de Soundtraxx entre 
@@ -159,7 +157,6 @@ avec le nom ou la description du manuel du d&#233;codeur.
 </p>
 </TD>
 </TR>
-
 
 <TR>
 <TD VALIGN=top>
@@ -180,7 +177,6 @@ nouveau d&#233;codeur. Par exemple, les capacit&#233;s uniques d'une DH142 Digit
 figurent sur une feuille "Digitrax" .</p>
 
 <p>
-
 D'autres variables d&#233;codeur sp&#233;cifiques et des feuilles peuvent &#234;tre ajout&#233;es via des fichiers 
 de configuration. En choisissant un format industriel standard XML pour les informations du 
 d&#233;codeur, nous esp&#233;rons rendre possible la cr&#233;ation d'une biblioth&#232;que compl&#232;te. Peut-&#234;tre que 
@@ -190,14 +186,13 @@ format par exemple.
 </TD>
 </TR>
 
-
 <TR>
 <TD VALIGN=top>
 <a href="./images/CVtable75.gif" ALT="CV Programmer">
 <IMG SRC="./images/CVtable75.gif" WIDTH="100" HEIGHT="100" ALT="CV Programmer"></a>
 </TD>
 <TD>
-<H2>Programmation Directe CV</H2>
+<h2>Programmation Directe CV</h2>
 <p>
 Il est aussi possible de programmer les CV directement &#224; l'aide du programmateur CV.
 Les boutons "Lire" et "Ecrire" vous permettent de travailler avec le contenu CV individuel. 
@@ -228,13 +223,13 @@ votre ordinateur, vous serez invit&#233; &#224; le faire si vous fermez le progr
 informations non m&#233;moris&#233;es.</p>
 
 <p>
-L"ID " dans la partie sup&#233;rieure est le nom que vous utiliserez plus tard pour s&#233;lectionner cette locomotive.
+L"ID" dans la partie sup&#233;rieure est le nom que vous utiliserez plus tard pour s&#233;lectionner cette locomotive.
 </p>
 </TD>
 </TR>
 
 <TR>
-<TD VALIGN=top>
+<TD VALIGN="top">
 <a href="./images/SelLoco.gif" ALT="SeoderPro/Tour.shtmllecting a roster entry">
 <IMG SRC="./images/SelLoco.gif" WIDTH="100" HEIGHT="100" ALT="Selecting a roster entry"></a>
 </TD>
@@ -259,7 +254,7 @@ depuis les fen&#234;tres de programmation. Dans le menu "Fichier ...", s&#233;le
 <P>
 </TD>
 </TR>
-</TABLE>
+</table>
 
 <h2>Plus d'Info</h2>
 
@@ -268,11 +263,11 @@ Pour plus d'informations sur la configuration et l'utilisation de DecoderPro, s'
 
 Il y a &#233;galement plus d'informations disponibles sur
 <a href="MoreInfo.shtml"> comment travaille DecoderPro </a>,
-y compris la fa&#231;on d'<a href="CreateDecoder.shtml">ajouter de nouveaux types de d&#233;codeur </a>.
+y compris la fa&#231;on d'<a href="CreateDecoder.shtml">ajouter de nouveaux types de d&#233;codeur</a>.
 
-
-</div>
     
 <!--#include virtual="/Footer" -->
+ </div>
+</div>
 </body>
 </html>

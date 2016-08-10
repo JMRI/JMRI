@@ -143,7 +143,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
             // This is a message asking for the power status
             try {
                 ((jmri.jmris.ServiceHandler) data).getPowerServer().sendStatus(
-                        InstanceManager.powerManagerInstance().getPower());
+                        InstanceManager.getDefault(jmri.PowerManager.class).getPower());
             } catch (jmri.JmriException je) {
                 // We shouldn't have any errors here.
                 // If we do, something is horibly wrong.

@@ -41,7 +41,7 @@ l'ajout d'un aiguillage, d'un croisement, ou un segment de voie, l'&#233;l&#233;
 <b> Capteur d'Occupation</b> sur le terrain, ce capteur sera attribu&#233; au canton entr&#233;.
 Un aiguillage, passage &#224; niveau, ou un segment de voie  peuvent &#233;galement &#234;tre affect&#233;s
 &#224; un canton en entrant le nom de ce canton dans le dialogue d'&#233;dition accessible en
-s&#233;lectionnant <b>Modifier ...</b> dans les &#233;l&#233;ments du menu contextuel. Dans les deux cas, si un canton
+s&#233;lectionnant <b>Modifier...</b> dans les &#233;l&#233;ments du menu contextuel. Dans les deux cas, si un canton
 avec le nom entr&#233; n'existe pas, il est cr&#233;&#233;.</p>
 <p>
 Un nom de canton peut &#234;tre n'importe quelle s&#233;rie de caract&#232;res alphab&#233;tiques ou num&#233;riques qui d&#233;crivent

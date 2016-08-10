@@ -53,6 +53,18 @@ public class ProxyLightManagerTest extends TestCase {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
+    public void testProvideFailure() {
+        boolean correct = false;
+        try {
+            Light t = l.provideLight("");
+            Assert.fail("didn't throw");
+        } catch (IllegalArgumentException ex) {
+            correct = true;
+        }
+        Assert.assertTrue("Exception thrown properly", correct);
+        
+    }
+
     public void testSingleObject() {
         // test that you always get the same representation
         Light t1 = l.newLight(getSystemName(getNumToTest1()), "mine");

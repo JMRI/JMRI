@@ -1,21 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!--UpDated by Herv&#233; Blorec le 2013/09/09-->
 <html lang="fr">
 <head>
     <TITLE>
- 	JMRI: Turnout Feedback
+ 	JMRI: R&#233;troSignalisation Aiguillage
    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <meta content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI Turnout feedback">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=.iso-8859-1">
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -23,15 +17,15 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
-ur
-<BODY>
+</head>
+
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>JMRI: R&#233;troSignalisation Aiguillage</H1>
+<h1>JMRI: R&#233;troSignalisation Aiguillage</h1>
 
 Les Mod&#232;listes ferroviaires veulent des choses diff&#233;rentes quand il s'agit de conna&#238;tre l'&#233;tat des aiguillages sur leur r&#233;seau. Certains sont tr&#232;s heureux de pouvoir dire "je lui ai dit de se d&#233;placer, c'est assez bon pour moi".
 Ces personnes ne s'inqui&#232;tent pas de savoir si un aiguillage de leur r&#233;seau s'est d&#233;plac&#233; quand ils le lui ont dit. Ces gens peuvent simplement ignorer cette page, et laisser les param&#232;tres de JMRI par d&#233;faut.

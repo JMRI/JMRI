@@ -136,7 +136,7 @@ public class TurnoutSignalMastXml
             m.resetPreviousStates(true);
         }
 
-        InstanceManager.signalMastManagerInstance()
+        InstanceManager.getDefault(jmri.SignalMastManager.class)
                 .register(m);
 
         return true;

@@ -14,10 +14,6 @@ import javax.swing.JTable;
  */
 public class CarsSetFrameAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3263490494828511284L;
     CarsTableModel _carsTableModel;
     JTable _carsTable;
 

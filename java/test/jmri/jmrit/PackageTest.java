@@ -36,7 +36,7 @@ public class PackageTest extends TestCase {
         suite.addTest(BundleTest.suite());
         suite.addTest(DccLocoAddressSelectorTest.suite());
         suite.addTest(MemoryContentsTest.suite());
-        suite.addTest(SoundTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SoundTest.class));
         suite.addTest(XmlFileTest.suite());
 
         suite.addTest(jmri.jmrit.automat.AutomatTest.suite());

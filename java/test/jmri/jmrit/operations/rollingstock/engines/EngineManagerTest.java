@@ -7,7 +7,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.trains.Train;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

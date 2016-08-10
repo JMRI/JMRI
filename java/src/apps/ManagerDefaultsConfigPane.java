@@ -54,7 +54,7 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
 
         // this doesn't find non-migrated systems, how do we handle that eventually?
         List<SystemConnectionMemo> connList = InstanceManager.getList(SystemConnectionMemo.class);
-        if (connList != null) {
+        if (!connList.isEmpty()) {
             log.debug("update of {} connections", connList.size());
             reloadConnections(connList);
         } else {

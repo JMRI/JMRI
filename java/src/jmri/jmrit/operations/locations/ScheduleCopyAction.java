@@ -14,11 +14,6 @@ import javax.swing.AbstractAction;
  */
 public class ScheduleCopyAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2327541514192626388L;
-
     public ScheduleCopyAction() {
         super(Bundle.getMessage("MenuItemCopySchedule"));
     }

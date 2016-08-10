@@ -37,7 +37,7 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
         return ((ReporterManager) getMgr(i)).newReporter(systemName, userName);
     }
 
-    public Reporter provideReporter(String sName) {
+    public Reporter provideReporter(String sName) throws IllegalArgumentException {
         return (Reporter) super.provideNamedBean(sName);
     }
 

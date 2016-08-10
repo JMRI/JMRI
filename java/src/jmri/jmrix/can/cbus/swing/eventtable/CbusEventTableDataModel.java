@@ -1,4 +1,3 @@
-// CbusEventTableDataModel.java
 package jmri.jmrix.can.cbus.swing.eventtable;
 
 import java.awt.Font;
@@ -27,14 +26,9 @@ import org.slf4j.LoggerFactory;
  * Table data model for display of Cbus events
  *
  * @author	Andrew Crosland (C) 2009
- * @version	$Revision$
  */
 public class CbusEventTableDataModel extends javax.swing.table.AbstractTableModel implements CanListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9220006375564405213L;
     static public final int IDCOLUMN = 0;
     static public final int NODECOLUMN = IDCOLUMN + 1;
     static public final int NAMECOLUMN = NODECOLUMN + 1;
@@ -45,21 +39,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     static public final int NUMCOLUMN = 6;
 
     final JFileChooser fileChooser = new JFileChooser(FileUtil.getUserFilesPath());
-    /*
-     * @deprecated 2.99.2
-     */
-    /*@Deprecated
-     CbusEventTableDataModel(int row, int column) {
-     _id = new int[CbusConstants.MAX_TABLE_EVENTS];
-     _node = new int[CbusConstants.MAX_TABLE_EVENTS];
-     _name = new String[CbusConstants.MAX_TABLE_EVENTS];
-     _event = new int[CbusConstants.MAX_TABLE_EVENTS];
-     _type = new boolean[CbusConstants.MAX_TABLE_EVENTS];
-     _comment = new String[CbusConstants.MAX_TABLE_EVENTS];
-     // connect to the CanInterface
-     tc = TrafficController.instance();
-     tc.addCanListener(this);
-     }*/
 
     CanSystemConnectionMemo memo;
 

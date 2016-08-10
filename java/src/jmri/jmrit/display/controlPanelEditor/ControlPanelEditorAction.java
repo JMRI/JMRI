@@ -7,15 +7,9 @@ import javax.swing.AbstractAction;
  * Start a ControlPanelEditor.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision$
  * @see jmri.jmrit.display.controlPanelEditor.ControlPanelEditorAction
  */
 public class ControlPanelEditorAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7670881366702521286L;
 
     public ControlPanelEditorAction(String s) {
         super(s);

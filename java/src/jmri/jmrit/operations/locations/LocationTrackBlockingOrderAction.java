@@ -13,11 +13,6 @@ import javax.swing.AbstractAction;
  */
 public class LocationTrackBlockingOrderAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8755364574386629561L;
-
     public LocationTrackBlockingOrderAction(Location location) {
         super(Bundle.getMessage("TitleTrackBlockingOrder"));
         _location = location;

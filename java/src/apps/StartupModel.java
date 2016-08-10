@@ -6,10 +6,8 @@ package apps;
  * classes.
  *
  * @author Randall Wood (C) 2015
+ * @deprecated since 4.5.1; use {@link apps.startup.StartupModel} instead.
  */
-public interface StartupModel {
-
-    public String getName();
-
-    public void setName(String name);
+@Deprecated
+public interface StartupModel extends apps.startup.StartupModel {
 }

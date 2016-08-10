@@ -303,9 +303,6 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         control.setAdapterMemo(this.getSystemConnectionMemo());
         control.connectPort(this);
         control.sendInitString();
-
-        // declare up
-        jmri.jmrix.rfid.ActiveFlag.setActive();
     }
 
     // base class methods for the RfidPortController interface

@@ -41,6 +41,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.maple.SerialAddressTest.suite());
         suite.addTest(jmri.jmrix.maple.OutputBitsTest.suite());
         suite.addTest(jmri.jmrix.maple.InputBitsTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.maple.serialdriver.PackageTest.class));
         return suite;
     }
 

@@ -1,4 +1,3 @@
-// PreviewDialog.java
 package jmri.jmrit.catalog;
 
 import java.awt.BorderLayout;
@@ -51,10 +50,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PreviewDialog extends JDialog {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -65980932474359139L;
     JPanel _selectedImage;
     static Color _grayColor = new Color(235, 235, 235);
     Color _currentBackground = _grayColor;
@@ -451,7 +446,6 @@ public class PreviewDialog extends JDialog {
             for (int i = 0; i < memoryTest.size(); i++) {
                 memoryTest.remove(i);
             }
-            memoryTest = null;
             //if (log.isDebugEnabled()) log.debug("Max Memory available= "+total+" bytes");
         }
         return total;

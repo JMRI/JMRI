@@ -14,7 +14,7 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainIcon;
 import jmri.jmrit.operations.trains.TrainManager;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

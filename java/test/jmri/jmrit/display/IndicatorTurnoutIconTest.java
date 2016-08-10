@@ -1,7 +1,5 @@
 package jmri.jmrit.display;
 
-import java.beans.PropertyChangeEvent;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import junit.framework.Assert;
 import junit.framework.Test;

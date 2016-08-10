@@ -1,4 +1,3 @@
-//AbstractLightServer.java
 package jmri.jmris;
 
 import java.beans.PropertyChangeEvent;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2010
  * @author Randall Wood Copyright (C) 2013, 2014
- * @version $Revision$
  */
 abstract public class AbstractLightServer {
 
@@ -51,10 +49,10 @@ abstract public class AbstractLightServer {
         }
     }
 
-    public Light initLight(String lightName) {
+    public Light initLight(String lightName)  throws IllegalArgumentException {
         Light light = InstanceManager.lightManagerInstance().provideLight(lightName);
         this.addLightToList(lightName);
-        return light;
+        return light;        
     }
 
     public void lightOff(String lightName) {

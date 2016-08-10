@@ -1,12 +1,5 @@
 package jmri.jmrit.withrottle;
 
-/**
- * Handle two-way communications regarding track power.
- *
- *
- * @author Brett Hoffman Copyright (C) 2010
- * @version $Revision$
- */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import jmri.InstanceManager;
@@ -15,12 +8,17 @@ import jmri.PowerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Handle two-way communications regarding track power.
+ *
+ * @author Brett Hoffman Copyright (C) 2010
+ */
 public class TrackPowerController extends AbstractController implements PropertyChangeListener {
 
     private PowerManager pwrMgr = null;
 
     public TrackPowerController() {
-        pwrMgr = InstanceManager.powerManagerInstance();
+        pwrMgr = InstanceManager.getOptionalDefault(jmri.PowerManager.class);
         if (pwrMgr == null) {
             log.info("No power manager instance.");
             isValid = false;

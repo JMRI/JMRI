@@ -1,116 +1,116 @@
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
+
 <html lang="en">
 <head>
-    <TITLE>
- 	JMRI: Plug-in mechanisms
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code plugins extension plug-in">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
+  <title>JMRI: Plug-in mechanisms</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content=
+  "JMRI technical code plugins extension plug-in">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
+  <!--#include virtual="/Style" -->
+</head><!--#include virtual="/Header" -->
 
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-    <!--#include virtual="/Style" -->
-</head>
+    <div id="mainContent">
+      <h1>JMRI: Plug-in mechanisms</h1>The original goal of the
+      JMRI project was to produce a library upon which people could
+      use to build their own applications. Although some people do
+      that, more use the existing applications such as DecoderPro
+      and PanelPro. We want to make this more flexible by providing
+      a way to extend those programs without having to rebuild them
+      from scratch. This note describes mechanisms for that which
+      will is included in JMRI 2.4 and later.
 
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+      <ol>
+        <li>CLASSPATH
 
-	<div id="mainContent">
+          <p>DecoderPro et al are run via a java command which sets
+          the CLASSPATH and various options. How that's actually
+          done varies with the platform: csh scripts on Unix, a
+          <a href="StartUpScripts.shtml#windows">launcher
+          application</a> on Windows, application bundles on Mac OS
+          X, etc.</p>
 
+          <p>To make it easy to add plug-ins, these include all
+          .jar files in the application directory, and in its
+          "lib/" subdirectory, in the CLASSPATH.</p>
 
-<h1>JMRI: Plug-in mechanisms</h1>
+          <p>If you create a jar file including your code, it will
+          automatically be found. You can also put your classes in
+          the "classes" directory of the startup directory, which
+          is searched first.</p>
 
-The original goal of the JMRI project was to produce a library upon which people
-could use to build their own applications.  Although some people do that, more
-use the existing applications such as DecoderPro and PanelPro. 
-We want to make this more flexible by providing a way to extend
-those programs without having to rebuild them from scratch.  This note describes
-mechanisms for that which will is included in JMRI 2.4 and later.
+          <p>For more information, see the <a href=
+          "StartUpScripts.shtml">page on startup scripts</a>.</p>
+        </li>
 
-<OL>
+        <li>Replacement of existing classes
 
-<LI>CLASSPATH
-<P>
-DecoderPro et al are run via a java command which sets the CLASSPATH and
-various options.  How that's actually done varies with the platform:  csh
-scripts on Unix, a 
-<a href="StartUpScripts.shtml#windows">launcher application</a>
-on Windows, application bundles on Mac OS X, etc.
-<P>
-To make it easy to add plug-ins, these include all .jar files in the 
-application directory, and in its "lib/" subdirectory, in the CLASSPATH.
-<P>
-If you create a jar file including your code, it will automatically
-be found. You can also put your classes in the "classes" directory of the
-startup directory, which is searched first.
-<p>
-For more information, see the 
-<a href="StartUpScripts.shtml">page on startup scripts</a>.
+          <p>Note that you can directly replace any of the files in
+          the jmri.jar distribution with your own versions by
+          putting them in a jar file that's searched first. For
+          example, including a modified version of a .properties
+          file would allow you to include customized versions of
+          menu strings. This can also be done with a .class file,
+          for example changing the order of menu items by replacing
+          the DecoderPro class.</p>
+        </li>
 
-<LI>Replacement of existing classes
-<P>
-Note that you can directly replace any of the files in the jmri.jar distribution
-with your own versions by putting them in a jar file that's searched first.  
-For example, including a modified version of a .properties file 
-would allow you to include customized versions of menu 
-strings.  This can also be done with a .class file, for example changing 
-the order of menu items by replacing the DecoderPro class.
+        <li>Plugin classes
 
-
-<LI>Plugin classes
-<P>
-Replacing a class can cause extra work in the long term, as the replaced
-class may be modified as JMRI evolves.  So we also provide a hook on which
-to hang new code.  After initialization is complete, the programs will
-attempt to invoke a static member of the form:
-<PRE>
+          <p>Replacing a class can cause extra work in the long
+          term, as the replaced class may be modified as JMRI
+          evolves. So we also provide a hook on which to hang new
+          code. After initialization is complete, the programs will
+          attempt to invoke a static member of the form:</p>
+          <pre>
 
   package jmri;
   public class JmriPlugin {
      public static void start(javax.swing.JFrame mainFrame, javax.swing.JMenuBar menuBar) {}
   }
 
-</PRE>
-This method
-can modify the menubar by inserting, modifying or removing menus or menu
-items, add buttons to the main panel, etc.  
-<p>
-As people use this capability, we'll probably want to refactor some existing
-classes to make them easier to extend. For example, a monolithic formatting
-class like llnmon should be broken up into smaller pieces to make it easier
-to add new formats.
+</pre>This method can modify the menubar by inserting, modifying or
+removing menus or menu items, add buttons to the main panel, etc.
 
-</OL>
+          <p>As people use this capability, we'll probably want to
+          refactor some existing classes to make them easier to
+          extend. For example, a monolithic formatting class like
+          llnmon should be broken up into smaller pieces to make it
+          easier to add new formats.</p>
+        </li>
+      </ol>
 
-<h2>Other Mechanisms</h2>
+      <h2>Other Mechanisms</h2>It's also possible to customize your
+      version of JMRI using scripts, and by using the <a href=
+      "../../../package/apps/TabbedPreferences.shtml">advanced
+      preferences</a>.
 
-It's also possible to customize your version of JMRI using 
-scripts, and by using the 
-<a href="../../../package/apps/TabbedPreferences.shtml">advanced preferences</a>.
-
-<p>
-Scripts can locate and access any open window, for example.
-The
-<a href="http://jmri.org/jython/AddButton.py">AddButton.py</a> 
-sample script is an example of adding a script button to the main window.
-The
-<a href="http://jmri.org/jython/DisableOpsMode.py">DisableOpsMode.py</a> 
-sample script shows how how to modify the main window to remove the ops-mode
-programming button.
-The
-<a href="http://jmri.org/jython/ReporterFontControl.py">ReporterFontControl.py</a> 
-sample script is an even more advanced example that 
-changes the appearance of items on panel screens.
-<!--#include virtual="/Footer" -->
-
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+      <p>Scripts can locate and access any open window, for
+      example. The <a href=
+      "http://jmri.org/jython/AddButton.py">AddButton.py</a> sample
+      script is an example of adding a script button to the main
+      window. The <a href=
+      "http://jmri.org/jython/DisableOpsMode.py">DisableOpsMode.py</a>
+      sample script shows how how to modify the main window to
+      remove the ops-mode programming button. The <a href=
+      "http://jmri.org/jython/ReporterFontControl.py">ReporterFontControl.py</a>
+      sample script is an even more advanced example that changes
+      the appearance of items on panel screens. 
+      <!--#include virtual="/Footer" --></p>
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

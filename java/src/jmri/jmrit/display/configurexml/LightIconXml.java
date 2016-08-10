@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.LightIcon objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2011
- * @version $Revision: 17977 $
  */
 public class LightIconXml extends PositionableLabelXml {
 

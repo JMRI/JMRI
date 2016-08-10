@@ -1,4 +1,3 @@
-// TrainInfo.java
 package jmri.jmrit.dispatcher;
 
 import java.util.ResourceBundle;
@@ -15,7 +14,6 @@ import java.util.ResourceBundle;
  * module.
  *
  * @author	Dave Duchamp Copyright (C) 2009
- * @version	$Revision$
  */
 public class TrainInfo {
 

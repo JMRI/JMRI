@@ -546,10 +546,6 @@
 		<variable label="Dual function F14" CV="T2CV.4.14" default="0" mask="VXXXXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
 			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		</variable>
-		<variable item="Sound Setting 11" CV="T2CV.4.15" default="1"  tooltip="Divides the BEMF value by n^2, higher the number the lower the chuff volume/change from loads">
-			<decVal max="8"/>
-			<label>BEMF sensitivity</label>
-		</variable>
 		<variable label="Chuff rate adjustment" CV="T2CV.4.16" default="100" tooltip="Default 100%, Increase value to increase chuff rate, decrease value to decrease chuff rate">
 			<decVal max="200"/>
 		</variable>

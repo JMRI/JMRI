@@ -1,17 +1,17 @@
-// RosterServlet.java
 package jmri.web.servlet.roster;
 
-import static jmri.jmris.json.JSON.ADDRESS;
-import static jmri.jmris.json.JSON.DATA;
-import static jmri.jmris.json.JSON.DECODER_FAMILY;
-import static jmri.jmris.json.JSON.DECODER_MODEL;
-import static jmri.jmris.json.JSON.GROUP;
-import static jmri.jmris.json.JSON.ID;
-import static jmri.jmris.json.JSON.LIST;
-import static jmri.jmris.json.JSON.MFG;
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.NUMBER;
-import static jmri.jmris.json.JSON.ROAD;
+import static jmri.server.json.JSON.ADDRESS;
+import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JSON.DECODER_FAMILY;
+import static jmri.server.json.JSON.DECODER_MODEL;
+import static jmri.server.json.JSON.GROUP;
+import static jmri.server.json.JSON.ID;
+import static jmri.server.json.JSON.LIST;
+import static jmri.server.json.JSON.MFG;
+import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.NUMBER;
+import static jmri.server.json.JSON.ROAD;
+import static jmri.server.json.JSON.FORMAT;
 import static jmri.web.servlet.ServletUtil.IMAGE_PNG;
 import static jmri.web.servlet.ServletUtil.UTF8;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
@@ -34,10 +34,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import jmri.jmris.json.JSON;
-import jmri.jmris.json.JsonUtil;
+import jmri.InstanceManager;
+import jmri.server.json.JSON;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.server.json.roster.JsonRosterServiceFactory;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
 import jmri.web.servlet.ServletUtil;
@@ -58,12 +59,7 @@ import org.slf4j.LoggerFactory;
  */
 public class RosterServlet extends HttpServlet {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -178879218045310132L;
-
-    private ObjectMapper mapper;
+    private transient ObjectMapper mapper;
 
     private final static Logger log = LoggerFactory.getLogger(RosterServlet.class.getName());
 
@@ -74,26 +70,33 @@ public class RosterServlet extends HttpServlet {
     }
 
     /**
-     * Parse all HTTP GET requests and pass to appropriate method
+     * Route the request and response to the appropriate methods.
      *
+     * @param request  servlet request
+     * @param response servlet response
+     * @throws java.io.IOException if communications is cut with client
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (request.getPathInfo().length() == 1) {
-            this.doList(request, response, true);
+            this.doList(request, response);
         } else {
             // split the path after removing the leading /
             String[] pathInfo = request.getPathInfo().substring(1).split("/"); // NOI18N
-            if (pathInfo[0].equals(LIST)) {
-                this.doList(request, response, false);
-            } else if (pathInfo[0].equals(GROUP)) {
-                if (pathInfo.length == 2) {
-                    this.doGroup(request, response, pathInfo[1]);
-                } else {
-                    this.doList(request, response, true);
-                }
-            } else {
-                this.doEntry(request, response);
+            switch (pathInfo[0]) {
+                case LIST:
+                    this.doList(request, response);
+                    break;
+                case GROUP:
+                    if (pathInfo.length == 2) {
+                        this.doGroup(request, response, pathInfo[1]);
+                    } else {
+                        this.doList(request, response);
+                    }
+                    break;
+                default:
+                    this.doEntry(request, response);
+                    break;
             }
         }
     }
@@ -101,11 +104,14 @@ public class RosterServlet extends HttpServlet {
     /**
      * Handle POST requests. POST requests are treated as GET requests.
      *
+     * @param request  servlet request
+     * @param response servlet response
+     * @throws java.io.IOException if communications is cut with client
      * @see #doGet(javax.servlet.http.HttpServletRequest,
      * javax.servlet.http.HttpServletResponse)
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         this.doGet(request, response);
     }
 
@@ -118,16 +124,19 @@ public class RosterServlet extends HttpServlet {
      * }. <b>Note:</b> Any given filter can be specified only once.
      *
      * This method responds to the following GET URL patterns: <ul>
-     * <li>/roster/group/&lt;group%20name&gt;</li>
-     * <li>/roster/group/&lt;group%20name&gt;?filter=filter[&amp;filter=filter]</li>
+     * <li>{@code/roster/group/<group name>}</li>
+     * <li>{@code/roster/group/<group name>?filter=filter[&filter=filter]}</li>
      * </ul>
      *
-     * This method responds to the POST URL
-     * <code>/roster/group/&lt;group%20name&gt;</code> with a JSON payload for
-     * the filter.
+     * This method responds to the POST URL {@code/roster/group/<group name>}
+     * with a JSON payload for the filter.
      *
+     * @param request  servlet request
+     * @param response servlet response
+     * @param group    The group name
+     * @throws java.io.IOException if communications is cut with client
      */
-    protected void doGroup(HttpServletRequest request, HttpServletResponse response, String group) throws ServletException, IOException {
+    protected void doGroup(HttpServletRequest request, HttpServletResponse response, String group) throws IOException {
         log.debug("Getting group {}", group);
         ObjectNode data;
         if (request.getContentType() != null && request.getContentType().contains(UTF8_APPLICATION_JSON)) {
@@ -147,7 +156,7 @@ public class RosterServlet extends HttpServlet {
         }
         data.put(GROUP, URLDecoder.decode(group, UTF8));
         log.debug("Getting roster with {}", data);
-        this.doRoster(request, response, data, true);
+        this.doRoster(request, response, data);
     }
 
     /**
@@ -155,18 +164,22 @@ public class RosterServlet extends HttpServlet {
      *
      * Lists roster entries and return an XML document conforming to the JMRI
      * Roster XML schema. This method can be passed multiple filter filter
-     * matching the filter in {@link jmri.jmrit.roster.Roster#getEntriesMatchingCriteria(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
-     * }. <b>Note:</b> Any given filter can be specified only once.
+     * matching the filter in
+     * {@link jmri.jmrit.roster.Roster#getEntriesMatchingCriteria(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)}.
+     * <b>Note:</b> Any given filter can be specified only once.
      *
      * This method responds to the following GET URL patterns: <ul>
-     * <li>/roster/</li> <li>/roster/list</li>
-     * <li>/roster/list?filter=filter[&amp;filter=filter]</li> </ul>
+     * <li>{@code/roster/}</li> <li>{@code/roster/list}</li>
+     * <li>{@code/roster/list?filter=filter[&filter=filter]}</li> </ul>
      *
      * This method responds to POST URLs <code>/roster</code> and
      * <code>/roster/list</code> with a JSON payload for the filter.
      *
+     * @param request  servlet request
+     * @param response servlet response
+     * @throws java.io.IOException if communications is cut with client
      */
-    protected void doList(HttpServletRequest request, HttpServletResponse response, Boolean groups) throws ServletException, IOException {
+    protected void doList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ObjectNode data;
         if (request.getContentType() != null && request.getContentType().contains(UTF8_APPLICATION_JSON)) {
             data = (ObjectNode) this.mapper.readTree(request.getReader());
@@ -176,19 +189,23 @@ public class RosterServlet extends HttpServlet {
         } else {
             data = this.mapper.createObjectNode();
             for (String filter : request.getParameterMap().keySet()) {
-                if (filter.equals(GROUP)) {
-                    String group = URLDecoder.decode(request.getParameter(filter), UTF8);
-                    if (!group.equals(Roster.AllEntries(request.getLocale()))) {
-                        data.put(GROUP, group);
-                    }
-                } else if (filter.equals(ID)) {
-                    data.put(NAME, URLDecoder.decode(request.getParameter(filter), UTF8));
-                } else {
-                    data.put(filter, URLDecoder.decode(request.getParameter(filter), UTF8));
+                switch (filter) {
+                    case GROUP:
+                        String group = URLDecoder.decode(request.getParameter(filter), UTF8);
+                        if (!group.equals(Roster.AllEntries(request.getLocale()))) {
+                            data.put(GROUP, group);
+                        }
+                        break;
+                    case ID:
+                        data.put(NAME, URLDecoder.decode(request.getParameter(filter), UTF8));
+                        break;
+                    default:
+                        data.put(filter, URLDecoder.decode(request.getParameter(filter), UTF8));
+                        break;
                 }
             }
         }
-        this.doRoster(request, response, data, groups);
+        this.doRoster(request, response, data);
     }
 
     /**
@@ -199,16 +216,19 @@ public class RosterServlet extends HttpServlet {
      * width and height specifiers, and always return PNG images.
      *
      * This method responds to the following URL patterns: <ul>
-     * <li>/roster/&lt;ID&gt;</li> <li>/roster/entry/&lt;ID&gt;</li>
-     * <li>/roster/&lt;ID&gt;/image</li> <li>/roster/&lt;ID&gt;/icon</li></ul>
+     * <li>{@code/roster/<ID>}</li> <li>{@code/roster/entry/<ID>}</li>
+     * <li>{@code/roster/<ID>/image}</li> <li>{@code/roster/<ID>/icon}</li></ul>
      * <b>Note:</b> The use of the term <em>entry</em> in URLs is optional.
      *
      * Images and icons can be rescaled using the following parameters:<ul>
      * <li>height</li> <li>maxHeight</li> <li>minHeight</li> <li>width</li>
      * <li>maxWidth</li> <li>minWidth</li></ul>
      *
+     * @param request  servlet request
+     * @param response servlet response
+     * @throws java.io.IOException if communications is cut with client
      */
-    protected void doEntry(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doEntry(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String[] pathInfo = request.getPathInfo().substring(1).split("/");
         int idOffset = 0;
         String type = null;
@@ -229,7 +249,7 @@ public class RosterServlet extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Could not find roster entry " + id);
             } else if (type == null || type.equals("entry")) {
                 // this should be an entirely different format than the table
-                this.doRoster(request, response, this.mapper.createObjectNode().put(ID, id), false);
+                this.doRoster(request, response, this.mapper.createObjectNode().put(ID, id));
             } else if (type.equals(JSON.IMAGE)) {
                 if (re.getImagePath() != null) {
                     this.doImage(request, response, FileUtil.getFile(re.getImagePath()));
@@ -247,12 +267,10 @@ public class RosterServlet extends HttpServlet {
                     } else {
                         response.sendError(HttpServletResponse.SC_NOT_FOUND);
                     }
+                } else if (re.getFunctionImage(function) != null) {
+                    this.doImage(request, response, FileUtil.getFile(re.getFunctionImage(function)));
                 } else {
-                    if (re.getFunctionImage(function) != null) {
-                        this.doImage(request, response, FileUtil.getFile(re.getFunctionImage(function)));
-                    } else {
-                        response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                    }
+                    response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 }
             } else if (type.equals(JSON.SELECTED_ICON)) {
                 if (pathInfo.length != (2 + idOffset)) {
@@ -260,7 +278,7 @@ public class RosterServlet extends HttpServlet {
                     this.doImage(request, response, FileUtil.getFile(re.getFunctionSelectedImage(function)));
                 }
             } else if (type.equals("file")) {
-                ServletUtil.getInstance().writeFile(response, new File(Roster.getFileLocation(), "roster" + File.separator + re.getFileName()), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
+                ServletUtil.getInstance().writeFile(response, new File(Roster.getDefault().getRosterLocation(), "roster" + File.separator + re.getFileName()), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
             } else if (type.equals("throttle")) {
                 ServletUtil.getInstance().writeFile(response, new File(FileUtil.getUserFilesPath(), "throttle" + File.separator + id + ".xml"), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
             } else {
@@ -276,98 +294,119 @@ public class RosterServlet extends HttpServlet {
     }
 
     /**
-     * Generate the XML output specified by {@link #doList(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, Boolean)
-     * }
-     * and {@link #doEntry(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-     * }.
+     * Generate the JSON, XML, or HTML output specified by {@link #doList(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)},
+     * {@link #doGroup(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.String)},
+     * or
+     * {@link #doEntry(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}.
      *
+     * @param request  servlet request with format and locale for response
+     * @param response servlet response
+     * @param filter   a JSON object with name-value pairs of parameters for
+     *                 {@link jmri.jmrit.roster.Roster#getEntriesMatchingCriteria(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)}.
+     * @throws java.io.IOException if communications is cut with client
      */
-    protected void doRoster(HttpServletRequest request, HttpServletResponse response, JsonNode filter, Boolean groups) throws ServletException, IOException {
+    protected void doRoster(HttpServletRequest request, HttpServletResponse response, JsonNode filter) throws IOException {
         ServletUtil.getInstance().setNonCachingHeaders(response);
         log.debug("Getting roster with filter {}", filter);
         String group = (!filter.path(GROUP).isMissingNode()) ? filter.path(GROUP).asText() : null;
         log.debug("Group {} was in filter", group);
-        if (JSON.JSON.equals(request.getParameter("format"))) { // NOI18N
-            response.setContentType(UTF8_APPLICATION_JSON);
-            response.getWriter().print(JsonUtil.getRoster(request.getLocale(), filter));
-        } else if (JSON.XML.equals(request.getParameter("format"))) { // NOI18N
-            response.setContentType(UTF8_APPLICATION_XML);
-            File roster = new File(Roster.defaultRosterFilename());
-            if (roster.exists()) {
-                response.getWriter().print(FileUtil.readFile(new File(Roster.defaultRosterFilename())));
-            }
-        } else if (("html").equals(request.getParameter("format"))) {
-            String row;
-            if ("simple".equals(request.getParameter("view"))) {
-                row = FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "SimpleTableRow.html")));
-            } else {
-                row = FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "TableRow.html")));
-            }
-            StringBuilder builder = new StringBuilder();
-            response.setContentType(UTF8_TEXT_HTML); // NOI18N
-            if (Roster.AllEntries(request.getLocale()).equals(group)) {
-                group = null;
-            }
-            List<RosterEntry> entries = Roster.instance().getEntriesMatchingCriteria(
-                    (!filter.path(ROAD).isMissingNode()) ? filter.path(ROAD).asText() : null,
-                    (!filter.path(NUMBER).isMissingNode()) ? filter.path(NUMBER).asText() : null,
-                    (!filter.path(ADDRESS).isMissingNode()) ? filter.path(ADDRESS).asText() : null,
-                    (!filter.path(MFG).isMissingNode()) ? filter.path(MFG).asText() : null,
-                    (!filter.path(DECODER_MODEL).isMissingNode()) ? filter.path(DECODER_MODEL).asText() : null,
-                    (!filter.path(DECODER_FAMILY).isMissingNode()) ? filter.path(DECODER_FAMILY).asText() : null,
-                    (!filter.path(NAME).isMissingNode()) ? filter.path(NAME).asText() : null,
-                    group
-            );
-            for (RosterEntry entry : entries) {
-                // NOTE: changing the following order will break JavaScript and HTML code
-                builder.append(String.format(request.getLocale(), row,
-                        entry.getId(),
-                        entry.getRoadName(),
-                        entry.getRoadNumber(),
-                        entry.getMfg(),
-                        entry.getModel(),
-                        entry.getOwner(),
-                        entry.getDccAddress(),
-                        entry.getDecoderModel(),
-                        entry.getDecoderFamily(),
-                        entry.getDecoderComment(),
-                        entry.getComment(),
-                        entry.getURL(),
-                        entry.getMaxSpeedPCT(),
-                        entry.getFileName(),
-                        StringUtil.escapeString(entry.getId())
-                // get function buttons in a formatting loop
-                // get attributes in a formatting loop
+
+        String format = request.getParameter(FORMAT);
+        if (format == null) {
+            format = "";
+        }
+        switch (format) {
+            case JSON.JSON:
+                response.setContentType(UTF8_APPLICATION_JSON);
+                JsonRosterServiceFactory factory = InstanceManager.getOptionalDefault(JsonRosterServiceFactory.class);
+                if (factory == null) {
+                    factory = new JsonRosterServiceFactory();
+                }
+                response.getWriter().print(factory.getHttpService(mapper).getRoster(request.getLocale(), filter));
+                break;
+            case JSON.XML:
+                response.setContentType(UTF8_APPLICATION_XML);
+                File roster = new File(Roster.getDefault().getRosterIndexPath());
+                if (roster.exists()) {
+                    response.getWriter().print(FileUtil.readFile(roster));
+                }
+                break;
+            case "html":
+                String row;
+                if ("simple".equals(request.getParameter("view"))) {
+                    row = FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "SimpleTableRow.html")));
+                } else {
+                    row = FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "TableRow.html")));
+                }
+                StringBuilder builder = new StringBuilder();
+                response.setContentType(UTF8_TEXT_HTML); // NOI18N
+                if (Roster.AllEntries(request.getLocale()).equals(group)) {
+                    group = null;
+                }
+                List<RosterEntry> entries = Roster.instance().getEntriesMatchingCriteria(
+                        (!filter.path(ROAD).isMissingNode()) ? filter.path(ROAD).asText() : null,
+                        (!filter.path(NUMBER).isMissingNode()) ? filter.path(NUMBER).asText() : null,
+                        (!filter.path(ADDRESS).isMissingNode()) ? filter.path(ADDRESS).asText() : null,
+                        (!filter.path(MFG).isMissingNode()) ? filter.path(MFG).asText() : null,
+                        (!filter.path(DECODER_MODEL).isMissingNode()) ? filter.path(DECODER_MODEL).asText() : null,
+                        (!filter.path(DECODER_FAMILY).isMissingNode()) ? filter.path(DECODER_FAMILY).asText() : null,
+                        (!filter.path(NAME).isMissingNode()) ? filter.path(NAME).asText() : null,
+                        group
+                );
+                entries.stream().forEach((entry) -> {
+                    // NOTE: changing the following order will break JavaScript and HTML code
+                    builder.append(String.format(request.getLocale(), row,
+                            entry.getId(),
+                            entry.getRoadName(),
+                            entry.getRoadNumber(),
+                            entry.getMfg(),
+                            entry.getModel(),
+                            entry.getOwner(),
+                            entry.getDccAddress(),
+                            entry.getDecoderModel(),
+                            entry.getDecoderFamily(),
+                            entry.getDecoderComment(),
+                            entry.getComment(),
+                            entry.getURL(),
+                            entry.getMaxSpeedPCT(),
+                            entry.getFileName(),
+                            StringUtil.escapeString(entry.getId())
+                    // get function buttons in a formatting loop
+                    // get attributes in a formatting loop
+                    ));
+                });
+                response.getWriter().print(builder.toString());
+                break;
+            default:
+                if (group == null) {
+                    group = Roster.AllEntries(request.getLocale());
+                }
+                response.setContentType(UTF8_TEXT_HTML); // NOI18N
+                response.getWriter().print(String.format(request.getLocale(),
+                        FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Roster.html"))),
+                        String.format(request.getLocale(),
+                                Bundle.getMessage(request.getLocale(), "HtmlTitle"),
+                                ServletUtil.getInstance().getRailroadName(false),
+                                Bundle.getMessage(request.getLocale(), "RosterTitle")
+                        ),
+                        ServletUtil.getInstance().getNavBar(request.getLocale(), request.getContextPath()),
+                        ServletUtil.getInstance().getRailroadName(false),
+                        ServletUtil.getInstance().getFooter(request.getLocale(), request.getContextPath()),
+                        group
                 ));
-            }
-            response.getWriter().print(builder.toString());
-        } else {
-            if (group == null) {
-                group = Roster.AllEntries(request.getLocale());
-            }
-            response.setContentType(UTF8_TEXT_HTML); // NOI18N
-            response.getWriter().print(String.format(request.getLocale(),
-                    FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Roster.html"))),
-                    String.format(request.getLocale(),
-                            Bundle.getMessage(request.getLocale(), "HtmlTitle"),
-                            ServletUtil.getInstance().getRailroadName(false),
-                            Bundle.getMessage(request.getLocale(), "RosterTitle")
-                    ),
-                    ServletUtil.getInstance().getNavBar(request.getLocale(), request.getContextPath()),
-                    ServletUtil.getInstance().getRailroadName(false),
-                    ServletUtil.getInstance().getFooter(request.getLocale(), request.getContextPath()),
-                    group
-            ));
+                break;
         }
     }
 
     /**
-     * Process the image for a roster entry image or icon request. This always
-     * returns a PNG image.
+     * Process the image for a roster entry image or icon request.
      *
      * @param file     {@link java.io.File} object containing an image
+     * @param request  contains parameters for drawing the image
+     * @param response sends a PNG image or a 403 Not Found error.
+     * @throws java.io.IOException if communications is cut with client
      */
-    void doImage(HttpServletRequest request, HttpServletResponse response, File file) throws ServletException, IOException {
+    void doImage(HttpServletRequest request, HttpServletResponse response, File file) throws IOException {
         BufferedImage image;
         try {
             image = ImageIO.read(file);

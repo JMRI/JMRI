@@ -33,7 +33,7 @@ segment de voie. Cette disposition est utilis&#233;e, o&#249; quatre voies se re
 dans une petite zone, si &#233;troitement que les signaux ne peuvent pas &#234;tre plac&#233;s aux pointes des aiguillages
 Une telle configuration est utilis&#233;e pour mod&#233;liser unr travers&#233;e jonction double, par exemple, mais peut aussi
 se produire dans d'autres contextes. Chacun des deux aiguillages peut &#234;tre soit un aiguillage &#224; droite (D),
-&#224; gauche (G) ou sym&#233;trique (Y) . Sch&#233;matiquement, la configuration finale pointe &#224; pointe se pr&#233;sente comme indiqu&#233; ci-dessous:</p>
+&#224; gauche (G) ou sym&#233;trique (Y). Sch&#233;matiquement, la configuration finale pointe &#224; pointe se pr&#233;sente comme indiqu&#233; ci-dessous:</p>
 <A Href="./images/DoubleXover8.gif"><IMG SRC = "./images/TToTTurnout8.gif"
 ALIGN= CENTER WIDTH= "280" height= "75" hspace= "0" vspace= "0"></A>
 <p>
@@ -66,11 +66,11 @@ sont plac&#233;es ou si la logique est cr&#233;&#233;e, l'&#201;diteur de TCO va
 signaux sont affect&#233;es &#224; l'aiguillages sp&#233;cifi&#233;.</p>
 <p>
 Lorsque les deux aiguillages ont cette configuration en utilisant cet outil d'intallation de pointe &#224; pointe, 
-l'&#201;diteur de TCO conserve la trace de ce fait. Donc, si vous s&#233;lectionnez <b> D&#233;finir des signaux ...</b>
+l'&#201;diteur de TCO conserve la trace de ce fait. Donc, si vous s&#233;lectionnez <b> D&#233;finir des signaux...</b>
 le menu contextuel de n'importe quel aiguillage, vous reviendrez &#224; ce dialogue avec les deux
 aiguillages remplis. Si vous avez plus tard, le d&#233;sir de"dissocier" les deux aiguillages
 et d'ajouter des signaux &#224; la pointe, pour chacun des aiguillages, s&#233;lectionnez
-<b> D&#233;finir Signaux &#224; l'aiguillage ...</b>, remplissez le nom de l'aiguillage manuellement, entrez les
+<b> D&#233;finir Signaux &#224; l'aiguillage...</b>, remplissez le nom de l'aiguillage manuellement, entrez les
 signaux, et cliquez sur <b>Termin&#233; </b>.
 
 <h3>Boite de Dialogue de D&#233;finition des Signaux aux Aiguillages Pointe &#224; Pointe</h3>
@@ -142,7 +142,7 @@ ne correspond pas &#224; un signal r&#233;el sur le r&#233;seau) &#224; la fin d
  qui relie la voie qui est signal&#233;e avec une voie qui n'est pas signal&#233;e.
 (Vous n'avez pas besoin d'ajouter une ic&#244;ne pour le signal virtuel sur votre TCO, mais il
 doit exister dans votre tableau signal, et doit &#234;tre affect&#233; &#224; un aiguillage ou un canton
-limite &#224; l'aide d'un outil ... D&#233;finir Signaux.) Si un canton se termine par un
+limite &#224; l'aide d'un outil... D&#233;finir Signaux.) Si un canton se termine par un
 heurtoir, aucun signal virtuel n'est requis &#224; la fin du heurtoir.</p>
 <p>
 Si un canton a un aiguillage interne ( l'aiguillage, et les tron&#231;ons de voie &#224; sa
@@ -151,7 +151,7 @@ de cet aiguillage, m&#234;me si ce n'est pas &#224; la fin du canton. Cependant,
  l'utilisateur peut ne pas vouloir signaler un aiguillage rarement utilis&#233; dans un canton.
 En suivant la voie &#224; travers un canton, le programme va sauter l'aiguillage interne non signal&#233;
  si <b> Passer Aiguillages Internes Non Signal&#233; </b> est coch&#233; dans le menu <b>Outils</b> de
-l'&#201;diteur de TCO .
+l'&#201;diteur de TCO.
 Il avertira toujours de ce qu'il fait. <b> Utilisez cette option avec
 prudence.</b> Il n'y a pas de signal de protection contre un aiguillage ignor&#233;
 mal r&#233;gl&#233;, si un aiguillage interne non signal&#233; n'est pas r&#233;gl&#233;e correctement,
