@@ -1706,13 +1706,13 @@ public class AutoActiveTrain implements ThrottleListener {
      */
     
     public static int getRampRateFromName(String rampRate) {
-        if (rampRate == rb.getString("RAMP_FAST")) {
+        if (rampRate.equals(rb.getString("RAMP_FAST"))) {
             return RAMP_FAST;
-        } else if (rampRate == rb.getString("RAMP_MEDIUM")) {
+        } else if (rampRate.equals(rb.getString("RAMP_MEDIUM"))) {
             return RAMP_MEDIUM;
-        } else if (rampRate == rb.getString("RAMP_MED_SLOW")) {
+        } else if (rampRate.equals(rb.getString("RAMP_MED_SLOW"))) {
             return RAMP_MED_SLOW;
-        } else if (rampRate == rb.getString("RAMP_SLOW")) {
+        } else if (rampRate.equals(rb.getString("RAMP_SLOW"))) {
             return RAMP_SLOW;
         }
         return RAMP_NONE;
