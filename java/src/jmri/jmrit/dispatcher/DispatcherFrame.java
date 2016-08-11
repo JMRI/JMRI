@@ -99,8 +99,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         }
     }
 
-    public void restoreAutoTrains() {
-        log.debug("Reloading saved trains");
+    public void loadAtStartup() {
+        log.debug("Loading saved trains flagged as LoadAtStartup");
         TrainInfoFile tif = new TrainInfoFile();
         String[] names = tif.getTrainInfoFileNames();
         boolean pathsInited = false;

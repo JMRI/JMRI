@@ -599,7 +599,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 if (shared.getAttribute("openDispatcher").getValue().equals("yes")) {
                     panel.setOpenDispatcherOnLoad(true);
                     jmri.jmrit.dispatcher.DispatcherFrame df = jmri.jmrit.dispatcher.DispatcherFrame.instance();
-                    df.restoreAutoTrains();
+                    df.loadAtStartup();
                 } else {
                     panel.setOpenDispatcherOnLoad(false);
                 }
