@@ -8,12 +8,7 @@
     <meta content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI help Transit Special Actions">
 
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-
-
 <!--#include virtual="/Style" -->
-
 </head>
 
 <body>
