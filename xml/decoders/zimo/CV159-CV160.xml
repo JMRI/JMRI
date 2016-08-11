@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
+<!-- version 1.1 Ronald Kuhn - add german translation --> 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <variable CV="159" mask="VVVVVVXX" item="Output 9 effect generated" minOut="9">
      <enumVal>
@@ -11,11 +12,13 @@
     </enumVal>
     <label>Function output 7 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 7</label>
+    <label xml:lang="de">FA7 Effekt</label>
   </variable>
   <variable CV="159" mask="XXXXXXVV" item="Output 9 behavior" minOut="9">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 7 behavior</label>
     <label xml:lang="it">Comportamento uscita Funzione 7</label>
+    <label xml:lang="de">FA7 Verhalten</label>
   </variable>
   <variable CV="160" mask="VVVVVVXX" item="Output 10 effect generated" minOut="10">
      <enumVal>
@@ -26,10 +29,12 @@
     </enumVal>
     <label>Function output 8 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 8</label>
+    <label xml:lang="de">FA8 Effekt</label>
   </variable>
   <variable CV="160" mask="XXXXXXVV" item="Output 10 behavior" minOut="10">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 8 behavior</label>
     <label xml:lang="it">Comportamento uscita Funzione 8</label>
+    <label xml:lang="de">FA8 Verhalten</label>
   </variable>
 </variables>

@@ -4,8 +4,11 @@
 <!-- version 1.1 2 Aug 11 JES
                  - made item name for CV 133 more generic
 -->
+<!-- version 1.2 - Ronald Kuhn - add german translation -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Smoke</name>
+  <name xml:lang="it">Fumo</name>
+  <name xml:lang="de">Rauch</name>
   <column>
     <display item="Smoke Characteristic"/>
     <label>
@@ -91,5 +94,4 @@
       </column>
     </row>
   </column>
-  <name xml:lang="it">Fumo</name>
 </pane>

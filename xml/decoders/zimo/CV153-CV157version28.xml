@@ -1,41 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- version 1.1, Nigel Cliffe - correcting naming of CV's 155 and 156  -->
 <!-- version 1, Mark Waters - for Unified Software -->
+<!-- version 1.1, Nigel Cliffe - correcting naming of CV's 155 and 156  -->
+<!-- version 1.2, Ronald Kuhn - add german translation  -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <variable CV="153" item="Packet Time-out Value" default="0" tooltip="When Energy storage cct connected, 0-255 (0-25sec)">
+  <variable CV="153" item="Packet Time-out Value" default="0">
     <decVal min="0" max="255"/>
     <label>Max drive Time after signal loss</label>
     <label xml:lang="it">Tempo massimo percorrenza dopo perdita segnale</label>
+    <label xml:lang="de">Weiterfahrt ohne Signal</label>
+	<tooltip>When Energy storage cct connected, 0-255 (0-25 sec)</tooltip>
+	<tooltip xml:lang="de">Anhalten nach Nicht-mehr-DCC-Empfang (Zehntel-sec)</tooltip>
   </variable>
-  <variable item="Special Output Configuration" CV="154" mask="XXXXXXXV" default="0">
+  <variable CV="154" item="Special Output Configuration" mask="XXXXXXXV" default="0">
     <enumVal>
       <enumChoice choice="No Special Configuration">
         <choice>No Special Configuration</choice>
         <choice xml:lang="it">Nessuna configurazione Speciale</choice>
+        <choice xml:lang="de">keine spezielle Einstellung</choice>
       </enumChoice>
       <enumChoice choice="Pantograph Operation (Zimo/Roco BR110)">
         <choice>Pantograph Operation (Zimo/Roco BR110)</choice>
         <choice xml:lang="it">Pantografo (Zimo/Roco BR110)(</choice>
+        <choice xml:lang="de">Pantograph (Zimo/Roco BR110)(</choice>
       </enumChoice>
     </enumVal>
     <label>Special Output Configuration</label>
     <label xml:lang="it">Configurazione Speciale Uscita</label>
+    <label xml:lang="de">Diverse Spezialbits</label>
   </variable>
-  <variable item="Drive Away if Startup sound still playing" CV="154" mask="XXXXXXVX" default="0">
+  <variable CV="154" item="Drive Away if Startup sound still playing" mask="XXXXXXVX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Drive Away if Startup sound still playing</label>
     <label xml:lang="it">Partenza anche se suono accensione ancora attivo</label>
+    <label xml:lang="de">&lt;html&gt;DIESEL: Sofort abfahren, auch wenn Stand-&lt;br&gt;geräusch noch nicht zu Ende abgespielt&lt;/html&gt;</label>
   </variable>
-  <variable CV="154" mask="XXXXVXXX" default="0" item="Advanced Group 1 Option 5">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
-    <label>Second Motorola Address</label>
-    <label xml:lang="it">Secondo Indirizzo Motorola</label>
-  </variable>
-  <variable item="Two Stage Air Compressor" CV="154" mask="XXXVXXXX" default="0" tooltip="Z1=fast, Z2=slow">
+  <variable CV="154" item="Two Stage Air Compressor" mask="XXXVXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Two Stage Air Compressor</label>
     <label xml:lang="it">Compressore aria a due stadi</label>
+    <label xml:lang="de">DAMPF: Zweistufige Luftpumpe</label>
+    <tooltip>Z1=fast, Z2=slow</tooltip>
+    <tooltip xml:lang="de">Z1 nach Stehenbleiben, Z2 während Stehens</tooltip>
   </variable>
   <variable CV="154" mask="XXVXXXXX" default="0" item="Advanced Group 1 Option 2">
     <enumVal>
@@ -54,6 +60,7 @@
     </enumVal>
     <label>ACKnoledgement Pulse 'Forward only'</label>
     <label xml:lang="it">Impulso ACK 'Solo in Avanti'</label>
+    <label xml:lang="de">ACKnoledgement Pulse 'nur Vorwärts'</label>
   </variable>
   <variable CV="154" mask="XVXXXXXX" default="0" item="Advanced Group 1 Option 3">
     <enumVal>
@@ -72,17 +79,26 @@
     </enumVal>
     <label>ACKnoledgement Pulse 'Reverse only'</label>
     <label xml:lang="it">Impulso ACK 'Solo in Retro'</label>
+    <label xml:lang="de">ACKnoledgement Pulse 'nur Rückwärts'</label>
   </variable>
-  <variable item="Delay Shutdown untill end of Starting Whistle" CV="154" mask="VXXXXXXX" default="0">
+  <variable CV="154" mask="XXXXVXXX" default="0" item="Advanced Group 1 Option 5">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+    <label>Second Motorola Address</label>
+    <label xml:lang="it">Secondo Indirizzo Motorola</label>
+    <label xml:lang="de">Zweite Motorola Adresse</label>
+  </variable>
+  <variable CV="154" item="Delay Shutdown untill end of Starting Whistle" mask="VXXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Delay Shutdown</label>
     <label xml:lang="it">Ritardo Spegnimento</label>
+    <label xml:lang="de">&lt;html&gt;DAMPF: Anfahrt verzögern, bis&lt;br&gt;„Anfahrpfiff“ vollständig abgespielt.&lt;/html&gt;</label>
   </variable>
-  <variable item="Half Speed Key Extension" CV="155" default="0">
+  <variable CV="155" item="Half Speed Key Extension" default="0">
     <enumVal>
       <enumChoice choice="Use Setting in CV124 above">
         <choice>Setting in CV124</choice>
         <choice xml:lang="it">parametri in CV124</choice>
+        <choice xml:lang="de">Einstellung aus CV124</choice>
       </enumChoice>
       <enumChoice choice="F1">
         <choice>F1</choice>
@@ -144,12 +160,14 @@
     </enumVal>
     <label>Half Speed Key Extension</label>
     <label xml:lang="it">Estensione tasto funzione Mezza velocità</label>
+    <label xml:lang="de">Halbgeschwindigkeit</label>
   </variable>
-  <variable item="Shunt Function Key Extension" CV="156" default="0">
+  <variable CV="156" item="Shunt Function Key Extension" default="0">
     <enumVal>
       <enumChoice choice="Use Setting in CV124 above">
         <choice>Setting in CV124</choice>
         <choice xml:lang="it">parametri in CV124</choice>
+        <choice xml:lang="de">Einstellung aus CV124</choice>
       </enumChoice>
       <enumChoice choice="F1">
         <choice>F1</choice>
@@ -211,12 +229,14 @@
     </enumVal>
     <label>Shunt Function Key Extension</label>
     <label xml:lang="it">Estensione tasto funzione Manovra</label>
+    <label xml:lang="de">Rangiergang</label>
   </variable>
-  <variable item="MAN Key Extension (Disable HLU or ABC signal control)" CV="157" default="0" tooltip="Disables ABC and HLU Signal Control">
+  <variable CV="157" item="MAN Key Extension (Disable HLU or ABC signal control)" default="0" tooltip="Disables ABC and HLU Signal Control">
     <enumVal>
       <enumChoice choice="MAN (Zimo)">
         <choice>Setting in CV124</choice>
         <choice xml:lang="it">parametri in CV124</choice>
+        <choice xml:lang="de">Einstellung aus CV124</choice>
       </enumChoice>
       <enumChoice choice="F1">
         <choice>F1</choice>
@@ -278,5 +298,6 @@
     </enumVal>
     <label>MAN Key Extension (Disable HLU or ABC signal control)</label>
     <label xml:lang="it">Estensione tasto funzione MAN (disabilita controllo segnale HLU o ABC)</label>
+    <label xml:lang="de">Auswahl der MAN-Taste (Abschalten von HLU bzw. ABC)</label>
   </variable>
 </variables>
