@@ -1368,7 +1368,7 @@ public class Location implements java.beans.PropertyChangeListener {
                         .provideReporter(
                                 e.getAttribute(Xml.READER).getValue());
                 _reader = r;
-            } catch (Exception ex) {
+            } catch (IllegalArgumentException ex) {
                 log.warn("Not able to find reader: {} for location ({})", e.getAttribute(Xml.READER).getValue(),
                         getName());
             }
