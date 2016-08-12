@@ -1690,7 +1690,7 @@
         </findbugs>
     </target>
 
-<!--  Start for checker framework -->
+    <!--  Start for checker framework -->
 
     <property environment="env"/>
     <property name="checkerframework" value="${libdir}/checker-framework/" />
@@ -2057,6 +2057,27 @@
                 <parallel>
                     <antcall target="javadoc" />
                     <antcall target="ci-test-travis" />
+                    <sequential>
+                        <findbugs home="${findbugs.home}"
+                                  output="xml:withMessages"
+                                  outputFile="findbugs.xml"
+                                  jvmargs="-Xmx1536m"
+                                  timeout="12000000"
+                                  excludeFilter=".findbugs.xml"
+                                  effort="max"
+                                  reportLevel="low"
+                                  errorProperty="test.failed"
+                                  warningsProperty="test.failed">
+                            <sourcePath path="${source}/"/>
+                            <class location="${jartarget}/jmri.jar"/>
+                            <auxClasspath refid="compile.class.path" />
+                        </findbugs>
+                        <fail>
+                            <condition>
+                                <istrue value="${test.failed}" />
+                            </condition>
+                        </fail>
+                    </sequential>
                 </parallel>
             </sequential>
         </parallel>
