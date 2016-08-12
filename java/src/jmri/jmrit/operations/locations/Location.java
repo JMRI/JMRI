@@ -60,7 +60,7 @@ public class Location implements java.beans.PropertyChangeListener {
     protected List<String> _listTypes = new ArrayList<String>();
 
     // IdTag reader associated with this location.
-    protected Reporter reader = null;
+    protected Reporter _reader = null;
 
     // Pool
     protected int _idPoolNumber = 0;
@@ -1195,6 +1195,28 @@ public class Location implements java.beans.PropertyChangeListener {
         return false;
     }
 
+    /*
+     * set the jmri.Reporter object associated with this location.
+     * 
+     * @param reader jmri.Reporter object.
+     */
+    protected void setReporter(Reporter r) {
+        Reporter old = _reader;
+        _reader = r;
+        if (old != r) {
+            setDirtyAndFirePropertyChange("reporterChange", old, r);
+        }
+    }
+
+    /*
+     * get the jmri.Reporter object associated with this location.
+     * 
+     * @return jmri.Reporter object.
+     */
+    public Reporter getReporter() {
+        return _reader;
+    }
+
     public void dispose() {
         List<Track> tracks = getTrackList();
         for (Track track : tracks) {
@@ -1345,7 +1367,7 @@ public class Location implements java.beans.PropertyChangeListener {
                         .getDefault(jmri.ReporterManager.class)
                         .provideReporter(
                                 e.getAttribute(Xml.READER).getValue());
-                setReporter(r);
+                _reader = r;
             } catch (Exception ex) {
                 log.warn("Not able to find reader: {} for location ({})", e.getAttribute(Xml.READER).getValue(),
                         getName());
@@ -1389,8 +1411,8 @@ public class Location implements java.beans.PropertyChangeListener {
             e.setAttribute(Xml.SOUTH_TRAIN_ICON_X, Integer.toString(getTrainIconSouth().x));
             e.setAttribute(Xml.SOUTH_TRAIN_ICON_Y, Integer.toString(getTrainIconSouth().y));
         }
-        if (reader != null) {
-            e.setAttribute(Xml.READER, reader.getDisplayName());
+        if (_reader != null) {
+            e.setAttribute(Xml.READER, _reader.getDisplayName());
         }
         // build list of rolling stock types for this location
         String[] types = getTypeNames();
@@ -1481,24 +1503,6 @@ public class Location implements java.beans.PropertyChangeListener {
             }
             deleteTypeName(oldType);
         }
-    }
-
-    /*
-     * set the jmri.Reporter object associated with this location.
-     * 
-     * @param reader jmri.Reporter object.
-     */
-    protected void setReporter(Reporter r) {
-        reader = r;
-    }
-
-    /*
-     * get the jmri.Reporter object associated with this location.
-     * 
-     * @return jmri.Reporter object.
-     */
-    public Reporter getReporter() {
-        return reader;
     }
 
     private void replaceRoad(String oldRoad, String newRoad) {
