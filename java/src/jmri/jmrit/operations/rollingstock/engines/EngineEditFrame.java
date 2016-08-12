@@ -593,7 +593,11 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
             }
             _engine.setComment(commentTextField.getText());
             _engine.setValue(valueTextField.getText());
-            _engine.setIdTag((IdTag) rfidComboBox.getSelectedItem());
+            // save the IdTag for this engine
+            IdTag idTag = (IdTag) rfidComboBox.getSelectedItem();
+            if (idTag != null) {
+                _engine.setRfid(idTag.getUserName());
+            }
         }
     }
 

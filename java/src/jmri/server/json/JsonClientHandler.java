@@ -5,18 +5,14 @@ import static jmri.server.json.JSON.CONSIST;
 import static jmri.server.json.JSON.CONSISTS;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.ENGINES;
-import static jmri.server.json.JSON.FORMAT;
 import static jmri.server.json.JSON.GOODBYE;
 import static jmri.server.json.JSON.HELLO;
 import static jmri.server.json.JSON.LIST;
 import static jmri.server.json.JSON.LOCALE;
 import static jmri.server.json.JSON.LOCATIONS;
 import static jmri.server.json.JSON.METHOD;
-import static jmri.server.json.JSON.PANELS;
 import static jmri.server.json.JSON.PING;
 import static jmri.server.json.JSON.PROGRAMMER;
-import static jmri.server.json.JSON.REPORTER;
-import static jmri.server.json.JSON.REPORTERS;
 import static jmri.server.json.JSON.SIGNAL_HEAD;
 import static jmri.server.json.JSON.SIGNAL_HEADS;
 import static jmri.server.json.JSON.SIGNAL_MAST;
@@ -24,7 +20,6 @@ import static jmri.server.json.JSON.SIGNAL_MASTS;
 import static jmri.server.json.JSON.TRAIN;
 import static jmri.server.json.JSON.TRAINS;
 import static jmri.server.json.JSON.TYPE;
-import static jmri.server.json.JSON.XML;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -48,6 +43,12 @@ import org.slf4j.LoggerFactory;
 
 public class JsonClientHandler {
 
+    /**
+     * When used as a parameter to
+     * {@link #onMessage(java.lang.String)}, will cause a
+     * {@value jmri.server.json.JSON#HELLO} message to be sent to the client.
+     */
+    public static final String HELLO_MSG = "{\"" + JSON.TYPE + "\":\"" + JSON.HELLO + "\"}";
     private final JsonConsistServer consistServer;
     private final JsonOperationsServer operationsServer;
     private final JsonProgrammerServer programmerServer;
@@ -176,12 +177,6 @@ public class JsonClientHandler {
                     case LOCATIONS:
                         reply = JsonUtil.getLocations(this.connection.getLocale());
                         break;
-                    case PANELS:
-                        reply = JsonUtil.getPanels(this.connection.getLocale(), (data.path(FORMAT).isMissingNode()) ? XML : data.path(FORMAT).asText());
-                        break;
-                    case REPORTERS:
-                        reply = JsonUtil.getReporters(this.connection.getLocale());
-                        break;
                     case SIGNAL_HEADS:
                         reply = JsonUtil.getSignalHeads(this.connection.getLocale());
                         break;
@@ -217,9 +212,6 @@ public class JsonClientHandler {
                         break;
                     case SIGNAL_MAST:
                         this.signalMastServer.parseRequest(this.connection.getLocale(), data);
-                        break;
-                    case REPORTER:
-                        this.reporterServer.parseRequest(this.connection.getLocale(), data);
                         break;
                     case TRAIN:
                         this.operationsServer.parseTrainRequest(this.connection.getLocale(), data);
@@ -258,13 +250,14 @@ public class JsonClientHandler {
     /**
      *
      * @param heartbeat seconds until heartbeat must be received before breaking
-     *                  connection to client.
+     *                  connection to client; currently ignored
      * @throws IOException if communications broken with client
-     * @deprecated since 4.5.2 without direct replacement
+     * @deprecated since 4.5.2; use {@link #onMessage(java.lang.String)} with
+     * the parameter {@link #HELLO_MSG} instead
      */
     @Deprecated
     public void sendHello(int heartbeat) throws IOException {
-        this.connection.sendMessage(JsonUtil.getHello(this.connection.getLocale(), heartbeat));
+        this.onMessage(HELLO_MSG);
     }
 
     private void sendErrorMessage(int code, String message) throws IOException {

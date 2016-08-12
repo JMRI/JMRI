@@ -28,6 +28,7 @@ public class LI100Test extends TestCase {
         suite.addTest(new TestSuite(LI100AdapterTest.class));
         suite.addTest(new TestSuite(LI100XNetInitializationManagerTest.class));
         suite.addTest(new TestSuite(LI100XNetProgrammerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
         return suite;
     }
 

@@ -258,7 +258,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     @Override
     public synchronized Object getValueAt(int row, int col) {
-        if (row >= sysList.size()) {
+        if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
         Train train = sysList.get(row);

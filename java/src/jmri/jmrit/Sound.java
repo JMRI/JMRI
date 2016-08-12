@@ -117,7 +117,7 @@ public class Sound {
      * {@link javax.sound.sampled.Clip#LOOP_CONTINUOUSLY} to create an endless
      * loop.
      *
-     * @param count
+     * @param count the number of times to loop
      */
     public void loop(int count) {
         if (streaming) {

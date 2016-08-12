@@ -156,8 +156,8 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
     }
 
     @Override
-    public Object getValueAt(int row, int col) {
-        if (row >= _tracksList.size()) {
+    public synchronized Object getValueAt(int row, int col) {
+        if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
         Track track = _tracksList.get(row);
@@ -183,8 +183,8 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
     }
 
     @Override
-    public void setValueAt(Object value, int row, int col) {
-        if (row >= _tracksList.size()) {
+    public synchronized void setValueAt(Object value, int row, int col) {
+        if (row >= getRowCount()) {
             return;
         }
         Track track = _tracksList.get(row);
