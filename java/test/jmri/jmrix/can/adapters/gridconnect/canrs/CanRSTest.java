@@ -31,6 +31,7 @@ public class CanRSTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.can.adapters.gridconnect.canrs.CanRSTest");
         suite.addTest(MergMessageTest.suite());
         suite.addTest(MergReplyTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.can.adapters.gridconnect.canrs.serialdriver.PackageTest.class));
         return suite;
     }
 
