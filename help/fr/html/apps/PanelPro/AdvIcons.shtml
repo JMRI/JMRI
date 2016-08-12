@@ -16,13 +16,13 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
 <h1>JMRI: Ic&#244;nes Avanc&#233;es dans PanelPro</h1>
 
-<a name="memoryicon"><h3>Ic&#244;nes de M&#233;moire</h3></a>
+<a name="memoryicon"></a><h3>Ic&#244;nes de M&#233;moire</h3>
 
 Les Objets M&#233;moire sont con&#231;us pour les scripts de
 contr&#244;le; la premi&#232;re application est un MemoryIcon qui vous permet de placer une ic&#244;ne 
@@ -36,7 +36,7 @@ directement, sous forme de cha&#238;ne si c'est une cha&#238;ne et en tant que N
 Voir xml/samples/MemoryIconExample.xml pour tout savoir
 sur la fa&#231;on de le mettre en place.
 
-<a name="reportericon"><h3>Ic&#244;nes Journal</h3></a>
+<a name="reportericon"></a><h3>Ic&#244;nes Journal</h3>
 
 La premi&#232;re impl&#233;mentation de Journal est le transpondeur Digitrax.
 En ajoutant les &#233;l&#233;ments appropri&#233;s &#224; vos fichiers panneau, vous pouvez afficher des informations sur 

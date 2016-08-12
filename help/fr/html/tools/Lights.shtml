@@ -19,7 +19,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -87,7 +87,7 @@ dans le menu  <b>Panneau</b> . Notez que l'&#233;tat activ&#233;/d&#233;sactiv&#
 n'est pas enregistr&#233; dans le fichier de configuration. Lorsque les Lumi&#232;res sont charg&#233;es &#224; partir d'un
 fichier de configuration, elles sont tous activ&#233;es.
 
-<a name="addLight"> <H3>Ajout d'un Nouvelle Lumi&#232;re</H3></a>
+<a name="addLight"></a><H3>Ajout d'un Nouvelle Lumi&#232;re</H3>
 <p>Pour ajouter une nouvelle Lumi&#232;re, suivez cette proc&#233;dure:</p>
 <ol>
 <p><li>Cliquez  <b> Tableau Lumi&#232;res</b>  dans le menu <b>Outils</b> pour faire appara&#238;tre
@@ -163,7 +163,7 @@ alors que dans le mode &#233;dition,  <b>Annuler</b> est automatiquement s&#233;
 modification n'est apport&#233;e &#224; la Lumi&#232;re s&#233;lectionn&#233;e.</li>
 </ol>
 
-<a name="lightcontrol"><H3>Options  de Commande Automatis&#233;e des Lumi&#232;res</h3></a>
+<a name="lightcontrol"></a><H3>Options  de Commande Automatis&#233;e des Lumi&#232;res</h3>
 
 Le fonctionnement d'une lumi&#232;re peut &#234;tre command&#233;e par les moyens suivants:
 <ul>
@@ -204,7 +204,7 @@ pour contr&#244;ler la sonnerie d'une cloche de passage &#224; niveau quand un t
 </li>
 </ul>
 	
-<a name="variablelight"><H3>Lumi&#232;res Variables</H3></a>
+<a name="variablelight"></a><H3>Lumi&#232;res Variables</H3>
 
 <p>
 Une lumi&#232;re variable permet un niveau variable d'intensit&#233;s entre On et Off.
@@ -254,7 +254,7 @@ r&#233;glage pour le nouveau r&#233;glage.
 </p>
 	
     
-<a name="VariableLightSettings"><H3>R&#233;glages Variables de la lumi&#232;re</H3></a>
+<a name="VariableLightSettings"></a><H3>R&#233;glages Variables de la lumi&#232;re</H3>
 <p>
 Ces param&#232;tres ajustent la mani&#232;re dont la commande "intensit&#233;" est utilis&#233;e.
 <dl>

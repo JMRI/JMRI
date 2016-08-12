@@ -193,6 +193,13 @@ public interface Manager {
     public static final int PANELFILES = TIMEBASE + 10;
     public static final int ENTRYEXIT = PANELFILES + 10;
 
+    /** 
+     * Determine the order that types should be written when storing 
+     * panel files.  Uses one of the constants defined in this class.
+     * <p>
+     * Yes, that's an overly-centralized methodology, but it works for now.
+     * @return write order for this Manager; larger is later.
+     */
     @CheckReturnValue
     public int getXMLOrder();
 

@@ -27,10 +27,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PrintLocationsByCarTypesAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7757265502705876182L;
     static final String NEW_LINE = "\n"; // NOI18N
     static final String TAB = "\t"; // NOI18N
 

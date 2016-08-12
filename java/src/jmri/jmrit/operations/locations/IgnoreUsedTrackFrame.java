@@ -22,10 +22,6 @@ import org.slf4j.LoggerFactory;
  */
 class IgnoreUsedTrackFrame extends OperationsFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8653916276049204803L;
     // radio buttons
     JRadioButton zeroPercent = new JRadioButton(Bundle.getMessage("Disabled"));
     JRadioButton twentyfivePercent = new JRadioButton("25%");	// NOI18N

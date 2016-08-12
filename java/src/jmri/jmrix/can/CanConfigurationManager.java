@@ -22,7 +22,6 @@ public class CanConfigurationManager extends ConfigurationManager {
     jmri.jmrix.swing.ComponentFactory cf = null;
 
     public void configureManagers() {
-        ActiveFlag.setActive();
     }
 
     /**

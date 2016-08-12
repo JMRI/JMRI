@@ -1,157 +1,155 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
+
 <html lang="en">
 <head>
-    <TITLE>
- 	JMRI: Recommended Practices
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code standards recommendation Swing">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Recommended Practices</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content=
+  "JMRI technical code standards recommendation Swing">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head><!--#include virtual="/Header" -->
 
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+    <div id="mainContent">
+      <h1>JMRI: Recommended Practices</h1>This is page of
+      miscellaneous info and pointers for JMRI developers.
 
-	    <H1>JMRI: Recommended Practices</H1>
+      <h2>Class Library Preferences</h2>
 
-This is page of miscellaneous info and pointers for JMRI developers.
+      <ul>
+        <li>We use Java Swing for our GUI development. It's a lot
+        more powerful than the original AWT, and the price is
+        right. We have a recommended organization and usage pattern
+        that's documented on <a href="Swing.shtml">another
+        page</a>.</li>
 
-<h2>Class Library Preferences</h2>
+        <li>JMRI uses the RXTX libraries to support serial
+        communications on Macintosh, Linux and Windows. On Windows
+        only, the Serialio package from <a href=
+        "http://Serialio.com">Serialio.com</a> is also used to be
+        able to use the MS100 baud rate. To do this, the
+        jmri.jmrix.loconet.ms100.MS100Adapter class was converted
+        to use Java reflection to decide which whether the Serialio
+        package is available; on other systems, it uses RXTX. Note
+        that our license for Serialio limits it to this use only;
+        we are not permitted to distribute the libraries for other
+        purposes.</li>
 
-<ul>
+        <li>Take a few moments to learn about the the different
+        types of <a href=
+        "http://java.sun.com/j2se/1.5.0/docs/guide/collections/overview.html">
+        Java collections</a> that are available (<a href=
+        "http://java.sun.com/j2se/1.5.0/docs/api/java/util/List.html">List</a>,
+        <a href=
+        "http://java.sun.com/j2se/1.5.0/docs/api/java/util/HashMap.html">
+        HashMap</a>, etc) in the <a href="">java.util package</a>.
+        Not everything needs to be a Vector or an array!</li>
 
-<LI>
-We use Java Swing for our GUI development.  It's a lot more powerful
-than the original AWT, and the price is right. We have a recommended
-organization and usage pattern that's documented on 
-<a href="Swing.shtml">another page</a>.
+        <li>JMRI uses <a href=
+        "http://java.sun.com/docs/books/tutorial/java/generics/index.html">
+        Java generics</a> extensively to <a href=
+        "http://java.sun.com/docs/books/tutorial/java/generics/generics.html">
+        reduce errors and improve understanding</a>. With lots of
+        people writing and sharing code, using generics instead of
+        casts makes it much easier to understand the code, and
+        allows the compiler to catch many misunderstandings about
+        how things should be used. Most of the important
+        information on them can be found on <a href=
+        "http://java.sun.com/docs/books/tutorial/java/generics/gentypes.html">
+        this page</a> from the Java Tutorial.</li>
 
-<LI>JMRI uses the RXTX libraries to support serial communications on Macintosh,
-Linux and Windows.  On Windows only, the Serialio package from
-<A HREF="http://Serialio.com">Serialio.com</a> is also used
-to be able to use the MS100 baud rate.  To do this, the 
-jmri.jmrix.loconet.ms100.MS100Adapter class was converted to use
-Java reflection to decide which whether the Serialio package is
-available; on other systems, it uses RXTX.
-Note that our license for Serialio limits it to this use only;
-we are not permitted to distribute the libraries for other purposes.
+        <li>If you need to use comma-separated variable (CSV)
+        files, please use the <a href=
+        "http://javacsv.sourceforge.net/">javacsv API</a> if
+        possible. We are already using that in a number of places,
+        and will probably use it in more. If that doesn't provide
+        enough functionality, we might eventually move to the
+        <a href=
+        "http://opencsv.sourceforge.net/api/au/com/bytecode/opencsv/">
+        opencsv API</a>, but since we only want to use one, the
+        conversion will be a lot of work.</li>
+      </ul>
 
-<LI>Take a few moments to learn about the the different types of
-<a href="http://java.sun.com/j2se/1.5.0/docs/guide/collections/overview.html">Java collections</a>
-that are available
-(<a href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/List.html">List</a>, 
-<a href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/HashMap.html">HashMap</a>, 
-etc)
-in the
-<a href="">java.util package</a>.
-Not everything needs to be a Vector or an array!
+      <h2>Code Format</h2>The <a href=
+      "http://www.oracle.com/technetwork/java/codeconventions-150003.pdf">
+      Java Code Conventions</a> (if that link is broken, try
+      <a href=
+      "https://web.archive.org/web/20080703230238/http://java.sun.com/docs/codeconv/">
+      this one</a> from the Internet Archive) for names,
+      formatting, etc are really useful. If you find that you can't
+      read a piece of code, these will help make it better.
 
-<LI>
-JMRI uses 
-<a href="http://java.sun.com/docs/books/tutorial/java/generics/index.html">Java generics</a>
-extensively to 
-<a href="http://java.sun.com/docs/books/tutorial/java/generics/generics.html">reduce errors and improve understanding</a>.  
-With lots of people writing and sharing code, using 
-generics instead of casts makes it much easier to understand the code, 
-and allows the compiler to catch many misunderstandings about how things
-should be used. Most of the important information on them can be 
-found on 
-<a href="http://java.sun.com/docs/books/tutorial/java/generics/gentypes.html">this page</a>
-from the Java Tutorial.
+      <p>Note that we have a few local conventions beyond those in
+      the Java recommendations. You'll find them on other pages in
+      this section, but for example, we recommend that you define
+      the <a href="Logging.shtml">logger reference</a> at the
+      bottom of each file.</p>
 
-<LI>
-If you need to use comma-separated variable (CSV) files, 
-please use the
-<a href="http://javacsv.sourceforge.net/">javacsv API</a>
-if possible.  We are already using that in a number of places,
-and will probably use it in more.  If that doesn't provide
-enough functionality, we might eventually move to the
-<a href="http://opencsv.sourceforge.net/api/au/com/bytecode/opencsv/">opencsv API</a>, but since we only want to use one,
-the conversion will be a lot of work.
-</UL>
+      <h2>Deprecating Code</h2>As development proceeds, sometimes
+      old ways of doing things have to be replaced by new ways. In
+      many cases, you can just change all the using code in our
+      repository, and move forward. For general interfaces that
+      might be used externally to JMRI, such as in scripts and
+      CATS, it can be good to leave the old interface in place for
+      a while, marking it as "deprecated" so that people can
+      discover that it will eventually go away. After a suitable
+      number of release cycles, the deprecated interface can then
+      be removed.
 
-<h2>Code Format</h2>
-The 
-<A HREF="http://www.oracle.com/technetwork/java/codeconventions-150003.pdf">Java Code Conventions</A>
-(if that link is broken, try <a href="https://web.archive.org/web/20080703230238/http://java.sun.com/docs/codeconv/">this one</a> from the Internet Archive)
-for names, formatting, etc are really useful.
-If you find that you can't read a piece of code, these will help
-make it better.
+      <p>Note that a deprecated interface is meant to still work.
+      Deprecated should only mean that you can't count on the
+      deprecated interface working in the future, so that it would
+      be good to code away from it while it's still working.</p>
 
-<p>
-Note that we have a few local conventions beyond those in the Java recommendations.
-You'll find them on other pages in this section, but for example, we recommend
-that you define the <a href="Logging.shtml">logger reference</a> at the bottom of each file.
-
-<h2>Deprecating Code</h2>
-
-As development proceeds, sometimes old ways of doing things have to be replaced by
-new ways.  
-In many cases, you can just change all the using code in our repository, 
-and move forward.  
-For general interfaces that might be used externally to JMRI, 
-such as in scripts and CATS, 
-it can be good to leave the old interface in place for a while, 
-marking it as "deprecated" so that people can discover that it 
-will eventually go away.  
-After a suitable number of release cycles, the
-deprecated interface can then be removed.
-<p>
-Note that a deprecated interface is meant to still work.  
-Deprecated should only mean that you 
-can't count on the deprecated interface working in the future, 
-so that it would be good to code away from it while it's still working.
-
-<p>
-You may want to work with the deprecation checks "on" during compilation.  
-To do that, change this line of build.xml:
-
-<pre><code>
+      <p>You may want to work with the deprecation checks "on"
+      during compilation. To do that, change this line of
+      build.xml:</p>
+      <pre>
+<code>
 &lt;property name="deprecation" value="on" /&gt;
-</code></pre>
+</code>
+</pre>
 
-<p>
-This lets you pay attention to new deprecation warnings as you code.
+      <p>This lets you pay attention to new deprecation warnings as
+      you code.</p>
 
-<p>
-There are two forms of marking something as deprecated (JavaDoc tag and Annotation), 
-and both allow you to add additional information. A nice discussion 
-of the technicalities is 
-<A href="http://download.oracle.com/javase/1.5.0/docs/guide/javadoc/deprecation/deprecation.html">here</a>.
-
-We use them this way:
-
-<pre><code>
+      <p>There are two forms of marking something as deprecated
+      (JavaDoc tag and Annotation), and both allow you to add
+      additional information. A nice discussion of the
+      technicalities is <a href=
+      "http://download.oracle.com/javase/1.5.0/docs/guide/javadoc/deprecation/deprecation.html">
+      here</a>. We use them this way:</p>
+      <pre>
+<code>
 * @deprecated 2.7.8
 
 @Deprecated // 2.7.8
-</code></pre>
-
-where the line contains the version in which the deprecation is applied.  
-That lets you easily know how long ago it was deprecated.
-
-
-<!--#include virtual="/Footer" -->
-
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+</code>
+</pre>where the line contains the version in which the deprecation
+is applied. That lets you easily know how long ago it was
+deprecated. <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-

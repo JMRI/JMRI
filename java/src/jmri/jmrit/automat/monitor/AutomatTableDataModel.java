@@ -1,4 +1,3 @@
-// AutomatTableDataModel.java
 package jmri.jmrit.automat.monitor;
 
 import java.beans.PropertyChangeListener;
@@ -19,15 +18,10 @@ import org.slf4j.LoggerFactory;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version	$Revision$
  */
 public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
         implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5450062337875366030L;
     static final int NAMECOL = 0;		// display name
     static final int TURNSCOL = 1;		// number of times through the loop
     static final int KILLCOL = 2;		//

@@ -23,10 +23,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SchedulesTableFrame extends OperationsFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3345422286868959830L;
     SchedulesTableModel schedulesModel = new SchedulesTableModel();
     javax.swing.JTable schedulesTable = new javax.swing.JTable(schedulesModel);
     JScrollPane schedulesPane;

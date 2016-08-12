@@ -1,249 +1,313 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
+
 <html lang="en">
 <head>
-    <TITLE>
- 	JMRI: Adding A New System
-    </TITLE>
-    <META content="Bob Jacoben" name=Author>
-    <meta name="keywords" content="JMRI technical system add">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Adding A New System</title>
+  <meta content="Bob Jacoben" name="Author">
+  <meta name="keywords" content="JMRI technical system add">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head><!--#include virtual="/Header" -->
 
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
-	    <!-- ------------- -->
-	    <!-- Page Contents --> <!-- Required -->
-	    <!-- ------------- -->
+    <div id="mainContent">
+      <h1>JMRI: Adding A New System</h1>
 
-	    <H1>JMRI: Adding A New System</H1>
+      <div class="para">
+        <p>This page describes the steps to add a new data-type,
+        e.g. Powerline devices, to JMRI.</p>
 
-		<div class=para>
-		<p>This page describes the steps to add a new data-type,
-		e.g. Powerline devices, to JMRI. </P>
-		
-		<p>It uses as an example the addition
-		of the "powerline" type in January 2008. </p>
-		</div>
+        <p>It uses as an example the addition of the "powerline"
+        type in January 2008.</p>
+      </div>
 
-		<div class=list>
-		<p>We list the files that are modified and created in the 
-		order they were done in this case; other orders may also work,
-		and you might not need to do all these.</p>
-		<P>
-		In this particular case, we started by copying an 
-		existing system implementation (SECSI).  This effects how
-		we ordered this, and made the basic process move pretty 
-		quickly.
-		
-		<dl>
+      <div class="list">
+        <p>We list the files that are modified and created in the
+        order they were done in this case; other orders may also
+        work, and you might not need to do all these.</p>
 
-		<h3>Duplicate an existing system</h3>
+        <p>In this particular case, we started by copying an
+        existing system implementation (SECSI). This effects how we
+        ordered this, and made the basic process move pretty
+        quickly.</p>
 
-		    <dt>Create a duplicate file tree</dt>
-		    <dd>
-			<p>Using whatever tool that useful to you, 
-			duplicate the src/jmri/jmrix subtree corresponding
-			to the existing system you want to copy.</p>
-		    </dd>
+        <dl>
+          <dd>
+            <h3>Duplicate an existing system</h3>
+          </dd>
 
-		    <dt>Change the package name information</dt>
-		    <dd>
-			<p>Using your favorite editor, change all the package
-			names in the new files to their new location.  In this example,
-			that was a bulk replace of "jmri.jmrix.secsi" with "jmri.jmrix.powerline".
-		    </dd>
+          <dt>Create a duplicate file tree</dt>
 
-		    <P>At this point, make sure you can compile. This code
-		    isn't consistent yet, but it should compile.</P>
+          <dd>
+            <p>Using whatever tool that useful to you, duplicate
+            the src/jmri/jmrix subtree corresponding to the
+            existing system you want to copy.</p>
+          </dd>
 
-		    <dt>Check copyright dates</dt>
-		    <dd>
-			<p>Because you've copied a system that might not
-			have been touched for a while, go through and add
-			the current year (and if need be, your name) to the 
-			copyright notices in all the files.</p>
-		    </dd>
+          <dt>Change the package name information</dt>
 
-		    <dt>Create SVN structure</dt>
-		    <dd>
-			<p>In this step, we put the basic SVN structure in place.</p>
-			<ul>
-			<li>Add all the directories you've created to SVN. In the example,
-			this was:<br/>
-			<code>svn add powerline powerline/serialdriver powerline/serialmon<br/>
-			svn add powerline/configurexml powerline/serialdriver/configurexml</code>
-			<li>Add all the COPYING files:<br/>
-			<code>svn add powerline/COPYING powerline/*/COPYING powerline/*/*/COPYING</code>
-            <li>Finally, commmit those files (but only those files):<br/>
-			<code>svn commit -m"usual file" powerline</code>            
-			</ul>
-		    </dd>
+          <dd>
+            <p>Using your favorite editor, change all the package
+            names in the new files to their new location. In this
+            example, that was a bulk replace of "jmri.jmrix.secsi"
+            with "jmri.jmrix.powerline".</p>
+          </dd>
 
-		    <P>At this point, make sure you can compile.</P>
+          <dd>
+            <p>At this point, make sure you can compile. This code
+            isn't consistent yet, but it should compile.</p>
+          </dd>
 
-		<h3>Do Basic Migration</h3>
+          <dt>Check copyright dates</dt>
 
-            <dt>Migrate names</dt>
-            <dd>
-            <p>Using your favorite editor, change all 
-            occurances of the old system name into the new one.</p>
-            <code>bbedit `grep -irl secsi powerline/`</code>
-            <p>Then search for and replace, perhaps not literally, all the
-            occurances.</p>
-            </dd>
-            
-		    <P>At this point, make sure you can compile.</P>
+          <dd>
+            <p>Because you've copied a system that might not have
+            been touched for a while, go through and add the
+            current year (and if need be, your name) to the
+            copyright notices in all the files.</p>
+          </dd>
 
-		<h3>Create Basic Tests</h3>
+          <dt>Create SVN structure</dt>
 
-            <dt>Duplicate directory</dt>
-            <dd>
-            <p>Following the steps above, duplicate 
-            the directory for the previous systems tests, creating
-            a new directory in test/jmri/jmrix to contain the 
-            tests.  
-            Change the package names, 
-            check the copyright dates, 
-            create the SVN structure,
-            and migrate the names.</p>
-            </dd>
-            
-		    <P>At this point, make sure you can compile
-		    both the main code (which wasn't changed in this step)
-		    and the tests.</P>
-		    
-		    <p>You should also be able to successfully run the 
-		    tests in your new system (although they were created
-		    for the old system's functionality):
-		    <code>ant tests &amp;&amp;./runtest.csh jmri.jmrix.powerline.SerialTest</code>
-            </dd>
+          <dd>
+            <p>In this step, we put the basic SVN structure in
+            place.</p>
 
+            <ul>
+              <li>Add all the directories you've created to SVN. In
+              the example, this was:<br>
+              <code>svn add powerline powerline/serialdriver
+              powerline/serialmon<br>
+              svn add powerline/configurexml
+              powerline/serialdriver/configurexml</code></li>
 
-		<h3>Connect Basics to Rest of System</h3>
+              <li>Add all the COPYING files:<br>
+              <code>svn add powerline/COPYING powerline/*/COPYING
+              powerline/*/*/COPYING</code></li>
 
-            <dt>Connect to configuration menus</dt>
-            <dd>
-            <p>Edit the jmri/jmrix/ActiveSystemsMenu.java file (two places),
-            src/jmri/jmrix/JmrixConfigPane.java (one place) and 
-            src/jmri/jmrix/SystemsMenu.java (one place) files to add the new 
-            system.</p>
+              <li>Finally, commmit those files (but only those
+              files):<br>
+              <code>svn commit -m"usual file" powerline</code></li>
+            </ul>
+          </dd>
+
+          <dd>
+            <p>At this point, make sure you can compile.</p>
+
+            <h3>Do Basic Migration</h3>
+          </dd>
+
+          <dt>Migrate names</dt>
+
+          <dd>
+            <p>Using your favorite editor, change all occurances of
+            the old system name into the new one.</p><code>bbedit
+            `grep -irl secsi powerline/`</code>
+
+            <p>Then search for and replace, perhaps not literally,
+            all the occurances.</p>
+          </dd>
+
+          <dd>
+            <p>At this point, make sure you can compile.</p>
+
+            <h3>Create Basic Tests</h3>
+          </dd>
+
+          <dt>Duplicate directory</dt>
+
+          <dd>
+            <p>Following the steps above, duplicate the directory
+            for the previous systems tests, creating a new
+            directory in test/jmri/jmrix to contain the tests.
+            Change the package names, check the copyright dates,
+            create the SVN structure, and migrate the names.</p>
+          </dd>
+
+          <dd>
+            <p>At this point, make sure you can compile both the
+            main code (which wasn't changed in this step) and the
+            tests.</p>
+
+            <p>You should also be able to successfully run the
+            tests in your new system (although they were created
+            for the old system's functionality): <code>ant tests
+            &amp;&amp;./runtest.csh
+            jmri.jmrix.powerline.SerialTest</code></p>
+          </dd>
+
+          <dd>
+            <h3>Connect Basics to Rest of System</h3>
+          </dd>
+
+          <dt>Connect to configuration menus</dt>
+
+          <dd>
+            <p>Edit the jmri/jmrix/ActiveSystemsMenu.java file (two
+            places), src/jmri/jmrix/JmrixConfigPane.java (one
+            place) and src/jmri/jmrix/SystemsMenu.java (one place)
+            files to add the new system.</p>
+
             <p>Don't commit this to SVN yet!</p>
-            </dd>
+          </dd>
 
-		    <P>At this point, make sure you can compile and run DecoderPro, and
-		    that your new system appears in the preferences panel.</P>
-            
-            <dt>Connect to test tree</dt>
-            <dd>
-            <p>Edit the test/jmri/jmrix/JmrixTest.java file 
-            to invoke your new system tests.</p>
+          <dd>
+            <p>At this point, make sure you can compile and run
+            DecoderPro, and that your new system appears in the
+            preferences panel.</p>
+          </dd>
+
+          <dt>Connect to test tree</dt>
+
+          <dd>
+            <p>Edit the test/jmri/jmrix/JmrixTest.java file to
+            invoke your new system tests.</p>
+
             <p>Don't commit this to SVN yet!</p>
-            </dd>
+          </dd>
 
-		    <P>At this point, when you "ant alltest", your new system's test
-		    should be run.</P>
-            
+          <dd>
+            <p>At this point, when you "ant alltest", your new
+            system's test should be run.</p>
 
-		<h3>Migrate to Basic Functionality</h3>
+            <h3>Migrate to Basic Functionality</h3>
+          </dd>
 
-            <dt>Update connection options</dt>
-            <dd>
-            Speeds, etc, in powerline/serialdriver/SerialDriverAdapter.java.
-            </dd>
+          <dt>Update connection options</dt>
 
-            <dt>Get send/receive communications working</dt>
-            <dd>
-            The first step is to get communications working so that
-            you can send a message from the "Send Command" window, 
-            and see it and the response in the "Monitor" window.
-            </dd>
+          <dd>Speeds, etc, in
+          powerline/serialdriver/SerialDriverAdapter.java.</dd>
 
-		<h3>Make It Easy to Use</h3>
+          <dt>Get send/receive communications working</dt>
 
-		    <dt>Add Possible Startup Items</dt>
-		    <dd>
-			<p>Edit src/apps/ActionListBundle.properties to add appropriate items.</p>
-		    </dd>
+          <dd>The first step is to get communications working so
+          that you can send a message from the "Send Command"
+          window, and see it and the response in the "Monitor"
+          window.</dd>
 
-		<h3>Complete the documentation</h3>
+          <dd>
+            <h3>Make It Easy to Use</h3>
+          </dd>
 
-		    <dt>Create The Help Tree</dt>
-		    <dd>
-			<p>Start by duplicating, then edit, don't forget to
-			update the index.</p>
-			<p>You'll also have to change the locations on 
-			the various frames</p>
-		    </dd>
+          <dt>Add Possible Startup Items</dt>
 
-		    <dt>ant javadoc</dt>
-		    <dd>
-			<p>Create the JavaDocs, and fix any new (or old) problems.</p>
-		    </dd>
+          <dd>
+            <p>Edit src/apps/ActionListBundle.properties to add
+            appropriate items.</p>
+          </dd>
 
-		    <dt>Add the system to the "hardware" web pages</dt>
-		    <dd>
-			<p>Edit help/en/html/hardware/index.shtml</p>
-		    </dd>
+          <dd>
+            <h3>Complete the documentation</h3>
+          </dd>
 
-    
-		</dl>
-		
-<h2>Adding a TCP/IP connection to an existing system</h2>
+          <dt>Create The Help Tree</dt>
 
-These are rough notes from adding a TCP/IP connection to the RFID type,
-by copying the architecture of the C/MRI system.
+          <dd>
+            <p>Start by duplicating, then edit, don't forget to
+            update the index.</p>
 
-<ol>
-<li>Create a "networkdriver" directory in parallel to the "serialdriver" directory.
-<br>
-<code>svn cp java/src/jmri/jmrix/cmri/serial/networkdriver/ java/src/jmri/jmrix/rfid/</code>
+            <p>You'll also have to change the locations on the
+            various frames</p>
+          </dd>
 
-<li>Edit the package and import statements, all files. ".cmri.serial." to ".rfid.", 
-then ".cmri." to ".rfid.".
+          <dt>ant javadoc</dt>
 
-<li>Change the "setManufacturer" call in NetworkDriverAdapter.
+          <dd>
+            <p>Create the JavaDocs, and fix any new (or old)
+            problems.</p>
+          </dd>
 
-<li>C/MRI might not have been the best starting point, but it's what we've got.
-Some specific edits needed:
-<ul>
-    <li>Change CMRISystemConnectionMemo to RfidSystemConnectionMemo
-    <li>Remove the reference to NodeConfigAction in ConnectionConfig (or
-        use this as the base for any special configuration you need; it was
-        adding a "Configure Nodes" button)
-    <li>Change the name of SerialSensorManager throughout
-    <li>Remove the SerialTurnoutManager SerialLightManager references (there aren't any in RFID)
-    <li>Add RfidReporterManager   
-</ul>
+          <dt>Add the system to the "hardware" web pages</dt>
 
-<li>Needs a network driver:<br>
-<code>svn cp java/src/jmri/jmrix/cmri/serial/SerialNetworkPortController.java java/src/jmri/jmrix/rfid/RfidNetworkPortController.java</code><br>
-and edit as above.
+          <dd>
+            <p>Edit help/en/html/hardware/index.shtml</p>
+          </dd>
+        </dl>
 
-<li>java/src/jmri/jmrix/rfid/networkdriver/configurexml/ConnectionConfigXml.java 
-contains dead code for configuring the C/MRI nodes (again, maybe not the
-right system to copy from).  Leave that for later by 
-commenting out the body of extendElement(Element e) and unpackElement(Element e).
+        <h2>Adding a TCP/IP connection to an existing
+        system</h2>These are rough notes from adding a TCP/IP
+        connection to the RFID type, by copying the architecture of
+        the C/MRI system.
 
-<li>Change references to SerialTrafficController to RfidTrafficController.
+        <ol>
+          <li>Create a "networkdriver" directory in parallel to the
+          "serialdriver" directory.<br>
+          <code>svn cp
+          java/src/jmri/jmrix/cmri/serial/networkdriver/
+          java/src/jmri/jmrix/rfid/</code></li>
 
-<li>Another problem with C/MRI as a prototype is that it still has an 
-instance() call in NetworkDriverAdapter.  Go to the RFID (multi-system capable)
-SerialDriverAdapter and copy the structure there.
-<code><pre>
+          <li>Edit the package and import statements, all files.
+          ".cmri.serial." to ".rfid.", then ".cmri." to
+          ".rfid.".</li>
+
+          <li>Change the "setManufacturer" call in
+          NetworkDriverAdapter.</li>
+
+          <li>C/MRI might not have been the best starting point,
+          but it's what we've got. Some specific edits needed:
+
+            <ul>
+              <li>Change CMRISystemConnectionMemo to
+              RfidSystemConnectionMemo</li>
+
+              <li>Remove the reference to NodeConfigAction in
+              ConnectionConfig (or use this as the base for any
+              special configuration you need; it was adding a
+              "Configure Nodes" button)</li>
+
+              <li>Change the name of SerialSensorManager
+              throughout</li>
+
+              <li>Remove the SerialTurnoutManager
+              SerialLightManager references (there aren't any in
+              RFID)</li>
+
+              <li>Add RfidReporterManager</li>
+            </ul>
+          </li>
+
+          <li>Needs a network driver:<br>
+          <code>svn cp
+          java/src/jmri/jmrix/cmri/serial/SerialNetworkPortController.java
+          java/src/jmri/jmrix/rfid/RfidNetworkPortController.java</code><br>
+
+          and edit as above.</li>
+
+          <li>
+          java/src/jmri/jmrix/rfid/networkdriver/configurexml/ConnectionConfigXml.java
+          contains dead code for configuring the C/MRI nodes
+          (again, maybe not the right system to copy from). Leave
+          that for later by commenting out the body of
+          extendElement(Element e) and unpackElement(Element
+          e).</li>
+
+          <li>Change references to SerialTrafficController to
+          RfidTrafficController.</li>
+
+          <li>Another problem with C/MRI as a prototype is that it
+          still has an instance() call in NetworkDriverAdapter. Go
+          to the RFID (multi-system capable) SerialDriverAdapter
+          and copy the structure there.
+            <pre>
+<code>
         // connect to the traffic controller
         this.getSystemConnectionMemo().setRfidTrafficController(control);
         control.setAdapterMemo(this.getSystemConnectionMemo());
@@ -252,44 +316,45 @@ SerialDriverAdapter and copy the structure there.
 
         // declare up
         jmri.jmrix.rfid.ActiveFlag.setActive();
-</code></pre>
-(There's also a bunch of stuff before this in the configure() method that should
-just be copied over, because the RFID connections also need some complicated configuration);
-the ctor also needs some parts copied over.
+</code>
+</pre>(There's also a bunch of stuff before this in the configure()
+method that should just be copied over, because the RFID
+connections also need some complicated configuration); the ctor
+also needs some parts copied over.
+          </li>
 
-<li>Add jmri.jmrix.rfid.networkdriver.ConnectionConfig to  java/src/jmri/jmrix/rfid//RfidConnectionTypeList.java
+          <li>Add jmri.jmrix.rfid.networkdriver.ConnectionConfig to
+          java/src/jmri/jmrix/rfid//RfidConnectionTypeList.java</li>
 
-<li>Change "RFID Device Connection" to "Direct Serial Connection" in ConnectionConfig.name()
-The network connection will default to "Network Connection".
+          <li>Change "RFID Device Connection" to "Direct Serial
+          Connection" in ConnectionConfig.name() The network
+          connection will default to "Network Connection".</li>
 
-<li>Check that configure/save/restart brings back all the configuration options.
-It should, you copied the necessary code above, but check.
+          <li>Check that configure/save/restart brings back all the
+          configuration options. It should, you copied the
+          necessary code above, but check.</li>
+        </ol>
 
-</ol>		
+        <h2>Connections with Complicated Setup</h2>Some connection
+        types need more configuration and/or setup than you can get
+        with the usual option1/option2/option3 mechanism. Tools
+        available are:
 
-<h2>Connections with Complicated Setup</h2>
+        <ul>
+          <li>loadDetails() in ConnectionConfig. This is invoked
+          when setting up the preferences window, and can be used
+          to add additional controls. C/MRI uses this to add a
+          "Configure Nodes" button. RFID uses it to add listeners
+          that control which combinations of options are
+          available.</li>
 
-Some connection types need more configuration and/or setup than you can 
-get with the usual option1/option2/option3 mechanism. Tools available are:
-
-<ul>
-<li>loadDetails() in ConnectionConfig.  This is invoked when
-setting up the preferences window, and can be used to add
-additional controls.  C/MRI uses this to add a "Configure Nodes" button.
-RFID uses it to add listeners that control which combinations of options are available.
-
-<li>extendElement(Element e) and unpackElement(Element e) in ConnectionConfigXml
-can be used to store additional information and reload it, respectively.
-C/MRI uses this to store its node information.
-
-</ul>
-
-</div>
-
-<!--#include virtual="/Footer" -->
-
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+          <li>extendElement(Element e) and unpackElement(Element e)
+          in ConnectionConfigXml can be used to store additional
+          information and reload it, respectively. C/MRI uses this
+          to store its node information.</li>
+        </ul>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-

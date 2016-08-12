@@ -6,7 +6,6 @@ import javax.swing.JLabel;
  * Test for popping test window content.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
  */
 public class ButtonTestAction extends jmri.util.swing.JmriAbstractAction {
 

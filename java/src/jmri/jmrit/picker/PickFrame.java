@@ -5,11 +5,6 @@ import jmri.util.JmriJFrame;
 
 public class PickFrame extends JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3288532933990677427L;
-
     public PickFrame(String title) {
         setTitle(title);
         /*

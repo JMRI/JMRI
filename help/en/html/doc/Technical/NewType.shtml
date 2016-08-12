@@ -1,248 +1,303 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
+
 <html lang="en">
 <head>
-    <TITLE>
- 	JMRI: Adding A New Data Type
-    </TITLE>
-    <META content="Bob Jacoben" name=Author>
-    <meta name="keywords" content="JMRI technical type add">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Adding A New Data Type</title>
+  <meta content="Bob Jacoben" name="Author">
+  <meta name="keywords" content="JMRI technical type add">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head><!--#include virtual="/Header" -->
 
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
-	    <!-- ------------- -->
-	    <!-- Page Contents --> <!-- Required -->
-	    <!-- ------------- -->
+    <div id="mainContent">
+      <h1>JMRI: Adding A New Data Type</h1>
 
-	    <H1>JMRI: Adding A New Data Type</H1>
+      <div class="para">
+        <p>This page describes the steps to add a new data-type,
+        e.g. Turnouts, to JMRI.</p>
 
-		<div class=para>
-		<p>This page describes the steps to add a new data-type,
-		e.g. Turnouts, to JMRI. </P>
-		
-		<p>It uses as an example the addition
-		of the Reporter type in July, 2004. Reporter is a new
-		type of NamedBean used to bring complex information
-		back from the layout.</p>
-		</div>
+        <p>It uses as an example the addition of the Reporter type
+        in July, 2004. Reporter is a new type of NamedBean used to
+        bring complex information back from the layout.</p>
+      </div>
 
-		<div class=list>
-		<p>We list the files that are modified and created in the 
-		order they were done in this case; other orders may also work,
-		and you might not need to do all these.</p>
-		<P>
-		In this particular case, our first implementation is for
-		only one hardware system (LocoNet).  This effects how
-		we ordered this, and reduced the need to have unit tests
-		in place at the beginning.  By working through the LocoNet
-		implementation first, we could get a better idea of whether
-		the proposed Reporter interface did what's needed.
-		If you are creating a new type that several system will 
-		need at first, you should also create unit tests early in the
-		process to encode what you think is the common behavior.
-		
-		<P>In general, the new classes and interfaces defined below
-		can most easily be made by copying an existing one.  In this
-		case, we copy the "*Turnout*" file to make a corresponding
-		"*Reporter*" file.
-		<dl>
+      <div class="list">
+        <p>We list the files that are modified and created in the
+        order they were done in this case; other orders may also
+        work, and you might not need to do all these.</p>
 
-		<h3>Define the new type and it's manager</h3>
+        <p>In this particular case, our first implementation is for
+        only one hardware system (LocoNet). This effects how we
+        ordered this, and reduced the need to have unit tests in
+        place at the beginning. By working through the LocoNet
+        implementation first, we could get a better idea of whether
+        the proposed Reporter interface did what's needed. If you
+        are creating a new type that several system will need at
+        first, you should also create unit tests early in the
+        process to encode what you think is the common
+        behavior.</p>
 
-		    <dt>Reporter</dt>
-		    <dd>
-			<p>This interface defines the properties needed.
-			It should inherit from NamedBean, though you can
-			add new accessors as desired.</p>
-		    </dd>
+        <p>In general, the new classes and interfaces defined below
+        can most easily be made by copying an existing one. In this
+        case, we copy the "*Turnout*" file to make a corresponding
+        "*Reporter*" file.</p>
 
-		    <dt>ReporterManager</dt>
-		    <dd>
-			<p>This interface provides methods for getting a Reporter
-			object, either just from the system name (preferred)
-			or with additional parameters</p>
-		    </dd>
+        <dl>
+          <dd>
+            <h3>Define the new type and it's manager</h3>
+          </dd>
 
-		    <P>At this point, make sure you can compile.</P>
+          <dt>Reporter</dt>
 
-		    <dt>doc/Technical/Names.shtml</dt>
-		    <dd>
-			<p>Update the discussion of naming to include the
-			type-letter for your new type.  While you're
-			at it, update the system-specific naming pages as needed.</p>
-		    </dd>
+          <dd>
+            <p>This interface defines the properties needed. It
+            should inherit from NamedBean, though you can add new
+            accessors as desired.</p>
+          </dd>
 
-		<h3>Provide the base for implementations</h3>
+          <dt>ReporterManager</dt>
 
-		    <dt>AbstractReporter</dt>
-		    <dd>
-			<p>This is a basic implementation.</p>
-		    </dd>
-		    
-		    <dt>AbstractReporterManager</dt>
-		    <dd>
-			<p>Basic implementation; stuff that's useful to
-			all the system-specific implementations</p>
-		    </dd>
+          <dd>
+            <p>This interface provides methods for getting a
+            Reporter object, either just from the system name
+            (preferred) or with additional parameters</p>
+          </dd>
 
-		    <P>At this point, make sure you can compile.</P>
+          <dd>
+            <p>At this point, make sure you can compile.</p>
+          </dd>
 
-		    <dt>managers.ProxyReporterManager</dt>
-		    <dd>
-			<p>This handles having more than one system providing
-			Reporter objects.  It takes zero or more ReporterManager
-			implementations, and routes requests for Reporter access 
-			to the right one.</p>
-		    </dd>
+          <dt>doc/Technical/Names.shtml</dt>
 
-		    <dt>InstanceManager</dt>
-		    <dd>
-			<p>There are several historical ways to install
-			things in the InstanceManager.  The current way is
-			to use "proxies" to allow the use of multiple layout
-			systems, so please copy Turnout as a template.</p>
-		    </dd>
+          <dd>
+            <p>Update the discussion of naming to include the
+            type-letter for your new type. While you're at it,
+            update the system-specific naming pages as needed.</p>
+          </dd>
 
-		    <P>At this point, make sure you can compile.</P>
+          <dd>
+            <h3>Provide the base for implementations</h3>
+          </dd>
 
-		<h3>Provide the first system-specific implementation</h3>
+          <dt>AbstractReporter</dt>
 
-		    <dt>jmrix.loconet.LnReporterManager</dt>
-		    <dd>
-			<p>This class listens for activity indicating a 
-			new LocoNet-specific Reporter, and calls for one to
-			be created if needed.  Other than that, and providing
-			the right system-specific letter (e.g. 'L'), this is
-			just a direct copy.</p>
-		    </dd>
+          <dd>
+            <p>This is a basic implementation.</p>
+          </dd>
 
-		    <dt>jmrix.loconet/LnReporter</dt>
-		    <dd>
-			<p>Converts specific messages into reporter actions and report.
-			All of the rest of the stuff is just to get this in place.</p>
-		    </dd>
+          <dt>AbstractReporterManager</dt>
 
-		    <P>At this point, make sure you can compile.
-		    Nothing will happen when you run until the next step.</P>
+          <dd>
+            <p>Basic implementation; stuff that's useful to all the
+            system-specific implementations</p>
+          </dd>
 
-		    <dt>jmrix.loconet.LnPortController</dt>
-		    <dd>
-			<p>Here (or perhaps somewhere else in another system) you
-			create an instance of the correct ReporterManager class at system startup
-			and install it in the InstanceManager.</p>
-		    </dd>
+          <dd>
+            <p>At this point, make sure you can compile.</p>
+          </dd>
 
-		<h3>Add to the scripting support</h3>
+          <dt>managers.ProxyReporterManager</dt>
 
-		    <dt>jython/jmri_defaults.py</dt>
-		    <dd>
-			<p>Add a new variable to give easy access to the new manager.</p>
-		    </dd>
+          <dd>
+            <p>This handles having more than one system providing
+            Reporter objects. It takes zero or more ReporterManager
+            implementations, and routes requests for Reporter
+            access to the right one.</p>
+          </dd>
 
-		    <dt>doc/Technical/Jython.shtml </dt>
-		    <dd>
-			<p>Update this to refer to the new Jython variable 
-			(There may be other web pages too!)</p>
-		    </dd>
+          <dt>InstanceManager</dt>
 
-		    <P>At this point, you should be able to compile and 
-		    run, testing the new code from the jython command line.</P>
+          <dd>
+            <p>There are several historical ways to install things
+            in the InstanceManager. The current way is to use
+            "proxies" to allow the use of multiple layout systems,
+            so please copy Turnout as a template.</p>
+          </dd>
 
-		<h3>Add a new table tool for access (optional)</h3>
-		
-			<dt>jmrit.beantable.ReporterTableAction</dt>
-		    <dd>
-			<p>Create a new "Table" for watching these in action.</P>
-			<p>In this particular case, the code had to be modified a little
-			(instead of just copied) because a Reporter doesn't really
-			have a way to support "click to change"</p>
-		    </dd>
+          <dd>
+            <p>At this point, make sure you can compile.</p>
 
-		    <dt>jmrit/beantable/BeanTableBundle.properties</dt>
-		    <dd>
-			<p>Add strings for the new properties you defined
-			in the previous step.  You might also want to translate these
-			in the other properties files when possible.</p>
-		    </dd>
+            <h3>Provide the first system-specific
+            implementation</h3>
+          </dd>
 
-		    <dt>jmrit.ToolsMenu</dt>
-		    <dd>
-			<p>Add the new ReporterTableAction class to the menu.</p>
-		    </dd>
+          <dt>jmrix.loconet.LnReporterManager</dt>
 
-		    <dt>jmrit/JmritToolsBundle.properties</dt>
-		    <dd>
-			<p>Add strings for the new property you defined
-			in the previous step.  You might also want to translate these
-			in the other properties files when possible.</p>
-		    </dd>
+          <dd>
+            <p>This class listens for activity indicating a new
+            LocoNet-specific Reporter, and calls for one to be
+            created if needed. Other than that, and providing the
+            right system-specific letter (e.g. 'L'), this is just a
+            direct copy.</p>
+          </dd>
 
-		    <P>At this point, you should be able to compile and 
-		    run to test the new table.</P>
+          <dt>jmrix.loconet/LnReporter</dt>
 
-		<h3>Provide for persistance of the manager and type objects</h3>
+          <dd>
+            <p>Converts specific messages into reporter actions and
+            report. All of the rest of the stuff is just to get
+            this in place.</p>
+          </dd>
 
-		    <dt>configxml.AbstractReporterManagerConfigXML</dt>
-		    <dd>
-			<p>Loads and stores the configuration date for the ReporterManager implementations</p>
-		    </dd>
+          <dd>
+            <p>At this point, make sure you can compile. Nothing
+            will happen when you run until the next step.</p>
+          </dd>
 
-		    <dt>jmrix.loconet.configurexml.LnReporterManagerXml</dt>
-		    <dd>
-			<p>Load and store the system-specific LocoNet Reporter Manager info</p>
-		    </dd>
-		    
-		    <dt>xml/DTD/layout-config.dtd</dt>
-		    <dd>
-			<p>Add any new XML elements and attributes to the DTD</p>
-		    </dd>
+          <dt>jmrix.loconet.LnPortController</dt>
 
-		<h3>Provide a suitable display icon class (optional)</h3>
+          <dd>
+            <p>Here (or perhaps somewhere else in another system)
+            you create an instance of the correct ReporterManager
+            class at system startup and install it in the
+            InstanceManager.</p>
+          </dd>
 
-		    <dt>jmrit.display.ReporterIcon</dt>
-		    <dd>
-			<p>discussion</p>
-		    </dd>
+          <dd>
+            <h3>Add to the scripting support</h3>
+          </dd>
 
-		    <dt>jmrit.display.configxml.ReporterIconXml</dt>
-		    <dd>
-			<p>discussion</p>
-		    </dd>
+          <dt>jython/jmri_defaults.py</dt>
 
-		    <dt>xml/DTD/layout-config.dtd</dt>
-		    <dd>
-			<p>discussion</p>
-		    </dd>
+          <dd>
+            <p>Add a new variable to give easy access to the new
+            manager.</p>
+          </dd>
 
-		<h3>Complete the documentation</h3>
+          <dt>doc/Technical/Jython.shtml</dt>
 
-		    <dt>ant javadoc</dt>
-		    <dd>
-			<p>Create the JavaDocs, and fix any new (or old) problems.</p>
-		    </dd>
+          <dd>
+            <p>Update this to refer to the new Jython variable
+            (There may be other web pages too!)</p>
+          </dd>
 
-		</dl>
-		</div>
+          <dd>
+            <p>At this point, you should be able to compile and
+            run, testing the new code from the jython command
+            line.</p>
 
-<!--#include virtual="/Footer" -->
+            <h3>Add a new table tool for access (optional)</h3>
+          </dd>
 
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+          <dt>jmrit.beantable.ReporterTableAction</dt>
+
+          <dd>
+            <p>Create a new "Table" for watching these in
+            action.</p>
+
+            <p>In this particular case, the code had to be modified
+            a little (instead of just copied) because a Reporter
+            doesn't really have a way to support "click to
+            change"</p>
+          </dd>
+
+          <dt>jmrit/beantable/BeanTableBundle.properties</dt>
+
+          <dd>
+            <p>Add strings for the new properties you defined in
+            the previous step. You might also want to translate
+            these in the other properties files when possible.</p>
+          </dd>
+
+          <dt>jmrit.ToolsMenu</dt>
+
+          <dd>
+            <p>Add the new ReporterTableAction class to the
+            menu.</p>
+          </dd>
+
+          <dt>jmrit/JmritToolsBundle.properties</dt>
+
+          <dd>
+            <p>Add strings for the new property you defined in the
+            previous step. You might also want to translate these
+            in the other properties files when possible.</p>
+          </dd>
+
+          <dd>
+            <p>At this point, you should be able to compile and run
+            to test the new table.</p>
+
+            <h3>Provide for persistance of the manager and type
+            objects</h3>
+          </dd>
+
+          <dt>configxml.AbstractReporterManagerConfigXML</dt>
+
+          <dd>
+            <p>Loads and stores the configuration date for the
+            ReporterManager implementations</p>
+          </dd>
+
+          <dt>jmrix.loconet.configurexml.LnReporterManagerXml</dt>
+
+          <dd>
+            <p>Load and store the system-specific LocoNet Reporter
+            Manager info</p>
+          </dd>
+
+          <dt>xml/DTD/layout-config.dtd</dt>
+
+          <dd>
+            <p>Add any new XML elements and attributes to the
+            DTD</p>
+          </dd>
+
+          <dd>
+            <h3>Provide a suitable display icon class
+            (optional)</h3>
+          </dd>
+
+          <dt>jmrit.display.ReporterIcon</dt>
+
+          <dd>
+            <p>discussion</p>
+          </dd>
+
+          <dt>jmrit.display.configxml.ReporterIconXml</dt>
+
+          <dd>
+            <p>discussion</p>
+          </dd>
+
+          <dt>xml/DTD/layout-config.dtd</dt>
+
+          <dd>
+            <p>discussion</p>
+          </dd>
+
+          <dd>
+            <h3>Complete the documentation</h3>
+          </dd>
+
+          <dt>ant javadoc</dt>
+
+          <dd>
+            <p>Create the JavaDocs, and fix any new (or old)
+            problems.</p>
+          </dd>
+        </dl>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-

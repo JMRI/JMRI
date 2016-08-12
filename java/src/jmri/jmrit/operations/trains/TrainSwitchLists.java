@@ -400,7 +400,7 @@ public class TrainSwitchLists extends TrainCommon {
                                         messageFormatText = TrainSwitchListText.getStringHoldCar(),
                                         new Object[]{padAndTruncateString(car.getRoadName(),
                                                 CarRoads.instance().getMaxNameLength()),
-                                                padAndTruncateString(car.getNumber(),
+                                                padAndTruncateString(TrainCommon.splitString(car.getNumber()),
                                                         Control.max_len_string_print_road_number),
                                                 padAndTruncateString(car.getTypeName().split("-")[0],
                                                         CarTypes.instance().getMaxNameLength()),

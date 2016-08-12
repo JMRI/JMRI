@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
  * Description:	Stands in for the SerialTrafficController class
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision$
  */
 public class SerialTrafficControlScaffold extends SerialTrafficController {
 

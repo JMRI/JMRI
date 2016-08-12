@@ -177,7 +177,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                     break;
                 case Conditional.ITEM_TYPE_SIGNALMAST:
                     try {
-                        bean = InstanceManager.signalMastManagerInstance().provideSignalMast(devName);
+                        bean = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(devName);
                     } catch (IllegalArgumentException e) {
                         bean = null;
                         log.error("invalid signal mast name= \"" + _deviceName + "\" in conditional action");
@@ -185,7 +185,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                     break;
                 case Conditional.ITEM_TYPE_SIGNALHEAD:
                     try {
-                        bean = InstanceManager.signalHeadManagerInstance().getSignalHead(devName);
+                        bean = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(devName);
                     } catch (IllegalArgumentException e) {
                         bean = null;
                         log.error("invalid signal head name= \"" + _deviceName + "\" in conditional action");

@@ -37,11 +37,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LocationsByCarLoadFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 968602554445596299L;
-
     LocationManager locationManager;
 
     // checkboxes track id as the checkbox name
@@ -214,6 +209,10 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
         String type = (String) typeComboBox.getSelectedItem();
         String load = (String) loadComboBox.getSelectedItem();
         log.debug("Selected car type : ({}) load ({})", type, load);
+        // did the location get deleted?
+        if (_location != null && locationManager.getLocationByName(_location.getName()) == null) {
+            _location = null;
+        }
         List<Location> locations = locationManager.getLocationsByNameList();
         for (Location location : locations) {
             // show only one location?

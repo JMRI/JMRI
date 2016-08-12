@@ -1,7 +1,6 @@
 <!-- Sidebar -->
 <!-- French Translation Updated by Blorec Herv&#233; le 2013-10-05; Egbert Broerse pour HTML; le 2015-10-18 -->
       <hr class="hide">
-      <div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
 	    <div style="text-align: center">JMRI est...</div>
 	    <dl>

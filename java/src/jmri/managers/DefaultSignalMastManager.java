@@ -22,7 +22,7 @@ public class DefaultSignalMastManager extends AbstractManager
 
     public DefaultSignalMastManager() {
         super();
-        jmri.InstanceManager.signalHeadManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).addVetoableChangeListener(this);
         jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
     }
 

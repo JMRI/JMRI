@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 public class QsiMonFrameTest extends TestCase {
 
     public void testCreate() {
-        QsiMonFrame f = new QsiMonFrame();
+        QsiMonFrame f = new QsiMonFrame(new jmri.jmrix.qsi.QsiSystemConnectionMemo());
         Assert.assertNotNull("exists", f);
     }
 

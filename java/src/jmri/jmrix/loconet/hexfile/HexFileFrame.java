@@ -185,9 +185,6 @@ public class HexFileFrame extends JmriJFrame {
         packets.startThreads();
         sourceThread = new Thread(port);
         sourceThread.start();
-
-        jmri.jmrix.loconet.ActiveFlag.setActive();
-
     }
 
     @SuppressWarnings("deprecation")

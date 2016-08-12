@@ -70,7 +70,7 @@ abstract public class AbstractActionModelFactory implements StartupModelFactory 
                     null);
             if (result == JOptionPane.OK_OPTION) {
                 String name = actions.getSelectedValue();
-                StartupActionsManager manager = InstanceManager.getDefault(StartupActionsManager.class);
+                StartupActionsManager manager = InstanceManager.getOptionalDefault(StartupActionsManager.class);
                 if (!name.equals(model.getName())) {
                     model.setName(name);
                     if (manager != null) {

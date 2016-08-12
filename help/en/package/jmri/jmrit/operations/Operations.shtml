@@ -82,6 +82,7 @@
        <ul>
         <li><a href="#CopyTrack">Copy Track</a></li>
         <li><a href="#ChangeTrackTypeLocation">Change Track Type</a></li>
+        <li><a href="#ShowTrackMoves">Show Track Moves</a></li>
         <li><a href="#ModifyLocationByCarType">Modify Location by Car Type</a></li>
         <li><a href="#ModifyLocationByCarLoad">Modify Location by Car Load</a></li>
         <li><a href="#TrackBlockingOrder">Track Blocking Order</a></li>
@@ -1557,13 +1558,23 @@
    <a name="ChangeTrackTypeLocation"></a>
    <h4>Change Track Type</h4>
 
-   <p>
-    The next tool is "Change Track Type". This tool allows you to change all of the tracks at this
-    location to the same type. Available track types are spur, yard, classification/interchange or
-    staging. You can also change the track type for a specific track, see <a href="#ChangeTrackType">Change
-     Track Type</a> for a track.
-   </p>
+   The next tool is "Change Track Type". This tool allows you to change all of the tracks at this
+   location to the same type. Available track types are spur, yard, classification/interchange or
+   staging. You can also change the track type for a specific track, see
+   <a href="#ChangeTrackType">Change Track Type</a> for a track. 
+   
+   <a name="ShowTrackMoves"></a>
+   <h4>Show Track Moves</h4>
 
+   The "Show Track Moves" tool adds a column called "Moves" to the "Edit Location" table. The
+   "Moves" column displays the number of times a car or engine was given the destination of this
+   track during a train build. Tracks with lower move counts are checked first by the program when
+   determining which track to select during the train build process. You can modify the "Moves"
+   count for a track by double clicking on the cell in the table and entering a new value. Note that
+   the program will reset all track move counts for a location when a new track is added to that
+   location. To remove the "Moves" column from the table, simply select the "Show Track Moves" tool a
+   second time. 
+   
    <a name="ModifyLocationByCarType"></a>
    <h4>Modify Location by Car Type</h4>
 

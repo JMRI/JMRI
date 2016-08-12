@@ -217,8 +217,6 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
         // packets.startThreads();
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
         new XNetInitializationManager(this.getSystemConnectionMemo());
-
-        jmri.jmrix.lenz.ActiveFlag.setActive();
     }
 
     // base class methods for the XNetSerialPortController interface

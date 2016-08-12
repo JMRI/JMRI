@@ -66,7 +66,6 @@ import org.slf4j.LoggerFactory;
  * circle in the direction of the turntable center.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision$
  */
 public class LayoutTurntable {
 
@@ -957,7 +956,7 @@ public class LayoutTurntable {
             border.setTitle("Ray : " + connectionIndex);
             if (connect == null) {
                 border.setTitle(rb.getString("Unconnected") + " : " + connectionIndex);
-            } else if (connect != null && connect.getLayoutBlock() != null) {
+            } else if (connect.getLayoutBlock() != null) {
                 border.setTitle(rb.getString("Connected") + " : " + connect.getLayoutBlock().getDisplayName());
             }
             return panel;

@@ -1,145 +1,301 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
 <!-- UpDated by Herv&#233; Blorec 2013-10-10-->
+
 <html lang="fr">
 <head>
- <TITLE>
-      JMRI: Cantonk Table Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Memory Table">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html;  charset=iso-8859-1">  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Cantonk Table Help</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI help Memory Table">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Le Tableau Canton</h1>
 
-<H1> Le Tableau Canton</H1>
+      <h2>Cantons :</h2>
 
-<H2>Cantons :</h2>
-<p>Les Cantons sont des tron&#231;ons de voie dont l'occupation peut &#234;tre suivie individuellement. Diviser la
-voie en Cantons est facultatif. Les Cantons mis en place dans un sch&#233;ma de voies correspondent normalement
-aux Cantons physiques sur un r&#233;seau. L'occupation du Canton est indiqu&#233; par l'&#233;tat d'un
-d&#233;tecteur de pr&#233;sence. Lorsque un circuit de voie est divis&#233; en Cantons, toute  la voie ne doit
-pas appartenir &#224; un seul Canton. Par exemple, les voies de triage ne peut pas &#234;tre dans un Canton, alors que la Ligne Principale
-sera presque toujours divis&#233;e en Cantons. La principale utilisation des Cantons est de faciliter
-la signalisation, mais les Cantons peuvent &#234;tre utilis&#233;s pour  d'autres commandes du r&#233;seau ou de fonction d'animation sur le r&#233;seau.</p>
-<p> Les Cantons peuvent &#234;tre configur&#233;s &#224; l'aide d'un script, ou automatiquement dans un panneau &#233;diteur de R&#233;seau. Quand un Canton est d&#233;fini dans un panneau &#233;diteur de R&#233;seau, un nouveau Canton est cr&#233;&#233; s'il n'existe pas d&#233;j&#224;. Dans l'&#233;diteur de R&#233;seau, Les Cantons sont identifi&#233;s par leur nom utilisateur, donc si un Canton repr&#233;sent&#233; dans ce tableau est utilis&#233; dans un panneau &#233;diteur de R&#233;seau, son nom d'utilisateur ne doit pas &#234;tre chang&#233;. Si
-vous voulez changer le nom d'utilisateur d'un Canton utilis&#233; dans un panneau &#233;diteur de R&#233;seau, faire le
-changement dans l'&#233;diteur de R&#233;seau, pas i&#231;i.</p>
-<p> Pour compl&#233;ter la d&#233;finition d'un Canton, les Chemins et les R&#233;glages doivent &#234;tre joints &#224;
-chaque Canton. Les Chemins  d&#233;crivent les points d'entr&#233;e du Canton. Chaque Canton a un ou plusieurs chemins
-qui lui sont associ&#233;s. Parfois, un aiguillage doit &#234;tre r&#233;gl&#233; d'une certaine fa&#231;on pour utiliser un chemin; Bean Settings
- r&#233;alise cette information. Les Chemins et Le param&#232;tres Bean sont mis en place automatiquement pour
-les Cantons d&#233;finis dans un panneau &#233;diteur de R&#233;seau. Ils peuvent &#233;galement &#234;tre mis en place dans un script. Il y a
-actuellement aucun moyen d'entrer manuellement les chemins ou les param&#232;tres Bean. Les Chemins et param&#232;tres Bean sont non repr&#233;sent&#233; sur la table Canton, et sont d&#233;crits ici  pour que ce soit complet.</p>
-<p> Pour une utilisation pour les trains circulants automatiquement, un attribut de la longueur et un attribut de courbure 
-peuvent &#233;ventuellement &#234;tre affect&#233;s &#224; un Canton. Ces attributs optionnels sont entr&#233;s manuellement
-dans ce tableau. Si les trains ne sont pas ex&#233;cut&#233; automatiquement pour
-un Canton, il n'est pas n&#233;cessaire d'ajouter ces attributs.</p><p>
-<H2>Colonnes  dans le Tableau Canton:</H2>
-<ul>
-<li> <p><b>Nom  syst&#232;me</b> - Le nom syst&#232;me du Canton. Il n'y a pas d'exigence fonctionnelle pour une lettre dans le Nom Syst&#232;me d'un Canton, mais par convention, nous utilisons
-'B' pour 'Canton'. L'impl&#233;mentation par d&#233;faut n'est pas sp&#233;cifique au syst&#232;me, donc une lettre du syst&#232;me
-du "I" est appropri&#233;. Cela conduit &#224; des noms de syst&#232;me comme "IB201".</P></li>
-<li><p><b>Nom Utilisateur</b> - Le nom Utilisateur du Canton. Le nom Utilisateur d'un Canton cr&#233;&#233;
-ici peut &#234;tre r&#233;gl&#233; &#224; n'importe quel texte. Le nom utilisateur pour un Canton cr&#233;&#233; par l'&#233;diteur de R&#233;seau est
-fix&#233; par l'&#233;diteur de TCO et ne doit pas &#234;tre chang&#233;.</p></li>
-<li><p><b>Valeur</b> - C'est la valeur de cha&#238;ne de n'importe quel objet que le
-Canton porte. Habituellement, ce sera soit un message
-ou un objet r&#233;gulateur. Si vous modifiez cela, c'est stock&#233;e dans le Canton
-comme une cha&#238;ne. Il n'y a actuellement aucun moyen d'ajouter manuellement un objet r&#233;gulateur &#224; un Canton de la table.</p></li>
-<li><p><b>Commentaire</b> - Vous pouvez entrer n'importe quel texte dans ce domaine qui vous aideront &#224;
-distinguer ce Canton parmi d'autres Cantons, ou de fournir des notes utiles sur son utilisation.</p></li>
-<li><p><b>Supprimer</b> - Cliquez sur le  bouton <b>Supprimer</b> dans n'importe quelle rang&#233;e pour supprimer le Canton de cette ligne de la liste des Cantons dans l'ordinateur. Vous devez sauvegarder votre configuration (et
-les panneaux pr&#233;sents) sur le disque pour rendre la suppression permanente. La radiation peut pas &#234;tre annul&#233;e.
-<b>Attention: Assurez-vous de supprimer toutes les r&#233;f&#233;rences &#224; un Canton avant de le supprimer</b>.
-Les Cantons sont r&#233;f&#233;renc&#233;s dans les chemins d'autres Cantons, dans certains scripts, et dans les panneaux de d'&#233;diteur de R&#233;seau <p></Li> 
-<li><p> <b>Direction</b> - La direction actuelle enregistr&#233;e dans le canton
+      <p>Les Cantons sont des tron&ccedil;ons de voie dont
+      l'occupation peut &ecirc;tre suivie individuellement. Diviser
+      la voie en Cantons est facultatif. Les Cantons mis en place
+      dans un sch&eacute;ma de voies correspondent normalement aux
+      Cantons physiques sur un r&eacute;seau. L'occupation du
+      Canton est indiqu&eacute; par l'&eacute;tat d'un
+      d&eacute;tecteur de pr&eacute;sence. Lorsque un circuit de
+      voie est divis&eacute; en Cantons, toute la voie ne doit pas
+      appartenir &agrave; un seul Canton. Par exemple, les voies de
+      triage ne peut pas &ecirc;tre dans un Canton, alors que la
+      Ligne Principale sera presque toujours divis&eacute;e en
+      Cantons. La principale utilisation des Cantons est de
+      faciliter la signalisation, mais les Cantons peuvent
+      &ecirc;tre utilis&eacute;s pour d'autres commandes du
+      r&eacute;seau ou de fonction d'animation sur le
+      r&eacute;seau.</p>
 
-<li><p> <b>Longueur</b> (facultatif) - Affiche la longueur du Canton. En option, vous pouvez
-entrer la longueur du Canton ici. La longueur est utilis&#233;e pour le fonctionnement automatique des trains.
-Si '0 .0 'est affich&#233;, la longueur n'a pas &#233;t&#233; indiqu&#233;e. La longueur indiqu&#233;e doit &#234;tre la
-longueur r&#233;elle du Canton sur le r&#233;seau mod&#232;le. La longueur est entr&#233; et affich&#233;
-en pouces ou centim&#232;tres, selon l'unit&#233; est demand&#233;e au bas du
-tableau de Canton.</p></li>
+      <p>Les Cantons peuvent &ecirc;tre configur&eacute;s &agrave;
+      l'aide d'un script, ou automatiquement dans un panneau
+      &eacute;diteur de R&eacute;seau. Quand un Canton est
+      d&eacute;fini dans un panneau &eacute;diteur de
+      R&eacute;seau, un nouveau Canton est cr&eacute;&eacute; s'il
+      n'existe pas d&eacute;j&agrave;. Dans l'&eacute;diteur de
+      R&eacute;seau, Les Cantons sont identifi&eacute;s par leur
+      nom utilisateur, donc si un Canton repr&eacute;sent&eacute;
+      dans ce tableau est utilis&eacute; dans un panneau
+      &eacute;diteur de R&eacute;seau, son nom d'utilisateur ne
+      doit pas &ecirc;tre chang&eacute;. Si vous voulez changer le
+      nom d'utilisateur d'un Canton utilis&eacute; dans un panneau
+      &eacute;diteur de R&eacute;seau, faire le changement dans
+      l'&eacute;diteur de R&eacute;seau, pas i&ccedil;i.</p>
 
-<li><p> <b>Courbure</b> (facultatif) - Affiche la courbure s&#233;lectionn&#233;e pour la voie du
- Canton. La courbure est utilis&#233;e pour l'exploitation automatique des trains, et ne doit pas &#234;tre entr&#233;e
-si les trains ne seront pas ex&#233;cut&#233;s automatiquement. La Courbure, si elle est pr&#233;sente, indique &#224; l'ordinateur
-qu'il devrait ralentir le train car parcours ce Canton. Si <b> Aucune</b> ou
-<b>Progressive</b> ne sont s&#233;lectionn&#233;es, un train automatique proc&#233;dera &#224; une vitesse normale. <b>&#233;lev&#233;</b>
-doit &#234;tre s&#233;lectionn&#233; si le train doit ralentir ; <b> S&#233;v&#232;re</b> doit &#234;tre s&#233;lectionn&#233;
-si le train doit ralentir d'un montant maximum. Si le Canton a une courbure variable, votre
-s&#233;lection devrait &#234;tre faite en fonction de la partie la plus s&#233;v&#233;re du Canton.</p></li>
+      <p>Pour compl&eacute;ter la d&eacute;finition d'un Canton,
+      les Chemins et les R&eacute;glages doivent &ecirc;tre joints
+      &agrave; chaque Canton. Les Chemins d&eacute;crivent les
+      points d'entr&eacute;e du Canton. Chaque Canton a un ou
+      plusieurs chemins qui lui sont associ&eacute;s. Parfois, un
+      aiguillage doit &ecirc;tre r&eacute;gl&eacute; d'une certaine
+      fa&ccedil;on pour utiliser un chemin; Bean Settings
+      r&eacute;alise cette information. Les Chemins et Le
+      param&egrave;tres Bean sont mis en place automatiquement pour
+      les Cantons d&eacute;finis dans un panneau &eacute;diteur de
+      R&eacute;seau. Ils peuvent &eacute;galement &ecirc;tre mis en
+      place dans un script. Il y a actuellement aucun moyen
+      d'entrer manuellement les chemins ou les param&egrave;tres
+      Bean. Les Chemins et param&egrave;tres Bean sont non
+      repr&eacute;sent&eacute; sur la table Canton, et sont
+      d&eacute;crits ici pour que ce soit complet.</p>
 
-<li><p><b>Statut</b> - 
-Montre le statut actuel du canton, Occup&#233; ou Non-occup&#233;.
+      <p>Pour une utilisation pour les trains circulants
+      automatiquement, un attribut de la longueur et un attribut de
+      courbure peuvent &eacute;ventuellement &ecirc;tre
+      affect&eacute;s &agrave; un Canton. Ces attributs optionnels
+      sont entr&eacute;s manuellement dans ce tableau. Si les
+      trains ne sont pas ex&eacute;cut&eacute; automatiquement pour
+      un Canton, il n'est pas n&eacute;cessaire d'ajouter ces
+      attributs.</p>
 
-<li><p><b>Rapport</b> - 
-Le Rapport affecter &#224; ce Canton. Noir le tableau Rapport. Entrez la valeur du Rapport dans la valeur de Canton.
+      <h2>Colonnes dans le Tableau Canton:</h2>
 
-<li><p><b>Utilisation actuelle?</b> - 
-Si l'on consid&#232;re le sc&#233;nario dans lequel nous voulons suivre un train autour du r&#233;seau, g&#233;n&#233;ralement ceci
-est r&#233;alis&#233;e par l'utilisation d'objets M&#233;moire associ&#233;s &#224; des Cantons. Jusqu'&#224; ce que le train soitt connu, nous
-n'ont rien &#224; suivre. En r&#232;gle g&#233;n&#233;rale, nous pouvons saisir manuellement le num&#233;ro de train dans un panneau, puis
-cela est suivi autour du r&#233;seau par l'occupation de canton. Si, toutefois, nous avons un 
-dispositif qui peut nous fournir l'identification du train, comme un lecteur RFID, nous n'avons plus besoin d'
-taper manuellement l'ID de train - le lecteur fait cela pour nous. En substance, le lecteur est un peu
-plus d'un capteur "intelligent" - il peut non seulement sentir que "quelque chose" est l&#224;, il peut
-nous dire ce que c'est.
-Maintenant, pour la mise en &#399;uvre.
-Un capteur est purement ACTIf ou INACTIf - soit quelque chose est l&#224; ou elle ne l'est pas.
-Un Rapport, cependant, ne peut nous dire l'un des &#233;l&#233;ments suivants:
-<ol>
-<li> "Hey, je vois quelque chose d&#232;s maintenant - c'est lui"
-<li> "Hmm, je ne vois rien pour l'instant "
-<li> "Hey, j'ai vu quelque chose de tout &#224; l'heure - c'&#233;tait lui"
-<li> "Hmm, je n'ai encore rien vu "
-</ol>
-Les deux premiers sont de CurrentReport, les deux derniers de LastReport.
-Au d&#233;marrage (en supposant qu'il n'y a rien dans la fourchette du lecteur), &#224; la fois 2 et 4 sont le premier
-&#233;tat. Une fois que quelque chose est vu, &#224; la fois 1 et 3 renvoient le m&#234;me r&#233;sultat.
-Lorsque la chose est 'hors fourchette '2 et 3 sont alors actif.
-Avec '"utilisation actuelle"? s&#233;lectionn&#233;e valeur du canton commutera entre 1 et 2,
-alors qu'avec "l'utilisation actuelle"? d&#233;coch&#233;e valeur du canton commutera entre 3 et 4.</li>
+      <ul>
+        <li>
+          <p><b>Nom syst&egrave;me</b> - Le nom syst&egrave;me du
+          Canton. Il n'y a pas d'exigence fonctionnelle pour une
+          lettre dans le Nom Syst&egrave;me d'un Canton, mais par
+          convention, nous utilisons 'B' pour 'Canton'.
+          L'impl&eacute;mentation par d&eacute;faut n'est pas
+          sp&eacute;cifique au syst&egrave;me, donc une lettre du
+          syst&egrave;me du "I" est appropri&eacute;. Cela conduit
+          &agrave; des noms de syst&egrave;me comme "IB201".</p>
+        </li>
 
-<li><p><b>permissive</b> - 
-L'option permissive facultative est utilis&#233;e pour identifier les cantons qui peuvent &#234;tre saisis alors que le
-Canton est occup&#233;. Il est utilis&#233; avec certains outils d'automatisation et de la logique, pour aider &#224;
-d&#233;terminer si un train peut entrer dans un Canton occup&#233; et quel aspect doit &#234;tre affich&#233;
-sur un m&#226;t de signalisation.</li>
+        <li>
+          <p><b>Nom Utilisateur</b> - Le nom Utilisateur du Canton.
+          Le nom Utilisateur d'un Canton cr&eacute;&eacute; ici
+          peut &ecirc;tre r&eacute;gl&eacute; &agrave; n'importe
+          quel texte. Le nom utilisateur pour un Canton
+          cr&eacute;&eacute; par l'&eacute;diteur de R&eacute;seau
+          est fix&eacute; par l'&eacute;diteur de TCO et ne doit
+          pas &ecirc;tre chang&eacute;.</p>
+        </li>
 
-<li><p><b>Vitesse Canton</b> - 
-La vitesse est utilis&#233;e avec certains outils d'automatisation et de logique, pour aider &#224;
-d&#233;terminer &#224; quelle vitesse un train peut &#234;tre r&#233;gl&#233; &#224; travers le Canton.
-Elle est &#233;galement utilis&#233; par la logique du m&#226;t de signalisation pour d&#233;terminer quel aspect doit
-&#234;tre affich&#233; dans un signal de chemin.
-<P> Dans la liste d&#233;roulante, vous sont pr&#233;sent&#233;s un ensemble de vitesses fixes qui 
-ont &#233;t&#233; pr&#233;d&#233;finies dans le fichier signalSpeed.xml, en plus d'une option globale.
-<br> Il est &#233;galement possible d'entrer une valeur num&#233;rique pour repr&#233;senter une vitesse.
-<p> La valeur globale est d&#233;finie via les <b>Vitesses</b> du menu option.</p></li>
+        <li>
+          <p><b>Valeur</b> - C'est la valeur de cha&icirc;ne de
+          n'importe quel objet que le Canton porte. Habituellement,
+          ce sera soit un message ou un objet r&eacute;gulateur. Si
+          vous modifiez cela, c'est stock&eacute;e dans le Canton
+          comme une cha&icirc;ne. Il n'y a actuellement aucun moyen
+          d'ajouter manuellement un objet r&eacute;gulateur
+          &agrave; un Canton de la table.</p>
+        </li>
 
+        <li>
+          <p><b>Commentaire</b> - Vous pouvez entrer n'importe quel
+          texte dans ce domaine qui vous aideront &agrave;
+          distinguer ce Canton parmi d'autres Cantons, ou de
+          fournir des notes utiles sur son utilisation.</p>
+        </li>
 
-<p>
-<a href="../../../../html/tools/tracker/index.shtml">Plus d'information sur les Cantons</a></p>
-<p>
-<a href="../display/LayoutEditor.shtml">Plus d'informations sur l'utilisation des Cantons avec l'&#233;diteur de R&#233;seau</a>
-<br>
-<li>
-<li>
-Localis&#233; &#224; package/jmri/jmrt/beantable/BlockTable
-<Li>
-<!--#include virtual="/Footer" -->
+        <li>
+          <p><b>Supprimer</b> - Cliquez sur le bouton
+          <b>Supprimer</b> dans n'importe quelle rang&eacute;e pour
+          supprimer le Canton de cette ligne de la liste des
+          Cantons dans l'ordinateur. Vous devez sauvegarder votre
+          configuration (et les panneaux pr&eacute;sents) sur le
+          disque pour rendre la suppression permanente. La
+          radiation peut pas &ecirc;tre annul&eacute;e.
+          <b>Attention: Assurez-vous de supprimer toutes les
+          r&eacute;f&eacute;rences &agrave; un Canton avant de le
+          supprimer</b>. Les Cantons sont
+          r&eacute;f&eacute;renc&eacute;s dans les chemins d'autres
+          Cantons, dans certains scripts, et dans les panneaux de
+          d'&eacute;diteur de R&eacute;seau</p>
+        </li>
+
+        <li>
+          <p><b>Direction</b> - La direction actuelle
+          enregistr&eacute;e dans le canton</p>
+        </li>
+
+        <li>
+          <p><b>Longueur</b> (facultatif) - Affiche la longueur du
+          Canton. En option, vous pouvez entrer la longueur du
+          Canton ici. La longueur est utilis&eacute;e pour le
+          fonctionnement automatique des trains. Si '0 .0 'est
+          affich&eacute;, la longueur n'a pas &eacute;t&eacute;
+          indiqu&eacute;e. La longueur indiqu&eacute;e doit
+          &ecirc;tre la longueur r&eacute;elle du Canton sur le
+          r&eacute;seau mod&egrave;le. La longueur est entr&eacute;
+          et affich&eacute; en pouces ou centim&egrave;tres, selon
+          l'unit&eacute; est demand&eacute;e au bas du tableau de
+          Canton.</p>
+        </li>
+
+        <li>
+          <p><b>Courbure</b> (facultatif) - Affiche la courbure
+          s&eacute;lectionn&eacute;e pour la voie du Canton. La
+          courbure est utilis&eacute;e pour l'exploitation
+          automatique des trains, et ne doit pas &ecirc;tre
+          entr&eacute;e si les trains ne seront pas
+          ex&eacute;cut&eacute;s automatiquement. La Courbure, si
+          elle est pr&eacute;sente, indique &agrave; l'ordinateur
+          qu'il devrait ralentir le train car parcours ce Canton.
+          Si <b>Aucune</b> ou <b>Progressive</b> ne sont
+          s&eacute;lectionn&eacute;es, un train automatique
+          proc&eacute;dera &agrave; une vitesse normale.
+          <b>&eacute;lev&eacute;</b> doit &ecirc;tre
+          s&eacute;lectionn&eacute; si le train doit ralentir ;
+          <b>S&eacute;v&egrave;re</b> doit &ecirc;tre
+          s&eacute;lectionn&eacute; si le train doit ralentir d'un
+          montant maximum. Si le Canton a une courbure variable,
+          votre s&eacute;lection devrait &ecirc;tre faite en
+          fonction de la partie la plus s&eacute;v&eacute;re du
+          Canton.</p>
+        </li>
+
+        <li>
+          <p><b>Statut</b> - Montre le statut actuel du canton,
+          Occup&eacute; ou Non-occup&eacute;.</p>
+        </li>
+
+        <li>
+          <p><b>Rapport</b> - Le Rapport affecter &agrave; ce
+          Canton. Noir le tableau Rapport. Entrez la valeur du
+          Rapport dans la valeur de Canton.</p>
+        </li>
+
+        <li>
+          <p><b>Utilisation actuelle?</b> - Si l'on
+          consid&egrave;re le sc&eacute;nario dans lequel nous
+          voulons suivre un train autour du r&eacute;seau,
+          g&eacute;n&eacute;ralement ceci est
+          r&eacute;alis&eacute;e par l'utilisation d'objets
+          M&eacute;moire associ&eacute;s &agrave; des Cantons.
+          Jusqu'&agrave; ce que le train soitt connu, nous n'ont
+          rien &agrave; suivre. En r&egrave;gle
+          g&eacute;n&eacute;rale, nous pouvons saisir manuellement
+          le num&eacute;ro de train dans un panneau, puis cela est
+          suivi autour du r&eacute;seau par l'occupation de canton.
+          Si, toutefois, nous avons un dispositif qui peut nous
+          fournir l'identification du train, comme un lecteur RFID,
+          nous n'avons plus besoin d' taper manuellement l'ID de
+          train - le lecteur fait cela pour nous. En substance, le
+          lecteur est un peu plus d'un capteur "intelligent" - il
+          peut non seulement sentir que "quelque chose" est
+          l&agrave;, il peut nous dire ce que c'est. Maintenant,
+          pour la mise en &#399;uvre. Un capteur est purement ACTIf
+          ou INACTIf - soit quelque chose est l&agrave; ou elle ne
+          l'est pas. Un Rapport, cependant, ne peut nous dire l'un
+          des &eacute;l&eacute;ments suivants:</p>
+
+          <ol>
+            <li>"Hey, je vois quelque chose d&egrave;s maintenant -
+            c'est lui"</li>
+
+            <li>"Hmm, je ne vois rien pour l'instant "</li>
+
+            <li>"Hey, j'ai vu quelque chose de tout &agrave;
+            l'heure - c'&eacute;tait lui"</li>
+
+            <li>"Hmm, je n'ai encore rien vu "</li>
+          </ol>Les deux premiers sont de CurrentReport, les deux
+          derniers de LastReport. Au d&eacute;marrage (en supposant
+          qu'il n'y a rien dans la fourchette du lecteur), &agrave;
+          la fois 2 et 4 sont le premier &eacute;tat. Une fois que
+          quelque chose est vu, &agrave; la fois 1 et 3 renvoient
+          le m&ecirc;me r&eacute;sultat. Lorsque la chose est 'hors
+          fourchette '2 et 3 sont alors actif. Avec '"utilisation
+          actuelle"? s&eacute;lectionn&eacute;e valeur du canton
+          commutera entre 1 et 2, alors qu'avec "l'utilisation
+          actuelle"? d&eacute;coch&eacute;e valeur du canton
+          commutera entre 3 et 4.
+        </li>
+
+        <li>
+          <p><b>permissive</b> - L'option permissive facultative
+          est utilis&eacute;e pour identifier les cantons qui
+          peuvent &ecirc;tre saisis alors que le Canton est
+          occup&eacute;. Il est utilis&eacute; avec certains outils
+          d'automatisation et de la logique, pour aider &agrave;
+          d&eacute;terminer si un train peut entrer dans un Canton
+          occup&eacute; et quel aspect doit &ecirc;tre
+          affich&eacute; sur un m&acirc;t de signalisation.</p>
+        </li>
+
+        <li>
+          <p><b>Vitesse Canton</b> - La vitesse est utilis&eacute;e
+          avec certains outils d'automatisation et de logique, pour
+          aider &agrave; d&eacute;terminer &agrave; quelle vitesse
+          un train peut &ecirc;tre r&eacute;gl&eacute; &agrave;
+          travers le Canton. Elle est &eacute;galement
+          utilis&eacute; par la logique du m&acirc;t de
+          signalisation pour d&eacute;terminer quel aspect doit
+          &ecirc;tre affich&eacute; dans un signal de chemin.</p>
+
+          <p>Dans la liste d&eacute;roulante, vous sont
+          pr&eacute;sent&eacute;s un ensemble de vitesses fixes qui
+          ont &eacute;t&eacute; pr&eacute;d&eacute;finies dans le
+          fichier signalSpeed.xml, en plus d'une option
+          globale.<br>
+          Il est &eacute;galement possible d'entrer une valeur
+          num&eacute;rique pour repr&eacute;senter une vitesse.</p>
+
+          <p>La valeur globale est d&eacute;finie via les
+          <b>Vitesses</b> du menu option.</p>
+        </li>
+
+        <li style="list-style: none">
+          <p><a href=
+          "../../../../html/tools/tracker/index.shtml">Plus
+          d'information sur les Cantons</a></p>
+
+          <p><a href="../display/LayoutEditor.shtml">Plus
+          d'informations sur l'utilisation des Cantons avec
+          l'&eacute;diteur de R&eacute;seau</a><br></p>
+        </li>
+
+        <li>Localis&eacute; &agrave;
+        package/jmri/jmrt/beantable/BlockTable</li>
+
+        <li><!--#include virtual="/Footer" --></li>
+      </ul>
+    </div>
+  </div>
 </body>
 </html>
-

@@ -77,39 +77,43 @@ public class ConditionalVariable {
             int itemType = Conditional.TEST_TO_ITEM[_type];
             switch (itemType) {
                 case Conditional.ITEM_TYPE_SENSOR:
-                    Sensor sn = InstanceManager.sensorManagerInstance().provideSensor(_name);
-                    if (sn == null) {
+                    try {
+                        Sensor sn = InstanceManager.sensorManagerInstance().provideSensor(_name);
+                        _namedBean = nbhm.getNamedBeanHandle(_name, sn);
+                    } catch (IllegalArgumentException e) {
                         log.error("invalid sensor name= \"" + _name + "\" in state variable");
                         return;
                     }
-                    _namedBean = nbhm.getNamedBeanHandle(_name, sn);
                     break;
                 case Conditional.ITEM_TYPE_TURNOUT:
-                    Turnout tn = InstanceManager.turnoutManagerInstance().provideTurnout(_name);
-                    if (tn == null) {
+                    try {
+                        Turnout tn = InstanceManager.turnoutManagerInstance().provideTurnout(_name);
+                        _namedBean = nbhm.getNamedBeanHandle(_name, tn);
+                    } catch (IllegalArgumentException e) {
                         log.error("invalid turnout name= \"" + _name + "\" in state variable");
                         return;
                     }
-                    _namedBean = nbhm.getNamedBeanHandle(_name, tn);
                     break;
                 case Conditional.ITEM_TYPE_MEMORY:
-                    Memory my = InstanceManager.memoryManagerInstance().provideMemory(_name);
-                    if (my == null) {
+                    try {
+                        Memory my = InstanceManager.memoryManagerInstance().provideMemory(_name);
+                        _namedBean = nbhm.getNamedBeanHandle(_name, my);
+                    } catch (IllegalArgumentException e) {
                         log.error("invalid memory name= \"" + _name + "\" in state variable");
                         return;
                     }
-                    _namedBean = nbhm.getNamedBeanHandle(_name, my);
                     break;
                 case Conditional.ITEM_TYPE_LIGHT:
-                    Light l = InstanceManager.lightManagerInstance().getLight(_name);
-                    if (l == null) {
+                    try {
+                        Light l = InstanceManager.lightManagerInstance().provideLight(_name);
+                        _namedBean = nbhm.getNamedBeanHandle(_name, l);
+                    } catch (IllegalArgumentException e) {
                         log.error("invalid light name= \"" + _name + "\" in state variable");
                         return;
                     }
-                    _namedBean = nbhm.getNamedBeanHandle(_name, l);
                     break;
                 case Conditional.ITEM_TYPE_SIGNALHEAD:
-                    SignalHead s = InstanceManager.signalHeadManagerInstance().getSignalHead(_name);
+                    SignalHead s = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(_name);
                     if (s == null) {
                         log.error("invalid signalhead name= \"" + _name + "\" in state variable");
                         return;
@@ -117,12 +121,13 @@ public class ConditionalVariable {
                     _namedBean = nbhm.getNamedBeanHandle(_name, s);
                     break;
                 case Conditional.ITEM_TYPE_SIGNALMAST:
-                    SignalMast sm = InstanceManager.signalMastManagerInstance().provideSignalMast(_name);
-                    if (sm == null) {
+                    try {
+                        SignalMast sm = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(_name);
+                        _namedBean = nbhm.getNamedBeanHandle(_name, sm);
+                    } catch (IllegalArgumentException e) {
                         log.error("invalid signalmast name= \"" + _name + "\" in state variable");
                         return;
                     }
-                    _namedBean = nbhm.getNamedBeanHandle(_name, sm);
                     break;
                 case Conditional.ITEM_TYPE_ENTRYEXIT:
                     NamedBean nb = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).getBySystemName(_name);
@@ -133,7 +138,7 @@ public class ConditionalVariable {
                     _namedBean = nbhm.getNamedBeanHandle(_name, nb);
                     break;
                 case Conditional.ITEM_TYPE_CONDITIONAL:
-                    Conditional c = InstanceManager.conditionalManagerInstance().getConditional(_name);
+                    Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getConditional(_name);
                     if (c == null) {
                         log.error("invalid conditiona; name= \"" + _name + "\" in state variable");
                         return;
@@ -158,6 +163,7 @@ public class ConditionalVariable {
                     break;
 
                 default:
+                    log.warn("Unexpected type in ConditionalVariable ctor: {} -> {}", _type, itemType);
                     break;
             }
         } catch (java.lang.NumberFormatException ex) {
@@ -236,13 +242,13 @@ public class ConditionalVariable {
                     bean = InstanceManager.memoryManagerInstance().provideMemory(_name);
                     break;
                 case Conditional.ITEM_TYPE_SIGNALMAST:
-                    bean = InstanceManager.signalMastManagerInstance().provideSignalMast(_name);
+                    bean = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(_name);
                     break;
                 case Conditional.ITEM_TYPE_SIGNALHEAD:
-                    bean = InstanceManager.signalHeadManagerInstance().getSignalHead(_name);
+                    bean = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(_name);
                     break;
                 case Conditional.ITEM_TYPE_CONDITIONAL:
-                    bean = InstanceManager.conditionalManagerInstance().getConditional(_name);
+                    bean = InstanceManager.getDefault(jmri.ConditionalManager.class).getConditional(_name);
                     break;
                 case Conditional.ITEM_TYPE_WARRANT:
                     bean = InstanceManager.getDefault(WarrantManager.class).getWarrant(_name);
@@ -592,9 +598,9 @@ public class ConditionalVariable {
                 result = compare(value1, value2, caseInsensitive);
                 break;
             case Conditional.ITEM_TYPE_CONDITIONAL:
-                Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(getName());
+                Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(getName());
                 if (c == null) {
-                    c = InstanceManager.conditionalManagerInstance().getByUserName(getName());
+                    c = InstanceManager.getDefault(jmri.ConditionalManager.class).getByUserName(getName());
                     if (c == null) {
                         log.error("invalid conditional name= \"" + getName() + "\" in state variable");
                         return (false);
@@ -642,7 +648,7 @@ public class ConditionalVariable {
                 }
                 break;
             case Conditional.ITEM_TYPE_CLOCK:
-                Timebase fastClock = InstanceManager.timebaseInstance();
+                Timebase fastClock = InstanceManager.getDefault(jmri.Timebase.class);
                 Date currentTime = fastClock.getTime();
                 int currentMinutes = (currentTime.getHours() * 60) + currentTime.getMinutes();
                 int beginTime = fixMidnight(_num1);

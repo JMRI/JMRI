@@ -1,106 +1,110 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
+
 <html lang="en">
 <head>
-    <TITLE>
- 	JMRI: Portable File Access
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code ">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Portable File Access</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI technical code">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head><!--#include virtual="/Header" -->
 
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div id="mainContent">
+    <div id="mainContent">
+      <h1>JMRI: Portable File Access</h1>JMRI uses files for icons,
+      images, panel files, scripts, and lots of other things.
+      References to those are routinely used by various code, and
+      stored in XML files. Some of the files are distributed with
+      JMRI, and some are created outside the JMRI distribution
+      directory by the local user.
 
-<H1>JMRI: Portable File Access</H1>
+      <p>In addition, JMRI is a cross-platform application, and we
+      want to be able to move JMRI XML files from one computer to
+      another, even of a different type, and have them still
+      work.</p>
 
-JMRI uses files for icons, images, panel files, scripts, and
-lots of other things.  References to those are routinely used
-by various code, and stored in XML files.  Some of the files
-are distributed with JMRI, and some are created outside the
-JMRI distribution directory by the local user.
+      <p>To do this, we've created a system of pseudo-URLs for
+      accessing file locations. Filenames are used internally and
+      stored in XML files with prefixes that identify where the
+      file is to be found in a system independent manner.</p>
 
-<p>
-In addition, JMRI is a cross-platform application, and we
-want to be able to move JMRI XML files from one computer to
-another, even of a different type, and have them still work.
+      <p>If the name</p>
 
-<p>
-To do this, we've created a system of pseudo-URLs for accessing
-file locations. Filenames are used internally and stored in XML
-files with prefixes that identify where the file is to be found
-in a system independent manner.
+      <ul>
+        <li>starts with "program:", treat the rest as a relative
+        pathname below the program directory</li>
 
-<p>
-If the name
-<UL>
-<LI> starts with "program:", treat the rest as a 
-            relative pathname below the program directory
-<LI> starts with "preference:", treat the rest as a 
-            relative path below the preferences directory
-<LI> starts with "home:", treat the rest as a 
-            relative path below the directory in the user.home property, Java's idea of the user's home directory
-<LI> starts with "resource:", treat the rest as a 
-            pathname relative to the program directory
-                 (deprecated; see "program:" above)
-<LI> starts with "file:", treat the rest as 
-            a relative path below the resource directory 
-            in the preferences directory
-                 (deprecated; see "preference:" above)
-</ul>
-Otherwise, treat the name as a relative path below the program directory to provide
-backward compatibility. In any case, absolute pathnames will work, but
-won't be cross-platform compatible.  The two deprecated cases will automatically
-be removed when the referencing file is read and rewritten through
-conversion mechanism described below.
+        <li>starts with "preference:", treat the rest as a relative
+        path below the preferences directory</li>
 
-<h2>Implementation</h2>
+        <li>starts with "home:", treat the rest as a relative path
+        below the directory in the user.home property, Java's idea
+        of the user's home directory</li>
 
-The 
-<a href="http://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html">jmri.util.FileUtil</a>
-class provides translation routines to make this automatic:
-<dl>
-<dd>static public String getExternalFilename(String pName)<dt>Convert an internal name (with
-prefixes as above) into an absolute pathname for use on the local 
-computer.  There's no guarantee that the file or any enclosing 
-directory is actually present, but the pathname will be syntactically
-valid on the present computer.
-<dd>static public String getPortableFilename(File file)
-<dd>static public String getPortableFilename(String filename)<dt>
-Convert a File or filename string into a string name with the appropriate
-prefix.
-</dl>
+        <li>starts with "resource:", treat the rest as a pathname
+        relative to the program directory (deprecated; see
+        "program:" above)</li>
 
-You should call getExternalFilename() before passing the filename to any Java
-common, and getPortableFilename() whenever you get a file or filename from
-a Java class.  It's OK to call either one multiple times, as they'll just pass 
-through in that case.  In particular, call getPortableFilename() before storing to an
-XML file.
+        <li>starts with "file:", treat the rest as a relative path
+        below the resource directory in the preferences directory
+        (deprecated; see "preference:" above)</li>
+      </ul>Otherwise, treat the name as a relative path below the
+      program directory to provide backward compatibility. In any
+      case, absolute pathnames will work, but won't be
+      cross-platform compatible. The two deprecated cases will
+      automatically be removed when the referencing file is read
+      and rewritten through conversion mechanism described below.
 
+      <h2>Implementation</h2>The <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html">jmri.util.FileUtil</a>
+      class provides translation routines to make this automatic:
 
+      <dl>
+        <dd>static public String getExternalFilename(String
+        pName)</dd>
 
+        <dt>Convert an internal name (with prefixes as above) into
+        an absolute pathname for use on the local computer. There's
+        no guarantee that the file or any enclosing directory is
+        actually present, but the pathname will be syntactically
+        valid on the present computer.</dt>
 
-<!--#include virtual="/Footer" -->
+        <dd>static public String getPortableFilename(File
+        file)</dd>
 
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+        <dd>static public String getPortableFilename(String
+        filename)</dd>
+
+        <dt>Convert a File or filename string into a string name
+        with the appropriate prefix.</dt>
+      </dl>You should call getExternalFilename() before passing the
+      filename to any Java common, and getPortableFilename()
+      whenever you get a file or filename from a Java class. It's
+      OK to call either one multiple times, as they'll just pass
+      through in that case. In particular, call
+      getPortableFilename() before storing to an XML file. 
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-

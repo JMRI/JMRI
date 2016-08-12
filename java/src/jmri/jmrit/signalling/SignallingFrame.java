@@ -1,4 +1,3 @@
-// StatusFrame.java
 package jmri.jmrit.signalling;
 
 import java.util.ResourceBundle;
@@ -9,14 +8,9 @@ import javax.swing.JButton;
  * Frame for the Signalling Logic
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version $Revision$
  */
 public class SignallingFrame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3885712015636161664L;
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
 
     public SignallingFrame() {

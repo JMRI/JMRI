@@ -1,4 +1,3 @@
-// AcelaMonFrame.java
 package jmri.jmrix.acela.acelamon;
 
 import jmri.jmrix.acela.AcelaListener;
@@ -10,20 +9,16 @@ import jmri.jmrix.acela.AcelaTrafficController;
  * Frame displaying (and logging) Acela command messages
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- *
  * @author	Bob Coleman, Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
 public class AcelaMonFrame extends jmri.jmrix.AbstractMonFrame implements AcelaListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6831074157726656711L;
+    jmri.jmrix.acela.AcelaSystemConnectionMemo _memo = null;
 
-    public AcelaMonFrame() {
+    public AcelaMonFrame(jmri.jmrix.acela.AcelaSystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
     protected String title() {
@@ -32,11 +27,11 @@ public class AcelaMonFrame extends jmri.jmrix.AbstractMonFrame implements AcelaL
 
     protected void init() {
         // connect to TrafficController
-        AcelaTrafficController.instance().addAcelaListener(this);
+        _memo.getTrafficController().addAcelaListener(this);
     }
 
     public void dispose() {
-        AcelaTrafficController.instance().removeAcelaListener(this);
+        _memo.getTrafficController().removeAcelaListener(this);
         super.dispose();
     }
 

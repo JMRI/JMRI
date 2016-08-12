@@ -1,4 +1,3 @@
-// LayoutBlockNeighbourTableModel.java
 package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 
 import java.beans.PropertyChangeListener;
@@ -14,14 +13,8 @@ import org.slf4j.LoggerFactory;
  * Any desired ordering, etc, is handled outside this class.
  *
  * @author Kevin Dickerson Copyright (C) 2011
- * @version $Revision$
  */
 public class LayoutBlockThroughPathsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4544331372118349150L;
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 

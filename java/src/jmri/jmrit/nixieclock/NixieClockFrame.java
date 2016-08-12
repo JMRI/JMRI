@@ -1,4 +1,3 @@
-// NixieClockFrame.java
 package jmri.jmrit.nixieclock;
 
 import java.awt.Image;
@@ -24,14 +23,9 @@ import jmri.util.JmriJFrame;
  * Modified by Dennis Miller for resizing Nov, 2004
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6327183291550522948L;
     // GUI member declarations
     JLabel h1;  // msb of hours
     JLabel h2;
@@ -53,7 +47,7 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
     public NixieClockFrame() {
         super(Bundle.getMessage("MenuItemNixieClock"));
 
-        clock = InstanceManager.timebaseInstance();
+        clock = InstanceManager.getDefault(jmri.Timebase.class);
 
         //Load the images (these are now the larger version of the original gifs
         for (int i = 0; i < 10; i++) {
@@ -78,7 +72,7 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
         // enabled.  When the Run/Stop button is enabled, the layout will have to be changed
         aspect = (4.5 * 24.) / 32.;
 
-        // listen for changes to the timebase parameters
+        // listen for changes to the Timebase parameters
         clock.addPropertyChangeListener(this);
 
         // init GUI

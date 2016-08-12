@@ -43,7 +43,7 @@ l'utilisateur ait &#224; se familiariser avec la logique math&#233;matique.
 	</dd>
 
 	<dl>
-	<dt class=left><a name=contents><H3>Contenus</H3></a></dt>
+	<dt class=left><a name=contents></a><h3>Contenus</h3></dt>
 	<dd class=top>
 	
 <p> La documentation ci-dessous d&#233;crit Logix, et discute de sa configuration
@@ -67,7 +67,7 @@ et suivez ces instructions. Revenez ici pour lire ce que vous avez fait.
 	</dd>
 
 
-<dt class = left><a  name=intro>  <H3>Introduction aux  Logix et Conditions</H3></a></dt>
+<dt class = left><a  name=intro>  </a><h3>Introduction aux  Logix et Conditions</h3></dt>
 <dd class=top>
 <p> Logix est un petit groupe de Conditions concentr&#233;s sur une t&#226;che unique
 sur le r&#233;seau. Chaque Condition peut &#234;tre consid&#233;r&#233; comme une d&#233;claration de la forme:
@@ -94,7 +94,7 @@ pour la t&#226;che &#224; un seul endroit, rend beaucoup plus facile de voir com
 expressions logiques li&#233;es peuvent travailler ensembles et comment elles pourraient s'affecter l'une  l'autre.
 </P></dd>
 
-    <dt class=left><a name=logix><H3> Logix</H3></a></dt>
+    <dt class=left><a name=logix></a><h3> Logix</h3></dt>
 <dd class=top>
 <p> Sauf quand il est cr&#233;&#233; ou modifi&#233;,
 un Logix est "actif", ce qui signifie
@@ -205,7 +205,7 @@ supprime Logix et tous ses Conditions. Cette op&#233;ration
          fourniront un moyen de copier le Logix et tout ou partie de sa condition &#224; un nouveau
          Logix ou &#224; un existant.</p>
 </dd>	
-	<dt class=left><a name=conditional><H3>Conditions</H3></a>
+	<dt class=left><a name=conditional></a><h3>Conditions</h3>
 	</dt>
 	<dd class=top>
 	<p>Un Nom syst&#232;me d'une Condition a la forme IXnnnnCmm, et
@@ -268,7 +268,7 @@ changement de l'expression logique. Cela signifie qu'un Condition peut effective
 <p> si (changements d'&#233;tat ant&#233;c&#233;dent) puis (faire actions "sur le changement").</ul></p>
 </ Dd>
 
-<dt class=left><a name=editconditional><H3> La fen&#234;tre Modifier Condition</H3></a>
+<dt class=left><a name=editconditional></a><h3> La fen&#234;tre Modifier Condition</h3>
 </Dt>
 <dd class=top
 <p>La fen&#234;tre Modifier Condition est o&#249; les expressions logiques sont mises en place et
@@ -282,7 +282,7 @@ d'un autre Condition dans le m&#234;me Logix. Viennent ensuite les deux sections
 pour l'installation d'une expression logique et une autre pour mettre en place les actions.</p>
 </Dd>
 
-<dt class=left><a name=logicalexpression><H3> L'Expression Logique</H3></a>
+<dt class=left><a name=logicalexpression></a><h3> L'Expression Logique</h3>
 </Dt>
 <dd class=top>
 <p> La section expression logique contient unetableaude variables d'&#233;tat, avec
@@ -353,7 +353,7 @@ nom  syst&#232;me et des donn&#233;es articles de cliquer sur une cellule diff&#
 termin&#233; votre entr&#233;e. Sinon votre entr&#233;e ne peut prendre effet, et une erreur
 peut &#234;tre signal&#233;e inutilement.</i></p >
 </Dd>
-<dt class=left><a name=thepolicy><H3>D&#233;clenchement des Actions</H3></a>
+<dt class=left><a name=thepolicy></a><h3>D&#233;clenchement des Actions</h3>
 	</dt>
 <dd><class=top>
          <p>
@@ -375,7 +375,7 @@ peut &#234;tre signal&#233;e inutilement.</i></p >
          un &#233;tat particulier de la condition, le bouton <b>Ex&#233;cuter les actions &#224; chaque fois</b> doit &#234;tre utilis&#233;
           Si des &#233;v&#233;nements ext&#233;rieurs annulent certaines des actions de la Condition, mais ne modifie pas l'&#233;tat de la Condition, cette politique va ex&#233;cuter l'action sur tous les d&#233;clenchements.</p> 
 
-<dt class=left><a name=theactions><H3> Les Actions</H3></a>
+<dt class=left><a name=theactions></a><h3> Les Actions</h3>
 </Dt>
 <dd class=top>
 <p> La section Actions de la fen&#234;tre &#201;dition Condition contient un tableau 
@@ -416,7 +416,7 @@ Une de ces options doit &#234;tre s&#233;lectionn&#233;e. Quand vous avez termin
        l'&#233;tat action pr&#233;c&#233;dant termin&#233; est la variable d'&#233;tat pour l'action suivante.</p>
 </Dd>
 
-<dt class=left><a name=updateconditional><H3> Enregistrer la Condition</H3></a>
+<dt class=left><a name=updateconditional></a><h3> Enregistrer la Condition</h3>
 </Dt>
 <dd class=top>
 <p> Lorsque l'expression logique et les actions ont &#233;t&#233; sp&#233;cifi&#233;es, cliquez sur
@@ -437,7 +437,7 @@ Condition</b> , fournit un moyen facile de supprimer une condition inutile.
 Cliquez sur <b>Supprimer Condition</b> pour supprimer la condition en cours d'&#233;dition et
 revenir &#224; la fen&#234;tre Modifier Logix.</p>
 </Dd>
-     	<dt class=left><a name=start><H3> Mise en Route</H3></a> 
+     	<dt class=left><a name=start></a><h3> Mise en Route</h3> 
 
 </Dt>
 <dd class=top>
@@ -533,7 +533,7 @@ d&#233;clench&#233; lors du changement de l'apparence du m&#226;t de signal.
     	</ul>
 	</dd>    
     
-	<dt class=left><a name=action><H3>Actions disponibles</H3></a></dt>
+	<dt class=left><a name=action></a><h3>Actions disponibles</h3></dt>
 <dd>
  <P> Actions qui sont actuellement disponibles pour une utilisation dans les Conditions et qui sont r&#233;pertori&#233;es
 ci-dessous avec des informations sur chacun:
@@ -668,7 +668,7 @@ Sp&#233;cifi&#233; le OCanton en entrant son nom du syst&#232;me ou nom utilisat
 
 		</ul>
 	</dd>    
-	<dt class=left><a name=notes><H3> Notes compl&#233;mentaires</H3></a></dt>
+	<dt class=left><a name=notes></a><h3> Notes compl&#233;mentaires</h3></dt>
 <dd>
 <p> Cette section contient des questions et r&#233;ponses qui normalement ne sont pas
 n&#233;cessaires pour les utilisateurs Logix, mais dans certains cas ont &#233;t&#233; importantes ou ont de l'

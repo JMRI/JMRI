@@ -13,15 +13,10 @@ import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 /**
  * <P>
  * @author Pete Cressman Copyright: Copyright (c) 2012
- * @version $Revision: 1 $
  *
  */
 public class DrawCircle extends DrawFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3871500332284884080L;
     JTextField _radiusText;
     int _radius;			// corner radius
 

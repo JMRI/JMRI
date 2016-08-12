@@ -119,9 +119,6 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
-
-        jmri.jmrix.tams.ActiveFlag.setActive();
-
     }
 
     // base class methods for the TamsPortController interface

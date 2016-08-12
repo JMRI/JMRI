@@ -26,13 +26,10 @@
 <body>
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
-	    <!-- -------- -->
-	    <!--  Teaser  --> <!-- Optional -->
-	    <!-- -------- -->
-
 <h1>JMRI: Mod&#232;les et Organisation</h1>
 
 JMRI a grandi et &#233;volu&#233; avec le temps, et

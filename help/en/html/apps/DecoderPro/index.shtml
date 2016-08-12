@@ -14,7 +14,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+<div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -63,7 +63,7 @@ For more information, please see the
 <a href="../../hardware/index.shtml">DCC hardware pages</a>.</p>
 
 <a name="guide">
-<h2>DecoderPro User Guide</h2></a>
+</a><h2>DecoderPro User Guide</h2>
 
 <dl class="toc">
 <dt><a href="./Roster.shtml">Working with the Roster</a></dt>

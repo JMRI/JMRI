@@ -20,7 +20,7 @@ public class PackageTest extends TestCase {
         // initialize the system
         Programmer p = new ProgDebugger();
         InstanceManager.setProgrammerManager(new DefaultProgrammerManager(p));
-        assertTrue(InstanceManager.programmerManagerInstance().getGlobalProgrammer() == p);
+        assertTrue(InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer() == p);
     }
 
     // from here down is testing infrastructure

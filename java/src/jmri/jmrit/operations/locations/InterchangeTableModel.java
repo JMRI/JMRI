@@ -16,11 +16,6 @@ import org.slf4j.LoggerFactory;
  */
 public class InterchangeTableModel extends TrackTableModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3985319043804319680L;
-
     public InterchangeTableModel() {
         super();
     }

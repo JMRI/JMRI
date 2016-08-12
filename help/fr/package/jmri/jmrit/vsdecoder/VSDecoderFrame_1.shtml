@@ -1,194 +1,241 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="fr"><head>
-<!-- $Id$ --><title>JMRI: Virtual Sound Decoder</title>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- $Id$ -->
 
-
- 
-    
-  
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-
-    
+  <title>JMRI: Virtual Sound Decoder</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
   <meta content="Mark Underwood" name="Author">
-
-    
-  <meta name="keywords" content="JMRI help Virtual Sound Decoder"><!-- Style -->
-
-
-
-  
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-
-  
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-
-  
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-
-  
+  <meta name="keywords" content="JMRI help Virtual Sound Decoder">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
 
-  
-  <link rel="home" title="Home" href="/"><!-- /Style --></head><body>
+<body>
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="/Header" -->
-  
-<div class="nomenu" id="mBody">
-    
-<div id="mainContent">
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>D&Atilde;&copy;codeur Son Virtuel JMRI</h1>Ceci est la
+      page de r&Atilde;&copy;f&Atilde;&copy;rence rapide de l'outil
+      D&Atilde;&copy;codeur Son Virtuel JMRI.<br>
+      <br>
+      Quelle est cette chose? Le D&eacute;codeur Son Virtuel JMRI
+      ("D&eacute;codeurSV"pour faire plus court) qui se trouve sur
+      votre ordinateur, &eacute;coutant son adresse d&eacute;codeur
+      attribu&eacute;. Quand vous faites quelque chose au
+      r&eacute;gulateur( changer de vitesse ou appuyez sur une
+      touche de fonction ), il &eacute;met des sons, comme un
+      ferait un d&eacute;codeur son physique dans votre locomotive
+      - sauf que le son vient de votre ordinateur.<br>
+      Le D&eacute;codeur de son Virtuel est compl&egrave;tement
+      ind&eacute;pendant du r&eacute;seau mat&eacute;riell, et peut
+      &ecirc;tre utilis&eacute; en mode autonome. Vous n'avez
+      m&ecirc;me pas besoin d'avoir une locomotive dans la Liste
+      pour l'utiliser.<br>
+      Vous <i>avez</i>besoin d'avoir un syst&egrave;me de son et
+      haut-parleurs sur votre ordinateur, bien s&ucirc;r!<br>
+      Devez avoir &eacute;galement le syst&egrave;me audio OpenAL
+      ou JavaSound install&eacute; sur votre votre ordinateur. Voir
+      <a href="http://jmri.org/help/en/html/tools/Audio.shtml">les
+      pages d'aides Audio JMRI</a>pour plus de d&eacute;tails .<br>
+      <hr>
 
-<h1>Décodeur Son Virtuel JMRI</h1>
+      <h2>&Atilde;&permil;l&Atilde;&copy;ments de la
+      fen&Atilde;&ordf;tre D&Atilde;&copy;codeurSV</h2>
+      <hr>
 
+      <h3>Volet Configuration</h3>Le volet Config vous permet de
+      choisir le profil sonore &Atilde;  utiliser (vapeur vs
+      Diesel, EMD vs GE, Leslie vs Nathan, etc ), et attribuer une
+      adresse de d&Atilde;&copy;codeur &Atilde; 
+      &Atilde;&copy;couter.
 
-Ceci est la page de référence rapide de l'outil Décodeur Son Virtuel JMRI.<br>
+      <h4>S&Atilde;&copy;lectionnez et Enregistrer la
+      Liste</h4>Vous pouvez s&Atilde;&copy;lectionner une
+      entr&Atilde;&copy;e de liste actuelle, si vous en avez.
+      Appuyez sur le bouton "Enregistrer" pour enregistrer le
+      fichier VSD actuellement charg&Atilde;&copy; et le profil de
+      l'Entr&Atilde;&copy;z Liste
+      s&Atilde;&copy;lectionn&Atilde;&copy;e. La prochaine fois que
+      vous choisirez cette Entr&Atilde;&copy;e Liste, il va charger
+      automatiquement le fichier VSD (Virtual Sound Decoder)
+      stock&Atilde;&copy; et Profil.<br>
+      Vous n'avez pas &Atilde;  utiliser la Liste du tout si vous
+      ne voulez pas . REMARQUE : Voir la note ci-dessous &Atilde; 
+      propos de l'enregistrement des informations
+      d'Entr&Atilde;&copy;e de Liste. Il y a un bug sur lequel les
+      concepteur travaillent.
 
-<br>
-   Quelle est cette chose? Le D&#233;codeur Son Virtuel JMRI ("D&#233;codeurSV"pour faire plus court) qui
- se trouve sur votre ordinateur, &#233;coutant son adresse d&#233;codeur attribu&#233;. Quand vous faites quelque chose au r&#233;gulateur( changer de vitesse ou appuyez sur une touche de fonction ), il &#233;met des sons, comme un ferait un d&#233;codeur son physique dans votre locomotive - sauf que le son vient de votre ordinateur.
-  <br>
-  Le D&#233;codeur de son Virtuel est compl&#232;tement ind&#233;pendant du r&#233;seau mat&#233;riell, et peut &#234;tre utilis&#233; en mode autonome. Vous n'avez m&#234;me pas besoin d'avoir une locomotive dans la Liste pour l'utiliser.
-  <br>
-  Vous <i>avez</i>besoin d'avoir un syst&#232;me de son et haut-parleurs sur votre ordinateur, bien s&#251;r!
-  <br>
-  Devez avoir &#233;galement le syst&#232;me audio OpenAL ou JavaSound install&#233; sur votre
-  votre ordinateur. Voir <a
-  href ="http://jmri.org/help/en/html/tools/Audio.shtml">les pages d'aides Audio JMRI</a>pour plus de d&#233;tails .
-  <br>
-  <hr>
-  <h2>Éléments de la fenêtre DécodeurSV</h2>
-  <hr>
-  <h3>Volet Configuration</h3>
-  Le volet Config vous permet de choisir le profil sonore à utiliser (vapeur vs Diesel, EMD vs GE, Leslie vs Nathan, etc ), et attribuer une adresse de décodeur à écouter.
- 
- <h4>Sélectionnez et Enregistrer la Liste</h4>
+      <h4>S&Atilde;&copy;lection de Profil</h4>Pour
+      s&Atilde;&copy;lectionner un profil, vous devez d'abord
+      charger un "fichier VSD". Un exemple de fichier VSD est
+      inclus dans le paquet, et vous pouvez faire (et &Atilde; 
+      partager!) le votre. Choisissez "Fichier -&gt; Charger VSD"
+      et chargez un fichier VSD . Vous ne pouvez rien faire d'autre
+      (&Atilde;  l'exception de choisir une entr&Atilde;&copy;e de
+      la liste) jusqu'&Atilde;  ce qu'un fichier VSD soit
+      charg&Atilde;&copy;.<br>
+      Maintenant, vous pouvez choisir l'un des profils dans la
+      liste d&Atilde;&copy;roulante de profil. Notez que vous ne
+      pouvez rien faire d'autre tant que vous n'avez pas
+      s&Atilde;&copy;lectionn&Atilde;&copy; un profil.
 
-  Vous pouvez sélectionner une entrée de liste actuelle, si vous en avez. Appuyez sur le bouton "Enregistrer" pour enregistrer le fichier VSD actuellement chargé et le profil de l'Entréz Liste sélectionnée. La prochaine fois que vous choisirez cette Entrée Liste, il va charger automatiquement le fichier VSD (Virtual Sound  Decoder) stocké et Profil.
-  <br>
-  Vous n'avez pas à utiliser la Liste du tout si vous ne voulez pas .
-  REMARQUE : Voir la note ci-dessous à propos de l'enregistrement des informations d'Entrée de Liste.
-  Il y a un bug sur lequel les concepteur travaillent.
- 
- <h4>Sélection de Profil</h4>
+      <h4>Adresse d'affectation et la Liste</h4>Une fois que vous
+      avez charg&Atilde;&copy; un fichier VSD et
+      d&Atilde;&copy;fini un profil, vous pouvez entrer une adresse
+      de d&Atilde;&copy;codeur directement-et appuyez sur
+      "D&Atilde;&copy;finir" - ou vous pouvez choisir une
+      locomotive &Atilde;  partir de votre liste. Le VSD
+      r&Atilde;&copy;pondra ensuite aux r&Atilde;&copy;gulateurs.
+      Il va &Atilde;&copy;couter <i>toutes</i>les informations
+      d'&Atilde;&copy;tat envoy&Atilde;&copy;es par les
+      r&Atilde;&copy;gulateurs pour JMRI . Cela comprend les
+      r&Atilde;&copy;gulateurs logiciels JMRI, "Smarth Phone" comme
+      WiThrottle, EngineDriver, et la plupart ( mais pas tous) des
+      r&Atilde;&copy;gulateurs mat&Atilde;&copy;riels.<br>
+      <hr>
+      <br>
 
-  Pour sélectionner un profil, vous devez d'abord charger un "fichier VSD". Un exemple de fichier VSD est inclus dans le paquet, et vous pouvez faire (et à partager!) le votre. Choisissez "Fichier -> Charger VSD" et chargez un fichier VSD . Vous ne pouvez rien faire d'autre (à l'exception de choisir une entrée de la liste) jusqu'à ce qu'un fichier VSD soit chargé.
-  <br>
-  Maintenant, vous pouvez choisir l'un des profils dans la liste déroulante de profil. Notez que vous ne pouvez rien faire d'autre tant que vous n'avez pas sélectionné un profil.
-  
-<h4>Adresse d'affectation et la Liste</h4>
+      <h3>Onglet Options</h3>In the future, the Options pane will
+      provide various option settings. For now, it is
+      non-functional. The gadgets on this pane are just for show.
 
-  Une fois que vous avez chargé un fichier VSD et défini un profil, vous pouvez entrer une adresse de décodeur directement-et appuyez sur "Définir" - ou vous pouvez choisir une locomotive à partir de votre liste. Le VSD répondra ensuite aux régulateurs. Il va écouter <i>toutes</i>les informations d'état envoyées par les régulateurs pour JMRI . Cela comprend les régulateurs logiciels JMRI, "Smarth Phone" comme WiThrottle, EngineDriver, et la plupart ( mais pas tous) des régulateurs matériels.
-  <br>
-  <hr>
-  <br>
-  <h3>Onglet Options</h3>
-In the future, the Options pane will provide various option settings.
-For now, it is non-functional.  The gadgets on this pane are just
-for show.
-<h3>Sounds Tab</h3>
-The Sounds tab provides a set of customized buttons for triggering
-  sounds without having to use a Throttle.  This allows the VSDecoder
-  to be used in a sort of "stand-alone" mode.  The exact buttons shown
-  will depend on which VSD file you have loaded.
-<br>
-<i>Note: In the "example.vsd" file, the "Coupler" and "Air Brake"
-buttons are non-functional, there just for show.</i>
-<br>
-<h4>Special note about Engine sounds</h4>
-The actual engine sound generation is still very "rough".  Expect
-  rather "jerky" transitions between speed steps, and some other odd
-  effects.  Be patient.  This is still "Alpha" code!
-<br>
-By default, the Engine sounds will not respond to throttle inputs
-  until you have pressed the "Engine Start" button on the Sounds tab.
-  This is to preserve a semblance of realism in that you must start
-  the engine before it will run.  This feature is completely
-  independent of the actual locomotive operation.  If you would prefer
-  to have your engine sounds start immediately when you advance the
-  throttle, without first pressing "Engine Start", there is a setting
-  in the VSDecoder Preferences to change this.  (This feature is
-  currently broken for Steam sounds...)
-<br>
-Also note that the slider above the "Engine Start" button is only an
-  indicator of which notch the engine is in.  Moving the slider has no
-  effect.
-<br>
-<hr>
-<h2> Menu Items </h2>
-<hr>
-<h3> File Menu </h3>
-<dl>
-  <dt>Load VSDecoder File</dt>
-  <dd>Pops up a file chooser to load a VSD File.  Most VSDecoder functions
-    will not work until you have loaded a VSD File.</dd>
-    <dt>VSDecoder Preferences<dt>
-    <dd>Launches the VSDecoder Preferences pane.<dd>
-  </dl>
-<h3> Window and Help Menus </h3>
-These are the standard JMRI Window and Help menus.
-  <br><hr>
-<h2> VSDecoder Preferences</h2>
-  <hr>
-The VSDecoder Preferences pane allows you to customize how the Virtual
-  Sound Decoder works.
-  <dl>
-    <dt>Auto Start Engine</dt>
-    <dd>If this box is checked, the engine sounds will respond to throttle
-      inputs immediately, without having to first press the "Engine Start"
-      button.</dd>
-<dt>Auto Load VSD File</dt>
-<dd>If this box is checked, the VSD File specified in the Default
-  Path/Name fields will be automatically loaded on decoder start-up.</dd>
-  <dt>Default VSD File Path</td
-  <dd>This path is both the default path for the "Load VSD File" chooser box
-    and the expected path for the Default VSD File if the "Auto Load VSD
-    File" checkbox is selected.</dd>
-<dt>Default VSD File Name</dt>
-<dd>This VSD file, assumed to be in the "Default VSD File Path", will be
-  auto-loaded on decoder start-up, if the "Auto Load VSD File"
-  checkbox is checked.</dd>
-</dl>
-<br><hr>
-<h2> Roster Interaction </h2>
-<hr>
-Virtual Sound Decoder connections to the Roster are still a bit "under
-construction".
-You can do the following:
-<ul>
-  <li>Set the VSDecoder address from a Roster entry</li>
-  <li>Store a preferred VSDecoder File and Profile Name to a Roster
-  entry</li>
-  <li>Auto-set the VSDecoder Profile and address from a Roster
-  entry</li>
-</ul>
+      <h3>Sounds Tab</h3>The Sounds tab provides a set of
+      customized buttons for triggering sounds without having to
+      use a Throttle. This allows the VSDecoder to be used in a
+      sort of "stand-alone" mode. The exact buttons shown will
+      depend on which VSD file you have loaded.<br>
+      <i>Note: In the "example.vsd" file, the "Coupler" and "Air
+      Brake" buttons are non-functional, there just for
+      show.</i><br>
 
-To store the current VSDecoder profile setting to a Roster Entry,
-select the Roster Entry and click the "Save" button.  See the bug note
-below, though!
+      <h4>Special note about Engine sounds</h4>The actual engine
+      sound generation is still very "rough". Expect rather "jerky"
+      transitions between speed steps, and some other odd effects.
+      Be patient. This is still "Alpha" code!<br>
+      By default, the Engine sounds will not respond to throttle
+      inputs until you have pressed the "Engine Start" button on
+      the Sounds tab. This is to preserve a semblance of realism in
+      that you must start the engine before it will run. This
+      feature is completely independent of the actual locomotive
+      operation. If you would prefer to have your engine sounds
+      start immediately when you advance the throttle, without
+      first pressing "Engine Start", there is a setting in the
+      VSDecoder Preferences to change this. (This feature is
+      currently broken for Steam sounds...)<br>
+      Also note that the slider above the "Engine Start" button is
+      only an indicator of which notch the engine is in. Moving the
+      slider has no effect.<br>
+      <hr>
 
-A few notes on limitations (bugs, mostly):
-<ul>
-  <li>If you choose a Roster Entry before loading the VSD file, it
-  will not set the address.</li>
-  <li>If you store VSDecoder info to a Roster Entry, it will not be
-  saved to disk unless you go to "Roster->Edit Entry...", select your
-  roster entry, open the programmer for it, and click "Save to
-  Roster".
-  <li>All of the sounds are still "rough".  Expect odd transitions
-  between speed settings, strange effects when you press buttons
-  rapidly (and sometimes not), and so on.
-  <li>Many other things are buggy or broken.  Please log a bug report
-  if something appears truly broken.
-</ul>
-  
-<p>
-  <br>
-  <hr>
-  <br>
-<a id="prefs">(This is the jmri.jmrit.vsdecoder.VSDecoderFrame help page)
-    
-<!--#include virtual="/Footer" -->
-</a></p>
-</div>
-</div>
-</body></html>
+      <h2>Menu Items</h2>
+      <hr>
+
+      <h3>File Menu</h3>
+
+      <dl>
+        <dt>Load VSDecoder File</dt>
+
+        <dd>Pops up a file chooser to load a VSD File. Most
+        VSDecoder functions will not work until you have loaded a
+        VSD File.</dd>
+
+        <dt>VSDecoder Preferences</dt>
+
+        <dd>Launches the VSDecoder Preferences pane.</dd>
+      </dl>
+
+      <h3>Window and Help Menus</h3>These are the standard JMRI
+      Window and Help menus.<br>
+      <hr>
+
+      <h2>VSDecoder Preferences</h2>
+      <hr>
+      The VSDecoder Preferences pane allows you to customize how
+      the Virtual Sound Decoder works.
+
+      <dl>
+        <dt>Auto Start Engine</dt>
+
+        <dd>If this box is checked, the engine sounds will respond
+        to throttle inputs immediately, without having to first
+        press the "Engine Start" button.</dd>
+
+        <dt>Auto Load VSD File</dt>
+
+        <dd>If this box is checked, the VSD File specified in the
+        Default Path/Name fields will be automatically loaded on
+        decoder start-up.</dd>
+
+        <dt>Default VSD File PathThis path is both the default path
+        for the "Load VSD File" chooser box and the expected path
+        for the Default VSD File if the "Auto Load VSD File"
+        checkbox is selected.</dt>
+
+        <dt>Default VSD File Name</dt>
+
+        <dd>This VSD file, assumed to be in the "Default VSD File
+        Path", will be auto-loaded on decoder start-up, if the
+        "Auto Load VSD File" checkbox is checked.</dd>
+      </dl><br>
+      <hr>
+
+      <h2>Roster Interaction</h2>
+      <hr>
+      Virtual Sound Decoder connections to the Roster are still a
+      bit "under construction". You can do the following:
+
+      <ul>
+        <li>Set the VSDecoder address from a Roster entry</li>
+
+        <li>Store a preferred VSDecoder File and Profile Name to a
+        Roster entry</li>
+
+        <li>Auto-set the VSDecoder Profile and address from a
+        Roster entry</li>
+      </ul>To store the current VSDecoder profile setting to a
+      Roster Entry, select the Roster Entry and click the "Save"
+      button. See the bug note below, though! A few notes on
+      limitations (bugs, mostly):
+
+      <ul>
+        <li>If you choose a Roster Entry before loading the VSD
+        file, it will not set the address.</li>
+
+        <li>If you store VSDecoder info to a Roster Entry, it will
+        not be saved to disk unless you go to "Roster-&gt;Edit
+        Entry...", select your roster entry, open the programmer
+        for it, and click "Save to Roster".</li>
+
+        <li>All of the sounds are still "rough". Expect odd
+        transitions between speed settings, strange effects when
+        you press buttons rapidly (and sometimes not), and so
+        on.</li>
+
+        <li>Many other things are buggy or broken. Please log a bug
+        report if something appears truly broken.</li>
+      </ul>
+
+      <p><br></p>
+      <hr>
+      <br>
+      <a id="prefs" name="prefs">(This is the
+      jmri.jmrit.vsdecoder.VSDecoderFrame help page) 
+      <!--#include virtual="/Footer" --></a>
+    </div>
+  </div>
+</body>
+</html>

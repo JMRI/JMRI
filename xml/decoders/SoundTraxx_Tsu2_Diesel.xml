@@ -49,6 +49,12 @@
       <authorinitials>MM</authorinitials>
       <revremark>Added TSU-2200 and TSU-PNP models</revremark>
     </revision>
+    <revision>
+      <revnumber>2.1</revnumber>
+      <date>2016-07-09</date>
+      <authorinitials>MM</authorinitials>
+      <revremark>Fixed sound selection for TSU-2200 and TSU-PNP models</revremark>
+    </revision>
   </revhistory>
   <version author="Michael Mosher" version="1" lastUpdated="20160529"/>
   <!-- Version 1:   Based on Tsunami2 Diesel Technical Reference version 1.0    -->
@@ -1009,23 +1015,23 @@
         </enumVal>
         <label>Auxiliary Airhorn Select</label>
       </variable>
-      <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="885001" default="18" tooltip="Bell sound effect and ring-rate">
+      <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="885001,885005,885013" default="18" tooltip="Bell sound effect and ring-rate">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselBell.xml"/>
         <label>Bell Select</label>
       </variable>
-      <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="885002" default="36" tooltip="Bell sound effect and ring-rate">
+      <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="885002,885006,885014" default="36" tooltip="Bell sound effect and ring-rate">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselBell.xml"/>
         <label>Bell Select</label>
       </variable>
-      <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="885003" default="10" tooltip="Bell sound effect and ring-rate">
+      <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="885003,885007,885015" default="10" tooltip="Bell sound effect and ring-rate">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselBell.xml"/>
         <label>Bell Select</label>
       </variable>
-      <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="885004" default="47" tooltip="Bell sound effect and ring-rate">
+      <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="885004,885008,885016" default="47" tooltip="Bell sound effect and ring-rate">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselBell.xml"/>
         <label>Bell Select</label>
       </variable>
-      <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="885001" default="0" tooltip="Select one of prime mover sound effects">
+      <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="885001,885005,885013" default="0" tooltip="Select one of prime mover sound effects">
         <enumVal>
           <enumChoice>
             <choice>EMD 567 (No Transition)</choice>
@@ -1057,7 +1063,7 @@
         </enumVal>
         <label>Prime Mover Select</label>
       </variable>
-      <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="885002" default="2" tooltip="Select one of prime mover sound effects">
+      <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="885002,885006,885014" default="2" tooltip="Select one of prime mover sound effects">
         <enumVal>
           <enumChoice>
             <choice>FDL-12</choice>
@@ -1083,7 +1089,7 @@
         </enumVal>
         <label>Prime Mover Select</label>
       </variable>
-      <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="885003" default="0" tooltip="Select one of prime mover sound effects">
+      <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="885003,885007,885015" default="0" tooltip="Select one of prime mover sound effects">
         <enumVal>
           <enumChoice>
             <choice>ALCO 539 Turbo</choice>
@@ -1115,7 +1121,7 @@
         </enumVal>
         <label>Prime Mover Select</label>
       </variable>
-      <variable CV="123" mask="XXXXXVVV" item="Sound Option 5" include="885004" default="0" tooltip="Select one of prime mover sound effects">
+      <variable CV="123" mask="XXXXXVVV" item="Sound Option 5" include="885004,885008,885016" default="0" tooltip="Select one of prime mover sound effects">
         <enumVal>
           <enumChoice>
             <choice>Baldwin VO</choice>
@@ -1141,19 +1147,19 @@
         </enumVal>
         <label>Prime Mover Select</label>
       </variable>
-      <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="885001" default="3" tooltip="Select one of air compressor sound effects">
+      <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="885001,885005,885013" default="3" tooltip="Select one of air compressor sound effects">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselComp.xml"/>
         <label>Air Compressor Select</label>
       </variable>
-      <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="885002" default="1" tooltip="Select one of air compressor sound effects">
+      <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="885002,885006,885014" default="1" tooltip="Select one of air compressor sound effects">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselComp.xml"/>
         <label>Air Compressor Select</label>
       </variable>
-      <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="885003" default="0" tooltip="Select one of air compressor sound effects">
+      <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="885003,885007,885015" default="0" tooltip="Select one of air compressor sound effects">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselComp.xml"/>
         <label>Air Compressor Select</label>
       </variable>
-      <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="885004" default="0" tooltip="Select one of air compressor sound effects">
+      <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="885004,885008,885016" default="0" tooltip="Select one of air compressor sound effects">
 		<enumVal>
 		  <enumChoice>
 			<choice>Engine Driven</choice>

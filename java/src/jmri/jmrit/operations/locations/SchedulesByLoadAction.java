@@ -12,10 +12,6 @@ import javax.swing.AbstractAction;
  */
 public class SchedulesByLoadAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6680843615707655230L;
     private SchedulesByLoadFrame _slf;
 
     public SchedulesByLoadAction(String actionName) {

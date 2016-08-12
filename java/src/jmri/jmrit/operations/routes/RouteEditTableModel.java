@@ -35,10 +35,6 @@ import org.slf4j.LoggerFactory;
  */
 public class RouteEditTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4770884408356323253L;
     // Defines the columns
     private static final int ID_COLUMN = 0;
     private static final int NAME_COLUMN = ID_COLUMN + 1;
@@ -272,8 +268,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     @Override
-    public Object getValueAt(int row, int col) {
-        if (row >= routeList.size()) {
+    public synchronized Object getValueAt(int row, int col) {
+        if (row >= getRowCount()) {
             return "ERROR unknown " + row; // NOI18N
         }
         RouteLocation rl = routeList.get(row);
@@ -343,7 +339,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     @Override
-    public void setValueAt(Object value, int row, int col) {
+    public synchronized void setValueAt(Object value, int row, int col) {
         if (value == null) {
             log.debug("Warning route table row {} still in edit", row);
             return;

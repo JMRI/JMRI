@@ -11,11 +11,6 @@ import jmri.PowerManager;
  */
 public class PowerButtonAction extends javax.swing.AbstractAction implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2336270044595139511L;
-
     public PowerButtonAction(String title) {
         super(title);
         checkManager();
@@ -28,16 +23,16 @@ public class PowerButtonAction extends javax.swing.AbstractAction implements jav
 
     void checkManager() {
         // disable ourself if there is no power Manager
-        if (jmri.InstanceManager.powerManagerInstance() == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.PowerManager.class) == null) {
             setEnabled(false);
         } else {
-            jmri.InstanceManager.powerManagerInstance().addPropertyChangeListener(this);
+            jmri.InstanceManager.getDefault(jmri.PowerManager.class).addPropertyChangeListener(this);
         }
     }
 
     void updateLabel() {
         try {
-            PowerManager p = jmri.InstanceManager.powerManagerInstance();
+            PowerManager p = jmri.InstanceManager.getDefault(jmri.PowerManager.class);
             if (p.getPower() != PowerManager.ON) {
                 putValue(Action.NAME, ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle").getString("ButtonSetOn"));
             } else {
@@ -56,7 +51,7 @@ public class PowerButtonAction extends javax.swing.AbstractAction implements jav
     public void actionPerformed(java.awt.event.ActionEvent e) {
         try {
             // alternate power state, updating name
-            PowerManager p = jmri.InstanceManager.powerManagerInstance();
+            PowerManager p = jmri.InstanceManager.getOptionalDefault(jmri.PowerManager.class);
             if (p == null) {
                 return;
             }

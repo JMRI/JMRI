@@ -174,7 +174,7 @@ public class WarrantTableAction extends AbstractAction {
                                     return true;
                                 }
                             };
-                            jmri.InstanceManager.shutDownManagerInstance().register(_shutDownTask);
+                            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(_shutDownTask);
                         }
                         updateWarrantMenu();
                     }
@@ -185,7 +185,7 @@ public class WarrantTableAction extends AbstractAction {
                 {
                     public void actionPerformed(ActionEvent e) {
                         _log.close();
-                        jmri.InstanceManager.shutDownManagerInstance().deregister(_shutDownTask);
+                        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(_shutDownTask);
                         _shutDownTask = null;
                         _log = null;
                         updateWarrantMenu();

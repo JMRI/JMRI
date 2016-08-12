@@ -1136,7 +1136,7 @@ public class LayoutSlip extends LayoutTurnout {
         if (signalMast == null) {
             return;
         }
-        InstanceManager.signalMastLogicManagerInstance().disableLayoutEditorUse(signalMast);
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).disableLayoutEditorUse(signalMast);
     }
 
     boolean active = true;

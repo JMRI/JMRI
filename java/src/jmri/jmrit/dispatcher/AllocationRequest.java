@@ -1,4 +1,3 @@
-// AllocationRequest.java
 package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
@@ -27,7 +26,6 @@ import java.util.ResourceBundle;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Dave Duchamp Copyright (C) 2008-2010
- * @version	$Revision$
  */
 public class AllocationRequest {
 
@@ -215,5 +213,3 @@ public class AllocationRequest {
 
     }
 }
-
-/* @(#)AllocationRequest.java */

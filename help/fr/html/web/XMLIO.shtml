@@ -16,7 +16,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -92,7 +92,8 @@ Le sch&#233;ma XML est d&#233;fini dans le
 
 Demande:
 
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xmlio&gt;
   &lt;item&gt;
     &lt;type&gt;turnout&lt;/type&gt;
@@ -107,9 +108,10 @@ Demande:
     &lt;name&gt;power&lt;/name&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</pre></code>
+</pre>
 
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xmlio&gt;
   &lt;item&gt;
     &lt;type&gt;turnout&lt;/type&gt;
@@ -127,7 +129,7 @@ Demande:
     &lt;value&gt;2&lt;/value&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</pre></code>
+</pre>
 
 La "valeur" &#233;l&#233;ment est ins&#233;r&#233;e dans la demande, et puis est
 retourn&#233;e comme r&#233;ponse. Vous pouvez simplement tourner autour de la r&#233;ponse et l'utiliser
@@ -139,16 +141,18 @@ la r&#233;ponse ne sera restitu&#233;e que lorsque l'un ou plusieurs des
 
 Demande:
 
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xmlio&gt;
   &lt;list&gt;
     &lt;type&gt;sensor&lt;/type&gt;
   &lt;/list&gt;
 &lt;/xmlio&gt;
-</pre></code>
+</pre>
 
 R&#233;ponse:
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xmlio&gt;
   &lt;item&gt;
     &lt;type&gt;sensor&lt;/type&gt;
@@ -166,8 +170,7 @@ R&#233;ponse:
     &lt;value&gt;2&lt;/value&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</pre></code>
-</Pre></code>
+</pre>
 
 La r&#233;ponse peut &#234;tre retourn&#233;e et utilis&#233;e comme la prochaine requ&#234;te.
 
@@ -175,7 +178,8 @@ La r&#233;ponse peut &#234;tre retourn&#233;e et utilis&#233;e comme la prochain
 
 Demande:
 
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xmlio&gt;
   &lt;item&gt;
     &lt;type&gt;turnout&lt;/type&gt;
@@ -183,10 +187,11 @@ Demande:
     &lt;set&gt;2&lt;/set&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</pre></code>
+</pre>
 
 R&#233;ponse:
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xmlio&gt;
   &lt;item&gt;
     &lt;type&gt;turnout&lt;/type&gt;
@@ -194,7 +199,7 @@ R&#233;ponse:
     &lt;value&gt;2&lt;/value&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</pre></code>
+</pre>
 
 L'&#233;l&#233;ment "set" de la demande r&#233;sulte de l'&#233;tat
  fix&#233; &#224; la valeur donn&#233;e, et puis est
@@ -210,13 +215,15 @@ soient propag&#233;es compl&#232;tement.
 
 <h3>Contr&#244;le un r&#233;gulateur</h3>
 Demande:
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;turnout name="IT12" set="2" /&gt;
-</pre></code>
+</pre>
 R&#233;ponse:
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;turnout name="IT12" value="2" /&gt;
-</pre></code>
+</pre>
 
 Un &#233;l&#233;ment
 peut &#234;tre utilis&#233; pour contr&#244;ler un r&#233;gulateur via le
@@ -233,8 +240,7 @@ alloue le r&#233;gulateur, et tous les post&#233;rieurs utilisent
   &lt;F3&gt; False&lt;/F3&gt;
    &lt;/throttle&gt;
 &lt;/Xmlio&gt;
-
-</Pre></code>
+</pre>
 
 Un &#233;l&#233;ment r&#233;gulateur est retourn&#233; inchang&#233;.
 

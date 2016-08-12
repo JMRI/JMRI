@@ -1,26 +1,23 @@
-// SprogMonFrame.java
 package jmri.jmrix.sprog.sprogmon;
 
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
 import jmri.jmrix.sprog.SprogTrafficController;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
  * Frame displaying (and logging) Sprog command messages
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class SprogMonFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4645506663293913369L;
+    private SprogSystemConnectionMemo _memo = null;;
 
-    public SprogMonFrame() {
+    public SprogMonFrame(SprogSystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
     protected String title() {
@@ -29,16 +26,16 @@ public class SprogMonFrame extends jmri.jmrix.AbstractMonFrame implements SprogL
 
     protected void init() {
         // connect to TrafficController
-        SprogTrafficController.instance().addSprogListener(this);
+        _memo.getSprogTrafficController().addSprogListener(this);
     }
 
     public void dispose() {
-        SprogTrafficController.instance().removeSprogListener(this);
+        _memo.getSprogTrafficController().removeSprogListener(this);
         super.dispose();
     }
 
     public synchronized void notifyMessage(SprogMessage l) {  // receive a message and log it
-        nextLine("cmd: \"" + l.toString() + "\"\n", "");
+        nextLine("cmd: \"" + l.toString(_memo.getSprogTrafficController().isSIIBootMode()) + "\"\n", "");
 
     }
 

@@ -32,11 +32,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LocationCopyFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5798102907541807915L;
-
     LocationManager locationManager = LocationManager.instance();
 
     // text field

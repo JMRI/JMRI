@@ -1,4 +1,3 @@
-// OptionsMenu.java
 package jmri.jmrit.dispatcher;
 
 import java.awt.Container;
@@ -44,14 +43,8 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Dave Duchamp Copyright (C) 2008
- * @version	$Revision$
  */
 public class OptionsMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2060918292476729120L;
 
     static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.dispatcher.DispatcherBundle");
@@ -442,5 +435,3 @@ public class OptionsMenu extends JMenu {
 
     private final static Logger log = LoggerFactory.getLogger(OptionsMenu.class.getName());
 }
-
-/* @(#)OptionsMenu.java */

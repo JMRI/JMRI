@@ -1,4 +1,3 @@
-// AutomatTableAction.java
 package jmri.jmrit.automat.monitor;
 
 import java.awt.event.ActionEvent;
@@ -8,14 +7,8 @@ import javax.swing.AbstractAction;
  * Swing action to create and register a AutomatTable GUI
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2008
- * @version $Revision$
  */
 public class AutomatTableAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 247180783423184258L;
 
     public AutomatTableAction(String actionName) {
         super(actionName);
@@ -39,4 +32,3 @@ public class AutomatTableAction extends AbstractAction {
     }
 
 }
-/* @(#)AutomatTableAction.java */

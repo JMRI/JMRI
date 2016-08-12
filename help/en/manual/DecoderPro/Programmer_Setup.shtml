@@ -1,73 +1,120 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>Using DecoderPro</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>Using DecoderPro</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h1>Using DecoderPro&reg;</h1>
-<h2><a name="Setting Up"></a>How do I set up to program
-a decoder?</h2>
+    <div id="mainContent">
+      <h1>Using DecoderPro&reg;</h1>
 
-<div align="right">
-<p><a href="Programmer_Start.shtml">Next</a></p>
-<p><a href="index.shtml">Back to Index</a></p>
-</div>
+      <h2><a name="Setting Up"></a>How do I set up to program a
+      decoder?</h2>
 
-<hr>
+      <div align="right">
+        <p><a href="Programmer_Start.shtml">Next</a></p>
 
-<p>Prior to using the programmer you  need to have completed the previous section (<a href="Start_DCC.shtml">Getting Started</a>), have your computer connected to  your command station/booster with the required interface device for your DCC  system, you are now ready to actually program a decoder that has been installed  in your locomotive.</p>
-<p><br>
-  On opening DecoderPro, the main  page will be displayed: (After preferences are set)</p>
-<div align="center"><img src="images/Splash_Screen.png" width="496" height="282" alt="splash"></div>
-<p>There are four buttons near the  bottom, the first two of which are: </p>
-<p><b><a href="Programmer_ServiceMode.shtml">
-<input type="button" name="button" id="button" value="Service Mode (Programming Track) Programmer">
-Service Mode </a></b>- 
-  With this button you select a programmer to program the  locomotive(decoder) on the dedicated programming track.  (Probably because the Locomotive has to be taken to the  servicing track to be programmed).&nbsp; Not all command  stations support a dedicated programming track, and some brands  will shut down the mainline power when in programming mode (not pleasant when you have  an ops session in progress.
-</p>
-<p><b><a href="Programmer_OpsMode.shtml">
-  <input type="button" name="button2" id="button2" value="Operations Mode (Main Track ) Programmer">
-  Operations Mode</a></b> - 
-    or <strong>[Programming on the main(POM)]</strong>.&nbsp; This  lets you program a specific decoder on the layout, even while it is 
-    operating. However, because it addresses a specific  decoder address, some  decoders will not allow you to change the  decoder's address using this method! 
-Some  command stations will only &quot;broadcast&quot; programming commands,  which can mean every locomotive on 
-  the layout gets the same programming! The same is true if  you try to program a loco with address zero (or forget to enter an address when  you start). &nbsp;If in doubt, check  your documentation.   </p>
-<p><strong>
-  <input type="button" name="button3" id="button3" value="Help">
-</strong>- Accesses the help files<br>
-</p>
-<p>
-  <input type="button" name="button4" id="button4" value="Quit"> 
-- Exits the program. </p>
-<p>Any additional buttons are added in the<strong> <a href="Start_Preferences.shtml">preferences</a></strong>.</p>
+        <p><a href="index.shtml">Back to Index</a></p>
+      </div>
+      <hr>
 
-<h2>Additional programmers that are available.</h2>
-<p><a href="Programmer_SingleCV.shtml"><strong>Single CV Programmer</strong></a>
-  Lets you program older decoders one CV at a time.</p>
-<p><a href="Programmer_Multi_Decoder.shtml"><strong>Multi-Programmer Control</strong></a> provides a convenient way to program CV's when you have more than one decoder installed in a locomotive. For example, if you have separate decoders to control the motor and provide sound, and they both use the same CV locations, programming one decoder would change the settings on the other, usually an undesired feature.</p>
-<p>Now that you have decided on which Programming Mode to use, you may continue </p>
+      <p>Prior to using the programmer you need to have completed
+      the previous section (<a href="Start_DCC.shtml">Getting
+      Started</a>), have your computer connected to your command
+      station/booster with the required interface device for your
+      DCC system, you are now ready to actually program a decoder
+      that has been installed in your locomotive.</p>
 
-<div align="right">
-  <p><a href="Programmer_Start.shtml">Next</a></p>
-  <p><a href="index.shtml">Back to Index</a></p>
-</div>
+      <p><br>
+      On opening DecoderPro, the main page will be displayed:
+      (After preferences are set)</p>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
+      <div align="center">
+        <img src="images/Splash_Screen.png" width="496" height=
+        "282" alt="splash">
+      </div>
+
+      <p>There are four buttons near the bottom, the first two of
+      which are:</p>
+
+      <p><b><a href="Programmer_ServiceMode.shtml"><input type=
+      "button" name="button" id="button" value=
+      "Service Mode (Programming Track) Programmer"> Service
+      Mode</a></b> - With this button you select a programmer to
+      program the locomotive(decoder) on the dedicated programming
+      track. (Probably because the Locomotive has to be taken to
+      the servicing track to be programmed). Not all command
+      stations support a dedicated programming track, and some
+      brands will shut down the mainline power when in programming
+      mode (not pleasant when you have an ops session in
+      progress.</p>
+
+      <p><b><a href="Programmer_OpsMode.shtml"><input type="button"
+      name="button2" id="button2" value=
+      "Operations Mode (Main Track ) Programmer"> Operations
+      Mode</a></b> - or <strong>[Programming on the
+      main(POM)]</strong>. This lets you program a specific decoder
+      on the layout, even while it is operating. However, because
+      it addresses a specific decoder address, some decoders will
+      not allow you to change the decoder's address using this
+      method! Some command stations will only "broadcast"
+      programming commands, which can mean every locomotive on the
+      layout gets the same programming! The same is true if you try
+      to program a loco with address zero (or forget to enter an
+      address when you start). If in doubt, check your
+      documentation.</p>
+
+      <p><strong><input type="button" name="button3" id="button3"
+      value="Help"></strong> - Accesses the help files<br></p>
+
+      <p><input type="button" name="button4" id="button4" value=
+      "Quit"> - Exits the program.</p>
+
+      <p>Any additional buttons are added in the <strong><a href=
+      "Start_Preferences.shtml">preferences</a></strong>.</p>
+
+      <h2>Additional programmers that are available.</h2>
+
+      <p><a href="Programmer_SingleCV.shtml"><strong>Single CV
+      Programmer</strong></a> Lets you program older decoders one
+      CV at a time.</p>
+
+      <p><a href=
+      "Programmer_Multi_Decoder.shtml"><strong>Multi-Programmer
+      Control</strong></a> provides a convenient way to program
+      CV's when you have more than one decoder installed in a
+      locomotive. For example, if you have separate decoders to
+      control the motor and provide sound, and they both use the
+      same CV locations, programming one decoder would change the
+      settings on the other, usually an undesired feature.</p>
+
+      <p>Now that you have decided on which Programming Mode to
+      use, you may continue</p>
+
+      <div align="right">
+        <p><a href="Programmer_Start.shtml">Next</a></p>
+
+        <p><a href="index.shtml">Back to Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

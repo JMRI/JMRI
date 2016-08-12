@@ -127,7 +127,7 @@ public class RaspberryPiSystemConnectionMemoTest {
       Assert.assertNotNull(jmri.InstanceManager.getDefault(RaspberryPiSystemConnectionMemo.class)); 
       m.dispose();
       // after dispose, should be deregistered.
-      Assert.assertNull(jmri.InstanceManager.getDefault(RaspberryPiSystemConnectionMemo.class)); 
+      Assert.assertNull(jmri.InstanceManager.getOptionalDefault(RaspberryPiSystemConnectionMemo.class)); 
    }
 
     // The minimal setup for log4J

@@ -24,7 +24,7 @@ public class WiThrottleManager {
         trackPowerController = new TrackPowerController();
         turnoutController = new TurnoutController();
         routeController = new RouteController();
-        if (jmri.InstanceManager.getDefault(jmri.jmrit.withrottle.WiThrottlePreferences.class) == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.jmrit.withrottle.WiThrottlePreferences.class) == null) {
             jmri.InstanceManager.store(new jmri.jmrit.withrottle.WiThrottlePreferences(FileUtil.getUserFilesPath() + "throttle" + File.separator + "WiThrottlePreferences.xml"), jmri.jmrit.withrottle.WiThrottlePreferences.class);
         }
         withrottlePreferences = jmri.InstanceManager.getDefault(jmri.jmrit.withrottle.WiThrottlePreferences.class);

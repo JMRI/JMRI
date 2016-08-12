@@ -60,7 +60,7 @@ public class NullAudioFactory extends AbstractAudioFactory {
         super.cleanup();
 
         // Get the active AudioManager
-        AudioManager am = InstanceManager.audioManagerInstance();
+        AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
 
         // Retrieve list of Audio Objects and remove the sources
         List<String> audios = am.getSystemNameList();

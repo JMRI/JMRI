@@ -1,6 +1,3 @@
-// This is the template file for package-info.java files.
-// Update the following, including the package statement, 
-// and remove these three lines.
 /**
  * Provides basic interfaces and certain core implementations for the JMRI
  * layout management concepts.

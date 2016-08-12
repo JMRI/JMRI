@@ -146,7 +146,7 @@ the type letter is "T" instead of "S", e.g. <code>MT-18;+21</code>)
 <p>(To be written, but the scheme is similar to Turnouts above, 
 except the type letter is "L" instead of "T", e.g. <code>ML-18;+21</code>)
 
-<a name="tools"></a><h2>JMRI MERG CBUS Tools</h2></a>
+<a name="tools"></a></a><h2>JMRI MERG CBUS Tools</h2>
 <img src="../images/MERG_Menu.png" alt="MERG menu" align="right" height="132" width="227">
 <p>The MERG menu contains 5 tools:
 	<ul>

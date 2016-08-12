@@ -165,7 +165,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     }
 
     void setFrameLocation() {
-        jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
         if ((prefsMgr != null) && (prefsMgr.isWindowPositionSaved(windowFrameRef))) {
             Dimension screen = getToolkit().getScreenSize();
             if ((reuseFrameSavedPosition)
@@ -357,10 +357,6 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     void addWindowCloseShortCut() {
         // modelled after code in JavaDev mailing list item by Bill Tschumy <bill@otherwise.com> 08 Dec 2004
         AbstractAction act = new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -1110135969033124426L;
 
             public void actionPerformed(ActionEvent e) {
                 // log.debug("keystroke requested close window ", JmriJFrame.this.getTitle());
@@ -442,11 +438,6 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     public void setEscapeKeyClosesWindow(boolean closesWindow) {
         if (closesWindow) {
             setEscapeKeyAction(new AbstractAction() {
-
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -814207277600217890L;
 
                 public void actionPerformed(ActionEvent ae) {
                     JmriJFrame.this.processWindowEvent(new java.awt.event.WindowEvent(JmriJFrame.this,
@@ -649,9 +640,9 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      */
     public void setSavePosition(boolean save) {
         reuseFrameSavedPosition = save;
-        jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        if (prefsMgr == null) {
-            prefsMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
+        if (prefsMgr == null) {  /* Why is this duplicated with above? */
+            prefsMgr = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
         }
         if (prefsMgr != null) {
             prefsMgr.setSaveWindowLocation(windowFrameRef, save);
@@ -667,9 +658,9 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      */
     public void setSaveSize(boolean save) {
         reuseFrameSavedSized = save;
-        jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        if (prefsMgr == null) {
-            prefsMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
+        if (prefsMgr == null) {  /* Why is this duplicated with above? */
+            prefsMgr = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
         }
         if (prefsMgr != null) {
             prefsMgr.setSaveWindowSize(windowFrameRef, save);
@@ -776,14 +767,14 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     }
 
     public void componentMoved(java.awt.event.ComponentEvent e) {
-        jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        jmri.UserPreferencesManager p = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
         if ((p != null) && (reuseFrameSavedPosition) && isVisible()) {
             p.setWindowLocation(windowFrameRef, this.getLocation());
         }
     }
 
     public void componentResized(java.awt.event.ComponentEvent e) {
-        jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        jmri.UserPreferencesManager p = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
         if ((p != null) && (reuseFrameSavedSized) && isVisible()) {
             saveWindowSize(p);
         }
@@ -795,14 +786,14 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     private transient jmri.implementation.AbstractShutDownTask task = null;
 
     protected void setShutDownTask() {
-        if (jmri.InstanceManager.shutDownManagerInstance() != null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
             task = new jmri.implementation.AbstractShutDownTask(getTitle()) {
                 public boolean execute() {
                     handleModified();
                     return true;
                 }
             };
-            jmri.InstanceManager.shutDownManagerInstance().register(task);
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(task);
         }
     }
 
@@ -816,7 +807,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * with super.dispose()
      */
     public void dispose() {
-        jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        jmri.UserPreferencesManager p = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
         if (p != null) {
             if (reuseFrameSavedPosition) {
                 p.setWindowLocation(windowFrameRef, this.getLocation());
@@ -830,7 +821,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
             windowInterface.dispose();
         }
         if (task != null) {
-            jmri.InstanceManager.shutDownManagerInstance().deregister(task);
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(task);
             task = null;
         }
         synchronized (list) {

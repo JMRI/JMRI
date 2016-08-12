@@ -13,11 +13,6 @@ import javax.swing.AbstractAction;
  */
 public class ModifyLocationsAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8755364574386629561L;
-
     public ModifyLocationsAction(String s, Location location) {
         super(s);
         l = location;

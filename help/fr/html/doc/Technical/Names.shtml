@@ -25,6 +25,7 @@
 </head>
 <body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
@@ -54,7 +55,7 @@ et des r&#233;f&#233;rences d'objets dans ce genre de configuration.
 </OL>
 
 <a name="type">
-<H2>El&#233;ments avec des noms</h2></a>
+</a><h2>El&#233;ments avec des noms</h2>
 Il y a un certain nombre de choses qui peuvent avoir besoin des noms:
 <UL>
 <LI>Aspects pour les signaux
@@ -111,8 +112,8 @@ Exemples:
 Notez qu'il n'y a aucune hypoth&#232;se de mod&#232;le pour les noms, ils ne sont pas
  affecter de fa&#231;on monotone, ils ne sont pas limit&#233;s &#224; un seul syst&#232;me.
 
-<a name="hardware">
-<H3>Mat&#233;riel, lettres syst&#232;me  </h3></a>
+<a name="hardware"></a>
+<H3>Mat&#233;riel, lettres syst&#232;me  </h3>
 Notez que certaines d'entre elles sont des espaces r&#233;serv&#233;s, et n'ont pas de mise en oeuvre sous-jacente.
 (les liens vont vers des pages  JMRI avec plus d'informations))
 <ul>
@@ -144,8 +145,8 @@ Notez que certaines d'entre elles sont des espaces r&#233;serv&#233;s, et n'ont 
 <LI> Z <a href="../../hardware/zimo/Zimo.shtml">Zimo MX-1</a>
 </ul>
    
-<a name="types">
-<H3>Lettres type de p&#233;riph&#233;rique</h3></a>
+<a name="types"></a>
+<H3>Lettres type de p&#233;riph&#233;rique</h3>
 Notez que certains d'entre eux sont des espaces r&#233;serv&#233;s, et n'ont pas de mise en oeuvre sous-jacente. En outre,
 il n'y a aucune garantie que tout syst&#232;me mat&#233;riel donn&#233; ne les mettra jamais en oeuvre. 
 <li>
@@ -185,8 +186,8 @@ d&#233;tecteurs de cantons.
 <LI> X Logix - un ensemble d'&#233;quations logiques utilis&#233;es pour contr&#244;ler le r&#233;seau 
 </ul>
 
-<a name="systeminfo">
-<h3>Info-sp&#233;cifiques Syst&#232;me</H3></a>
+<a name="systeminfo"></a>
+<h3>Info-sp&#233;cifiques Syst&#232;me</H3>
 Chaque syst&#232;me mat&#233;riel diff&#233;rent peut sp&#233;cifier la "chaine " qui suit le syst&#232;me et la lettre type.
 G&#233;n&#233;ralement sp&#233;cifique, ce sont de petits nombres, mais leur signification exacte est tr&#232;s sp&#233;cifique au syst&#232;me.
 Pour plus d'informations, s'il vous pla&#238;t voir les pages sp&#233;cifiques pour 
@@ -208,7 +209,7 @@ est mise en oeuvre sur trois sorties diff&#233;rentes, LT1, LT2 et LT3, l'objet 
 pourrait &#234;tre appel&#233; IH3.
 
 <a name="special">
-<h2>Convention de D&#233;signation pour un usage automatique</h2></a>
+</a><h2>Convention de D&#233;signation pour un usage automatique</h2>
 
 Certaines constructions de niveau sup&#233;rieur cr&#233;ent leurs propres &#233;l&#233;ments. Par exemple, un
 "Groupe Capteur"

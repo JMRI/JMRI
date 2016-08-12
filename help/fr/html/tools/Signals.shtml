@@ -45,6 +45,7 @@ JMRI: Signal Head Documentation
   <div id="container">
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
       <div id="mainContent">

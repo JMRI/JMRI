@@ -24,7 +24,7 @@ public class QuitAction extends jmri.util.swing.JmriAbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         try {
-            jmri.InstanceManager.shutDownManagerInstance().shutdown();
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).shutdown();
         } catch (Exception ex) {
             System.err.println("Continuing after error in handleQuit: " + ex); // can't count on logging here
         }

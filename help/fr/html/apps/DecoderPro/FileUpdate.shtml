@@ -16,7 +16,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -34,7 +34,7 @@ Le processus d'installation &#233;tait simplifi&#233; dans la version JMRI 2.3.6
 "Importer fichier D&#233;codeur" et"URL Importation D&#233;codeur" sont ajouter au menu Debug.
 
 <a name="after236">
-<h2>JMRI Version 2.3.6 et Apr&#232;s</h2></a>
+</a><h2>JMRI Version 2.3.6 et Apr&#232;s</h2>
 
 Cette section d&#233;crit l'addition d'une nouvelle d&#233;finition de d&#233;codeur quand vous &#234;tes utlisateJmriHelp_frTOC.xmlur de JMRI verion 2.3.6 ou suivant.
 
@@ -70,7 +70,7 @@ Ces deux outils prennent l'information de d&#233;finition de d&#233;codeur depui
 La d&#233;finition est stock&#233;e dans votre fichier "preferences", au lieu du r&#233;pertoire de distribution JMRI, ainsi une nouvelle installation de JMRI ne l'effacera pas.  Notez, toutefois, que si une nouvelle version de JMRI arrive avec une copie de cette d&#233;finition de d&#233;codeur install&#233;e, Le programme donne la priorit&#233; &#224; la version sp&#233;cifique sue vous avez import&#233;e.  JMRI pense que que vous saviez ce que vous faisiez quand vous avez sp&#233;cialement importer cette version sp&#233;cifique. Si vous pr&#233;f&#233;rez utiliser celle de la nouvelle version de JMRI, effacez juste votre version dans le r&#233;pertoire preference et s&#233;lectionnez  "Rebuilt Decoder Index"  dans le menu d&#233;bug.
 
 <a name="before236">
-<h2>JMRI Version 2.3.5 et Avant</h2></a>
+</a><h2>JMRI Version 2.3.5 et Avant</h2>
 JmriHelp_frTOC.xml
 Cette section d&#233;crit l'addition d'une nouvelle d&#233;finition de d&#233;codeur quand vous utilisez la version JMRI 2.3.5 ou avant.
 

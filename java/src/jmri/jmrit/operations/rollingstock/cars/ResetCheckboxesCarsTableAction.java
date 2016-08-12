@@ -13,10 +13,6 @@ import javax.swing.AbstractAction;
  */
 public class ResetCheckboxesCarsTableAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1076812683689273095L;
     CarsTableModel _carsTableModel;
 
     public ResetCheckboxesCarsTableAction(String s) {

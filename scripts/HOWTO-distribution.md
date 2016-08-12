@@ -198,13 +198,13 @@ We roll some general code maintenance items into the release process.  They can 
 - Put a comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note
 
 ```
-The release-4.3.7 branch has been created. 
+The release-4.3.9 branch has been created. 
 
-From now on, please document your changes in the [jmri4.3.7.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.3.7.shtml) release note file.
+From now on, please document your changes in the [jmri4.3.9.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.3.9.shtml) release note file.
 
 Maintainers, please set the 4.5.1 milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
 
-Jenkins will be creating files shortly at the [new server](http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.7/)
+Jenkins will be creating files shortly at the [new server](http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.9/)
 ````
 
 ================================================================================
@@ -242,7 +242,7 @@ If you're building locally:
 - Get the release in your local work directory
 
 ```
-    git checkout release-4.3.7
+    git checkout release-4.3.9
 ```
 
 - edit release.properties to say release.official=true (last line)
@@ -279,7 +279,7 @@ If you're building locally:
 
 - Announce the file set to jmri-developers with a download URL like:
 
-    http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.6/
+    http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.9/
 
 - *Wait for some replies* before proceeding
 
@@ -331,9 +331,9 @@ It still gets a bit tricky if there’s a difference (e.g. due to a conflict wit
 ```
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
-    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/4.3.6/ws/dist/release/*zip*/release.zip"
+    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/4.3.9/ws/dist/release/*zip*/release.zip"
         (use the following instead if building on second Jenkins server)
-    curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.6/ws/dist/release/*zip*/release.zip"
+    curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.9/ws/dist/release/*zip*/release.zip"
     rm release/JMRI*
     unzip release.zip
     cd release
@@ -385,20 +385,20 @@ Note: Unlike releasing files to SourceForge, once a GitHub Release is created it
 ```
    - Description content (really need to automate this!):
 ```    
-[Release notes](http://jmri.org/releasenotes/jmri4.3.6.shtml)
+[Release notes](http://jmri.org/releasenotes/jmri4.3.9.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.3.3-R47390b0.dmg](https://github.com/JMRI/JMRI/releases/download/v4.3.1/JMRI.4.3.3-R47390b0.dmg) | ee2e47d840ffd8ae1efea9ba11c289b8ac1d76dc8dc5cbd330a581d364421fe6
-[JMRI.4.3.3-R47390b0.exe](https://github.com/JMRI/JMRI/releases/download/v4.3.1/JMRI.4.3.3-R47390b0.exe) | 64828358712a9fb7c67556f2ead48961c531f878ca2ebb6e367483f5521ad75f
-[JMRI.4.3.3-R47390b0.tgz](https://github.com/JMRI/JMRI/releases/download/v4.3.1/JMRI.4.3.3-R47390b0.tgz) | fb28ed2d3dc8dfa2c6cf57ad740c7185e7c75990b2426d2864543d63add7c00a
+[JMRI.4.3.9-Rd144052.dmg](https://github.com/JMRI/JMRI/releases/download/v4.3.9/JMRI.4.3.9-Rd144052.dmg) | 346341bbb87d8c8530ae1ac923e2d1e61de3d97be5df364d85213d95d5f99702
+[JMRI.4.3.9-Rd144052.exe](https://github.com/JMRI/JMRI/releases/download/v4.3.9/JMRI.4.3.9-Rd144052.exe) | 4d8d86345adf2a06a2b60f3ddefbfa03751819bc34e894f5e947e98dcb36e294
+[JMRI.4.3.9-Rd144052.tgz](https://github.com/JMRI/JMRI/releases/download/v4.3.9/JMRI.4.3.9-Rd144052.tgz) | 0531e6ec7aebe13e75f82f4d9905431420f8a86e31f145470b0e3fe50d055c83
 ```
 
 - Attach files by dragging them in (you might have to have downloaded them above via e.g. a separate 
 ```
-curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.6/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"" 
+curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.9/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"" 
 ```
 and expansion; it's slow to upload from a typical home machine, though, so wish we had a way to cross-load from somewhere fast - if release.zip is still on SF.net, you can do
 ```
@@ -408,6 +408,14 @@ scp user,jmri@shell.sf.net:release.zip .
 then expand the release.zip file and drag-and-drop the three files onto the web page one at a time.
 
 Note there's a little progress bar that has to go across & "Uploading your release now..." has to complete before you publish; make sure all three files show.
+
+Alternatively, if you have shell access to the Jenkins server, you can upload directly from there, once the initial draft release has been created:
+
+```
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.3.9 -n "JMRI.4.3.9-Rd144052.dmg" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.3.9/workspace/dist/release/JMRI.4.3.9-Rd144052.dmg 
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.3.9 -n "JMRI.4.3.9-Rd144052.exe" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.3.9/workspace/dist/release/JMRI.4.3.9-Rd144052.exe 
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.3.9 -n "JMRI.4.3.9-Rd144052.tgz" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.3.9/workspace/dist/release/JMRI.4.3.9-Rd144052.tgz 
+```
     
 - Click "Publish Release"
 - Wait for completion, which might be a while with big uploads
@@ -486,7 +494,7 @@ If you don't, a bunch of Windows users are likely to whine
 
 - Mail announcement to jmriusers@yahoogroups.com
 
-    Subject is "Test version 4.3.3 of JMRI/DecoderPro is available for download" or "JMRI 4.0 is available for download"
+    Subject is "Test version 4.3.9 of JMRI/DecoderPro is available for download" or "JMRI 4.4 is available for download"
 
 - If a production version, update the SF automatic download icon by selecting default in SF.net FRS (3 times)
 

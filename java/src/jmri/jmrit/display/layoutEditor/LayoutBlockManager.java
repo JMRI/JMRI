@@ -2185,7 +2185,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
      * upon if the routing protocol has stabilised or is under going a change.
      */
     public void setStabilisedSensor(String pName) throws jmri.JmriException {
-        if (InstanceManager.sensorManagerInstance() != null) {
+        if (InstanceManager.getOptionalDefault(jmri.SensorManager.class) != null) {
             try {
                 Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
                 namedStabilisedIndicator = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor);
@@ -2255,7 +2255,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
      * @return list of layout block user names
      */
     public List<LayoutBlock> getLayoutBlocksOccupiedByRosterEntry(RosterEntry re) {
-        BlockManager bm = jmri.InstanceManager.blockManagerInstance();
+        BlockManager bm = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
         List<Block> blockList = bm.getBlocksOccupiedByRosterEntry(re);
         List<LayoutBlock> layoutBlockList = new ArrayList<>();
         

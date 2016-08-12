@@ -17,7 +17,7 @@
 <link rel="icon" href="/images/jmri.ico" type="image/png" >
 <link rel="home" title="Home" href="/" ><!-- /Style --></head><body>
   <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 <h1>Menus Fen&#234;tre R&#233;gulateur</h1>

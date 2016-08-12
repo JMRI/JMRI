@@ -23,13 +23,7 @@ import org.slf4j.LoggerFactory;
  */
 public class QsiTrafficController implements QsiInterface, Runnable {
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
     public QsiTrafficController() {
-        if (log.isDebugEnabled()) {
-            log.debug("setting instance: " + this);
-        }
-        self = this;
     }
 
 // The methods to implement the QsiInterface
@@ -97,18 +91,20 @@ public class QsiTrafficController implements QsiInterface, Runnable {
 
     public void setQsiState(int s) {
         qsiState = s;
-        if (s == V4BOOTMODE) {
-            // enable flow control - required for QSI v4 bootloader
-            SerialDriverAdapter.instance().setHandshake(SerialPort.FLOWCONTROL_RTSCTS_IN
-                    | SerialPort.FLOWCONTROL_RTSCTS_OUT);
+        if(controller instanceof SerialDriverAdapter) {
+           if (s == V4BOOTMODE) {
+               // enable flow control - required for QSI v4 bootloader
+               ((SerialDriverAdapter)controller).setHandshake(SerialPort.FLOWCONTROL_RTSCTS_IN
+                       | SerialPort.FLOWCONTROL_RTSCTS_OUT);
 
-        } else {
-            // disable flow control
-            SerialDriverAdapter.instance().setHandshake(0);
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("Setting qsiState " + s);
-        }
+           } else {
+               // disable flow control
+               ((SerialDriverAdapter)controller).setHandshake(0);
+           }
+           if (log.isDebugEnabled()) {
+               log.debug("Setting qsiState " + s);
+           }
+       }
     }
 
     public boolean isNormalMode() {
@@ -247,18 +243,12 @@ public class QsiTrafficController implements QsiInterface, Runnable {
      *
      * @return The registered QsiTrafficController instance for general use, if
      *         need be creating one.
+     * deprecated since 4.5.1
      */
+    @Deprecated
     static public QsiTrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new QsiTrafficController object");
-            }
-            self = new QsiTrafficController();
-        }
-        return self;
+        return null;
     }
-
-    static volatile protected QsiTrafficController self = null;
 
     // data members to hold the streams
     DataInputStream istream = null;

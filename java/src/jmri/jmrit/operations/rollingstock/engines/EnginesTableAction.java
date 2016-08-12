@@ -13,11 +13,6 @@ import javax.swing.AbstractAction;
  */
 public class EnginesTableAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 755025320493011103L;
-
     public EnginesTableAction(String s) {
         super(s);
     }

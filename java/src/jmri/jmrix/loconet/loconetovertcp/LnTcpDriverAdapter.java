@@ -48,8 +48,6 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
 
         // start operation
         packets.startThreads();
-        jmri.jmrix.loconet.ActiveFlag.setActive();
-
     }
 
     public boolean status() {

@@ -29,10 +29,6 @@ import jmri.jmrit.picker.PickPanel;
  */
 public class DetectionPanel extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5943021268643905786L;
     private JTextField _occDetectorName = new JTextField();   // can be either a Sensor or OBlock name
     private JFrame _pickFrame;
     private JButton _openPicklistButton;

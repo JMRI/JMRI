@@ -2,6 +2,7 @@
 package jmri.jmrit.display;
 
 import java.awt.Color;
+import jmri.ConfigureManager;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
@@ -77,7 +78,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
 
         // make four windows
-        InstanceManager.configureManagerInstance()
+        InstanceManager.getDefault(ConfigureManager.class)
                 .load(new java.io.File("java/test/jmri/jmrit/display/configurexml/verify/backgrounds.xml"));
         flushAWT();
 

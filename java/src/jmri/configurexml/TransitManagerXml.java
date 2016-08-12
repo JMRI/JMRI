@@ -147,7 +147,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
         if (log.isDebugEnabled()) {
             log.debug("Found " + transitList.size() + " transits");
         }
-        TransitManager tm = InstanceManager.transitManagerInstance();
+        TransitManager tm = InstanceManager.getDefault(jmri.TransitManager.class);
 
         for (int i = 0; i < transitList.size(); i++) {
             if (transitList.get(i).getAttribute("systemName") == null) {
@@ -218,7 +218,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
     }
 
     public int loadOrder() {
-        return InstanceManager.transitManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(jmri.TransitManager.class).getXMLOrder();
     }
 
     private final static Logger log = LoggerFactory.getLogger(TransitManagerXml.class.getName());

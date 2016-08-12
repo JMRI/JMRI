@@ -1,9 +1,5 @@
 package jmri.jmrit.withrottle;
 
-/**
- * @author Brett Hoffman Copyright (C) 2010
- * @version $Revision$
- */
 import apps.PerformActionModel;
 import apps.StartupActionsManager;
 import java.awt.event.ItemEvent;
@@ -28,9 +24,12 @@ import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
 
+/**
+ * @author Brett Hoffman Copyright (C) 2010
+ * @version $Revision$
+ */
 public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
-    private static final long serialVersionUID = -5008747256799742063L;
     JCheckBox eStopCB;
     JSpinner delaySpinner;
 
@@ -52,7 +51,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     JFrame parentFrame = null;
 
     public WiThrottlePrefsPanel() {
-        if (InstanceManager.getDefault(WiThrottlePreferences.class) == null) {
+        if (InstanceManager.getOptionalDefault(WiThrottlePreferences.class) == null) {
             InstanceManager.store(new WiThrottlePreferences(FileUtil.getUserFilesPath() + "throttle" + File.separator + "WiThrottlePreferences.xml"), WiThrottlePreferences.class);
         }
         localPrefs = InstanceManager.getDefault(WiThrottlePreferences.class);

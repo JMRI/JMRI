@@ -132,7 +132,7 @@ have been predefined in the <code>signalSpeed.xml</code> file, in addition to a 
 <p>The global value is set via the <b>Speeds</b> menu.</p></li>
 </ul>
 
-<a name="addBlock"><h2>Adding a new Block</h2></a>
+<a name="addBlock"></a><h2>Adding a new Block</h2>
 <p>To add a new Block, see <a href="BlockAddEdit.shtml">Add/Edit Block Entries</a></p>
 
 <h2>Editing an existing Block</h2>

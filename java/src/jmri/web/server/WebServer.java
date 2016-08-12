@@ -7,7 +7,7 @@ import java.util.Properties;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
-import jmri.jmris.json.JSON;
+import jmri.server.json.JSON;
 import jmri.util.FileUtil;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.web.servlet.directory.DirectoryHandler;
@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2005, 2006
  * @author Randall Wood Copyright 2012, 2016
- * @version $Revision$
  */
 public final class WebServer implements LifeCycle.Listener {
 
@@ -50,7 +49,7 @@ public final class WebServer implements LifeCycle.Listener {
     }
 
     public static WebServer getDefault() {
-        if (InstanceManager.getDefault(WebServer.class) == null) {
+        if (InstanceManager.getOptionalDefault(WebServer.class) == null) {
             InstanceManager.setDefault(WebServer.class, new WebServer());
         }
         return InstanceManager.getDefault(WebServer.class);
@@ -170,8 +169,8 @@ public final class WebServer implements LifeCycle.Listener {
     @Override
     public void lifeCycleStarting(LifeCycle lc) {
         shutDownTask = new ServerShutDownTask(this);
-        if (InstanceManager.shutDownManagerInstance() != null) {
-            InstanceManager.shutDownManagerInstance().register(shutDownTask);
+        if (InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+            InstanceManager.getDefault(jmri.ShutDownManager.class).register(shutDownTask);
         }
         log.info("Starting Web Server on port " + preferences.getPort());
     }
@@ -202,8 +201,8 @@ public final class WebServer implements LifeCycle.Listener {
 
     @Override
     public void lifeCycleStopped(LifeCycle lc) {
-        if (InstanceManager.shutDownManagerInstance() != null) {
-            InstanceManager.shutDownManagerInstance().deregister(shutDownTask);
+        if (InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+            InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(shutDownTask);
         }
         log.debug("Web Server stopped");
     }

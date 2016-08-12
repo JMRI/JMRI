@@ -42,10 +42,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PrintLocationsAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3978269721157121891L;
     static final String NEW_LINE = "\n"; // NOI18N
     static final String FORM_FEED = "\f"; // NOI18N
     static final String TAB = "\t"; // NOI18N
@@ -904,10 +900,6 @@ public class PrintLocationsAction extends AbstractAction {
 
     public class LocationPrintOptionFrame extends OperationsFrame {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -8648671751787189906L;
         PrintLocationsAction pla;
 
         public LocationPrintOptionFrame(PrintLocationsAction pla) {

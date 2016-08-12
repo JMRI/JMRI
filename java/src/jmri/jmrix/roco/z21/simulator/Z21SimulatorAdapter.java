@@ -61,8 +61,6 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
         sourceThread.start();
 
         this.getSystemConnectionMemo().configureManagers();
-
-        jmri.jmrix.roco.z21.ActiveFlag.setActive();
     }
 
     @Override
