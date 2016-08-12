@@ -65,7 +65,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     AutomationTableFrame _frame;
     boolean _matchMode = false;
 
-    synchronized void updateList() {
+    private synchronized void updateList() {
         if (_automation == null) {
             return;
         }
@@ -80,7 +80,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
 
     List<AutomationItem> _list = new ArrayList<AutomationItem>();
 
-    void initTable(AutomationTableFrame frame, JTable table, Automation automation) {
+    protected synchronized void initTable(AutomationTableFrame frame, JTable table, Automation automation) {
         _automation = automation;
         _table = table;
         _frame = frame;
@@ -140,7 +140,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     @Override
-    public int getRowCount() {
+    public synchronized int getRowCount() {
         return _list.size();
     }
 
@@ -492,7 +492,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
 
     // this table listens for changes to a automation and it's car types
     @Override
-    public void propertyChange(PropertyChangeEvent e) {
+    public synchronized void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY)
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
@@ -524,7 +524,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
     }
 
-    public void dispose() {
+    public synchronized void dispose() {
         if (log.isDebugEnabled()) {
             log.debug("dispose");
         }
