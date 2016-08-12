@@ -13,6 +13,8 @@ import static jmri.server.json.roster.JsonRoster.ROSTER;
 import static jmri.server.json.roster.JsonRoster.ROSTER_ENTRY;
 import static jmri.server.json.roster.JsonRoster.ROSTER_GROUP;
 import static jmri.server.json.roster.JsonRoster.ROSTER_GROUPS;
+import static jmri.server.json.signalHead.JsonSignalHead.SIGNAL_HEAD;
+import static jmri.server.json.signalMast.JsonSignalMast.SIGNAL_MAST;
 import static jmri.server.json.time.JsonTimeServiceFactory.TIME;
 import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUT;
 

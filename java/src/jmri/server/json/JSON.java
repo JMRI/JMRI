@@ -199,14 +199,6 @@ public final class JSON {
      */
     public static final String SENSORS = "sensors"; // NOI18N
     /**
-     * {@value #SIGNAL_HEADS}
-     */
-    public static final String SIGNAL_HEADS = "signalHeads"; // NOI18N
-    /**
-     * {@value #SIGNAL_MASTS}
-     */
-    public static final String SIGNAL_MASTS = "signalMasts"; // NOI18N
-    /**
      * {@value #TRAINS}
      */
     public static final String TRAINS = "trains"; // NOI18N
@@ -270,14 +262,6 @@ public final class JSON {
      * {@value #SENSOR}
      */
     public static final String SENSOR = "sensor"; // NOI18N
-    /**
-     * {@value #SIGNAL_HEAD}
-     */
-    public static final String SIGNAL_HEAD = "signalHead"; // NOI18N
-    /**
-     * {@value #SIGNAL_MAST}
-     */
-    public static final String SIGNAL_MAST = "signalMast"; // NOI18N
     /**
      * {@value #THROTTLE}
      */
