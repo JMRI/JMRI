@@ -628,28 +628,29 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private JMenu makeSelectTypeMenu() {
         JMenu menu = new JMenu(Bundle.getMessage("SelectType"));
         ButtonGroup typeGroup = new ButtonGroup();
+        // I18N use existing jmri.NamedBeanBundle keys
         JRadioButtonMenuItem button = makeSelectTypeButton("IndicatorTrack", "jmri.jmrit.display.IndicatorTrackIcon");
         typeGroup.add(button);
         menu.add(button);
         button = makeSelectTypeButton("IndicatorTO", "jmri.jmrit.display.IndicatorTurnoutIcon");
         typeGroup.add(button);
         menu.add(button);
-        button = makeSelectTypeButton("Turnout", "jmri.jmrit.display.TurnoutIcon");
+        button = makeSelectTypeButton("BeanNameTurnout", "jmri.jmrit.display.TurnoutIcon");
         typeGroup.add(button);
         menu.add(button);
-        button = makeSelectTypeButton("Sensor", "jmri.jmrit.display.SensorIcon");
+        button = makeSelectTypeButton("BeanNameSensor", "jmri.jmrit.display.SensorIcon");
         typeGroup.add(button);
         menu.add(button);
         button = makeSelectTypeButton("Shape", "jmri.jmrit.display.controlPanelEditor.shape.PositionableShape");
         typeGroup.add(button);
         menu.add(button);
-        button = makeSelectTypeButton("SignalMast", "jmri.jmrit.display.SignalMastIcon");
+        button = makeSelectTypeButton("BeanNameSignalMast", "jmri.jmrit.display.SignalMastIcon");
         typeGroup.add(button);
         menu.add(button);
-        button = makeSelectTypeButton("SignalHead", "jmri.jmrit.display.SignalHeadIcon");
+        button = makeSelectTypeButton("BeanNameSignalHead", "jmri.jmrit.display.SignalHeadIcon");
         typeGroup.add(button);
         menu.add(button);
-        button = makeSelectTypeButton("Memory", "jmri.jmrit.display.MemoryIcon");
+        button = makeSelectTypeButton("BeanNameMemory", "jmri.jmrit.display.MemoryIcon");
         typeGroup.add(button);
         menu.add(button);
         button = makeSelectTypeButton("MemoryInput", "jmri.jmrit.display.PositionableJPanel");
@@ -661,7 +662,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         button = makeSelectTypeButton("LocoID", "jmri.jmrit.display.LocoIcon");
         typeGroup.add(button);
         menu.add(button);
-        button = makeSelectTypeButton("Light", "jmri.jmrit.display.LightIcon");
+        button = makeSelectTypeButton("BeanNameLight", "jmri.jmrit.display.LightIcon");
         typeGroup.add(button);
         menu.add(button);
         return menu;

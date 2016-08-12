@@ -24,7 +24,7 @@ public class LayoutBlockRouteTableAction extends AbstractAction {
         this.lBlock = lBlock;
     }
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
+    //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     LayoutBlock lBlock;
 
@@ -62,9 +62,9 @@ public class LayoutBlockRouteTableAction extends AbstractAction {
 
     void setTitle() {
         if (lBlock != null) {
-            f.setTitle(rb.getString("BlockRoutingTableTitle") + " " + lBlock.getDisplayName());
+            f.setTitle(Bundle.getMessage("BlockRoutingTableTitle") + " " + lBlock.getDisplayName());
         } else {
-            f.setTitle(rb.getString("BlockRoutingTableTitleShort"));
+            f.setTitle(Bundle.getMessage("BlockRoutingTableTitleShort"));
         }
     }
 

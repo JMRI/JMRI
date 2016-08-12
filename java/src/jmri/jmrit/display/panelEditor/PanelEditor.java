@@ -1093,6 +1093,7 @@ public class PanelEditor extends Editor implements ItemListener {
             return;
         }
         JMenu _add = new JMenu("Add Item"); // NOI18N
+        // for the following list, I18N picked up later on
         addItemPopUp(new ComboBoxItem("RightTurnout"), _add);
         addItemPopUp(new ComboBoxItem("LeftTurnout"), _add);
         addItemPopUp(new ComboBoxItem("SlipTOEditor"), _add);

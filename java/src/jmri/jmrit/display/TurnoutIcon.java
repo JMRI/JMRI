@@ -374,7 +374,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     protected void editItem() {
         makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameTurnout")));
         _itemPanel = new TableItemPanel(_paletteFrame, "Turnout", _iconFamily,
-                PickListModel.turnoutPickModelInstance(), _editor);
+                PickListModel.turnoutPickModelInstance(), _editor); // NOI18N
         ActionListener updateAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateItem();
@@ -442,7 +442,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     }
 
     protected void edit() {
-        makeIconEditorFrame(this, "Turnout", true, null);
+        makeIconEditorFrame(this, "Turnout", true, null); // NOI18N
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.turnoutPickModelInstance());
         Iterator<Integer> e = _iconStateMap.keySet().iterator();
         int i = 0;

@@ -4874,8 +4874,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             int selectedValue = JOptionPane.showOptionDialog(this,
                     rb.getString("Question6"), Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
-                        rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
+                    new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
+                        rb.getString("ButtonYesPlus")}, Bundle.getMessage("ButtonNo"));
             if (selectedValue == 1) {
                 return;   // return without creating if "No" response
             }
@@ -6592,7 +6592,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         StringBuilder sb = new StringBuilder();
         sb.append("This ");
         if (sm instanceof SignalMast) {
-            sb.append("Signal Mast");
+            sb.append("Signal Mast"); // TODO I18N using Bundle.getMessage("BeanNameSignalMast");
             sb.append(" is linked to the following items<br> do you want to remove those references");
             if (InstanceManager.getDefault(jmri.SignalMastLogicManager.class).isSignalMastUsed((SignalMast) sm)) {
                 jmri.SignalMastLogic sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic((SignalMast) sm);
@@ -6602,10 +6602,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }
         } else if (sm instanceof Sensor) {
-            sb.append("Sensor");
+            sb.append("Sensor"); // TODO I18N using Bundle.getMessage("BeanNameSensor");
             sb.append(" is linked to the following items<br> do you want to remove those references");
         } else if (sm instanceof SignalHead) {
-            sb.append("SignalHead");
+            sb.append("SignalHead"); // TODO I18N using Bundle.getMessage("BeanNameSignalHead");
             sb.append(" is linked to the following items<br> do you want to remove those references");
         }
 
@@ -6634,7 +6634,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             found = true;
         }
         if ((lt = finder.findLayoutTurnoutByBean(sm)) != null) {
-            sb.append("<br>Turnout " + lt.getTurnoutName());
+            sb.append("<br>Turnout " + lt.getTurnoutName()); // I18N using Bundle.getMessage("BeanNameTurnout");
             found = true;
         }
         if ((lx = finder.findLevelXingByBean(sm)) != null) {
@@ -6659,8 +6659,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             int selectedValue = JOptionPane.showOptionDialog(this,
                     usage, Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
-                            Bundle.getMessage("ButtonCancel")}, rb.getString("ButtonYes"));
+                    new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
+                            Bundle.getMessage("ButtonCancel")}, Bundle.getMessage("ButtonYes"));
             if (selectedValue == 1) {
                 return (true); // return leaving the references in place but allow the icon to be deleted.
             }
@@ -6708,8 +6708,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 int selectedValue = JOptionPane.showOptionDialog(this,
                         rb.getString("Question2"), Bundle.getMessage("WarningTitle"),
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                        new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
-                            rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
+                        new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
+                            rb.getString("ButtonYesPlus")}, Bundle.getMessage("ButtonNo"));
                 if (selectedValue == 1) {
                     return (false);   // return without creating if "No" response
                 }
@@ -6760,8 +6760,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             int selectedValue = JOptionPane.showOptionDialog(this,
                     rb.getString("Question1r"), Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
-                        rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
+                    new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
+                        rb.getString("ButtonYesPlus")}, Bundle.getMessage("ButtonNo"));
             if (selectedValue == 1) {
                 return (false);   // return without removing if "No" response
             }
@@ -6852,8 +6852,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             int selectedValue = JOptionPane.showOptionDialog(this,
                     rb.getString("Question3r"), Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
-                        rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
+                    new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
+                        rb.getString("ButtonYesPlus")}, Bundle.getMessage("ButtonNo"));
             if (selectedValue == 1) {
                 return (false);   // return without creating if "No" response
             }
@@ -6921,8 +6921,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             int selectedValue = JOptionPane.showOptionDialog(this,
                     rb.getString("Question5r"), Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
-                        rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
+                    new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
+                        rb.getString("ButtonYesPlus")}, Bundle.getMessage("ButtonNo"));
             if (selectedValue == 1) {
                 return (false);   // return without creating if "No" response
             }
@@ -6987,8 +6987,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             int selectedValue = JOptionPane.showOptionDialog(this,
                     rb.getString("Question4r"), Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
-                        rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
+                    new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
+                        rb.getString("ButtonYesPlus")}, Bundle.getMessage("ButtonNo"));
             if (selectedValue == 1) {
                 return (false);   // return without creating if "No" response
             }

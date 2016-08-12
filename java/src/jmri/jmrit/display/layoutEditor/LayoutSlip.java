@@ -52,8 +52,8 @@ import org.slf4j.LoggerFactory;
  * When LayoutSlips are first created, there are no connections. Block
  * information and connections are added when available.
  * <P>
- * Signal Head names are saved here to keep track of where signals are.
- * LayoutSlip only serves as a storage place for signal head names. The names
+ * SignalHead names are saved here to keep track of where signals are.
+ * LayoutSlip only serves as a storage place for SignalHead names. The names
  * are placed here by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007

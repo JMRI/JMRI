@@ -250,7 +250,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             _iconPanel.add(panel);
             c.gridx++;
             HashMap<String, NamedIcon> iconMap = entry.getValue();
-            ItemPanel.checkIconMap("Turnout", iconMap);
+            ItemPanel.checkIconMap("Turnout", iconMap); // NOI18N
             Iterator<Entry<String, NamedIcon>> iter = iconMap.entrySet().iterator();
             while (iter.hasNext()) {
                 Entry<String, NamedIcon> ent = iter.next();
@@ -396,7 +396,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     private void createNewFamily() {
         _iconGroupsMap = new HashMap<String, HashMap<String, NamedIcon>>();
         for (int i = 0; i < STATUS_KEYS.length; i++) {
-            _iconGroupsMap.put(STATUS_KEYS[i], makeNewIconMap("Turnout"));
+            _iconGroupsMap.put(STATUS_KEYS[i], makeNewIconMap("Turnout")); // NOI18N
         }
         ItemPalette.addLevel4Family(_editor, _itemType, _family, _iconGroupsMap);
         resetFamiliesPanel();
