@@ -485,20 +485,20 @@ public class ActiveTrain {
      * @param sType - name, such as "LOCAL_PASSENGER"
      */
     public void setTrainType(String sType) {
-        if (sType == rb.getString("LOCAL_FREIGHT")) {
+        if (sType.equals(rb.getString("LOCAL_FREIGHT"))) {
             setTrainType(LOCAL_FREIGHT);
-        } else if (sType == rb.getString("LOCAL_PASSENGER")) {
-            setTrainType(LOCAL_FREIGHT);
-        } else if (sType == rb.getString("THROUGH_FREIGHT")) {
-            setTrainType(LOCAL_FREIGHT);
-        } else if (sType == rb.getString("THROUGH_PASSENGER")) {
-            setTrainType(LOCAL_FREIGHT);
-        } else if (sType == rb.getString("EXPRESS_FREIGHT")) {
-            setTrainType(LOCAL_FREIGHT);
-        } else if (sType == rb.getString("EXPRESS_PASSENGER")) {
-            setTrainType(LOCAL_FREIGHT);
-        } else if (sType == rb.getString("MOW")) {
-            setTrainType(LOCAL_FREIGHT);
+        } else if (sType.equals(rb.getString("LOCAL_PASSENGER"))) {
+            setTrainType(LOCAL_PASSENGER);
+        } else if (sType.equals(rb.getString("THROUGH_FREIGHT"))) {
+            setTrainType(THROUGH_FREIGHT);
+        } else if (sType.equals(rb.getString("THROUGH_PASSENGER"))) {
+            setTrainType(THROUGH_PASSENGER);
+        } else if (sType.equals(rb.getString("EXPRESS_FREIGHT"))) {
+            setTrainType(EXPRESS_FREIGHT);
+        } else if (sType.equals(rb.getString("EXPRESS_PASSENGER"))) {
+            setTrainType(EXPRESS_PASSENGER);
+        } else if (sType.equals(rb.getString("MOW"))) {
+            setTrainType(MOW);
         }
     }
 
