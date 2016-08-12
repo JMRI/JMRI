@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.cmri.serial.networkdriver;
 
 import javax.swing.JButton;
@@ -11,7 +10,6 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
  * NetworkDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2015
- * @version	$Revision: 28746 $
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 

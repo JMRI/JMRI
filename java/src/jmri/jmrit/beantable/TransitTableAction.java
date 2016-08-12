@@ -1741,6 +1741,7 @@ public class TransitTableAction extends AbstractTableAction {
 
     private void setWhat(int code) {
         whatBox.setSelectedIndex(code - 1);
+        //hide all the possible input boxes, to be set visible as needed
         whatStringField.setVisible(false);
         whatData1Field.setVisible(false);
         whatData2Field.setVisible(false);

@@ -45,11 +45,12 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.direct.PackageTest.suite());
         suite.addTest(jmri.jmrix.easydcc.PackageTest.suite());
         suite.addTest(jmri.jmrix.grapevine.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.internal.PackageTest.class));
         suite.addTest(jmri.jmrix.jmriclient.PackageTest.suite());
         suite.addTest(jmri.jmrix.lenz.PackageTest.suite());
         suite.addTest(jmri.jmrix.loconet.PackageTest.suite());
         suite.addTest(jmri.jmrix.maple.PackageTest.suite());
-        suite.addTest(jmri.jmrix.marklin.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.marklin.PackageTest.class));
         suite.addTest(jmri.jmrix.modbus.PackageTest.suite());
         suite.addTest(jmri.jmrix.nce.PackageTest.suite());
         suite.addTest(jmri.jmrix.oaktree.PackageTest.suite());
