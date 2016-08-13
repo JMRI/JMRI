@@ -169,10 +169,10 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                         log.debug("   setting default for \"{}\" to \"{}\" in configure", c, memo.get(c));
                         InstanceManager.setDefault(c, memo.get(c));
                     } catch (NullPointerException ex) {
-                        String englishMsg = Bundle.getMessage(Locale.ENGLISH, "ErrorNullDefault", memo.getUserName(), memo.getClass(), c); // NOI18N
-                        String localizedMsg = Bundle.getMessage("ErrorNullDefault", memo.getUserName(), memo.getClass(), c); // NOI18N
+                        String englishMsg = Bundle.getMessage(Locale.ENGLISH, "ErrorNullDefault", memo.getUserName(), c); // NOI18N
+                        String localizedMsg = Bundle.getMessage("ErrorNullDefault", memo.getUserName(), c); // NOI18N
                         error = new InitializationException(englishMsg, localizedMsg);
-                        log.warn(englishMsg);
+                        log.warn("SystemConnectionMemo for {} ({}) provides a null {} instance", memo.getUserName(), memo.getClass(), c);
                     }
                     break;
                 }
