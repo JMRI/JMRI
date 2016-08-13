@@ -10,7 +10,8 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   SprogNanoSerialDriverAdapterTest.class
+   SprogNanoSerialDriverAdapterTest.class,
+   ConnectionConfigTest.class
 })
 public class PackageTest {
 }
