@@ -64,7 +64,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         fireTableDataChanged();
     }
 
-    synchronized void updateList() {
+    private synchronized void updateList() {
         // first, remove listeners from the individual objects
         removePropertyChangeSchedules();
         removePropertyChangeTracks();
@@ -84,7 +84,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     List<Schedule> sysList = null;
     JTable table;
 
-    void initTable(SchedulesTableFrame frame, JTable table) {
+    public void initTable(SchedulesTableFrame frame, JTable table) {
         this.table = table;
         // Install the button handlers
         TableColumnModel tcm = table.getColumnModel();
@@ -123,7 +123,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     @Override
-    public int getRowCount() {
+    public synchronized int getRowCount() {
         return sysList.size();
     }
 
@@ -397,7 +397,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 
     // check for change in number of schedules, or a change in a schedule
     @Override
-    public void propertyChange(PropertyChangeEvent e) {
+    public synchronized void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());

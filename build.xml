@@ -1690,7 +1690,7 @@
         </findbugs>
     </target>
 
-<!--  Start for checker framework -->
+    <!--  Start for checker framework -->
 
     <property environment="env"/>
     <property name="checkerframework" value="${libdir}/checker-framework/" />
