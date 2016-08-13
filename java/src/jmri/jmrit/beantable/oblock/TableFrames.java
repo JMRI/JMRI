@@ -165,7 +165,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
         menuBar.add(fileMenu);
 
-        JMenu editMenu = new JMenu(rb.getString("MenuEdit"));
+        JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
         editMenu.setMnemonic(KeyEvent.VK_E);
         TransferActionListener actionListener = new TransferActionListener();
 

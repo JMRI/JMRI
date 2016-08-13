@@ -1119,12 +1119,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         JMenu edit = new JMenu(Bundle.getMessage("EditLocation"));
         if ((p instanceof MemoryIcon) && (p.getPopupUtility().getFixedWidth() == 0)) {
             MemoryIcon pm = (MemoryIcon) p;
-            edit.add("x= " + pm.getOriginalX());
-            edit.add("y= " + pm.getOriginalY());
+            edit.add("x = " + pm.getOriginalX());
+            edit.add("y = " + pm.getOriginalY());
             edit.add(MemoryIconCoordinateEdit.getCoordinateEditAction(pm));
         } else {
-            edit.add("x= " + p.getX());
-            edit.add("y= " + p.getY());
+            edit.add("x = " + p.getX());
+            edit.add("y = " + p.getY());
             edit.add(CoordinateEdit.getCoordinateEditAction(p));
         }
         popup.add(edit);
@@ -1320,7 +1320,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     public void setDisplayLevelMenu(Positionable p, JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditLevel"));
-        edit.add("level= " + p.getDisplayLevel());
+        edit.add("Level = " + p.getDisplayLevel());
         edit.add(CoordinateEdit.getLevelEditAction(p));
         popup.add(edit);
     }
@@ -2887,7 +2887,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         protected JPanel makeDoneButtonPanel() {
             JPanel panel0 = new JPanel();
             panel0.setLayout(new FlowLayout());
-            JButton doneButton = new JButton(Bundle.getMessage("Done"));
+            JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
             doneButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent a) {

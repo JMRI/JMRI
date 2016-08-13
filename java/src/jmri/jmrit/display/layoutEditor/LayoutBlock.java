@@ -1496,7 +1496,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                     blk.informNeighbourOfValidRoutes(getBlock());
                 }
             } else if (enableAddRouteLogging) {
-                log.info("From " + this.getDisplayName() + " neighbor " + addBlock.getDisplayName() + " has no layoutBlock associated, metric set to " + adj.getMetric());
+                log.info("From " + this.getDisplayName() + " neighbour " + addBlock.getDisplayName() + " has no layoutBlock associated, metric set to " + adj.getMetric());
             }
         }
         /*If the connectivity before had not completed and produced an error with 

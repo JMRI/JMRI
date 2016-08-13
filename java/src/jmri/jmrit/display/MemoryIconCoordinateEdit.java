@@ -61,10 +61,10 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
         oldY = pl.getOriginalY();
 
         textX = new javax.swing.JLabel();
-        textX.setText("x= " + pl.getOriginalX());
+        textX.setText("x = " + pl.getOriginalX());
         textX.setVisible(true);
         textY = new javax.swing.JLabel();
-        textY.setText("y= " + pl.getOriginalY());
+        textY.setText("y = " + pl.getOriginalY());
         textY.setVisible(true);
 
         SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 10000, 1);
@@ -73,8 +73,8 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
                 int x = ((Number) spinX.getValue()).intValue();
                 int y = ((Number) spinY.getValue()).intValue();
                 pl.setLocation(x, y);
-                textX.setText("x= " + pl.getOriginalX());
-                textY.setText("y= " + pl.getOriginalY());
+                textX.setText("x = " + pl.getOriginalX());
+                textY.setText("y = " + pl.getOriginalY());
             }
         };
         spinX = new javax.swing.JSpinner(model);
