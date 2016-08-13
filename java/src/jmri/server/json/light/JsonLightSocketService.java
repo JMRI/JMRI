@@ -1,5 +1,10 @@
 package jmri.server.json.light;
 
+import static jmri.server.json.JSON.METHOD;
+import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.PUT;
+import static jmri.server.json.light.JsonLightServiceFactory.LIGHT;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -10,13 +15,9 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Light;
 import jmri.LightManager;
-import static jmri.server.json.JSON.METHOD;
-import static jmri.server.json.JSON.NAME;
-import static jmri.server.json.JSON.PUT;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
-import static jmri.server.json.light.JsonLightServiceFactory.LIGHT;
 
 /**
  *
@@ -44,9 +45,11 @@ public class JsonLightSocketService extends JsonSocketService {
         }
         if (!this.lights.containsKey(name)) {
             Light light = InstanceManager.getDefault(LightManager.class).getLight(name);
-            LightListener listener = new LightListener(light);
-            light.addPropertyChangeListener(listener);
-            this.lights.put(name, listener);
+            if (light != null) {
+                LightListener listener = new LightListener(light);
+                light.addPropertyChangeListener(listener);
+                this.lights.put(name, listener);
+            }
         }
     }
 

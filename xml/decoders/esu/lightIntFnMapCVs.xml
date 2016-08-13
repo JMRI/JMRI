@@ -1,0 +1,554 @@
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="FL(f) controls output 3" CV="33" mask="XXXXXVXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="FL(f) controls output 4" CV="33" mask="XXXXVXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="FL(f) controls output 5" CV="33" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="FL(f) controls output 6" CV="33" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="FL(f) controls output 7" CV="33" mask="XVXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="FL(f) controls output 8" CV="33" mask="VXXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="FL(r) controls output 3" CV="34" mask="XXXXXVXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="FL(r) controls output 4" CV="34" mask="XXXXVXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="FL(r) controls output 5" CV="34" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="FL(r) controls output 6" CV="34" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="FL(r) controls output 7" CV="34" mask="XVXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="FL(r) controls output 8" CV="34" mask="VXXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F1(f) controls output 1" CV="35" mask="XXXXXXXV" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F1(f) controls output 2" CV="35" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F1(f) controls output 3" CV="35" mask="XXXXXVXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F1(f) controls output 4" CV="35" mask="XXXXVXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F1(f) controls output 5" CV="35" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F1(f) controls output 6" CV="35" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F1(f) controls output 7" CV="35" mask="XVXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F1(f) controls output 8" CV="35" mask="VXXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F2 controls output 2" CV="36" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F2 controls output 3" CV="36" mask="XXXXXVXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F2 controls output 4" CV="36" mask="XXXXVXXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F2 controls output 5" CV="36" mask="XXXVXXXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F2 controls output 6" CV="36" mask="XXVXXXXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F2 controls output 7" CV="36" mask="XVXXXXXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F2 controls output 8" CV="36" mask="VXXXXXXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F3 controls output 1" CV="37" mask="XXXXXXXV" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F3 controls output 2" CV="37" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F3 controls output 3" CV="37" mask="XXXXXVXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F3 controls output 4" CV="37" mask="XXXXVXXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F3 controls output 5" CV="37" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F3 controls output 6" CV="37" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F3 controls output 7" CV="37" mask="XVXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F3 controls output 8" CV="37" mask="VXXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F4 controls output 1" CV="38" mask="XXXXXXXV" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F4 controls output 2" CV="38" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F4 controls output 3" CV="38" mask="XXXXXVXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F4 controls output 4" CV="38" mask="XXXXVXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F4 controls output 5" CV="38" mask="XXXVXXXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F4 controls output 6" CV="38" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F4 controls output 7" CV="38" mask="XVXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F4 controls output 8" CV="38" mask="VXXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F5 controls output 1" CV="39" mask="XXXXXXXV" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F5 controls output 2" CV="39" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F5 controls output 3" CV="39" mask="XXXXXVXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F5 controls output 4" CV="39" mask="XXXXVXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F5 controls output 5" CV="39" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F5 controls output 6" CV="39" mask="XXVXXXXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F5 controls output 7" CV="39" mask="XVXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F5 controls output 8" CV="39" mask="VXXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F6 controls output 1" CV="40" mask="XXXXXXXV" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F6 controls output 2" CV="40" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F6 controls output 3" CV="40" mask="XXXXXVXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F6 controls output 4" CV="40" mask="XXXXVXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F6 controls output 5" CV="40" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F6 controls output 6" CV="40" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F6 controls output 7" CV="40" mask="XVXXXXXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F6 controls output 8" CV="40" mask="VXXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F7 controls output 1" CV="41" mask="XXXXXXXV" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F7 controls output 2" CV="41" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F7 controls output 3" CV="41" mask="XXXXXVXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F7 controls output 4" CV="41" mask="XXXXVXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F7 controls output 5" CV="41" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F7 controls output 6" CV="41" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F7 controls output 7" CV="41" mask="XVXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F7 controls output 8" CV="41" mask="VXXXXXXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F8 controls output 1" CV="42" mask="XXXXXXXV" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F8 controls output 2" CV="42" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F8 controls output 3" CV="42" mask="XXXXXVXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F8 controls output 4" CV="42" mask="XXXXVXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F8 controls output 5" CV="42" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F8 controls output 6" CV="42" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F8 controls output 7" CV="42" mask="XVXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F8 controls output 8" CV="42" mask="VXXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F9 controls output 1" CV="43" mask="XXXXXXXV" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F9 controls output 2" CV="43" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F9 controls output 3" CV="43" mask="XXXXXVXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F9 controls output 4" CV="43" mask="XXXXVXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F9 controls output 5" CV="43" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F9 controls output 6" CV="43" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F9 controls output 7" CV="43" mask="XVXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F9 controls output 8" CV="43" mask="VXXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F10 controls output 1" CV="44" mask="XXXXXXXV" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F10 controls output 2" CV="44" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F10 controls output 3" CV="44" mask="XXXXXVXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F10 controls output 4" CV="44" mask="XXXXVXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F10 controls output 5" CV="44" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F10 controls output 6" CV="44" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F10 controls output 7" CV="44" mask="XVXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F10 controls output 8" CV="44" mask="VXXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F11 controls output 1" CV="45" mask="XXXXXXXV" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F11 controls output 2" CV="45" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F11 controls output 3" CV="45" mask="XXXXXVXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F11 controls output 4" CV="45" mask="XXXXVXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F11 controls output 5" CV="45" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F11 controls output 6" CV="45" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F11 controls output 7" CV="45" mask="XVXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F11 controls output 8" CV="45" mask="VXXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F12 controls output 1" CV="46" mask="XXXXXXXV" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F12 controls output 2" CV="46" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F12 controls output 3" CV="46" mask="XXXXXVXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F12 controls output 4" CV="46" mask="XXXXVXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F12 controls output 5" CV="46" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F12 controls output 6" CV="46" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F12 controls output 7" CV="46" mask="XVXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F12 controls output 8" CV="46" mask="VXXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F1(r) controls output 1" CV="47" mask="XXXXXXXV" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F1(r) controls output 2" CV="47" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F1(r) controls output 3" CV="47" mask="XXXXXVXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F1(r) controls output 4" CV="47" mask="XXXXVXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F1(r) controls output 5" CV="47" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F1(r) controls output 6" CV="47" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F1(r) controls output 7" CV="47" mask="XVXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F1(r) controls output 8" CV="47" mask="VXXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F13 controls output 1" CV="129" mask="XXXXXXXV" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F13 controls output 2" CV="129" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F13 controls output 3" CV="129" mask="XXXXXVXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F13 controls output 4" CV="129" mask="XXXXVXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F13 controls output 5" CV="129" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F13 controls output 6" CV="129" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F13 controls output 7" CV="129" mask="XVXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F13 controls output 8" CV="129" mask="VXXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F14 controls output 1" CV="130" mask="XXXXXXXV" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F14 controls output 2" CV="130" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F14 controls output 3" CV="130" mask="XXXXXVXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F14 controls output 4" CV="130" mask="XXXXVXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F14 controls output 5" CV="130" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F14 controls output 6" CV="130" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F14 controls output 7" CV="130" mask="XVXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F14 controls output 8" CV="130" mask="VXXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F15 controls output 1" CV="131" mask="XXXXXXXV" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F15 controls output 2" CV="131" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F15 controls output 3" CV="131" mask="XXXXXVXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F15 controls output 4" CV="131" mask="XXXXVXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F15 controls output 5" CV="131" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F15 controls output 6" CV="131" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F15 controls output 7" CV="131" mask="XVXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F15 controls output 8" CV="131" mask="VXXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F16 controls output 1" CV="132" mask="XXXXXXXV" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F16 controls output 2" CV="132" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F16 controls output 3" CV="132" mask="XXXXXVXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F16 controls output 4" CV="132" mask="XXXXVXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F16 controls output 5" CV="132" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F16 controls output 6" CV="132" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F16 controls output 7" CV="132" mask="XVXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F16 controls output 8" CV="132" mask="VXXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F17 controls output 1" CV="133" mask="XXXXXXXV" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F17 controls output 2" CV="133" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F17 controls output 3" CV="133" mask="XXXXXVXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F17 controls output 4" CV="133" mask="XXXXVXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F17 controls output 5" CV="133" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F17 controls output 6" CV="133" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F17 controls output 7" CV="133" mask="XVXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F17 controls output 8" CV="133" mask="VXXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F18 controls output 1" CV="134" mask="XXXXXXXV" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F18 controls output 2" CV="134" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F18 controls output 3" CV="134" mask="XXXXXVXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F18 controls output 4" CV="134" mask="XXXXVXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F18 controls output 5" CV="134" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F18 controls output 6" CV="134" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F18 controls output 7" CV="134" mask="XVXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F18 controls output 8" CV="134" mask="VXXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F19 controls output 1" CV="135" mask="XXXXXXXV" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F19 controls output 2" CV="135" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F19 controls output 3" CV="135" mask="XXXXXVXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F19 controls output 4" CV="135" mask="XXXXVXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F19 controls output 5" CV="135" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F19 controls output 6" CV="135" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F19 controls output 7" CV="135" mask="XVXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F19 controls output 8" CV="135" mask="VXXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F20 controls output 1" CV="136" mask="XXXXXXXV" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F20 controls output 2" CV="136" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F20 controls output 3" CV="136" mask="XXXXXVXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F20 controls output 4" CV="136" mask="XXXXVXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F20 controls output 5" CV="136" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F20 controls output 6" CV="136" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F20 controls output 7" CV="136" mask="XVXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+  <variable item="F20 controls output 8" CV="136" mask="VXXXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+  </variable>
+</variables>

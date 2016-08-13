@@ -1,11 +1,5 @@
 package jmri.server.json.util;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import static org.junit.Assert.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,6 +7,11 @@ import java.io.DataOutputStream;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonMockConnection;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  *
@@ -51,7 +50,9 @@ public class JsonUtilServiceFactoryTest {
             JSON.METADATA,
             JSON.NETWORK_SERVICES,
             JSON.NODE,
+            JSON.PANELS,
             JSON.PING,
+            JSON.RAILROAD,
             JSON.SYSTEM_CONNECTIONS};
         String[] result = instance.getTypes();
         assertArrayEquals(expResult, result);

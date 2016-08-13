@@ -18,8 +18,10 @@ session.log
 # transient artifacts
 .ant-targets-build.xml
 /java/classes
+/java/test-classes
 /java/tmp
 /java/doc
+/java/test-classes/
 *.class
 /temp
 .pydevproject
