@@ -2453,6 +2453,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 }
             }
             p.add(new JLabel(txt));
+            p.add(new JLabel("    ")); // add a bit of space on pane above icons
             frame.getContentPane().add(p, BorderLayout.NORTH);
             frame.getContentPane().add(editor);
 

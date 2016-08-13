@@ -92,7 +92,7 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getTooltipEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("SetTooltip")) {
+        return new AbstractAction(Bundle.getMessage("SetTooltip") + "...") {
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -107,7 +107,7 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getBorderEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("SetBorderSize")) {
+        return new AbstractAction(Bundle.getMessage("SetBorderSize") + "...") {
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -122,7 +122,7 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getMarginEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("SetMarginSize")) {
+        return new AbstractAction(Bundle.getMessage("SetMarginSize") + "...") {
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -137,7 +137,7 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getFixedSizeEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("SetFixedSize")) {
+        return new AbstractAction(Bundle.getMessage("SetFixedSize") + "...") {
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -256,7 +256,7 @@ public class CoordinateEdit extends JmriJFrame {
             nameText.setText(java.text.MessageFormat.format(Bundle.getMessage("namelabel"), pos.getNameString()));
             nameText.setVisible(true);
         }
-        okButton.setText(Bundle.getMessage("ButtonSet"));
+        okButton.setText(Bundle.getMessage("ButtonOK"));
         okButton.setVisible(true);
 
         cancelButton.setText(Bundle.getMessage("ButtonCancel"));
@@ -367,7 +367,7 @@ public class CoordinateEdit extends JmriJFrame {
     public void initSetTip() {
         oldStr = pl.getTooltip().getText();
         textX = new javax.swing.JLabel();
-        textX.setText("Tooltip ");
+        textX.setText(Bundle.getMessage("TooltipLabel" + ": ");
         textX.setVisible(true);
 
         xTextField = new javax.swing.JTextField(15);

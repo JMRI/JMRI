@@ -101,7 +101,7 @@ public class SensorTextEdit extends JmriJFrame {
                 unknownTextField.getMaximumSize().width, unknownTextField
                 .getPreferredSize().height));
 
-        okButton.setText(Bundle.getMessage("ButtonSet"));
+        okButton.setText(Bundle.getMessage("ButtonOK"));
         okButton.setVisible(true);
         okButton.setToolTipText(rb.getString("SetButtonToolTipSensor"));
 

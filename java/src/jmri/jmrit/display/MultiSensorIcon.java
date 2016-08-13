@@ -376,7 +376,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
             switch (state) {
                 case Sensor.ACTIVE:
                     if (isText()) {
-                        super.setText(Bundle.getMessage("Active"));
+                        super.setText(Bundle.getMessage("SensorStateActive"));
                     }
                     if (isIcon()) {
                         super.setIcon(e.icon);
@@ -386,7 +386,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
                     break;  // look at the next ones too
                 case Sensor.UNKNOWN:
                     if (isText()) {
-                        super.setText(Bundle.getMessage("UnKnown"));
+                        super.setText(Bundle.getMessage("BeanStateUnknown"));
                     }
                     if (isIcon()) {
                         super.setIcon(unknown);
@@ -394,7 +394,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
                     return;  // this trumps all others
                 case Sensor.INCONSISTENT:
                     if (isText()) {
-                        super.setText(Bundle.getMessage("Inconsistent"));
+                        super.setText(Bundle.getMessage("BeanStateInconsistent"));
                     }
                     if (isIcon()) {
                         super.setIcon(inconsistent);
@@ -409,7 +409,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
             return;  // set active
         }        // only case left is all inactive
         if (isText()) {
-            super.setText(Bundle.getMessage("Inactive"));
+            super.setText(Bundle.getMessage("SensorStateInactive"));
         }
         if (isIcon()) {
             super.setIcon(inactive);
