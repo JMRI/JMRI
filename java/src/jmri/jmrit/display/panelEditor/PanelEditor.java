@@ -496,7 +496,7 @@ public class PanelEditor extends Editor implements ItemListener {
             } else {
                 BundleName = name;
             }
-            return Bundle.getMessage(name); // TODO use NamedBeanBundle property for basic beans like "Turnout" I18N
+            return Bundle.getMessage(BundleName); // use NamedBeanBundle property for basic beans like "Turnout" I18N
         }
     }
 
