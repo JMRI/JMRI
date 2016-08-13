@@ -4,11 +4,14 @@ import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Locale;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.AddressedProgrammerManager;
 import jmri.CommandStation;
+import jmri.ConfigureManager;
 import jmri.ConsistManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
@@ -16,9 +19,11 @@ import jmri.PowerManager;
 import jmri.ProgrammerManager;
 import jmri.ThrottleManager;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
 import jmri.util.prefs.AbstractPreferencesManager;
+import jmri.util.prefs.InitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,16 +79,16 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                     break;
                 case "ConnectionAdded":
                     // check for special case of anything else then Internal
-                    java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
-                    if (list != null && (list.size() == 2) && (list.get(1) instanceof jmri.jmrix.internal.InternalSystemConnectionMemo)) {
+                    List<SystemConnectionMemo> list = InstanceManager.getList(SystemConnectionMemo.class);
+                    if (list.size() == 2 && list.get(1) instanceof InternalSystemConnectionMemo) {
                         log.debug("First real system added, reset defaults");
                         String name = list.get(1).getUserName();
                         removeConnectionAsDefault(name);
                     }
                     break;
-                 default:
+                default:
                     log.debug("ignoring notification of \"{}\"", e.getPropertyName());
-                    break;   
+                    break;
             }
             this.firePropertyChange("Updated", null, null);
         });
@@ -103,7 +108,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
             ManagerDefaultSelector.this.defaults.remove(tmpArray1);
         });
     }
-        
+
     /**
      * Return the userName of the system that provides the default instance for
      * a specific class.
@@ -140,9 +145,14 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
     }
 
     /**
-     * load into InstanceManager
+     * Load into InstanceManager
+     *
+     * @return an exception that can be passed to the user or null if no errors
+     *         occur
      */
-    public void configure() {
+    @CheckForNull
+    public InitializationException configure() {
+        InitializationException error = null;
         log.debug("configure defaults into InstanceManager");
         List<SystemConnectionMemo> connList = InstanceManager.getList(SystemConnectionMemo.class);
         for (Class<?> c : defaults.keySet()) {
@@ -155,8 +165,15 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                 if (testName.equals(connectionName)) {
                     found = true;
                     // match, store
-                    log.debug("   setting default for \"{}\" to \"{}\" in configure", c, memo.get(c));
-                    InstanceManager.setDefault(c, memo.get(c));
+                    try {
+                        log.debug("   setting default for \"{}\" to \"{}\" in configure", c, memo.get(c));
+                        InstanceManager.setDefault(c, memo.get(c));
+                    } catch (NullPointerException ex) {
+                        String englishMsg = Bundle.getMessage(Locale.ENGLISH, "ErrorNullDefault", memo.getUserName(), memo.getClass(), c); // NOI18N
+                        String localizedMsg = Bundle.getMessage("ErrorNullDefault", memo.getUserName(), memo.getClass(), c); // NOI18N
+                        error = new InitializationException(englishMsg, localizedMsg);
+                        log.warn(englishMsg);
+                    }
                     break;
                 }
             }
@@ -167,12 +184,12 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
             if (!found) {
                 log.debug("!found, so resetting");
                 String currentName = null;
-                if (c == ThrottleManager.class && InstanceManager.getOptionalDefault(jmri.ThrottleManager.class) != null) {
+                if (c == ThrottleManager.class && InstanceManager.getOptionalDefault(ThrottleManager.class) != null) {
                     currentName = InstanceManager.throttleManagerInstance().getUserName();
-                } else if (c == PowerManager.class && InstanceManager.getOptionalDefault(jmri.PowerManager.class) != null) {
-                    currentName = InstanceManager.getDefault(jmri.PowerManager.class).getUserName();
-                } else if (c == ProgrammerManager.class && InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) != null) {
-                    currentName = InstanceManager.getDefault(jmri.ProgrammerManager.class).getUserName();
+                } else if (c == PowerManager.class && InstanceManager.getOptionalDefault(PowerManager.class) != null) {
+                    currentName = InstanceManager.getDefault(PowerManager.class).getUserName();
+                } else if (c == ProgrammerManager.class && InstanceManager.getOptionalDefault(ProgrammerManager.class) != null) {
+                    currentName = InstanceManager.getDefault(ProgrammerManager.class).getUserName();
                 }
                 if (currentName != null) {
                     log.warn("The configured " + connectionName + " for " + c + " can not be found so will use the default " + currentName);
@@ -180,6 +197,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                 }
             }
         }
+        return error;
     }
 
     // Define set of items that we remember defaults for, manually maintained because
@@ -195,7 +213,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
     };
 
     @Override
-    public void initialize(Profile profile) {
+    public void initialize(Profile profile) throws InitializationException {
         if (!this.isInitialized(profile)) {
             Preferences settings = ProfileUtils.getPreferences(profile, this.getClass(), true).node("defaults"); // NOI18N
             try {
@@ -211,9 +229,15 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
             } catch (BackingStoreException ex) {
                 log.info("Unable to read preferences for Default Selector.");
             }
-            this.configure();
-            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(this); // allow ProfileConfig.xml to be written correctly
+            InitializationException ex = this.configure();
+            ConfigureManager manager = InstanceManager.getOptionalDefault(ConfigureManager.class);
+            if (manager != null) {
+                manager.registerPref(this); // allow ProfileConfig.xml to be written correctly
+            }
             this.setInitialized(profile, true);
+            if (ex != null) {
+                throw ex;
+            }
         }
     }
 
@@ -256,4 +280,3 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
 
     private final static Logger log = LoggerFactory.getLogger(ManagerDefaultSelector.class.getName());
 }
-
