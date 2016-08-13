@@ -52,6 +52,7 @@ public abstract class TrainCustomCommon {
      * Adds one CSV file path to the collection of files to be processed.
      *
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT")
     public void addCVSFile(File csvFile) {
         // Ignore null files...
         if (csvFile == null  || !excelFileExists()) {
@@ -87,6 +88,7 @@ public abstract class TrainCustomCommon {
      * Processes the CSV files using a Custom external program that reads the
      * file of file names.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT")
     public boolean process() {
         
         // check to see it the Excel program is available

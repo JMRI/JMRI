@@ -70,7 +70,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         fireTableDataChanged();
     }
 
-    synchronized void updateList() {
+    private synchronized void updateList() {
         if (_location == null) {
             return;
         }
@@ -158,7 +158,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     }
 
     @Override
-    public int getRowCount() {
+    public synchronized int getRowCount() {
         return tracksList.size();
     }
 
@@ -449,7 +449,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         }
     }
 
-    public void dispose() {
+    public synchronized void dispose() {
         // if (log.isDebugEnabled())
         // log.debug("dispose");
         removePropertyChangeTracks();

@@ -27,7 +27,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.ecos.PackageTest");  // no tests in this class itself
         suite.addTest(BundleTest.suite());
         suite.addTest(jmri.jmrix.ecos.swing.PackageTest.suite());
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ecos.networkdriver.PackageTest.class));
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
         }
 

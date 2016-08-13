@@ -876,7 +876,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
     /**
      * An entry has been selected in the Roster Table, activate the bottom part
-     * of the window
+     * of the window.
+     *
+     * @param id ID of the selected roster entry
      */
     void locoSelected(String id) {
         if (id != null) {

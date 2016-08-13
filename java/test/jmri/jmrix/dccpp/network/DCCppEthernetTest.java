@@ -28,6 +28,7 @@ public class DCCppEthernetTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.dccpp.network.DCCppEthernetTest");  // no tests in this class itself
         suite.addTest(new TestSuite(DCCppEthernetAdapterTest.class));
         suite.addTest(new TestSuite(DCCppEthernetPacketizerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
         return suite;
     }
 
