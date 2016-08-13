@@ -43,7 +43,7 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
         super();
     }
 
-    synchronized void updateList() {
+    private synchronized void updateList() {
         if (_location == null) {
             return;
         }
@@ -58,7 +58,7 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
         fireTableDataChanged();
     }
 
-    protected void initTable(JTable table, Location location) {
+    protected synchronized void initTable(JTable table, Location location) {
         _table = table;
         _location = location;
         if (_location != null) {
@@ -94,7 +94,7 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
     }
 
     @Override
-    public int getRowCount() {
+    public synchronized int getRowCount() {
         return _tracksList.size();
     }
 
@@ -230,7 +230,7 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
         }
     }
 
-    public void dispose() {
+    public synchronized void dispose() {
         // if (log.isDebugEnabled())
         // log.debug("dispose");
         removePropertyChangeTracks();

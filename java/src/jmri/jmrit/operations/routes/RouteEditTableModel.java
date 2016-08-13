@@ -70,7 +70,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         initTable(_table);
     }
 
-    synchronized void updateList() {
+    private synchronized void updateList() {
         if (_route == null) {
             return;
         }
@@ -85,7 +85,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
     List<RouteLocation> routeList = new ArrayList<RouteLocation>();
 
-    void initTable(RouteEditFrame frame, JTable table, Route route) {
+    protected void initTable(RouteEditFrame frame, JTable table, Route route) {
         _frame = frame;
         _table = table;
         _route = route;
@@ -95,7 +95,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         initTable(table);
     }
 
-    void initTable(JTable table) {
+    private void initTable(JTable table) {
         // Install the button handlers
         TableColumnModel tcm = table.getColumnModel();
         ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -145,7 +145,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     @Override
-    public int getRowCount() {
+    public synchronized int getRowCount() {
         return routeList.size();
     }
 
@@ -645,7 +645,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
     // this table listens for changes to a route and it's locations
     @Override
-    public void propertyChange(PropertyChangeEvent e) {
+    public synchronized void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
@@ -673,7 +673,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
-    public void dispose() {
+    public synchronized void dispose() {
         if (log.isDebugEnabled()) {
             log.debug("dispose");
         }
