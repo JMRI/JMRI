@@ -38,6 +38,7 @@ import jmri.jmris.json.JsonUtil;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonWebSocket;
+import jmri.server.json.util.JsonUtilHttpService;
 import jmri.spi.JsonServiceFactory;
 import jmri.util.FileUtil;
 import jmri.web.servlet.ServletUtil;
@@ -206,7 +207,7 @@ public class JsonServlet extends WebSocketServlet {
                             reply = JsonUtil.getCar(request.getLocale(), name);
                             break;
                         case CONSIST:
-                            reply = JsonUtil.getConsist(request.getLocale(), JsonUtil.addressForString(name));
+                            reply = JsonUtil.getConsist(request.getLocale(), JsonUtilHttpService.addressForString(name));
                             break;
                         case ENGINE:
                             reply = JsonUtil.getEngine(request.getLocale(), name);
@@ -316,8 +317,8 @@ public class JsonServlet extends WebSocketServlet {
                 if (name != null) {
                     switch (type) {
                         case CONSIST:
-                            JsonUtil.setConsist(request.getLocale(), JsonUtil.addressForString(name), data);
-                            reply = JsonUtil.getConsist(request.getLocale(), JsonUtil.addressForString(name));
+                            JsonUtil.setConsist(request.getLocale(), JsonUtilHttpService.addressForString(name), data);
+                            reply = JsonUtil.getConsist(request.getLocale(), JsonUtilHttpService.addressForString(name));
                             break;
                         case TRAIN:
                             JsonUtil.setTrain(request.getLocale(), name, data);
@@ -406,8 +407,8 @@ public class JsonServlet extends WebSocketServlet {
                 if (name != null) {
                     switch (type) {
                         case CONSIST:
-                            JsonUtil.putConsist(request.getLocale(), JsonUtil.addressForString(name), data);
-                            reply = JsonUtil.getConsist(request.getLocale(), JsonUtil.addressForString(name));
+                            JsonUtil.putConsist(request.getLocale(), JsonUtilHttpService.addressForString(name), data);
+                            reply = JsonUtil.getConsist(request.getLocale(), JsonUtilHttpService.addressForString(name));
                             break;
                         default:
                             if (this.services.get(type) != null) {
@@ -477,7 +478,7 @@ public class JsonServlet extends WebSocketServlet {
                     throw new JsonException(400, "name must be specified"); // need to I18N
                 }
                 if (type.equals(CONSIST)) {
-                    JsonUtil.delConsist(request.getLocale(), JsonUtil.addressForString(name));
+                    JsonUtil.delConsist(request.getLocale(), JsonUtilHttpService.addressForString(name));
                 } else if (this.services.get(type) != null) {
                     for (JsonHttpService service : this.services.get(type)) {
                         service.doDelete(type, name, request.getLocale());
