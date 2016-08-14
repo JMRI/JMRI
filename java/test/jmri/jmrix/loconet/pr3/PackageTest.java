@@ -26,6 +26,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.loconet.pr3.LocoStatsTest");  // no tests in this class itself
         suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.pr3.configurexml.PackageTest.class));
         return suite;
     }
 
