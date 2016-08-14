@@ -276,7 +276,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         }
         String name = _portalName.getText();
         if (portal == null || name == null || name.trim().length() == 0) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("changePortalName"),
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("changePortalName", Bundle.getMessage("buttonChangeName")),
                     Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
             return;
         }

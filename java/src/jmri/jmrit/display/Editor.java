@@ -1320,7 +1320,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     public void setDisplayLevelMenu(Positionable p, JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditLevel"));
-        edit.add("Level = " + p.getDisplayLevel());
+        edit.add(Bundle.getMessage("Level") + " = " + p.getDisplayLevel());
         edit.add(CoordinateEdit.getLevelEditAction(p));
         popup.add(edit);
     }

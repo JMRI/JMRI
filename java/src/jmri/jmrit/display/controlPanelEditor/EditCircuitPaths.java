@@ -740,7 +740,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         String name = _pathName.getText();
         OPath path = _pathList.getSelectedValue();
         if (name == null || name.trim().length() == 0 || path == null) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("changePathName"),
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("changePathName", Bundle.getMessage("buttonChangeName")),
                     Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
             return;
         }
