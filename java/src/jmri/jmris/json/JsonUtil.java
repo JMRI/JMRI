@@ -69,6 +69,7 @@ import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.profile.ProfileManager;
 import jmri.server.json.JsonException;
+import jmri.server.json.util.JsonUtilHttpService;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.node.NodeIdentity;
@@ -335,7 +336,7 @@ public class JsonUtil {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", LIGHT, name));
         }
     }
-    
+
     /*
      * deprecated in favor of the implementations of the {@code do*} methods in
      * {@link jmri.server.json.JsonHttpService}.
@@ -510,9 +511,9 @@ public class JsonUtil {
     }
 
     /**
-     * 
+     *
      * @param locale The client's Locale.
-     * @param name The metadata element to get.
+     * @param name   The metadata element to get.
      * @return JSON metadata element.
      * @throws JsonException if name is not a recognized metadata element.
      * @deprecated since 4.5.2
@@ -535,10 +536,11 @@ public class JsonUtil {
     }
 
     /**
-     * 
+     *
      * @param locale The client's Locale.
      * @return Array of JSON metadata elements.
-     * @throws JsonException if thrown by {@link #getMetadata(java.util.Locale, java.lang.String)}.
+     * @throws JsonException if thrown by
+     *                       {@link #getMetadata(java.util.Locale, java.lang.String)}.
      * @deprecated since 4.5.2
      */
     @Deprecated
@@ -1518,15 +1520,13 @@ public class JsonUtil {
      * type is not specified, type is assumed to be short.
      *
      * @return The DccLocoAddress for address.
+     * @deprecated since 4.5.3; use
+     * {@link jmri.server.json.util.JsonUtilHttpService#addressForString(java.lang.String)}
+     * instead.
      */
+    @Deprecated
     static public DccLocoAddress addressForString(String address) {
-        String[] components = address.split("[()]");
-        int number = Integer.parseInt(components[0]);
-        boolean isLong = false;
-        if (components.length > 1 && "L".equals(components[1].toUpperCase())) {
-            isLong = true;
-        }
-        return new DccLocoAddress(number, isLong);
+        return JsonUtilHttpService.addressForString(address);
     }
 
     static public ObjectNode getCar(Car car) {
