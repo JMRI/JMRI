@@ -231,9 +231,14 @@ public class AutoActiveTrain implements ThrottleListener {
         _stoppingUsingSpeedProfile = false;
         
         // get decoder address
-        _address = Integer.valueOf(_activeTrain.getDccAddress()).intValue();
+        try {
+            _address = Integer.valueOf(_activeTrain.getDccAddress()).intValue();
+        } catch (NumberFormatException ex) {
+            log.warn("invalid dcc address '{}' for {}", _activeTrain.getDccAddress(), _activeTrain.getTrainName());
+            return false;
+        }
         if ((_address < 1) || (_address > 9999)) {
-            log.warn("invalid dcc address for " + _activeTrain.getTrainName());
+            log.warn("invalid dcc address '{}' for {}", _activeTrain.getDccAddress(), _activeTrain.getTrainName());
             return false;
         }
         // request a throttle for automatic operation, throttle returned via callback below
@@ -1692,6 +1697,25 @@ public class AutoActiveTrain implements ThrottleListener {
                     break;
             }
         }
+    }
+    
+    /** routine to convert ramp rate name, stored as a string into the constant value assigned
+     * 
+     * @param rampRate - name of ramp rate, such as "RAMP_FAST"
+     * @return integer representing a ramprate constant value
+     */
+    
+    public static int getRampRateFromName(String rampRate) {
+        if (rampRate.equals(rb.getString("RAMP_FAST"))) {
+            return RAMP_FAST;
+        } else if (rampRate.equals(rb.getString("RAMP_MEDIUM"))) {
+            return RAMP_MEDIUM;
+        } else if (rampRate.equals(rb.getString("RAMP_MED_SLOW"))) {
+            return RAMP_MED_SLOW;
+        } else if (rampRate.equals(rb.getString("RAMP_SLOW"))) {
+            return RAMP_SLOW;
+        }
+        return RAMP_NONE;
     }
 
     private final static Logger log = LoggerFactory.getLogger(AutoActiveTrain.class.getName());

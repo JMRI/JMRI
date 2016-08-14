@@ -369,12 +369,12 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         }
         if (ae.getSource() == runFileButton) {
             // Processes the CSV Manifest files using an external custom program.
-            if (!TrainCustomManifest.manifestCreatorFileExists()) {
-                log.warn("Manifest creator file not found!, directory name: " + TrainCustomManifest.getDirectoryName()
-                        + ", file name: " + TrainCustomManifest.getFileName()); // NOI18N
+            if (!TrainCustomManifest.instance().excelFileExists()) {
+                log.warn("Manifest creator file not found!, directory name: " + TrainCustomManifest.instance().getDirectoryName()
+                        + ", file name: " + TrainCustomManifest.instance().getFileName()); // NOI18N
                 JOptionPane.showMessageDialog(this, MessageFormat.format(
                         Bundle.getMessage("LoadDirectoryNameFileName"), new Object[]{
-                            TrainCustomManifest.getDirectoryName(), TrainCustomManifest.getFileName()}), Bundle
+                            TrainCustomManifest.instance().getDirectoryName(), TrainCustomManifest.instance().getFileName()}), Bundle
                         .getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -390,13 +390,13 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
                         // Make sure our csv manifest file exists for this Train.
                         File csvFile = train.createCSVManifestFile();
                         // Add it to our collection to be processed.
-                        TrainCustomManifest.addCVSFile(csvFile);
+                        TrainCustomManifest.instance().addCVSFile(csvFile);
                     }
                 }
             }
 
             // Now run the user specified custom Manifest processor program
-            TrainCustomManifest.process();
+            TrainCustomManifest.instance().process();
         }
         if (ae.getSource() == switchListsButton) {
             if (tslef != null) {

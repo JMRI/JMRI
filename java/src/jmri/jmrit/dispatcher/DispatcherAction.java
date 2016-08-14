@@ -34,6 +34,7 @@ public class DispatcherAction extends AbstractAction {
         // create a Dispatcher window or activate the existing one
         if (f == null) {
             f = DispatcherFrame.instance();
+            f.loadAtStartup();
         }
         f.setVisible(true);
     }

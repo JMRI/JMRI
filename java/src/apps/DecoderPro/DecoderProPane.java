@@ -32,9 +32,6 @@ public class DecoderProPane extends apps.AppsLaunchPane {
         super();
     }
 
-    /**
-     * Returns the ID for the window's help, which is application specific
-     */
     protected String windowHelpID() {
         return "package.apps.DecoderPro.DecoderPro";
     }
