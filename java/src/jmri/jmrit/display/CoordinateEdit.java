@@ -367,7 +367,7 @@ public class CoordinateEdit extends JmriJFrame {
     public void initSetTip() {
         oldStr = pl.getTooltip().getText();
         textX = new javax.swing.JLabel();
-        textX.setText(Bundle.getMessage("TooltipLabel" + ": "));
+        textX.setText(Bundle.getMessage("TooltipLabel") + ": ");
         textX.setVisible(true);
 
         xTextField = new javax.swing.JTextField(15);

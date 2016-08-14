@@ -1346,7 +1346,7 @@ public class PanelEditor extends Editor implements ItemListener {
         addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Green"), Color.green);
         addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Blue"), Color.blue);
         addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Magenta"), Color.magenta);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Clear"), null);
+        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("ColorClear"), null);
     }
 
     protected void addColorMenuEntry(JMenu menu, ButtonGroup colorButtonGroup,
