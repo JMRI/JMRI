@@ -19,6 +19,8 @@
 	<!-- remove BEMF control and dither -->
 	<version author="Michael Mosher" version="4" lastUpdated="20160608"/>
 	<!-- Fix whistle selection -->
+	<version author="Michael Mosher" version="5" lastUpdated="20160805"/>
+	<!-- Fix defualt values CV4.9 & 4.21                                 -->
 	<decoder>
 		<family name="WOW Sound Set 2" mfg="Train Control Systems" comment="TCS FW Starting Jan 2012">
 			<model model="WOW Sound 101" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="9pin"
@@ -1122,6 +1124,10 @@
 				</enumVal>
 				<label>Default Whistle Set</label>
 			</variable>
+			<variable item="Sound Setting 34" CV="T2CV.4.9" default="10" >
+				<decVal max="126"/>
+				<label>Proto chuff start speed step</label>
+			</variable>
 			<variable item="Sound Setting 1" CV="T2CV.4.10" default="5" >
 				<decVal max="5"/>
 				<label>Global volume</label>
@@ -1148,6 +1154,10 @@
 			<variable item="Sound Group 7 Checkbox 8" CV="T2CV.4.19" default="1" mask="XXXXXXXXVXXXXXXX">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
 				<label>Function 2 toggle in Audio Assist</label>
+			</variable>
+			<variable item="Sound Setting 2" CV="T2CV.4.21" default="256" mask="VVVVVVVVVVVVVVVV">
+				<decVal max="65535"/>
+				<label>Audio Auto Shut-off Time</label>
 			</variable>
 			<variable item="Volume Group 1" CV="T3CV.6.0.1" default="5">
 				<decVal max="5"/>

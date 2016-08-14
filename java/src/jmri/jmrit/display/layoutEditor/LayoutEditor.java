@@ -168,6 +168,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JTextField blockIDField = new JTextField(8);
     private JTextField blockSensor = new JTextField(5);
 
+    // TODO: all the following JCheckBoxes should be JRadioButtons instead of check boxes (only 1 selected at a given time)
     private JCheckBox turnoutRHBox = new JCheckBox(rb.getString("RightHandAbbreviation"));
     private JCheckBox turnoutLHBox = new JCheckBox(rb.getString("LeftHandAbbreviation"));
     private JCheckBox turnoutWYEBox = new JCheckBox(rb.getString("WYEAbbreviation"));
