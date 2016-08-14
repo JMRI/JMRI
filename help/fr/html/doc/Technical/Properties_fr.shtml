@@ -3,7 +3,7 @@
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
 <!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233; le 2013-09-06-->
+<!-- UpDated by Blorec Herv&#233; le 2016-08-14-->
 <title>JMRI: System Properties</title>
 
 <!-- Style -->
@@ -32,11 +32,12 @@ Cette page liste les propri&#233;t&#233;s du syst&#232;me que JMRI utilise.
 <dt>
 os.name
 <dd>
-La plupart de JMRI est ind&#233;pendant du syst&#232;me, mais dans quelques endroits nous fournissons le code sp&#233;cifique au syst&#232;me pour personnaliser l'exp&#233;rience de l'utilisateur.
+La plupart de JMRI est un syst&#232;me ind&#233;pendant, mais dans quelques 
+endroits nous fournissons le code sp&#233;cifique au syst&#232;me pour personnaliser l'exp&#233;rience de l'utilisateur.
 C'est la propri&#233;t&#233; que nous utilisons pour dire quel type de syst&#232;me d'exploitation
 est en cours d'utilisation.
 <p>
-Par exemple, on localise le<a href="../../apps/DecoderPro/Files.shtml#location"> r&#233;pertoire pr&#233;f&#233;rences</a>
+Par exemple, on localise le<a href="../../apps/DecoderPro/Files.shtml#location"> r&#233;pertoire preferences</a>
 dans des lieux diff&#233;rents selon le type de syst&#232;me.
 
 <dt>
@@ -44,14 +45,14 @@ user.dir
 <dd>
 Java d&#233;finit celui-ci pour &#234;tre le r&#233;pertoire dans lequel JMRI est ex&#233;cut&#233;.
 JMRI l'utilise pour trouver bon nombre de ses dossiers; cette propri&#233;t&#233; ne devrait pas
-&#234;tre chang&#233; par l'utilisateur!
+&#234;tre chang&#233;e par l'utilisateur!
 
 <dt>
 user.home
 <dd>
 Java d&#233;finit celui-ci comme le r&#233;pertoire "home" de l'utilisateur actuel.
 JMRI l'utilise, sur certains syst&#232;mes, pour localiser les
-emplacements par d&#233;faut pour le r&#233;pertoire des pr&#233;f&#233;rences.
+emplacements par d&#233;faut pour le r&#233;pertoire preferences.
 
 <dt>
 gnu.io.rxtx.SerialPorts
@@ -71,10 +72,22 @@ Les scripts de d&#233;marrage Linux le fera si vous avez d&#233;fini la variable
 <dl>
 
 <dt>
+jmri.log
+<dd>
+Nom du fichier de commande d'enregistrement de JMRI, typiquement par d&#233;faut ;lcf
+
+
+<dt>
+jmri.log.path
+<dd>
+Le r&#233;pertoire pour stocker le journal de bord. Si non sp&#233;cifi&#233;
+les journaux de bord sont stock&#233;s dans le r&#233;pertoire des r&#233;glages JMRI
+
+<dt>
 jmri.prefsdir
 <dd>
 En d&#233;finissant cette propri&#233;t&#233;, vous pouvez d&#233;finir explicitement o&#249; JMRI doit
-chercher le r&#233;pertoire de pr&#233;f&#233;rence.
+chercher le r&#233;pertoire preference.
 
 <dt>
 jmri.inset.height
@@ -93,6 +106,19 @@ Si elle est d&#233;finie, fournit une valeur minimum d'encart pour la largeur de
 L'encart est l'espace allou&#233; pour les d&#233;corations sur les c&#244;t&#233;s de l'&#233;cran.
 Mettez lui un nombre entier positif N pour s'assurer que les fen&#234;tres JMRI 
 seront ouvertes avec N pixels disponibles sur les c&#244;t&#233;s
+</dl>
+
+ 
+<dt>
+org.jmri.Apps.(key)
+<dd>
+
+
+<dt>
+org.jmri.Apps.configFilename
+<dd>
+
+
 </dl>
     
 <!--#include virtual="/Footer" -->
