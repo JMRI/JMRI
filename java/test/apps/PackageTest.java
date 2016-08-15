@@ -30,6 +30,8 @@ public class PackageTest extends TestCase {
 
         suite.addTest(BundleTest.suite());
         suite.addTest(ValidateConfigFilesTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(apps.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(apps.startup.PackageTest.class));
         return suite;
     }
 

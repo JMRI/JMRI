@@ -30,6 +30,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.can.nmranet.NmraNetTest");
         // suite.addTest(jmri.jmrix.can.CanMessageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.can.nmranet.configurexml.PackageTest.class));
         return suite;
     }
 

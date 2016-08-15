@@ -28,7 +28,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.jmriclient.json.PackageTest");  // no tests in this class itself
         suite.addTest(BundleTest.suite());
         suite.addTest(jmri.jmrix.jmriclient.json.swing.PackageTest.suite());
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.jmriclient.json.configurexml.PackageTest.class));
 
         // if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
         // there are currently no swing tests.
