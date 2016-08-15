@@ -214,7 +214,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     @Override
-    public boolean isCellEditable(int row, int col) {
+    public synchronized boolean isCellEditable(int row, int col) {
         switch (col) {
             case ACTION_COLUMN:
             case TRAIN_COLUMN:

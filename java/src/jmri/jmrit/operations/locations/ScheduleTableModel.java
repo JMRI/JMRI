@@ -124,7 +124,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
 
-    private void setPreferredWidths(JTable table) {
+    private synchronized void setPreferredWidths(JTable table) {
         if (_frame.loadTableDetails(table)) {
             return; // done
         }
@@ -683,12 +683,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         }
     }
 
-//	private int _trainDirection = Setup.getDirectionInt(Setup.getTrainDirectionComboBox().getItemAt(0));
-//
-//	public int getLastTrainDirection() {
-//		return _trainDirection;
-//	}
-    public void setMatchMode(boolean mode) {
+    public synchronized void setMatchMode(boolean mode) {
         if (mode != _matchMode) {
             _matchMode = mode;
             fireTableStructureChanged();
