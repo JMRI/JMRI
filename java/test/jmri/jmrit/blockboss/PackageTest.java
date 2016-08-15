@@ -27,6 +27,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.blockboss.BlockBossTest"); // no tests in class itself
         suite.addTest(jmri.jmrit.blockboss.BlockBossLogicTest.suite());
         suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.blockboss.configurexml.PackageTest.class));
         return suite;
     }
 

@@ -62,7 +62,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     ScheduleEditFrame _frame;
     boolean _matchMode = false;
 
-    synchronized void updateList() {
+    private synchronized void updateList() {
         if (_schedule == null) {
             return;
         }
@@ -85,7 +85,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
     List<ScheduleItem> _list = new ArrayList<ScheduleItem>();
 
-    void initTable(ScheduleEditFrame frame, JTable table, Schedule schedule, Location location, Track track) {
+    protected synchronized void initTable(ScheduleEditFrame frame, JTable table, Schedule schedule, Location location, Track track) {
         _schedule = schedule;
         _location = location;
         _track = track;
@@ -149,7 +149,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
 
     @Override
-    public int getRowCount() {
+    public synchronized int getRowCount() {
         return _list.size();
     }
 
@@ -264,8 +264,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
 
     @Override
-    public Object getValueAt(int row, int col) {
-        if (row >= _list.size()) {
+    public synchronized Object getValueAt(int row, int col) {
+        if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
         ScheduleItem si = _list.get(row);
@@ -314,7 +314,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
 
     @Override
-    public void setValueAt(Object value, int row, int col) {
+    public synchronized void setValueAt(Object value, int row, int col) {
         if (value == null) {
             log.debug("Warning schedule table row {} still in edit", row);
             return;
@@ -674,7 +674,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
 
     // remove receive loads not serviced by track
-    private void filterLoads(ScheduleItem si, JComboBox<String> cb) {
+    private synchronized void filterLoads(ScheduleItem si, JComboBox<String> cb) {
         for (int i = cb.getItemCount() - 1; i > 0; i--) {
             String loadName = cb.getItemAt(i);
             if (!loadName.equals(CarLoads.NONE) && !_track.acceptsLoad(loadName, si.getTypeName())) {
@@ -698,7 +698,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
     // this table listens for changes to a schedule and it's car types
     @Override
-    public void propertyChange(PropertyChangeEvent e) {
+    public synchronized void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
@@ -740,7 +740,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         }
     }
 
-    public void dispose() {
+    public synchronized void dispose() {
         if (log.isDebugEnabled()) {
             log.debug("dispose");
         }

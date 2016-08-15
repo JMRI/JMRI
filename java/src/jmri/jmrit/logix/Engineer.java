@@ -222,7 +222,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     /**
      * Cannot set _runOnET until current NOOP command completes
      *
-     * @param set true to run on elapsed time calculations only, false to consider other inputs
+     * @param set true to run on elapsed time calculations only, false to
+     *            consider other inputs
      */
     protected void setRunOnET(Boolean set) {
         log.debug("setRunOnET {} command #{} warrant {}", set, _idxCurrentCommand, _warrant.getDisplayName());
@@ -911,7 +912,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             notify();
         }
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UL_UNRELEASED_LOCK_EXCEPTION_PATH", justification = "warning indicates that _lock should be released in a finally clause of a try block, but _lock is already released in a finally clause of a try block.")
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT", "UL_UNRELEASED_LOCK_EXCEPTION_PATH"},
+                justification = "UL_UNRELEASED_LOCK_EXCEPTION_PATH ignores _lock release in a finally clause of a try block; TLW_TWO_LOCK_WAIT appears to be a spurious warning, this should be reevaluated later")
         @Override
         public void run() {
             _lock.lock();
