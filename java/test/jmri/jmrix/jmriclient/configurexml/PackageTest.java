@@ -8,6 +8,10 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+   JMRIClientLightManagerXmlTest.class,
+   JMRIClientReporterManagerXmlTest.class,
+   JMRIClientSensorManagerXmlTest.class,
+   JMRIClientTurnoutManagerXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.jmriclient.configurexml package.

@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    OlcbSensorManagerXmlTest.class,
+    OlcbTurnoutManagerXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.openlcb.configurexml package.
