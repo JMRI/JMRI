@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    MarklinSensorManagerXmlTest.class,
+    MarklinTurnoutManagerXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.marklin.configurexml package.

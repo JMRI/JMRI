@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    ConcentratorReporterManagerXmlTest.class,
+    ConcentratorSensorManagerXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.rfid.merg.concentrator.configurexml package.

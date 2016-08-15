@@ -8,6 +8,12 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    LNCPSignalMastXmlTest.class,
+    LnLightManagerXmlTest.class,
+    LnReporterManagerXmlTest.class,
+    LnSensorManagerXmlTest.class,
+    LnTurnoutManagerXmlTest.class,
+    SE8cSignalHeadXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.loconet.configurexml package.

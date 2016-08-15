@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    DCCppLightManagerXmlTest.class,
+    DCCppSensorManagerXmlTest.class,
+    DCCppTurnoutManagerXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.dccpp.configurexml package.
