@@ -58,7 +58,7 @@ public interface AuxiliaryConfiguration {
      *                 profile, false if the fragment is for just the current
      *                 computer.
      */
-    void putConfigurationFragment(@Nonnull Element fragment, @Nonnull boolean shared);
+    void putConfigurationFragment(@Nonnull Element fragment, boolean shared);
 
     /**
      * Remove a configuration fragment from the configuration.
