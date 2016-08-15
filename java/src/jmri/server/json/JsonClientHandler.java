@@ -126,7 +126,7 @@ public class JsonClientHandler {
     /**
      * Process a JSON node and handle appropriately.
      *
-     * See {@link #onMessage(java.lang.String) } for expected JSON objects.
+     * See {@link #onMessage(java.lang.String)} for expected JSON objects.
      *
      * @param root the JSON node.
      * @throws java.io.IOException if communications is broken with the client.
@@ -146,7 +146,8 @@ public class JsonClientHandler {
             if ((type.equals(HELLO) || type.equals(PING) || type.equals(GOODBYE))
                     && data.isMissingNode()) {
                 // these messages are not required to have a data payload,
-                // so create one if the message did not contain one
+                // so create one if the message did not contain one to avoid
+                // special casing later
                 data = this.connection.getObjectMapper().createObjectNode();
             }
             if (type.equals(LIST)) {
