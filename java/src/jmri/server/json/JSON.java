@@ -191,10 +191,6 @@ public final class JSON {
      */
     public static final String ROUTES = "routes"; // NOI18N
     /**
-     * {@value #SENSORS}
-     */
-    public static final String SENSORS = "sensors"; // NOI18N
-    /**
      * {@value #TRAINS}
      */
     public static final String TRAINS = "trains"; // NOI18N
@@ -250,10 +246,6 @@ public final class JSON {
      * {@value #ROUTE}
      */
     public static final String ROUTE = "route"; // NOI18N
-    /**
-     * {@value #SENSOR}
-     */
-    public static final String SENSOR = "sensor"; // NOI18N
     /**
      * {@value #THROTTLE}
      */

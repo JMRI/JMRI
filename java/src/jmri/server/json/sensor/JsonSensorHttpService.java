@@ -1,6 +1,6 @@
 package jmri.server.json.sensor;
 
-import static jmri.server.json.sensor.JsonSensorServiceFactory.SENSOR;
+import static jmri.server.json.sensor.JsonSensor.SENSOR;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

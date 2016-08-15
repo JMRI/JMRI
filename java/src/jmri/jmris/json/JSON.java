@@ -5,7 +5,7 @@ import jmri.server.json.block.JsonBlock;
 import jmri.server.json.power.JsonPowerServiceFactory;
 import jmri.server.json.reporter.JsonReporter;
 import jmri.server.json.roster.JsonRoster;
-import jmri.server.json.sensor.JsonSensorServiceFactory;
+import jmri.server.json.sensor.JsonSensor;
 import jmri.server.json.signalHead.JsonSignalHead;
 import jmri.server.json.signalMast.JsonSignalMast;
 import jmri.server.json.throttle.JsonThrottle;
@@ -264,7 +264,7 @@ public final class JSON {
      *
      * @see jmri.server.json.sensor.JsonSensorServiceFactory#SENSORS
      */
-    public static final String SENSORS = JsonSensorServiceFactory.SENSORS;
+    public static final String SENSORS = JsonSensor.SENSORS;
     /**
      * {@value #SIGNAL_HEADS}
      */
@@ -350,7 +350,7 @@ public final class JSON {
      *
      * @see jmri.server.json.sensor.JsonSensorServiceFactory#SENSOR
      */
-    public static final String SENSOR = JsonSensorServiceFactory.SENSOR;
+    public static final String SENSOR = JsonSensor.SENSOR;
     /**
      * {@value #SIGNAL_HEAD}
      */
