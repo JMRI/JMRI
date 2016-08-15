@@ -175,10 +175,6 @@ public final class JSON {
      */
     public static final String LOCATIONS = "locations"; // NOI18N
     /**
-     * {@value #MEMORIES}
-     */
-    public static final String MEMORIES = "memories"; // NOI18N
-    /**
      * {@value #METADATA}
      */
     public static final String METADATA = "metadata"; // NOI18N
@@ -220,10 +216,6 @@ public final class JSON {
      * {@value #LOCATION_ID}
      */
     public static final String LOCATION_ID = "locationId"; // NOI18N
-    /**
-     * {@value #MEMORY}
-     */
-    public static final String MEMORY = "memory"; // NOI18N
     /**
      * {@value #NETWORK_SERVICE}
      *

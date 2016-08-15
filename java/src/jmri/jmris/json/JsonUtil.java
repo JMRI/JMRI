@@ -6,6 +6,7 @@ import static jmri.server.json.JsonException.CODE;
 import static jmri.server.json.JsonException.ERROR;
 import static jmri.server.json.JsonException.MESSAGE;
 import static jmri.server.json.light.JsonLight.LIGHT;
+import static jmri.server.json.memory.JsonMemory.MEMORY;
 import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
 import static jmri.server.json.reporter.JsonReporter.LAST_REPORT;
 import static jmri.server.json.reporter.JsonReporter.REPORT;

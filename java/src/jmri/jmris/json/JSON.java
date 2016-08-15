@@ -3,6 +3,7 @@ package jmri.jmris.json;
 import jmri.server.json.JsonException;
 import jmri.server.json.block.JsonBlock;
 import jmri.server.json.light.JsonLight;
+import jmri.server.json.memory.JsonMemory;
 import jmri.server.json.power.JsonPowerServiceFactory;
 import jmri.server.json.reporter.JsonReporter;
 import jmri.server.json.roster.JsonRoster;
@@ -221,7 +222,7 @@ public final class JSON {
     /**
      * {@value #MEMORIES}
      */
-    public static final String MEMORIES = jmri.server.json.JSON.MEMORIES;
+    public static final String MEMORIES = JsonMemory.MEMORIES;
     /**
      * {@value #METADATA}
      */
@@ -321,7 +322,7 @@ public final class JSON {
     /**
      * {@value #MEMORY}
      */
-    public static final String MEMORY = jmri.server.json.JSON.MEMORY;
+    public static final String MEMORY = JsonMemory.MEMORY;
     /**
      * {@value #NETWORK_SERVICE}
      *
