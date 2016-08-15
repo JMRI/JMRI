@@ -264,15 +264,19 @@ public final class JSON {
     /**
      * {@value #SENSORS}
      *
-     * @see jmri.server.json.sensor.JsonSensorServiceFactory#SENSORS
+     * @see jmri.server.json.sensor.JsonSensor#SENSORS
      */
     public static final String SENSORS = JsonSensor.SENSORS;
     /**
      * {@value #SIGNAL_HEADS}
+     *
+     * @see jmri.server.json.signalHead.JsonSignalHead#SIGNAL_HEADS
      */
     public static final String SIGNAL_HEADS = JsonSignalHead.SIGNAL_HEADS;
     /**
      * {@value #SIGNAL_MASTS}
+     *
+     * @see jmri.server.json.signalMast.JsonSignalMast#SIGNAL_MASTS
      */
     public static final String SIGNAL_MASTS = JsonSignalMast.SIGNAL_MASTS;
     /**
@@ -350,15 +354,19 @@ public final class JSON {
     /**
      * {@value #SENSOR}
      *
-     * @see jmri.server.json.sensor.JsonSensorServiceFactory#SENSOR
+     * @see jmri.server.json.sensor.JsonSensor#SENSOR
      */
     public static final String SENSOR = JsonSensor.SENSOR;
     /**
      * {@value #SIGNAL_HEAD}
+     *
+     * @see jmri.server.json.signalHead.JsonSignalHead#SIGNAL_HEAD
      */
     public static final String SIGNAL_HEAD = JsonSignalHead.SIGNAL_HEAD;
     /**
      * {@value #SIGNAL_MAST}
+     *
+     * @see jmri.server.json.signalMast.JsonSignalMast#SIGNAL_MAST
      */
     public static final String SIGNAL_MAST = JsonSignalMast.SIGNAL_MAST;
     /**
