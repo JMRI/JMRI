@@ -1,9 +1,9 @@
-package jmri.server.json.memory;
+package jmri.server.json.signalHead;
 
 import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PUT;
-import static jmri.server.json.memory.JsonMemory.MEMORY;
+import static jmri.server.json.signalHead.JsonSignalHead.SIGNAL_HEAD;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import java.beans.PropertyChangeEvent;
@@ -13,25 +13,25 @@ import java.util.HashMap;
 import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.Memory;
-import jmri.MemoryManager;
+import jmri.SignalHead;
+import jmri.SignalHeadManager;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
 
 /**
  *
- * @author Randall Wood
+ * @author Randall Wood (C) 2016
  */
-public class JsonMemorySocketService extends JsonSocketService {
+public class JsonSignalHeadSocketService extends JsonSocketService {
 
-    private final JsonMemoryHttpService service;
-    private final HashMap<String, MemoryListener> memories = new HashMap<>();
+    private final JsonSignalHeadHttpService service;
+    private final HashMap<String, SignalHeadListener> signalHeads = new HashMap<>();
     private Locale locale;
 
-    public JsonMemorySocketService(JsonConnection connection) {
+    public JsonSignalHeadSocketService(JsonConnection connection) {
         super(connection);
-        this.service = new JsonMemoryHttpService(connection.getObjectMapper());
+        this.service = new JsonSignalHeadHttpService(connection.getObjectMapper());
     }
 
     @Override
@@ -43,12 +43,12 @@ public class JsonMemorySocketService extends JsonSocketService {
         } else {
             this.connection.sendMessage(this.service.doPost(type, name, data, locale));
         }
-        if (!this.memories.containsKey(name)) {
-            Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(name);
-            if (memory != null) {
-                MemoryListener listener = new MemoryListener(memory);
-                memory.addPropertyChangeListener(listener);
-                this.memories.put(name, listener);
+        if (!this.signalHeads.containsKey(name)) {
+            SignalHead signalHead = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(name);
+            if (signalHead != null) {
+                SignalHeadListener listener = new SignalHeadListener(signalHead);
+                signalHead.addPropertyChangeListener(listener);
+                this.signalHeads.put(name, listener);
             }
         }
     }
@@ -61,34 +61,33 @@ public class JsonMemorySocketService extends JsonSocketService {
 
     @Override
     public void onClose() {
-        memories.values().stream().forEach((memory) -> {
-            memory.memory.removePropertyChangeListener(memory);
+        signalHeads.values().stream().forEach((reporter) -> {
+            reporter.signalHead.removePropertyChangeListener(reporter);
         });
-        memories.clear();
+        signalHeads.clear();
     }
 
-    private class MemoryListener implements PropertyChangeListener {
+    private class SignalHeadListener implements PropertyChangeListener {
 
-        protected final Memory memory;
+        protected final SignalHead signalHead;
 
-        public MemoryListener(Memory memory) {
-            this.memory = memory;
+        public SignalHeadListener(SignalHead signalHead) {
+            this.signalHead = signalHead;
         }
 
         @Override
         public void propertyChange(PropertyChangeEvent e) {
-            // If the Commanded State changes, show transition state as "<inconsistent>"
-            if (e.getPropertyName().equals("value")) {
+            if (e.getPropertyName().equals("Appearance") || e.getPropertyName().equals("Held")) {
                 try {
                     try {
-                        connection.sendMessage(service.doGet(MEMORY, this.memory.getSystemName(), locale));
+                        connection.sendMessage(service.doGet(SIGNAL_HEAD, this.signalHead.getSystemName(), locale));
                     } catch (JsonException ex) {
                         connection.sendMessage(ex.getJsonMessage());
                     }
-                } catch (IOException ex) {
+                } catch (IOException ie) {
                     // if we get an error, de-register
-                    memory.removePropertyChangeListener(this);
-                    memories.remove(this.memory.getSystemName());
+                    signalHead.removePropertyChangeListener(this);
+                    signalHeads.remove(this.signalHead.getSystemName());
                 }
             }
         }
