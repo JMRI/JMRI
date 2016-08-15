@@ -8,6 +8,10 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+   AcelaLightManagerXmlTest.class,
+   AcelaSensorManagerXmlTest.class,
+   AcelaSignalHeadXmlTest.class,
+   AcelaTurnoutManagerXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.acela.configurexml package.

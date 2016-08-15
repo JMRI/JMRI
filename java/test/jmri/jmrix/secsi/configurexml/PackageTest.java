@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    SerialLightManagerXmlTest.class,
+    SerialSensorManagerXmlTest.class,
+    SerialTurnoutManagerXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.secsi.configurexml package.

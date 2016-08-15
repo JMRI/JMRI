@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+   XpaTurnoutManagerXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.xpa.configurexml package.
