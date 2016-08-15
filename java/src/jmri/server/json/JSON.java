@@ -171,10 +171,6 @@ public final class JSON {
      */
     public static final String ENGINES = "engines"; // NOI18N
     /**
-     * {@value #LIGHTS}
-     */
-    public static final String LIGHTS = "lights"; // NOI18N
-    /**
      * {@value #LOCATIONS}
      */
     public static final String LOCATIONS = "locations"; // NOI18N
@@ -216,10 +212,6 @@ public final class JSON {
      * {@value #ENGINE}
      */
     public static final String ENGINE = "engine"; // NOI18N
-    /**
-     * {@value #LIGHT}
-     */
-    public static final String LIGHT = "light"; // NOI18N
     /**
      * {@value #LOCATION}
      */

@@ -2,6 +2,7 @@ package jmri.jmris.json;
 
 import jmri.server.json.JsonException;
 import jmri.server.json.block.JsonBlock;
+import jmri.server.json.light.JsonLight;
 import jmri.server.json.power.JsonPowerServiceFactory;
 import jmri.server.json.reporter.JsonReporter;
 import jmri.server.json.roster.JsonRoster;
@@ -212,7 +213,7 @@ public final class JSON {
     /**
      * {@value #LIGHTS}
      */
-    public static final String LIGHTS = jmri.server.json.JSON.LIGHTS;
+    public static final String LIGHTS = JsonLight.LIGHTS;
     /**
      * {@value #LOCATIONS}
      */
@@ -308,7 +309,7 @@ public final class JSON {
     /**
      * {@value #LIGHT}
      */
-    public static final String LIGHT = jmri.server.json.JSON.LIGHT;
+    public static final String LIGHT = JsonLight.LIGHT;
     /**
      * {@value #LOCATION}
      */
