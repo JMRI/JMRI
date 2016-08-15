@@ -518,7 +518,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
     }
 
-    private void removePropertyChangeAutomationItems() {
+    private synchronized void removePropertyChangeAutomationItems() {
         for (AutomationItem item : _list) {
             item.removePropertyChangeListener(this);
         }

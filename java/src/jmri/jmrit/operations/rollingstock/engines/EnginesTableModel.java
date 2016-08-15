@@ -89,7 +89,6 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 sort == SORTBY_OWNER ||
                 sort == SORTBY_VALUE ||
                 sort == SORTBY_RFID ||
-                sort == SORTBY_VALUE ||
                 sort == SORTBY_LAST) {
             XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
             tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), sort == SORTBY_MOVES);
