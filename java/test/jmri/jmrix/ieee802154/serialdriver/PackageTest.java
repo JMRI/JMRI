@@ -31,6 +31,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialNodeTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialDriverAdapterTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ieee802154.serialdriver.configurexml.PackageTest.class));
         return suite;
     }
 

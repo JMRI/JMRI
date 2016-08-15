@@ -85,7 +85,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
     List<ScheduleItem> _list = new ArrayList<ScheduleItem>();
 
-    protected void initTable(ScheduleEditFrame frame, JTable table, Schedule schedule, Location location, Track track) {
+    protected synchronized void initTable(ScheduleEditFrame frame, JTable table, Schedule schedule, Location location, Track track) {
         _schedule = schedule;
         _location = location;
         _track = track;
@@ -674,7 +674,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
 
     // remove receive loads not serviced by track
-    private void filterLoads(ScheduleItem si, JComboBox<String> cb) {
+    private synchronized void filterLoads(ScheduleItem si, JComboBox<String> cb) {
         for (int i = cb.getItemCount() - 1; i > 0; i--) {
             String loadName = cb.getItemAt(i);
             if (!loadName.equals(CarLoads.NONE) && !_track.acceptsLoad(loadName, si.getTypeName())) {

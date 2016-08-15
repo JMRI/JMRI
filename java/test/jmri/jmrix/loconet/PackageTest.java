@@ -58,6 +58,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.loconet.hexfile.PackageTest.suite());
         suite.addTest(jmri.jmrix.loconet.lnsvf2.PackageTest.suite());
         suite.addTest(jmri.jmrix.loconet.downloader.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.configurexml.PackageTest.class));
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.loconet.locoio.PackageTest.suite());

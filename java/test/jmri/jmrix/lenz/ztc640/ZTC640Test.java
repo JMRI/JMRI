@@ -28,6 +28,7 @@ public class ZTC640Test extends TestCase {
         suite.addTest(new TestSuite(ZTC640AdapterTest.class));
         suite.addTest(new TestSuite(ZTC640XNetPacketizerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.lenz.ztc640.configurexml.PackageTest.class));
         return suite;
     }
 
