@@ -8,10 +8,10 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    CbusLightManagerXml.class,
-    CbusSensorManagerXml.class,
-    CbusReporterManagerXml.class,
-    CbusTurnoutManagerXml.class
+    CbusLightManagerXmlTest.class,
+    CbusSensorManagerXmlTest.class,
+    CbusReporterManagerXmlTest.class,
+    CbusTurnoutManagerXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.can.cbus.configurexml package.

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   ConnectionConfigXml.class
+   ConnectionConfigXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.wangrow.serialdriver.configurexml package.
