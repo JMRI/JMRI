@@ -1,7 +1,7 @@
-package jmri.server.json.memory;
+package jmri.server.json.signalMast;
 
-import static jmri.server.json.memory.JsonMemory.MEMORIES;
-import static jmri.server.json.memory.JsonMemory.MEMORY;
+import static jmri.server.json.signalMast.JsonSignalMast.SIGNAL_MAST;
+import static jmri.server.json.signalMast.JsonSignalMast.SIGNAL_MASTS;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JsonConnection;
@@ -11,24 +11,23 @@ import jmri.spi.JsonServiceFactory;
 
 /**
  *
- * @author Randall Wood
+ * @author Randall Wood (C) 2016
  */
-public class JsonMemoryServiceFactory implements JsonServiceFactory {
-
+public class JsonSignalMastServiceFactory implements JsonServiceFactory {
 
     @Override
     public String[] getTypes() {
-        return new String[]{MEMORY, MEMORIES};
+        return new String[]{SIGNAL_MAST, SIGNAL_MASTS};
     }
 
     @Override
     public JsonSocketService getSocketService(JsonConnection connection) {
-        return new JsonMemorySocketService(connection);
+        return new JsonSignalMastSocketService(connection);
     }
 
     @Override
     public JsonHttpService getHttpService(ObjectMapper mapper) {
-        return new JsonMemoryHttpService(mapper);
+        return new JsonSignalMastHttpService(mapper);
     }
 
 }
