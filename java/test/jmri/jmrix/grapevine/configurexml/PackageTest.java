@@ -8,6 +8,10 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+   SerialLightManagerXmlTest.class,
+   SerialSensorManagerXmlTest.class,
+   SerialSignalHeadXmlTest.class,
+   SerialTurnoutManagerXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.grapevine.configurexml package.

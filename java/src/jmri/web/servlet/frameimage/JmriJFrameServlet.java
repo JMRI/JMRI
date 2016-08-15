@@ -31,10 +31,10 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
-import jmri.server.json.JSON;
-import jmri.jmris.json.JsonUtil;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
+import jmri.server.json.JSON;
+import jmri.server.json.util.JsonUtilHttpService;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
 import jmri.web.server.WebServerPreferences;
@@ -349,9 +349,10 @@ public class JmriJFrameServlet extends HttpServlet {
         if ("json".equals(format)) { // NOI18N
             ArrayNode root = mapper.createArrayNode();
             HashSet<JFrame> frames = new HashSet<>();
+            JsonUtilHttpService service = new JsonUtilHttpService(new ObjectMapper());
             JmriJFrame.getFrameList().stream().forEach((frame) -> {
                 if (usePanels && frame instanceof Editor) {
-                    ObjectNode node = JsonUtil.getPanel(request.getLocale(), (Editor) frame, "xml"); // NOI18N
+                    ObjectNode node = service.getPanel(request.getLocale(), (Editor) frame, JSON.XML);
                     if (node != null) {
                         root.add(node);
                         frames.add(((Editor) frame).getTargetFrame());

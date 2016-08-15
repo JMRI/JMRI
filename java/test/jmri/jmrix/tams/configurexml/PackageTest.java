@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+   TamsTurnoutManagerXmlTest.class,
+   TamsSensorManagerXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.tams.configurexml package.
