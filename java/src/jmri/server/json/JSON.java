@@ -110,6 +110,10 @@ public final class JSON {
      * {@value #STATUS_CODE}
      */
     public static final String STATUS_CODE = "statusCode"; // NOI18N
+    /**
+     * {@value #PROPERTIES}
+     */
+    public static final String PROPERTIES = "properties"; // NOI18N
 
     /* JSON hello and metadata */
     /**
@@ -733,7 +737,7 @@ public final class JSON {
      * JSON State (an unsigned integer)
      */
 
-    /* Common state */
+ /* Common state */
     /**
      * {@value #UNKNOWN}
      * <p>
