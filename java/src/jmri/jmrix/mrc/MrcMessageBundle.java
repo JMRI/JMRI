@@ -19,7 +19,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * the local resource bundle name.
  *
  * @author Bob Jacobsen Copyright (C) 2012
- * @version $Revision: 17977 $
  * @since 3.3.1
  */
 public class MrcMessageBundle extends jmri.jmrix.mrc.Bundle {
@@ -78,5 +77,3 @@ public class MrcMessageBundle extends jmri.jmrix.mrc.Bundle {
     }
 
 }
-
-/* @(#)Bundle.java */

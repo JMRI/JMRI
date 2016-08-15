@@ -1,4 +1,3 @@
-// Bundle.java
 package jmri.web.servlet.operations;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -111,5 +110,3 @@ public class Bundle extends jmri.web.servlet.Bundle {
     }
 
 }
-
-/* @(#)Bundle.java */
