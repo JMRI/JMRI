@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    RfidReporterManagerXmlTest.class,
+    RfidSensorManagerXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.rfid.configurexml package.

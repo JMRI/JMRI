@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+   DccTurnoutManagerXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.dcc.configurexml package.

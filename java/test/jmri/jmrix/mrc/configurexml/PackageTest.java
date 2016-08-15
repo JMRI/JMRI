@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    MrcTurnoutManagerXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.mrc.configurexml package.
