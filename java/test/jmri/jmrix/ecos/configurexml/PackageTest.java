@@ -8,6 +8,11 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    EcosLocoAddressManagerXmlTest.class,
+    EcosPreferencesXmlTest.class,
+    EcosReporterManagerXmlTest.class,
+    EcosSensorManagerXmlTest.class,
+    EcosTurnoutManagerXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.ecos.configurexml package.

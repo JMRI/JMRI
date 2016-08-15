@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    Dcc4PcReporterManagerXmlTest.class,
+    Dcc4PcSensorManagerXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.dcc4pc.configurexml package.

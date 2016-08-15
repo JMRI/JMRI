@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+   RpsReporterManagerXmlTest.class,
+   RpsSensorManagerXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.rps.configurexml package.

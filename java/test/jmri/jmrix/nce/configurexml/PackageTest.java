@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+   NceLightManagerXmlTest.class,
+   NceSensorManagerXmlTest.class,
+   NceTurnoutManagerXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.nce.configurexml package.

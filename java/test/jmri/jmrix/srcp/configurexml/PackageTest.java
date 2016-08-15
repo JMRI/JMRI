@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    SRCPSensorManagerXmlTest.class,
+    SRCPTurnoutManagerXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.srcp.configurexml package.
