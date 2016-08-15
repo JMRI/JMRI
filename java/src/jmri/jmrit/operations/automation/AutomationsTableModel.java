@@ -326,7 +326,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
 
     // check for change in number of automations, or a change in a automation
     @Override
-    public void propertyChange(PropertyChangeEvent e) {
+    public synchronized void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
