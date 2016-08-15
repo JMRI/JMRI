@@ -28,6 +28,7 @@ public class XnTcpTest extends TestCase {
         suite.addTest(new TestSuite(XnTcpAdapterTest.class));
         suite.addTest(new TestSuite(XnTcpXNetPacketizerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.lenz.xntcp.configurexml.PackageTest.class));
         return suite;
     }
 

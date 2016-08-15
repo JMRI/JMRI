@@ -728,6 +728,8 @@
 
 <mapID target="html.doc.Technical.Logging_code" url="html/doc/Technical/Logging.shtml#code"/>
 
+<mapID target="html.hardware.USBtoSerial_usb2serial" url="html/hardware/USBtoSerial.shtml#usb2serial"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_ManifestOptions" url="package/jmri/jmrit/operations/Operations.shtml#ManifestOptions"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_CarLoad" url="package/jmri/jmrit/operations/Operations.shtml#CarLoad"/>
@@ -1345,6 +1347,8 @@
 <mapID target="html.hardware.can.scripting_documentation" url="html/hardware/can/scripting.shtml#documentation"/>
 
 <mapID target="glossary.index" url="glossary/index.shtml"/>
+
+<mapID target="html.doc.Technical.JUnit_junit4" url="html/doc/Technical/JUnit.shtml#junit4"/>
 
 <mapID target="html.hardware.openlcb.Details" url="html/hardware/openlcb/Details.shtml"/>
 

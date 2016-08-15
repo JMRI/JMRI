@@ -89,7 +89,6 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 sort == SORTBY_OWNER ||
                 sort == SORTBY_VALUE ||
                 sort == SORTBY_RFID ||
-                sort == SORTBY_VALUE ||
                 sort == SORTBY_LAST) {
             XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
             tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), sort == SORTBY_MOVES);
@@ -113,7 +112,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
      *
      * @return -1 if not found, table row number if found
      */
-    public int findEngineByRoadNumber(String roadNumber) {
+    public synchronized int findEngineByRoadNumber(String roadNumber) {
         if (sysList != null) {
             if (!roadNumber.equals(_roadNumber)) {
                 return getIndex(0, roadNumber);
@@ -158,7 +157,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         return -1;
     }
 
-    synchronized void updateList() {
+    private synchronized void updateList() {
         // first, remove listeners from the individual objects
         removePropertyChangeEngines();
         sysList = getSelectedEngineList();
@@ -250,7 +249,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     }
 
     @Override
-    public int getRowCount() {
+    public synchronized int getRowCount() {
         return sysList.size();
     }
 
@@ -496,7 +495,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         }
     }
 
-    private void removePropertyChangeEngines() {
+    private synchronized void removePropertyChangeEngines() {
         if (sysList != null) {
             for (RollingStock rs : sysList) {
                 rs.removePropertyChangeListener(this);
@@ -505,7 +504,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent e) {
+    public synchronized void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());

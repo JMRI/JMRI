@@ -103,7 +103,7 @@ public class BackgroundItemPanel extends IconItemPanel {
             if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
             JPanel panel = new JPanel();
             panel.setLayout(new FlowLayout());
-            JButton doneButton = new JButton(Bundle.getMessage("doneButton"));
+            JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
             doneButton.addActionListener(new ActionListener() {
                 ColorDialog dialog;
 
@@ -119,7 +119,7 @@ public class BackgroundItemPanel extends IconItemPanel {
             }.init(this));
             panel.add(doneButton);
 
-            JButton cancelButton = new JButton(Bundle.getMessage("cancelButton"));
+            JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
             cancelButton.addActionListener(new ActionListener() {
                 ColorDialog dialog;
 

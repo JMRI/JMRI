@@ -44,6 +44,7 @@ public class PackageTest extends TestCase {
         suite.addTest(OlcbThrottleManagerTest.suite());
         suite.addTest(BundleTest.suite());
         suite.addTest(jmri.jmrix.openlcb.swing.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.openlcb.configurexml.PackageTest.class));
 
         return suite;
     }
