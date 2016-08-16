@@ -36,16 +36,16 @@ public class JsonSensorHttpServiceTest extends TestCase {
         Sensor sensor1 = manager.provideSensor("IS1"); // no value
         JsonNode result;
         try {
-            result = service.doGet(JsonSensorServiceFactory.SENSOR, "IS1", Locale.ENGLISH);
+            result = service.doGet(JsonSensor.SENSOR, "IS1", Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals("IS1", result.path(JSON.DATA).path(JSON.NAME).asText());
             Assert.assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt(-1)); // -1 is not a possible value
             sensor1.setKnownState(Sensor.ACTIVE);
-            result = service.doGet(JsonSensorServiceFactory.SENSOR, "IS1", Locale.ENGLISH);
+            result = service.doGet(JsonSensor.SENSOR, "IS1", Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(JSON.ACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt(-1));
             sensor1.setKnownState(Sensor.INACTIVE);
-            result = service.doGet(JsonSensorServiceFactory.SENSOR, "IS1", Locale.ENGLISH);
+            result = service.doGet(JsonSensor.SENSOR, "IS1", Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(Sensor.INACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt(-1));
         } catch (JsonException ex) {
@@ -63,24 +63,24 @@ public class JsonSensorHttpServiceTest extends TestCase {
         try {
             // set ACTIVE
             message = mapper.createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.ACTIVE);
-            result = service.doPost(JsonSensorServiceFactory.SENSOR, "IS1", message, Locale.ENGLISH);
+            result = service.doPost(JsonSensor.SENSOR, "IS1", message, Locale.ENGLISH);
             Assert.assertEquals(Sensor.ACTIVE, sensor1.getKnownState());
             Assert.assertNotNull(result);
             Assert.assertEquals(JSON.ACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt(-1)); // -1 is not a possible value
             // set INACTIVE
             message = mapper.createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.INACTIVE);
-            result = service.doPost(JsonSensorServiceFactory.SENSOR, "IS1", message, Locale.ENGLISH);
+            result = service.doPost(JsonSensor.SENSOR, "IS1", message, Locale.ENGLISH);
             Assert.assertEquals(Sensor.INACTIVE, sensor1.getKnownState());
             Assert.assertNotNull(result);
             Assert.assertEquals(JSON.INACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt(-1));
             // set UNKNOWN
             message = mapper.createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.UNKNOWN);
-            result = service.doPost(JsonSensorServiceFactory.SENSOR, "IS1", message, Locale.ENGLISH);
+            result = service.doPost(JsonSensor.SENSOR, "IS1", message, Locale.ENGLISH);
             Assert.assertEquals(Sensor.INACTIVE, sensor1.getKnownState());
             Assert.assertEquals(JSON.INACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt(-1));
             // set INCONSISTENT
             message = mapper.createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.INCONSISTENT);
-            result = service.doPost(JsonSensorServiceFactory.SENSOR, "IS1", message, Locale.ENGLISH);
+            result = service.doPost(JsonSensor.SENSOR, "IS1", message, Locale.ENGLISH);
             Assert.assertEquals(Sensor.INACTIVE, sensor1.getKnownState());
             Assert.assertEquals(JSON.INACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt(-1));
         } catch (JsonException ex) {
@@ -97,7 +97,7 @@ public class JsonSensorHttpServiceTest extends TestCase {
             // add a sensor
             Assert.assertNull(manager.getSensor("IS1"));
             message = mapper.createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.UNKNOWN);
-            service.doPut(JsonSensorServiceFactory.SENSOR, "IS1", message, Locale.ENGLISH);
+            service.doPut(JsonSensor.SENSOR, "IS1", message, Locale.ENGLISH);
             Assert.assertNotNull(manager.getSensor("IS1"));
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
@@ -110,12 +110,12 @@ public class JsonSensorHttpServiceTest extends TestCase {
             JsonSensorHttpService service = new JsonSensorHttpService(mapper);
             SensorManager manager = InstanceManager.getDefault(SensorManager.class);
             JsonNode result;
-            result = service.doGetList(JsonSensorServiceFactory.SENSOR, Locale.ENGLISH);
+            result = service.doGetList(JsonSensor.SENSOR, Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
             manager.provideSensor("IS1");
             manager.provideSensor("IS2");
-            result = service.doGetList(JsonSensorServiceFactory.SENSOR, Locale.ENGLISH);
+            result = service.doGetList(JsonSensor.SENSOR, Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());
         } catch (JsonException ex) {
@@ -125,7 +125,7 @@ public class JsonSensorHttpServiceTest extends TestCase {
     
     public void testDelete() {
         try {
-            (new JsonSensorHttpService(new ObjectMapper())).doDelete(JsonSensorServiceFactory.SENSOR, null, Locale.ENGLISH);
+            (new JsonSensorHttpService(new ObjectMapper())).doDelete(JsonSensor.SENSOR, null, Locale.ENGLISH);
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
             return;
