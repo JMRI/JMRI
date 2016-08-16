@@ -9,6 +9,8 @@ jmri.server.json.reporter.JsonReporterServiceFactory
 jmri.server.json.roster.JsonRosterServiceFactory
 jmri.server.json.route.JsonRouteServiceFactory
 jmri.server.json.sensor.JsonSensorServiceFactory
+jmri.server.json.signalHead.JsonSignalHeadServiceFactory
+jmri.server.json.signalMast.JsonSignalMastServiceFactory
 jmri.server.json.throttle.JsonThrottleServiceFactory
 jmri.server.json.time.JsonTimeServiceFactory
 jmri.server.json.turnout.JsonTurnoutServiceFactory
