@@ -38,6 +38,11 @@ public class PackageTest extends TestCase {
         //suite.addTest(SerialAddressTest.suite());
         suite.addTest(jmri.jmrix.powerline.cm11.CM11Test.suite());
         suite.addTest(jmri.jmrix.powerline.insteon2412s.Insteon2412sTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.powerline.simulator.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.powerline.cp290.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.powerline.serialdriver.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.powerline.configurexml.PackageTest.class));
+
         return suite;
     }
 

@@ -715,36 +715,36 @@ public class Maintenance {
             String line1 = MessageFormat.format(rbm.getString("ReferenceTitle"),
                     new Object[]{" ", rbm.getString("Route"), uName, sName});
             for (int i = 0; i < jmri.Route.MAX_CONTROL_SENSORS; i++) {
-                String line = MessageFormat.format(rbm.getString("ControlReference"), rbm.getString("Sensor"));
+                String line = MessageFormat.format(rbm.getString("ControlReference"), Bundle.getMessage("BeanNameSensor"));
                 if (testName(r.getRouteSensorName(i), found, names, line1, null, line, tempText)) {
                     found = true;
                     referenceCount++;
                 }
             }
-            String line = MessageFormat.format("TurnoutsAlignedSensor", rbm.getString("Sensor"));
+            String line = MessageFormat.format("TurnoutsAlignedSensor", Bundle.getMessage("BeanNameSensor"));
             if (testName(r.getTurnoutsAlignedSensor(), found, names, line1, null, line, tempText)) {
                 found = true;
                 referenceCount++;
             }
-            line = MessageFormat.format(rbm.getString("ControlReference"), rbm.getString("Turnout"));
+            line = MessageFormat.format(rbm.getString("ControlReference"), Bundle.getMessage("BeanNameTurnout"));
             if (testName(r.getControlTurnout(), found, names, line1, null, line, tempText)) {
                 found = true;
                 referenceCount++;
             }
-            line = MessageFormat.format("LockControlTurnout", rbm.getString("Turnout"));
+            line = MessageFormat.format("LockControlTurnout", Bundle.getMessage("BeanNameTurnout"));
             if (testName(r.getLockControlTurnout(), found, names, line1, null, line, tempText)) {
                 found = true;
                 referenceCount++;
             }
             for (int i = 0; i < r.getNumOutputTurnouts(); i++) {
-                line = MessageFormat.format(rbm.getString("OutputReference"), rbm.getString("Turnout"));
+                line = MessageFormat.format(rbm.getString("OutputReference"), Bundle.getMessage("BeanNameTurnout"));
                 if (testName(r.getOutputTurnoutByIndex(i), found, names, line1, null, line, tempText)) {
                     found = true;
                     referenceCount++;
                 }
             }
             for (int i = 0; i < r.getNumOutputSensors(); i++) {
-                line = MessageFormat.format(rbm.getString("OutputReference"), rbm.getString("Sensor"));
+                line = MessageFormat.format(rbm.getString("OutputReference"), Bundle.getMessage("BeanNameSensor"));
                 if (testName(r.getOutputSensorByIndex(i), found, names, line1, null, line, tempText)) {
                     found = true;
                     referenceCount++;
@@ -823,7 +823,7 @@ public class Maintenance {
                     sName = block.getSystemName();
                     uName = block.getUserName();
                     tempText.append(MessageFormat.format(rbm.getString("ReferenceTitle"),
-                            new Object[]{"\t\t", rbm.getString("Block"), uName, sName}));
+                            new Object[]{"\t\t", Bundle.getMessage("BeanNameBlock"), uName, sName}));
                     if (sName.equals(sysName) || uName.equals(userName)) {
                         tempText.append(MessageFormat.format(rbm.getString("BlockReference"), "\t\t"));
                         found = true;
@@ -896,7 +896,7 @@ public class Maintenance {
             }
             String uName = section.getUserName();
             String line1 = MessageFormat.format(rbm.getString("ReferenceTitle"),
-                    new Object[]{" ", rbm.getString("Section"), uName, sName});
+                    new Object[]{" ", Bundle.getMessage("BeanNameSection"), uName, sName});
             if (sName.equals(sysName) || uName.equals(userName)) {
                 tempText.append(MessageFormat.format(rbm.getString("SectionReference"), "\t"));
 
@@ -930,7 +930,7 @@ public class Maintenance {
                 sName = block.getSystemName();
                 uName = block.getUserName();
                 String line2 = MessageFormat.format(rbm.getString("ReferenceTitle"),
-                        new Object[]{"\t", rbm.getString("Block"), uName, sName});
+                        new Object[]{"\t", Bundle.getMessage("BeanNameBlock"), uName, sName});
                 if (sName.equals(sysName) || (uName != null && uName.equals(userName))) {
                     tempText.append(line2);
                     tempText.append(MessageFormat.format(rbm.getString("BlockReference"), "\t"));
@@ -985,7 +985,7 @@ public class Maintenance {
             jmri.Block b = blockManager.getBySystemName(sName);
             String uName = b.getUserName();
             String line1 = MessageFormat.format(rbm.getString("ReferenceTitle"),
-                    new Object[]{" ", rbm.getString("Block"), uName, sName});
+                    new Object[]{" ", Bundle.getMessage("BeanNameBlock"), uName, sName});
             if (sName.equals(sysName) || (uName != null && uName.equals(userName))) {
                 tempText.append(line1);
                 tempText.append(MessageFormat.format(rbm.getString("BlockReference"), "\t"));
@@ -1182,7 +1182,7 @@ public class Maintenance {
             }
             String uName = c.getUserName();
             String line1 = MessageFormat.format(rbm.getString("ReferenceTitle"),
-                    new Object[]{" ", rbm.getString("Conditional"), uName, sName});
+                    new Object[]{" ", Bundle.getMessage("BeanNameConditional"), uName, sName});
             if (sName.equals(sysName) || uName.equals(userName)) {
                 tempText.append(line1);
                 tempText.append(MessageFormat.format(rbm.getString("ConditionalReference"), "\t"));
@@ -1238,7 +1238,7 @@ public class Maintenance {
                 if (o.getClass().getName().equals("jmri.jmrit.display.SensorIcon")) {
                     name = ((jmri.jmrit.display.SensorIcon) o).getSensor().getSystemName();
                     String line = MessageFormat.format(rbm.getString("PanelReference"),
-                            new Object[]{"\t", rbm.getString("Sensor")});
+                            new Object[]{"\t", Bundle.getMessage("BeanNameSensor")});
                     if (testName(name, found, names, line1, null, line, tempText)) {
                         found = true;
                         referenceCount++;
@@ -1246,7 +1246,7 @@ public class Maintenance {
                 } else if (o.getClass().getName().equals("jmri.jmrit.display.TurnoutIcon")) {
                     name = ((jmri.jmrit.display.TurnoutIcon) o).getTurnout().getSystemName();
                     String line = MessageFormat.format(rbm.getString("PanelReference"),
-                            new Object[]{"\t", rbm.getString("Turnout")});
+                            new Object[]{"\t", Bundle.getMessage("BeanNameTurnout")});
                     if (testName(name, found, names, line1, null, line, tempText)) {
                         found = true;
                         referenceCount++;
@@ -1254,7 +1254,7 @@ public class Maintenance {
                 } else if (o.getClass().getName().equals("jmri.jmrit.display.SignalHeadIcon")) {
                     name = ((jmri.jmrit.display.SignalHeadIcon) o).getSignalHead().getSystemName();
                     String line = MessageFormat.format(rbm.getString("PanelReference"),
-                            new Object[]{"\t", rbm.getString("SignalHead")});
+                            new Object[]{"\t", Bundle.getMessage("BeanNameSignalHead")});
                     if (testName(name, found, names, line1, null, line, tempText)) {
                         found = true;
                         referenceCount++;

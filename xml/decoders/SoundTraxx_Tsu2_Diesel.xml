@@ -55,12 +55,13 @@
       <authorinitials>MM</authorinitials>
       <revremark>Fixed sound selection for TSU-2200 and TSU-PNP models</revremark>
     </revision>
+    <revision>
+      <revnumber>2.2</revnumber>
+      <date>2016-08-09</date>
+      <authorinitials>MM</authorinitials>
+      <revremark>Added forth compressor type to Baldwin, user reported to exist thou not in Soundtraxx doc's</revremark>
+    </revision>
   </revhistory>
-  <version author="Michael Mosher" version="1" lastUpdated="20160529"/>
-  <!-- Version 1:   Based on Tsunami2 Diesel Technical Reference version 1.0    -->
-  <!-- Version 1.1: Add new reset values for Tsunami2                           -->
-  <!-- Version 2: Added TSU-2200 & TSU-PNP models                               -->
-  <!--                                                                          -->
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Tsunami2 Diesel" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Econami Diesel decoders">
@@ -1155,22 +1156,8 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselComp.xml"/>
         <label>Air Compressor Select</label>
       </variable>
-      <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="885003,885007,885015" default="0" tooltip="Select one of air compressor sound effects">
+      <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="885003,885007,885015,885004,885008,885016" default="0" tooltip="Select one of air compressor sound effects">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselComp.xml"/>
-        <label>Air Compressor Select</label>
-      </variable>
-      <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="885004,885008,885016" default="0" tooltip="Select one of air compressor sound effects">
-		<enumVal>
-		  <enumChoice>
-			<choice>Engine Driven</choice>
-		  </enumChoice>
-		  <enumChoice>
-			<choice>GE Whooping (motor driven)</choice>
-		  </enumChoice>
-		  <enumChoice>
-			<choice>GE GEVO Series (motor driven)</choice>
-		  </enumChoice>
-		</enumVal>
         <label>Air Compressor Select</label>
       </variable>
       <!-- End Sound Selection -->

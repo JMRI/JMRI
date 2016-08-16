@@ -45,8 +45,11 @@ public class SampleMinimalProgram {
     }
 
     /**
-     * Static method to return a standard program id. Used for logging startup,
-     * etc.
+     * Static method to return a first logging statement. Used for logging
+     * startup, etc.
+     *
+     * @param program the name of the program
+     * @return the logging statement including JMRI and Java versions
      */
     static public String startupInfo(String program) {
         return (program + " version " + jmri.Version.name()
@@ -54,8 +57,8 @@ public class SampleMinimalProgram {
     }
 
     /**
-     * Static method to get Log4J working before the rest of JMRI starts up.
-     * In a non-minimal program, invoke jmri.util.Log4JUtil.initLogging
+     * Static method to get Log4J working before the rest of JMRI starts up. In
+     * a non-minimal program, invoke jmri.util.Log4JUtil.initLogging
      */
     static protected void initLog4J() {
         // initialize log4j - from logging control file (lcf) only
@@ -77,6 +80,8 @@ public class SampleMinimalProgram {
 
     /**
      * Constructor starts the JMRI application running, and then returns.
+     *
+     * @param args command line arguments set at application launch
      */
     public SampleMinimalProgram(String[] args) {
 

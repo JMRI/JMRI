@@ -27,6 +27,8 @@ public class LIUSBEthernetTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.lenz.liusbethernet.LIUSBEthernetTest");  // no tests in this class itself
         suite.addTest(new TestSuite(LIUSBEthernetAdapterTest.class));
         suite.addTest(new TestSuite(LIUSBEthernetXNetPacketizerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.lenz.liusbethernet.configurexml.PackageTest.class));
         return suite;
     }
 

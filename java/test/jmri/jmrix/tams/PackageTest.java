@@ -28,6 +28,10 @@ public class PackageTest extends TestCase {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.tams.PackageTest");
         suite.addTest(TamsTurnoutManagerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.tams.simulator.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.tams.serialdriver.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.tams.configurexml.PackageTest.class));
+
         return suite;
     }
 

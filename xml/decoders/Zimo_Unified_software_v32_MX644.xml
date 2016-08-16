@@ -15,6 +15,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Mark Waters mark16jmri@mybtinternet.com" version="1" lastUpdated="20110628"/>
   <version author="Mark Waters mark16jmri@mybtinternet.com" version="1.2" lastUpdated="20160311"/>
+  <version author="Mark Waters mark16jmri@mybtinternet.com" version="1.3" lastUpdated="20160813"/>
   <!-- This decoder configuration file is based on the Zimo_MX640_v9.xml                     -->
   <!-- V 1 file, dated 20090222. With the Sound tabs from Jeff Schmaltz' MX69/MX690 file.    -->
   <!--                                                                                       -->
@@ -29,10 +30,11 @@
   <!-- V 1 new file, MX644, which is MTC-21 pin socket version, Zimo document as MTC21 version of MX645, Nigel Cliffe. 27 May 2014  -->
   <!-- v1.1,  Changed to use generic CV739-CV744.xml file. Added C and D models.    Mark Waters, 4 Feb 2015 -->
   <!-- v1.2,  Added Sound Samples Pane.   Mark Waters, 11 Mar 2016 -->
+  <!-- v1.3,  Added outputs FO7 and FO8.   Mark Waters, 13 Aug 2016 -->
 
   <decoder>
     <family name="Zimo Unified software (version 32+)" mfg="Zimo">
-      <model model="MX644 version 32+" show="no" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="222">
+      <model model="MX644 version 32+" show="no" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="222">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -41,9 +43,11 @@
         <output name="6" label="FO 4 (+5v)"/>
         <output name="7" label="FO 5"/>
         <output name="8" label="FO 6"/>
+        <output name="9" label="FO 7 (+5v)"/>
+        <output name="10" label="FO 8 (+5v)"/>
         <size length="30" width="15" height="4" units="mm"/>
       </model>
-      <model model="MX644C version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="222">
+      <model model="MX644C version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="222">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -52,9 +56,11 @@
         <output name="6" label="FO 4 (+5v)"/>
         <output name="7" label="FO 5"/>
         <output name="8" label="FO 6"/>
+        <output name="9" label="FO 7 (+5v)"/>
+        <output name="10" label="FO 8 (+5v)"/>
         <size length="30" width="15" height="4" units="mm"/>
       </model>
-      <model model="MX644D version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="222">
+      <model model="MX644D version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="222">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -63,6 +69,8 @@
         <output name="6" label="FO 4"/>
         <output name="7" label="FO 5"/>
         <output name="8" label="FO 6"/>
+        <output name="9" label="FO 7 (+5v)"/>
+        <output name="10" label="FO 8 (+5v)"/>
         <size length="30" width="15" height="4" units="mm"/>
       </model>
     </family>
@@ -115,7 +123,7 @@
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneShuntUncouple.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAltFunctionMap8.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAltFunctionMap8+.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSwissMapping.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneFunctionOutput.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSmoke.xml"/>
