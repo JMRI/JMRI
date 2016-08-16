@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.LocationsByCarTypeFrame;
+import jmri.jmrit.operations.locations.tools.LocationsByCarTypeFrame;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.Control;
