@@ -436,8 +436,8 @@ public class DefaultConditional extends AbstractNamedBean
             leftArg = dp.result;
             i += dp.indexCount;
             argsUsed.or(dp.argsUsed);
-        } else {
-            // cannot be '('.  must be either leftArg or notleftArg
+        } else // cannot be '('.  must be either leftArg or notleftArg
+        {
             if (s.charAt(i) == 'R') { //NOI18N
                 try {
                     k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
@@ -505,8 +505,8 @@ public class DefaultConditional extends AbstractNamedBean
                     rightArg = dp.result;
                     i += dp.indexCount;
                     argsUsed.or(dp.argsUsed);
-                } else {
-                    // cannot be '('.  must be either rightArg or notRightArg
+                } else // cannot be '('.  must be either rightArg or notRightArg
+                {
                     if (s.charAt(i) == 'R') { //NOI18N
                         try {
                             k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
@@ -928,12 +928,19 @@ public class DefaultConditional extends AbstractNamedBean
                         }
                         break;
                     case Conditional.ACTION_PLAY_SOUND:
-                        if (!(getActionString(action).equals(""))) {
+                        String path = getActionString(action);
+                        if (!path.equals("")) {
                             Sound sound = action.getSound();
                             if (sound == null) {
-                                sound = new jmri.jmrit.Sound(jmri.util.FileUtil.getExternalFilename(getActionString(action)));
+                                try {
+                                    sound = new Sound(path);
+                                } catch (NullPointerException ex) {
+                                    errorList.add("invalid path to sound: " + path);
+                                }
                             }
-                            sound.play();
+                            if (sound != null) {
+                                sound.play();
+                            }
                             actionCount++;
                         }
                         break;
@@ -1003,7 +1010,8 @@ public class DefaultConditional extends AbstractNamedBean
                                 case Audio.CMD_RESET_POSITION:
                                     audioListener.resetCurrentPosition();
                                     break;
-                                default: break; // nothing needed for others
+                                default:
+                                    break; // nothing needed for others
                             }
                         }
                         break;
@@ -1239,7 +1247,7 @@ public class DefaultConditional extends AbstractNamedBean
                 java.awt.Toolkit.getDefaultToolkit().beep();
                 if (!_skipErrorDialog) {
                     new ErrorDialog(errorList, this);
-                }                
+                }
             }
         }
         if (log.isDebugEnabled()) {
@@ -1399,14 +1407,14 @@ public class DefaultConditional extends AbstractNamedBean
             } catch (NumberFormatException ex) {
                 time = -1;
             }
-            if (time<=0) {
+            if (time <= 0) {
                 log.error("invalid Millisecond value from memory, \""
                         + getUserName() + "\" (" + mem.getSystemName() + "), value = " + (String) mem.getValue()
                         + ", for Action \"" + action.getTypeString()
                         + "\", in Conditional \"" + getUserName() + "\" (" + getSystemName() + ")");
             }
         }
-        return (int)(time*1000);
+        return (int) (time * 1000);
     }
 
     /**
@@ -1513,7 +1521,7 @@ public class DefaultConditional extends AbstractNamedBean
                 log.error(getDisplayName() + " Invalid delayed sensor name - " + action.getDeviceName());
             } else {
                 // set the sensor
-                
+
                 Sensor s = (Sensor) action.getNamedBean().getBean();
                 try {
                     int act = action.getActionData();
