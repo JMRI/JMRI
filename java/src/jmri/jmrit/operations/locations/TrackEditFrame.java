@@ -335,6 +335,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         //		addComboBoxAction(comboBoxTypes);
         addCheckBoxAction(autoDropCheckBox);
         addCheckBoxAction(autoPickupCheckBox);
+        
+        if (Setup.isRfidEnabled()) {
+            // setup the Reader dropdown.
+            readerSelector.addItem(""); // add an empty entry.
+            for (jmri.NamedBean r : jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getNamedBeanList()) {
+                readerSelector.addItem(((Reporter) r).getDisplayName());
+            }
+        }
 
         // load fields and enable buttons
         if (_track != null) {
@@ -345,12 +353,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
             enableButtons(true);
             _trackName = _track.getName();
             if (Setup.isRfidEnabled()) {
-                // setup the Reader dropdown.
-                readerSelector.addItem(""); // add an empty entry.
-                for (jmri.NamedBean r : jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getNamedBeanList()) {
-                    readerSelector.addItem(((Reporter) r).getDisplayName());
-                }
-
                 try {
                     readerSelector.setSelectedItem(_track.getReporter().getDisplayName());
                 } catch (java.lang.NullPointerException e) {
