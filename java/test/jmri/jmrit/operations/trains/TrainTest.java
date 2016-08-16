@@ -342,11 +342,6 @@ public class TrainTest extends OperationsTestCase {
 
     public void testNoRouteBuild(){
         TrainManager tmanager = TrainManager.instance();
-
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
         Train train = tmanager.newTrain("Test");
 
         // build train without a route, should fail
@@ -359,12 +354,6 @@ public class TrainTest extends OperationsTestCase {
     public void testRouteLocationBuild() {
         TrainManager tmanager = TrainManager.instance();
         RouteManager rmanager = RouteManager.instance();
-//        LocationManager lmanager = LocationManager.instance();
-
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
 
         Train train = tmanager.newTrain("Test");
 
@@ -384,11 +373,6 @@ public class TrainTest extends OperationsTestCase {
         TrainManager tmanager = TrainManager.instance();
         RouteManager rmanager = RouteManager.instance();
         LocationManager lmanager = LocationManager.instance();
-
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
 
         Train train = tmanager.newTrain("Test");
 
@@ -471,11 +455,6 @@ public class TrainTest extends OperationsTestCase {
         RouteManager rmanager = RouteManager.instance();
         LocationManager lmanager = LocationManager.instance();
 
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
-
         Train train = tmanager.newTrain("Test");
 
         // exercise manifest build
@@ -512,12 +491,7 @@ public class TrainTest extends OperationsTestCase {
         TrainManager tmanager = TrainManager.instance();
         RouteManager rmanager = RouteManager.instance();
         LocationManager lmanager = LocationManager.instance();
-//        EngineManager emanager = EngineManager.instance();
 
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
         // This test uses the maximum length of a train in route
         Setup.setMaxTrainLength(1000);
 
@@ -556,10 +530,6 @@ public class TrainTest extends OperationsTestCase {
         LocationManager lmanager = LocationManager.instance();
         EngineManager emanager = EngineManager.instance();
 
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
         // This test uses the maximum length of a train in route
         Setup.setMaxTrainLength(1000);
 
@@ -611,10 +581,6 @@ public class TrainTest extends OperationsTestCase {
         LocationManager lmanager = LocationManager.instance();
         EngineManager emanager = EngineManager.instance();
 
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
         // This test uses the maximum length of a train in route
         Setup.setMaxTrainLength(1000);
 
@@ -683,10 +649,6 @@ public class TrainTest extends OperationsTestCase {
         LocationManager lmanager = LocationManager.instance();
         EngineManager emanager = EngineManager.instance();
 
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
         // This test uses the maximum length of a train in route
         Setup.setMaxTrainLength(1000);
         Setup.setMaxNumberEngines(6);
@@ -756,10 +718,6 @@ public class TrainTest extends OperationsTestCase {
         LocationManager lmanager = LocationManager.instance();
         EngineManager emanager = EngineManager.instance();
 
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
         // This test uses the maximum length of a train in route
         Setup.setMaxTrainLength(1000);
 
@@ -964,9 +922,6 @@ public class TrainTest extends OperationsTestCase {
         rl5.setTrainIconX(225); // set the train icon coordinates
         rl5.setTrainIconY(225);
         rl5.setPickUpAllowed(false); // don't include cars at destination
-
-        // turn off build fail messages
-        tmanager.setBuildMessagesEnabled(false);
 
         // define the train
         Train t1 = tmanager.newTrain("FF");
@@ -1793,11 +1748,6 @@ public class TrainTest extends OperationsTestCase {
                 .getTrainTerminatesRouteLocation().getName());
         Assert.assertEquals("Train 2 Next Location Name", "", train2.getNextLocationName());
         Assert.assertEquals("Train 2 Route Name", "Southbound Main Route", train2.getRoute().getName());
-
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
 
         // Try building without engines
         train1.build();
@@ -3077,8 +3027,6 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Bob Test Train train2 Terminates Name", "Westend", train2
                 .getTrainTerminatesName());
 
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
         // Build trains
         train1.build();
         train2.build();
@@ -3264,11 +3212,6 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Car c7 load should be E", "E", c7.getLoadName());
         Assert.assertEquals("Car c8 load should be E", "E", c8.getLoadName());
         Assert.assertEquals("Car c9 load should be E", "E", c9.getLoadName());
-
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
 
         // Build train
         train1.build();
@@ -3879,11 +3822,6 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Place c12", Track.OKAY, c12.setLocation(loc1, loc1trk1));
         Assert.assertEquals("Place c13", Track.OKAY, c13.setLocation(loc1, loc1trk2));
 
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
-
         train1.build();
 
         // Schedule sch1 should cause c2 to be delivered to Chelmsford Freight 2
@@ -4313,11 +4251,6 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Place c11", Track.OKAY, c11.setLocation(loc1, loc1trk1));
         Assert.assertEquals("Place c12", Track.OKAY, c12.setLocation(loc1, loc1trk1));
         Assert.assertEquals("Place c13", Track.OKAY, c13.setLocation(loc1, loc1trk1));
-
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
 
         train1.build();
         train2.build();
@@ -4867,7 +4800,6 @@ public class TrainTest extends OperationsTestCase {
         loc3trk2.deleteTypeName("Caboose");
 
         // Create route with 3 location
-        Setup.setCarMoves(7); // set default to 7 moves per location
         Route rte1 = rmanager.newRoute("Route 2 Boston");
         RouteLocation rl1 = rte1.addLocation(loc1);
         RouteLocation rl2 = rte1.addLocation(loc2);
@@ -4880,9 +4812,6 @@ public class TrainTest extends OperationsTestCase {
         // Create train
         Train train1 = tmanager.newTrain("HTB");
         train1.setRoute(rte1);
-
-        // turn off build fail messages
-        tmanager.setBuildMessagesEnabled(false);
 
         // Place cars
         Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(loc1, loc1trk1));
@@ -5206,8 +5135,7 @@ public class TrainTest extends OperationsTestCase {
 
         // Reduce Arlington to only two moves, this should cause train build to fail
         rl2.setMaxCarMoves(2);
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
+
         train1.build();
         Assert.assertEquals("Train 1 After Build 13", false, train1.isBuilt());
 
@@ -5590,9 +5518,6 @@ public class TrainTest extends OperationsTestCase {
         // train skips Boston
         train1.addTrainSkipsLocation(rl3.getId());
 
-        // turn off build fail messages
-        tmanager.setBuildMessagesEnabled(false);
-
         // Place cars
         Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(loc1, loc1trk1));
         Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(loc1, loc1trk2));
@@ -5624,11 +5549,6 @@ public class TrainTest extends OperationsTestCase {
         train1.setRequirements(Train.CABOOSE);
         train1.setNumberEngines("2");
         train1.setOwnerOption(Train.ALL_OWNERS);
-
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
 
         train1.build();
         Assert.assertEquals("Train 1 After Build 1", true, train1.isBuilt());
@@ -5961,7 +5881,6 @@ public class TrainTest extends OperationsTestCase {
         loc5trk2.setLength(1000);
 
         // Create route with 5 location
-        Setup.setCarMoves(7); // set default to 7 moves per location
         Route rte1 = rmanager.newRoute("Route 3 Westford");
         rte1.addLocation(loc1);
         rte1.addLocation(loc2);
@@ -5972,9 +5891,6 @@ public class TrainTest extends OperationsTestCase {
         // Create train
         Train train1 = tmanager.newTrain("Harvard to Westford Aggressive");
         train1.setRoute(rte1);
-
-        // turn off build fail messages
-        tmanager.setBuildMessagesEnabled(false);
 
         // Place cars
         Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(loc1, loc1trk1));
@@ -6004,11 +5920,6 @@ public class TrainTest extends OperationsTestCase {
         train1.setRequirements(Train.CABOOSE);
         train1.setNumberEngines("3");
         train1.setOwnerOption(Train.ALL_OWNERS);
-
-        // disable build messages
-        tmanager.setBuildMessagesEnabled(false);
-        // disable build reports
-        tmanager.setBuildReportEnabled(false);
 
         train1.build();
         Assert.assertEquals("Train 1 After Build 1", true, train1.isBuilt());
@@ -6216,8 +6127,6 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("e7 location", "Harvard Yard 1", e7.getTrackName());
         Assert.assertEquals("e8 location", "Harvard Yard 1", e8.getTrackName());
 
-        Setup.setBuildAggressive(false);
-
     }
 
     // from here down is testing infrastructure
@@ -6233,6 +6142,13 @@ public class TrainTest extends OperationsTestCase {
         Setup.setLocalInterchangeMovesEnabled(false);
         Setup.setLocalSpurMovesEnabled(false);
         Setup.setLocalYardMovesEnabled(false);
+        Setup.setCarMoves(7); // set default to 7 moves per location
+        
+        // turn off build fail messages
+        TrainManager.instance().setBuildMessagesEnabled(false);
+        // disable build reports
+        TrainManager.instance().setBuildReportEnabled(false);
+        
     }
 
     public TrainTest(String s) {

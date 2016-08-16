@@ -28,7 +28,7 @@ import jmri.managers.DefaultMemoryManager;
 import jmri.managers.DefaultSignalMastLogicManager;
 import jmri.managers.InternalReporterManager;
 import jmri.managers.InternalSensorManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +41,8 @@ import org.slf4j.LoggerFactory;
  * to use JFCUnit for that.
  * <p>
  * If you're using the InstanceManager, setUp() implementation should start
- * with:  <pre><code>
+ * with:
+ * <pre><code>
  * super.setUp();
  * JUnitUtil.resetInstanceManager();
  * JUnitUtil.initInternalTurnoutManager();
@@ -50,7 +51,8 @@ import org.slf4j.LoggerFactory;
  * JUnitUtil.initDebugThrottleManager();
  * </code></pre>
  * <p>
- * Your tearDown() should end with:  <pre><code>
+ * Your tearDown() should end with:
+ * <pre><code>
  * JUnitUtil.resetInstanceManager();
  * super.tearDown();
  * </code></pre>
@@ -66,16 +68,29 @@ public class JUnitUtil {
     static final int DEFAULT_RELEASETHREAD_DELAY = 50;
 
     static int count = 0;
+
     /**
-     * Release the current thread, allowing other threads to process.
-     * 
-     * This cannot be used on the Swing or AWT event threads.
-     * For those, please use JFCUnit's flushAWT() and waitAtLeast(..)
+     * Release the current thread, allowing other threads to process. Waits for
+     * {@value #DEFAULT_RELEASETHREAD_DELAY} milliseconds.
+     *
+     * This cannot be used on the Swing or AWT event threads. For those, please
+     * use JFCUnit's flushAWT() and waitAtLeast(..)
+     *
+     * @param self currently ignored
      */
     public static void releaseThread(Object self) {
         releaseThread(self, DEFAULT_RELEASETHREAD_DELAY);
     }
 
+    /**
+     * Release the current thread, allowing other threads to process.
+     *
+     * This cannot be used on the Swing or AWT event threads. For those, please
+     * use JFCUnit's flushAWT() and waitAtLeast(..)
+     *
+     * @param self  currently ignored
+     * @param delay milliseconds to wait
+     */
     public static void releaseThread(Object self, int delay) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use releaseThread on Swing thread", new Exception());
@@ -93,16 +108,19 @@ public class JUnitUtil {
 
     static final int WAITFOR_DELAY_STEP = 5;
     static final int WAITFOR_MAX_DELAY = 15000; // really long, but only matters when failing
-    
-    /** 
+
+    /**
      * Wait for a specific condition to be true, without having to wait longer
      * <p>
-     * To be used in tests, will do an assert if the total delay is longer than WAITFOR_MAX_DELAY
+     * To be used in tests, will do an assert if the total delay is longer than
+     * WAITFOR_MAX_DELAY
      * <p>
      * Typical use:
-     * waitFor(()->{return replyVariable != null;},"reply not received")
+     * <code>JUnitUtil.waitFor(()->{return replyVariable != null;},"reply not received")</code>
      *
-     * @param condition name of condition being waited for; will appear in Assert.fail if condition not true fast enough
+     * @param condition condition being waited for
+     * @param name      name of condition being waited for; will appear in
+     *                  Assert.fail if condition not true fast enough
      */
     static public void waitFor(ReleaseUntil condition, String name) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
@@ -112,7 +130,9 @@ public class JUnitUtil {
         int delay = 0;
         try {
             while (delay < WAITFOR_MAX_DELAY) {
-                if (condition.ready()) return;
+                if (condition.ready()) {
+                    return;
+                }
                 int priority = Thread.currentThread().getPriority();
                 try {
                     Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
@@ -124,36 +144,80 @@ public class JUnitUtil {
                     Thread.currentThread().setPriority(priority);
                 }
             }
-            Assert.fail("\""+name+"\" did not occur in time");
+            Assert.fail("\"" + name + "\" did not occur in time");
         } catch (Exception ex) {
-            Assert.fail("Exception while waiting for \""+name+"\" "+ex);
+            Assert.fail("Exception while waiting for \"" + name + "\" " + ex);
+        }
+    }
+
+    /**
+     * Wait for a specific condition to be true, without having to wait longer
+     * <p>
+     * To be used in assumptions, will return false if the total delay is longer
+     * than WAITFOR_MAX_DELAY
+     * <p>
+     * Typical use:
+     * <code>Assume.assumeTrue("reply not received", JUnitUtil.waitForTrue(()->{return replyVariable != null;}));</code>
+     *
+     * @param condition condition to wait for
+     * @return true if condition is met before WAITFOR_MAX_DELAY, false
+     *         otherwise
+     */
+    static public boolean waitFor(ReleaseUntil condition) {
+        if (javax.swing.SwingUtilities.isEventDispatchThread()) {
+            log.error("Cannot use waitFor on Swing thread", new Exception());
+            return false;
+        }
+        int delay = 0;
+        try {
+            while (delay < WAITFOR_MAX_DELAY) {
+                if (condition.ready()) {
+                    return true;
+                }
+                int priority = Thread.currentThread().getPriority();
+                try {
+                    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+                    Thread.sleep(WAITFOR_DELAY_STEP);
+                    delay += WAITFOR_DELAY_STEP;
+                } catch (InterruptedException e) {
+                    return false;
+                } finally {
+                    Thread.currentThread().setPriority(priority);
+                }
+            }
+            return false;
+        } catch (Exception ex) {
+            log.error("Exception in waitFor condition.", ex);
+            return false;
         }
     }
 
     static public interface ReleaseUntil {
+
         public boolean ready() throws Exception;
     }
 
-    /** 
-     * Set a NamedBean (Turnout, Sensor, SignalHead, ...)
-     * to a specific value in a thread-safe way.
-     * 
-     * You can't assume that all the consequences of that setting
-     * will have propagated through when this returns; those might
-     * take a long time.  But the set operation itself will be complete.
-     * @param NamedBean
-     * @param state
+    /**
+     * Set a NamedBean (Turnout, Sensor, SignalHead, ...) to a specific value in
+     * a thread-safe way.
+     *
+     * You can't assume that all the consequences of that setting will have
+     * propagated through when this returns; those might take a long time. But
+     * the set operation itself will be complete.
+     *
+     * @param bean  the bean
+     * @param state the desired state
      */
     static public void setBeanState(NamedBean bean, int state) {
         try {
             javax.swing.SwingUtilities.invokeAndWait(
-                () -> {
-                    try {
-                        bean.setState(state);
-                    } catch (JmriException e) {
-                        log.error("Threw exception while setting state: ", e);
+                    () -> {
+                        try {
+                            bean.setState(state);
+                        } catch (JmriException e) {
+                            log.error("Threw exception while setting state: ", e);
+                        }
                     }
-                }
             );
         } catch (InterruptedException e) {
             log.warn("Interrupted while setting state: ", e);
@@ -161,26 +225,30 @@ public class JUnitUtil {
             log.warn("Failed during invocation while setting state: ", e);
         }
     }
-    
+
     public static void resetInstanceManager() {
         // clear system connections
         jmri.jmrix.SystemConnectionMemo.reset();
 
         // create a new instance manager & use initializer to clear static list of state
         new InstanceManager() {
-            { managerLists.clear(); }
+            {
+                managerLists.clear();
+            }
         };
-        
+
         // add the NamedBeanHandleManager, which is always needed
         InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
     public static void resetTurnoutOperationManager() {
-        new jmri.TurnoutOperationManager(){
-            { resetTheInstance();}
+        new jmri.TurnoutOperationManager() {
+            {
+                resetTheInstance();
+            }
         };
     }
-    
+
     public static void initConfigureManager() {
         InstanceManager.setDefault(ConfigureManager.class, new JmriConfigurationManager());
     }
@@ -198,8 +266,8 @@ public class JUnitUtil {
 
     public static void initInternalLightManager() {
         // now done automatically by InstanceManager's autoinit
-         jmri.InstanceManager.lightManagerInstance();
-   }
+        jmri.InstanceManager.lightManagerInstance();
+    }
 
     public static void initInternalSensorManager() {
         // now done automatically by InstanceManager's autoinit
@@ -215,7 +283,7 @@ public class JUnitUtil {
         // now done automatically by InstanceManager's autoinit
         InstanceManager.getDefault(RouteManager.class);
     }
-    
+
     public static void initMemoryManager() {
         MemoryManager m = new DefaultMemoryManager();
         if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
@@ -300,7 +368,7 @@ public class JUnitUtil {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.CONDITIONALS);
         }
     }
-    
+
     public static void initShutDownManager() {
         if (InstanceManager.getOptionalDefault(ShutDownManager.class) == null) {
             InstanceManager.setDefault(ShutDownManager.class, new MockShutDownManager());

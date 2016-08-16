@@ -32,6 +32,10 @@ public class GridConnectTest extends TestCase {
         suite.addTest(GridConnectMessageTest.suite());
         suite.addTest(GridConnectReplyTest.suite());
         suite.addTest(jmri.jmrix.can.adapters.gridconnect.canrs.CanRSTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.can.adapters.gridconnect.lccbuffer.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.can.adapters.gridconnect.net.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.can.adapters.gridconnect.canusb.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.can.adapters.gridconnect.can2usbino.PackageTest.class));
         return suite;
     }
 

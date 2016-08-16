@@ -27,21 +27,21 @@ public class DispatcherTrainInfoFileTest extends TestCase {
         Assert.assertTrue("Train From Roster", ti.getTrainFromRoster());
         Assert.assertFalse("Train From Trains", ti.getTrainFromTrains());
         Assert.assertFalse("Train From User", ti.getTrainFromUser());
-        Assert.assertEquals("Priority", ti.getPriority(), "7");
-        Assert.assertTrue("Run Auto", ti.getRunAuto());
+        Assert.assertEquals("Priority", ti.getPriority(), 7);
+        Assert.assertTrue("Run Auto", ti.getAutoRun());
         Assert.assertFalse("Reset When Done", ti.getResetWhenDone());
         Assert.assertEquals("Delayed Start", ti.getDelayedStart(), 1);
-        Assert.assertEquals("Departure Time Hours", ti.getDepartureTimeHr(), "08");
-        Assert.assertEquals("Departure Time Minutes", ti.getDepartureTimeMin(), "10");
+        Assert.assertEquals("Departure Time Hours", ti.getDepartureTimeHr(), 8);
+        Assert.assertEquals("Departure Time Minutes", ti.getDepartureTimeMin(), 10);
         Assert.assertEquals("Train Type", ti.getTrainType(), "THROUGH_FREIGHT");
 
-        Assert.assertEquals("Speed Factor", ti.getSpeedFactor(), "0.8");
-        Assert.assertEquals("Maximum Speed", ti.getMaxSpeed(), "0.6");
+        Assert.assertEquals("Speed Factor", ti.getSpeedFactor(), 0.8f);
+        Assert.assertEquals("Maximum Speed", ti.getMaxSpeed(), 0.6f);
         Assert.assertEquals("Ramp Rate", ti.getRampRate(), "RAMP_FAST");
         Assert.assertTrue("Resistance Wheels", ti.getResistanceWheels());
         Assert.assertFalse("Run In Reverse", ti.getRunInReverse());
         Assert.assertFalse("Sound Decoder", ti.getSoundDecoder());
-        Assert.assertEquals("Maximum Train Length", ti.getMaxTrainLength(), "222.0");
+        Assert.assertEquals("Maximum Train Length", ti.getMaxTrainLength(), 222.0f);
 
     }
 

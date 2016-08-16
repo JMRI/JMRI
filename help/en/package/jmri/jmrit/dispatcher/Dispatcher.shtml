@@ -39,6 +39,8 @@ Underlined items are links to sections of this document or to other help files.<
 	<li><a href="#allocated">The Allocated Section Table</a></li>
 	<li><a href="#automatic">Running Trains Automatically</a></li>
 	<li><a href="#require">Requirements for Automatic Running</a></li>
+	<li><a href="./Options.shtml">Dispatcher Options</a></li>
+	<li><a href="./NewTrain.shtml">Activate New Train Window</a></li>
 </ul>
 
 <a name="intro"></a><H2>Introduction to Dispatcher</H2>
@@ -627,13 +629,16 @@ slower than RAMP_FAST.</p>
 slower than RAMP_FAST. Too slow for almost all decoders.</p>
 </li>
 </ul>
+<p>Note: Overall ramping rates can be adjusted in Dispatcher Options.</p> 
 <p>When traversing the layout, an Auto Active Train changes speed in response 
-to the signals it passes.  If the next signal it faces is dark, red or flashing 
+to the signals it passes. If the next signal it faces is dark, red or flashing 
 red, the train will stop in the current Section (see below). If the facing signal 
 is green or flashing green, the train will run at its <i>maximum allowed speed</i>. 
-If the facing signal is yellow or flashing yellow, the train will run at a slow speed 
-of 35% of the allowable speed range. If the train is preparing to stop, it will 
-slow to a restricted speed of 25% of the allowable speed range.</p> 
+If the facing signal is yellow or flashing yellow, the train will run at a reduced speed 
+of 35% of the allowable speed range. </p>
+<p>If using SignalMasts, the speed between two SignalMasts is set to the lesser 
+of the SignalMast indicated speed vs. the Block and Turnout speed for that path. 
+This allows you to specify maximum speeds for specific trackage.</p> 
 <p>When an Auto Active Train is created, a default <i>maximum allowed speed</i> is 
 specified as a fraction of the allowable speed range. Each new speed value is 
 compared to the <i>maximum allowed speed</i>, and reduced if necessary. This allows 
@@ -641,7 +646,7 @@ different Auto Active Trains to run at maximum speeds appropriate to the type of
 train, regardless of the speed capability of its locomotive. The <i>maximum allowed 
 speed</i> may be changed while running by using the <b>Set Maximum Speed</b> Action. 
 This provides for slowing down or speeding up at specified locations in the 
-Transit, for exampled, when passing through a town.</p> 
+Transit, for example, when passing through a town.</p> 
 <p>Since all locomotives do not run the same, when an Auto Active Train is created, 
 a <b>Speed Factor</b> in the range of 0.5 to 1.5 is specified. This Speed Factor 
 multiplies all speed values immediately before the speed is sent to the throttle 
@@ -654,20 +659,20 @@ Train when it needs to stop. If the Section has hardware stop Sensors, the train
 is halted when it reaches the Stop Sensor for its direction of travel. If no Stop 
 Sensors are available for the Section, the train length is compared to the 
 length of the Section to determine if the Auto Active Train will fit in the 
-Section. If the Auto Active Train will fit in the Section, and if the all cars 
+Section. If the Auto Active Train will fit in the Section, and if all cars 
 of the train are detectable, the Auto Active Train is stopped when it exits the 
 Section previous to the current Section. If neither of the two methods apply, 
-the train is stopped when it enters the Section.</p>
-<p>Stopping using a Stop Sensor is the most precise way to stop an Auto Active 
-Train at a specific location. Stop Sensors need not be in place for each 
-Section. Use of Stop Sensors for automatic station stops and passing tracks is 
-strongly recommended. For the second stopping method to work, lengths of all
-Blocks in the Transit must be present in the Block Table, and the train must 
-be fully detectable--this usually means all cars must have resistance wheels on 
-one or more trucks. The lengths assigned to Blocks do not need to be highly 
-accurate. Lengths should not include the lengths of turnouts at the ends of 
-the Section, or the lengths of portions of a Section not normally traversed by 
-the Auto Active Train.
+the train is stopped when it enters the Section.<br />
+Stopping using a Stop Sensor is the most precise way to stop an Auto Active 
+Train at a specific location. Stop Sensors need not be in place for all 
+Sections, but their use for automatic station stops and passing tracks is 
+strongly recommended. <br />
+For the second stopping method to work, train length must be entered, 
+lengths of all Blocks in the Transit must be present in the Block Table, and 
+the train must be fully detectable (this usually means all cars must have 
+resistance wheels on one or more trucks). Block lengths should 
+not include the turnouts at the ends of the Section, or portions of a Section 
+not normally traversed by the Auto Active Train.</p>
 
  <a name="require"></a>
 <H2>Requirements for Automatic Running</H2>
@@ -694,13 +699,15 @@ that fully describes the connectivity of the layout. The Layout Editor panel nee
 not be displayed, but must show up in the submenu of Panels/Show Panel. If 
 multiple Layout Editor panels are present, Dispatcher will use the Layout 
 Editor panel selected in Dispatcher's Options window. The Layout Editor panel 
-acts as a connectivity data base, supplying connectivity information as needed to 
+acts as a connectivity database, supplying connectivity information as needed to 
 Dispatcher or the Auto Active Train's <i>virtual engineer</i>.</p>
 </li>
-<li><p>Hardware signals on the layout need not be present, but signals and signal 
+<li><p>
+Auto Active Trains follow signals, requiring signals as part of the Layout Editor panel.
+Hardware signals on the layout need not be physically present, but signals and signal 
 logic (Either SignalHeads &amp; SSL or SignalMasts &amp; SML) must be configured in the 
-Layout Editor panel. Auto Active Trains follow signals, requiring signals on the 
-Layout Editor panel.</p>
+Layout Editor panel, and must be connected to the track at the proper block 
+transition points.</p>
 </li>
 <li><p>Sections and Transits must be set up for the layout. This is also required 
 for manual running of Active Trains. Sections must be configured so that Sections 
@@ -719,12 +726,13 @@ Use of these tools to set up signal logic is strongly recommended.
 When checking for direction sensors in signal logic, Dispatcher 
 looks in the SSL of each signal head (see below). 
 If signal logic is set up without use of the Layout Editor tools, make sure each 
-SSL or SML is configured correctly</p> 
+SSL or SML is configured correctly.</p> 
 </li>
-<li><p>All Sections must be configured with direction Sensors. When an Auto Active 
-Train is created, Dispatcher will check that direction Sensors are present and 
+<li><p>(SSL Only) All Sections must be configured with direction Sensors. 
+When an Auto Active Train is created, 
+Dispatcher will check that direction Sensors are present and 
 are configured in signal logic of signals in all Sections of the Transit. 
-Dispatcher will place direction Sensors in (SSL Only) signal logic if they are not found. 
+Dispatcher will place direction Sensors in signal logic if they are not found. 
 <b>Note:</b> Direction Sensors may be cleared from signal logic using a tool in 
 the Section Table when not running automatic trains.</p>
 </li>
@@ -742,7 +750,8 @@ being used (applies to both manual and automatic running of trains).
 for all Auto Active Trains. If they are not present, the <i>virtual engineer</i> 
 has no way of knowing when the last car has exited a Block. Without the train 
 being fully detectable along its entire length, the 
-Auto Active Train will not stop at acceptable locations.</p>
+Auto Active Train will not stop at acceptable locations, and waiting trains may allocate 
+and set turnouts before the undetectable train has passed.</p>
 </li>
 </ul>
 <p>Even if the above requirements are met, automatic running will not be 
@@ -752,6 +761,9 @@ very clean, allowing good block detection. Locomotives must run smoothly, especi
 at slower speeds. Derailing problems must have been solved. 
 <b>A train should run flawlessly in manual mode, before automatic running 
 is attempted.</b></p>
+<p>Because Auto Active Trains use JMRI signalling for stops, starts and speeds, the
+signalling should also be flawless, including all blocks, turnouts and direction 
+indicators needed.</p> 
 
 <!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->

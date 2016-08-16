@@ -345,6 +345,8 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
 
     /**
      * Returns the ID for the window's help, which is application specific
+     *
+     * @return the Java Help reference or null if no help is available
      */
     protected abstract String windowHelpID();
 

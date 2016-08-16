@@ -30,6 +30,7 @@ public class PackageTest extends TestCase {
 
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+            suite.addTest(ItemPaletteTest.suite());
         }
 
         suite.addTest(BundleTest.suite());

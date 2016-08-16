@@ -24,7 +24,7 @@
 <H1>Dispatcher Options
 </H1>
 <H2>Introduction
-</H2
+</H2>
 <p>The <b>Options Window</b> provides for tailoring 
 <b><a href="Dispatcher.shtml">Dispatcher</a></b> options according 
 to user needs and preferences. The <b>Options Menu</b> provides access to Dispatcher 
@@ -32,11 +32,10 @@ options and provides for saving Dispatcher options on disk for later use. Both
 are described below in detail. Available Dispatcher options are described fully 
 in the following section. 
 
-<H2>Using the Options Window
-</H2
+<H2>Using the Options Window</H2>
+<img src="OptionsWindow.jpg" height="665" width="568" style="float:right;margin:2em;">
 <p>Selecting <b>Options Window...</b> in the <b>Options</b> menu of the Dispatcher 
-window brings up the window shown below.</p>
-<img src="OptionsWindow.jpg" height="445" width="519">
+window brings up the window shown at right.</p>
 
 <p>This window shows options currently selected for Dispatcher. To change 
 Dispatcher options, change to the desired option configuration, and 
@@ -57,12 +56,12 @@ allocated (see below), and if trains are to be run automatically.</p></li>
 <li><p>Select from the drop down the type of Signalling control that is use on the panel
 <ul>
     <li><b>SignalHeads/SSL</b> - Uses the traditional Signal Heads and Simple Signal Logic</li>
-    <li><b>SignalMasts </b>- Uses the more advanced Signal Masts and associated Logic, including Sections based up the logic</li>
+    <li><b>SignalMasts </b>- Uses the more advanced Signal Masts and associated SignalMast Logic</li>
 </ul>
 </li>
 <li><p>Select one of the three options for Dispatcher to select trains from 
 when creating Active Trains. The three possibilities are:</p></li>
-	<ul>
+  <ul>
 	<li><b>Trains from Roster</b> - Dispatcher will list all trains in the JMRI 
 	Roster that are not currently in Active Trains.</li>
 	<li><b>Trains from Trains</b> - Dispatcher will list all trains available 
@@ -71,7 +70,8 @@ when creating Active Trains. The three possibilities are:</p></li>
 	selection box in the 
 	<b><a href="NewTrain.shtml">Activate New Train</a></b> window with two 
 	entry fields allowing the user to enter a train name and a dcc Address.
-	</li></ul>
+	</li>
+  </ul>
 <li><p>Check <b>Layout has block detection hardware</b> if block occupancy 
 detection is available from the layout. Uncheck if the layout does not have block 
 occupancy detection, or if Dispatcher should not make use of block occupancy 
@@ -97,7 +97,13 @@ unless the Section to be allocated is free and unoccupied, except for the first
 Section of an Active Train that starts in the Transit. If turnouts cannot be 
 set, the dispatcher will be warned. When setting turnouts, Dispatcher only issues 
 commands to set turnouts; it does not wait for turnouts to actually change. This
-item is required for automatic running of trains.</p>
+item is required for automatic running of trains.<br />
+Note that signals dependent on those turnouts will not change until the turnout is
+changed, so Dispatcher may (indirectly) wait for turnouts to align.</p>
+</li>
+<li><p>Check <b>Trust Known State of Turnouts?</b> to suppress sending of  
+turnout commands if the known state already matches the desired state. This can be used
+where reliable turnout feedback is in place.</p>
 </li>
 <li><p>Check <b>Use short Active Train names</b> to use the train name as the 
 Active Train name in tables and selection boxes where Active Trains are 
@@ -115,18 +121,24 @@ This option is designed to make it easier for the dispatcher to see which
 Sections have been allocated.</p>
 </li>
 <li><p>Check <b>Place train name in allocated Blocks</b> to place the name of the 
-Active Train to which a Section is allocated in the Memory label of Blocks of the 
+Active Train to which a Section is allocated as the value of Blocks of the 
 Allocated Section. This feature, coupled with the above alternate color option, 
 makes it easy for the dispatcher to see which Allocated Section is allocated to 
 which Active Train when viewing a Layout Editor panel.</p>
 </li>
 <li><p>Select layout scale in the <b>Layout Scale</b> selection box. The selected 
-scale is used in conjunction with Block length in automatic running of trains.</p>
+scale is used to convert Block length as used in automatic running of trains.</p>
 </li>
 <li><p>Select the preferred <b>Units</b>, either <b>Scale Feet</b> or 
 <b>Scale Meters</b> for referencing train length and block length in 
 Dispatcher.</p>
 </li>
+<li><p><b>Minimum Throttle Interval</b> is used to manage throttle traffic, by sending
+throttle commands no more often than this value. Increasing this value reduces traffic on 
+your DCC bus, but will affect "smoothness" of speed changes.</p></li>
+<li><p><b>Time to Fully Ramp</b> is used to calculate the Ramping values. Specifically, it is
+how long (in milliseconds) it would take to go from 0% to 100%. Increasing this value
+causes ramping operations to take longer.</p></li>
 <li><p>Check the <b>Open Dispatcher with Panel</b> to open up the Dispatcher 
 window when the panel file is loaded.  Please note that this option is saved when the panel 
 file itself and is saved and not when the "Save Options" is selected.
@@ -137,7 +149,7 @@ Dispatcher Options are not saved, they revert to the previous values the next
 time Dispatcher is run.</p>
 
 <H2>Using the Options Menu
-</H2
+</H2>
 <p>The <b>Options</b> menu is used to access, edit, and save Dispatcher options. 
 Items in this menu and their use are explained below:
 <ul>

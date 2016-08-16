@@ -13,6 +13,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Nigel Cliffe   nigel.cliffe@outlook.com" version="1" lastUpdated="20162404"/>
+  <version author="Mark Waters   mark16jmri@mybtinternet.com" version="1.1" lastUpdated="20162707"/>
   <!-- This decoder configuration file is based on other Zimo non-sound decoders                     -->
   <!-- Tested on a MX600, which reported v31 firmware and decoderID 199 (which matches manuals), on 6th May 2016 (NC)    -->
   <!--                                                                                       -->
@@ -24,23 +25,24 @@
   <!-- Continued the practice of using unrelated "item" names to place Zimo unique           -->
   <!-- variables on the proper pane of the Comprehensive programmer.                         -->
   <!-- V 1 new file -->
+  <!-- v1.1,  change to refer to PaneAltFunctionMap4.xml and highVersionID changed to 41. Mark Waters 27 july 2016 -->
   <decoder>
     <family name="Zimo Unified software (version 25+)" mfg="Zimo">
-      <model model="MX600 version 31" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="4" numFns="14" productID="199">
+      <model model="MX600 version 31" lowVersionID="31" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="4" numFns="14" productID="199">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
         <output name="4" label="FO 2"/>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX600R version 31" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="4" numFns="14" productID="199">
+      <model model="MX600R version 31" lowVersionID="31" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="4" numFns="14" productID="199">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
         <output name="4" label="FO 2"/>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX600P12 version 31" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="4" numFns="14" productID="199">
+      <model model="MX600P12 version 31" lowVersionID="31" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="4" numFns="14" productID="199">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -65,7 +67,7 @@
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneShuntUncouple.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAltFunctionMap6+2.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAltFunctionMap4.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneFunctionOutput.xml"/>
   <!-- <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSmoke.xml"/>  -->
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneZimoSpecific.xml"/>

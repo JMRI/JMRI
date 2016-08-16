@@ -34,6 +34,8 @@ public class Xml {
     static final String OWNER = "owner"; // NOI18N
     static final String VALUE = "value"; // NOI18N
     static final String RFID = "rfid"; // NOI18N
+    static final String RFID_WHERE_LAST_SEEN = "wherelastSeen"; // NOI18N
+    static final String RFID_WHEN_LAST_SEEN = "whenlastSeen"; // NOI18N
     static final String TRAIN = "train"; // NOI18N
     static final String TRAIN_ID = "trainId"; // NOI18N
     static final String OUT_OF_SERVICE = "outOfService"; // NOI18N
