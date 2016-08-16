@@ -65,7 +65,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         super();
     }
 
-    public void setWait(boolean showWait) {
+    public synchronized void setWait(boolean showWait) {
         _showWait = showWait;
         fireTableStructureChanged();
         initTable(_table);
@@ -120,7 +120,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
 
-    private void setPreferredWidths(JTable table) {
+    private synchronized void setPreferredWidths(JTable table) {
         // set column preferred widths
         if (_frame.loadTableDetails(table)) {
             return; // done
