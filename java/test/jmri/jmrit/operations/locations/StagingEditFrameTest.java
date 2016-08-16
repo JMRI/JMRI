@@ -77,14 +77,8 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
 
         sleep(1);	// for slow machines
-        Track t = l.getTrackByName("new staging track", null);
-        Assert.assertNotNull("new staging track", t);
-        Assert.assertEquals("staging track length", 34, t.getLength());
-        // check that the defaults are correct
-        Assert.assertEquals("all directions", ALL, t.getTrainDirections());
-        Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
-
-        t = l.getTrackByName("2nd staging track", null);
+        // we check the first track in another test, so start with the 2nd.
+        Track t = l.getTrackByName("2nd staging track", null);
         Assert.assertNotNull("2nd staging track", t);
         Assert.assertEquals("2nd staging track length", 3456, t.getLength());
         // check that the defaults are correct
