@@ -3,6 +3,7 @@ package jmri.jmrit.operations.locations;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import jmri.Reporter;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -30,7 +31,6 @@ import org.slf4j.LoggerFactory;
  * interchange track.
  *
  * @author Daniel Boudreau Copyright (C) 2008 - 2014
- * @version $Revision$
  */
 public class Track {
 
@@ -179,6 +179,10 @@ public class Track {
     public static final String SERVICE_ORDER_CHANGED_PROPERTY = "trackServiceOrder"; // NOI18N
     public static final String ALTERNATE_TRACK_CHANGED_PROPERTY = "trackAlternate"; // NOI18N
     public static final String TRACK_BLOCKING_ORDER_CHANGED_PROPERTY = "trackBlockingOrder"; // NOI18N
+
+    // IdTag reader associated with this track.
+    protected Reporter _reader = null;
+
 
     public Track(String id, String name, String type, Location location) {
         log.debug("New ({}) track ({}) id: {}", type, name, id);
@@ -2551,6 +2555,21 @@ public class Track {
                 _commentSetout = a.getValue();
             }
         }
+
+        if (e.getAttribute(Xml.READER) != null) {
+            //            @SuppressWarnings("unchecked")
+            try {
+                Reporter r = jmri.InstanceManager
+                        .getDefault(jmri.ReporterManager.class)
+                        .provideReporter(
+                                e.getAttribute(Xml.READER).getValue());
+                _reader = r;
+            } catch (IllegalArgumentException ex) {
+                log.warn("Not able to find reader: {} for location ({})", e.getAttribute(Xml.READER).getValue(),
+                        getName());
+            }
+        }
+
     }
 
     /**
@@ -2769,7 +2788,9 @@ public class Track {
             setout.setAttribute(Xml.COMMENT, getCommentSetout());
             e.addContent(comments);
         }
-
+        if (_reader != null) {
+            e.setAttribute(Xml.READER, _reader.getDisplayName());
+        }
         return e;
     }
 
@@ -2787,6 +2808,30 @@ public class Track {
         LocationManagerXml.instance().setDirty(true);
         pcs.firePropertyChange(p, old, n);
     }
+
+
+    /*
+     * set the jmri.Reporter object associated with this location.
+     *
+     * @param reader jmri.Reporter object.
+     */
+    protected void setReporter(Reporter r) {
+        Reporter old = _reader;
+        _reader = r;
+        if (old != r) {
+            setDirtyAndFirePropertyChange("reporterChange", old, r);
+        }
+    }
+
+    /*
+     * get the jmri.Reporter object associated with this location.
+     *
+     * @return jmri.Reporter object.
+     */
+    public Reporter getReporter() {
+        return _reader;
+    }
+
 
     private final static Logger log = LoggerFactory.getLogger(Track.class.getName());
 
