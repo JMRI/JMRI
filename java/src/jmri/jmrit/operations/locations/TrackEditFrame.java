@@ -26,6 +26,11 @@ import javax.swing.JTextField;
 import jmri.Reporter;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.locations.schedules.ScheduleManager;
+import jmri.jmrit.operations.locations.tools.PoolTrackAction;
+import jmri.jmrit.operations.locations.tools.TrackEditCommentsAction;
+import jmri.jmrit.operations.locations.tools.TrackLoadEditAction;
+import jmri.jmrit.operations.locations.tools.TrackRoadEditAction;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -53,8 +58,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     TrainManager trainManager = TrainManager.instance();
     RouteManager routeManager = RouteManager.instance();
 
-    Location _location = null;
-    Track _track = null;
+    public Location _location = null;
+    public Track _track = null;
     String _trackName = null; // track name for tools menu
     String _type = "";
     JMenu _toolMenu = null;

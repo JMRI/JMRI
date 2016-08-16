@@ -26,6 +26,18 @@ import javax.swing.ScrollPaneConstants;
 import jmri.Reporter;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.locations.tools.ChangeTracksTypeAction;
+import jmri.jmrit.operations.locations.tools.EditCarTypeAction;
+import jmri.jmrit.operations.locations.tools.LocationTrackBlockingOrderAction;
+import jmri.jmrit.operations.locations.tools.LocationsByCarTypeFrame;
+import jmri.jmrit.operations.locations.tools.ModifyLocationsAction;
+import jmri.jmrit.operations.locations.tools.ModifyLocationsCarLoadsAction;
+import jmri.jmrit.operations.locations.tools.PrintLocationsAction;
+import jmri.jmrit.operations.locations.tools.SetPhysicalLocationAction;
+import jmri.jmrit.operations.locations.tools.ShowCarsByLocationAction;
+import jmri.jmrit.operations.locations.tools.ShowTrackMovesAction;
+import jmri.jmrit.operations.locations.tools.ShowTrainsServingLocationAction;
+import jmri.jmrit.operations.locations.tools.TrackCopyAction;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
@@ -57,7 +69,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
     LocationManager locationManager = LocationManager.instance();
 
-    Location _location = null;
+    public Location _location = null;
     ArrayList<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
     JPanel panelCheckBoxes = new JPanel();
     JScrollPane typePane;
