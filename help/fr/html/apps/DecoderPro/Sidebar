@@ -20,7 +20,7 @@
 <DD>
 <UL>
 <LI><a HREF="./IntroXML.shtml">Introduction aux fichiers XML </a>
-<LI><a href="./CreateDecoder.shtml">Cr&#233;er votre propre d&#233;&finition de d&#233;codeur</a>
+<LI><a href="./CreateDecoder.shtml">Cr&#233;er votre propre d&#233;finition de d&#233;codeur</a>
 <LI><a href="./Programmer.shtml">Cr&#233;er un programmateur personnalis&#233; de d&#233;finition </a>
 <LI><a HREF="./RosterFile.shtml">Comment la Liste est stock&#233;e; mise &#224; jour manuelle</a>
 <LI><a HREF="./LocoFile.shtml">Fichiers Locomotive (Liste)</a>
