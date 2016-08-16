@@ -25,8 +25,9 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
     public void testAddOneStagingTrack() {
         StagingEditFrame f = new StagingEditFrame();
         f.setTitle("Test Staging Add Frame");
-        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
         f.initComponents(l, null);
+        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
 
         // create four staging tracks
         f.trackNameTextField.setText("new staging track");
