@@ -145,6 +145,8 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         lManager = LocationManager.instance();
         l = lManager.getLocationByName("Test Loc A");
         Assert.assertNotNull("Test Loc A", l);
+
+        jmri.jmrit.operations.setup.Setup.setRfidEnabled(false); // turn off the ID Tag Reader field by default.
     }
 
     public StagingEditFrameTest(String s) {
