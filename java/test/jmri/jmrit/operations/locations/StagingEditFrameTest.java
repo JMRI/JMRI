@@ -16,13 +16,37 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
 
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
 
+    LocationManager lManager = null; // set in setUp, dispose in tearDown
+    Location l = null;  // set in setUp, dispose in tearDown
+
+    /**
+     * Staging tracks needs its own location
+     */
+    public void testAddOneStagingTrack() {
+        StagingEditFrame f = new StagingEditFrame();
+        f.setTitle("Test Staging Add Frame");
+        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.initComponents(l, null);
+
+        // create four staging tracks
+        f.trackNameTextField.setText("new staging track");
+        f.trackLengthTextField.setText("34");
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        sleep(1);	// for slow machines
+        Track t = l.getTrackByName("new staging track", null);
+        Assert.assertNotNull("new staging track", t);
+        Assert.assertEquals("staging track length", 34, t.getLength());
+        // check that the defaults are correct
+        Assert.assertEquals("all directions", ALL, t.getTrainDirections());
+        Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
+
+        f.dispose();
+    }
+
     /**
      * Staging tracks needs its own location
      */
     public void testStagingEditFrame() {
-        LocationManager lManager = LocationManager.instance();
-        Location l = lManager.getLocationByName("Test Loc A");
-        Assert.assertNotNull("Test Loc A", l);
         StagingEditFrame f = new StagingEditFrame();
         f.setTitle("Test Staging Add Frame");
         f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
@@ -123,6 +147,10 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         super.setUp();
 
         loadLocations();
+
+        lManager = LocationManager.instance();
+        l = lManager.getLocationByName("Test Loc A");
+        Assert.assertNotNull("Test Loc A", l);
     }
 
     public StagingEditFrameTest(String s) {
@@ -144,5 +172,8 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
+
+        lManager = null; 
+        l = null; 
     }
 }
