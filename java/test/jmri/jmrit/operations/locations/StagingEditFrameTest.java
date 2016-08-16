@@ -31,7 +31,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         // create four staging tracks
         f.trackNameTextField.setText("new staging track");
         f.trackLengthTextField.setText("34");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
         sleep(1);	// for slow machines
         Track t = l.getTrackByName("new staging track", null);
         Assert.assertNotNull("new staging track", t);

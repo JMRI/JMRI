@@ -426,6 +426,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         }
         if (ae.getSource() == addTrackButton) {
             addNewTrack();
+            log.error("add track button pressed"); // for debuging test, 
+                                                   // remove before merge.
         }
         if (_track == null) {
             return;
