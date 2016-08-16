@@ -103,6 +103,26 @@ public class LocationManager implements java.beans.PropertyChangeListener {
         return null;
     }
 
+    /**
+     * Request a track associated with a given reporter.
+     *
+     * @param r Reporter object associated with desired location.
+     * @return requested Location object or null if none exists 
+     */
+    public Track getTrackByReporter(Reporter r) {
+       for(Location location: _locationHashTable.values()) {
+          for(Track track: getTracks(null))
+          try {
+             if (track.getReporter().equals(r))
+                 return track;
+	  } catch(java.lang.NullPointerException npe) {
+             // it's valid for a reporter to be null (no reporter
+             // at a given location.
+          }
+        }
+        return null;
+    }
+
 
     /**
      * Finds an existing location or creates a new location if needed requires
