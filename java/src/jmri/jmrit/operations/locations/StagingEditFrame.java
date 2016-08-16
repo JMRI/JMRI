@@ -37,6 +37,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 
     @Override
     public void initComponents(Location location, Track track) {
+        _type = Track.STAGING;
 
         // setup the optional panel with staging stuff
         panelLoad.setLayout(new BoxLayout(panelLoad, BoxLayout.X_AXIS));
@@ -69,7 +70,6 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
         panelLoad.add(p3);
 
         super.initComponents(location, track);
-        _type = Track.STAGING;
 
         _toolMenu.add(new TrackDestinationEditAction(this));
         _toolMenu.add(new ShowTrainsServingLocationAction(Bundle.getMessage("MenuItemShowTrainsTrack"), _location, _track));
