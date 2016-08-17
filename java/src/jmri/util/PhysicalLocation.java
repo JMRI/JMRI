@@ -131,7 +131,8 @@ public class PhysicalLocation extends Vector3f {
         // Flags are boolean. If they are present, they are true.
         // Regex [-+]?[0-9]*\.?[0-9]+
         //String syntax = "\\((\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+)\\)";
-        String syntax = "\\((\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+)\\)(\\([tunnel]\\))*";
+        //String syntax = "\\((\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+)\\)(\\([tunnel]\\))*";
+        String syntax = "\\((\\s*[-+]?[0-9]*\\.?[0-9]+), (\\s*[-+]?[0-9]*\\.?[0-9]+), (\\s*[-+]?[0-9]*\\.?[0-9]+)\\)\\(?([tunnel]*)\\)?";
         try {
             Pattern p = Pattern.compile(syntax);
             Matcher m = p.matcher(pos);
@@ -148,14 +149,14 @@ public class PhysicalLocation extends Vector3f {
             boolean is_tunnel = false;
             // Handle optional flags
             for (int i = 4; i < m.groupCount() + 1; i++) {
-                if ((m.group(i) != null) && ("(tunnel)".equals(m.group(i)))) {
+                if ((m.group(i) != null) && ("tunnel".equals(m.group(i)))) {
                     is_tunnel = true;
                 }
             }
 
-            return (new PhysicalLocation(Float.parseFloat(m.group(1)),
-                    Float.parseFloat(m.group(2)),
-                    Float.parseFloat(m.group(3)),
+            return (new PhysicalLocation(Float.parseFloat(xs),
+                    Float.parseFloat(ys),
+                    Float.parseFloat(zs),
                     is_tunnel));
         } catch (PatternSyntaxException e) {
             log.error("Malformed listener position syntax! " + syntax);
