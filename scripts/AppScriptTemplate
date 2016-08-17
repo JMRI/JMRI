@@ -244,16 +244,6 @@ parse_args "$default_options"
 parse_args $JMRI_OPTIONS # support JMRI_OPTIONS if someone is using it
 parse_args $@
 
-# set if -J-Xmx=... is not in options or arguments
-if [ -z "${jmri_xmx:-}" ] ; then
-    jmri_xmx="-Xmx$( heap_size )m"
-fi
-# set if -J-Xms=... is not in options or arguments
-if [ -z "${jmri_xms:-}" ] ; then
-    # initial heap size = default for 6 GB RAM (default = 1/64 installed RAM)
-    jmri_xms="-Xms96m"
-fi
-
 # define JAVA_HOME if needed
 if [ -z "${JAVA_HOME}" ] ; then
     #
@@ -327,6 +317,16 @@ else
 fi
 # make JAVA_HOME available to spawned processes
 export JAVA_HOME
+
+# set if -J-Xmx=... is not in options or arguments
+if [ -z "${jmri_xmx:-}" ] ; then
+    jmri_xmx="-Xmx$( heap_size )m"
+fi
+# set if -J-Xms=... is not in options or arguments
+if [ -z "${jmri_xms:-}" ] ; then
+    # initial heap size = default for 6 GB RAM (default = 1/64 installed RAM)
+    jmri_xms="-Xms96m"
+fi
 
 # define JMRI_HOME if it is not defined
 if [ -z "${JMRI_HOME}" ] ; then
