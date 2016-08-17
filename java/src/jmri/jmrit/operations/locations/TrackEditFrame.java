@@ -138,7 +138,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     JPanel panelOpt4 = new JPanel();
 
     // Reader selection dropdown.
-    JComboBox<String> readerSelector = new JComboBox<String>();
+    JComboBox<Reporter> readerSelector = new JComboBox<Reporter>();
 
     public static final String DISPOSE = "dispose"; // NOI18N
     public static final int MAX_NAME_LENGTH = Control.max_len_string_track_name;
@@ -335,12 +335,12 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         //		addComboBoxAction(comboBoxTypes);
         addCheckBoxAction(autoDropCheckBox);
         addCheckBoxAction(autoPickupCheckBox);
-        
+
         if (Setup.isRfidEnabled()) {
             // setup the Reader dropdown.
-            readerSelector.addItem(""); // add an empty entry.
+            readerSelector.addItem(null); // add an empty entry.
             for (jmri.NamedBean r : jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getNamedBeanList()) {
-                readerSelector.addItem(((Reporter) r).getDisplayName());
+                readerSelector.addItem((Reporter) r);
             }
         }
 
@@ -353,14 +353,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
             enableButtons(true);
             _trackName = _track.getName();
             if (Setup.isRfidEnabled()) {
-                try {
-                    readerSelector.setSelectedItem(_track.getReporter().getDisplayName());
-                } catch (java.lang.NullPointerException e) {
-                    // if there is no reader set, getReporter
-                    // will return null, so set a blank.
-                }
+                readerSelector.setSelectedItem(_track.getReporter());
             }
-
         } else {
             enableButtons(false);
         }
@@ -606,18 +600,9 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
         track.setComment(commentTextArea.getText());
 
-        if (Setup.isRfidEnabled() &&
-                readerSelector.getSelectedItem() != null &&
-                !((String) readerSelector.getSelectedItem()).equals("")) {
-            _track.setReporter(
-                    jmri.InstanceManager.getDefault(jmri.ReporterManager.class)
-                            .getReporter((String) readerSelector.getSelectedItem()));
-        } else if (Setup.isRfidEnabled() &&
-                readerSelector.getSelectedItem() != null &&
-                ((String) readerSelector.getSelectedItem()).equals("")) {
-            _track.setReporter(null);
+        if (Setup.isRfidEnabled()) {
+            _track.setReporter((Reporter) readerSelector.getSelectedItem());
         }
-
 
         // save current window size so it doesn't change during updates
         setPreferredSize(getSize());
