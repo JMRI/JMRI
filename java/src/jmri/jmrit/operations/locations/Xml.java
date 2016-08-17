@@ -48,25 +48,6 @@ public class Xml {
     static final String SWITCH_LIST_COMMENT = "switchListComment"; // NOI18N
     static final String SECONDARY = "secondary"; // early version of operations called tracks "secondary" // NOI18N
 
-    // SccheduleManager.java
-    static final String SCHEDULES = "schedules"; // NOI18N
-
-    // ScheduleItem.java
-    static final String ITEM = "item"; // NOI18N
-    static final String SEQUENCE_ID = "sequenceId"; // NOI18N
-    static final String RANDOM = "random"; // NOI18N
-    static final String TRAIN_SCHEDULE_ID = "trainScheduleId"; // NOI18N
-    static final String PICKUP_TRAIN_SCHEDULE_ID = "pickupTrainScheduleId"; // NOI18N
-    static final String COUNT = "count"; // NOI18N
-    static final String WAIT = "wait"; // NOI18N
-    static final String TYPE = "type"; // NOI18N
-    static final String ROAD = "road"; // NOI18N
-    static final String LOAD = "load"; // NOI18N
-    static final String SHIP = "ship"; // NOI18N
-    static final String DESTINATION_ID = "destinationId"; // NOI18N
-    static final String DEST_TRACK_ID = "destTrackId"; // NOI18N
-    static final String HITS = "hits"; // NOI18N
-
     // Track.java
     static final String LOC_TYPE = "locType"; // NOI18N
     static final String LENGTH = "length"; // NOI18N
