@@ -38,6 +38,7 @@ public class JsonSensorHttpServiceTest extends TestCase {
         try {
             result = service.doGet(JsonSensor.SENSOR, "IS1", Locale.ENGLISH);
             Assert.assertNotNull(result);
+            Assert.assertEquals(JsonSensor.SENSOR, result.path(JSON.TYPE).asText());
             Assert.assertEquals("IS1", result.path(JSON.DATA).path(JSON.NAME).asText());
             Assert.assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt(-1)); // -1 is not a possible value
             sensor1.setKnownState(Sensor.ACTIVE);
