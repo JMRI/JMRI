@@ -35,12 +35,7 @@
                     .bind('message', function(e) {
                         var m = JSON.parse(e.originalEvent.data);
                         var h = settings.events[m.type];
-                        if (h) {
-                        	h.call(this, m);
-                        } else {
-                        	if (window.console) console.log("json message type '" + m.type+  "' not handled for message:" +
-                        			e.originalEvent.data);
-                        }
+                        if (h) h.call(this, m);
                     });
                 ws._send = ws.send;
                 ws.send = function(type, data) {

@@ -570,6 +570,74 @@
                     jmri.failedReconnect();
                 }
             };
+            //set of functions for handling each "type" of json message
+            jmri.events = {
+            		// TODO: add consist, programmer, and operations-related events
+            		error: function(e) {
+            			jmri.log("Error " + e.data.code + ": " + e.data.message);
+            			jmri.error(e.data);
+            		},
+            		goodbye: function(e) {
+            			jmri.goodbye(e.data);
+            		},
+            		// handle the initial handshake response from the server
+            		hello: function(e) {
+            			if (jmri.reconnectAttempts !== 0) {
+            				jmri.reconnectAttempts = 0;
+            				jmri.didReconnect();
+            			}
+            			jmri.heartbeatInterval = setInterval(jmri.heartbeat, e.data.heartbeat);
+            			jmri.version(e.data.JMRI);
+            			jmri.railroad(e.data.railroad);
+            			jmri.hello(e.data);
+            		},
+            		light: function(e) {
+            			jmri.light(e.data.name, e.data.state, e.data);
+            		},
+            		block: function(e) {
+            			jmri.block(e.data.name, e.data.value, e.data);
+            		},
+            		layoutBlock: function(e) {
+            			jmri.layoutBlock(e.data.name, e.data.value, e.data);
+            		},
+            		memory: function(e) {
+            			jmri.memory(e.data.name, e.data.value, e.data);
+            		},
+            		power: function(e) {
+            			jmri.power(e.data.state);
+            		},
+            		reporter: function(e) {
+            			jmri.reporter(e.data.name, e.data.value, e.data);
+            		},
+            		route: function(e) {
+            			jmri.route(e.data.name, e.data.state, e.data);
+            		},
+            		sensor: function(e) {
+            			jmri.sensor(e.data.name, e.data.state, e.data);
+            		},
+            		signalHead: function(e) {
+            			jmri.signalHead(e.data.name, e.data.state, e.data);
+            		},
+            		signalMast: function(e) {
+            			jmri.signalMast(e.data.name, e.data.state, e.data);
+            		},
+            		throttle: function(e) {
+            			jmri.throttle(e.data.throttle, e.data);
+            		},
+            		time: function(e) {
+            			jmri.time(e.data.time, e.data);
+            		},
+            		train: function(e) {
+            			jmri.train(e.data.id, e.data);
+            		},
+            		turnout: function(e) {
+            			jmri.turnout(e.data.name, e.data.state, e.data);
+            		},
+            		pong: function(e) {
+            			jmri.pong();
+            		}
+            }
+
             jmri.reconnect = function() {
                 jmri.socket = $.websocket(jmri.url.replace(/^http/, "ws"), {
                     open: function() {
@@ -584,75 +652,18 @@
                         jmri.socket = null;
                         jmri.close(e);
                         jmri.attemptReconnection();
-                    },
+                    },                    
                     message: function(e) {
                         jmri.console(e.originalEvent.data);
-                    },
-                    events: {
-                        // TODO: add consist, programmer, and operations-related events
-                        error: function(e) {
-                            jmri.log("Error " + e.data.code + ": " + e.data.message);
-                            jmri.error(e.data);
-                        },
-                        goodbye: function(e) {
-                            jmri.goodbye(e.data);
-                        },
-                        // handle the initial handshake response from the server
-                        hello: function(e) {
-                            if (jmri.reconnectAttempts !== 0) {
-                                jmri.reconnectAttempts = 0;
-                                jmri.didReconnect();
-                            }
-                            jmri.heartbeatInterval = setInterval(jmri.heartbeat, e.data.heartbeat);
-                            jmri.version(e.data.JMRI);
-                            jmri.railroad(e.data.railroad);
-                            jmri.hello(e.data);
-                        },
-                        light: function(e) {
-                            jmri.light(e.data.name, e.data.state, e.data);
-                        },
-                        block: function(e) {
-                            jmri.block(e.data.name, e.data.value, e.data);
-                        },
-                        layoutBlock: function(e) {
-                            jmri.layoutBlock(e.data.name, e.data.value, e.data);
-                        },
-                        memory: function(e) {
-                            jmri.memory(e.data.name, e.data.value, e.data);
-                        },
-                        power: function(e) {
-                            jmri.power(e.data.state);
-                        },
-                        reporter: function(e) {
-                            jmri.reporter(e.data.name, e.data.value, e.data);
-                        },
-                        route: function(e) {
-                            jmri.route(e.data.name, e.data.state, e.data);
-                        },
-                        sensor: function(e) {
-                            jmri.sensor(e.data.name, e.data.state, e.data);
-                        },
-                        signalHead: function(e) {
-                            jmri.signalHead(e.data.name, e.data.state, e.data);
-                        },
-                        signalMast: function(e) {
-                            jmri.signalMast(e.data.name, e.data.state, e.data);
-                        },
-                        throttle: function(e) {
-                            jmri.throttle(e.data.throttle, e.data);
-                        },
-                        time: function(e) {
-                            jmri.time(e.data.time, e.data);
-                        },
-                        train: function(e) {
-                            jmri.train(e.data.id, e.data);
-                        },
-                        turnout: function(e) {
-                            jmri.turnout(e.data.name, e.data.state, e.data);
-                        },
-                        pong: function(e) {
-                            jmri.pong();
-                        }
+                        //determine message type and call appropriate event handler
+                        var m = JSON.parse(e.originalEvent.data);
+                        var h = jmri.events[m.type];
+                        if (h) h.call(this, m);
+                        if (!m.type) {
+                        	jmri.log("ERROR: 'type' element not found in json message:" +
+                        			e.originalEvent.data);
+                        } else if (!h)
+                        	jmri.log("ERROR: json type '" + m.type +"' received, but not handled");
                     }
                 });
             };
