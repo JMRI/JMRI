@@ -3,7 +3,7 @@ package jmri.server.json.block;
 import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PUT;
-import static jmri.server.json.block.JsonBlockServiceFactory.BLOCK;
+import static jmri.server.json.block.JsonBlock.BLOCK;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import java.beans.PropertyChangeEvent;

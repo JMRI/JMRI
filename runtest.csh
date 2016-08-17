@@ -70,27 +70,31 @@ found_settingsdir="no"
 for opt in "$@"; do
     if [ "${found_settingsdir}" = "yes" ]; then
         # --settingsdir /path/to/... part 2
-        settingsdir="$opt"
-        prefsdir="$settingsdir"
+        settingsdir="${opt}"
+        prefsdir="${settingsdir}"
         break
-    elif [ "$opt" = "--settingsdir" ]; then
+    elif [ "${opt}" = "--settingsdir" ]; then
         # --settingsdir /path/to/... part 1
         found_settingsdir="yes"
-    elif [[ "$opt" =~ "--settingsdir=" ]]; then
+    elif [[ "${opt}" =~ "--settingsdir=" ]]; then
         # --settingsdir=/path/to/...
         settingsdir="${opt#*=}"
-        prefsdir="$settingsdir"
+        prefsdir="${settingsdir}"
         break;
     fi
 done
 
 # if --settingsdir="" was passed, allow run.sh to use JMRI default, otherwise
 # prepend the option token to ensure run.sh sets the settings dir correctly
-if [ -n "$settingsdir" ] ; then
+if [ -n "${settingsdir}" ] ; then
     settingsdir="--settingsdir=${settingsdir}"
 fi
-if [ -n "$prefsdir" ] ; then
+if [ -n "${prefsdir}" ] ; then
     prefsdir="-Djmri.prefsdir=${prefsdir}"
 fi
 
-"${dirname}/.run.sh" "$settingsdir" "$prefsdir" $@
+# tests are no longer with production classes, so append the directory containing
+# tests to the classpaths
+testclasspath="--cp:a=${dirname}/java/test-classes"
+
+"${dirname}/.run.sh" "${settingsdir}" "${prefsdir}" "${testclasspath}" $@

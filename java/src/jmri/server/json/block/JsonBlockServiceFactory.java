@@ -1,5 +1,8 @@
 package jmri.server.json.block;
 
+import static jmri.server.json.block.JsonBlock.BLOCK;
+import static jmri.server.json.block.JsonBlock.BLOCKS;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonHttpService;
@@ -13,8 +16,6 @@ import jmri.spi.JsonServiceFactory;
  */
 public class JsonBlockServiceFactory implements JsonServiceFactory {
 
-    public static final String BLOCK = "block"; // NOI18N
-    public static final String BLOCKS = "blocks"; // NOI18N
 
     @Override
     public String[] getTypes() {

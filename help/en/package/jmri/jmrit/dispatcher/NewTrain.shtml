@@ -167,7 +167,7 @@ back and forth running is accomplished by also checking <b>Reset When Done</b>.
 <li>Enter a <b>Priority</b> for the Active Train relative to other Active 
 Trains. Larger numbers are higher priority. The priority is used by the dispatcher 
 and/or automated dispatching functions to arbitrate between Active Trains if 
-multiple Active Trains are requesting the same resources.</p>
+multiple Active Trains are requesting the same resources.
 </li>
 <li><p>Select a <b>Train Type</b> from the <b>Train Type:</b> popup menu. The
 selected train type is displayed in the Dispatcher window to aid in allocation 
@@ -183,7 +183,10 @@ dispatcher is given a chance to override this restriction. If an Active Train is
 being run automatically by the computer (see below), the Active Train will 
 automatically start at the specified fast clock time. This option allows 
 the dispatcher to set up a number of Active Trains which will start at various 
-times during a session.</p>
+times during a session.</p></li>
+<li> Check <b>Load this Train at Startup</b> to have Dispatcher automatically load 
+this train when Dispatcher starts. You must <b>Save Train Info</b> for this
+flag to take effect on the next start.</li> 
 <li><p>Check <b>Run Train Automatically</b> to request that the Active Train 
 be run automatically by the computer. If the Active Train is to be run manually 
 by a human engineer, skip the next few steps; go directly to the third to last 
@@ -191,10 +194,11 @@ item of these instructions.  Requesting <b>Run Train Automatically</b> will exte
 this window (see below) to display options that are only related to automatic 
 running of trains.</p>
 <img src="NewTrainAutoWindow.jpg" height="528" width="480">
-<p><b>Note:</b> Requirements for automatic running are not validated until creation 
+<p>
+<b>Note:</b> Requirements for automatic running are not validated until creation 
 of an Active Train is requested. More information about automatic running of 
-Active Trains may be found in the <b><a href="Dispatcher.shtml">Dispatcher</a></b> 
-help file.</p>
+Active Trains may be found in the <b><a href="Dispatcher.shtml#automatic">Running
+Trains Automatically</a></b> help page.
 </li>
 <li><p>In the <b>Speed Factor:</b> field, enter a factor (0.1 - 1.5) to modify all 
 train speed settings.  If the locomotive runs <i>normally</i>, enter 1.0.  If the 
@@ -228,7 +232,7 @@ the ramp rates offered.</p>
 </li>
 <li><p>Check <b>Loco has sound decoder.</b> if the locomotive has a sound decoder. 
 If this item is not checked, <b>Actions</b> that require a sound decoder, such as 
-ringing the bell or sounding the horn will be skipped.</p?
+ringing the bell or sounding the horn will be skipped.</p>
 </li>
 <li><p>Check <b>Run in reverse</b> if the locomotive is to be run in reverse through 
 the Transit. This should not be confused with the direction through the Transit, 
@@ -272,7 +276,6 @@ on saving train information.</li>
 and activate the new Active Train. The new Active Train will immediately 
 appear in the Dispatcher window, and this window will be dismissed.</p>
 <p>- OR -</p>
-</li>
 </li>
 <li><p>Click <b>Cancel</b> to exit this window without creating a new Active 
 Train.</p>

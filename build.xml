@@ -1463,7 +1463,7 @@
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="6000"/><!-- change from default 100 warnings -->
+            <arg value="5500"/><!-- change from default 100 warnings -->
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
 
@@ -1690,7 +1690,7 @@
         </findbugs>
     </target>
 
-<!--  Start for checker framework -->
+    <!--  Start for checker framework -->
 
     <property environment="env"/>
     <property name="checkerframework" value="${libdir}/checker-framework/" />
@@ -2050,13 +2050,13 @@
     <!-- CI Test runners -->
     <target name="travis-ci" description="Parallel execution of CI tasks on Travis CI">
         <parallel threadCount="4"> <!-- allow up to four tasks at once -->
-            <ant target="checklineends" />
-            <ant target="checknonascii" />
+            <antcall target="checklineends" />
+            <antcall target="checknonascii" />
             <sequential>
-                <ant target="compile-generated-source" />
+                <antcall target="compile-generated-source" />
                 <parallel>
-                    <ant target="javadoc" />
-                    <ant target="ci-test-travis" />
+                    <antcall target="javadoc" />
+                    <antcall target="ci-test-travis" />
                 </parallel>
             </sequential>
         </parallel>
@@ -2064,8 +2064,8 @@
     
     <target name="appveyor" description="Parallel execution of CI tasks on Appveyor">
         <parallel threadCount="4"> <!-- allow up to four tasks at once -->
-            <ant target="checkPropertiesFiles" />
-            <ant target="ci-test-appveyor" />
+            <antcall target="checkPropertiesFiles" />
+            <antcall target="ci-test-appveyor" />
         </parallel>
     </target>
 </project>

@@ -31,12 +31,16 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
      * returns true if throwing an InitializationException to ensure that the
      * provider is not repeatedly initialized.
      *
+     * @param profile the configuration profile used for this initialization
+     * @throws jmri.util.prefs.InitializationException if the user needs to be
+     *                                                 notified of an issue
      */
     public void initialize(@Nonnull Profile profile) throws InitializationException;
 
     /**
      * Test if the PreferencesManager is initialized for the provided Profile.
      *
+     * @param profile the configuration profile to test against
      * @return true if the provider is initialized.
      */
     public boolean isInitialized(@Nonnull Profile profile);
@@ -68,6 +72,8 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
 
     /**
      * Save the preferences that this provider manages for the provided Profile.
+     *
+     * @param profile the profile associated with the preferences to save
      */
     public void savePreferences(@Nonnull Profile profile);
 

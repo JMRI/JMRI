@@ -16,16 +16,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.JComponent;
 import jmri.server.json.JSON;
-import jmri.jmris.json.JsonUtil;
 import jmri.jmrit.display.Editor;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
 import jmri.web.server.WebServer;
 import jmri.web.servlet.ServletUtil;
+
 import static jmri.web.servlet.ServletUtil.IMAGE_PNG;
 import static jmri.web.servlet.ServletUtil.UTF8;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
 import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
+
+import jmri.server.json.util.JsonUtilHttpService;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -131,7 +133,8 @@ abstract class AbstractPanelServlet extends HttpServlet {
         if (JSON.JSON.equals(request.getParameter("format"))) {
             response.setContentType(UTF8_APPLICATION_JSON);
             ServletUtil.getInstance().setNonCachingHeaders(response);
-            response.getWriter().print(JsonUtil.getPanels(request.getLocale(), JSON.XML));
+            JsonUtilHttpService service = new JsonUtilHttpService(new ObjectMapper());
+            response.getWriter().print(service.getPanels(request.getLocale(), JSON.XML));
         } else {
             response.setContentType(UTF8_TEXT_HTML);
             response.getWriter().print(String.format(request.getLocale(),

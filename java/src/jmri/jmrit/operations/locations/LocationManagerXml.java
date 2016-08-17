@@ -3,6 +3,7 @@ package jmri.jmrit.operations.locations;
 
 import java.io.File;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.setup.Control;
 import org.jdom2.Document;
 import org.jdom2.Element;
