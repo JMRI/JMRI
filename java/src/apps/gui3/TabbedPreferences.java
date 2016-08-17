@@ -217,6 +217,7 @@ public class TabbedPreferences extends AppConfigBase {
     // package only - for TabbedPreferencesFrame
     boolean isDirty() {
         for (PreferencesPanel panel : this.getPreferencesPanels().values()) {
+            // wrapped in isDebugEnabled test to prevent overhead of assembling message
             if (log.isDebugEnabled()) {
                 log.debug("PreferencesPanel {} ({}) is {}.",
                         panel.getClass().getName(),
@@ -234,6 +235,7 @@ public class TabbedPreferences extends AppConfigBase {
     boolean invokeSaveOptions() {
         boolean restartRequired = false;
         for (PreferencesPanel panel : this.getPreferencesPanels().values()) {
+            // wrapped in isDebugEnabled test to prevent overhead of assembling message
             if (log.isDebugEnabled()) {
                 log.debug("PreferencesPanel {} ({}) is {}.",
                         panel.getClass().getName(),
@@ -241,6 +243,7 @@ public class TabbedPreferences extends AppConfigBase {
                         (panel.isDirty()) ? "dirty" : "clean");
             }
             panel.savePreferences();
+            // wrapped in isDebugEnabled test to prevent overhead of assembling message
             if (log.isDebugEnabled()) {
                 log.debug("PreferencesPanel {} ({}) restart is {}required.",
                         panel.getClass().getName(),
