@@ -63,7 +63,7 @@ public class CoordinateEdit extends JmriJFrame {
     javax.swing.JSpinner spinY;
 
     public static AbstractAction getCoordinateEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("SetXY")) {
+        return new AbstractAction(Bundle.getMessage("SetXY") + "...") {
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
@@ -77,7 +77,7 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getLevelEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("SetLevel")) {
+        return new AbstractAction(Bundle.getMessage("SetLevel") + "...") {
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -599,7 +599,7 @@ public class CoordinateEdit extends JmriJFrame {
         PositionableLabel pLabel = (PositionableLabel) pl;
         oldStr = pLabel.getUnRotatedText();
         textX = new javax.swing.JLabel();
-        textX.setText(Bundle.getMessage("textLabel") + ":");
+        textX.setText(Bundle.getMessage("TextLabel") + ":");
         textX.setVisible(true);
 
         xTextField = new javax.swing.JTextField(15);

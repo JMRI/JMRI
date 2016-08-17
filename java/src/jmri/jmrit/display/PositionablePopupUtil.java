@@ -125,7 +125,7 @@ public class PositionablePopupUtil {
     public void setFixedTextMenu(JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditFixed"));
         if (getFixedWidth() == 0) {
-            edit.add("Width= Auto");
+            edit.add("Width = Auto");
         } else {
             edit.add("Width = " + _parent.maxWidth());
         }
@@ -490,7 +490,7 @@ public class PositionablePopupUtil {
         addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Blue"), Color.blue, type);
         addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Magenta"), Color.magenta, type);
         if (type == BACKGROUND_COLOR) {
-            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Clear"), null, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("ColorClear"), null, type);
         }
         return buttonGrp;
     }

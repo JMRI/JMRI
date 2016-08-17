@@ -205,7 +205,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JCheckBox signalMastBox = new JCheckBox(rb.getString("SignalMastIcon"));
     private JTextField nextSignalMast = new JTextField(5);
 
-    private JCheckBox textLabelBox = new JCheckBox(rb.getString("TextLabel"));
+    private JCheckBox textLabelBox = new JCheckBox(Bundle.getMessage("TextLabel"));
     private JTextField textLabel = new JTextField(8);
 
     private JCheckBox blockContentsBox = new JCheckBox("Block Contents");

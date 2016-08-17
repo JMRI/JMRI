@@ -49,8 +49,8 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         Bundle.getMessage("right")};
 
     static final String[] STYLES = {Bundle.getMessage("plain"),
-        Bundle.getMessage("bold"),
-        Bundle.getMessage("italic"),
+        Bundle.getMessage("Bold"),
+        Bundle.getMessage("Italic"),
         Bundle.getMessage("bold/italic")};
 
     static final String[] FONTSIZE = {"6", "8", "10", "11", "12", "14", "16",

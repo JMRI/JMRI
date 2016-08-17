@@ -166,18 +166,17 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                 }
             }
             if (activeText == null) {
-                activeText = Bundle.getMessage("SensorStateActive");
-                //textColorActive=Color.red;
+                activeText = "<" + Bundle.getMessage("SensorStateActive").toLowerCase() + ">"; // initiate state label string
+                // created from Bundle as lower case, enclosed in < >
             }
             if (inactiveText == null) {
-                inactiveText = Bundle.getMessage("SensorStateInactive");
-                //textColorInActive=Color.yellow;
+                inactiveText = "<" + Bundle.getMessage("SensorStateInactive").toLowerCase() + ">";
             }
             if (inconsistentText == null) {
-                inconsistentText = Bundle.getMessage("BeanStateInconsistent");
+                inconsistentText = "<" + Bundle.getMessage("BeanStateInconsistent").toLowerCase() + ">";
             }
             if (unknownText == null) {
-                unknownText = Bundle.getMessage("BeanStateUnknown");
+                unknownText = "<" + Bundle.getMessage("BeanStateUnknown").toLowerCase() + ">";
             }
             if (textColorActive == null) {
                 textColorActive = Color.red;
@@ -997,7 +996,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             ButtonGroup buttonGrp = super.makeColorMenu( colorMenu,  type);
             if (type == UNKOWN_BACKGROUND_COLOR || type == ACTIVE_BACKGROUND_COLOR 
                     || type == INACTIVE_BACKGROUND_COLOR || type == INCONSISTENT_BACKGROUND_COLOR) {
-                addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Clear"), null, type);
+                addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("ColorClear"), null, type);
             }
             return buttonGrp;
         }

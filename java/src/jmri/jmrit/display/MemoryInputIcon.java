@@ -177,7 +177,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     }
 
     /**
-     * Poppup menu iconEditor's ActionListener
+     * Popup menu iconEditor's ActionListener
      */
     SpinnerNumberModel _spinModel = new SpinnerNumberModel(3, 1, 100, 1);
 
