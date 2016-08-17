@@ -154,7 +154,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     @Override
-    public String getColumnName(int col) {
+    public synchronized String getColumnName(int col) {
         switch (col) {
             case ID_COLUMN:
                 return Bundle.getMessage("Id");
@@ -199,7 +199,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     @Override
-    public Class<?> getColumnClass(int col) {
+    public synchronized Class<?> getColumnClass(int col) {
         switch (col) {
             case ID_COLUMN:
                 return String.class;
