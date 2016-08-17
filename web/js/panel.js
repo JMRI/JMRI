@@ -673,16 +673,18 @@ function $handleLinkingLabelClick(e) {
 function $drawCircle($ptx, $pty, $radius, $color, $width) {
     var $savStrokeStyle = $gCtx.strokeStyle;
     var $savLineWidth = $gCtx.lineWidth;
-    if (typeof $color !== "undefined")
+    if (typeof $color !== "undefined" && $savStrokeStyle != $color) //only change context if needed
         $gCtx.strokeStyle = $color;
-    if (typeof $width !== "undefined")
+    if (typeof $width !== "undefined" && $savLineWidth != $width)
         $gCtx.lineWidth = $width;
     $gCtx.beginPath();
     $gCtx.arc($ptx, $pty, $radius, 0, 2 * Math.PI, false);
     $gCtx.stroke();
-    // put color and widths back to default
-    $gCtx.lineWidth = $savLineWidth;
-    $gCtx.strokeStyle = $savStrokeStyle;
+    // put color and widths back to default, if changed
+    if ($savStrokeStyle != $color)
+        $gCtx.strokeStyle = $savStrokeStyle;
+    if ($savLineWidth != $width)
+      $gCtx.lineWidth = $savLineWidth;
 }
 
 //draw a Tracksegment (pass in widget)
@@ -744,7 +746,6 @@ function $drawDashedLine($pt1x, $pt1y, $pt2x, $pt2y, $color, $width, dashArray) 
         $gCtx.lineWidth = $width;
     $gCtx.beginPath();
     $gCtx.dashedLine($pt1x, $pt1y, $pt2x, $pt2y, dashArray);
-    $gCtx.closePath();
     $gCtx.stroke();
     // put color and width back to default
     $gCtx.strokeStyle = $savStrokeStyle;
@@ -1048,18 +1049,19 @@ function $storeLevelXingPoints($widget) {
 function $drawLine($pt1x, $pt1y, $pt2x, $pt2y, $color, $width) {
     var $savLineWidth = $gCtx.lineWidth;
     var $savStrokeStyle = $gCtx.strokeStyle;
-    if (typeof $color !== "undefined")
+    if (typeof $color !== "undefined" && $savStrokeStyle != $color) //only change context if needed
         $gCtx.strokeStyle = $color;
-    if (typeof $width !== "undefined")
+    if (typeof $width !== "undefined" && $savLineWidth != $width)
         $gCtx.lineWidth = $width;
     $gCtx.beginPath();
     $gCtx.moveTo($pt1x, $pt1y);
     $gCtx.lineTo($pt2x, $pt2y);
-    $gCtx.closePath();
     $gCtx.stroke();
-    // put color and width back to default
-    $gCtx.strokeStyle = $savStrokeStyle;
-    $gCtx.lineWidth = $savLineWidth;
+    // put color and width back to default, if changed
+    if ($savStrokeStyle != $color)
+      $gCtx.strokeStyle = $savStrokeStyle;
+    if ($savLineWidth != $width)
+      $gCtx.lineWidth = $savLineWidth;
 }
 
 //drawArc, passing in values from xml
@@ -1073,9 +1075,9 @@ function $drawArc(pt1x, pt1y, pt2x, pt2y, degrees, $color, $width) {
         //save track settings for restore
         var $savLineWidth = $gCtx.lineWidth;
         var $savStrokeStyle = $gCtx.strokeStyle;
-        if (typeof $color !== "undefined")
+        if (typeof $color !== "undefined" && $savStrokeStyle != $color) //only change context if needed
             $gCtx.strokeStyle = $color;
-        if (typeof $width !== "undefined")
+        if (typeof $width !== "undefined" && $savLineWidth != $width)
             $gCtx.lineWidth = $width;
 
         var halfAngle = (degrees / 2) * Math.PI / 180; //in radians
@@ -1083,8 +1085,8 @@ function $drawArc(pt1x, pt1y, pt2x, pt2y, degrees, $color, $width) {
         // Circle
         var startRad = Math.atan2(a, o) - halfAngle; //in radians
         // calculate center of circle
-        var cx = ((pt2x * 1.0) - Math.cos(startRad) * radius);
-        var cy = ((pt2y * 1.0) + Math.sin(startRad) * radius);
+        var cx = (pt2x * 1.0) - Math.cos(startRad) * radius;
+        var cy = (pt2y * 1.0) + Math.sin(startRad) * radius;
 
         //calculate start and end angle
         var startAngle = Math.atan2(pt1y - cy, pt1x - cx); //in radians
@@ -1094,9 +1096,11 @@ function $drawArc(pt1x, pt1y, pt2x, pt2y, degrees, $color, $width) {
         $gCtx.beginPath();
         $gCtx.arc(cx, cy, radius, startAngle, endAngle, counterClockwise);
         $gCtx.stroke();
-        // put color and width back to default
-        $gCtx.strokeStyle = $savStrokeStyle;
-        $gCtx.lineWidth = $savLineWidth;
+        // put color and width back to default (if changed)
+        if ($savStrokeStyle != $color)
+          $gCtx.strokeStyle = $savStrokeStyle;
+        if ($savLineWidth != $width)
+          $gCtx.lineWidth = $savLineWidth;
     }
 }
 

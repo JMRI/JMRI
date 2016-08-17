@@ -245,6 +245,11 @@
                     case "turnout":
                         jmri.getTurnout(name);
                         break;
+                    default:
+                        if (window.console) {
+                            console.log("WARN-unknown type of " + type + " encountered by jquery.jmri.js in getObject().");
+                        }
+
                 }
             };
             jmri.setObject = function(type, name, state) {
@@ -279,6 +284,10 @@
                     case "turnout":
                         jmri.setTurnout(name, state);
                         break;
+                    default:
+                        if (window.console) {
+                            console.log("WARN-unknown type of " + type + " encountered by jquery.jmri.js in setObject().");
+                        }
                 }
             };
             jmri.getPower = function() {
