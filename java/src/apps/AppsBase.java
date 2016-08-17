@@ -284,8 +284,7 @@ public abstract class AppsBase {
             configDeferredLoadOK = true;
         } else // To avoid possible locks, deferred load should be
         // performed on the Swing thread
-        {
-            if (SwingUtilities.isEventDispatchThread()) {
+         if (SwingUtilities.isEventDispatchThread()) {
                 configDeferredLoadOK = doDeferredLoad(file);
             } else {
                 try {
@@ -298,7 +297,6 @@ public abstract class AppsBase {
                     log.error("Exception creating system console frame: " + ex);
                 }
             }
-        }
         if (sharedConfig == null && configOK == true && configDeferredLoadOK == true) {
             log.info("Migrating preferences to new format...");
             // migrate preferences
@@ -314,18 +312,14 @@ public abstract class AppsBase {
     //abstract protected void addToActionModel();
     private boolean doDeferredLoad(File file) {
         boolean result;
-        if (log.isDebugEnabled()) {
-            log.debug("start deferred load from config file " + file.getName());
-        }
+        log.debug("start deferred load from config file {}", file.getName());
         try {
             result = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).loadDeferred(file);
         } catch (JmriException e) {
             log.error("Unhandled problem loading deferred configuration: " + e);
             result = false;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("end deferred load from config file " + file.getName() + ", OK=" + result);
-        }
+        log.debug("end deferred load from config file {}, OK={}", file.getName(), result);
         return result;
     }
 
@@ -345,9 +339,7 @@ public abstract class AppsBase {
         // `kill -s 9 pid`
         jmri.util.RuntimeUtil.addShutdownHook(new Thread(new Runnable() {
             public void run() {
-                if (log.isDebugEnabled()) {
-                    log.debug("Shutdown hook called");
-                }
+                log.debug("Shutdown hook called");
                 handleQuit();
             }
         }));
