@@ -2559,16 +2559,14 @@ public class Track {
             }
         }
 
-        if (e.getAttribute(Xml.READER) != null) {
-            //            @SuppressWarnings("unchecked")
+        if ((a = e.getAttribute(Xml.READER)) != null) {
             try {
                 Reporter r = jmri.InstanceManager
                         .getDefault(jmri.ReporterManager.class)
-                        .provideReporter(
-                                e.getAttribute(Xml.READER).getValue());
+                        .provideReporter(a.getValue());
                 _reader = r;
             } catch (IllegalArgumentException ex) {
-                log.warn("Not able to find reader: {} for location ({})", e.getAttribute(Xml.READER).getValue(),
+                log.warn("Not able to find reader: {} for location ({})", a.getValue(),
                         getName());
             }
         }
