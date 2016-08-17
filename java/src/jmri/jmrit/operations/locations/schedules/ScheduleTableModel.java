@@ -162,7 +162,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
 
     @Override
-    public String getColumnName(int col) {
+    public synchronized String getColumnName(int col) {
         switch (col) {
             case ID_COLUMN:
                 return Bundle.getMessage("Id");
@@ -511,7 +511,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
 
     // set the count or hits if in match mode
-    private void setCount(Object value, int row) {
+    private synchronized void setCount(Object value, int row) {
         ScheduleItem si = _list.get(row);
         int count;
         try {
