@@ -30,6 +30,7 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService {
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
+        root.put(JSON.TYPE, SENSOR);
         Sensor sensor = InstanceManager.getDefault(SensorManager.class).getSensor(name);
         ObjectNode data = this.getNamedBean(sensor, name, type, locale); // throws JsonException if sensor == null
         if (sensor != null) {
