@@ -673,16 +673,18 @@ function $handleLinkingLabelClick(e) {
 function $drawCircle($ptx, $pty, $radius, $color, $width) {
     var $savStrokeStyle = $gCtx.strokeStyle;
     var $savLineWidth = $gCtx.lineWidth;
-    if (typeof $color !== "undefined")
+    if (typeof $color !== "undefined" && $savStrokeStyle != $color) //only change context if needed
         $gCtx.strokeStyle = $color;
-    if (typeof $width !== "undefined")
+    if (typeof $width !== "undefined" && $savLineWidth != $width)
         $gCtx.lineWidth = $width;
     $gCtx.beginPath();
     $gCtx.arc($ptx, $pty, $radius, 0, 2 * Math.PI, false);
     $gCtx.stroke();
-    // put color and widths back to default
-    $gCtx.lineWidth = $savLineWidth;
-    $gCtx.strokeStyle = $savStrokeStyle;
+    // put color and widths back to default, if changed
+    if ($savStrokeStyle != $color)
+        $gCtx.strokeStyle = $savStrokeStyle;
+    if ($savLineWidth != $width)
+      $gCtx.lineWidth = $savLineWidth;
 }
 
 //draw a Tracksegment (pass in widget)
@@ -695,14 +697,12 @@ function $drawTrackSegment($widget) {
     //get the endpoints by name
     var $pt1 = $gPts[$widget.connect1name + "." + $widget.type1];
     if (typeof $pt1 == "undefined") {
-        if (window.console)
-            console.log("can't draw tracksegment " + $widget.connect1name + "." + $widget.type1 + " undefined (1)");
+    	jmri.log("can't draw tracksegment " + $widget.connect1name + "." + $widget.type1 + " undefined (1)");
         return;
     }
     var $pt2 = $gPts[$widget.connect2name + "." + $widget.type2];
     if (typeof $pt2 == "undefined") {
-        if (window.console)
-            console.log("can't draw tracksegment " + $widget.connect2name + "." + $widget.type2 + " undefined (2)");
+    	jmri.log("can't draw tracksegment " + $widget.connect2name + "." + $widget.type2 + " undefined (2)");
         return;
     }
 
@@ -744,7 +744,6 @@ function $drawDashedLine($pt1x, $pt1y, $pt2x, $pt2y, $color, $width, dashArray) 
         $gCtx.lineWidth = $width;
     $gCtx.beginPath();
     $gCtx.dashedLine($pt1x, $pt1y, $pt2x, $pt2y, dashArray);
-    $gCtx.closePath();
     $gCtx.stroke();
     // put color and width back to default
     $gCtx.strokeStyle = $savStrokeStyle;
@@ -826,8 +825,7 @@ function $drawIcon($widget) {
             $("#panel-area>#" + $widget.id + "overlay").css({position: 'absolute', left: $widget.x + 'px', top: $widget.y + 'px', zIndex: ($widget.level - 1)});
         }
     } else {
-        if (window.console)
-            console.log("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate);
+    	jmri.log("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate);
     }
     $setWidgetPosition($("#panel-area #" + $widget.id));
 }
@@ -844,8 +842,8 @@ function $drawLevelXing($widget) {
         if ($gWidgets[$widget.connectaname].mainline == "yes") {
             $width = $gPanel.mainlinetrackwidth;
         }
-    } else {
-//		if (window.console) console.log("could not get trackwidth of "+$widget.connectaname+" for "+$widget.name);
+//    } else {
+//		  jmri.log("could not get trackwidth of "+$widget.connectaname+" for "+$widget.name);
     }
     if ($gPanel.turnoutcircles == "yes") {
         $drawCircle($widget.xcen, $widget.ycen, $gPanel.turnoutcirclesize * SIZE, $gPanel.turnoutcirclecolor, 1);
@@ -888,8 +886,8 @@ function $drawTurnout($widget) {
         if ($gWidgets[$widget.connectaname].mainline == "yes") {
             $width = $gPanel.mainlinetrackwidth;
         }
-    } else {
-//		if (window.console) console.log("could not get trackwidth of "+$widget.connectaname+" for "+$widget.name);
+//    } else {
+//		 jmri.log("could not get trackwidth of "+$widget.connectaname+" for "+$widget.name);
     }
     var cenx = $widget.xcen;
     var ceny = $widget.ycen
@@ -1048,18 +1046,19 @@ function $storeLevelXingPoints($widget) {
 function $drawLine($pt1x, $pt1y, $pt2x, $pt2y, $color, $width) {
     var $savLineWidth = $gCtx.lineWidth;
     var $savStrokeStyle = $gCtx.strokeStyle;
-    if (typeof $color !== "undefined")
+    if (typeof $color !== "undefined" && $savStrokeStyle != $color) //only change context if needed
         $gCtx.strokeStyle = $color;
-    if (typeof $width !== "undefined")
+    if (typeof $width !== "undefined" && $savLineWidth != $width)
         $gCtx.lineWidth = $width;
     $gCtx.beginPath();
     $gCtx.moveTo($pt1x, $pt1y);
     $gCtx.lineTo($pt2x, $pt2y);
-    $gCtx.closePath();
     $gCtx.stroke();
-    // put color and width back to default
-    $gCtx.strokeStyle = $savStrokeStyle;
-    $gCtx.lineWidth = $savLineWidth;
+    // put color and width back to default, if changed
+    if ($savStrokeStyle != $color)
+      $gCtx.strokeStyle = $savStrokeStyle;
+    if ($savLineWidth != $width)
+      $gCtx.lineWidth = $savLineWidth;
 }
 
 //drawArc, passing in values from xml
@@ -1073,9 +1072,9 @@ function $drawArc(pt1x, pt1y, pt2x, pt2y, degrees, $color, $width) {
         //save track settings for restore
         var $savLineWidth = $gCtx.lineWidth;
         var $savStrokeStyle = $gCtx.strokeStyle;
-        if (typeof $color !== "undefined")
+        if (typeof $color !== "undefined" && $savStrokeStyle != $color) //only change context if needed
             $gCtx.strokeStyle = $color;
-        if (typeof $width !== "undefined")
+        if (typeof $width !== "undefined" && $savLineWidth != $width)
             $gCtx.lineWidth = $width;
 
         var halfAngle = (degrees / 2) * Math.PI / 180; //in radians
@@ -1083,8 +1082,8 @@ function $drawArc(pt1x, pt1y, pt2x, pt2y, degrees, $color, $width) {
         // Circle
         var startRad = Math.atan2(a, o) - halfAngle; //in radians
         // calculate center of circle
-        var cx = ((pt2x * 1.0) - Math.cos(startRad) * radius);
-        var cy = ((pt2y * 1.0) + Math.sin(startRad) * radius);
+        var cx = (pt2x * 1.0) - Math.cos(startRad) * radius;
+        var cy = (pt2y * 1.0) + Math.sin(startRad) * radius;
 
         //calculate start and end angle
         var startAngle = Math.atan2(pt1y - cy, pt1x - cx); //in radians
@@ -1094,9 +1093,11 @@ function $drawArc(pt1x, pt1y, pt2x, pt2y, degrees, $color, $width) {
         $gCtx.beginPath();
         $gCtx.arc(cx, cy, radius, startAngle, endAngle, counterClockwise);
         $gCtx.stroke();
-        // put color and width back to default
-        $gCtx.strokeStyle = $savStrokeStyle;
-        $gCtx.lineWidth = $savLineWidth;
+        // put color and width back to default (if changed)
+        if ($savStrokeStyle != $color)
+          $gCtx.strokeStyle = $savStrokeStyle;
+        if ($savLineWidth != $width)
+          $gCtx.lineWidth = $savLineWidth;
     }
 }
 
@@ -1270,8 +1271,7 @@ var $reDrawIcon = function($widget) {
     } else if ($widget['defaulticon']) {  //if state icon not found, use default icon if provided
         $('img#' + $widget.id).attr('src', $widget['defaulticon']); 
     } else {
-        if (window.console)
-            console.log("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate);
+    	jmri.log("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate);
     }
 };
 
@@ -1279,8 +1279,7 @@ var $reDrawIcon = function($widget) {
 var $setWidgetState = function($id, $newState) {
     var $widget = $gWidgets[$id];
     if ($widget.state !== $newState) {  //don't bother if already this value
-        if (window.console)
-            console.log("setting " + $id + " for " + $widget.jsonType + " " + $widget.name + ", '" + $widget.state + "' --> '" + $newState + "'");
+    	jmri.log("setting " + $id + " for " + $widget.jsonType + " " + $widget.name + ", '" + $widget.state + "' --> '" + $newState + "'");
         $widget.state = $newState;
         switch ($widget.widgetFamily) {
             case "icon" :
@@ -1310,8 +1309,7 @@ var $setWidgetState = function($id, $newState) {
         }
         $gWidgets[$id].state = $newState;  //update the persistent widget to the new state
 //    } else {
-//        if (window.console)
-//            console.log("NOT setting " + $id + " for " + $widget.jsonType + " " + $widget.name + " --> " + $newState);
+//        jmri.log("NOT setting " + $id + " for " + $widget.jsonType + " " + $widget.name + " --> " + $newState);
     }
 };
 
@@ -1335,9 +1333,7 @@ var $safeName = function($name) {
 
 //send request for state change 
 var sendElementChange = function(type, name, nextState) {
-    if (window.console) {
-        console.log("sending " + type + " " + name + " --> " + nextState);
-    }
+	jmri.log("sending " + type + " " + name + " --> " + nextState);
     jmri.setObject(type, name, nextState);
 };
 
@@ -1348,14 +1344,12 @@ $(document).ajaxError(function(event, xhr, opt, exception) {
         $('div#messageText').text($msg);
         $("#activity-alert").addClass("show").removeClass("hidden");
         $('dvi#workingMessage').position({within: "window"});
-        if (window.console)
-            console.log($msg);
+        jmri.log($msg);
         return;
     }
     if (xhr.statusText == "timeout") {
         var $msg = "AJAX timeout " + opt.url + ", status= " + xhr.status + " " + xhr.statusText + " resending list....";
-        if (window.console)
-            console.log($msg);
+        jmri.log($msg);
         // TODO: need to recover somehow
     }
 });
@@ -1412,8 +1406,7 @@ var $getNextState = function($widget) {
                             $nextState = s; //last one was the current, so this one must be next
                         if (s == $widget.state)
                             $currentState = s;
-                        if (window.console)
-                            console.log('key: ' + k + " first=" + $firstState);
+//                        jmri.log('key: ' + k + " first=" + $firstState);
                     }
                 }
                 if (typeof $nextState == "undefined")
@@ -1437,8 +1430,7 @@ var $getNextState = function($widget) {
     					$nextState = s; //last one was the current, so this one must be next
     				if (s == $widget.state)
     					$currentState = s;
-    				if (window.console)
-    					console.log('key: ' + k + " first=" + $firstState);
+//    				jmri.log('key: ' + k + " first=" + $firstState);
     			}
     		};
     		if (typeof $nextState == "undefined")
@@ -1539,15 +1531,13 @@ var $getWidgetFamily = function($widget, $element) {
             return "drawn";
             break;
     }
-    if (window.console)
-        console.log("unknown widget type of '" + $widget.widgetType +"'");
+    jmri.log("unknown widget type of '" + $widget.widgetType +"'");
     return; //unrecognized widget returns undefined
 };
 
 //redraw all "drawn" elements for given block (called after color change) 
 function $redrawBlock(blockName) {
-//	if (window.console)
-//		console.log("redrawing all track for block " + blockName);
+//	   jmri.log("redrawing all track for block " + blockName);
 	//loop thru widgets, if block matches, redraw widget by proper method
 	jQuery.each($gWidgets, function($id, $widget) {
 		if ($widget.blockname == blockName) {
@@ -1599,8 +1589,7 @@ var $drawAllIconWidgets = function() {
 function updateWidgets(name, state, data) {
     //if systemName not in systemNames list, replace userName with systemName
 	if (!systemNames[name] && name != data.userName) {
-        if (window.console)
-		  console.log("replacing userName " + data.userName + " with systemName " + name);    	
+		jmri.log("replacing userName " + data.userName + " with systemName " + name);    	
 		if (systemNames[data.userName]) {  										  //if found by userName
 			systemNames[name] = systemNames[data.userName];  //copy entry over
 			delete systemNames[data.userName];  							 //delete old one
@@ -1612,15 +1601,13 @@ function updateWidgets(name, state, data) {
             $setWidgetState(widgetId, state);
         });
     } else {
-        if (window.console)
-          console.log("system name " + name + " not found, can't set state to " + state);
+    	jmri.log("system name " + name + " not found, can't set state to " + state);
     }
 }
 
 function updateOccupancy(occupancyName, state) {
 	if (occupancyNames[occupancyName]) {
-		if (window.console)
-			console.log("setting occupancies for sensor " + occupancyName + " to " + state);
+		jmri.log("setting occupancies for sensor " + occupancyName + " to " + state);
 		$.each(occupancyNames[occupancyName], function(index, widgetId) {
 			$widget = $gWidgets[widgetId];
 			if ($widget.blockname) {
@@ -1638,14 +1625,12 @@ function updateOccupancy(occupancyName, state) {
 }
 
 function setBlockColor(blockName, newColor) {
-	if (window.console)
-		console.log("setting color for block " + blockName + " to " + newColor);
+	jmri.log("setting color for block " + blockName + " to " + newColor);
     var $blk = $gBlks[blockName];
     if (typeof $blk != "undefined") {
     	$gBlks[blockName].blockcolor = newColor;
     } else {
-    	if (window.console)
-    		console.log("ERROR: block " + blockName + " not found for color " + newColor);
+    	jmri.log("ERROR: block " + blockName + " not found for color " + newColor);
     }
     $redrawBlock(blockName);
 }
@@ -1734,10 +1719,8 @@ $(document).ready(function() {
             didReconnect: function() {
                 // if a reconnect is triggered, reload the page - it is the
                 // simplest method to refresh every object in the panel
-                if (window.console) {
-                    console.log("Reloading at reconnect");
-                }
-                location.reload(false);
+            	jmri.log("Reloading at reconnect");
+            	location.reload(false);
             },
             light: function(name, state, data) {
                 updateWidgets(name, state, data);
