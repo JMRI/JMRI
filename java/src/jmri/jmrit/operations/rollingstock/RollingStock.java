@@ -775,21 +775,23 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      */
     public void setRfid(String id) {
         String old = _rfid;
-        if (id != null && !id.equals(old)) {
-            _rfid = id;
-            log.debug("Changing IdTag for {} to {}", toString(), id);
-            try {
-                IdTag tag = InstanceManager.getDefault(IdTagManager.class).getIdTag(id.toUpperCase());
-                if (tag != null) {
-                    log.debug("Tag {} Found", tag.toString());
-                } else {
-                    log.error("Tag {} Not Found", id);
-                }
-                setIdTag(tag);
-            } catch (NullPointerException e) {
-                log.error("Tag {} Not Found", id);
-            }
-            setDirtyAndFirePropertyChange("rolling stock rfid", old, id); // NOI18N
+        if(id != null && !id.equals(old)) {
+           log.debug("Changing IdTag for {} to {}", toString(), id);
+           try {
+               IdTag tag = InstanceManager.getDefault(IdTagManager.class).getIdTag(id.toUpperCase());
+               if (tag != null) {
+                  log.debug("Tag {} Found", tag.toString());
+               } else {
+                   log.error("Tag {} Not Found", id);
+               }
+                   setIdTag(tag);
+           } catch (NullPointerException e) {
+               log.error("Tag {} Not Found", id);
+           } finally {
+             // always set the _rfid if it changed.
+             _rfid = id;
+             setDirtyAndFirePropertyChange("rolling stock rfid", old, id); // NOI18N
+           }
         }
     }
 
@@ -798,8 +800,8 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     }
 
     /**
-     * Sets the id tag for this rolling stock. The id tag isn't saved, ut the
-     * RFID is.
+     * Sets the id tag for this rolling stock. The id tag isn't saved, 
+     * between session but the tag label is saved as _rfid.
      * 
      * @param tag the id tag
      */
@@ -895,12 +897,29 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 
     public Track getTrackLastSeen() {
         if (_tag == null) {
+            // there isn't a tag associated with this piece of rolling stock.
             return null;
         }
         jmri.Reporter r = _tag.getWhereLastSeen();
+        if(r==null) {
+           // there is a tag associated with this piece
+           // of rolling stock, but no reporter has seen it (or it was reset). 
+           return null; 
+        }
         // this return value will be null, if there isn't an associated track
-        // for the last read.
+        // for the last reporter.
         return locationManager.getTrackByReporter(r);
+    }
+
+    public String getTrackLastSeenName() {
+        // let getTrackLastSeen() find the track, if it exists. 
+        Track t = getTrackLastSeen();
+        if(t!=null){
+           // if there is a track, return the name.
+           return t.getName();
+        }
+        // otherwise, there is no track to return the name of.
+        return NONE;
     }
 
     public Date getWhenLastSeen() {

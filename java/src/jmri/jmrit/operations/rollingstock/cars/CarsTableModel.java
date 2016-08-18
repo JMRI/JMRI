@@ -527,8 +527,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case WAIT_COLUMN:
             case VALUE_COLUMN:
             case RFID_COLUMN:
-            case RFID_WHEN_LAST_SEEN_COLUMN:
-            case RFID_WHERE_LAST_SEEN_COLUMN:
                 return true;
             default:
                 return false;
@@ -577,7 +575,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 return car.getStatus();
             }
             case RFID_WHERE_LAST_SEEN_COLUMN: {
-                return car.getWhereLastSeenName();
+                return car.getWhereLastSeenName() + " (" +car.getTrackLastSeenName() + ")";
             }
             case RFID_WHEN_LAST_SEEN_COLUMN: {
                 return car.getWhenLastSeenDate();
@@ -690,13 +688,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 break;
             case RFID_COLUMN:
                 car.setRfid(value.toString());
-                break;
-            case RFID_WHERE_LAST_SEEN_COLUMN:
-                Location newLocation = LocationManager.instance().getLocationByName(value.toString());
-                car.setWhereLastSeen(newLocation);
-                break;
-            case RFID_WHEN_LAST_SEEN_COLUMN:
-                car.setWhenLastSeen(value.toString());
                 break;
             case WAIT_COLUMN:
                 try {

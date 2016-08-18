@@ -596,7 +596,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
             // save the IdTag for this engine
             IdTag idTag = (IdTag) rfidComboBox.getSelectedItem();
             if (idTag != null) {
-                _engine.setRfid(idTag.getUserName());
+                _engine.setRfid(idTag.toString());
             }
         }
     }

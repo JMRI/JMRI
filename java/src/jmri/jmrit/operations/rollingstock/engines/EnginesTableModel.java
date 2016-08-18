@@ -325,8 +325,6 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             case MOVES_COLUMN:
             case VALUE_COLUMN:
             case RFID_COLUMN:
-            case RFID_WHEN_LAST_SEEN_COLUMN:
-            case RFID_WHERE_LAST_SEEN_COLUMN:
                 return true;
             default:
                 return false;
@@ -373,7 +371,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 return s;
             }
             case RFID_WHERE_LAST_SEEN_COLUMN: {
-                return eng.getWhereLastSeenName();
+                return eng.getWhereLastSeenName() + " (" + eng.getTrackLastSeenName() +")";
             }
             case RFID_WHEN_LAST_SEEN_COLUMN: {
                 return eng.getWhenLastSeenDate();
@@ -438,13 +436,6 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 break;
             case RFID_COLUMN:
                 engine.setRfid(value.toString());
-                break;
-            case RFID_WHERE_LAST_SEEN_COLUMN:
-                Location newLocation = LocationManager.instance().getLocationByName(value.toString());
-                engine.setWhereLastSeen(newLocation);
-                break;
-            case RFID_WHEN_LAST_SEEN_COLUMN:
-                engine.setWhenLastSeen(value.toString());
                 break;
             case SET_COLUMN:
                 log.debug("Set engine location");
