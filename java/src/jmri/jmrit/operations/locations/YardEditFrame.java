@@ -2,6 +2,9 @@
 package jmri.jmrit.operations.locations;
 
 import javax.swing.BorderFactory;
+import jmri.jmrit.operations.locations.tools.ChangeTrackTypeAction;
+import jmri.jmrit.operations.locations.tools.ShowCarsByLocationAction;
+import jmri.jmrit.operations.locations.tools.ShowTrainsServingLocationAction;
 
 /**
  * Frame for user edit of a yard

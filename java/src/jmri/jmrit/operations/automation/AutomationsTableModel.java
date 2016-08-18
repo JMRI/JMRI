@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * Table model allowing the edit and status of an automation used by operations.
  *
  * @author Daniel Boudreau Copyright (C) 2016
- * @version $Revision$
  */
 public class AutomationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -311,9 +310,6 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
     }
 
     public synchronized void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
         Enumeration<String> en = automationEditFrames.keys();
         while (en.hasMoreElements()) {
             AutomationTableFrame frame = automationEditFrames.get(en.nextElement());
@@ -326,7 +322,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
 
     // check for change in number of automations, or a change in a automation
     @Override
-    public void propertyChange(PropertyChangeEvent e) {
+    public synchronized void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());

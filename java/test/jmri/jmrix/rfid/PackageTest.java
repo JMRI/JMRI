@@ -43,6 +43,9 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.rfid.protocol.seeedstudio.SeeedStudioRfidProtocolTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.rfid.serialdriver.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.rfid.networkdriver.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.rfid.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.rfid.generic.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.rfid.merg.PackageTest.class));
         return suite;
     }
 

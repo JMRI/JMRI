@@ -1,4 +1,3 @@
-// Bundle.java
 package jmri.jmrit.display.controlPanelEditor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -19,7 +18,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * the local resource bundle name.
  *
  * @author Bob Jacobsen Copyright (C) 2012
- * @version $Revision: 17977 $
  * @since 3.3.1
  */
 public class Bundle extends jmri.jmrit.display.Bundle {
@@ -78,5 +76,3 @@ public class Bundle extends jmri.jmrit.display.Bundle {
     }
 
 }
-
-/* @(#)Bundle.java */

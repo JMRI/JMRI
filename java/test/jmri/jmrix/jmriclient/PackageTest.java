@@ -38,6 +38,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(JMRIClientPowerManagerTest.class));
         suite.addTest(BundleTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.jmriclient.networkdriver.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.jmriclient.configurexml.PackageTest.class));
 // if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
         // there are currently no swing tests.
         // }

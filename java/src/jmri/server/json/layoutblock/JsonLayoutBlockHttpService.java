@@ -1,19 +1,19 @@
 package jmri.server.json.layoutblock;
 
-import static jmri.server.json.JSON.BLOCK_COLOR;
 import static jmri.server.json.JSON.COMMENT;
 import static jmri.server.json.JSON.DATA;
-import static jmri.server.json.JSON.EXTRA_COLOR;
 import static jmri.server.json.JSON.NAME;
-import static jmri.server.json.JSON.OCCUPANCY_SENSOR;
-import static jmri.server.json.JSON.OCCUPIED_COLOR;
-import static jmri.server.json.JSON.OCCUPIED_SENSE;
 import static jmri.server.json.JSON.STATE;
-import static jmri.server.json.JSON.TRACK_COLOR;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.USERNAME;
-import static jmri.server.json.JSON.USE_EXTRA_COLOR;
-import static jmri.server.json.layoutblock.JsonLayoutBlockServiceFactory.LAYOUTBLOCK;
+import static jmri.server.json.layoutblock.JsonLayoutBlock.BLOCK_COLOR;
+import static jmri.server.json.layoutblock.JsonLayoutBlock.EXTRA_COLOR;
+import static jmri.server.json.layoutblock.JsonLayoutBlock.LAYOUTBLOCK;
+import static jmri.server.json.layoutblock.JsonLayoutBlock.OCCUPANCY_SENSOR;
+import static jmri.server.json.layoutblock.JsonLayoutBlock.OCCUPIED_COLOR;
+import static jmri.server.json.layoutblock.JsonLayoutBlock.OCCUPIED_SENSE;
+import static jmri.server.json.layoutblock.JsonLayoutBlock.TRACK_COLOR;
+import static jmri.server.json.layoutblock.JsonLayoutBlock.USE_EXTRA_COLOR;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

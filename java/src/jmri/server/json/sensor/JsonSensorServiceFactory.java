@@ -1,5 +1,8 @@
 package jmri.server.json.sensor;
 
+import static jmri.server.json.sensor.JsonSensor.SENSOR;
+import static jmri.server.json.sensor.JsonSensor.SENSORS;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonHttpService;
@@ -13,8 +16,6 @@ import jmri.spi.JsonServiceFactory;
  */
 public class JsonSensorServiceFactory implements JsonServiceFactory {
 
-    public static final String SENSOR = "sensor"; // NOI18N
-    public static final String SENSORS = "sensors"; // NOI18N
 
     @Override
     public String[] getTypes() {

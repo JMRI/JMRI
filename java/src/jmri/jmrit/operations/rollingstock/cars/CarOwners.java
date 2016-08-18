@@ -1,4 +1,3 @@
-// CarOwners.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Represents the owner names that cars can have.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2014
- * @version $Revision$
  */
 public class CarOwners extends RollingStockAttribute {
 
@@ -28,9 +26,7 @@ public class CarOwners extends RollingStockAttribute {
 
     public static synchronized CarOwners instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("CarOwners creating instance");
-            }
+            log.debug("CarOwners creating instance");
             // create and load
             _instance = new CarOwners();
         }

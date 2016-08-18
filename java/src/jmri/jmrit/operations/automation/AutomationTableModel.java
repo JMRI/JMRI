@@ -1,4 +1,3 @@
-// AutomationTableModel.java
 package jmri.jmrit.operations.automation;
 
 import java.awt.BorderLayout;
@@ -214,7 +213,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     @Override
-    public boolean isCellEditable(int row, int col) {
+    public synchronized boolean isCellEditable(int row, int col) {
         switch (col) {
             case ACTION_COLUMN:
             case TRAIN_COLUMN:
@@ -518,16 +517,13 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
     }
 
-    private void removePropertyChangeAutomationItems() {
+    private synchronized void removePropertyChangeAutomationItems() {
         for (AutomationItem item : _list) {
             item.removePropertyChangeListener(this);
         }
     }
 
     public synchronized void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
         if (_automation != null) {
             removePropertyChangeAutomationItems();
             _automation.removePropertyChangeListener(this);
