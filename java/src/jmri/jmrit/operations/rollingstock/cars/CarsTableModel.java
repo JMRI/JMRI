@@ -1,4 +1,3 @@
-// CarsTableModel.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.beans.PropertyChangeEvent;
@@ -714,9 +713,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose CarTableModel");
-        }
         manager.removePropertyChangeListener(this);
         removePropertyChangeCars();
         if (csf != null) {

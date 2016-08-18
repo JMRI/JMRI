@@ -13,12 +13,11 @@ import org.slf4j.LoggerFactory;
  * Represents a locomotive on the layout
  *
  * @author Daniel Boudreau (C) Copyright 2008
- * @version $Revision$
  */
 public class Engine extends RollingStock {
-    
+
     public static final int NCE_REAR_BLOCK_NUMBER = 8;
-    public static final int B_UNIT_BLOCKING = 10;  // block B Units after NCE Consists
+    public static final int B_UNIT_BLOCKING = 10; // block B Units after NCE Consists
 
     private Consist _consist = null;
     private String _model = NONE;
@@ -262,21 +261,24 @@ public class Engine extends RollingStock {
     }
 
     /**
-     * Determine if there's a change in the lead locomotive. There are two possible
-     * locations in a train's route. TODO this code places the last loco added to the
-     * train as the lead. It would be better if the first one became the lead loco.
+     * Determine if there's a change in the lead locomotive. There are two
+     * possible locations in a train's route. TODO this code places the last
+     * loco added to the train as the lead. It would be better if the first one
+     * became the lead loco.
      */
     @Override
     protected void moveRollingStock(RouteLocation current, RouteLocation next) {
         if (current == getRouteLocation()) {
             if (getConsist() == null || getConsist().isLead(this)) {
-                if (getRouteLocation() != getRouteDestination() && getTrain() != null
-                        && !isBunit() && getTrain().getLeadEngine() != this) {
-                    if (((getTrain().getSecondLegStartLocation() == current
-                            && (getTrain().getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES))
-                            ||
-                            ((getTrain().getThirdLegStartLocation() == current
-                            && (getTrain().getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES))) {
+                if (getRouteLocation() != getRouteDestination() &&
+                        getTrain() != null &&
+                        !isBunit() &&
+                        getTrain().getLeadEngine() != this) {
+                    if (((getTrain().getSecondLegStartLocation() == current &&
+                            (getTrain().getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES)) ||
+                            ((getTrain().getThirdLegStartLocation() == current &&
+                                    (getTrain().getThirdLegOptions() &
+                                            Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES))) {
                         log.debug("New lead locomotive ({}) for train ({})", toString(), getTrain().getName());
                         getTrain().setLeadEngine(this);
                         getTrain().createTrainIcon(current);
@@ -384,19 +386,15 @@ public class Engine extends RollingStock {
         super.propertyChange(e);
         if (e.getPropertyName().equals(EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY)) {
             if (e.getOldValue().equals(getTypeName())) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Loco ({} {}) sees type name change old: ({}) new: ({})", toString(), e.getOldValue(), e
-                            .getNewValue()); // NOI18N
-                }
+                log.debug("Loco ({} {}) sees type name change old: ({}) new: ({})", toString(), e.getOldValue(), e
+                        .getNewValue()); // NOI18N
                 setTypeName((String) e.getNewValue());
             }
         }
         if (e.getPropertyName().equals(EngineLengths.ENGINELENGTHS_NAME_CHANGED_PROPERTY)) {
             if (e.getOldValue().equals(getLength())) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Loco ({}) sees length name change old: {} new: {}", toString(), e.getOldValue(), e
-                            .getNewValue()); // NOI18N
-                }
+                log.debug("Loco ({}) sees length name change old: {} new: {}", toString(), e.getOldValue(), e
+                        .getNewValue()); // NOI18N
                 setLength((String) e.getNewValue());
             }
         }

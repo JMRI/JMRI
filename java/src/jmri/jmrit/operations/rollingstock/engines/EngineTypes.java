@@ -1,4 +1,3 @@
-// EngineTypes.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Represents the types of engines a railroad can have.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2014
- * @version $Revision$
  */
 public class EngineTypes extends RollingStockAttribute {
 
@@ -31,9 +29,7 @@ public class EngineTypes extends RollingStockAttribute {
 
     public static synchronized EngineTypes instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("EngineTypes creating instance");
-            }
+            log.debug("EngineTypes creating instance");
             // create and load
             _instance = new EngineTypes();
         }
