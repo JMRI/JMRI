@@ -65,10 +65,17 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService {
         SignalMast signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
         this.postNamedBean(signalMast, data, name, type, locale);
         if (signalMast != null) {
-            if (data.path(ASPECT).isTextual()) {
-                String aspect = data.path(ASPECT).asText();
-                if (signalMast.getValidAspects().contains(aspect)) {
-                    signalMast.setAspect(aspect);
+            if (data.path(STATE).isTextual()) {
+                String aspect = data.path(STATE).asText();
+                if (aspect.equals("Held")) {
+                    signalMast.setHeld(true);
+                } else if (signalMast.getValidAspects().contains(aspect)) {
+                    if (signalMast.getHeld()) {
+                        signalMast.setHeld(false);
+                    }
+                    if (!signalMast.getAspect().equals(aspect)) {
+                        signalMast.setAspect(aspect);
+                    }
                 } else {
                     throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", SIGNAL_MAST, aspect));
                 }
@@ -80,7 +87,9 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService {
     @Override
     public JsonNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
-        for (String name : InstanceManager.getDefault(SignalMastManager.class).getSystemNameList()) {
+
+        for (String name : InstanceManager.getDefault(SignalMastManager.class
+        ).getSystemNameList()) {
             root.add(this.doGet(SIGNAL_MAST, name, locale));
         }
         return root;
