@@ -1,4 +1,3 @@
-// LocationsByCarLoadFrame.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Dimension;
@@ -36,7 +35,6 @@ import org.slf4j.LoggerFactory;
  * Frame to display which locations service certain car loads
  *
  * @author Dan Boudreau Copyright (C) 2014
- * @version $Revision: 27492 $
  */
 public class LocationsByCarLoadFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -335,13 +333,15 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
                             if (!track.acceptsLoadName(load)) {
                                 JOptionPane.showMessageDialog(this,
                                         MessageFormat.format(Bundle.getMessage("WarningExcludeTrackLoad"),
-                                                new Object[]{track.getName(), load}), Bundle.getMessage("Error"),
+                                                new Object[]{track.getName(), load}),
+                                        Bundle.getMessage("Error"),
                                         JOptionPane.WARNING_MESSAGE);
                                 needLoadTrackEditFrame = true;
                             } else if (!track.acceptsLoad(load, type)) {
                                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                         .getMessage("WarningExcludeTrackTypeAndLoad"), new Object[]{track.getName(),
-                                            type, load}), Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
+                                                type, load}),
+                                        Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
                                 needLoadTrackEditFrame = true;
                             }
                         }
@@ -357,7 +357,8 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
                             } else if (track.acceptsLoad(load, type)) {
                                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                         .getMessage("WarningAcceptTrackTypeAndLoad"), new Object[]{track.getName(),
-                                            type, load}), Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
+                                                type, load}),
+                                        Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
                                 needLoadTrackEditFrame = true;
                             }
                         } else if (track.getLoadOption().equals(Track.EXCLUDE_LOADS)) {
@@ -381,12 +382,14 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
                             if (!track.shipsLoadName(load)) {
                                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                         .getMessage("WarningExcludeTrackShipLoad"), new Object[]{track.getName(),
-                                            load}), Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
+                                                load}),
+                                        Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
                                 needLoadTrackEditFrame = true;
                             } else if (!track.shipsLoad(load, type)) {
                                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                         .getMessage("WarningExcludeTrackShipTypeAndLoad"), new Object[]{
-                                            track.getName(), type, load}), Bundle.getMessage("Error"),
+                                                track.getName(), type, load}),
+                                        Bundle.getMessage("Error"),
                                         JOptionPane.WARNING_MESSAGE);
                                 needLoadTrackEditFrame = true;
                             }
@@ -403,7 +406,8 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
                             } else if (track.shipsLoad(load, type)) {
                                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                         .getMessage("WarningShipTrackTypeAndLoad"), new Object[]{track.getName(),
-                                            type, load}), Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
+                                                type, load}),
+                                        Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
                                 needLoadTrackEditFrame = true;
                             }
                         } else if (track.getShipLoadOption().equals(Track.EXCLUDE_LOADS)) {
@@ -447,20 +451,18 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (log.isDebugEnabled()) {
-            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
-                    .getNewValue());
-        }
-        if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Track.NAME_CHANGED_PROPERTY)) {
+        log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+                .getNewValue());
+        if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Track.NAME_CHANGED_PROPERTY)) {
             updateLocations();
         }
-        if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY)) {
             updateTypeComboBox();
         }
         if (e.getPropertyName().equals(CarLoads.LOAD_CHANGED_PROPERTY)) {

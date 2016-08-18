@@ -1243,7 +1243,6 @@ public class Location implements java.beans.PropertyChangeListener {
      * @param e Consist XML element
      */
     public Location(Element e) {
-        // if (log.isDebugEnabled()) log.debug("ctor from element "+e);
         Attribute a;
         if ((a = e.getAttribute(Xml.ID)) != null) {
             _id = a.getValue();
@@ -1341,7 +1340,6 @@ public class Location implements java.beans.PropertyChangeListener {
         else if ((a = e.getAttribute(Xml.CAR_TYPES)) != null) {
             String names = a.getValue();
             String[] Types = names.split("%%"); // NOI18N
-            // if (log.isDebugEnabled()) log.debug("rolling stock types: "+names);
             setTypeNames(Types);
         }
         // early version of operations called tracks "secondary"
