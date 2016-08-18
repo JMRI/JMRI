@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Represents one schedule item of a schedule
  *
  * @author Daniel Boudreau Copyright (C) 2009, 2010, 2013, 2014
- * @version $Revision$
  */
 public class ScheduleItem implements java.beans.PropertyChangeListener {
 
@@ -284,7 +283,6 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
      * @param e Consist XML element
      */
     public ScheduleItem(org.jdom2.Element e) {
-        // if (log.isDebugEnabled()) log.debug("ctor from element "+e);
         org.jdom2.Attribute a;
         if ((a = e.getAttribute(Xml.ID)) != null) {
             _id = a.getValue();
