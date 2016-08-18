@@ -31,7 +31,6 @@ import jmri.jmrit.display.Editor.TargetPane;
 /**
  * <P>
  * @author Pete Cressman Copyright: Copyright (c) 2012
- * @version $Revision: 1 $
  *
  */
 public abstract class DrawFrame extends jmri.util.JmriJFrame {
@@ -362,7 +361,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
             return i;
         } catch (NumberFormatException nfe) {
             JOptionPane.showMessageDialog(this, nfe,
-                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return value;
         }
     }

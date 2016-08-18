@@ -29,16 +29,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <P>
  * @author Pete Cressman Copyright: Copyright (c) 2011
  *
  */
 public class EditCircuitFrame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6144223447231259664L;
     private OBlock _block;
     private CircuitBuilder _parent;
 

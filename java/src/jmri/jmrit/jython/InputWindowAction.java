@@ -1,4 +1,3 @@
-// InputWindowAction.java
 package jmri.jmrit.jython;
 
 import java.awt.event.ActionEvent;
@@ -12,14 +11,8 @@ import jmri.util.JmriJFrame;
  * jython interpreter
  *
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version $Revision$
  */
 public class InputWindowAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7519659048278662430L;
 
     /**
      * Constructor just initializes parent class.
@@ -55,5 +48,3 @@ public class InputWindowAction extends AbstractAction {
 
     JFrame f;
 }
-
-/* @(#)InputWindowAction.java */

@@ -1,108 +1,164 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head>
-<title>JMRI OperationsPro - Advanced Features Pane</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI OperationsPro - Advanced Features Pane</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<a name="Top"></a>
-<h1>Using JMRI&reg; to Operate Trains</h1>
-<h2>OperationsPro: Build Options for Trains</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-<p><a href="Ops_Trains_Menu.shtml">Back</a><a href="#"></a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
-</div>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<hr>
-<p>The <strong>Options</strong> pane is opened from the <strong>Trains</strong> pane's <strong>Tools</strong> menu.</p>
-<table border="0" cellpadding="2" cellspacing="1" width="90%">
-  <tbody><tr>
-    <td valign="top" width="57%"><img style="width: 477px; height: 691px;" alt="trains build options" src="images/Ops_Trains_BuildOptions.png"><br></td>
-    <td valign="top" width="43%"><p>Standard JMRI&reg; <strong>Window</strong> and <strong>Help</strong> menus</p>
-    <p><strong>Build Options</strong><br>
-      <input name="radio" id="radio" value="radio" checked="checked" type="radio">
-      <strong>Normal 
-      <input name="radio2" id="radio2" value="radio2" type="radio">
-      Agressive</strong> <br>
-Normal builds are recommended when you first begin the program. Normal
-builds guarantee that when a Car is delivered (set out) by a train that
-there will be track space available for the car.<br>
-      <br>
-      Aggressive builds makes the Car's track space available as soon a a car is scheduled for pick up.<br>
-      <br>
-Note that once you've built a train, the build option can not be changed until all trains are terminated or reset.</p>
-    <p><strong>Switcher Service</strong></p>
-    <p>Next
-set of options control local car movements. Normally, it is beter not
-to allow a car to move from one spur directly to another spur in the
-same location.</p>
-    <p><strong>Staging</strong></p>
-    <p>
-      <input name="checkbox2" id="checkbox2" checked="checked" type="checkbox">
-      <strong>Enable Type, Road and Load Restrictions into Staging</strong><br>
-When selected, the program will only deliver a train to a staging track
-that has the same rolling stock, road, and load name restrictions.</p><p><input name="departure" type="checkbox"> M<span style="font-weight: bold;">ake departure track available after train is built.</span></p><p><input name="2" type="checkbox"> <span style="font-weight: bold;">Allow cars to return to staging if needed.</span></p>
-    <p>
-      <input name="checkbox3" id="checkbox3" type="checkbox">
-      <strong>Prompt for Departure Track from Staging</strong><br>
-If selected the program ask you which track should depart from staging
-during the train build. Note that the program will only prompt you if
-there are two or more trains available in staging that meet the train's
-requirements.</p>
-    
-    <p>
-      <input name="checkbox4" id="checkbox4" type="checkbox">
-      <strong>Prompt for Arrival Track into Staging</strong><br>
-If selected the program ask you which track should be used for arrival
-to staging during the train build. Note that the program will only
-prompt you if there are two or more trains available in staging that
-meet the train's requirements.</p>
-    <p><strong>Car Routing Options<br>
-    </strong><br>
-      <input name="checkbox" id="checkbox" checked="checked" type="checkbox">
-      <strong>Enable Car Routing</strong><br>
-When enabled, the program will use multiple trains to deliver a car to
-its final destination. It is recommended that you leave this option
-enabled. When enabled , you can use <strong><a href="Ops_schedule.shtml">Schedule</a></strong> to deliver a car to a specific location.</p><p><input name="cb10" type="checkbox"> <span style="font-weight: bold;">Enable Car Routing via Yards</span></p>
-<p><strong>Logging Options<br>
-</strong><br> You can have the program log your locomotive, car, or
-train movement to a file by selecting the appropriate check boxes. The
-program creates a new directory "logger" in the operations directory.
-For each day's session the program will create a new file (.csv) using
-the day's date.</p>
-    <p> <strong>Options</strong><br>
-Allow you to create your own custom manifest using .csv file. Import
-into a program like Excel to create a manifest to your liking.</p>
-    <p>
-      <input name="button" id="button" value="Save" type="button"> 
-      settings to disk to preserve them.
-      <br>
-    </p></td>
-  </tr>
-</tbody></table>
+      <h1>Using JMRI&reg; to Operate Trains</h1>
 
-<hr>
+      <h2>OperationsPro: Build Options for Trains</h2>
 
-<div align="right">
-<p><a href="Ops_Trains_Menu.shtml">Back</a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
-</div>
+      <div align="right">
+        <p><a href="Ops_Trains_Menu.shtml">Back</a><a href=
+        "#"></a></p>
 
-<!--#include virtual="/Footer" -->
-</div>
-</div>
+        <p><a href="index.shtml#Operations">Back to Index</a></p>
+      </div>
+      <hr>
+
+      <p>The <strong>Options</strong> pane is opened from the
+      <strong>Trains</strong> pane's <strong>Tools</strong>
+      menu.</p>
+
+      <table border="0" cellpadding="2" cellspacing="1" width=
+      "90%">
+        <tbody>
+          <tr>
+            <td valign="top" width="57%"><img style=
+            "width: 477px; height: 691px;" alt=
+            "trains build options" src=
+            "images/Ops_Trains_BuildOptions.png"><br></td>
+
+            <td valign="top" width="43%">
+              <p>Standard JMRI&reg; <strong>Window</strong> and
+              <strong>Help</strong> menus</p>
+
+              <p><strong>Build Options</strong><br>
+              <input name="radio" id="radio" value="radio" checked=
+              "checked" type="radio"> <strong>Normal <input name=
+              "radio2" id="radio2" value="radio2" type="radio">
+              Agressive</strong><br>
+              Normal builds are recommended when you first begin
+              the program. Normal builds guarantee that when a Car
+              is delivered (set out) by a train that there will be
+              track space available for the car.<br>
+              <br>
+              Aggressive builds makes the Car's track space
+              available as soon a a car is scheduled for pick
+              up.<br>
+              <br>
+              Note that once you've built a train, the build option
+              can not be changed until all trains are terminated or
+              reset.</p>
+
+              <p><strong>Switcher Service</strong></p>
+
+              <p>Next set of options control local car movements.
+              Normally, it is beter not to allow a car to move from
+              one spur directly to another spur in the same
+              location.</p>
+
+              <p><strong>Staging</strong></p>
+
+              <p><input name="checkbox2" id="checkbox2" checked=
+              "checked" type="checkbox"> <strong>Enable Type, Road
+              and Load Restrictions into Staging</strong><br>
+              When selected, the program will only deliver a train
+              to a staging track that has the same rolling stock,
+              road, and load name restrictions.</p>
+
+              <p><input name="departure" type="checkbox">
+              M<span style="font-weight: bold;">ake departure track
+              available after train is built.</span></p>
+
+              <p><input name="2" type="checkbox"> <span style=
+              "font-weight: bold;">Allow cars to return to staging
+              if needed.</span></p>
+
+              <p><input name="checkbox3" id="checkbox3" type=
+              "checkbox"> <strong>Prompt for Departure Track from
+              Staging</strong><br>
+              If selected the program ask you which track should
+              depart from staging during the train build. Note that
+              the program will only prompt you if there are two or
+              more trains available in staging that meet the
+              train's requirements.</p>
+
+              <p><input name="checkbox4" id="checkbox4" type=
+              "checkbox"> <strong>Prompt for Arrival Track into
+              Staging</strong><br>
+              If selected the program ask you which track should be
+              used for arrival to staging during the train build.
+              Note that the program will only prompt you if there
+              are two or more trains available in staging that meet
+              the train's requirements.</p>
+
+              <p><strong>Car Routing Options<br></strong><br>
+              <input name="checkbox" id="checkbox" checked=
+              "checked" type="checkbox"> <strong>Enable Car
+              Routing</strong><br>
+              When enabled, the program will use multiple trains to
+              deliver a car to its final destination. It is
+              recommended that you leave this option enabled. When
+              enabled , you can use <strong><a href=
+              "Ops_schedule.shtml">Schedule</a></strong> to deliver
+              a car to a specific location.</p>
+
+              <p><input name="cb10" type="checkbox"> <span style=
+              "font-weight: bold;">Enable Car Routing via
+              Yards</span></p>
+
+              <p><strong>Logging Options<br></strong><br>
+              You can have the program log your locomotive, car, or
+              train movement to a file by selecting the appropriate
+              check boxes. The program creates a new directory
+              "logger" in the operations directory. For each day's
+              session the program will create a new file (.csv)
+              using the day's date.</p>
+
+              <p><strong>Options</strong><br>
+              Allow you to create your own custom manifest using
+              .csv file. Import into a program like Excel to create
+              a manifest to your liking.</p>
+
+              <p><input name="button" id="button" value="Save"
+              type="button"> settings to disk to preserve
+              them.<br></p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <hr>
+
+      <div align="right">
+        <p><a href="Ops_Trains_Menu.shtml">Back</a></p>
+
+        <p><a href="index.shtml#Operations">Back to Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

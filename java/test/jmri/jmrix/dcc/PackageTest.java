@@ -27,6 +27,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.dcc.PackageTest");  // no tests in this class itself
         suite.addTest(new TestSuite(DccTurnoutTest.class));
         suite.addTest(new TestSuite(DccTurnoutManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.dcc.configurexml.PackageTest.class));
         return suite;
     }
 }

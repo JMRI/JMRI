@@ -8,7 +8,6 @@ import org.jdom2.Element;
  * Handle configuration for display.ReporterIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision$
  */
 public class ReporterIconXml extends PositionableLabelXml {
 
@@ -50,7 +49,7 @@ public class ReporterIconXml extends PositionableLabelXml {
 
         loadTextInfo(l, element);
 
-        l.setReporter(jmri.InstanceManager.reporterManagerInstance().getReporter(
+        l.setReporter(jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(
                 element.getAttribute("reporter").getValue()));
 
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);

@@ -80,14 +80,10 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
      * @param pName Used as a system/user name to lookup the Block object
      */
     public void setBlock(String pName) {
-        if (InstanceManager.blockManagerInstance() != null) {
-            Block block = InstanceManager.blockManagerInstance().
+        if (InstanceManager.getOptionalDefault(jmri.BlockManager.class) != null) {
+            Block block = InstanceManager.getDefault(jmri.BlockManager.class).
                     provideBlock(pName);
-            if (block != null) {
-                setBlock(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, block));
-            } else {
-                log.error("Block '" + pName + "' not available, icon won't see changes");
-            }
+            setBlock(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, block));
         } else {
             log.error("No Block Manager for this protocol, icon won't see changes");
         }
@@ -178,7 +174,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
                 }
             });
 
-            final jmri.jmrit.dispatcher.DispatcherFrame df = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
+            final jmri.jmrit.dispatcher.DispatcherFrame df = jmri.InstanceManager.getOptionalDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
             if (df != null) {
                 final jmri.jmrit.dispatcher.ActiveTrain at = df.getActiveTrainForRoster(re);
                 if (at != null) {

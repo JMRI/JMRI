@@ -58,7 +58,7 @@ program will prompt you to do that after saving the Preferences.
 </p>
 
 <a name="Connection">
-<h2>Connections</h2></a>
+</a><h2>Connections</h2>
 
 You can select any of the various JMRI layout Connections here.<p>
 <a href="images/Ops_SetConnection214.png">
@@ -80,13 +80,13 @@ Remember to press <strong>Save</strong>!
 <a href="images/JMRI_PrefsDefaults.png">
 <img src="images/JMRI_PrefsDefaults.png" height="222" width="419" align="right" alt="JMRI v2.14 Defaults Prefs tab"></a>
 <a name="Defaults">
-<h2>Defaults</h2></a>
+</a><h2>Defaults</h2>
 If you are using multiple connections, e.g. a
 LocoNet Connection and a MERG Connection, the Defaults pane lets you select which one is connected
 to e.g. the CV programmer and the Command Station you want to use. A second Connection of the same type will have the number (2) added in its name and its System-specific menu.
 
 <a name="FileLocations">
-<h2>File Locations</h2></a>
+</a><h2>File Locations</h2>
 These allow you to set the default location for where scripts and user files are loaded and saved to.
 <p>
 Note that when changing the "User Files Location" this will also change the default location for where the following are stored:
@@ -105,7 +105,7 @@ Rps
 with information on sharing files between computers using Dropbox.
 
 <a name="Startup">
-<h2>Start Up</h2></a>
+</a><h2>Start Up</h2>
 <p><em>Start Up</em> preferences allow windows and files to be opened, scripts
     to be run, and additional buttons to be placed on the main window when the
     application starts.</p>
@@ -151,7 +151,7 @@ is started.
 </dl>
 
 <a name="Display">
-<h2>Display</h2></a>
+</a><h2>Display</h2>
 
 <dl>
 <dt>GUI
@@ -188,12 +188,12 @@ window so that it always appears in the same place and at the same size.
 <a href="images/PrefsMsgPane421.png">
 <img src="images/PrefsMsgPane421.png" height="214" width="375" align="right" alt="JMRI v4.2 Roster Prefs tab"></a>
 <a name="Messages">
-<h2>Messages</h2></a>
+</a><h2>Messages</h2>
 This allows you to change the way that information and warning messages are displayed in JMRI.<br>
 It will also allow you to configure a default responses and the question being displayed.
 
 <a name="Roster">
-<h2>Roster</h2></a>
+</a><h2>Roster</h2>
 <a href="images/PrefsRoster42.png">
 <img src="images/PrefsRoster42.png" height="177" width="419" align="right" alt="JMRI v4.2 Roster Prefs tab"></a>
 
@@ -235,13 +235,13 @@ existing entries, even if changed.
 </dl>
 
 <a name="Throttle">
-<h2>Throttle</h2></a>
+</a><h2>Throttle</h2>
 
 This Preference pane tab lets you select whether the extended Throttle
 features are available, and which ones can be used.
 
 <a name="WiThrottle">
-<h2>WiThrottle</h2></a>
+</a><h2>WiThrottle</h2>
 
 <dl>
 <dt>eStop
@@ -282,7 +282,7 @@ The "Save" button at lower left puts any changed settings into effect. For a con
 new settings, you'll have to restart JMRI (and then restart WiThrottle) as instructed by the dialog.
 
 <a name="Profiles">
-<h2>Config Profiles</h2></a>
+</a><h2>Config Profiles</h2>
 
 JMRI Configuration Profiles make it easy to set up your 
 JMRI applications to work with different setups.  Each profile
@@ -293,12 +293,12 @@ For more information, see the
 page.
 
 <a name="RailroadName">
-<h2>Railroad Name</h2></a>
+</a><h2>Railroad Name</h2>
 <p>
 The Railroad Name tab lets you specify the name of your model railroad (module), as it is used by several server protocols.</p>
 
 <a name="JSONServer">
-<h2>JSON Server</h2></a>
+</a><h2>JSON Server</h2>
 <p>
 The JMRI <a href="../../html/web/JsonServlet.shtml">JSON server</a> is used by applications on other computers,
 including tablets and phones, to connect to JMRI to operate your 
@@ -309,7 +309,7 @@ and how often the server checks for whether the connection has failed via a hear
 message.</p>
 
 <a name="WebServer">
-<h2>Web Server</h2></a>
+</a><h2>Web Server</h2>
 
 The JMRI Web Server lets you 
 connect to JMRI from a web browser on your computer, tablet or phone
@@ -320,7 +320,7 @@ For more information, see the
 <a href="../../html/web/index.shtml#Configure">Web Server Preferences pane</a> page.
 
 <a name="SRCP Server">
-<h2>SRCP Server</h2></a>
+</a><h2>SRCP Server</h2>
 <p>
 The JMRI <a href="../../html/hardware/SRCP/index.shtml">SRCP server</a> is a standard way of connecting "client" user programs to a "server".</p>
 <p>
@@ -328,7 +328,7 @@ On this pane you can specify the port for the connection (usually left at defaul
 </p>
 
 <a name="Simple Server">
-<h2>Simple Server</h2></a>
+</a><h2>Simple Server</h2>
 <p>
 JMRI Simple Server is part of <a href="../../html/hardware/jmriclient/index.shtml">JMRIClient</a>, a method to remotely connecting one JMRI program to another.</p>
 <p>
@@ -336,7 +336,7 @@ On this pane you can specify the port for the connection (usually left at defaul
 </p>
 
 <a name="Warrants">
-<h2>Warrants</h2></a>
+</a><h2>Warrants</h2>
 
 This tab sets parameters used in computing routes for <a href="../../package/jmri/jmrit/logix/Warrant.shtml">Warrants</a> and for
 controlling the events that warranted trains may encounter.

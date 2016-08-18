@@ -1,4 +1,3 @@
-// FourByteMacroEditor.java
 package jmri.jmrix.loconet.sdfeditor;
 
 import javax.swing.JLabel;
@@ -14,14 +13,8 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  * content.
  *
  * @author	Bob Jacobsen Copyright (C) 2007, 2008
- * @version $Revision$
  */
 class FourByteMacroEditor extends SdfMacroEditor {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4304621567924328054L;
 
     public FourByteMacroEditor(SdfMacro inst) {
         super(inst);
@@ -33,5 +26,3 @@ class FourByteMacroEditor extends SdfMacroEditor {
         add(new JLabel("No editor defined for this instruction yet."));
     }
 }
-
-/* @(#)FourByteMacroEditor.java */

@@ -157,6 +157,7 @@ public class ZeroConfService {
     /**
      * Create a ZeroConfService object.
      *
+     * @param service the JmDNS service information
      */
     protected ZeroConfService(ServiceInfo service) {
         this.serviceInfo = service;
@@ -176,6 +177,9 @@ public class ZeroConfService {
      * Generate a ZeroConfService key for searching in the HashMap of running
      * services.
      *
+     * @param type the service type (usually a protocol name or mapping)
+     * @param name the service name (usually the JMRI railroad name or system
+     *             host name)
      * @return The combination of the name and type of the service.
      */
     protected static String key(String type, String name) {
@@ -388,8 +392,8 @@ public class ZeroConfService {
             } catch (IOException ex) {
                 log.warn("Unable to create JmDNS with error: {}", ex.getMessage(), ex);
             }
-            if (InstanceManager.shutDownManagerInstance() != null) {
-                InstanceManager.shutDownManagerInstance().register(ZeroConfService.shutDownTask);
+            if (InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+                InstanceManager.getDefault(jmri.ShutDownManager.class).register(ZeroConfService.shutDownTask);
             }
         }
         return new HashMap<>(ZeroConfService.netServices);
@@ -545,12 +549,12 @@ public class ZeroConfService {
             }).start();
             return true;
         }
-        
+
         @Override
         public boolean isParallel() {
             return true;
         }
-        
+
         @Override
         public boolean isComplete() {
             return this.isComplete;

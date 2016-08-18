@@ -1,4 +1,3 @@
-/* Dcc4PcOpsModeProgrammer.java */
 package jmri.jmrix.dcc4pc;
 
 import java.beans.PropertyChangeListener;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.Programmer
  * @author Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implements PropertyChangeListener, AddressedProgrammer {
 
@@ -46,14 +44,15 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
     /**
      * Send an ops-mode write request to the XPressnet.
      */
+    @Override
     synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         rcTag.setExpectedCv(cv);
         progListener = p;
         defaultProgrammer.writeCV(CV, val, new ProxyProgList());
     }
 
+    @Override
     synchronized public void readCV(int cv, ProgListener p) throws ProgrammerException {
-
         rcTag.addPropertyChangeListener(this);
         rcTag.setExpectedCv(cv);
         progListener = p;
@@ -76,14 +75,16 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
         }
     }
 
-    public void confirmCV(int cv, int val, ProgListener p) throws ProgrammerException {
+    @Override
+    public void confirmCV(String cvName, int val, ProgListener p) throws ProgrammerException {
+        int cv = Integer.parseInt(cvName);
         rcTag.addPropertyChangeListener(this);
         rcTag.setExpectedCv(cv);
         synchronized (this) {
             progListener = p;
         }
         this.cv = cv;
-        defaultProgrammer.confirmCV(cv, val, new ProxyProgList());
+        defaultProgrammer.confirmCV(cvName, val, new ProxyProgList());
     }
 
     /**
@@ -136,5 +137,3 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
     private final static Logger log = LoggerFactory.getLogger(Dcc4PcOpsModeProgrammer.class.getName());
 
 }
-
-/* @(#)XnetOpsModeProgrammer.java */

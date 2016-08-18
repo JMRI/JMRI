@@ -238,7 +238,7 @@ list is remade each time you open a new programmer window.
 </dl>
 
 <a name="id">
-<h3>How variables in a decoder file match up with the programmer file</h3></a>
+</a><h3>How variables in a decoder file match up with the programmer file</h3>
 
 Each decoder file defines 
 <a href="CreateDecoder.shtml#variable">variables</a> that describe specific controls within the

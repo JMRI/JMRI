@@ -26,7 +26,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
     public LoadXmlThrottlesLayoutAction(String s) {
         super(s);
         // disable the ourselves if there is no throttle Manager
-        if (jmri.InstanceManager.throttleManagerInstance() == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ThrottleManager.class) == null) {
             setEnabled(false);
         }
     }

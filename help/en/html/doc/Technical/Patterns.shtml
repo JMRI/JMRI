@@ -1,157 +1,175 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-    <title>
- 	JMRI: Patterns and Structure
-    </title>
-    <meta name="author" content="Bob Jacobsen">
-    <meta name="keywords" content="JMRI technical code patterns structure">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Patterns and Structure</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content=
+  "JMRI technical code patterns structure"><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
+
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header" -->
 
-	<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h1>JMRI: Patterns and Organization</h1>
-<p>
-JMRI has grown and evolved with time, and
-you can't always see the currently-preferred
-structure and patterns by looking at older code pieces.
-<p>
-This page attempts to describe the recommended structure and patterns,
-and point to examples of current best practices.
+    <div id="mainContent">
+      <h1>JMRI: Patterns and Organization</h1>
 
-<a id="namedbeans" name="namedbeans"></a><h2>Names, NamedBeans, and Managers</h2>
+      <p>JMRI has grown and evolved with time, and you can't always
+      see the currently-preferred structure and patterns by looking
+      at older code pieces.</p>
 
-The "NamedBean" concept is basic to JMRI.
-A <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a>
-is a basic JMRI object that represents something, typically something 
-like a specific Sensor or Turnout.  
-<ul>
-<li>They're called a "Bean" because they're a unit of 
-interaction:  Multiple pieces of code can work with one, it can be loaded and stored, etc.
-<li>They're "Named" to make sure they're unique and retrievable:  There's only one Turnout NamedBean with 
-called "LT01", and it represents a specific addressed (named) layout object.
-See the <a href="Names.shtml">page on Names</a> for more on this.
-</ul>
-Functionally, all the device object classes (Sensor, Turnout, ...) and 
-their specific implementations (LnSensor, XNetTurnout, ...) inherit from the 
-base
-<a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a> class.
-<p>
-To get access to a specific object (a NamedBean of a specific type with a specific name), you
-make requests of a manager:  You ask a 
-<a href="http://jmri.org/JavaDoc/doc/jmri/TurnoutManager.html">TurnoutManager</a> for a specific Turnout.
-In turn, you 
-<a href="IntroStructure.shtml">access the managers through the common InstanceManager</a>.
+      <p>This page attempts to describe the recommended structure
+      and patterns, and point to examples of current best
+      practices. <a id="namedbeans" name="namedbeans"></a></p>
 
-<p>
-A user might want to reference a NamedBean via a user name, and in turn might want 
-to change the specific NamedBean that user name refers to.  "Yard East Turnout" might be
-"LT12" at one point, and later get moved to "CT5".  To handle this, 
-your code should use 
-<a href="http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>
-objects to handle references to NamedBeans.  They automate the process of renaming.
+      <h2>Names, NamedBeans, and Managers</h2>The "NamedBean"
+      concept is basic to JMRI. A <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a>
+      is a basic JMRI object that represents something, typically
+      something like a specific Sensor or Turnout.
 
-<h2>Code Organization</h2>
-<p>
-At the highest level, we separate test code from 
-distributed code by putting both in separate directories
-within the development directory: "test" and "src".
-This makes it easy to compile a version without test code,
-to apply different tools to the two types of code, etc.
+      <ul>
+        <li>They're called a "Bean" because they're a unit of
+        interaction: Multiple pieces of code can work with one, it
+        can be loaded and stored, etc.</li>
 
-<p>
-Within the source code itself, we separate out several types:
+        <li>They're "Named" to make sure they're unique and
+        retrievable: There's only one Turnout NamedBean with called
+        "LT01", and it represents a specific addressed (named)
+        layout object. See the <a href="Names.shtml">page on
+        Names</a> for more on this.</li>
+      </ul>Functionally, all the device object classes (Sensor,
+      Turnout, ...) and their specific implementations (LnSensor,
+      XNetTurnout, ...) inherit from the base <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a>
+      class.
 
-<dl>
-<dt>The jmri package
-<dd>contains the basic interfaces and certain core implementations for the JMRI layout management concepts.
-    It should contain minimal implementation code, 
-    and no non-JMRI references, esp. Swing code.
+      <p>To get access to a specific object (a NamedBean of a
+      specific type with a specific name), you make requests of a
+      manager: You ask a <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/TurnoutManager.html">TurnoutManager</a>
+      for a specific Turnout. In turn, you <a href=
+      "IntroStructure.shtml">access the managers through the common
+      InstanceManager</a>.</p>
 
-<dt>The jmri.jmris package
-<dd>contains all the code for the server implementation for the JMRI interfaces.
+      <p>A user might want to reference a NamedBean via a user
+      name, and in turn might want to change the specific NamedBean
+      that user name refers to. "Yard East Turnout" might be "LT12"
+      at one point, and later get moved to "CT5". To handle this,
+      your code should use <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>
+      objects to handle references to NamedBeans. They automate the
+      process of renaming.</p>
 
-<dt>The jmri.jmrit package
-<dd>contains all the code for various non-system-specific JMRI tools and extensions.
-Most of the tools are in subpackages, but some appear directly in the package.
+      <h2>Code Organization</h2>
 
-<dt>The jmri.jmrix package
-<dd>contains all the code for connecting to 
-    specific layout hardware.
+      <p>At the highest level, we separate test code from
+      distributed code by putting both in separate directories
+      within the development directory: "test" and "src". This
+      makes it easy to compile a version without test code, to
+      apply different tools to the two types of code, etc.</p>
 
-<dt>The jmri.managers and jmri.implementations packages
-<dd>These provide default implementations for managers
-    and other classes.  This moves code out of the primary
-    jmri package.  These should not reply on apps, jmri.jmrix
-    or jmri.jmrit.
+      <p>Within the source code itself, we separate out several
+      types:</p>
 
-<dt>The jmri.util package
-<dd>Other common implementations of general use.
-    Should not depend on jmri.jmrit or jmri.jmrix packages.
-    The jmri.util.swing subpackage provides Swing 
-    utilities.
+      <dl>
+        <dt>The jmri package</dt>
 
-<dt>Apps package
-<dd>For putting together an application, this can
-    depend on anything.
-    
-<dt>configurexml subdirectories
-<dd>These contain code for the
-    <a href="XmlPersistance.shtml">XML configuration system</a>. 
-    top-level packages, esp util & dependencies, apps
+        <dd>contains the basic interfaces and certain core
+        implementations for the JMRI layout management concepts. It
+        should contain minimal implementation code, and no non-JMRI
+        references, esp. Swing code.</dd>
 
-<dt>swing subdirectories
-<dd>Contain Swing specific tools.
-    Particularly outside the jmri.jmrit package,
-    we are trying to separate Swing code from 
-    normal operational code.
-    See the <a href="Swing.shtml">Swing page</a>
-    for more information.
+        <dt>The jmri.jmris package</dt>
 
-<dt>Help files
-<dd>The file structure for Help
-    files echos the structure of the code.
-    For more information, see the 
-    <a href="Help.shtml">Help page on JavaHelp pages</a>.
+        <dd>contains all the code for the server implementation for
+        the JMRI interfaces.</dd>
 
-<dt>ResourceBundles
-<dd>We use resource bundles for
-    <a href="I8N.shtml">internationalization</a>.
-    The are colocated with the code that references them,
-    but we are moving to a new naming convention.
-    To reduce loading burden, we are moving to a 
-    pattern where the jmri.foo.FooBundle.properties
-    file is addressed via a static element in the
-    jmri.foo.FooBundle class, separate from the 
-    properties file itself.  This reduces loading
-    time a lot!
-    <p>
-    Note that there are also a few 
-    resource bundles that are used for other purposes,
-    indicated in their header comments.
-    
-</dl>
+        <dt>The jmri.jmrit package</dt>
 
-The "checkdepends.csh" development tool script 
-is meant to check some for inadvertant dependencies,
-but we're far from clearing it.
+        <dd>contains all the code for various non-system-specific
+        JMRI tools and extensions. Most of the tools are in
+        subpackages, but some appear directly in the package.</dd>
 
-<!--#include virtual="/Footer" -->
+        <dt>The jmri.jmrix package</dt>
 
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+        <dd>contains all the code for connecting to specific layout
+        hardware.</dd>
+
+        <dt>The jmri.managers and jmri.implementations
+        packages</dt>
+
+        <dd>These provide default implementations for managers and
+        other classes. This moves code out of the primary jmri
+        package. These should not reply on apps, jmri.jmrix or
+        jmri.jmrit.</dd>
+
+        <dt>The jmri.util package</dt>
+
+        <dd>Other common implementations of general use. Should not
+        depend on jmri.jmrit or jmri.jmrix packages. The
+        jmri.util.swing subpackage provides Swing utilities.</dd>
+
+        <dt>Apps package</dt>
+
+        <dd>For putting together an application, this can depend on
+        anything.</dd>
+
+        <dt>configurexml subdirectories</dt>
+
+        <dd>These contain code for the <a href=
+        "XmlPersistance.shtml">XML configuration system</a>.
+        top-level packages, esp util &amp; dependencies, apps</dd>
+
+        <dt>swing subdirectories</dt>
+
+        <dd>Contain Swing specific tools. Particularly outside the
+        jmri.jmrit package, we are trying to separate Swing code
+        from normal operational code. See the <a href=
+        "Swing.shtml">Swing page</a> for more information.</dd>
+
+        <dt>Help files</dt>
+
+        <dd>The file structure for Help files echos the structure
+        of the code. For more information, see the <a href=
+        "Help.shtml">Help page on JavaHelp pages</a>.</dd>
+
+        <dt>ResourceBundles</dt>
+
+        <dd>
+          We use resource bundles for <a href=
+          "I8N.shtml">internationalization</a>. The are colocated
+          with the code that references them, but we are moving to
+          a new naming convention. To reduce loading burden, we are
+          moving to a pattern where the
+          jmri.foo.FooBundle.properties file is addressed via a
+          static element in the jmri.foo.FooBundle class, separate
+          from the properties file itself. This reduces loading
+          time a lot!
+
+          <p>Note that there are also a few resource bundles that
+          are used for other purposes, indicated in their header
+          comments.</p>
+        </dd>
+      </dl>The "checkdepends.csh" development tool script is meant
+      to check some for inadvertant dependencies, but we're far
+      from clearing it. <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-

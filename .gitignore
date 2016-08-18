@@ -18,8 +18,10 @@ session.log
 # transient artifacts
 .ant-targets-build.xml
 /java/classes
+/java/test-classes
 /java/tmp
 /java/doc
+/java/test-classes/
 *.class
 /temp
 .pydevproject
@@ -29,11 +31,14 @@ session.log
 /xml/XSLT/properties
 /xml/XSLT/xml
 /xml/XSLT/pages
+.run.sh
 
 # private / per-user configuration files
 /nbproject/private
 /.idea/workspace.xml
 local.properties
+/test
+/test/jmri.conf
 *.original~
 .metadata
 RemoteSystemsTempFiles

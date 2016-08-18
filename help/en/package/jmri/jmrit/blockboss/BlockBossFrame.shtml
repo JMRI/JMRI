@@ -27,7 +27,7 @@
 JMRI: Simple Signal Logic
 </h1>
 
-<a name="contents"><h2>Contents</h2></a>
+<a name="contents"></a><h2>Contents</h2>
 
 <p>The documentation below describes Signaling with JMRI using an older tool, SSL, and discusses how to set 
 up basic signaling situations with it.
@@ -37,7 +37,7 @@ up basic signaling situations with it.
 		<li><a href="#more">More information</a></li>
 </li></ul>
 
-<a name="intro"><h2>Introduction</h2></a>
+<a name="intro"></a><h2>Introduction</h2>
 
 <p>Simple Signal Logic (SSL) provided the first method to enable the rapid setup of basic Automatic Block Signaling (ABS) style signaling in JMRI. 
 	For more complex operations beyond the capability of SSL refer to the newer and preferred method of Signal Mast Logic on the <a href="../../../../html/tools/signaling/index.shtml">Signaling main help page</a>. Note that SSL ignores any Signal Mast objects and only drives individual Signal Heads.<br/>
@@ -103,7 +103,7 @@ SSL can be used to create a CTC panel, as Bob Bucklew shows on
 <a href="http://www.quaker-valley.com/CTC/QV_CTCnew.html">his web site</a>.
 </p>
 	
-<a name="start"><h2>Getting Started</h2></a>
+<a name="start"></a><h2>Getting Started</h2>
 
 <p>Follow these steps to create your first JMRI Signal and become familiar
 with the SSL user interface. As a starter this example defines just one "virtual" Signal
@@ -155,7 +155,7 @@ in the case of Turnouts and the actual hardware number of the Turnout.
 	</li><li>Be sure to save your work by selecting "Save Panels..." from the Panels menu.</li>
 		</ol>
 	  
-	  <a name="more"><h2>More on SSL</h2></a>
+	  <a name="more"></a><h2>More on SSL</h2>
 	  <ul>
 		  <li>Check out the <a href="../../../../html/tools/signaling/SimpleSignalExample.shtml">Simple Signal Logic example</a>.
 			<li><a href="../../../../html/tools/signaling/Logic.shtml">Backgrounds on SSL</a>

@@ -43,9 +43,9 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
         }
 
         // make a backup file
-        InstanceManager.configureManagerInstance().makeBackup(file);
+        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).makeBackup(file);
         // and finally store
-        boolean results = InstanceManager.configureManagerInstance().storeUser(file);
+        boolean results = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).storeUser(file);
         log.debug(results ? "store was successful" : "store failed");
         if (!results) {
             JOptionPane.showMessageDialog(null,

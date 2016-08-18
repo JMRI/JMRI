@@ -97,11 +97,9 @@ import org.slf4j.LoggerFactory;
  * implemented at JDK 1.2 for backward compatibility
  * <P>
  * @author Pete Cressman Copyright: Copyright (c) 2009, 2010, 2011
- * @version $Revision: 21062 $
  *
  */
 public class ControlPanelEditor extends Editor implements DropTargetListener, ClipboardOwner {
-    private static final long serialVersionUID = 2767111074938103944L;
     public boolean _debug;
     protected JMenuBar _menuBar;
     private JMenu _editorMenu;
@@ -176,7 +174,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         super.setDefaultToolTip(new ToolTip(null, 0, 0, new Font("Serif", Font.PLAIN, 12),
                 Color.black, new Color(255, 250, 210), Color.black));
         // register the resulting panel for later configuration
-        InstanceManager.configureManagerInstance().registerUser(this);
+        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerUser(this);
         pack();
         setVisible(true);
         class makeCatalog extends SwingWorker<CatalogPanel, Object> {
@@ -324,33 +322,18 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _markerMenu = new JMenu(Bundle.getMessage("MenuMarker"));
         _menuBar.add(_markerMenu);
         _markerMenu.add(new AbstractAction(Bundle.getMessage("AddLoco")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 154630416282406989L;
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 locoMarkerFromInput();
             }
         });
         _markerMenu.add(new AbstractAction(Bundle.getMessage("AddLocoRoster")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -7447460365984229346L;
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 locoMarkerFromRoster();
             }
         });
         _markerMenu.add(new AbstractAction(Bundle.getMessage("RemoveMarkers")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -4318812692030653839L;
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 removeMarkers();

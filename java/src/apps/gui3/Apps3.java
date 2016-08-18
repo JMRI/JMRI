@@ -56,6 +56,8 @@ public abstract class Apps3 extends AppsBase {
     /**
      * Initial actions before frame is created, invoked in the applications
      * main() routine.
+     *
+     * @param applicationName application name
      */
     static public void preInit(String applicationName) {
         AppsBase.preInit(applicationName);
@@ -75,6 +77,10 @@ public abstract class Apps3 extends AppsBase {
      * Create and initialize the application object.
      * <p>
      * Expects initialization from preInit() to already be done.
+     *
+     * @param applicationName application name
+     * @param configFileDef   default configuration file name
+     * @param args            command line arguments set at application launch
      */
     public Apps3(String applicationName, String configFileDef, String[] args) {
         // pre-GUI work
@@ -159,6 +165,8 @@ public abstract class Apps3 extends AppsBase {
 
     /**
      * Set a toolbar to be initially floating. This doesn't quite work right.
+     *
+     * @param toolBar the toolbar to float
      */
     protected void setFloating(JToolBar toolBar) {
         //((javax.swing.plaf.basic.BasicToolBarUI) toolBar.getUI()).setFloatingLocation(100,100);

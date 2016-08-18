@@ -418,7 +418,7 @@ public class VSDConfigPanel extends JmriPanel {
         log.debug("storeFile starts");
         // We need to create a programmer, a cvTableModel, an iCvTableModel, and a variableTableModel.
         // Doesn't matter which, so we'll use the Global programmer.
-        Programmer p = InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+        Programmer p = InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
         CvTableModel cvModel = new CvTableModel(null, p);
         IndexedCvTableModel iCvModel = new IndexedCvTableModel(null, p);
         VariableTableModel variableModel = new VariableTableModel(null, new String[]{"Name", "Value"}, cvModel, iCvModel);

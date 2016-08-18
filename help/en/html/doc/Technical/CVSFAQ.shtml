@@ -1,211 +1,202 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
+
 <html lang="en">
 <head>
-    <TITLE>
- 	JMRI: CVS FAQ
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code CVS FAQ">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: CVS FAQ</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI technical code CVS FAQ">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head><!--#include virtual="/Header" -->
 
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+    <div id="mainContent">
+      <h1>JMRI: CVS FAQ</h1>This is a list of Frequently Asked
+      Questions for CVS, particularly regarding how we use it with
+      JMRI.
 
-<H1>JMRI: CVS FAQ</H1>
-This is a list of Frequently Asked Questions for CVS, particularly regarding how
-we use it with JMRI.
+      <p><em>Note: JMRI code is not maintained in CVS any more. To
+      get the current code, please see the pages on the <a href=
+      "getgitcode.shtml">accessing the code via the Git
+      repository.</a></em></p>
 
-<p>
-<em>Note: JMRI code is not maintained in CVS any more.  
-To get the current code, please see the pages on the 
-<a href="getgitcode.shtml">accessing the code via the Git repository</em>.
+      <p>See also the <a href="index.shtml">Technical index</a> for
+      more information on maintaining JMRI code. <a name="cvstool"
+      id="cvstool"></a></p>
 
-<P>
-See also the 
-<A HREF="index.shtml">Technical index</a>
-for more information on maintaining JMRI code.
+      <h3>How do I get a copy of CVS?</h3>Many computers come with
+      CVS installed, including Linux and Mac OS X. If you're using
+      Windows, you will need to install a CVS "client" program like
+      <a href=
+      "http://sourceforge.net/project/showfiles.php?group_id=10072&amp;release_id=24467">
+      WinCVS</a>. A recent version can be downloaded from: <a href=
+      "http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip">http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip</a>.
+      <a name="jmrisource" id="jmrisource"></a>
 
-
-<A name="cvstool"><h3>How do I get a copy of CVS?</h3></a>
-
-Many computers come with CVS installed, including Linux and Mac OS X.
-If you're using Windows, you will need to install a CVS "client" program like
-<A HREF="http://sourceforge.net/project/showfiles.php?group_id=10072&release_id=24467">WinCVS</a>.
-A recent version can be downloaded from: 
-<a href="http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip">http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip</a>.
-
-<A name="jmrisource">
-<h3>How can I get my own copy of the JMRI code?</h3></a>
-
-To get a copy of the source for your own use, you can use "anonymous checkout".
-For a command line cvs client, make a new directory for the project,
-change to it, and tell CVS you exist with
-<PRE>
+      <h3>How can I get my own copy of the JMRI code?</h3>To get a
+      copy of the source for your own use, you can use "anonymous
+      checkout". For a command line cvs client, make a new
+      directory for the project, change to it, and tell CVS you
+      exist with
+      <pre>
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri login
-</PRE>
-This "login" line
-is only needed once; after that, it is remembered on your local machine.  You may
-be asked for a password. If so, just hit return, as the empty password will be accepted.
-You can then get a copy of the code with
-<PRE>
+</pre>This "login" line is only needed once; after that, it is
+remembered on your local machine. You may be asked for a password.
+If so, just hit return, as the empty password will be accepted. You
+can then get a copy of the code with
+      <pre>
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri co all
-</PRE>
-<P>
-If you're using a GUI-based client like WinCVS, pull down the "admin"
-menu and select "command line" to get a place to type these commands.
-On other computers, you can type them directly on the command line.
+</pre>
 
+      <p>If you're using a GUI-based client like WinCVS, pull down
+      the "admin" menu and select "command line" to get a place to
+      type these commands. On other computers, you can type them
+      directly on the command line. <a name="update" id=
+      "update"></a></p>
 
-<A name="update">
-<h3>How can I bring my copy of the JMRI code up to date?</h3></a>
-People contribute updates to the JMRI code almost every week.
-Your local copy doesn't get these changes until you ask for them,
-so that you've got something stable to work with.
-If you have an existing copy of the code and want to update it
-to the most recent contents of CVS, the CVS command is:
-<PRE>
+      <h3>How can I bring my copy of the JMRI code up to
+      date?</h3>People contribute updates to the JMRI code almost
+      every week. Your local copy doesn't get these changes until
+      you ask for them, so that you've got something stable to work
+      with. If you have an existing copy of the code and want to
+      update it to the most recent contents of CVS, the CVS command
+      is:
+      <pre>
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri -q update -dA
-</PRE>
-
-The "-q" option suppresses a lot of routine messages.  The
+</pre>The "-q" option suppresses a lot of routine messages. The
 "-d" option is needed to tell CVS to also bring in new directories.
-The "-A" option, here combined with "-d", means you want the most recent
-contents.
+The "-A" option, here combined with "-d", means you want the most
+recent contents. <a name="release" id="release"></a>
 
-<A name="release">
-<h3>How can I get the code for a particular release?</h3></a>
-
-CVS uses "tags" to make specific sets of content.
-We use these to mark the code for each release as we build it.
-To get the code for a release, you can ask for it with a command like this:
-<PRE>
+      <h3>How can I get the code for a particular release?</h3>CVS
+      uses "tags" to make specific sets of content. We use these to
+      mark the code for each release as we build it. To get the
+      code for a release, you can ask for it with a command like
+      this:
+      <pre>
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri -q co -rRelease-2-1-5
-</PRE>
+</pre>In this example, "Release-2-1-5" is the tag for the 2.1.5
+release. You can adjust that as needed. If you already have a
+release checked out and want to update it to a specific release,
+change the "co" command to "update -d"
 
-In this example, "Release-2-1-5" is the tag for the 2.1.5 release.  You can adjust that
-as needed.  If you already have a release checked out and want to update it
-to a specific release, change the "co" command to "update -d"
+      <h3><a name="refid" id="refid">What are those lines like
+      <i>$Revision$</i> and <i>$Id$</i>?</a></h3>Those are
+      automatically updated by CVS every time a new version of the
+      file is checked-in to the repository. Please don't edit
+      them!!! If you contribute your changes to the project, those
+      line have to be intact in the contributed file.
 
-<A name="refid">
-<h3>What are those lines like <i>$Revision$</i> and <i>$Id$</i>?</h3>
-</a>
-
-Those are automatically updated by CVS every time a new version of the 
-file is checked-in to the repository.  Please don't edit them!!!
-If you contribute your changes to the project, those line have to be
-intact in the contributed file.
-
-<A name="update">
-<h3>How do I update an existing copy of the source to the current version?</h3>
-</a>
-
-As the common code changes, you might want to update your copy to contain the 
-lastest version.  To do that, use:
-<PRE>
+      <h3><a name="update" id="update">How do I update an existing
+      copy of the source to the current version?</a></h3>As the
+      common code changes, you might want to update your copy to
+      contain the lastest version. To do that, use:
+      <pre>
 cvs -q update
-</PRE>
-Any changes will be merged into the files on your disk, and you should then be up-to-date
-with your own changes still present.  
+</pre>Any changes will be merged into the files on your disk, and
+you should then be up-to-date with your own changes still present.
 
-<P>
-The "-q" option removes a lot of
-informational messages as CVS enters the various directories in the 
-project; the command still works if you omit it, but it will be harder to
-see any real error messages.
+      <p>The "-q" option removes a lot of informational messages as
+      CVS enters the various directories in the project; the
+      command still works if you omit it, but it will be harder to
+      see any real error messages.</p>
 
-<A name="ds_store">
-<h3>What are these messages about .DS_Store files?</h3>
-</a>
+      <h3><a name="ds_store" id="ds_store">What are these messages
+      about .DS_Store files?</a></h3>If you're using Mac OS X, CVS
+      may give you messages about ".DS_Store" files. These are used
+      to keep track of window layouts, etc. To suppress these
+      messages, just create a file in your home directory called
+      ".cvsignore" and add a line of ".DS_Store" to it (no quotes).
+      CVS will then ignore all .DS_Store files in all of your
+      checked-out directory trees.
 
-If you're using Mac OS X, CVS may give you messages about ".DS_Store" files. These
-are used to keep track of window layouts, etc.  To suppress these messages,
-just create a file in your home directory called ".cvsignore" and add a line 
-of ".DS_Store" to it (no quotes). CVS will then ignore all .DS_Store files in 
-all of your checked-out directory trees.
+      <h3><a name="tags" id="tags">What is the convention for tag
+      names?</a></h3>Typically, three types of tag names are used:
 
-<A name="tags">
-<h3>What is the convention for tag names?</h3>
-</a>
+      <ol>
+        <li>"Release-1-5-4" - the tag defining a specific released
+        version of the code. These are created during the release
+        builds, and should not be changed.</li>
 
-Typically, three types of tag names are used:
-<OL>
-<LI>"Release-1-5-4" - the tag defining a specific released version of the code.
-These are created during the release builds, and should not be changed.
-<LI>"Release-1-5-4-branch" - this is the branch-tag defining a "patch branch"
-for a specific release.  This is the only use we make of CVS branches; please
-note that we do not use branches for normal development.
-<LI>"rgj20050603a" - of the form "initials" "date" "some letter", these 
-can be used by individual developers to keep track of what they're doing.  All
-we ask is that you start a tag with your initials.
-</OL>
+        <li>"Release-1-5-4-branch" - this is the branch-tag
+        defining a "patch branch" for a specific release. This is
+        the only use we make of CVS branches; please note that we
+        do not use branches for normal development.</li>
 
-<A name="structure">
-<h3>How is JMRI stored in CVS?</h3>
+        <li>"rgj20050603a" - of the form "initials" "date" "some
+        letter", these can be used by individual developers to keep
+        track of what they're doing. All we ask is that you start a
+        tag with your initials.</li>
+      </ol>
 
-JMRI consists of two large code trees, and a number of auxiliary directories.
-The code is divided into "jmri", the main JMRI code, and "test", the set of
-automated tests.  These are kept separate so that it's easy to build just
-the distributed software, without including the test code.
-(If you directly look at the CVS repository, you'll also see "jmrit" and
-"jmrix" directories; these are obsolete, and kept only for historical reasons.)
-<p>
-Similarly, auxilary information is kept in separate "lib", "xml", 
-"resources", "jython", etc. directories.
-<p>
-Finally, there's a bunch of information that's not part of the 
-application development areas, including the "scripts" directory
-of tools for building releases, the web site, and others.
-<p>
-We store all these separately in CVS so that you can check out just the
-ones you need.
-<p>
-To simplify checking out a development tree, we provide a 
-CVS module named "all".  This checks out the necessary directories and puts 
-them in the required places for a straight-forward build.
+      <h3><a name="structure" id="structure">How is JMRI stored in
+      CVS?</a></h3><a name="structure" id="structure">JMRI consists
+      of two large code trees, and a number of auxiliary
+      directories. The code is divided into "jmri", the main JMRI
+      code, and "test", the set of automated tests. These are kept
+      separate so that it's easy to build just the distributed
+      software, without including the test code. (If you directly
+      look at the CVS repository, you'll also see "jmrit" and
+      "jmrix" directories; these are obsolete, and kept only for
+      historical reasons.)</a>
 
-<A name="lcok">
-<h3>Some files appear to be read-only, why is that?</h3>
+      <p>Similarly, auxilary information is kept in separate "lib",
+      "xml", "resources", "jython", etc. directories.</p>
 
-As the software evolves, sometimes files become obsolete.
-If they're not needed at all, CVS allows us to delete them
-from future releases.  In that case, they don't show up
-at all when you check out a current copy.
-<p>
-But sometimes the file needs to remain, but we don't want it
-to be modified any more.  For example, an older schema or DTD
-file needs to remain around so that older references to it continue
-to work, but we don't want somebody accidentally modifying the 
-older version instead of the current version of the file.
-<p>
-In cases like that, we use the "cvs watch on" option to
-effectively lock the file.  The checked-out version of
-the file is write-protected so you can't edit it without
-noticing the problem, and changes can't be checked back into
-CVS unless the file watch is turned off.
+      <p>Finally, there's a bunch of information that's not part of
+      the application development areas, including the "scripts"
+      directory of tools for building releases, the web site, and
+      others.</p>
 
-<!--#include virtual="/Footer" -->
+      <p>We store all these separately in CVS so that you can check
+      out just the ones you need.</p>
 
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+      <p>To simplify checking out a development tree, we provide a
+      CVS module named "all". This checks out the necessary
+      directories and puts them in the required places for a
+      straight-forward build.</p>
+
+      <h3><a name="lcok" id="lcok">Some files appear to be
+      read-only, why is that?</a></h3><a name="lcok" id="lcok">As
+      the software evolves, sometimes files become obsolete. If
+      they're not needed at all, CVS allows us to delete them from
+      future releases. In that case, they don't show up at all when
+      you check out a current copy.</a>
+
+      <p>But sometimes the file needs to remain, but we don't want
+      it to be modified any more. For example, an older schema or
+      DTD file needs to remain around so that older references to
+      it continue to work, but we don't want somebody accidentally
+      modifying the older version instead of the current version of
+      the file.</p>
+
+      <p>In cases like that, we use the "cvs watch on" option to
+      effectively lock the file. The checked-out version of the
+      file is write-protected so you can't edit it without noticing
+      the problem, and changes can't be checked back into CVS
+      unless the file watch is turned off. 
+      <!--#include virtual="/Footer" --></p>
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-

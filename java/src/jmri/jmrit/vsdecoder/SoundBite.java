@@ -90,7 +90,7 @@ class SoundBite extends VSDSound {
     }
 
     public final boolean init(VSDFile vf, BufferMode mode) {
-        AudioManager am = jmri.InstanceManager.audioManagerInstance();
+        AudioManager am = jmri.InstanceManager.getDefault(jmri.AudioManager.class);
         if (!initialized) {
             try {
                 sound_src = (AudioSource) am.provideAudio(SrcSysNamePrefix + system_name);

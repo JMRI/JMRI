@@ -59,7 +59,7 @@ public class ScriptOutput {
     }
 
     static public ScriptOutput getDefault() {
-        if (InstanceManager.getDefault(ScriptOutput.class) == null) {
+        if (InstanceManager.getOptionalDefault(ScriptOutput.class) == null) {
             InstanceManager.store(new ScriptOutput(), ScriptOutput.class);
         }
         return InstanceManager.getDefault(ScriptOutput.class);

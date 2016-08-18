@@ -57,6 +57,7 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
     int operationVariableNumber; // remember the variable number being read/written
 
     // programming interface
+    @Override
     synchronized public void writeCV(int varnum, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("write " + varnum + " listens " + p);
@@ -78,10 +79,12 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
         notifyProgListenerEnd(operationValue, jmri.ProgListener.OK);
     }
 
-    synchronized public void confirmCV(int varnum, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    @Override
+    synchronized public void confirmCV(String varnum, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(varnum, p);
     }
 
+    @Override
     synchronized public void readCV(int varnum, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + varnum + " listens " + p);

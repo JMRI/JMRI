@@ -1,4 +1,3 @@
-// StatusPanel.java
 package jmri.jmrit.beantable.beanedit;
 
 import java.awt.event.ActionEvent;
@@ -17,14 +16,8 @@ import jmri.Sensor;
  * it can be re-used in other panels.
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision: 19923 $
  */
 public class SensorDebounceEditAction extends BeanEditAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3622370435108538307L;
 
     public String helpTarget() {
         return "package.jmri.jmrit.beantable.SensorTable";

@@ -1,47 +1,44 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
+
 <html lang="en">
 <head>
-    <TITLE>
- 	JMRI: Xml Schema Examples
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code xml schema usage">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
+  <title>JMRI: Xml Schema Examples</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content=
+  "JMRI technical code xml schema usage">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
+  <!--#include virtual="/Style" -->
+</head><!--#include virtual="/Header" -->
 
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-    <!--#include virtual="/Style" -->
-</head>
+    <div id="mainContent">
+      <h1>JMRI: XML Schema Examples</h1>This page contains examples
+      of various XML Schema fragments that you might find useful.
+      For discussion of JMRI's use of XML Schema, including info on
+      preferred patterns and organization, see <a href=
+      "XmlSchema.shtml">another page</a>.
 
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-
-	<div id="mainContent">
-
-<H1>JMRI: XML Schema Examples</H1>
-
-This page contains examples of various XML Schema fragments
-that you might find useful.
-For discussion of JMRI's use of XML Schema, including
-info on preferred patterns and organization, see
-<a href="XmlSchema.shtml">another page</a>.
-
-<h2>Element with just text content, no attributes</h2>
-
-<pre><code>
+      <h2>Element with just text content, no attributes</h2>
+      <pre>
+<code>
 &lt;xs:element name="someData" minOccurs="0" maxOccurs="1"&gt;
-</code></pre>
-
-That doesn't specify any typing.  If you want e.g. to enforce
+</code>
+</pre>That doesn't specify any typing. If you want e.g. to enforce
 integer:
-
-<pre><code>
+      <pre>
+<code>
 &lt;xs:element name="someIntThing" &gt;
   &lt;xs:complexType&gt;
     &lt;xs:simpleContent&gt;
@@ -49,13 +46,13 @@ integer:
     &lt;/xs:simpleContent&gt;
   &lt;/xs:complexType&gt;
 &lt;/xs:element&gt;
-</code></pre>
+</code>
+</pre>
 
-<h2>Element with just attributes, no content</h2>
-
-Preferred Venetion-blind form:
-
-<pre><code>
+      <h2>Element with just attributes, no content</h2>Preferred
+      Venetion-blind form:
+      <pre>
+<code>
 &lt;xs:element name="sample" type="SampleType" 
     minOccurs="0" maxOccurs="unbounded" /&gt;
 
@@ -63,12 +60,11 @@ Preferred Venetion-blind form:
   &lt;xs:attribute name="foo" /&gt;
   &lt;xs:attribute name="bar" /&gt;
 &lt;/xs:complexType&gt;
-</code></pre>
-
-Can also be combined if you think it's unlikely to be
-used elsewhere:
-
-<pre><code>
+</code>
+</pre>Can also be combined if you think it's unlikely to be used
+elsewhere:
+      <pre>
+<code>
 &lt;xs:element name="sample" 
     minOccurs="0" maxOccurs="unbounded" /&gt;
   &lt;xs:complexType&gt;
@@ -76,12 +72,13 @@ used elsewhere:
     &lt;xs:attribute name="bar" /&gt;
   &lt;/xs:complexType&gt;
 &lt;/xs:element&gt;
-</code></pre>
+</code>
+</pre>
 
-<h2>Element with text content and attributes</h2>
-
-Restricting the content of the element to just an integer:
-<pre><code>
+      <h2>Element with text content and attributes</h2>Restricting
+      the content of the element to just an integer:
+      <pre>
+<code>
 &lt;xs:element name="someIntThing" &gt;
   &lt;xs:complexType&gt;
     &lt;xs:simpleContent&gt;
@@ -92,14 +89,14 @@ Restricting the content of the element to just an integer:
     &lt;/xs:simpleContent&gt;
   &lt;/xs:complexType&gt;
 &lt;/xs:element&gt;
-</code></pre>
+</code>
+</pre>
 
-<h2>Limiting an attribute to some specific values</h2>
-
-If you want to do this, it's worth it to define a general
-type that can be reused.  These live in xml/schema/types/general.xsd.
-
-<pre><code>
+      <h2>Limiting an attribute to some specific values</h2>If you
+      want to do this, it's worth it to define a general type that
+      can be reused. These live in xml/schema/types/general.xsd.
+      <pre>
+<code>
 &lt;xs:simpleType name="yesNoType"&gt;
   &lt;xs:annotation&gt;
     &lt;xs:documentation&gt;
@@ -111,19 +108,18 @@ type that can be reused.  These live in xml/schema/types/general.xsd.
     &lt;xs:enumeration value="no"/&gt;
   &lt;/xs:restriction&gt;
 &lt;/xs:simpleType&gt;
-</code></pre>
-
-Then putting it on an attribute is simple:
-
-<pre><code>
+</code>
+</pre>Then putting it on an attribute is simple:
+      <pre>
+<code>
 &lt;xs:attribute name="opsOnly" type="yesNoType"/&gt;
-</code></pre>
+</code>
+</pre>
 
-<h2>Element with restricted text content</h2>
-
-Not an attribute, an element:
-
-<pre><code>
+      <h2>Element with restricted text content</h2>Not an
+      attribute, an element:
+      <pre>
+<code>
 &lt;xs:element name="relation"&gt;
   &lt;xs:simpleType&gt;
     &lt;xs:restriction base="xs:string"&gt;
@@ -134,15 +130,14 @@ Not an attribute, an element:
     &lt;/xs:restriction&gt;
   &lt;/xs:simpleType&gt;
 &lt;/xs:element&gt;
-</code></pre>
+</code>
+</pre>
 
-<h2>Attribute Groups</h2>
-
-Attribute Groups are good for representing a set of attributes
-read and written together by a common service routine.  
-Example definition:
-
-<pre><code>
+      <h2>Attribute Groups</h2>Attribute Groups are good for
+      representing a set of attributes read and written together by
+      a common service routine. Example definition:
+      <pre>
+<code>
 &lt;xs:attributeGroup name="EditorCommonAttributesGroup"&gt;
   &lt;xs:annotation&gt;
     &lt;xs:documentation&gt;
@@ -157,18 +152,14 @@ Example definition:
   &lt;xs:attribute name="level" type="xs:int" /&gt;
   &lt;xs:attribute name="forcecontroloff" type="trueFalseType" default="false" /&gt;
 &lt;/xs:attributeGroup&gt;
-</code></pre>
-
-and example use in some later type:
-
-<pre><code>
+</code>
+</pre>and example use in some later type:
+      <pre>
+<code>
 &lt;xs:attributeGroup ref="EditorCommonAttributesGroup" /&gt;
-</code></pre>
-
-<!--#include virtual="/Footer" -->
-
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+</code>
+</pre><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-

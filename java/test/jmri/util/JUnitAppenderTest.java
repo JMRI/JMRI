@@ -69,6 +69,16 @@ public class JUnitAppenderTest extends TestCase {
         JUnitAppender.assertWarnMessage(msg);
     }
 
+    public void testIgnoreLowerBeforeExpectedWarnMessage() {
+        log.debug("this is a DEBUG, should still pass");
+        log.info("this is an INFO, should still pass");
+        log.trace("this is a TRACE, should still pass");
+        
+        String msg = "Message for testing";
+        log.warn(msg);
+        JUnitAppender.assertWarnMessage(msg);
+    }
+
     public void testExpectedWarnAfterDebugMessage() {
         String msg = "Message for testing";
         log.debug("debug to skip");

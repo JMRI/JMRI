@@ -1,52 +1,51 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
 <!-- Translated by Herv&#233; Blorec  2013-10-10-->
+
 <html lang="fr">
 <head>
- <TITLE>
-      JMRI: Audio Table Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Matt Harris" name=Author>
-    <META name="keywords" content="JMRI help Audio Table">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Audio Table Help</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta content="Matt Harris" name="Author">
+  <meta name="keywords" content="JMRI help Audio Table">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>La Table Audio</h1>Vous pouvez utiliser la Table Audio
+      pour regarder le contenu des objets audio JMRI.
 
-<H1> La Table Audio</H1>
+      <p>Notez que vous pouvez trier la table par chacune des
+      colonnes, cliquez simplement sur le t&ecirc;te de
+      colonne.</p><a href="AudioTable.jpg"><img src=
+      "AudioTable.jpg" height="178" width="420"></a>
 
+      <p>Pour cr&eacute;er un nouvel objet audio, cliquez sur le
+      bouton " <a href="AudioAddEdit.shtml">Ajouter ...</a>" au bas
+      de la fen&ecirc;tre.</p>
 
-Vous pouvez utiliser la Table Audio pour regarder le contenu des objets audio JMRI.
-<p>
-Notez que vous pouvez trier la table par chacune des colonnes, cliquez simplement sur le
-t&#234;te de colonne.
-</p>
- <a href="AudioTable.jpg"><img src="AudioTable.jpg" height="178" width="420">
-</a>
-<p>
-Pour cr&#233;er un nouvel objet audio, cliquez sur le bouton
-"<a href="AudioAddEdit.shtml"> Ajouter ...</a>"  au bas de la fen&#234;tre.
-
-<p>
-Pour plus d'informations sur les objets audio, consultez la
-<a href="../../../../html/tools/Audio.shtml">  page d'aide audio</a>.
-
-<br>
-
-<!--#include virtual="/Footer" -->
+      <p>Pour plus d'informations sur les objets audio, consultez
+      la <a href="../../../../html/tools/Audio.shtml">page d'aide
+      audio</a>.<br>
+      <!--#include virtual="/Footer" --></p>
+    </div>
+  </div>
 </body>
 </html>
-
-
- 	  	 

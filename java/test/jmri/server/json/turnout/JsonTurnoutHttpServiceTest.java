@@ -39,6 +39,7 @@ public class JsonTurnoutHttpServiceTest extends TestCase {
             turnout1.setState(Turnout.UNKNOWN);
             result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1", Locale.ENGLISH);
             Assert.assertNotNull(result);
+            Assert.assertEquals(JsonTurnoutServiceFactory.TURNOUT, result.path(JSON.TYPE).asText());
             Assert.assertEquals("IT1", result.path(JSON.DATA).path(JSON.NAME).asText());
             Assert.assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
             turnout1.setState(Turnout.CLOSED);

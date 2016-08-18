@@ -24,11 +24,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PickPanel extends JPanel implements ListSelectionListener, ChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5093844168716608126L;
-
     private int ROW_HEIGHT;
 
     PickListModel[] _models;

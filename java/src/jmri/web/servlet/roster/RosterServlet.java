@@ -1,16 +1,16 @@
 package jmri.web.servlet.roster;
 
-import static jmri.jmris.json.JSON.ADDRESS;
-import static jmri.jmris.json.JSON.DATA;
-import static jmri.jmris.json.JSON.DECODER_FAMILY;
-import static jmri.jmris.json.JSON.DECODER_MODEL;
-import static jmri.jmris.json.JSON.GROUP;
-import static jmri.jmris.json.JSON.ID;
-import static jmri.jmris.json.JSON.LIST;
-import static jmri.jmris.json.JSON.MFG;
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.NUMBER;
-import static jmri.jmris.json.JSON.ROAD;
+import static jmri.server.json.JSON.ADDRESS;
+import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JSON.DECODER_FAMILY;
+import static jmri.server.json.JSON.DECODER_MODEL;
+import static jmri.server.json.JSON.GROUP;
+import static jmri.server.json.JSON.ID;
+import static jmri.server.json.JSON.LIST;
+import static jmri.server.json.JSON.MFG;
+import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.NUMBER;
+import static jmri.server.json.JSON.ROAD;
 import static jmri.server.json.JSON.FORMAT;
 import static jmri.web.servlet.ServletUtil.IMAGE_PNG;
 import static jmri.web.servlet.ServletUtil.UTF8;
@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
-import jmri.jmris.json.JSON;
+import jmri.server.json.JSON;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.server.json.roster.JsonRosterServiceFactory;
@@ -310,6 +310,7 @@ public class RosterServlet extends HttpServlet {
         log.debug("Getting roster with filter {}", filter);
         String group = (!filter.path(GROUP).isMissingNode()) ? filter.path(GROUP).asText() : null;
         log.debug("Group {} was in filter", group);
+
         String format = request.getParameter(FORMAT);
         if (format == null) {
             format = "";
@@ -317,7 +318,7 @@ public class RosterServlet extends HttpServlet {
         switch (format) {
             case JSON.JSON:
                 response.setContentType(UTF8_APPLICATION_JSON);
-                JsonRosterServiceFactory factory = InstanceManager.getDefault(JsonRosterServiceFactory.class);
+                JsonRosterServiceFactory factory = InstanceManager.getOptionalDefault(JsonRosterServiceFactory.class);
                 if (factory == null) {
                     factory = new JsonRosterServiceFactory();
                 }

@@ -1,137 +1,193 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
-<head><title>Basic Programming</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>Basic Programming</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<h1>The Basic Programmer</h1>
-<h2>The Roster Entry Pane</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-<p><a href="Programmer_Setup.shtml">Previous | </a><a href="Basic_BasicPane.shtml">Next</a></p>
-<p><a href="index.shtml#Basic%20Programmer">Back to Index</a></p>
-</div>
+    <div id="mainContent">
+      <h1>The Basic Programmer</h1>
 
-<hr>
-<p>The Basic Programmer uses only the required panes to set up
-the decoder for DCC operation and creating a Roster entry and uses only
-the first two TABs. &nbsp;The first action in programming a locomotive
-with DecoderPro&reg; is to fill out the roster entry screen.</p>
+      <h2>The Roster Entry Pane</h2>
 
-<p>A <b>roster</b> is a database of all locomotives that your
-installation of DecoderPro has programmed. All of this information
-will be contained in the list on the DecoderPro main page. It includes
-the information seen in the screen
-below:</p>
-<div align="center"><img style="width: 642px; height: 602px;" alt="Basic roster" src="images/Basic_Roster.png"><br></div>
-<p>Most of these fields are self-explanatory.  However, note that the first field (<strong>ID</strong>)
-becomes the file name in the Roster for the locomotive you are
-programming. Set up a schema to identify your locomotive to its decoder
-program. i.e. Mfr, Loco Type, and &nbsp;Address (Kato_SD40-2_5645).
-Spaces in the ID field will be changed to underscores (_) when the file
-is written.&nbsp; In a club environment, often the ID begins with the
-owner&#8217;s name, or member number. This way the Roster (which is sorted
-alphabetically) will keep all of an owner's locomotives listed
-together. DecoderPro also allows you to categorize roster
-entries into Groups, so you could have a separate group for each
-member.&nbsp; </p>
-<p>We&#8217;ll get to Groups and all the other neat stuff that can be done
-with DecoderPro in a while. I just thought I&#8217;d give you peek
-behind the curtain, and give you a chance to mentally thank the JMRI
-developers for all their work on DecoderPro version 3.&nbsp; Of course a message
-to that effect posted to the JMRI Yahoo group would also be warmly
-received.<br>
-  <br>
-The DCC address will be filled in automatically when we get to
-programming the address.&nbsp; The Decoder Family and Model are entered
-automatically from the Selection page we just used to get here.</p>
-<p> The <strong>Decoder</strong> <strong>Comment</strong> field is a good place 
-  to add the date you purchased the locomotive, price, or  any other information you might 
-feel is important to record. </p>
+      <div align="right">
+        <p><a href="Programmer_Setup.shtml">Previous |</a> <a href=
+        "Basic_BasicPane.shtml">Next</a></p>
 
-<p>The 
-  <input name="Save to Roster" id="Save to Roster" value="Save to Roster" type="submit">
-button stores the current decoder information to your computer hard
-drive and folder where your roster file is located. The default storage
-is the same directory where the program is installed. </p>
-<p>The 
-  <input name="button" id="button" value="Reset to Defaults" type="submit">
-button can be used to return the Roster file to the condition of a new
-file for the type and version of the decoder listed in the roster
-entry.&nbsp; It does NOT change the values in the roster file on your
-hard disk, unless you specifically save it after using this reset
-button. It also is not written to the decoder until you specifically
-select a write operation.&nbsp; It was included in DecoderPro so that
-if you get hopelessly confused in proceeding screen to screen entering
-variables, you can return to the decoder manufacturers baseline default
-set and start again. </p>
-<p><br>
-  Most decoders will activate the <strong>Reset Menu</strong>
-(next to the File menu at the top of the page).&nbsp; This will reset
-the decoder to the manufacturers default settings for all the CVs, or
-just some of them if the manufacturer has several reset routines.&nbsp;
-It does this by writing directly to a CV in the decoder, if the decoder
-has that feature, CV8 in the case of Digitrax. All decoders may not
-support reset and how they work is manufacturer and decoder dependent.</p>
-<p><br> One decoder with a lengthy list of reset routines is the QSI
-Revolution decoder, which enables a drop-down list of options for
-resetting the decoder as shown below:</p>
-<p style="text-align: center;"><img src="images/FactoryReset.jpg" alt="Factory reset" height="557" width="638"></p>
-<p>You will note that the decoder address is shown but grayed out (or
-blank if this is a new locomotive in the roster).&nbsp; This field is
-automatically filled in by the program and is determined from the
-address entered using the <strong>Basic</strong> tab which we will get to shortly.&nbsp; This address is used with the <strong>Ident </strong>function  on the start page if you wish to recall a locomotive that is already in your  roster. </p>
+        <p><a href="index.shtml#Basic%20Programmer">Back to
+        Index</a></p>
+      </div>
+      <hr>
 
-<p><a name="ProgramModes"></a>The Programming mode can be changed by clicking on the drop down box</p>
+      <p>The Basic Programmer uses only the required panes to set
+      up the decoder for DCC operation and creating a Roster entry
+      and uses only the first two TABs. The first action in
+      programming a locomotive with DecoderPro&reg; is to fill out
+      the roster entry screen.</p>
 
-<div align="center"><img src="images/SetProgramMode.png" alt="set program mode" height="218" width="653"></div>
-<p>There are options for several <a href="Basic_Mode.shtml"><strong>programming modes</strong></a>.
-JMRI now selects the best mode for you. It determines this from the
-command station type you are using and the decoder model you are
-attempting to program. Usually this will be OK. If you find that you
-are having a problem with programming you may try a different mode.</p>
+      <p>A <b>roster</b> is a database of all locomotives that your
+      installation of DecoderPro has programmed. All of this
+      information will be contained in the list on the DecoderPro
+      main page. It includes the information seen in the screen
+      below:</p>
 
-<p>For most newer decoders, 
-stay with <strong>Paged mode</strong> or
-whichever Direct mode your Command Station supports. Your decoder
-documentation should let you know if programming in some other mode is
-necessary... but if you are having problems, experiment. If a mode is
-not supported for the selected decoder and system, that option will be
-grayed out. For this decoder I will use Direct Bye Mode.</p><p>When you make your selection, the programming mode should now display to the left of the 
-  in the dropdown box.</p>
-<p>Below is a Basic Programming Roster setup for Athearn FP-45
-locomotive in n scale with OEM decoder (Tsunami 750) decoder. Note in
-the status at the bottom of pane indicates that the file has been saved.</p>
-<p style="text-align: center;"><img src="images/Basic_Roster01.png" alt="roster" height="557" width="642"></p>
+      <div align="center">
+        <img style="width: 642px; height: 602px;" alt=
+        "Basic roster" src="images/Basic_Roster.png"><br>
+      </div>
 
-<p>Now that we have the Roster  information all in order, we can continue with programming the decoder. </p>
-<p>Now it's time to click on the <strong>Save to Roster</strong> button
-to save this data. Note that there will be brief message in status bar
-at the bottom of the screen that roster has been saved.</p>
+      <p>Most of these fields are self-explanatory. However, note
+      that the first field (<strong>ID</strong>) becomes the file
+      name in the Roster for the locomotive you are programming.
+      Set up a schema to identify your locomotive to its decoder
+      program. i.e. Mfr, Loco Type, and Address (Kato_SD40-2_5645).
+      Spaces in the ID field will be changed to underscores (_)
+      when the file is written. In a club environment, often the ID
+      begins with the owner's name, or member number. This way the
+      Roster (which is sorted alphabetically) will keep all of an
+      owner's locomotives listed together. DecoderPro also allows
+      you to categorize roster entries into Groups, so you could
+      have a separate group for each member.</p>
 
-<p>Let&#8217;s  move on to the Basic Programmer.</p>
+      <p>We'll get to Groups and all the other neat stuff that can
+      be done with DecoderPro in a while. I just thought I'd give
+      you peek behind the curtain, and give you a chance to
+      mentally thank the JMRI developers for all their work on
+      DecoderPro version 3. Of course a message to that effect
+      posted to the JMRI Yahoo group would also be warmly
+      received.<br>
+      <br>
+      The DCC address will be filled in automatically when we get
+      to programming the address. The Decoder Family and Model are
+      entered automatically from the Selection page we just used to
+      get here.</p>
 
-<hr>
-<div align="right">
-  <p><a href="Programmer_Setup.shtml">Previous | </a><a href="Basic_BasicPane.shtml">Next</a></p>
-  <p><a href="index.shtml#Basic%20Programmer">Back to Index</a></p>
-</div>
+      <p>The <strong>Decoder</strong> <strong>Comment</strong>
+      field is a good place to add the date you purchased the
+      locomotive, price, or any other information you might feel is
+      important to record.</p>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
- </body>
+      <p>The <input name="SaveToRoster" value="Save to Roster"
+      type="submit"> button stores the current decoder information
+      to your computer hard drive and folder where your roster file
+      is located. The default storage is the same directory where
+      the program is installed.</p>
+
+      <p>The <input name="button" id="button" value=
+      "Reset to Defaults" type="submit"> button can be used to
+      return the Roster file to the condition of a new file for the
+      type and version of the decoder listed in the roster entry.
+      It does NOT change the values in the roster file on your hard
+      disk, unless you specifically save it after using this reset
+      button. It also is not written to the decoder until you
+      specifically select a write operation. It was included in
+      DecoderPro so that if you get hopelessly confused in
+      proceeding screen to screen entering variables, you can
+      return to the decoder manufacturers baseline default set and
+      start again.</p>
+
+      <p><br>
+      Most decoders will activate the <strong>Reset Menu</strong>
+      (next to the File menu at the top of the page). This will
+      reset the decoder to the manufacturers default settings for
+      all the CVs, or just some of them if the manufacturer has
+      several reset routines. It does this by writing directly to a
+      CV in the decoder, if the decoder has that feature, CV8 in
+      the case of Digitrax. All decoders may not support reset and
+      how they work is manufacturer and decoder dependent.</p>
+
+      <p><br>
+      One decoder with a lengthy list of reset routines is the QSI
+      Revolution decoder, which enables a drop-down list of options
+      for resetting the decoder as shown below:</p>
+
+      <p style="text-align: center;"><img src=
+      "images/FactoryReset.jpg" alt="Factory reset" height="557"
+      width="638"></p>
+
+      <p>You will note that the decoder address is shown but grayed
+      out (or blank if this is a new locomotive in the roster).
+      This field is automatically filled in by the program and is
+      determined from the address entered using the
+      <strong>Basic</strong> tab which we will get to shortly. This
+      address is used with the <strong>Ident</strong> function on
+      the start page if you wish to recall a locomotive that is
+      already in your roster.</p>
+
+      <p><a name="ProgramModes" id="ProgramModes"></a>The
+      Programming mode can be changed by clicking on the drop down
+      box</p>
+
+      <div align="center">
+        <img src="images/SetProgramMode.png" alt="set program mode"
+        height="218" width="653">
+      </div>
+
+      <p>There are options for several <a href=
+      "Basic_Mode.shtml"><strong>programming modes</strong></a>.
+      JMRI now selects the best mode for you. It determines this
+      from the command station type you are using and the decoder
+      model you are attempting to program. Usually this will be OK.
+      If you find that you are having a problem with programming
+      you may try a different mode.</p>
+
+      <p>For most newer decoders, stay with <strong>Paged
+      mode</strong> or whichever Direct mode your Command Station
+      supports. Your decoder documentation should let you know if
+      programming in some other mode is necessary... but if you are
+      having problems, experiment. If a mode is not supported for
+      the selected decoder and system, that option will be grayed
+      out. For this decoder I will use Direct Bye Mode.</p>
+
+      <p>When you make your selection, the programming mode should
+      now display to the left of the in the dropdown box.</p>
+
+      <p>Below is a Basic Programming Roster setup for Athearn
+      FP-45 locomotive in n scale with OEM decoder (Tsunami 750)
+      decoder. Note in the status at the bottom of pane indicates
+      that the file has been saved.</p>
+
+      <p style="text-align: center;"><img src=
+      "images/Basic_Roster01.png" alt="roster" height="557" width=
+      "642"></p>
+
+      <p>Now that we have the Roster information all in order, we
+      can continue with programming the decoder.</p>
+
+      <p>Now it's time to click on the <strong>Save to
+      Roster</strong> button to save this data. Note that there
+      will be brief message in status bar at the bottom of the
+      screen that roster has been saved.</p>
+
+      <p>Let's move on to the Basic Programmer.</p>
+      <hr>
+
+      <div align="right">
+        <p><a href="Programmer_Setup.shtml">Previous |</a> <a href=
+        "Basic_BasicPane.shtml">Next</a></p>
+
+        <p><a href="index.shtml#Basic%20Programmer">Back to
+        Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
 </html>

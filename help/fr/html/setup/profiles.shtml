@@ -1,84 +1,108 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-<title>JMRI Setup - Configuration Profiles</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI Setup - Configuration Profiles</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<!-- Page Body -->
-<h1>JMRI Setup: Configuration Profiles</h1>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<p><em>Configuration Profiles</em> allow a single JMRI application to be launched
-    with one of multiple user-specified configurations. A configuration profile
-    contains all preferences set in the JMRI preferences dialog, and may,
-    optionally, include user files, a roster, and throttles.</p>
+    <div id="mainContent">
+      <!-- Page Body -->
 
-<p>When a JMRI application is launched for the first time, it checks for a
-    configuration profile. If no profile exists, the application will create a
-    default profile and use it without prompting you. If only a single profile
-    is found, the application will use that profile without prompting you.
-    If there are multiple profiles, the application will prompt you for the
-    profile to use. You may specify that the application always start with the
-    same profile.</p>
+      <h1>JMRI Setup: Configuration Profiles</h1>
 
-<p>By default, when a JMRI application starts up, it prompts the user 
-    for which configuration profile to use: <img src="images/Set_Active_Profile.png"></p>
-<p>If the user doesn't select a new profile and click OK, the program will
-continue with the default profile after a short delay. You can check a box in the
-preferences to bypass this step and go directly to the last-used profile.</p>
+      <p><em>Configuration Profiles</em> allow a single JMRI
+      application to be launched with one of multiple
+      user-specified configurations. A configuration profile
+      contains all preferences set in the JMRI preferences dialog,
+      and may, optionally, include user files, a roster, and
+      throttles.</p>
 
-<h2>Profile Management</h2>
+      <p>When a JMRI application is launched for the first time, it
+      checks for a configuration profile. If no profile exists, the
+      application will create a default profile and use it without
+      prompting you. If only a single profile is found, the
+      application will use that profile without prompting you. If
+      there are multiple profiles, the application will prompt you
+      for the profile to use. You may specify that the application
+      always start with the same profile.</p>
 
-<p>Configuration profiles can be managed in the application preferences, under
-    the Profile Configuration tab.</p>
+      <p>By default, when a JMRI application starts up, it prompts
+      the user for which configuration profile to use: <img src=
+      "images/Set_Active_Profile.png"></p>
 
-<img src="images/Profile_Preferences_prompt.png">
+      <p>If the user doesn't select a new profile and click OK, the
+      program will continue with the default profile after a short
+      delay. You can check a box in the preferences to bypass this
+      step and go directly to the last-used profile.</p>
 
-<p>The "Currently active profile" is being used by this run of the JMRI application, 
-    and is also where preferences changes will be saved.</p>
+      <h2>Profile Management</h2>
 
-<p>To use or configure a different profile, select it, click "Activate", and restart
-    the program.</p>
+      <p>Configuration profiles can be managed in the application
+      preferences, under the Profile Configuration
+      tab.</p><img src="images/Profile_Preferences_prompt.png">
 
-<p>For more information on how to configure JMRI to share its
-configuration files between multiple computers, see the
-<a href="Dropbox.shtml">page on using Dropbox with JMRI</a>.
+      <p>The "Currently active profile" is being used by this run
+      of the JMRI application, and is also where preferences
+      changes will be saved.</p>
 
-<h2>Sharing Profiles</h2>
-<h3>Exporting</h3>
-<p>Profiles can be exported from the application preferences Config Profile
-    section. An exported profile is a compressed archive containing the profile's
-    contents, and will optionally contain the user files and roster if they are
-    stored outside the profile.</p>
-<h3>Importing</h3>
-<p>JMRI does not yet directly support importing profiles.</p>
-<p>A profile can be imported by uncompressing it a native archive management
-    utility into a new directory and then opening while launching JMRI or from
-    the application preferences by clicking the "Add Existing..." button.</p>
-<p>Note that using the profile Import/Export capability to copy JMRI data back
-    and forth between two computers is neither supported or recommended.</p>
+      <p>To use or configure a different profile, select it, click
+      "Activate", and restart the program.</p>
 
-<h2>Upgrading from Earlier Versions of JMRI</h2>
-<p>When you first run a JMRI application after upgrading from an earlier version
-    of JMRI, the application will copy its existing configuration to a new profile,
-    and use that profile. If you are using a JMRI application you had not used
-    prior to upgrading, the application will behave as described above.</p>
+      <p>For more information on how to configure JMRI to share its
+      configuration files between multiple computers, see the
+      <a href="Dropbox.shtml">page on using Dropbox with
+      JMRI</a>.</p>
 
-<!--#include virtual="/Footer" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+      <h2>Sharing Profiles</h2>
+
+      <h3>Exporting</h3>
+
+      <p>Profiles can be exported from the application preferences
+      Config Profile section. An exported profile is a compressed
+      archive containing the profile's contents, and will
+      optionally contain the user files and roster if they are
+      stored outside the profile.</p>
+
+      <h3>Importing</h3>
+
+      <p>JMRI does not yet directly support importing profiles.</p>
+
+      <p>A profile can be imported by uncompressing it a native
+      archive management utility into a new directory and then
+      opening while launching JMRI or from the application
+      preferences by clicking the "Add Existing..." button.</p>
+
+      <p>Note that using the profile Import/Export capability to
+      copy JMRI data back and forth between two computers is
+      neither supported or recommended.</p>
+
+      <h2>Upgrading from Earlier Versions of JMRI</h2>
+
+      <p>When you first run a JMRI application after upgrading from
+      an earlier version of JMRI, the application will copy its
+      existing configuration to a new profile, and use that
+      profile. If you are using a JMRI application you had not used
+      prior to upgrading, the application will behave as described
+      above.</p><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

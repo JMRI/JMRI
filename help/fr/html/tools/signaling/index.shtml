@@ -208,7 +208,7 @@ sur vos panneaux, s'il vous pla&#238;t voir le
 et les pages web sur le
 <A HREF="http://jmri.org/community/examples/Panels-Cornwall/Cornwall.html">  panneau de commande de chemin de fer Cornwall </a>.
 <A name="logic"> 
-<a name="intro"></a><h3> Introduction &#224; la simple logique signal </h3></a></dt>
+<a name="intro"></a></a><h3> Introduction &#224; la simple logique signal </h3></dt>
 
 Simple Logique Signal (SSL)
 est un outil JMRI pour permettre l'installation rapide de la signalisation de base de style ABS.
@@ -367,7 +367,7 @@ allum&#233;e.
 est maintenue.
        	</li></ul>  
 
-<a name="action"><h4> Actions Signaux Disponibles dans Logix </h4></a></dt>    
+<a name="action"></a><h4> Actions Signaux Disponibles dans Logix </h4></dt>    
 	
 <p >Les actions li&#233;es &#224; des signaux qui sont actuellement disponibles pour une utilisation dans les conditions Logix sont r&#233;pertori&#233;es
 ci-dessous avec des informations sur chacune d'elles. <i>Remarque:</i>

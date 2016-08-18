@@ -77,7 +77,7 @@ public class AcelaSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
 
         loadCommon(h, shared);
 
-        InstanceManager.signalHeadManagerInstance().register(h);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
 
         AcelaNode sh = AcelaAddress.getNodeFromSystemName(sys,_memo);
         int rawaddr = AcelaAddress.getBitFromSystemName(sys);

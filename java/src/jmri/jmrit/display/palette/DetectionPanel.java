@@ -29,10 +29,6 @@ import jmri.jmrit.picker.PickPanel;
  */
 public class DetectionPanel extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5943021268643905786L;
     private JTextField _occDetectorName = new JTextField();   // can be either a Sensor or OBlock name
     private JFrame _pickFrame;
     private JButton _openPicklistButton;
@@ -254,7 +250,7 @@ public class DetectionPanel extends JPanel {
                 if (sensor == null) {
                     JOptionPane.showMessageDialog(_parent._paletteFrame,
                             Bundle.getMessage("InvalidOccDetector", name),
-                            Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                     _occDetectorName.setText(null);
                 }
                 _blockPathPanel.setVisible(false);

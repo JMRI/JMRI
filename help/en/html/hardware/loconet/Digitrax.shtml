@@ -85,7 +85,7 @@ station over the LocoNet&reg; using one of several types of <a href="#adapters">
     connection instead of a real LocoNet connection.  This is the "LocoNet 
     Simulator".</p>
 
-<a name="adapters" id="adapters"><h3>Computer Interfaces</h3></a>
+<a name="adapters"></a><h3>Computer Interfaces</h3>
 <p>To connect your computer to the LocoNet, and hence to the command station,
 you need one of the following adapters:</p>
 <ul>
@@ -509,8 +509,7 @@ for more information.
             <li><a href="MS100.shtml">Digitrax MS100</a> (Strongly not recommended)</li>
         </ul>
     </li>
-    <li><a href="LocoNetTools.shtml">JMRI's Tools for LocoNet&reg; Devices</a></li>
-    <li>LocoNet-related Tools
+    <li><a name="tools"></a>LocoNet-related Tools
         <ul>
             <li><a href="../../../package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">Monitor LocoNet</a></li>
             <li><a href="../../../package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml">Monitor Slots</a></li>
@@ -554,7 +553,7 @@ for more information.
         </ul>
     </li>    
 </ul>
-<a name="Support"><h3>Third Party/Support</h3></a>
+<a name="Support"></a><h3>Third Party/Support</h3>
 <p>Support for Digitrax hardware products is available through <a href="http://www.digitrax.com">
         Digitrax, Inc.</a> Digitrax product manuals may be found 
         <a href="http://www.digitrax.com/support/manuals/">here</a>.  

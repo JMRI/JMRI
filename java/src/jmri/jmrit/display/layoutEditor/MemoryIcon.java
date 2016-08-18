@@ -11,12 +11,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display a status of a Memory.
+ *
+ * This is the same name as display.MemoryIcon, but a very
+ * separate class. That's not good. Unfortunately, it's too 
+ * hard to disentangle that now because it's resident in the
+ * panel file that have been written out, so we just annoted 
+ * the fact, but now we want to leave it on the list to fix.
  */
-// This is the same name as display.MemoryIcon, but a very
-// separate class. That's not good. Unfortunately, it's too 
-// hard to disentangle that now because it's resident in the
-// panel file that have been written out, so we just annoted 
-// the fact, but now we want to leave it on the list to fix.
 //@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
 

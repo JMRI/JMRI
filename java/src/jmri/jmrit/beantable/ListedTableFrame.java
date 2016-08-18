@@ -69,7 +69,7 @@ public class ListedTableFrame extends BeanTableFrame {
 
     public ListedTableFrame(String s) {
         super(s);
-        if (jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
             //We add this to the instanceManager so that other components can add to the table
             jmri.InstanceManager.store(this, jmri.jmrit.beantable.ListedTableFrame.class);
         }
@@ -201,7 +201,9 @@ public class ListedTableFrame extends BeanTableFrame {
         }
     }
 
+    @Override
     public void dispose() {
+        pref.disallowSave();
         for (int x = 0; x < tabbedTableArray.size(); x++) {
             tabbedTableArray.get(x).dispose();
         }
@@ -209,6 +211,7 @@ public class ListedTableFrame extends BeanTableFrame {
             list.removeListSelectionListener(list.getListSelectionListeners()[0]);
         }
         super.dispose();
+        pref.allowSave();
     }
 
     void buildMenus(final TabbedTableItem item) {

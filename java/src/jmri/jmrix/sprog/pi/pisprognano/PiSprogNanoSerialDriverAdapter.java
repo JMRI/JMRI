@@ -26,7 +26,7 @@ public class PiSprogNanoSerialDriverAdapter
     }
 
     /**
-     * Get an array of valid baud rates. This is currently only 9,600 bps
+     * Get an array of valid baud rates. This is currently only 115,200 bps
      */
     @Override
     public String[] validBaudRates() {
@@ -38,18 +38,8 @@ public class PiSprogNanoSerialDriverAdapter
      */
     @Deprecated
     static public PiSprogNanoSerialDriverAdapter instance() {
-        if (mInstance == null) {
-            PiSprogNanoSerialDriverAdapter m = new PiSprogNanoSerialDriverAdapter();
-            m.setManufacturer(jmri.jmrix.sprog.SprogConnectionTypeList.SPROG);
-            mInstance = m;
-        }
-        return mInstance;
+        return null;
     }
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static volatile PiSprogNanoSerialDriverAdapter mInstance = null;
 
     static Logger log = LoggerFactory.getLogger(PiSprogNanoSerialDriverAdapter.class.getName());
 

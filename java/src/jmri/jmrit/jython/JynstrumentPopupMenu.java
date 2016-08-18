@@ -11,11 +11,6 @@ import javax.swing.JPopupMenu;
 
 public class JynstrumentPopupMenu extends JPopupMenu {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8294137276227871972L;
-
     private static final ResourceBundle jythonBundle = ResourceBundle.getBundle("jmri/jmrit/jython/JythonBundle");
 
     Jynstrument jynstrument; // The jynstrument itself

@@ -79,7 +79,7 @@ public class IndicatorTrackIcon extends PositionableIcon
             setOccSensorHandle(null);
             return;
         }
-        if (InstanceManager.sensorManagerInstance() != null) {
+        if (InstanceManager.getOptionalDefault(jmri.SensorManager.class) != null) {
             try {
                 Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
                 setOccSensorHandle(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));

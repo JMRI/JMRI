@@ -168,6 +168,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JTextField blockIDField = new JTextField(8);
     private JTextField blockSensor = new JTextField(5);
 
+    // TODO: all the following JCheckBoxes should be JRadioButtons instead of check boxes (only 1 selected at a given time)
     private JCheckBox turnoutRHBox = new JCheckBox(rb.getString("RightHandAbbreviation"));
     private JCheckBox turnoutLHBox = new JCheckBox(rb.getString("LeftHandAbbreviation"));
     private JCheckBox turnoutWYEBox = new JCheckBox(rb.getString("WYEAbbreviation"));
@@ -549,7 +550,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         top1.add(new JLabel(" y:"));
         top1.add(yLabel);
         // add turnout items
-        top1.add(new JLabel("    " + rb.getString("Turnout") + ": "));
+        top1.add(new JLabel("    " + Bundle.getMessage("BeanNameTurnout") + ": "));
         top1.add(new JLabel(rb.getString("Name")));
         top1.add(nextTurnout);
         nextTurnout.setToolTipText(rb.getString("TurnoutNameToolTip"));
@@ -751,7 +752,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         helpBar.setVisible(false);
 
         // register the resulting panel for later configuration
-        InstanceManager.configureManagerInstance().registerUser(this);
+        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerUser(this);
         // confirm that panel hasn't already been loaded
         if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)) {
             log.warn("File contains a panel with the same name (" + name + ") as an existing panel");
@@ -763,9 +764,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         resetDirty();
         // establish link to LayoutEditorAuxTools
         auxTools = new LayoutEditorAuxTools(thisPanel);
-        if (auxTools == null) {
-            log.error("Unable to create link to LayoutEditorAuxTools");
-        }
     }
 
     @Override
@@ -1767,7 +1765,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         dispMenu.add(newTrainItem);
         newTrainItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                if (jmri.InstanceManager.transitManagerInstance().getSystemNameList().size() <= 0) {
+                if (jmri.InstanceManager.getDefault(jmri.TransitManager.class).getSystemNameList().size() <= 0) {
                     // Inform the user that there are no Transits available, and don't open the window
                     javax.swing.JOptionPane.showMessageDialog(null, ResourceBundle.getBundle("jmri.jmrit.dispatcher.DispatcherBundle").getString("NoTransitsMessage"));
                     return;
@@ -2072,10 +2070,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // get reporter name
         Reporter reporter = null;
         String rName = reporterNameField.getText().trim();
-        if (InstanceManager.reporterManagerInstance() != null) {
-            reporter = InstanceManager.reporterManagerInstance().
-                    provideReporter(rName);
-            if (reporter == null) {
+        if (InstanceManager.getOptionalDefault(jmri.ReporterManager.class) != null) {
+            try {
+                reporter = InstanceManager.getDefault(jmri.ReporterManager.class).
+                            provideReporter(rName);
+            } catch (IllegalArgumentException e) {
                 JOptionPane.showMessageDialog(enterReporterFrame,
                         java.text.MessageFormat.format(rb.getString("Error18"),
                                 new Object[]{rName}), rb.getString("Error"),
@@ -4874,7 +4873,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private void deleteSelectedItems() {
         if (!noWarnGlobalDelete) {
             int selectedValue = JOptionPane.showOptionDialog(this,
-                    rb.getString("Question6"), rb.getString("WarningTitle"),
+                    rb.getString("Question6"), Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                     new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
                         rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
@@ -6050,32 +6049,29 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         newTrack = new TrackSegment(name, beginObject, beginPointType,
                 foundObject, foundPointType, dashedLine.isSelected(),
                 mainlineTrack.isSelected(), this);
-        if (newTrack != null) {
-            trackList.add(newTrack);
-            setDirty(true);
-            // link to connected objects
-            setLink(newTrack, TRACK, beginObject, beginPointType);
-            setLink(newTrack, TRACK, foundObject, foundPointType);
-            // check on layout block
-            LayoutBlock b = provideLayoutBlock(blockIDField.getText().trim());
-            if (b != null) {
-                newTrack.setLayoutBlock(b);
-                auxTools.setBlockConnectivityChanged();
-                // check on occupancy sensor
-                String sensorName = (blockSensor.getText().trim());
-                if (sensorName.length() > 0) {
-                    if (!validateSensor(sensorName, b, this)) {
-                        b.setOccupancySensorName("");
-                    } else {
-                        blockSensor.setText(b.getOccupancySensorName());
-                    }
-                }
-                newTrack.updateBlockInfo();
-            }
 
-        } else {
-            log.error("Failure to create a new Track Segment");
+        trackList.add(newTrack);
+        setDirty(true);
+        // link to connected objects
+        setLink(newTrack, TRACK, beginObject, beginPointType);
+        setLink(newTrack, TRACK, foundObject, foundPointType);
+        // check on layout block
+        LayoutBlock b = provideLayoutBlock(blockIDField.getText().trim());
+        if (b != null) {
+            newTrack.setLayoutBlock(b);
+            auxTools.setBlockConnectivityChanged();
+            // check on occupancy sensor
+            String sensorName = (blockSensor.getText().trim());
+            if (sensorName.length() > 0) {
+                if (!validateSensor(sensorName, b, this)) {
+                    b.setOccupancySensorName("");
+                } else {
+                    blockSensor.setText(b.getOccupancySensorName());
+                }
+            }
+            newTrack.updateBlockInfo();
         }
+
     }
 
     /**
@@ -6599,9 +6595,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (sm instanceof SignalMast) {
             sb.append("Signal Mast");
             sb.append(" is linked to the following items<br> do you want to remove those references");
-            if (InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed((SignalMast) sm)) {
+            if (InstanceManager.getDefault(jmri.SignalMastLogicManager.class).isSignalMastUsed((SignalMast) sm)) {
                 jmri.SignalMastLogic sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic((SignalMast) sm);
-                //jmri.SignalMastLogic sml = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic((SignalMast)sm);
+                //jmri.SignalMastLogic sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic((SignalMast)sm);
                 if (sml != null && sml.useLayoutEditor(sml.getDestinationList().get(0))) {
                     sb.append(" and any SignalMast Logic associated with it");
                 }
@@ -6662,7 +6658,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (usage != null) {
             usage = "<html>" + usage + "</html>";
             int selectedValue = JOptionPane.showOptionDialog(this,
-                    usage, rb.getString("WarningTitle"),
+                    usage, Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                     new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"), rb.getString("ButtonCancel")}, rb.getString("ButtonYes"));
             if (selectedValue == 1) {
@@ -6710,7 +6706,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (o.getConnect1() != null || o.getConnect2() != null) {
             if (!noWarnPositionablePoint) {
                 int selectedValue = JOptionPane.showOptionDialog(this,
-                        rb.getString("Question2"), rb.getString("WarningTitle"),
+                        rb.getString("Question2"), Bundle.getMessage("WarningTitle"),
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                         new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
                             rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
@@ -6762,7 +6758,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // First verify with the user that this is really wanted
         if (!noWarnLayoutTurnout) {
             int selectedValue = JOptionPane.showOptionDialog(this,
-                    rb.getString("Question1r"), rb.getString("WarningTitle"),
+                    rb.getString("Question1r"), Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                     new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
                         rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
@@ -6854,7 +6850,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // First verify with the user that this is really wanted
         if (!noWarnLevelXing) {
             int selectedValue = JOptionPane.showOptionDialog(this,
-                    rb.getString("Question3r"), rb.getString("WarningTitle"),
+                    rb.getString("Question3r"), Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                     new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
                         rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
@@ -6923,7 +6919,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // First verify with the user that this is really wanted
         if (!noWarnSlip) {
             int selectedValue = JOptionPane.showOptionDialog(this,
-                    rb.getString("Question5r"), rb.getString("WarningTitle"),
+                    rb.getString("Question5r"), Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                     new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
                         rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
@@ -6989,7 +6985,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // First verify with the user that this is really wanted
         if (!noWarnTurntable) {
             int selectedValue = JOptionPane.showOptionDialog(this,
-                    rb.getString("Question4r"), rb.getString("WarningTitle"),
+                    rb.getString("Question4r"), Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                     new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
                         rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
@@ -7225,10 +7221,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // check for valid signal head entry
         String tName = nextSignalHead.getText().trim();
         SignalHead mHead = null;
-        if ((tName != null) && (!tName.equals(""))) {
-            mHead = InstanceManager.signalHeadManagerInstance().getSignalHead(tName);
+        if (!tName.equals("")) {
+            mHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(tName);
             /*if (mHead == null)
-             mHead = InstanceManager.signalHeadManagerInstance().getByUserName(tName);
+             mHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(tName);
              else */
             nextSignalHead.setText(tName);
         }
@@ -7265,9 +7261,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     SignalHead getSignalHead(String name) {
-        SignalHead sh = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
+        SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(name);
         if (sh == null) {
-            sh = InstanceManager.signalHeadManagerInstance().getByUserName(name);
+            sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(name);
         }
         if (sh == null) {
             log.warn("did not find a SignalHead named " + name);
@@ -7309,8 +7305,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // check for valid signal head entry
         String tName = nextSignalMast.getText().trim();
         SignalMast mMast = null;
-        if ((tName != null) && (!tName.equals(""))) {
-            mMast = InstanceManager.signalMastManagerInstance().getSignalMast(tName);
+        if (!tName.equals("")) {
+            mMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(tName);
             nextSignalMast.setText(tName);
         }
         if (mMast == null) {
@@ -7336,9 +7332,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     SignalMast getSignalMast(String name) {
-        SignalMast sh = InstanceManager.signalMastManagerInstance().getBySystemName(name);
+        SignalMast sh = InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name);
         if (sh == null) {
-            sh = InstanceManager.signalMastManagerInstance().getByUserName(name);
+            sh = InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName(name);
         }
         if (sh == null) {
             log.warn("did not find a SignalMast named " + name);
@@ -7570,18 +7566,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (conTools == null) {
             conTools = new ConnectivityUtil(thisPanel);
         }
-        if (conTools == null) {
-            log.error("Unable to establish link to Connectivity Tools for Layout Editor panel " + layoutName);
-        }
         return conTools;
     }
 
     public LayoutEditorTools getLETools() {
         if (tools == null) {
             tools = new LayoutEditorTools(thisPanel);
-        }
-        if (tools == null) {
-            log.error("Unable to establish link to Layout Editor Tools for Layout Editor panel " + layoutName);
         }
         return tools;
     }

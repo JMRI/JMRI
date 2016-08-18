@@ -1,4 +1,3 @@
-// AutoAllocate.java
 package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
@@ -65,7 +64,6 @@ import org.slf4j.LoggerFactory;
  * </P>
  *
  * @author	Dave Duchamp Copyright (C) 2011
- * @version	$Revision$
  */
 public class AutoAllocate {
 
@@ -83,9 +81,6 @@ public class AutoAllocate {
             return;
         }
         _conUtil = _dispatcher.getLayoutEditor().getConnectivityUtil();
-        if (_conUtil == null) {
-            log.error("null ConnectivityUtil when constructing AutoAllocate");
-        }
     }
 
     // operational variables
@@ -515,37 +510,37 @@ public class AutoAllocate {
             }
             // already in a PASSING_MEET Allocation Plan - find target Section and sequence
             Section oSection = null;
-            ActiveTrain oTrain = null;
+//            ActiveTrain oTrain = null;
             if (apx.getActiveTrain(1) == nt) {
                 nSecSeq = apx.getTargetSectionSequenceNum(1);
                 nSec = apx.getTargetSection(1);
                 oSection = apx.getTargetSection(2);
-                oTrain = apx.getActiveTrain(2);
+//                oTrain = apx.getActiveTrain(2);
             } else {
                 nSecSeq = apx.getTargetSectionSequenceNum(2);
                 nSec = apx.getTargetSection(2);
                 oSection = apx.getTargetSection(1);
-                oTrain = apx.getActiveTrain(1);
+//                oTrain = apx.getActiveTrain(1);
             }
             int aCurrentSeq = getCurrentSequenceNumber(at);
             aSecSeq = willTraverse(nSec, at, aCurrentSeq);
             if (aSecSeq == 0) {
                 return false;
             }
-            int tnSecSeq = nSecSeq;
-            if (nt.getPriority() > oTrain.getPriority()) {
-                if (!nt.isAllocationReversed()) {
-                    tnSecSeq--;
-                    if (tnSecSeq <= 0) {
-                        tnSecSeq = nSecSeq;
-                    }
-                } else {
-                    tnSecSeq++;
-                    if (tnSecSeq > nt.getTransit().getMaxSequence()) {
-                        tnSecSeq = nSecSeq;
-                    }
-                }
-            }
+//            int tnSecSeq = nSecSeq;
+//            if (nt.getPriority() > oTrain.getPriority()) {
+//                if (!nt.isAllocationReversed()) {
+//                    tnSecSeq--;
+//                    if (tnSecSeq <= 0) {
+//                        tnSecSeq = nSecSeq;
+//                    }
+//                } else {
+//                    tnSecSeq++;
+//                    if (tnSecSeq > nt.getTransit().getMaxSequence()) {
+//                        tnSecSeq = nSecSeq;
+//                    }
+//                }
+//            }
             ArrayList<Section> nSections = nt.getTransit().getSectionListBySeq(nSecSeq);
             if (nSections.size() <= 1) {
                 return false;
@@ -732,7 +727,7 @@ public class AutoAllocate {
         Transit t = at.getTransit();
         if (!at.isTransitReversed()) {
             for (int i = seq; i <= t.getMaxSequence(); i++) {
-                for (int j = 0; j <= t.getSectionListBySeq(i).size(); j++) {
+                for (int j = 0; j < t.getSectionListBySeq(i).size(); j++) {
                     if (t.getSectionListBySeq(i).get(j) == s) {
                         return i;
                     }
@@ -740,7 +735,7 @@ public class AutoAllocate {
             }
         } else {
             for (int i = seq; i >= 0; i--) {
-                for (int j = 0; j <= t.getSectionListBySeq(i).size(); j++) {
+                for (int j = 0; j < t.getSectionListBySeq(i).size(); j++) {
                     if (t.getSectionListBySeq(i).get(j) == s) {
                         return i;
                     }
@@ -1246,4 +1241,3 @@ public class AutoAllocate {
     private final static Logger log = LoggerFactory.getLogger(AutoAllocate.class.getName());
 }
 
-/* @(#)AutoAllocate.java */

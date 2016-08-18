@@ -203,7 +203,7 @@ can be added to the script such as triggering or responding to external sensors.
 information about creating and customizing scripts.</p>
 <p>
 <a name="SpeedMap">
-<h2>Warrants and Speed Restrictions</h2></a>
+</a><h2>Warrants and Speed Restrictions</h2>
 A train running under a warrant must be aware of track conditions ahead. Signals
 may indicate reduced speed or permission to return to normal speed.  Blocks may impose
 yard limit speed restrictions.  Rogue trains may show up unexpectedly in the route.

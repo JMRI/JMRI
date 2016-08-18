@@ -887,7 +887,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         if ((adapterMemo != null) && (adapterMemo.get(jmri.CommandStation.class) != null)) {
             c = adapterMemo.get(jmri.CommandStation.class);
         } else {
-            c = InstanceManager.commandStationInstance();
+            c = InstanceManager.getOptionalDefault(CommandStation.class);
         }
 
         // send it 3 times
@@ -919,7 +919,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         if ((adapterMemo != null) && (adapterMemo.get(jmri.CommandStation.class) != null)) {
             c = adapterMemo.get(jmri.CommandStation.class);
         } else {
-            c = InstanceManager.commandStationInstance();
+            c = InstanceManager.getOptionalDefault(CommandStation.class);
         }
 
         // send it 3 times

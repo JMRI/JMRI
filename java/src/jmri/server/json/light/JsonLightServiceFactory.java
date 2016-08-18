@@ -1,5 +1,8 @@
 package jmri.server.json.light;
 
+import static jmri.server.json.light.JsonLight.LIGHT;
+import static jmri.server.json.light.JsonLight.LIGHTS;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonHttpService;
@@ -12,8 +15,6 @@ import jmri.spi.JsonServiceFactory;
  */
 public class JsonLightServiceFactory implements JsonServiceFactory {
 
-    public static final String LIGHT = "light"; // NOI18N
-    public static final String LIGHTS = "lights"; // NOI18N
 
     @Override
     public String[] getTypes() {

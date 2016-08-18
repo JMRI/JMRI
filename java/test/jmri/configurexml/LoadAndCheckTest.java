@@ -1,5 +1,6 @@
 package jmri.configurexml;
 
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import junit.framework.Assert;
@@ -25,7 +26,7 @@ public class LoadAndCheckTest extends LoadAndStoreTestBase {
      */
     public void testLoadFileTest() throws Exception {
         // load file
-        InstanceManager.configureManagerInstance()
+        InstanceManager.getDefault(ConfigureManager.class)
                 .load(new java.io.File("java/test/jmri/configurexml/load/LoadFileTest.xml"));
 
         // check existance of a few objects
@@ -42,7 +43,7 @@ public class LoadAndCheckTest extends LoadAndStoreTestBase {
 
     public void testLoadMultipleSystems() throws Exception {
         // load file
-        InstanceManager.configureManagerInstance()
+        InstanceManager.getDefault(ConfigureManager.class)
                 .load(new java.io.File("java/test/jmri/configurexml/load/LoadMultipleSystems.xml"));
 
         // check existance of a few objects
@@ -59,7 +60,7 @@ public class LoadAndCheckTest extends LoadAndStoreTestBase {
 
     public void testLoad295() throws Exception {
         // load file
-        InstanceManager.configureManagerInstance()
+        InstanceManager.getDefault(ConfigureManager.class)
                 .load(new java.io.File("java/test/jmri/configurexml/load/LoadFileTest295.xml"));
 
         // check existance of a few objects

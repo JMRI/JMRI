@@ -26,10 +26,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LocoIcon extends PositionableLabel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9079140879519495618L;
     public static final String WHITE = Bundle.getMessage("White");		//loco background colors
     public static final String GREEN = Bundle.getMessage("Green");
     public static final String GRAY = Bundle.getMessage("Gray");

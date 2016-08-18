@@ -24,7 +24,7 @@
 
 <h1>L'&#201;diteur de R&#233;seau</h1>
 
-<a name="contents"><h2>Contenu</h2></a>
+<a name="contents"></a><h2>Contenu</h2>
 
 Ce document d&#233;crit L'&#201;diteur de R&#233;seau et comment l'utiliser pour faire des panneaux
  PanelPro. Le document est divis&#233; en sections; cliquez ci-dessous pour
@@ -55,7 +55,7 @@ sections en d&#233;tail.</p>
 <li><a href="#finish">Mettre la Touche Finale &#224; votre Panneau</a>
 </ul>
 
-<a name="intro"> <h2>Introduction &#224; L'&#201;diteur de Panneau R&#233;seau</h2></a>
+<a name="intro"> </a><h2>Introduction &#224; L'&#201;diteur de Panneau R&#233;seau</h2>
 
 <b>Le panneau &#201;diteur de R&#233;seau</b> soutient la construction et l'affichage des panneaux PanelPro.
 <b>L'&#201;diteur de R&#233;seau</b> est similaire &#224; <b>l'&#201;diteur traditionnel Panneau PanelPro</b>,
@@ -321,7 +321,7 @@ Ic&#244;nes Signal, l'&#201;diteur de R&#233;seau par d&#233;faut pour les ic&#2
 "Ressources/icons/smallschematics/projecteurs/". Si vous utilisez un fond  noir, vous pouvez avoir besoin de passer &#224; des ic&#244;nes blanches qui sont disponibles dans les m&#234;mes
 domaine, puisque les ic&#244;nes par d&#233;faut ont des bordures noires.</p>
 
-<a name="filemenu"><h2>Utilisation d'un Menu Fichier de Panneau</h2></a>
+<a name="filemenu"></a><h2>Utilisation d'un Menu Fichier de Panneau</h2>
 <p>
 Le menu Fichier permet de sauvegarder et d'effacer  des panneaux.
 </p>
@@ -341,7 +341,7 @@ Le menu Fichier permet de sauvegarder et d'effacer  des panneaux.
  suppression de ce panneau <b>Il n'y a pas d'annulation pour la suppression.</b> A moins que le panneau n'ait &#233;t&#233; enregistr&#233; sur le disque, il est parti apr&#232;s sa suppression.</li>
  </ul>
 
- <a name="option"><h2>Utilisation du Menu Options de l'&#201;diteur de R&#233;seau</h2></a>
+ <a name="option"></a><h2>Utilisation du Menu Options de l'&#201;diteur de R&#233;seau</h2>
 <p>
 Le menu Options est utilis&#233; pour d&#233;finir les options, ajouter des &#233;l&#233;ments au panneau, et effectuer des
 op&#233;rations qui ne surviennent pas tr&#232;s souvent lors de la cr&#233;ation du panneau. Chaque s&#233;lection du menu Option
@@ -444,7 +444,7 @@ op&#233;rations qui ne surviennent pas tr&#232;s souvent lors de la cr&#233;atio
   </ul>
  </ul>
 
-<a name="toolsmenu"><h2>Utilisation du Menu Outil de l'&#201;diteur de R&#233;seau</h2></a>
+<a name="toolsmenu"></a><h2>Utilisation du Menu Outil de l'&#201;diteur de R&#233;seau</h2>
 <p>
 Le menu Outils offre des outils d'aide &#224; la cr&#233;ation et &#224; l'&#233;dition de Panneaux d'&#201;dition de R&#233;seau.
  L'utilisation de ces proc&#233;dures automatis&#233;es devrait r&#233;duire le temps et les efforts n&#233;cessaires
@@ -640,7 +640,7 @@ D&#233;finir Signals pour un aiguillage 3-voies).
 </li>
 </ul>
 
-<a name="zoommenu"><h2>Utilisation du Menu Zoom de l'&#201;diteur de R&#233;seau</h2></a>
+<a name="zoommenu"></a><h2>Utilisation du Menu Zoom de l'&#201;diteur de R&#233;seau</h2>
 <p>
 Le menu de zoom permet d'agrandir temporairement un panneau. Le menu offre une
 choix de plusieurs facteurs de grossissement, et un &#233;l&#233;ment <b>Pas de zoom</b> pour revenir &#224; la
@@ -658,7 +658,7 @@ Panneau sans grossissement. Un groupe sp&#233;cial peut &#234;tre sauv&#233; alo
 Quand un panneau est charg&#233;, il vient toujours avec <b>Pas de Zoom</b> s&#233;lectionn&#233;. Puisque
 le zoom est temporaire, le facteur de zoom n'est pas conserv&#233; lorsque le panneau est sauv&#233;. </p>
 
-<a  name="Marqueurmenu"><h2> Utilisation du Menu Marqueur de l'&#201;diteur de R&#233;seau</h2></a>
+<a  name="Marqueurmenu"></a><h2> Utilisation du Menu Marqueur de l'&#201;diteur de R&#233;seau</h2>
 
 Le menu Marqueurs fournit les <b>Marqueurs</b> qui peuvent &#234;tre utilis&#233;s pour garder une trace de
 la localisation des trains sur des panneaux du R&#233;seau. Les marqueurs sont de petites ic&#244;nes color&#233;es qui
@@ -699,7 +699,7 @@ dans sa barre de titre.
 marqueur peut &#234;tre retir&#233; en s&#233;lectionnant <b>Supprimer</b> dans son menu contextuel
 </ul>
 
-<a name="editing"><h2>&#201;diter et Supprimer des &#201;l&#233;ments</h2></a>
+<a name="editing"></a><h2>&#201;diter et Supprimer des &#201;l&#233;ments</h2>
 <p>
 Chaque &#233;l&#233;ment sur un panneau comporte un menu d&#233;roulant. <b>Sauf pour les marqueurs, les menus contextuels sont seulement 
 actifs en mode &#233;dition.</b> Pour acc&#233;der au menu contextuel d'un objet &#224; base d'ic&#244;nes (,
@@ -753,7 +753,7 @@ minimum d'informations soit disponible pour les outils. Le reste des outils <b>D
 d&#233;crit ci-dessous <a ref="#toolsmenu">  Utilisation du menu Outils de l'&#201;diteur de R&#233;seau </a>,
 et sont discut&#233;s en d&#233;tail sur la page d'aide de la fen&#234;tre de dialogue de l'outil. </p>
 
-<a name="turnouts"><h2>Aiguillages</h2></a>
+<a name="turnouts"></a><h2>Aiguillages</h2>
 <p>
 L'&#201;diteur de R&#233;seau prend en charge six types diff&#233;rents d'appareils de voie (aiguillages): 
  (<b>D</b>), <b>G</b>), Sym&#233;trique (<b>Y</b>), 
@@ -848,7 +848,7 @@ ou <b>canton 4</b> les entr&#233;es sont vides, le canton par d&#233;faut est ut
  sont num&#233;rot&#233;s 1, 2, 3 et 4, partant du point de connexion en haut &#224; gauche
  dans le sens horaire.</p>
 
-<a name="track"> <h2> Tron&#231;ons de voie et Points de connexion</h2></a>
+<a name="track"> </a><h2> Tron&#231;ons de voie et Points de connexion</h2>
 <p>
 Un <b>Segment de Voie</b> est un morceau de voie droite entre deux 
 points de connexion. Les points de raccordement sont dessin&#233;s comme des petits carr&#233;s rouges ou verts.
@@ -902,7 +902,7 @@ Segment de voie est r&#233;alis&#233; sous une forme (par exemple:le connecteur 
 deux segments de voie vont dans la m&#234;me direction.</p>
 
 <p>
-<a name="xing"><h2>Croisements</h2></a></p>
+<a name="xing"></a><h2>Croisements</h2></p>
 <p>
 Un croisement est une pi&#232;ce particuli&#232;re de la voie qui repr&#233;sente deux voies traversant
 au niveau du sol. Un croisement a quatre points de connexion, et deux voies, d&#233;sign&#233; 1 et 2. Quand un croisement est cr&#233;&#233;e, la voie 1 est la voie horizontale, et la voie 2 est la 
@@ -925,7 +925,7 @@ cantons puissent &#234;tre incluses ou modifi&#233;es. Le canton (s) affect&#233
 croisement &#224; un point de raccordement o&#249; les changements de canton sert de canton
 fronti&#232;re. (les cantons sont discut&#233;s plus en d&#233;tail ci-dessous.)</P>
 
-<a name="turn"> <h2>Pont Tournant</h2></a>
+<a name="turn"> </a><h2>Pont Tournant</h2>
 <p>
 Un pont tournant est une repr&#233;sentation sch&#233;matique d'un pont tournant sur le
 r&#233;seau. Un pont tournant est dessin&#233; comme un cercle avec un nombre variable de connexions de voie,
@@ -952,7 +952,7 @@ action.</p>
 La bo&#238;te de dialogue Modifier Pont permet de modifier le rayon du cercle du pont, et pr&#233;voit l'ajout et la suppression de voies rayonnantes. Pour de plus amples
 informations sur la fa&#231;on d'ajouter et de supprimer des voies rayonnantes, voir la page d'aide de la boite de dialogue Modifier Pont</p>
 
-<a name="background"><h2>Fonds</h2></a>
+<a name="background"></a><h2>Fonds</h2>
 <p>
 Les images de fond ne sont pas requises pour les panneaux  R&#233;seau. Le support pour
 l'ajout d'un arri&#232;re-plan est fourni pour les panneaux qui n&#233;cessitent autre que le fond par d&#233;faut &#224; disposition sur
@@ -994,7 +994,7 @@ panneau CTC, puis terminer en ajoutant l'image bord droit. Les avantages de la
 la construction de fond CTC avec des tranches sont que 1) vous pouvez faire pratiquement tout
 Longueur de panneau CTC, et 2) les plaques seront pr&#233;cis&#233;ment positionn&#233;es automatiquement.</P>
 
-<a name="block"><h2>Cantons</h2></a>
+<a name="block"></a><h2>Cantons</h2>
 <p>
 Les cantons sont des tron&#231;ons de voie dont l'occupation peut &#234;tre suivi individuellement.
 Diviser la voie en cantons est facultative. Les cantons mis en place dans un sch&#233;ma de voies
@@ -1061,7 +1061,7 @@ et de croisement) qui sont affect&#233;s &#224; un canton. Ce nombre est affich&
 l'option Cr&#233;er/Modifier canton comme <b>Utilisez Compteur courant:</b>. Lorsque les panneaux sont enregistr&#233;s
 sur le disque, seuls les cantons avec une utilisation du compteur plus grande que z&#233;ro sont enregistr&#233;s.</p>
 
-<a name="tracking">  <h2>Cantons, &#201;tiquettes M&#233;moire, et Suivi de Train</h2></a>
+<a name="tracking">  </a><h2>Cantons, &#201;tiquettes M&#233;moire, et Suivi de Train</h2>
 <p>
 Le <b>Suivi de Train</b> est une technique d'animation qui nous permet d'afficher en
 dynamique, quand  un train occupe un
@@ -1114,7 +1114,7 @@ roues et des voies propres, et d'avoir assez de voitures dans chaque train dans 
 courant afin d'assurer que le canton de d&#233;tection ne perde pas l'information avant que le train
 p&#233;n&#232;tre dans le bloc suivant.</p>
 
-<a name="tips"><h2>Conseils</h2></a>
+<a name="tips"></a><h2>Conseils</h2>
 <p>
 En raison de la fa&#231;on dont un panneau R&#233;seau est rafra&#238;chi, le sch&#233;ma  &#233;tabli
 sera sur le dessus de toutes les ic&#244;nes et les &#233;tiquettes. Il est possible d'avoir une &#233;tiquette ou une ic&#244;ne
@@ -1142,7 +1142,7 @@ Si vous souhaitez deux mondes, envisager &#224; la fois la construction d'&#201;
  un Panneau R&#233;seau pour le suivi des trains comme vue plus haut, Vous pouvez suivre les trains dans un panneau compagnon Editeur de Panneau juste en ajoutant
  des &#201;tiquettes M&#233;moires.</p>
 
-<a name="finish"><h2>Mettre la Touche Finale &#224; votre Panneau</h2></a>
+<a name="finish"></a><h2>Mettre la Touche Finale &#224; votre Panneau</h2>
 <p>
 Ci-dessous est une version am&#233;lior&#233;e du panneau simple ovale construit avec <b>D&#233;buter avec &#201;diteur de R&#233;seau</b>.
  Les &#233;tapes g&#233;n&#233;rales n&#233;cessaires pour obtenir depuis le panneau de d&#233;part  ce panneau sont esquiss&#233;es ci-dessous.

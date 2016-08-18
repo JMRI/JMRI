@@ -131,7 +131,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     // add update button to  bottom1Panel
     private void addUpdateButtonToBottom(ActionListener doneAction) {
 
-        _updateButton = new JButton(Bundle.getMessage("updateButton"));
+        _updateButton = new JButton(Bundle.getMessage("updateButton")); // custom Update text
         _updateButton.addActionListener(doneAction);
         _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
         _bottom1Panel.add(_updateButton);
@@ -204,7 +204,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             if (ItemPalette.getIconMap(_itemType, _family) != null) {
 //                JOptionPane.showMessageDialog(_paletteFrame, 
 //                        Bundle.getMessage("DuplicateFamilyName", _family, _itemType), 
-//                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+//                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 // make sure name does not duplicate a known name
                 _family = null;
             }
@@ -353,7 +353,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _familyButtonGroup.add(button);
         }
         familyPanel.add(buttonPanel);
-        if (_family != family && setDefault) {
+        if (setDefault && !family.equals(_family)) {
             _family = family;       // let last family be the selected one
             if (button != null) {
                 button.setSelected(true);
@@ -558,7 +558,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         newFamilyButton.setToolTipText(Bundle.getMessage("ToolTipAddFamily"));
         panel.add(newFamilyButton);
 
-        JButton cancelButton = new JButton(Bundle.getMessage("cancelButton"));
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateFamiliesPanel();
@@ -581,7 +581,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             if (family.equals(iter.next())) {
                 JOptionPane.showMessageDialog(_paletteFrame,
                         Bundle.getMessage("DuplicateFamilyName", family, _itemType),
-                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return false;
             }
         }

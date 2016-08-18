@@ -204,7 +204,7 @@ public class LevelXing {
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalAHeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -225,7 +225,7 @@ public class LevelXing {
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalBHeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -246,7 +246,7 @@ public class LevelXing {
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalCHeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -267,7 +267,7 @@ public class LevelXing {
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalDHeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -356,7 +356,7 @@ public class LevelXing {
         }
 
         try {
-            SignalMast mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
+            SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMast);
             signalAMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
         } catch (IllegalArgumentException ex) {
             signalAMastNamed = null;
@@ -384,7 +384,7 @@ public class LevelXing {
         }
 
         try {
-            SignalMast mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
+            SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMast);
             signalBMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
         } catch (IllegalArgumentException ex) {
             signalBMastNamed = null;
@@ -412,7 +412,7 @@ public class LevelXing {
         }
 
         try {
-            SignalMast mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
+            SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMast);
             signalCMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
         } catch (IllegalArgumentException ex) {
             signalCMastNamed = null;
@@ -440,7 +440,7 @@ public class LevelXing {
         }
 
         try {
-            SignalMast mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
+            SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMast);
             signalDMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
         } catch (IllegalArgumentException ex) {
             signalDMastNamed = null;
@@ -824,7 +824,7 @@ public class LevelXing {
         if (signalMast == null) {
             return;
         }
-        if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(signalMast)) {
+        if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.getDefault(jmri.SignalMastLogicManager.class).isSignalMastUsed(signalMast)) {
             SignallingGuiTools.removeSignalMastLogic(null, signalMast);
         }
     }
@@ -1257,7 +1257,7 @@ public class LevelXing {
             }
             // get new block, or null if block has been removed
             blockNameAC = block1Name.getText().trim();
-            if ((blockNameAC != null) && (blockNameAC.length() > 0)) {
+            if (blockNameAC.length() > 0) {
                 try {
                     blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
                     // decrement use if block was previously counted
@@ -1296,7 +1296,7 @@ public class LevelXing {
             }
             // get new block, or null if block has been removed
             blockNameBD = block2Name.getText().trim();
-            if ((blockNameBD != null) && (blockNameBD.length() > 0)) {
+            if (blockNameBD.length() > 0) {
                 try {
                     blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
                     // decrement use if block was previously counted
@@ -1335,7 +1335,7 @@ public class LevelXing {
             }
             // get new block, or null if block has been removed
             blockNameAC = block1Name.getText().trim();
-            if ((blockNameAC != null) && (blockNameAC.length() > 0)) {
+            if (blockNameAC.length() > 0) {
                 try {
                     blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
                     // decrement use if block was previously counted
@@ -1361,7 +1361,7 @@ public class LevelXing {
             }
             // get new block, or null if block has been removed
             blockNameBD = block2Name.getText().trim();
-            if ((blockNameBD != null) && (blockNameBD.length() > 0)) {
+            if (blockNameBD.length() > 0) {
                 try {
                     blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
                     // decrement use if block was previously counted
@@ -1445,9 +1445,9 @@ public class LevelXing {
             sml.add(sm);
             return;
         }
-        SignalMastLogic sl = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sm);
+        SignalMastLogic sl = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sm);
         for (int i = 0; i < sml.size(); i++) {
-            SignalMastLogic s = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sml.get(i));
+            SignalMastLogic s = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sml.get(i));
             if (s != null) {
                 s.setConflictingLogic(sm, this);
             }
@@ -1465,7 +1465,7 @@ public class LevelXing {
             return;
         }
         for (int i = 0; i < sml.size(); i++) {
-            SignalMastLogic s = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sm);
+            SignalMastLogic s = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sm);
             if (s != null) {
                 s.removeConflictingLogic(sm, this);
             }

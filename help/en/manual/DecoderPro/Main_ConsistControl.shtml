@@ -1,113 +1,189 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>
-Tool Menu
-</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>Tool Menu</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<h1>Tool Menu </h1>
-<h2>Consisting Control Window</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-<p><a href="Main_Tool.shtml#Consist">Back</a></p>
-<p><a href="index.shtml#Main">Back to Index</a></p>
-</div>
+    <div id="mainContent">
+      <h1>Tool Menu</h1>
 
-<hr>
-<p align="left">Three types of consists are used on DCC systems:</p>
-<ul>
-  <li>A <strong><em>basic</em></strong> or <strong><em>primary address consist</em></strong>, where each locomotive is assigned the same address on the programming track, or on the main with <a href="Basic_Programming.shtml#OpsMode">OpsMode Programming</a> (if supported by the command station and decoder). <br>
-    <br>
-  </li>
-  <li>A <strong><em>Command Station Assisted Consist </em></strong>(CSAC) which builds the consist using a function of your command station. Command Station Assisted Consists go by the trade names listed below.<br>
-    <br>
-    <table width="90%" border="0" align="center" cellpadding="1" cellspacing="1">
-      <tr>
-        <td><strong>Manufacturer</strong></td>
-        <td><strong>Trade Name</strong></td>
-        <td><strong>Usage Notes</strong></td>
-      </tr>
-      <tr>
-        <td align="left" valign="top">Digitrax</td>
-        <td>Universal Consist</td>
-        <td>Limited to the number of slots supported by the system. Allows any address</td>
-      </tr>
-      <tr>
-        <td align="left" valign="top">Lenz</td>
-        <td>Double Header</td>
-        <td>Limited to 2 locomotives. Allows any address but 00 to be used</td>
-      </tr>
-      <tr>
-        <td align="left" valign="top">NCE</td>
-        <td>Old Style Consist</td>
-        <td>Limited to 8 locomotives. Allows any address but 00 to be used</td>
-      </tr>
-      <tr>
-        <td align="left" valign="top">EasyDCC</td>
-        <td>Standard Consist</td>
-        <td>Limited to 8 locomotives. Allows any address but 00 to be used</td>
-      </tr>
-    </table>
-    <br>
-  </li>
-  <li>A <em><strong>Decoder Assisted Consist (</strong></em>DAC), often referred to as Advanced Consist. The NMRA<sup>&reg;</sup> has set aside CV19 as a dedicated location for consist addresses. If CV19 contains a value other than 0, the locomotive will respond to speed and direction instructions sent to the address in CV19. If CV19 contains zero then it will respond to speed and direction commands sent to the usual short or long decoder address. Since the consist address is a single CV, it is limited to the range of 1 to 127. If you add 128 to the consist address, the locomotive will run backwards (relative to it's normal direction of travel) in the consist. The DAC can be set up in the <a href="Comp_Consist.shtml"><strong>Consisting</strong></a> tab in the Comprehensive Programmer.</li>
-</ul>
-<h4>DecoderPro Consisting Tool</h4>
-<p>The consist tool provides a visual tool for manipulating the <em><strong>Decoder Assisted Consists</strong></em> and , on some command stations, <em><strong>Command Station Assisted Consists.</strong></em></p>
-<p align="center"><img src="images/Main_consist_01.png" width="616" height="331" alt="consist"></p>
-<p>The 
-<input name="radio" type="radio" id="radio" value="radio" checked> 
-<strong>Advanced Consist</strong> and the 
-<input type="radio" name="radio2" id="radio2" value="radio2"> 
-<strong>Command Station Consist</strong> allow you to select either consisting mode if supported by your command station. If not supported the options will be grayed out.
-<p><strong>Consist</strong> text box: type the consist ID assigned to the locomotives in the consist for <em><strong>Decoder Assisted Consists.</strong></em> For Command Station Consist, this is automatically filled in with the address of the lead locomotive in the consist.
-<p><strong>New Locomotive</strong> text box : type in a new locomotive address or select from you roster using the drop-down list. 
-<p>Clicking the <strong>
-    <input type="button" name="button" id="button" value="adds">
-</strong> will add the locomotive to the consist and it will appear in the list area of the window.
-<p>Clicking the <strong>
-    <input type="button" name="button2" id="button2" value="Button">
-</strong> will clear the information of the current locomotive.
-<p>The 
-  <input name="checkbox" type="checkbox" id="checkbox" checked> 
-<strong>Direction Normal ?  </strong> determines the direction of the locomotive travel as forwarded or reverse when the consist is traveling forward. Will be grayed out until the lead locomotive is selected.
-<p><strong>
-    <input type="button" name="button3" id="button3" value="DEL">
-</strong> removes the consist.      The list of the consist will have a 
-<input type="button" name="button4" id="button4" value="DEL">
- for each locomotive, allowing you to remove any locomotive from the consist.
-<p>
-<input type="button" name="button6" id="button6" value="Delelte"> 
-deletes the entire consist.
-<p><a href="Main_Throttle.shtml">    <input type="button" name="button5" id="button5" value="Throttle"></a>
-</a>opens a<strong><a href="Main_Throttle.shtml"> throttle </a></strong>for the consist.
-<p>
-<input type="button" name="button7" id="button7" value="Reverse"> 
-reverses the direction of the consist.
-<hr>
+      <h2>Consisting Control Window</h2>
 
-<div align="right">
-<p><a href="Main_Tool.shtml#Consist">Back</a></p>
-<p><a href="index.shtml#Main">Back to Index</a></p>
-</div>
+      <div align="right">
+        <p><a href="Main_Tool.shtml#Consist">Back</a></p>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
+        <p><a href="index.shtml#Main">Back to Index</a></p>
+      </div>
+      <hr>
+
+      <p align="left">Three types of consists are used on DCC
+      systems:</p>
+
+      <ul>
+        <li>A <strong><em>basic</em></strong> or
+        <strong><em>primary address consist</em></strong>, where
+        each locomotive is assigned the same address on the
+        programming track, or on the main with <a href=
+        "Basic_Programming.shtml#OpsMode">OpsMode Programming</a>
+        (if supported by the command station and decoder).<br>
+        <br></li>
+
+        <li>A <strong><em>Command Station Assisted
+        Consist</em></strong> (CSAC) which builds the consist using
+        a function of your command station. Command Station
+        Assisted Consists go by the trade names listed below.<br>
+          <br>
+
+          <table width="90%" border="0" align="center" cellpadding=
+          "1" cellspacing="1">
+            <tr>
+              <td><strong>Manufacturer</strong></td>
+
+              <td><strong>Trade Name</strong></td>
+
+              <td><strong>Usage Notes</strong></td>
+            </tr>
+
+            <tr>
+              <td align="left" valign="top">Digitrax</td>
+
+              <td>Universal Consist</td>
+
+              <td>Limited to the number of slots supported by the
+              system. Allows any address</td>
+            </tr>
+
+            <tr>
+              <td align="left" valign="top">Lenz</td>
+
+              <td>Double Header</td>
+
+              <td>Limited to 2 locomotives. Allows any address but
+              00 to be used</td>
+            </tr>
+
+            <tr>
+              <td align="left" valign="top">NCE</td>
+
+              <td>Old Style Consist</td>
+
+              <td>Limited to 8 locomotives. Allows any address but
+              00 to be used</td>
+            </tr>
+
+            <tr>
+              <td align="left" valign="top">EasyDCC</td>
+
+              <td>Standard Consist</td>
+
+              <td>Limited to 8 locomotives. Allows any address but
+              00 to be used</td>
+            </tr>
+          </table><br>
+        </li>
+
+        <li>A <em><strong>Decoder Assisted Consist
+        (</strong></em>DAC), often referred to as Advanced Consist.
+        The NMRA<sup>&reg;</sup> has set aside CV19 as a dedicated
+        location for consist addresses. If CV19 contains a value
+        other than 0, the locomotive will respond to speed and
+        direction instructions sent to the address in CV19. If CV19
+        contains zero then it will respond to speed and direction
+        commands sent to the usual short or long decoder address.
+        Since the consist address is a single CV, it is limited to
+        the range of 1 to 127. If you add 128 to the consist
+        address, the locomotive will run backwards (relative to
+        it's normal direction of travel) in the consist. The DAC
+        can be set up in the <a href=
+        "Comp_Consist.shtml"><strong>Consisting</strong></a> tab in
+        the Comprehensive Programmer.</li>
+      </ul>
+
+      <h4>DecoderPro Consisting Tool</h4>
+
+      <p>The consist tool provides a visual tool for manipulating
+      the <em><strong>Decoder Assisted Consists</strong></em> and ,
+      on some command stations, <em><strong>Command Station
+      Assisted Consists.</strong></em></p>
+
+      <p align="center"><img src="images/Main_consist_01.png"
+      width="616" height="331" alt="consist"></p>
+
+      <p>The <input name="radio" type="radio" id="radio" value=
+      "radio" checked> <strong>Advanced Consist</strong> and the
+      <input type="radio" name="radio2" id="radio2" value="radio2">
+      <strong>Command Station Consist</strong> allow you to select
+      either consisting mode if supported by your command station.
+      If not supported the options will be grayed out.</p>
+
+      <p><strong>Consist</strong> text box: type the consist ID
+      assigned to the locomotives in the consist for
+      <em><strong>Decoder Assisted Consists.</strong></em> For
+      Command Station Consist, this is automatically filled in with
+      the address of the lead locomotive in the consist.</p>
+
+      <p><strong>New Locomotive</strong> text box : type in a new
+      locomotive address or select from you roster using the
+      drop-down list.</p>
+
+      <p>Clicking the <strong><input type="button" name="button"
+      id="button" value="adds"></strong> will add the locomotive to
+      the consist and it will appear in the list area of the
+      window.</p>
+
+      <p>Clicking the <strong><input type="button" name="button2"
+      id="button2" value="Button"></strong> will clear the
+      information of the current locomotive.</p>
+
+      <p>The <input name="checkbox" type="checkbox" id="checkbox"
+      checked> <strong>Direction Normal ?</strong> determines the
+      direction of the locomotive travel as forwarded or reverse
+      when the consist is traveling forward. Will be grayed out
+      until the lead locomotive is selected.</p>
+
+      <p><strong><input type="button" name="button3" id="button3"
+      value="DEL"></strong> removes the consist. The list of the
+      consist will have a <input type="button" name="button4" id=
+      "button4" value="DEL"> for each locomotive, allowing you to
+      remove any locomotive from the consist.</p>
+
+      <p><input type="button" name="button6" id="button6" value=
+      "Delelte"> deletes the entire consist.</p>
+
+      <p><a href="Main_Throttle.shtml"><input type="button" name=
+      "button5" id="button5" value="Throttle"></a> opens a
+      <strong><a href="Main_Throttle.shtml">throttle</a></strong>
+      for the consist.</p>
+
+      <p><input type="button" name="button7" id="button7" value=
+      "Reverse"> reverses the direction of the consist.</p>
+      <hr>
+
+      <div align="right">
+        <p><a href="Main_Tool.shtml#Consist">Back</a></p>
+
+        <p><a href="index.shtml#Main">Back to Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

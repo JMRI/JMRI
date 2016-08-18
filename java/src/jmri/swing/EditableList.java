@@ -1,4 +1,3 @@
-// EditableList.java
 package jmri.swing;
 
 import java.applet.Applet;
@@ -30,10 +29,6 @@ import javax.swing.event.ChangeEvent;
  */
 public class EditableList<E> extends JList<E> implements CellEditorListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2724300657041009593L;
     protected Component editorComp = null;
     protected int editingIndex = -1;
     protected transient ListCellEditor<E> cellEditor = null;

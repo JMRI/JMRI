@@ -7,15 +7,9 @@ import javax.swing.AbstractAction;
  * Start a LayoutEditor.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  * @see jmri.jmrit.display.panelEditor.PanelEditorAction
  */
 public class LayoutEditorAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8529340792792129330L;
 
     public LayoutEditorAction(String s) {
         super(s);

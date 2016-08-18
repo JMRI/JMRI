@@ -42,7 +42,7 @@ public class JmriClockPropertyListener extends JmriSimplePropertyListener {
         _endTimes[0] = fixMidnight(endTime);
         _rangeList[0] = false;
         numRanges = 1;
-        _fastClock = InstanceManager.timebaseInstance();
+        _fastClock = InstanceManager.getDefault(jmri.Timebase.class);
         Date currentTime = _fastClock.getTime();
         _currentMinutes = (currentTime.getHours() * 60) + currentTime.getMinutes();
     }

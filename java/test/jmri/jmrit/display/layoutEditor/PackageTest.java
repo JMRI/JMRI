@@ -35,6 +35,7 @@ public class PackageTest extends TestCase {
         suite.addTest(LayoutConnectivityTest.suite());
 
         suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.display.layoutEditor.configurexml.PackageTest.class));
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(LayoutEditorActionTest.suite());

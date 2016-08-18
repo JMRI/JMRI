@@ -177,7 +177,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                     break;
                 case Conditional.ITEM_TYPE_SIGNALMAST:
                     try {
-                        bean = InstanceManager.signalMastManagerInstance().provideSignalMast(devName);
+                        bean = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(devName);
                     } catch (IllegalArgumentException e) {
                         bean = null;
                         log.error("invalid signal mast name= \"" + _deviceName + "\" in conditional action");
@@ -185,7 +185,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                     break;
                 case Conditional.ITEM_TYPE_SIGNALHEAD:
                     try {
-                        bean = InstanceManager.signalHeadManagerInstance().getSignalHead(devName);
+                        bean = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(devName);
                     } catch (IllegalArgumentException e) {
                         bean = null;
                         log.error("invalid signal head name= \"" + _deviceName + "\" in conditional action");
@@ -425,27 +425,27 @@ public class DefaultConditionalAction implements ConditionalAction {
     public static String getItemTypeString(int t) {
         switch (t) {
             case Conditional.ITEM_TYPE_SENSOR:
-                return (rbx.getString("Sensor"));
+                return (Bundle.getMessage("BeanNameSensor"));
             case Conditional.ITEM_TYPE_TURNOUT:
-                return (rbx.getString("Turnout"));
+                return (Bundle.getMessage("BeanNameTurnout"));
             case Conditional.ITEM_TYPE_LIGHT:
-                return (rbx.getString("Light"));
+                return (Bundle.getMessage("BeanNameLight"));
             case Conditional.ITEM_TYPE_SIGNALHEAD:
-                return (rbx.getString("SignalHead"));
+                return (Bundle.getMessage("BeanNameSignalHead"));
             case Conditional.ITEM_TYPE_SIGNALMAST:
-                return (rbx.getString("SignalMast"));
+                return (Bundle.getMessage("BeanNameSignalMast"));
             case Conditional.ITEM_TYPE_MEMORY:
-                return (rbx.getString("Memory"));
+                return (Bundle.getMessage("BeanNameMemory"));
             case Conditional.ITEM_TYPE_LOGIX:
-                return (rbx.getString("Logix"));
+                return (Bundle.getMessage("BeanNameLogix"));
             case Conditional.ITEM_TYPE_WARRANT:
-                return (rbx.getString("Warrant"));
+                return (Bundle.getMessage("BeanNameWarrant"));
             case Conditional.ITEM_TYPE_OBLOCK:
-                return (rbx.getString("OBlock"));
+                return (Bundle.getMessage("BeanNameOBlock"));
             case Conditional.ITEM_TYPE_CLOCK:
                 return (rbx.getString("FastClock"));
             case Conditional.ITEM_TYPE_AUDIO:
-                return (rbx.getString("Audio"));
+                return (Bundle.getMessage("BeanNameAudio"));
             case Conditional.ITEM_TYPE_SCRIPT:
                 return (rbx.getString("Script"));
             case Conditional.ITEM_TYPE_OTHER:

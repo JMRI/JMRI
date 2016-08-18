@@ -87,7 +87,7 @@
  Server.  A remote computer (or several remote computers) can then use the
  DCC++ Over TCP interface to remotely access and control the Base Station.
  
-<a name="Limitations"><h2>Limitations</h2></a>
+<a name="Limitations"></a><h2>Limitations</h2>
 <div class="list">
     <dl>
     	<dt class="left">JMRI</dt>

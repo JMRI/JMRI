@@ -1,46 +1,61 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="fr"><head>
-<title>JMRI: D&#233;codeur Son Virtuel JMRI</title>
-<meta content="Mark Underwood" name="Author">
-<meta name="keywords" content="JMRI help Virtual Sound Decoder">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
+  <title>JMRI: D&eacute;codeur Son Virtuel JMRI</title>
+  <meta content="Mark Underwood" name="Author">
+  <meta name="keywords" content="JMRI help Virtual Sound Decoder">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
+
 <body>
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="/Header" -->
-  
-<div class="nomenu" id="mBody">
-    
-<div id="mainContent">
-<h1>D&#233;codeur Son Virtuel JMRI</h1>
-<p>Ceci est la page de r&#233;f&#233;rence rapide pour le D&#233;codeur Son Virtuel JMRI
-   outil de Gestion des Lieux VSD.</p>
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>D&eacute;codeur Son Virtuel JMRI</h1>
 
-<h2>Onglets</h2>
-   <ul>
-     <li> Onglet Rapporteur: d&#233;finir des emplacements pour les Rapporteurs JMRI </li>
-     <li> Op&#233;rations Emplacements Tab: d&#233;finir des emplacements pour les Lieux des op&#233;rations JMRI
-    </li>
-   <li> Auditeurs Tab: D&#233;finir l'emplacement et l'orientation de L'Auditeur</li>
-   </ul>
+      <p>Ceci est la page de r&eacute;f&eacute;rence rapide pour le
+      D&eacute;codeur Son Virtuel JMRI outil de Gestion des Lieux
+      VSD.</p>
 
-   <h2>Bugs, notes et autres bizarreries</h2>
-   <ul>
-     <li> Si vous ajoutez de nouveaux rapporteurs, vous devez fermer et rouvrir le gestionnaire de la fen&#234;tres des Emplacements DSV pour les faire appara&#238;tre. </li>
-   </ul>
+      <h2>Onglets</h2>
 
-<p>(Ceci est la page d'aide jmri.jmrit.vsdecoder.ManageLocationsFrame)</p>
+      <ul>
+        <li>Onglet Rapporteur: d&eacute;finir des emplacements pour
+        les Rapporteurs JMRI</li>
 
-<!--#include virtual="/Footer" -->
-</div>
-</div>
+        <li>Op&eacute;rations Emplacements Tab: d&eacute;finir des
+        emplacements pour les Lieux des op&eacute;rations JMRI</li>
+
+        <li>Auditeurs Tab: D&eacute;finir l'emplacement et
+        l'orientation de L'Auditeur</li>
+      </ul>
+
+      <h2>Bugs, notes et autres bizarreries</h2>
+
+      <ul>
+        <li>Si vous ajoutez de nouveaux rapporteurs, vous devez
+        fermer et rouvrir le gestionnaire de la fen&ecirc;tres des
+        Emplacements DSV pour les faire appara&icirc;tre.</li>
+      </ul>
+
+      <p>(Ceci est la page d'aide
+      jmri.jmrit.vsdecoder.ManageLocationsFrame)</p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

@@ -89,7 +89,7 @@ en mode service.(voie de programmation)
 Bien qu'il soit possible d'utiliser cet outil en mode "Ops" (programmation voie principale), dans ce cas on n'est pas en mesure de confirmer les op&#233;rations, de sorte qu'on ne peut pas &#234;tre s&#251;r &#224; 100% que le d&#233;codeur a bien &#233;t&#233; s&#233;lectionn&#233;.
 
 <a NAME="digitraxproposal">
-<h2>Proposition Originale Digitrax</h2></a>
+</a><h2>Proposition Originale Digitrax</h2>
 
 Les utilisateurs de DCC ont parfois envie d'installer plus d'un d&#233;codeur dans une seule locomotive. Un cas classique est l'aide de d&#233;codeurs s&#233;par&#233;s pour le contr&#244;le moteur et du son. Parce que ces d&#233;codeurs ont souvent besoin d'avoir leurs CVs configur&#233;s s&#233;par&#233;ment, un m&#233;canisme est n&#233;cessaire pour communiquer avec un seul &#224; la fois.
 <p>

@@ -12,7 +12,6 @@ import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 /**
  * <P>
  * @author Pete Cressman Copyright: Copyright (c) 2012
- * @version $Revision: 1 $
  *
  */
 public class ShapeDrawer {

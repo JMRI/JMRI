@@ -295,7 +295,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         }
     }
 
-    class PollHandler implements Runnable {//Why do we need this?
+    static class PollHandler implements Runnable {//Why do we need this?
 
         TamsSensorManager sm = null;
 

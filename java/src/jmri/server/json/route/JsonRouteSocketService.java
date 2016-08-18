@@ -1,5 +1,7 @@
 package jmri.server.json.route;
 
+import static jmri.server.json.route.JsonRouteServiceFactory.ROUTE;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -15,7 +17,6 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
-import static jmri.server.json.route.JsonRouteServiceFactory.ROUTE;
 
 /**
  * JSON socket service provider for managing {@link jmri.Route}s.
@@ -44,11 +45,13 @@ public class JsonRouteSocketService extends JsonSocketService {
         }
         if (!this.routes.containsKey(name)) {
             Route route = InstanceManager.getDefault(RouteManager.class).getRoute(name);
-            Sensor sensor = route.getTurnoutsAlgdSensor();
-            if (sensor != null) {
-                RouteListener listener = new RouteListener(route);
-                sensor.addPropertyChangeListener(listener);
-                this.routes.put(name, listener);
+            if (route != null) {
+                Sensor sensor = route.getTurnoutsAlgdSensor();
+                if (sensor != null) {
+                    RouteListener listener = new RouteListener(route);
+                    sensor.addPropertyChangeListener(listener);
+                    this.routes.put(name, listener);
+                }
             }
         }
     }
