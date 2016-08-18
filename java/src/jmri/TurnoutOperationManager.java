@@ -178,9 +178,7 @@ public class TurnoutOperationManager {
                     // which calls addOperation here, which adds it to the 
                     // turnoutOperations map.
                     thisClass.newInstance();
-                    if (log.isDebugEnabled()) {
-                        log.debug("loaded TurnoutOperation class " + thisClassName);
-                    }
+                    log.debug("loaded TurnoutOperation class {}", thisClassName);
                 } catch (ClassNotFoundException e1) {
                     log.error("during loadOperationTypes", e1);
                 } catch (InstantiationException e2) {

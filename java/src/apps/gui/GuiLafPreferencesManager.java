@@ -186,20 +186,20 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     /**
-     * Logs LAF fonts at the TRACE level
+     * Logs LAF fonts at the TRACE level.
      */
-    private void listLAFfonts() {
+    private void logAllFonts() {
         // avoid any activity if logging at this level is disabled to avoid
-        // unnessesary overhead of getting the fonts 
+        // the unnessesary overhead of getting the fonts 
         if (log.isTraceEnabled()) {
-            log.trace("******** LAF=" + UIManager.getLookAndFeel().getClass().getName());
+            log.trace("******** LAF={}", UIManager.getLookAndFeel().getClass().getName());
             java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
             while (keys.hasMoreElements()) {
                 Object key = keys.nextElement();
                 Object value = UIManager.get(key);
                 if (value instanceof javax.swing.plaf.FontUIResource || value instanceof java.awt.Font || key.toString().endsWith(".font")) {
                     Font f = UIManager.getFont(key);
-                    log.trace("Class=" + value.getClass().getName() + ";Key:" + key.toString() + " Font: " + f.getName() + " size: " + f.getSize());
+                    log.trace("Class={}; Key: {} Font: {} size: {}", value.getClass().getName(), key, f.getName(), f.getSize());
                 }
             }
         }
@@ -293,7 +293,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * for each.
      */
     private void applyFontSize() {
-        listLAFfonts();
+        logAllFonts();
         if (this.getFontSize() != this.getDefaultFontSize()) {
 //            UIManager.getDefaults().keySet().stream().forEach((key) -> {
             Enumeration<Object> keys = UIManager.getDefaults().keys();
@@ -304,7 +304,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
                     UIManager.put(key, UIManager.getFont(key).deriveFont(((Font) value).getStyle(), getCalcFontSize(((Font) value).getSize())));
                 }
             }
-            listLAFfonts();
+            logAllFonts();
         }
     }
 

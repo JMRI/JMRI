@@ -76,5 +76,3 @@ public class Bundle extends jmri.Bundle {
     }
 
 }
-
-/* @(#)Bundle.java */

@@ -1,4 +1,3 @@
-// Bundle.java
 package jmri.jmrix.loconet.lnsvf2;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * the local resource bundle name.
  *
  * @author Bob Jacobsen Copyright (C) 2012
- * @version $Revision: 17977 $
  * @since 3.3.1
  */
 public class Bundle extends jmri.jmrix.loconet.Bundle {
@@ -103,5 +101,3 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
     }
 
 }
-
-/* @(#)Bundle.java */

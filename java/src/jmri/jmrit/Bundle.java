@@ -1,4 +1,3 @@
-// Bundle.java
 package jmri.jmrit;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -14,7 +13,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * the local resource bundle name.
  *
  * @author Bob Jacobsen Copyright (C) 2012
- * @version $Revision: 17977 $
  * @since 3.3.1
  */
 @ParametersAreNonnullByDefault
@@ -109,5 +107,3 @@ public class Bundle extends jmri.Bundle {
     }
 
 }
-
-/* @(#)Bundle.java */
