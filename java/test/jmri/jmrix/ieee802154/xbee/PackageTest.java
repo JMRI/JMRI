@@ -40,6 +40,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(XBeeAdapterTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XBeeNodeManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XBeeIOStreamTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ieee802154.xbee.configurexml.PackageTest.class));
         return suite;
     }
 

@@ -1,4 +1,3 @@
-// Bundle.java
 package jmri.jmrix.lenz.swing;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -76,5 +75,3 @@ public class Bundle extends jmri.jmrix.lenz.Bundle {
     }
 
 }
-
-/* @(#)Bundle.java */
