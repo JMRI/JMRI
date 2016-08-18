@@ -582,8 +582,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             if (CandidateBlock == b) {
                 setValue(CandidateBlock.getValue());
                 setDirection(pListOfPossibleEntrancePaths[i].getFromBlockDirection());
-                //if (log.isDebugEnabled()) 
-                log.info("Block " + getSystemName() + " gets LATE new value from " + CandidateBlock.getSystemName() + ", direction=" + Path.decodeDirection(getDirection()));
+                log.info("Block {} gets LATE new value from {}, direction={}", getSystemName(), CandidateBlock.getSystemName(), Path.decodeDirection(getDirection()));
                 ResetCandidateEntrancePaths();
                 return true;
             }
@@ -629,9 +628,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      * Handles Block sensor going INACTIVE: this block is empty
      */
     public void goingInactive() {
-        if (log.isDebugEnabled()) {
-            log.debug("Block " + getSystemName() + " goes UNOCCUPIED");
-        }
+        log.debug("Block {} goes UNOCCUPIED", getSystemName());
         int currPathCnt = paths.size();
         for (int i = 0; i < currPathCnt; i++) {
             Block b = paths.get(i).getBlock();
@@ -803,9 +800,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         } else {
             // count > 1, check for one with proper direction
             // this time, count ones with proper direction
-            if (log.isDebugEnabled()) {
-                log.debug("Block " + getSystemName() + "- count of active linked blocks = " + count);
-            }
+            log.debug("Block {} - count of active linked blocks = {}", getSystemName(), count);
             next = null;
             count = 0;
             for (int i = 0; i < currPathCnt; i++) {
@@ -820,9 +815,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
                 }
             }
             if (next == null) {
-                if (log.isDebugEnabled()) {
-                    log.debug("next is null!");
-                }
+                log.debug("next is null!");
             }
             if (next != null && count == 1) {
                 // found one block with proper direction, assume that
@@ -832,8 +825,8 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             }
         }
         // in any case, go OCCUPIED
-        if (log.isDebugEnabled()) {
-            log.debug("Block " + getSystemName() + " with direction " + Path.decodeDirection(getDirection()) + " gets new value from " + (next != null ? next.getBlock().getSystemName() : "(no next block)") + "(informational. No state change)");
+        if (log.isDebugEnabled()) { // avoid potentially expensive non-logging
+            log.debug("Block {} with direction {} gets new value from {} + (informational. No state change)", getSystemName(), Path.decodeDirection(getDirection()), (next != null ? next.getBlock().getSystemName() : "(no next block)"));
         }
         return (next);
     }
