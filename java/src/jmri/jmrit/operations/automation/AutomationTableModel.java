@@ -1,4 +1,3 @@
-// AutomationTableModel.java
 package jmri.jmrit.operations.automation;
 
 import java.awt.BorderLayout;
@@ -525,9 +524,6 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     public synchronized void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
         if (_automation != null) {
             removePropertyChangeAutomationItems();
             _automation.removePropertyChangeListener(this);

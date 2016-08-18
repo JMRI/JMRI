@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * on the layout.
  *
  * @author Daniel Boudreau Copyright (C) 2009, 2010, 2013
- * @version $Revision$
  */
 public class RollingStock implements java.beans.PropertyChangeListener {
 
@@ -1391,62 +1390,46 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     // rolling stock listens for changes in a location name or if a location is deleted
     @Override
     public void propertyChange(PropertyChangeEvent e) {
-        // if (log.isDebugEnabled()) log.debug("Property change for rolling stock: " + toString()+ " property name: "
+        // log.debug("Property change for rolling stock: " + toString()+ " property name: "
         // +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
         // notify if track or location name changes
         if (e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY)) {
-            if (log.isDebugEnabled()) {
-                log.debug("Property change for rolling stock: ({}) property name: ({}) old: ({}) new: ({})",
-                        toString(), e.getPropertyName(), e.getOldValue(), e.getNewValue());
-            }
+            log.debug("Property change for rolling stock: ({}) property name: ({}) old: ({}) new: ({})",
+                    toString(), e.getPropertyName(), e.getOldValue(), e.getNewValue());
             setDirtyAndFirePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
         }
         if (e.getPropertyName().equals(Location.DISPOSE_CHANGED_PROPERTY)) {
             if (e.getSource() == _location) {
-                if (log.isDebugEnabled()) {
-                    log.debug("delete location for rolling stock: ({})", toString());
-                }
+                log.debug("delete location for rolling stock: ({})", toString());
                 setLocation(null, null);
             }
             if (e.getSource() == _destination) {
-                if (log.isDebugEnabled()) {
-                    log.debug("delete destination for rolling stock: ({})", toString());
-                }
+                log.debug("delete destination for rolling stock: ({})", toString());
                 setDestination(null, null);
             }
         }
         if (e.getPropertyName().equals(Track.DISPOSE_CHANGED_PROPERTY)) {
             if (e.getSource() == _trackLocation) {
-                if (log.isDebugEnabled()) {
-                    log.debug("delete location for rolling stock: ({})", toString());
-                }
+                log.debug("delete location for rolling stock: ({})", toString());
                 setLocation(_location, null);
             }
             if (e.getSource() == _trackDestination) {
-                if (log.isDebugEnabled()) {
-                    log.debug("delete destination for rolling stock: ({})", toString());
-                }
+                log.debug("delete destination for rolling stock: ({})", toString());
                 setDestination(_destination, null);
             }
         }
         if (e.getPropertyName().equals(Train.DISPOSE_CHANGED_PROPERTY) && e.getSource() == getTrain()) {
-            if (log.isDebugEnabled()) {
-                log.debug("delete train for rolling stock: ({})", toString());
-            }
+            log.debug("delete train for rolling stock: ({})", toString());
             setTrain(null);
         }
         if (e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY) && e.getSource() == getTrain()) {
-            if (log.isDebugEnabled()) {
-                log.debug("Rolling stock ({}) is serviced by train ({})", toString(), getTrainName());
-            }
+            log.debug("Rolling stock ({}) is serviced by train ({})", toString(), getTrainName());
             moveRollingStock((RouteLocation) e.getOldValue(), (RouteLocation) e.getNewValue());
         }
         if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY) &&
                 e.getNewValue().equals(Train.TRAIN_RESET) &&
                 e.getSource() == getTrain()) {
-            if (log.isDebugEnabled()) {
-                log.debug("Rolling stock ({}) is removed from train ({}) by reset", toString(), getTrainName()); // NOI18N
-            }
+            log.debug("Rolling stock ({}) is removed from train ({}) by reset", toString(), getTrainName()); // NOI18N
             reset();
         }
         if (e.getPropertyName().equals(Train.NAME_CHANGED_PROPERTY)) {
@@ -1454,10 +1437,8 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         }
         if (e.getPropertyName().equals(CarRoads.CARROADS_NAME_CHANGED_PROPERTY)) {
             if (e.getOldValue().equals(getRoadName())) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Rolling stock ({}) sees road name change from ({}) to ({})", toString(),
-                            e.getOldValue(), e.getNewValue()); // NOI18N
-                }
+                log.debug("Rolling stock ({}) sees road name change from ({}) to ({})", toString(),
+                        e.getOldValue(), e.getNewValue()); // NOI18N
                 if (e.getNewValue() != null) {
                     setRoadName((String) e.getNewValue());
                 }
@@ -1465,19 +1446,15 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         }
         if (e.getPropertyName().equals(CarOwners.CAROWNERS_NAME_CHANGED_PROPERTY)) {
             if (e.getOldValue().equals(getOwner())) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Rolling stock ({}) sees owner name change from ({}) to ({})", toString(), e
-                            .getOldValue(), e.getNewValue()); // NOI18N
-                }
+                log.debug("Rolling stock ({}) sees owner name change from ({}) to ({})", toString(), e
+                        .getOldValue(), e.getNewValue()); // NOI18N
                 setOwner((String) e.getNewValue());
             }
         }
         if (e.getPropertyName().equals(CarColors.CARCOLORS_NAME_CHANGED_PROPERTY)) {
             if (e.getOldValue().equals(getColor())) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Rolling stock ({}) sees color name change from ({}) to ({})", toString(), e
-                            .getOldValue(), e.getNewValue()); // NOI18N
-                }
+                log.debug("Rolling stock ({}) sees color name change from ({}) to ({})", toString(), e
+                        .getOldValue(), e.getNewValue()); // NOI18N
                 setColor((String) e.getNewValue());
             }
         }

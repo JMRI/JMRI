@@ -1,4 +1,3 @@
-// TrainLogger.java
 package jmri.jmrit.operations.trains;
 
 import java.beans.PropertyChangeEvent;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * Logs train movements and status to a file.
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2013
- * @version $Revision$
  */
 public class TrainLogger extends XmlFile implements java.beans.PropertyChangeListener {
 
@@ -43,9 +41,7 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 
     public static synchronized TrainLogger instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("TrainLogger creating instance");
-            }
+            log.debug("TrainLogger creating instance");
             // create and load
             _instance = new TrainLogger();
         }
@@ -69,7 +65,7 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
         }
         if (_fileLogger != null) {
             return; // log file has already been created
-        }		// create the logging file for this session
+        } // create the logging file for this session
         try {
             if (!checkFile(getFullLoggerFileName())) {
                 // The file/directory does not exist, create it before writing
@@ -98,17 +94,48 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
         // create train file if needed
         createFile();
         // Note that train status can contain a comma
-        String line = ESC + train.getName() + ESC + DEL + ESC + train.getDescription() + ESC + DEL + ESC
-                + train.getCurrentLocationName() + ESC + DEL + ESC + train.getNextLocationName() + ESC + DEL + ESC
-                + train.getStatus() + ESC + DEL + ESC + train.getBuildFailedMessage() + ESC + DEL + getTime();
+        String line = ESC +
+                train.getName() +
+                ESC +
+                DEL +
+                ESC +
+                train.getDescription() +
+                ESC +
+                DEL +
+                ESC +
+                train.getCurrentLocationName() +
+                ESC +
+                DEL +
+                ESC +
+                train.getNextLocationName() +
+                ESC +
+                DEL +
+                ESC +
+                train.getStatus() +
+                ESC +
+                DEL +
+                ESC +
+                train.getBuildFailedMessage() +
+                ESC +
+                DEL +
+                getTime();
         fileOut(line);
     }
 
     private String getHeader() {
-        String header = Bundle.getMessage("Name") + DEL + Bundle.getMessage("Description") + DEL
-                + Bundle.getMessage("Current") + DEL + Bundle.getMessage("NextLocation") + DEL
-                + Bundle.getMessage("Status") + DEL + Bundle.getMessage("BuildMessages") + DEL
-                + Bundle.getMessage("DateAndTime");
+        String header = Bundle.getMessage("Name") +
+                DEL +
+                Bundle.getMessage("Description") +
+                DEL +
+                Bundle.getMessage("Current") +
+                DEL +
+                Bundle.getMessage("NextLocation") +
+                DEL +
+                Bundle.getMessage("Status") +
+                DEL +
+                Bundle.getMessage("BuildMessages") +
+                DEL +
+                Bundle.getMessage("DateAndTime");
         return header;
     }
 
@@ -170,8 +197,8 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 
     @Override
     public void propertyChange(PropertyChangeEvent e) {
-        if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
             if (Control.SHOW_PROPERTY) {
                 log.debug("Train logger sees property change for train " + e.getSource());
             }
@@ -190,8 +217,8 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
         return loggingDirectory + File.separator + getFileName();
     }
 
-    private String operationsDirectory = OperationsSetupXml.getFileLocation()
-            + OperationsSetupXml.getOperationsDirectoryName();
+    private String operationsDirectory =
+            OperationsSetupXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName();
     private String loggingDirectory = operationsDirectory + File.separator + "logger"; // NOI18N
 
     public String getDirectoryName() {
@@ -218,8 +245,8 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
     }
 
     /**
-     * Return the date and time in an MS Excel friendly format
-     * yyyy/MM/dd HH:mm:ss
+     * Return the date and time in an MS Excel friendly format yyyy/MM/dd
+     * HH:mm:ss
      */
     private String getTime() {
         String time = Calendar.getInstance().getTime().toString();
