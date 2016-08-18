@@ -814,7 +814,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         // save the IdTag for this car
         IdTag idTag = (IdTag) rfidComboBox.getSelectedItem();
         if (idTag != null) {
-            _car.setRfid(idTag.getUserName());
+            _car.setRfid(idTag.toString());
         }
         autoTrackCheckBox.setEnabled(true);
 

@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * ConditionalVariable objects are fully mutable, so use the default equals()
  * operator that checks for identical objects, not identical contents.
- * 
+ *
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Pete Cressman Copyright (C) 2009
- * @author  Bob Jacobsen  Copyright (C) 2016
+ * @author Bob Jacobsen Copyright (C) 2016
  */
 public class ConditionalVariable {
 
@@ -227,8 +227,7 @@ public class ConditionalVariable {
                 case Conditional.TYPE_NONE:
                     break;
                 case Conditional.ITEM_TYPE_CLOCK:
-                    break;	/* no beans for these, at least that I know of */
-
+                    break; // no beans for these, at least that I know of
                 case Conditional.ITEM_TYPE_SENSOR:
                     bean = InstanceManager.sensorManagerInstance().provideSensor(_name);
                     break;
@@ -265,7 +264,7 @@ public class ConditionalVariable {
 
             //Once all refactored, we should probably register an error if the bean is returned null.
             _namedBean = nbhm.getNamedBeanHandle(_name, bean);
-            
+
         } catch (IllegalArgumentException ex) {
             log.warn("Did not have or create \"{}\" in setName", _name);
             _namedBean = null;
@@ -392,9 +391,7 @@ public class ConditionalVariable {
         boolean result = true;
         // evaluate according to state variable type
         int itemType = Conditional.TEST_TO_ITEM[_type];
-        if (log.isDebugEnabled()) {
-            log.debug("evaluate: \"" + getName() + "\" type= " + _type + " itemType= " + itemType);
-        }
+        log.debug("evaluate: \"{}\" type= {} itemType= {}", getName(), _type, itemType);
         switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:
                 //Sensor sn = InstanceManager.sensorManagerInstance().provideSensor(getName());
@@ -409,12 +406,10 @@ public class ConditionalVariable {
                     } else {
                         result = false;
                     }
+                } else if (sn.getState() == Sensor.INACTIVE) {
+                    result = true;
                 } else {
-                    if (sn.getState() == Sensor.INACTIVE) {
-                        result = true;
-                    } else {
-                        result = false;
-                    }
+                    result = false;
                 }
                 break;
             case Conditional.ITEM_TYPE_TURNOUT:
@@ -429,12 +424,10 @@ public class ConditionalVariable {
                     } else {
                         result = false;
                     }
+                } else if (t.getKnownState() == Turnout.CLOSED) {
+                    result = true;
                 } else {
-                    if (t.getKnownState() == Turnout.CLOSED) {
-                        result = true;
-                    } else {
-                        result = false;
-                    }
+                    result = false;
                 }
                 break;
             case Conditional.ITEM_TYPE_LIGHT:
@@ -449,12 +442,10 @@ public class ConditionalVariable {
                     } else {
                         result = false;
                     }
+                } else if (lgt.getState() == Light.OFF) {
+                    result = true;
                 } else {
-                    if (lgt.getState() == Light.OFF) {
-                        result = true;
-                    } else {
-                        result = false;
-                    }
+                    result = false;
                 }
                 break;
             case Conditional.ITEM_TYPE_SIGNALMAST:
@@ -612,12 +603,10 @@ public class ConditionalVariable {
                     } else {
                         result = false;
                     }
+                } else if (c.getState() == Conditional.FALSE) {
+                    result = true;
                 } else {
-                    if (c.getState() == Conditional.FALSE) {
-                        result = true;
-                    } else {
-                        result = false;
-                    }
+                    result = false;
                 }
                 break;
             case Conditional.ITEM_TYPE_WARRANT:
@@ -661,8 +650,8 @@ public class ConditionalVariable {
                     } else {
                         result = false;
                     }
-                } else {
-                    // range includes midnight
+                } else // range includes midnight
+                {
                     if (beginTime <= currentMinutes || currentMinutes <= endTime) {
                         result = true;
                     } else {
@@ -686,12 +675,10 @@ public class ConditionalVariable {
                     } else {
                         result = false;
                     }
+                } else if (e.getState() == 0x04) {
+                    result = true;
                 } else {
-                    if (e.getState() == 0x04) {
-                        result = true;
-                    } else {
-                        result = false;
-                    }
+                    result = false;
                 }
                 break;
             default:
@@ -734,9 +721,7 @@ public class ConditionalVariable {
                         return false;
                     }
                 }
-                if (log.isDebugEnabled()) {
-                    log.debug("Compare numbers: n1= " + n1 + ", to n2= " + n2);
-                }
+                log.debug("Compare numbers: n1= {} to n2= {}", n1, n2);
                 switch (_num1) // both are numbers
                 {
                     case LESS_THAN:
@@ -761,9 +746,7 @@ public class ConditionalVariable {
             } catch (NumberFormatException ex) { // OK neither a number
             }
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Compare Strings: value1= " + value1 + ", to value2= " + value2);
-        }
+        log.debug("Compare Strings: value1= {} to value2= {}", value1, value2);
         int compare = 0;
         if (caseInsensitive) {
             compare = value1.compareToIgnoreCase(value2);
