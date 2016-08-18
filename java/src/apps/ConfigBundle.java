@@ -77,5 +77,3 @@ public class ConfigBundle extends apps.Bundle {
     }
 
 }
-
-/* @(#)Bundle.java */

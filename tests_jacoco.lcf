@@ -1,4 +1,5 @@
-# Log4J configuration file for running JMRI JUnit tests
+# Log4J configuration file for running a 2nd pass of JUnit
+# tests with logging turned on for JaCoCo coverage testing
 
 # #############################################################
 #  Log4J configuration
@@ -25,7 +26,7 @@
 # hierarchy.  See the end of the file for examples of how to 
 # control this at a finer level.
 
-log4j.rootCategory= WARN, A1
+log4j.rootCategory= DEBUG, A1
 
 # A1 is set to be a jmri.util.JUnitAppender which outputs to System.err. 
 # The JUnitAppender provides hooks used to test whether a given
@@ -34,6 +35,9 @@ log4j.appender.A1=jmri.util.JUnitAppender
 
 # A1 writes to system.err to synchronize with e.g. exception traces
 log4j.appender.A1.target=System.err
+
+# Default A1 to only logging WARN for tests, even though DEFAULT is turned on for coverage
+log4j.appender.A1.Threshold=WARN
 
 # A1 uses PatternLayout to control the format of the log messages.
 log4j.appender.A1.layout=org.apache.log4j.PatternLayout

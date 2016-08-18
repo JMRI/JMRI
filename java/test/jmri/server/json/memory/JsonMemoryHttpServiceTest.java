@@ -38,6 +38,7 @@ public class JsonMemoryHttpServiceTest extends TestCase {
         try {
             result = service.doGet(JsonMemory.MEMORY, "IM1", Locale.ENGLISH);
             Assert.assertNotNull(result);
+            Assert.assertEquals(JsonMemory.MEMORY, result.path(JSON.TYPE).asText());
             Assert.assertEquals("IM1", result.path(JSON.DATA).path(JSON.NAME).asText());
             // JSON node has the text "null" if memory is null
             Assert.assertEquals("null", result.path(JSON.DATA).path(JSON.VALUE).asText());

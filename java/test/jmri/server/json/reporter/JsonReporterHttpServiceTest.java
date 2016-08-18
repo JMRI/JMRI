@@ -41,6 +41,7 @@ public class JsonReporterHttpServiceTest  {
         try {
             result = service.doGet(REPORTER, "IR1", Locale.ENGLISH);
             Assert.assertNotNull(result);
+            Assert.assertEquals(REPORTER, result.path(JSON.TYPE).asText());
             Assert.assertEquals("IR1", result.path(JSON.DATA).path(JSON.NAME).asText());
             // JSON node has the text "null" if reporter is null
             Assert.assertEquals("null", result.path(JSON.DATA).path(JsonReporter.REPORT).asText());

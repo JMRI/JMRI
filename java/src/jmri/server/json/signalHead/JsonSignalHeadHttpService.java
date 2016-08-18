@@ -2,16 +2,11 @@ package jmri.server.json.signalHead;
 
 import static jmri.server.json.JSON.APPEARANCE;
 import static jmri.server.json.JSON.APPEARANCE_NAME;
-import static jmri.server.json.JSON.COMMENT;
 import static jmri.server.json.JSON.DATA;
-import static jmri.server.json.JSON.INCONSISTENT;
 import static jmri.server.json.JSON.LIT;
-import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.TOKEN_HELD;
 import static jmri.server.json.JSON.TYPE;
-import static jmri.server.json.JSON.UNKNOWN;
-import static jmri.server.json.JSON.USERNAME;
 import static jmri.server.json.signalHead.JsonSignalHead.SIGNAL_HEAD;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -23,13 +18,14 @@ import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.SignalHeadManager;
 import jmri.server.json.JsonException;
-import jmri.server.json.JsonHttpService;
+import jmri.server.json.JsonNamedBeanHttpService;
 
 /**
+ * JSON HTTP service for {@link jmri.SignalHead}s.
  *
  * @author Randall Wood (C) 2016
  */
-public class JsonSignalHeadHttpService extends JsonHttpService {
+public class JsonSignalHeadHttpService extends JsonNamedBeanHttpService {
 
     public JsonSignalHeadHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -39,52 +35,44 @@ public class JsonSignalHeadHttpService extends JsonHttpService {
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, SIGNAL_HEAD);
-        ObjectNode data = root.putObject(DATA);
         SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name);
-        if (signalHead == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", SIGNAL_HEAD, name));
+        ObjectNode data = this.getNamedBean(signalHead, name, type, locale);
+        root.put(DATA, data);
+        if (signalHead != null) {
+            data.put(LIT, signalHead.getLit());
+            data.put(APPEARANCE, signalHead.getAppearance());
+            data.put(TOKEN_HELD, signalHead.getHeld());
+            //state is appearance, plus a flag for held status
+            if (signalHead.getHeld()) {
+                data.put(STATE, SignalHead.HELD);
+            } else {
+                data.put(STATE, signalHead.getAppearance());
+            }
+            data.put(APPEARANCE_NAME, signalHead.getAppearanceName());
         }
-        data.put(NAME, name);
-        data.put(USERNAME, signalHead.getUserName());
-        data.put(COMMENT, signalHead.getComment());
-        data.put(LIT, signalHead.getLit());
-        data.put(APPEARANCE, signalHead.getAppearance());
-        data.put(TOKEN_HELD, signalHead.getHeld());
-        //state is appearance, plus a flag for held status
-        if (signalHead.getHeld()) {
-            data.put(STATE, SignalHead.HELD);
-        } else {
-            data.put(STATE, signalHead.getAppearance());
-        }
-        data.put(APPEARANCE_NAME, signalHead.getAppearanceName());
         return root;
     }
 
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
         SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name);
-        if (signalHead == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", SIGNAL_HEAD, name));
-        }
-        if (data.path(USERNAME).isTextual()) {
-            signalHead.setUserName(data.path(USERNAME).asText());
-        }
-        if (data.path(COMMENT).isTextual()) {
-            signalHead.setComment(data.path(COMMENT).asText());
-        }
-        int state = data.path(STATE).asInt(UNKNOWN);
-        boolean isValid = false;
-        for (int validState : signalHead.getValidStates()) {
-            if (state == validState) {
-                isValid = true;
-                break;
+        this.postNamedBean(signalHead, data, name, type, locale);
+        if (signalHead != null) {
+            if (data.path(STATE).isInt()) {
+                int state = data.path(STATE).asInt();
+                boolean isValid = false;
+                for (int validState : signalHead.getValidStates()) {
+                    if (state == validState) {
+                        isValid = true;
+                        // TODO: completely insulate JSON state from SignalHead state
+                        signalHead.setAppearance(state);
+                        break;
+                    }
+                }
+                if (!isValid) {
+                    throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", SIGNAL_HEAD, state));
+                }
             }
-        }
-        if (isValid && state != INCONSISTENT && state != UNKNOWN) {
-            // TODO: completely insulate JSON state from SignalHead state
-            signalHead.setAppearance(state);
-        } else {
-            throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", SIGNAL_HEAD, state));
         }
         return this.doGet(type, name, locale);
     }
