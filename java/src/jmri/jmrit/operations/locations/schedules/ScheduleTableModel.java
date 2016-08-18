@@ -1,4 +1,3 @@
-// ScheduleTableModel.java
 package jmri.jmrit.operations.locations.schedules;
 
 import java.beans.PropertyChangeEvent;
@@ -30,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of a schedule used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009, 2014
- * @version $Revision$
  */
 public class ScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -162,7 +160,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
 
     @Override
-    public String getColumnName(int col) {
+    public synchronized String getColumnName(int col) {
         switch (col) {
             case ID_COLUMN:
                 return Bundle.getMessage("Id");
@@ -511,7 +509,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
 
     // set the count or hits if in match mode
-    private void setCount(Object value, int row) {
+    private synchronized void setCount(Object value, int row) {
         ScheduleItem si = _list.get(row);
         int count;
         try {
@@ -739,9 +737,6 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
 
     public synchronized void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
         if (_schedule != null) {
             removePropertyChangeScheduleItems();
             _schedule.removePropertyChangeListener(this);
