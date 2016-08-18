@@ -186,11 +186,11 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     /**
-     * Logs LAF fonts at the TRACE level
+     * Logs LAF fonts at the TRACE level.
      */
-    private void listLAFfonts() {
+    private void logAllFonts() {
         // avoid any activity if logging at this level is disabled to avoid
-        // unnessesary overhead of getting the fonts 
+        // the unnessesary overhead of getting the fonts 
         if (log.isTraceEnabled()) {
             log.trace("******** LAF=" + UIManager.getLookAndFeel().getClass().getName());
             java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
@@ -293,7 +293,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * for each.
      */
     private void applyFontSize() {
-        listLAFfonts();
+        logAllFonts();
         if (this.getFontSize() != this.getDefaultFontSize()) {
 //            UIManager.getDefaults().keySet().stream().forEach((key) -> {
             Enumeration<Object> keys = UIManager.getDefaults().keys();
@@ -304,7 +304,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
                     UIManager.put(key, UIManager.getFont(key).deriveFont(((Font) value).getStyle(), getCalcFontSize(((Font) value).getSize())));
                 }
             }
-            listLAFfonts();
+            logAllFonts();
         }
     }
 
