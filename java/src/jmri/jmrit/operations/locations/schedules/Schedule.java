@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Represents a car delivery schedule for a location
  *
  * @author Daniel Boudreau Copyright (C) 2009, 2011, 2013
- * @version $Revision$
  */
 public class Schedule implements java.beans.PropertyChangeListener {
 
@@ -278,7 +277,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
                 replaceSi.setSequenceId(sequenceId);
                 si.setSequenceId(sequenceId + 1);
             } else {
-                resequenceIds();	// error the sequence number is missing
+                resequenceIds(); // error the sequence number is missing
             }
         }
         setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
@@ -315,9 +314,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
         if (e.getChildren(Xml.ITEM) != null) {
             @SuppressWarnings("unchecked")
             List<Element> eScheduleItems = e.getChildren(Xml.ITEM);
-            if (log.isDebugEnabled()) {
-                log.debug("schedule: {} has {} items", getName(), eScheduleItems.size());
-            }
+            log.debug("schedule: {} has {} items", getName(), eScheduleItems.size());
             for (Element eScheduleItem : eScheduleItems) {
                 register(new ScheduleItem(eScheduleItem));
             }

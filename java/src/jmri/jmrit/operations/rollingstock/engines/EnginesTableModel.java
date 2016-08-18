@@ -1,4 +1,3 @@
-// EnginesTableModel.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.beans.PropertyChangeEvent;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of engines used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2012
- * @version $Revision$
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -79,6 +77,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
     /**
      * Not all columns are visible at the same time.
+     * 
      * @param sort which sort is active
      */
     public void setSort(int sort) {
@@ -211,14 +210,15 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     }
 
     // Default engines frame table column widths, starts with Number column and ends with Edit
-    private int[] _enginesTableColumnWidths = {60, 60, 65, 50, 65, 35, 75, 190, 190, 140, 190, 65, 50, 50, 50, 50, 100, 130, 65, 70};
+    private int[] _enginesTableColumnWidths =
+            {60, 60, 65, 50, 65, 35, 75, 190, 190, 140, 190, 65, 50, 50, 50, 50, 100, 130, 65, 70};
 
     void initTable() {
         // Use XTableColumnModel so we can control which columns are visible
         XTableColumnModel tcm = new XTableColumnModel();
         _table.setColumnModel(tcm);
         _table.createDefaultColumnsFromModel();
-        
+
         // Install the button handlers
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         tcm.getColumn(SET_COLUMN).setCellRenderer(buttonRenderer);
@@ -237,7 +237,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         _table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        
+
         // turn off columns
         tcm.setColumnVisible(tcm.getColumnByModelIndex(BUILT_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OWNER_COLUMN), false);
@@ -473,9 +473,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     }
 
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose EngineTableModel");
-        }
+        log.debug("dispose EngineTableModel");
         manager.removePropertyChangeListener(this);
         removePropertyChangeEngines();
         if (engineSetFrame != null) {

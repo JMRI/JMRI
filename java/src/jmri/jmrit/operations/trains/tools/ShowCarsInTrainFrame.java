@@ -1,4 +1,3 @@
-// ShowCarsInTrainFrame.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Dimension;
@@ -31,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * out at each location in the train's route.
  *
  * @author Dan Boudreau Copyright (C) 2012
- * @version $Revision: 18630 $
  */
 public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -70,7 +68,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
         carPane = new JScrollPane(pCars);
         carPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Cars")));
         carPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		// carPane.setPreferredSize(new Dimension(200, 300));
+        // carPane.setPreferredSize(new Dimension(200, 300));
 
         // Set up the panels
         // Layout the panel by rows
@@ -114,10 +112,10 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
         pRow12.add(carPane);
 
         // row 13
-//		JPanel pStatus = new JPanel();
-//		pStatus.setLayout(new GridBagLayout());
+        //		JPanel pStatus = new JPanel();
+        //		pStatus.setLayout(new GridBagLayout());
         textStatus.setBorder(BorderFactory.createTitledBorder(""));
-//		addItem(pStatus, textStatus, 0, 0);
+        //		addItem(pStatus, textStatus, 0, 0);
         textStatus.setBackground(null);
         textStatus.setEditable(false);
 
@@ -173,11 +171,13 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
                     boolean isOnlyPassenger = _train.isOnlyPassengerCars();
                     for (RouteLocation rld : _train.getRoute().getLocationsBySequenceList()) {
                         for (Car car : carManager.getByTrainDestinationList(_train)) {
-                            if ((car.getTrack() == null || car.getRouteLocation() == rl)
-                                    && (car.getRouteDestination() == rld || (car.isPassenger() && isOnlyPassenger))) {
- 
-                                log.debug("car ({}) routelocation ({}) track ({}) route destination ({})", car.toString(), car
-                                        .getRouteLocation().getName(), car.getTrackName(), car.getRouteDestination().getName());
+                            if ((car.getTrack() == null || car.getRouteLocation() == rl) &&
+                                    (car.getRouteDestination() == rld || (car.isPassenger() && isOnlyPassenger))) {
+
+                                log.debug("car ({}) routelocation ({}) track ({}) route destination ({})",
+                                        car.toString(), car
+                                                .getRouteLocation().getName(),
+                                        car.getTrackName(), car.getRouteDestination().getName());
                                 JCheckBox checkBox = new JCheckBox(TrainCommon.splitString(car.toString()));
                                 if (car.getRouteDestination() == rl) {
                                     addItemLeft(pCars, checkBox, 2, i++); // set out
@@ -207,14 +207,14 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
         if (Setup.isPrintLoadsAndEmptiesEnabled()) {
             int emptyCars = _train.getNumberEmptyCarsInTrain(rl);
             return MessageFormat.format(TrainManifestText.getStringTrainDepartsLoads(), new Object[]{
-                TrainCommon.splitString(rl.getName()), rl.getTrainDirectionString(),
-                _train.getNumberCarsInTrain(rl) - emptyCars, emptyCars, _train.getTrainLength(rl),
-                Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl)});
+                    TrainCommon.splitString(rl.getName()), rl.getTrainDirectionString(),
+                    _train.getNumberCarsInTrain(rl) - emptyCars, emptyCars, _train.getTrainLength(rl),
+                    Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl)});
         } else {
             return MessageFormat.format(TrainManifestText.getStringTrainDepartsCars(),
                     new Object[]{rl.getName(), rl.getTrainDirectionString(), _train.getNumberCarsInTrain(),
-                        _train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(),
-                        _train.getTrainWeight(rl)});
+                            _train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(),
+                            _train.getTrainWeight(rl)});
         }
     }
 
@@ -241,11 +241,11 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        // if (Control.showProperty && log.isDebugEnabled())
-        log.debug("Property change " + e.getPropertyName() + " for: " + e.getSource().toString() + " old: "
-                + e.getOldValue() + " new: " + e.getNewValue()); // NOI18N
-        if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY)) {
+        // if (Control.showProperty)
+        log.debug("Property change {} from: {} old: {} new: {}", e.getPropertyName(), e.getSource().toString(),
+                e.getOldValue(), e.getNewValue()); // NOI18N
+        if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY)) {
             update();
         }
     }

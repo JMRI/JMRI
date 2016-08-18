@@ -1,4 +1,3 @@
-// TrainCommon.java
 package jmri.jmrit.operations.trains;
 
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
@@ -39,7 +38,6 @@ import org.slf4j.LoggerFactory;
  * Common routines for trains
  *
  * @author Daniel Boudreau (C) Copyright 2008, 2009, 2010, 2011, 2012, 2013
- * @version $Revision: 1 $
  */
 public class TrainCommon {
 
@@ -1075,9 +1073,7 @@ public class TrainCommon {
      * @param string string to write
      */
     protected static void addLine(PrintWriter file, String level, String string) {
-        if (log.isDebugEnabled()) {
-            log.debug(string);
-        }
+        log.debug(string);
         if (file != null) {
             String[] lines = string.split(NEW_LINE);
             for (String line : lines) {
@@ -1155,9 +1151,7 @@ public class TrainCommon {
      *
      */
     protected void addLine(PrintWriter file, String string) {
-        if (log.isDebugEnabled()) {
-            log.debug(string);
-        }
+        log.debug(string);
         if (file != null) {
             file.println(string);
         }
