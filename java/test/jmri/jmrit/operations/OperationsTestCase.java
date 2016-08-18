@@ -5,7 +5,7 @@ import java.util.Locale;
 import jmri.jmrit.operations.automation.AutomationManager;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
-import jmri.jmrit.operations.locations.ScheduleManager;
+import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.rollingstock.cars.CarColors;
 import jmri.jmrit.operations.rollingstock.cars.CarLengths;

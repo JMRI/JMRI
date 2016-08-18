@@ -1,4 +1,3 @@
-// LocationsTableModel.java
 package jmri.jmrit.operations.locations;
 
 import java.beans.PropertyChangeEvent;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2013
- * @version $Revision$
  */
 public class LocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -329,9 +327,6 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
         for (LocationEditFrame lef : frameList) {
             lef.dispose();
         }

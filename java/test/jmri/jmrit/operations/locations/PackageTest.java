@@ -1,5 +1,11 @@
 package jmri.jmrit.operations.locations;
 
+import jmri.jmrit.operations.locations.schedules.ScheduleEditFrameTest;
+import jmri.jmrit.operations.locations.schedules.ScheduleItemTest;
+import jmri.jmrit.operations.locations.schedules.ScheduleManagerTest;
+import jmri.jmrit.operations.locations.schedules.ScheduleTableFrameTest;
+import jmri.jmrit.operations.locations.schedules.ScheduleTest;
+import jmri.jmrit.operations.locations.tools.PoolTrackGuiTest;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

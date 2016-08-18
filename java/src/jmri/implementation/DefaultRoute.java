@@ -13,6 +13,7 @@ import jmri.NamedBeanHandle;
 import jmri.Route;
 import jmri.Sensor;
 import jmri.Turnout;
+import jmri.jmrit.Sound;
 import jmri.script.JmriScriptEngineManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1328,8 +1329,11 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
 
             // play sound defined for start of route set
             if ((r.getOutputSoundName() != null) && (!r.getOutputSoundName().equals(""))) {
-                jmri.jmrit.Sound snd = new jmri.jmrit.Sound(jmri.util.FileUtil.getExternalFilename(r.getOutputSoundName()));
-                snd.play();
+                try {
+                    (new Sound(r.getOutputSoundName())).play();
+                } catch (NullPointerException ex) {
+                    log.error("Cannot find file {}", r.getOutputSoundName());
+                }
             }
 
             // set sensors at

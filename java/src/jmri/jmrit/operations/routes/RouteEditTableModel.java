@@ -1,4 +1,3 @@
-// RouteEditTableModel.java
 package jmri.jmrit.operations.routes;
 
 import java.awt.BorderLayout;
@@ -31,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2013
- * @version $Revision$
  */
 public class RouteEditTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -65,7 +63,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         super();
     }
 
-    public void setWait(boolean showWait) {
+    public synchronized void setWait(boolean showWait) {
         _showWait = showWait;
         fireTableStructureChanged();
         initTable(_table);
@@ -120,7 +118,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
 
-    private void setPreferredWidths(JTable table) {
+    private synchronized void setPreferredWidths(JTable table) {
         // set column preferred widths
         if (_frame.loadTableDetails(table)) {
             return; // done
@@ -154,7 +152,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     @Override
-    public String getColumnName(int col) {
+    public synchronized String getColumnName(int col) {
         switch (col) {
             case ID_COLUMN:
                 return Bundle.getMessage("Id");
@@ -199,7 +197,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     @Override
-    public Class<?> getColumnClass(int col) {
+    public synchronized Class<?> getColumnClass(int col) {
         switch (col) {
             case ID_COLUMN:
                 return String.class;
@@ -672,9 +670,6 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     public synchronized void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
         removePropertyChangeRouteLocations();
         if (_route != null) {
             _route.removePropertyChangeListener(this);
