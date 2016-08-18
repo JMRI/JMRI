@@ -116,7 +116,7 @@ public class PositionablePropertiesUtil {
     //JLabel example;
 
     ImageIcon[] images;
-    String[] _fontcolors = {"Black", "Dark Gray", "Gray", "Light Gray", "White", "Red", "Orange", "Yellow", "Green", "Blue", "Magenta"};
+    String[] _fontcolors = {"Black", "Dark Gray", "Gray", "Light Gray", "White", "Red", "Orange", "Yellow", "Green", "Blue", "Magenta"}; // NOI18N
     String[] _backgroundcolors;
     JComboBox<Integer> fontColor;
     JComboBox<Integer> backgroundColor;
@@ -141,7 +141,7 @@ public class PositionablePropertiesUtil {
         for (int i = 0; i < _fontcolors.length; i++) {
             _backgroundcolors[i] = _fontcolors[i];
         }
-        _backgroundcolors[_backgroundcolors.length - 1] = "None"; // TODO I18N using Bundle.getMessage("ColorClear");
+        _backgroundcolors[_backgroundcolors.length - 1] = Bundle.getMessage("ColorClear"); // I18N using Bundle.getMessage("ColorClear");
 
         Integer[] intArray = new Integer[_backgroundcolors.length];
         images = new ImageIcon[_backgroundcolors.length];
@@ -154,13 +154,13 @@ public class PositionablePropertiesUtil {
                 Field f = Color.class.getField((_backgroundcolors[i].toUpperCase()).replaceAll(" ", "_"));
                 desiredColor = (Color) f.get(null);
             } catch (NoSuchFieldException ce) {
-                //Can be considered normal if background is set None
+                //Can be considered normal if background is set None/Clear
                 desiredColor = null;
             } catch (SecurityException ce) {
-                //Can be considered normal if background is set None
+                //Can be considered normal if background is set None/Clear
                 desiredColor = null;
             } catch (IllegalAccessException ce) {
-                //Can be considered normal if background is set None
+                //Can be considered normal if background is set None/Clear
                 desiredColor = null;
             }
             if (desiredColor != null) {
@@ -182,15 +182,15 @@ public class PositionablePropertiesUtil {
         backgroundColor.setSelectedIndex(backCurrentColor);
         backgroundColor.addActionListener(PreviewActionListener);
         backgroundColorPanel.add(backgroundColor);
+
         int fontCurrentColor = 0;
         for (int i = 0; i < _fontcolors.length; i++) {
-
             intArray[i] = Integer.valueOf(i);
             try {
                 Field f = Color.class.getField((_fontcolors[i].toUpperCase()).replaceAll(" ", "_"));
                 desiredColor = (Color) f.get(null);
             } catch (Exception ce) {
-                log.error("Unable to get font colour from field " + ce);
+                log.error("Unable to get font color from field " + ce);
             }
             if (desiredColor != null && desiredColor.equals(defaultForeground)) {
                 fontCurrentColor = i;
@@ -308,7 +308,7 @@ public class PositionablePropertiesUtil {
                 }
             });
             p = new JPanel();
-            p.add(new JLabel(Bundle.getMessage("FontBackgroundColor") + ": ")); // TODO I18N
+            p.add(new JLabel(Bundle.getMessage("FontBackgroundColor") + ": "));
             p.add(txtBackColor);
 
             String _borderTitle = txtList.get(i).getDescription();
@@ -321,7 +321,7 @@ public class PositionablePropertiesUtil {
             _textPanel.add(txtPanel);
 
         }
-        propertiesPanel.addTab("Font", null, _textPanel, "Set Font"); // TODO I18N
+        propertiesPanel.addTab(Bundle.getMessage("FontTabTitle"), null, _textPanel, Bundle.getMessage("FontTabTooltip"));
     }
 
     ActionListener PreviewActionListener = new ActionListener() {
@@ -398,20 +398,20 @@ public class PositionablePropertiesUtil {
         borderColorCombo.addActionListener(PreviewActionListener);
 
         JPanel borderColorPanel = new JPanel();
-        borderColorPanel.add(new JLabel("Border Color") + ": ");
+        borderColorPanel.add(new JLabel(Bundle.getMessage("borderColor") + ": "));
         borderColorPanel.add(borderColorCombo);
 
         JPanel borderSizePanel = new JPanel();
-        borderSizeTextSpin = getSpinner(borderSize, "Border Size");
+        borderSizeTextSpin = getSpinner(borderSize, Bundle.getMessage("borderSize"));
         borderSizeTextSpin.addChangeListener(SpinnerChangeListener);
-        borderSizePanel.add(new JLabel("Border Size" + ": "));
+        borderSizePanel.add(new JLabel(Bundle.getMessage("borderSize") + ": "));
         borderSizePanel.add(borderSizeTextSpin);
 
         JPanel marginSizePanel = new JPanel();
-        marginSizeTextSpin = getSpinner(marginSize, "Margin Size");
+        marginSizeTextSpin = getSpinner(marginSize, Bundle.getMessage("marginSize"));
         marginSizeTextSpin.addChangeListener(SpinnerChangeListener);
 
-        marginSizePanel.add(new JLabel("Margin Size" + ": "));
+        marginSizePanel.add(new JLabel(Bundle.getMessage("marginSize") + ": "));
         marginSizePanel.add(marginSizeTextSpin);
 
         borderPanel.setLayout(new BoxLayout(borderPanel, BoxLayout.Y_AXIS));
@@ -419,7 +419,7 @@ public class PositionablePropertiesUtil {
         borderPanel.add(borderSizePanel);
         borderPanel.add(marginSizePanel);
 
-        propertiesPanel.addTab("Border", null, borderPanel, "Set Border");
+        propertiesPanel.addTab(Bundle.getMessage("Border"), null, borderPanel, Bundle.getMessage("BorderTabTooltip"));
 
     }
 
@@ -441,7 +441,7 @@ public class PositionablePropertiesUtil {
 
             String _borderTitle = txtList.get(i).getDescription();
             if (_borderTitle.equals(Bundle.getMessage("TextExampleLabel"))) {
-                _borderTitle = Bundle.getMessage("TextBorderLabel"); // replace default label by a appropriate one for text string box on Contents tab
+                _borderTitle = Bundle.getMessage("TextBorderLabel"); // replace label provided by Ctor by an appropriate one for text string box on Contents tab
             }
             p.setBorder(BorderFactory.createTitledBorder(_borderTitle));
 
@@ -464,7 +464,7 @@ public class PositionablePropertiesUtil {
             p.add(textField);
             editText.add(p);
         }
-        propertiesPanel.addTab(Bundle.getMessage("EditTextLabel"), null, editText, "Edit Contents");
+        propertiesPanel.addTab(Bundle.getMessage("EditTextLabel"), null, editText, Bundle.getMessage("EditTabTooltip"));
     }
 
     /**
@@ -477,14 +477,14 @@ public class PositionablePropertiesUtil {
         JPanel xyPanel = new JPanel();
         xyPanel.setLayout(new BoxLayout(xyPanel, BoxLayout.Y_AXIS));
         JPanel xPanel = new JPanel();
-        JLabel txt = new JLabel("X: ");
+        JLabel txt = new JLabel(" X: ");
         xPositionTextSpin = getSpinner(xPos, "x position");
         xPositionTextSpin.addChangeListener(SpinnerChangeListener);
         xPanel.add(txt);
         xPanel.add(xPositionTextSpin);
 
         JPanel yPanel = new JPanel();
-        txt = new JLabel("Y: ");
+        txt = new JLabel(" Y: ");
         yPositionTextSpin = getSpinner(yPos, "y position");
         yPositionTextSpin.addChangeListener(SpinnerChangeListener);
         yPanel.add(txt);
@@ -496,20 +496,20 @@ public class PositionablePropertiesUtil {
         JPanel sizePanel = new JPanel();
         sizePanel.setLayout(new BoxLayout(sizePanel, BoxLayout.Y_AXIS));
         JPanel widthPanel = new JPanel();
-        widthSizeTextSpin = getSpinner(fixedWidth, "width");
+        widthSizeTextSpin = getSpinner(fixedWidth, Bundle.getMessage("width"));
         widthSizeTextSpin.addChangeListener(SpinnerChangeListener);
         /*widthSizeText = new JTextField(""+fixedWidth, 10);
          widthSizeText.addKeyListener(PreviewKeyActionListener);*/
-        txt = new JLabel("Width: ");
+        txt = new JLabel(Bundle.getMessage("width") + ": ");
         widthPanel.add(txt);
         widthPanel.add(widthSizeTextSpin);
 
         JPanel heightPanel = new JPanel();
         /*heightSizeText = new JTextField(""+fixedHeight, 10);
          heightSizeText.addKeyListener(PreviewKeyActionListener);*/
-        heightSizeTextSpin = getSpinner(fixedHeight, "height");
+        heightSizeTextSpin = getSpinner(fixedHeight, Bundle.getMessage("height"));
         heightSizeTextSpin.addChangeListener(SpinnerChangeListener);
-        txt = new JLabel("Height: ");
+        txt = new JLabel(Bundle.getMessage("height") + ": ");
         heightPanel.add(txt);
         heightPanel.add(heightSizeTextSpin);
 
@@ -520,7 +520,7 @@ public class PositionablePropertiesUtil {
         posPanel.add(sizePanel);
         posPanel.setLayout(new BoxLayout(posPanel, BoxLayout.Y_AXIS));
 
-        propertiesPanel.addTab("Size & Position", null, posPanel, "Set Size & Position");
+        propertiesPanel.addTab(Bundle.getMessage("SizeTabTitle"), null, posPanel, Bundle.getMessage("SizeTabTooltip"));
     }
 
     void fontApply() {

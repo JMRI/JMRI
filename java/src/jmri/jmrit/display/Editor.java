@@ -2428,6 +2428,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             BundleName = "BeanNameReporter";
         } else if ("Light".equals(name)) {
             BundleName = "BeanNameLight";
+        } else if ("Turnout".equals(name)) {
+            BundleName = "BeanNameTurnout"; // called by RightTurnout and LeftTurnout objects in TurnoutIcon.java edit() method
         } else {
             BundleName = name;
         }

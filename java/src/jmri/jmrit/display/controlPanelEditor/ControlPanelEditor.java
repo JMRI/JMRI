@@ -278,7 +278,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
         });
 
-        addItem = new JMenuItem(Bundle.getMessage("Zoom"));
+        addItem = new JMenuItem(Bundle.getMessage("Zoom") + "...");
         _zoomMenu.add(addItem);
         PositionableJComponent z = new PositionableJComponent(this);
         z.setScale(getPaintScale());

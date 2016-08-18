@@ -152,7 +152,7 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getRotateEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("rotate")) {
+        return new AbstractAction(Bundle.getMessage("rotate") + "...") {
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -167,7 +167,7 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getScaleEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("scale")) {
+        return new AbstractAction(Bundle.getMessage("scale") + "...") {
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -211,7 +211,7 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getZoomEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("Zoom")) {
+        return new AbstractAction(Bundle.getMessage("Zoom") + "...") {
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -438,7 +438,7 @@ public class CoordinateEdit extends JmriJFrame {
         oldX = util.getMargin();
 
         textX = new javax.swing.JLabel();
-        textX.setText("Margin = " + util.getMargin());
+        textX.setText(Bundle.getMessage("Margin") + ": " + util.getMargin());
         textX.setVisible(true);
 
         SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 1000, 1);
@@ -458,7 +458,7 @@ public class CoordinateEdit extends JmriJFrame {
                 PositionablePopupUtil util = pl.getPopupUtility();
                 pl.getPopupUtility().setMargin(l);
                 pl.getEditor().setAttributes(util, pl);
-                textX.setText("Margin = " + l);
+                textX.setText(Bundle.getMessage("Margin") + ": " + l);
                 dispose();
             }
         });
