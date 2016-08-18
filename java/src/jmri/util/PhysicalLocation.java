@@ -130,8 +130,9 @@ public class PhysicalLocation extends Vector3f {
         // Optional flags come immediately after the (x,y,z) in the form of "(flag)".
         // Flags are boolean. If they are present, they are true.
         // Regex [-+]?[0-9]*\.?[0-9]+
-        //String syntax = "\\((\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+)\\)";
-        String syntax = "\\((\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+)\\)(\\([tunnel]\\))*";
+        // String syntax = "\\((\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+)\\)";
+        // String syntax = "\\((\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+)\\)(\\([tunnel]\\))*";
+        String syntax = "\\((\\s*[-+]?[0-9]*\\.?[0-9]+), (\\s*[-+]?[0-9]*\\.?[0-9]+), (\\s*[-+]?[0-9]*\\.?[0-9]+)\\)\\(?([tunnel]*)\\)?";
         try {
             Pattern p = Pattern.compile(syntax);
             Matcher m = p.matcher(pos);
