@@ -12,16 +12,12 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Randall Wood
  */
 public class ProfileTest {
-
-    private final static Logger log = LoggerFactory.getLogger(ProfileTest.class);
 
     public ProfileTest() {
     }
