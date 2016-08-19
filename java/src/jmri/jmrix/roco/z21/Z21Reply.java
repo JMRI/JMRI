@@ -67,7 +67,7 @@ public class Z21Reply extends AbstractMRReply {
     }
 
     public int getLength() {
-        return _dataChars[0] + (_dataChars[1] << 8);
+        return (0xff & _dataChars[0] ) + ((0xff & _dataChars[1]) << 8);
     }
 
     protected int skipPrefix(int index) {
@@ -120,7 +120,7 @@ public class Z21Reply extends AbstractMRReply {
      * @return the locomotive address for the specified entry.
      */
     jmri.DccLocoAddress getRailComLocoAddress(int n){
-         int offset = 4+((n-1)*13);
+         int offset = 4+((n)*13);
          int address = ((0xff&getElement(offset))<<8)+(0xff&(getElement(offset+1)));
          return new jmri.DccLocoAddress(address,address>=100);
     }
