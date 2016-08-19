@@ -45,9 +45,11 @@ public class ProfileTest {
 
     /**
      * Test of save method, of class Profile.
+     *
+     * @throws java.io.IOException on any unanticipated errors setting up test
      */
     @Test
-    public void testSave() throws Exception {
+    public void testSave() throws IOException {
         File profileFolder = new File(folder.newFolder(Profile.PROFILE), "test");
         Profile instance = new Profile("test", "test", profileFolder);
         instance.setName("saved");
