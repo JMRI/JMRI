@@ -1,7 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!--  $Id$ -->
-<!-- UpDated by Herv&#233; Blorec  2013-09-09-->
-
+<!-- UpDated by Herv&#233; Blorec  2016-08-19-->
 <html lang="fr">
 <head>
     <TITLE>
@@ -10,15 +9,9 @@
     <META content="Bob Jacobsen" name=Author>
     <meta name="keywords" content="JMRI technical code xml editors">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
@@ -50,9 +43,13 @@ Pour plus d'informations sur XML lui-m&#234;me, s'il vous pla&#238;t voir notre
 <a href="../../apps/DecoderPro/IntroXML.shtml"> page d'introduction</a>..
 
 <h2>&#233;diteurs Libres</h2>
+
 <dl>
 <dt> Crimson Editor
 <dd> <a href="http://www.crimsoneditor.com/"> http://www.crimsoneditor.com/</a>
+
+<dt>CotEditor
+<dd><a href="http://coteditor.com">http://coteditor.com</a> (OS X)
 
 <dt> Editra
 <dd> <a href="http://editra.org/"> http://editra.org/</a>
@@ -72,7 +69,7 @@ Komodo Edit <dt>
 <dt> Notepad + +
 <dd> <a href="http://www.microsoft.com/downloads/details.aspx?familyid=72d6aa49-787d-4118-ba5f-4f30fe913628&displaylang=en">http://notepad-plus-plus.org/</a>
 
-<dt> Marker XML
+<dt> XML Marker
 <dd> <a href="http://symbolclick.com/"> http://symbolclick.com/</a>
 
 <dt> PSPad
@@ -113,4 +110,3 @@ Plusieurs utilisateurs ont signal&#233; des probl&#232;mes avec XML Notepad 2007
 	</div> <!-- closes #mBody-->
 </body>
 </html>
-
