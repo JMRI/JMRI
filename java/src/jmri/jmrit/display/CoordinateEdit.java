@@ -286,8 +286,8 @@ public class CoordinateEdit extends JmriJFrame {
                 int x = ((Number) spinX.getValue()).intValue();
                 int y = ((Number) spinY.getValue()).intValue();
                 pl.setLocation(x, y);
-                textX.setText("X = " + pl.getX());
-                textY.setText("Y = " + pl.getY());
+                textX.setText("X: " + pl.getX());
+                textY.setText("Y: " + pl.getY());
             }
         };
         spinX = new javax.swing.JSpinner(model);
@@ -332,7 +332,7 @@ public class CoordinateEdit extends JmriJFrame {
     public void initSetLevel() {
         oldX = pl.getDisplayLevel();
         textX = new javax.swing.JLabel();
-        textX.setText(Bundle.getMessage("Level") + " = " + pl.getDisplayLevel());
+        textX.setText(Bundle.getMessage("Level") + ": " + pl.getDisplayLevel());
         textX.setVisible(true);
 
         SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 10, 1);
@@ -350,7 +350,7 @@ public class CoordinateEdit extends JmriJFrame {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 int l = ((Number) spinX.getValue()).intValue();
                 pl.getEditor().setSelectionsDisplayLevel(l, pl);
-                textX.setText(Bundle.getMessage("Level") + " = " + l);
+                textX.setText(Bundle.getMessage("Level") + ": " + l);
                 dispose();
             }
         });
@@ -400,7 +400,7 @@ public class CoordinateEdit extends JmriJFrame {
         oldX = util.getBorderSize();
 
         textX = new javax.swing.JLabel();
-        textX.setText(Bundle.getMessage("Border") + " = " + util.getBorderSize());
+        textX.setText(Bundle.getMessage("Border") + ": " + util.getBorderSize());
         textX.setVisible(true);
 
         SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 1000, 1);
@@ -420,7 +420,7 @@ public class CoordinateEdit extends JmriJFrame {
                 PositionablePopupUtil util = pl.getPopupUtility();
                 util.setBorderSize(l);
                 pl.getEditor().setAttributes(util, pl);
-                textX.setText(Bundle.getMessage("Border") + " = " + l);
+                textX.setText(Bundle.getMessage("Border") + ": " + l);
                 dispose();
             }
         });

@@ -141,7 +141,7 @@ public class PositionablePropertiesUtil {
         for (int i = 0; i < _fontcolors.length; i++) {
             _backgroundcolors[i] = _fontcolors[i];
         }
-        _backgroundcolors[_backgroundcolors.length - 1] = Bundle.getMessage("ColorClear"); // I18N using Bundle.getMessage("ColorClear");
+        _backgroundcolors[_backgroundcolors.length - 1] = Bundle.getMessage("ColorClear"); // colors stored as RGB int values in xml
 
         Integer[] intArray = new Integer[_backgroundcolors.length];
         images = new ImageIcon[_backgroundcolors.length];
@@ -468,7 +468,7 @@ public class PositionablePropertiesUtil {
     }
 
     /**
-     * Create and fill in the Size & Position tab of the UI.
+     * Create and fill in the Size &amp; Position tab of the UI.
      */
     void sizePosition() {
 

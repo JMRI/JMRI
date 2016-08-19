@@ -348,7 +348,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     }
 
     /**
-     * Build the Control Panel Editor tabbed Item Panel frame & menus
+     * Build the Control Panel Editor tabbed Item Panel frame &amp; menus
      */
     public ItemPalette(String title, Editor editor) {
         super(title, true, true);
