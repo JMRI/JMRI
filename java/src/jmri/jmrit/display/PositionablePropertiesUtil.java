@@ -122,7 +122,7 @@ public class PositionablePropertiesUtil {
     JComboBox<Integer> backgroundColor;
     JTextField fontSizeField;
 
-    String[] _justification = {"Left", "Right", "Center"}; // TODO I18N
+    String[] _justification = {Bundle.getMessage("left"), Bundle.getMessage("right"), Bundle.getMessage("center")};
     JComboBox<String> _justificationCombo;
 
     /**

@@ -627,16 +627,16 @@ public class PositionablePopupUtil {
         JRadioButtonMenuItem r;
         switch (just) {
             case LEFT:
-                r = new JRadioButtonMenuItem("Left");
+                r = new JRadioButtonMenuItem(Bundle.getMessage("left"));
                 break;
             case RIGHT:
-                r = new JRadioButtonMenuItem("Right");
+                r = new JRadioButtonMenuItem(Bundle.getMessage("right"));
                 break;
             case CENTRE:
-                r = new JRadioButtonMenuItem("Center");
+                r = new JRadioButtonMenuItem(Bundle.getMessage("center"));
                 break;
             default:
-                r = new JRadioButtonMenuItem("Left");
+                r = new JRadioButtonMenuItem(Bundle.getMessage("left"));
         }
         r.addActionListener(new ActionListener() {
             //final int justification = just;
