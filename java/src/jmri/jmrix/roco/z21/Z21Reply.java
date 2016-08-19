@@ -120,7 +120,7 @@ public class Z21Reply extends AbstractMRReply {
      * @return the locomotive address for the specified entry.
      */
     jmri.DccLocoAddress getRailComLocoAddress(int n){
-         int offset = 4+((n)*13);
+         int offset = 4+(n*13);
          int address = ((0xff&getElement(offset))<<8)+(0xff&(getElement(offset+1)));
          return new jmri.DccLocoAddress(address,address>=100);
     }
@@ -132,7 +132,7 @@ public class Z21Reply extends AbstractMRReply {
      * @return the receive counter for the specified entry.
      */
     int getRailComRcvCount(int n){
-         int offset = 4+((n-1)*13)+2; // +2 to get past the address.
+         int offset = 6+(n*13); // +2 to get past the address.
          int rcvcount = ((0xff&getElement(offset))<<24) +
                        ((0xff&(getElement(offset+1))<<16) + 
                        ((0xff&getElement(offset+2))<<8) + 
@@ -147,7 +147,7 @@ public class Z21Reply extends AbstractMRReply {
      * @return the error counter for the specified entry.
      */
     int getRailComErrCount(int n){
-         int offset = 4+((n-1)*13)+6; // +6 to get past the address and rcv count.
+         int offset = 10+(n*13); // +6 to get past the address and rcv count.
          int errorcount = ((0xff&getElement(offset))<<24) +
                        ((0xff&(getElement(offset+1))<<16) + 
                        ((0xff&getElement(offset+2))<<8) + 
@@ -162,7 +162,7 @@ public class Z21Reply extends AbstractMRReply {
      * @return the error counter for the specified entry.
      */
     int getRailComSpeed(int n){
-         int offset = 4+((n-1)*13)+10; //+10 to get past the address and counters.
+         int offset = 14+(n*13); //+10 to get past the address and counters.
          return (0xff&(getElement(offset)));
     }
 
@@ -173,7 +173,7 @@ public class Z21Reply extends AbstractMRReply {
      * @return the options for the specified entry.
      */
     int getRailComOptions(int n){
-         int offset = 4+((n-1)*13)+11; //+10 to get past the address,counter,speed.
+         int offset = 15+(n*13); //+10 to get past the address,counter,speed.
          return (0xff&(getElement(offset)));
     }
 
@@ -184,7 +184,7 @@ public class Z21Reply extends AbstractMRReply {
      * @return the temperature for the specified entry.
      */
     int getRailComTemp(int n){
-         int offset = 4+((n-1)*13)+12; //+10 to get past the other data.
+         int offset = 16+(n*13); //+10 to get past the other data.
          return (0xff&(getElement(offset)));
     }
 
