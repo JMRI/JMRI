@@ -94,8 +94,8 @@ public class PanelEditor extends Editor implements ItemListener {
      *
      */
     private static final long serialVersionUID = -3568655156437993712L;
-    JTextField nextX = new JTextField(Bundle.getMessage("DefaultX"), 4);
-    JTextField nextY = new JTextField(Bundle.getMessage("DefaultY"), 4);
+    JTextField nextX = new JTextField("0", 4);
+    JTextField nextY = new JTextField("0", 4);
 
     JCheckBox editableBox = new JCheckBox(Bundle.getMessage("CheckBoxEditable"));
     JCheckBox positionableBox = new JCheckBox(Bundle.getMessage("CheckBoxPositionable"));

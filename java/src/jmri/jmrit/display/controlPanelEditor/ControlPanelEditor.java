@@ -342,7 +342,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     protected void makeOptionMenu() {
-        _optionMenu = new JMenu(Bundle.getMessage("MenuOption"));
+        _optionMenu = new JMenu(Bundle.getMessage("MenuOptions"));
         _menuBar.add(_optionMenu, 0);
         // use globals item
         _optionMenu.add(useGlobalFlagBox);
