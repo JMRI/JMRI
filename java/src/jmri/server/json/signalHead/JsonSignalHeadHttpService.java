@@ -3,12 +3,10 @@ package jmri.server.json.signalHead;
 import static jmri.server.json.JSON.APPEARANCE;
 import static jmri.server.json.JSON.APPEARANCE_NAME;
 import static jmri.server.json.JSON.DATA;
-import static jmri.server.json.JSON.INCONSISTENT;
 import static jmri.server.json.JSON.LIT;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.TOKEN_HELD;
 import static jmri.server.json.JSON.TYPE;
-import static jmri.server.json.JSON.UNKNOWN;
 import static jmri.server.json.signalHead.JsonSignalHead.SIGNAL_HEAD;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -60,19 +58,25 @@ public class JsonSignalHeadHttpService extends JsonNamedBeanHttpService {
         SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name);
         this.postNamedBean(signalHead, data, name, type, locale);
         if (signalHead != null) {
-            int state = data.path(STATE).asInt(UNKNOWN);
-            boolean isValid = false;
-            for (int validState : signalHead.getValidStates()) {
-                if (state == validState) {
-                    isValid = true;
-                    break;
+            if (data.path(STATE).isInt()) {
+                int state = data.path(STATE).asInt();
+                if (state == SignalHead.HELD) {
+                    signalHead.setHeld(true);                    
+                } else {
+                    boolean isValid = false;
+                    for (int validState : signalHead.getValidStates()) {
+                        if (state == validState) {
+                            isValid = true;
+                            // TODO: completely insulate JSON state from SignalHead state
+                            if (signalHead.getHeld()) signalHead.setHeld(false);
+                            signalHead.setAppearance(state);
+                            break;
+                        }
+                    }
+                    if (!isValid) {
+                        throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", SIGNAL_HEAD, state));
+                    }
                 }
-            }
-            if (isValid && state != INCONSISTENT && state != UNKNOWN) {
-                // TODO: completely insulate JSON state from SignalHead state
-                signalHead.setAppearance(state);
-            } else if (state != INCONSISTENT && state != UNKNOWN) {
-                throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", SIGNAL_HEAD, state));
             }
         }
         return this.doGet(type, name, locale);

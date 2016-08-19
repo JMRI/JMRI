@@ -44,7 +44,7 @@ class AutoActiveTrains_Simulator(jmri.jmrit.automat.AbstractAutomaton) :
 						break
 				log.debug(at.getTrainName() + " occupiedBlocks: " + str(occupiedBlocks)
 						 + " next:" + ("None" if (nextBlock==None) else str(nextBlock.getDisplayName()))
-						 + " last:" + str(lastBlock.getDisplayName())
+						 + " last:" + ("None" if (lastBlock==None) else str(lastBlock.getDisplayName()))
 						 + " speed:" + str(targetSpeed))
 				if ((nextBlock != None) and (targetSpeed > 0)): # occupy next block if moving
 					s = nextBlock.getSensor()
