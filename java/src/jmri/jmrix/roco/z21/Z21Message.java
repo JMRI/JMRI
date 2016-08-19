@@ -83,7 +83,7 @@ public class Z21Message extends AbstractMRMessage {
     }
 
     public int getOpCode() {
-        return (_dataChars[2] + (_dataChars[3] << 8));
+        return ( (0xff & _dataChars[2]) + ((0xff & _dataChars[3]) << 8));
     }
 
     public void setLength(int i) {
@@ -125,7 +125,7 @@ public class Z21Message extends AbstractMRMessage {
     }
 
     /*
-     * @return z21 message for serial number request.
+     * @return z21 message for a hardware information request.
      */
     public static Z21Message getLanGetHardwareInfoRequestMessage() {
         Z21Message retval = new Z21Message(4);
@@ -208,6 +208,20 @@ public class Z21Message extends AbstractMRMessage {
         retval.setElement(7, (flags & 0xff000000)>>24 );
         return retval;
     }
+
+
+    /**
+     * @return z21 message for LAN_RAILCOM_GETDATA request.
+     */
+    public static Z21Message getLanRailComGetDataRequestMessage() {
+        Z21Message retval = new Z21Message(4);
+        retval.setElement(0, 0x04);
+        retval.setElement(1, 0x00);
+        retval.setElement(2, 0x89);
+        retval.setElement(3, 0x00);
+        return retval;
+    }
+
 
     public String toMonitorString() {
         return toString();
