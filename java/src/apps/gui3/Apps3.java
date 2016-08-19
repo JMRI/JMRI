@@ -153,6 +153,15 @@ public abstract class Apps3 extends AppsBase {
         displayMainFrame(mainFrame.getMaximumSize());
     }
 
+    /**
+     * At one time intended to provide a list of
+     * {@link apps.startup.AbstractActionModel} objects that could be used with
+     * the implementing class. Apparently never used.
+     *
+     * @return the list of action models.
+     * @deprecated since 4.5.3
+     */
+    @Deprecated
     abstract protected ResourceBundle getActionModelResourceBundle();
 
     /**
