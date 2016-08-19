@@ -58,6 +58,19 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
     private Z21TrafficController _tc = null;
 
+    /**
+     * Reporter Manager for this instance.
+     */
+    public void setReporterManager(Z21ReporterManager rm){
+           _rm = rm;
+    }
+
+    public Z21ReporterManager getReporterManager() {
+           return _rm;
+    }
+
+    private Z21ReporterManager _rm = null;
+
     public ProgrammerManager getProgrammerManager() {
         if (_xnettunnel!=null) {
             // deligate to the XPressnet tunnel.
@@ -76,6 +89,9 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (getDisabled()) {
             return false;
         }
+        if (type.equals(jmri.ReporterManager.class)){
+           return true;
+        }
         if (_xnettunnel!=null) {
             // deligate to the XPressnet tunnel.
             return _xnettunnel.getStreamPortController().getSystemConnectionMemo().provides(type);        
@@ -90,6 +106,9 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
+        }
+        if(T.equals(jmri.ReporterManager.class)){
+            return (T) getReporterManager();
         }
         if (_xnettunnel!=null) {
             // delegate to the XPressnet tunnel.
@@ -119,6 +138,12 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
         // add an XPressNet Tunnel.
         _xnettunnel = new Z21XPressNetTunnel(this);
+
+        // set up the Reporter Manager
+        if(_rm==null){
+           setReporterManager(new Z21ReporterManager(this));
+           jmri.InstanceManager.store(getReporterManager(),jmri.ReporterManager.class);
+        }
  
    }
 

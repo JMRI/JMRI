@@ -8,9 +8,8 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.swing.XTableColumnModel;
@@ -526,8 +525,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case WAIT_COLUMN:
             case VALUE_COLUMN:
             case RFID_COLUMN:
-            case RFID_WHEN_LAST_SEEN_COLUMN:
-            case RFID_WHERE_LAST_SEEN_COLUMN:
                 return true;
             default:
                 return false;
@@ -576,7 +573,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 return car.getStatus();
             }
             case RFID_WHERE_LAST_SEEN_COLUMN: {
-                return car.getWhereLastSeenName();
+                return car.getWhereLastSeenName() +
+                        (car.getTrackLastSeenName().equals(Engine.NONE) ? "" : " (" + car.getTrackLastSeenName() + ")");
             }
             case RFID_WHEN_LAST_SEEN_COLUMN: {
                 return car.getWhenLastSeenDate();
@@ -689,13 +687,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 break;
             case RFID_COLUMN:
                 car.setRfid(value.toString());
-                break;
-            case RFID_WHERE_LAST_SEEN_COLUMN:
-                Location newLocation = LocationManager.instance().getLocationByName(value.toString());
-                car.setWhereLastSeen(newLocation);
-                break;
-            case RFID_WHEN_LAST_SEEN_COLUMN:
-                car.setWhenLastSeen(value.toString());
                 break;
             case WAIT_COLUMN:
                 try {

@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   ConnectionConfigXmlTest.class
+   ConnectionConfigXmlTest.class,
+   Z21ReporterManagerConfigXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.roco.z21.configurexml package.

@@ -120,7 +120,7 @@ public class AudioListenerFrame extends AbstractAudioFrame {
      */
     @Override
     public void populateFrame(Audio a) {
-        if (a instanceof AudioListener) {
+        if (!(a instanceof AudioListener)) {
             throw new IllegalArgumentException(a.getSystemName() + " is not an AudioListener object");
         }
         super.populateFrame(a);

@@ -242,21 +242,21 @@ public final class WebServer implements LifeCycle.Listener {
                 try {
                     server.stop();
                 } catch (Exception ex) {
-                    log.warn("Error shutting down WebServer: " + ex);
-                    if (log.isDebugEnabled()) {
-                        log.debug("Details follow: ", ex);
-                    }
+                    // Error without stack trace
+                    log.warn("Error shutting down WebServer: {}", ex);
+                    // Full stack trace
+                    log.debug("Details follow: ", ex);
                 }
                 this.isComplete = true;
             }).start();
             return true;
         }
-        
+
         @Override
         public boolean isParallel() {
             return true;
         }
-        
+
         @Override
         public boolean isComplete() {
             return this.isComplete;

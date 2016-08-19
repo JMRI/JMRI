@@ -1,26 +1,31 @@
 package jmri.jmrix.roco.z21;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.roco.z21.Z21Reply class
  *
  * @author	Bob Jacobsen
  */
-public class Z21ReplyTest extends TestCase {
+public class Z21ReplyTest {
 
+    @Test
     public void testCtor() {
         Z21Reply m = new Z21Reply();
         Assert.assertNotNull(m);
     }
 
-    // test the string constructor.
+    // test the byte array  constructor.
+    @Test
     public void testStringCtor() {
-        Z21Message m = new Z21Message("0D 00 04 00 12 34 AB 3 19 6 B B1");
+        byte msg[]={(byte)0x0D,(byte)0x00,(byte)0x04,(byte)0x00,(byte)0x12,(byte)0x34,(byte)0xAB,(byte)0x03,(byte)0x19,(byte)0x06,(byte)0x0B,(byte)0xB1};
+        Z21Reply m = new Z21Reply(msg,12);
         Assert.assertEquals("length", 12, m.getNumDataElements());
+        Assert.assertEquals("OpCode", 0x0004, m.getOpCode());
         Assert.assertEquals("0th byte", 0x0D, m.getElement(0) & 0xFF);
         Assert.assertEquals("1st byte", 0x00, m.getElement(1) & 0xFF);
         Assert.assertEquals("2nd byte", 0x04, m.getElement(2) & 0xFF);
@@ -35,29 +40,98 @@ public class Z21ReplyTest extends TestCase {
         Assert.assertEquals("11th byte", 0xB1, m.getElement(11) & 0xFF);
     }
 
-    // from here down is testing infrastructure
-    public Z21ReplyTest(String s) {
-        super(s);
+    // Test XPressNet Tunnel related methods.
+    @Test
+    public void tunnelXPressNet(){
+        byte msg[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
+        Z21Reply m = new Z21Reply(msg,7);
+        Assert.assertTrue("XPressNet Tunnel Message",m.isXPressNetTunnelMessage());
+        byte msg1[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
+        m = new Z21Reply(msg1,17);
+        Assert.assertFalse("Not XPressNet Tunnel Message",m.isXPressNetTunnelMessage());
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", Z21ReplyTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Test
+    public void getXPressNetReply(){
+        byte msg[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
+        Z21Reply m = new Z21Reply(msg,7);
+        jmri.jmrix.lenz.XNetReply x = m.getXNetReply();
+        Assert.assertEquals("0th byte", 0x61, x.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", 0x82, x.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", 0xE3, x.getElement(2) & 0xFF);
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(Z21ReplyTest.class);
-        return suite;
+    //Test RailCom related methods.
+    @Test
+    public void railComReply(){
+        byte msg[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
+        Z21Reply m = new Z21Reply(msg,17);
+        Assert.assertTrue("RailCom Reply",m.isRailComDataChangedMessage());
+        byte msg1[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
+        m = new Z21Reply(msg1,7);
+        Assert.assertFalse("Not RailCom Reply",m.isRailComDataChangedMessage());
+    }
+
+    @Test
+    public void railComEntries(){
+        byte msg[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
+        Z21Reply m = new Z21Reply(msg,17);
+        Assert.assertEquals("RailCom Entries",1,m.getNumRailComDataEntries());
+        byte msg1[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
+        m = new Z21Reply(msg1,7);
+        Assert.assertEquals("RailCom Entries",0,m.getNumRailComDataEntries());
+    } 
+
+    @Test
+    public void railComAddress(){
+        byte msg[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
+        Z21Reply m = new Z21Reply(msg,17);
+        Assert.assertTrue("RailCom Address",(new jmri.DccLocoAddress(1,false)).equals(m.getRailComLocoAddress(0)));
+    }
+
+    @Test
+    public void railComRcvCount(){
+        byte msg[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
+        Z21Reply m = new Z21Reply(msg,17);
+        Assert.assertEquals("RailCom Rcv Count",1,m.getRailComRcvCount(0));
+    }
+
+    @Test
+    public void railComErrCount(){
+        byte msg[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
+        Z21Reply m = new Z21Reply(msg,17);
+        Assert.assertEquals("RailCom Err Count",5,m.getRailComErrCount(0));
+    }
+
+    @Test
+    public void railComSpeed(){
+        byte msg[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
+        Z21Reply m = new Z21Reply(msg,17);
+        Assert.assertEquals("RailCom Speed",6,m.getRailComSpeed(0));
+    }
+
+    @Test
+    public void railComOptions(){
+        byte msg[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
+        Z21Reply m = new Z21Reply(msg,17);
+        Assert.assertEquals("RailCom Options",7,m.getRailComOptions(0));
+    }
+
+    @Test
+    public void railComTemp(){
+        byte msg[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
+        Z21Reply m = new Z21Reply(msg,17);
+        Assert.assertEquals("RailCom Temp",8,m.getRailComTemp(0));
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 
