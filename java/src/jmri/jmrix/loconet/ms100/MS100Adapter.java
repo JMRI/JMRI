@@ -76,60 +76,43 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
             } catch (UnsupportedCommOperationException e) {
                 // assume that's a baudrate problem, fall back.
                 log.warn("attempting to fall back to 16457 baud after 16600 failed");
-            try {
-                activeSerialPort.setSerialPortParams(16457, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            } catch (UnsupportedCommOperationException e2) {
-                log.warn("trouble setting 16600 baud");
-                javax.swing.JOptionPane.showMessageDialog(null,
-                        "Failed to set the correct baud rate for the MS100. Port is set to "
-                        + activeSerialPort.getBaudRate()
-                        + " baud. See the README file for more info.",
-                        "Connection failed", javax.swing.JOptionPane.ERROR_MESSAGE);
+                try {
+                    activeSerialPort.setSerialPortParams(16457, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+                } catch (UnsupportedCommOperationException e2) {
+                    log.warn("trouble setting 16600 baud");
+                    javax.swing.JOptionPane.showMessageDialog(null,
+                            "Failed to set the correct baud rate for the MS100. Port is set to "
+                            + activeSerialPort.getBaudRate()
+                            + " baud. See the README file for more info.",
+                            "Connection failed", javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
             }
-        }
 
-        // set RTS high, DTR low to power the MS100
-        activeSerialPort.setRTS(true);          // not connected in some serial ports and adapters
-        activeSerialPort.setDTR(false);         // pin 1 in DIN8; on main connector, this is DTR
+            // set RTS high, DTR low to power the MS100
+            activeSerialPort.setRTS(true);          // not connected in some serial ports and adapters
+            activeSerialPort.setDTR(false);         // pin 1 in DIN8; on main connector, this is DTR
 
-        // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
-        activeSerialPort.setFlowControlMode(0);
+            // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
+            activeSerialPort.setFlowControlMode(0);
 
-        // set timeout
-        try {
-            activeSerialPort.enableReceiveTimeout(10);
-            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
-        } catch (UnsupportedCommOperationException et) {
-            log.info("failed to set serial timeout: " + et);
-        }
+            // set timeout
+            try {
+                activeSerialPort.enableReceiveTimeout(10);
+                log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
+                        + " " + activeSerialPort.isReceiveTimeoutEnabled());
+            } catch (UnsupportedCommOperationException et) {
+                log.info("failed to set serial timeout: " + et);
+            }
 
-        // get and save stream
-        serialInStream = activeSerialPort.getInputStream();
-        serialOutStream = activeSerialPort.getOutputStream();
+            // get and save stream
+            serialInStream = activeSerialPort.getInputStream();
+            serialOutStream = activeSerialPort.getOutputStream();
 
-        // port is open, start work on the stream
-        // purge contents, if any
-        int count = serialInStream.available();
-        log.debug("input stream shows " + count + " bytes available");
-        while (count > 0) {
-            serialInStream.skip(count);
-            count = serialInStream.available();
-        }
+            // port is open, start work on the stream
+            // purge contents, if any
+            purgeStream(serialInStream);
 
-        // report status?
-        if (log.isInfoEnabled()) {
-            log.info(portName + " port opened at "
-                    + activeSerialPort.getBaudRate() + " baud, sees "
-                    + " DTR: " + activeSerialPort.isDTR()
-                    + " RTS: " + activeSerialPort.isRTS()
-                    + " DSR: " + activeSerialPort.isDSR()
-                    + " CTS: " + activeSerialPort.isCTS()
-                    + "  CD: " + activeSerialPort.isCD()
-            );
-        }
-
-        opened = true;
+            opened = true;
 
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);

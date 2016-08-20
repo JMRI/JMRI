@@ -53,8 +53,13 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
-            // set timeout
-            activeSerialPort.enableReceiveTimeout(10);
+            try {
+                // set timeout
+                activeSerialPort.enableReceiveTimeout(10);
+            } catch (UnsupportedCommOperationException ex) {
+                log.error("Cannot set receive timeout on port " + portName + ": " + ex.getMessage());
+                return "Cannot set receive timeout on port " + portName + ": " + ex.getMessage();
+            }
             log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
                       + " " + activeSerialPort.isReceiveTimeoutEnabled());
 
