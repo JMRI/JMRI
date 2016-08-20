@@ -21,7 +21,7 @@ public class ToolsMenu extends JMenu {
         if (rb == null) {
             rb = java.util.ResourceBundle.getBundle("jmri.jmrit.ussctc.UssCtcBundle");
         }
-        setText(rb.getString("MenuTools"));
+        setText(rb.getString("MenuCtcTools"));
 
         add(new OsIndicatorAction(rb.getString("MenuItemOsIndicator")));
         add(new FollowerAction(rb.getString("MenuItemFollower")));

@@ -62,7 +62,7 @@ public class SensorTextEdit extends JmriJFrame {
         pl = l;
 
         // the following code sets the frame's initial state
-        lableName.setText(rb.getString("Name") + ": ");
+        lableName.setText(Bundle.getMessage("Name") + ": ");
         lableName.setVisible(true);
 
         nameText.setText(name);

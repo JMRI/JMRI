@@ -1745,7 +1745,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 case UNAME_COLUMN:
                     return rb.getString("ColumnUserName");
                 case STATE_COLUMN:
-                    return rb.getString("ColumnState");
+                    return Bundle.getMessage("ColumnState");
 
                 default:
                     return "unknown";

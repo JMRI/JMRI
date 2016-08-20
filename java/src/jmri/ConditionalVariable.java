@@ -819,7 +819,7 @@ public class ConditionalVariable {
             case Conditional.ITEM_TYPE_WARRANT:
                 return (Bundle.getMessage("BeanNameWarrant"));
             case Conditional.ITEM_TYPE_CLOCK:
-                return (rbx.getString("FastClock"));
+                return (Bundle.getMessage("FastClock"));
             case Conditional.ITEM_TYPE_OBLOCK:
                 return (Bundle.getMessage("BeanNameOBlock"));
             case Conditional.ITEM_TYPE_ENTRYEXIT:
@@ -1105,7 +1105,7 @@ public class ConditionalVariable {
                         new Object[]{rbx.getString("WarrantRoute"), getName(), type});
             case Conditional.ITEM_TYPE_CLOCK:
                 return java.text.MessageFormat.format(rbx.getString("FastClockDescrpt"),
-                        new Object[]{rbx.getString("FastClock"),
+                        new Object[]{Bundle.getMessage("FastClock"),
                             LogixTableAction.formatTime(_num1 / 60, _num1 - ((_num1 / 60) * 60)),
                             LogixTableAction.formatTime(_num2 / 60, _num2 - ((_num2 / 60) * 60))});
             case Conditional.ITEM_TYPE_OBLOCK:

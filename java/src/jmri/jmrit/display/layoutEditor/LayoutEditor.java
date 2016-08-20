@@ -551,7 +551,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         top1.add(yLabel);
         // add turnout items
         top1.add(new JLabel("    " + Bundle.getMessage("BeanNameTurnout") + ": "));
-        top1.add(new JLabel(rb.getString("Name")));
+        top1.add(new JLabel(Bundle.getMessage("Name")));
         top1.add(nextTurnout);
         nextTurnout.setToolTipText(rb.getString("TurnoutNameToolTip"));
         JLabel extraTurnLabel = new JLabel(rb.getString("SecondName"));
@@ -561,7 +561,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         extraTurnoutPanel.add(extraTurnout);
         extraTurnout.setToolTipText(rb.getString("TurnoutNameToolTip"));
         top1.add(extraTurnoutPanel);
-        top1.add(new JLabel(rb.getString("Type")));
+        top1.add(new JLabel(Bundle.getMessage("Type")));
         top1.add(turnoutRHBox);
         turnoutRHBox.setToolTipText(rb.getString("RHToolTip"));
         top1.add(turnoutLHBox);
@@ -617,8 +617,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         top3.add(textLabel);
         textLabel.setToolTipText(rb.getString("TextToolTip"));
         top3.add(memoryBox);
-        memoryBox.setToolTipText(rb.getString("MemoryBoxToolTip"));
-        blockContentsBox.setToolTipText(rb.getString("MemoryBoxToolTip"));
+        memoryBox.setToolTipText(Bundle.getMessage("MemoryBoxToolTip", Bundle.getMessage("Memory")));
+        blockContentsBox.setToolTipText(Bundle.getMessage("MemoryBoxToolTip", Bundle.getMessage("Memory")));
         top3.add(textMemory);
         textMemory.setToolTipText(rb.getString("MemoryToolTip"));
         top3.add(blockContentsBox);
@@ -846,7 +846,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     jmri.jmrit.signalling.AddEntryExitPairAction entryExit = null;
 
     void setupToolsMenu(JMenuBar menuBar) {
-        JMenu toolsMenu = new JMenu(rb.getString("MenuTools"));
+        JMenu toolsMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolsMenu.setMnemonic(stringsToVTCodes.get(rb.getString("MenuToolsMnemonic")));
         menuBar.add(toolsMenu);
         // scale track diagram
@@ -1302,7 +1302,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Cyan"), Color.cyan);
         optionMenu.add(backgroundColorMenu);
         // add fast clock
-        JMenuItem clockItem = new JMenuItem(rb.getString("AddFastClock"));
+        JMenuItem clockItem = new JMenuItem(Bundle.getMessage("AddThing", Bundle.getMessage("FastClock")));
         optionMenu.add(clockItem);
         clockItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -1522,7 +1522,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     private void setupZoomMenu(JMenuBar menuBar) {
-        JMenu zoomMenu = new JMenu(rb.getString("MenuZoom"));
+        JMenu zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
         zoomMenu.setMnemonic(stringsToVTCodes.get(rb.getString("MenuZoomMnemonic")));
         menuBar.add(zoomMenu);
         ButtonGroup zoomButtonGroup = new ButtonGroup();

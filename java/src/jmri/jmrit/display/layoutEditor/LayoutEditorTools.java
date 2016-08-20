@@ -162,11 +162,11 @@ public class LayoutEditorTools {
             panel1.setLayout(new FlowLayout());
             if (turnoutFromMenu) {
                 JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " "
-                        + rb.getString("Name") + " : " + layoutTurnout.getTurnoutName());
+                        + Bundle.getMessage("Name") + " : " + layoutTurnout.getTurnoutName());
                 panel1.add(turnoutNameLabel);
             } else {
                 JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " "
-                        + rb.getString("Name"));
+                        + Bundle.getMessage("Name"));
                 panel1.add(turnoutNameLabel);
                 panel1.add(turnoutNameField);
                 turnoutNameField.setToolTipText(rb.getString("SignalsTurnoutNameHint"));
@@ -1954,11 +1954,11 @@ public class LayoutEditorTools {
             panel11.setLayout(new FlowLayout());
             if (boundaryFromMenu) {
                 JLabel block1NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
-                        + rb.getString("Name") + " : " + boundary.getConnect1().getLayoutBlock().getID());
+                        + Bundle.getMessage("Name") + " : " + boundary.getConnect1().getLayoutBlock().getID());
                 panel11.add(block1NameLabel);
             } else {
                 JLabel block1NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
-                        + rb.getString("Name") + " : ");
+                        + Bundle.getMessage("Name") + " : ");
                 panel11.add(block1NameLabel);
                 panel11.add(block1NameField);
                 block1NameField.setToolTipText(rb.getString("SignalsBlockNameHint"));
@@ -1969,12 +1969,12 @@ public class LayoutEditorTools {
             if (boundaryFromMenu) {
                 if (boundary.getConnect2() != null) {
                     JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
-                            + rb.getString("Name") + " : " + boundary.getConnect2().getLayoutBlock().getID());
+                            + Bundle.getMessage("Name") + " : " + boundary.getConnect2().getLayoutBlock().getID());
                     panel12.add(block2NameLabel);
                 }
             } else {
                 JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
-                        + rb.getString("Name") + " : ");
+                        + Bundle.getMessage("Name") + " : ");
                 panel12.add(block2NameLabel);
                 panel12.add(block2NameField);
                 block2NameField.setToolTipText(rb.getString("SignalsBlockNameHint"));
@@ -2559,7 +2559,7 @@ public class LayoutEditorTools {
             return;
         }
         xoverTurnoutNameLabel.setText(Bundle.getMessage("BeanNameTurnout") + " "
-                + rb.getString("Name") + " : " + xoverTurnoutName);
+                + Bundle.getMessage("Name") + " : " + xoverTurnoutName);
         xoverType = layoutTurnout.getTurnoutType();
         if (setSignalsAtXoverOpen) {
             setSignalsAtXoverFrame.setVisible(true);
@@ -3666,12 +3666,12 @@ public class LayoutEditorTools {
             panel11.setLayout(new FlowLayout());
             if (xingFromMenu) {
                 JLabel blockANameLabel = new JLabel(rb.getString("BlockAtA") + " "
-                        + rb.getString("Name") + " : " + levelXing.getBlockNameAC());
+                        + Bundle.getMessage("Name") + " : " + levelXing.getBlockNameAC());
 
                 panel11.add(blockANameLabel);
             } else {
                 JLabel blockANameLabel = new JLabel(rb.getString("BlockAtA") + " "
-                        + rb.getString("Name") + " : ");
+                        + Bundle.getMessage("Name") + " : ");
                 panel11.add(blockANameLabel);
                 panel11.add(blockANameField);
                 blockANameField.setToolTipText(rb.getString("SignalsBlockNameHint"));
@@ -3681,12 +3681,12 @@ public class LayoutEditorTools {
             panel12.setLayout(new FlowLayout());
             if (xingFromMenu) {
                 JLabel blockCNameLabel = new JLabel(rb.getString("BlockAtC") + " "
-                        + rb.getString("Name") + " : " + levelXing.getBlockNameBD());
+                        + Bundle.getMessage("Name") + " : " + levelXing.getBlockNameBD());
 
                 panel12.add(blockCNameLabel);
             } else {
                 JLabel blockCNameLabel = new JLabel(rb.getString("BlockAtC") + " "
-                        + rb.getString("Name") + " : ");
+                        + Bundle.getMessage("Name") + " : ");
                 panel12.add(blockCNameLabel);
                 panel12.add(blockCNameField);
                 blockCNameField.setToolTipText(rb.getString("SignalsBlockNameHint"));
@@ -4514,7 +4514,7 @@ public class LayoutEditorTools {
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
             JLabel turnout1NameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " 1 "
-                    + rb.getString("Name"));
+                    + Bundle.getMessage("Name"));
             panel1.add(turnout1NameLabel);
             panel1.add(turnout1NameField);
             turnout1NameField.setToolTipText(rb.getString("SignalsTurnoutNameHint"));
@@ -4522,7 +4522,7 @@ public class LayoutEditorTools {
             JPanel panel11 = new JPanel();
             panel11.setLayout(new FlowLayout());
             JLabel turnout2NameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " 2 "
-                    + rb.getString("Name"));
+                    + Bundle.getMessage("Name"));
             panel11.add(turnout2NameLabel);
             panel11.add(turnout2NameField);
             turnout2NameField.setToolTipText(rb.getString("SignalsTurnoutNameHint"));
@@ -7349,11 +7349,11 @@ public class LayoutEditorTools {
             panel11.setLayout(new FlowLayout());
             if (boundaryFromMenu) {
                 JLabel block1NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
-                        + rb.getString("Name") + " : " + boundary.getConnect1().getLayoutBlock().getID());
+                        + Bundle.getMessage("Name") + " : " + boundary.getConnect1().getLayoutBlock().getID());
                 panel11.add(block1NameLabel);
             } else {
                 JLabel block1NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
-                        + rb.getString("Name") + " : ");
+                        + Bundle.getMessage("Name") + " : ");
                 panel11.add(block1NameLabel);
                 panel11.add(block1NameField);
                 block1NameField.setToolTipText(rb.getString("SensorsBlockNameHint"));
@@ -7363,11 +7363,11 @@ public class LayoutEditorTools {
             panel12.setLayout(new FlowLayout());
             if ((boundaryFromMenu) && (boundary.getType() == PositionablePoint.ANCHOR)) {
                 JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
-                        + rb.getString("Name") + " : " + boundary.getConnect2().getLayoutBlock().getID());
+                        + Bundle.getMessage("Name") + " : " + boundary.getConnect2().getLayoutBlock().getID());
                 panel12.add(block2NameLabel);
             } else if (boundary.getType() == PositionablePoint.ANCHOR) {
                 JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
-                        + rb.getString("Name") + " : ");
+                        + Bundle.getMessage("Name") + " : ");
                 panel12.add(block2NameLabel);
                 panel12.add(block2NameField);
                 block2NameField.setToolTipText(rb.getString("SensorsBlockNameHint"));
@@ -7886,11 +7886,11 @@ public class LayoutEditorTools {
             panel11.setLayout(new FlowLayout());
             if (boundaryFromMenu) {
                 JLabel block1NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
-                        + rb.getString("Name") + " : " + boundary.getConnect1().getLayoutBlock().getID());
+                        + Bundle.getMessage("Name") + " : " + boundary.getConnect1().getLayoutBlock().getID());
                 panel11.add(block1NameLabel);
             } else {
                 JLabel block1NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
-                        + rb.getString("Name") + " : ");
+                        + Bundle.getMessage("Name") + " : ");
                 panel11.add(block1NameLabel);
                 panel11.add(block1NameField);
                 block1NameField.setToolTipText(rb.getString("SignalMastsBlockNameHint"));
@@ -7900,11 +7900,11 @@ public class LayoutEditorTools {
             panel12.setLayout(new FlowLayout());
             if ((boundaryFromMenu) && (boundary.getType() == PositionablePoint.ANCHOR)) {
                 JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
-                        + rb.getString("Name") + " : " + boundary.getConnect2().getLayoutBlock().getID());
+                        + Bundle.getMessage("Name") + " : " + boundary.getConnect2().getLayoutBlock().getID());
                 panel12.add(block2NameLabel);
             } else if (boundary.getType() == PositionablePoint.ANCHOR) {
                 JLabel block2NameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
-                        + rb.getString("Name") + " : ");
+                        + Bundle.getMessage("Name") + " : ");
                 panel12.add(block2NameLabel);
                 panel12.add(block2NameField);
                 block2NameField.setToolTipText(rb.getString("SignalMastsBlockNameHint"));
@@ -9072,7 +9072,7 @@ public class LayoutEditorTools {
             turnoutSignalMastD = new BeanDetails("SignalMast", jmri.InstanceManager.getDefault(jmri.SignalMastManager.class));
             if (turnoutMastFromMenu) {
                 JLabel turnoutMastNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " "
-                        + rb.getString("Name") + " : " + layoutTurnout.getTurnoutName());
+                        + Bundle.getMessage("Name") + " : " + layoutTurnout.getTurnoutName());
                 panel1.add(turnoutMastNameLabel);
                 turnoutSignalMastA.setTextField(layoutTurnout.getSignalAMastName());
                 turnoutSignalMastB.setTextField(layoutTurnout.getSignalBMastName());
@@ -9080,7 +9080,7 @@ public class LayoutEditorTools {
                 turnoutSignalMastD.setTextField(layoutTurnout.getSignalDMastName());
             } else {
                 JLabel turnoutMastNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " "
-                        + rb.getString("Name"));
+                        + Bundle.getMessage("Name"));
                 panel1.add(turnoutMastNameLabel);
                 panel1.add(turnoutMastNameField);
                 turnoutMastNameField.setToolTipText(rb.getString("SignalMastsTurnoutNameHint"));
@@ -9614,7 +9614,7 @@ public class LayoutEditorTools {
             panel11.setLayout(new FlowLayout());
             if (slipMastFromMenu) {
                 JLabel blockANameLabel = new JLabel(rb.getString("BlockAtA") + " "
-                        + rb.getString("Name") + " : " + layoutSlip.getBlockName());
+                        + Bundle.getMessage("Name") + " : " + layoutSlip.getBlockName());
 
                 panel11.add(blockANameLabel);
                 slipSignalMastA.setTextField(layoutSlip.getSignalAMastName());
@@ -9623,7 +9623,7 @@ public class LayoutEditorTools {
                 slipSignalMastD.setTextField(layoutSlip.getSignalDMastName());
             } else {
                 JLabel blockANameLabel = new JLabel(rb.getString("BlockAtA") + " "
-                        + rb.getString("Name") + " : ");
+                        + Bundle.getMessage("Name") + " : ");
                 panel11.add(blockANameLabel);
                 panel11.add(blockANameMastField);
                 blockANameMastField.setToolTipText(rb.getString("SignalsBlockNameHint"));
@@ -9633,7 +9633,7 @@ public class LayoutEditorTools {
             panel12.setLayout(new FlowLayout());
             if (slipMastFromMenu) {
                 JLabel blockCNameLabel = new JLabel(rb.getString("BlockAtC") + " "
-                        + rb.getString("Name") + " : " + layoutSlip.getBlockName());
+                        + Bundle.getMessage("Name") + " : " + layoutSlip.getBlockName());
 
                 panel12.add(blockCNameLabel);
             }
@@ -10109,7 +10109,7 @@ public class LayoutEditorTools {
             panel11.setLayout(new FlowLayout());
             if (xingMastFromMenu) {
                 JLabel blockANameLabel = new JLabel(rb.getString("BlockAtA") + " "
-                        + rb.getString("Name") + " : " + levelXing.getBlockNameAC());
+                        + Bundle.getMessage("Name") + " : " + levelXing.getBlockNameAC());
 
                 panel11.add(blockANameLabel);
                 xingSignalMastA.setTextField(levelXing.getSignalAMastName());
@@ -10118,7 +10118,7 @@ public class LayoutEditorTools {
                 xingSignalMastD.setTextField(levelXing.getSignalDMastName());
             } else {
                 JLabel blockANameLabel = new JLabel(rb.getString("BlockAtA") + " "
-                        + rb.getString("Name") + " : ");
+                        + Bundle.getMessage("Name") + " : ");
                 panel11.add(blockANameLabel);
                 panel11.add(blockANameMastField);
                 blockANameMastField.setToolTipText(rb.getString("SignalsBlockNameHint"));
@@ -10128,12 +10128,12 @@ public class LayoutEditorTools {
             panel12.setLayout(new FlowLayout());
             if (xingMastFromMenu) {
                 JLabel blockCNameLabel = new JLabel(rb.getString("BlockAtC") + " "
-                        + rb.getString("Name") + " : " + levelXing.getBlockNameBD());
+                        + Bundle.getMessage("Name") + " : " + levelXing.getBlockNameBD());
 
                 panel12.add(blockCNameLabel);
             } else {
                 JLabel blockCNameLabel = new JLabel(rb.getString("BlockAtC") + " "
-                        + rb.getString("Name") + " : ");
+                        + Bundle.getMessage("Name") + " : ");
                 panel12.add(blockCNameLabel);
                 panel12.add(blockCNameMastField);
                 blockCNameMastField.setToolTipText(rb.getString("SignalsBlockNameHint"));
@@ -10617,7 +10617,7 @@ public class LayoutEditorTools {
 
             if (turnoutSensorFromMenu) {
                 JLabel turnoutSensorNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " "
-                        + rb.getString("Name") + " : " + layoutTurnout.getTurnoutName());
+                        + Bundle.getMessage("Name") + " : " + layoutTurnout.getTurnoutName());
                 panel1.add(turnoutSensorNameLabel);
                 turnoutSensorA.setTextField(layoutTurnout.getSensorAName());
                 turnoutSensorB.setTextField(layoutTurnout.getSensorBName());
@@ -10625,7 +10625,7 @@ public class LayoutEditorTools {
                 turnoutSensorD.setTextField(layoutTurnout.getSensorDName());
             } else {
                 JLabel turnoutSensorNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " "
-                        + rb.getString("Name"));
+                        + Bundle.getMessage("Name"));
                 panel1.add(turnoutSensorNameLabel);
                 panel1.add(turnoutSensorNameField);
                 turnoutSensorNameField.setToolTipText(rb.getString("SensorsTurnoutNameHint"));
@@ -11136,7 +11136,7 @@ public class LayoutEditorTools {
             xingSensorD = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
             if (xingSensorFromMenu) {
                 JLabel blockANameLabel = new JLabel(rb.getString("BlockAtA") + " "
-                        + rb.getString("Name") + " : " + levelXing.getBlockNameAC());
+                        + Bundle.getMessage("Name") + " : " + levelXing.getBlockNameAC());
 
                 panel11.add(blockANameLabel);
                 xingSensorA.setTextField(levelXing.getSensorAName());
@@ -11145,7 +11145,7 @@ public class LayoutEditorTools {
                 xingSensorD.setTextField(levelXing.getSensorDName());
             } else {
                 JLabel blockANameLabel = new JLabel(rb.getString("BlockAtA") + " "
-                        + rb.getString("Name") + " : ");
+                        + Bundle.getMessage("Name") + " : ");
                 panel11.add(blockANameLabel);
                 panel11.add(blockANameSensorField);
                 blockANameSensorField.setToolTipText(rb.getString("SensorsBlockNameHint"));
@@ -11155,12 +11155,12 @@ public class LayoutEditorTools {
             panel12.setLayout(new FlowLayout());
             if (xingSensorFromMenu) {
                 JLabel blockCNameLabel = new JLabel(rb.getString("BlockAtC") + " "
-                        + rb.getString("Name") + " : " + levelXing.getBlockNameBD());
+                        + Bundle.getMessage("Name") + " : " + levelXing.getBlockNameBD());
 
                 panel12.add(blockCNameLabel);
             } else {
                 JLabel blockCNameLabel = new JLabel(rb.getString("BlockAtC") + " "
-                        + rb.getString("Name") + " : ");
+                        + Bundle.getMessage("Name") + " : ");
                 panel12.add(blockCNameLabel);
                 panel12.add(blockCNameSensorField);
                 blockCNameSensorField.setToolTipText(rb.getString("SensorsBlockNameHint"));
@@ -11679,7 +11679,7 @@ public class LayoutEditorTools {
             slipSensorD = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
             if (slipSensorFromMenu) {
                 JLabel blockANameLabel = new JLabel(rb.getString("BlockAtA") + " "
-                        + rb.getString("Name") + " : " + layoutSlip.getBlockName());
+                        + Bundle.getMessage("Name") + " : " + layoutSlip.getBlockName());
 
                 panel11.add(blockANameLabel);
                 slipSensorA.setTextField(layoutSlip.getSensorAName());
@@ -11688,7 +11688,7 @@ public class LayoutEditorTools {
                 slipSensorD.setTextField(layoutSlip.getSensorDName());
             } else {
                 JLabel blockANameLabel = new JLabel(rb.getString("BlockAtA") + " "
-                        + rb.getString("Name") + " : ");
+                        + Bundle.getMessage("Name") + " : ");
                 panel11.add(blockANameLabel);
                 panel11.add(blockANameSensorField);
                 blockANameSensorField.setToolTipText(rb.getString("SensorsBlockNameHint"));
@@ -12314,7 +12314,7 @@ public class LayoutEditorTools {
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
             JLabel turnout1NameLabel = new JLabel(rb.getString("Slip") + " "
-                    + rb.getString("Name"));
+                    + Bundle.getMessage("Name"));
             panel1.add(turnout1NameLabel);
             panel1.add(slipNameCombo);
             for (LayoutSlip slip : layoutEditor.slipList) {
