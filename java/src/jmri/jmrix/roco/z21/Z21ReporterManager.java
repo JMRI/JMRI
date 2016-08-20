@@ -1,6 +1,8 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.Reporter;
+import jmri.InstanceManager;
+import jmri.RailComManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,11 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager {
      */
     public Z21ReporterManager(Z21SystemConnectionMemo memo){
         _memo = memo;
+        if(InstanceManager.getDefault(RailComManager.class)==null){
+              // there is no RailComManager, so create a new one
+              InstanceManager.setDefault(RailComManager.class,
+                                     new jmri.managers.DefaultRailComManager());
+        }
     }
 
     @Override
