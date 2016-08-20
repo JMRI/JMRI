@@ -21,6 +21,11 @@ public class Z21Reporter extends jmri.implementation.AbstractRailComReporter imp
 
     private Z21SystemConnectionMemo _memo = null;
 
+    private javax.swing.Timer refreshTimer; // Timer used to periodically
+    // referesh the RailCom data (this does not appear to happen automatically).
+    private static final int refreshTimeoutValue = 15000; 
+
+
     /**  
      * Create a new Z21Reporter
      * @param systemName the system name of the new reporter.
@@ -34,6 +39,12 @@ public class Z21Reporter extends jmri.implementation.AbstractRailComReporter imp
         _memo = memo;
         _memo.getTrafficController().addz21Listener(this);
         // request an update from the layout.
+       requestUpdateFromLayout();
+       refreshTimer();
+    }
+
+    // request an update from the layout.
+    private void requestUpdateFromLayout(){
        _memo.getTrafficController().sendz21Message(Z21Message.getLanRailComGetDataRequestMessage(),this);
     }
 
@@ -58,7 +69,10 @@ public class Z21Reporter extends jmri.implementation.AbstractRailComReporter imp
                  // get the locomotive address from the message.
                  DccLocoAddress l = msg.getRailComLocoAddress(i);
                  // see if there is a tag for this address.
-                 IdTag tag = InstanceManager.getDefault(IdTagManager.class).provideIdTag("" + l.getNumber());
+                 RailCom tag = InstanceManager.getDefault(RailComManager.class).provideIdTag("" + l.getNumber());
+                 tag.setAddressType(l.isLongAddress()?RailCom.LONG_ADDRESS:RailCom.SHORT_ADDRESS);
+                 tag.setActualSpeed(msg.getRailComSpeed(i));
+                 tag.setActualTemperature(msg.getRailComTemp(i));
                  // set the tag report.
                  notify(tag);
              }
@@ -78,9 +92,26 @@ public class Z21Reporter extends jmri.implementation.AbstractRailComReporter imp
          // we don't need to handle outgoing messages, so just ignore them.
     }
 
-
+    /*
+     * Set up the refreshTimer, and start it.
+     */
+    private void refreshTimer() {
+        if (refreshTimer == null) {
+            refreshTimer = new javax.swing.Timer(refreshTimeoutValue, new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    // If the timer times out, send a request for status
+                    requestUpdateFromLayout();
+                }
+            });
+        }
+        refreshTimer.stop();
+        refreshTimer.setInitialDelay(refreshTimeoutValue);
+        refreshTimer.setRepeats(true);
+        refreshTimer.start();
+    }
 
     public void dispose(){
         super.dispose();
+        refreshTimer.stop();
     }
 }
