@@ -49,7 +49,7 @@ Page Bronson cliniques </A>. </P>
 <p>
 L'&#233;diteur de panneau se compose des &#233;l&#233;ments suivants: </P>
 <UL>
-Deux champs <LI> texte, <b> x: </b> et <b> y: </b>, en pr&#233;cisant o&#249; seront ins&#233;r&#233;s (en pixels) de nouveaux composants
+<LI>Deux champs texte, <b> x: </b> et <b> y: </b>, en pr&#233;cisant o&#249; seront ins&#233;r&#233;s (en pixels) de nouveaux composants
  sur le panneau. Vous pouvez g&#233;n&#233;ralement ignorer ces derniers, car une fois
 que les composants ont &#233;t&#233; ins&#233;r&#233;s, vous pouvez les glisser en tenant la
 m&#233;ta (Apple, commande; Linux & Windows, le bouton de droite) touche enfonc&#233;e </LI>
@@ -169,7 +169,7 @@ droit de la souris cliquez et faites glisser le curseur ".
 Windows) qui fournira diverses fa&#231;ons de manipuler l'ic&#244;ne. Il vous permettra de faire
  tournez l'ic&#244;ne pour qu'elle pointe dans la direction que vous voulez.
 Des &#233;tiquettes de texte peuvent avoir leur police, la taille et la couleur chang&#233;es. Vous pouvez &#233;galement
-supprimer des ic&#244;nes du panneau avec le menu contextuel.</P>. 
+supprimer des ic&#244;nes du panneau avec le menu contextuel.</P> 
 
 <H3> Rotation et Mise &#224; l'&#201;chelle</H3>
 <P> Lorsque la case pour montrer les coordonn&#233;es d'une ic&#244;ne est coch&#233;e, l'ic&#244;ne peut &#234;tre r&#233;duite ou
