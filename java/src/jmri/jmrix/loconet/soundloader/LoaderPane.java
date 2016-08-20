@@ -1,4 +1,3 @@
-// LoaderPane.java
 package jmri.jmrix.loconet.soundloader;
 
 import java.awt.FlowLayout;
@@ -22,14 +21,8 @@ import jmri.util.FileUtil;
  * Pane for downloading .hex files
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version	$Revision$
  */
 public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3466057573583241795L;
 
     // GUI member declarations
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Loader");
@@ -181,7 +174,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
     }
 
     void doRead() {
-        if (inputFileName.getText() == "") {
+        if (inputFileName.getText().equals("")) {
             JOptionPane.showMessageDialog(this, res.getString("ErrorNoInputFile"),
                     res.getString("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);

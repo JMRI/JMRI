@@ -1,4 +1,3 @@
-// DeleteRosterGroupAction.java
 package jmri.jmrit.roster.swing;
 
 import java.awt.Component;
@@ -7,6 +6,7 @@ import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import jmri.beans.Beans;
 import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 
@@ -25,14 +25,8 @@ import jmri.util.swing.WindowInterface;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision$
  */
 public class DeleteRosterGroupAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5645990386314165982L;
 
     public DeleteRosterGroupAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -60,13 +54,12 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
      * name of the group to be copied is already known and is not the
      * selectedRosterGroup property of the WindowInterface.
      *
-     * @param event
      */
     @Override
     public void actionPerformed(ActionEvent event) {
         String group = null;
-        if (Beans.hasProperty(wi, "selectedRosterGroup")) {
-            group = (String) Beans.getProperty(wi, "selectedRosterGroup");
+        if (Beans.hasProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP)) {
+            group = (String) Beans.getProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP);
         }
         // null might be valid output from getting the selectedRosterGroup,
         // so we have to check for null again.

@@ -54,6 +54,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
             DccLocoAddress locoAddress = ConsistList.get(0);
             killConsist(locoAddress.getNumber(), locoAddress.isLongAddress());
         }
+        stopReadNCEconsistThread();
         super.dispose();
     }
 
@@ -168,14 +169,23 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
         startReadNCEconsistThread(true);
     }
 
+    private NceReadConsist mb=null;
+
     private void startReadNCEconsistThread(boolean check) {
         // read command station memory to get the current consist (can't be a USB, only PH)
         if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
-            NceReadConsist mb = new NceReadConsist();
+            mb = new NceReadConsist();
             mb.setName("Read Consist " + _consistNum);
             mb.setConsist(_consistNum);
             mb.setCheck(check);
             mb.start();
+        }
+    }
+
+    private void stopReadNCEconsistThread(){
+        if(mb!=null){
+           mb.stop();
+           mb=null;
         }
     }
 

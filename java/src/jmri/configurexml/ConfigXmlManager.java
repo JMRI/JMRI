@@ -21,10 +21,8 @@ import org.slf4j.LoggerFactory;
  * Provides the mechanisms for storing an entire layout configuration to XML.
  * "Layout" refers to the hardware: Specific communcation systems, etc.
  *
- * @see <A HREF="package-summary.html">Package summary for details of the
- * overall structure</A>
+ * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen Copyright (c) 2002, 2008
- * @version $Revision$
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
         implements jmri.ConfigureManager {
@@ -68,9 +66,9 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             if (adapter != null) {
                 try {
                     Class.forName(adapter);
-                } catch (java.lang.ClassNotFoundException ex) {
+                } catch (ClassNotFoundException ex) {
                     locateClassFailed(ex, adapter, o);
-                } catch (java.lang.NoClassDefFoundError ex) {
+                } catch (NoClassDefFoundError ex) {
                     locateClassFailed(ex, adapter, o);
                 }
             }
@@ -190,7 +188,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     ArrayList<Object> plist = new ArrayList<Object>();
-    //Hashtable<Object, Integer> clist = new Hashtable<Object, Integer>();
     Map<Object, Integer> clist = Collections.synchronizedMap(new LinkedHashMap<Object, Integer>());
     ArrayList<Object> tlist = new ArrayList<Object>();
     ArrayList<Object> ulist = new ArrayList<Object>();
@@ -274,7 +271,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 if (e != null) {
                     root.addContent(e);
                 }
-            } catch (java.lang.Exception e) {
+            } catch (Exception e) {
                 storingErrorEncountered(null, "storing to file",
                         "Unknown error (Exception)", null, null, e);
                 result = false;
@@ -292,7 +289,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 if (e != null) {
                     root.addContent(e);
                 }
-            } catch (java.lang.Exception e) {
+            } catch (Exception e) {
                 result = false;
                 storingErrorEncountered(((XmlAdapter) o), "storing to file",
                         "Unknown error (Exception)", null, null, e);
@@ -310,7 +307,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 if (e != null) {
                     root.addContent(e);
                 }
-            } catch (java.lang.Exception e) {
+            } catch (Exception e) {
                 result = false;
                 storingErrorEncountered((XmlAdapter) o, "storing to file",
                         "Unknown error (Exception)", null, null, e);
@@ -331,7 +328,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     protected void includeHistory(Element root) {
         // add history to end of document
-        if (InstanceManager.getDefault(FileHistory.class) != null) {
+        if (InstanceManager.getOptionalDefault(FileHistory.class) != null) {
             root.addContent(jmri.jmrit.revhistory.configurexml.FileHistoryXml.storeDirectly(InstanceManager.getDefault(FileHistory.class)));
         }
     }
@@ -370,7 +367,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     /**
      * Writes config, tools and user to a file.
      *
-     * @param file
+     * @param file config file to write
      */
     public boolean storeAll(File file) {
         boolean result = true;
@@ -429,17 +426,9 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     File prefsFile;
 
     /**
-     * Set location for user preferences file.
-     * <p>
-     * File need not exist, but location must be writable when storePrefs()
-     * called.
-     */
-    /*public void setUserPrefsLocation(File userPrefsFile) { this.userPrefsFile = userPrefsFile; }
-     File userPrefsFile;*/
-    /**
      * Writes prefs to a file.
      *
-     * @param file
+     * @param file config file to write.
      */
     public boolean storeConfig(File file) {
         boolean result = true;
@@ -457,10 +446,10 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     /**
      * Writes user and config info to a file.
      * <P>
-     * Config is included here because it doesnt hurt to read it again, and the
+     * Config is included here because it doesn't hurt to read it again, and the
      * user data (typically a panel) requires it to be present first.
      *
-     * @param file
+     * @param file config file to write
      */
     public boolean storeUser(File file) {
         boolean result = true;
@@ -488,9 +477,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      *
      * @param o The object to get an XML representation of
      * @return An XML element representing o
-     * @deprecated
      */
-    @Deprecated
     static public Element elementFromObject(Object o) {
         return ConfigXmlManager.elementFromObject(o, true);
     }
@@ -508,7 +495,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         XmlAdapter adapter = null;
         try {
             adapter = (XmlAdapter) Class.forName(adapterName(object)).newInstance();
-        } catch (java.lang.ClassNotFoundException | java.lang.IllegalAccessException | java.lang.InstantiationException ex) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
             log.error("Cannot load configuration adapter for {}", object.getClass().getName(), ex);
         }
         if (adapter != null) {
@@ -530,25 +517,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         );
     }
 
-//     private void loadVersion(Element root, XmlAdapter adapter) {
-//         int majorRelease = 0;
-//         int minorRelease = 0;
-//         int testRelease = 0;
-//         Element v = root.getChild("jmriversion");
-//         if (v!=null) {
-//             try {
-//                 majorRelease = Integer.parseInt(v.getChild("major").getText());
-//                 minorRelease = Integer.parseInt(v.getChild("minor").getText());
-//                 testRelease = Integer.parseInt(v.getChild("test").getText());
-//             } catch (NullPointerException npe) {
-//             } catch ( NumberFormatException nfe) {
-//             }
-//         }
-//         adapter.setConfigXmlManager(this);
-//         adapter.setMajorRelease(majorRelease);
-//         adapter.setMinorRelease(minorRelease);
-//         adapter.setTestRelease(testRelease);
-//     }
     /**
      * Load a file.
      * <p>
@@ -574,7 +542,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * @param fi               file to load
      * @param registerDeferred true to register objects to defer
      * @return true if no problems during the load
-     * @throws JmriConfigureXmlException
+     * @throws JmriConfigureXmlException if problem during load
      * @see jmri.configurexml.XmlAdapter#loadDeferred()
      * @since 2.11.2
      */
@@ -588,16 +556,46 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * <p>
      * Handles problems locally to the extent that it can, by routing them to
      * the creationErrorEncountered method.
+     * <p>
+     * Always processes on Swing thread
      *
      * @param url              URL of file to load
      * @param registerDeferred true to register objects to defer
      * @return true if no problems during the load
-     * @throws JmriConfigureXmlException
+     * @throws JmriConfigureXmlException if problem during load
      * @see jmri.configurexml.XmlAdapter#loadDeferred()
      * @since 3.3.2
      */
     @Override
     public boolean load(URL url, boolean registerDeferred) throws JmriConfigureXmlException {
+        // must not use invokeAndWait on Swing thread
+        if (javax.swing.SwingUtilities.isEventDispatchThread()) {
+            // direct exec
+            return loadOnSwingThread(url, registerDeferred);
+        } else {
+            // push to swing
+            final java.util.concurrent.atomic.AtomicReference<Boolean> result = new java.util.concurrent.atomic.AtomicReference<>();
+
+            try {
+                javax.swing.SwingUtilities.invokeAndWait(() -> {
+                    try {
+                        boolean temp = loadOnSwingThread(url, registerDeferred);
+                        result.set(temp);
+                    } catch (JmriConfigureXmlException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            } catch (InterruptedException e) {
+                throw new JmriConfigureXmlException(e);
+            } catch (java.lang.reflect.InvocationTargetException e) {
+                throw new JmriConfigureXmlException(e);
+            }
+
+            return result.get();
+        }
+    }
+
+    private boolean loadOnSwingThread(URL url, boolean registerDeferred) throws JmriConfigureXmlException {
         boolean result = true;
         Element root = null;
         /* We will put all the elements into a load list, along with the load order
@@ -694,83 +692,29 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             creationErrorEncountered(null, "parsing file " + url.getFile(),
                     "Parse error", null, null, e);
             result = false;
-        } catch (java.lang.Exception e) {
+        } catch (java.io.IOException e) {
             creationErrorEncountered(null, "loading from file " + url.getFile(),
-                    "Unknown error (Exception)", null, null, e);
+                    "IOException", null, null, e);
+            result = false;
+        } catch (ClassNotFoundException e) {
+            creationErrorEncountered(null, "loading from file " + url.getFile(),
+                    "ClassNotFoundException", null, null, e);
+            result = false;
+        } catch (InstantiationException e) {
+            creationErrorEncountered(null, "loading from file " + url.getFile(),
+                    "InstantiationException", null, null, e);
+            result = false;
+        } catch (IllegalAccessException e) {
+            creationErrorEncountered(null, "loading from file " + url.getFile(),
+                    "IllegalAccessException", null, null, e);
             result = false;
         } finally {
             // no matter what, close error reporting
             handler.done();
         }
 
-        /*try {
-         root = super.rootFromFile(fi);
-         // get the objects to load
-         List<Element> items = root.getChildren();
-         for (int i = 0; i<items.size(); i++) {
-         // get the class, hence the adapter object to do loading
-         Element item = items.get(i);
-         if (item.getAttribute("class") == null) {
-         // this is an element that we're not meant to read
-         continue;
-         }
-         String adapterName = item.getAttribute("class").getValue();
-         log.debug("load via "+adapterName);
-         XmlAdapter adapter = null;
-                
-         try {
-         adapter = (XmlAdapter)Class.forName(adapterName).newInstance();
-
-         // get version info
-         // loadVersion(root, adapter);
-                    
-         // and do it
-         if (adapter.loadDeferred() && registerDeferred) {
-         // register in the list for deferred load
-         loadDeferredList.add(item);
-         log.debug("deferred load registered for " + adapterName);
-         } else {
-         boolean loadStatus = adapter.load(item);
-         log.debug("load status for "+adapterName+" is "+loadStatus);
-                    
-         // if any adaptor load fails, then the entire load has failed
-         if (!loadStatus)
-         result = false;
-         }
-         } catch (Exception e) {
-         creationErrorEncountered (adapter, "load("+fi.getName()+")",Level.ERROR,
-         "Unexpected error (Exception)",null,null,e);
-                   
-         result = false;  // keep going, but return false to signal problem
-         } catch (Throwable et) {
-         creationErrorEncountered (adapter, "in load("+fi.getName()+")", Level.ERROR,
-         "Unexpected error (Throwable)",null,null,et);
-
-         result = false;  // keep going, but return false to signal problem
-         }
-         }
-
-
-         } catch (java.io.FileNotFoundException e1) {
-         // this returns false to indicate un-success, but not enough
-         // of an error to require a message
-         creationErrorEncountered (null, "opening file "+fi.getName(), Level.ERROR,
-         "File not found", null,null,e1);
-         result = false;
-         } catch (org.jdom2.JDOMException e) {
-         creationErrorEncountered (null, "parsing file "+fi.getName(), Level.ERROR,
-         "Parse error", null,null,e);
-         result = false;
-         } catch (java.lang.Exception e) {
-         creationErrorEncountered (null, "loading from file "+fi.getName(), Level.ERROR,
-         "Unknown error (Exception)", null,null,e);
-         result = false;
-         } finally {
-         // no matter what, close error reporting
-         handler.done();
-         }*/
         // loading complete, as far as it got, make history entry
-        FileHistory r = InstanceManager.getDefault(FileHistory.class);
+        FileHistory r = InstanceManager.getOptionalDefault(FileHistory.class);
         if (r != null) {
             FileHistory included = null;
             if (root != null) {

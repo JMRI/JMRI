@@ -1,4 +1,3 @@
-//SRCPClientVisitor.java
 package jmri.jmrix.srcp.parser;
 
 import jmri.jmrix.srcp.SRCPBusConnectionMemo;
@@ -9,7 +8,6 @@ import org.slf4j.LoggerFactory;
 /* This class provides an interface between the JavaTree/JavaCC 
  * parser for the SRCP protocol and the JMRI front end.
  * @author Paul Bender Copyright (C) 2011
- * @version $Revision$
  */
 public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParserVisitor {
 
@@ -167,7 +165,10 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
             }
         } else if (group instanceof ASTsm) {
             if (busMemo.provides(jmri.ProgrammerManager.class)) {
-                ((jmri.jmrix.srcp.SRCPProgrammer) (busMemo.getProgrammerManager().getGlobalProgrammer())).reply(node);
+                jmri.jmrix.srcp.SRCPProgrammer programmer = (jmri.jmrix.srcp.SRCPProgrammer) (busMemo.getProgrammerManager().getGlobalProgrammer());
+                if( programmer != null) {
+                   programmer.reply(node);
+                }
             }
         } else if (group instanceof ASTpower) {
             if (busMemo.provides(jmri.PowerManager.class)) {
@@ -176,10 +177,15 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
                 ((jmri.jmrix.srcp.SRCPPowerManager) busMemo.getPowerManager()).reply(node);
             }
         } else if (group instanceof ASTtime) {
+          log.debug("INFO Response for TIME group with bus " + bus);
         } else if (group instanceof ASTsession) {
+	  log.debug("INFO Response for SESSION group with bus " + bus);
         } else if (group instanceof ASTserver) {
+	  log.debug("INFO Response for SERVER group with bus " + bus);
         } else if (group instanceof ASTdescription) {
+	  log.debug("INFO Response for DESCRIPTION group with bus " + bus);
         } else if (group instanceof ASTlock) {
+	  log.debug("INFO Response for LOCK group with bus " + bus);
         }
         return data;
     }

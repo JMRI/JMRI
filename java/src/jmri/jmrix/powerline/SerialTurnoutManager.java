@@ -75,7 +75,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
         String sName = tc.getAdapterMemo().getSerialAddress().normalizeSystemName(systemName);
-        if (sName == "") {
+        if (sName.equals("")) {
             // system name is not valid
             return null;
         }

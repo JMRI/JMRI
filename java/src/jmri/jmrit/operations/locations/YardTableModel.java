@@ -16,11 +16,6 @@ import org.slf4j.LoggerFactory;
  */
 public class YardTableModel extends TrackTableModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7919234279596604386L;
-
     public YardTableModel() {
         super();
     }
@@ -29,6 +24,7 @@ public class YardTableModel extends TrackTableModel {
         super.initTable(table, location, Track.YARD);
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case NAME_COLUMN:
@@ -37,6 +33,7 @@ public class YardTableModel extends TrackTableModel {
         return super.getColumnName(col);
     }
 
+    @Override
     protected void editTrack(int row) {
         log.debug("Edit yard");
         if (tef != null) {
@@ -44,6 +41,7 @@ public class YardTableModel extends TrackTableModel {
         }
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 tef = new YardEditFrame();
                 Track yard = tracksList.get(row);
@@ -54,8 +52,9 @@ public class YardTableModel extends TrackTableModel {
     }
 
     // this table listens for changes to a location and it's yards
-    public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+    @Override
+    public synchronized void propertyChange(PropertyChangeEvent e) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -64,7 +63,7 @@ public class YardTableModel extends TrackTableModel {
             Track track = ((Track) e.getSource());
             if (track.getTrackType().equals(Track.YARD)) {
                 int row = tracksList.indexOf(track);
-                if (Control.showProperty) {
+                if (Control.SHOW_PROPERTY) {
                     log.debug("Update yard table row: {} track: ({})", row, track.getName());
                 }
                 if (row >= 0) {

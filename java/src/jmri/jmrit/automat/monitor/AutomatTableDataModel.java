@@ -1,4 +1,3 @@
-// AutomatTableDataModel.java
 package jmri.jmrit.automat.monitor;
 
 import java.beans.PropertyChangeListener;
@@ -19,15 +18,10 @@ import org.slf4j.LoggerFactory;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version	$Revision$
  */
 public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
         implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5450062337875366030L;
     static final int NAMECOL = 0;		// display name
     static final int TURNSCOL = 1;		// number of times through the loop
     static final int KILLCOL = 2;		//
@@ -149,7 +143,6 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
      * optional, in that other table formats can use this table model. But we
      * put it here to help keep it consistent.
      *
-     * @param table
      */
     public void configureTable(JTable table) {
         // allow reordering of the columns
@@ -173,8 +166,6 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
      * Service method to setup a column so that it will hold a button for it's
      * values
      *
-     * @param table
-     * @param column
      * @param sample Typical button, used for size
      */
     void setColumnToHoldButton(JTable table, int column, JButton sample) {

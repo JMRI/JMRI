@@ -10,14 +10,8 @@ import jmri.jmrit.roster.RosterEntry;
  *
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
  */
 public class RosterTreeNode extends DefaultMutableTreeNode {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7965184515372170059L;
 
     public RosterTreeNode() {
         super();

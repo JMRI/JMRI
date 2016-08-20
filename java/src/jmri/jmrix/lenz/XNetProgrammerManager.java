@@ -7,10 +7,10 @@ import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Extend DefaultProgrammerManager to provide ops mode programmers on XPressNet
- *
  * @see jmri.ProgrammerManager
  * @author	Paul Bender Copyright (C) 2003
- * @version	$Revision$
+ * @navassoc 1 - 1 jmri.jmrix.lenz.XNetProgrammer
+ * @navassoc 1 - * jmri.jmrix.lenz.XNetOpsModeProgrammer
  */
 public class XNetProgrammerManager extends DefaultProgrammerManager {
 

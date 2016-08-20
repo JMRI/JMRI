@@ -1,4 +1,3 @@
-// LocaleSelector.java
 package jmri.util.jdom;
 
 import java.util.Locale;
@@ -15,7 +14,6 @@ import org.jdom2.Namespace;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.3
- * @version $Revision$
  */
 public class LocaleSelector {
 
@@ -30,15 +28,16 @@ public class LocaleSelector {
 
     /**
      * Return the value of an attribute for the current locale.
-     *
-     * <foo temp="a">
-     * <temp xml:lang="hh">b</temp>
-     * </foo>
-     *
+     * <p>
+     * {@code <foo temp="a">}
+     * {@code <temp xml:lang="hh">b</temp>}
+     * {@code </foo>}
+     * </p>
+     * <p>
      * Say it's looking for the attribute ATT. For each possible suffix, it
      * first looks for a contained element named ATT with an XML 'lang'
      * attribute for the suffix. If so, it takes that value. If none are found,
-     * the attribute value is taken from the original element
+     * the attribute value is taken from the original element</p>
      */
     static public String getAttribute(Element el, String name) {
         String retval;

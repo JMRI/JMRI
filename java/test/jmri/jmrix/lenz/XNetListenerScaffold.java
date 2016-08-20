@@ -4,7 +4,6 @@
  * Description:	test implementation of XNetListener
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 package jmri.jmrix.lenz;
 

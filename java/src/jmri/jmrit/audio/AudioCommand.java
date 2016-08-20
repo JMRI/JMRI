@@ -1,4 +1,3 @@
-// AudioCommand.java
 package jmri.jmrit.audio;
 
 import jmri.Audio;
@@ -20,7 +19,6 @@ import jmri.Audio;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class AudioCommand {
 
@@ -111,5 +109,3 @@ public class AudioCommand {
 
     //private static final Logger log = LoggerFactory.getLogger(AudioCommand.class.getName());
 }
-
-/* @(#)AudioCommand.java */

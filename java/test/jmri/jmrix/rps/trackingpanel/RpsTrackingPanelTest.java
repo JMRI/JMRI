@@ -1,4 +1,3 @@
-// RpsTrackingPanelTest.java
 package jmri.jmrix.rps.trackingpanel;
 
 import apps.tests.Log4JFixture;
@@ -112,7 +111,7 @@ public class RpsTrackingPanelTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {RpsTrackingPanelTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

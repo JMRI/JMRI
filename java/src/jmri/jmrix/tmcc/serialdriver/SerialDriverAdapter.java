@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.tmcc.serialdriver;
 
 import java.io.DataInputStream;
@@ -24,7 +23,6 @@ import purejavacomm.UnsupportedCommOperationException;
  * tmcc.serialdriver.SerialDriverFrame class.
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -32,7 +30,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     public SerialDriverAdapter() {
         super(new TMCCSystemConnectionMemo());
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.LIONEL;
+        this.manufacturerName = jmri.jmrix.tmcc.SerialConnectionTypeList.LIONEL;
     }
 
     public String openPort(String portName, String appName) {
@@ -66,12 +64,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -281,12 +274,20 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     private boolean opened = false;
     InputStream serialStream = null;
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public SerialDriverAdapter instance() {
         if (mInstance == null) {
             mInstance = new SerialDriverAdapter();
         }
         return mInstance;
     }
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static SerialDriverAdapter mInstance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());

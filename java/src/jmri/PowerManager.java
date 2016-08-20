@@ -1,7 +1,10 @@
-// PowerManager.java
 package jmri;
 
 import java.beans.PropertyChangeListener;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 
 /**
  * Provide controls for layout power.
@@ -27,7 +30,6 @@ import java.beans.PropertyChangeListener;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public interface PowerManager {
 
@@ -39,18 +41,17 @@ public interface PowerManager {
 
     public void setPower(int v) throws JmriException;
 
+    @CheckReturnValue
     public int getPower() throws JmriException;
 
     // to free resources when no longer used
     public void dispose() throws JmriException;
 
     // to hear of changes
-    public void addPropertyChangeListener(PropertyChangeListener p);
+    public void addPropertyChangeListener(@CheckForNull PropertyChangeListener p);
 
     public void removePropertyChangeListener(PropertyChangeListener p);
 
-    public String getUserName();
+    @CheckReturnValue
+    public @Nonnull String getUserName();
 }
-
-
-/* @(#)PowerManager.java */

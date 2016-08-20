@@ -1,12 +1,10 @@
-/* OlcbProgrammer.java */
 package jmri.jmrix.openlcb;
 
-import java.util.List;
 import java.util.ArrayList;
-
+import java.util.List;
+import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
-import jmri.ProgListener;
 
 /**
  * Provide access to the hardware DCC decoder programming capability.
@@ -79,11 +77,6 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
     }
 
     @Override
-    @Deprecated
-    public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
-    }
-
-    @Override
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
     }
     
@@ -94,6 +87,3 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
     public String getAddress() { return "";}
 
 }
-
-
-/* @(#)OlcbProgrammer.java */

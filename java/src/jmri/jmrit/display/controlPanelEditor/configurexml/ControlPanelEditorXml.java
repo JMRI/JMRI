@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for {@link ControlPanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision$
  */
 public class ControlPanelEditorXml extends AbstractXmlAdapter {
 
@@ -113,7 +112,6 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
      * it in a JFrame
      *
      * @param shared Top level Element to unpack.
-     * @param perNode
      * @return true if successful
      */
     @Override
@@ -271,7 +269,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         panel.setAllEditable(panel.isEditable());
 
         // register the resulting panel for later configuration
-        InstanceManager.configureManagerInstance().registerUser(panel);
+        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerUser(panel);
 
         // reset the size and position, in case the display caused it to change
         panel.getTargetFrame().setLocation(x, y);

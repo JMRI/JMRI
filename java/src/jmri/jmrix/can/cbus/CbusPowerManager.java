@@ -1,4 +1,3 @@
-// CbusPowerManager.java
 package jmri.jmrix.can.cbus;
 
 import jmri.JmriException;
@@ -14,7 +13,6 @@ import jmri.jmrix.can.TrafficController;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author	Andrew CRosland Copyright (C) 2009
- * @version	$Revision$
  */
 public class CbusPowerManager implements PowerManager, CanListener {
 
@@ -109,5 +107,3 @@ public class CbusPowerManager implements PowerManager, CanListener {
     }
 
 }
-
-/* @(#)CbusPowerManager.java */

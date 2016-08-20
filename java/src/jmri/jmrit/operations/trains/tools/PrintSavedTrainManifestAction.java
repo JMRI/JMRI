@@ -6,7 +6,10 @@ import java.io.File;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.jmrit.operations.trains.TrainPrintUtilities;
 import jmri.util.FileUtil;
@@ -19,51 +22,70 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2015
  * @version $Revision$
  */
-public class PrintSavedTrainManifestAction extends AbstractAction {
+public class PrintSavedTrainManifestAction extends AbstractAction implements java.beans.PropertyChangeListener {
 
-    public PrintSavedTrainManifestAction(String actionName, boolean preview) {
+    private final static Logger log = LoggerFactory.getLogger(PrintSavedTrainManifestAction.class.getName());
+
+    public PrintSavedTrainManifestAction(String actionName, boolean isPreview, Train train) {
         super(actionName);
-        isPreview = preview;
+        _isPreview = isPreview;
+        _train = train;
         setEnabled(Setup.isSaveTrainManifestsEnabled());
+        Setup.addPropertyChangeListener(this);
     }
 
     /**
      * Variable to set whether this is to be printed or previewed
      */
-    boolean isPreview;
+    boolean _isPreview;
+    Train _train;
 
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+        if (Control.SHOW_PROPERTY) {
+            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+                    .getNewValue());
+        }
+        if (e.getPropertyName().equals(Setup.SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE)) {
+            setEnabled(Setup.isSaveTrainManifestsEnabled());
+        }
+    }
+
+    @Override
     public void actionPerformed(ActionEvent e) {
         File file = getFile();
         if (file == null || !file.exists()) {
             log.debug("User didn't select a file");
             return;
         }
-        if (isPreview && Setup.isManifestEditorEnabled()) {
+        if (_isPreview && Setup.isManifestEditorEnabled()) {
             TrainPrintUtilities.openDesktopEditor(file);
             return;
         }
         String logoURL = Setup.NONE;
-// TODO figure out which train manifest is being printed in case there's a custom logo for the train.
-//        if (!train.getManifestLogoURL().equals(NONE)) {
-//            logoURL = FileUtil.getExternalFilename(train.getManifestLogoURL());
-//        } else 
-        if (!Setup.getManifestLogoURL().equals(Setup.NONE)) {
+        if (_train != null && !_train.getManifestLogoURL().equals(Train.NONE)) {
+            logoURL = FileUtil.getExternalFilename(_train.getManifestLogoURL());
+        } else if (!Setup.getManifestLogoURL().equals(Setup.NONE)) {
             logoURL = FileUtil.getExternalFilename(Setup.getManifestLogoURL());
         }
         String printerName = Location.NONE;
-// TODO not sure even if we know which train to send it to the departure printer
-//      Location departs = LocationManager.instance().getLocationByName(train.getTrainDepartsName());
-//        if (departs != null) {
-//            printerName = departs.getDefaultPrinterName();
-//        }
-        TrainPrintUtilities.printReport(file, file.getName(), isPreview, Setup.getFontName(), false, logoURL,
+        if (_train != null) {
+            Location departs = LocationManager.instance().getLocationByName(_train.getTrainDepartsName());
+            if (departs != null) {
+                printerName = departs.getDefaultPrinterName();
+            }
+        }
+        TrainPrintUtilities.printReport(file, file.getName(), _isPreview, Setup.getFontName(), false, logoURL,
                 printerName, Setup.getManifestOrientation(), Setup.getManifestFontSize());
         return;
     }
-    
+
     // Get file to read from
     protected File getFile() {
-        JFileChooser fc = new JFileChooser(TrainManagerXml.instance().getBackupManifestDirectory());
+        String pathName = TrainManagerXml.instance().getBackupManifestDirectory();
+        if (_train != null) {
+            pathName = TrainManagerXml.instance().getBackupManifestDirectory(_train.getName());
+        }
+        JFileChooser fc = new JFileChooser(pathName);
         fc.addChoosableFileFilter(new FileFilter());
         int retVal = fc.showOpenDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) {
@@ -75,10 +97,9 @@ public class PrintSavedTrainManifestAction extends AbstractAction {
         File file = fc.getSelectedFile();
         return file;
     }
-    
-    private final static Logger log = LoggerFactory.getLogger(PrintSavedTrainManifestAction.class.getName());
-    
+
     private static class FileFilter extends javax.swing.filechooser.FileFilter {
+        @Override
         public boolean accept(File f) {
             if (f.isDirectory())
                 return true;
@@ -88,11 +109,10 @@ public class PrintSavedTrainManifestAction extends AbstractAction {
             else
                 return false;
         }
-        
+
+        @Override
         public String getDescription() {
             return Bundle.getMessage("TextFiles");
         }
     }
 }
-        
-        

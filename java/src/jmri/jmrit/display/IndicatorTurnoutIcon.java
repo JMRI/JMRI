@@ -38,11 +38,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Pete Cressman Copyright (c) 2010 2012
- * @version $Revision$
  */
 public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack {
-
-    private static final long serialVersionUID = 7715842501699997420L;
 
     HashMap<String, HashMap<Integer, NamedIcon>> _iconMaps;
 
@@ -118,11 +115,11 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
             setOccSensorHandle(null);
             return;
         }
-        if (InstanceManager.sensorManagerInstance() != null) {
-            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
-            if (sensor != null) {
+        if (InstanceManager.getOptionalDefault(jmri.SensorManager.class) != null) {
+            try {
+                Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
                 setOccSensorHandle(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
-            } else {
+            } catch (IllegalArgumentException ex) {
                 log.error("Occupancy Sensor '" + pName + "' not available, icon won't see changes");
             }
         } else {

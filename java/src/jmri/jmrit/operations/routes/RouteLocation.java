@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * route.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2013
- * @version $Revision$
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 
@@ -74,6 +73,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     }
 
     // for combo boxes
+    @Override
     public String toString() {
         if (_location != null) {
             return _location.getName();
@@ -166,7 +166,6 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     /**
      * Set the train length departing this location when building a train
      *
-     * @param length
      */
     public void setTrainLength(int length) {
         int old = _trainLength;
@@ -183,7 +182,6 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     /**
      * Set the train weight departing this location when building a train
      *
-     * @param weight
      */
     public void setTrainWeight(int weight) {
         int old = _trainWeight;
@@ -263,7 +261,6 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     /**
      * Set the number of moves that this location has when building a train
      *
-     * @param moves
      */
     public void setCarMoves(int moves) {
         int old = _carMoves;
@@ -346,6 +343,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
         return time[0] + ":" + time[1] + AM_PM;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "firing property change doesn't matter")
     public void setGrade(double grade) {
         double old = _grade;
         _grade = grade;
@@ -388,19 +386,19 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
      */
     public void setTrainIconCoordinates() {
         Location l = LocationManager.instance().getLocationByName(getName());
-        if ((getTrainDirection() & Location.EAST) > 0) {
+        if ((getTrainDirection() & Location.EAST) == Location.EAST) {
             setTrainIconX(l.getTrainIconEast().x);
             setTrainIconY(l.getTrainIconEast().y);
         }
-        if ((getTrainDirection() & Location.WEST) > 0) {
+        if ((getTrainDirection() & Location.WEST) == Location.WEST) {
             setTrainIconX(l.getTrainIconWest().x);
             setTrainIconY(l.getTrainIconWest().y);
         }
-        if ((getTrainDirection() & Location.NORTH) > 0) {
+        if ((getTrainDirection() & Location.NORTH) == Location.NORTH) {
             setTrainIconX(l.getTrainIconNorth().x);
             setTrainIconY(l.getTrainIconNorth().y);
         }
-        if ((getTrainDirection() & Location.SOUTH) > 0) {
+        if ((getTrainDirection() & Location.SOUTH) == Location.SOUTH) {
             setTrainIconX(l.getTrainIconSouth().x);
             setTrainIconY(l.getTrainIconSouth().y);
         }
@@ -424,7 +422,6 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
      * @param e Consist XML element
      */
     public RouteLocation(Element e) {
-        // if (log.isDebugEnabled()) log.debug("ctor from element "+e);
         Attribute a;
         if ((a = e.getAttribute(Xml.ID)) != null) {
             _id = a.getValue();
@@ -553,8 +550,9 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
         return e;
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

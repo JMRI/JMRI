@@ -1,4 +1,3 @@
-// SRCPClientParserTokenizerTest.java
 package jmri.jmrix.srcp.parser;
 
 import java.io.StringReader;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the {@link jmri.jmrix.srcp.parser.SRCPClientParserTokenizer} class.
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class SRCPClientParserTokenizerTest extends TestCase {
 
@@ -259,7 +257,7 @@ public class SRCPClientParserTokenizerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SRCPClientParserTokenizerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

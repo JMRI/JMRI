@@ -63,7 +63,7 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
             log.debug("getBySystemName: systemName= " + name);
             CatalogTree tree = (CatalogTree) _tsys.get(name);
             if (tree != null) {
-                CatalogTreeNode root = (CatalogTreeNode) tree.getRoot();
+                CatalogTreeNode root = tree.getRoot();
                 log.debug("root= " + root.toString()
                         + ", has " + root.getChildCount() + " children");
             }

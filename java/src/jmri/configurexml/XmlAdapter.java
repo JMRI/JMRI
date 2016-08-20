@@ -6,7 +6,6 @@ import org.jdom2.Element;
  * Interface assumed during configuration operations.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision$
  * @see ConfigXmlManager
  */
 public interface XmlAdapter {
@@ -18,9 +17,7 @@ public interface XmlAdapter {
      * @throws Exception when a error prevents creating the objects as as
      *                   required by the input XML.
      * @return true if successful
-     * @deprecated use {@link #load(org.jdom2.Element, org.jdom2.Element)}
      */
-    @Deprecated
     public boolean load(Element e) throws Exception;
 
     /**
@@ -56,10 +53,8 @@ public interface XmlAdapter {
      * @param o Implementation-specific Object needed for the conversion
      * @throws Exception when a error prevents creating the objects as as
      *                   required by the input XML.
-     * @deprecated use {@link #load(org.jdom2.Element, org.jdom2.Element, java.lang.Object)
      * }
      */
-    @Deprecated
     public void load(Element e, Object o) throws Exception;
 
     /**
@@ -84,9 +79,7 @@ public interface XmlAdapter {
      *          will require this to be of a specific type; that binding is done
      *          in ConfigXmlManager.
      * @return The XML representation Element
-     * @deprecated use {@link #store(java.lang.Object, boolean) }
      */
-    @Deprecated
     public Element store(Object o);
 
     /**

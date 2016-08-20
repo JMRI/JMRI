@@ -6,7 +6,6 @@ import org.jdom2.Element;
  * Abstract class to provide basic error handling for XmlAdapter
  *
  * @author Bob Jacobsen Copyright (c) 2009
- * @version $Revision$
  * @see XmlAdapter
  */
 public abstract class AbstractXmlAdapter implements XmlAdapter {

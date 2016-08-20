@@ -1,4 +1,3 @@
-//AbstractMonFrame.java
 package jmri.jmrix;
 
 import java.awt.Dimension;
@@ -32,14 +31,8 @@ import org.slf4j.LoggerFactory;
  * Abstract base class for Frames displaying communications monitor information
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2014
- * @version	$Revision$
  */
 public abstract class AbstractMonFrame extends JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7090997005389773332L;
 
     // template functions to fill in
     protected abstract String title();    // provide the title for the frame

@@ -1,10 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$  -->
 <!--  UpDated by Herv&#233; Blorec  bzh56420@yahoo.fr 2013-11-01--> 
 <HTML LANG="fr">
 <HEAD>
 <TITLE>JMRI: SlipTurnout Icon Editor Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <META CONTENT="Kevin Dickerson" NAME="Author">
 <META NAME="keywords" CONTENT="JMRI help Panel Editor">
 
@@ -28,14 +26,14 @@
 
 <p>L'&#233;diteur manuel de travers&#233;e n&#233;cessitent plus d'une adresse accessoire
 (aiguillage) et avoir plus de deux itin&#233;raires &#224; travers les aiguillages.
-<p> Cela comprend ..
-<ul>
-<li> Les Travers&#233;es Jonction Double (TJD)
-<li> Les Travers&#233;es Jonction Simples (TJS)
-<li> Aiguillages  Triples
-<li> Bretelle Doubles
-</ Ul>
-<p> La fa&#231;on dont les ic&#244;nes sont modifi&#233;es dans l'&#201;diteur d'Ic&#244;nes de Travers&#233;e Jonction est la m&#234;me que celle utilis&#233;e qui modifie les ic&#244;nes dans les autres Editeur d'Ic&#244;nes. Les boutons <b>Changer Ic&#244;ne ...</b> et le
+<p> Cela comprend:
+    <ul>
+    <li> Les Travers&#233;es Jonction Double (TJD)
+    <li> Les Travers&#233;es Jonction Simples (TJS)
+    <li> Aiguillages  Triples
+    <li> Bretelle Doubles
+    </ul>
+<p> La fa&#231;on dont les ic&#244;nes sont modifi&#233;es dans l'&#201;diteur d'Ic&#244;nes de Travers&#233;e Jonction est la m&#234;me que celle utilis&#233;e qui modifie les ic&#244;nes dans les autres Editeur d'Ic&#244;nes. Les boutons <b>Changer Ic&#244;ne...</b> et le
 Catalogue de fonction sont identique aux autres &#201;diteur d'Ic&#244;nes. Le menu <b>Trouver des Ic&#244;nes</b>
 et de ses &#233;l&#233;ments sont
 &#233;galement identiques. <p> Voir les<a href="IconAdder.shtml"> pages  &#201;diteurs d'Ic&#244;nes</a>
@@ -44,12 +42,12 @@ pour plus de d&#233;tails sur leur utilisation.
 
 <H2>Contenu de l'&#233;diteur d'Ic&#244;nes de Travers&#233;e Jonction</H2>
 <p> Chaque type de "Travers&#233;e" utilise un nombre fixe d'aiguillages et d'itin&#233;raires.
-Typiquement, chaque Â«Travers&#233;eÂ» utilise deux aiguillages et a entre trois et quatre itin&#233;raires diff&#233;rents
+Typiquement, chaque «Travers&#233;e» utilise deux aiguillages et a entre trois et quatre itin&#233;raires diff&#233;rents
 .
 
 <p> Chaque travers&#233;e doit avoir tous les aiguillages n&#233;cessaires ajout&#233;s, lorsque tous les aiguillages sont
 affect&#233;s, le bouton <b> Ajouter au TCO</b> devient actif et il peut &#234;tre press&#233;
-pour installer la travers&#233;e sur le TCO .
+pour installer la travers&#233;e sur le TCO.
 <p> Pour s&#233;lectionner le type de Travers&#233;e complexe qui est utilis&#233;, utilisez les boutons radio
 dans le haut de la fen&#234;tre. <p>
 <img src="images/SlipOptions.png">
@@ -70,7 +68,7 @@ n&#233;cessite une paire d'appareils de voie pour s&#233;lectionner le cot&#233;
 Toutefois, il a une autre option, qui consiste &#224; choisir dans quel sens la travers&#233;e route les voies.</P>
 <img src="images/SingleOptions.png">
 <p> Utilisez le bouton radio pour s&#233;lectionner si la travers&#233;e prend la route sup&#233;rieure ou inf&#233;rieure, ce qui rend automatique
-le changement de l'ic&#244;ne en fonction de la position de la travers&#233;e .
+le changement de l'ic&#244;ne en fonction de la position de la travers&#233;e.
 
 <H3> Aiguillage Triple</H3>
 <img src="images/ThreeWay.png" align="right">
@@ -92,6 +90,10 @@ Trajet Haut Ouest avec Bas Est dans la partie Droite du Panneau Bretelle Double,
 <img src="images/ScissorBy4.png" align="right">
 <p>Lorsque les quatre aiguillages sont utilis&#233;s, vous devez placer les quatre aiguillages de la
 Table aiguillage aux emplacements correspondants dans le TCO.
+</p>
+
 <!--#include virtual="/Footer" -->
+        </div>
+      </div>
 </BODY>
 </HTML>

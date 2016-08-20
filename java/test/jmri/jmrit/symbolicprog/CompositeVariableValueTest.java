@@ -1,4 +1,3 @@
-// CompositeVariableValueTest.java
 package jmri.jmrit.symbolicprog;
 
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import jmri.util.JUnitUtil;
  * Test CompositeVariableValue class.
  *
  * @author	Bob Jacobsen Copyright 2006, 2015
- * @version $Revision$
  */
 public class CompositeVariableValueTest extends VariableValueTest {
 
@@ -313,7 +311,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", CompositeVariableValueTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

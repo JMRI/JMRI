@@ -1,4 +1,3 @@
-// BundleTest.java
 package jmri.util;
 
 import junit.framework.Assert;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the Bundle class
  *
  * @author Bob Jacobsen Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 public class BundleTest extends TestCase {
 
@@ -51,7 +49,7 @@ public class BundleTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", BundleTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

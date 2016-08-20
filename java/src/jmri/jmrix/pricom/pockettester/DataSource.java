@@ -1,4 +1,3 @@
-// pricom.pockettester.DataSource.java
 package jmri.jmrix.pricom.pockettester;
 
 import java.awt.FlowLayout;
@@ -35,10 +34,6 @@ import purejavacomm.UnsupportedCommOperationException;
  */
 public class DataSource extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6253194020952470551L;
     static DataSource existingInstance;
 
     /**
@@ -191,11 +186,6 @@ public class DataSource extends jmri.util.JmriJFrame {
 
         {
             MonitorAction a = new MonitorAction() {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -1633077392080446971L;
-
                 public void connect(DataListener l) {
                     DataSource.this.addListener(l);
                 }
@@ -207,11 +197,6 @@ public class DataSource extends jmri.util.JmriJFrame {
 
         {
             PacketTableAction p = new PacketTableAction() {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 6577986261540429898L;
-
                 public void connect(DataListener l) {
                     DataSource.this.addListener(l);
                     ((PacketTableFrame) l).setSource(DataSource.this);
@@ -224,11 +209,6 @@ public class DataSource extends jmri.util.JmriJFrame {
 
         {
             StatusAction a = new StatusAction() {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -8975013830132142941L;
-
                 public void connect(StatusFrame l) {
                     DataSource.this.addListener(l);
                     l.setSource(DataSource.this);

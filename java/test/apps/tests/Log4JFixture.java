@@ -22,6 +22,7 @@ public class Log4JFixture extends java.lang.Object {
     }
 
     public static void initLogging() {
-        jmri.util.Log4JUtil.initLogging("tests.lcf");
+        String filename = System.getProperty("jmri.log4jconfigfilename", "tests.lcf");
+        jmri.util.Log4JUtil.initLogging(filename);
     }
 }

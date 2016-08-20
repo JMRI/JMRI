@@ -16,7 +16,7 @@ public interface RosterGroupSelector {
     /**
      * Key for the property "selectedRosterGroup"
      */
-    public final static String selectedRosterGroupProperty = "selectedRosterGroup";
+    public final static String SELECTED_ROSTER_GROUP = "selectedRosterGroup";
 
     public String getSelectedRosterGroup();
 

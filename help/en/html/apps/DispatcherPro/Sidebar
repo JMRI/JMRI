@@ -1,7 +1,6 @@
 <!-- Sidebar -->
 <!-- This is the common sidebar definition for apps/DispatcherPro pages -->
 <hr class="hide">
-<div id="mBody">
 <div id="side"> <!-- Block of text on left side of page -->
 
 <dl class="toc">

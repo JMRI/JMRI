@@ -213,7 +213,7 @@ public final class TreeModel extends DefaultTreeModel {
             dNode.setValue(value);
 
             // report change to possible listeners
-            pcs.firePropertyChange("Value", dNode, new Float(value));
+            pcs.firePropertyChange("Value", dNode, Float.valueOf(value));
         }
     }
 

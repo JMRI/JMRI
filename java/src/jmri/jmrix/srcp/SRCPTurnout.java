@@ -1,4 +1,3 @@
-// SRCPTurnout.java
 package jmri.jmrix.srcp;
 
 import jmri.Turnout;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  * @author	Paul Bender Copyright (C) 2014
- * @version	$Revision$
  */
 public class SRCPTurnout extends AbstractTurnout {
 
@@ -54,9 +52,9 @@ public class SRCPTurnout extends AbstractTurnout {
     // Handle a request to change state by sending a formatted DCC packet
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states
-        if ((s & Turnout.CLOSED) > 0) {
+        if ((s & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) > 0) {
+            if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both CLOSED and THROWN " + s);
                 return;

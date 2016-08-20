@@ -1,4 +1,3 @@
-// LocoIOPanelTest.java
 package jmri.jmrix.loconet.locoio;
 
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
@@ -13,7 +12,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.loconet.locoio.LocoIOFrame class
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version $Revision$
  */
 public class LocoIOPanelTest extends TestCase {
 
@@ -80,11 +78,6 @@ public class LocoIOPanelTest extends TestCase {
 
         // skip the warning dialog box
         LocoIOPanel f = new LocoIOPanel() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 4431060598846920555L;
-
             protected int cautionAddrSet() {
                 return 1;
             }
@@ -117,7 +110,7 @@ public class LocoIOPanelTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {LocoIOPanelTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

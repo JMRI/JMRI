@@ -43,10 +43,6 @@ import org.slf4j.LoggerFactory;
  */
 public class IconItemPanel extends ItemPanel implements MouseListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1708592955281190759L;
     HashMap<String, NamedIcon> _iconMap;
     HashMap<String, NamedIcon> _tmpIconMap;
     JPanel _iconPanel;
@@ -111,7 +107,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
 
     /**
      * Plain icons have only one family, usually named "set" Override for plain
-     * icon & background and put all icons here
+     * icon {@literal &} background and put all icons here
      */
     protected void initIconFamiliesPanel() {
         HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
@@ -253,7 +249,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         if (_iconMap.get(name) != null) {
             JOptionPane.showMessageDialog(this,
                     Bundle.getMessage("DuplicateIconName", name),
-                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             name = setIconName(name);
             if (name == null || _iconMap.get(name) != null) {
                 return;
@@ -295,7 +291,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         while (_iconMap.get(name) != null) {
             JOptionPane.showMessageDialog(this,
                     Bundle.getMessage("DuplicateIconName", name),
-                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             name = JOptionPane.showInputDialog(this,
                     Bundle.getMessage("NoIconName"), name);
             if (name == null || name.trim().length() == 0) {
@@ -363,10 +359,6 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
 
     public class IconDragJLabel extends DragJLabel implements DropTargetListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 6215368657257938019L;
         int level;
 
         public IconDragJLabel(DataFlavor flavor, int zLevel) {
@@ -471,7 +463,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             e.dropComplete(true);
             if (log.isDebugEnabled()) {
                 log.debug("DropJLabel.drop COMPLETED for " + label.getName()
-                        + ", " + (newIcon != null ? newIcon.getURL().toString() : " newIcon==null "));
+                        + ", " + (newIcon != null ? newIcon.getURL() : " newIcon==null "));
             }
         }
     }

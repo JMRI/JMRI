@@ -21,10 +21,8 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The AutoTrains Window
-</H1>
-<H2>Introduction
-</H2
+<H1>The AutoTrains Window</H1>
+<H2>Introduction</H2>
 <p>The <b>AutoTrains</b> window allows the dispatcher to take control of an 
 Auto Active Train (an automatically running Active Train) from the <i>virtual 
 dispatcher</i> when required to solve a problem, and to restore automatic operation 
@@ -39,8 +37,7 @@ to another location if desired. An entry is added for each additional Auto Activ
 Train as it is created. When an Auto Active Train is terminated, its entry is 
 removed from the <b>AutoTrains</b> window.
 
-<H2>Using the AutoTrains Window
-</H2
+<H2>Using the AutoTrains Window</H2>
 <p>Below is an <b>AutoTrains</b> window showing two Auto Active Trains, Amtrak 139 and 
 GTW 6418. Entries are separated by a horizontal line.</p>
 <img src="AutoTrainsA.jpg" height="154" width="255">
@@ -52,6 +49,8 @@ emergency stop to all Auto Active Trains shown in the <b>AutoTrains</b> window.
 <b>Stop</b> buttons change to <b>Resume</b> buttons when trains are stopped. Each 
 stopped train must be restarted individually by clicking its <b>Resume</b> button. 
 </p>
+<p>Once an AutoTrain has completed its run, the <b>Stop</b> button changes to 
+<b>Restart</b>. Pressing this causes the AutoTrain to begin running again.</p>
 <p>If the dispatcher clicks the <b>To Manual</b> button for Amtrak 139, the above 
 window changes to:</p>
 <img src="AutoTrainsB.jpg" height="154" width="551">

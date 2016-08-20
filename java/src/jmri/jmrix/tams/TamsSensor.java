@@ -1,4 +1,3 @@
-// TamsSensor.java
 package jmri.jmrix.tams;
 
 import jmri.implementation.AbstractSensor;
@@ -13,15 +12,14 @@ import jmri.implementation.AbstractSensor;
  * in one location.
  *
  * @author Kevin Dickerson (C) 2009
- * @version	$Revision: 20842 $
  */
 public class TamsSensor extends AbstractSensor {
 
     /**
-     *
+     * 
      */
-    private static final long serialVersionUID = -810400928174703675L;
-
+    private static final long serialVersionUID = 1L;
+    
     public TamsSensor(String systemName, String userName) {
         super(systemName, userName);
         init(systemName);
@@ -42,5 +40,3 @@ public class TamsSensor extends AbstractSensor {
     static int[] modeValues = null;
 
 }
-
-/* @(#)TamsSensor.java */

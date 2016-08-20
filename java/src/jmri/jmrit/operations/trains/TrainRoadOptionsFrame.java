@@ -30,11 +30,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4077306284213827815L;
-
     Train _train = null;
 
     JPanel pRoadControls = new JPanel();
@@ -178,6 +173,7 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
     }
 
     // Save
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (_train != null) {
             if (ae.getSource() == saveTrainButton) {
@@ -204,6 +200,7 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
         }
     }
 
+    @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
         if (_train != null) {
@@ -287,6 +284,7 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
         CarRoads.instance().updateComboBox(comboBoxRoads);
     }
 
+    @Override
     public void dispose() {
         CarTypes.instance().removePropertyChangeListener(this);
         CarRoads.instance().removePropertyChangeListener(this);
@@ -296,8 +294,9 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

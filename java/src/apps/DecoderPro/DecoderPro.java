@@ -1,4 +1,3 @@
-// DecoderPro.java
 package apps.DecoderPro;
 
 import apps.Apps;
@@ -41,11 +40,8 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Bob Jacobsen Copyright 2003, 2004, 2007
- * @version $Revision$
  */
 public class DecoderPro extends Apps {
-
-    private static final long serialVersionUID = -3951875421070292360L;
 
     DecoderPro(JFrame p) {
         super(p);
@@ -82,9 +78,6 @@ public class DecoderPro extends Apps {
         Action serviceprog = new PaneProgAction(Bundle.getMessage("DpButtonUseProgrammingTrack"));
         Action opsprog = new PaneOpsProgAction(Bundle.getMessage("DpButtonProgramOnMainTrack"));
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
-
-            private static final long serialVersionUID = -3633527961661923859L;
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 Apps.handleQuit();
@@ -98,8 +91,8 @@ public class DecoderPro extends Apps {
         b1.addActionListener(serviceprog);
         b1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(b1);
-        if (InstanceManager.programmerManagerInstance() == null
-                || !InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
+        if (InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) == null
+                || !InstanceManager.getDefault(jmri.ProgrammerManager.class).isGlobalProgrammerAvailable()) {
             b1.setEnabled(false);
             b1.setToolTipText(Bundle.getMessage("MsgServiceButtonDisabled"));
         }
@@ -107,8 +100,8 @@ public class DecoderPro extends Apps {
         m1.addActionListener(opsprog);
         m1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(m1);
-        if (InstanceManager.programmerManagerInstance() == null
-                || !InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
+        if (InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) == null
+                || !InstanceManager.getDefault(jmri.ProgrammerManager.class).isAddressedModePossible()) {
             m1.setEnabled(false);
             m1.setToolTipText(Bundle.getMessage("MsgOpsButtonDisabled"));
         }

@@ -1,17 +1,13 @@
-/**
- *
- */
 package jmri;
 
 import java.util.ResourceBundle;
 import jmri.implementation.AbstractTurnout;
 
 /**
- * CommonTurnoutOperation class - specialization of TurnoutOperation to contain
+ * CommonTurnoutOperation  - specialization of TurnoutOperation to contain
  * common properties and methods for concrete subclasses
  *
  * @author John Harper
- * @version $Revision$
  */
 public abstract class CommonTurnoutOperation extends TurnoutOperation {
 
@@ -71,7 +67,7 @@ public abstract class CommonTurnoutOperation extends TurnoutOperation {
     /**
      * set new value for interval. do nothing if not in range.
      *
-     * @param newInterval
+     * @param newInterval new retry interval time
      */
     public void setInterval(int newInterval) {
         if (newInterval >= minInterval && newInterval <= maxInterval) {
@@ -82,7 +78,7 @@ public abstract class CommonTurnoutOperation extends TurnoutOperation {
     /**
      * set new value for MaxTries. do nothing if not in range.
      *
-     * @param newMaxTries
+     * @param newMaxTries new maximum number of retries
      */
     public void setMaxTries(int newMaxTries) {
         if (newMaxTries >= minMaxTries && newMaxTries <= maxMaxTries) {

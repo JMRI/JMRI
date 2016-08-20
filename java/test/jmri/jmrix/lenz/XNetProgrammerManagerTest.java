@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.lenz.XNetProgrammerManager class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class XNetProgrammerManagerTest extends TestCase {
 
@@ -31,7 +30,7 @@ public class XNetProgrammerManagerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", XNetProgrammerManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

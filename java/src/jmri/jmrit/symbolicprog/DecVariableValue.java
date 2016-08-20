@@ -1,4 +1,3 @@
-// DecVariableValue.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Color;
@@ -22,8 +21,6 @@ import org.slf4j.LoggerFactory;
  * Decimal representation of a value.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
- *
  */
 public class DecVariableValue extends VariableValue
         implements ActionListener, PropertyChangeListener, FocusListener {
@@ -311,7 +308,6 @@ public class DecVariableValue extends VariableValue
     /**
      * Notify the connected CVs of a state change from above
      *
-     * @param state
      */
     public void setCvState(int state) {
         _cvMap.get(getCvNum()).setState(state);
@@ -389,14 +385,8 @@ public class DecVariableValue extends VariableValue
      * an underlying variable
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version
      */
     public class VarTextField extends JTextField {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7844901319795104952L;
 
         VarTextField(Document doc, String text, int col, DecVariableValue var) {
             super(doc, text, col);

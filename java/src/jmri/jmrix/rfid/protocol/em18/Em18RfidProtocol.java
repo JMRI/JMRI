@@ -1,4 +1,3 @@
-// Em18RfidProtocol.java
 package jmri.jmrix.rfid.protocol.em18;
 
 import jmri.jmrix.AbstractMRReply;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Matthew Harris Copyright (C) 2014
  * @author Oscar A. Pruitt Copyright (C) 2015
- * @version $Revision$
  * @since 4.1.2
  */
 public class Em18RfidProtocol extends RfidProtocol {
@@ -151,5 +149,3 @@ public class Em18RfidProtocol extends RfidProtocol {
     private static final Logger log = LoggerFactory.getLogger(Em18RfidProtocol.class.getName());
 
 }
-
-/* @(#)Em18RfidProtocol.java */

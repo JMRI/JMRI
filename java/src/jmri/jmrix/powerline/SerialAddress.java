@@ -1,4 +1,3 @@
-// SerialAddress.java
 package jmri.jmrix.powerline;
 
 import java.util.regex.Matcher;
@@ -19,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author Bob Jacobsen, Copyright (C) 2006, 2007, 2008, 2009
  * @author	Ken Cameron, Copyright (C) 2008, 2009, 2010
- * @version $Revision$
  */
 public class SerialAddress {
 
@@ -76,24 +74,23 @@ public class SerialAddress {
             }
             return (true);
         }
-        if (aTest) {
-            // This is a PLaa.bb.cc address - validate the Insteon address fields
-            if (!iTest) {
+        
+        assert aTest;
+        
+        // This is a PLaa.bb.cc address - validate the Insteon address fields
+        if (!iTest) {
+            // here if an illegal format
+            log.error("address did not match any valid forms: " + systemName);
+            return (false);
+        } else {
+            if (iCodes.groupCount() != 5) {
                 // here if an illegal format
-                log.error("address did not match any valid forms: " + systemName);
+                log.error("invalid format - " + systemName);
                 return (false);
             } else {
-                if (iCodes.groupCount() != 5) {
-                    // here if an illegal format
-                    log.error("invalid format - " + systemName);
-                    return (false);
-                } else {
-                    return (true);
-                }
+                return (true);
             }
         }
-        log.error("address did not match any valid forms: " + systemName);
-        return false;
     }
 
     /**
@@ -164,7 +161,7 @@ public class SerialAddress {
             // This is a PLaxx address 
             nName = hCodes.group(1) + hCodes.group(2) + hCodes.group(3) + Integer.toString(Integer.parseInt(hCodes.group(4)));
         }
-        if (nName == "") {
+        if (nName.equals("")) {
             // check for the presence of a char to differentiate the two address formats
             if (iMatch && iCount == 5) {
                 // This is a PLaa.bb.cc Insteon address 
@@ -364,5 +361,3 @@ public class SerialAddress {
 
     private final static Logger log = LoggerFactory.getLogger(SerialAddress.class.getName());
 }
-
-/* @(#)SerialAddress.java */

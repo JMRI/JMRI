@@ -1,4 +1,3 @@
-// ConnectionConfigXml.java
 package jmri.jmrix.acela.serialdriver.configurexml;
 
 import java.util.List;
@@ -22,8 +21,6 @@ import org.slf4j.LoggerFactory;
  * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision$
- *
  * @author Bob Coleman, Copyright (c) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
@@ -32,7 +29,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     public ConnectionConfigXml() {
         super();
     }
-
+ 
     /**
      * Write out the SerialNode objects too
      *
@@ -102,7 +99,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                 }
             }
             // look for the next node
-            node = (AcelaNode) AcelaTrafficController.instance().getNode(index);
+            node = (AcelaNode) ((jmri.jmrix.acela.serialdriver.SerialDriverAdapter)adapter).getSystemConnectionMemo().getTrafficController().getNode(index);
             index++;
         }
     }
@@ -112,10 +109,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         p.setAttribute("name", name);
         p.addContent(value);
         return p;
-    }
-
-    protected void getInstance() {
-        adapter = SerialDriverAdapter.instance();
     }
 
     @Override
@@ -128,7 +121,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             int type = AcelaNode.moduleTypes.lastIndexOf(nodetypestring) / 2;
 
             // create node (they register themselves)
-            AcelaNode node = new AcelaNode(addr, type);
+            AcelaNode node = new AcelaNode(addr, type,((jmri.jmrix.acela.serialdriver.SerialDriverAdapter)adapter).getSystemConnectionMemo().getTrafficController());
             log.info("Created a new Acela Node [" + addr + "] as a result of a configuration file of type: " + type);
 
             if (type == AcelaNode.TB) {
@@ -329,7 +322,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             AcelaTrafficController.instance().initializeAcelaNode(node);
         }
         // Do not let the Acela network poll until we are really ready
-        AcelaTrafficController.instance().setReallyReadyToPoll(true);
+        ((AcelaTrafficController)adapter).setReallyReadyToPoll(true);
     }
 
     /**
@@ -349,6 +342,18 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             }
         }
         return null;
+    }
+
+    @Override
+    protected void getInstance() {
+        if (adapter == null) {
+            adapter = new SerialDriverAdapter();
+        }
+    }
+
+    @Override
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig) object).getAdapter();
     }
 
     @Override

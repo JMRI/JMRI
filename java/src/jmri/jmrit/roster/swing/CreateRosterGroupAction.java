@@ -1,4 +1,3 @@
-// CreateRosterGroupAction.java
 package jmri.jmrit.roster.swing;
 
 import java.awt.Component;
@@ -30,14 +29,8 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision$
  */
 public class CreateRosterGroupAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8222098783980850363L;
 
     public CreateRosterGroupAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -98,8 +91,6 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
      * <dd>An ArrayList&lt;RosterEntry&gt; of roster entries.
      * </dl>
      *
-     * @param key
-     * @param value
      */
     @Override
     @SuppressWarnings("unchecked")

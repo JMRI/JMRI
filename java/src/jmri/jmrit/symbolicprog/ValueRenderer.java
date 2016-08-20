@@ -1,11 +1,3 @@
-/**
- * ValueRenderer.java
- *
- * Description:	Renders enum table cells
- *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @version
- */
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Component;
@@ -13,6 +5,13 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
+/**
+ * ValueRenderer.java
+ *
+ * Description:	Renders enum table cells
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001
+ */
 public class ValueRenderer implements TableCellRenderer {
 
     public ValueRenderer() {

@@ -1,4 +1,3 @@
-// SRCPSensorManager.java
 package jmri.jmrix.srcp;
 
 import jmri.Sensor;
@@ -9,7 +8,6 @@ import jmri.Sensor;
  * System names are "DSnnn", where nnn is the sensor number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision$
  */
 public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
 
@@ -34,10 +32,12 @@ public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
         return t;
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public SRCPSensorManager instance() {
         return null;
     }
 
 }
-
-/* @(#)SRCPSensorManager.java */

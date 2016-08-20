@@ -15,11 +15,6 @@ import javax.swing.AbstractAction;
  */
 public class EditSwitchListTextAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5992026885290650922L;
-
     public EditSwitchListTextAction() {
         this(Bundle.getMessage("TitleSwitchListText"));
     }
@@ -30,6 +25,7 @@ public class EditSwitchListTextAction extends AbstractAction {
 
     EditSwitchListTextFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a settings frame
         if (f == null || !f.isVisible()) {

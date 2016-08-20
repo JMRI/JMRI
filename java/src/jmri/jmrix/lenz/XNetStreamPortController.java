@@ -26,8 +26,6 @@ public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortContr
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
 
         new XNetInitializationManager(this.getSystemConnectionMemo());
-
-        jmri.jmrix.lenz.ActiveFlag.setActive();
     }
 
     public XNetSystemConnectionMemo getSystemConnectionMemo() {

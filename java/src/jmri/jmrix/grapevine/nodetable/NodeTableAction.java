@@ -1,4 +1,3 @@
-// NodeTableAction.java
 package jmri.jmrix.grapevine.nodetable;
 
 import java.awt.event.ActionEvent;
@@ -10,14 +9,8 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a NodeTableFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2008
- * @version	$Revision$
  */
 public class NodeTableAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8663753655086906561L;
 
     public NodeTableAction(String s) {
         super(s);
@@ -39,6 +32,3 @@ public class NodeTableAction extends AbstractAction {
     }
     private final static Logger log = LoggerFactory.getLogger(NodeTableAction.class.getName());
 }
-
-
-/* @(#)NodeTableAction.java */

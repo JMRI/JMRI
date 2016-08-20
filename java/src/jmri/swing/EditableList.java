@@ -1,4 +1,3 @@
-// EditableList.java
 package jmri.swing;
 
 import java.applet.Applet;
@@ -30,10 +29,6 @@ import javax.swing.event.ChangeEvent;
  */
 public class EditableList<E> extends JList<E> implements CellEditorListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2724300657041009593L;
     protected Component editorComp = null;
     protected int editingIndex = -1;
     protected transient ListCellEditor<E> cellEditor = null;
@@ -170,7 +165,7 @@ public class EditableList<E> extends JList<E> implements CellEditorListener {
 
         @Override
         public void propertyChange(PropertyChangeEvent ev) {
-            if (!isEditing() || getClientProperty("terminateEditOnFocusLost") != Boolean.TRUE) {   //NOI18N
+            if (!isEditing() || !getClientProperty("terminateEditOnFocusLost").equals(Boolean.TRUE) ) {   //NOI18N
                 return;
             }
 
@@ -198,7 +193,7 @@ public class EditableList<E> extends JList<E> implements CellEditorListener {
      */
     public boolean isCellEditable(int index) {
         if (getModel() instanceof EditableListModel) {
-            return ((EditableListModel) getModel()).isCellEditable(index);
+            return ((EditableListModel<E>) getModel()).isCellEditable(index);
         }
         return false;
     }
@@ -237,7 +232,7 @@ public class EditableList<E> extends JList<E> implements CellEditorListener {
         @Override
         @SuppressWarnings("unchecked") // have to cast CellEditor to ListCellEditor to access methods
         public void actionPerformed(ActionEvent e) {
-            EditableList list = (EditableList) e.getSource();
+            EditableList<E> list = (EditableList<E>) e.getSource();
             if (!list.hasFocus()) {
                 ListCellEditor<E> cellEditor = list.getListCellEditor();
                 if (cellEditor != null && !cellEditor.stopCellEditing()) {
@@ -263,9 +258,10 @@ public class EditableList<E> extends JList<E> implements CellEditorListener {
          */
         private static final long serialVersionUID = -8222730187928540505L;
 
+        @SuppressWarnings("unchecked")
         @Override
         public void actionPerformed(ActionEvent e) {
-            EditableList list = (EditableList) e.getSource();
+            EditableList<E> list = (EditableList<E>) e.getSource();
             list.removeEditor();
         }
 

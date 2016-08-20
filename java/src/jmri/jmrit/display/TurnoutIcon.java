@@ -77,11 +77,11 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
      * @param pName Used as a system/user name to lookup the turnout object
      */
     public void setTurnout(String pName) {
-        if (InstanceManager.turnoutManagerInstance() != null) {
-            Turnout turnout = InstanceManager.turnoutManagerInstance().provideTurnout(pName);
-            if (turnout != null) {
+        if (InstanceManager.getOptionalDefault(jmri.TurnoutManager.class) != null) {
+            try {
+                Turnout turnout = InstanceManager.turnoutManagerInstance().provideTurnout(pName);
                 setTurnout(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, turnout));
-            } else {
+            } catch (IllegalArgumentException ex) {
                 log.error("Turnout '" + pName + "' not available, icon won't see changes");
             }
         } else {

@@ -10,21 +10,14 @@
 package jmri.jmrix.lenz.swing.packetgen;
 
 import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
+import jmri.jmrix.lenz.swing.AbstractXPressNetAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PacketGenAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5884805612020376097L;
-    jmri.jmrix.lenz.XNetSystemConnectionMemo _memo = null;
+public class PacketGenAction extends AbstractXPressNetAction {
 
     public PacketGenAction(String s, jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        super(s);
-        _memo = memo;
+        super(s,memo);
     }
 
     public PacketGenAction(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
@@ -47,5 +40,3 @@ public class PacketGenAction extends AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(PacketGenAction.class.getName());
 }
 
-
-/* @(#)LocoGenAction.java */

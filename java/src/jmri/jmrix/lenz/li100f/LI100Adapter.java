@@ -1,4 +1,3 @@
-// LI100Adapter.java
 package jmri.jmrix.lenz.li100f;
 
 import java.io.DataInputStream;
@@ -28,7 +27,6 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender, Copyright (C) 2003-2010
- * @version	$Revision$
  */
 public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -36,7 +34,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
         super();
         option1Name = "FlowControl";
         options.put(option1Name, new Option("LI100F connection uses : ", validOption1));
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
+        this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
     public String openPort(String portName, String appName) {
@@ -70,12 +68,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -226,8 +219,6 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
 
         new XNetInitializationManager(this.getSystemConnectionMemo());
-
-        jmri.jmrix.lenz.ActiveFlag.setActive();
     }
 
     // base class methods for the XNetSerialPortController interface

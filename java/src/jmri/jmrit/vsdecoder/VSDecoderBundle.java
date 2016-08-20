@@ -1,5 +1,3 @@
-// VSDecoderBundle.java
-
 /*
  * <hr>
  * This file is part of JMRI.
@@ -16,7 +14,6 @@
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
  */
 package jmri.jmrit.vsdecoder;
 
@@ -30,8 +27,6 @@ import java.util.ResourceBundle;
  * Adapted from ThrottleBundle by Bob Jacobsen (2010)
  *
  * @author Mark Underwood Copyright 2011
- * @since
- * @version $Revision$
  */
 public class VSDecoderBundle {
 

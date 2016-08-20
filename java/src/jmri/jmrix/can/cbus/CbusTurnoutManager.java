@@ -1,4 +1,3 @@
-// CbusTurnoutManager.java
 package jmri.jmrix.can.cbus;
 
 import jmri.JmriException;
@@ -12,7 +11,6 @@ import jmri.managers.AbstractTurnoutManager;
  * Turnouts must be manually created.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  * @since 2.3.1
  */
 public class CbusTurnoutManager extends AbstractTurnoutManager {
@@ -99,5 +97,3 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         return range;
     }
 }
-
-/* @(#)CbusTurnoutManager.java */

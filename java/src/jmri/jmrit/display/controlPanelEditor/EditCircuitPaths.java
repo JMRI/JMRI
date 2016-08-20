@@ -350,7 +350,6 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     /**
      * Construct the array of icons that displays the path
      *
-     * @param path
      */
     private ArrayList<Positionable> makePathGroup(OPath path) {
         Portal fromPortal = path.getFromPortal();
@@ -390,7 +389,6 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     /**
      * Sets the path icons for display
      *
-     * @param pathChanged
      */
     protected void updatePath(boolean pathChanged) {
         // to avoid ConcurrentModificationException now set data

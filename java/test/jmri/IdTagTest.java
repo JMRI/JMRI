@@ -1,4 +1,3 @@
-// IdTagTest.java
 package jmri;
 
 import junit.framework.Assert;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the IdTag class
  *
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  */
 public class IdTagTest extends TestCase {
 
@@ -35,7 +33,7 @@ public class IdTagTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {IdTagTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

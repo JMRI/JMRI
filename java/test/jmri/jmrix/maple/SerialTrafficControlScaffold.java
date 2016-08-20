@@ -1,4 +1,3 @@
-// SerialInterfaceScaffold.java
 package jmri.jmrix.maple;
 
 import java.util.Vector;

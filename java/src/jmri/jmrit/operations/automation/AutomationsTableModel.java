@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * Table model allowing the edit and status of an automation used by operations.
  *
  * @author Daniel Boudreau Copyright (C) 2016
- * @version $Revision$
  */
 public class AutomationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -38,7 +37,6 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
     private static final int NAME_COLUMN = ID_COLUMN + 1;
     private static final int COMMENT_COLUMN = NAME_COLUMN + 1;
     private static final int ACTION_COLUMN = COMMENT_COLUMN + 1;
-//    private static final int MESSAGE_COLUMN = ACTION_COLUMN + 1;
     private static final int STATUS_COLUMN = ACTION_COLUMN + 1;
     private static final int RUN_COLUMN = STATUS_COLUMN + 1;
     private static final int EDIT_COLUMN = RUN_COLUMN + 1;
@@ -66,7 +64,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         fireTableDataChanged();
     }
 
-    synchronized void updateList() {
+    private synchronized void updateList() {
         // first, remove listeners from the individual objects
         removePropertyChangeAutomations();
 
@@ -84,7 +82,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
     List<Automation> _sysList = null;
     JTable _table;
 
-    void initTable(AutomationsTableFrame frame, JTable table) {
+    protected synchronized void initTable(AutomationsTableFrame frame, JTable table) {
         _table = table;
         // Install the button handlers
         TableColumnModel tcm = table.getColumnModel();
@@ -102,7 +100,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         setPreferredWidths(frame, table);
 
         // set row height
-        //table.setRowHeight(new JComboBox<>().getPreferredSize().height);
+        table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
@@ -117,21 +115,23 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(200);
         table.getColumnModel().getColumn(COMMENT_COLUMN).setPreferredWidth(350);
         table.getColumnModel().getColumn(ACTION_COLUMN).setPreferredWidth(250);
-//        table.getColumnModel().getColumn(MESSAGE_COLUMN).setPreferredWidth(250);
         table.getColumnModel().getColumn(STATUS_COLUMN).setPreferredWidth(90);
         table.getColumnModel().getColumn(RUN_COLUMN).setPreferredWidth(90);
         table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(90);
     }
 
-    public int getRowCount() {
+    @Override
+    public synchronized int getRowCount() {
         return _sysList.size();
     }
 
+    @Override
     public int getColumnCount() {
         return HIGHEST_COLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case ID_COLUMN:
@@ -142,8 +142,6 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
                 return Bundle.getMessage("Comment");
             case ACTION_COLUMN:
                 return Bundle.getMessage("Action");
-//            case MESSAGE_COLUMN:
-//                return Bundle.getMessage("Message");
             case STATUS_COLUMN:
                 return Bundle.getMessage("Status");
             case RUN_COLUMN:
@@ -157,6 +155,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case ID_COLUMN:
@@ -169,8 +168,6 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
                 return String.class;
             case ACTION_COLUMN:
                 return String.class;
-//            case MESSAGE_COLUMN:
-//                return String.class;
             case RUN_COLUMN:
                 return JButton.class;
             case EDIT_COLUMN:
@@ -182,6 +179,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case RUN_COLUMN:
@@ -193,8 +191,9 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         }
     }
 
-    public Object getValueAt(int row, int col) {
-        if (row >= _sysList.size()) {
+    @Override
+    public synchronized Object getValueAt(int row, int col) {
+        if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
         Automation automation = _sysList.get(row);
@@ -212,8 +211,6 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
                 return automation.getCurrentActionString();
             case STATUS_COLUMN:
                 return automation.getActionStatus();
-//            case MESSAGE_COLUMN:
-//                return automation.getMessage();
             case RUN_COLUMN:
                 if (automation.isActionRunning())
                     return Bundle.getMessage("Stop");
@@ -230,7 +227,8 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         }
     }
 
-    public void setValueAt(Object value, int row, int col) {
+    @Override
+    public synchronized void setValueAt(Object value, int row, int col) {
         switch (col) {
             case RUN_COLUMN:
                 runAutomation(row);
@@ -249,6 +247,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
     private void runAutomation(int row) {
         Automation automation = _sysList.get(row);
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 if (automation.isActionRunning())
                     automation.stop();
@@ -263,7 +262,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
     private void editAutomation(int row) {
         log.debug("Edit automation");
         Automation automation = _sysList.get(row);
-        
+
         // is the edit window already open?
         if (automationEditFrames.containsKey(automation.getId())) {
             AutomationTableFrame frame = automationEditFrames.get(automation.getId());
@@ -276,6 +275,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
 
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 AutomationTableFrame frame = new AutomationTableFrame(automation);
                 automationEditFrames.put(automation.getId(), frame);
@@ -309,10 +309,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         }
     }
 
-    public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
+    public synchronized void dispose() {
         Enumeration<String> en = automationEditFrames.keys();
         while (en.hasMoreElements()) {
             AutomationTableFrame frame = automationEditFrames.get(en.nextElement());
@@ -324,8 +321,9 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
     }
 
     // check for change in number of automations, or a change in a automation
-    public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+    @Override
+    public synchronized void propertyChange(PropertyChangeEvent e) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -335,7 +333,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         } else if (e.getSource().getClass().equals(Automation.class)) {
             Automation automation = (Automation) e.getSource();
             int row = _sysList.indexOf(automation);
-            if (Control.showProperty) {
+            if (Control.SHOW_PROPERTY) {
                 log.debug("Update automation table row: {} name: {}", row, automation.getName());
             }
             if (row >= 0) {

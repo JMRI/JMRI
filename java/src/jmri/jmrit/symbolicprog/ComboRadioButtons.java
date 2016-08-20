@@ -1,4 +1,3 @@
-//ComboRadioButtons.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionListener;
@@ -15,14 +14,9 @@ import org.slf4j.LoggerFactory;
 /* Represents a JComboBox as a JPanel of radio buttons.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision$
  */
 public class ComboRadioButtons extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 45307396535595216L;
     ButtonGroup g = new ButtonGroup();
 
     ComboRadioButtons(JComboBox<String> box, EnumVariableValue var) {

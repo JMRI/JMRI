@@ -1,4 +1,3 @@
-// SRCPSensor.java
 package jmri.jmrix.srcp;
 
 import jmri.Sensor;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  * @author	Paul Bender Copyright (C) 2010
- * @version	$Revision$
  */
 public class SRCPSensor extends AbstractSensor implements SRCPListener {
 
@@ -49,9 +47,9 @@ public class SRCPSensor extends AbstractSensor implements SRCPListener {
     // to the server.
     public void setKnownState(int s) throws jmri.JmriException {
         // sort out states
-        if ((s & Sensor.ACTIVE) > 0) {
+        if ((s & Sensor.ACTIVE) !=  0) {
             // first look for the double case, which we can't handle
-            if ((s & Sensor.INACTIVE) > 0) {
+            if ((s & Sensor.INACTIVE) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both ACTIVE and INACTIVE " + s);
                 return;

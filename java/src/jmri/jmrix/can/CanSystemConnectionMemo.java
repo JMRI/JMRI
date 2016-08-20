@@ -1,4 +1,3 @@
-// CanSystemConnectionMemo.java
 package jmri.jmrix.can;
 
 import java.util.ResourceBundle;
@@ -14,7 +13,6 @@ import jmri.InstanceManager;
  * passed on to the relevant ConfigurationManager to handle.
  * <p>
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 19602 $
  */
 public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -116,6 +114,3 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     }
 }
-
-
-/* @(#)CanSystemConnectionMemo.java */

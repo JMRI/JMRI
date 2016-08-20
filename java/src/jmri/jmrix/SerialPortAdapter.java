@@ -1,4 +1,3 @@
-// SerialPortAdapter.java
 package jmri.jmrix;
 
 import java.util.Vector;
@@ -10,7 +9,6 @@ import purejavacomm.PortInUseException;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2008
- * @version	$Revision$
  * @see jmri.jmrix.SerialConfigException
  */
 public interface SerialPortAdapter extends PortAdapter {
@@ -40,7 +38,6 @@ public interface SerialPortAdapter extends PortAdapter {
     /**
      * Remember the associated port name
      *
-     * @param s
      */
     public void setPort(String s);
 

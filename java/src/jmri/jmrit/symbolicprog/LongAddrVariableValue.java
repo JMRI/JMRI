@@ -1,4 +1,3 @@
-// LongAddrVariableValue.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Color;
@@ -9,6 +8,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
+import javax.annotation.Nonnull;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.text.Document;
@@ -18,17 +18,17 @@ import org.slf4j.LoggerFactory;
 /**
  * Extends VariableValue to represent a NMRA long address
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2016
  *
  */
 public class LongAddrVariableValue extends VariableValue
         implements ActionListener, PropertyChangeListener, FocusListener {
 
-    public LongAddrVariableValue(String name, String comment, String cvName,
+    public LongAddrVariableValue(@Nonnull String name, @Nonnull String comment, @Nonnull String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
-            String cvNum, String mask, int minVal, int maxVal,
-            HashMap<String, CvValue> v, JLabel status, String stdname, CvValue mHighCV) {
+            @Nonnull String cvNum, @Nonnull String mask, int minVal, int maxVal,
+            @Nonnull HashMap<String, CvValue> v, @Nonnull JLabel status, 
+            @Nonnull String stdname, @Nonnull CvValue mHighCV) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
@@ -44,9 +44,6 @@ public class LongAddrVariableValue extends VariableValue
         cv.setState(CvValue.FROMFILE);
 
         highCV = mHighCV;
-        if (highCV == null) {
-            log.error("High CV not found in LongAddrVariableValue ctor");
-        }
         highCV.addPropertyChangeListener(this);
         highCV.setState(CvValue.FROMFILE);
     }
@@ -56,7 +53,7 @@ public class LongAddrVariableValue extends VariableValue
     public CvValue[] usesCVs() {
         return new CvValue[]{
             _cvMap.get(getCvNum()),
-            _cvMap.get(highCV)};
+            highCV};
     }
 
     /**
@@ -219,7 +216,6 @@ public class LongAddrVariableValue extends VariableValue
     /**
      * Notify the connected CVs of a state change from above
      *
-     * @param state
      */
     public void setCvState(int state) {
         (_cvMap.get(getCvNum())).setState(state);
@@ -297,7 +293,7 @@ public class LongAddrVariableValue extends VariableValue
     }
 
     // handle incoming parameter notification
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
+    public void propertyChange(@Nonnull java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("property changed event - name: "
                     + e.getPropertyName());
@@ -394,14 +390,8 @@ public class LongAddrVariableValue extends VariableValue
      * an underlying variable
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version
      */
     public class VarTextField extends JTextField {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -5489064948676750746L;
 
         VarTextField(Document doc, String text, int col, LongAddrVariableValue var) {
             super(doc, text, col);

@@ -20,7 +20,7 @@ public class JsonServerManager {
      */
     @Deprecated
     public static JsonServerManager getInstance() {
-        if (InstanceManager.getDefault(JsonServerManager.class) == null) {
+        if (InstanceManager.getOptionalDefault(JsonServerManager.class) == null) {
             InstanceManager.store(new JsonServerManager(), JsonServerManager.class);
         }
         return InstanceManager.getDefault(JsonServerManager.class);

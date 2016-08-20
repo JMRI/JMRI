@@ -86,7 +86,7 @@ pas &#234;tre un probl&#232;me pour vous. </p>
 
 
 <A NAME="flow">
-<h2> Contr&#244;le du flux LocoBuffer</h2></a>
+</a><h2> Contr&#244;le du flux LocoBuffer</h2>
 
 	  <p>Certaines versions de Windows, en particulier Win2000, ne peut pas g&#233;rer
  la liaison LocoBuffer correctement. Vous verrez 

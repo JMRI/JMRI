@@ -45,11 +45,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TrackerTableAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3359499686576807040L;
-
     static int STRUT_SIZE = 10;
 
     private static TrackerTableAction _instance;
@@ -119,7 +114,6 @@ public class TrackerTableAction extends AbstractAction {
      */
     static class TableFrame extends JmriJFrame implements PropertyChangeListener, MouseListener {
 
-        private static final long serialVersionUID = -56337259221744388L;
         private TrackerTableModel _model;
         private JmriJFrame _pickFrame;
         JDialog _dialog;
@@ -408,7 +402,6 @@ public class TrackerTableAction extends AbstractAction {
          * Adds listeners to all blocks in the range of a Tracker.
          * Called when a new tracker is created.
          *
-         * @param newTracker
          */
         private void addBlockListeners(Tracker tracker) {
             List<OBlock> range = tracker.getRange();
@@ -597,9 +590,6 @@ public class TrackerTableAction extends AbstractAction {
          * indicate the new occupancy positions of the train. Upon return,
          * update the listeners for the trains next move
          *
-         * @param tracker
-         * @param block
-         * @param state
          */
         private void processTrackerStateChange(Tracker tracker, OBlock block, int state) {
             List<OBlock> oldRange = tracker.getRange();// range in effect when state change was detected 
@@ -686,7 +676,6 @@ public class TrackerTableAction extends AbstractAction {
 
     static class TrackerTableModel extends AbstractTableModel {
 
-        private static final long serialVersionUID = -8320710926680330134L;
         public static final int NAME_COL = 0;
         public static final int STATUS_COL = 1;
         public static final int STOP_COL = 2;

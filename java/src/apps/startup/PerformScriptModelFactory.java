@@ -1,7 +1,6 @@
 package apps.startup;
 
 import apps.PerformScriptModel;
-import apps.StartupModel;
 import javax.swing.JFileChooser;
 import jmri.script.ScriptFileChooser;
 

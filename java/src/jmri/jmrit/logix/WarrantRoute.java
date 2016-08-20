@@ -51,8 +51,6 @@ import org.slf4j.LoggerFactory;
 
 public abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListener, PropertyChangeListener {
 
-    private static final long serialVersionUID = 6066050907933847146L;
-
     enum Location {ORIGIN, DEST, VIA, AVOID}
     protected RouteLocation  _origin = new RouteLocation(Location.ORIGIN);
     protected RouteLocation  _destination = new RouteLocation(Location.DEST);
@@ -165,7 +163,6 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
      * Set the roster entry, if it exists, or train id string if not.
      * i.e. set enough info to get a dccLocoAddress
      * @param name may be roster Id or address
-     * @return
      */
     protected String setTrainInfo(String name) {
         if (log.isDebugEnabled()) {
@@ -308,6 +305,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     }
     
     @SuppressWarnings("unchecked") // parameter can be any of several types, including JComboBox<String>
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UCF_USELESS_CONTROL_FLOW", justification = "checkBlockBox in the internal class RouteLocation is a method with side effects that returns a boolean value. This code basically says try all possibilities until one succeeds.")
     void doAction(Object obj) {
         if (obj instanceof JTextField) {
             JTextField box = (JTextField)obj;
@@ -1046,10 +1044,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
 
     /************************* Route Table ******************************/
     class RouteTableModel extends AbstractTableModel {
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 1966890806689115258L;
+
         public static final int BLOCK_COLUMN = 0;
         public static final int ENTER_PORTAL_COL =1;
         public static final int PATH_COLUMN = 2;
@@ -1144,9 +1139,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     /**
     *
     * @param vertical  Label orientation true = above, false = left
-    * @param textField
     * @param label String label message
-    * @return
     */
    static protected JPanel makeTextBoxPanel(boolean vertical, JComponent textField, String label, String tooltip) {
        JPanel panel = new JPanel();

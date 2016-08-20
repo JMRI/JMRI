@@ -1,4 +1,3 @@
-// EngineLengths.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Represents the lengths that engines can have.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2014
- * @version $Revision$
  */
 public class EngineLengths extends RollingStockAttribute {
 
@@ -29,32 +27,34 @@ public class EngineLengths extends RollingStockAttribute {
 
     public static synchronized EngineLengths instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("EngineLengths creating instance");
-            }
+            log.debug("EngineLengths creating instance");
             // create and load
             _instance = new EngineLengths();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("EngineLengths returns instance {}", _instance);
         }
         return _instance;
     }
 
+    @Override
     protected String getDefaultNames() {
         return LENGTHS;
     }
 
     // override, need to perform a number sort
+    @Override
     public void setNames(String[] lengths) {
         setValues(lengths);
     }
 
+    @Override
     public void addName(String length) {
         super.addName(length);
         setDirtyAndFirePropertyChange(ENGINELENGTHS_CHANGED_PROPERTY, null, length);
     }
 
+    @Override
     public void deleteName(String length) {
         super.deleteName(length);
         setDirtyAndFirePropertyChange(ENGINELENGTHS_CHANGED_PROPERTY, length, null);

@@ -38,10 +38,6 @@ import org.slf4j.LoggerFactory;
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3672037911597893323L;
     EnginesTableModel enginesModel;
     TableSorter sorter;
     javax.swing.JTable enginesTable;
@@ -197,7 +193,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new EngineRosterMenu(Bundle.getMessage("TitleEngineRoster"), EngineRosterMenu.MAINMENU, this));
         toolMenu.add(new NceConsistEngineAction(Bundle.getMessage("MenuItemNceSync"), this));
         menuBar.add(toolMenu);
@@ -213,46 +209,47 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         createShutDownTask();
     }
 
+    @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
         if (ae.getSource() == sortByNumber) {
-            enginesModel.setSort(enginesModel.SORTBYNUMBER);
+            enginesModel.setSort(enginesModel.SORTBY_NUMBER);
         }
         if (ae.getSource() == sortByRoad) {
-            enginesModel.setSort(enginesModel.SORTBYROAD);
+            enginesModel.setSort(enginesModel.SORTBY_ROAD);
         }
         if (ae.getSource() == sortByModel) {
-            enginesModel.setSort(enginesModel.SORTBYMODEL);
+            enginesModel.setSort(enginesModel.SORTBY_MODEL);
         }
         if (ae.getSource() == sortByConsist) {
-            enginesModel.setSort(enginesModel.SORTBYCONSIST);
+            enginesModel.setSort(enginesModel.SORTBY_CONSIST);
         }
         if (ae.getSource() == sortByLocation) {
-            enginesModel.setSort(enginesModel.SORTBYLOCATION);
+            enginesModel.setSort(enginesModel.SORTBY_LOCATION);
         }
         if (ae.getSource() == sortByDestination) {
-            enginesModel.setSort(enginesModel.SORTBYDESTINATION);
+            enginesModel.setSort(enginesModel.SORTBY_DESTINATION);
         }
         if (ae.getSource() == sortByTrain) {
-            enginesModel.setSort(enginesModel.SORTBYTRAIN);
+            enginesModel.setSort(enginesModel.SORTBY_TRAIN);
         }
         if (ae.getSource() == sortByMoves) {
-            enginesModel.setSort(enginesModel.SORTBYMOVES);
+            enginesModel.setSort(enginesModel.SORTBY_MOVES);
         }
         if (ae.getSource() == sortByBuilt) {
-            enginesModel.setSort(enginesModel.SORTBYBUILT);
+            enginesModel.setSort(enginesModel.SORTBY_BUILT);
         }
         if (ae.getSource() == sortByOwner) {
-            enginesModel.setSort(enginesModel.SORTBYOWNER);
+            enginesModel.setSort(enginesModel.SORTBY_OWNER);
         }
         if (ae.getSource() == sortByValue) {
-            enginesModel.setSort(enginesModel.SORTBYVALUE);
+            enginesModel.setSort(enginesModel.SORTBY_VALUE);
         }
         if (ae.getSource() == sortByRfid) {
-            enginesModel.setSort(enginesModel.SORTBYRFID);
+            enginesModel.setSort(enginesModel.SORTBY_RFID);
         }
         if (ae.getSource() == sortByLast) {
-            enginesModel.setSort(enginesModel.SORTBYLAST);
+            enginesModel.setSort(enginesModel.SORTBY_LAST);
         }
         // clear any sorts by column
         clearTableSort(enginesTable);
@@ -262,9 +259,10 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         return enginesModel.getSelectedEngineList();
     }
 
-    EngineEditFrame f = null;
+    EngineEditFrame engineEditFrame = null;
 
     // add, save or find button
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         // log.debug("engine button activated");
         if (ae.getSource() == findButton) {
@@ -282,12 +280,11 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
             return;
         }
         if (ae.getSource() == addButton) {
-            if (f != null) {
-                f.dispose();
+            if (engineEditFrame != null) {
+                engineEditFrame.dispose();
             }
-            f = new EngineEditFrame();
-            f.initComponents();
-            f.setTitle(Bundle.getMessage("TitleEngineAdd"));
+            engineEditFrame = new EngineEditFrame();
+            engineEditFrame.initComponents();
         }
         if (ae.getSource() == saveButton) {
             if (enginesTable.isEditing()) {
@@ -311,17 +308,19 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         return widths;
     }
 
+    @Override
     public void dispose() {
         engineManager.removePropertyChangeListener(this);
         enginesModel.dispose();
-        if (f != null) {
-            f.dispose();
+        if (engineEditFrame != null) {
+            engineEditFrame.dispose();
         }
         super.dispose();
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

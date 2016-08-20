@@ -36,7 +36,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         if (pollShutDownTask == null) {
             pollShutDownTask = new QuietShutDownTask("DCC4PC Board Poll Shutdown") {
                 @Override
-                public boolean doAction() {
+                public boolean execute() {
                     stopPolling = true;
                     return true;
                 }

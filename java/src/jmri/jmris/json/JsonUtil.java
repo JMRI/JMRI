@@ -1,5 +1,25 @@
-// JsonUtil.java
 package jmri.jmris.json;
+
+import static jmri.jmrit.operations.trains.TrainCommon.splitString;
+import static jmri.server.json.JSON.*;
+import static jmri.server.json.JsonException.CODE;
+import static jmri.server.json.JsonException.ERROR;
+import static jmri.server.json.JsonException.MESSAGE;
+import static jmri.server.json.light.JsonLight.LIGHT;
+import static jmri.server.json.memory.JsonMemory.MEMORY;
+import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
+import static jmri.server.json.reporter.JsonReporter.LAST_REPORT;
+import static jmri.server.json.reporter.JsonReporter.REPORT;
+import static jmri.server.json.reporter.JsonReporter.REPORTER;
+import static jmri.server.json.roster.JsonRoster.ROSTER;
+import static jmri.server.json.roster.JsonRoster.ROSTER_ENTRY;
+import static jmri.server.json.roster.JsonRoster.ROSTER_GROUP;
+import static jmri.server.json.roster.JsonRoster.ROSTER_GROUPS;
+import static jmri.server.json.sensor.JsonSensor.SENSOR;
+import static jmri.server.json.signalHead.JsonSignalHead.SIGNAL_HEAD;
+import static jmri.server.json.signalMast.JsonSignalMast.SIGNAL_MAST;
+import static jmri.server.json.time.JsonTimeServiceFactory.TIME;
+import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUT;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,6 +29,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
@@ -27,129 +48,6 @@ import jmri.SensorManager;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
-import static jmri.jmris.json.JSON.ACTIVE;
-import static jmri.jmris.json.JSON.ACTIVE_PROFILE;
-import static jmri.jmris.json.JSON.ADDRESS;
-import static jmri.jmris.json.JSON.ADD_COMMENT;
-import static jmri.jmris.json.JSON.APPEARANCE;
-import static jmri.jmris.json.JSON.APPEARANCE_NAME;
-import static jmri.jmris.json.JSON.ASPECT;
-import static jmri.jmris.json.JSON.ASPECT_DARK;
-import static jmri.jmris.json.JSON.ASPECT_HELD;
-import static jmri.jmris.json.JSON.ASPECT_UNKNOWN;
-import static jmri.jmris.json.JSON.CABOOSE;
-import static jmri.jmris.json.JSON.CAR;
-import static jmri.jmris.json.JSON.CARS;
-import static jmri.jmris.json.JSON.CLOSED;
-import static jmri.jmris.json.JSON.CODE;
-import static jmri.jmris.json.JSON.COLOR;
-import static jmri.jmris.json.JSON.COMMENT;
-import static jmri.jmris.json.JSON.CONSIST;
-import static jmri.jmris.json.JSON.CONTROL_PANEL;
-import static jmri.jmris.json.JSON.DATA;
-import static jmri.jmris.json.JSON.DECODER_FAMILY;
-import static jmri.jmris.json.JSON.DECODER_MODEL;
-import static jmri.jmris.json.JSON.DEPARTURE_LOCATION;
-import static jmri.jmris.json.JSON.DEPARTURE_TIME;
-import static jmri.jmris.json.JSON.DESCRIPTION;
-import static jmri.jmris.json.JSON.DESTINATION;
-import static jmri.jmris.json.JSON.DIRECTION;
-import static jmri.jmris.json.JSON.ENGINE;
-import static jmri.jmris.json.JSON.ENGINES;
-import static jmri.jmris.json.JSON.ERROR;
-import static jmri.jmris.json.JSON.EXPECTED_ARRIVAL;
-import static jmri.jmris.json.JSON.EXPECTED_DEPARTURE;
-import static jmri.jmris.json.JSON.F;
-import static jmri.jmris.json.JSON.FINAL_DESTINATION;
-import static jmri.jmris.json.JSON.FORMER_NODES;
-import static jmri.jmris.json.JSON.FORWARD;
-import static jmri.jmris.json.JSON.FUNCTION_KEYS;
-import static jmri.jmris.json.JSON.GROUP;
-import static jmri.jmris.json.JSON.HAZARDOUS;
-import static jmri.jmris.json.JSON.HEARTBEAT;
-import static jmri.jmris.json.JSON.HELLO;
-import static jmri.jmris.json.JSON.ICON;
-import static jmri.jmris.json.JSON.ICON_NAME;
-import static jmri.jmris.json.JSON.ID;
-import static jmri.jmris.json.JSON.IMAGE;
-import static jmri.jmris.json.JSON.INACTIVE;
-import static jmri.jmris.json.JSON.INCONSISTENT;
-import static jmri.jmris.json.JSON.INVERTED;
-import static jmri.jmris.json.JSON.IS_LONG_ADDRESS;
-import static jmri.jmris.json.JSON.JMRI;
-import static jmri.jmris.json.JSON.JSON;
-import static jmri.jmris.json.JSON.JSON_PROTOCOL_VERSION;
-import static jmri.jmris.json.JSON.KERNEL;
-import static jmri.jmris.json.JSON.LABEL;
-import static jmri.jmris.json.JSON.LAST_REPORT;
-import static jmri.jmris.json.JSON.LAYOUT_PANEL;
-import static jmri.jmris.json.JSON.LEAD_ENGINE;
-import static jmri.jmris.json.JSON.LENGTH;
-import static jmri.jmris.json.JSON.LIGHT;
-import static jmri.jmris.json.JSON.LIT;
-import static jmri.jmris.json.JSON.LOAD;
-import static jmri.jmris.json.JSON.LOCATION;
-import static jmri.jmris.json.JSON.LOCATIONS;
-import static jmri.jmris.json.JSON.LOCATION_ID;
-import static jmri.jmris.json.JSON.LOCKABLE;
-import static jmri.jmris.json.JSON.MAX_SPD_PCT;
-import static jmri.jmris.json.JSON.MEMORY;
-import static jmri.jmris.json.JSON.MESSAGE;
-import static jmri.jmris.json.JSON.METADATA;
-import static jmri.jmris.json.JSON.MFG;
-import static jmri.jmris.json.JSON.MODEL;
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.NETWORK_SERVICE;
-import static jmri.jmris.json.JSON.NODE;
-import static jmri.jmris.json.JSON.NULL;
-import static jmri.jmris.json.JSON.NUMBER;
-import static jmri.jmris.json.JSON.OFF;
-import static jmri.jmris.json.JSON.ON;
-import static jmri.jmris.json.JSON.OWNER;
-import static jmri.jmris.json.JSON.PANEL;
-import static jmri.jmris.json.JSON.PORT;
-import static jmri.jmris.json.JSON.POSITION;
-import static jmri.jmris.json.JSON.POWER;
-import static jmri.jmris.json.JSON.PREFIX;
-import static jmri.jmris.json.JSON.RAILROAD;
-import static jmri.jmris.json.JSON.RATE;
-import static jmri.jmris.json.JSON.REMOVE_COMMENT;
-import static jmri.jmris.json.JSON.REPORT;
-import static jmri.jmris.json.JSON.REPORTER;
-import static jmri.jmris.json.JSON.RETURN_WHEN_EMPTY;
-import static jmri.jmris.json.JSON.ROAD;
-import static jmri.jmris.json.JSON.ROSTER;
-import static jmri.jmris.json.JSON.ROSTER_ENTRY;
-import static jmri.jmris.json.JSON.ROSTER_GROUP;
-import static jmri.jmris.json.JSON.ROSTER_GROUPS;
-import static jmri.jmris.json.JSON.ROUTE;
-import static jmri.jmris.json.JSON.ROUTE_ID;
-import static jmri.jmris.json.JSON.SELECTED_ICON;
-import static jmri.jmris.json.JSON.SENSOR;
-import static jmri.jmris.json.JSON.SEQUENCE;
-import static jmri.jmris.json.JSON.SHUNTING_FUNCTION;
-import static jmri.jmris.json.JSON.SIGNAL_HEAD;
-import static jmri.jmris.json.JSON.SIGNAL_MAST;
-import static jmri.jmris.json.JSON.SIZE_LIMIT;
-import static jmri.jmris.json.JSON.STATE;
-import static jmri.jmris.json.JSON.STATUS;
-import static jmri.jmris.json.JSON.STATUS_CODE;
-import static jmri.jmris.json.JSON.SYSTEM_CONNECTION;
-import static jmri.jmris.json.JSON.TERMINATES_LOCATION;
-import static jmri.jmris.json.JSON.THROWN;
-import static jmri.jmris.json.JSON.TIME;
-import static jmri.jmris.json.JSON.TOGGLE;
-import static jmri.jmris.json.JSON.TOKEN_HELD;
-import static jmri.jmris.json.JSON.TRACK;
-import static jmri.jmris.json.JSON.TRAIN;
-import static jmri.jmris.json.JSON.TURNOUT;
-import static jmri.jmris.json.JSON.TYPE;
-import static jmri.jmris.json.JSON.UNKNOWN;
-import static jmri.jmris.json.JSON.URL;
-import static jmri.jmris.json.JSON.USERNAME;
-import static jmri.jmris.json.JSON.UTILITY;
-import static jmri.jmris.json.JSON.VALUE;
-import static jmri.jmris.json.JSON.WEIGHT;
 import jmri.jmrit.consisttool.ConsistFile;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
@@ -165,7 +63,6 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
-import static jmri.jmrit.operations.trains.TrainCommon.splitString;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -174,17 +71,23 @@ import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.profile.ProfileManager;
+import jmri.server.json.JsonException;
+import jmri.server.json.util.JsonUtilHttpService;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
-import jmri.web.server.WebServerManager;
+import jmri.web.server.WebServerPreferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * A set of static methods for converting certain objects to/from JSON
- * representations
+ * representations.
+ *
+ * All methods in this class will eventually be deprecated in favor of the
+ * implementations of the {@code do*} methods in
+ * {@link jmri.server.json.JsonHttpService}.
  *
  * @author rhwood
  */
@@ -296,7 +199,6 @@ public class JsonUtil {
      * @param data    The JSON representation of the consist. See
      * {@link #getConsist(Locale, jmri.DccLocoAddress) } for the
      *                JSON structure.
-     * @throws JsonException
      */
     static public void putConsist(Locale locale, DccLocoAddress address, JsonNode data) throws JsonException {
         try {
@@ -315,7 +217,6 @@ public class JsonUtil {
      * @param locale The locale to throw exceptions in.
      * @return JSON array of consists as in the structure returned by
      * {@link #getConsist(Locale, jmri.DccLocoAddress) }
-     * @throws JsonException
      */
     static public JsonNode getConsists(Locale locale) throws JsonException {
         try {
@@ -350,7 +251,6 @@ public class JsonUtil {
      * @param locale  the locale to throw exceptions in
      * @param address the consist address
      * @param data    the consist as a JsonObject
-     * @throws JsonException
      */
     static public void setConsist(Locale locale, DccLocoAddress address, JsonNode data) throws JsonException {
         try {
@@ -407,6 +307,12 @@ public class JsonUtil {
         return root;
     }
 
+    /*
+     * deprecated in favor of the implementations of the {@code do*} methods in
+     * {@link jmri.server.json.JsonHttpService}.
+     * @deprecated since 4.5.1
+     */
+    @Deprecated
     static public JsonNode getLight(Locale locale, String name) throws JsonException {
         try {
             ObjectNode root = mapper.createObjectNode();
@@ -434,6 +340,12 @@ public class JsonUtil {
         }
     }
 
+    /*
+     * deprecated in favor of the implementations of the {@code do*} methods in
+     * {@link jmri.server.json.JsonHttpService}.
+     * @deprecated since 4.5.1
+     */
+    @Deprecated
     static public JsonNode getLights(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.lightManagerInstance().getSystemNameList()) {
@@ -442,6 +354,12 @@ public class JsonUtil {
         return root;
     }
 
+    /*
+     * deprecated in favor of the implementations of the {@code do*} methods in
+     * {@link jmri.server.json.JsonHttpService}.
+     * @deprecated since 4.5.1
+     */
+    @Deprecated
     static public void putLight(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             InstanceManager.lightManagerInstance().provideLight(name);
@@ -451,6 +369,12 @@ public class JsonUtil {
         setLight(locale, name, data);
     }
 
+    /*
+     * deprecated in favor of the implementations of the {@code do*} methods in
+     * {@link jmri.server.json.JsonHttpService}.
+     * @deprecated since 4.5.1
+     */
+    @Deprecated
     static public void setLight(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             Light light = InstanceManager.lightManagerInstance().getBySystemName(name);
@@ -505,6 +429,12 @@ public class JsonUtil {
         return root;
     }
 
+    /*
+     * deprecated in favor of the implementations of the {@code do*} methods in
+     * {@link jmri.server.json.JsonHttpService}.
+     * @deprecated since 4.5.1
+     */
+    @Deprecated
     static public JsonNode getMemories(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.memoryManagerInstance().getSystemNameList()) {
@@ -513,6 +443,12 @@ public class JsonUtil {
         return root;
     }
 
+    /*
+     * deprecated in favor of the implementations of the {@code do*} methods in
+     * {@link jmri.server.json.JsonHttpService}.
+     * @deprecated since 4.5.1
+     */
+    @Deprecated
     static public JsonNode getMemory(Locale locale, String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, MEMORY);
@@ -534,6 +470,12 @@ public class JsonUtil {
         return root;
     }
 
+    /*
+     * deprecated in favor of the implementations of the {@code do*} methods in
+     * {@link jmri.server.json.JsonHttpService}.
+     * @deprecated since 4.5.1
+     */
+    @Deprecated
     static public void putMemory(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             InstanceManager.memoryManagerInstance().provideMemory(name);
@@ -543,6 +485,12 @@ public class JsonUtil {
         setMemory(locale, name, data);
     }
 
+    /*
+     * deprecated in favor of the implementations of the {@code do*} methods in
+     * {@link jmri.server.json.JsonHttpService}.
+     * @deprecated since 4.5.1
+     */
+    @Deprecated
     static public void setMemory(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             Memory memory = InstanceManager.memoryManagerInstance().getMemory(name);
@@ -565,6 +513,15 @@ public class JsonUtil {
         }
     }
 
+    /**
+     *
+     * @param locale The client's Locale.
+     * @param name   The metadata element to get.
+     * @return JSON metadata element.
+     * @throws JsonException if name is not a recognized metadata element.
+     * @deprecated since 4.5.2
+     */
+    @Deprecated
     static public JsonNode getMetadata(Locale locale, String name) throws JsonException {
         String metadata = Metadata.getBySystemName(name);
         ObjectNode root;
@@ -581,6 +538,15 @@ public class JsonUtil {
         return root;
     }
 
+    /**
+     *
+     * @param locale The client's Locale.
+     * @return Array of JSON metadata elements.
+     * @throws JsonException if thrown by
+     *                       {@link #getMetadata(java.util.Locale, java.lang.String)}.
+     * @deprecated since 4.5.2
+     */
+    @Deprecated
     static public JsonNode getMetadata(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         List<String> names = Metadata.getSystemNameList();
@@ -593,7 +559,7 @@ public class JsonUtil {
     static public ObjectNode getPanel(Locale locale, Editor editor, String format) {
         if (editor.getAllowInFrameServlet()) {
             String title = ((JmriJFrame) editor.getTargetPanel().getTopLevelAncestor()).getTitle();
-            if (!title.isEmpty() && !WebServerManager.getWebServerPreferences().getDisallowedFrames().contains(title)) {
+            if (!title.isEmpty() && !Arrays.asList(WebServerPreferences.getDefault().getDisallowedFrames()).contains(title)) {
                 String type = PANEL;
                 String name = "Panel";
                 if (editor instanceof ControlPanelEditor) {
@@ -648,7 +614,7 @@ public class JsonUtil {
         root.put(TYPE, POWER);
         ObjectNode data = root.putObject(DATA);
         try {
-            switch (InstanceManager.powerManagerInstance().getPower()) {
+            switch (InstanceManager.getDefault(jmri.PowerManager.class).getPower()) {
                 case PowerManager.OFF:
                     data.put(STATE, OFF);
                     break;
@@ -675,10 +641,10 @@ public class JsonUtil {
         try {
             switch (state) {
                 case OFF:
-                    InstanceManager.powerManagerInstance().setPower(PowerManager.OFF);
+                    InstanceManager.getDefault(jmri.PowerManager.class).setPower(PowerManager.OFF);
                     break;
                 case ON:
-                    InstanceManager.powerManagerInstance().setPower(PowerManager.ON);
+                    InstanceManager.getDefault(jmri.PowerManager.class).setPower(PowerManager.ON);
                     break;
                 case UNKNOWN:
                     // quietly ignore
@@ -695,7 +661,7 @@ public class JsonUtil {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, RAILROAD);
         ObjectNode data = root.putObject(DATA);
-        data.put(NAME, WebServerManager.getWebServerPreferences().getRailRoadName());
+        data.put(NAME, WebServerPreferences.getDefault().getRailRoadName());
         return root;
     }
 
@@ -703,7 +669,7 @@ public class JsonUtil {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, REPORTER);
         ObjectNode data = root.putObject(DATA);
-        Reporter reporter = InstanceManager.reporterManagerInstance().getReporter(name);
+        Reporter reporter = InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(name);
         data.put(NAME, reporter.getSystemName());
         data.put(USERNAME, reporter.getUserName());
         data.put(STATE, reporter.getState());
@@ -715,7 +681,7 @@ public class JsonUtil {
 
     static public JsonNode getReporters(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
-        for (String name : InstanceManager.reporterManagerInstance().getSystemNameList()) {
+        for (String name : InstanceManager.getDefault(jmri.ReporterManager.class).getSystemNameList()) {
             root.add(getReporter(locale, name));
         }
         return root;
@@ -723,7 +689,7 @@ public class JsonUtil {
 
     static public void putReporter(Locale locale, String name, JsonNode data) throws JsonException {
         try {
-            InstanceManager.reporterManagerInstance().provideReporter(name);
+            InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter(name);
         } catch (Exception ex) {
             throw new JsonException(500, Bundle.getMessage(locale, "ErrorCreatingObject", REPORTER, name));
         }
@@ -732,7 +698,7 @@ public class JsonUtil {
 
     static public void setReporter(Locale locale, String name, JsonNode data) throws JsonException {
         try {
-            Reporter reporter = InstanceManager.reporterManagerInstance().getBySystemName(name);
+            Reporter reporter = InstanceManager.getDefault(jmri.ReporterManager.class).getBySystemName(name);
             if (data.path(USERNAME).isTextual()) {
                 reporter.setUserName(data.path(USERNAME).asText());
             }
@@ -740,9 +706,9 @@ public class JsonUtil {
                 reporter.setComment(data.path(COMMENT).asText());
             }
             if (data.path(REPORT).isNull()) {
-                InstanceManager.reporterManagerInstance().getReporter(name).setReport(null);
+                InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(name).setReport(null);
             } else {
-                InstanceManager.reporterManagerInstance().getReporter(name).setReport(data.path(REPORT).asText());
+                InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(name).setReport(data.path(REPORT).asText());
             }
         } catch (NullPointerException ex) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", REPORTER, name));
@@ -756,10 +722,11 @@ public class JsonUtil {
      * folder of the JMRI server. It is expected that clients will fill in the
      * server IP address and port as they know it to be.
      *
-     * @param locale
-     * @param id     The id of an entry in the roster.
+     * @param id The id of an entry in the roster.
      * @return a roster entry in JSON notation
+     * @deprecated since 4.3.5
      */
+    @Deprecated
     static public JsonNode getRosterEntry(Locale locale, String id) {
         return JsonUtil.getRosterEntry(locale, Roster.instance().getEntryForId(id));
     }
@@ -771,10 +738,11 @@ public class JsonUtil {
      * folder of the JMRI server. It is expected that clients will fill in the
      * server IP address and port as they know it to be.
      *
-     * @param locale
-     * @param re     A RosterEntry that may or may not be in the roster.
+     * @param re A RosterEntry that may or may not be in the roster.
      * @return a roster entry in JSON notation
+     * @deprecated since 4.3.5
      */
+    @Deprecated
     static public JsonNode getRosterEntry(Locale locale, RosterEntry re) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ROSTER_ENTRY);
@@ -810,6 +778,15 @@ public class JsonUtil {
         return root;
     }
 
+    /**
+     *
+     * @param locale The locale of the requesting client
+     * @param data   A JsonNode optionally containing a group name in the
+     *               "group" node
+     * @return the Roster as a Json Array
+     * @deprecated since 4.3.5
+     */
+    @Deprecated
     static public JsonNode getRoster(Locale locale, JsonNode data) {
         String group = (!data.path(GROUP).isMissingNode()) ? data.path(GROUP).asText() : null;
         if (Roster.ALLENTRIES.equals(group)) {
@@ -829,6 +806,13 @@ public class JsonUtil {
         return root;
     }
 
+    /**
+     *
+     * @param locale The locale of the requesting client
+     * @return the list of Roster groups
+     * @deprecated since 4.3.5
+     */
+    @Deprecated
     static public JsonNode getRosterGroups(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         root.add(getRosterGroup(locale, Roster.ALLENTRIES));
@@ -838,6 +822,14 @@ public class JsonUtil {
         return root;
     }
 
+    /**
+     *
+     * @param locale The locale of the requesting client
+     * @param name   The name of the group
+     * @return A description of the group including its name and size
+     * @deprecated since 4.3.5
+     */
+    @Deprecated
     static public JsonNode getRosterGroup(Locale locale, String name) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ROSTER_GROUP);
@@ -847,12 +839,13 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public JsonNode getRoute(Locale locale, String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ROUTE);
         ObjectNode data = root.putObject(DATA);
         try {
-            Route route = InstanceManager.routeManagerInstance().getRoute(name);
+            Route route = InstanceManager.getDefault(jmri.RouteManager.class).getRoute(name);
             SensorManager s = InstanceManager.sensorManagerInstance();
             data.put(NAME, route.getSystemName());
             data.put(USERNAME, route.getUserName());
@@ -884,9 +877,10 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public JsonNode getRoutes(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
-        for (String name : InstanceManager.routeManagerInstance().getSystemNameList()) {
+        for (String name : InstanceManager.getDefault(jmri.RouteManager.class).getSystemNameList()) {
             root.add(getRoute(locale, name));
         }
         return root;
@@ -899,12 +893,12 @@ public class JsonUtil {
      * @param locale The locale to throw exceptions in
      * @param name   The name of the route
      * @param data   A JsonNode containing route attributes to set
-     * @throws JsonException
      * @see jmri.Route#TOGGLE
      */
+    @Deprecated
     static public void setRoute(Locale locale, String name, JsonNode data) throws JsonException {
         try {
-            Route route = InstanceManager.routeManagerInstance().getRoute(name);
+            Route route = InstanceManager.getDefault(jmri.RouteManager.class).getRoute(name);
             if (data.path(USERNAME).isTextual()) {
                 route.setUserName(data.path(USERNAME).asText());
             }
@@ -930,6 +924,7 @@ public class JsonUtil {
         }
     }
 
+    @Deprecated
     static public JsonNode getSensor(Locale locale, String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, SENSOR);
@@ -962,6 +957,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public JsonNode getSensors(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.sensorManagerInstance().getSystemNameList()) {
@@ -970,6 +966,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public void putSensor(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             InstanceManager.sensorManagerInstance().provideSensor(name);
@@ -979,6 +976,7 @@ public class JsonUtil {
         setSensor(locale, name, data);
     }
 
+    @Deprecated
     static public void setSensor(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(name);
@@ -1017,7 +1015,7 @@ public class JsonUtil {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, SIGNAL_HEAD);
         ObjectNode data = root.putObject(DATA);
-        SignalHead signalHead = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+        SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name);
         try {
             data.put(NAME, name);
             data.put(USERNAME, signalHead.getUserName());
@@ -1041,7 +1039,7 @@ public class JsonUtil {
 
     static public JsonNode getSignalHeads(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
-        for (String name : InstanceManager.signalHeadManagerInstance().getSystemNameList()) {
+        for (String name : InstanceManager.getDefault(jmri.SignalHeadManager.class).getSystemNameList()) {
             root.add(getSignalHead(locale, name));
         }
         return root;
@@ -1049,7 +1047,7 @@ public class JsonUtil {
 
     static public void setSignalHead(Locale locale, String name, JsonNode data) throws JsonException {
         try {
-            SignalHead signalHead = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+            SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name);
             if (data.path(USERNAME).isTextual()) {
                 signalHead.setUserName(data.path(USERNAME).asText());
             }
@@ -1080,7 +1078,7 @@ public class JsonUtil {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, SIGNAL_MAST);
         ObjectNode data = root.putObject(DATA);
-        SignalMast signalMast = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+        SignalMast signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
         try {
             data.put(NAME, name);
             data.put(USERNAME, signalMast.getUserName());
@@ -1111,7 +1109,7 @@ public class JsonUtil {
 
     static public JsonNode getSignalMasts(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
-        for (String name : InstanceManager.signalMastManagerInstance().getSystemNameList()) {
+        for (String name : InstanceManager.getDefault(jmri.SignalMastManager.class).getSystemNameList()) {
             root.add(getSignalMast(locale, name));
         }
         return root;
@@ -1120,7 +1118,7 @@ public class JsonUtil {
     // TODO: test for HELD and DARK aspects
     static public void setSignalMast(Locale locale, String name, JsonNode data) throws JsonException {
         try {
-            SignalMast signalMast = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+            SignalMast signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
             if (data.path(USERNAME).isTextual()) {
                 signalMast.setUserName(data.path(USERNAME).asText());
             }
@@ -1139,6 +1137,14 @@ public class JsonUtil {
         }
     }
 
+    /**
+     *
+     * @param locale the client's Locale.
+     * @return the JSON networkServices message.
+     * @deprecated since 4.5.2; use
+     * {@link jmri.server.json.util.JsonUtilHttpService#getSystemConnections(java.util.Locale)}.
+     */
+    @Deprecated
     static public JsonNode getSystemConnections(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         ArrayList<String> prefixes = new ArrayList<String>();
@@ -1185,9 +1191,9 @@ public class JsonUtil {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, TIME);
         ObjectNode data = root.putObject(DATA);
-        data.put(TIME, new ISO8601DateFormat().format(InstanceManager.timebaseInstance().getTime()));
-        data.put(RATE, InstanceManager.timebaseInstance().getRate());
-        data.put(STATE, InstanceManager.timebaseInstance().getRun() ? ON : OFF);
+        data.put(TIME, new ISO8601DateFormat().format(InstanceManager.getDefault(jmri.Timebase.class).getTime()));
+        data.put(RATE, InstanceManager.getDefault(jmri.Timebase.class).getRate());
+        data.put(STATE, InstanceManager.getDefault(jmri.Timebase.class).getRun() ? ON : OFF);
         return root;
     }
 
@@ -1195,13 +1201,13 @@ public class JsonUtil {
     static public void setTime(Locale locale, JsonNode data) throws JsonException {
         try {
             if (data.path(TIME).isTextual()) {
-                InstanceManager.timebaseInstance().setTime(new ISO8601DateFormat().parse(data.path(TIME).asText()));
+                InstanceManager.getDefault(jmri.Timebase.class).setTime(new ISO8601DateFormat().parse(data.path(TIME).asText()));
             }
             if (data.path(RATE).isDouble()) {
-                InstanceManager.clockControlInstance().setRate(data.path(RATE).asDouble());
+                InstanceManager.getDefault(jmri.ClockControl.class).setRate(data.path(RATE).asDouble());
             }
             if (data.path(STATE).isInt()) {
-                InstanceManager.timebaseInstance().setRun(data.path(STATE).asInt() == ON);
+                InstanceManager.getDefault(jmri.Timebase.class).setRun(data.path(STATE).asInt() == ON);
             }
         } catch (ParseException ex) {
             log.error("Time \"{}\" not in ISO 8601 date format", data.path(TIME).asText());
@@ -1243,9 +1249,7 @@ public class JsonUtil {
             if (train.getLeadEngine() != null) {
                 data.put(LEAD_ENGINE, train.getLeadEngine().toString());
             }
-            if (train.getCabooseRoadAndNumber() != null) {
-                data.put(CABOOSE, train.getCabooseRoadAndNumber());
-            }
+            data.put(CABOOSE, train.getCabooseRoadAndNumber());
 
         } catch (NullPointerException e) {
             log.error("Unable to get train id [{}].", id);
@@ -1273,7 +1277,8 @@ public class JsonUtil {
      * @param locale The locale to throw exceptions in.
      * @param id     The id of the train.
      * @param data   Train data to change.
-     * @throws JsonException
+     * @throws jmri.server.json.JsonException if the train cannot move to the
+     *                                        location in data.
      */
     static public void setTrain(Locale locale, String id, JsonNode data) throws JsonException {
         Train train = TrainManager.instance().getTrainById(id);
@@ -1372,6 +1377,15 @@ public class JsonUtil {
         }
     }
 
+    /**
+     *
+     * @param locale the client's Locale.
+     * @param type   the requested type.
+     * @return JSON error message.
+     * @deprecated since 4.5.2; throw a {@link jmri.server.json.JsonException}
+     * instead.
+     */
+    @Deprecated
     static public JsonNode getUnknown(Locale locale, String type) {
         return handleError(404, Bundle.getMessage(locale, "ErrorUnknownType", type));
     }
@@ -1415,6 +1429,16 @@ public class JsonUtil {
         return rlan;  //return array of routeLocations
     }
 
+    /**
+     *
+     * @param locale    the client's Locale
+     * @param heartbeat seconds before which no communications from client will
+     *                  cause connection to be broken
+     * @return a JSON hello message
+     * @deprecated since 4.5.2; use
+     * {@link jmri.server.json.util.JsonUtilHttpService#getHello(java.util.Locale, int)}.
+     */
+    @Deprecated
     static public JsonNode getHello(Locale locale, int heartbeat) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, HELLO);
@@ -1422,12 +1446,20 @@ public class JsonUtil {
         data.put(JMRI, jmri.Version.name());
         data.put(JSON, JSON_PROTOCOL_VERSION);
         data.put(HEARTBEAT, Math.round(heartbeat * 0.9f));
-        data.put(RAILROAD, WebServerManager.getWebServerPreferences().getRailRoadName());
+        data.put(RAILROAD, WebServerPreferences.getDefault().getRailRoadName());
         data.put(NODE, NodeIdentity.identity());
-        data.put(ACTIVE_PROFILE, ProfileManager.defaultManager().getActiveProfile().getName());
+        data.put(ACTIVE_PROFILE, ProfileManager.getDefault().getActiveProfile().getName());
         return root;
     }
 
+    /**
+     *
+     * @param locale the client's Locale.
+     * @return the JSON networkServices message.
+     * @deprecated since 4.5.2; use
+     * {@link jmri.server.json.util.JsonUtilHttpService#getNetworkServices(java.util.Locale)}.
+     */
+    @Deprecated
     static public JsonNode getNetworkServices(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         for (ZeroConfService service : ZeroConfService.allServices()) {
@@ -1446,6 +1478,14 @@ public class JsonUtil {
         return root;
     }
 
+    /**
+     *
+     * @param locale the client's Locale
+     * @return the JSON node message
+     * @deprecated since 4.5.2; use
+     * {@link jmri.server.json.util.JsonUtilHttpService#getNode(java.util.Locale)}.
+     */
+    @Deprecated
     public static JsonNode getNode(Locale locale) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, NODE);
@@ -1463,9 +1503,6 @@ public class JsonUtil {
      * JSON errors should be handled by throwing a
      * {@link jmri.server.json.JsonException}.
      *
-     * @param code
-     * @param message
-     * @return
      * @deprecated
      */
     @Deprecated
@@ -1485,17 +1522,14 @@ public class JsonUtil {
      * Type may be <code>L</code> for long or <code>S</code> for short. If the
      * type is not specified, type is assumed to be short.
      *
-     * @param address
      * @return The DccLocoAddress for address.
+     * @deprecated since 4.5.3; use
+     * {@link jmri.server.json.util.JsonUtilHttpService#addressForString(java.lang.String)}
+     * instead.
      */
+    @Deprecated
     static public DccLocoAddress addressForString(String address) {
-        String[] components = address.split("[()]");
-        int number = Integer.parseInt(components[0]);
-        boolean isLong = false;
-        if (components.length > 1 && "L".equals(components[1].toUpperCase())) {
-            isLong = true;
-        }
-        return new DccLocoAddress(number, isLong);
+        return JsonUtilHttpService.addressForString(address);
     }
 
     static public ObjectNode getCar(Car car) {

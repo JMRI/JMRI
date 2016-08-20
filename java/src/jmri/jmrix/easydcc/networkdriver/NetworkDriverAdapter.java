@@ -21,7 +21,7 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
 
     public NetworkDriverAdapter() {
         super(new jmri.jmrix.easydcc.EasyDccSystemConnectionMemo("E", "EasyDCC via Network"));
-        setManufacturer(jmri.jmrix.DCCManufacturerList.EASYDCC);
+        setManufacturer(jmri.jmrix.easydcc.EasyDccConnectionTypeList.EASYDCC);
     }
 
     /**

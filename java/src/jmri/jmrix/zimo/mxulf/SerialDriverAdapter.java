@@ -1,15 +1,3 @@
-/**
- * mxulfAdapter.java
- *
- * Title:	mxulfAdapter Description:	Provide access to Zimo's MX-1 on an attached
- * serial comm port. Normally controlled by the zimo.mxulf.mxulfFrame class.
- *
- * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision: 22821 $
- *
- * Adapted for use with Zimo MXULF by Kevin Dickerson
- *
- */
 package jmri.jmrix.zimo.mxulf;
 
 import java.io.DataInputStream;
@@ -31,11 +19,20 @@ import purejavacomm.SerialPortEvent;
 import purejavacomm.SerialPortEventListener;
 import purejavacomm.UnsupportedCommOperationException;
 
+/**
+ * Provide access to Zimo's MX-1 on an attached
+ * serial comm port. Normally controlled by the zimo.mxulf.mxulfFrame class.
+ *
+ * @author	Bob Jacobsen Copyright (C) 2002
+ *
+ * Adapted for use with Zimo MXULF by Kevin Dickerson
+ *
+ */
 public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix.SerialPortAdapter {
 
     public SerialDriverAdapter() {
         super(new Mx1SystemConnectionMemo());
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.ZIMO;
+        this.manufacturerName = jmri.jmrix.zimo.Mx1ConnectionTypeList.ZIMO;
         option1Name = "FlowControl";
         options.put(option1Name, new Option("MXULF connection uses : ", validOption1));
         this.getSystemConnectionMemo().setConnectionType(Mx1SystemConnectionMemo.MXULF);
@@ -70,12 +67,7 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -202,9 +194,6 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
 
         // start operation
         packets.startThreads();
-
-        jmri.jmrix.zimo.ActiveFlag.setActive();
-
     }
 
 // base class methods for the ZimoPortController interface

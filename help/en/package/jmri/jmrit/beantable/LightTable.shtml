@@ -46,7 +46,7 @@ is read from a configuration file, the Light is 'activated'; it is set up
 to monitor automatically any changes in state of its control Sensor(s), 
 Turnout, or Fast Clock. When the controlling Sensor, Turnout, or Fast Clock
 changes in a user-specified way, the Light is switched on or off. Lights 
-can also be controlled by <a href="Logix.shtml">Logix</a>, if more 
+can also be controlled by <a href="LogixTable.shtml">Logix</a>, if more 
 complicated control logic is needed.</p>
 
 <p>The Light Table contains an 'Enabled' column. For a Light to be 
@@ -75,7 +75,7 @@ may be controlled by two Sensors, On when either of the two Sensors is
 Active (or Inactive). Two sensor control is useful in controlling layout sounds 
 or crossing gates.  A Light may also be controlled from a Logix, as the 
 action of one of its conditionals.  If you need more powerful logic to 
-control your Light, consider using a <a href="Logix.shtml">Logix</a>.</p>
+control your Light, consider using a <a href="LogixTable.shtml">Logix</a>.</p>
 
 <p>Note that Enabled/Disabled applies only to a Light's automated
 control mechanism.  A 'Disabled' state will not prevent a Light

@@ -15,10 +15,6 @@ import org.slf4j.LoggerFactory;
 
 public class EditableResizableImagePanel extends ResizableImagePanel implements FileDrop.Listener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8966988787277300571L;
     private transient MyMouseAdapter myMouseAdapter = null;
     private String dropFolder;
 
@@ -59,7 +55,6 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
      * used image path top folder when dnd enabled, also enable contextual menu
      * with remove entry
      *
-     * @param dnd
      */
     public void setDnd(boolean dnd) {
         if (dnd) {

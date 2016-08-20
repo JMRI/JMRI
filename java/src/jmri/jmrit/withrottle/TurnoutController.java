@@ -20,7 +20,7 @@ public class TurnoutController extends AbstractController implements PropertyCha
     private TurnoutManager manager = null;
 
     public TurnoutController() {
-        manager = InstanceManager.turnoutManagerInstance();
+        manager = InstanceManager.getOptionalDefault(jmri.TurnoutManager.class);
         if (manager == null) {
             log.info("No turnout manager instance.");
             isValid = false;
@@ -142,7 +142,6 @@ public class TurnoutController extends AbstractController implements PropertyCha
 
     /**
      *
-     * @param evt
      */
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("KnownState")) {

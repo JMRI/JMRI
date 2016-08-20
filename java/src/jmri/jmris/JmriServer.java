@@ -1,4 +1,3 @@
-// JmriServer.java
 package jmri.jmris;
 
 import java.io.DataInputStream;
@@ -86,8 +85,8 @@ public class JmriServer {
             this.listenThread.start();
             this.advertise();
         }
-        if (this.shutDownTask != null && InstanceManager.shutDownManagerInstance() != null) {
-            InstanceManager.shutDownManagerInstance().register(this.shutDownTask);
+        if (this.shutDownTask != null && InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+            InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
         }
     }
 
@@ -113,8 +112,8 @@ public class JmriServer {
         }
         this.listenThread = null;
         this.service.stop();
-        if (this.shutDownTask != null && InstanceManager.shutDownManagerInstance() != null) {
-            InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
+        if (this.shutDownTask != null && InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+            InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
         }
     }
 

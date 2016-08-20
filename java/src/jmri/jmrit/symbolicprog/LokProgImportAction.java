@@ -1,4 +1,3 @@
-// LokProgImportAction.java
 package jmri.jmrit.symbolicprog;
 
 import java.io.File;
@@ -11,7 +10,6 @@ import javax.swing.JLabel;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author	Dave Heap Copyright (C) 2015
- * @version $Revision: 22821 $
  */
 public class LokProgImportAction extends GenericImportAction {
 

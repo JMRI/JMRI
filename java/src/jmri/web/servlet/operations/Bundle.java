@@ -1,11 +1,10 @@
-// Bundle.java
 package jmri.web.servlet.operations;
 
-import javax.annotation.CheckReturnValue;
-import javax.annotation.ParametersAreNonnullByDefault;
-import javax.annotation.Nullable;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @CheckReturnValue
@@ -111,5 +110,3 @@ public class Bundle extends jmri.web.servlet.Bundle {
     }
 
 }
-
-/* @(#)Bundle.java */

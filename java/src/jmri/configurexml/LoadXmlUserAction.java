@@ -1,4 +1,3 @@
-// LoadXmlConfigAction.java
 package jmri.configurexml;
 
 import java.awt.event.ActionEvent;
@@ -19,17 +18,12 @@ import org.slf4j.LoggerFactory;
  * information stored in configuration files.
  *
  * @author Bob Jacobsen Copyright (C) 2002
- * @version $Revision$
  * @see jmri.jmrit.XmlFile
  */
 public class LoadXmlUserAction extends LoadXmlConfigAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5470543428367047464L;
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
-    static File currentFile = null;
+    static private File currentFile = null;
 
     public LoadXmlUserAction() {
         this(rb.getString("MenuItemLoad"));
@@ -43,13 +37,13 @@ public class LoadXmlUserAction extends LoadXmlConfigAction {
     public void actionPerformed(ActionEvent e) {
         JFileChooser userFileChooser = getUserFileChooser();
         userFileChooser.setDialogType(javax.swing.JFileChooser.OPEN_DIALOG);
-        userFileChooser.setApproveButtonText(rb.getString("MenuItemLoad"));
-        userFileChooser.setDialogTitle(rb.getString("MenuItemLoad"));
+        userFileChooser.setApproveButtonText(rb.getString("LoadPanelTitle"));
+        userFileChooser.setDialogTitle(rb.getString("LoadPanelTitle"));
 
         boolean results = loadFile(userFileChooser);
         if (results) {
             log.debug("load was successful");
-            currentFile = userFileChooser.getSelectedFile();
+            setCurrentFile(userFileChooser.getSelectedFile());
         } else {
             log.debug("load failed");
             JOptionPane.showMessageDialog(null,
@@ -57,12 +51,19 @@ public class LoadXmlUserAction extends LoadXmlConfigAction {
                     + rb.getString("CheckPreferences") + "\n"
                     + rb.getString("ConsoleWindowHasInfo"),
                     rb.getString("PanelLoadError"), JOptionPane.ERROR_MESSAGE);
-            currentFile = null;
+            setCurrentFile(null);
         }
     }
-
+    
+    /**
+     * Used by e.g. jmri.jmrit.mailreport.ReportPanel et al to know last load
+     */
     public static File getCurrentFile() {
         return currentFile;
+    }
+
+    private static void setCurrentFile(File arg) {
+        currentFile = arg;
     }
 
     // initialize logging

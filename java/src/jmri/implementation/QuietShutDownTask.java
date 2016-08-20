@@ -1,4 +1,3 @@
-// QuietShutDownTask.java
 package jmri.implementation;
 
 
@@ -6,24 +5,15 @@ package jmri.implementation;
  * Provides a base to perform a shutdown task without user-intervention.
  *
  * @author Matthew Harris Copyright (c) 2008
- * @version $Revision$
  */
-public class QuietShutDownTask extends AbstractShutDownTask {
+public abstract class QuietShutDownTask extends AbstractShutDownTask {
 
     /**
      * Constructor specifies the shutdown task name
+     * @param name Name to give this task
      */
     public QuietShutDownTask(String name) {
         super(name);
-    }
-
-    /**
-     * Take the necessary action.
-     *
-     * @return true if the shutdown should continue, false to abort.
-     */
-    public boolean execute() {
-        return doAction();
     }
 
     /**
@@ -31,11 +21,11 @@ public class QuietShutDownTask extends AbstractShutDownTask {
      * problem. This is a dummy implementation, intended to be overloaded.
      *
      * @return true if ready to shutdown, false to end shutdown
+     * @deprecated Since 4.3.6; override {@link #execute()} directly
      */
+    @Deprecated
     protected boolean doAction() {
         return true;
     }
 
 }
-
-/* @(#)QuietShutDownTask.java */

@@ -1,4 +1,3 @@
-// NcePacketGenPanel.java
 package jmri.jmrix.nce.packetgen;
 
 import java.awt.Dimension;
@@ -17,14 +16,8 @@ import jmri.util.StringUtil;
  * @author	Ken Cameron	Copyright (C) 2010 derived from:
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision$
  */
 public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4820259525840330859L;
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.packetgen.NcePacketGenBundle");
 
@@ -216,11 +209,6 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1797965223160428671L;
 
         public Default() {
             super("Open NCE Send Binary Command",

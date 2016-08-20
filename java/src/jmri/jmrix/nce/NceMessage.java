@@ -156,7 +156,6 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * enter programming track mode
      *
-     * @param tc
      */
     public static NceMessage getProgMode(NceTrafficController tc) {
         // test if supported on current connection
@@ -220,8 +219,6 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Read Paged mode CV on programming track
      *
-     * @param tc
-     * @param cv
      */
     public static NceMessage getReadPagedCV(NceTrafficController tc, int cv) {
         // test if supported on current connection
@@ -254,9 +251,6 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * write paged mode CV to programming track
      *
-     * @param tc
-     * @param cv
-     * @param val
      */
     public static NceMessage getWritePagedCV(NceTrafficController tc, int cv, int val) {
         // test if supported on current connection

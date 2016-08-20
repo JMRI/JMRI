@@ -1,4 +1,3 @@
-// InstallDecoderURLAction.java
 package jmri.jmrit.decoderdefn;
 
 import java.awt.event.ActionEvent;
@@ -25,15 +24,9 @@ import org.slf4j.LoggerFactory;
  * Install decoder definition from URL
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  */
 public class InstallDecoderURLAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2460646302372383168L;
 
     public InstallDecoderURLAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -179,7 +172,7 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
             }
             return true;
 
-        } catch (Exception ex) {
+        } catch (java.io.IOException | org.jdom2.JDOMException ex) {
             log.debug("" + ex);
             JOptionPane.showMessageDialog(who, rb.getString("ParseError"));
             return false;

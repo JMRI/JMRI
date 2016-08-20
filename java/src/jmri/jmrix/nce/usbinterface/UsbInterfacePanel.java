@@ -24,11 +24,9 @@ import org.slf4j.LoggerFactory;
  * Panel for configuring a NCE USB interface
  *
  * @author	ken cameron Copyright (C) 2013
- * @version $Revision: 1 $
  */
 public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
 
-    private static final long serialVersionUID = -4800241983719851490L;
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.usbinterface.UsbInterfaceBundle");
 
     private int replyLen = 0;						// expected byte length

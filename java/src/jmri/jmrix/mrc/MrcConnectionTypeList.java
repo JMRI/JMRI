@@ -11,11 +11,18 @@ package jmri.jmrix.mrc;
  */
 public class MrcConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String MRC = "MRC";
+
     @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.mrc.serialdriver.ConnectionConfig",
             "jmri.jmrix.mrc.simulator.ConnectionConfig",}; //IN18N
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{MRC};
     }
 
 }

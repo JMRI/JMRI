@@ -15,9 +15,15 @@ public class TrainsScheduleEditAction extends AbstractAction {
     public TrainsScheduleEditAction() {
         super(Bundle.getMessage("MenuItemEditSchedule"));
     }
+    
+    TrainsScheduleEditFrame frame;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
-        new TrainsScheduleEditFrame();
+        if (frame != null) {
+            frame.dispose();
+        }
+        frame = new TrainsScheduleEditFrame();
     }
 
 }

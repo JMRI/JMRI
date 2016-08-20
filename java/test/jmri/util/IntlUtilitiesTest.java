@@ -1,4 +1,3 @@
-// IntlUtilitiesTest.java
 package jmri.util;
 
 import java.util.Locale;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.util.IntlUtilities class.
  *
  * @author	Bob Jacobsen Copyright 20014
- * @version	$Revision$
  */
 public class IntlUtilitiesTest extends TestCase {
 
@@ -111,7 +109,7 @@ public class IntlUtilitiesTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", IntlUtilitiesTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

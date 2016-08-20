@@ -1,4 +1,3 @@
-// SpecificSystemConnectionMemo.java
 package jmri.jmrix.rfid.merg.concentrator;
 
 import jmri.InstanceManager;
@@ -26,7 +25,6 @@ import jmri.jmrix.rfid.RfidSystemConnectionMemo;
  * <P>
  *
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  * @since 2.11.4
  */
 public class ConcentratorSystemConnectionMemo extends RfidSystemConnectionMemo {
@@ -52,5 +50,3 @@ public class ConcentratorSystemConnectionMemo extends RfidSystemConnectionMemo {
     }
 
 }
-
-/* @(#)SpecificSystemConnectionMemo.java */

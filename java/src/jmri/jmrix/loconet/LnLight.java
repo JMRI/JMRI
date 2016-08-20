@@ -1,4 +1,3 @@
-// LnLight.java
 package jmri.jmrix.loconet;
 
 import jmri.implementation.AbstractLight;
@@ -13,14 +12,8 @@ import org.slf4j.LoggerFactory;
  * Based in part on SerialLight.java
  *
  * @author Dave Duchamp Copyright (C) 2006
- * @version $Revision$
  */
 public class LnLight extends AbstractLight {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2993413165048057836L;
 
     /**
      * Create a Light object, with only system name.
@@ -86,5 +79,3 @@ public class LnLight extends AbstractLight {
 
     private final static Logger log = LoggerFactory.getLogger(LnLight.class.getName());
 }
-
-/* @(#)LnLight.java */

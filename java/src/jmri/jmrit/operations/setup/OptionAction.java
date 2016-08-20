@@ -14,17 +14,13 @@ import javax.swing.AbstractAction;
  */
 public class OptionAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7507020443490655869L;
-
     public OptionAction(String s) {
         super(s);
     }
 
     OptionFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (f == null || !f.isVisible()) {
             f = new OptionFrame();

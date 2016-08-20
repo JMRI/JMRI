@@ -1,4 +1,3 @@
-// NamedBeanHandleTest.java
 package jmri.util;
 
 import jmri.Turnout;
@@ -12,7 +11,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.util.NamedBeanUtil class.
  *
  * @author	Bob Jacobsen Copyright 2009
- * @version	$Revision$
  */
 public class NamedBeanHandleTest extends TestCase {
 
@@ -22,10 +20,6 @@ public class NamedBeanHandleTest extends TestCase {
 
     public void testHoldsTurnout() {
         Turnout t = new AbstractTurnout("name") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -449495740652645244L;
 
             protected void forwardCommandChangeToLayout(int s) {
             }
@@ -46,7 +40,7 @@ public class NamedBeanHandleTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", NamedBeanHandleTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

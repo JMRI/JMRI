@@ -1,4 +1,3 @@
-// HubPane.java
 package jmri.jmrix.openlcb.swing.hub;
 
 import java.net.InetAddress;

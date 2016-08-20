@@ -1,4 +1,3 @@
-// LearnWarrantTest.java
 package jmri.jmrit.logix;
 
 import java.io.File;
@@ -25,7 +24,6 @@ import junit.framework.TestSuite;
  * Tests for the Warrant creation
  *
  * @author  Pete Cressman 2015
- * @version $Revision: 00000 $
  * 
  * todo - test error conditions
  */
@@ -152,7 +150,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", LearnWarrantTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -180,6 +178,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         JUnitUtil.initLogixManager();
         JUnitUtil.initConditionalManager();
         JUnitUtil.initWarrantManager();
+        JUnitUtil.initShutDownManager();
     }
 
     @Override

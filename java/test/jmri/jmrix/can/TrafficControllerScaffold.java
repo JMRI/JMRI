@@ -1,4 +1,3 @@
-// TrafficControllerScaffold.java
 package jmri.jmrix.can;
 
 import java.util.Vector;

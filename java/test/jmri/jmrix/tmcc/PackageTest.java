@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.tmcc;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.tmcc package.
  *
  * @author Bob Jacobsen Copyright 2003
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -21,7 +19,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -34,7 +32,8 @@ public class PackageTest extends TestCase {
         suite.addTest(SerialReplyTest.suite());
         suite.addTest(SerialTrafficControllerTest.suite());
         suite.addTest(SerialAddressTest.suite());
-
+ 	suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.tmcc.serialdriver.PackageTest.class));
+ 	suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.tmcc.configurexml.PackageTest.class));
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.tmcc.serialmon.SerialMonFrameTest.suite());
         }

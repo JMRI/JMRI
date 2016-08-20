@@ -1,4 +1,3 @@
-//AbstractTurnoutServer.java
 package jmri.jmris;
 
 import java.beans.PropertyChangeEvent;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2010-2013
  * @author Randall Wood Copyright (C) 2013
- * @version $Revision$
  */
 abstract public class AbstractTurnoutServer {
 
@@ -51,7 +49,7 @@ abstract public class AbstractTurnoutServer {
         }
     }
 
-    public Turnout initTurnout(String turnoutName) {
+    public Turnout initTurnout(String turnoutName) throws IllegalArgumentException {
         Turnout turnout = InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName);
         this.addTurnoutToList(turnoutName);
         return turnout;

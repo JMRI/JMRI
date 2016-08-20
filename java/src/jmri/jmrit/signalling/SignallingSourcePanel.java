@@ -30,14 +30,8 @@ import org.slf4j.LoggerFactory;
  * Frame for Signal Mast Add / Edit Panel
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version $Revision$
  */
 public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4060876707415116653L;
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
 
@@ -52,9 +46,9 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
 
     public SignallingSourcePanel(final SignalMast sourceMast) {
         super();
-        sml = jmri.InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sourceMast);
+        sml = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sourceMast);
         this.sourceMast = sourceMast;
-        fixedSourceMastLabel = new JLabel(sourceMast.getDisplayName());
+        fixedSourceMastLabel = new JLabel(rb.getString("SourceMast") + " " + sourceMast.getDisplayName());
         if (sml != null) {
             _signalMastList = sml.getDestinationList();
         }
@@ -144,16 +138,16 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         signalMastLogicFrame.setVisible(true);
 
         ArrayList<LayoutEditor> layout = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
-        jmri.InstanceManager.signalMastLogicManagerInstance().addPropertyChangeListener(this);
+        jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).addPropertyChangeListener(this);
         for (int i = 0; i < layout.size(); i++) {
             try {
-                jmri.InstanceManager.signalMastLogicManagerInstance().discoverSignallingDest(sourceMast, layout.get(i));
+                jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).discoverSignallingDest(sourceMast, layout.get(i));
             } catch (jmri.JmriException ex) {
                 signalMastLogicFrame.setVisible(false);
                 JOptionPane.showMessageDialog(null, ex.toString());
             }
         }
-        jmri.InstanceManager.signalMastLogicManagerInstance().removePropertyChangeListener(this);
+        jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removePropertyChangeListener(this);
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -176,7 +170,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
 
     private void updateDetails() {
         SignalMastLogic old = sml;
-        sml = jmri.InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sourceMast);
+        sml = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sourceMast);
         if (sml != null) {
             _signalMastList = sml.getDestinationList();
             _AppearanceModel.updateSignalMastLogic(old, sml);
@@ -267,7 +261,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                 return rb.getString("ColumnUserName");
             }
             if (col == SYSNAME_COLUMN) {
-                return rb.getString("ColumnSystemName");
+                return rb.getString("DestMast");
             }
             if (col == ACTIVE_COLUMN) {
                 return rb.getString("ColumnActive");
@@ -276,10 +270,10 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                 return rb.getString("ColumnEnabled");
             }
             if (col == EDIT_COLUMN) {
-                return rb.getString("ColumnEdit");
+                return ""; //no title above Edit buttons
             }
             if (col == DEL_COLUMN) {
-                return rb.getString("ColumnDelete");
+                return ""; //no title above Delete buttons
             }
             return "";
         }
@@ -313,9 +307,9 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             // have the delete column hold a button
             /*AbstractTableAction.rb.getString("EditDelete")*/
             setColumnToHoldButton(table, EDIT_COLUMN,
-                    new JButton(rb.getString("ButtonEdit")));
+                    new JButton(Bundle.getMessage("ButtonEdit")));
             setColumnToHoldButton(table, DEL_COLUMN,
-                    new JButton(rb.getString("ButtonDelete")));
+                    new JButton(Bundle.getMessage("ButtonDelete")));
         }
 
         protected void setColumnToHoldButton(JTable table, int column, JButton sample) {
@@ -370,7 +364,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         }
 
         protected void deletePair(int r) {
-            jmri.InstanceManager.signalMastLogicManagerInstance().removeSignalMastLogic(sml, _signalMastList.get(r));
+            jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removeSignalMastLogic(sml, _signalMastList.get(r));
         }
 
         public static final int SYSNAME_COLUMN = 0;
@@ -409,9 +403,9 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                 case ENABLE_COLUMN:
                     return sml.isEnabled(_signalMastList.get(r));
                 case EDIT_COLUMN:
-                    return rb.getString("ButtonEdit");
+                    return Bundle.getMessage("ButtonEdit");
                 case DEL_COLUMN:
-                    return rb.getString("ButtonDelete");
+                    return Bundle.getMessage("ButtonDelete");
                 default:
                     return null;
             }

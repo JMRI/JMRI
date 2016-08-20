@@ -13,11 +13,6 @@ import javax.swing.AbstractAction;
  */
 public class EnginesTableAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 755025320493011103L;
-
     public EnginesTableAction(String s) {
         super(s);
     }
@@ -26,6 +21,7 @@ public class EnginesTableAction extends AbstractAction {
         this(Bundle.getMessage("MenuEngines")); // NOI18N
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a engine table frame
         new EnginesTableFrame();

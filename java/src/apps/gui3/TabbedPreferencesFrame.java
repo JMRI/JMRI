@@ -1,4 +1,3 @@
-// TabbedPreferencesFrame.java
 package apps.gui3;
 
 import java.awt.event.WindowEvent;
@@ -11,11 +10,8 @@ import jmri.util.JmriJFrame;
  * Provide access to the various tables via a listed pane.
  * <P>
  * @author	Kevin Dickerson Copyright 2010
- * @version $Revision$
  */
 public class TabbedPreferencesFrame extends JmriJFrame {
-
-    private static final long serialVersionUID = 4861869203791661041L;
 
     @Override
     public String getTitle() {

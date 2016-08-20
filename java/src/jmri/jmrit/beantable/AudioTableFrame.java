@@ -1,4 +1,3 @@
-// AudioTableFrame.java
 package jmri.jmrit.beantable;
 
 import javax.swing.Box;
@@ -22,14 +21,9 @@ import javax.swing.JMenuBar;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class AudioTableFrame extends BeanTableFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -92682823885444455L;
     AudioTablePanel audioPanel;
 
     public AudioTableFrame(AudioTablePanel panel,
@@ -44,7 +38,7 @@ public class AudioTableFrame extends BeanTableFrame {
 
         // add save menu item
         JMenuBar menuBar = new JMenuBar();
-        JMenu fileMenu = new JMenu(rbapps.getString("MenuFile"));
+        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         menuBar.add(fileMenu);
         fileMenu.add(new jmri.configurexml.SaveMenu());
 
@@ -75,5 +69,3 @@ public class AudioTableFrame extends BeanTableFrame {
     }
 
 }
-
-/* @(#)AudioTableFrame.java */

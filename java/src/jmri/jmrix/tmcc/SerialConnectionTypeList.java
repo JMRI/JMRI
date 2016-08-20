@@ -11,10 +11,18 @@ package jmri.jmrix.tmcc;
  */
 public class SerialConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String LIONEL = "Lionel TMCC";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.tmcc.serialdriver.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{LIONEL};
     }
 
 }

@@ -1,4 +1,3 @@
-// CommandStation.java
 package jmri;
 
 import javax.annotation.Nonnull;
@@ -29,7 +28,6 @@ import javax.annotation.Nonnull;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public interface CommandStation {
 
@@ -47,5 +45,3 @@ public interface CommandStation {
     public String getSystemPrefix();
 
 }
-
-/* @(#)CommandStation.java */

@@ -1,4 +1,3 @@
-// BlockBossLogicTest.java
 package jmri.jmrit.blockboss;
 
 import jmri.InstanceManager;
@@ -15,7 +14,6 @@ import junit.framework.TestSuite;
  * Tests for the BlockBossLogic class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class BlockBossLogicTest extends TestCase {
 
@@ -252,19 +250,9 @@ public class BlockBossLogicTest extends TestCase {
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
 
-        // create a new instance manager
-        InstanceManager i = new InstanceManager() {
-            protected void init() {
-                root = null;
-                super.init();
-                root = this;
-            }
-        };
-
-        Assert.assertNotNull("Instance exists", i);
-
         // reset InstanceManager
         JUnitUtil.resetInstanceManager();
+        
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
 
@@ -284,19 +272,19 @@ public class BlockBossLogicTest extends TestCase {
         s10 = InstanceManager.sensorManagerInstance().newSensor("IS10", "10");
 
         h1 = new jmri.implementation.VirtualSignalHead("IH1", "1");
-        InstanceManager.signalHeadManagerInstance().register(h1);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h1);
         setAndWait(h1, SignalHead.RED); // ensure starting point
         
         h2 = new jmri.implementation.VirtualSignalHead("IH2", "2");
-        InstanceManager.signalHeadManagerInstance().register(h2);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h2);
         setAndWait(h2, SignalHead.RED); // ensure starting point
 
         h3 = new jmri.implementation.VirtualSignalHead("IH3", "3");
-        InstanceManager.signalHeadManagerInstance().register(h3);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h3);
         setAndWait(h3, SignalHead.RED); // ensure starting point
 
         h4 = new jmri.implementation.VirtualSignalHead("IH4", "4");
-        InstanceManager.signalHeadManagerInstance().register(h4);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h4);
         setAndWait(h4, SignalHead.RED); // ensure starting point
     }
 
@@ -308,7 +296,7 @@ public class BlockBossLogicTest extends TestCase {
     static public void main(String[] args) {
         apps.tests.Log4JFixture.initLogging();
         String[] testCaseName = {"-noloading", BlockBossLogicTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

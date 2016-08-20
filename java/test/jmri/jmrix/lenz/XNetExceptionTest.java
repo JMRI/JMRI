@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.lenz.XNetException class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class XNetExceptionTest extends TestCase {
 
@@ -29,7 +28,7 @@ public class XNetExceptionTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", XNetExceptionTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

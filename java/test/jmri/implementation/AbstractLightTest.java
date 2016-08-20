@@ -1,4 +1,3 @@
-// AbstractLightTest.java
 package jmri.implementation;
 
 import java.beans.PropertyChangeListener;

@@ -17,38 +17,29 @@ import org.slf4j.LoggerFactory;
  */
 public class RedirectionServlet extends HttpServlet {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4780651112712605891L;
     private final Properties redirections = new Properties();
     private static final Logger log = LoggerFactory.getLogger(RedirectionServlet.class);
 
     public RedirectionServlet() {
+
         try {
             InputStream in;
-            in = this.getClass().getResourceAsStream("/jmri/web/server/FilePaths.properties"); // NOI18N
-            redirections.load(in);
-            in.close();
+            in = RedirectionServlet.class.getResourceAsStream("/jmri/web/server/FilePaths.properties"); // NOI18N
+            try {
+                redirections.load(in);
+            } catch (IOException e) {
+                log.error("Error in servlet creation IO", e);
+            } finally {
+                in.close();
+            }
         } catch (IOException e) {
-            log.error(e.getMessage());
+            log.error("Error in servlet creation IO", e);
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        boolean firstParameter = true;
-        String target = redirections.getProperty(request.getContextPath());
-        // TODO: add any additional path outside context to target
-        for (String key : request.getParameterMap().keySet()) {
-            if (firstParameter) {
-                firstParameter = false;
-                target = target + "?" + key + "=" + request.getParameter(key);
-            } else {
-                target = target + "&" + key + "=" + request.getParameter(key);
-            }
-        }
-        response.sendRedirect(target);
+        response.sendRedirect(redirections.getProperty(request.getContextPath()));
     }
 
     @Override

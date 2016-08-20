@@ -1,4 +1,3 @@
-// EliteAdapter.java
 package jmri.jmrix.lenz.hornbyelite;
 
 import java.io.DataInputStream;
@@ -27,7 +26,6 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender, Copyright (C) 2003,2008-2010
- * @version	$Revision$
  */
 public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -38,7 +36,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
         option2Name = "Buffer";
         options.put(option2Name, new Option("Check Buffer : ", validOption2));
         setCheckBuffer(true); // default to true for elite
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.HORNBY;
+        this.manufacturerName = EliteConnectionTypeList.HORNBY;
     }
 
     Vector<String> portNameVector = null;
@@ -74,12 +72,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -230,8 +223,6 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
 
         new EliteXNetInitializationManager(this.getSystemConnectionMemo());
-
-        jmri.jmrix.lenz.ActiveFlag.setActive();
     }
 
     // base class methods for the XNetSerialPortController interface
@@ -249,7 +240,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
         }
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
-        } catch (java.io.IOException e) {
+        } catch (IOException e) {
             log.error("getOutputStream exception: " + e.getMessage());
         }
         return null;
@@ -315,6 +306,11 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
     private boolean opened = false;
     InputStream serialStream = null;
 
+    
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public EliteAdapter instance() {
         if (mInstance == null) {
             mInstance = new EliteAdapter();

@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision$
  */
 public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -52,6 +51,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
                 String sname = iter.next();
                 if (sname == null) {
                     log.error("System name null during store");
+                    break;
                 }
                 log.debug("system name is " + sname);
                 Memory m = tm.getBySystemName(sname);
@@ -100,10 +100,10 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
      * Create a MemoryManager object of the correct class, then register and
      * fill it.
      *
-     * @param sharedMemories Shared top level Element to unpack.
+     * @param sharedMemories  Shared top level Element to unpack.
      * @param perNodeMemories Per-node top level Element to unpack.
      * @return true if successful
-     * @throws jmri.configurexml.JmriConfigureXmlException
+     * @throws jmri.configurexml.JmriConfigureXmlException if error during load.
      */
     @Override
     abstract public boolean load(Element sharedMemories, Element perNodeMemories) throws JmriConfigureXmlException;

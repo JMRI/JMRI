@@ -1,4 +1,3 @@
-// OlcbAddressTest.java
 package jmri.jmrix.openlcb;
 
 import jmri.jmrix.can.CanMessage;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.openlcb.OlcbAddress class.
  *
  * @author	Bob Jacobsen Copyright 2008, 2010
- * @version $Revision$
  */
 public class OlcbAddressTest extends TestCase {
 
@@ -145,7 +143,7 @@ public class OlcbAddressTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {OlcbAddressTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

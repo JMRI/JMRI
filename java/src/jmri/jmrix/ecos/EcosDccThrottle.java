@@ -515,7 +515,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
     }
 
     /**
-     * Set the speed & direction.
+     * Set the speed {@literal &} direction.
      * <P>
      * This intentionally skips the emergency stop value of 1.
      *
@@ -627,7 +627,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
                     if (line.contains("speed") && !line.contains("speedstep")) {
                         speedMessageSent--;
                         if (speedMessageSent <= 0) {
-                            Float newSpeed = new Float(floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed"))));
+                            Float newSpeed = Float.valueOf(floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed"))));
                             super.setSpeedSetting(newSpeed);
                         }
                     } else if (line.contains("dir")) {
@@ -643,7 +643,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
                     if (m.toString().contains("speed") && !m.toString().contains("speedstep")) {
                         speedMessageSent--;
                         if (speedMessageSent <= 0) {
-                            Float newSpeed = new Float(floatSpeed(Integer.parseInt(EcosReply.getContentDetails(m.toString(), "speed"))));
+                            Float newSpeed = Float.valueOf(floatSpeed(Integer.parseInt(EcosReply.getContentDetails(m.toString(), "speed"))));
                             super.setSpeedSetting(newSpeed);
                         }
                     } else if (m.toString().contains("dir")) {
@@ -662,7 +662,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
                     if (speedMessageSent > 0 && m.isUnsolicited() && line.contains("speed")) {
                         //We want to ignore these messages.
                     } else if (speedMessageSent <= 0 && line.contains("speed") && !line.contains("speedstep")) {
-                        Float newSpeed = new Float(floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed"))));
+                        Float newSpeed = Float.valueOf(floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed"))));
                         super.setSpeedSetting(newSpeed);
                     } else if (line.contains("dir")) {
                         boolean newDirection = false;

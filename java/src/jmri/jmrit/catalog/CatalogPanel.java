@@ -1,4 +1,3 @@
-// CatalogPanel.java
 package jmri.jmrit.catalog;
 
 import java.awt.Color;
@@ -78,10 +77,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CatalogPanel extends JPanel implements MouseListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5940317496784694547L;
     public static final double ICON_SCALE = 0.15;
     public static final int ICON_WIDTH = 100;
     public static final int ICON_HEIGHT = 100;
@@ -182,17 +177,25 @@ public class CatalogPanel extends JPanel implements MouseListener {
     }
 
     /**
-     * Create a new model and add it to the main root
+     * Create a new model and add it to the main root.
+     * <p>
+     * Can be called from off the GUI thread.
      */
     public void createNewBranch(String systemName, String userName, String path) {
 
-        CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
+        CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         CatalogTree tree = manager.getBySystemName(systemName);
-        if (tree == null) {
-            tree = manager.newCatalogTree(systemName, userName);
-            tree.insertNodes(path);
+        if (tree != null) {
+            jmri.util.ThreadingUtil.runOnGUI(()->{
+                addTree(tree);
+            });
+        } else {
+            final CatalogTree t = manager.newCatalogTree(systemName, userName);
+            jmri.util.ThreadingUtil.runOnGUI(()->{
+                t.insertNodes(path);
+                addTree(t);
+            });
         }
-        addTree(tree);
     }
 
     /**
@@ -205,7 +208,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
                 return;
             }
         }
-        addTreeBranch((CatalogTreeNode) tree.getRoot());
+        addTreeBranch(tree.getRoot());
         _branchModel.add(tree);
         _model.reload();
     }
@@ -252,7 +255,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         TreeNode[] nodes = node.getPath();
         CatalogTreeNode cNode = null;
         for (int i = 0; i < _branchModel.size(); i++) {
-            CatalogTreeNode cRoot = (CatalogTreeNode) _branchModel.get(i).getRoot();
+            CatalogTreeNode cRoot = _branchModel.get(i).getRoot();
             cNode = match(cRoot, nodes, 1);
             if (cNode != null) {
                 break;
@@ -290,7 +293,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         CatalogTree model = null;
         for (int i = 0; i < _branchModel.size(); i++) {
             model = _branchModel.get(i);
-            CatalogTreeNode cRoot = (CatalogTreeNode) model.getRoot();
+            CatalogTreeNode cRoot = model.getRoot();
             if (match(cRoot, nodes, 1) != null) {
                 break;
             }
@@ -473,6 +476,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
      * Display the icons in the preview panel
      */
     protected String setIcons() throws OutOfMemoryError {
+        Thread.UncaughtExceptionHandler exceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
         resetPanel();
         CatalogTreeNode node = getSelectedNode();
         if (node == null) {
@@ -585,7 +589,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         gridbag.setConstraints(bottom, c);
         _preview.add(bottom);
 
-        Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
+        Thread.setDefaultUncaughtExceptionHandler(exceptionHandler);
         return java.text.MessageFormat.format(Bundle.getMessage("numImagesInNode"),
                 new Object[]{node.getUserObject(), Integer.valueOf(leaves.size())});
     }
@@ -593,14 +597,12 @@ public class CatalogPanel extends JPanel implements MouseListener {
     public static CatalogPanel makeDefaultCatalog() {
         CatalogPanel catalog = new CatalogPanel("catalogs", "selectNode");
         catalog.init(false);
-        CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
+        CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         List<String> sysNames = manager.getSystemNameList();
-        if (sysNames != null) {
-            for (int i = 0; i < sysNames.size(); i++) {
-                String systemName = sysNames.get(i);
-                if (systemName.charAt(0) == 'I') {
-                    catalog.addTree(manager.getBySystemName(systemName));
-                }
+        for (int i = 0; i < sysNames.size(); i++) {
+            String systemName = sysNames.get(i);
+            if (systemName.charAt(0) == 'I') {
+                catalog.addTree(manager.getBySystemName(systemName));
             }
         }
         catalog.createNewBranch("IFJAR", "Program Directory", "resources");

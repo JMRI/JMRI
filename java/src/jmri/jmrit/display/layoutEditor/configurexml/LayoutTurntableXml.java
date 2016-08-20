@@ -1,4 +1,3 @@
-// jmri.jmrit.display.layoutEditor.configurexml.LayoutTurntableXml.java
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.geom.Point2D;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision$
  */
 public class LayoutTurntableXml extends AbstractXmlAdapter {
 
@@ -44,7 +42,7 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
         element.setAttribute("xcen", "" + coords.getX());
         element.setAttribute("ycen", "" + coords.getY());
         element.setAttribute("turnoutControlled", "" + (turnoutControl ? "yes" : "no"));
-        element.setAttribute("class", "jmri.jmrit.display.configurexml.LayoutTurntableXml");
+        element.setAttribute("class", getClass().getName());
         // add ray tracks
         for (int i = 0; i < p.getNumberRays(); i++) {
             Element rElem = new Element("raytrack");

@@ -1,4 +1,3 @@
-// AbstractReporterMgrTest.java
 /**
  * This is not itself a test class, e.g. should not be added to a suite.
  * Instead, this forms the base for test classes, including providing some
@@ -63,6 +62,17 @@ public abstract class AbstractReporterMgrTest extends TestCase {
         // Check that "providing" an already-created reporter returns the same object.
         Reporter t2 = l.provideReporter("" + getNumToTest2());
         Assert.assertTrue("provided same object ", t == t2);
+    }
+
+    public void testProvideFailure() {
+        boolean correct = false;
+        try {
+            Reporter t = l.provideReporter("..");
+            Assert.fail("didn't throw");
+        } catch (IllegalArgumentException ex) {
+            correct = true;
+        }
+        Assert.assertTrue("Exception thrown properly", correct);        
     }
 
     public void testReporterGetBySystemName() {

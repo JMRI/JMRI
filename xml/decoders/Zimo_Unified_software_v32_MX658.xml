@@ -13,8 +13,10 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version version="1" author="PB, pierre.bln@me.com" lastUpdated="20150412"/>
-  <version version="1.1" author="Mark Waters mark16jmri@mybtinternet.com" lastUpdated="20160103"/>
+  <version author="PB, pierre.bln@me.com" version="1" lastUpdated="20150412"/>
+  <version author="Mark Waters mark16jmri@mybtinternet.com" version="1.1" lastUpdated="20160103"/>
+  <version author="Mark Waters mark16jmri@mybtinternet.com" version="1.2" lastUpdated="20160311"/>
+  <!-- v1.2,  Added Sound Samples Pane.   Mark Waters, 11 Mar 2016 -->
   <!-- 1.1 Changed to use generic CV739-CV744.xml file.   Mark Waters, 3 Jan 2016 -->
   <!-- 1 Creation 
 		File based on Zimo_Unified_software_v32_MX644.xml by Mark Waters. 
@@ -101,6 +103,7 @@
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneInputMapping.xml"/>
   <!-- Begin sound-only panes -->
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSoundLevels.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSoundSamples.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSound.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSound-ElectricLoco.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSound-DieselLoco.xml"/>

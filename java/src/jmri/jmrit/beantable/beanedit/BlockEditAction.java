@@ -1,4 +1,3 @@
-// StatusPanel.java
 package jmri.jmrit.beantable.beanedit;
 
 import java.awt.event.ActionEvent;
@@ -21,6 +20,7 @@ import jmri.Block;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.Reporter;
+import jmri.implementation.SignalSpeedMap;
 import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,14 +29,9 @@ import org.slf4j.LoggerFactory;
  * Provides an edit panel for a block object
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision: 19923 $
  */
 public class BlockEditAction extends BeanEditAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2188902845944347657L;
     private String noneText = Bundle.getMessage("BlockNone");
     private String gradualText = Bundle.getMessage("BlockGradual");
     private String tightText = Bundle.getMessage("BlockTight");
@@ -77,7 +72,7 @@ public class BlockEditAction extends BeanEditAction {
         BeanItemPanel reporter = new BeanItemPanel();
         reporter.setName(Bundle.getMessage("BeanNameReporter"));
 
-        reporterField = new JmriBeanComboBox(InstanceManager.reporterManagerInstance(), ((Block) bean).getReporter(), JmriBeanComboBox.DISPLAYNAME);
+        reporterField = new JmriBeanComboBox(InstanceManager.getDefault(jmri.ReporterManager.class), ((Block) bean).getReporter(), JmriBeanComboBox.DISPLAYNAME);
         reporterField.setFirstItemBlank(true);
 
         reporter.addItem(new BeanEditItem(reporterField, Bundle.getMessage("BeanNameReporter"), Bundle.getMessage("BlockReporterText")));
@@ -99,11 +94,6 @@ public class BlockEditAction extends BeanEditAction {
         }
 
         reporter.setResetItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2449970976942578601L;
-
             public void actionPerformed(ActionEvent e) {
                 reporterField.setSelectedBean(((Block) bean).getReporter());
                 useCurrent.setSelected(((Block) bean).isReportingCurrent());
@@ -111,11 +101,6 @@ public class BlockEditAction extends BeanEditAction {
         });
 
         reporter.setSaveItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -6560902254904220330L;
-
             public void actionPerformed(ActionEvent e) {
                 Block blk = (Block) bean;
                 blk.setReporter((Reporter) reporterField.getSelectedBean());
@@ -123,7 +108,7 @@ public class BlockEditAction extends BeanEditAction {
             }
         });
         bei.add(reporter);
-        if (jmri.InstanceManager.getDefault(jmri.ReporterManager.class) == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ReporterManager.class) == null) {
             setEnabled(false);
         }
         return reporter;
@@ -143,7 +128,7 @@ public class BlockEditAction extends BeanEditAction {
 
         defaultBlockSpeedText = (Bundle.getMessage("UseGlobal") + " " + jmri.InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed());
         speedList.add(defaultBlockSpeedText);
-        java.util.Vector<String> _speedMap = jmri.implementation.SignalSpeedMap.getMap().getValidSpeedNames();
+        java.util.Vector<String> _speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames();
         for (int i = 0; i < _speedMap.size(); i++) {
             if (!speedList.contains(_speedMap.get(i))) {
                 speedList.add(_speedMap.get(i));
@@ -206,11 +191,6 @@ public class BlockEditAction extends BeanEditAction {
         permissiveField.setSelected(((Block) bean).getPermissiveWorking());
 
         basic.setSaveItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 3999787373758196069L;
-
             public void actionPerformed(ActionEvent e) {
                 Block blk = (Block) bean;
                 String cName = (String) curvatureField.getSelectedItem();
@@ -249,11 +229,6 @@ public class BlockEditAction extends BeanEditAction {
             }
         });
         basic.setResetItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1875022997531442999L;
-
             public void actionPerformed(ActionEvent e) {
                 Block blk = (Block) bean;
                 lengthField.setText(twoDigit.format(((Block) bean).getLengthMm()));
@@ -323,11 +298,6 @@ public class BlockEditAction extends BeanEditAction {
         });
 
         basic.setSaveItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 6849518499144179541L;
-
             public void actionPerformed(ActionEvent e) {
                 Block blk = (Block) bean;
                 jmri.jmrit.display.layoutEditor.LayoutBlock lBlk = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(blk);
@@ -341,11 +311,6 @@ public class BlockEditAction extends BeanEditAction {
             }
         });
         basic.setResetItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1648534584189754888L;
-
             public void actionPerformed(ActionEvent e) {
                 Block blk = (Block) bean;
                 //From basic details

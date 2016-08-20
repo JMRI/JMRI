@@ -1,21 +1,20 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
-
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
 import java.beans.PropertyChangeEvent;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.trains.timetable.TrainSchedule;
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Represents a car on the layout
  *
- * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2012, 2013, 2014, 2015
- * @version $Revision$
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2012, 2013, 2014,
+ *         2015
  */
 public class Car extends RollingStock {
 
@@ -29,7 +28,7 @@ public class Car extends RollingStock {
     protected boolean _loadGeneratedByStaging = false;
     protected Kernel _kernel = null;
     protected String _loadName = carLoads.getDefaultEmptyName();
-    protected int _wait = 0;   
+    protected int _wait = 0;
 
     protected Location _rweDestination = null; // return when empty destination
     protected Track _rweDestTrack = null; // return when empty track
@@ -46,7 +45,7 @@ public class Car extends RollingStock {
     protected String _previousScheduleId = NONE; // previous schedule id (for train resets)
     protected String _pickupScheduleId = NONE;
     protected String _nextPickupScheduleId = NONE; // when the car needs to be pulled
-    
+
     public static final String EXTENSION_REGEX = " ";
     public static final String CABOOSE_EXTENSION = Bundle.getMessage("(C)");
     public static final String FRED_EXTENSION = Bundle.getMessage("(F)");
@@ -86,7 +85,7 @@ public class Car extends RollingStock {
         car.setOwner(_owner);
         car.setRoadName(_road);
         car.setTypeName(_type);
-        car.loaded=true;
+        car.loaded = true;
         return car;
     }
 
@@ -124,6 +123,7 @@ public class Car extends RollingStock {
 
     /**
      * Used to determine if car has FRED (Flashing Rear End Device).
+     * 
      * @return true if car has FRED.
      */
     public boolean hasFred() {
@@ -140,6 +140,7 @@ public class Car extends RollingStock {
 
     /**
      * The load name assigned to this car.
+     * 
      * @return The load name assigned to this car.
      */
     public String getLoadName() {
@@ -205,7 +206,6 @@ public class Car extends RollingStock {
     /**
      * Used to keep track of which item in a schedule was used for this car.
      *
-     * @param id
      */
     public void setScheduleItemId(String id) {
         log.debug("Set schedule item id ({}) for car ({})", id, toString());
@@ -232,6 +232,7 @@ public class Car extends RollingStock {
         return _nextLoadName;
     }
 
+    @Override
     public String getWeightTons() {
         String weight = super.getWeightTons();
         if (!_weightTons.equals(DEFAULT_WEIGHT)) {
@@ -253,6 +254,7 @@ public class Car extends RollingStock {
      * Returns a car's weight adjusted for load. An empty car's weight is 1/3
      * the car's loaded weight.
      */
+    @Override
     public int getAdjustedWeightTons() {
         int weightTons = 0;
         try {
@@ -262,7 +264,7 @@ public class Car extends RollingStock {
             if (!isCaboose() && !isPassenger() && getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
                 weightTons = weightTons / 3;
             }
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             log.debug("Car ({}) weight not set", toString());
         }
         return weightTons;
@@ -294,6 +296,7 @@ public class Car extends RollingStock {
 
     /**
      * Sets when this car will be picked up (day of the week)
+     * 
      * @param id See TrainSchedule.java
      */
     public void setPickupScheduleId(String id) {
@@ -503,7 +506,6 @@ public class Car extends RollingStock {
     /**
      * A kernel is a group of cars that are switched as a unit.
      *
-     * @param kernel
      */
     public void setKernel(Kernel kernel) {
         if (_kernel == kernel) {
@@ -564,6 +566,7 @@ public class Car extends RollingStock {
      * @return status OKAY, TYPE, ROAD, LENGTH, ERROR_TRACK, CAPACITY, SCHEDULE,
      *         CUSTOM
      */
+    @Override
     public String testDestination(Location destination, Track track) {
         String status = super.testDestination(destination, track);
         if (!status.equals(Track.OKAY)) {
@@ -579,8 +582,7 @@ public class Car extends RollingStock {
     /**
      * Sets the car's destination on the layout
      *
-     * @param destination
-     * @param track       (yard, spur, staging, or interchange track)
+     * @param track (yard, spur, staging, or interchange track)
      * @return "okay" if successful, "type" if the rolling stock's type isn't
      *         acceptable, or "length" if the rolling stock length didn't fit,
      *         or Schedule if the destination will not accept the car because
@@ -588,6 +590,7 @@ public class Car extends RollingStock {
      *         requirements. Also changes the car load status when the car
      *         reaches its destination.
      */
+    @Override
     public String setDestination(Location destination, Track track) {
         return setDestination(destination, track, false);
     }
@@ -595,10 +598,9 @@ public class Car extends RollingStock {
     /**
      * Sets the car's destination on the layout
      *
-     * @param destination
-     * @param track       (yard, spur, staging, or interchange track)
-     * @param force       when true ignore track length, type, & road when
-     *                    setting destination
+     * @param track (yard, spur, staging, or interchange track)
+     * @param force when true ignore track length, type, {@literal &} road when
+     *            setting destination
      * @return "okay" if successful, "type" if the rolling stock's type isn't
      *         acceptable, or "length" if the rolling stock length didn't fit,
      *         or Schedule if the destination will not accept the car because
@@ -606,6 +608,7 @@ public class Car extends RollingStock {
      *         requirements. Also changes the car load status when the car
      *         reaches its destination.
      */
+    @Override
     public String setDestination(Location destination, Track track, boolean force) {
         // save destination name and track in case car has reached its destination
         String destinationName = getDestinationName();
@@ -651,8 +654,9 @@ public class Car extends RollingStock {
             } else if (destTrack.isLoadEmptyEnabled() && getLoadName().equals(carLoads.getDefaultLoadName())) {
                 setLoadEmpty();
             } // empty car if it has a custom load
-            else if (destTrack.isRemoveCustomLoadsEnabled() && !getLoadName().equals(carLoads.getDefaultEmptyName())
-                    && !getLoadName().equals(carLoads.getDefaultLoadName())) {
+            else if (destTrack.isRemoveCustomLoadsEnabled() &&
+                    !getLoadName().equals(carLoads.getDefaultEmptyName()) &&
+                    !getLoadName().equals(carLoads.getDefaultLoadName())) {
                 // remove this car's final destination if it has one
                 setFinalDestination(null);
                 setFinalDestinationTrack(null);
@@ -673,7 +677,7 @@ public class Car extends RollingStock {
     public void updateLoad() {
         if (getWait() > 0) {
             return; // change load when wait count reaches 0
-        }		// arriving at spur with a schedule?
+        } // arriving at spur with a schedule?
         if (!getNextLoadName().equals(NONE)) {
             setLoadName(getNextLoadName());
             setNextLoadName(NONE);
@@ -702,8 +706,15 @@ public class Car extends RollingStock {
         }
     }
 
+    /*
+     * Don't set return address if in staging with the same RWE address and
+     * don't set return address if at the RWE address
+     */
     private void setReturnWhenEmpty() {
-        if (getReturnWhenEmptyDestination() != null) {
+        if (getReturnWhenEmptyDestination() != null &&
+                (getLocation() != getReturnWhenEmptyDestination() ||
+                        (!getReturnWhenEmptyDestination().isStaging() &&
+                                getTrack() != getReturnWhenEmptyDestTrack()))) {
             setFinalDestination(getReturnWhenEmptyDestination());
             if (getReturnWhenEmptyDestTrack() != null) {
                 setFinalDestinationTrack(getReturnWhenEmptyDestTrack());
@@ -712,7 +723,7 @@ public class Car extends RollingStock {
                     getFinalDestinationName(), getFinalDestinationTrackName(), getLoadName());
         }
     }
-    
+
     public String getTypeExtensions() {
         StringBuffer buf = new StringBuffer();
         if (isCaboose()) {
@@ -733,6 +744,7 @@ public class Car extends RollingStock {
         return buf.toString();
     }
 
+    @Override
     public void reset() {
         setScheduleItemId(getPreviousScheduleId()); // revert to previous
         setNextLoadName(NONE);
@@ -747,6 +759,7 @@ public class Car extends RollingStock {
         super.reset();
     }
 
+    @Override
     public void dispose() {
         setKernel(null);
         setFinalDestination(null); // removes property change listener
@@ -767,7 +780,7 @@ public class Car extends RollingStock {
      */
     public Car(org.jdom2.Element e) {
         super(e);
-        loaded = true ;
+        loaded = true;
         org.jdom2.Attribute a;
         if ((a = e.getAttribute(Xml.PASSENGER)) != null) {
             _passenger = a.getValue().equals(Xml.TRUE);
@@ -945,6 +958,7 @@ public class Car extends RollingStock {
         return e;
     }
 
+    @Override
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // Set dirty
         CarManagerXml.instance().setDirty(true);
@@ -956,39 +970,32 @@ public class Car extends RollingStock {
         CarLengths.instance().addPropertyChangeListener(this);
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         super.propertyChange(e);
         if (e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY)) {
             if (e.getOldValue().equals(getTypeName())) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Car ({}) sees type name change old: ({}) new: ({})", toString(), e.getOldValue(), e
-                            .getNewValue()); // NOI18N
-                }
+                log.debug("Car ({}) sees type name change old: ({}) new: ({})", toString(), e.getOldValue(), e
+                        .getNewValue()); // NOI18N
                 setTypeName((String) e.getNewValue());
             }
         }
         if (e.getPropertyName().equals(CarLengths.CARLENGTHS_NAME_CHANGED_PROPERTY)) {
             if (e.getOldValue().equals(getLength())) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Car ({}) sees length name change old: ({}) new: ({})", toString(), e.getOldValue(), e
-                            .getNewValue()); // NOI18N
-                }
+                log.debug("Car ({}) sees length name change old: ({}) new: ({})", toString(), e.getOldValue(), e
+                        .getNewValue()); // NOI18N
                 setLength((String) e.getNewValue());
             }
         }
         if (e.getPropertyName().equals(Location.DISPOSE_CHANGED_PROPERTY)) {
             if (e.getSource() == _finalDestination) {
-                if (log.isDebugEnabled()) {
-                    log.debug("delete final destination for car: ({})", toString());
-                }
+                log.debug("delete final destination for car: ({})", toString());
                 setFinalDestination(null);
             }
         }
         if (e.getPropertyName().equals(Track.DISPOSE_CHANGED_PROPERTY)) {
             if (e.getSource() == _finalDestTrack) {
-                if (log.isDebugEnabled()) {
-                    log.debug("delete final destination for car: ({})", toString());
-                }
+                log.debug("delete final destination for car: ({})", toString());
                 setFinalDestinationTrack(null);
             }
         }

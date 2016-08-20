@@ -1,4 +1,3 @@
-// EnumVariableValue.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Color;
@@ -29,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2013, 2014
- * @version	$Revision$
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -166,7 +164,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
             }
             // match and select in tree
             for (int i = 0; i < _valueArray.length; i++) {
-                if (e.getActionCommand().toString().equals(_itemArray[i])) {
+                if (e.getActionCommand().equals(_itemArray[i])) {
                     // now select in the tree
                     TreePath path = _pathArray[i];
                     for (JTree tree : trees) {
@@ -231,7 +229,6 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * <P>
      * If the value is larger than any defined, a new one is created.
      *
-     * @param value
      */
     protected void selectValue(int value) {
         for (int i = 0; i < _valueArray.length; i++) {
@@ -405,7 +402,6 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     /**
      * Notify the connected CVs of a state change from above
      *
-     * @param state
      */
     public void setCvState(int state) {
         _cvMap.get(getCvNum()).setState(state);
@@ -492,11 +488,6 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      */
     public static class VarComboBox extends JComboBox<String> {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -133896999775526954L;
-
         VarComboBox(ComboBoxModel<String> m, EnumVariableValue var) {
             super(m);
             _var = var;
@@ -564,12 +555,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         }
     }
 
-    class TreeLeafNode extends DefaultMutableTreeNode {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 4826729728567652557L;
+    static class TreeLeafNode extends DefaultMutableTreeNode {
 
         TreeLeafNode(String name, int index) {
             super(name);

@@ -1,4 +1,3 @@
-// PollTableActionTest.java
 package jmri.jmrix.rps.swing.polling;
 
 import javax.swing.JFrame;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.rps.swing.polling package.
  *
  * @author Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class PollTableActionTest extends TestCase {
 
@@ -32,7 +30,7 @@ public class PollTableActionTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PollTableActionTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -40,6 +38,11 @@ public class PollTableActionTest extends TestCase {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite(PollTableActionTest.class);
         return suite;
+    }
+
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
     }
 
 }

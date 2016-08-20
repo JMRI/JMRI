@@ -29,7 +29,7 @@ log4j.rootCategory= WARN, A1
 
 # A1 is set to be a jmri.util.JUnitAppender which outputs to System.err. 
 # The JUnitAppender provides hooks used to test whether a given
-# log message is expected or not.
+# log message is expected or not, and whether ERROR messages have been logged.
 log4j.appender.A1=jmri.util.JUnitAppender
 
 # A1 writes to system.err to synchronize with e.g. exception traces
@@ -61,7 +61,7 @@ log4j.appender.A1.layout=org.apache.log4j.PatternLayout
 
 log4j.appender.A1.layout.ConversionPattern=%-5p - %m [%t] %c{4}.%M()%n
 
-# R is set to output to a log file
+# R is set to output to a log file, but then not used in normal testing
 log4j.appender.R=org.apache.log4j.FileAppender
 log4j.appender.R.File=example.log
 log4j.appender.R.layout=org.apache.log4j.PatternLayout

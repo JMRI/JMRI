@@ -1,4 +1,3 @@
-// OlcbSensorTest.java
 package jmri.jmrix.openlcb;
 
 import jmri.Sensor;
@@ -13,7 +12,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.openlcb.OlcbSensor class.
  *
  * @author	Bob Jacobsen Copyright 2008, 2010
- * @version $Revision$
  */
 public class OlcbSensorTest extends TestCase {
 
@@ -100,7 +98,7 @@ public class OlcbSensorTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {OlcbSensorTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

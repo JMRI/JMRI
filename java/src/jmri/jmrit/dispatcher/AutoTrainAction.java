@@ -1,4 +1,3 @@
-// AutoTrainAction.java
 package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
@@ -6,6 +5,10 @@ import java.util.ResourceBundle;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Sensor;
+import jmri.SignalHead;
+import jmri.SignalHeadManager;
+import jmri.SignalMast;
+import jmri.SignalMastManager;
 import jmri.TransitSection;
 import jmri.TransitSectionAction;
 import org.slf4j.Logger;
@@ -37,7 +40,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Dave Duchamp Copyright (C) 2010-2011
- * @version	$Revision$
  */
 public class AutoTrainAction {
 
@@ -100,7 +102,7 @@ public class AutoTrainAction {
                     case TransitSectionAction.TRAINSTART:
                         // when train starts - monitor in separate thread
                         Runnable monTrain = new MonitorTrain(tsa);
-                        Thread tMonTrain = new Thread(monTrain, "Monitor Train Transit Action");
+                        Thread tMonTrain = new Thread(monTrain, "Monitor Train Transit Action " + _activeTrain.getDccAddress());
                         tsa.setWaitingThread(tMonTrain);
                         tMonTrain.start();
                         break;
@@ -185,7 +187,7 @@ public class AutoTrainAction {
         for (int i = 0; i < _activeActionList.size(); i++) {
             if (_activeActionList.get(i).getWaitingForBlock()) {
                 TransitSectionAction tsa = _activeActionList.get(i);
-                Block target = InstanceManager.blockManagerInstance().getBlock(tsa.getStringWhen());
+                Block target = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(tsa.getStringWhen());
                 if (b == target) {
                     // waiting on state change for this block
                     if (((b.getState() == Block.OCCUPIED) && (tsa.getWhenCode() == TransitSectionAction.BLOCKENTRY))
@@ -375,6 +377,7 @@ public class AutoTrainAction {
             case TransitSectionAction.SETLIGHT:
                 // set light on or off
                 if (_autoActiveTrain.getAutoEngineer() != null) {
+                    log.debug("{}: setting light (F0) to {}", _activeTrain.getTrainName(), tsa.getStringWhat());
                     if (tsa.getStringWhat().equals("On")) {
                         _autoActiveTrain.getAutoEngineer().setFunction(0, true);
                     } else if (tsa.getStringWhat().equals("Off")) {
@@ -388,6 +391,7 @@ public class AutoTrainAction {
             case TransitSectionAction.STARTBELL:
                 // start bell (only works with sound decoder)
                 if (_autoActiveTrain.getSoundDecoder() && (_autoActiveTrain.getAutoEngineer() != null)) {
+                    log.debug("{}: starting bell (F1)", _activeTrain.getTrainName());
                     _autoActiveTrain.getAutoEngineer().setFunction(1, true);
                 }
                 completedAction(tsa);
@@ -395,6 +399,7 @@ public class AutoTrainAction {
             case TransitSectionAction.STOPBELL:
                 // stop bell (only works with sound decoder)
                 if (_autoActiveTrain.getSoundDecoder() && (_autoActiveTrain.getAutoEngineer() != null)) {
+                    log.debug("{}: stopping bell (F1)", _activeTrain.getTrainName());
                     _autoActiveTrain.getAutoEngineer().setFunction(1, false);
                 }
                 completedAction(tsa);
@@ -404,6 +409,7 @@ public class AutoTrainAction {
             case TransitSectionAction.SOUNDHORNPATTERN:
                 // sound horn according to specified pattern - done in separate thread
                 if (_autoActiveTrain.getSoundDecoder()) {
+                    log.debug("{}: sounding horn as specified in action", _activeTrain.getTrainName());
                     Runnable rHorn = new HornExecution(tsa);
                     Thread tHorn = new Thread(rHorn);
                     tsa.setWaitingThread(tHorn);
@@ -415,6 +421,8 @@ public class AutoTrainAction {
             case TransitSectionAction.LOCOFUNCTION:
                 // execute the specified decoder function
                 if (_autoActiveTrain.getAutoEngineer() != null) {
+                    log.debug("{}: setting function {} to {}", _activeTrain.getTrainName(), 
+                            tsa.getDataWhat1(), tsa.getStringWhat());
                     int fun = tsa.getDataWhat1();
                     if (tsa.getStringWhat().equals("On")) {
                         _autoActiveTrain.getAutoEngineer().setFunction(fun, true);
@@ -467,6 +475,44 @@ public class AutoTrainAction {
                     log.error("Could not find Sensor " + tsa.getStringWhat());
                 } else {
                     log.error("Sensor not specified for Action");
+                }
+                break;
+            case TransitSectionAction.HOLDSIGNAL:
+                // set specified signalhead or signalmast to HELD
+                SignalMast sm = null;
+                SignalHead sh = null;
+                String sName = tsa.getStringWhat();
+                sm = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(sName);
+                if (sm == null) {
+                    sh = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(sName);
+                    if (sh == null) {
+                        log.error("{}: Could not find SignalMast or SignalHead named '{}'", _activeTrain.getTrainName(), sName);
+                    } else {
+                        log.debug("{}: setting signalHead '{}' to HELD", _activeTrain.getTrainName(), sName);
+                        sh.setHeld(true);
+                    }
+                } else {
+                    log.debug("{}: setting signalMast '{}' to HELD", _activeTrain.getTrainName(), sName);
+                    sm.setHeld(true);                    
+                }
+                break;
+            case TransitSectionAction.RELEASESIGNAL:
+                // set specified signalhead or signalmast to NOT HELD
+                sm = null;
+                sh = null;
+                sName = tsa.getStringWhat();
+                sm = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(sName);
+                if (sm == null) {
+                    sh = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(sName);
+                    if (sh == null) {
+                        log.error("{}: Could not find SignalMast or SignalHead named '{}'", _activeTrain.getTrainName(), sName);
+                    } else {
+                        log.debug("{}: setting signalHead '{}' to NOT HELD", _activeTrain.getTrainName(), sName);
+                        sh.setHeld(false);
+                    }
+                } else {
+                    log.debug("{}: setting signalMast '{}' to NOT HELD", _activeTrain.getTrainName(), sName);
+                    sm.setHeld(false);                    
                 }
                 break;
             default:
@@ -663,5 +709,3 @@ public class AutoTrainAction {
 
     private final static Logger log = LoggerFactory.getLogger(AutoTrainAction.class.getName());
 }
-
-/* @(#)AutoTrainAction.java */

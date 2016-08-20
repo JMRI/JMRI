@@ -1,4 +1,3 @@
-// BlockBossFrame.java
 package jmri.jmrit.blockboss;
 
 import java.awt.FlowLayout;
@@ -7,7 +6,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -44,7 +42,6 @@ import org.slf4j.LoggerFactory;
  * individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2005
- * @version $Revision$
  *
  * Revisions to add facing point sensors, approach lighting, limited speed,
  * changed layout, and tool tips. Dick Bronson (RJB) 2006
@@ -52,10 +49,6 @@ import org.slf4j.LoggerFactory;
  */
 public class BlockBossFrame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3755131702786969639L;
     JPanel modeSingle = new JPanel();
     JRadioButton buttonSingle;
     JTextField sSensorField1 = new JTextField(6);
@@ -163,8 +156,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
         // add save menu item
         JMenuBar menuBar = new JMenuBar();
-        ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
-        JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
+        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         menuBar.add(fileMenu);
         fileMenu.add(new jmri.configurexml.SaveMenu());
         setJMenuBar(menuBar);
@@ -688,14 +680,14 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
     void okPressed() {
         // check signal head exists
-        if (sh == null && InstanceManager.signalHeadManagerInstance().getSignalHead(outSignalField.getText()) == null) {
+        if (sh == null && InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(outSignalField.getText()) == null) {
             setTitle(rbt.getString("Simple_Signal_Logic"));
             JOptionPane.showMessageDialog(this, rbt.getString("Signal_head_") + outSignalField.getText() + rbt.getString("_is_not_defined_yet"));
             return;
         }
         SignalHead head = sh;
         if (sh == null) {
-            head = InstanceManager.signalHeadManagerInstance().getSignalHead(outSignalField.getText());
+            head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(outSignalField.getText());
         }
 
         // it does
@@ -813,21 +805,18 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     void activate() {
 
         // check signal head exists
-        if (sh == null && InstanceManager.signalHeadManagerInstance().getSignalHead(outSignalField.getText()) == null) {
+        if (sh == null && InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(outSignalField.getText()) == null) {
+            // head not exist, just title the window and leave
             setTitle(rbt.getString("Simple_Signal_Logic"));
             return;
         }
 
         // find existing logic  
-        BlockBossLogic b;// = BlockBossLogic.getExisting(outSignalField.getText());
+        BlockBossLogic b;
         if (sh != null) {
             b = BlockBossLogic.getExisting(sh);
         } else {
             b = BlockBossLogic.getExisting(outSignalField.getText());
-        }
-        if (b == null) {
-            setTitle(rbt.getString("Simple_Signal_Logic"));
-            return;
         }
 
         setTitle(rbt.getString("Signal_logic_for_") + " " + outSignalField.getText());
@@ -923,5 +912,3 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
     private final static Logger log = LoggerFactory.getLogger(BlockBossLogic.class.getName());
 }
-
-/* @(#)BlockBossFrame.java */

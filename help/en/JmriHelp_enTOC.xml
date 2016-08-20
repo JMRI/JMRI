@@ -558,7 +558,19 @@
 
    <tocitem text="JMRI Program Structure " target="html.doc.Technical.IntroStructure"/>
 
+   <tocitem text="Names and Naming " target="html.doc.Technical.Names"/>
+
+   <tocitem text="Code Structure Patterns " target="html.doc.Technical.Patterns"/>
+
+   <tocitem text="Swing Structure " target="html.doc.Technical.Swing"/>
+
+   <tocitem text="External Connection Structure " target="html.doc.Technical.Threads"/>
+
    <tocitem text="JavaHelp HowTo " target="html.doc.Technical.Help"/>
+
+   <tocitem text="Documentation with JavaDoc and UML " target="html.doc.Technical.JavaDoc"/>
+
+   <tocitem text="Unit testing with JUnit " target="html.doc.Technical.JUnit"/>
 
    <tocitem text="The Website " target="html.doc.Technical.WebSite"/>
 

@@ -1,19 +1,15 @@
  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr>  2013-10-31--> 
 <HTML LANG="fr">
 <HEAD>
-<TITLE>JMRI: Item Palette Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>JMRI: L'&#233;l&#233;ment Palette</TITLE>
 <META CONTENT="Pete Cressman" NAME="Author">
 <META NAME="keywords" CONTENT="JMRI help Item Palette">
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
@@ -24,17 +20,17 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1> L'&#233;l&#233;ment Palette</H1>
+<h1>L'&#233;l&#233;ment Palette</h1>
 
-<b>L'&#233;l&#233;ment Palette</b> est utilis&#233; pour placer des ic&#244;nes et du texte sur l'<b>&#233;diteur de TCO</b>
-. La palette est une fen&#234;tre &#224; onglets avec des onglets pour chaque type d'&#233;l&#233;ment. La m&#233;thode commune
+<b>L'&#233;l&#233;ment Palette</b> est utilis&#233; pour placer des ic&#244;nes et du texte sur l'<b>&#233;diteur de TCO</b>.
+        La palette est une fen&#234;tre &#224; onglets avec des onglets pour chaque type d'&#233;l&#233;ment. La m&#233;thode commune
 en usage pour tous les &#233;l&#233;ments pour en ajouter un par un TCO est "Glisser et D&#233;poser". Chaque onglet dispose d'un 
 Panneau avec bordure &#233;tiquet&#233; <b>Glisser vers le Panneau</b>. Faites glisser l'&#233;l&#233;ment &#224; l'int&#233;rieur de cette fronti&#232;re vers le panneau. Dans le
  cas o&#249; l'ic&#244;ne repr&#233;sente un dispositif de configuration (par exemple un aiguillage, un capteur, etc), vous
 devez s&#233;lectionner une ligne d'une table &#224; associer &#224; ce dispositif particulier avec l'ic&#244;ne - et ensuite
 faites glisser l'ic&#244;ne sur le TCO.</p>
 
-<H2> Articles Iconiques</H2>
+<h2> Articles Iconiques</h2>
 Pour ces articles utilisant des ic&#244;nes, de multiples ensembles d'ic&#244;nes sont offerts par l'&#233;l&#233;ment Palette.
 Dans chacun de ces cas plusieurs jeux d'ic&#244;nes diff&#233;rents sont fournis par d&#233;faut. Les boutons radio
 sont utilis&#233;s pour s&#233;lectionner un jeu d'ic&#244;nes.</p> Par exemple, sous l'onglet du capteur vous pouvez avoir des ensembles de
@@ -53,7 +49,7 @@ nombre de jeux d'ic&#244;nes qui
 peuvent &#234;tre ajout&#233;s &#224; un onglet. Lorsque l'&#233;l&#233;ment Palette est personnalis&#233; avec d'autres jeux d'ic&#244;nes, la fermeture de la Palette avec le bouton de fermeture dans la barre de titre va ouvrir une
 bo&#238;te de dialogue vous demandant si vous souhaitez enregistrer vos modifications.
 Lorsque des modifications sont sauvegard&#233;es l'&#233;l&#233;ment Palette est stock&#233; dans le fichier CatalogTrees.xml dans le r&#233;pertoire des pr&#233;f&#233;rences.
-.</p>
+        </p>
 <p>
 La boite de dialogue <b>Modifier Ic&#244;nes</b> 
 est utilis&#233;e pour supprimer un jeu d'ic&#244;nes ou d'ajouter un jeu d'ic&#244;nes suppl&#233;mentaires. Le bouton <b>Supprimer Jeu d'Ic&#244;nes</b>
@@ -62,12 +58,11 @@ catalogue d'ic&#244;nes. Le nouveau jeu d'ic&#244;nes doit &#234;tre nomm&#233; 
 dialogue. Enfin, appuyez sur le bouton <b>Cr&#233;er Jeu d'Icones</b> et la bo&#238;te de dialogue est ferm&#233;e avec
 le nouveau jeu d'ic&#244;nes ajout&#233; &#224; la liste des boutons radio.</p>
 
-
-<H3>Table des &#233;l&#233;ments</H3>
+<h3>Table des &#233;l&#233;ments</h3>
 Les &#233;l&#233;ments associ&#233;s &#224; une table ont un bouton <b>Ajouter un Nouvel &#233;l&#233;ment au Tableau</b>. Ce bouton ouvre
 un dialogue o&#249; un nouvel &#233;l&#233;ment d'un dispositif peut &#234;tre ajout&#233; &#224; cette table. Les onglets avec des tableaux n&#233;cessitent la s&#233;lection d'un dispositif (une ligne dans le tableau) avant que l'ic&#244;ne puisse &#234;tre gliss&#233;e sur un TCO pour le repr&#233;senter.
    
-<H2>Onglets &#233;l&#233;ment Palette</H2>
+<h2>Onglets &#233;l&#233;ment Palette</h2>
 
 <ul>
         <li> <b>Aiguillage</b> Les jeux d'ic&#244;nes d'aiguillage &#224; la fois droite et gauche sont contenues dans cet onglet.
@@ -92,8 +87,8 @@ un dialogue o&#249; un nouvel &#233;l&#233;ment d'un dispositif peut &#234;tre a
                         peuvent &#234;tre ajout&#233;s ou supprim&#233;s. Autrement dit, vous pouvez faire un capteur &#224; deux multicapteurs
                         ou un jeu d'ic&#244;nes de quatre ou cinq multicapteur. </li>
         <li> <b>Ic&#244;ne</b> Les ic&#244;nes affich&#233;es &#224; la fronti&#232;re (&#233;tiquet&#233;es &#224; leur nom) peuvent &#234;tre gliss&#233;es
-                        directement sur un TCO. Les ic&#244;nes peuvent aussi &#234;tre gliss&#233;es directement &#224; partir du Catalogue d'ic&#244;nes
-                       .</Li>
+                        directement sur un TCO. Les ic&#244;nes peuvent aussi &#234;tre gliss&#233;es directement &#224; partir du Catalogue d'ic&#244;nes.
+        </li>
         <li> <b>Arri&#232;re Plan</b> Les ic&#244;nes d'arri&#232;re Plan sont plac&#233;es dans un panneau comme le sont les ic&#244;nes normales.
                         Cependant, elle sont affect&#233;s du plus bas niveau d'affichage et ne peut &#234;tre
                         s&#233;lectionn&#233;s avec un simple clic de souris. Utilisez "Ctrl-Clic" pour s&#233;lectionner
@@ -113,10 +108,10 @@ un dialogue o&#249; un nouvel &#233;l&#233;ment d'un dispositif peut &#234;tre a
                         <b> Circuit Occupation</b> acceptera un nom de capteur. Lorsque c'est le cas
                         seuls les couleurs "Occup&#233;s" et "Libres" peuvent &#234;tre affich&#233;es.</li>
         <li> <b> Indicateur d'Aiguillage</b> Le commentaire ci-dessus s'applique aussi aux Indicateurs d'Aiguillage.</li>
-</Ul>
+</ul>
 
 
-<H2>Plus d'Infos sur les Indicateurs de Voies </H2>
+<h2>Plus d'Infos sur les Indicateurs de Voies </h2>
 
 Les Indicateurs de Voies (&#224; savoir les segments de voie et aiguillages) ont des couleurs pour afficher l'&#233;tat du circuit de voie
  qu'ils repr&#233;sentent. Lorsque le circuit de voie est configur&#233; par un OBlock, et les Portails et Chemins
@@ -136,17 +131,17 @@ qu'il contient, les Statuts d'&#233;tat suivants sont  affich&#233;s en couleur:
                         &#233;chec d'alimentation.</li>
 </ul>
 <p>
-<b> Remarque:</b>
+<b>Remarque:</b>
 La configuration des Ic&#244;nes Indicateur Voie peut &#234;tre fait en groupe automatiquement - y compris la conversion automatique
 des ic&#244;nes de voie r&#233;guli&#232;rement avec le <b>G&#233;n&#233;rateur de Circuit</b>. Le seul &#233;l&#233;ment o&#249; vous pouvez vouloir &#233;diter un indicateur
 Ic&#244;ne de Voie individuellement est de choisir l'ic&#244;ne qui montre le nom du train quand le bloc
 repr&#233;sent&#233; est occup&#233; en vertu d'un mandat. (Souvent, plusieurs ic&#244;nes affichent un OBlock et vous voulez seulement
 l'un d'eux pour montrer le marqueur.)</p>
 
-<H3>Onglet Indicateur de Voie</H3>
-
-Entrez le nom du circuit de voie (OBlock), cette ic&#244;ne  voie repr&#233;sente dans le champs <b>Circuit d'Occupation</b>
-. La bouton <b>Ouvrir Liste de S&#233;lection de D&#233;tecteur</b> ouvre une liste de choix montrant les circuits voie OBlock d&#233;finis .
+<h3>Onglet Indicateur de Voie</h3>
+<p>
+Entrez le nom du circuit de voie (OBlock), cette ic&#244;ne  voie repr&#233;sente dans le champs <b>Circuit d'Occupation</b>.
+        La bouton <b>Ouvrir Liste de S&#233;lection de D&#233;tecteur</b> ouvre une liste de choix montrant les circuits voie OBlock d&#233;fini.
 Faites glisser ou copier le nom du champ du Circuit d'Occupation. <i> <b>Ne pas utiliser</b> l'onglet "Table Capteur" de la liste de s&#233;lection
 <b>&#224; moins qu'</b>il n'y ait pas de OBlocks configur&#233;s et que vous souhaitiez utiliser uniquement le statut "Occup&#233;/Inoccup&#233;".</i></p>
 <p>
@@ -157,31 +152,31 @@ Si les chemins ont &#233;t&#233; cr&#233;&#233;s ou &#233;dit&#233;s par le G&#2
 ci-dessus un "sous" panneau sera mis en lecture seule.</p>
 <p>
 En dessous du champ de circuit d'occupation est une case lib&#233;l&#233; <b>Affichage du Nom du Train quand occup&#233; par un train mandat&#233;</b>.
-
 Quand un train mandat&#233; occupe le circuit de voie, les ic&#244;nes circuit ayant cette case coch&#233;e, montrent
 un marqueur avec l'Id du train occupant. Tr&#232;s probablement, vous ne voulez seulement l'une des ic&#244;nes dans le
 circuits de voie pour afficher l'ID du train.</p>
 <p>
 Les boutons radio <b>Jeux d'Ic&#244;nes</b> , la zone <b>Glisser sur le TCO</b> et les boutons de fonction <b> Afficher les Ic&#244;nes</b> et <b>Modifier Ic&#244;nes</b>  comme d&#233;crit avant.</p>
 
- <H3>Onglet Indicateur Aiguillage </H3>
-
+<h3>Onglet Indicateur Aiguillage </h3>
+<p>
 Cet onglet contient les m&#234;mes fonctions que l'onglet Indicateur de Voie avec l'ajout d'un tableau Aiguillage.
-Un aiguillage doit &#234;tre s&#233;lectionn&#233; dans la Table Aiguillage pour &#234;tre en mesure de faire glisser une ic&#244;ne sur un TCO.</P>
+Un aiguillage doit &#234;tre s&#233;lectionn&#233; dans la Table Aiguillage pour &#234;tre en mesure de faire glisser une ic&#244;ne sur un TCO.</p>
 <p>
 Une l&#233;g&#232;re variation sont les  boutons
 <b>Ajouter Jeu d'Ic&#244;nes</b> et <b>Supprimer Jeu d'Ic&#244;nes</b> au bas de l'onglet. En outre, le bouton<b>Afficher les Ic&#244;nes</b>
  affiche le jeu d'ic&#244;ne  dans une matrice o&#249; les lignes montrent l'&#233;tat de l'ic&#244;ne pour chaque &#233;tat de l'aiguillage - direct,
 D&#233;vi&#233;, Incoh&#233;rent et Inconnu. &#224; la droite de chaque ligne de la matrice est un bouton <b>Modifier des Ic&#244;nes</b>.
-. Ces boutons ouvrent une bo&#238;te de dialogue Modifier des Ic&#244;nes pour chaque ligne de la matrice. Le bouton
+    Ces boutons ouvrent une bo&#238;te de dialogue Modifier des Ic&#244;nes pour chaque ligne de la matrice. Le bouton
 <b> Masquer les Ic&#244;nes</b> ferme la matrice ic&#244;ne et retourne sur l'onglet &#224; son point d'origine.</p>
 <p>
 Quand un des boutons <b>Modifier des Ic&#244;ne</b> est press&#233; sur une rang&#233;e de l'affichage de l'ic&#244;ne, une bo&#238;te de dialogue d'&#233;dition de la ligne
 est ouverte. Les ic&#244;nes peuvent &#234;tre modifi&#233;s en faisant glisser des ic&#244;nes &#224; partir du Catalogue d'Ic&#244;nes. Aussi le statut entier
-peut &#234;tre retir&#233; par le bouton <b> Supprimer Statut</b> - ou restaur&#233; par le bouton <b> Ajouter &#233;tat Manquant</b>
-.</p>
-<p>
+peut &#234;tre retir&#233; par le bouton <b> Supprimer Statut</b> - ou restaur&#233; par le bouton <b> Ajouter &#233;tat Manquant</b>.
+</p>
 
 <!--#include virtual="/Footer" -->
+        </div>
+      </div>
 </BODY>
 </HTML>

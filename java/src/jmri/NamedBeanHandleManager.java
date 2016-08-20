@@ -39,11 +39,6 @@ import org.slf4j.LoggerFactory;
  */
 public class NamedBeanHandleManager extends jmri.managers.AbstractManager implements java.io.Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2201166159004504615L;
-
     public NamedBeanHandleManager() {
         super();
     }
@@ -53,7 +48,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
         if (bean == null || name == null || name.equals("")) {
             return null;
         }
-        NamedBeanHandle<T> temp = new NamedBeanHandle<T>(name, bean);
+        NamedBeanHandle<T> temp = new NamedBeanHandle<>(name, bean);
 
         for (NamedBeanHandle<T> h : namedBeanHandles) {
             if (temp.equals(h)) {
@@ -78,7 +73,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
          it simply updates the name to the new one. So hence you can end up with
          multiple named bean entries for one name.
          */
-        NamedBeanHandle<T> oldBean = new NamedBeanHandle<T>(oldName, bean);
+        NamedBeanHandle<T> oldBean = new NamedBeanHandle<>(oldName, bean);
         for (NamedBeanHandle<T> h : namedBeanHandles) {
             if (oldBean.equals(h)) {
                 h.setName(newName);
@@ -102,7 +97,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
          multiple bean entries with the same name.
          */
 
-        NamedBeanHandle<T> oldNamedBean = new NamedBeanHandle<T>(name, oldBean);
+        NamedBeanHandle<T> oldNamedBean = new NamedBeanHandle<>(name, oldBean);
         for (NamedBeanHandle<T> h : namedBeanHandles) {
             if (oldNamedBean.equals(h)) {
                 h.setBean(newBean);
@@ -130,7 +125,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
 
     @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
     public <T> boolean inUse(String name, T bean) {
-        NamedBeanHandle<T> temp = new NamedBeanHandle<T>(name, bean);
+        NamedBeanHandle<T> temp = new NamedBeanHandle<>(name, bean);
         for (NamedBeanHandle<T> h : namedBeanHandles) {
             if (temp.equals(h)) {
                 return true;
@@ -147,9 +142,9 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
      * A method to update the listener reference from oldName to a newName
      */
     private void updateListenerRef(String oldName, String newName, NamedBean nBean) {
-        ArrayList<java.beans.PropertyChangeListener> listeners = nBean.getPropertyChangeListeners(oldName);
-        for (int i = 0; i < listeners.size(); i++) {
-            nBean.updateListenerRef(listeners.get(i), newName);
+        java.beans.PropertyChangeListener[] listeners = nBean.getPropertyChangeListenersByReference(oldName);
+        for (java.beans.PropertyChangeListener listener : listeners) {
+            nBean.updateListenerRef(listener, newName);
         }
     }
 
@@ -158,7 +153,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
      * listerner reference matches the currentName.
      */
     private void moveListener(NamedBean oldBean, NamedBean newBean, String currentName) {
-        ArrayList<java.beans.PropertyChangeListener> listeners = oldBean.getPropertyChangeListeners(currentName);
+        java.beans.PropertyChangeListener[] listeners = oldBean.getPropertyChangeListenersByReference(currentName);
         for (java.beans.PropertyChangeListener l : listeners) {
             String listenerRef = oldBean.getListenerRef(l);
             oldBean.removePropertyChangeListener(l);
@@ -174,18 +169,13 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
     }
 
     @SuppressWarnings("rawtypes") // namedBeanHandles contains multiple types of NameBeanHandles<T>
-    ArrayList<NamedBeanHandle> namedBeanHandles = new ArrayList<NamedBeanHandle>();
+    ArrayList<NamedBeanHandle> namedBeanHandles = new ArrayList<>();
 
     /**
      * Don't want to store this information
      */
     @Override
     protected void registerSelf() {
-    }
-
-    @Override
-    public char systemLetter() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public String getSystemPrefix() {

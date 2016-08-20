@@ -1,4 +1,3 @@
-// WavBufferTest.java
 package jmri.jmrit.sound;
 
 import junit.framework.Assert;
@@ -12,7 +11,6 @@ import junit.framework.TestSuite;
  * Note: This makes noise!
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version $Revision$
  */
 public class WavBufferTest extends TestCase {
 
@@ -61,7 +59,7 @@ public class WavBufferTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {WavBufferTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

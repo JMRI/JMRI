@@ -16,7 +16,6 @@ import junit.framework.TestSuite;
  *
  * @author	Paul Bender
  * @author	Mark Underwood (C) 2015
- * @version $Revision$
  */
 public class DCCppStreamPortControllerTest extends TestCase {
 
@@ -44,7 +43,7 @@ public class DCCppStreamPortControllerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", DCCppStreamPortControllerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

@@ -1,4 +1,3 @@
-// NodeConfigAction.java
 package jmri.jmrix.grapevine.nodeconfig;
 
 import java.awt.event.ActionEvent;
@@ -10,14 +9,8 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a NodeConfigFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version	$Revision$
  */
 public class NodeConfigAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4741020402241406039L;
 
     public NodeConfigAction(String s) {
         super(s);
@@ -39,6 +32,3 @@ public class NodeConfigAction extends AbstractAction {
     }
     private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
 }
-
-
-/* @(#)NodeConfigAction.java */

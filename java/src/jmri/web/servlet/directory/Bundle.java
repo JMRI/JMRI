@@ -1,11 +1,10 @@
-// Bundle.java
 package jmri.web.servlet.directory;
 
-import javax.annotation.CheckReturnValue;
-import javax.annotation.ParametersAreNonnullByDefault;
-import javax.annotation.Nullable;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @CheckReturnValue
@@ -20,7 +19,6 @@ import java.util.Locale;
  * the local resource bundle name.
  *
  * @author Bob Jacobsen Copyright (C) 2012
- * @version $Revision: 17977 $
  * @since 3.3.1
  */
 public class Bundle extends jmri.web.servlet.Bundle {
@@ -111,5 +109,3 @@ public class Bundle extends jmri.web.servlet.Bundle {
     }
 
 }
-
-/* @(#)Bundle.java */

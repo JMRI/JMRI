@@ -1,4 +1,3 @@
-// ZTC640Adapter.java
 package jmri.jmrix.lenz.ztc640;
 
 import java.io.DataInputStream;
@@ -27,7 +26,6 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender, Copyright (C) 2003-2010
- * @version	$Revision$
  */
 public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -55,25 +53,21 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
-            // set timeout
             try {
+                // set timeout
                 activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                        + " " + activeSerialPort.isReceiveTimeoutEnabled());
-            } catch (Exception et) {
-                log.info("failed to set serial timeout: " + et);
+            } catch (UnsupportedCommOperationException ex) {
+                log.error("Cannot set receive timeout on port " + portName + ": " + ex.getMessage());
+                return "Cannot set receive timeout on port " + portName + ": " + ex.getMessage();
             }
+            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
+                      + " " + activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -204,7 +198,7 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
         } catch (IOException | TooManyListenersException ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
-            return "Unexpected error while opening port " + portName + ": " + ex;
+            return "IO Exception while opening port " + portName + ": " + ex;
         }
 
         return null; // normal operation
@@ -223,8 +217,6 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
         // packets.startThreads();
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
         new XNetInitializationManager(this.getSystemConnectionMemo());
-
-        jmri.jmrix.lenz.ActiveFlag.setActive();
     }
 
     // base class methods for the XNetSerialPortController interface
@@ -242,7 +234,7 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
         }
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
-        } catch (java.io.IOException e) {
+        } catch (IOException e) {
             log.error("getOutputStream exception: " + e.getMessage());
         }
         return null;

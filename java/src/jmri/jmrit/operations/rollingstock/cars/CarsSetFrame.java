@@ -18,10 +18,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3962047189679581L;
     CarsTableModel _carsTableModel;
     JTable _carsTable;
     TableSorter _sorter;
@@ -82,6 +78,7 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
         }
     }
 
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         super.buttonActionPerformed(ae);
         if (ae.getSource() == ignoreAllButton) {
@@ -104,7 +101,8 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
         toggle = !b;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected boolean save() {
         // save ignore states
         ignoreStatusCheckBoxSelected = ignoreStatusCheckBox.isSelected();

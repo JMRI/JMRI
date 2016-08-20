@@ -15,7 +15,6 @@ import junit.framework.TestSuite;
  *
  * @author Bob Jacobsen
  * @author Mark Underwood
- * @version $Revision$
  */
 public class DCCppTrafficControllerTest extends TestCase {
 
@@ -26,7 +25,7 @@ public class DCCppTrafficControllerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", DCCppTrafficControllerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

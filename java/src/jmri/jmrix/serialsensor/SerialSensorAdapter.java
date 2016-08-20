@@ -1,4 +1,3 @@
-// SerialSensorAdapter.java
 package jmri.jmrix.serialsensor;
 
 import java.io.DataInputStream;
@@ -27,7 +26,6 @@ import purejavacomm.UnsupportedCommOperationException;
  * port. Sensor "1" will be via DCD, and sensor "2" via DSR
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision$
  */
 public class SerialSensorAdapter extends AbstractSerialPortController
         implements jmri.jmrix.SerialPortAdapter {
@@ -35,7 +33,7 @@ public class SerialSensorAdapter extends AbstractSerialPortController
     SerialPort activeSerialPort = null;
 
     public SerialSensorAdapter() {
-        super(new SystemConnectionMemo(null, null) {
+        super(new SystemConnectionMemo("S", "Serial") {
 
             @Override
             protected ResourceBundle getActionModelResourceBundle() {
@@ -120,12 +118,7 @@ public class SerialSensorAdapter extends AbstractSerialPortController
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -230,7 +223,7 @@ public class SerialSensorAdapter extends AbstractSerialPortController
             try {
                 InstanceManager.sensorManagerInstance().provideSensor(mSensor)
                         .setKnownState(value);
-            } catch (JmriException e) {
+            } catch (JmriException | IllegalArgumentException e) {
                 log.error("Exception setting state: " + e);
             }
         }

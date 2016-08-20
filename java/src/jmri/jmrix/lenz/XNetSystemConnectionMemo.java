@@ -189,8 +189,10 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public void setCommandStation(CommandStation c) {
         commandStation = c;
-        ((LenzCommandStation) c).setTrafficController(xt);
-        ((LenzCommandStation) c).setSystemConnectionMemo(this);
+        if( c instanceof LenzCommandStation) {
+           ((LenzCommandStation) c).setTrafficController(xt);
+           ((LenzCommandStation) c).setSystemConnectionMemo(this);
+        }
     }
 
     private CommandStation commandStation = null;

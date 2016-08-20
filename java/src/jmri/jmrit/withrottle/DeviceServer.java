@@ -1,8 +1,6 @@
 package jmri.jmrit.withrottle;
 
 /**
- * DeviceServer.java
- *
  * WiThrottle
  *
  * @author Brett Hoffman Copyright (C) 2009, 2010
@@ -89,7 +87,7 @@ import java.util.TimerTask;
 import jmri.CommandStation;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.web.server.WebServerManager;
+import jmri.web.server.WebServerPreferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -99,7 +97,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     private static final String versionNumber = "2.0";
 
     private Socket device;
-    private CommandStation cmdStation = jmri.InstanceManager.commandStationInstance();
+    private CommandStation cmdStation = jmri.InstanceManager.getOptionalDefault(CommandStation.class);
     String newLine = System.getProperty("line.separator");
     BufferedReader in = null;
     PrintStream out = null;
@@ -468,7 +466,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             }
 
         };
-        ekg.scheduleAtFixedRate(task, pulseInterval * 900, pulseInterval * 900);
+        ekg.scheduleAtFixedRate(task, pulseInterval * 900L, pulseInterval * 900L);
     }
 
     public void stopEKG() {
@@ -565,7 +563,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     }
 
     public static String getWebServerPort() {
-        return Integer.toString(WebServerManager.getWebServerPreferences().getPort());
+        return Integer.toString(WebServerPreferences.getDefault().getPort());
     }
 
     /**
@@ -589,7 +587,6 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     /**
      * Add a DeviceListener
      *
-     * @param l
      */
     public void addDeviceListener(DeviceListener l) {
         if (listeners == null) {
@@ -603,7 +600,6 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     /**
      * Remove a DeviceListener
      *
-     * @param l
      */
     public void removeDeviceListener(DeviceListener l) {
         if (listeners == null) {

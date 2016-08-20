@@ -132,6 +132,7 @@
             <xs:enumeration value="le"/>
             <xs:enumeration value="eq"/>
             <xs:enumeration value="ne"/>
+            <xs:enumeration value="exists"/>
           </xs:restriction>
         </xs:simpleType>
       </xs:element>

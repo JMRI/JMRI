@@ -31,7 +31,7 @@ The Signal Group Table
 				<li>Finally there is an <b>Edit</b> button</li>
 		</ol>
 	
-		<a name="add"><h3>Creating a Signal Group</h3></a>
+		<a name="add"></a><h3>Creating a Signal Group</h3>
 <p>To define a new Signal Group, click on the <a href="SignalGroupAddEdit.shtml">Add...</a> button at the bottom of the Signal Group Table. This will prompt you for a Signal Group name and whatever further information is needed.
 <p>You can delete a Signal Group from the Signal Group Table by clicking one of the <b>Delete</b> buttons. Save
 a copy of your JMRI Configuration file as a backup first!

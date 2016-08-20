@@ -1,4 +1,3 @@
-// Siglet.java
 package jmri.jmrit.automat;
 
 import jmri.NamedBean;
@@ -21,7 +20,6 @@ import jmri.NamedBean;
  * will cause a recursive invocation when the output changes.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public class Siglet extends AbstractAutomaton {
 
@@ -75,5 +73,3 @@ public class Siglet extends AbstractAutomaton {
         inputs = in;
     }
 }
-
-/* @(#)Siglet.java */

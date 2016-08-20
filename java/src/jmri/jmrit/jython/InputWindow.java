@@ -1,4 +1,3 @@
-// InputWindow.java
 package jmri.jmrit.jython;
 
 import java.awt.BorderLayout;
@@ -40,14 +39,9 @@ import org.slf4j.LoggerFactory;
  * interpreter
  *
  * @author Bob Jacobsen Copyright (C) 2004
- * @version $Revision$
  */
 public class InputWindow extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8043631915757357490L;
     JTextArea area;
     JButton button;
     JButton loadButton;
@@ -157,7 +151,6 @@ public class InputWindow extends JPanel {
 
     /**
      *
-     * @param fileChooser
      * @return true if successful
      */
     protected boolean loadFile(JFileChooser fileChooser) {
@@ -194,7 +187,6 @@ public class InputWindow extends JPanel {
         }
         /**
          *
-         * @param fileChooser
          * @return true if successful
          */
     protected boolean storeFile(JFileChooser fileChooser) {
@@ -275,5 +267,3 @@ public class InputWindow extends JPanel {
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(InputWindow.class.getName());
 }
-
-/* @(#)InputWindow.java */

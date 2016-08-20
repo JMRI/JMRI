@@ -1,4 +1,3 @@
-// QsiTrafficControllerTest.java
 package jmri.jmrix.qsi;
 
 import java.io.DataInputStream;
@@ -231,7 +230,7 @@ public class QsiTrafficControllerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {QsiTrafficControllerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

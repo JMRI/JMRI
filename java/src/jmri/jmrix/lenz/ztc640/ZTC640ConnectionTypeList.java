@@ -11,6 +11,9 @@ package jmri.jmrix.lenz.ztc640;
  */
 public class ZTC640ConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String ZTC = "ZTC";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         String[] masterList = new jmri.jmrix.lenz.LenzConnectionTypeList().getAvailableProtocolClasses();
 
@@ -22,6 +25,11 @@ public class ZTC640ConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
             x++;
         }
         return tempList;
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{ZTC};
     }
 
 }

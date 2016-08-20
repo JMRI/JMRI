@@ -34,6 +34,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     protected static final int THROTTLESTATSENT = 1;  // Sent Status request
     protected static final int THROTTLESPEEDSENT = 2;  // Sent speed/dir command to locomotive
     protected static final int THROTTLEFUNCSENT = 4;   // Sent a function command to locomotive.
+    protected static final int THROTTLEMOMSTATSENT = 8;  // Sent Momentary Status request for F0-F12
+    protected static final int THROTTLEHIGHSTATSENT = 16;  // Sent Status request for F13-F28
+    protected static final int THROTTLEHIGHMOMSTATSENT = 32;  // Sent Momentary Status request for F13-F28
 
     public int requestState = THROTTLEIDLE;
 
@@ -57,7 +60,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     public XNetThrottle(XNetSystemConnectionMemo memo, LocoAddress address, XNetTrafficController controller) {
         super(memo);
         this.tc = controller;
-        this.setDccAddress(((DccLocoAddress) address).getNumber());
+        this.setDccAddress(address.getNumber());
         this.speedIncrement = SPEED_STEP_128_INCREMENT;
         this.speedStepMode = DccThrottle.SpeedStepMode128;
         //       this.isForward=true;
@@ -198,7 +201,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
             return;
         }
-        XNetMessage msg = XNetMessage.getFunctionGroup2SetMomMsg(this.getDccAddress(),
+        XNetMessage msg = XNetMessage.getFunctionGroup3SetMomMsg(this.getDccAddress(),
                 f9Momentary, f10Momentary, f11Momentary, f12Momentary);
         // now, queue the message for sending to the command station
         queueMessage(msg, THROTTLEFUNCSENT);
@@ -375,7 +378,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         }
         /* Send the request for Function status */
         XNetMessage msg = XNetMessage.getLocomotiveFunctionStatusMsg(this.address);
-        queueMessage(msg, THROTTLESTATSENT);
+        queueMessage(msg, ( THROTTLEMOMSTATSENT | THROTTLESTATSENT) );
         return;
     }
 
@@ -393,7 +396,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         /* Send the request for Function status */
         XNetMessage msg = XNetMessage.getLocomotiveFunctionHighOnStatusMsg(this.address);
         // now, we send the message to the command station
-        queueMessage(msg, THROTTLESTATSENT);
+        queueMessage(msg, THROTTLEHIGHSTATSENT | THROTTLESTATSENT );
         return;
     }
 
@@ -418,7 +421,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         /* Send the request for Function status */
         XNetMessage msg = XNetMessage.getLocomotiveFunctionHighMomStatusMsg(this.address);
         // now, we send the message to the command station
-        queueMessage(msg, THROTTLESTATSENT);
+        queueMessage(msg, (THROTTLEHIGHMOMSTATSENT | THROTTLESTATSENT) );
         return;
     }
 
@@ -485,7 +488,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 sendQueuedMessage();
             } else if (l.isRetransmittableErrorMsg()) {
                 /* this is a communications error */
-                log.error("Communications error occured - message recieved was: " + l);
+                log.debug("Communications error occured - message recieved was: " + l);
             } else if (l.getElement(0) == XNetConstants.CS_INFO
                     && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
                 /* The Command Station does not support this command */
@@ -496,9 +499,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 /* this is an unknown error */
                 requestState = THROTTLEIDLE;
                 sendQueuedMessage();
-                log.warn("Received unhandled response: " + l);
+                log.debug("Received unhandled response: " + l);
             }
-        } else if (requestState == THROTTLESTATSENT) {
+        } else if ( ( requestState & THROTTLESTATSENT ) == THROTTLESTATSENT) {
             if (log.isDebugEnabled()) {
                 log.debug("Current throttle status is THROTTLESTATSENT");
             }
@@ -652,18 +655,25 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 }
             } else if (l.isRetransmittableErrorMsg()) {
                 /* this is a communications error */
-                log.error("Communications error occured - message received was: " + l);
+                log.debug("Communications error occured - message received was: " + l);
             } else if (l.getElement(0) == XNetConstants.CS_INFO
                     && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
                 /* The Command Station does not support this command */
                 log.error("Unsupported Command Sent to command station");
-                requestState = THROTTLEIDLE;
-                sendQueuedMessage();
+                if((requestState & THROTTLEMOMSTATSENT) == THROTTLEMOMSTATSENT){
+                   // if momentaty is not supported, try requesting the
+                   // high function state.
+                   requestState = THROTTLEIDLE;
+                   sendFunctionHighInformationRequest();
+                } else {
+                   requestState = THROTTLEIDLE;
+                   sendQueuedMessage();
+                }
             } else {
                 /* this is an unknown error */
                 requestState = THROTTLEIDLE;
                 sendQueuedMessage();
-                log.warn("Received unhandled response: " + l);
+                log.debug("Received unhandled response: " + l);
             }
         }
         //requestState=THROTTLEIDLE;
@@ -791,8 +801,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             if (java.lang.Math.abs(
                     this.getSpeedSetting() - ((float) speedVal / (float) 126)) >= 0.0079) {
                 notifyPropertyChangeListener("SpeedSetting",
-                        new Float(this.speedSetting),
-                        new Float(this.speedSetting
+                        Float.valueOf(this.speedSetting),
+                        Float.valueOf(this.speedSetting
                                 = (float) speedVal / (float) 126));
             }
         } else if (this.speedStepMode == DccThrottle.SpeedStepMode28) {
@@ -811,8 +821,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             if (java.lang.Math.abs(
                     this.getSpeedSetting() - ((float) speedVal / (float) 28)) >= 0.035) {
                 notifyPropertyChangeListener("SpeedSetting",
-                        new Float(this.speedSetting),
-                        new Float(this.speedSetting
+                        Float.valueOf(this.speedSetting),
+                        Float.valueOf(this.speedSetting
                                 = (float) speedVal / (float) 28));
             }
         } else if (this.speedStepMode == DccThrottle.SpeedStepMode27) {
@@ -831,8 +841,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             if (java.lang.Math.abs(
                     this.getSpeedSetting() - ((float) speedVal / (float) 27)) >= 0.037) {
                 notifyPropertyChangeListener("SpeedSetting",
-                        new Float(this.speedSetting),
-                        new Float(this.speedSetting
+                        Float.valueOf(this.speedSetting),
+                        Float.valueOf(this.speedSetting
                                 = (float) speedVal / (float) 27));
             }
         } else {
@@ -846,8 +856,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             if (java.lang.Math.abs(
                     this.getSpeedSetting() - ((float) speedVal / (float) 14)) >= 0.071) {
                 notifyPropertyChangeListener("SpeedSetting",
-                        new Float(this.speedSetting),
-                        new Float(this.speedSetting
+                        Float.valueOf(this.speedSetting),
+                        Float.valueOf(this.speedSetting
                                 = (float) speedVal / (float) 14));
             }
         }

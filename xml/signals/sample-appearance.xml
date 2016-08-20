@@ -26,7 +26,7 @@
     </revision>    
     <revision>
         <revnumber>2</revnumber>
-        <date>2009-12-29</date>
+        <date>2016-04-12</date>
         <authorinitials>initials</authorinitials>
         <revremark>comment</revremark>
     </revision>    
@@ -47,6 +47,8 @@
       <show>red</show>
       <reference></reference>
       <reference></reference>
+      <imagelink type="small">../../../resources/icons/smallschematics/searchlights/left-green-high.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/smallschematics/searchlights/left-green-high.gif</imagelink>
     </appearance>
 
 
@@ -56,6 +58,8 @@
       <show>red</show>
       <reference></reference>
       <reference></reference>
+      <imagelink type="small">../../../resources/icons/smallschematics/searchlights/left-red-high.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/smallschematics/searchlights/left-red-high.gif</imagelink>
     </appearance>
 
   </appearances>

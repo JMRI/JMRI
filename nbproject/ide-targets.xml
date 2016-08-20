@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir=".." name="JMRI-IDE">
+    <import file="../build.xml"/>
+    <target depends="debug, runtime-library-selection" description="Debug DecoderPro app" name="debug-nb">
+        <nbjpdastart addressproperty="jpda.address" name="JMRI" transport="dt_socket">
+            <classpath refid="project.class.path"/>
+        </nbjpdastart>
+        <property name="debugger" value="true"/>
+        <property name="jdpa.server" value="n"/>
+        <antcall target="decoderpro"/>
+    </target>
+
+</project>

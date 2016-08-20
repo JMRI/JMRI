@@ -1,4 +1,3 @@
-// jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml.java
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import jmri.configurexml.AbstractXmlAdapter;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision$
  */
 public class TrackSegmentXml extends AbstractXmlAdapter {
 
@@ -54,7 +52,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                 element.setAttribute("hideConLines", "" + (p.hideConstructionLines() ? "yes" : "no"));
             }
         }
-        element.setAttribute("class", "jmri.jmrit.display.configurexml.TrackSegmentXml");
+        element.setAttribute("class", getClass().getName());
         return element;
     }
 

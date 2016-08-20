@@ -1,11 +1,8 @@
-/**
- * DCCppPacketizer.java
- */
 package jmri.jmrix.dccpp;
 
+import java.nio.charset.StandardCharsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Converts Stream-based I/O to/from DCC++ messages. The "DCCppInterface" side
@@ -17,7 +14,6 @@ import java.nio.charset.StandardCharsets;
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <P>
  * <UL>
  * <LI> RcvHandler - at highest available priority
  * <LI> XmtHandler - down one, which is assumed to be above the GUI
@@ -26,7 +22,6 @@ import java.nio.charset.StandardCharsets;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author	Mark Underwood Copyright (C) 2015
- * @version $Revision$
  *
  * Based on XNetPacketizer by Bob Jacobsen
  *
@@ -176,5 +171,3 @@ public class DCCppPacketizer extends DCCppTrafficController {
 
     private final static Logger log = LoggerFactory.getLogger(DCCppPacketizer.class.getName());
 }
-
-/* @(#)DCCppPacketizer.java */

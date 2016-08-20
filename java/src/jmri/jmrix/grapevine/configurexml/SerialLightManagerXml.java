@@ -1,4 +1,3 @@
-// SerialLightManagerXml.java
 package jmri.jmrix.grapevine.configurexml;
 
 import jmri.jmrix.grapevine.SerialLightManager;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Based on SerialTurnoutManagerXml.java
  *
  * @author Dave Duchamp Copyright (c) 2004, 2007
- * @version $Revision$
  */
 public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 

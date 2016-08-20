@@ -109,7 +109,6 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
      * sensor with respect to whether or not a feedback request was sent. This
      * is used only when the sensor is created by on layout feedback.
      *
-     * @param l
      *
      */
     synchronized void initmessage(DCCppReply l) {
@@ -125,7 +124,6 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
      * _once_ if anything has changed state (or set the commanded state
      * directly)
      *
-     * @param l
      */
     public synchronized void message(DCCppReply l) {
         if (log.isDebugEnabled()) {

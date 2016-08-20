@@ -1,4 +1,3 @@
-// CsvExportAction.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionEvent;
@@ -16,14 +15,8 @@ import org.slf4j.LoggerFactory;
  * Action to export the CV values to a Comma Separated Valiable (CSV) data file.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public class CsvExportAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5770050662682568623L;
 
     public CsvExportAction(String actionName, CvTableModel pModel, JFrame pParent) {
         super(actionName);

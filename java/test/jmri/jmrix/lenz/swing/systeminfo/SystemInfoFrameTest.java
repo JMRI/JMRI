@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class SystemInfoFrameTest extends TestCase {
 
@@ -32,7 +31,7 @@ public class SystemInfoFrameTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SystemInfoFrameTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

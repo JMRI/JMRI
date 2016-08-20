@@ -1,4 +1,3 @@
-// AbstractSimulatorConnectionConfig.java
 package jmri.jmrix;
 
 import java.awt.Color;
@@ -24,9 +23,7 @@ import org.slf4j.LoggerFactory;
  * the simulator adapter in due course.
  *
  * @author Kevin Dickerson Copyright (C) 2001, 2003
- * @version	$Revision$
  */
-//
 abstract public class AbstractSimulatorConnectionConfig extends AbstractConnectionConfig {
 
     /**

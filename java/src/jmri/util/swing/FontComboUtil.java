@@ -1,4 +1,3 @@
-// FontComboUtil.java
 package jmri.util.swing;
 
 import java.awt.Dimension;
@@ -35,7 +34,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  * @since 2.13.1
  */
 public class FontComboUtil {
@@ -90,6 +88,7 @@ public class FontComboUtil {
     /**
      * Method to initialise the font lists on first access
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="font sizes are really quantized")
     public static synchronized void prepareFontLists() {
 
         if (prepared) {
@@ -130,6 +129,7 @@ public class FontComboUtil {
                 // Check if the widths of a 'narrow' letter (I)
                 // a 'wide' letter (W) and a 'space' ( ) are the same.
                 double w;
+                // next line is the FE_FLOATING_POINT_EQUALITY annotated above
                 if (f.getStringBounds("I", frc).getWidth()
                         == (w = f.getStringBounds("W", frc).getWidth())
                         && w == f.getStringBounds(" ", frc).getWidth()) {
@@ -331,5 +331,3 @@ public class FontComboUtil {
     private static final Logger log = LoggerFactory.getLogger(FontComboUtil.class.getName());
 
 }
-
-/* @(#)FontComboUtil.java */

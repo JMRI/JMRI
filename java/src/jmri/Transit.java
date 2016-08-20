@@ -1,4 +1,3 @@
-// Transit.java
 package jmri;
 
 import java.util.ArrayList;
@@ -51,16 +50,9 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Dave Duchamp Copyright (C) 2008-2011
- *
- * @version	$Revision$
  */
 public class Transit extends AbstractNamedBean
         implements java.io.Serializable {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1416985602957797317L;
 
     public Transit(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
@@ -574,5 +566,3 @@ public class Transit extends AbstractNamedBean
     private final static Logger log = LoggerFactory.getLogger(Transit.class.getName());
 
 }
-
-/* @(#)Transit.java */

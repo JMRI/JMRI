@@ -1,13 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * ThrottlesPreferencesPane.java
- *
- * Created on 17 juil. 2009, 15:05:26
- */
 package jmri.jmrit.throttle;
 
 import java.awt.GridBagConstraints;
@@ -33,8 +23,6 @@ import jmri.swing.PreferencesPanel;
  */
 public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeListener, PreferencesPanel {
 
-    private static final long serialVersionUID = -5473594799045080011L;
-
     private JCheckBox cbUseToolBar;
     private JCheckBox cbUseFunctionIcon;
     private JCheckBox cbResizeWinImg;
@@ -56,7 +44,7 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
      */
     @SuppressWarnings("LeakingThisInConstructor")
     public ThrottlesPreferencesPane() {
-        if (InstanceManager.getDefault(ThrottlesPreferences.class) == null) {
+        if (InstanceManager.getOptionalDefault(ThrottlesPreferences.class) == null) {
             InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
         }
         ThrottlesPreferences tp = InstanceManager.getDefault(ThrottlesPreferences.class);
@@ -86,12 +74,6 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         gridBagConstraints12.insets = new Insets(2, 23, 2, 2);
         gridBagConstraints12.anchor = GridBagConstraints.WEST;
         gridBagConstraints12.gridy = 9;
-
-        GridBagConstraints gridBagConstraints15 = new GridBagConstraints();
-        gridBagConstraints15.gridx = 0;
-        gridBagConstraints15.insets = new Insets(2, 23, 2, 2);
-        gridBagConstraints15.anchor = GridBagConstraints.WEST;
-        gridBagConstraints15.gridy = 8;
 
         GridBagConstraints gridBagConstraints11 = new GridBagConstraints();
         gridBagConstraints11.gridx = 0;

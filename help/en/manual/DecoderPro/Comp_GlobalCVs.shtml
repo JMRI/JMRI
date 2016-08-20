@@ -1,94 +1,122 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>Comprehensive Programmer - Global CV Listing Pane</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>Comprehensive Programmer - Global CV Listing Pane</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<a name="Top"></a>
-<h1>DecoderPro&reg; Comprehensive Programmer</h1>
-<h2>Global CV Listing Pane</h2>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<div align="right">
-<p><a href="Comp_SoundLevels.shtml"> Previous</a> | 
-  <a href="Comp_ManfSpecific.shtml">Next </a>
-</p><p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
-</p></div>
+      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
 
-<hr>
-<p>
-For the hard-core programmer, this pane is a listing of the raw CV
-data by CV number, with data in <span class="ACCENT">decimal format</span>.
-You may change data by typing new numbers into the <b>Values</b> window.
-<b>State</b> shows the validity of the data, whether it was taken <b>From file </b>(the decoder information saved in the <b>Roster</b>), <b>Edited</b>,
-<b>Read</b> directly from the decoder, <b>Stored</b> to the decoder or if the status is <b>Unknown</b>. Note the <b>scroll bar</b> on
-the right side of the listings. You may scroll up or down to access all
-of the CV listings.</p>
-<h4>Decoder Locking
-</h4>
-<p> You tried to read a CV value and get &#8220;Error 308, No Acknowledgement
-from Decoder&#8221;, well the decoder may be locked. CV 15 and 16 deal
-with locking, if your manufacturer implements this feature (and
-manufacturers have slight differences as to how they implement
-it).&nbsp; If the decoder is locked, then you will not be able to read
-data from it or write to it.&nbsp; To unlock the decoder, you must
-enter a value into CV15 (the only CV that can be written when the
-decoder is locked), that is equal to the value that is currently in
-CV16.&nbsp; Now I hear you thinking &#8220;but I can&#8217;t read CV16 to know what
-to put into CV15&#8221;.&nbsp; Well, you&#8217;ll have to try all possible
-values,&nbsp; which isn&#8217;t that hard since it can only have 8 possible
-values 0 thru 7.&nbsp; After each write, try to read CV16.&nbsp; It&#8217;s
-the fastest read since it can only have 8 possible values.&nbsp; If
-JMRI responds with the no-ack error, then try the next value.&nbsp; If
-it returns the value in CV16, you&#8217;ve unlocked the decoder and you&#8217;re
-in.&nbsp; If you have unsuccessfully tried all the 8 possibilities,
-then check your layout connection and the loco&#8217;s wheels for poor
-connections and try again. Now you say, &#8220;I&#8217;ve looked thru the
-list several times and CV 15 doesn&#8217;t appear&#8221;.&nbsp; That&#8217;s on purpose,
-to minimize inadvertent locking by a Write All Sheets.&nbsp; You will
-have to use the<u> </u><a href="Simple_Programmer.shtml">Single CV Programmer </a>to write CV15.&nbsp; It can be found in the Tools menu on the Main  Page, under Programmers.</p>
-<p>If you have more than one decoder in your locomotive, you probably
-have a decoder locking scheme implemented to be able to access each one
-individually for programming. There is a <a href="Multi_Decoder_Control.shtml">Multi-decoder control</a>
-tool in JMRI. It is located on the main window under Tools menu,
-programmers option. It is accompanied with a comprehensive help
-describing its use.</p>
-<p>
-You may <b>Read</b> or <b>Write</b> individual CVs using the buttons
-in their row. On this page, a <b>Read sheet</b> or <b>Write sheet</b> operation
-is the same as a <b>Read all</b> or <b>Write all</b>. <span class="ACCENT">Again, a reminder: you can only read CVs if your command station has that capability.</span>
-</p><p align="center"><img style="width: 923px; height: 799px;" src="images/Comp_11_CV.png" alt="CVs">
-</p><p>
-  One thing to keep in mind about the <b>CV</b> listing on
-this pane - anything you can do here you can do from one of the other
-panes in Decoder Pro, without having to know the <b>CV</b> number or
-how to compile the values to get the desired effect. This pane is meant
-for advanced users of DCC used to crunching the numbers themselves.
-Those new to DCC can safely ignore this panel without losing any
-capability at all.
-</p>
-<hr>
-<div align="right">
-<p><a href="Comp_ManfSpecific.shtml"></a>
-  <a href="Comp_SoundLevels.shtml">Previous</a> | <a href="Comp_ManfSpecific.shtml">Next </a>
-</p><p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
-</p></div>
+      <h2>Global CV Listing Pane</h2>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
- </body>
+      <div align="right">
+        <p><a href="Comp_SoundLevels.shtml">Previous</a> | <a href=
+        "Comp_ManfSpecific.shtml">Next</a></p>
+
+        <p><a href="index.shtml#Advanced%20Programmer">Back to
+        Index</a></p>
+      </div>
+      <hr>
+
+      <p>For the hard-core programmer, this pane is a listing of
+      the raw CV data by CV number, with data in <span class=
+      "ACCENT">decimal format</span>. You may change data by typing
+      new numbers into the <b>Values</b> window. <b>State</b> shows
+      the validity of the data, whether it was taken <b>From
+      file</b> (the decoder information saved in the
+      <b>Roster</b>), <b>Edited</b>, <b>Read</b> directly from the
+      decoder, <b>Stored</b> to the decoder or if the status is
+      <b>Unknown</b>. Note the <b>scroll bar</b> on the right side
+      of the listings. You may scroll up or down to access all of
+      the CV listings.</p>
+
+      <h4>Decoder Locking</h4>
+
+      <p>You tried to read a CV value and get "Error 308, No
+      Acknowledgement from Decoder", well the decoder may be
+      locked. CV 15 and 16 deal with locking, if your manufacturer
+      implements this feature (and manufacturers have slight
+      differences as to how they implement it). If the decoder is
+      locked, then you will not be able to read data from it or
+      write to it. To unlock the decoder, you must enter a value
+      into CV15 (the only CV that can be written when the decoder
+      is locked), that is equal to the value that is currently in
+      CV16. Now I hear you thinking "but I can't read CV16 to know
+      what to put into CV15". Well, you'll have to try all possible
+      values, which isn't that hard since it can only have 8
+      possible values 0 thru 7. After each write, try to read CV16.
+      It's the fastest read since it can only have 8 possible
+      values. If JMRI responds with the no-ack error, then try the
+      next value. If it returns the value in CV16, you've unlocked
+      the decoder and you're in. If you have unsuccessfully tried
+      all the 8 possibilities, then check your layout connection
+      and the loco's wheels for poor connections and try again. Now
+      you say, "I've looked thru the list several times and CV 15
+      doesn't appear". That's on purpose, to minimize inadvertent
+      locking by a Write All Sheets. You will have to use the
+      <a href="Simple_Programmer.shtml">Single CV Programmer</a> to
+      write CV15. It can be found in the Tools menu on the Main
+      Page, under Programmers.</p>
+
+      <p>If you have more than one decoder in your locomotive, you
+      probably have a decoder locking scheme implemented to be able
+      to access each one individually for programming. There is a
+      <a href="Multi_Decoder_Control.shtml">Multi-decoder
+      control</a> tool in JMRI. It is located on the main window
+      under Tools menu, programmers option. It is accompanied with
+      a comprehensive help describing its use.</p>
+
+      <p>You may <b>Read</b> or <b>Write</b> individual CVs using
+      the buttons in their row. On this page, a <b>Read sheet</b>
+      or <b>Write sheet</b> operation is the same as a <b>Read
+      all</b> or <b>Write all</b>. <span class="ACCENT">Again, a
+      reminder: you can only read CVs if your command station has
+      that capability.</span></p>
+
+      <p align="center"><img style="width: 923px; height: 799px;"
+      src="images/Comp_11_CV.png" alt="CVs"></p>
+
+      <p>One thing to keep in mind about the <b>CV</b> listing on
+      this pane - anything you can do here you can do from one of
+      the other panes in Decoder Pro, without having to know the
+      <b>CV</b> number or how to compile the values to get the
+      desired effect. This pane is meant for advanced users of DCC
+      used to crunching the numbers themselves. Those new to DCC
+      can safely ignore this panel without losing any capability at
+      all.</p>
+      <hr>
+
+      <div align="right">
+        <p><a href="Comp_ManfSpecific.shtml"></a> <a href=
+        "Comp_SoundLevels.shtml">Previous</a> | <a href=
+        "Comp_ManfSpecific.shtml">Next</a></p>
+
+        <p><a href="index.shtml#Advanced%20Programmer">Back to
+        Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
 </html>

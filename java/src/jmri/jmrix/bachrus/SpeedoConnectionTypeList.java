@@ -12,10 +12,18 @@ package jmri.jmrix.bachrus;
  */
 public class SpeedoConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String BACHRUS = "Bachrus";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.bachrus.serialdriver.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{BACHRUS};
     }
 
 }

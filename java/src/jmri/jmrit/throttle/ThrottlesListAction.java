@@ -6,11 +6,6 @@ import javax.swing.AbstractAction;
 public class ThrottlesListAction extends AbstractAction {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = 6318756102854541505L;
-
-    /**
      * Constructor
      *
      * @param s Name for the action.
@@ -18,7 +13,7 @@ public class ThrottlesListAction extends AbstractAction {
     public ThrottlesListAction(String s) {
         super(s);
         // disable the ourselves if there is no throttle Manager
-        if (jmri.InstanceManager.throttleManagerInstance() == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ThrottleManager.class) == null) {
             setEnabled(false);
         }
     }

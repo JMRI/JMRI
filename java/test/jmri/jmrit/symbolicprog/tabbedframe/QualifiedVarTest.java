@@ -1,4 +1,3 @@
-// QualifiedVarTest.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import javax.swing.JPanel;
@@ -34,11 +33,6 @@ public class QualifiedVarTest extends TestCase {
                 PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
                         "test qualified var", "programmers/Basic.xml",
                         new jmri.progdebugger.ProgDebugger(), false) {
-                            /**
-                             *
-                             */
-                            private static final long serialVersionUID = 1786734447474211880L;
-
                             // dummy implementations
                             protected JPanel getModePane() {
                                 return null;
@@ -193,7 +187,7 @@ public class QualifiedVarTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", QualifiedVarTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

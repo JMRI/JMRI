@@ -26,6 +26,7 @@
 
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
@@ -86,7 +87,7 @@ Eventually, all but a few index pages will have
 ".shtml" extensions. (The remaining index.html pages keep that name
 so that people who request just a directory URL will be served something useful).</p>
 
-<p><a name="redirect" id="redirect"></a>
+<p><a name="redirect"></a>
 We are using .htaccess files to do redirects when a web page is removed.  This
 lets older bookmarks continue to work.  
 The 
@@ -124,21 +125,23 @@ the source.  The <a href="http://jmri.org/JavaDoc/doc">JavaDoc</a> is one such s
 
 <h2>Updating the jmri.org site</h2>
 
-<p>Most of the web site contents is updated hourly from a job running on one of the
+<p>Most of the web site contents is updated hourly from jobs running on one of the
 project's Jenkins build servers.  The directories listed above constitute most of the site,
 and this content is updated from the JMRI repository without any additional work.</p>
+<ul>
+<li><a href="http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20JMRI%20repository/">static content from JMRI/JMRI repository, e.g. help, xml, etc in JMRI distributions</a>
+<li><a href="http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/">static content from JMRI/website repository, e.g. website-only information</a>
+<li><a href="http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website-legal%20repository/">static content from JMRI/website-legal repository, e.g. content around the JMRI-Katzer legal case</a>
+</ul>
 
 <p>The regeneration of the JavaDoc and xml content involves
-significantly more work than merely updating a directory, and so these are only done once per day, as needed.</p>
+significantly more work than merely updating a directory, and so these are only done once per day, as needed,
+by the
+<a href="http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/">Generate Website</a>
+job on the 
+<a href="http://jmri.tagadab.com/jenkins/">production Jenkins server</a>.</p>
 
-<p>The status of the web site updates is available on the JMRI
-<a href="https://jmri.ci.cloudbees.com/job/Development/job/Web%20Site/">production</a>
-and
-<a href="http://builds.jmri.org/jenkins/job/Web%20Site/job/Update%20Static%20Components/">test</a>
-CI servers.
-</p>
-
-<a name="local" id="local"></a><h2>Local Web Site: Mac OS X</h2>
+<a name="local"></a><h2>Local Web Site: Mac OS X</h2>
 
 <p>If you want to host a copy of the JMRI web site on your local
 Mac OS X machine, follow these instructions to first configure
@@ -194,6 +197,12 @@ Add the word "Includes" to the last line so it looks like
     AddHandler server-parsed .shtml
 </PRE>
 
+        Then find the reference to the include_module and make sure it's loaded by a line like:
+<PRE>
+LoadModule include_module libexec/apache2/mod_include.so
+</PRE>
+        By default, that's commented out with a leading # character.
+<p>          
     <li>Finally, configure the server to allow <a href="#redirect">.htaccess files to provide redirects</a>.  
         We use this to allow people with old URLs in bookmarks to reach the right current pages.
         <p>
@@ -220,12 +229,18 @@ DocumentRoot "/Library/WebServer/Documents"
 LoadModule rewrite_module libexec/apache2/mod_rewrite.so
 </PRE>
         By default, that's commented out with a leading # character.
+<p>          
+        We also want PHP turned on, so that the indices for the resources pages will work.
+        Find the follow line and make sure it's not commented out:
+<PRE>
+LoadModule php5_module libexec/apache2/libphp5.so
+</PRE>
           
     </ul>
 
 <LI>Install the JMRI files to be served:
     <UL>
-    <LI><a name="link" id="link"></a>Check out both the JMRI/JMRI
+    <LI><a name="link"></a>Check out both the JMRI/JMRI
         and JMRI/website repositories to somewhere on your computer.  It's OK for these
         to be outside the web server's directory tree.
     <LI>Change to the web server directory
@@ -247,7 +262,7 @@ were directly present.
 which should get you a JMRI top-level page.
 </OL>
 
-<a name="catalog" id="catalog"></a><h3>Installing a local XML catalog</h3>
+<a name="catalog"></a><h3>Installing a local XML catalog</h3>
 
 Many JMRI XML files contain XIncludes that reference
 other XML files with URLs like "http://jmri.org/xml/schema/types/turnouts-2-9-6.xsd".

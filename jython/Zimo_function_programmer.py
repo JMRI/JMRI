@@ -330,7 +330,7 @@ class LocoZimoProg(jmri.jmrit.automat.AbstractAutomaton) :
         self.startButton = javax.swing.JButton("Start")
         self.startButton.actionPerformed = self.whenMyButtonClicked		
 
-        self.roster = jmri.jmrit.roster.Roster.instance()
+        self.roster = jmri.jmrit.roster.Roster.getDefault()
         self.box = jmri.jmrit.roster.swing.GlobalRosterEntryComboBox()
         self.box.itemStateChanged = self.rosterBoxChange
         temppanel1.add(self.box)

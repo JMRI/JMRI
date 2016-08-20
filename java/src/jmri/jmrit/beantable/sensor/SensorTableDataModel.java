@@ -1,4 +1,3 @@
-// SensorTableDataModel.java
 package jmri.jmrit.beantable.sensor;
 
 import java.util.ResourceBundle;
@@ -21,14 +20,9 @@ import org.slf4j.LoggerFactory;
  * Data model for a SensorTable
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2009
- * @version $Revision$
  */
 public class SensorTableDataModel extends BeanTableDataModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9025503488977960491L;
     static public final int INVERTCOL = NUMCOLUMN;
     static public final int EDITCOL = INVERTCOL + 1;
     static public final int USEGLOBALDELAY = EDITCOL + 1;
@@ -323,5 +317,3 @@ public class SensorTableDataModel extends BeanTableDataModel {
 
     private final static Logger log = LoggerFactory.getLogger(SensorTableDataModel.class.getName());
 }
-
-/* @(#)SensorTableDataModel.java */

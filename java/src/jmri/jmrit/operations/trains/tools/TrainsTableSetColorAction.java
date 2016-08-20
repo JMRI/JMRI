@@ -28,6 +28,7 @@ public class TrainsTableSetColorAction extends AbstractAction {
 
     TrainsTableSetColorFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (f == null || !f.isVisible()) {
             f = new TrainsTableSetColorFrame(_train);

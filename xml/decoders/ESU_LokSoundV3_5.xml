@@ -33,35 +33,304 @@
   <version author="Dave Heap" version="8" lastUpdated="20130626"/>
   <!-- ver9 renamed where necessary to match ESU practice and added decoder-matchable Product IDs -->
   <version author="Dave Heap" version="9" lastUpdated="20150427"/>
+  <!-- ver10 refactored to use standard Function Map and eliminate three custom panes -->
+  <version author="Dave Heap" version="10" lastUpdated="20160419"/>
   <decoder>
     <family name="ESU LokSound V3.5 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="59" highVersionID="81">
-      <model model="LokSound V3.5" numOuts="4" numFns="12" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="16777229,16777234,16777239,16777248">
-        <output name="1" label="Front lights" maxcurrent="250mA"/>
-        <output name="2" label="Rear lights" maxcurrent="250mA"/>
-        <output name="3" label="AUX 1" maxcurrent="250mA"/>
-        <output name="4" label="AUX 2" maxcurrent="250mA"/>
-        <size length="30" width="15.5" height="6.5" units="mm"/>
+      <model model="LokSound V3.5" numOuts="6" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="16777229,16777234,16777239,16777248">
+        <output name="1" label="Front|Light" maxcurrent="250mA">
+          <label xml:lang="fr">Feux|avant</label>
+          <label xml:lang="it">Luci|Frontali</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="250mA">
+          <label xml:lang="fr">Feux|arrière</label>
+          <label xml:lang="it">Luci|Posteriori</label>
+        </output>
+        <output name="3" label="Aux|1" maxcurrent="250mA">
+          <label xml:lang="fr">Aux|1</label>
+          <label xml:lang="it">Ausil|1</label>
+        </output>
+        <output name="4" label="Aux|2" maxcurrent="250mA">
+          <label xml:lang="fr">Aux|2</label>
+          <label xml:lang="it">Ausil|2</label>
+        </output>
+        <output name="5" label="Aux|3" maxcurrent="250mA">
+          <label xml:lang="fr">Aux|3</label>
+          <label xml:lang="it">Ausil|3</label>
+        </output>
+        <output name="6" label="Aux|4" maxcurrent="250mA">
+          <label xml:lang="fr">Aux|4</label>
+          <label xml:lang="it">Ausil|4</label>
+        </output>
+        <output name="7" label="Notch|up">
+          <label xml:lang="fr">Monter|cran</label>
+          <label xml:lang="it">Incrementa|velocità</label>
+        </output>
+        <output name="8" label="Notch|down">
+          <label xml:lang="fr">Descendre|cran</label>
+          <label xml:lang="it">Rallenta|velocità</label>
+        </output>
+        <output name="9" label="Momentum|off">
+          <label xml:lang="fr">Inertie|désactivée</label>
+          <label xml:lang="it">Inerzia|off</label>
+        </output>
+        <output name="10" label="Shunt|mode">
+          <label xml:lang="fr">Mode|manœuvre</label>
+          <label xml:lang="it">Velocità|Manovra</label>
+        </output>
+        <output name="11" label="Sound|on">
+          <label xml:lang="fr">Son|allumé</label>
+          <label xml:lang="it">Suono|on</label>
+        </output>
+        <output name="12" label="Shift|mode">
+          <label xml:lang="fr">Changement|mode</label>
+          <label xml:lang="it">Modo|Modifica</label>
+        </output>
+        <output name="13" label="Fan|sound">
+          <label xml:lang="fr">Son|ventilateur</label>
+          <label xml:lang="it">Suono|Ventole</label>
+        </output>
+        <output name="14" label="Doppler|effect">
+          <label xml:lang="fr">Effet|Doppler</label>
+          <label xml:lang="it">Effetto |Doppler</label>
+        </output>
+        <output name="15" label="Volume|/Mute">
+          <label xml:lang="fr">Volume|/Muet</label>
+          <label xml:lang="it">Volume|/Muto</label>
+        </output>
+        <output name="16" label="Dynamic|brake">
+          <label xml:lang="fr">Frein|dynamique</label>
+          <label xml:lang="it">Freni|Dinamici</label>
+        </output>
+        <output name="17" label="Sound|slot">
+          <label xml:lang="fr">Créneau|Son</label>
+          <label xml:lang="it">Slot| Suono</label>
+        </output>
+        <size length="31" width="15.5" height="6.5" units="mm"/>
         <protocols>
           <protocol>dcc</protocol>
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="LokSound Micro V3.5" numOuts="4" numFns="12" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="16777241,16777246">
-        <output name="1" label="Front lights" maxcurrent="250mA"/>
-        <output name="2" label="Rear lights" maxcurrent="250mA"/>
-        <output name="3" label="AUX 1" maxcurrent="250mA"/>
-        <output name="4" label="AUX 2" maxcurrent="250mA"/>
-        <size length="30" width="15.5" height="6.5" units="mm"/>
+      <model model="LokSound Micro V3.5" numOuts="6" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="16777241,16777246">
+        <output name="1" label="Front|Light" maxcurrent="180mA">
+          <label xml:lang="fr">Feux|avant</label>
+          <label xml:lang="it">Luci|Frontali</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="180mA">
+          <label xml:lang="fr">Feux|arrière</label>
+          <label xml:lang="it">Luci|Posteriori</label>
+        </output>
+        <output name="3" label="Aux|1" maxcurrent="180mA">
+          <label xml:lang="fr">Aux|1</label>
+          <label xml:lang="it">Ausil|1</label>
+        </output>
+        <output name="4" label="Aux|2" maxcurrent="180mA">
+          <label xml:lang="fr">Aux|2</label>
+          <label xml:lang="it">Ausil|2</label>
+        </output>
+        <output name="5" label="Aux|3" maxcurrent="180mA">
+          <label xml:lang="fr">Aux|3</label>
+          <label xml:lang="it">Ausil|3</label>
+        </output>
+        <output name="6" label="Aux|4" maxcurrent="180mA">
+          <label xml:lang="fr">Aux|4</label>
+          <label xml:lang="it">Ausil|4</label>
+        </output>
+        <output name="7" label="Notch|up">
+          <label xml:lang="fr">Monter|cran</label>
+          <label xml:lang="it">Incrementa|velocità</label>
+        </output>
+        <output name="8" label="Notch|down">
+          <label xml:lang="fr">Descendre|cran</label>
+          <label xml:lang="it">Rallenta|velocità</label>
+        </output>
+        <output name="9" label="Momentum|off">
+          <label xml:lang="fr">Inertie|désactivée</label>
+          <label xml:lang="it">Inerzia|off</label>
+        </output>
+        <output name="10" label="Shunt|mode">
+          <label xml:lang="fr">Mode|manœuvre</label>
+          <label xml:lang="it">Velocità|Manovra</label>
+        </output>
+        <output name="11" label="Sound|on">
+          <label xml:lang="fr">Son|allumé</label>
+          <label xml:lang="it">Suono|on</label>
+        </output>
+        <output name="12" label="Shift|mode">
+          <label xml:lang="fr">Changement|mode</label>
+          <label xml:lang="it">Modo|Modifica</label>
+        </output>
+        <output name="13" label="Fan|sound">
+          <label xml:lang="fr">Son|ventilateur</label>
+          <label xml:lang="it">Suono|Ventole</label>
+        </output>
+        <output name="14" label="Doppler|effect">
+          <label xml:lang="fr">Effet|Doppler</label>
+          <label xml:lang="it">Effetto |Doppler</label>
+        </output>
+        <output name="15" label="Volume|/Mute">
+          <label xml:lang="fr">Volume|/Muet</label>
+          <label xml:lang="it">Volume|/Muto</label>
+        </output>
+        <output name="16" label="Dynamic|brake">
+          <label xml:lang="fr">Frein|dynamique</label>
+          <label xml:lang="it">Freni|Dinamici</label>
+        </output>
+        <output name="17" label="Sound|slot">
+          <label xml:lang="fr">Créneau|Son</label>
+          <label xml:lang="it">Slot| Suono</label>
+        </output>
+        <size length="28.5" width="10" height="5" units="mm"/>
         <protocols>
           <protocol>dcc</protocol>
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model show="no" model="LokSound Version 3.5" replacementModel="LokSound V3.5" replacementFamily="ESU LokSound V3.5 Silent BEMF/Sound decoders" numOuts="4" numFns="12" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="LokSound V3.5">
-        <output name="1" label="Front lights" maxcurrent="250mA"/>
-        <output name="2" label="Rear lights" maxcurrent="250mA"/>
-        <output name="3" label="AUX 1" maxcurrent="250mA"/>
-        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+      <model model="LokSoundXL Version 3.5" numOuts="8" maxMotorCurrent="3.0A" extFnsNmraF13="yes" productID="16777230,16777236,16777252">
+        <output name="1" label="Front|Light" maxcurrent="600mA">
+          <label xml:lang="fr">Feux|avant</label>
+          <label xml:lang="it">Luci|Frontali</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="600mA">
+          <label xml:lang="fr">Feux|arrière</label>
+          <label xml:lang="it">Luci|Posteriori</label>
+        </output>
+        <output name="3" label="Aux|1" maxcurrent="600mA">
+          <label xml:lang="fr">Aux|1</label>
+          <label xml:lang="it">Ausil|1</label>
+        </output>
+        <output name="4" label="Aux|2" maxcurrent="600mA">
+          <label xml:lang="fr">Aux|2</label>
+          <label xml:lang="it">Ausil|2</label>
+        </output>
+        <output name="5" label="Aux|3" maxcurrent="600mA">
+          <label xml:lang="fr">Aux|3</label>
+          <label xml:lang="it">Ausil|3</label>
+        </output>
+        <output name="6" label="Aux|4" maxcurrent="600mA">
+          <label xml:lang="fr">Aux|4</label>
+          <label xml:lang="it">Ausil|4</label>
+        </output>
+        <output name="7" label="Aux|5" maxcurrent="600mA">
+          <label xml:lang="fr">Aux|5</label>
+          <label xml:lang="it">Ausil|5</label>
+        </output>
+        <output name="8" label="Aux|6" maxcurrent="600mA">
+          <label xml:lang="fr">Aux|6</label>
+          <label xml:lang="it">Ausil|6</label>
+        </output>
+        <output name="9" label="Momentum|off">
+          <label xml:lang="fr">Inertie|désactivée</label>
+          <label xml:lang="it">Inerzia|off</label>
+        </output>
+        <output name="10" label="Shunt|mode">
+          <label xml:lang="fr">Mode|manœuvre</label>
+          <label xml:lang="it">Velocità|Manovra</label>
+        </output>
+        <output name="11" label="Sound|on">
+          <label xml:lang="fr">Son|allumé</label>
+          <label xml:lang="it">Suono|on</label>
+        </output>
+        <output name="12" label="Shift|mode">
+          <label xml:lang="fr">Changement|mode</label>
+          <label xml:lang="it">Modo|Modifica</label>
+        </output>
+        <output name="13" label="Fan|sound">
+          <label xml:lang="fr">Son|ventilateur</label>
+          <label xml:lang="it">Suono|Ventole</label>
+        </output>
+        <output name="14" label="Doppler|effect">
+          <label xml:lang="fr">Effet|Doppler</label>
+          <label xml:lang="it">Effetto |Doppler</label>
+        </output>
+        <output name="15" label="Volume|/Mute">
+          <label xml:lang="fr">Volume|/Muet</label>
+          <label xml:lang="it">Volume|/Muto</label>
+        </output>
+        <output name="16" label="Dynamic|brake">
+          <label xml:lang="fr">Frein|dynamique</label>
+          <label xml:lang="it">Freni|Dinamici</label>
+        </output>
+        <output name="17" label="Sound|slot">
+          <label xml:lang="fr">Créneau|Son</label>
+          <label xml:lang="it">Slot| Suono</label>
+        </output>
+        <size length="51" width="40" height="14" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+      <model show="no" model="LokSound Version 3.5" replacementModel="LokSound V3.5" replacementFamily="ESU LokSound V3.5 Silent BEMF/Sound decoders" numOuts="6" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="LokSound V3.5">
+        <output name="1" label="Front|Light" maxcurrent="250mA">
+          <label xml:lang="fr">Feux|avant</label>
+          <label xml:lang="it">Luci|Frontali</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="250mA">
+          <label xml:lang="fr">Feux|arrière</label>
+          <label xml:lang="it">Luci|Posteriori</label>
+        </output>
+        <output name="3" label="Aux|1" maxcurrent="250mA">
+          <label xml:lang="fr">Aux|1</label>
+          <label xml:lang="it">Ausil|1</label>
+        </output>
+        <output name="4" label="Aux|2" maxcurrent="250mA">
+          <label xml:lang="fr">Aux|2</label>
+          <label xml:lang="it">Ausil|2</label>
+        </output>
+        <output name="5" label="Aux|3" maxcurrent="250mA">
+          <label xml:lang="fr">Aux|3</label>
+          <label xml:lang="it">Ausil|3</label>
+        </output>
+        <output name="6" label="Aux|4" maxcurrent="250mA">
+          <label xml:lang="fr">Aux|4</label>
+          <label xml:lang="it">Ausil|4</label>
+        </output>
+        <output name="7" label="Notch|up">
+          <label xml:lang="fr">Monter|cran</label>
+          <label xml:lang="it">Incrementa|velocità</label>
+        </output>
+        <output name="8" label="Notch|down">
+          <label xml:lang="fr">Descendre|cran</label>
+          <label xml:lang="it">Rallenta|velocità</label>
+        </output>
+        <output name="9" label="Momentum|off">
+          <label xml:lang="fr">Inertie|désactivée</label>
+          <label xml:lang="it">Inerzia|off</label>
+        </output>
+        <output name="10" label="Shunt|mode">
+          <label xml:lang="fr">Mode|manœuvre</label>
+          <label xml:lang="it">Velocità|Manovra</label>
+        </output>
+        <output name="11" label="Sound|on">
+          <label xml:lang="fr">Son|allumé</label>
+          <label xml:lang="it">Suono|on</label>
+        </output>
+        <output name="12" label="Shift|mode">
+          <label xml:lang="fr">Changement|mode</label>
+          <label xml:lang="it">Modo|Modifica</label>
+        </output>
+        <output name="13" label="Fan|sound">
+          <label xml:lang="fr">Son|ventilateur</label>
+          <label xml:lang="it">Suono|Ventole</label>
+        </output>
+        <output name="14" label="Doppler|effect">
+          <label xml:lang="fr">Effet|Doppler</label>
+          <label xml:lang="it">Effetto |Doppler</label>
+        </output>
+        <output name="15" label="Volume|/Mute">
+          <label xml:lang="fr">Volume|/Muet</label>
+          <label xml:lang="it">Volume|/Muto</label>
+        </output>
+        <output name="16" label="Dynamic|brake">
+          <label xml:lang="fr">Frein|dynamique</label>
+          <label xml:lang="it">Freni|Dinamici</label>
+        </output>
+        <output name="17" label="Sound|slot">
+          <label xml:lang="fr">Créneau|Son</label>
+          <label xml:lang="it">Slot| Suono</label>
+        </output>
         <size length="30" width="15.5" height="6.5" units="mm"/>
         <protocols>
           <protocol>dcc</protocol>
@@ -69,12 +338,74 @@
         </protocols>
       </model>
       <model show="no" model="LokSound Version 3.5 (21 pin)" replacementModel="LokSound V3.5" replacementFamily="ESU LokSound V3.5 Silent BEMF/Sound decoders" numOuts="6" numFns="12" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="LokSound V3.5">
-        <output name="1" label="Front lights" maxcurrent="250mA"/>
-        <output name="2" label="Rear lights" maxcurrent="250mA"/>
-        <output name="3" label="AUX 1" maxcurrent="250mA"/>
-        <output name="4" label="AUX 2" maxcurrent="250mA"/>
-        <output name="5" label="AUX 3" maxcurrent="250mA"/>
-        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="1" label="Front|Light" maxcurrent="250mA">
+          <label xml:lang="fr">Feux|avant</label>
+          <label xml:lang="it">Luci|Frontali</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="250mA">
+          <label xml:lang="fr">Feux|arrière</label>
+          <label xml:lang="it">Luci|Posteriori</label>
+        </output>
+        <output name="3" label="Aux|1" maxcurrent="250mA">
+          <label xml:lang="fr">Aux|1</label>
+          <label xml:lang="it">Ausil|1</label>
+        </output>
+        <output name="4" label="Aux|2" maxcurrent="250mA">
+          <label xml:lang="fr">Aux|2</label>
+          <label xml:lang="it">Ausil|2</label>
+        </output>
+        <output name="5" label="Aux|3" maxcurrent="250mA">
+          <label xml:lang="fr">Aux|3</label>
+          <label xml:lang="it">Ausil|3</label>
+        </output>
+        <output name="6" label="Aux|4" maxcurrent="250mA">
+          <label xml:lang="fr">Aux|4</label>
+          <label xml:lang="it">Ausil|4</label>
+        </output>
+        <output name="7" label="Notch|up">
+          <label xml:lang="fr">Monter|cran</label>
+          <label xml:lang="it">Incrementa|velocità</label>
+        </output>
+        <output name="8" label="Notch|down">
+          <label xml:lang="fr">Descendre|cran</label>
+          <label xml:lang="it">Rallenta|velocità</label>
+        </output>
+        <output name="9" label="Momentum|off">
+          <label xml:lang="fr">Inertie|désactivée</label>
+          <label xml:lang="it">Inerzia|off</label>
+        </output>
+        <output name="10" label="Shunt|mode">
+          <label xml:lang="fr">Mode|manœuvre</label>
+          <label xml:lang="it">Velocità|Manovra</label>
+        </output>
+        <output name="11" label="Sound|on">
+          <label xml:lang="fr">Son|allumé</label>
+          <label xml:lang="it">Suono|on</label>
+        </output>
+        <output name="12" label="Shift|mode">
+          <label xml:lang="fr">Changement|mode</label>
+          <label xml:lang="it">Modo|Modifica</label>
+        </output>
+        <output name="13" label="Fan|sound">
+          <label xml:lang="fr">Son|ventilateur</label>
+          <label xml:lang="it">Suono|Ventole</label>
+        </output>
+        <output name="14" label="Doppler|effect">
+          <label xml:lang="fr">Effet|Doppler</label>
+          <label xml:lang="it">Effetto |Doppler</label>
+        </output>
+        <output name="15" label="Volume|/Mute">
+          <label xml:lang="fr">Volume|/Muet</label>
+          <label xml:lang="it">Volume|/Muto</label>
+        </output>
+        <output name="16" label="Dynamic|brake">
+          <label xml:lang="fr">Frein|dynamique</label>
+          <label xml:lang="it">Freni|Dinamici</label>
+        </output>
+        <output name="17" label="Sound|slot">
+          <label xml:lang="fr">Créneau|Son</label>
+          <label xml:lang="it">Slot| Suono</label>
+        </output>
         <protocols>
           <protocol>dcc</protocol>
           <protocol>motorola</protocol>
@@ -545,7 +876,7 @@
       </variable>
       <variable CV="56" default="64" item="Range">
         <decVal max="64"/>
-        <label>Operating Range of Load Controll'</label>
+        <label>Operating Range of Load Control'</label>
         <label xml:lang="fr">Portée de la compensation de charge</label>
       </variable>
       <variable CV="57" default="0" item="Sound Group 1 Control">
@@ -1123,3408 +1454,7 @@
         <label>Maximum Speed in AC mode</label>
         <label xml:lang="fr">Vit. Max. en analog. AC</label>
       </variable>
-      <variable CV="131" mask="XXXVVVVV" item="Soundkey1">
-        <decVal max="16"/>
-        <label>Stop Fwd</label>
-        <label xml:lang="fr">Stop avant</label>
-      </variable>
-      <variable CV="134" mask="XXXVVVVV" item="Soundkey2">
-        <decVal max="16"/>
-        <label>Stop Rev</label>
-        <label xml:lang="fr">Stop arrière</label>
-      </variable>
-      <variable CV="137" mask="XXXVVVVV" item="Soundkey3">
-        <decVal max="16"/>
-        <label>Run Fwd</label>
-        <label xml:lang="fr">démarr. avant</label>
-      </variable>
-      <variable CV="140" mask="XXXVVVVV" item="Soundkey4">
-        <decVal max="16"/>
-        <label>Run Rev</label>
-        <label xml:lang="fr">Démarr. arrière</label>
-      </variable>
-      <variable CV="143" mask="XXXVVVVV" item="Soundkey5">
-        <decVal max="16"/>
-        <label>F0 Fwd</label>
-        <label xml:lang="fr">F0 en av</label>
-      </variable>
-      <variable CV="146" mask="XXXVVVVV" item="Soundkey6">
-        <decVal max="16"/>
-        <label>F0 Rev</label>
-        <label xml:lang="fr">F0 en arr</label>
-      </variable>
-      <variable CV="149" mask="XXXVVVVV" item="Soundkey7">
-        <decVal max="16"/>
-        <label>F1 Fwd</label>
-        <label xml:lang="fr">F1 en av</label>
-      </variable>
-      <variable CV="152" mask="XXXVVVVV" item="Soundkey8">
-        <decVal max="16"/>
-        <label>F1 Rev</label>
-        <label xml:lang="fr">F1 en arr</label>
-      </variable>
-      <variable CV="155" mask="XXXVVVVV" item="Soundkey9">
-        <decVal max="16"/>
-        <label>F2 Fwd</label>
-        <label xml:lang="fr">F2 en av</label>
-      </variable>
-      <variable CV="158" mask="XXXVVVVV" item="Soundkey10">
-        <decVal max="16"/>
-        <label>F2 Rev</label>
-        <label xml:lang="fr">F2 en arr</label>
-      </variable>
-      <variable CV="161" mask="XXXVVVVV" item="Soundkey11">
-        <decVal max="16"/>
-        <label>F3 Fwd</label>
-        <label xml:lang="fr">F3 en av</label>
-      </variable>
-      <variable CV="164" mask="XXXVVVVV" item="Soundkey12">
-        <decVal max="16"/>
-        <label>F3 Rev</label>
-        <label xml:lang="fr">F3 en arr</label>
-      </variable>
-      <variable CV="167" mask="XXXVVVVV" item="Soundkey13">
-        <decVal max="16"/>
-        <label>F4 Fwd</label>
-        <label xml:lang="fr">F4 en av</label>
-      </variable>
-      <variable CV="170" mask="XXXVVVVV" item="Soundkey14">
-        <decVal max="16"/>
-        <label>F4 Rev</label>
-        <label xml:lang="fr">F4 en arr</label>
-      </variable>
-      <variable CV="173" mask="XXXVVVVV" item="Soundkey15">
-        <decVal max="16"/>
-        <label>F5 Fwd</label>
-        <label xml:lang="fr">F5 en av</label>
-      </variable>
-      <variable CV="176" mask="XXXVVVVV" item="Soundkey16">
-        <decVal max="16"/>
-        <label>F5 Rev</label>
-        <label xml:lang="fr">F5 en arr</label>
-      </variable>
-      <variable CV="179" mask="XXXVVVVV" item="Soundkey17">
-        <decVal max="16"/>
-        <label>F6 Fwd</label>
-        <label xml:lang="fr">F6 en av</label>
-      </variable>
-      <variable CV="182" mask="XXXVVVVV" item="Soundkey18">
-        <decVal max="16"/>
-        <label>F6 Rev</label>
-        <label xml:lang="fr">F6 en arr</label>
-      </variable>
-      <variable CV="185" mask="XXXVVVVV" item="Soundkey19">
-        <decVal max="16"/>
-        <label>F7 Fwd</label>
-        <label xml:lang="fr">F7 en av</label>
-      </variable>
-      <variable CV="188" mask="XXXVVVVV" item="Soundkey20">
-        <decVal max="16"/>
-        <label>F7 Rev</label>
-        <label xml:lang="fr">F7 en arr</label>
-      </variable>
-      <variable CV="191" mask="XXXVVVVV" item="Soundkey21">
-        <decVal max="16"/>
-        <label>F8 Fwd</label>
-        <label xml:lang="fr">F8 en av</label>
-      </variable>
-      <variable CV="194" mask="XXXVVVVV" item="Soundkey22">
-        <decVal max="16"/>
-        <label>F8 Rev</label>
-        <label xml:lang="fr">F8 en arr</label>
-      </variable>
-      <variable CV="197" mask="XXXVVVVV" item="Soundkey23">
-        <decVal max="16"/>
-        <label>F9 Fwd</label>
-        <label xml:lang="fr">F9 en av</label>
-      </variable>
-      <variable CV="200" mask="XXXVVVVV" item="Soundkey24">
-        <decVal max="16"/>
-        <label>F9 Rev</label>
-        <label xml:lang="fr">F9 en arr</label>
-      </variable>
-      <variable CV="203" mask="XXXVVVVV" item="Soundkey25">
-        <decVal max="16"/>
-        <label>F10 Fwd</label>
-        <label xml:lang="fr">F10 en av</label>
-      </variable>
-      <variable CV="206" mask="XXXVVVVV" item="Soundkey26">
-        <decVal max="16"/>
-        <label>F10 Rev</label>
-        <label xml:lang="fr">F10 en arr</label>
-      </variable>
-      <variable CV="209" mask="XXXVVVVV" item="Soundkey27">
-        <decVal max="16"/>
-        <label>F11 Fwd</label>
-        <label xml:lang="fr">F11 en av</label>
-      </variable>
-      <variable CV="212" mask="XXXVVVVV" item="Soundkey28">
-        <decVal max="16"/>
-        <label>F11 Rev</label>
-        <label xml:lang="fr">F11 en arr</label>
-      </variable>
-      <variable CV="215" mask="XXXVVVVV" item="Soundkey29">
-        <decVal max="16"/>
-        <label>F12 Fwd</label>
-        <label xml:lang="fr">F12 en av</label>
-      </variable>
-      <variable CV="218" mask="XXXVVVVV" item="Soundkey30">
-        <decVal max="16"/>
-        <label>F12 Rev</label>
-        <label xml:lang="fr">F12 en arr</label>
-      </variable>
-      <variable CV="221" mask="XXXVVVVV" item="Soundkey31">
-        <decVal max="16"/>
-        <label>F13 Fwd</label>
-        <label xml:lang="fr">F13 en av</label>
-      </variable>
-      <variable CV="224" mask="XXXVVVVV" item="Soundkey32">
-        <decVal max="16"/>
-        <label>F13 Rev</label>
-        <label xml:lang="fr">F13 en arr</label>
-      </variable>
-      <variable CV="227" mask="XXXVVVVV" item="Soundkey33">
-        <decVal max="16"/>
-        <label>F14 Fwd</label>
-        <label xml:lang="fr">F14 en av</label>
-      </variable>
-      <variable CV="230" mask="XXXVVVVV" item="Soundkey34">
-        <decVal max="16"/>
-        <label>F14 Rev</label>
-        <label xml:lang="fr">F14 en arr</label>
-      </variable>
-      <variable CV="233" mask="XXXVVVVV" item="Soundkey35">
-        <decVal max="16"/>
-        <label>F15 Fwd</label>
-        <label xml:lang="fr">F15 en av</label>
-      </variable>
-      <variable CV="236" mask="XXXVVVVV" item="Soundkey36">
-        <decVal max="16"/>
-        <label>F15 Rev</label>
-        <label xml:lang="fr">F15 en arr</label>
-      </variable>
-      <variable CV="239" mask="XXXVVVVV" item="Soundkey37">
-        <decVal max="16"/>
-        <label>Sensor1 Fwd</label>
-        <label xml:lang="fr">Son 1 en av</label>
-      </variable>
-      <variable CV="242" mask="XXXVVVVV" item="Soundkey38">
-        <decVal max="16"/>
-        <label>Sensor1 Rev</label>
-        <label xml:lang="fr">Son 1 en arr</label>
-      </variable>
-      <variable CV="245" mask="XXXVVVVV" item="Soundkey39">
-        <decVal max="16"/>
-        <label>Sensor2 Fwd</label>
-        <label xml:lang="fr">Son 2 en av</label>
-      </variable>
-      <variable CV="248" mask="XXXVVVVV" item="Soundkey40">
-        <decVal max="16"/>
-        <label>Sensor2 Rev</label>
-        <label xml:lang="fr">Son 2 en arr</label>
-      </variable>
-      <!-- Definitions for A mapping -->
-      <variable CV="129" mask="XXXXXXXV" minOut="1" item="Stop(f)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop(f)1</label>
-        <label xml:lang="fr">Stop F1 avant</label>
-      </variable>
-      <variable CV="129" mask="XXXXXXVX" minOut="2" item="Stop(f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop(f)2</label>
-        <label xml:lang="fr">Stop F2 avant</label>
-      </variable>
-      <variable CV="129" mask="XXXXXVXX" minOut="3" item="Stop(f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop(f)3</label>
-        <label xml:lang="fr">Stop F3 avant</label>
-      </variable>
-      <variable CV="129" mask="XXXXVXXX" minOut="4" item="Stop(f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop(f)4</label>
-        <label xml:lang="fr">Stop F4 avant</label>
-      </variable>
-      <variable CV="129" mask="XXXVXXXX" minOut="5" item="Stop(f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop(f)5</label>
-        <label xml:lang="fr">Stop F5 avant</label>
-      </variable>
-      <variable CV="129" mask="XXVXXXXX" minOut="6" item="Stop(f)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop(f)6</label>
-        <label xml:lang="fr">Stop F6 avant</label>
-      </variable>
-      <variable CV="129" mask="XVXXXXXX" minOut="1" item="Stop(f)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop(f)7</label>
-        <label xml:lang="fr">Stop F7 avant</label>
-      </variable>
-      <variable CV="129" mask="VXXXXXXX" minOut="1" item="Stop(f)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop(f)8</label>
-        <label xml:lang="fr">Stop F8 avant</label>
-      </variable>
-      <variable CV="132" mask="XXXXXXXV" minOut="1" item="Stop(r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop(r)1</label>
-        <label xml:lang="fr">Stop F1 arrière</label>
-      </variable>
-      <variable CV="132" mask="XXXXXXVX" item="Stop(r)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop(r)2</label>
-        <label xml:lang="fr">Stop F2 arrière</label>
-      </variable>
-      <variable CV="132" mask="XXXXXVXX" item="Stop(r)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop(r)3</label>
-        <label xml:lang="fr">Stop F3 arrière</label>
-      </variable>
-      <variable CV="132" mask="XXXXVXXX" item="Stop(r)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop(r)4</label>
-        <label xml:lang="fr">Stop F4 arrière</label>
-      </variable>
-      <variable CV="132" mask="XXXVXXXX" item="Stop(r)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop(r)5</label>
-        <label xml:lang="fr">Stop F5 arrière</label>
-      </variable>
-      <variable CV="132" mask="XXVXXXXX" item="Stop(r)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop(r)6</label>
-        <label xml:lang="fr">Stop F6 arrière</label>
-      </variable>
-      <variable CV="132" mask="XVXXXXXX" item="Stop(r)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop(r)7</label>
-        <label xml:lang="fr">Stop F7 arrière</label>
-      </variable>
-      <variable CV="132" mask="VXXXXXXX" item="Stop(r)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop(r)8</label>
-        <label xml:lang="fr">Stop F8 arrière</label>
-      </variable>
-      <variable CV="135" mask="XXXXXXXV" item="Run(f)1" minOut="1" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Run(f)1</label>
-        <label xml:lang="fr">démarrage F1 avant</label>
-      </variable>
-      <variable CV="135" mask="XXXXXXVX" item="Run(f)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Run(f)2</label>
-        <label xml:lang="fr">démarrage F2 avant</label>
-      </variable>
-      <variable CV="135" mask="XXXXXVXX" item="Run(f)3" minOut="3" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Run(f)3</label>
-        <label xml:lang="fr">démarrage F3 avant</label>
-      </variable>
-      <variable CV="135" mask="XXXXVXXX" item="Run(f)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Run(f)4</label>
-        <label xml:lang="fr">démarrage F4 avant</label>
-      </variable>
-      <variable CV="135" mask="XXXVXXXX" item="Run(f)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Run(f)5</label>
-        <label xml:lang="fr">démarrage F5 avant</label>
-      </variable>
-      <variable CV="135" mask="XXVXXXXX" item="Run(f)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Run(f)6</label>
-        <label xml:lang="fr">démarrage F6 avant</label>
-      </variable>
-      <variable CV="135" mask="XVXXXXXX" item="Run(f)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Run(f)7</label>
-        <label xml:lang="fr">démarrage F7 avant</label>
-      </variable>
-      <variable CV="135" mask="VXXXXXXX" item="Run(f)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Run(f)8</label>
-        <label xml:lang="fr">démarrage F8 avant</label>
-      </variable>
-      <variable CV="138" mask="XXXXXXXV" item="Run(r)1" minOut="1" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Run(r)1</label>
-        <label xml:lang="fr">démarrage F1 arrière</label>
-      </variable>
-      <variable CV="138" mask="XXXXXXVX" item="Run(r)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Run(r)2</label>
-        <label xml:lang="fr">démarrage F2 arrière</label>
-      </variable>
-      <variable CV="138" mask="XXXXXVXX" item="Run(r)3" minOut="3" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Run(r)3</label>
-        <label xml:lang="fr">démarrage F3 arrière</label>
-      </variable>
-      <variable CV="138" mask="XXXXVXXX" item="Run(r)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Run(r)4</label>
-        <label xml:lang="fr">démarrage F4 arrière</label>
-      </variable>
-      <variable CV="138" mask="XXXVXXXX" item="Run(r)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Run(r)5</label>
-        <label xml:lang="fr">démarrage F5 arrière</label>
-      </variable>
-      <variable CV="138" mask="XXVXXXXX" item="Run(r)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Run(r)6</label>
-        <label xml:lang="fr">démarrage F6 arrière</label>
-      </variable>
-      <variable CV="138" mask="XVXXXXXX" item="Run(r)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Run(r)7</label>
-        <label xml:lang="fr">démarrage F7 arrière</label>
-      </variable>
-      <variable CV="138" mask="VXXXXXXX" item="Run(r)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Run(r)8</label>
-        <label xml:lang="fr">démarrage F8 arrière</label>
-      </variable>
-      <variable CV="141" mask="XXXXXXXV" item="FL(f)1" minOut="1" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(f)1</label>
-        <label xml:lang="fr">FL (av)1</label>
-      </variable>
-      <variable CV="141" mask="XXXXXXVX" item="FL(f)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(f)2</label>
-        <label xml:lang="fr">FL (av)2</label>
-      </variable>
-      <variable CV="141" mask="XXXXXVXX" item="FL(f)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(f)3</label>
-        <label xml:lang="fr">FL (av)3</label>
-      </variable>
-      <variable CV="141" mask="XXXXVXXX" item="FL(f)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(f)4</label>
-        <label xml:lang="fr">FL (av)4</label>
-      </variable>
-      <variable CV="141" mask="XXXVXXXX" item="FL(f)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(f)5</label>
-        <label xml:lang="fr">FL (av)5</label>
-      </variable>
-      <variable CV="141" mask="XXVXXXXX" item="FL(f)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(f)6</label>
-        <label xml:lang="fr">FL (av)6</label>
-      </variable>
-      <variable CV="141" mask="XVXXXXXX" item="FL(f)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(f)7</label>
-        <label xml:lang="fr">FL (av)7</label>
-      </variable>
-      <variable CV="141" mask="VXXXXXXX" item="FL(f)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(f)8</label>
-        <label xml:lang="fr">FL (av)8</label>
-      </variable>
-      <variable CV="144" mask="XXXXXXXV" item="FL(r)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(r)1</label>
-        <label xml:lang="fr">FL (arr)1</label>
-      </variable>
-      <variable CV="144" mask="XXXXXXVX" item="FL(r)2" minOut="2" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(r)2</label>
-        <label xml:lang="fr">FL (arr)2</label>
-      </variable>
-      <variable CV="144" mask="XXXXXVXX" item="FL(r)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(r)3</label>
-        <label xml:lang="fr">FL (arr)3</label>
-      </variable>
-      <variable CV="144" mask="XXXXVXXX" item="FL(r)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(r)4</label>
-        <label xml:lang="fr">FL (arr)4</label>
-      </variable>
-      <variable CV="144" mask="XXXVXXXX" item="FL(r)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(r)5</label>
-        <label xml:lang="fr">FL (arr)5</label>
-      </variable>
-      <variable CV="144" mask="XXVXXXXX" item="FL(r)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(r)6</label>
-        <label xml:lang="fr">FL (arr)6</label>
-      </variable>
-      <variable CV="144" mask="XVXXXXXX" item="FL(r)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(r)7</label>
-        <label xml:lang="fr">FL (arr)7</label>
-      </variable>
-      <variable CV="144" mask="VXXXXXXX" item="FL(r)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>FL(r)8</label>
-        <label xml:lang="fr">FL (arr)8</label>
-      </variable>
-      <variable CV="147" mask="XXXXXXXV" item="F1(f)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1(f)1</label>
-        <label xml:lang="fr">F1 (av)1</label>
-      </variable>
-      <variable CV="147" mask="XXXXXXVX" item="F1(f)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1(f)2</label>
-        <label xml:lang="fr">F1 (av)2</label>
-      </variable>
-      <variable CV="147" mask="XXXXXVXX" item="F1(f)3" minOut="3" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1(f)3</label>
-        <label xml:lang="fr">F1 (av)3</label>
-      </variable>
-      <variable CV="147" mask="XXXXVXXX" item="F1(f)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1(f)4</label>
-        <label xml:lang="fr">F1 (av)4</label>
-      </variable>
-      <variable CV="147" mask="XXXVXXXX" item="F1(f)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1(f)5</label>
-        <label xml:lang="fr">F1 (av)5</label>
-      </variable>
-      <variable CV="147" mask="XXVXXXXX" item="F1(f)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1(f)6</label>
-        <label xml:lang="fr">F1 (av)6</label>
-      </variable>
-      <variable CV="147" mask="XVXXXXXX" item="F1(f)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1(f)7</label>
-        <label xml:lang="fr">F1 (av)7</label>
-      </variable>
-      <variable CV="147" mask="VXXXXXXX" item="F1(f)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1(f)8</label>
-        <label xml:lang="fr">F1 (av)8</label>
-      </variable>
-      <variable CV="150" mask="XXXXXXXV" item="F1(r)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1(r)1</label>
-        <label xml:lang="fr">F1 (arr)1</label>
-      </variable>
-      <variable CV="150" mask="XXXXXXVX" item="F1(r)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1(r)2</label>
-        <label xml:lang="fr">F1 (arr)2</label>
-      </variable>
-      <variable CV="150" mask="XXXXXVXX" item="F1(r)3" minOut="3" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1(r)3</label>
-        <label xml:lang="fr">F1 (arr)3</label>
-      </variable>
-      <variable CV="150" mask="XXXXVXXX" item="F1(r)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1(r)4</label>
-        <label xml:lang="fr">F1 (arr)4</label>
-      </variable>
-      <variable CV="150" mask="XXXVXXXX" item="F1(r)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1(r)5</label>
-        <label xml:lang="fr">F1 (arr)5</label>
-      </variable>
-      <variable CV="150" mask="XXVXXXXX" item="F1(r)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1(r)6</label>
-        <label xml:lang="fr">F1 (arr)6</label>
-      </variable>
-      <variable CV="150" mask="XVXXXXXX" item="F1(r)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1(r)7</label>
-        <label xml:lang="fr">F1 (arr)7</label>
-      </variable>
-      <variable CV="150" mask="VXXXXXXX" item="F1(r)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1(r)8</label>
-        <label xml:lang="fr">F1 (arr)8</label>
-      </variable>
-      <variable CV="153" mask="XXXXXXXV" item="F2(f)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2(f)1</label>
-        <label xml:lang="fr">F2 (av)1</label>
-      </variable>
-      <variable CV="153" mask="XXXXXXVX" item="F2(f)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2(f)2</label>
-        <label xml:lang="fr">F2 (av)2</label>
-      </variable>
-      <variable CV="153" mask="XXXXXVXX" item="F2(f)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2(f)3</label>
-        <label xml:lang="fr">F2 (av)3</label>
-      </variable>
-      <variable CV="153" mask="XXXXVXXX" item="F2(f)4" minOut="4" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2(f)4</label>
-        <label xml:lang="fr">F2 (av)4</label>
-      </variable>
-      <variable CV="153" mask="XXXVXXXX" item="F2(f)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2(f)5</label>
-        <label xml:lang="fr">F2 (av)5</label>
-      </variable>
-      <variable CV="153" mask="XXVXXXXX" item="F2(f)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2(f)6</label>
-        <label xml:lang="fr">F2 (av)6</label>
-      </variable>
-      <variable CV="153" mask="XVXXXXXX" item="F2(f)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2(f)7</label>
-        <label xml:lang="fr">F2 (av)7</label>
-      </variable>
-      <variable CV="153" mask="VXXXXXXX" item="F2(f)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2(f)8</label>
-        <label xml:lang="fr">F2 (av)8</label>
-      </variable>
-      <variable CV="156" mask="XXXXXXXV" item="F2(r)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2(r)1</label>
-        <label xml:lang="fr">F2 (arr)1</label>
-      </variable>
-      <variable CV="156" mask="XXXXXXVX" item="F2(r)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2(r)2</label>
-        <label xml:lang="fr">F2 (arr)2</label>
-      </variable>
-      <variable CV="156" mask="XXXXXVXX" item="F2(r)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2(r)3</label>
-        <label xml:lang="fr">F2 (arr)3</label>
-      </variable>
-      <variable CV="156" mask="XXXXVXXX" item="F2(r)4" minOut="4" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2(r)4</label>
-        <label xml:lang="fr">F2 (arr)4</label>
-      </variable>
-      <variable CV="156" mask="XXXVXXXX" item="F2(r)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2(r)5</label>
-        <label xml:lang="fr">F2 (arr)5</label>
-      </variable>
-      <variable CV="156" mask="XXVXXXXX" item="F2(r)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2(r)6</label>
-        <label xml:lang="fr">F2 (arr)6</label>
-      </variable>
-      <variable CV="156" mask="XVXXXXXX" item="F2(r)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2(r)7</label>
-        <label xml:lang="fr">F2 (arr)7</label>
-      </variable>
-      <variable CV="156" mask="VXXXXXXX" item="F2(r)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2(r)8</label>
-        <label xml:lang="fr">F2 (arr)8</label>
-      </variable>
-      <variable CV="159" mask="XXXXXXXV" item="F3(f)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3(f)1</label>
-        <label xml:lang="fr">F3 (av)1</label>
-      </variable>
-      <variable CV="159" mask="XXXXXXVX" item="F3(f)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3(f)2</label>
-        <label xml:lang="fr">F3 (av)2</label>
-      </variable>
-      <variable CV="159" mask="XXXXXVXX" item="F3(f)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3(f)3</label>
-        <label xml:lang="fr">F3 (av)3</label>
-      </variable>
-      <variable CV="159" mask="XXXXVXXX" item="F3(f)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3(f)4</label>
-        <label xml:lang="fr">F3 (av)4</label>
-      </variable>
-      <variable CV="159" mask="XXXVXXXX" item="F3(f)5" minOut="5" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3(f)5</label>
-        <label xml:lang="fr">F3 (av)5</label>
-      </variable>
-      <variable CV="159" mask="XXVXXXXX" item="F3(f)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3(f)6</label>
-        <label xml:lang="fr">F3 (av)6</label>
-      </variable>
-      <variable CV="159" mask="XVXXXXXX" item="F3(f)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3(f)7</label>
-        <label xml:lang="fr">F3 (av)7</label>
-      </variable>
-      <variable CV="159" mask="VXXXXXXX" item="F3(f)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3(f)8</label>
-        <label xml:lang="fr">F3 (av)8</label>
-      </variable>
-      <variable CV="162" mask="XXXXXXXV" item="F3(r)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3(r)1</label>
-        <label xml:lang="fr">F3 (arr)1</label>
-      </variable>
-      <variable CV="162" mask="XXXXXXVX" item="F3(r)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3(r)2</label>
-        <label xml:lang="fr">F3 (arr)2</label>
-      </variable>
-      <variable CV="162" mask="XXXXXVXX" item="F3(r)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3(r)3</label>
-        <label xml:lang="fr">F3 (arr)3</label>
-      </variable>
-      <variable CV="162" mask="XXXXVXXX" item="F3(r)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3(r)4</label>
-        <label xml:lang="fr">F3 (arr)4</label>
-      </variable>
-      <variable CV="162" mask="XXXVXXXX" item="F3(r)5" minOut="5" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3(r)5</label>
-        <label xml:lang="fr">F3 (arr)5</label>
-      </variable>
-      <variable CV="162" mask="XXVXXXXX" item="F3(r)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3(r)6</label>
-        <label xml:lang="fr">F3 (arr)6</label>
-      </variable>
-      <variable CV="162" mask="XVXXXXXX" item="F3(r)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3(r)7</label>
-        <label xml:lang="fr">F3 (arr)7</label>
-      </variable>
-      <variable CV="162" mask="VXXXXXXX" item="F3(r)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3(r)8</label>
-        <label xml:lang="fr">F3 (arr)8</label>
-      </variable>
-      <variable CV="165" mask="XXXXXXXV" item="F4(f)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4(f)1</label>
-        <label xml:lang="fr">F4 (av)1</label>
-      </variable>
-      <variable CV="165" mask="XXXXXXVX" item="F4(f)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4(f)2</label>
-        <label xml:lang="fr">F4 (av)2</label>
-      </variable>
-      <variable CV="165" mask="XXXXXVXX" item="F4(f)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4(f)3</label>
-        <label xml:lang="fr">F4 (av)3</label>
-      </variable>
-      <variable CV="165" mask="XXXXVXXX" item="F4(f)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4(f)4</label>
-        <label xml:lang="fr">F4 (av)4</label>
-      </variable>
-      <variable CV="165" mask="XXXVXXXX" item="F4(f)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4(f)5</label>
-        <label xml:lang="fr">F4 (av)5</label>
-      </variable>
-      <variable CV="165" mask="XXVXXXXX" item="F4(f)6" minOut="6" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4(f)6</label>
-        <label xml:lang="fr">F4 (av)6</label>
-      </variable>
-      <variable CV="165" mask="XVXXXXXX" item="F4(f)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4(f)7</label>
-        <label xml:lang="fr">F4 (av)7</label>
-      </variable>
-      <variable CV="165" mask="VXXXXXXX" item="F4(f)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4(f)8</label>
-        <label xml:lang="fr">F4 (av)8</label>
-      </variable>
-      <variable CV="168" mask="XXXXXXXV" item="F4(r)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4(r)1</label>
-        <label xml:lang="fr">F4 (arr)1</label>
-      </variable>
-      <variable CV="168" mask="XXXXXXVX" item="F4(r)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4(r)2</label>
-        <label xml:lang="fr">F4 (arr)2</label>
-      </variable>
-      <variable CV="168" mask="XXXXXVXX" item="F4(r)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4(r)3</label>
-        <label xml:lang="fr">F4 (arr)3</label>
-      </variable>
-      <variable CV="168" mask="XXXXVXXX" item="F4(r)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4(r)4</label>
-        <label xml:lang="fr">F4 (arr)4</label>
-      </variable>
-      <variable CV="168" mask="XXXVXXXX" item="F4(r)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4(r)5</label>
-        <label xml:lang="fr">F4 (arr)5</label>
-      </variable>
-      <variable CV="168" mask="XXVXXXXX" item="F4(r)6" minOut="6" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4(r)6</label>
-        <label xml:lang="fr">F4 (arr)6</label>
-      </variable>
-      <variable CV="168" mask="XVXXXXXX" item="F4(r)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4(r)7</label>
-        <label xml:lang="fr">F4 (arr)7</label>
-      </variable>
-      <variable CV="168" mask="VXXXXXXX" item="F4(r)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4(r)8</label>
-        <label xml:lang="fr">F4 (arr)8</label>
-      </variable>
-      <variable CV="171" mask="XXXXXXXV" item="F5(f)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5(f)1</label>
-        <label xml:lang="fr">F5 (av)1</label>
-      </variable>
-      <variable CV="171" mask="XXXXXXVX" item="F5(f)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5(f)2</label>
-        <label xml:lang="fr">F5 (av)2</label>
-      </variable>
-      <variable CV="171" mask="XXXXXVXX" item="F5(f)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5(f)3</label>
-        <label xml:lang="fr">F5 (av)3</label>
-      </variable>
-      <variable CV="171" mask="XXXXVXXX" item="F5(f)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5(f)4</label>
-        <label xml:lang="fr">F5 (av)4</label>
-      </variable>
-      <variable CV="171" mask="XXXVXXXX" item="F5(f)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5(f)5</label>
-        <label xml:lang="fr">F5 (av)5</label>
-      </variable>
-      <variable CV="171" mask="XXVXXXXX" item="F5(f)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5(f)6</label>
-        <label xml:lang="fr">F5 (av)6</label>
-      </variable>
-      <variable CV="171" mask="XVXXXXXX" item="F5(f)7" minOut="1" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5(f)7</label>
-        <label xml:lang="fr">F5 (av)7</label>
-      </variable>
-      <variable CV="171" mask="VXXXXXXX" item="F5(f)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5(f)8</label>
-        <label xml:lang="fr">F5 (av)8</label>
-      </variable>
-      <variable CV="174" mask="XXXXXXXV" item="F5(r)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5(r)1</label>
-        <label xml:lang="fr">F5 (arr)1</label>
-      </variable>
-      <variable CV="174" mask="XXXXXXVX" item="F5(r)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5(r)2</label>
-        <label xml:lang="fr">F5 (arr)2</label>
-      </variable>
-      <variable CV="174" mask="XXXXXVXX" item="F5(r)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5(r)3</label>
-        <label xml:lang="fr">F5 (arr)3</label>
-      </variable>
-      <variable CV="174" mask="XXXXVXXX" item="F5(r)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5(r)4</label>
-        <label xml:lang="fr">F5 (arr)4</label>
-      </variable>
-      <variable CV="174" mask="XXXVXXXX" item="F5(r)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5(r)5</label>
-        <label xml:lang="fr">F5 (arr)5</label>
-      </variable>
-      <variable CV="174" mask="XXVXXXXX" item="F5(r)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5(r)6</label>
-        <label xml:lang="fr">F5 (arr)6</label>
-      </variable>
-      <variable CV="174" mask="XVXXXXXX" item="F5(r)7" minOut="1" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5(r)7</label>
-        <label xml:lang="fr">F5 (arr)7</label>
-      </variable>
-      <variable CV="174" mask="VXXXXXXX" item="F5(r)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5(r)8</label>
-        <label xml:lang="fr">F5 (arr)8</label>
-      </variable>
-      <variable CV="177" mask="XXXXXXXV" item="F6(f)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6(f)1</label>
-        <label xml:lang="fr">F6 (av)1</label>
-      </variable>
-      <variable CV="177" mask="XXXXXXVX" item="F6(f)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6(f)2</label>
-        <label xml:lang="fr">F6 (av)2</label>
-      </variable>
-      <variable CV="177" mask="XXXXXVXX" item="F6(f)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6(f)3</label>
-        <label xml:lang="fr">F6 (av)3</label>
-      </variable>
-      <variable CV="177" mask="XXXXVXXX" item="F6(f)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6(f)4</label>
-        <label xml:lang="fr">F6 (av)4</label>
-      </variable>
-      <variable CV="177" mask="XXXVXXXX" item="F6(f)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6(f)5</label>
-        <label xml:lang="fr">F6 (av)5</label>
-      </variable>
-      <variable CV="177" mask="XXVXXXXX" item="F6(f)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6(f)6</label>
-        <label xml:lang="fr">F6 (av)6</label>
-      </variable>
-      <variable CV="177" mask="XVXXXXXX" item="F6(f)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6(f)7</label>
-        <label xml:lang="fr">F6 (av)7</label>
-      </variable>
-      <variable CV="177" mask="VXXXXXXX" item="F6(f)8" minOut="1" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6(f)8</label>
-        <label xml:lang="fr">F6 (av)8</label>
-      </variable>
-      <variable CV="180" mask="XXXXXXXV" item="F6(r)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6(r)1</label>
-        <label xml:lang="fr">F6 (arr)1</label>
-      </variable>
-      <variable CV="180" mask="XXXXXXVX" item="F6(r)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6(r)2</label>
-        <label xml:lang="fr">F6 (arr)2</label>
-      </variable>
-      <variable CV="180" mask="XXXXXVXX" item="F6(r)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6(r)3</label>
-        <label xml:lang="fr">F6 (arr)3</label>
-      </variable>
-      <variable CV="180" mask="XXXXVXXX" item="F6(r)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6(r)4</label>
-        <label xml:lang="fr">F6 (arr)4</label>
-      </variable>
-      <variable CV="180" mask="XXXVXXXX" item="F6(r)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6(r)5</label>
-        <label xml:lang="fr">F6 (arr)5</label>
-      </variable>
-      <variable CV="180" mask="XXVXXXXX" item="F6(r)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6(r)6</label>
-        <label xml:lang="fr">F6 (arr)6</label>
-      </variable>
-      <variable CV="180" mask="XVXXXXXX" item="F6(r)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6(r)7</label>
-        <label xml:lang="fr">F6 (arr)7</label>
-      </variable>
-      <variable CV="180" mask="VXXXXXXX" item="F6(r)8" minOut="1" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6(r)8</label>
-        <label xml:lang="fr">F6 (arr)8</label>
-      </variable>
-      <variable CV="183" mask="XXXXXXXV" item="F7(f)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7(f)1</label>
-        <label xml:lang="fr">F7 (av)1</label>
-      </variable>
-      <variable CV="183" mask="XXXXXXVX" item="F7(f)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7(f)2</label>
-        <label xml:lang="fr">F7 (av)2</label>
-      </variable>
-      <variable CV="183" mask="XXXXXVXX" item="F7(f)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7(f)3</label>
-        <label xml:lang="fr">F7 (av)3</label>
-      </variable>
-      <variable CV="183" mask="XXXXVXXX" item="F7(f)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7(f)4</label>
-        <label xml:lang="fr">F7 (av)4</label>
-      </variable>
-      <variable CV="183" mask="XXXVXXXX" item="F7(f)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7(f)5</label>
-        <label xml:lang="fr">F7 (av)5</label>
-      </variable>
-      <variable CV="183" mask="XXVXXXXX" item="F7(f)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7(f)6</label>
-        <label xml:lang="fr">F7 (av)6</label>
-      </variable>
-      <variable CV="183" mask="XVXXXXXX" item="F7(f)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7(f)7</label>
-        <label xml:lang="fr">F7 (av)7</label>
-      </variable>
-      <variable CV="183" mask="VXXXXXXX" item="F7(f)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7(f)8</label>
-        <label xml:lang="fr">F7 (av)8</label>
-      </variable>
-      <variable CV="186" mask="XXXXXXXV" item="F7(r)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7(r)1</label>
-        <label xml:lang="fr">F7 (arr)1</label>
-      </variable>
-      <variable CV="186" mask="XXXXXXVX" item="F7(r)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7(r)2</label>
-        <label xml:lang="fr">F7 (arr)2</label>
-      </variable>
-      <variable CV="186" mask="XXXXXVXX" item="F7(r)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7(r)3</label>
-        <label xml:lang="fr">F7 (arr)3</label>
-      </variable>
-      <variable CV="186" mask="XXXXVXXX" item="F7(r)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7(r)4</label>
-        <label xml:lang="fr">F7 (arr)4</label>
-      </variable>
-      <variable CV="186" mask="XXXVXXXX" item="F7(r)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7(r)5</label>
-        <label xml:lang="fr">F7 (arr)5</label>
-      </variable>
-      <variable CV="186" mask="XXVXXXXX" item="F7(r)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7(r)6</label>
-        <label xml:lang="fr">F7 (arr)6</label>
-      </variable>
-      <variable CV="186" mask="XVXXXXXX" item="F7(r)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7(r)7</label>
-        <label xml:lang="fr">F7 (arr)7</label>
-      </variable>
-      <variable CV="186" mask="VXXXXXXX" item="F7(r)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7(r)8</label>
-        <label xml:lang="fr">F7 (arr)8</label>
-      </variable>
-      <variable CV="189" mask="XXXXXXXV" item="F8(f)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8(f)1</label>
-        <label xml:lang="fr">F8 (av)1</label>
-      </variable>
-      <variable CV="189" mask="XXXXXXVX" item="F8(f)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8(f)2</label>
-        <label xml:lang="fr">F8 (av)2</label>
-      </variable>
-      <variable CV="189" mask="XXXXXVXX" item="F8(f)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8(f)3</label>
-        <label xml:lang="fr">F8 (av)3</label>
-      </variable>
-      <variable CV="189" mask="XXXXVXXX" item="F8(f)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8(f)4</label>
-        <label xml:lang="fr">F8 (av)4</label>
-      </variable>
-      <variable CV="189" mask="XXXVXXXX" item="F8(f)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8(f)5</label>
-        <label xml:lang="fr">F8 (av)5</label>
-      </variable>
-      <variable CV="189" mask="XXVXXXXX" item="F8(f)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8(f)6</label>
-        <label xml:lang="fr">F8 (av)6</label>
-      </variable>
-      <variable CV="189" mask="XVXXXXXX" item="F8(f)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8(f)7</label>
-        <label xml:lang="fr">F8 (av)7</label>
-      </variable>
-      <variable CV="189" mask="VXXXXXXX" item="F8(f)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8(f)8</label>
-        <label xml:lang="fr">F8 (av)8</label>
-      </variable>
-      <variable CV="192" mask="XXXXXXXV" item="F8(r)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8(r)1</label>
-        <label xml:lang="fr">F8 (arr)1</label>
-      </variable>
-      <variable CV="192" mask="XXXXXXVX" item="F8(r)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8(r)2</label>
-        <label xml:lang="fr">F8 (arr)2</label>
-      </variable>
-      <variable CV="192" mask="XXXXXVXX" item="F8(r)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8(r)3</label>
-        <label xml:lang="fr">F8 (arr)3</label>
-      </variable>
-      <variable CV="192" mask="XXXXVXXX" item="F8(r)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8(r)4</label>
-        <label xml:lang="fr">F8 (arr)4</label>
-      </variable>
-      <variable CV="192" mask="XXXVXXXX" item="F8(r)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8(r)5</label>
-        <label xml:lang="fr">F8 (arr)5</label>
-      </variable>
-      <variable CV="192" mask="XXVXXXXX" item="F8(r)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8(r)6</label>
-        <label xml:lang="fr">F8 (arr)6</label>
-      </variable>
-      <variable CV="192" mask="XVXXXXXX" item="F8(r)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8(r)7</label>
-        <label xml:lang="fr">F8 (arr)7</label>
-      </variable>
-      <variable CV="192" mask="VXXXXXXX" item="F8(r)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8(r)8</label>
-        <label xml:lang="fr">F8 (arr)8</label>
-      </variable>
-      <variable CV="195" mask="XXXXXXXV" item="F9(f)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9(f)1</label>
-        <label xml:lang="fr">F9 (av)1</label>
-      </variable>
-      <variable CV="195" mask="XXXXXXVX" item="F9(f)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9(f)2</label>
-        <label xml:lang="fr">F9 (av)2</label>
-      </variable>
-      <variable CV="195" mask="XXXXXVXX" item="F9(f)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9(f)3</label>
-        <label xml:lang="fr">F9 (av)3</label>
-      </variable>
-      <variable CV="195" mask="XXXXVXXX" item="F9(f)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9(f)4</label>
-        <label xml:lang="fr">F9 (av)4</label>
-      </variable>
-      <variable CV="195" mask="XXXVXXXX" item="F9(f)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9(f)5</label>
-        <label xml:lang="fr">F9 (av)5</label>
-      </variable>
-      <variable CV="195" mask="XXVXXXXX" item="F9(f)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9(f)6</label>
-        <label xml:lang="fr">F9 (av)6</label>
-      </variable>
-      <variable CV="195" mask="XVXXXXXX" item="F9(f)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9(f)7</label>
-        <label xml:lang="fr">F9 (av)7</label>
-      </variable>
-      <variable CV="195" mask="VXXXXXXX" item="F9(f)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9(f)8</label>
-        <label xml:lang="fr">F9 (av)8</label>
-      </variable>
-      <variable CV="198" mask="XXXXXXXV" item="F9(r)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9(r)1</label>
-        <label xml:lang="fr">F9 (arr)1</label>
-      </variable>
-      <variable CV="198" mask="XXXXXXVX" item="F9(r)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9(r)2</label>
-        <label xml:lang="fr">F9 (arr)2</label>
-      </variable>
-      <variable CV="198" mask="XXXXXVXX" item="F9(r)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9(r)3</label>
-        <label xml:lang="fr">F9 (arr)3</label>
-      </variable>
-      <variable CV="198" mask="XXXXVXXX" item="F9(r)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9(r)4</label>
-        <label xml:lang="fr">F9 (arr)4</label>
-      </variable>
-      <variable CV="198" mask="XXXVXXXX" item="F9(r)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9(r)5</label>
-        <label xml:lang="fr">F9 (arr)5</label>
-      </variable>
-      <variable CV="198" mask="XXVXXXXX" item="F9(r)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9(r)6</label>
-        <label xml:lang="fr">F9 (arr)6</label>
-      </variable>
-      <variable CV="198" mask="XVXXXXXX" item="F9(r)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9(r)7</label>
-        <label xml:lang="fr">F9 (arr)7</label>
-      </variable>
-      <variable CV="198" mask="VXXXXXXX" item="F9(r)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9(r)8</label>
-        <label xml:lang="fr">F9 (arr)8</label>
-      </variable>
-      <variable CV="201" mask="XXXXXXXV" item="F10(f)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10(f)1</label>
-        <label xml:lang="fr">F10 (av)1</label>
-      </variable>
-      <variable CV="201" mask="XXXXXXVX" item="F10(f)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10(f)2</label>
-        <label xml:lang="fr">F10 (av)2</label>
-      </variable>
-      <variable CV="201" mask="XXXXXVXX" item="F10(f)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10(f)3</label>
-        <label xml:lang="fr">F10 (av)3</label>
-      </variable>
-      <variable CV="201" mask="XXXXVXXX" item="F10(f)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10(f)4</label>
-        <label xml:lang="fr">F10 (av)4</label>
-      </variable>
-      <variable CV="201" mask="XXXVXXXX" item="F10(f)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10(f)5</label>
-        <label xml:lang="fr">F10 (av)5</label>
-      </variable>
-      <variable CV="201" mask="XXVXXXXX" item="F10(f)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10(f)6</label>
-        <label xml:lang="fr">F10 (av)6</label>
-      </variable>
-      <variable CV="201" mask="XVXXXXXX" item="F10(f)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10(f)7</label>
-        <label xml:lang="fr">F10 (av)7</label>
-      </variable>
-      <variable CV="201" mask="VXXXXXXX" item="F10(f)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10(f)8</label>
-        <label xml:lang="fr">F10 (av)8</label>
-      </variable>
-      <variable CV="204" mask="XXXXXXXV" item="F10(r)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10(r)1</label>
-        <label xml:lang="fr">F10 (arr)1</label>
-      </variable>
-      <variable CV="204" mask="XXXXXXVX" item="F10(r)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10(r)2</label>
-        <label xml:lang="fr">F10 (arr)2</label>
-      </variable>
-      <variable CV="204" mask="XXXXXVXX" item="F10(r)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10(r)3</label>
-        <label xml:lang="fr">F10 (arr)3</label>
-      </variable>
-      <variable CV="204" mask="XXXXVXXX" item="F10(r)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10(r)4</label>
-        <label xml:lang="fr">F10 (arr)4</label>
-      </variable>
-      <variable CV="204" mask="XXXVXXXX" item="F10(r)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10(r)5</label>
-        <label xml:lang="fr">F10 (arr)5</label>
-      </variable>
-      <variable CV="204" mask="XXVXXXXX" item="F10(r)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10(r)6</label>
-        <label xml:lang="fr">F10 (arr)6</label>
-      </variable>
-      <variable CV="204" mask="XVXXXXXX" item="F10(r)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10(r)7</label>
-        <label xml:lang="fr">F10 (arr)7</label>
-      </variable>
-      <variable CV="204" mask="VXXXXXXX" item="F10(r)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10(r)8</label>
-        <label xml:lang="fr">F10 (arr)8</label>
-      </variable>
-      <variable CV="207" mask="XXXXXXXV" item="F11(f)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11(f)1</label>
-        <label xml:lang="fr">F11 (av)1</label>
-      </variable>
-      <variable CV="207" mask="XXXXXXVX" item="F11(f)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11(f)2</label>
-        <label xml:lang="fr">F11 (av)2</label>
-      </variable>
-      <variable CV="207" mask="XXXXXVXX" item="F11(f)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11(f)3</label>
-        <label xml:lang="fr">F11 (av)3</label>
-      </variable>
-      <variable CV="207" mask="XXXXVXXX" item="F11(f)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11(f)4</label>
-        <label xml:lang="fr">F11 (av)4</label>
-      </variable>
-      <variable CV="207" mask="XXXVXXXX" item="F11(f)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11(f)5</label>
-        <label xml:lang="fr">F11 (av)5</label>
-      </variable>
-      <variable CV="207" mask="XXVXXXXX" item="F11(f)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11(f)6</label>
-        <label xml:lang="fr">F11 (av)6</label>
-      </variable>
-      <variable CV="207" mask="XVXXXXXX" item="F11(f)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11(f)7</label>
-        <label xml:lang="fr">F11 (av)7</label>
-      </variable>
-      <variable CV="207" mask="VXXXXXXX" item="F11(f)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11(f)8</label>
-        <label xml:lang="fr">F11 (av)8</label>
-      </variable>
-      <variable CV="210" mask="XXXXXXXV" item="F11(r)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11(r)1</label>
-        <label xml:lang="fr">F11 (arr)1</label>
-      </variable>
-      <variable CV="210" mask="XXXXXXVX" item="F11(r)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11(r)2</label>
-        <label xml:lang="fr">F11 (arr)2</label>
-      </variable>
-      <variable CV="210" mask="XXXXXVXX" item="F11(r)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11(r)3</label>
-        <label xml:lang="fr">F11 (arr)3</label>
-      </variable>
-      <variable CV="210" mask="XXXXVXXX" item="F11(r)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11(r)4</label>
-        <label xml:lang="fr">F11 (arr)4</label>
-      </variable>
-      <variable CV="210" mask="XXXVXXXX" item="F11(r)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11(r)5</label>
-        <label xml:lang="fr">F11 (arr)5</label>
-      </variable>
-      <variable CV="210" mask="XXVXXXXX" item="F11(r)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11(r)6</label>
-        <label xml:lang="fr">F11 (arr)6</label>
-      </variable>
-      <variable CV="210" mask="XVXXXXXX" item="F11(r)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11(r)7</label>
-        <label xml:lang="fr">F11 (arr)7</label>
-      </variable>
-      <variable CV="210" mask="VXXXXXXX" item="F11(r)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11(r)8</label>
-        <label xml:lang="fr">F11 (arr)8</label>
-      </variable>
-      <variable CV="213" mask="XXXXXXXV" item="F12(f)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12(f)1</label>
-        <label xml:lang="fr">F12 (av)1</label>
-      </variable>
-      <variable CV="213" mask="XXXXXXVX" item="F12(f)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12(f)2</label>
-        <label xml:lang="fr">F12 (av)2</label>
-      </variable>
-      <variable CV="213" mask="XXXXXVXX" item="F12(f)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12(f)3</label>
-        <label xml:lang="fr">F12 (av)3</label>
-      </variable>
-      <variable CV="213" mask="XXXXVXXX" item="F12(f)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12(f)4</label>
-        <label xml:lang="fr">F12 (av)4</label>
-      </variable>
-      <variable CV="213" mask="XXXVXXXX" item="F12(f)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12(f)5</label>
-        <label xml:lang="fr">F12 (av)5</label>
-      </variable>
-      <variable CV="213" mask="XXVXXXXX" item="F12(f)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12(f)6</label>
-        <label xml:lang="fr">F12 (av)6</label>
-      </variable>
-      <variable CV="213" mask="XVXXXXXX" item="F12(f)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12(f)7</label>
-        <label xml:lang="fr">F12 (av)7</label>
-      </variable>
-      <variable CV="213" mask="VXXXXXXX" item="F12(f)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12(f)8</label>
-        <label xml:lang="fr">F12 (av)8</label>
-      </variable>
-      <variable CV="216" mask="XXXXXXXV" item="F12(r)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12(r)1</label>
-        <label xml:lang="fr">F12 (arr)1</label>
-      </variable>
-      <variable CV="216" mask="XXXXXXVX" item="F12(r)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12(r)2</label>
-        <label xml:lang="fr">F12 (arr)2</label>
-      </variable>
-      <variable CV="216" mask="XXXXXVXX" item="F12(r)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12(r)3</label>
-        <label xml:lang="fr">F12 (arr)3</label>
-      </variable>
-      <variable CV="216" mask="XXXXVXXX" item="F12(r)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12(r)4</label>
-        <label xml:lang="fr">F12 (arr)4</label>
-      </variable>
-      <variable CV="216" mask="XXXVXXXX" item="F12(r)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12(r)5</label>
-        <label xml:lang="fr">F12 (arr)5</label>
-      </variable>
-      <variable CV="216" mask="XXVXXXXX" item="F12(r)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12(r)6</label>
-        <label xml:lang="fr">F12 (arr)6</label>
-      </variable>
-      <variable CV="216" mask="XVXXXXXX" item="F12(r)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12(r)7</label>
-        <label xml:lang="fr">F12 (arr)7</label>
-      </variable>
-      <variable CV="216" mask="VXXXXXXX" item="F12(r)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12(r)8</label>
-        <label xml:lang="fr">F12 (arr)8</label>
-      </variable>
-      <variable CV="219" mask="XXXXXXXV" item="F13(f)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13(f)1</label>
-        <label xml:lang="fr">F13 (av)1</label>
-      </variable>
-      <variable CV="219" mask="XXXXXXVX" item="F13(f)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13(f)2</label>
-        <label xml:lang="fr">F13 (av)2</label>
-      </variable>
-      <variable CV="219" mask="XXXXXVXX" item="F13(f)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13(f)3</label>
-        <label xml:lang="fr">F13 (av)3</label>
-      </variable>
-      <variable CV="219" mask="XXXXVXXX" item="F13(f)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13(f)4</label>
-        <label xml:lang="fr">F13 (av)4</label>
-      </variable>
-      <variable CV="219" mask="XXXVXXXX" item="F13(f)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13(f)5</label>
-        <label xml:lang="fr">F13 (av)5</label>
-      </variable>
-      <variable CV="219" mask="XXVXXXXX" item="F13(f)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13(f)6</label>
-        <label xml:lang="fr">F13 (av)6</label>
-      </variable>
-      <variable CV="219" mask="XVXXXXXX" item="F13(f)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13(f)7</label>
-        <label xml:lang="fr">F13 (av)7</label>
-      </variable>
-      <variable CV="219" mask="VXXXXXXX" item="F13(f)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13(f)8</label>
-        <label xml:lang="fr">F13 (av)8</label>
-      </variable>
-      <variable CV="222" mask="XXXXXXXV" item="F13(r)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13(r)1</label>
-        <label xml:lang="fr">F13 (arr)1</label>
-      </variable>
-      <variable CV="222" mask="XXXXXXVX" item="F13(r)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13(r)2</label>
-        <label xml:lang="fr">F13 (arr)2</label>
-      </variable>
-      <variable CV="222" mask="XXXXXVXX" item="F13(r)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13(r)3</label>
-        <label xml:lang="fr">F13 (arr)3</label>
-      </variable>
-      <variable CV="222" mask="XXXXVXXX" item="F13(r)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13(r)4</label>
-        <label xml:lang="fr">F13 (arr)4</label>
-      </variable>
-      <variable CV="222" mask="XXXVXXXX" item="F13(r)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13(r)5</label>
-        <label xml:lang="fr">F13 (arr)5</label>
-      </variable>
-      <variable CV="222" mask="XXVXXXXX" item="F13(r)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13(r)6</label>
-        <label xml:lang="fr">F13 (arr)6</label>
-      </variable>
-      <variable CV="222" mask="XVXXXXXX" item="F13(r)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13(r)7</label>
-        <label xml:lang="fr">F13 (arr)7</label>
-      </variable>
-      <variable CV="222" mask="VXXXXXXX" item="F13(r)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13(r)8</label>
-        <label xml:lang="fr">F13 (arr)8</label>
-      </variable>
-      <variable CV="225" mask="XXXXXXXV" item="F14(f)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14(f)1</label>
-        <label xml:lang="fr">F14 (av)1</label>
-      </variable>
-      <variable CV="225" mask="XXXXXXVX" item="F14(f)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14(f)2</label>
-        <label xml:lang="fr">F14 (av)2</label>
-      </variable>
-      <variable CV="225" mask="XXXXXVXX" item="F14(f)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14(f)3</label>
-        <label xml:lang="fr">F14 (av)3</label>
-      </variable>
-      <variable CV="225" mask="XXXXVXXX" item="F14(f)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14(f)4</label>
-        <label xml:lang="fr">F14 (av)4</label>
-      </variable>
-      <variable CV="225" mask="XXXVXXXX" item="F14(f)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14(f)5</label>
-        <label xml:lang="fr">F14 (av)5</label>
-      </variable>
-      <variable CV="225" mask="XXVXXXXX" item="F14(f)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14(f)6</label>
-        <label xml:lang="fr">F14 (av)6</label>
-      </variable>
-      <variable CV="225" mask="XVXXXXXX" item="F14(f)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14(f)7</label>
-        <label xml:lang="fr">F14 (av)7</label>
-      </variable>
-      <variable CV="225" mask="VXXXXXXX" item="F14(f)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14(f)8</label>
-        <label xml:lang="fr">F14 (av)8</label>
-      </variable>
-      <variable CV="228" mask="XXXXXXXV" item="F14(r)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14(r)1</label>
-        <label xml:lang="fr">F14 (arr)1</label>
-      </variable>
-      <variable CV="228" mask="XXXXXXVX" item="F14(r)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14(r)2</label>
-        <label xml:lang="fr">F14 (arr)2</label>
-      </variable>
-      <variable CV="228" mask="XXXXXVXX" item="F14(r)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14(r)3</label>
-        <label xml:lang="fr">F14 (arr)3</label>
-      </variable>
-      <variable CV="228" mask="XXXXVXXX" item="F14(r)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14(r)4</label>
-        <label xml:lang="fr">F14 (arr)4</label>
-      </variable>
-      <variable CV="228" mask="XXXVXXXX" item="F14(r)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14(r)5</label>
-        <label xml:lang="fr">F14 (arr)5</label>
-      </variable>
-      <variable CV="228" mask="XXVXXXXX" item="F14(r)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14(r)6</label>
-        <label xml:lang="fr">F14 (arr)6</label>
-      </variable>
-      <variable CV="228" mask="XVXXXXXX" item="F14(r)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14(r)7</label>
-        <label xml:lang="fr">F14 (arr)7</label>
-      </variable>
-      <variable CV="228" mask="VXXXXXXX" item="F14(r)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14(r)8</label>
-        <label xml:lang="fr">F14 (arr)8</label>
-      </variable>
-      <variable CV="231" mask="XXXXXXXV" item="F15(f)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15(f)1</label>
-        <label xml:lang="fr">F15 (av)1</label>
-      </variable>
-      <variable CV="231" mask="XXXXXXVX" item="F15(f)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15(f)2</label>
-        <label xml:lang="fr">F15 (av)2</label>
-      </variable>
-      <variable CV="231" mask="XXXXXVXX" item="F15(f)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15(f)3</label>
-        <label xml:lang="fr">F15 (av)3</label>
-      </variable>
-      <variable CV="231" mask="XXXXVXXX" item="F15(f)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15(f)4</label>
-        <label xml:lang="fr">F15 (av)4</label>
-      </variable>
-      <variable CV="231" mask="XXXVXXXX" item="F15(f)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15(f)5</label>
-        <label xml:lang="fr">F15 (av)5</label>
-      </variable>
-      <variable CV="231" mask="XXVXXXXX" item="F15(f)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15(f)6</label>
-        <label xml:lang="fr">F15 (av)6</label>
-      </variable>
-      <variable CV="231" mask="XVXXXXXX" item="F15(f)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15(f)7</label>
-        <label xml:lang="fr">F15 (av)7</label>
-      </variable>
-      <variable CV="231" mask="VXXXXXXX" item="F15(f)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15(f)8</label>
-        <label xml:lang="fr">F15 (av)8</label>
-      </variable>
-      <variable CV="234" mask="XXXXXXXV" item="F15(r)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15(r)1</label>
-        <label xml:lang="fr">F15 (arr)1</label>
-      </variable>
-      <variable CV="234" mask="XXXXXXVX" item="F15(r)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15(r)2</label>
-        <label xml:lang="fr">F15 (arr)2</label>
-      </variable>
-      <variable CV="234" mask="XXXXXVXX" item="F15(r)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15(r)3</label>
-        <label xml:lang="fr">F15 (arr)3</label>
-      </variable>
-      <variable CV="234" mask="XXXXVXXX" item="F15(r)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15(r)4</label>
-        <label xml:lang="fr">F15 (arr)4</label>
-      </variable>
-      <variable CV="234" mask="XXXVXXXX" item="F15(r)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15(r)5</label>
-        <label xml:lang="fr">F15 (arr)5</label>
-      </variable>
-      <variable CV="234" mask="XXVXXXXX" item="F15(r)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15(r)6</label>
-        <label xml:lang="fr">F15 (arr)6</label>
-      </variable>
-      <variable CV="234" mask="XVXXXXXX" item="F15(r)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15(r)7</label>
-        <label xml:lang="fr">F15 (arr)7</label>
-      </variable>
-      <variable CV="234" mask="VXXXXXXX" item="F15(r)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15(r)8</label>
-        <label xml:lang="fr">F15 (arr)8</label>
-      </variable>
-      <variable CV="237" mask="XXXXXXXV" item="Sensor1(f)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Son 1(f)1</label>
-        <label xml:lang="fr">Son 1 (av)1</label>
-      </variable>
-      <variable CV="237" mask="XXXXXXVX" item="Sensor1(f)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor1(f)2</label>
-        <label xml:lang="fr">Son 1 (av)2</label>
-      </variable>
-      <variable CV="237" mask="XXXXXVXX" item="Sensor1(f)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor1(f)3</label>
-        <label xml:lang="fr">Son 1 (av)3</label>
-      </variable>
-      <variable CV="237" mask="XXXXVXXX" item="Sensor1(f)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor1(f)4</label>
-        <label xml:lang="fr">Son 1 (av)4</label>
-      </variable>
-      <variable CV="237" mask="XXXVXXXX" item="Sensor1(f)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor1(f)5</label>
-        <label xml:lang="fr">Son 1 (av)5</label>
-      </variable>
-      <variable CV="237" mask="XXVXXXXX" item="Sensor1(f)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor1(f)6</label>
-        <label xml:lang="fr">Son 1 (av)6</label>
-      </variable>
-      <variable CV="237" mask="XVXXXXXX" item="Sensor1(f)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor1(f)7</label>
-        <label xml:lang="fr">Son 1 (av)7</label>
-      </variable>
-      <variable CV="237" mask="VXXXXXXX" item="Sensor1(f)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor1(f)8</label>
-        <label xml:lang="fr">Son 1 (av)8</label>
-      </variable>
-      <variable CV="240" mask="XXXXXXXV" item="Sensor1(r)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor1(r)1</label>
-        <label xml:lang="fr">Son 1 (arr)1</label>
-      </variable>
-      <variable CV="240" mask="XXXXXXVX" item="Sensor1(r)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor1(r)2</label>
-        <label xml:lang="fr">Son 1 (arr)2</label>
-      </variable>
-      <variable CV="240" mask="XXXXXVXX" item="Sensor1(r)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor1(r)3</label>
-        <label xml:lang="fr">Son 1 (arr)3</label>
-      </variable>
-      <variable CV="240" mask="XXXXVXXX" item="Sensor1(r)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor1(r)4</label>
-        <label xml:lang="fr">Son 1 (arr)4</label>
-      </variable>
-      <variable CV="240" mask="XXXVXXXX" item="Sensor1(r)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor1(r)5</label>
-        <label xml:lang="fr">Son 1 (arr)5</label>
-      </variable>
-      <variable CV="240" mask="XXVXXXXX" item="Sensor1(r)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor1(r)6</label>
-        <label xml:lang="fr">Son 1 (arr)6</label>
-      </variable>
-      <variable CV="240" mask="XVXXXXXX" item="Sensor1(r)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor1(r)7</label>
-        <label xml:lang="fr">Son 1 (arr)7</label>
-      </variable>
-      <variable CV="240" mask="VXXXXXXX" item="Sensor1(r)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor1(r)8</label>
-        <label xml:lang="fr">Son 1 (arr)8</label>
-      </variable>
-      <variable CV="243" mask="XXXXXXXV" item="Sensor2(f)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor2(f)1</label>
-        <label xml:lang="fr">Son 2 (av)1</label>
-      </variable>
-      <variable CV="243" mask="XXXXXXVX" item="Sensor2(f)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor2(f)2</label>
-        <label xml:lang="fr">Son 2 (av)2</label>
-      </variable>
-      <variable CV="243" mask="XXXXXVXX" item="Sensor2(f)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor2(f)3</label>
-        <label xml:lang="fr">Son 2 (av)3</label>
-      </variable>
-      <variable CV="243" mask="XXXXVXXX" item="Sensor2(f)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor2(f)4</label>
-        <label xml:lang="fr">Son 2 (av)4</label>
-      </variable>
-      <variable CV="243" mask="XXXVXXXX" item="Sensor2(f)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor2(f)5</label>
-        <label xml:lang="fr">Son 2 (av)5</label>
-      </variable>
-      <variable CV="243" mask="XXVXXXXX" item="Sensor2(f)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor2(f)6</label>
-        <label xml:lang="fr">Son 2 (av)6</label>
-      </variable>
-      <variable CV="243" mask="XVXXXXXX" item="Sensor2(f)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor2(f)7</label>
-        <label xml:lang="fr">Son 2 (av)7</label>
-      </variable>
-      <variable CV="243" mask="VXXXXXXX" item="Sensor2(f)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor2(f)8</label>
-        <label xml:lang="fr">Son 2 (av)8</label>
-      </variable>
-      <variable CV="246" mask="XXXXXXXV" item="Sensor2(r)1" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor2(r)1</label>
-        <label xml:lang="fr">Son 2 (arr)1</label>
-      </variable>
-      <variable CV="246" mask="XXXXXXVX" item="Sensor2(r)2" minOut="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor2(r)2</label>
-        <label xml:lang="fr">Son 2 (arr)2</label>
-      </variable>
-      <variable CV="246" mask="XXXXXVXX" item="Sensor2(r)3" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor2(r)3</label>
-        <label xml:lang="fr">Son 2 (arr)3</label>
-      </variable>
-      <variable CV="246" mask="XXXXVXXX" item="Sensor2(r)4" minOut="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor2(r)4</label>
-        <label xml:lang="fr">Son 2 (arr)4</label>
-      </variable>
-      <variable CV="246" mask="XXXVXXXX" item="Sensor2(r)5" minOut="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor2(r)5</label>
-        <label xml:lang="fr">Son 2 (arr)5</label>
-      </variable>
-      <variable CV="246" mask="XXVXXXXX" item="Sensor2(r)6" minOut="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor2(r)6</label>
-        <label xml:lang="fr">Son 2 (arr)6</label>
-      </variable>
-      <variable CV="246" mask="XVXXXXXX" item="Sensor2(r)7" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor2(r)7</label>
-        <label xml:lang="fr">Son 2 (arr)7</label>
-      </variable>
-      <variable CV="246" mask="VXXXXXXX" item="Sensor2(r)8" minOut="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>sensor2(r)8</label>
-        <label xml:lang="fr">Son 2 (arr)8</label>
-      </variable>
-      <!-- This is start of variable definition for Button Behavior -->
-      <variable CV="130" mask="XXXXXXXV" item="Stop forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop Forward Button</label>
-        <label xml:lang="fr">Stop fonction en av</label>
-      </variable>
-      <variable CV="130" mask="XXXXXXVX" item="Stop (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop Forward Button</label>
-        <label xml:lang="fr">Stop fonction en av</label>
-      </variable>
-      <variable CV="130" mask="XXXXXVXX" item="Stop (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop Forward Button</label>
-        <label xml:lang="fr">Stop fonction en av</label>
-      </variable>
-      <variable CV="130" mask="XXXXVXXX" item="Stop (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop Forward Button</label>
-        <label xml:lang="fr">Stop fonction en av</label>
-      </variable>
-      <variable CV="130" mask="XXXVXXXX" item="Stop (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop Forward Button</label>
-        <label xml:lang="fr">Stop fonction en av</label>
-      </variable>
-      <variable CV="130" mask="XXVXXXXX" item="Stop (f)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop Forward Button</label>
-        <label xml:lang="fr">Stop fonction en av</label>
-      </variable>
-      <variable CV="130" mask="XVXXXXXX" item="Stop (f)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop Forward Button</label>
-        <label xml:lang="fr">Stop fonction en av</label>
-      </variable>
-      <variable CV="130" mask="VXXXXXXX" item="Stop (f)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop Forward Button</label>
-        <label xml:lang="fr">Stop fonction en av</label>
-      </variable>
-      <variable CV="133" mask="XXXXXXXV" item="Stop (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop reverse Button</label>
-        <label xml:lang="fr">Stop fonction en arr</label>
-      </variable>
-      <variable CV="133" mask="XXXXXXVX" item="Stop (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop reverse Button</label>
-        <label xml:lang="fr">Stop fonction en arr</label>
-      </variable>
-      <variable CV="133" mask="XXXXXVXX" item="Stop (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop reverse Button</label>
-        <label xml:lang="fr">Stop fonction en arr</label>
-      </variable>
-      <variable CV="133" mask="XXXXVXXX" item="Stop (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop reverse Button</label>
-        <label xml:lang="fr">Stop fonction en arr</label>
-      </variable>
-      <variable CV="133" mask="XXXVXXXX" item="Stop (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop reverse Button</label>
-        <label xml:lang="fr">Stop fonction en arr</label>
-      </variable>
-      <variable CV="133" mask="XXVXXXXX" item="Stop (r)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop reverse Button</label>
-        <label xml:lang="fr">Stop fonction en arr</label>
-      </variable>
-      <variable CV="133" mask="XVXXXXXX" item="Stop (r)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop reverse Button</label>
-        <label xml:lang="fr">Stop fonction en arr</label>
-      </variable>
-      <variable CV="133" mask="VXXXXXXX" item="Stop (r)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Stop reverse Button</label>
-        <label xml:lang="fr">Stop fonction en arr</label>
-      </variable>
-      <variable CV="136" mask="XXXXXXXV" item="Running forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running Forward Button</label>
-        <label xml:lang="fr">Fonction active en av</label>
-      </variable>
-      <variable CV="136" mask="XXXXXXVX" item="Running (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running Forward Button</label>
-        <label xml:lang="fr">Fonction active en av</label>
-      </variable>
-      <variable CV="136" mask="XXXXXVXX" item="Running (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running Forward Button</label>
-        <label xml:lang="fr">Fonction active en av</label>
-      </variable>
-      <variable CV="136" mask="XXXXVXXX" item="Running (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running Forward Button</label>
-        <label xml:lang="fr">Fonction active en av</label>
-      </variable>
-      <variable CV="136" mask="XXXVXXXX" item="Running (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running Forward Button</label>
-        <label xml:lang="fr">Fonction active en av</label>
-      </variable>
-      <variable CV="136" mask="XXVXXXXX" item="Running (f)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running Forward Button</label>
-        <label xml:lang="fr">Fonction active en av</label>
-      </variable>
-      <variable CV="136" mask="XVXXXXXX" item="Running (f)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running Forward Button</label>
-        <label xml:lang="fr">Fonction active en av</label>
-      </variable>
-      <variable CV="136" mask="VXXXXXXX" item="Running (f)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running Forward Button</label>
-        <label xml:lang="fr">Fonction active en av</label>
-      </variable>
-      <variable CV="139" mask="XXXXXXXV" item="Running (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running reverse Button</label>
-        <label xml:lang="fr">Fonction active en arr</label>
-      </variable>
-      <variable CV="139" mask="XXXXXXVX" item="Running (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running reverse Button</label>
-        <label xml:lang="fr">Fonction active en arr</label>
-      </variable>
-      <variable CV="139" mask="XXXXXVXX" item="Running (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running reverse Button</label>
-        <label xml:lang="fr">Fonction active en arr</label>
-      </variable>
-      <variable CV="139" mask="XXXXVXXX" item="Running (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running reverse Button</label>
-        <label xml:lang="fr">Fonction active en arr</label>
-      </variable>
-      <variable CV="139" mask="XXXVXXXX" item="Running (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running reverse Button</label>
-        <label xml:lang="fr">Fonction active en arr</label>
-      </variable>
-      <variable CV="139" mask="XXVXXXXX" item="Running (r)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running reverse Button</label>
-        <label xml:lang="fr">Fonction active en arr</label>
-      </variable>
-      <variable CV="139" mask="XVXXXXXX" item="Running (r)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running reverse Button</label>
-        <label xml:lang="fr">Fonction active en arr</label>
-      </variable>
-      <variable CV="139" mask="VXXXXXXX" item="Running (r)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Running reverse Button</label>
-        <label xml:lang="fr">Fonction active en arr</label>
-      </variable>
-      <variable CV="142" mask="XXXXXXXV" item="F0 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 Forward Button</label>
-        <label xml:lang="fr">F0 active en av</label>
-      </variable>
-      <variable CV="142" mask="XXXXXXVX" item="F0 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 Forward Button</label>
-        <label xml:lang="fr">F0 active en av</label>
-      </variable>
-      <variable CV="142" mask="XXXXXVXX" item="F0 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 Forward Button</label>
-        <label xml:lang="fr">F0 active en av</label>
-      </variable>
-      <variable CV="142" mask="XXXXVXXX" item="F0 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 Forward Button</label>
-        <label xml:lang="fr">F0 active en av</label>
-      </variable>
-      <variable CV="142" mask="XXXVXXXX" item="F0 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 Forward Button</label>
-        <label xml:lang="fr">F0 active en av</label>
-      </variable>
-      <variable CV="142" mask="XXVXXXXX" item="F0 (f)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 Forward Button</label>
-        <label xml:lang="fr">F0 active en av</label>
-      </variable>
-      <variable CV="142" mask="XVXXXXXX" item="F0 (f)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 Forward Button</label>
-        <label xml:lang="fr">F0 active en av</label>
-      </variable>
-      <variable CV="142" mask="VXXXXXXX" item="F0 (f)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 Forward Button</label>
-        <label xml:lang="fr">F0 active en av</label>
-      </variable>
-      <variable CV="145" mask="XXXXXXXV" item="F0 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 reverse Button</label>
-        <label xml:lang="fr">F0 active en arr</label>
-      </variable>
-      <variable CV="145" mask="XXXXXXVX" item="F0 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 reverse Button</label>
-        <label xml:lang="fr">F0 active en arr</label>
-      </variable>
-      <variable CV="145" mask="XXXXXVXX" item="F0 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 reverse Button</label>
-        <label xml:lang="fr">F0 active en arr</label>
-      </variable>
-      <variable CV="145" mask="XXXXVXXX" item="F0 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 reverse Button</label>
-        <label xml:lang="fr">F0 active en arr</label>
-      </variable>
-      <variable CV="145" mask="XXXVXXXX" item="F0 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 reverse Button</label>
-        <label xml:lang="fr">F0 active en arr</label>
-      </variable>
-      <variable CV="145" mask="XXVXXXXX" item="F0 (r)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 reverse Button</label>
-        <label xml:lang="fr">F0 active en arr</label>
-      </variable>
-      <variable CV="145" mask="XVXXXXXX" item="F0 (r)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 reverse Button</label>
-        <label xml:lang="fr">F0 active en arr</label>
-      </variable>
-      <variable CV="145" mask="VXXXXXXX" item="F0 (r)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F0 reverse Button</label>
-        <label xml:lang="fr">F0 active en arr</label>
-      </variable>
-      <variable CV="148" mask="XXXXXXXV" item="F1 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 Forward Button</label>
-        <label xml:lang="fr">F1 active en av</label>
-      </variable>
-      <variable CV="148" mask="XXXXXXVX" item="F1 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 Forward Button</label>
-        <label xml:lang="fr">F1 active en av</label>
-      </variable>
-      <variable CV="148" mask="XXXXXVXX" item="F1 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 Forward Button</label>
-        <label xml:lang="fr">F1 active en av</label>
-      </variable>
-      <variable CV="148" mask="XXXXVXXX" item="F1 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 Forward Button</label>
-        <label xml:lang="fr">F1 active en av</label>
-      </variable>
-      <variable CV="148" mask="XXXVXXXX" item="F1 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 Forward Button</label>
-        <label xml:lang="fr">F1 active en av</label>
-      </variable>
-      <variable CV="148" mask="XXVXXXXX" item="F1 (f)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 Forward Button</label>
-        <label xml:lang="fr">F1 active en av</label>
-      </variable>
-      <variable CV="148" mask="XVXXXXXX" item="F1 (f)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 Forward Button</label>
-        <label xml:lang="fr">F1 active en av</label>
-      </variable>
-      <variable CV="148" mask="VXXXXXXX" item="F1 (f)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 Forward Button</label>
-        <label xml:lang="fr">F1 active en av</label>
-      </variable>
-      <variable CV="151" mask="XXXXXXXV" item="F1 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 reverse Button</label>
-        <label xml:lang="fr">F1 active en arr</label>
-      </variable>
-      <variable CV="151" mask="XXXXXXVX" item="F1 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 reverse Button</label>
-        <label xml:lang="fr">F1 active en arr</label>
-      </variable>
-      <variable CV="151" mask="XXXXXVXX" item="F1 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 reverse Button</label>
-        <label xml:lang="fr">F1 active en arr</label>
-      </variable>
-      <variable CV="151" mask="XXXXVXXX" item="F1 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 reverse Button</label>
-        <label xml:lang="fr">F1 active en arr</label>
-      </variable>
-      <variable CV="151" mask="XXXVXXXX" item="F1 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 reverse Button</label>
-        <label xml:lang="fr">F1 active en arr</label>
-      </variable>
-      <variable CV="151" mask="XXVXXXXX" item="F1 (r)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 reverse Button</label>
-        <label xml:lang="fr">F1 active en arr</label>
-      </variable>
-      <variable CV="151" mask="XVXXXXXX" item="F1 (r)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 reverse Button</label>
-        <label xml:lang="fr">F1 active en arr</label>
-      </variable>
-      <variable CV="151" mask="VXXXXXXX" item="F1 (r)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F1 reverse Button</label>
-        <label xml:lang="fr">F1 active en arr</label>
-      </variable>
-      <variable CV="154" mask="XXXXXXXV" item="F2 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 Forward Button</label>
-        <label xml:lang="fr">F2 active en av</label>
-      </variable>
-      <variable CV="154" mask="XXXXXXVX" item="F2 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 Forward Button</label>
-        <label xml:lang="fr">F2 active en av</label>
-      </variable>
-      <variable CV="154" mask="XXXXXVXX" item="F2 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 Forward Button</label>
-        <label xml:lang="fr">F2 active en av</label>
-      </variable>
-      <variable CV="154" mask="XXXXVXXX" item="F2 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 Forward Button</label>
-        <label xml:lang="fr">F2 active en av</label>
-      </variable>
-      <variable CV="154" mask="XXXVXXXX" item="F2 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 Forward Button</label>
-        <label xml:lang="fr">F2 active en av</label>
-      </variable>
-      <variable CV="154" mask="XXVXXXXX" item="F2 (f)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 Forward Button</label>
-        <label xml:lang="fr">F2 active en av</label>
-      </variable>
-      <variable CV="154" mask="XVXXXXXX" item="F2 (f)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 Forward Button</label>
-        <label xml:lang="fr">F2 active en av</label>
-      </variable>
-      <variable CV="154" mask="VXXXXXXX" item="F2 (f)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 Forward Button</label>
-        <label xml:lang="fr">F2 active en av</label>
-      </variable>
-      <variable CV="157" mask="XXXXXXXV" item="F2 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 reverse Button</label>
-        <label xml:lang="fr">F2 active en arr</label>
-      </variable>
-      <variable CV="157" mask="XXXXXXVX" item="F2 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 reverse Button</label>
-        <label xml:lang="fr">F2 active en arr</label>
-      </variable>
-      <variable CV="157" mask="XXXXXVXX" item="F2 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 reverse Button</label>
-        <label xml:lang="fr">F2 active en arr</label>
-      </variable>
-      <variable CV="157" mask="XXXXVXXX" item="F2 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 reverse Button</label>
-        <label xml:lang="fr">F2 active en arr</label>
-      </variable>
-      <variable CV="157" mask="XXXVXXXX" item="F2 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 reverse Button</label>
-        <label xml:lang="fr">F2 active en arr</label>
-      </variable>
-      <variable CV="157" mask="XXVXXXXX" item="F2 (r)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 reverse Button</label>
-        <label xml:lang="fr">F2 active en arr</label>
-      </variable>
-      <variable CV="157" mask="XVXXXXXX" item="F2 (r)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 reverse Button</label>
-        <label xml:lang="fr">F2 active en arr</label>
-      </variable>
-      <variable CV="157" mask="VXXXXXXX" item="F2 (r)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 reverse Button</label>
-        <label xml:lang="fr">F2 active en arr</label>
-      </variable>
-      <variable CV="160" mask="XXXXXXXV" item="F3 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 Forward Button</label>
-        <label xml:lang="fr">F3 active en av</label>
-      </variable>
-      <variable CV="160" mask="XXXXXXVX" item="F3 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 Forward Button</label>
-        <label xml:lang="fr">F3 active en av</label>
-      </variable>
-      <variable CV="160" mask="XXXXXVXX" item="F3 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 Forward Button</label>
-        <label xml:lang="fr">F3 active en av</label>
-      </variable>
-      <variable CV="160" mask="XXXXVXXX" item="F3 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 Forward Button</label>
-        <label xml:lang="fr">F3 active en av</label>
-      </variable>
-      <variable CV="160" mask="XXXVXXXX" item="F3 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 Forward Button</label>
-        <label xml:lang="fr">F3 active en av</label>
-      </variable>
-      <variable CV="160" mask="XXVXXXXX" item="F3 (f)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 Forward Button</label>
-        <label xml:lang="fr">F3 active en av</label>
-      </variable>
-      <variable CV="160" mask="XVXXXXXX" item="F3 (f)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 Forward Button</label>
-        <label xml:lang="fr">F3 active en av</label>
-      </variable>
-      <variable CV="160" mask="VXXXXXXX" item="F3 (f)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 Forward Button</label>
-        <label xml:lang="fr">F3 active en av</label>
-      </variable>
-      <variable CV="163" mask="XXXXXXXV" item="F3 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 reverse Button</label>
-        <label xml:lang="fr">F3 active en arr</label>
-      </variable>
-      <variable CV="163" mask="XXXXXXVX" item="F3 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 reverse Button</label>
-        <label xml:lang="fr">F3 active en arr</label>
-      </variable>
-      <variable CV="163" mask="XXXXXVXX" item="F3 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 reverse Button</label>
-        <label xml:lang="fr">F3 active en arr</label>
-      </variable>
-      <variable CV="163" mask="XXXXVXXX" item="F3 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 reverse Button</label>
-        <label xml:lang="fr">F3 active en arr</label>
-      </variable>
-      <variable CV="163" mask="XXXVXXXX" item="F3 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 reverse Button</label>
-        <label xml:lang="fr">F3 active en arr</label>
-      </variable>
-      <variable CV="163" mask="XXVXXXXX" item="F3 (r)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 reverse Button</label>
-        <label xml:lang="fr">F3 active en arr</label>
-      </variable>
-      <variable CV="163" mask="XVXXXXXX" item="F3 (r)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 reverse Button</label>
-        <label xml:lang="fr">F3 active en arr</label>
-      </variable>
-      <variable CV="163" mask="VXXXXXXX" item="F3 (r)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F3 reverse Button</label>
-        <label xml:lang="fr">F3 active en arr</label>
-      </variable>
-      <variable CV="166" mask="XXXXXXXV" item="F4 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 Forward Button</label>
-        <label xml:lang="fr">F4 active en av</label>
-      </variable>
-      <variable CV="166" mask="XXXXXXVX" item="F4 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 Forward Button</label>
-        <label xml:lang="fr">F4 active en av</label>
-      </variable>
-      <variable CV="166" mask="XXXXXVXX" item="F4 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 Forward Button</label>
-        <label xml:lang="fr">F4 active en av</label>
-      </variable>
-      <variable CV="166" mask="XXXXVXXX" item="F4 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 Forward Button</label>
-        <label xml:lang="fr">F4 active en av</label>
-      </variable>
-      <variable CV="166" mask="XXXVXXXX" item="F4 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 Forward Button</label>
-        <label xml:lang="fr">F4 active en av</label>
-      </variable>
-      <variable CV="166" mask="XXVXXXXX" item="F4 (f)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 Forward Button</label>
-        <label xml:lang="fr">F4 active en av</label>
-      </variable>
-      <variable CV="166" mask="XVXXXXXX" item="F4 (f)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 Forward Button</label>
-        <label xml:lang="fr">F4 active en av</label>
-      </variable>
-      <variable CV="166" mask="VXXXXXXX" item="F4 (f)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 Forward Button</label>
-        <label xml:lang="fr">F4 active en av</label>
-      </variable>
-      <variable CV="169" mask="XXXXXXXV" item="F4 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 reverse Button</label>
-        <label xml:lang="fr">F4 active en arr</label>
-      </variable>
-      <variable CV="169" mask="XXXXXXVX" item="F4 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 reverse Button</label>
-        <label xml:lang="fr">F4 active en arr</label>
-      </variable>
-      <variable CV="169" mask="XXXXXVXX" item="F4 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 reverse Button</label>
-        <label xml:lang="fr">F4 active en arr</label>
-      </variable>
-      <variable CV="169" mask="XXXXVXXX" item="F4 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 reverse Button</label>
-        <label xml:lang="fr">F4 active en arr</label>
-      </variable>
-      <variable CV="169" mask="XXXVXXXX" item="F4 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 reverse Button</label>
-        <label xml:lang="fr">F4 active en arr</label>
-      </variable>
-      <variable CV="169" mask="XXVXXXXX" item="F4 (r)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 reverse Button</label>
-        <label xml:lang="fr">F4 active en arr</label>
-      </variable>
-      <variable CV="169" mask="XVXXXXXX" item="F4 (r)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 reverse Button</label>
-        <label xml:lang="fr">F4 active en arr</label>
-      </variable>
-      <variable CV="169" mask="VXXXXXXX" item="F4 (r)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F4 reverse Button</label>
-        <label xml:lang="fr">F4 active en arr</label>
-      </variable>
-      <variable CV="172" mask="XXXXXXXV" item="F5 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 Forward Button</label>
-        <label xml:lang="fr">F5 active en av</label>
-      </variable>
-      <variable CV="172" mask="XXXXXXVX" item="F5 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 Forward Button</label>
-        <label xml:lang="fr">F5 active en av</label>
-      </variable>
-      <variable CV="172" mask="XXXXXVXX" item="F5 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 Forward Button</label>
-        <label xml:lang="fr">F5 active en av</label>
-      </variable>
-      <variable CV="172" mask="XXXXVXXX" item="F5 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 Forward Button</label>
-        <label xml:lang="fr">F5 active en av</label>
-      </variable>
-      <variable CV="172" mask="XXXVXXXX" item="F5 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 Forward Button</label>
-        <label xml:lang="fr">F5 active en av</label>
-      </variable>
-      <variable CV="172" mask="XXVXXXXX" item="F5 (f)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 Forward Button</label>
-        <label xml:lang="fr">F5 active en av</label>
-      </variable>
-      <variable CV="172" mask="XVXXXXXX" item="F5 (f)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 Forward Button</label>
-        <label xml:lang="fr">F5 active en av</label>
-      </variable>
-      <variable CV="172" mask="VXXXXXXX" item="F5 (f)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 Forward Button</label>
-        <label xml:lang="fr">F5 active en av</label>
-      </variable>
-      <variable CV="175" mask="XXXXXXXV" item="F5 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 reverse Button</label>
-        <label xml:lang="fr">F5 active en arr</label>
-      </variable>
-      <variable CV="175" mask="XXXXXXVX" item="F5 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 reverse Button</label>
-        <label xml:lang="fr">F5 active en arr</label>
-      </variable>
-      <variable CV="175" mask="XXXXXVXX" item="F5 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 reverse Button</label>
-        <label xml:lang="fr">F5 active en arr</label>
-      </variable>
-      <variable CV="175" mask="XXXXVXXX" item="F5 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 reverse Button</label>
-        <label xml:lang="fr">F5 active en arr</label>
-      </variable>
-      <variable CV="175" mask="XXXVXXXX" item="F5 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 reverse Button</label>
-        <label xml:lang="fr">F5 active en arr</label>
-      </variable>
-      <variable CV="175" mask="XXVXXXXX" item="F5 (r)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 reverse Button</label>
-        <label xml:lang="fr">F5 active en arr</label>
-      </variable>
-      <variable CV="175" mask="XVXXXXXX" item="F5 (r)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 reverse Button</label>
-        <label xml:lang="fr">F5 active en arr</label>
-      </variable>
-      <variable CV="175" mask="VXXXXXXX" item="F5 (r)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 reverse Button</label>
-        <label xml:lang="fr">F5 active en arr</label>
-      </variable>
-      <variable CV="178" mask="XXXXXXXV" item="F6 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 Forward Button</label>
-        <label xml:lang="fr">F6 active en av</label>
-      </variable>
-      <variable CV="178" mask="XXXXXXVX" item="F6 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 Forward Button</label>
-        <label xml:lang="fr">F6 active en av</label>
-      </variable>
-      <variable CV="178" mask="XXXXXVXX" item="F6 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 Forward Button</label>
-        <label xml:lang="fr">F6 active en av</label>
-      </variable>
-      <variable CV="178" mask="XXXXVXXX" item="F6 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 Forward Button</label>
-        <label xml:lang="fr">F6 active en av</label>
-      </variable>
-      <variable CV="178" mask="XXXVXXXX" item="F6 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 Forward Button</label>
-        <label xml:lang="fr">F6 active en av</label>
-      </variable>
-      <variable CV="178" mask="XXVXXXXX" item="F6 (f)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 Forward Button</label>
-        <label xml:lang="fr">F6 active en av</label>
-      </variable>
-      <variable CV="178" mask="XVXXXXXX" item="F6 (f)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 Forward Button</label>
-        <label xml:lang="fr">F6 active en av</label>
-      </variable>
-      <variable CV="178" mask="VXXXXXXX" item="F6 (f)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 Forward Button</label>
-        <label xml:lang="fr">F6 active en av</label>
-      </variable>
-      <variable CV="181" mask="XXXXXXXV" item="F6 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 reverse Button</label>
-        <label xml:lang="fr">F6 active en arr</label>
-      </variable>
-      <variable CV="181" mask="XXXXXXVX" item="F6 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 reverse Button</label>
-        <label xml:lang="fr">F6 active en arr</label>
-      </variable>
-      <variable CV="181" mask="XXXXXVXX" item="F6 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 reverse Button</label>
-        <label xml:lang="fr">F6 active en arr</label>
-      </variable>
-      <variable CV="181" mask="XXXXVXXX" item="F6 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 reverse Button</label>
-        <label xml:lang="fr">F6 active en arr</label>
-      </variable>
-      <variable CV="181" mask="XXXVXXXX" item="F6 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 reverse Button</label>
-        <label xml:lang="fr">F6 active en arr</label>
-      </variable>
-      <variable CV="181" mask="XXVXXXXX" item="F6 (r)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 reverse Button</label>
-        <label xml:lang="fr">F6 active en arr</label>
-      </variable>
-      <variable CV="181" mask="XVXXXXXX" item="F6 (r)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 reverse Button</label>
-        <label xml:lang="fr">F6 active en arr</label>
-      </variable>
-      <variable CV="181" mask="VXXXXXXX" item="F6 (r)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 reverse Button</label>
-        <label xml:lang="fr">F6 active en arr</label>
-      </variable>
-      <variable CV="184" mask="XXXXXXXV" item="F7 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 Forward Button</label>
-        <label xml:lang="fr">F7 active en av</label>
-      </variable>
-      <variable CV="184" mask="XXXXXXVX" item="F7 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 Forward Button</label>
-        <label xml:lang="fr">F7 active en av</label>
-      </variable>
-      <variable CV="184" mask="XXXXXVXX" item="F7 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 Forward Button</label>
-        <label xml:lang="fr">F7 active en av</label>
-      </variable>
-      <variable CV="184" mask="XXXXVXXX" item="F7 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 Forward Button</label>
-        <label xml:lang="fr">F7 active en av</label>
-      </variable>
-      <variable CV="184" mask="XXXVXXXX" item="F7 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 Forward Button</label>
-        <label xml:lang="fr">F7 active en av</label>
-      </variable>
-      <variable CV="184" mask="XXVXXXXX" item="F7 (f)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 Forward Button</label>
-        <label xml:lang="fr">F7 active en av</label>
-      </variable>
-      <variable CV="184" mask="XVXXXXXX" item="F7 (f)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 Forward Button</label>
-        <label xml:lang="fr">F7 active en av</label>
-      </variable>
-      <variable CV="184" mask="VXXXXXXX" item="F7 (f)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 Forward Button</label>
-        <label xml:lang="fr">F7 active en av</label>
-      </variable>
-      <variable CV="187" mask="XXXXXXXV" item="F7 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 reverse Button</label>
-        <label xml:lang="fr">F7 active en arr</label>
-      </variable>
-      <variable CV="187" mask="XXXXXXVX" item="F7 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 reverse Button</label>
-        <label xml:lang="fr">F7 active en arr</label>
-      </variable>
-      <variable CV="187" mask="XXXXXVXX" item="F7 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 reverse Button</label>
-        <label xml:lang="fr">F7 active en arr</label>
-      </variable>
-      <variable CV="187" mask="XXXXVXXX" item="F7 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 reverse Button</label>
-        <label xml:lang="fr">F7 active en arr</label>
-      </variable>
-      <variable CV="187" mask="XXXVXXXX" item="F7 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 reverse Button</label>
-        <label xml:lang="fr">F7 active en arr</label>
-      </variable>
-      <variable CV="187" mask="XXVXXXXX" item="F7 (r)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 reverse Button</label>
-        <label xml:lang="fr">F7 active en arr</label>
-      </variable>
-      <variable CV="187" mask="XVXXXXXX" item="F7 (r)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 reverse Button</label>
-        <label xml:lang="fr">F7 active en arr</label>
-      </variable>
-      <variable CV="187" mask="VXXXXXXX" item="F7 (r)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 reverse Button</label>
-        <label xml:lang="fr">F7 active en arr</label>
-      </variable>
-      <variable CV="190" mask="XXXXXXXV" item="F8 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 Forward Button</label>
-        <label xml:lang="fr">F8 active en av</label>
-      </variable>
-      <variable CV="190" mask="XXXXXXVX" item="F8 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 Forward Button</label>
-        <label xml:lang="fr">F8 active en av</label>
-      </variable>
-      <variable CV="190" mask="XXXXXVXX" item="F8 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 Forward Button</label>
-        <label xml:lang="fr">F8 active en av</label>
-      </variable>
-      <variable CV="190" mask="XXXXVXXX" item="F8 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 Forward Button</label>
-        <label xml:lang="fr">F8 active en av</label>
-      </variable>
-      <variable CV="190" mask="XXXVXXXX" item="F8 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 Forward Button</label>
-        <label xml:lang="fr">F8 active en av</label>
-      </variable>
-      <variable CV="190" mask="XXVXXXXX" item="F8 (f)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 Forward Button</label>
-        <label xml:lang="fr">F8 active en av</label>
-      </variable>
-      <variable CV="190" mask="XVXXXXXX" item="F8 (f)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 Forward Button</label>
-        <label xml:lang="fr">F8 active en av</label>
-      </variable>
-      <variable CV="190" mask="VXXXXXXX" item="F8 (f)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 Forward Button</label>
-        <label xml:lang="fr">F8 active en av</label>
-      </variable>
-      <variable CV="193" mask="XXXXXXXV" item="F8 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 reverse Button</label>
-        <label xml:lang="fr">F8 active en arr</label>
-      </variable>
-      <variable CV="193" mask="XXXXXXVX" item="F8 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 reverse Button</label>
-        <label xml:lang="fr">F8 active en arr</label>
-      </variable>
-      <variable CV="193" mask="XXXXXVXX" item="F8 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 reverse Button</label>
-        <label xml:lang="fr">F8 active en arr</label>
-      </variable>
-      <variable CV="193" mask="XXXXVXXX" item="F8 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 reverse Button</label>
-        <label xml:lang="fr">F8 active en arr</label>
-      </variable>
-      <variable CV="193" mask="XXXVXXXX" item="F8 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 reverse Button</label>
-        <label xml:lang="fr">F8 active en arr</label>
-      </variable>
-      <variable CV="193" mask="XXVXXXXX" item="F8 (r)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 reverse Button</label>
-        <label xml:lang="fr">F8 active en arr</label>
-      </variable>
-      <variable CV="193" mask="XVXXXXXX" item="F8 (r)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 reverse Button</label>
-        <label xml:lang="fr">F8 active en arr</label>
-      </variable>
-      <variable CV="193" mask="VXXXXXXX" item="F8 (r)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 reverse Button</label>
-        <label xml:lang="fr">F8 active en arr</label>
-      </variable>
-      <variable CV="196" mask="XXXXXXXV" item="F9 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 Forward Button</label>
-        <label xml:lang="fr">F9 active en av</label>
-      </variable>
-      <variable CV="196" mask="XXXXXXVX" item="F9 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 Forward Button</label>
-        <label xml:lang="fr">F9 active en av</label>
-      </variable>
-      <variable CV="196" mask="XXXXXVXX" item="F9 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 Forward Button</label>
-        <label xml:lang="fr">F9 active en av</label>
-      </variable>
-      <variable CV="196" mask="XXXXVXXX" item="F9 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 Forward Button</label>
-        <label xml:lang="fr">F9 active en av</label>
-      </variable>
-      <variable CV="196" mask="XXXVXXXX" item="F9 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 Forward Button</label>
-        <label xml:lang="fr">F9 active en av</label>
-      </variable>
-      <variable CV="196" mask="XXVXXXXX" item="F9 (f)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 Forward Button</label>
-        <label xml:lang="fr">F9 active en av</label>
-      </variable>
-      <variable CV="196" mask="XVXXXXXX" item="F9 (f)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 Forward Button</label>
-        <label xml:lang="fr">F9 active en av</label>
-      </variable>
-      <variable CV="196" mask="VXXXXXXX" item="F9 (f)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 Forward Button</label>
-        <label xml:lang="fr">F9 active en av</label>
-      </variable>
-      <variable CV="199" mask="XXXXXXXV" item="F9 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 reverse Button</label>
-        <label xml:lang="fr">F9 active en arr</label>
-      </variable>
-      <variable CV="199" mask="XXXXXXVX" item="F9 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 reverse Button</label>
-        <label xml:lang="fr">F9 active en arr</label>
-      </variable>
-      <variable CV="199" mask="XXXXXVXX" item="F9 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 reverse Button</label>
-        <label xml:lang="fr">F9 active en arr</label>
-      </variable>
-      <variable CV="199" mask="XXXXVXXX" item="F9 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 reverse Button</label>
-        <label xml:lang="fr">F9 active en arr</label>
-      </variable>
-      <variable CV="199" mask="XXXVXXXX" item="F9 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 reverse Button</label>
-        <label xml:lang="fr">F9 active en arr</label>
-      </variable>
-      <variable CV="199" mask="XXVXXXXX" item="F9 (r)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 reverse Button</label>
-        <label xml:lang="fr">F9 active en arr</label>
-      </variable>
-      <variable CV="199" mask="XVXXXXXX" item="F9 (r)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 reverse Button</label>
-        <label xml:lang="fr">F9 active en arr</label>
-      </variable>
-      <variable CV="199" mask="VXXXXXXX" item="F9 (r)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 reverse Button</label>
-        <label xml:lang="fr">F9 active en arr</label>
-      </variable>
-      <variable CV="202" mask="XXXXXXXV" item="F10 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 Forward Button</label>
-        <label xml:lang="fr">F10 active en av</label>
-      </variable>
-      <variable CV="202" mask="XXXXXXVX" item="F10 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 Forward Button</label>
-        <label xml:lang="fr">F10 active en av</label>
-      </variable>
-      <variable CV="202" mask="XXXXXVXX" item="F10 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 Forward Button</label>
-        <label xml:lang="fr">F10 active en av</label>
-      </variable>
-      <variable CV="202" mask="XXXXVXXX" item="F10 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 Forward Button</label>
-        <label xml:lang="fr">F10 active en av</label>
-      </variable>
-      <variable CV="202" mask="XXXVXXXX" item="F10 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 Forward Button</label>
-        <label xml:lang="fr">F10 active en av</label>
-      </variable>
-      <variable CV="202" mask="XXVXXXXX" item="F10 (f)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 Forward Button</label>
-        <label xml:lang="fr">F10 active en av</label>
-      </variable>
-      <variable CV="202" mask="XVXXXXXX" item="F10 (f)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 Forward Button</label>
-        <label xml:lang="fr">F10 active en av</label>
-      </variable>
-      <variable CV="202" mask="VXXXXXXX" item="F10 (f)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 Forward Button</label>
-        <label xml:lang="fr">F10 active en av</label>
-      </variable>
-      <variable CV="205" mask="XXXXXXXV" item="F10 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 reverse Button</label>
-        <label xml:lang="fr">F10 active en arr</label>
-      </variable>
-      <variable CV="205" mask="XXXXXXVX" item="F10 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 reverse Button</label>
-        <label xml:lang="fr">F10 active en arr</label>
-      </variable>
-      <variable CV="205" mask="XXXXXVXX" item="F10 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 reverse Button</label>
-        <label xml:lang="fr">F10 active en arr</label>
-      </variable>
-      <variable CV="205" mask="XXXXVXXX" item="F10 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 reverse Button</label>
-        <label xml:lang="fr">F10 active en arr</label>
-      </variable>
-      <variable CV="205" mask="XXXVXXXX" item="F10 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 reverse Button</label>
-        <label xml:lang="fr">F10 active en arr</label>
-      </variable>
-      <variable CV="205" mask="XXVXXXXX" item="F10 (r)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 reverse Button</label>
-        <label xml:lang="fr">F10 active en arr</label>
-      </variable>
-      <variable CV="205" mask="XVXXXXXX" item="F10 (r)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 reverse Button</label>
-        <label xml:lang="fr">F10 active en arr</label>
-      </variable>
-      <variable CV="205" mask="VXXXXXXX" item="F10 (r)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 reverse Button</label>
-        <label xml:lang="fr">F10 active en arr</label>
-      </variable>
-      <variable CV="208" mask="XXXXXXXV" item="F11 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 Forward Button</label>
-        <label xml:lang="fr">F11 active en av</label>
-      </variable>
-      <variable CV="208" mask="XXXXXXVX" item="F11 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 Forward Button</label>
-        <label xml:lang="fr">F11 active en av</label>
-      </variable>
-      <variable CV="208" mask="XXXXXVXX" item="F11 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 Forward Button</label>
-        <label xml:lang="fr">F11 active en av</label>
-      </variable>
-      <variable CV="208" mask="XXXXVXXX" item="F11 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 Forward Button</label>
-        <label xml:lang="fr">F11 active en av</label>
-      </variable>
-      <variable CV="208" mask="XXXVXXXX" item="F11 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 Forward Button</label>
-        <label xml:lang="fr">F11 active en av</label>
-      </variable>
-      <variable CV="208" mask="XXVXXXXX" item="F11 (f)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 Forward Button</label>
-        <label xml:lang="fr">F11 active en av</label>
-      </variable>
-      <variable CV="208" mask="XVXXXXXX" item="F11 (f)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 Forward Button</label>
-        <label xml:lang="fr">F11 active en av</label>
-      </variable>
-      <variable CV="208" mask="VXXXXXXX" item="F11 (f)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 Forward Button</label>
-        <label xml:lang="fr">F11 active en av</label>
-      </variable>
-      <variable CV="211" mask="XXXXXXXV" item="F11 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 reverse Button</label>
-        <label xml:lang="fr">F11 active en arr</label>
-      </variable>
-      <variable CV="211" mask="XXXXXXVX" item="F11 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 reverse Button</label>
-        <label xml:lang="fr">F11 active en arr</label>
-      </variable>
-      <variable CV="211" mask="XXXXXVXX" item="F11 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 reverse Button</label>
-        <label xml:lang="fr">F11 active en arr</label>
-      </variable>
-      <variable CV="211" mask="XXXXVXXX" item="F11 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 reverse Button</label>
-        <label xml:lang="fr">F11 active en arr</label>
-      </variable>
-      <variable CV="211" mask="XXXVXXXX" item="F11 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 reverse Button</label>
-        <label xml:lang="fr">F11 active en arr</label>
-      </variable>
-      <variable CV="211" mask="XXVXXXXX" item="F11 (r)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 reverse Button</label>
-        <label xml:lang="fr">F11 active en arr</label>
-      </variable>
-      <variable CV="211" mask="XVXXXXXX" item="F11 (r)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 reverse Button</label>
-        <label xml:lang="fr">F11 active en arr</label>
-      </variable>
-      <variable CV="211" mask="VXXXXXXX" item="F11 (r)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 reverse Button</label>
-        <label xml:lang="fr">F11 active en arr</label>
-      </variable>
-      <variable CV="214" mask="XXXXXXXV" item="F12 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 Forward Button</label>
-        <label xml:lang="fr">F12 active en av</label>
-      </variable>
-      <variable CV="214" mask="XXXXXXVX" item="F12 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 Forward Button</label>
-        <label xml:lang="fr">F12 active en av</label>
-      </variable>
-      <variable CV="214" mask="XXXXXVXX" item="F12 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 Forward Button</label>
-        <label xml:lang="fr">F12 active en av</label>
-      </variable>
-      <variable CV="214" mask="XXXXVXXX" item="F12 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 Forward Button</label>
-        <label xml:lang="fr">F12 active en av</label>
-      </variable>
-      <variable CV="214" mask="XXXVXXXX" item="F12 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 Forward Button</label>
-        <label xml:lang="fr">F12 active en av</label>
-      </variable>
-      <variable CV="214" mask="XXVXXXXX" item="F12 (f)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 Forward Button</label>
-        <label xml:lang="fr">F12 active en av</label>
-      </variable>
-      <variable CV="214" mask="XVXXXXXX" item="F12 (f)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 Forward Button</label>
-        <label xml:lang="fr">F12 active en av</label>
-      </variable>
-      <variable CV="214" mask="VXXXXXXX" item="F12 (f)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 Forward Button</label>
-        <label xml:lang="fr">F12 active en av</label>
-      </variable>
-      <variable CV="217" mask="XXXXXXXV" item="F12 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 reverse Button</label>
-        <label xml:lang="fr">F12 active en arr</label>
-      </variable>
-      <variable CV="217" mask="XXXXXXVX" item="F12 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 reverse Button</label>
-        <label xml:lang="fr">F12 active en arr</label>
-      </variable>
-      <variable CV="217" mask="XXXXXVXX" item="F12 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 reverse Button</label>
-        <label xml:lang="fr">F12 active en arr</label>
-      </variable>
-      <variable CV="217" mask="XXXXVXXX" item="F12 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 reverse Button</label>
-        <label xml:lang="fr">F12 active en arr</label>
-      </variable>
-      <variable CV="217" mask="XXXVXXXX" item="F12 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 reverse Button</label>
-        <label xml:lang="fr">F12 active en arr</label>
-      </variable>
-      <variable CV="217" mask="XXVXXXXX" item="F12 (r)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 reverse Button</label>
-        <label xml:lang="fr">F12 active en arr</label>
-      </variable>
-      <variable CV="217" mask="XVXXXXXX" item="F12 (r)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 reverse Button</label>
-        <label xml:lang="fr">F12 active en arr</label>
-      </variable>
-      <variable CV="217" mask="VXXXXXXX" item="F12 (r)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 reverse Button</label>
-        <label xml:lang="fr">F12 active en arr</label>
-      </variable>
-      <variable CV="220" mask="XXXXXXXV" item="F13 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13 Forward Button</label>
-        <label xml:lang="fr">F13 active en av</label>
-      </variable>
-      <variable CV="220" mask="XXXXXXVX" item="F13 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13 Forward Button</label>
-        <label xml:lang="fr">F13 active en av</label>
-      </variable>
-      <variable CV="220" mask="XXXXXVXX" item="F13 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13 Forward Button</label>
-        <label xml:lang="fr">F13 active en av</label>
-      </variable>
-      <variable CV="220" mask="XXXXVXXX" item="F13 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13 Forward Button</label>
-        <label xml:lang="fr">F13 active en av</label>
-      </variable>
-      <variable CV="220" mask="XXXVXXXX" item="F13 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13 Forward Button</label>
-        <label xml:lang="fr">F13 active en av</label>
-      </variable>
-      <variable CV="220" mask="XXVXXXXX" item="F13 (f)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13 Forward Button</label>
-        <label xml:lang="fr">F13 active en av</label>
-      </variable>
-      <variable CV="220" mask="XVXXXXXX" item="F13 (f)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13 Forward Button</label>
-        <label xml:lang="fr">F13 active en av</label>
-      </variable>
-      <variable CV="220" mask="VXXXXXXX" item="F13 (f)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13 Forward Button</label>
-        <label xml:lang="fr">F13 active en av</label>
-      </variable>
-      <variable CV="223" mask="XXXXXXXV" item="F13 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13 reverse Button</label>
-        <label xml:lang="fr">F13 active en arr</label>
-      </variable>
-      <variable CV="223" mask="XXXXXXVX" item="F13 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13 reverse Button</label>
-        <label xml:lang="fr">F13 active en arr</label>
-      </variable>
-      <variable CV="223" mask="XXXXXVXX" item="F13 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13 reverse Button</label>
-        <label xml:lang="fr">F13 active en arr</label>
-      </variable>
-      <variable CV="223" mask="XXXXVXXX" item="F13 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13 reverse Button</label>
-        <label xml:lang="fr">F13 active en arr</label>
-      </variable>
-      <variable CV="223" mask="XXXVXXXX" item="F13 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13 reverse Button</label>
-        <label xml:lang="fr">F13 active en arr</label>
-      </variable>
-      <variable CV="223" mask="XXVXXXXX" item="F13 (r)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13 reverse Button</label>
-        <label xml:lang="fr">F13 active en arr</label>
-      </variable>
-      <variable CV="223" mask="XVXXXXXX" item="F13 (r)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13 reverse Button</label>
-        <label xml:lang="fr">F13 active en arr</label>
-      </variable>
-      <variable CV="223" mask="VXXXXXXX" item="F13 (r)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F13 reverse Button</label>
-        <label xml:lang="fr">F13 active en arr</label>
-      </variable>
-      <variable CV="226" mask="XXXXXXXV" item="F14 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14 Forward Button</label>
-        <label xml:lang="fr">F14 active en av</label>
-      </variable>
-      <variable CV="226" mask="XXXXXXVX" item="F14 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14 Forward Button</label>
-        <label xml:lang="fr">F14 active en av</label>
-      </variable>
-      <variable CV="226" mask="XXXXXVXX" item="F14 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14 Forward Button</label>
-        <label xml:lang="fr">F14 active en av</label>
-      </variable>
-      <variable CV="226" mask="XXXXVXXX" item="F14 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14 Forward Button</label>
-        <label xml:lang="fr">F14 active en av</label>
-      </variable>
-      <variable CV="226" mask="XXXVXXXX" item="F14 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14 Forward Button</label>
-        <label xml:lang="fr">F14 active en av</label>
-      </variable>
-      <variable CV="226" mask="XXVXXXXX" item="F14 (f)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14 Forward Button</label>
-        <label xml:lang="fr">F14 active en av</label>
-      </variable>
-      <variable CV="226" mask="XVXXXXXX" item="F14 (f)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14 Forward Button</label>
-        <label xml:lang="fr">F14 active en av</label>
-      </variable>
-      <variable CV="226" mask="VXXXXXXX" item="F14 (f)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14 Forward Button</label>
-        <label xml:lang="fr">F14 active en av</label>
-      </variable>
-      <variable CV="229" mask="XXXXXXXV" item="F14 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14 reverse Button</label>
-        <label xml:lang="fr">F14 active en arr</label>
-      </variable>
-      <variable CV="229" mask="XXXXXXVX" item="F14 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14 reverse Button</label>
-        <label xml:lang="fr">F14 active en arr</label>
-      </variable>
-      <variable CV="229" mask="XXXXXVXX" item="F14 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14 reverse Button</label>
-        <label xml:lang="fr">F14 active en arr</label>
-      </variable>
-      <variable CV="229" mask="XXXXVXXX" item="F14 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14 reverse Button</label>
-        <label xml:lang="fr">F14 active en arr</label>
-      </variable>
-      <variable CV="229" mask="XXXVXXXX" item="F14 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14 reverse Button</label>
-        <label xml:lang="fr">F14 active en arr</label>
-      </variable>
-      <variable CV="229" mask="XXVXXXXX" item="F14 (r)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14 reverse Button</label>
-        <label xml:lang="fr">F14 active en arr</label>
-      </variable>
-      <variable CV="229" mask="XVXXXXXX" item="F14 (r)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14 reverse Button</label>
-        <label xml:lang="fr">F14 active en arr</label>
-      </variable>
-      <variable CV="229" mask="VXXXXXXX" item="F14 (r)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F14 reverse Button</label>
-        <label xml:lang="fr">F14 active en arr</label>
-      </variable>
-      <variable CV="232" mask="XXXXXXXV" item="F15 forward1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15 Forward Button</label>
-        <label xml:lang="fr">F15 active en av</label>
-      </variable>
-      <variable CV="232" mask="XXXXXXVX" item="F15 (f)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15 Forward Button</label>
-        <label xml:lang="fr">F15 active en av</label>
-      </variable>
-      <variable CV="232" mask="XXXXXVXX" item="F15 (f)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15 Forward Button</label>
-        <label xml:lang="fr">F15 active en av</label>
-      </variable>
-      <variable CV="232" mask="XXXXVXXX" item="F15 (f)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15 Forward Button</label>
-        <label xml:lang="fr">F15 active en av</label>
-      </variable>
-      <variable CV="232" mask="XXXVXXXX" item="F15 (f)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15 Forward Button</label>
-        <label xml:lang="fr">F15 active en av</label>
-      </variable>
-      <variable CV="232" mask="XXVXXXXX" item="F15 (f)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15 Forward Button</label>
-        <label xml:lang="fr">F15 active en av</label>
-      </variable>
-      <variable CV="232" mask="XVXXXXXX" item="F15 (f)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15 Forward Button</label>
-        <label xml:lang="fr">F15 active en av</label>
-      </variable>
-      <variable CV="232" mask="VXXXXXXX" item="F15 (f)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15 Forward Button</label>
-        <label xml:lang="fr">F15 active en av</label>
-      </variable>
-      <variable CV="235" mask="XXXXXXXV" item="F15 (r)1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15 reverse Button</label>
-        <label xml:lang="fr">F15 active en arr</label>
-      </variable>
-      <variable CV="235" mask="XXXXXXVX" item="F15 (r)2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15 reverse Button</label>
-        <label xml:lang="fr">F15 active en arr</label>
-      </variable>
-      <variable CV="235" mask="XXXXXVXX" item="F15 (r)3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15 reverse Button</label>
-        <label xml:lang="fr">F15 active en arr</label>
-      </variable>
-      <variable CV="235" mask="XXXXVXXX" item="F15 (r)4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15 reverse Button</label>
-        <label xml:lang="fr">F15 active en arr</label>
-      </variable>
-      <variable CV="235" mask="XXXVXXXX" item="F15 (r)5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15 reverse Button</label>
-        <label xml:lang="fr">F15 active en arr</label>
-      </variable>
-      <variable CV="235" mask="XXVXXXXX" item="F15 (r)6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15 reverse Button</label>
-        <label xml:lang="fr">F15 active en arr</label>
-      </variable>
-      <variable CV="235" mask="XVXXXXXX" item="F15 (r)7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15 reverse Button</label>
-        <label xml:lang="fr">F15 active en arr</label>
-      </variable>
-      <variable CV="235" mask="VXXXXXXX" item="F15 (r)8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F15 reverse Button</label>
-        <label xml:lang="fr">F15 active en arr</label>
-      </variable>
-      <variable CV="238" mask="XXXXXXXV" item="Sensor1 fwd1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 forward</label>
-        <label xml:lang="fr">Son 1 en av</label>
-      </variable>
-      <variable CV="238" mask="XXXXXXVX" item="Sensor1 fwd2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 forward</label>
-        <label xml:lang="fr">Son 1 en av</label>
-      </variable>
-      <variable CV="238" mask="XXXXXVXX" item="Sensor1 fwd3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 forward</label>
-        <label xml:lang="fr">Son 1 en av</label>
-      </variable>
-      <variable CV="238" mask="XXXXVXXX" item="Sensor1 fwd4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 forward</label>
-        <label xml:lang="fr">Son 1 en av</label>
-      </variable>
-      <variable CV="238" mask="XXXVXXXX" item="Sensor1 fwd5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 forward</label>
-        <label xml:lang="fr">Son 1 en av</label>
-      </variable>
-      <variable CV="238" mask="XXVXXXXX" item="Sensor1 fwd6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 forward</label>
-        <label xml:lang="fr">Son 1 en av</label>
-      </variable>
-      <variable CV="238" mask="XVXXXXXX" item="Sensor1 fwd7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 forward</label>
-        <label xml:lang="fr">Son 1 en av</label>
-      </variable>
-      <variable CV="238" mask="VXXXXXXX" item="Sensor1 fwd8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 forward</label>
-        <label xml:lang="fr">Son 1 en av</label>
-      </variable>
-      <variable CV="241" mask="XXXXXXXV" item="Sensor1 rev1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 reverse</label>
-        <label xml:lang="fr">Son 1 en arr</label>
-      </variable>
-      <variable CV="241" mask="XXXXXXVX" item="Sensor1 rev2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 reverse</label>
-        <label xml:lang="fr">Son 1 en arr</label>
-      </variable>
-      <variable CV="241" mask="XXXXXVXX" item="Sensor1 rev3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 reverse</label>
-        <label xml:lang="fr">Son 1 en arr</label>
-      </variable>
-      <variable CV="241" mask="XXXXVXXX" item="Sensor1 rev4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 reverse</label>
-        <label xml:lang="fr">Son 1 en arr</label>
-      </variable>
-      <variable CV="241" mask="XXXVXXXX" item="Sensor1 rev5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 reverse</label>
-        <label xml:lang="fr">Son 1 en arr</label>
-      </variable>
-      <variable CV="241" mask="XXVXXXXX" item="Sensor1 rev6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 reverse</label>
-        <label xml:lang="fr">Son 1 en arr</label>
-      </variable>
-      <variable CV="241" mask="XVXXXXXX" item="Sensor1 rev7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 reverse</label>
-        <label xml:lang="fr">Son 1 en arr</label>
-      </variable>
-      <variable CV="241" mask="VXXXXXXX" item="Sensor1 rev8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 1 reverse</label>
-        <label xml:lang="fr">Son 1 en arr</label>
-      </variable>
-      <variable CV="244" mask="XXXXXXXV" item="Sensor2 fwd1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 forward</label>
-        <label xml:lang="fr">Son 2 en av</label>
-      </variable>
-      <variable CV="244" mask="XXXXXXVX" item="Sensor2 fwd2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 forward</label>
-        <label xml:lang="fr">Son 2 en av</label>
-      </variable>
-      <variable CV="244" mask="XXXXXVXX" item="Sensor2 fwd3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 forward</label>
-        <label xml:lang="fr">Son 2 en av</label>
-      </variable>
-      <variable CV="244" mask="XXXXVXXX" item="Sensor2 fwd4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 forward</label>
-        <label xml:lang="fr">Son 2 en av</label>
-      </variable>
-      <variable CV="244" mask="XXXVXXXX" item="Sensor2 fwd5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 forward</label>
-        <label xml:lang="fr">Son 2 en av</label>
-      </variable>
-      <variable CV="244" mask="XXVXXXXX" item="Sensor2 fwd6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 forward</label>
-        <label xml:lang="fr">Son 2 en av</label>
-      </variable>
-      <variable CV="244" mask="XVXXXXXX" item="Sensor2 fwd7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 forward</label>
-        <label xml:lang="fr">Son 2 en av</label>
-      </variable>
-      <variable CV="244" mask="VXXXXXXX" item="Sensor2 fwd8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 forward</label>
-        <label xml:lang="fr">Son 2 en av</label>
-      </variable>
-      <variable CV="247" mask="XXXXXXXV" item="Sensor2 rev1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 reverse</label>
-        <label xml:lang="fr">Son 2 en arr</label>
-      </variable>
-      <variable CV="247" mask="XXXXXXVX" item="Sensor2 rev2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 reverse</label>
-        <label xml:lang="fr">Son 2 en arr</label>
-      </variable>
-      <variable CV="247" mask="XXXXXVXX" item="Sensor2 rev3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 reverse</label>
-        <label xml:lang="fr">Son 2 en arr</label>
-      </variable>
-      <variable CV="247" mask="XXXXVXXX" item="Sensor2 rev4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 reverse</label>
-        <label xml:lang="fr">Son 2 en arr</label>
-      </variable>
-      <variable CV="247" mask="XXXVXXXX" item="Sensor2 rev5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 reverse</label>
-        <label xml:lang="fr">Son 2 en arr</label>
-      </variable>
-      <variable CV="247" mask="XXVXXXXX" item="Sensor2 rev6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 reverse</label>
-        <label xml:lang="fr">Son 2 en arr</label>
-      </variable>
-      <variable CV="247" mask="XVXXXXXX" item="Sensor2 rev7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 reverse</label>
-        <label xml:lang="fr">Son 2 en arr</label>
-      </variable>
-      <variable CV="247" mask="VXXXXXXX" item="Sensor2 rev8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Sensor 2 reverse</label>
-        <label xml:lang="fr">Son 2 en arr</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/esu/v3fnMapCVs.xml"/>
       <variable item="Minimum Distance of Steam Puff" CV="249">
         <decVal/>
         <label>Minimum Distance of Steam Puff</label>
@@ -4540,20 +1470,19 @@
         <label>Steam Shift Cycle Earliest Start Position</label>
         <label xml:lang="fr">Décalage d'un quart avant de cycle vapeur</label>
       </variable>
-      <variable item="Steam Shift Cycle Latest Start Poition" CV="252">
+      <variable item="Steam Shift Cycle Latest Start Position" CV="252">
         <decVal/>
-        <label>Steam Shift Cycle Latest Start Poition</label>
+        <label>Steam Shift Cycle Latest Start Position</label>
         <label xml:lang="fr">dernier quart cycle vapeur</label>
       </variable>
     </variables>
     <resets>
-      <factReset label="Reset All CVs. WARNING: May render sounds inoperable! Not recommended." CV="8" default="8"/>
+      <factReset label="Reset All CVs. WARNING: May render sounds inoperable! Not recommended." CV="8" default="8">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v3buttonPane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v3soundPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v3extraPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v3bemfPane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v3effectsPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v3brightnessPane.xml"/>
 </decoder-config>

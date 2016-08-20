@@ -1,4 +1,3 @@
-// DCCppPortControllerScaffold.java
 package jmri.jmrix.dccpp;
 
 import java.io.DataInputStream;
@@ -13,7 +12,6 @@ import java.io.PipedOutputStream;
  *
  * @author	Bob Jacobsen Copyright (C) 2006
  * @author	Mark Underwood Copyright (C) 2015
- * @version $Revision$
  */
 class DCCppPortControllerScaffold extends DCCppSimulatorPortController {
 

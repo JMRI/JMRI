@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * Tests for the Operations Setup GUI class
  *
  * @author Dan Boudreau Copyright (C) 2009
- * @version $Revision$
  */
 public class OperationsSetupGuiTest extends OperationsSwingTestCase {
 
@@ -204,7 +203,7 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", OperationsSetupGuiTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

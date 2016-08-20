@@ -1,9 +1,7 @@
-/* GlobalProgrammerManager.java */
 package jmri;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 
 /**
  * Get access to available {@link Programmer} objects.
@@ -85,6 +83,3 @@ public interface GlobalProgrammerManager {
     @Nonnull
     public String toString();
 }
-
-
-/* @(#)GlobalProgrammerManager.java */

@@ -1,4 +1,3 @@
-// NceInterfaceScaffold.java
 package jmri.jmrix.nce;
 
 import java.util.Vector;
@@ -39,7 +38,7 @@ class NceInterfaceScaffold extends NceTrafficController {
     /**
      * forward a message to the listeners, e.g. test receipt
      */
-    protected void sendTestMessage(NceMessage m) {
+    public void sendTestMessage(NceMessage m) {
         // forward a test message to Listeners
         if (log.isDebugEnabled()) {
             log.debug("sendTestMessage    [" + m + "]");
@@ -48,7 +47,7 @@ class NceInterfaceScaffold extends NceTrafficController {
         return;
     }
 
-    protected void sendTestReply(NceReply m, NceProgrammer p) {
+    public void sendTestReply(NceReply m, NceListener p) {
         // forward a test message to Listeners
         if (log.isDebugEnabled()) {
             log.debug("sendTestReply    [" + m + "]");

@@ -10,6 +10,7 @@ import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.util.ColorUtil;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
@@ -22,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision$
  */
 public class LayoutEditorXml extends AbstractXmlAdapter {
 
@@ -41,7 +41,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         LayoutEditor p = (LayoutEditor) o;
         Element panel = new Element("LayoutEditor");
 
-        panel.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml");
+        panel.setAttribute("class", getClass().getName());
         panel.setAttribute("name", p.getLayoutName());
         panel.setAttribute("x", "" + p.getUpperLeftX());
         panel.setAttribute("y", "" + p.getUpperLeftY());
@@ -238,8 +238,6 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
      * JFrame
      *
      * @param shared Top level Element to unpack.
-     * @param perNode
-     * @return 
      */
     @Override
     public boolean load(Element shared, Element perNode) {
@@ -533,7 +531,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             int red = shared.getAttribute("redBackground").getIntValue();
             int blue = shared.getAttribute("blueBackground").getIntValue();
             int green = shared.getAttribute("greenBackground").getIntValue();
-            panel.setDefaultBackgroundColor(LayoutEditor.colorToString(new Color(red, green, blue)));
+            panel.setDefaultBackgroundColor(ColorUtil.colorToString(new Color(red, green, blue)));
             panel.setBackgroundColor(new Color(red, green, blue));
         } catch (org.jdom2.DataConversionException e) {
             log.warn("Could not parse color attributes!");
@@ -594,12 +592,14 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.resetDirty();
 
         // register the resulting panel for later configuration
-        InstanceManager.configureManagerInstance().registerUser(panel);
-        if (jmri.InstanceManager.transitManagerInstance().getSystemNameList().size() > 0) {
+        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerUser(panel);
+        //open Dispatcher frame if any Transits are defined, and open Dispatcher flag set on
+        if (jmri.InstanceManager.getDefault(jmri.TransitManager.class).getSystemNameList().size() > 0) {
             if (shared.getAttribute("openDispatcher") != null) {
                 if (shared.getAttribute("openDispatcher").getValue().equals("yes")) {
                     panel.setOpenDispatcherOnLoad(true);
-                    jmri.jmrit.dispatcher.DispatcherFrame.instance();
+                    jmri.jmrit.dispatcher.DispatcherFrame df = jmri.jmrit.dispatcher.DispatcherFrame.instance();
+                    df.loadAtStartup();
                 } else {
                     panel.setOpenDispatcherOnLoad(false);
                 }

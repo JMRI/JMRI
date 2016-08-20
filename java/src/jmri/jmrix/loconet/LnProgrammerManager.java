@@ -1,11 +1,11 @@
 /* LnProgrammerManager.java */
 package jmri.jmrix.loconet;
 
+import java.util.ArrayList;
+import java.util.List;
 import jmri.AddressedProgrammer;
 import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
-
-import java.util.*;
 
 /**
  * Extend DefaultProgrammerManager to provide ops mode programmers on LocoNet

@@ -14,11 +14,17 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Peter Ulvestad" version="1" lastUpdated="20100125"/>
+  <version author="Alain Le Marchand" version="2" lastUpdated="20160409"/>
   <!-- Ver 1  Made from the MRC1806 file -->
+  <!--  ...........................................................................  -->
+  <!--                                                                               -->
+  <!--  Deprecated file - DO NOT USE ANYMORE - only kept for compatibility           -->
+  <!--  ...........................................................................  -->
+  <!--  version 2 Replacement models - renamed decoder and family                    -->
+  <!--            Add missing CV21.                                                  -->
   <decoder>
     <family name="Athearn" mfg="MRC" lowVersionID="32" highVersionID="32">
-      <model model="Athearn SD45/SD60 MRC-1825" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes">
-                </model>
+      <model show="maybe" model="Athearn SD45/SD60 MRC-1825" replacementModel="1825 - HO Scale - Athearn SD45/60" replacementFamily="Sound Decoders" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes"/>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
@@ -132,7 +138,7 @@
         <decVal max="3"/>
         <label>Coupling Volume</label>
       </variable>
-      <variable CV="63" item="Global lighting option 4" tooltip="" default="1">
+      <variable CV="63" item="Global lighting option 5" tooltip="" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
         <label>Auto Ditchlight flash</label>
       </variable>
@@ -230,6 +236,17 @@
           </enumChoice>
         </enumVal>
         <label>ACC2 Light Mode</label>
+      </variable>
+      <variable CV="121" item="Global lighting option 4" default="0">
+        <enumVal>
+          <enumChoice choice="Always On">
+            <choice>Always On</choice>
+          </enumChoice>
+          <enumChoice choice="Flash">
+            <choice>Flash</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Ditch Light Flash</label>
       </variable>
       <variable CV="122" item="Sound Option 7" default="1" tooltip="Diesel Notch Mode, range 0-3">
         <enumVal>

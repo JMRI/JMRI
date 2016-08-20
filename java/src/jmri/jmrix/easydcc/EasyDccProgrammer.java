@@ -1,19 +1,18 @@
-//EasyDccProgrammer.java
 package jmri.jmrix.easydcc;
 
+import java.util.ArrayList;
+import java.util.List;
+import jmri.ProgrammingMode;
+import jmri.jmrix.AbstractProgrammer;
+import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.*;
-import jmri.jmrix.AbstractProgrammer;
-import java.util.*;
-import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Implements the jmri.Programmer interface via commands for the EasyDcc
  * powerstation
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccListener {
 
@@ -65,7 +64,8 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         }
     }
 
-    public synchronized void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    @Override
+    public synchronized void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
@@ -216,6 +216,3 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
     private final static Logger log = LoggerFactory.getLogger(EasyDccProgrammer.class.getName());
 
 }
-
-
-/* @(#)EasyDccProgrammer.java */

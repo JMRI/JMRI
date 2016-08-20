@@ -13,11 +13,6 @@ import javax.swing.AbstractAction;
  */
 public class YardmasterByTrackAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8755364574386629561L;
-
     public YardmasterByTrackAction(String s, Location location) {
         super(s);
         _location = location;
@@ -40,6 +35,7 @@ public class YardmasterByTrackAction extends AbstractAction {
 
     YardmasterByTrackFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a frame
         if (f == null || !f.isVisible()) {

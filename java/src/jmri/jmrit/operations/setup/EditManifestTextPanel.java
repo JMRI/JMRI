@@ -20,10 +20,6 @@ import jmri.jmrit.operations.trains.TrainManifestText;
  */
 public class EditManifestTextPanel extends OperationsPreferencesPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4953082330888903645L;
 //    private static final Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);
 
     protected static final ResourceBundle rb = ResourceBundle
@@ -80,6 +76,7 @@ public class EditManifestTextPanel extends OperationsPreferencesPanel {
         pValidTextField.setBorder(BorderFactory.createTitledBorder(rb.getString("Valid")));
         pValidTextField.add(validTextField);
         validTextField.setText(TrainManifestText.getStringValid());
+        validTextField.setToolTipText(rb.getString("ToolTipValid"));
         pManifest.add(pValidTextField);
 
         JPanel pScheduledWorkAtTextField = new JPanel();

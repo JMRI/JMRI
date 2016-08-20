@@ -11,6 +11,9 @@ package jmri.jmrix.loconet;
  */
 public class LnConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String DIGITRAX = "Digitrax";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.loconet.locobufferusb.ConnectionConfig",
@@ -24,6 +27,11 @@ public class LnConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
             "jmri.jmrix.loconet.ms100.ConnectionConfig",
             "jmri.jmrix.loconet.bluetooth.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{DIGITRAX};
     }
 
 }

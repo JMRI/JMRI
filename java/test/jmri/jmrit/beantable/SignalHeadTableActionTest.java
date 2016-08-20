@@ -1,4 +1,3 @@
-// SignalHeadTableActionTest.java
 package jmri.jmrit.beantable;
 
 import javax.swing.JFrame;
@@ -27,12 +26,12 @@ public class SignalHeadTableActionTest extends jmri.util.SwingTestCase {
 
     public void testInvoke() {
         // add a few signals and see if they exist
-        InstanceManager.signalHeadManagerInstance().register(
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DoubleTurnoutSignalHead("IH2", "double example 1-2",
                         new NamedBeanHandle<Turnout>("IT1", InstanceManager.turnoutManagerInstance().provideTurnout("IT1")),
                         new NamedBeanHandle<Turnout>("IT2", InstanceManager.turnoutManagerInstance().provideTurnout("IT2"))
                 ));
-        InstanceManager.signalHeadManagerInstance().register(
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new QuadOutputSignalHead("IH4", "quad example 11-14",
                         new NamedBeanHandle<Turnout>("IT11", InstanceManager.turnoutManagerInstance().provideTurnout("IT11")),
                         new NamedBeanHandle<Turnout>("IT12", InstanceManager.turnoutManagerInstance().provideTurnout("IT12")),
@@ -40,14 +39,14 @@ public class SignalHeadTableActionTest extends jmri.util.SwingTestCase {
                         new NamedBeanHandle<Turnout>("IT14", InstanceManager.turnoutManagerInstance().provideTurnout("IT14"))
                 ));
 
-        InstanceManager.signalHeadManagerInstance().register(
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new SE8cSignalHead(
                         new NamedBeanHandle<Turnout>("IT1", InstanceManager.turnoutManagerInstance().provideTurnout("IT21")),
                         new NamedBeanHandle<Turnout>("IT2", InstanceManager.turnoutManagerInstance().provideTurnout("IT22")),
                         "SE8c from handles")
         );
 
-        InstanceManager.signalHeadManagerInstance().register(
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new SE8cSignalHead(31, "SE8c from number")
         );
 
@@ -67,7 +66,7 @@ public class SignalHeadTableActionTest extends jmri.util.SwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SignalHeadTableActionTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

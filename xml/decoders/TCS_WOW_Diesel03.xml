@@ -14,10 +14,12 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 	<version author="Michael Mosher" version="1" lastUpdated="20160215"/>
 	<!-- new file, based on Wow diesel sound set 2 -->
+	<version author="Michael Mosher" version="2" lastUpdated="20160608"/>
+	<!-- Fix version IDs -->
 	<decoder>
 		<family name="WOW Diesel Sound Set 3" mfg="Train Control Systems" >
 			<model model="WOW Diesel 101 SS3" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="9pin"
-				lowVersionID="2" highVersionID="2" productID="170">
+				lowVersionID="3" highVersionID="3" productID="170">
 				<output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
 				<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
 				<output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
@@ -31,7 +33,7 @@
 				<size length="1.35" width="0.66" height="0.22" units="inches"/>
 			</model>
 			<model model="WOW Diesel 121 SS3" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="21pin"
-				lowVersionID="2" highVersionID="2" productID="171">
+				lowVersionID="3" highVersionID="3" productID="171">
 				<output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
 				<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
 				<output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
@@ -1456,7 +1458,6 @@
 				<decVal max="100"/>
 				<label>Windshield Wiper</label>
 			</variable>
-
 			<!-- sound CVs -->
 			<variable item="Sound Option 1" CV="T2CV.4.8" default="0" tooltip="Rotate horn function will change this setting">
 				<enumVal>

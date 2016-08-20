@@ -1,4 +1,3 @@
-// ProxyLightManagerTest.java
 package jmri.managers;
 
 import java.beans.PropertyChangeListener;
@@ -52,6 +51,18 @@ public class ProxyLightManagerTest extends TestCase {
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+
+    public void testProvideFailure() {
+        boolean correct = false;
+        try {
+            Light t = l.provideLight("");
+            Assert.fail("didn't throw");
+        } catch (IllegalArgumentException ex) {
+            correct = true;
+        }
+        Assert.assertTrue("Exception thrown properly", correct);
+        
     }
 
     public void testSingleObject() {
@@ -134,10 +145,6 @@ public class ProxyLightManagerTest extends TestCase {
         Assert.assertNotNull(InstanceManager.getDefault(LightManager.class).provideLight("IL1"));
 
         InternalLightManager m = new InternalLightManager() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 8116874049550256716L;
 
             public String getSystemPrefix() {
                 return "J";
@@ -169,7 +176,7 @@ public class ProxyLightManagerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", ProxyLightManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -183,11 +190,6 @@ public class ProxyLightManagerTest extends TestCase {
         apps.tests.Log4JFixture.setUp();
         // create and register the manager object
         l = new InternalLightManager() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 3997181366432698703L;
-
             public String getSystemPrefix() {
                 return "J";
             }

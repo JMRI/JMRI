@@ -35,7 +35,7 @@ public class AcelaAddress {
      * Node Address Note: Returns '-1' if illegal systemName format or if the
      * node is not found. Nodes are numbered from 0 - 127.
      */
-    public static int getNodeAddressFromSystemName(String systemName) {
+    public static int getNodeAddressFromSystemName(String systemName, AcelaSystemConnectionMemo memo) {
         // validate the system Name leader characters
         if ((systemName.charAt(0) != 'A') || ((systemName.charAt(1) != 'L')
                 && (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T')
@@ -60,12 +60,12 @@ public class AcelaAddress {
         int nodeaddress = -1;
         if (systemName.charAt(1) == 'S') {
             // Acela has two address spaces: true == sensor address space; false == output address space
-            nodeaddress = AcelaTrafficController.instance().lookupAcelaNodeAddress(num, true);
+            nodeaddress = memo.getTrafficController().lookupAcelaNodeAddress(num, true);
 //            log.info("For this sensor, we want to use node: " + nodeaddress);
 
         } else {
             // Acela has two address spaces: true == sensor address space; false == output address space
-            nodeaddress = AcelaTrafficController.instance().lookupAcelaNodeAddress(num, false);
+            nodeaddress = memo.getTrafficController().lookupAcelaNodeAddress(num, false);
         }
         return (nodeaddress);
     }
@@ -75,25 +75,25 @@ public class AcelaAddress {
      * Node Note: Returns 'null' if illegal systemName format or if the node is
      * not found
      */
-    public static AcelaNode getNodeFromSystemName(String systemName) {
+    public static AcelaNode getNodeFromSystemName(String systemName,AcelaSystemConnectionMemo memo) {
         // get the node address
         int ua;
         //int tempaddress;
 //        log.info("Trying to register sensor "+ systemName );
 
-        ua = getNodeAddressFromSystemName(systemName);
+        ua = getNodeAddressFromSystemName(systemName,memo);
         if (ua == -1) {
             // error messages have already been issued by getNodeAddressFromSystemName
             return null;
         }
 
         AcelaNode tempnode;
-        tempnode = (AcelaNode) (AcelaTrafficController.instance().getNodeFromAddress(ua));
+        tempnode = (AcelaNode) (memo.getTrafficController().getNodeFromAddress(ua));
         //tempaddress = tempnode.getNodeAddress();
 
 //        log.info("Got back node of type (expecting 1,3, or 9): " + tempnode.nodeType + " for node: " + tempaddress);
         return tempnode;
-        //        return (AcelaNode)(AcelaTrafficController.instance().getNodeFromAddress(ua));
+        //        return (AcelaNode)(memo.getTrafficController().getNodeFromAddress(ua));
     }
 
     /**
@@ -160,12 +160,12 @@ public class AcelaAddress {
      * returns 'true' if system name has a valid meaning in current
      * configuration, else returns 'false'
      */
-    public static boolean validSystemNameConfig(String systemName, char type) {
+    public static boolean validSystemNameConfig(String systemName, char type,AcelaSystemConnectionMemo memo) {
         if (!validSystemNameFormat(systemName, type)) {
             // No point in trying if a valid system name format is not present
             return false;
         }
-        AcelaNode node = getNodeFromSystemName(systemName);
+        AcelaNode node = getNodeFromSystemName(systemName,memo);
         if (node == null) {
             // The node indicated by this system address is not present
             return false;
@@ -189,13 +189,13 @@ public class AcelaAddress {
         return true;
     }
 
-    public static boolean validSystemNameConfig(String systemName) {
+    public static boolean validSystemNameConfig(String systemName, AcelaSystemConnectionMemo memo) {
         char type = systemName.charAt(1);
         if (!validSystemNameFormat(systemName, type)) {
             // No point in trying if a valid system name format is not present
             return false;
         }
-        AcelaNode node = getNodeFromSystemName(systemName);
+        AcelaNode node = getNodeFromSystemName(systemName,memo);
         if (node == null) {
             // The node indicated by this system address is not present
             return false;
@@ -275,7 +275,7 @@ public class AcelaAddress {
      * 0 - 127 range, or the bit number is out of the 1 - 2048 range, an error
      * message is logged and the null string "" is returned.
      */
-    public static String makeSystemName(String type, int nAddress, int bitNum) {
+    public static String makeSystemName(String type, int nAddress, int bitNum, AcelaSystemConnectionMemo memo) {
         String nName = "";
         // check the type character
         if (!type.equalsIgnoreCase("S") && !type.equalsIgnoreCase("L") && !type.equalsIgnoreCase("T")) {
@@ -284,7 +284,7 @@ public class AcelaAddress {
             return (nName);
         }
         // check the node address
-        if ((nAddress < AcelaTrafficController.instance().getMinimumNodeAddress()) || (nAddress > AcelaTrafficController.instance().getMaximumNumberOfNodes())) {
+        if ((nAddress < memo.getTrafficController().getMinimumNodeAddress()) || (nAddress > memo.getTrafficController().getMaximumNumberOfNodes())) {
             // here if an illegal node address 
             log.error("illegal node adddress proposed for system name");
             return (nName);

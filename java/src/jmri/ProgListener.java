@@ -1,4 +1,3 @@
-//  ProgListener.java
 package jmri;
 
 /**
@@ -20,7 +19,6 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public interface ProgListener extends java.util.EventListener {
 
@@ -104,5 +102,3 @@ public interface ProgListener extends java.util.EventListener {
     public final int CommError = 0x400;
 }
 
-
-/* @(#)ProgListener.java */

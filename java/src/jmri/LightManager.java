@@ -1,7 +1,10 @@
-// LightManager.java
 package jmri;
 
 import java.util.List;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 
 /**
  * Interface for obtaining Lights.
@@ -23,7 +26,6 @@ import java.util.List;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
  */
 public interface LightManager extends Manager {
 
@@ -33,10 +35,11 @@ public interface LightManager extends Manager {
      * new Light. Otherwise, the makeSystemName method will attempt to turn it
      * into a valid system name.
      *
-     * @param name
+     * @param name User name, system name, or address which can be promoted to
+     *             system name
      * @return Never null under normal circumstances
      */
-    public Light provideLight(String name);
+    public @Nonnull Light provideLight(@Nonnull String name);
 
     // to free resources when no longer used
     public void dispose();
@@ -53,7 +56,8 @@ public interface LightManager extends Manager {
      *                                  e.g. an illegal name or name that can't
      *                                  be parsed.
      */
-    public Light getLight(String name);
+    @CheckReturnValue
+    public @CheckForNull Light getLight(@Nonnull String name);
 
     /**
      * Return an instance with the specified system and user names. Note that
@@ -82,30 +86,34 @@ public interface LightManager extends Manager {
      *                                  an illegal name or name that can't be
      *                                  parsed.
      */
-    public Light newLight(String systemName, String userName);
+    public @Nonnull Light newLight(@Nonnull String systemName, @CheckForNull String userName);
 
     /**
      * Locate a Light by its user name
      */
-    public Light getByUserName(String s);
+    @CheckReturnValue
+    public @CheckForNull Light getByUserName(@Nonnull String s);
 
     /**
      * Locate a Light by its system name
      */
-    public Light getBySystemName(String s);
+    @CheckReturnValue
+    public @CheckForNull Light getBySystemName(@Nonnull String s);
 
     /**
      * Validate system name format returns 'true' if system name has a valid
      * format, else returns 'false'
      */
-    public boolean validSystemNameFormat(String systemName);
+    @CheckReturnValue
+    public boolean validSystemNameFormat(@Nonnull String systemName);
 
     /**
      * Validate system name for the current hardware configuration returns
      * 'true' if system name has a valid meaning in current configuration, else
      * returns 'false'
      */
-    public boolean validSystemNameConfig(String systemName);
+    @CheckReturnValue
+    public boolean validSystemNameConfig(@Nonnull String systemName);
 
     /**
      * Normalize the system name
@@ -118,7 +126,8 @@ public interface LightManager extends Manager {
      * system-specific Light Manager should override this routine and supply a
      * normalized system name.
      */
-    public String normalizeSystemName(String systemName);
+    @CheckReturnValue
+    public @Nonnull String normalizeSystemName(@Nonnull String systemName);
 
     /**
      * Convert the system name to a normalized alternate name
@@ -130,12 +139,14 @@ public interface LightManager extends Manager {
      * system implementation has alternate names, the system specific Light
      * Manager should override this routine and supply the alternate name.
      */
-    public String convertSystemNameToAlternate(String systemName);
+    @CheckReturnValue
+    public @Nonnull String convertSystemNameToAlternate(@Nonnull String systemName);
 
     /**
      * Get a list of all Light system names.
      */
-    public List<String> getSystemNameList();
+    @CheckReturnValue
+    public @Nonnull List<String> getSystemNameList();
 
     /**
      * Activate the control mechanism for each Light controlled by this
@@ -148,16 +159,15 @@ public interface LightManager extends Manager {
     /**
      * Returns 'true' if the System can potentially support variable Lights
      */
-    public boolean supportsVariableLights(String systemName);
+    @CheckReturnValue
+    public boolean supportsVariableLights(@Nonnull String systemName);
 
     /**
      * A method that determines if it is possible to add a range of lights in
      * numerical order eg 11 thru 18, primarily used to show/not show the add
      * range box in the add Light window
-     *
      */
-    public boolean allowMultipleAdditions(String systemName);
+    @CheckReturnValue
+    public boolean allowMultipleAdditions(@Nonnull String systemName);
 
 }
-
-/* @(#)LightManager.java */

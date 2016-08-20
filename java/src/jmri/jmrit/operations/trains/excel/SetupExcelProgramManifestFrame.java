@@ -20,36 +20,38 @@ import org.slf4j.LoggerFactory;
  */
 public class SetupExcelProgramManifestFrame extends SetupExcelProgramFrame {
 
+    @Override
     public void initComponents() {
         super.initComponents();
 
         generateCheckBox.setText(rb.getString("GenerateCsvManifest"));
         generateCheckBox.setSelected(Setup.isGenerateCsvManifestEnabled());
-        fileNameTextField.setText(TrainCustomManifest.getFileName());
-        pDirectoryName.add(new JLabel(OperationsManager.getInstance().getFile(TrainCustomManifest.getDirectoryName()).getPath()));
+        fileNameTextField.setText(TrainCustomManifest.instance().getFileName());
+        pDirectoryName.add(new JLabel(OperationsManager.getInstance().getFile(TrainCustomManifest.instance().getDirectoryName()).getPath()));
     }
 
     // Save and Test
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == addButton) {
-            File f = selectFile(TrainCustomManifest.getDirectoryName());
+            File f = selectFile(TrainCustomManifest.instance().getDirectoryName());
             if (f != null) {
                 log.debug("User selected file: {}", f.getName());
                 fileNameTextField.setText(f.getName());
             }
         }
 
-        TrainCustomManifest.setFileName(fileNameTextField.getText());
+        TrainCustomManifest.instance().setFileName(fileNameTextField.getText());
 
         if (ae.getSource() == testButton) {
-            if (TrainCustomManifest.manifestCreatorFileExists()) {
+            if (TrainCustomManifest.instance().excelFileExists()) {
                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("DirectoryNameFileName"),
-                        new Object[]{TrainCustomManifest.getDirectoryName(), TrainCustomManifest.getFileName()}),
+                        new Object[]{TrainCustomManifest.instance().getDirectoryName(), TrainCustomManifest.instance().getFileName()}),
                         Bundle.getMessage("ManifestCreatorFound"), JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(this, MessageFormat.format(
                         Bundle.getMessage("LoadDirectoryNameFileName"), new Object[]{
-                            TrainCustomManifest.getDirectoryName(), TrainCustomManifest.getFileName()}), Bundle
+                            TrainCustomManifest.instance().getDirectoryName(), TrainCustomManifest.instance().getFileName()}), Bundle
                         .getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
             }
         }

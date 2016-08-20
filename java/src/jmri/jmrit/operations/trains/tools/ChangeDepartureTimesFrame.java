@@ -66,6 +66,7 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
         addButtonAction(changeButton);
     }
 
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == changeButton) {
             log.debug("change button activated");

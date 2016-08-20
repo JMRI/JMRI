@@ -1,5 +1,7 @@
 package jmri.server.json.power;
 
+import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -12,7 +14,6 @@ import jmri.PowerManager;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
-import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
 
 /**
  *

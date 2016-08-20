@@ -1,12 +1,3 @@
-/**
- * SimpleTurnoutCtrlAction.java
- *
- * Description:	Swing action to create and register a SimpleTurnoutCtrlFrame
- * object
- *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @version
- */
 package jmri.jmrit.simpleturnoutctrl;
 
 import java.awt.event.ActionEvent;
@@ -14,12 +5,13 @@ import javax.swing.Icon;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 
+/**
+ * Swing action to create and register a SimpleTurnoutCtrlFrame
+ * object
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001
+ */
 public class SimpleTurnoutCtrlAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6750002493680281206L;
 
     public SimpleTurnoutCtrlAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -33,7 +25,7 @@ public class SimpleTurnoutCtrlAction extends JmriAbstractAction {
         super(s);
 
         // disable ourself if there is no primary turnout manager available
-        if (jmri.InstanceManager.turnoutManagerInstance() == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.TurnoutManager.class) == null) {
             setEnabled(false);
         }
 
@@ -55,6 +47,3 @@ public class SimpleTurnoutCtrlAction extends JmriAbstractAction {
         throw new IllegalArgumentException("Should not be invoked");
     }
 }
-
-
-/* @(#)SimpleTurnoutCtrlAction.java */

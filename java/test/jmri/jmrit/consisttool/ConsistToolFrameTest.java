@@ -1,4 +1,3 @@
-// ConsistToolFrameTest.java
 package jmri.jmrit.consisttool;
 
 import junit.framework.Assert;
@@ -28,7 +27,7 @@ public class ConsistToolFrameTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", ConsistToolFrameTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -37,4 +36,13 @@ public class ConsistToolFrameTest extends TestCase {
         return suite;
     }
 
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+    }
+    
+    @Override
+    public void tearDown() throws Exception {
+        super.tearDown();
+    }
 }

@@ -116,7 +116,7 @@ public class DccSignalMastXml
             }
         }
 
-        InstanceManager.signalMastManagerInstance()
+        InstanceManager.getDefault(jmri.SignalMastManager.class)
                 .register(m);
         return true;
 

@@ -31,7 +31,7 @@ public class SerialTrafficController extends IEEE802154TrafficController {
      * adapter-specific subclass.
      */
     protected AbstractMRReply newReply() {
-        return new IEEE802154Reply(this);
+        return new IEEE802154Reply();
     }
 
     /*

@@ -1,4 +1,3 @@
-// SerialAddressTest.java
 package jmri.jmrix.oaktree;
 
 import jmri.util.JUnitAppender;
@@ -193,7 +192,7 @@ public class SerialAddressTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SerialAddressTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

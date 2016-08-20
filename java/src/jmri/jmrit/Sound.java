@@ -1,17 +1,20 @@
 package jmri.jmrit;
 
-import java.applet.AudioClip;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import javax.annotation.Nonnull;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,98 +27,132 @@ import org.slf4j.LoggerFactory;
  * jmri.jmrix. It seems most like a "tool using JMRI", or perhaps a tool for use
  * with JMRI, so it was placed in jmri.jmrit.
  * <P>
- * S@see jmri.jmrit.sound
+ * @see jmri.jmrit.sound
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2006
+ * @author Bob Jacobsen Copyright (C) 2004, 2006
  * @author Dave Duchamp Copyright (C) 2011 - add streaming play of large files
- * @version	$Revision$
  */
 public class Sound {
 
-    /*
-     * Constructor takes the filename or URL, and
-     * causes the sound to be loaded
+    // files over this size will be streamed
+    public static final long LARGE_SIZE = 100000;
+    private final URL url;
+    private boolean streaming = false;
+    private boolean streamingStop = false;
+    private Clip clip = null;
+    private final static Logger log = LoggerFactory.getLogger(Sound.class);
+
+    /**
+     * Create a Sound object using the media file at path
+     *
+     * @param path path, portable or absolute, to the media
+     * @throws NullPointerException if path cannot be converted into a URL by
+     *                              {@link jmri.util.FileUtilSupport#findURL(java.lang.String)}
      */
-    public Sound(String filename) {
-        if (needStreaming(filename)) {
-            streaming = true;
-            _fileName = filename;
-        } else {
+    public Sound(@Nonnull String path) throws NullPointerException {
+        this(FileUtil.findURL(path));
+    }
+
+    /**
+     * Create a Sound object using the media file
+     *
+     * @param file reference to the media
+     * @throws java.net.MalformedURLException if file cannot be converted into a
+     *                                        valid URL
+     */
+    public Sound(@Nonnull File file) throws MalformedURLException {
+        this(file.toURI().toURL());
+    }
+
+    /**
+     * Create a Sound object using the media URL
+     *
+     * @param url path to the media
+     * @throws NullPointerException if URL is null
+     */
+    public Sound(@Nonnull URL url) throws NullPointerException {
+        if (url == null) {
+            throw new NullPointerException();
+        }
+        this.url = url;
+        try {
+            this.clip = AudioSystem.getClip();
+            streaming = this.needStreaming();
+            if (!streaming) {
+                this.clip.open(AudioSystem.getAudioInputStream(this.url));
+            }
+        } catch (URISyntaxException ex) {
             streaming = false;
-            loadingSound(filename);
+        } catch (IOException ex) {
+            log.error("Unable to open {}", url);
+        } catch (LineUnavailableException ex) {
+            log.error("Unable to provide audio playback", ex);
+        } catch (UnsupportedAudioFileException ex) {
+            log.error("{} is not a recognised audio format", url);
         }
     }
 
-    /*
-     * instance variables to support streaming extension
-     */
-    public static final long LARGE_SIZE = 100000;
-    private String _fileName = "";
-    private boolean streaming = false;
-    private boolean streamingStop = false;
-
     /**
-     * Play the sound once
+     * Play the sound once.
      */
     public void play() {
         if (streaming) {
-            Runnable streamSound = new StreamingSound(_fileName);
+            Runnable streamSound = new StreamingSound(this.url);
             Thread tStream = new Thread(streamSound);
             tStream.start();
         } else {
-            audioClip.play();
+            this.clip.start();
         }
     }
 
     /**
-     * Play the sound as a loop
+     * Play the sound as an endless loop
      */
     public void loop() {
+        this.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+
+    /**
+     * Play the sound in a loop count times. Use
+     * {@link javax.sound.sampled.Clip#LOOP_CONTINUOUSLY} to create an endless
+     * loop.
+     *
+     * @param count the number of times to loop
+     */
+    public void loop(int count) {
         if (streaming) {
             log.warn("Streaming this audio file, loop() not allowed");
         } else {
-            audioClip.loop();
+            this.clip.loop(count);
         }
     }
 
     /**
-     * Stop playing as a loop
+     * Stop playing a loop.
      */
     public void stop() {
         if (streaming) {
             streamingStop = true;
         } else {
-            audioClip.stop();
+            this.clip.stop();
         }
     }
 
-    private boolean needStreaming(String fileName) {
-        return (new File(fileName).length() > LARGE_SIZE);
-    }
-
-    /**
-     * Load the requested sound resource, not streaming
-     */
-    void loadingSound(String filename) {
-        try {
-            // create a base URL for the sound file location
-            URL url = (new java.io.File(filename)).toURI().toURL();
-
-            // Create a loader and start asynchronous sound loading.
-            // The next line is the long term form, but it
-            // caused a NPE when deployed in JMRI 2.9.5
-            //audioClip = new java.applet.Applet().getAudioClip(url);
-            audioClip = new sun.applet.AppletAudioClip(url);      // Warning on sun.applet.AppletAudioClip as private-to-Sun cannot be suppressed
-            // May some day need to reimplement this class in terms of another sound engine
-
-        } catch (MalformedURLException e) {
-            log.error("Error creating sound address: " + e.getMessage());
+    private boolean needStreaming() throws URISyntaxException, IOException {
+        if (url != null) {
+            if ("file".equals(this.url.getProtocol())) {
+                return (new File(this.url.toURI()).length() > LARGE_SIZE);
+            } else {
+                return this.url.openConnection().getContentLengthLong() > LARGE_SIZE;
+            }
         }
+        return false;
     }
 
     /**
      * Play a sound from a buffer
      *
+     * @param wavData data to play
      */
     public static void playSoundBuffer(byte[] wavData) {
 
@@ -123,7 +160,7 @@ public class Sound {
         float sampleRate = 11200.0f;
         int sampleSizeInBits = 8;
         int channels = 1;
-        boolean signed = (sampleSizeInBits > 8 ? true : false);
+        boolean signed = (sampleSizeInBits > 8);
         boolean bigEndian = true;
 
         AudioFormat format = new AudioFormat(sampleRate, sampleSizeInBits, channels, signed, bigEndian);
@@ -131,7 +168,7 @@ public class Sound {
         DataLine.Info info = new DataLine.Info(SourceDataLine.class, format); // format is an AudioFormat object
         if (!AudioSystem.isLineSupported(info)) {
             // Handle the error.
-            log.error("line not supported: " + info);
+            log.warn("line not supported: " + info);
             return;
         }
         // Obtain and open the line.
@@ -148,11 +185,6 @@ public class Sound {
         line.write(wavData, 0, wavData.length);
 
     }
-
-    /**
-     * The actual sound, stored as an AudioClip
-     */
-    public AudioClip audioClip = null;
 
     public static class WavBuffer {
 
@@ -214,27 +246,31 @@ public class Sound {
 
     public class StreamingSound implements Runnable {
 
-        /**
-         * A runnable to stream in sound and play it This method does not read
-         * in an entire large sound file at one time, but instead reads in
-         * smaller chunks as needed.
-         */
-        public StreamingSound(String fileName) {
-            _file = fileName;
-        }
-        private String _file;
+        private final URL url;
         private AudioInputStream stream = null;
         private AudioFormat format = null;
         private SourceDataLine line = null;
         private jmri.Sensor streamingSensor = null;
 
+        /**
+         * A runnable to stream in sound and play it This method does not read
+         * in an entire large sound file at one time, but instead reads in
+         * smaller chunks as needed.
+         *
+         * @param url the URL containing audio media
+         */
+        public StreamingSound(URL url) {
+            this.url = url;
+        }
+
+        @Override
         public void run() {
             // Note: some of the following is based on code from 
             //      "Killer Game Programming in Java" by A. Davidson.
             // Set up the audio input stream from the sound file
             try {
                 // link an audio stream to the sampled sound's file
-                stream = AudioSystem.getAudioInputStream(new File(_file));
+                stream = AudioSystem.getAudioInputStream(url);
                 format = stream.getFormat();
                 log.debug("Audio format: " + format);
                 // convert ULAW/ALAW formats to PCM format
@@ -264,13 +300,9 @@ public class Sound {
             if (streamingSensor == null) {
                 streamingSensor = jmri.InstanceManager.sensorManagerInstance().provideSensor("ISSOUNDSTREAMING");
             }
-            if (streamingSensor != null) {
-                try {
-                    streamingSensor.setState(jmri.Sensor.ACTIVE);
-                } catch (jmri.JmriException ex) {
-                    log.error("Exception while setting ISSOUNDSTREAMING sensor to ACTIVE");
-                }
-            }
+
+            setSensor(jmri.Sensor.ACTIVE);
+
             if (!streamingStop) {
                 // set up the SourceDataLine going to the JVM's mixer
                 try {
@@ -291,18 +323,12 @@ public class Sound {
             }
             if (streamingStop) {
                 line.close();
-                if (streamingSensor != null) {
-                    try {
-                        streamingSensor.setState(jmri.Sensor.INACTIVE);
-                    } catch (jmri.JmriException ex) {
-                        log.error("Exception while setting ISSOUNDSTREAMING sensor to INACTIVE - 2");
-                    }
-                }
+                setSensor(jmri.Sensor.INACTIVE);
                 return;
             }
             // Read  the sound file in chunks of bytes into buffer, and
             //			pass them on through the SourceDataLine 
-            int numRead = 0;
+            int numRead;
             byte[] buffer = new byte[line.getBufferSize()];
             log.debug("streaming sound buffer size = " + line.getBufferSize());
             line.start();
@@ -322,15 +348,18 @@ public class Sound {
             line.drain();
             line.stop();
             line.close();
+            setSensor(jmri.Sensor.INACTIVE);
+        }
+
+        private void setSensor(int mode) {
             if (streamingSensor != null) {
                 try {
-                    streamingSensor.setState(jmri.Sensor.INACTIVE);
+                    streamingSensor.setState(mode);
                 } catch (jmri.JmriException ex) {
-                    log.error("Exception while setting ISSOUNDSTREAMING sensor to INACTIVE");
+                    log.error("Exception while setting ISSOUNDSTREAMING sensor {} to {}", streamingSensor.getDisplayName(), mode);
                 }
             }
         }
-    }
 
-    private final static Logger log = LoggerFactory.getLogger(Sound.class.getName());
+    }
 }

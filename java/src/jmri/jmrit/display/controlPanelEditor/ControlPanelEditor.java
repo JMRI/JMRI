@@ -70,6 +70,7 @@ import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
 import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.logix.WarrantTableAction;
 import jmri.util.HelpUtil;
+import jmri.util.SystemType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -96,11 +97,9 @@ import org.slf4j.LoggerFactory;
  * implemented at JDK 1.2 for backward compatibility
  * <P>
  * @author Pete Cressman Copyright: Copyright (c) 2009, 2010, 2011
- * @version $Revision: 21062 $
  *
  */
 public class ControlPanelEditor extends Editor implements DropTargetListener, ClipboardOwner {
-    private static final long serialVersionUID = 2767111074938103944L;
     public boolean _debug;
     protected JMenuBar _menuBar;
     private JMenu _editorMenu;
@@ -175,7 +174,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         super.setDefaultToolTip(new ToolTip(null, 0, 0, new Font("Serif", Font.PLAIN, 12),
                 Color.black, new Color(255, 250, 210), Color.black));
         // register the resulting panel for later configuration
-        InstanceManager.configureManagerInstance().registerUser(this);
+        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerUser(this);
         pack();
         setVisible(true);
         class makeCatalog extends SwingWorker<CatalogPanel, Object> {
@@ -203,20 +202,32 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (_itemPalette==null) {                   
+                if (_itemPalette==null) {
                     _itemPalette = new ItemPalette(Bundle.getMessage("MenuItemItemPallette"), editor);
                 }
                 _itemPalette.setVisible(true);
             }
         }.init(this));
-        mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
+        if (SystemType.isMacOSX()) {
+            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.META_MASK));
+        } else {
+            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
+        }
         _iconMenu.add(mi);
         _iconMenu.add(new jmri.jmrit.beantable.OBlockTableAction(Bundle.getMessage("MenuItemOBlockTable")));
         mi = (JMenuItem) _iconMenu.getMenuComponent(1);
-        mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, ActionEvent.CTRL_MASK));
+        if (SystemType.isMacOSX()) {
+            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, ActionEvent.META_MASK));
+        } else {
+            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, ActionEvent.CTRL_MASK));
+        }
         _iconMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemTableList")));
         mi = (JMenuItem) _iconMenu.getMenuComponent(2);
-        mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.CTRL_MASK));
+        if (SystemType.isMacOSX()) {
+            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.META_MASK));
+        } else {
+            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.CTRL_MASK));
+        }
     }
 
     protected void makeCircuitMenu(boolean edit) {
@@ -311,33 +322,18 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _markerMenu = new JMenu(Bundle.getMessage("MenuMarker"));
         _menuBar.add(_markerMenu);
         _markerMenu.add(new AbstractAction(Bundle.getMessage("AddLoco")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 154630416282406989L;
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 locoMarkerFromInput();
             }
         });
         _markerMenu.add(new AbstractAction(Bundle.getMessage("AddLocoRoster")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -7447460365984229346L;
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 locoMarkerFromRoster();
             }
         });
         _markerMenu.add(new AbstractAction(Bundle.getMessage("RemoveMarkers")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -4318812692030653839L;
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 removeMarkers();
@@ -478,7 +474,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             public void actionPerformed(ActionEvent event) {
                 changeView("jmri.jmrit.display.panelEditor.PanelEditor");
                 if (_itemPalette!=null) {
-                    _itemPalette.dispose();                    
+                    _itemPalette.dispose();
                 }
             }
         });
@@ -546,7 +542,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
          KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
          menuItem.setMnemonic(KeyEvent.VK_C);
          _editMenu.add(menuItem);
-        
+
          menuItem = new JMenuItem("Paste");
          menuItem.setActionCommand((String)TransferHandler.getPasteAction().getValue(Action.NAME));
          menuItem.addActionListener(actionListener);
@@ -564,8 +560,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 removeSelections(null);
             }
         });
-        menuItem.setAccelerator(
-                KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+        if (SystemType.isMacOSX()) {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.META_MASK));
+        } else {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+        }
         menuItem.setMnemonic(KeyEvent.VK_T);
         _editMenu.add(menuItem);
 
@@ -576,8 +577,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 copyToClipboard();
             }
         });
-        menuItem.setAccelerator(
-                KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
+        if (SystemType.isMacOSX()) {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.META_MASK));
+        } else {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
+        }
         menuItem.setMnemonic(KeyEvent.VK_C);
         _editMenu.add(menuItem);
 
@@ -588,8 +594,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 pasteFromClipboard();
             }
         });
-        menuItem.setAccelerator(
-                KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.CTRL_MASK));
+        if (SystemType.isMacOSX()) {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.META_MASK));
+        } else {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.CTRL_MASK));
+        }
         menuItem.setMnemonic(KeyEvent.VK_P);
         _editMenu.add(menuItem);
 
@@ -604,8 +615,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 _targetPanel.repaint();
             }
         });
-        menuItem.setAccelerator(
-                KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.CTRL_MASK));
+        if (SystemType.isMacOSX()) {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.META_MASK));
+        } else {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.CTRL_MASK));
+        }
         _editMenu.add(menuItem);
     }
 
@@ -671,7 +687,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     private void selectType(String name) {
         try {
-            Class cl = Class.forName(name);
+            Class<?> cl = Class.forName(name);
             _selectionGroup = new ArrayList<Positionable>();
             Iterator<Positionable> it = _contents.iterator();
             while (it.hasNext()) {
@@ -1411,7 +1427,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     @Override
     public void mouseDragged(MouseEvent event) {
-        //if (_debug) log.debug("mouseDragged at ("+event.getX()+","+event.getY()+")"); 
+        //if (_debug) log.debug("mouseDragged at ("+event.getX()+","+event.getY()+")");
         setToolTip(null); // ends tooltip if displayed
 
         if (_circuitBuilder.doMouseDragged(_currentSelection, event)) {
@@ -1472,7 +1488,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     @Override
     public void mouseMoved(MouseEvent event) {
-        //if (_debug) log.debug("mouseMoved at ("+event.getX()+","+event.getY()+")"); 
+        //if (_debug) log.debug("mouseMoved at ("+event.getX()+","+event.getY()+")");
         if (_dragging || event.isPopupTrigger() || event.isMetaDown() || event.isAltDown()) {
             return;
         }
@@ -1689,7 +1705,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
             // items with defaults or using overrides
             boolean popupSet = false;
-//            popupSet |= p.setRotateOrthogonalMenu(popup);        
+//            popupSet |= p.setRotateOrthogonalMenu(popup);
             popupSet |= p.setRotateMenu(popup);
             popupSet |= p.setScaleMenu(popup);
             if (popupSet) {
@@ -1708,16 +1724,16 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 }   Add backgrounds & text over icons later */
                 if (!pl.isIcon()) {
                     popupSet |= setTextAttributes(pl, popup);
-                    if (p instanceof MemoryIcon){                        
-                        popupSet |= p.setTextEditMenu(popup);                
+                    if (p instanceof MemoryIcon){
+                        popupSet |= p.setTextEditMenu(popup);
                     }
                 } else if (p instanceof SensorIcon) {
                     popup.add(CoordinateEdit.getTextEditAction(p, "OverlayText"));
                     if (pl.isText()) {
-                        popupSet |= setTextAttributes(p, popup);                                        
+                        popupSet |= setTextAttributes(p, popup);
                     }
                 } else {
-                    popupSet = p.setTextEditMenu(popup);                
+                    popupSet = p.setTextEditMenu(popup);
                 }
             } else if (p instanceof PositionableJPanel) {
                 popupSet |= setTextAttributes(p, popup);

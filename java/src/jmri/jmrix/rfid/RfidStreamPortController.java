@@ -1,4 +1,3 @@
-// RfidStreamPortController.java
 package jmri.jmrix.rfid;
 
 import java.io.DataInputStream;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * <p>
  *
  * @author	Paul Bender Copyright (C) 2014
- * @version	$Revision$
  */
 public class RfidStreamPortController extends AbstractStreamPortController implements RfidInterface {
 
@@ -38,10 +36,6 @@ public class RfidStreamPortController extends AbstractStreamPortController imple
                 new StandaloneSensorManager(control, this.getSystemPrefix()),
                 new StandaloneReporterManager(control, this.getSystemPrefix()));
         control.connectPort(this);
-
-        // declare up
-        ActiveFlag.setActive();
-
     }
 
     /**
@@ -88,6 +82,3 @@ public class RfidStreamPortController extends AbstractStreamPortController imple
     private final static Logger log = LoggerFactory.getLogger(RfidStreamPortController.class.getName());
 
 }
-
-
-/* @(#)RfidStreamPortController.java */

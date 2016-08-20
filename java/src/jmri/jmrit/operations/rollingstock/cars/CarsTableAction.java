@@ -13,11 +13,6 @@ import javax.swing.AbstractAction;
  */
 public class CarsTableAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1165041540465869264L;
-
     public CarsTableAction(String s) {
         super(s);
     }
@@ -26,6 +21,7 @@ public class CarsTableAction extends AbstractAction {
         this(Bundle.getMessage("MenuCars")); // NOI18N
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a car table frame
         new CarsTableFrame(true, null, null);

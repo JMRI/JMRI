@@ -1,4 +1,3 @@
-// BlockTableActionTest.java
 package jmri.jmrit.beantable;
 
 import jmri.Block;
@@ -27,9 +26,9 @@ public class BlockTableActionTest extends jmri.util.SwingTestCase {
         ba.actionPerformed(null);
 
         // create a couple blocks, and see if they show
-        InstanceManager.blockManagerInstance().createNewBlock("IB1", "block 1");
+        InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("IB1", "block 1");
 
-        Block b2 = InstanceManager.blockManagerInstance().createNewBlock("IB2", "block 2");
+        Block b2 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("IB2", "block 2");
         b2.setDirection(jmri.Path.EAST);
         TestHelper.disposeWindow(ba.f, this);
     }
@@ -42,7 +41,7 @@ public class BlockTableActionTest extends jmri.util.SwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", BlockTableActionTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

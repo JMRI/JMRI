@@ -17,8 +17,9 @@
 <!-- Comments by Author: Lolke Bijlsma (lbijlsma@pobox.com)                                                      -->
 <!-- Decoder definition based on NMJ B7 board, a special packaged version of the Shine Plus Max Digi             -->
 <!-- Decoder manual used: http://www.train-o-matic.com/downloads/manuals/tOm_Shine_Plus_Maxi_Digi_en_v_0.0.9.pdf -->
+<!-- Version 2 - Added the NMJ B3 and B7 boards that are made by tOm                                             -->
 
-  <version author="lbijlsma@pobox.com" version="1" lastUpdated="20141025"/>
+  <version author="lbijlsma@pobox.com" version="2" lastUpdated="20160507"/>
   <decoder>
     <family name="Shine Plus" mfg="Tehnologistic (train-O-matic)">
       <model model="Shine Plus Midi Digi" lowVersionID="0" highVersionID="255" numOuts="12" numFns="15">
@@ -37,6 +38,42 @@
         <size length="210" width="11" height="3" units="mm" />
       </model>
       <model model="Shine Plus Maxi Digi" lowVersionID="0" highVersionID="255" numOuts="16" numFns="19">
+        <output name="1" label="Out 1" />
+        <output name="2" label="Out 2" />
+        <output name="3" label="Out 3" />
+        <output name="4" label="Out 4" />
+        <output name="5" label="Out 5" />
+        <output name="6" label="Out 6" />
+        <output name="7" label="Out 7" />
+        <output name="8" label="Out 8" />
+        <output name="9" label="Out 9" />
+        <output name="10" label="Out 10" />
+        <output name="11" label="Out 11" />
+        <output name="12" label="Out 12" />
+        <output name="13" label="Out 13" />
+        <output name="14" label="Out 14" />
+        <output name="15" label="Out 15" />
+        <output name="16" label="Out 16" />
+        <size length="275" width="11" height="3" units="mm" />
+      </model>      
+      <model model="NMJ B3-Series DCC Lighting" lowVersionID="4" highVersionID="255" numOuts="14" numFns="17">
+        <output name="1" label="Out 1" />
+        <output name="2" label="Out 2" />
+        <output name="3" label="Out 3" />
+        <output name="4" label="Out 4" />
+        <output name="5" label="Out 5" />
+        <output name="6" label="Out 6" />
+        <output name="7" label="Out 7" />
+        <output name="8" label="Out 8" />
+        <output name="9" label="Out 9" />
+        <output name="10" label="Out 10" />
+        <output name="11" label="Out 11" />
+        <output name="12" label="Out 12" />
+        <output name="13" label="Out 13" />
+        <output name="14" label="Out 14" />
+        <size length="236" width="11" height="3" units="mm" />
+      </model>
+      <model model="NMJ B7-Series DCC Lighting" lowVersionID="3" highVersionID="255" numOuts="16" numFns="19">
         <output name="1" label="Out 1" />
         <output name="2" label="Out 2" />
         <output name="3" label="Out 3" />

@@ -40,6 +40,3 @@ public class NodeConfigAction extends AbstractAction {
 
     private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
 }
-
-
-/* @(#)SerialPacketGenAction.java */

@@ -1,4 +1,3 @@
-// AbstractAudio.java
 package jmri.implementation;
 
 import jmri.Audio;
@@ -23,14 +22,8 @@ import jmri.Audio;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6464454340389625230L;
 
     private int _state = STATE_INITIAL;
 
@@ -109,5 +102,3 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
     }
 
 }
-
-/* $(#)AbstractAudio.java */

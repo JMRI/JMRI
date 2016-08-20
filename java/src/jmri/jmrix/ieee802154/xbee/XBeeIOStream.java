@@ -1,4 +1,3 @@
-// XBeeIOStream.java
 package jmri.jmrix.ieee802154.xbee;
 
 import com.rapplogic.xbee.api.XBeeAddress16;
@@ -24,9 +23,8 @@ import org.slf4j.LoggerFactory;
  * Some of this code is derived from the XNetSimulator.
  *
  * @Author Paul Bender Copyright (C) 2014
- * @Revision $Revision$
  */
-public class XBeeIOStream extends AbstractPortController implements XBeeListener {
+final public class XBeeIOStream extends AbstractPortController implements XBeeListener {
 
     private DataOutputStream pout = null; // for output to other classes
     private DataInputStream pin = null; // for input from other classes
@@ -156,7 +154,7 @@ public class XBeeIOStream extends AbstractPortController implements XBeeListener
         }
     }
 
-    private class TransmitThread implements Runnable {
+    static private class TransmitThread implements Runnable {
 
         private XBeeNode node = null;
         private XBeeTrafficController xtc = null;
@@ -195,7 +193,7 @@ public class XBeeIOStream extends AbstractPortController implements XBeeListener
                     log.debug("Attempting byte read");
                     byte b = pipe.readByte();
                     log.debug("Read Byte: {}", b);
-                    data.add(data.size(), new Integer(b));
+                    data.add(data.size(), Integer.valueOf(b));
                 } while (data.size() < 100 && pipe.available() > 0);
                 int dataArray[] = new int[data.size()];
                 int i = 0;
@@ -225,4 +223,3 @@ public class XBeeIOStream extends AbstractPortController implements XBeeListener
 
 }
 
-// end XBeeIOStream.java

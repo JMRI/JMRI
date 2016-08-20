@@ -11,9 +11,17 @@ package jmri.jmrix.ecos;
  */
 public class EcosConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String ESU = "ESU";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.ecos.networkdriver.ConnectionConfig",};
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{ESU};
     }
 
 }

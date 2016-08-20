@@ -1,4 +1,3 @@
-// JythonAutomatonAction.java
 package jmri.jmrit.automat;
 
 import java.awt.event.ActionEvent;
@@ -11,14 +10,8 @@ import javax.swing.JPanel;
  * Swing action to create and register a JythonAutomaton object
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2007
- * @version $Revision$
  */
 public class JythonAutomatonAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6659056356505294196L;
 
     public JythonAutomatonAction(String s, JPanel who) {
         super(s);
@@ -40,5 +33,3 @@ public class JythonAutomatonAction extends AbstractAction {
         }
     }
 }
-
-/* @(#)JythonAutomatonAction.java */

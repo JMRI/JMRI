@@ -18,32 +18,28 @@
 
 <h1>Adding/Editing Audio objects</h1>
     
-To create an audio object, click the 
-"Add..." button on the 
-<a href="AudioTable.shtml">Audio Table</a>.
+To create an audio object, click either the 
+"Add Source..." or the "Add Buffer..." button at the bottom of the 
+<a href="AudioTable.shtml">Audio Table</a> pane.
 This will open a new pane with space to enter
-a System Name and User Name for the new Audio object, plus
-and "Add..." button.
+a System Name and User Name for the new Audio object.
 <p>
 You must enter a unique System Name.  System Names for Audio objects have
 a set pattern: they start with "IAL" for "Internal Audio Listener", "IAB" for
 "Internal Audio Buffer", or "IAS" for "Internal Audio Source".
 
 <p>
-There are separate windows for adding each of the 
-different types.
+There are separate panes for adding each of the 
+different types:
 <p>
 <a href="AddEditAudioListener.jpg">
-<img src="AddEditAudioListener.jpg" height="202" width="164">
-</a>
+<img src="AddEditAudioListener.jpg" height="202" width="164"></a>
 &nbsp;
 <a href="AddEditAudioBuffer.jpg">
-<img src="AddEditAudioBuffer.jpg" height="94" width="272">
-</a>
+<img src="AddEditAudioBuffer.jpg" height="94" width="272"></a>
 &nbsp;
 <a href="AddEditAudioSource.jpg">
-<img src="AddEditAudioSource.jpg" height="263" width="164">
-</a>
+<img src="AddEditAudioSource.jpg" height="263" width="164"></a>
 <p>
 The User Name is optional, but if given has to be unique.
 

@@ -1,4 +1,3 @@
-// AttributeTableModel.java
 package jmri.jmrit.roster.swing.attributetable;
 
 import jmri.jmrit.roster.Roster;
@@ -14,15 +13,9 @@ import jmri.jmrit.roster.RosterEntry;
  * fields. But it's a start....
  *
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  * @since 2.7.5
  */
 public class AttributeTableModel extends javax.swing.table.AbstractTableModel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 59936474957867177L;
 
     public int getRowCount() {
         return Roster.instance().numEntries();
@@ -55,9 +48,6 @@ public class AttributeTableModel extends javax.swing.table.AbstractTableModel {
         String key = getColumnName(col);
         // get roster entry for row
         RosterEntry re = Roster.instance().getEntry(row);
-        if (re == null) {
-            return "";
-        }
         String retval = re.getAttribute(key);
         if (retval != null) {
             return retval;

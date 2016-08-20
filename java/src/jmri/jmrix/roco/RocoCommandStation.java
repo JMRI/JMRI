@@ -1,6 +1,3 @@
-/*
- * LenzCommandStation.java
- */
 package jmri.jmrix.roco;
 
 import org.slf4j.Logger;
@@ -13,15 +10,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001 
  * @author      Paul Bender Copyright (C) 2016
  */
-public class RocoCommandStation extends jmri.jmrix.lenz.LenzCommandStation implements jmri.jmrix.DccCommandStation, jmri.CommandStation {
-
-    /**
-     * Roco does use a service mode
-     */
-    @Override
-    public boolean getHasServiceMode() {
-        return true;
-    }
+public class RocoCommandStation extends jmri.jmrix.lenz.LenzCommandStation implements jmri.CommandStation {
 
     /*
      * We need to register for logging
@@ -29,6 +18,3 @@ public class RocoCommandStation extends jmri.jmrix.lenz.LenzCommandStation imple
     private final static Logger log = LoggerFactory.getLogger(RocoCommandStation.class.getName());
 
 }
-
-
-/* @(#)RocoCommandStation.java */

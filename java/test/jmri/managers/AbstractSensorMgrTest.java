@@ -1,4 +1,3 @@
-// AbstractSensorMgrTest.java
 /**
  * This is not itself a test class, e.g. should not be added to a suite.
  * Instead, this forms the base for test classes, including providing some
@@ -67,6 +66,18 @@ public abstract class AbstractSensorMgrTest extends TestCase {
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+
+    public void testProvideFailure() {
+        boolean correct = false;
+        try {
+            Sensor t = l.provideSensor("");
+            Assert.fail("didn't throw");
+        } catch (IllegalArgumentException ex) {
+            correct = true;
+        }
+        Assert.assertTrue("Exception thrown properly", correct);  
+        jmri.util.JUnitAppender.assertWarnMessage("Invalid system name for sensor: IS needed IS");      
     }
 
     public void testSingleObject() {

@@ -1,9 +1,9 @@
-// Bean.java
 package jmri.beans;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import jmri.util.ThreadingUtil;
 
 /**
  * Generic implementation of {@link jmri.beans.BeanInterface} with a complete
@@ -12,7 +12,7 @@ import java.beans.PropertyChangeSupport;
  * See the PropertyChangeSupport documentation for complete documentation of
  * those methods.
  *
- * @author rhwood
+ * @author Randall Wood (c) 2011, 2014, 2015, 2016
  * @see java.beans.PropertyChangeSupport
  */
 public abstract class Bean extends UnboundBean implements PropertyChangeProvider {
@@ -44,102 +44,115 @@ public abstract class Bean extends UnboundBean implements PropertyChangeProvider
     }
 
     /**
+     * Fire an indexed property change on the Event dispatch (Swing) thread. Use
+     * {@link java.beans.PropertyChangeSupport#fireIndexedPropertyChange(java.lang.String, int, boolean, boolean)}
+     * directly to fire this notification on another thread.
      *
-     * @param propertyName
-     * @param index
-     * @param oldValue
-     * @param newValue
-     * @deprecated Use the
-     * {@link #propertyChangeSupport} {@link java.beans.PropertyChangeSupport#fireIndexedPropertyChange(java.lang.String, int, boolean, boolean)}
-     * directly
+     * @param propertyName the programmatic name of the property that was
+     *                     changed
+     * @param index        the index of the property element that was changed
+     * @param oldValue     the old value of the property
+     * @param newValue     the new value of the property
      */
-    @Deprecated
     protected void fireIndexedPropertyChange(String propertyName, int index, boolean oldValue, boolean newValue) {
-        propertyChangeSupport.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
+        ThreadingUtil.runOnGUIEventually(() -> {
+            propertyChangeSupport.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
+        });
     }
 
     /**
+     * Fire an indexed property change on the Event dispatch (Swing) thread. Use
+     * {@link java.beans.PropertyChangeSupport#fireIndexedPropertyChange(java.lang.String, int, int, int)}
+     * directly to fire this notification on another thread.
      *
-     * @param propertyName
-     * @param index
-     * @param oldValue
-     * @param newValue
-     * @deprecated Use the
-     * {@link #propertyChangeSupport} {@link java.beans.PropertyChangeSupport#fireIndexedPropertyChange(java.lang.String, int, int, int)}
-     * directly
+     * @param propertyName the programmatic name of the property that was
+     *                     changed
+     * @param index        the index of the property element that was changed
+     * @param oldValue     the old value of the property
+     * @param newValue     the new value of the property
      */
-    @Deprecated
     protected void fireIndexedPropertyChange(String propertyName, int index, int oldValue, int newValue) {
-        propertyChangeSupport.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
+        ThreadingUtil.runOnGUIEventually(() -> {
+            propertyChangeSupport.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
+        });
     }
 
     /**
+     * Fire an indexed property change on the Event dispatch (Swing) thread. Use
+     * {@link java.beans.PropertyChangeSupport#fireIndexedPropertyChange(java.lang.String, int, java.lang.Object, java.lang.Object)}
+     * directly to fire this notification on another thread.
      *
-     * @param propertyName
-     * @param index
-     * @param oldValue
-     * @param newValue
-     * @deprecated Use the
-     * {@link #propertyChangeSupport} {@link java.beans.PropertyChangeSupport#fireIndexedPropertyChange(java.lang.String, int, java.lang.Object, java.lang.Object)}
-     * directly
+     * @param propertyName the programmatic name of the property that was
+     *                     changed
+     * @param index        the index of the property element that was changed
+     * @param oldValue     the old value of the property
+     * @param newValue     the new value of the property
      */
-    @Deprecated
     protected void fireIndexedPropertyChange(String propertyName, int index, Object oldValue, Object newValue) {
-        propertyChangeSupport.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
+        ThreadingUtil.runOnGUIEventually(() -> {
+            propertyChangeSupport.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
+        });
     }
 
     /**
+     * Fire an indexed property change on the Event dispatch (Swing) thread. Use
+     * {@link java.beans.PropertyChangeSupport#firePropertyChange(java.lang.String, boolean, boolean)}
+     * directly to fire this notification on another thread.
      *
-     * @param key
-     * @param oldValue
-     * @param value
-     * @deprecated Use the
-     * {@link #propertyChangeSupport} {@link java.beans.PropertyChangeSupport#firePropertyChange(java.lang.String, boolean, boolean)}
-     * directly
+     * @param propertyName the programmatic name of the property that was
+     *                     changed
+     * @param oldValue     the old value of the property
+     * @param newValue     the new value of the property
      */
-    @Deprecated
-    protected void firePropertyChange(String key, boolean oldValue, boolean value) {
-        propertyChangeSupport.firePropertyChange(key, oldValue, value);
+    protected void firePropertyChange(String propertyName, boolean oldValue, boolean newValue) {
+        ThreadingUtil.runOnGUIEventually(() -> {
+            propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+        });
     }
 
     /**
+     * Fire an indexed property change on the Event dispatch (Swing) thread. Use
+     * {@link java.beans.PropertyChangeSupport#firePropertyChange(java.beans.PropertyChangeEvent)}
+     * directly to fire this notification on another thread.
      *
-     * @param evt
-     * @deprecated Use the
-     * {@link #propertyChangeSupport} {@link java.beans.PropertyChangeSupport#firePropertyChange(java.beans.PropertyChangeEvent)}
-     * directly
+     * @param event the PropertyChangeEvent to be fired
      */
-    @Deprecated
-    protected void firePropertyChange(PropertyChangeEvent evt) {
-        propertyChangeSupport.firePropertyChange(evt);
+    protected void firePropertyChange(PropertyChangeEvent event) {
+        ThreadingUtil.runOnGUIEventually(() -> {
+            propertyChangeSupport.firePropertyChange(event);
+        });
     }
 
     /**
+     * Fire an indexed property change on the Event dispatch (Swing) thread. Use
+     * {@link java.beans.PropertyChangeSupport#firePropertyChange(java.lang.String, int, int)}
+     * directly to fire this notification on another thread.
      *
-     * @param key
-     * @param value
-     * @param oldValue
-     * @deprecated Use the
-     * {@link #propertyChangeSupport} {@link java.beans.PropertyChangeSupport#firePropertyChange(java.lang.String, int, int)}
-     * directly
+     * @param propertyName the programmatic name of the property that was
+     *                     changed
+     * @param oldValue     the old value of the property
+     * @param newValue     the new value of the property
      */
-    @Deprecated
-    protected void firePropertyChange(String key, int oldValue, int value) {
-        propertyChangeSupport.firePropertyChange(key, oldValue, value);
+    protected void firePropertyChange(String propertyName, int oldValue, int newValue) {
+        ThreadingUtil.runOnGUIEventually(() -> {
+            propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+        });
     }
 
     /**
+     * Fire an indexed property change on the Event dispatch (Swing) thread. Use
+     * {@link java.beans.PropertyChangeSupport#firePropertyChange(java.lang.String, java.lang.Object, java.lang.Object)}
+     * directly to fire this notification on another thread.
      *
-     * @param key
-     * @param oldValue
-     * @param value
-     * @deprecated Use the
-     * {@link #propertyChangeSupport} {@link java.beans.PropertyChangeSupport#firePropertyChange(java.lang.String, java.lang.Object, java.lang.Object)}
-     * directly
+     * @param propertyName the programmatic name of the property that was
+     *                     changed
+     * @param oldValue     the old value of the property
+     * @param newValue     the new value of the property
      */
-    @Deprecated
-    protected void firePropertyChange(String key, Object oldValue, Object value) {
-        propertyChangeSupport.firePropertyChange(key, oldValue, value);
+    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+        ThreadingUtil.runOnGUIEventually(() -> {
+            propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+        });
     }
 
     @Override

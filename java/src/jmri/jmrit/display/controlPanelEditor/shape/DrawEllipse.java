@@ -13,15 +13,10 @@ import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 /**
  * <P>
  * @author Pete Cressman Copyright: Copyright (c) 2012
- * @version $Revision: 1 $
  *
  */
 public class DrawEllipse extends DrawFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4225546649083339942L;
     int _width;
     int _height;
     JTextField _widthText;

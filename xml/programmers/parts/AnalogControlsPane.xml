@@ -4,6 +4,7 @@
   <name xml:lang="ca">Control Analògic</name>
   <name xml:lang="it">Controlli Analogici</name>
   <name xml:lang="de">Analogeinstellungen</name>
+  <name xml:lang="da">Analog Kontrol</name>
   <column>
     <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
       <tooltip xml:lang="ca">Determina si una locomotora pot funcionar en CC</tooltip>

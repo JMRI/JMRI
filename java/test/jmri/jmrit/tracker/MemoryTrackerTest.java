@@ -1,4 +1,3 @@
-// MemoryTrackerTest.java
 package jmri.jmrit.tracker;
 
 import jmri.Block;
@@ -12,7 +11,6 @@ import junit.framework.TestSuite;
  * Tests for the MemoryTracker class
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version $Revision$
  */
 public class MemoryTrackerTest extends TestCase {
 
@@ -32,7 +30,7 @@ public class MemoryTrackerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {MemoryTrackerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

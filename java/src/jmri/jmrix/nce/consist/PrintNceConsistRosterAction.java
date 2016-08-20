@@ -1,4 +1,3 @@
-// PrintNceConsistRosterAction.java
 package jmri.jmrix.nce.consist;
 
 import java.awt.Frame;
@@ -21,14 +20,8 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class PrintNceConsistRosterAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2634928231435374292L;
 
     public PrintNceConsistRosterAction(String actionName, Frame frame, boolean preview) {
         super(actionName);

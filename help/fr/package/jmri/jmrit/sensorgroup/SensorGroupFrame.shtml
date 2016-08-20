@@ -1,16 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!--  $Id$ -->
 <!-- UpDated by Herv&#233; Blorec bzh56420@yahoo.fr 2013-11-11-->
 <html lang="fr">
 <head>
  <TITLE>
-      JMRI: Sensor Groups
+      JMRI: Groupes Capteur
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <META name="keywords" content="JMRI help Sensor Groups">
 
 <!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -40,14 +39,14 @@ ferait  alors  devenir le capteur de la position pr&#233;c&#233;dente inactif lo
 vous avez cliqu&#233; pour modifier le commutateur rotatif simul&#233;.
 <P>
 Pour d&#233;finir un groupe:
-<UL>
-<LI> Cochez la case "inclus" &#224; c&#244;t&#233; de chaque capteur que vous voulez
-inclure dans le groupe. Vous pouvez cliquer sur les titres au sommet de la
-colonnes pour les trier si vous avez beaucoup de capteurs &#224; parcourir.
-<LI> Mettez un nom de capteur unique au groupe dans la case en bas. Pas 
- de format particuli&#232;rement requis, mais il ne peut pas reproduire celui que vous avez d&#233;j&#224; d&#233;fini.
-<LI> Cliquez sur ajouter/mise &#224; jour
-</ UL>
+    <UL>
+    <LI> Cochez la case "inclus" &#224; c&#244;t&#233; de chaque capteur que vous voulez
+    inclure dans le groupe. Vous pouvez cliquer sur les titres au sommet de la
+    colonnes pour les trier si vous avez beaucoup de capteurs &#224; parcourir.
+    <LI> Mettez un nom de capteur unique au groupe dans la case en bas. Pas
+     de format particuli&#232;rement requis, mais il ne peut pas reproduire celui que vous avez d&#233;j&#224; d&#233;fini.
+    <LI> Cliquez sur ajouter/mise &#224; jour
+    </UL>
 <P>
 Pour voir un groupe de capteurs que vous avez d&#233;j&#224; d&#233;fini, mettre son nom dans la
 Zone Nom du groupe, et cliquez sur Afficher. Vous pouvez ensuite modifier les cases pour
@@ -57,8 +56,11 @@ vos modifications.
 N'oubliez pas de sauvegarder vos modifications d'une nouvelle configuration ou d'un fichier du panneau avant de quitter le programme!
 <P>
 Ceci est la page d'aide help/fr/package/jmri/jmrit/sensorgroup/SensorGroupFrame.shtml
+</P>
 
 <!--#include virtual="/Footer" -->
+        </div>
+      </div>
 </body>
 </html>
 

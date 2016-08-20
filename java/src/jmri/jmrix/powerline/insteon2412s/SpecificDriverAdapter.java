@@ -1,4 +1,3 @@
-// SpecificDriverAdapter.java
 package jmri.jmrix.powerline.insteon2412s;
 
 import java.io.DataInputStream;
@@ -26,7 +25,6 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author	Ken Cameron, (C) 2009, sensors from poll replies Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision$
  */
 public class SpecificDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -74,12 +72,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -196,9 +189,6 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
         tc.connectPort(this);
         // Configure the form of serial address validation for this connection
         this.getSystemConnectionMemo().setSerialAddress(new jmri.jmrix.powerline.SerialAddress(this.getSystemConnectionMemo()));
-
-        // declare up
-        jmri.jmrix.powerline.ActiveFlag.setActive();
     }
 
     /**

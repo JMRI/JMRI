@@ -1,4 +1,3 @@
-// NullAudioSource.java
 package jmri.jmrit.audio;
 
 import javax.vecmath.Vector3f;
@@ -24,14 +23,9 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class NullAudioSource extends AbstractAudioSource {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7475706869819530598L;
     /**
      * True if we've been initialised
      */
@@ -179,5 +173,3 @@ public class NullAudioSource extends AbstractAudioSource {
     private static final Logger log = LoggerFactory.getLogger(NullAudioSource.class.getName());
 
 }
-
-/* $(#)NullAudioSource.java */

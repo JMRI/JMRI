@@ -1,4 +1,3 @@
-// SwingTestCaseTest.java
 package jmri.util;
 
 import java.awt.Dimension;
@@ -20,7 +19,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.util.SwingTestCase class.
  *
  * @author	Bob Jacobsen Copyright 2009
- * @version	$Revision$
  */
 public class SwingTestCaseTest extends SwingTestCase {
 
@@ -205,7 +203,7 @@ public class SwingTestCaseTest extends SwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SwingTestCaseTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

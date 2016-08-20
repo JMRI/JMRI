@@ -1,4 +1,3 @@
-// FollowerPanel.java
 package jmri.jmrit.ussctc;
 
 import java.awt.event.ActionEvent;
@@ -17,14 +16,9 @@ import org.slf4j.LoggerFactory;
  * machines.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version	$Revision$
  */
 public class FollowerPanel extends BasePanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4276657325541090103L;
     JTextField outputName;
     JTextField sensorName;
     JTextField vetoName;

@@ -1,15 +1,17 @@
-// ManagerDefaultSelector.java
 package jmri.managers;
 
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Locale;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.AddressedProgrammerManager;
 import jmri.CommandStation;
+import jmri.ConfigureManager;
 import jmri.ConsistManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
@@ -17,9 +19,11 @@ import jmri.PowerManager;
 import jmri.ProgrammerManager;
 import jmri.ThrottleManager;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.spi.AbstractPreferencesProvider;
+import jmri.util.prefs.AbstractPreferencesManager;
+import jmri.util.prefs.InitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,10 +43,9 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2010
  * @author Randall Wood Copyright (C) 2015
- * @version	$Revision$
  * @since 2.9.4
  */
-public class ManagerDefaultSelector extends AbstractPreferencesProvider {
+public class ManagerDefaultSelector extends AbstractPreferencesManager {
 
     public final Hashtable<Class<?>, String> defaults = new Hashtable<>();
 
@@ -52,6 +55,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
                 case "ConnectionNameChanged":
                     String oldName = (String) e.getOldValue();
                     String newName = (String) e.getNewValue();
+                    log.debug("ConnectionNameChanged from \"{}\" to \"{}\"", oldName, newName);
                     defaults.keySet().stream().forEach((c) -> {
                         String connectionName = this.defaults.get(c);
                         if (connectionName.equals(oldName)) {
@@ -64,37 +68,44 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
                     if (newState) {
                         SystemConnectionMemo memo = (SystemConnectionMemo) e.getSource();
                         String disabledName = memo.getUserName();
-                        ArrayList<Class<?>> tmpArray = new ArrayList<>();
-                        defaults.keySet().stream().forEach((c) -> {
-                            String connectionName = ManagerDefaultSelector.this.defaults.get(c);
-                            if (connectionName.equals(disabledName)) {
-                                log.warn("Connection " + disabledName + " has been disabled, we shall remove it as the default for " + c);
-                                tmpArray.add(c);
-//                                ManagerDefaultSelector.instance.defaults.remove(c);
-                            }
-                        });
-                        tmpArray.stream().forEach((tmpArray1) -> {
-                            ManagerDefaultSelector.this.defaults.remove(tmpArray1);
-                        });
+                        log.debug("ConnectionDisabled true: \"{}\"", disabledName);
+                        removeConnectionAsDefault(disabledName);
                     }
                     break;
                 case "ConnectionRemoved":
                     String removedName = (String) e.getOldValue();
-                    ArrayList<Class<?>> tmpArray = new ArrayList<>();
-                    defaults.keySet().stream().forEach((c) -> {
-                        String connectionName = ManagerDefaultSelector.this.defaults.get(c);
-                        if (connectionName.equals(removedName)) {
-                            log.warn("Connection " + removedName + " has been removed, we shall remove it as the default for " + c);
-                            //ManagerDefaultSelector.instance.defaults.remove(c);
-                            tmpArray.add(c);
-                        }
-                    });
-                    tmpArray.stream().forEach((tmpArray1) -> {
-                        ManagerDefaultSelector.this.defaults.remove(tmpArray1);
-                    });
+                    log.debug("ConnectionRemoved for \"{}\"", removedName);
+                    removeConnectionAsDefault(removedName);
+                    break;
+                case "ConnectionAdded":
+                    // check for special case of anything else then Internal
+                    List<SystemConnectionMemo> list = InstanceManager.getList(SystemConnectionMemo.class);
+                    if (list.size() == 2 && list.get(1) instanceof InternalSystemConnectionMemo) {
+                        log.debug("First real system added, reset defaults");
+                        String name = list.get(1).getUserName();
+                        removeConnectionAsDefault(name);
+                    }
+                    break;
+                default:
+                    log.debug("ignoring notification of \"{}\"", e.getPropertyName());
                     break;
             }
-            this.propertyChangeSupport.firePropertyChange("Updated", null, null);
+            this.firePropertyChange("Updated", null, null);
+        });
+    }
+
+    // remove connection's record
+    void removeConnectionAsDefault(String removedName) {
+        ArrayList<Class<?>> tmpArray = new ArrayList<>();
+        defaults.keySet().stream().forEach((c) -> {
+            String connectionName = ManagerDefaultSelector.this.defaults.get(c);
+            if (connectionName.equals(removedName)) {
+                log.debug("Connection " + removedName + " has been removed as the default for " + c);
+                tmpArray.add(c);
+            }
+        });
+        tmpArray.stream().forEach((tmpArray1) -> {
+            ManagerDefaultSelector.this.defaults.remove(tmpArray1);
         });
     }
 
@@ -125,6 +136,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
     public void setDefault(Class<?> managerClass, String userName) {
         for (Item item : knownManagers) {
             if (item.managerClass.equals(managerClass)) {
+                log.debug("   setting default for \"{}\" to \"{}\" by request", managerClass, userName);
                 defaults.put(managerClass, userName);
                 return;
             }
@@ -133,14 +145,16 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
     }
 
     /**
-     * load into InstanceManager
+     * Load into InstanceManager
+     *
+     * @return an exception that can be passed to the user or null if no errors
+     *         occur
      */
-    @SuppressWarnings("unchecked")
-    public void configure() {
+    @CheckForNull
+    public InitializationException configure() {
+        InitializationException error = null;
+        log.debug("configure defaults into InstanceManager");
         List<SystemConnectionMemo> connList = InstanceManager.getList(SystemConnectionMemo.class);
-        if (connList == null) {
-            return; // nothing to do 
-        }
         for (Class<?> c : defaults.keySet()) {
             // 'c' is the class to load
             String connectionName = this.defaults.get(c);
@@ -151,7 +165,15 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
                 if (testName.equals(connectionName)) {
                     found = true;
                     // match, store
-                    InstanceManager.setDefault(c, memo.get(c));
+                    try {
+                        log.debug("   setting default for \"{}\" to \"{}\" in configure", c, memo.get(c));
+                        InstanceManager.setDefault(c, memo.get(c));
+                    } catch (NullPointerException ex) {
+                        String englishMsg = Bundle.getMessage(Locale.ENGLISH, "ErrorNullDefault", memo.getUserName(), c); // NOI18N
+                        String localizedMsg = Bundle.getMessage("ErrorNullDefault", memo.getUserName(), c); // NOI18N
+                        error = new InitializationException(englishMsg, localizedMsg);
+                        log.warn("SystemConnectionMemo for {} ({}) provides a null {} instance", memo.getUserName(), memo.getClass(), c);
+                    }
                     break;
                 }
             }
@@ -160,13 +182,14 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
              * has currently been set.
              */
             if (!found) {
+                log.debug("!found, so resetting");
                 String currentName = null;
-                if (c == ThrottleManager.class && InstanceManager.throttleManagerInstance() != null) {
+                if (c == ThrottleManager.class && InstanceManager.getOptionalDefault(ThrottleManager.class) != null) {
                     currentName = InstanceManager.throttleManagerInstance().getUserName();
-                } else if (c == PowerManager.class && InstanceManager.powerManagerInstance() != null) {
-                    currentName = InstanceManager.powerManagerInstance().getUserName();
-                } else if (c == ProgrammerManager.class && InstanceManager.programmerManagerInstance() != null) {
-                    currentName = InstanceManager.programmerManagerInstance().getUserName();
+                } else if (c == PowerManager.class && InstanceManager.getOptionalDefault(PowerManager.class) != null) {
+                    currentName = InstanceManager.getDefault(PowerManager.class).getUserName();
+                } else if (c == ProgrammerManager.class && InstanceManager.getOptionalDefault(ProgrammerManager.class) != null) {
+                    currentName = InstanceManager.getDefault(ProgrammerManager.class).getUserName();
                 }
                 if (currentName != null) {
                     log.warn("The configured " + connectionName + " for " + c + " can not be found so will use the default " + currentName);
@@ -174,8 +197,12 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
                 }
             }
         }
+        return error;
     }
 
+    // Define set of items that we remember defaults for, manually maintained because
+    // there are lots of JMRI-internal types of no interest to the user and/or not system-specific.
+    // This grows if you add something to the SystemConnectionMemo system
     final public Item[] knownManagers = new Item[]{
         new Item("Throttles", ThrottleManager.class),
         new Item("<html>Power<br>Control</html>", PowerManager.class),
@@ -186,7 +213,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
     };
 
     @Override
-    public void initialize(Profile profile) {
+    public void initialize(Profile profile) throws InitializationException {
         if (!this.isInitialized(profile)) {
             Preferences settings = ProfileUtils.getPreferences(profile, this.getClass(), true).node("defaults"); // NOI18N
             try {
@@ -202,9 +229,15 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
             } catch (BackingStoreException ex) {
                 log.info("Unable to read preferences for Default Selector.");
             }
-            this.configure();
-            InstanceManager.configureManagerInstance().registerPref(this); // allow ProfileConfig.xml to be written correctly
-            this.setIsInitialized(profile, true);
+            InitializationException ex = this.configure();
+            ConfigureManager manager = InstanceManager.getOptionalDefault(ConfigureManager.class);
+            if (manager != null) {
+                manager.registerPref(this); // allow ProfileConfig.xml to be written correctly
+            }
+            this.setInitialized(profile, true);
+            if (ex != null) {
+                throw ex;
+            }
         }
     }
 
@@ -225,7 +258,6 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
 
         public String typeName;
         public Class<?> managerClass;
-        public boolean proxy;
 
         Item(String typeName, Class<?> managerClass) {
             this.typeName = typeName;
@@ -248,5 +280,3 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
 
     private final static Logger log = LoggerFactory.getLogger(ManagerDefaultSelector.class.getName());
 }
-
-/* @(#)ManagerDefaultSelector.java */

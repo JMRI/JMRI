@@ -1,4 +1,3 @@
-// SpeedoConsoleFrame.java
 package jmri.jmrix.bachrus;
 
 import java.awt.BorderLayout;
@@ -54,7 +53,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Andrew Crosland Copyright (C) 2010
  * @author	Dennis Miller Copyright (C) 2015
- * @version	$Revision$
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         ThrottleListener,
@@ -176,7 +174,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     /*
      * At low speed, readings arrive less often and less filtering
      * is applied to minimise the delay in updating the display
-     * 
+     *
      * Speed measurement is split into 4 ranges with an overlap, tp
      * prevent "hunting" between the ranges.
      */
@@ -247,8 +245,11 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     SpeedoTrafficController tc = null;
     String replyString;
 
-    public SpeedoConsoleFrame() {
+    private SpeedoSystemConnectionMemo _memo = null;
+
+    public SpeedoConsoleFrame(SpeedoSystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
     protected String title() {
@@ -256,34 +257,31 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     }
 
     public void dispose() {
-        SpeedoTrafficController.instance().removeSpeedoListener(this);
+        _memo.getTrafficController().removeSpeedoListener(this);
         super.dispose();
     }
 
+    // FIXME: Why does the if statement in this method include a direct false?
+    @SuppressWarnings("unused")
     public void initComponents() throws Exception {
         setTitle(title());
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // What services do we have?
         dccServices = BASIC;
-        if (InstanceManager.programmerManagerInstance() != null
-                && InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
-            prog = InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+        if (InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) != null
+                && InstanceManager.getDefault(jmri.ProgrammerManager.class).isGlobalProgrammerAvailable()) {
+            prog = InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
             dccServices |= PROG;
         }
-        if (false /*jmri.InstanceManager.commandStationInstance() != null*/) {
-            // We'll use the command station to send explicit speed steps
-            commandStation = InstanceManager.commandStationInstance();
-            log.info("Using CommandStation interface for profiling");
-            dccServices |= COMMAND;
-        } else if (InstanceManager.throttleManagerInstance() != null) {
+        if (InstanceManager.getOptionalDefault(jmri.ThrottleManager.class) != null) {
             // otherwise we'll send speed commands
             log.info("Using Throttle interface for profiling");
             dccServices |= THROTTLE;
         }
 
-        if (InstanceManager.powerManagerInstance() != null) {
-            pm = InstanceManager.powerManagerInstance();
+        if (InstanceManager.getOptionalDefault(jmri.PowerManager.class) != null) {
+            pm = InstanceManager.getDefault(jmri.PowerManager.class);
             pm.addPropertyChangeListener(this);
         }
 
@@ -480,7 +478,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         rosterBox = new GlobalRosterEntryComboBox();
         rosterBox.setNonSelectedItem(rb.getString("NoLocoSelected"));
         rosterBox.setToolTipText(rb.getString("TTSelectLocoFromRoster"));
-        /* 
+        /*
          Using an ActionListener didn't select a loco from the ComboBox properly
          so changed it to a PropertyChangeListener approach modeled on the code
          in CombinedLocoSelPane class, layoutRosterSelection method, which is known to work.
@@ -679,7 +677,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         }
 
         // connect to TrafficController
-        tc = SpeedoTrafficController.instance();
+        tc = _memo.getTrafficController();
         tc.addSpeedoListener(this);
 
         // add help menu to window
@@ -771,7 +769,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      * Handle "replies" from the hardware. In fact, all the hardware does is
      * send a constant stream of unsolicited speed updates.
      *
-     * @param l
      */
     public synchronized void reply(SpeedoReply l) {  // receive a reply message and log it
         //log.debug("Speedo reply " + l.toString());

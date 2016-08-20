@@ -1,4 +1,3 @@
-// LocoNetInterfaceScaffold.java
 package jmri.jmrix.loconet;
 
 import java.util.Vector;

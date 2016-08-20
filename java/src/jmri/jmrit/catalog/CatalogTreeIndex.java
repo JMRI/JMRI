@@ -1,4 +1,3 @@
-// CatalogTreeIndex.java
 package jmri.jmrit.catalog;
 
 import java.util.HashMap;
@@ -15,11 +14,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class CatalogTreeIndex extends AbstractCatalogTree {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -421977014689495815L;
 
     public CatalogTreeIndex(String sysName, String userName) {
 
@@ -48,42 +42,36 @@ public class CatalogTreeIndex extends AbstractCatalogTree {
         }
         insertNodeInto(newNode, pParent, pParent.getChildCount());
     }
-    /*
-     public void insertNodes(String rootName, String pathToRoot) {
-     CatalogTreeNode root = (CatalogTreeNode)getRoot();
-     insertNodes(rootName, pathToRoot, root);
-     }
-     */
 
-    public void setProperty(Object key, Object value) {
+    public void setProperty(String key, Object value) {
         if (parameters == null) {
-            parameters = new HashMap<Object, Object>();
+            parameters = new HashMap<String, Object>();
         }
         parameters.put(key, value);
     }
 
-    public Object getProperty(Object key) {
+    public Object getProperty(String key) {
         if (parameters == null) {
-            return null;
+            parameters = new HashMap<String, Object>();
         }
         return parameters.get(key);
     }
 
-    public java.util.Set<Object> getPropertyKeys() {
+    public java.util.Set<String> getPropertyKeys() {
         if (parameters == null) {
-            return null;
+            parameters = new HashMap<String, Object>();
         }
         return parameters.keySet();
     }
 
-    public void removeProperty(Object key) {
+    public void removeProperty(String key) {
         if (parameters == null || key == null) {
             return;
         }
         parameters.remove(key);
     }
 
-    HashMap<Object, Object> parameters = null;
+    HashMap<String, Object> parameters = null;
 
     private final static Logger log = LoggerFactory.getLogger(CatalogTreeIndex.class.getName());
 }

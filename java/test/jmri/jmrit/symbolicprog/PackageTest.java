@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.symbolicprog;
 
 import jmri.InstanceManager;
@@ -13,7 +12,6 @@ import junit.framework.TestSuite;
  * Test the jmri.jmrix.symbolicprog package.
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -22,7 +20,7 @@ public class PackageTest extends TestCase {
         // initialize the system
         Programmer p = new ProgDebugger();
         InstanceManager.setProgrammerManager(new DefaultProgrammerManager(p));
-        assertTrue(InstanceManager.programmerManagerInstance().getGlobalProgrammer() == p);
+        assertTrue(InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer() == p);
     }
 
     // from here down is testing infrastructure
@@ -33,7 +31,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests, including others in the package
@@ -58,6 +56,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.symbolicprog.CombinedLocoSelListPaneTest.suite());
 
         suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.symbolicprog.configurexml.PackageTest.class));
         return suite;
     }
 

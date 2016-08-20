@@ -1,13 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- Translated by Blorec Hervé le 2011-22-05-->
-
+<!-- Copyright ($Author$) 2016 -->
+<!-- Translated by Moi le 2016-17-06-->
 <title>JMRI: ???Page Title</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" CONTENT="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> <!-- No UTF-8 under html4-strict -->
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -26,9 +25,7 @@ JMRI: Titre Page???
 
 Contenu????
 
-Ce fichier indique la matière en haut et en bas d'une page simple, sans menu latéral (sur le web).
-
-
+Ce fichier indique la mati&egrave;re en haut et en bas d&apos;une page simple, sans menu lat&eacute;ral (sur le web).
 
 
     

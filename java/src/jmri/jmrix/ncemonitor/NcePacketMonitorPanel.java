@@ -1,4 +1,3 @@
-// NcePacketMonitorFrame.java
 package jmri.jmrix.ncemonitor;
 
 import java.awt.Dimension;
@@ -37,15 +36,9 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author	Ken Cameron Copyright (C) 2010 derived from -
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  */
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "serialStream is access from separate thread, and this class isn't used much")
 public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements NcePanelInterface {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8995209813681779828L;
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ncemonitor.NcePacketMonitorBundle");
 

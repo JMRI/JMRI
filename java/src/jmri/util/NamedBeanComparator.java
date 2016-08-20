@@ -15,11 +15,6 @@ import jmri.NamedBean;
  */
 public class NamedBeanComparator extends SystemNameComparator {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -234644279136758942L;
-
     public NamedBeanComparator() {
     }
 

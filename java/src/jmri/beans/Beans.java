@@ -1,6 +1,6 @@
-// Beans.java
 package jmri.beans;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.IndexedPropertyDescriptor;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author rhwood
  */
-@SuppressWarnings("NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Intentional pattern")
 public class Beans extends java.beans.Beans {
 
     private final static Logger log = LoggerFactory.getLogger(Beans.class.getName());
@@ -33,10 +33,10 @@ public class Beans extends java.beans.Beans {
      * otherwise it calls
      * {@link jmri.beans.Beans#setIntrospectedIndexedProperty(java.lang.Object, java.lang.String, int, java.lang.Object)}
      *
-     * @param bean
-     * @param key
-     * @param index
-     * @param value
+     * @param bean  The bean to update.
+     * @param key   The indexed property to set.
+     * @param index The element to use.
+     * @param value The value to set.
      * @see jmri.beans.BeanInterface#setIndexedProperty(java.lang.String, int,
      * java.lang.Object)
      */
@@ -65,10 +65,10 @@ public class Beans extends java.beans.Beans {
      * but is public so it can be accessed by any potential implementation of
      * that method.
      *
-     * @param bean
-     * @param key
-     * @param index
-     * @param value
+     * @param bean  The bean to update.
+     * @param key   The indexed property to set.
+     * @param index The element to use.
+     * @param value The value to set.
      */
     public static void setIntrospectedIndexedProperty(Object bean, String key, int index, Object value) {
         if (bean != null && key != null) {
@@ -96,9 +96,9 @@ public class Beans extends java.beans.Beans {
      * {@link java.lang.ArrayIndexOutOfBoundsException} do to the inability to
      * get the size of the indexed property using introspection.
      *
-     * @param bean
-     * @param key
-     * @param index
+     * @param bean  The bean to inspect.
+     * @param key   The indexed property to get.
+     * @param index The element to return.
      * @return the value at <i>index</i> or null
      */
     public static Object getIndexedProperty(Object bean, String key, int index) {
@@ -119,9 +119,9 @@ public class Beans extends java.beans.Beans {
      * but is public so it can be accessed by any potential implementation of
      * that method.
      *
-     * @param bean
-     * @param key
-     * @param index
+     * @param bean  The bean to inspect.
+     * @param key   The indexed property to get.
+     * @param index The element to return.
      * @return the value at <i>index</i> or null
      */
     public static Object getIntrospectedIndexedProperty(Object bean, String key, int index) {
@@ -135,8 +135,9 @@ public class Beans extends java.beans.Beans {
                 }
                 // catch only introspection-related exceptions, and allow all other to pass through
             } catch (InvocationTargetException ex) {
-                if (ex.getCause() instanceof IndexOutOfBoundsException) {
-                    throw (IndexOutOfBoundsException) ex.getCause();
+                Throwable tex = ex.getCause();
+                if (tex instanceof IndexOutOfBoundsException) {
+                    throw (IndexOutOfBoundsException) tex;
                 } else {
                     log.warn(ex.toString(), ex);
                 }
@@ -155,9 +156,9 @@ public class Beans extends java.beans.Beans {
      * otherwise it calls
      * {@link jmri.beans.Beans#setIntrospectedProperty(java.lang.Object, java.lang.String, java.lang.Object)}.
      *
-     * @param bean
-     * @param key
-     * @param value
+     * @param bean  The bean to update.
+     * @param key   The property to set.
+     * @param value The value to set.
      * @see jmri.beans.BeanInterface#setProperty(java.lang.String,
      * java.lang.Object)
      */
@@ -184,9 +185,9 @@ public class Beans extends java.beans.Beans {
      * but is public so it can be accessed by any potential implementation of
      * that method.
      *
-     * @param bean
-     * @param key
-     * @param value
+     * @param bean  The bean to update.
+     * @param key   The property to set.
+     * @param value The value to set.
      */
     public static void setIntrospectedProperty(Object bean, String key, Object value) {
         if (bean != null && key != null) {
@@ -215,8 +216,8 @@ public class Beans extends java.beans.Beans {
      * it calls
      * {@link jmri.beans.Beans#getIntrospectedProperty(java.lang.Object, java.lang.String)}.
      *
-     * @param bean
-     * @param key
+     * @param bean The bean to inspect.
+     * @param key  The property to get.
      * @return value of property <i>key</i>
      * @see jmri.beans.BeanInterface#getProperty(java.lang.String)
      */
@@ -244,8 +245,8 @@ public class Beans extends java.beans.Beans {
      * public so it can be accessed by any potential implementation of that
      * method.
      *
-     * @param bean
-     * @param key
+     * @param bean The bean to inspect.
+     * @param key  The property to get.
      * @return value of property <i>key</i> or null
      */
     public static Object getIntrospectedProperty(Object bean, String key) {
@@ -273,8 +274,8 @@ public class Beans extends java.beans.Beans {
      * it calls
      * {@link jmri.beans.Beans#hasIntrospectedProperty(java.lang.Object, java.lang.String)}.
      *
-     * @param bean
-     * @param key
+     * @param bean The bean to inspect.
+     * @param key  The property key to check for.
      * @return true if <i>bean</i> has property <i>key</i>
      */
     public static boolean hasProperty(Object bean, String key) {
@@ -293,8 +294,8 @@ public class Beans extends java.beans.Beans {
      * otherwise it calls
      * {@link jmri.beans.Beans#hasIntrospectedIndexedProperty(java.lang.Object, java.lang.String)}.
      *
-     * @param bean
-     * @param key
+     * @param bean The bean to inspect.
+     * @param key  The indexed property to check for.
      * @return true if <i>bean</i> has indexed property <i>key</i>
      */
     public static boolean hasIndexedProperty(Object bean, String key) {
@@ -319,8 +320,8 @@ public class Beans extends java.beans.Beans {
      * public so it can be accessed by any potential implementation of that
      * method.
      *
-     * @param bean
-     * @param key
+     * @param bean The bean to inspect.
+     * @param key  The property to check for.
      * @return true if <i>bean</i> has property <i>key</i>
      */
     public static boolean hasIntrospectedProperty(Object bean, String key) {
@@ -354,8 +355,8 @@ public class Beans extends java.beans.Beans {
      * but is public so it can be accessed by any potential implementation of
      * that method.
      *
-     * @param bean
-     * @param key
+     * @param bean The bean to inspect.
+     * @param key  The indexed property to check for.
      * @return true if <i>bean</i> has indexed property <i>key</i>
      */
     public static boolean hasIntrospectedIndexedProperty(Object bean, String key) {
@@ -396,7 +397,7 @@ public class Beans extends java.beans.Beans {
      * it can be accessed by any potential implementation of that method.
      *
      * @param bean The bean to inspect.
-     * @return
+     * @return {@link Set} of property names
      */
     public static Set<String> getIntrospectedPropertyNames(Object bean) {
         HashSet<String> names = new HashSet<>();
@@ -417,7 +418,7 @@ public class Beans extends java.beans.Beans {
     /**
      * Test that <i>bean</i> implements {@link jmri.beans.BeanInterface}.
      *
-     * @param bean
+     * @param bean The bean to inspect.
      * @return true if <i>bean</i> implements BeanInterface.
      */
     public static boolean implementsBeanInterface(Object bean) {

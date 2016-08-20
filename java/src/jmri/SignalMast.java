@@ -8,7 +8,7 @@ import java.util.Vector;
  * treated as a single signal. (Imagine several heads attached to a single mast,
  * though other implementations are possible)
  * <P>
- * A mast presents an Aspect, as that's a composite of the appearance of the
+ * A mast presents an Aspect, as that's a composite of the appearance(s) of the
  * entire signal.
  * <P>
  * This class has three bound parameters:
@@ -49,7 +49,6 @@ import java.util.Vector;
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2008
  * @author	Pete Cressman Copyright (C) 2009
- * @version	$Revision$
  */
 public interface SignalMast extends NamedBean {
 
@@ -103,4 +102,3 @@ public interface SignalMast extends NamedBean {
 
     public boolean allowUnLit();
 }
-/* @(#)SignalMast.java */

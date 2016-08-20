@@ -1,4 +1,3 @@
-// EntryPoint.java
 package jmri;
 
 import org.slf4j.Logger;
@@ -19,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * Entry Point is loaded from a configuration file.
  *
  * @author	Dave Duchamp Copyright (C) 2008
- * @version	$Revision$
  */
 public class EntryPoint {
 
@@ -57,11 +55,11 @@ public class EntryPoint {
     private String fromBlockName = "";
 
     private void initialize() {
-        mBlock = jmri.InstanceManager.blockManagerInstance().getBySystemName(blockName);
+        mBlock = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(blockName);
         if (mBlock == null) {
             log.error("Missing block - " + blockName + " - when initializing entry point");
         }
-        mFromBlock = jmri.InstanceManager.blockManagerInstance().getBySystemName(fromBlockName);
+        mFromBlock = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(fromBlockName);
         if (mFromBlock == null) {
             log.error("Missing block - " + fromBlockName + " - when initializing entry point");
         }
@@ -155,5 +153,3 @@ public class EntryPoint {
 
     private final static Logger log = LoggerFactory.getLogger(EntryPoint.class.getName());
 }
-
-/* @(#)EntryPoint.java */

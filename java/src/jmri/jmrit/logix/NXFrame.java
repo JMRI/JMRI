@@ -27,24 +27,23 @@ import org.slf4j.LoggerFactory;
  * <P>
  * The route can be defined in a form or by mouse clicking on the OBlock
  * IndicatorTrack icons.
- * <P>
+ * <BR>
  * <hr>
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * </P>
  *
  * @author  Pete Cressman  Copyright (C) 2009, 2010, 2015
  */
 public class NXFrame extends WarrantRoute {
 
-    private static final long serialVersionUID = -8971792418011219112L;
     private float _scale = 87.1f;
 
     JTextField _trainName = new JTextField(6);
@@ -98,7 +97,7 @@ public class NXFrame extends WarrantRoute {
         _controlPanel.add(makeBlockPanels());
         _controlPanel.add(searchDepthPanel(false));
 
-        _autoRunPanel = makeAutoRunPanel(SignalSpeedMap.getMap().getInterpretation());
+        _autoRunPanel = makeAutoRunPanel(jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation());
         _maxSpeedBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 getBoxData();
@@ -210,17 +209,17 @@ public class NXFrame extends WarrantRoute {
                 throttleIncrLabel = "RampIncrement";
                 break;
             case SignalSpeedMap.SPEED_MPH:
-                float factor =  SignalSpeedMap.getMap().getDefaultThrottleFactor();
-                maxSpeed = Math.round(_maxSpeed*factor*_scale*2.2369363f*1000)/1000;
+                float factor =  jmri.InstanceManager.getDefault(SignalSpeedMap.class).getDefaultThrottleFactor();
+                maxSpeed = _maxSpeed*factor*_scale*2.2369363f; // 2.2369363 is 3.6 converted by mile/km
                 maxSpeedLabel = "MaxMph";
-                throttleIncr = Math.round(_throttleIncr*factor*_scale*2.2369363f*1000)/1000;
+                throttleIncr = _throttleIncr*factor*_scale*2.2369363f;
                 throttleIncrLabel = "MinMph";
                 break;
             case SignalSpeedMap.SPEED_KMPH:
-                factor =  SignalSpeedMap.getMap().getDefaultThrottleFactor();
-                maxSpeed = Math.round(_maxSpeed*factor*_scale*3.6f*1000)/1000;
+                factor =  jmri.InstanceManager.getDefault(SignalSpeedMap.class).getDefaultThrottleFactor();
+                maxSpeed = _maxSpeed*factor*_scale*3.6f;
                 maxSpeedLabel = "MaxKMph";
-                throttleIncr = Math.round(_throttleIncr*factor*_scale*3.6f*1000)/1000;
+                throttleIncr = _throttleIncr*factor*_scale*3.6f;
                 throttleIncrLabel = "MinKMph";
                 break;
             default:
@@ -393,7 +392,6 @@ public class NXFrame extends WarrantRoute {
         if (msg!=null) {
             JOptionPane.showMessageDialog(this, msg,
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            warrant = null;
         } else {
             closeFrame();           
             if (log.isDebugEnabled()) log.debug("Close Frame.");
@@ -467,15 +465,15 @@ public class NXFrame extends WarrantRoute {
             return Bundle.getMessage("MustBeFloat", text);             
         }
         String speedErr;
-        switch ( SignalSpeedMap.getMap().getInterpretation()) {
+        switch ( jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation()) {
             case SignalSpeedMap.SPEED_MPH:
-                float factor =  SignalSpeedMap.getMap().getDefaultThrottleFactor();
+                float factor =  jmri.InstanceManager.getDefault(SignalSpeedMap.class).getDefaultThrottleFactor();
                 _maxSpeed = maxSpeed/(factor*_scale*2.2369363f);
                 _minSpeed = minSpeed/(factor*_scale*2.2369363f);
                 speedErr = Bundle.getMessage("speedMph");
                 break;
             case SignalSpeedMap.SPEED_KMPH:
-                factor =  SignalSpeedMap.getMap().getDefaultThrottleFactor();
+                factor =  jmri.InstanceManager.getDefault(SignalSpeedMap.class).getDefaultThrottleFactor();
                 _maxSpeed = maxSpeed/(factor*_scale*3.6f);
                 _minSpeed = minSpeed/(factor*_scale*3.6f);
                 speedErr = Bundle.getMessage("speedKmph");
@@ -539,7 +537,7 @@ public class NXFrame extends WarrantRoute {
         float speed = 0.0f;
         float rampLength = 0.0f;
         int numSteps = 0;
-        float factor =  SignalSpeedMap.getMap().getDefaultThrottleFactor();
+        float factor =  jmri.InstanceManager.getDefault(SignalSpeedMap.class).getDefaultThrottleFactor();
         while (speed < _maxSpeed) {
             float dist;
             if (speedProfile != null) {
@@ -595,7 +593,7 @@ public class NXFrame extends WarrantRoute {
         
         // estimate for blocks of zero length - an estimate of ramp length
         boolean isForward = _forward.isSelected();
-        float scaleFactor =  SignalSpeedMap.getMap().getDefaultThrottleFactor();
+        float scaleFactor =  jmri.InstanceManager.getDefault(SignalSpeedMap.class).getDefaultThrottleFactor();
         jmri.jmrit.roster.RosterEntry ent = getTrain();
         RosterSpeedProfile speedProfile = null;
         if (ent!=null) {

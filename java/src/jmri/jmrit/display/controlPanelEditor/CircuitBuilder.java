@@ -54,7 +54,6 @@ import org.slf4j.LoggerFactory;
 /**
  * <P>
  * @author Pete Cressman Copyright: Copyright (c) 2011
- * @version $Revision: 21062 $
  *
  */
 public class CircuitBuilder {
@@ -1073,7 +1072,7 @@ public class CircuitBuilder {
         block.dispose();
     }
 
-    /**
+    /*
      * *************** Overriden methods of Editor *******************
      *
      * public void paintTargetPanel(Graphics g) { Graphics2D g2d =

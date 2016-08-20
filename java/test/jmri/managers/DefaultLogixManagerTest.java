@@ -1,4 +1,3 @@
-// DefaultLogixManagerTest.java
 package jmri.managers;
 
 import junit.framework.Test;
@@ -43,7 +42,7 @@ public class DefaultLogixManagerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", DefaultLogixManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

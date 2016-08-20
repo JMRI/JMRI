@@ -28,10 +28,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4047912812578857980L;
     //    JTextField _text;
     DecoratorPanel _decorator;
 
@@ -42,6 +38,7 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
 
     public void init() {
         if (!_initialized) {
+            if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
             Thread.yield();
             JPanel blurb = new JPanel();
             blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
@@ -69,10 +66,6 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
      */
     class DragDecoratorLabel extends PositionableLabel implements DragGestureListener, DragSourceListener, Transferable {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -7325043467502758054L;
         DataFlavor dataFlavor;
 
         public DragDecoratorLabel(String s, Editor editor) {

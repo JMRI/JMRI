@@ -1,4 +1,3 @@
-// PanelMenu.java
 package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright 2003, 2004, 2010
  * @author Dave Duchamp Copyright 2007
  * @author Pete Cressman Copyright 2010
- * @version $Revision$
  */
 public class PanelMenu extends JMenu {
 
@@ -75,6 +73,13 @@ public class PanelMenu extends JMenu {
             thisMenu = new PanelMenu();
         }
         return thisMenu;
+    }
+
+    /**
+     * Provide method to delete the refence to this menu
+     */
+    static public void dispose() {
+        thisMenu = null;
     }
 
     /**

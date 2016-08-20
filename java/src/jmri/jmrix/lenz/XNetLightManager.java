@@ -1,4 +1,3 @@
-// XNetLightManager.java
 package jmri.jmrix.lenz;
 
 import jmri.Light;
@@ -12,9 +11,8 @@ import org.slf4j.LoggerFactory;
  * System names are "XLnnnnn", where nnnnn is the bit number without padding.
  * <P>
  * Based in part on SerialLightManager.java
- *
  * @author	Paul Bender Copyright (C) 2008
- * @version	$Revision$
+ * @navassoc 1 - * jmri.jmrix.lenz.XNetLight
  */
 public class XNetLightManager extends AbstractLightManager {
 
@@ -124,5 +122,3 @@ public class XNetLightManager extends AbstractLightManager {
     private final static Logger log = LoggerFactory.getLogger(XNetLightManager.class.getName());
 
 }
-
-/* @(#)XNetLightManager.java */

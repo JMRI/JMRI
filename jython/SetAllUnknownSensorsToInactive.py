@@ -5,12 +5,17 @@
 
 import jmri
 
-# loop thru defined sensors, if unknown, set to inactive
+sCnt = 0
+chgCnt = 0
+
+# loop thru defined sensors, if UNKNOWN, set to INACTIVE
 list = sensors.getSystemNameList()
 for i in range(list.size()) :
+    sCnt += 1
     s = sensors.getSensor(list.get(i))
     cs = s.getKnownState()
     if cs == UNKNOWN :
+      chgCnt += 1
       s.setKnownState(INACTIVE)
-      print s.systemName + " set to INACTIVE"
+print str(sCnt) + " sensors found, " + str(chgCnt) + " changed to INACTIVE"
 

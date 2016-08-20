@@ -1,4 +1,3 @@
-// LnReporterTest.java
 package jmri.jmrix.loconet;
 
 import jmri.LocoAddress;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.loconet.LnReporter class.
  *
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision$
  */
 public class LnReporterTest extends TestCase {
 
@@ -84,7 +82,7 @@ public class LnReporterTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {LnReporterTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

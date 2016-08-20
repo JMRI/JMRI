@@ -89,9 +89,6 @@ public class CarRosterMenu extends JMenu {
                 previewAction.setEnabled(true);
                 break;
             case SELECTMENU:
-                printAction.setEnabled(true);
-                previewAction.setEnabled(true);
-                break;
             case ENTRYMENU:
                 printAction.setEnabled(true);
                 previewAction.setEnabled(true);

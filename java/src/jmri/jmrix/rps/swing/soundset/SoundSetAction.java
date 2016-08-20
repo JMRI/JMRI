@@ -1,4 +1,3 @@
-// SoundSetAction.java
 package jmri.jmrix.rps.swing.soundset;
 
 import java.awt.event.ActionEvent;
@@ -10,14 +9,8 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a SoundSetFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public class SoundSetAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3969609830068349700L;
 
     public SoundSetAction(String s) {
         super(s);
@@ -42,6 +35,3 @@ public class SoundSetAction extends AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(SoundSetAction.class.getName());
 
 }
-
-
-/* @(#)SoundSetAction.java */

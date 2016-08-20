@@ -6,7 +6,7 @@ import jmri.server.json.JsonConnection;
 /**
  * 
  * @author Randall Wood
- * @deprecated User {@link jmri.server.json.JsonClientHandler} instead.
+ * @deprecated Use {@link jmri.server.json.JsonClientHandler} instead.
  */
 @Deprecated
 public class JsonClientHandler extends jmri.server.json.JsonClientHandler {

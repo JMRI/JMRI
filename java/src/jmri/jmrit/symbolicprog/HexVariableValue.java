@@ -1,4 +1,3 @@
-// HexVariableValue.java
 package jmri.jmrit.symbolicprog;
 
 import java.util.HashMap;
@@ -10,7 +9,6 @@ import javax.swing.JLabel;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2014
  * @author	Dave Heap Copyright (C) 2015
- * @version $Revision$
  */
 public class HexVariableValue extends DecVariableValue {
 

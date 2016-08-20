@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * Loads and stores the operation setup using xml files.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision$
  */
 public class OperationsSetupXml extends OperationsXml {
 
@@ -29,23 +28,20 @@ public class OperationsSetupXml extends OperationsXml {
 
     public static synchronized OperationsSetupXml instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("OperationsSetupXml creating instance");
-            }
+            log.debug("OperationsSetupXml creating instance");
             // create and load
             _instance = new OperationsSetupXml();
             _instance.load();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("OperationsSetupXml returns instance {}", _instance);
         }
         return _instance;
     }
 
+    @Override
     public void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("writeFile {}", name);
-        }
+        log.debug("writeFile {}", name);
         // This is taken in large part from "Java and XML" page 368
         File file = findFile(name);
         if (file == null) {
@@ -103,10 +99,12 @@ public class OperationsSetupXml extends OperationsXml {
         Control.load(root);
     }
 
+    @Override
     public void setOperationsFileName(String name) {
         operationsFileName = name;
     }
 
+    @Override
     public String getOperationsFileName() {
         return operationsFileName;
     }
@@ -115,7 +113,9 @@ public class OperationsSetupXml extends OperationsXml {
 
     private final static Logger log = LoggerFactory.getLogger(OperationsSetupXml.class.getName());
 
-    public void dispose(){
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "for testing")
+    public void dispose() {
         _instance = null;
     }
 

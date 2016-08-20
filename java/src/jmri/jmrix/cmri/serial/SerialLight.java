@@ -1,9 +1,9 @@
-// SerialLight.java
 package jmri.jmrix.cmri.serial;
 
 import jmri.implementation.AbstractLight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * SerialLight.java
@@ -13,22 +13,19 @@ import org.slf4j.LoggerFactory;
  * Based in part on SerialTurnout.java
  *
  * @author Dave Duchamp Copyright (C) 2004
- * @version $Revision$
  */
 public class SerialLight extends AbstractLight {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2525373718284737564L;
+    CMRISystemConnectionMemo _memo = null;
 
     /**
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in SerialLightManager
      */
-    public SerialLight(String systemName) {
+    public SerialLight(String systemName,CMRISystemConnectionMemo memo) {
         super(systemName);
+        _memo = memo;
         // Initialize the Light
         initializeLight(systemName);
     }
@@ -38,8 +35,9 @@ public class SerialLight extends AbstractLight {
      * <P>
      * 'systemName' was previously validated in SerialLightManager
      */
-    public SerialLight(String systemName, String userName) {
+    public SerialLight(String systemName, String userName,CMRISystemConnectionMemo memo) {
         super(systemName, userName);
+        _memo = memo;
         initializeLight(systemName);
     }
 
@@ -67,7 +65,7 @@ public class SerialLight extends AbstractLight {
      * polled.
      */
     protected void doNewState(int oldState, int newState) {
-        SerialNode mNode = (SerialNode) SerialAddress.getNodeFromSystemName(getSystemName());
+        SerialNode mNode = (SerialNode) SerialAddress.getNodeFromSystemName(getSystemName(),_memo.getTrafficController());
         if (mNode != null) {
             if (newState == ON) {
                 mNode.setOutputBit(mBit, false);
@@ -81,5 +79,3 @@ public class SerialLight extends AbstractLight {
 
     private final static Logger log = LoggerFactory.getLogger(SerialLight.class.getName());
 }
-
-/* @(#)SerialLight.java */

@@ -1,17 +1,20 @@
-// CreateButtonModel.java
 package apps;
+
+import apps.startup.AbstractActionModel;
 
 /**
  * Creates a button when the program is started.
- * <P>
+ * <p>
  * The list of actions available is defined in the {@link AbstractActionModel}
- * superclass.
- * <P>
+ * superclass.</p>
+ * <p>
  * This is a separate class, even though it has no additional behavior, so that
- * persistence systems realize the type of data being stored.
+ * persistence systems realize the type of data being stored.</p>
+ * <p>
+ * This class remains in the {@code apps} package for historical reasons related
+ * to preferences storage.</p>
  *
  * @author	Bob Jacobsen Copyright 2003
- * @version $Revision$
  * @see apps.startup.CreateButtonModelFactory
  */
 public class CreateButtonModel extends AbstractActionModel {

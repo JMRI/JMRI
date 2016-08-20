@@ -1,4 +1,3 @@
-// QsiReplyTest.java
 package jmri.jmrix.qsi;
 
 import junit.framework.Assert;
@@ -11,9 +10,11 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen Copyright 2006, 2007
  *
- * @version $Revision$
  */
 public class QsiReplyTest extends TestCase {
+
+    private QsiSystemConnectionMemo memo = null;
+    private QsiTrafficController tc = null;
 
     public void testCreate() {
         QsiReply m = new QsiReply();
@@ -37,7 +38,7 @@ public class QsiReplyTest extends TestCase {
         m.setElement(1, 'o');
         m.setElement(2, 'm');
         m.setElement(3, ':');
-        Assert.assertEquals("string compare ", "43 6F 6D 3A ", m.toString());
+        Assert.assertEquals("string compare ", "43 6F 6D 3A ", m.toString(tc));
     }
 
     public void testSkipWhiteSpace() {
@@ -68,7 +69,7 @@ public class QsiReplyTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", QsiReplyTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -80,10 +81,20 @@ public class QsiReplyTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        memo = new QsiSystemConnectionMemo();
+        tc = new QsiTrafficControlScaffold(){
+            @Override
+            public boolean isSIIBootMode(){
+                return true;
+            }
+        };
+        memo.setQsiTrafficController(tc);
     }
 
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
 }

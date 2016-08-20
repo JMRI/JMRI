@@ -187,7 +187,7 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         menuBar.add(toolMenu);
         toolMenu.add(new AutomationResetAction(this));
         toolMenu.add(new AutomationCopyAction(automation));
@@ -199,6 +199,7 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
     }
 
     // Save, Delete, Add
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         stopCellEditing();
         if (_automation != null) {
@@ -362,6 +363,7 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
         resumeActionButton.setEnabled(b && !_automation.isRunning());
     }
 
+    @Override
     public void dispose() {
         if (_automation != null) {
             _automation.removePropertyChangeListener(this);
@@ -370,6 +372,7 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         //        if (Control.showProperty)
         log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

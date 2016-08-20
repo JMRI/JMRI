@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.powerline.serialdriver;
 
 import java.io.DataInputStream;
@@ -24,10 +23,8 @@ import purejavacomm.UnsupportedCommOperationException;
  * oaktree code.
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @author	Ken Cameron, (C) 2009, sensors from poll replies Converted to
- * multiple connection
+ * @author	Ken Cameron, (C) 2009, sensors from poll replies Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -37,7 +34,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         super(new SerialSystemConnectionMemo());
         option1Name = "Adapter";
         options.put(option1Name, new Option("Adapter", stdOption1Values));
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.POWERLINE;
+        this.manufacturerName = jmri.jmrix.powerline.SerialConnectionTypeList.POWERLINE;
     }
 
     public String openPort(String portName, String appName) {
@@ -78,12 +75,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -225,9 +217,6 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         tc.connectPort(this);
         // Configure the form of serial address validation for this connection
         this.getSystemConnectionMemo().setSerialAddress(new jmri.jmrix.powerline.SerialAddress(this.getSystemConnectionMemo()));
-
-        // declare up
-        jmri.jmrix.powerline.ActiveFlag.setActive();
     }
 
     // base class methods for the SerialPortController interface
@@ -313,11 +302,6 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     private boolean opened = false;
     InputStream serialStream = null;
 
-//    static public SerialDriverAdapter instance() {
-//        if (mInstance == null) mInstance = new SerialDriverAdapter();
-//        return mInstance;
-//    }
-//    static SerialDriverAdapter mInstance = null;
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

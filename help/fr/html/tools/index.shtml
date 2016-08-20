@@ -6,7 +6,7 @@
   <title>
  	JMRI: Tools
   </title>
-  <meta http-equiv=Content-Type content="text/html; charset= iso-8859-1">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
 
   <meta content="Bob Jacobsen" name="Author">
   <meta name="keywords" content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
@@ -24,6 +24,7 @@
   <div id="container">
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
       <div id="mainContent">
@@ -100,7 +101,7 @@ Pour un contr&#244;le plus puissants, combiner les raisonnements logiques
 LItin&#233;raires &#233;tend les capacit&#233;s des Itin&#233;raires par 
                      leur mise en oeuvre en tant que Logix. LItin&#233;raires peut &#234;tre d&#233;fini
                      avec un nombre illimit&#233; de capteurs, d'aiguillages, de Lumi&#232;res,
-                     et/ou TÃªte Signal pour des actions ou des contr&#244;les. LItin&#233;raire peut
+                     et/ou Tête Signal pour des actions ou des contr&#244;les. LItin&#233;raire peut
                      fournir un point de d&#233;part facile pour la cr&#233;ation de nouveaux Logix
                      car ils peuvent &#234;tre &#233;tendus pour inclure toute les
                      Capacit&#233;s de Logix.

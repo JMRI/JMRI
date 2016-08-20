@@ -27,7 +27,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
         option2Name = "Protocol";
         options.put(option2Name, new Option("Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions(), false));
         this.getSystemConnectionMemo().setUserName("OpenLCB");
-        setManufacturer(jmri.jmrix.DCCManufacturerList.OPENLCB);
+        setManufacturer(jmri.jmrix.openlcb.OlcbConnectionTypeList.OPENLCB);
     }
 
     /**

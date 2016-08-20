@@ -1,4 +1,3 @@
-// EasyDccTrafficControllerTest.java
 package jmri.jmrix.easydcc;
 
 import java.io.DataInputStream;
@@ -16,7 +15,6 @@ import junit.framework.TestSuite;
  * Description:	JUnit tests for the EasyDccTrafficController class
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2007, 2015
- * @version $Revision$
  */
 public class EasyDccTrafficControllerTest extends TestCase {
 
@@ -156,7 +154,7 @@ public class EasyDccTrafficControllerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", EasyDccTrafficControllerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

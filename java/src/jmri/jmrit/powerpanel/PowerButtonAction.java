@@ -1,4 +1,3 @@
-// PowerButtonAction.java
 package jmri.jmrit.powerpanel;
 
 import java.util.ResourceBundle;
@@ -9,14 +8,8 @@ import jmri.PowerManager;
  * Swing action to create and register a PowerPanelFrame object.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2010
- * @version $Revision$
  */
 public class PowerButtonAction extends javax.swing.AbstractAction implements java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2336270044595139511L;
 
     public PowerButtonAction(String title) {
         super(title);
@@ -30,23 +23,23 @@ public class PowerButtonAction extends javax.swing.AbstractAction implements jav
 
     void checkManager() {
         // disable ourself if there is no power Manager
-        if (jmri.InstanceManager.powerManagerInstance() == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.PowerManager.class) == null) {
             setEnabled(false);
         } else {
-            jmri.InstanceManager.powerManagerInstance().addPropertyChangeListener(this);
+            jmri.InstanceManager.getDefault(jmri.PowerManager.class).addPropertyChangeListener(this);
         }
     }
 
     void updateLabel() {
         try {
-            PowerManager p = jmri.InstanceManager.powerManagerInstance();
+            PowerManager p = jmri.InstanceManager.getDefault(jmri.PowerManager.class);
             if (p.getPower() != PowerManager.ON) {
                 putValue(Action.NAME, ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle").getString("ButtonSetOn"));
             } else {
                 putValue(Action.NAME, ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle").getString("ButtonSetOff"));
             }
             firePropertyChange(Action.NAME, "", getValue(Action.NAME));
-        } catch (Exception ex) {
+        } catch (jmri.JmriException ex) {
             return;
         }
     }
@@ -58,7 +51,7 @@ public class PowerButtonAction extends javax.swing.AbstractAction implements jav
     public void actionPerformed(java.awt.event.ActionEvent e) {
         try {
             // alternate power state, updating name
-            PowerManager p = jmri.InstanceManager.powerManagerInstance();
+            PowerManager p = jmri.InstanceManager.getOptionalDefault(jmri.PowerManager.class);
             if (p == null) {
                 return;
             }
@@ -74,5 +67,3 @@ public class PowerButtonAction extends javax.swing.AbstractAction implements jav
     }
 
 }
-
-/* @(#)PowerButtonAction.java */

@@ -33,10 +33,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SensorIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6172183103608993048L;
     static final public int UNKOWN_FONT_COLOR = 0x03;
     static final public int UNKOWN_BACKGROUND_COLOR = 0x04;
     static final public int ACTIVE_FONT_COLOR = 0x05;
@@ -113,11 +109,11 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
      * @param pName System/user name to lookup the sensor object
      */
     public void setSensor(String pName) {
-        if (InstanceManager.sensorManagerInstance() != null) {
-            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
-            if (sensor != null) {
+        if (InstanceManager.getOptionalDefault(jmri.SensorManager.class) != null) {
+            try {
+                Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
                 setSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
-            } else {
+            } catch (IllegalArgumentException ex) {
                 log.error("Sensor '" + pName + "' not available, icon won't see changes");
             }
         } else {
@@ -170,11 +166,11 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                 }
             }
             if (activeText == null) {
-                activeText = Bundle.getMessage("SensorActive");
+                activeText = Bundle.getMessage("SensorStateActive");
                 //textColorActive=Color.red;
             }
             if (inactiveText == null) {
-                inactiveText = Bundle.getMessage("SensorInactive");
+                inactiveText = Bundle.getMessage("SensorStateInactive");
                 //textColorInActive=Color.yellow;
             }
             if (inconsistentText == null) {
@@ -384,8 +380,8 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             if (isText() && !isIcon()) {
                 JMenu stateColor = new JMenu(Bundle.getMessage("StateColors"));
                 stateColor.add(stateMenu(Bundle.getMessage("Unknown"), UNKOWN_FONT_COLOR)); //Unknown
-                stateColor.add(stateMenu(Bundle.getMessage("SensorActive"), ACTIVE_FONT_COLOR)); //Active
-                stateColor.add(stateMenu(Bundle.getMessage("SensorInactive"), INACTIVE_FONT_COLOR)); //Inactive
+                stateColor.add(stateMenu(Bundle.getMessage("SensorStateActive"), ACTIVE_FONT_COLOR)); //Active
+                stateColor.add(stateMenu(Bundle.getMessage("SensorStateInactive"), INACTIVE_FONT_COLOR)); //Inactive
                 stateColor.add(stateMenu(Bundle.getMessage("Inconsistent"), INCONSISTENT_FONT_COLOR)); //Inconsistent
                 popup.add(stateColor);
             }
@@ -690,14 +686,14 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     protected HashMap<Integer, NamedIcon> cloneMap(HashMap<Integer, NamedIcon> map,
             SensorIcon pos) {
-        HashMap<Integer, NamedIcon> clone = new HashMap<Integer, NamedIcon>();
+        HashMap<Integer, NamedIcon> clone = new HashMap<>();
         if (map != null) {
             Iterator<Entry<Integer, NamedIcon>> it = map.entrySet().iterator();
             while (it.hasNext()) {
                 Entry<Integer, NamedIcon> entry = it.next();
                 clone.put(entry.getKey(), cloneIcon(entry.getValue(), pos));
                 if (pos != null) {
-                    pos.setIcon(pos._state2nameMap.get(entry.getKey()), _iconMap.get(entry.getKey()));
+                    pos.setIcon(pos._state2nameMap.get(entry.getKey()), _iconMap.get(entry.getKey().toString()));
                 }
             }
         }

@@ -1,8 +1,6 @@
 // CarsTableFrame.java
 package jmri.jmrit.operations.rollingstock.cars;
 
-import jmri.jmrit.operations.trains.tools.TrainsByCarTypeAction;
-
 import java.text.MessageFormat;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -24,11 +22,12 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumnModel;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.ModifyLocationsAction;
-import jmri.jmrit.operations.locations.ScheduleManager;
+import jmri.jmrit.operations.locations.schedules.ScheduleManager;
+import jmri.jmrit.operations.locations.tools.ModifyLocationsAction;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.tools.TrainsByCarTypeAction;
 import jmri.util.com.sun.TableSorter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,10 +42,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CarsTableFrame extends OperationsFrame implements TableModelListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5469624100056817632L;
     CarsTableModel carsTableModel;
     JTable carsTable;
     boolean showAllCars;
@@ -253,7 +248,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new CarRosterMenu(Bundle.getMessage("TitleCarRoster"), CarRosterMenu.MAINMENU, this));
         toolMenu.add(new ShowCheckboxesCarsTableAction(carsTableModel));
         toolMenu.add(new ResetCheckboxesCarsTableAction(carsTableModel));
@@ -273,6 +268,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         createShutDownTask();
     }
 
+    @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
         if (ae.getSource() == sortByNumber) {
@@ -343,6 +339,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     CarEditFrame f = null;
 
     // add, find or save button
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         // log.debug("car button activated");
         if (ae.getSource() == findButton) {
@@ -363,8 +360,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
                 f.dispose();
             }
             f = new CarEditFrame();
-            f.initComponents();
-            f.setTitle(Bundle.getMessage("TitleCarAdd"));
+            f.initComponents(); // default is add car
         }
         if (ae.getSource() == saveButton) {
             if (carsTable.isEditing()) {
@@ -388,6 +384,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         return widths;
     }
 
+    @Override
     public void dispose() {
         carsTableModel.removeTableModelListener(this);
         carsTableModel.dispose();
@@ -397,8 +394,9 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         super.dispose();
     }
 
+    @Override
     public void tableChanged(TableModelEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Table changed");
         }
         updateNumCars();

@@ -1,23 +1,5 @@
 package jmri.jmrit.beantable.oblock;
 
-/**
- * GUI to define OBlocks
- * <P>
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
- *
- * @author	Pete Cressman (C) 2010
- * @version $Revision$
- */
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -31,9 +13,24 @@ import jmri.jmrit.logix.PortalManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * GUI to define OBlocks
+ * <hr>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * <P>
+ *
+ * @author	Pete Cressman (C) 2010
+ */
 public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
 
-    private static final long serialVersionUID = -4467086483594717590L;
     public static final int FROM_BLOCK_COLUMN = 0;
     public static final int NAME_COLUMN = 1;
     public static final int TO_BLOCK_COLUMN = 2;

@@ -1,4 +1,3 @@
-// RosterEntryToGroupAction.java
 package jmri.jmrit.roster.swing;
 
 import java.awt.Component;
@@ -28,14 +27,8 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision$
  */
 public class RosterEntryToGroupAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 583406343893394954L;
 
     /**
      * @param s Name of this action, e.g. in menus

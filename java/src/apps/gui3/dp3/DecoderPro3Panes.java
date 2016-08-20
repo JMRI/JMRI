@@ -1,4 +1,3 @@
-// DecoderPro3Panes.java
 package apps.gui3.dp3;
 
 import jmri.util.BusyGlassPane;
@@ -11,11 +10,6 @@ import jmri.util.BusyGlassPane;
  */
 public class DecoderPro3Panes extends javax.swing.JPanel
         implements jmri.jmrit.symbolicprog.tabbedframe.PaneContainer {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7909265900453394172L;
 
     public boolean isBusy() {
         return false;

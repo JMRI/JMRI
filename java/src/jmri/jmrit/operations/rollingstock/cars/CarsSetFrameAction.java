@@ -14,10 +14,6 @@ import javax.swing.JTable;
  */
 public class CarsSetFrameAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3263490494828511284L;
     CarsTableModel _carsTableModel;
     JTable _carsTable;
 
@@ -30,6 +26,7 @@ public class CarsSetFrameAction extends AbstractAction {
         _carsTable = carsTable;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a car table frame
         CarsSetFrame csf = new CarsSetFrame();

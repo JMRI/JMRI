@@ -2,8 +2,6 @@
 <!-- This is the sidebar definition for (current) OperationsPro Manual pages -->
 <hr class="hide">
 
-<div id="mBody">
-
 <div id="side"> <!-- Block of text at top -->
     <div style="text-align: center"><strong>The OpsPro Manual</strong></div>
 

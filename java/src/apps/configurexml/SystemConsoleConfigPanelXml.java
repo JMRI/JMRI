@@ -1,4 +1,3 @@
-// SystemConsoleConfigPanelXml.java
 package apps.configurexml;
 
 import apps.SystemConsoleConfigPanel;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2010
- * @version $Revision$
  * @see apps.SystemConsoleConfigPanel
  */
 public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAdapter {
@@ -98,7 +96,7 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
 
         // As we've had a load request, register the system console with the
         // preference manager
-        jmri.InstanceManager.configureManagerInstance().registerPref(new SystemConsoleConfigPanel());
+        jmri.InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(new SystemConsoleConfigPanel());
 
         return result;
     }

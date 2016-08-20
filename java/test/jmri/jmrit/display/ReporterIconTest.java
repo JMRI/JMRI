@@ -1,7 +1,6 @@
 package jmri.jmrit.display;
 
 import javax.swing.JFrame;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -29,22 +28,17 @@ public class ReporterIconTest extends jmri.util.SwingTestCase {
         jf.getContentPane().add(to);
 
         // reset instance manager
-        jmri.InstanceManager i = new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = this;
-            }
-        };
-        Assert.assertNotNull("Instance exists", i);
+        jmri.util.JUnitUtil.resetInstanceManager();
+
         // reset the LocoNet instances, so this behaves independent of 
         // any layout connection
         jmri.jmrix.loconet.LocoNetInterfaceScaffold tc = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
 
         // create objects to test
         jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager(tc, "L"));
-        jmri.InstanceManager.reporterManagerInstance().provideReporter("LR1");
+        jmri.InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter("LR1");
         to.setReporter("LR1");
-        jmri.InstanceManager.reporterManagerInstance().provideReporter("LR1").setReport("data");
+        jmri.InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter("LR1").setReport("data");
 
         jf.pack();
         jf.setVisible(true);
@@ -58,23 +52,17 @@ public class ReporterIconTest extends jmri.util.SwingTestCase {
         to = new ReporterIcon(panel);
         jf.getContentPane().add(to);
 
-        // reset instance manager
-        jmri.InstanceManager i = new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = this;
-            }
-        };
-        Assert.assertNotNull("Instance exists", i);
+        jmri.util.JUnitUtil.resetInstanceManager();
+
         // reset the LocoNet instances, so this behaves independent of 
         // any layout connection
         jmri.jmrix.loconet.LocoNetInterfaceScaffold tc = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
 
         // create objects to test
         jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager(tc, "L"));
-        jmri.InstanceManager.reporterManagerInstance().provideReporter("1");
+        jmri.InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter("1");
         to.setReporter("1");
-        jmri.InstanceManager.reporterManagerInstance().provideReporter("1").setReport("data");
+        jmri.InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter("1").setReport("data");
 
         jf.pack();
         jf.setVisible(true);
@@ -89,7 +77,7 @@ public class ReporterIconTest extends jmri.util.SwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", ReporterIconTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

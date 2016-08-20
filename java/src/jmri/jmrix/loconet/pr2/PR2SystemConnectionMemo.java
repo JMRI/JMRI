@@ -28,7 +28,7 @@ public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo {
      * Configure the subset of LocoNet managers valid for the PR2.
      */
     public void configureManagers() {
-        jmri.InstanceManager.setPowerManager(getPowerPr2Manager());
+        jmri.InstanceManager.store(getPowerPr2Manager(), jmri.PowerManager.class);
 
         /* jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager()); */
 

@@ -1,10 +1,8 @@
-// EliteXNetTurnoutManagerTest.java
 package jmri.jmrix.lenz.hornbyelite;
 
 import java.util.ArrayList;
 import java.util.List;
 import jmri.Turnout;
-import jmri.TurnoutAddress;
 import jmri.TurnoutManager;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
@@ -18,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the jmri.jmrix.lenz.hornbyelite.EliteXNetTurnoutManager class.
  *
  * @author	Bob Jacobsen Copyright 2004
- * @version $Revision$
  */
 public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
@@ -35,10 +32,6 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
     }
 
     public void testMisses() {
-        // sample address object
-        TurnoutAddress a = new TurnoutAddress("XT22", "user");
-        Assert.assertNotNull("exists", a);
-
         // try to get nonexistant turnouts
         Assert.assertTrue(null == l.getByUserName("foo"));
         Assert.assertTrue(null == l.getBySystemName("bar"));
@@ -110,7 +103,7 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", EliteXNetTurnoutManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -119,18 +112,21 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
         return suite;
     }
 
-    // The minimal setup for log4J
-    protected void setUp() {
+    @Override
+    protected void tearDown() throws Exception {
+        apps.tests.Log4JFixture.tearDown();
+        super.tearDown();
+    }
+
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
         apps.tests.Log4JFixture.setUp();
         // prepare an interface, register
         lnis = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
         // create and register the manager object
         l = new EliteXNetTurnoutManager(lnis, "X");
         jmri.InstanceManager.setTurnoutManager(l);
-    }
-
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManagerTest.class.getName());

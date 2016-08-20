@@ -17,7 +17,6 @@ import jmri.jmrix.rfid.networkdriver.NetworkDriverAdapter;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2015
  * @author kcameron Copyright (C) 2010 added multiple connections
- * @version $Revision: 28746 $
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
@@ -25,10 +24,12 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
         adapter = new NetworkDriverAdapter();
     }
 
+    @Override
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig) object).getAdapter();
     }

@@ -25,6 +25,7 @@ public class TrainIconAnimation extends Thread {
         setName("TrainIconAnimation"); // NOI18N
     }
 
+    @Override
     public void run() {
         // we need to wait for any previous icon animation to complete
         if (_previous != null) {

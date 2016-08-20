@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.xpa.serialdriver;
 
 import java.io.DataInputStream;
@@ -26,15 +25,18 @@ import purejavacomm.UnsupportedCommOperationException;
  * first configuraiont variable for the modem initilization string.
  *
  * @author	Paul Bender Copyright (C) 2004
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix.SerialPortAdapter {
 
     public SerialDriverAdapter() {
+
         super(new XpaSystemConnectionMemo());
+        ((XpaSystemConnectionMemo)getSystemConnectionMemo()).setXpaTrafficController(new XpaTrafficController());
+
+
         option1Name = "ModemInitString";
         options.put(option1Name, new Option("Modem Initilization String : ", new String[]{"ATX0E0"}));
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
+        this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
     SerialPort activeSerialPort = null;
@@ -74,12 +76,7 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -100,7 +97,7 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
         } catch (UnsupportedCommOperationException | IOException ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
-            return "Unexpected error while opening port " + portName + ": " + ex;
+            return "IO Exception while opening port " + portName + ": " + ex;
         }
 
         return null; // indicates OK return
@@ -114,22 +111,22 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
     public void configure() {
 
         // connect to the traffic controller
-        XpaTrafficController.instance().connectPort(this);
+        XpaSystemConnectionMemo memo = ((XpaSystemConnectionMemo)getSystemConnectionMemo());
+        XpaTrafficController tc = memo.getXpaTrafficController();
+        tc.connectPort(this);
+        
+        memo.setPowerManager(new jmri.jmrix.xpa.XpaPowerManager(tc));
+        jmri.InstanceManager.store(memo.getPowerManager(), jmri.PowerManager.class);
 
-        jmri.InstanceManager.setPowerManager(new jmri.jmrix.xpa.XpaPowerManager());
-
-        jmri.InstanceManager.setTurnoutManager(jmri.jmrix.xpa.XpaTurnoutManager.instance());
+        memo.setTurnoutManager(new jmri.jmrix.xpa.XpaTurnoutManager(memo));
+        jmri.InstanceManager.store(memo.getTurnoutManager(),jmri.TurnoutManager.class);
+        memo.setThrottleManager(new jmri.jmrix.xpa.XpaThrottleManager(memo));
+        jmri.InstanceManager.store(memo.getThrottleManager(),jmri.ThrottleManager.class);
 
         // start operation
-        // sourceThread = new Thread(p);
-        // sourceThread.start();
-        sinkThread = new Thread(XpaTrafficController.instance());
+        tc.startTransmitThread();
+        sinkThread = new Thread(tc);
         sinkThread.start();
-
-        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.xpa.XpaThrottleManager());
-
-        jmri.jmrix.xpa.ActiveFlag.setActive();
-
     }
 
     private Thread sinkThread;
@@ -168,14 +165,6 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
 
     private boolean opened = false;
     InputStream serialStream = null;
-
-    static public SerialDriverAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new SerialDriverAdapter();
-        }
-        return mInstance;
-    }
-    static SerialDriverAdapter mInstance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 

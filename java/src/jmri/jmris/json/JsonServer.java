@@ -1,5 +1,10 @@
-// JsonServer.java
 package jmri.jmris.json;
+
+import static jmri.server.json.JSON.GOODBYE;
+import static jmri.server.json.JSON.JSON;
+import static jmri.server.json.JSON.JSON_PROTOCOL_VERSION;
+import static jmri.server.json.JSON.TYPE;
+import static jmri.server.json.JSON.ZEROCONF_SERVICE_TYPE;
 
 import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,11 +18,6 @@ import java.util.concurrent.TimeUnit;
 import jmri.InstanceManager;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmris.JmriServer;
-import static jmri.jmris.json.JSON.GOODBYE;
-import static jmri.jmris.json.JSON.JSON;
-import static jmri.jmris.json.JSON.JSON_PROTOCOL_VERSION;
-import static jmri.jmris.json.JSON.TYPE;
-import static jmri.jmris.json.JSON.ZEROCONF_SERVICE_TYPE;
 import jmri.server.json.JsonClientHandler;
 import jmri.server.json.JsonConnection;
 import org.slf4j.Logger;
@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * handshaking in this server. You may just start sending commands.
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision: 21126 $
  *
  */
 public class JsonServer extends JmriServer {
@@ -37,7 +36,7 @@ public class JsonServer extends JmriServer {
     private ObjectMapper mapper;
 
     public static JsonServer getDefault() {
-        if (InstanceManager.getDefault(JsonServer.class) == null) {
+        if (InstanceManager.getOptionalDefault(JsonServer.class) == null) {
             InstanceManager.store(new JsonServer(), JsonServer.class);
         }
         return InstanceManager.getDefault(JsonServer.class);
@@ -91,7 +90,7 @@ public class JsonServer extends JmriServer {
         JsonClientHandler handler = new JsonClientHandler(new JsonConnection(outStream));
 
         // Start by sending a welcome message
-        handler.sendHello(this.timeout);
+        handler.onMessage(JsonClientHandler.HELLO_MSG);
 
         while (true) {
             try {

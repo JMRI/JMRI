@@ -1,4 +1,4 @@
-// TurnoutSignalMast.javaa
+// TurnoutSignalMast.java
 package jmri.implementation;
 
 import java.util.ArrayList;
@@ -25,14 +25,8 @@ import org.slf4j.LoggerFactory;
  * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2009, 2014
- * @version $Revision: 19027 $
  */
 public class TurnoutSignalMast extends AbstractSignalMast {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1372935171542317280L;
 
     public TurnoutSignalMast(String systemName, String userName) {
         super(systemName, userName);
@@ -211,10 +205,6 @@ public class TurnoutSignalMast extends AbstractSignalMast {
 
     static class TurnoutAspect implements java.io.Serializable {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8111549826837671830L;
         NamedBeanHandle<Turnout> namedTurnout;
         int state;
 
@@ -286,5 +276,3 @@ public class TurnoutSignalMast extends AbstractSignalMast {
 
     private final static Logger log = LoggerFactory.getLogger(TurnoutSignalMast.class.getName());
 }
-
-/* @(#)TurnoutSignalMast.java */

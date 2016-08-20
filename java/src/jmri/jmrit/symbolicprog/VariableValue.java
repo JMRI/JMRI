@@ -1,4 +1,3 @@
-// VariableValue.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Component;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2004, 2005, 2013
  * @author Howard G. Penny Copyright (C) 2005
- * @version $Revision$
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
 
@@ -74,6 +72,23 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      */
     abstract public void setIntValue(int i);
 
+    /** 
+     * Set value from a String value.
+     * <p>
+     * The current implementation is a stand-in.  Note that 
+     * e.g. Speed Tables don't use a single Int, so will 
+     * just be skipped. The solution to that is to overload this in 
+     * complicated variable types.
+     */
+    public void setValue(String value) {
+        try {
+            int val = Integer.parseInt(value);
+            setIntValue(val);
+        } catch ( NumberFormatException e) {
+            log.debug("skipping set of non-integer value \"{}\"", value);
+        }
+    }
+    
     /**
      * Get the value as a single number.
      *
@@ -198,7 +213,6 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * info.
      *
      * @see #updateRepresentation
-     * @param t
      */
     public void setToolTipText(String t) {
         _tooltipText = t;
@@ -208,7 +222,6 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * Add the proper tooltip text to a graphical rep before returning it, sets
      * the visibility
      *
-     * @param c
      */
     protected JComponent updateRepresentation(JComponent c) {
         c.setToolTipText(_tooltipText);

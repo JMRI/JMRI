@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Handle XML persistance of SimpleTimebase objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision$
  */
 public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
 
@@ -29,14 +28,12 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
      */
     public Element store(Object o) {
 
-        Timebase clock = InstanceManager.timebaseInstance();
+        Timebase clock = InstanceManager.getDefault(jmri.Timebase.class);
 
         Element elem = new Element("timebase");
         elem.setAttribute("class", this.getClass().getName());
 
-        if (clock.getStartTime() != null) {
-            elem.setAttribute("time", clock.getStartTime().toString());
-        }
+        elem.setAttribute("time", clock.getStartTime().toString());
         elem.setAttribute("rate", "" + clock.userGetRate());
         elem.setAttribute("run", (!clock.getStartStopped() ? "yes" : "no"));
         elem.setAttribute("master", (clock.getInternalMaster() ? "yes" : "no"));
@@ -57,7 +54,7 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
     @Override
     public boolean load(Element shared, Element perNode) {
         boolean result = true;
-        Timebase clock = InstanceManager.timebaseInstance();
+        Timebase clock = InstanceManager.getDefault(jmri.Timebase.class);
         String val, val2;
         if (shared.getAttribute("master") != null) {
             val = shared.getAttributeValue("master");
@@ -173,7 +170,7 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
 
     // Conversion format for dates created by Java Date.toString().
     // The Locale needs to be always US, irrelevant from computer's and program's settings!
-    static final SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
+    final SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
 
     /**
      * Update static data from XML file

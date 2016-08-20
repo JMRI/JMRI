@@ -1,4 +1,3 @@
-// StatusFrame.java
 package jmri.jmrit.roster.swing.speedprofile;
 
 import java.awt.BorderLayout;
@@ -8,14 +7,8 @@ import javax.swing.JOptionPane;
  * Frame Entry Exit Frames
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version $Revision: 1.5 $
  */
 public class SpeedProfileFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 665383251598012193L;
 
     public SpeedProfileFrame() {
         super(false, true);
@@ -54,7 +47,7 @@ public class SpeedProfileFrame extends jmri.util.JmriJFrame {
                 spPanel.updateSpeedProfileWithResults();            
             }
         }
-        if (spPanel.table !=null) {
+        if (spPanel != null && spPanel.table !=null) {
             spPanel.table.dispose();
         }
     }

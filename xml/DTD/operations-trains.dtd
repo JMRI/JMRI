@@ -145,6 +145,7 @@
 <!ATTLIST train oldStatusCode			CDATA #IMPLIED>
 
 <!ATTLIST rowColor name				CDATA #IMPLIED>
+<!ATTLIST rowColor resetRowColor	CDATA #IMPLIED>
 <!ATTLIST carType name				CDATA #IMPLIED>
 <!ATTLIST locoType name				CDATA #IMPLIED>
 <!ATTLIST carLoad name				CDATA #IMPLIED>

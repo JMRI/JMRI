@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Handle XML persistence of ManagerDefaultsConfigPane objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
- * @version $Revision$
  */
 public class ManagerDefaultsConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
 
@@ -24,7 +23,7 @@ public class ManagerDefaultsConfigPaneXml extends jmri.configurexml.AbstractXmlA
      * @return null after others arranged
      */
     public Element store(Object o) {
-        InstanceManager.configureManagerInstance().registerPref(InstanceManager.getDefault(ManagerDefaultSelector.class));
+        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(InstanceManager.getDefault(ManagerDefaultSelector.class));
         return null;
     }
 

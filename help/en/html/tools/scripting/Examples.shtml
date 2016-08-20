@@ -1,432 +1,462 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- $Id$ -->
-  <title>JMRI: Scripting Examples</title>
-  <!-- Style -->
-  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+
+  <title>JMRI: Scripting Examples</title><!-- Style -->
+  <meta http-equiv="content-type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header" -->
 
-<div id="mainContent">
-<!-- Page Body -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h2>JMRI: Scripting Examples </h2>
+    <div id="mainContent">
+      <!-- Page Body -->
 
-<p>The JMRI distributions come with a jython directory that contains a few
-examples. This page provide a short description of each, copied from 
-the comment in the scripts themselves.</p>
+      <h2>JMRI: Scripting Examples</h2>
 
-<p>
-To run of these scripts, start DecoderPro or PanelPro 
-(set preferences to "LocoNet Simulator to run without connecting to a layout), 
-then under Panels select Run Script. Now find
-and select the desired script file in the "jython" folder of the JMRI program directory.
+      <p>The JMRI distributions come with a jython directory that
+      contains a few examples. This page provide a short
+      description of each, copied from the comment in the scripts
+      themselves.</p>
 
-<p>
-To browse the most current set of scripts, please see the
-<a href="http://jmri.org/jython">jython directory</a> 
-on the JMRI web site.
+      <p>To run of these scripts, start DecoderPro or PanelPro (set
+      preferences to "LocoNet Simulator to run without connecting
+      to a layout), then under Panels select Run Script. Now find
+      and select the desired script file in the "jython" folder of
+      the JMRI program directory.</p>
 
-<p><a
-href="../../../../../jython/AD4OnOff.py">AD4OnOff.py</a></p>
+      <p>To browse the most current set of scripts, please see the
+      <a href="http://jmri.org/jython">jython directory</a> on the
+      JMRI web site.</p>
 
-<p>Sample script to show put a button on the screen
-that will enable or disable local control of AD4 accessory decoders. This
-script has been superceded by the "Lock" capability in JMRI 1.9.3 and later.
-You can directly request that JMRI lock/unlock a turnout via the Turnout Table,
-Routes and Logi</p>
+      <p><a href=
+      "../../../../../jython/AD4OnOff.py">AD4OnOff.py</a></p>
 
-<p><a
-href="../../../../../jython/AddButton.py">AddButton.py</a></p>
+      <p>Sample script to show put a button on the screen that will
+      enable or disable local control of AD4 accessory decoders.
+      This script has been superceded by the "Lock" capability in
+      JMRI 1.9.3 and later. You can directly request that JMRI
+      lock/unlock a turnout via the Turnout Table, Routes and
+      Logi</p>
 
-<p>Sample script to add a button to the main JMRI
-application window that loads a script file</p>
+      <p><a href=
+      "../../../../../jython/AddButton.py">AddButton.py</a></p>
 
-<p><a
-href="../../../../../jython/AddButton.py">AlarmClock.py</a></p>
+      <p>Sample script to add a button to the main JMRI application
+      window that loads a script file</p>
 
-<p>This is an example script to pulse an output based
-on a fast clock.</p>
+      <p><a href=
+      "../../../../../jython/AddButton.py">AlarmClock.py</a></p>
 
-<p><a
-href="../../../../../jython/AppleScript.py">AppleScript.py</a></p>
+      <p>This is an example script to pulse an output based on a
+      fast clock.</p>
 
-<p>This is an example script for invoking an
-AppleScript from JMRI on Mac OS X.</p>
+      <p><a href=
+      "../../../../../jython/AppleScript.py">AppleScript.py</a></p>
 
-<p><a
-href="../../../../../jython/AutoLayoutPowerOff.py">AutoLayoutPowerOff.py</a></p>
+      <p>This is an example script for invoking an AppleScript from
+      JMRI on Mac OS X.</p>
 
-<p>This script turns off power to the layout automatically after there has been
-no activity on the layout for a specified amount of time. (Activity is detected
-by monitoring block occupancy detectors.) It is intended to be run from the 
-startup preferences.</p>
+      <p><a href=
+      "../../../../../jython/AutoLayoutPowerOff.py">AutoLayoutPowerOff.py</a></p>
 
-<p><a
-href="../../../../../jython/AutomatonExample.py">AutomatonExample.py</a></p>
+      <p>This script turns off power to the layout automatically
+      after there has been no activity on the layout for a
+      specified amount of time. (Activity is detected by monitoring
+      block occupancy detectors.) It is intended to be run from the
+      startup preferences.</p>
 
-<p>This is an example script for a JMRI "Automat" in
-Python It listens to two sensors, running a locomotive back and forth between
-them by changing its direction when a sensor detects the engine. You need to
-set the speed of the engine using a throttle.</p>
+      <p><a href=
+      "../../../../../jython/AutomatonExample.py">AutomatonExample.py</a></p>
 
-<p><a href="../../../../../jython/BackAndForth.py">BackAndForth.py </a> </p>
+      <p>This is an example script for a JMRI "Automat" in Python
+      It listens to two sensors, running a locomotive back and
+      forth between them by changing its direction when a sensor
+      detects the engine. You need to set the speed of the engine
+      using a throttle.</p>
 
-<p>This is an example script for a JMRI "Automat" in
-Python It is based on the AutomatonExample. It listens to two sensors, running
-a locomotive back and forth between them by changing its direction when a
-sensor detects the engine. </p>
+      <p><a href=
+      "../../../../../jython/BackAndForth.py">BackAndForth.py</a></p>
 
-<p><a
-href="../../../../../jython/BackAndForthTimed.py">BackAndForthTimed.py</a></p>
+      <p>This is an example script for a JMRI "Automat" in Python
+      It is based on the AutomatonExample. It listens to two
+      sensors, running a locomotive back and forth between them by
+      changing its direction when a sensor detects the engine.</p>
 
-<p>This is an example script for a JMRI "Automat" in
-Python. It is based on the AutomatonExample. It runs a locomotive back and
-forth using time delays.</p>
+      <p><a href=
+      "../../../../../jython/BackAndForthTimed.py">BackAndForthTimed.py</a></p>
 
-<p><a
-href="../../../../../jython/CanExample.py">CanExample.py</a></p>
+      <p>This is an example script for a JMRI "Automat" in Python.
+      It is based on the AutomatonExample. It runs a locomotive
+      back and forth using time delays.</p>
 
-<p>Sample script to show how to send and receive CAN
-Frames</p>
+      <p><a href=
+      "../../../../../jython/CanExample.py">CanExample.py</a></p>
 
-<p><a
-href="../../../../../jython/ControlPanel.py">ControlPanel.py</a></p>
+      <p>Sample script to show how to send and receive CAN
+      Frames</p>
 
-<p>Sample script to show a set of JButtons that
-show/hide panel windows when clicked.</p>
+      <p><a href=
+      "../../../../../jython/ControlPanel.py">ControlPanel.py</a></p>
 
-<p>When this script is run, it finds all open
-panels(for either PanelEditor or LayoutEditor) and creates a small window with
-a button for each panel. The buttons are labelled with the names of the panels,
-and it's required that those names be unique.</p>
+      <p>Sample script to show a set of JButtons that show/hide
+      panel windows when clicked.</p>
 
-<p><a
-href="../../../../../jython/DebounceSensor.py">DebounceSensor.py</a></p>
+      <p>When this script is run, it finds all open panels(for
+      either PanelEditor or LayoutEditor) and creates a small
+      window with a button for each panel. The buttons are labelled
+      with the names of the panels, and it's required that those
+      names be unique.</p>
+
+      <p><a href=
+      "../../../../../jython/DebounceSensor.py">DebounceSensor.py</a></p>
+
+      <p>This script manages an internal sensor as a debounced
+      version of another sensor. Both the on and off delays may be
+      specified.</p>
+
+      <p><a href=
+      "../../../../../jython/DecoderPro.py">DecoderPro.py</a></p>
+
+      <p>Python code to start a DecoderPro app, complete with menu
+      bar</p>
+
+      <p><a href=
+      "../../../../../jython/DisableOpsMode.py">DisableOpsMode.py</a></p>
+
+      <p>Sample script to navigate through the GUI and disable the
+      Ops Mode button on the main DecoderPro window.</p>
+
+      <p><a href=
+      "../../../../../jython/InitTurnouts.py">InitTurnouts.py</a></p>
+
+      <p>Sample script showing how to initialize turnouts based on
+      the state of their input sensors (e.g. feedback)</p>
+
+      <p>This is particularly useful for a C/MRI system, where the
+      turnouts need to be set to a particular state quickly</p>
+
+      <p><a href=
+      "../../../../../jython/JButtonComplexExample.py">JButtonComplexExample.py</a></p>
+
+      <p>Sample script to show a JFrame for data entry. The frame
+      contains two JTextFields, and a button which is inactive
+      until data has been entered. Once activated, the button
+      prints a little diagnostic message when clicked. The print
+      statement can be changed to include whatever desired, e.g.
+      throw a turnout, program a CV, etc.</p>
+
+      <p>This script creates a panel called "Data entry" with two
+      fields that data is entered in. The script waits for
+      something in both fields to be entered and then enables
+      "Enter values". When "Enter values" button is clicked, it
+      causes the data to be displayed on the Java console and the
+      "Data entry" panel to disappear. To see the output on the
+      Java console you need to open the Java console or select
+      "Script Output" from the JMRI "Panels" menu.</p>
+
+      <p><a href=
+      "../../../../../jython/JButtonExample.py">JButtonExample.py</a></p>
+
+      <p>Sample script to show a JButton which prints a little
+      message when clicked. The print statement can be changed to
+      include whatever desired, e.g. throw a turnout, program a CV,
+      etc.</p>
+
+      <p><a href=
+      "../../../../../jython/jmri_defaults.py">jmri_defaults.py</a></p>
+
+      <p>Python code to define common JMRI defaults Assumes JMRI
+      has already been initialized, so this can reference various
+      managers, etc. This is only read once, when the JMRI library
+      first executes a script, so changes will not take effect
+      until after restarting the program</p>
+
+      <p><a href=
+      "../../../../../jython/JmriDemo.py">JmriDemo.py</a></p>
+
+      <p>Python code to start a JmriDemo app, complete with menu
+      bar (probably obsolete at this point, the usual method now is
+      to start DecoderPro or PanelPro and then run Python scripts
+      from within it; left as an example of the approach)</p>
+
+      <p><a href=
+      "../../../../../jython/ListenerExample.py">ListenerExample.py</a></p>
+
+      <p>example of an event listener for a JMRI class, in this
+      case a Turnout.</p>
+
+      <p><a href=
+      "../../../../../jython/LnPowerButton.py">LnPowerButton.py</a></p>
+
+      <p>Sample script to show a JButton which sends a LocoNet
+      message when clicked. In this case, the LocoNet message
+      alternates between "on" and "off" for a PM4 relay. The
+      particular relay is addressed by the board and zone variables
+      set in the code below. Note that the message sent to the PM4
+      has fixed contents for the other three (of four) channels on
+      the card. Will this cause a problem in normal operation?\</p>
+
+      <p><a href=
+      "../../../../../jython/LnSendTool.py">LnSendTool.py</a></p>
+
+      <p>This script will send several of the most command loconet
+      type messages. These include switch, feedback and sensor type
+      messages. DCC signal packets can also be sent via loconet.
+      Messages are configurated using radio buttons and combo
+      boxes. Portions of this script are taken from
+      LnPowerButton.py by Bob Jacobsen</p>
+
+      <p><a href=
+      "../../../../../jython/LocoTest.py">LocoTest.py</a></p>
+
+      <p>Script to test a locomotive and decoder after
+      installation. It pops a field for entering the locomotive
+      address, and a "Go" button. Upon clicking the button, it
+      sequences through a series of operations: F0 on, F0 off, F1
+      on, F1 off</p>
+
+      <p><a href=
+      "../../../../../jython/MemorySiglet.py">MemorySiglet.py</a></p>
+
+      <p>This is an example script for a JMRI "Siglet" in Python It
+      listens to a Memory object, and prints the new state to
+      stdout</p>
+
+      <p><a href=
+      "../../../../../jython/NSelectorExample.py">NSelectorExample.py</a></p>
+
+      <p>This is an example script for putting a "N-way" selector
+      on a panel. The panel contains N sensors (in this example
+      numbered 101, 102, 103). When one is clicked on the panel,
+      the others are forced to inactive and the program sets
+      outputs appropriately (in this case setting turnouts 101 and
+      102) For N large, this would be better done with arrays and
+      closures, but for N = 3 a direct approach is better.</p>
+
+      <p><a href=
+      "../../../../../jython/NumberInput.py">NumberInput.py</a></p>
+
+      <p>Fill a memory with a two-digit number, using 10 sensors as
+      digit inputs</p>
+
+      <p><a href=
+      "../../../../../jython/OpsProgExample.py">OpsProgExample.py</a></p>
+
+      <p>This sample Automaton watches a Sensor, and adjusts the
+      momentum of a locomotive using ops-mode programming when the
+      sensor state changes. The sensor and decoder are hardcoded,
+      as this is an example of just the Automaton function. Adding
+      a GUI to configure these would be straight-forward. The
+      values could be passed via the constructor, or the
+      constructor (which can run in any required thread) could
+      invoke a dialog.</p>
+
+      <p><a href=
+      "../../../../../jython/PacketPro.py">PacketPro.py</a></p>
+
+      <p>start the PacketPro Java application, including main
+      menu</p>
+
+      <p><a href=
+      "../../../../../jython/ParallelPortTest.py">ParallelPortTest.py</a></p>
+
+      <p>Try to send some bytes to a parallel port</p>
+
+      <p><a href=
+      "../../../../../../../ParallelPortTurnouts.py">ParallelPortTurnouts.py</a></p>
+
+      <p>Connect JMRI turnouts to parallel port logic Maps internal
+      turnouts to specific values to be send to the parallel port.
+      Note that JMRI must be set up to have a valid turnout table;
+      if you're not using some other DCC connection, configure JMRI
+      to use LocoNet Simulator</p>
+
+      <p><a href=
+      "../../../../../jython/PM4Announce.py">PM4Announce.py</a></p>
+
+      <p>Sample script to make an announcement when a PM4 section
+      changes state. This assumes that the PM4 sections are doing
+      short protection. If they are doing auto-reversing, you might
+      want to change the announcement message below. Also, it
+      assumes that only one PM4 is going to trip at a time. Note
+      that the previous state (oldStateN variables) is not kept
+      per-board, but just as one single copy. If you want to track
+      changes in multiple boards, this needs to become a more
+      complicated data structure that's e.g. indexed by board. Also
+      note that if multiple sections change at once and you're
+      using the "speak" command, the announcements may overlap.</p>
+
+      <p><a href=
+      "../../../../../jython/PocketTesterExample.py">PocketTesterExample.py</a></p>
+
+      <p>Example of an event listener for a PRICOM PocketTester</p>
+
+      <p><a href=
+      "../../../../../jython/PowerSensor.py">PowerSensor.py</a></p>
+
+      <p>Provides an example of listening to the PowerManager, and
+      operating a Sensor to indicate changes. The sensor number
+      used to indicate the power status is hardcoded below as
+      "100". Change this if you want to use some other sensor.</p>
+
+      <p><a href=
+      "../../../../../jython/RailDriver.py">RailDriver.py</a></p>
+
+      <p>Connect a RailDriver Modern Desktop (USB device) to a
+      throttle.</p>
+
+      <p><a href=
+      "../../../../../jython/ReporterFontControl.py">ReporterFontControl.py</a></p>
 
-<p>This script manages an internal sensor as a
-debounced version of another sensor. Both the on and off delays may be
-specified.</p>
-
-<p><a
-href="../../../../../jython/DecoderPro.py">DecoderPro.py</a></p>
-
-<p>Python code to start a DecoderPro app, complete with
-menu bar</p>
-
-<p><a
-href="../../../../../jython/DisableOpsMode.py">DisableOpsMode.py</a></p>
-
-<p>Sample script to navigate through the GUI and
-disable the Ops Mode button on the main DecoderPro window.</p>
-
-<p><a
-href="../../../../../jython/InitTurnouts.py">InitTurnouts.py</a></p>
-
-<p>Sample script showing how to initialize turnouts
-based on the state of their input sensors (e.g. feedback)</p>
-
-<p>This is particularly useful for a C/MRI system,
-where the turnouts need to be set to a particular state quickly</p>
-
-<p><a
-href="../../../../../jython/JButtonComplexExample.py">JButtonComplexExample.py</a></p>
-
-<p>Sample script to show a JFrame for data entry. The
-frame contains two JTextFields, and a button which is inactive until data has
-been entered. Once activated, the button prints a little diagnostic message
-when clicked. The print statement can be changed to include whatever desired,
-e.g. throw a turnout, program a CV, etc.</p>
-
-<p>This script
-creates a panel called "Data entry" with two fields that data is entered in.
-The script waits for something in both fields to be entered and then enables
-"Enter values". When "Enter values" button is clicked, it causes the data to be
-displayed on the Java console and the "Data entry" panel to disappear. To see
-the output on the Java console you need to open the Java console or 
-select "Script Output" from the JMRI "Panels" menu.</p>
-
-<p><a
-href="../../../../../jython/JButtonExample.py">JButtonExample.py</a></p>
-
-<p>Sample script to show a JButton which prints a
-little message when clicked. The print statement can be changed to include
-whatever desired, e.g. throw a turnout, program a CV, etc.</p>
-
-<p><a
-href="../../../../../jython/jmri_defaults.py">jmri_defaults.py</a></p>
-
-<p>Python code to define common JMRI defaults Assumes
-JMRI has already been initialized, so this can reference various managers, etc.
-This is only read once, when the JMRI library first executes a script, so
-changes will not take effect until after restarting the program</p>
-
-<p><a
-href="../../../../../jython/JmriDemo.py">JmriDemo.py</a></p>
-
-<p>Python code to start a JmriDemo app, complete with
-menu bar (probably obsolete at this point, the usual
-method now is to start DecoderPro or PanelPro
-and then run Python scripts from within it; left as
-an example of the approach)</p>
-
-<p><a
-href="../../../../../jython/ListenerExample.py">ListenerExample.py</a></p>
-
-<p>example of an event listener for a JMRI class, in
-this case a Turnout.</p>
-
-<p><a
-href="../../../../../jython/LnPowerButton.py">LnPowerButton.py</a></p>
-
-<p>Sample script to show a JButton which sends a
-LocoNet message when clicked. In this case, the LocoNet message alternates
-between "on" and "off" for a PM4 relay. The particular relay is addressed by
-the board and zone variables set in the code below. Note that the message sent
-to the PM4 has fixed contents for the other three (of four) channels on the
-card. Will this cause a problem in normal operation?\</p>
-
-<p><a
-href="../../../../../jython/LnSendTool.py">LnSendTool.py</a></p>
-
-<p>This script will send several of the most command
-loconet type messages. These include switch, feedback and sensor type messages.
-DCC signal packets can also be sent via loconet. Messages are configurated
-using radio buttons and combo boxes. Portions of this script are taken from
-LnPowerButton.py by Bob Jacobsen</p>
-
-<p><a
-href="../../../../../jython/LocoTest.py">LocoTest.py</a></p>
-
-<p>Script to test a locomotive and decoder after
-installation. It pops a field for entering the locomotive address, and a "Go"
-button. Upon clicking the button, it sequences through a series of operations:
-F0 on, F0 off, F1 on, F1 off</p>
-
-<p><a
-href="../../../../../jython/MemorySiglet.py">MemorySiglet.py</a></p>
-
-<p>This is an example script for a JMRI "Siglet" in
-Python It listens to a Memory object, and prints the new state to stdout</p>
-
-<p><a
-href="../../../../../jython/NSelectorExample.py">NSelectorExample.py</a></p>
-
-<p>This is an example script for putting a "N-way"
-selector on a panel. The panel contains N sensors (in this example numbered
-101, 102, 103). When one is clicked on the panel, the others are forced to
-inactive and the program sets outputs appropriately (in this case setting
-turnouts 101 and 102) For N large, this would be better done with arrays and
-closures, but for N = 3 a direct approach is better.</p>
-
-<p><a
-href="../../../../../jython/NumberInput.py">NumberInput.py</a></p>
-
-<p>Fill a memory with a two-digit number, using 10
-sensors as digit inputs</p>
-
-<p><a
-href="../../../../../jython/OpsProgExample.py">OpsProgExample.py</a></p>
-
-<p>This sample Automaton watches a Sensor, and adjusts
-the momentum of a locomotive using ops-mode programming when the sensor state
-changes. The sensor and decoder are hardcoded, as this is an example of just
-the Automaton function. Adding a GUI to configure these would be
-straight-forward. The values could be passed via the constructor, or the
-constructor (which can run in any required thread) could invoke a dialog.</p>
-
-<p><a
-href="../../../../../jython/PacketPro.py">PacketPro.py</a></p>
-
-<p>start the PacketPro Java application, including main
-menu</p>
-
-<p><a
-href="../../../../../jython/ParallelPortTest.py">ParallelPortTest.py</a></p>
-
-<p>Try to send some bytes to a parallel port</p>
-
-<p><a
-href="../../../../../../../ParallelPortTurnouts.py">ParallelPortTurnouts.py</a></p>
-
-<p>Connect JMRI turnouts to parallel port logic Maps
-internal turnouts to specific values to be send to the parallel port. Note that
-JMRI must be set up to have a valid turnout table; if you're not using some
-other DCC connection, configure JMRI to use LocoNet Simulator</p>
-
-<p><a
-href="../../../../../jython/PM4Announce.py">PM4Announce.py</a></p>
-
-<p>Sample script to make an announcement when a PM4
-section changes state. This assumes that the PM4 sections are doing short
-protection. If they are doing auto-reversing, you might want to change the
-announcement message below. Also, it assumes that only one PM4 is going to trip
-at a time. Note that the previous state (oldStateN variables) is not kept
-per-board, but just as one single copy. If you want to track changes in
-multiple boards, this needs to become a more complicated data structure that's
-e.g. indexed by board. Also note that if multiple sections change at once and
-you're using the "speak" command, the announcements may overlap.</p>
-
-<p><a
-href="../../../../../jython/PocketTesterExample.py">PocketTesterExample.py</a></p>
-
-<p>Example of an event listener for a PRICOM
-PocketTester</p>
-
-<p><a
-href="../../../../../jython/PowerSensor.py">PowerSensor.py</a></p>
-
-<p>Provides an example of listening to the
-PowerManager, and operating a Sensor to indicate changes. The sensor number
-used to indicate the power status is hardcoded below as "100". Change this if
-you want to use some other sensor.</p>
-
-<p><a
-href="../../../../../jython/RailDriver.py">RailDriver.py</a></p>
-
-<p>Connect a RailDriver Modern Desktop (USB device) to
-a throttle.</p>
-
-<p><a
-href="../../../../../jython/ReporterFontControl.py">ReporterFontControl.py</a></p>
-
-<p>Script to go through each open panel, walk down the
-object hierarchy and search for all ReporterIcon objects. Every ReporterIcon
-will have its font size and colour set as specified at the top of the script In
-addition to being a useful tool in itself, this is a good example of stepping
-through the object structure of a panel.</p>
-
-<p><a
-href="../../../../../jython/ReporterFormatter.py">ReporterFormatter.py</a></p>
-
-<p>Provides an example of listening to a Reporter, and
-putting the changes to a Memory in a nicer format The Reporter and Memory names
-are hardcoded in the example near the bottom. Change those to something that
-makes sense for your layout First, define the listener class. This gets
-messages from the reporter, uses them to keep track of the decoders in a block,
-and writes that list to a memory for display.</p>
-
-<p><a
-href="../../../../../jython/RobotThrottle.py">RobotThrottle.py</a></p>
-
-<p>This script runs a loco around the track,
-controlling the speed according to signals and following the blocks.</p>
-
-<p><a
-href="../../../../../jython/RosterLoop.py">RosterLoop.py</a></p>
-
-<p>Sample script showing how to loop through the Roster
-entries. This example just prints the name, but youcan extract or use other
-info too.</p>
-
-<p><a
-href="../../../../../jython/RpsRaceTrack.py">RpsRaceTrack.py</a></p>
-
-<p>RaceTrack using RPS position measurement loco1 is
-faster, loco2 is slower. When loco1 comes within dmin=24 inches of loco2, it
-will: slow to 1/4 of it's speed wait 6 seconds return to it's original speed
-and check again This is time-based (check every 200 msec), rather than
-measurement based (listeners) for ease of debugging. Changing it over later on
-will be good.</p>
-
-<p><a
-href="../../../../../jython/SampleLnStats.py">SampleLnStats.py</a></p>
-
-<p>This is script for samples the LocoNet statistics
-once per minute and prints them out</p>
-
-<p><a
-href="../../../../../jython/SampleSound.py">SampleSound.py</a></p>
-
-<p>This is an example script for playing a sound in a
-JMRI script</p>
-
-<p><a
-href="../../../../../jython/SensorLog.py">SensorLog.py</a></p>
-
-<p>Listen to all sensors, printing a line when they
-change state.</p>
-
-<p><a
-href="../../../../../jython/Sensor-sound.py">Sensor-sound.py</a></p>
-
-<p>Listens for specific Sensor (Sensor #4), plays
-crossing gate sound on train entering block.</p>
-
-<p><a
-href="../../../../../jython/SetTurnouts.py">SetTurnouts.py</a></p>
-
-<p>Sample script showing how to multiple turnouts to
-specific positions, with a time delay between them, separately from other
-things that the program is doing. By putting the turnout commands in a separate
-class, they'll run independently after the "start" operation</p>
-
-<p><a
-href="../../../../../jython/ShutDownExample.py">ShutDownExample.py</a></p>
-
-<p>Schedule something to happen when a JMRI application
-ends</p>
-
-<p><a
-href="../../../../../jython/SigletExample.py">SigletExample.py</a></p>
-
-<p>This is an example script for a JMRI "Siglet" in
-Python It listens for changes to two sensors and a turnout, and then
-recalculates a signal aspect based on the values</p>
-
-<p><a
-href="../../../../../jython/ThrottleSound.py">ThrottleSound.py</a></p>
-
-<p>Play a sound when the F3 key is pressed on the
-handheld and loco 1001 selected.</p>
-
-<p><a
-href="../../../../../jython/TurnoutReset.py">TurnoutReset.py</a></p>
-
-<p>Reset a turnout to Closed every time it's clicked
-Thrown This might be used so that a turnout icon on a panel sits in one
-position, ready to be clicked and fire a route The top of the file defines the
-needed code. There are some lines near the bottom you should edit to adapt it
-to your particular layout.</p>
-
-<p><a
-href="../../../../../jython/TwoOutputTurnouts.py">TwoOutputTurnouts.py</a></p>
-
-<p>Drive a turnouts from two CMRI connections. Some
-CMRI users connect slow-motion switch machines between two CMRI outputs, and
-then set the outputs to complementary states (one active, one inactive) to
-drive the machine in the two directions. This script slaves a 2nd turnout to a
-first one, so that when the first one is commanded to a particular state, the
-second one goes to the other state To use this, edit the script to include your
-turnouts at the bottom (see the existing example; you should remove that)Then
-select it as a script to be run at startup from the "Advanced Preferences" on
-the preferences window e a turnouts from two CMRI connections.</p>
-
-<p><a
-href="../../../../../jython/USBThrottle.py">USBThrottle.py</a></p>
-
-<p><a>Use a USB device as a throttle</a></p>
-
-<p><a
-href="../../../../../jython/javaone">javaone</a></p>
-
-<p>This directory contains scripts that were first
-created for the JavaOne test layout. </p>
-
-<!--#include virtual="/Footer" -->
+      <p>Script to go through each open panel, walk down the object
+      hierarchy and search for all ReporterIcon objects. Every
+      ReporterIcon will have its font size and colour set as
+      specified at the top of the script In addition to being a
+      useful tool in itself, this is a good example of stepping
+      through the object structure of a panel.</p>
+
+      <p><a href=
+      "../../../../../jython/ReporterFormatter.py">ReporterFormatter.py</a></p>
+
+      <p>Provides an example of listening to a Reporter, and
+      putting the changes to a Memory in a nicer format The
+      Reporter and Memory names are hardcoded in the example near
+      the bottom. Change those to something that makes sense for
+      your layout First, define the listener class. This gets
+      messages from the reporter, uses them to keep track of the
+      decoders in a block, and writes that list to a memory for
+      display.</p>
+
+      <p><a href=
+      "../../../../../jython/RobotThrottle.py">RobotThrottle.py</a></p>
+
+      <p>This script runs a loco around the track, controlling the
+      speed according to signals and following the blocks.</p>
+
+      <p><a href=
+      "../../../../../jython/RosterLoop.py">RosterLoop.py</a></p>
+
+      <p>Sample script showing how to loop through the Roster
+      entries. This example just prints the name, but youcan
+      extract or use other info too.</p>
+
+      <p><a href=
+      "../../../../../jython/RpsRaceTrack.py">RpsRaceTrack.py</a></p>
+
+      <p>RaceTrack using RPS position measurement loco1 is faster,
+      loco2 is slower. When loco1 comes within dmin=24 inches of
+      loco2, it will: slow to 1/4 of it's speed wait 6 seconds
+      return to it's original speed and check again This is
+      time-based (check every 200 msec), rather than measurement
+      based (listeners) for ease of debugging. Changing it over
+      later on will be good.</p>
+
+      <p><a href=
+      "../../../../../jython/SampleLnStats.py">SampleLnStats.py</a></p>
+
+      <p>This is script for samples the LocoNet statistics once per
+      minute and prints them out</p>
+
+      <p><a href=
+      "../../../../../jython/SampleSound.py">SampleSound.py</a></p>
+
+      <p>This is an example script for playing a sound in a JMRI
+      script</p>
+
+      <p><a href=
+      "../../../../../jython/SensorLog.py">SensorLog.py</a></p>
+
+      <p>Listen to all sensors, printing a line when they change
+      state.</p>
+
+      <p><a href=
+      "../../../../../jython/Sensor-sound.py">Sensor-sound.py</a></p>
+
+      <p>Listens for specific Sensor (Sensor #4), plays crossing
+      gate sound on train entering block.</p>
+
+      <p><a href=
+      "../../../../../jython/SetTurnouts.py">SetTurnouts.py</a></p>
+
+      <p>Sample script showing how to multiple turnouts to specific
+      positions, with a time delay between them, separately from
+      other things that the program is doing. By putting the
+      turnout commands in a separate class, they'll run
+      independently after the "start" operation</p>
+
+      <p><a href=
+      "../../../../../jython/ShutDownExample.py">ShutDownExample.py</a></p>
+
+      <p>Schedule something to happen when a JMRI application
+      ends</p>
+
+      <p><a href=
+      "../../../../../jython/SigletExample.py">SigletExample.py</a></p>
+
+      <p>This is an example script for a JMRI "Siglet" in Python It
+      listens for changes to two sensors and a turnout, and then
+      recalculates a signal aspect based on the values</p>
+
+      <p><a href=
+      "../../../../../jython/ThrottleSound.py">ThrottleSound.py</a></p>
+
+      <p>Play a sound when the F3 key is pressed on the handheld
+      and loco 1001 selected.</p>
+
+      <p><a href=
+      "../../../../../jython/TurnoutReset.py">TurnoutReset.py</a></p>
+
+      <p>Reset a turnout to Closed every time it's clicked Thrown
+      This might be used so that a turnout icon on a panel sits in
+      one position, ready to be clicked and fire a route The top of
+      the file defines the needed code. There are some lines near
+      the bottom you should edit to adapt it to your particular
+      layout.</p>
+
+      <p><a href=
+      "../../../../../jython/TwoOutputTurnouts.py">TwoOutputTurnouts.py</a></p>
+
+      <p>Drive a turnouts from two CMRI connections. Some CMRI
+      users connect slow-motion switch machines between two CMRI
+      outputs, and then set the outputs to complementary states
+      (one active, one inactive) to drive the machine in the two
+      directions. This script slaves a 2nd turnout to a first one,
+      so that when the first one is commanded to a particular
+      state, the second one goes to the other state To use this,
+      edit the script to include your turnouts at the bottom (see
+      the existing example; you should remove that)Then select it
+      as a script to be run at startup from the "Advanced
+      Preferences" on the preferences window e a turnouts from two
+      CMRI connections.</p>
+
+      <p><a href=
+      "../../../../../jython/USBThrottle.py">USBThrottle.py</a></p>
+
+      <p><a>Use a USB device as a throttle</a></p>
+
+      <p><a href="../../../../../jython/javaone">javaone</a></p>
+
+      <p>This directory contains scripts that were first created
+      for the JavaOne test layout.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
-  </div> <!-- closes #mBody-->
- </body>
+  </div><!-- closes #mBody-->
+</body>
 </html>
-
- 	  	 

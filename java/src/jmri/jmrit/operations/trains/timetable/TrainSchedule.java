@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * determining which trains to build and run.
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision$
  */
 public class TrainSchedule {
     
@@ -46,6 +45,7 @@ public class TrainSchedule {
     }
 
     // for combo boxes
+    @Override
     public String toString() {
         return _name;
     }
@@ -89,7 +89,6 @@ public class TrainSchedule {
      * @param e Consist XML element
      */
     public TrainSchedule(Element e) {
-        // if (log.isDebugEnabled()) log.debug("ctor from element "+e);
         org.jdom2.Attribute a;
         if ((a = e.getAttribute(Xml.ID)) != null) {
             _id = a.getValue();
@@ -108,7 +107,6 @@ public class TrainSchedule {
             for (String id : trainIds) {
                 _trainIds.add(id);
             }
-//			if (log.isDebugEnabled())
 //				log.debug("Train schedule " + getName() + " trainIds: " + ids);
         }
     }
@@ -136,7 +134,7 @@ public class TrainSchedule {
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

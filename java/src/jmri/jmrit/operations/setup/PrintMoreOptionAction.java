@@ -14,11 +14,6 @@ import javax.swing.AbstractAction;
  */
 public class PrintMoreOptionAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6885400704456385145L;
-
     public PrintMoreOptionAction() {
         this(Bundle.getMessage("TitlePrintMoreOptions"));
     }
@@ -29,6 +24,7 @@ public class PrintMoreOptionAction extends AbstractAction {
 
     PrintMoreOptionFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (f == null || !f.isVisible()) {
             f = new PrintMoreOptionFrame();

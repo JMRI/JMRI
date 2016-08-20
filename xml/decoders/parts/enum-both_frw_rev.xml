@@ -5,13 +5,16 @@
       <enumChoice choice="Both directions">
        <choice>Both directions</choice>
        <choice xml:lang="it">Entrambe le direzioni</choice>
+       <choice xml:lang="de">beide Richtungen ein</choice>
       </enumChoice>
       <enumChoice choice="Only in forward">
         <choice>Only in forward</choice>
         <choice xml:lang="it">Solo in Avanti</choice>
+        <choice xml:lang="de">wenn Rückwärts aus</choice>
       </enumChoice>
       <enumChoice choice="Only in reverse">
         <choice>Only in reverse</choice>
         <choice xml:lang="it">Solo in Retro</choice>
+        <choice xml:lang="de">wenn Vorwärts aus</choice>
       </enumChoice>
 </enumVal>

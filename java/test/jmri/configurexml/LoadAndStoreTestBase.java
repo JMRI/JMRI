@@ -1,7 +1,7 @@
-// LoadAndStoreTestBase.java
 package jmri.configurexml;
 
 import java.io.BufferedReader;
+import jmri.ConfigureManager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2009, 2014
  * @since 2.5.5 (renamed & reworked in 3.9 series)
- * @version $Revision$
  */
 public class LoadAndStoreTestBase extends TestCase {
 
@@ -95,6 +94,7 @@ public class LoadAndStoreTestBase extends TestCase {
                     log.error("match failed in testLoadStoreCurrent line " + count);
                     log.error("   inLine = \"" + inLine + "\"");
                     log.error("  outLine = \"" + outLine + "\"");
+                    log.error("     comparing \"" + inFile.getName() + "\" and \"" + outFile.getName() + "\"");
                 }
                 Assert.assertEquals(inLine, outLine);
             }
@@ -105,9 +105,9 @@ public class LoadAndStoreTestBase extends TestCase {
     
     static void loadFile(File inFile) throws Exception  {
         // load file
-        InstanceManager.configureManagerInstance().load(inFile);
+        InstanceManager.getDefault(ConfigureManager.class).load(inFile);
 
-        InstanceManager.logixManagerInstance().activateAllLogixs();
+        InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
         new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
     }
@@ -116,7 +116,7 @@ public class LoadAndStoreTestBase extends TestCase {
         String name = inFile.getName();
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
         File outFile = new File(FileUtil.getUserFilesPath() + "temp/" + name);
-        InstanceManager.configureManagerInstance().storeConfig(outFile);
+        InstanceManager.getDefault(ConfigureManager.class).storeConfig(outFile);
         return outFile;
     }
     
@@ -132,7 +132,7 @@ public class LoadAndStoreTestBase extends TestCase {
         String name = inFile.getName();
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
         File outFile = new File(FileUtil.getUserFilesPath() + "temp/" + name);
-        InstanceManager.configureManagerInstance().storeConfig(outFile);
+        InstanceManager.getDefault(ConfigureManager.class).storeConfig(outFile);
 
         checkFile(inFile, outFile);
     }
@@ -154,7 +154,7 @@ public class LoadAndStoreTestBase extends TestCase {
         // store file
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
         File outFile = new File(FileUtil.getUserFilesPath() + "temp/" + name);
-        InstanceManager.configureManagerInstance().storeConfig(outFile);
+        InstanceManager.getDefault(ConfigureManager.class).storeConfig(outFile);
 
         checkFile(inFile, outFile);
     }
@@ -167,7 +167,7 @@ public class LoadAndStoreTestBase extends TestCase {
         File file;
 
         public CheckOneFilePasses(File file) {
-            super("Test schema valid: " + file);
+            super("Test load&store&compare matches: " + file);
             this.file = file;
         }
 

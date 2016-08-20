@@ -92,6 +92,7 @@
             </Property>
           </Properties>
           <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable() {&#xa;    //Implement table cell tool tips.&#xa;    public String getToolTipText(MouseEvent e) {&#xa;        try {&#xa;            return getValueAt(rowAtPoint(e.getPoint()), -1).toString();&#xa;        } catch (RuntimeException e1) {&#xa;            //catch null pointer exception if mouse is over an empty line&#xa;        }&#xa;        return null;&#xa;    }&#xa;}"/>
             <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="actionsTbl.setDefaultRenderer(StartupModel.class, new StartupModelCellRenderer());&#xa;actionsTbl.setDefaultEditor(StartupModel.class, new StartupModelCellEditor());"/>
             <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="StartupActionsPreferencesPanel_actionsTbl"/>
           </AuxValues>

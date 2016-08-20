@@ -14,11 +14,6 @@ import javax.swing.AbstractAction;
  */
 public class BuildReportOptionAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6686776607454912217L;
-
     public BuildReportOptionAction() {
         this(Bundle.getMessage("TitleBuildReportOptions"));
     }
@@ -29,6 +24,7 @@ public class BuildReportOptionAction extends AbstractAction {
 
     BuildReportOptionFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a settings frame
         if (f == null || !f.isVisible()) {

@@ -5,11 +5,6 @@ import jmri.Manager;
 
 public class LightTableTabAction extends AbstractTableTabAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2814960247992024318L;
-
     public LightTableTabAction(String s) {
         super(s);
     }

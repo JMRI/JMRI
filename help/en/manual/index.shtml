@@ -14,13 +14,14 @@
 
 <body>
 <!--#include virtual="/Header" -->
+<div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent"><a name="Top"></a>
 
 <h1>JMRI&reg; Manuals</h1>
 
-<table border="0">
+<table border="0" summary="Manual links">
 <tbody>
 
 <tr>

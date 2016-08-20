@@ -1,22 +1,18 @@
-//JmriSRCPThrottleServer.java
 package jmri.jmris.srcp;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Throttle;
-import jmri.ThrottleManager;
-import jmri.ThrottleListener;
-import jmri.LocoAddress;
+import java.util.ArrayList;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.JmriException;
+import jmri.LocoAddress;
+import jmri.Throttle;
+import jmri.ThrottleManager;
 import jmri.jmris.AbstractThrottleServer;
+import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,8 +27,8 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
 
     private DataOutputStream output;
 
-    private ArrayList busList;
-    private ArrayList addressList;
+    private ArrayList<Integer> busList;
+    private ArrayList<LocoAddress> addressList;
 
     public JmriSRCPThrottleServer(DataInputStream inStream, DataOutputStream outStream) {
         super();
@@ -72,7 +68,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
         if(memo.provides(jmri.ThrottleManager.class)) {
            ThrottleManager t=memo.get(jmri.ThrottleManager.class);
            // we will use getThrottleInfo to request information about the
-           // address, so we need to convert the address to a DccLocoAddress 
+           // address, so we need to convert the address to a DccLocoAddress
            // object first.
            DccLocoAddress addr = new DccLocoAddress(address,t.canBeLongAddress(address));
            Boolean isForward=(Boolean)t.getThrottleInfo(addr,"IsForward");
@@ -176,7 +172,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
     public void sendThrottleFound(jmri.LocoAddress address) throws IOException{
         Integer bus;
         if(addressList.contains(address)){
-           bus = (Integer)busList.get(addressList.indexOf(address));
+           bus = busList.get(addressList.indexOf(address));
         } else {
            // we didn't request this address.
            return;
@@ -193,7 +189,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
     public void sendThrottleReleased(jmri.LocoAddress address) throws IOException{
         Integer bus;
         if(addressList.contains(address)){
-           bus = (Integer)busList.get(addressList.indexOf(address));
+           bus = busList.get(addressList.indexOf(address));
         } else {
            // we didn't request this address.
            return;
@@ -206,7 +202,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
         TimeStampedOutput.writeTimestamp(output, StatusString);
     }
 
-    public void initThrottle(int bus, int address, boolean isLong, 
+    public void initThrottle(int bus, int address, boolean isLong,
                              int speedsteps, int functions) throws IOException {
         log.debug("initThrottle called with bus {} and address {}", bus, address);
 
@@ -224,12 +220,12 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
         if(memo.provides(jmri.ThrottleManager.class)) {
            ThrottleManager t=memo.get(jmri.ThrottleManager.class);
            // we will use getThrottleInfo to request information about the
-           // address, so we need to convert the address to a DccLocoAddress 
+           // address, so we need to convert the address to a DccLocoAddress
            // object first.
            DccLocoAddress addr = new DccLocoAddress(address,isLong);
-           busList.add(new Integer(bus));
+           busList.add(Integer.valueOf(bus));
            addressList.add(addr);
-           t.requestThrottle(addr,(ThrottleListener)this);
+           t.requestThrottle(addr, this);
         }
     }
 
@@ -287,14 +283,14 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
         if(memo.provides(jmri.ThrottleManager.class)) {
            ThrottleManager tm=memo.get(jmri.ThrottleManager.class);
            // we will use getThrottleInfo to request information about the
-           // address, so we need to convert the address to a DccLocoAddress 
+           // address, so we need to convert the address to a DccLocoAddress
            // object first.
            DccLocoAddress addr = new DccLocoAddress(address,tm.canBeLongAddress(address));
-         
-           // get the throttle for the address.     
+
+           // get the throttle for the address.
            if(addressList.contains(addr)){
                log.debug("Throttle in throttle list");
-               Throttle t = (Throttle)throttleList.get(addressList.indexOf(addr));
+               Throttle t = throttleList.get(addressList.indexOf(addr));
                // set the speed and direction.
                t.setSpeedSetting(speed);
                t.setIsForward(isForward);
@@ -310,7 +306,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
      * @param fList an ArrayList of boolean values indicating whether the
      *         function is active or not.
      */
-    public void setThrottleFunctions(int bus,int address, ArrayList fList ){
+    public void setThrottleFunctions(int bus,int address, ArrayList<Boolean> fList ){
         log.debug("Setting Functions for address {} bus {}",
                   address,bus);
         java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
@@ -330,19 +326,19 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
         if(memo.provides(jmri.ThrottleManager.class)) {
            ThrottleManager tm=memo.get(jmri.ThrottleManager.class);
            // we will use getThrottleInfo to request information about the
-           // address, so we need to convert the address to a DccLocoAddress 
+           // address, so we need to convert the address to a DccLocoAddress
            // object first.
            DccLocoAddress addr = new DccLocoAddress(address,tm.canBeLongAddress(address));
-         
-           // get the throttle for the address.     
+
+           // get the throttle for the address.
            if(addressList.contains(addr)){
                log.debug("Throttle in throttle list");
-               Throttle t = (Throttle)throttleList.get(addressList.indexOf(addr));
+               Throttle t = throttleList.get(addressList.indexOf(addr));
                for(int i=0;i< fList.size();i++){
                   try {
                      java.lang.reflect.Method setter = t.getClass()
                                       .getMethod("setF"+i,boolean.class);
-                     setter.invoke(t,(Boolean) fList.get(i));
+                     setter.invoke(t, fList.get(i));
                   } catch (java.lang.NoSuchMethodException|
                           java.lang.IllegalAccessException|
                           java.lang.reflect.InvocationTargetException ex1) {
@@ -368,7 +364,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
        throttleList.add(t);
        try{
           sendThrottleFound(t.getLocoAddress());
-          t.addPropertyChangeListener(new srcpThrottlePropertyChangeListener(this,t, (Integer)busList.get(addressList.indexOf(t.getLocoAddress()))));
+          t.addPropertyChangeListener(new srcpThrottlePropertyChangeListener(this, t, busList.get(addressList.indexOf(t.getLocoAddress()))));
        } catch(java.io.IOException ioe){
            //Something failed writing data to the port.
        }
@@ -377,18 +373,16 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
 
 
 
-   class srcpThrottlePropertyChangeListener implements PropertyChangeListener {
+   static class srcpThrottlePropertyChangeListener implements PropertyChangeListener {
 
       int bus;
       int address;
-      Throttle throttle=null;
       JmriSRCPThrottleServer clientServer=null;
-      
+
       srcpThrottlePropertyChangeListener(JmriSRCPThrottleServer ts,Throttle t,
             int bus ){
             log.debug("property change listener created");
             clientServer=ts;
-            throttle = t;
             this.bus=bus;
             address=t.getLocoAddress().getNumber();
        }

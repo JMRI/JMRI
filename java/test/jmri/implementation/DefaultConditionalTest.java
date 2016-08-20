@@ -1,4 +1,3 @@
-// DefaultConditionalTest.java
 package jmri.implementation;
 
 import jmri.*;
@@ -64,7 +63,7 @@ public class DefaultConditionalTest extends NamedBeanTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {DefaultConditionalTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

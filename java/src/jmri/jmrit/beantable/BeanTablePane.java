@@ -1,4 +1,3 @@
-// BeanTablePane.java
 package jmri.jmrit.beantable;
 
 import java.awt.Component;
@@ -22,14 +21,9 @@ import jmri.util.com.sun.TableSorter;
  * invoke {@link #addToBottomBox} as needed.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision$
  */
 public class BeanTablePane extends jmri.util.swing.JmriPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1172856759033682216L;
     BeanTableDataModel dataModel;
     JTable dataTable;
     JScrollPane dataScroll;
@@ -95,10 +89,6 @@ public class BeanTablePane extends jmri.util.swing.JmriPanel {
      */
     protected JTable makeJTable(TableSorter sorter) {
         return new JTable(sorter) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 5236037575632515212L;
 
             public boolean editCellAt(int row, int column, java.util.EventObject e) {
                 boolean res = super.editCellAt(row, column, e);
@@ -119,7 +109,7 @@ public class BeanTablePane extends jmri.util.swing.JmriPanel {
      * Add a component to the bottom box. Takes care of organising glue, struts
      * etc
      *
-     * @param comp
+     * @param comp {@link Component} to add
      */
     protected void addToBottomBox(Component comp) {
         bottomBox.add(Box.createHorizontalStrut(bottomStrutWidth), bottomBoxIndex);

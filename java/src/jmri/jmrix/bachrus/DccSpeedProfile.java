@@ -237,7 +237,7 @@ public class DccSpeedProfile {
         for (int i = 2; i < dccProfileData.size(); i++) {
             try {
                 String value = dccProfileData.get(i).split("\\s*,\\s*")[1];
-                float speed = new Float(value);
+                float speed = Float.valueOf(value);
                 // speed values from the speedometer are calc'd and stored in 
                 // the DccSpeedProfile object as KPH so need to convert
                 // if the file was in MPH

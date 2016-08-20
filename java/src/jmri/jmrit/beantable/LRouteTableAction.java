@@ -1,4 +1,3 @@
-// LRouteTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.BorderLayout;
@@ -59,14 +58,10 @@ import org.slf4j.LoggerFactory;
  * railroad control task.
  *
  * @author Pete Cressman Copyright (C) 2009
+ * @author Egbert Broerse i18n 2016
  *
  */
 public class LRouteTableAction extends AbstractTableAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9004336444814249851L;
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LRouteTableBundle");
 
     /**
@@ -75,12 +70,12 @@ public class LRouteTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
+     * @param s title of the action
      */
     public LRouteTableAction(String s) {
         super(s);
-        _logixManager = InstanceManager.logixManagerInstance();
-        _conditionalManager = InstanceManager.conditionalManagerInstance();
+        _logixManager = InstanceManager.getOptionalDefault(jmri.LogixManager.class);
+        _conditionalManager = InstanceManager.getOptionalDefault(jmri.ConditionalManager.class);
         // disable ourself if there is no Logix manager or no Conditional manager available
         if ((_logixManager == null) || (_conditionalManager == null)) {
             setEnabled(false);
@@ -89,23 +84,18 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     public LRouteTableAction() {
-        this(rbx.getString("Title"));
+        this(Bundle.getMessage("TitleLRouteTable"));
     }
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
-     * of Road Condtionals
+     * of Road Conditionals
      */
     protected void createModel() {
         m = new LBeanTableDataModel();
     }
 
     class LBeanTableDataModel extends BeanTableDataModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2397834189317951853L;
         // overlay the state column with the edit column
         static public final int ENABLECOL = VALUECOL;
         static public final int EDITCOL = DELETECOL;
@@ -198,7 +188,7 @@ public class LRouteTableAction extends AbstractTableAction {
 
         public Object getValueAt(int row, int col) {
             if (col == EDITCOL) {
-                return rbx.getString("ButtonEdit");
+                return Bundle.getMessage("ButtonEdit");
             } else if (col == ENABLECOL) {
                 return Boolean.valueOf(
                         ((Logix) getBySystemName((String) getValueAt(row,
@@ -283,7 +273,7 @@ public class LRouteTableAction extends AbstractTableAction {
         protected void configDeleteColumn(JTable table) {
             // have the delete column hold a button
             setColumnToHoldButton(table, DELETECOL,
-                    new JButton(rbx.getString("ButtonEdit")));
+                    new JButton(Bundle.getMessage("ButtonEdit")));
         }
 
         protected void configValueColumn(JTable table) {
@@ -296,7 +286,7 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     protected void setTitle() {
-        f.setTitle(rbx.getString("Title"));
+        f.setTitle(Bundle.getMessage("TitleLRouteTable"));
     }
 
     protected String helpTarget() {
@@ -341,10 +331,10 @@ public class LRouteTableAction extends AbstractTableAction {
     JTextField soundFile = new JTextField(30);
     JTextField scriptFile = new JTextField(30);
 
-    JButton createButton = new JButton(rbx.getString("ButtonCreate"));
-    JButton deleteButton = new JButton(rbx.getString("ButtonDelete"));
-    JButton updateButton = new JButton(rbx.getString("ButtonUpdate"));
-    JButton cancelButton = new JButton(rbx.getString("ButtonCancel"));
+    JButton createButton = new JButton(Bundle.getMessage("ButtonCreate"));
+    JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
+    JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
+    JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
 
     boolean routeDirty = false;  // true to fire reminder to save work
 
@@ -399,7 +389,7 @@ public class LRouteTableAction extends AbstractTableAction {
             inputTS.add(new RouteInputLight(systemName, userName));
             outputTS.add(new RouteOutputLight(systemName, userName));
         }
-        jmri.SignalHeadManager shm = InstanceManager.signalHeadManagerInstance();
+        jmri.SignalHeadManager shm = InstanceManager.getDefault(jmri.SignalHeadManager.class);
         systemNameList = shm.getSystemNameList();
         iter = systemNameList.iterator();
         while (iter.hasNext()) {
@@ -513,6 +503,9 @@ public class LRouteTableAction extends AbstractTableAction {
                     break;
                 case 'L':
                     getLockConditions(cSysName);
+                    break;
+                default:
+                    log.warn("Unexpected getRouteConditionalType {}", getRouteConditionalType(logixSysName, cSysName));
                     break;
             }
         }
@@ -869,14 +862,14 @@ public class LRouteTableAction extends AbstractTableAction {
             // add system name
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
-            p.add(new JLabel(rbx.getString("SystemName")));
+            p.add(new JLabel(Bundle.getMessage("LabelSystemName")));
             p.add(_systemName);
             _systemName.setToolTipText(rbx.getString("SystemNameHint"));
             tab1.add(p);
             // add user name
             p = new JPanel();
             p.setLayout(new FlowLayout());
-            p.add(new JLabel(rbx.getString("UserName")));
+            p.add(new JLabel(Bundle.getMessage("LabelUserName")));
             p.add(_userName);
             _userName.setToolTipText(rbx.getString("UserNameHint"));
             tab1.add(p);
@@ -917,7 +910,7 @@ public class LRouteTableAction extends AbstractTableAction {
                     _systemName.setText(LOGIX_INITIALIZER);
                 }
             });
-            _typePanel = makeShowButtons(_newRouteButton, oldRoute, _initializeButton, "LRouteType");
+            _typePanel = makeShowButtons(_newRouteButton, oldRoute, _initializeButton, rbx.getString("LRouteType") + ":");
             _typePanel.setBorder(BorderFactory.createEtchedBorder());
             tab1.add(_typePanel);
             tab1.add(Box.createVerticalGlue());
@@ -959,7 +952,7 @@ public class LRouteTableAction extends AbstractTableAction {
                     cancelPressed(e);
                 }
             });
-            cancelButton.setToolTipText(rbx.getString("CancelHint"));
+            cancelButton.setToolTipText(Bundle.getMessage("TooltipCancelRoute"));
             cancelButton.setName("CancelButton");
 
             // Show the initial buttons, and hide the others
@@ -975,10 +968,10 @@ public class LRouteTableAction extends AbstractTableAction {
             //////////////////////////////////// Tab 2 /////////////////////////////
             JPanel tab2 = new JPanel();
             tab2.setLayout(new BoxLayout(tab2, BoxLayout.Y_AXIS));
-            tab2.add(new JLabel(rbx.getString("OutputTitle")));
-            _outputAllButton = new JRadioButton(rbx.getString("All"), true);
-            JRadioButton includedOutputButton = new JRadioButton(rbx.getString("Included"), false);
-            tab2.add(makeShowButtons(_outputAllButton, includedOutputButton, null, "Show"));
+            tab2.add(new JLabel(rbx.getString("OutputTitle") + ":"));
+            _outputAllButton = new JRadioButton(Bundle.getMessage("All"), true);
+            JRadioButton includedOutputButton = new JRadioButton(Bundle.getMessage("Included"), false);
+            tab2.add(makeShowButtons(_outputAllButton, includedOutputButton, null, Bundle.getMessage("Show") + ":"));
             _outputAllButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Setup for display of all Turnouts, if needed
@@ -1010,10 +1003,10 @@ public class LRouteTableAction extends AbstractTableAction {
             //////////////////////////////////// Tab 3 /////////////////////////////
             JPanel tab3 = new JPanel();
             tab3.setLayout(new BoxLayout(tab3, BoxLayout.Y_AXIS));
-            tab3.add(new JLabel(rbx.getString("InputTitle")));
-            _inputAllButton = new JRadioButton(rbx.getString("All"), true);
-            JRadioButton includedInputButton = new JRadioButton(rbx.getString("Included"), false);
-            tab3.add(makeShowButtons(_inputAllButton, includedInputButton, null, "Show"));
+            tab3.add(new JLabel(rbx.getString("InputTitle") + ":"));
+            _inputAllButton = new JRadioButton(Bundle.getMessage("All"), true);
+            JRadioButton includedInputButton = new JRadioButton(Bundle.getMessage("Included"), false);
+            tab3.add(makeShowButtons(_inputAllButton, includedInputButton, null, Bundle.getMessage("Show") + ":"));
             _inputAllButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Setup for display of all Turnouts, if needed
@@ -1046,12 +1039,12 @@ public class LRouteTableAction extends AbstractTableAction {
             ////////////////////// Tab 4 /////////////////
             JPanel tab4 = new JPanel();
             tab4.setLayout(new BoxLayout(tab4, BoxLayout.Y_AXIS));
-            tab4.add(new JLabel(rbx.getString("MiscTitle")));
+            tab4.add(new JLabel(rbx.getString("MiscTitle") + ":"));
             // Enter filenames for sound, script
             JPanel p25 = new JPanel();
             p25.setLayout(new FlowLayout());
-            p25.add(new JLabel(rbx.getString("PlaySound")));
-            JButton ss = new JButton(rbx.getString("Set"));
+            p25.add(new JLabel(Bundle.getMessage("LabelPlaySound")));
+            JButton ss = new JButton("...");
             ss.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setSoundPressed();
@@ -1063,8 +1056,8 @@ public class LRouteTableAction extends AbstractTableAction {
 
             p25 = new JPanel();
             p25.setLayout(new FlowLayout());
-            p25.add(new JLabel(rbx.getString("RunScript")));
-            ss = new JButton(rbx.getString("Set"));
+            p25.add(new JLabel(Bundle.getMessage("LabelRunScript")));
+            ss = new JButton("...");
             ss.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setScriptPressed();
@@ -1076,7 +1069,7 @@ public class LRouteTableAction extends AbstractTableAction {
 
             p25 = new JPanel();
             p25.setLayout(new FlowLayout());
-            p25.add(new JLabel(rbx.getString("SetLocks")));
+            p25.add(new JLabel(rbx.getString("SetLocks") + ":"));
             _lockCheckBox = new JCheckBox(rbx.getString("Lock"), true);
             _lockCheckBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -1087,9 +1080,9 @@ public class LRouteTableAction extends AbstractTableAction {
             p25.add(_lockCheckBox);
             tab4.add(p25);
 
-            _alignAllButton = new JRadioButton(rbx.getString("All"), true);
-            JRadioButton includedAlignButton = new JRadioButton(rbx.getString("Included"), false);
-            tab4.add(makeShowButtons(_alignAllButton, includedAlignButton, null, "Show"));
+            _alignAllButton = new JRadioButton(Bundle.getMessage("All"), true);
+            JRadioButton includedAlignButton = new JRadioButton(Bundle.getMessage("Included"), false);
+            tab4.add(makeShowButtons(_alignAllButton, includedAlignButton, null, Bundle.getMessage("Show") + ":"));
             _alignAllButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Setup for display of all Turnouts, if needed
@@ -1140,7 +1133,9 @@ public class LRouteTableAction extends AbstractTableAction {
                     // remind to save, if Route was created or edited
                     if (routeDirty) {
                         InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Reminder", "Remember to save your LRoute information.", getClassName(), "remindSaveRoute");
+                                showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("BeanNameLRoute")),
+                                        getClassName(),
+                                        "remindSaveRoute"); // NOI18N
                         routeDirty = false;
                     }
                     clearPage();
@@ -1170,7 +1165,7 @@ public class LRouteTableAction extends AbstractTableAction {
     JPanel makeShowButtons(JRadioButton allButton, JRadioButton includeButton,
             JRadioButton extraButton, String msg) {
         JPanel panel = new JPanel();
-        panel.add(new JLabel(rbx.getString(msg)));
+        panel.add(new JLabel(msg));
         panel.add(allButton);
         panel.add(includeButton);
         ButtonGroup selGroup = new ButtonGroup();
@@ -1277,7 +1272,7 @@ public class LRouteTableAction extends AbstractTableAction {
     void showMessage(String msg) {
 
         javax.swing.JOptionPane.showMessageDialog(
-                _addFrame, rbx.getString(msg), rbx.getString("Warn"),
+                _addFrame, rbx.getString(msg), Bundle.getMessage("WarningTitle"),
                 javax.swing.JOptionPane.WARNING_MESSAGE);
     }
 
@@ -1646,6 +1641,9 @@ public class LRouteTableAction extends AbstractTableAction {
                             case Route.TOGGLE:
                                 add = false;
                                 break;
+                            default:
+                                log.warn("Unexpected state {} from elt.getState() in SENSOR_TYPE", elt.getState());
+                                break;
                         }
                         break;
                     case TURNOUT_TYPE:
@@ -1662,6 +1660,9 @@ public class LRouteTableAction extends AbstractTableAction {
                             case Route.TOGGLE:
                                 add = false;
                                 break;
+                            default:
+                                log.warn("Unexpected state {} from elt.getState() in TURNOUT_TYPE", elt.getState());
+                                break;
                         }
                         break;
                     case LIGHT_TYPE:
@@ -1677,6 +1678,9 @@ public class LRouteTableAction extends AbstractTableAction {
                                 break;
                             case Route.TOGGLE:
                                 add = false;
+                                break;
+                            default:
+                                log.warn("Unexpected state {} from elt.getState() in LIGHT_TYPE", elt.getState());
                                 break;
                         }
                         break;
@@ -1718,6 +1722,9 @@ public class LRouteTableAction extends AbstractTableAction {
                             case SET_SIGNAL_LIT:
                                 varType = Conditional.TYPE_SIGNAL_HEAD_LIT;
                                 break;
+                            default:
+                                log.warn("Unexpected state {} from elt.getState() in SIGNAL_TYPE", elt.getState());
+                                break;
                         }
                         break;
                     default:
@@ -1738,7 +1745,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 javax.swing.JOptionPane.showMessageDialog(
                         _addFrame, java.text.MessageFormat.format(rbx.getString("NoAlign"),
                                 new Object[]{name, sensor.getAlignType()}),
-                        rbx.getString("Warn"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
             }
         }
         ///////////////// Make Lock Conditional //////////////////////////
@@ -1790,7 +1797,7 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * @throw IllegalArgumentException if "user input no good"
+     * @throws IllegalArgumentException if "user input no good"
      * @return The number of conditionals after the creation.
      */
     int makeRouteConditional(int numConds, /*boolean onChange,*/ ArrayList<ConditionalAction> actionList,
@@ -1810,9 +1817,9 @@ public class LRouteTableAction extends AbstractTableAction {
             if (tSize > 1) {
                 antecedent.append("(");
             }
-            antecedent.append("R1");
+            antecedent.append("R1"); //NOI18N
             for (int i = 1; i < tSize; i++) {
-                antecedent.append(" OR R" + (i + 1));
+                antecedent.append(" " + Bundle.getMessage("LogicOR") + " R" + (i + 1)); //NOI18N
             }
             if (tSize > 1) {
                 antecedent.append(")");
@@ -1826,14 +1833,14 @@ public class LRouteTableAction extends AbstractTableAction {
         if (vetoList != null && vetoList.size() > 0) {
             int vSize = vetoList.size();
             if (tSize > 0) {
-                antecedent.append(" AND ");
+                antecedent.append(" " + Bundle.getMessage("LogicAND") + " ");
             }
             if (vSize > 1) {
                 antecedent.append("(");
             }
-            antecedent.append("NOT R" + (1 + tSize));
+            antecedent.append(Bundle.getMessage("LogicNOT") + " R" + (1 + tSize)); //NOI18N
             for (int i = 1; i < vSize; i++) {
-                antecedent.append(" AND NOT R" + (i + 1 + tSize));
+                antecedent.append(" " + Bundle.getMessage("LogicAND") + " " + Bundle.getMessage("LogicNOT") + " R" + (i + 1 + tSize)); //NOI18N
             }
             if (vSize > 1) {
                 antecedent.append(")");
@@ -1878,7 +1885,7 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * @throw IllegalArgumentException if "user input no good"
+     * @throws IllegalArgumentException if "user input no good"
      * @return The number of conditionals after the creation.
      */
     int makeAlignConditional(int numConds, ArrayList<ConditionalAction> actionList,
@@ -2001,12 +2008,6 @@ public class LRouteTableAction extends AbstractTableAction {
 
 ////////////////////////////// Internal Utility Classes ////////////////////////////////
     public class ComboBoxCellEditor extends DefaultCellEditor {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2610003095583895650L;
-
         ComboBoxCellEditor() {
             super(new JComboBox<String>());
         }
@@ -2053,12 +2054,6 @@ public class LRouteTableAction extends AbstractTableAction {
      * Base Table model for selecting Route elements
      */
     public abstract class RouteElementModel extends AbstractTableModel implements PropertyChangeListener {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -8781528720076479485L;
-
         abstract public boolean isInput();
 
         public Class<?> getColumnClass(int c) {
@@ -2076,13 +2071,13 @@ public class LRouteTableAction extends AbstractTableAction {
         public String getColumnName(int c) {
             switch (c) {
                 case SNAME_COLUMN:
-                    return rbx.getString("SystemName");
+                    return Bundle.getMessage("ColumnSystemName");
                 case UNAME_COLUMN:
-                    return rbx.getString("UserName");
+                    return Bundle.getMessage("ColumnUserName");
                 case TYPE_COLUMN:
                     return rbx.getString("Type");
                 case INCLUDE_COLUMN:
-                    return rbx.getString("Include");
+                    return Bundle.getMessage("Include");
             }
             return "";
         }
@@ -2113,12 +2108,6 @@ public class LRouteTableAction extends AbstractTableAction {
      * Table model for selecting input variables
      */
     class RouteInputModel extends RouteElementModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 210785278316050800L;
-
         public boolean isInput() {
             return true;
         }
@@ -2180,6 +2169,9 @@ public class LRouteTableAction extends AbstractTableAction {
                 case STATE_COLUMN:
                     inputList.get(r).setTestState((String) type);
                     break;
+                default:
+                    log.warn("Unexpected column {} in setValueAt", c);
+                    break;
             }
         }
     }
@@ -2188,12 +2180,6 @@ public class LRouteTableAction extends AbstractTableAction {
      * Table model for selecting output variables
      */
     class RouteOutputModel extends RouteElementModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5167852390939595503L;
-
         public boolean isInput() {
             return false;
         }
@@ -2255,6 +2241,9 @@ public class LRouteTableAction extends AbstractTableAction {
                 case STATE_COLUMN:
                     outputList.get(r).setSetToState((String) type);
                     break;
+                default:
+                    log.warn("Unexpected column {} in setValueAt", c);
+                    break;
             }
         }
     }
@@ -2263,12 +2252,6 @@ public class LRouteTableAction extends AbstractTableAction {
      * Table model for selecting output variables
      */
     class AlignmentModel extends RouteElementModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3042074636786118990L;
-
         public boolean isInput() {
             return false;
         }
@@ -2308,7 +2291,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 case INCLUDE_COLUMN:
                     return Boolean.valueOf(alignList.get(r).isIncluded());
                 case TYPE_COLUMN:
-                    return rbx.getString("Sensor");
+                    return Bundle.getMessage("BeanNameSensor");
                 case STATE_COLUMN:  //
                     return alignList.get(r).getAlignType();
                 default:
@@ -2329,6 +2312,9 @@ public class LRouteTableAction extends AbstractTableAction {
                     break;
                 case STATE_COLUMN:
                     alignList.get(r).setAlignType((String) type);
+                    break;
+                default:
+                    log.warn("Unexpected column {} in setValueAt", c);
                     break;
             }
         }
@@ -2363,55 +2349,55 @@ public class LRouteTableAction extends AbstractTableAction {
     private static String ALIGN_SIGNAL = rbx.getString("AlignSignal");
     private static String ALIGN_ALL = rbx.getString("AlignAll");
 
-    private static String ON_CHANGE = rbx.getString("OnChange");
-    private static String ON_ACTIVE = rbx.getString("OnActive");
-    private static String ON_INACTIVE = rbx.getString("OnInactive");
-    private static String VETO_ON_ACTIVE = rbx.getString("VetoActive");
-    private static String VETO_ON_INACTIVE = rbx.getString("VetoInactive");
-    private static String ON_THROWN = rbx.getString("OnThrown");
-    private static String ON_CLOSED = rbx.getString("OnClosed");
-    private static String VETO_ON_THROWN = rbx.getString("VetoThrown");
-    private static String VETO_ON_CLOSED = rbx.getString("VetoClosed");
-    private static String ON_LIT = rbx.getString("OnLit");
+    private static String ON_CHANGE = Bundle.getMessage("OnConditionChange"); //rbx.getString("xOnChange");
+    private static String ON_ACTIVE = Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SensorStateActive"); //rbx.getString("xOnActive");
+    private static String ON_INACTIVE = Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SensorStateInactive"); //rbx.getString("xOnInactive");
+    private static String VETO_ON_ACTIVE = "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("SensorStateActive"); //rbx.getString("xVetoActive");
+    private static String VETO_ON_INACTIVE = "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("SensorStateInactive"); //rbx.getString("xVetoInactive");
+    private static String ON_THROWN = Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("TurnoutStateThrown"); //rbx.getString("xOnThrown");
+    private static String ON_CLOSED = Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("TurnoutStateClosed"); //rbx.getString("xOnClosed");
+    private static String VETO_ON_THROWN = "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateThrown"); //rbx.getString("xVetoThrown");
+    private static String VETO_ON_CLOSED = "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateClosed"); //rbx.getString("xVetoClosed");
+    private static String ON_LIT = Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("ColumnHeadLit"); //rbx.getString("xOnLit");
     private static String ON_UNLIT = rbx.getString("OnUnLit");
-    private static String VETO_ON_LIT = rbx.getString("VetoLit");
+    private static String VETO_ON_LIT = "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("ColumnHeadLit"); //rbx.getString("xVetoLit");
     private static String VETO_ON_UNLIT = rbx.getString("VetoUnLit");
-    private static String ON_RED = rbx.getString("OnRed");
-    private static String ON_FLASHRED = rbx.getString("OnFlashRed");
-    private static String ON_YELLOW = rbx.getString("OnYellow");
-    private static String ON_FLASHYELLOW = rbx.getString("OnFlashYellow");
-    private static String ON_GREEN = rbx.getString("OnGreen");
-    private static String ON_FLASHGREEN = rbx.getString("OnFlashGreen");
-    private static String ON_DARK = rbx.getString("OnDark");
-    private static String ON_SIGNAL_LIT = rbx.getString("OnLit");
-    private static String ON_SIGNAL_HELD = rbx.getString("OnHeld");
-    private static String VETO_ON_RED = rbx.getString("VetoOnRed");
-    private static String VETO_ON_FLASHRED = rbx.getString("VetoOnFlashRed");
-    private static String VETO_ON_YELLOW = rbx.getString("VetoOnYellow");
-    private static String VETO_ON_FLASHYELLOW = rbx.getString("VetoOnFlashYellow");
-    private static String VETO_ON_GREEN = rbx.getString("VetoOnGreen");
-    private static String VETO_ON_FLASHGREEN = rbx.getString("VetoOnFlashGreen");
-    private static String VETO_ON_DARK = rbx.getString("VetoOnDark");
-    private static String VETO_ON_SIGNAL_LIT = rbx.getString("VetoOnLit");
-    private static String VETO_ON_SIGNAL_HELD = rbx.getString("VetoOnHeld");
+    private static String ON_RED = Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SignalHeadStateRed"); //rbx.getString("xOnRed");
+    private static String ON_FLASHRED = Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SignalHeadStateFlashingRed"); //rbx.getString("xOnFlashRed");
+    private static String ON_YELLOW = Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SignalHeadStateYellow"); //rbx.getString("xOnYellow");
+    private static String ON_FLASHYELLOW = Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SignalHeadStateFlashingYellow"); //rbx.getString("xOnFlashYellow");
+    private static String ON_GREEN = Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SignalHeadStateGreen"); //rbx.getString("xOnGreen");
+    private static String ON_FLASHGREEN = Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SignalHeadStateFlashingGreen"); //rbx.getString("xOnFlashGreen");
+    private static String ON_DARK = Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SignalHeadStateDark"); //rbx.getString("xOnDark");
+    private static String ON_SIGNAL_LIT = Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("ColumnHeadLit"); //rbx.getString("xOnLit");
+    private static String ON_SIGNAL_HELD = Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SignalHeadStateHeld"); //rbx.getString("xOnHeld");
+    private static String VETO_ON_RED = "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("SignalHeadStateRed"); //rbx.getString("xVetoOnRed");
+    private static String VETO_ON_FLASHRED = "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("SignalHeadStateFlashingRed"); //rbx.getString("xVetoOnFlashRed");
+    private static String VETO_ON_YELLOW = "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("SignalHeadStateYellow"); //rbx.getString("xVetoOnYellow");
+    private static String VETO_ON_FLASHYELLOW = "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("SignalHeadStateFlashingYellow"); //rbx.getString("xVetoOnFlashYellow");
+    private static String VETO_ON_GREEN = "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("SignalHeadStateGreen"); //rbx.getString("xVetoOnGreen");
+    private static String VETO_ON_FLASHGREEN = "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("SignalHeadStateFlashingGreen"); //rbx.getString("xVetoOnFlashGreen");
+    private static String VETO_ON_DARK = "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("SignalHeadStateDark"); //rbx.getString("xVetoOnDark");
+    private static String VETO_ON_SIGNAL_LIT = "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("ColumnHeadLit"); //rbx.getString("xVetoOnLit");
+    private static String VETO_ON_SIGNAL_HELD = "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("SignalHeadStateHeld"); //rbx.getString("xVetoOnHeld");
 
-    private static String SET_TO_ACTIVE = rbx.getString("SetActive");
-    private static String SET_TO_INACTIVE = rbx.getString("SetInactive");
-    private static String SET_TO_CLOSED = rbx.getString("SetClosed");
-    private static String SET_TO_THROWN = rbx.getString("SetThrown");
-    private static String SET_TO_TOGGLE = rbx.getString("SetToggle");
-    private static String SET_TO_ON = rbx.getString("SetLightOn");
-    private static String SET_TO_OFF = rbx.getString("SetLightOff");
-    private static String SET_TO_DARK = rbx.getString("SetDark");
-    private static String SET_TO_LIT = rbx.getString("SetLit");
-    private static String SET_TO_HELD = rbx.getString("SetHeld");
+    private static String SET_TO_ACTIVE =  Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSensor"), Bundle.getMessage("SensorStateActive")); // rbx.getString("xSetActive");
+    private static String SET_TO_INACTIVE = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSensor"), Bundle.getMessage("SensorStateInactive")); // rbx.getString("xSetInactive");
+    private static String SET_TO_CLOSED = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameTurnout"), Bundle.getMessage("TurnoutStateClosed")); //rbx.getString("xSetClosed");
+    private static String SET_TO_THROWN = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameTurnout"), Bundle.getMessage("TurnoutStateThrown")); //rbx.getString("xSetThrown");
+    private static String SET_TO_TOGGLE = Bundle.getMessage("SetBeanState", "", Bundle.getMessage("Toggle")); //rbx.getString("xSetToggle");
+    private static String SET_TO_ON = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameLight"), Bundle.getMessage("LightStateOn")); //rbx.getString("xSetLightOn");
+    private static String SET_TO_OFF = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameLight"), Bundle.getMessage("LightStateOff")); //rbx.getString("xSetLightOff");
+    private static String SET_TO_DARK = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSignalHead"), Bundle.getMessage("SignalHeadStateDark")); //rbx.getString("xSetDark");
+    private static String SET_TO_LIT = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSignalHead"), Bundle.getMessage("ColumnHeadLit")); //rbx.getString("xSetLit");
+    private static String SET_TO_HELD = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSignalHead"), Bundle.getMessage("SignalHeadStateHeld")); //rbx.getString("xSetHeld");
     private static String SET_TO_CLEAR = rbx.getString("SetClear");
-    private static String SET_TO_RED = rbx.getString("SetRed");
-    private static String SET_TO_FLASHRED = rbx.getString("SetFlashRed");
-    private static String SET_TO_YELLOW = rbx.getString("SetYellow");
-    private static String SET_TO_FLASHYELLOW = rbx.getString("SetFlashYellow");
-    private static String SET_TO_GREEN = rbx.getString("SetGreen");
-    private static String SET_TO_FLASHGREEN = rbx.getString("SetFlashGreen");
+    private static String SET_TO_RED = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSignalHead"), Bundle.getMessage("SignalHeadStateRed")); //rbx.getString("xSetRed");
+    private static String SET_TO_FLASHRED = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSignalHead"), Bundle.getMessage("SignalHeadStateFlashingRed")); //rbx.getString("xSetFlashRed");
+    private static String SET_TO_YELLOW = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSignalHead"), Bundle.getMessage("SignalHeadStateYellow")); //rbx.getString("xSetYellow");
+    private static String SET_TO_FLASHYELLOW = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSignalHead"), Bundle.getMessage("SignalHeadStateFlashingYellow")); //rbx.getString("xSetFlashYellow");
+    private static String SET_TO_GREEN = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSignalHead"), Bundle.getMessage("SignalHeadStateGreen")); //rbx.getString("xSetGreen");
+    private static String SET_TO_FLASHGREEN = Bundle.getMessage("SetBeanState", Bundle.getMessage("BeanNameSignalHead"), Bundle.getMessage("SignalHeadStateFlashingGreen")); //rbx.getString("xSetFlashGreen");
 
     private static String[] ALIGNMENT_STATES = new String[]{ALIGN_SENSOR, ALIGN_TURNOUT, ALIGN_LIGHT, ALIGN_SIGNAL, ALIGN_ALL};
     private static String[] INPUT_SENSOR_STATES = new String[]{ON_ACTIVE, ON_INACTIVE, ON_CHANGE, VETO_ON_ACTIVE, VETO_ON_INACTIVE};
@@ -2432,12 +2418,6 @@ public class LRouteTableAction extends AbstractTableAction {
      * Sorts RouteElement
      */
     public static class RouteElementComparator extends SystemNameComparator {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -4393706804845323729L;
-
         RouteElementComparator() {
         }
 
@@ -2466,19 +2446,22 @@ public class LRouteTableAction extends AbstractTableAction {
             _included = false;
             switch (type) {
                 case SENSOR_TYPE:
-                    _typeString = rbx.getString("Sensor");
+                    _typeString = Bundle.getMessage("BeanNameSensor");
                     break;
                 case TURNOUT_TYPE:
-                    _typeString = rbx.getString("Turnout");
+                    _typeString = Bundle.getMessage("BeanNameTurnout");
                     break;
                 case LIGHT_TYPE:
-                    _typeString = rbx.getString("Light");
+                    _typeString = Bundle.getMessage("BeanNameLight");
                     break;
                 case SIGNAL_TYPE:
-                    _typeString = rbx.getString("Signal");
+                    _typeString = Bundle.getMessage("BeanNameSignalHead");
                     break;
                 case CONDITIONAL_TYPE:
-                    _typeString = rbx.getString("Conditional");
+                    _typeString = Bundle.getMessage("BeanNameConditional");
+                    break;
+                default:
+                    log.warn("Unexpected type {} in RouteElement constructor", type);
                     break;
             }
         }
@@ -2938,10 +2921,9 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     public String getClassDescription() {
-        return rbx.getString("Title");
+        return Bundle.getMessage("TitleLRouteTable");
     }
 
-    private final static Logger log = LoggerFactory
-            .getLogger(LRouteTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LRouteTableAction.class.getName());
 }
-/* @(#)RouteTableAction.java */
+

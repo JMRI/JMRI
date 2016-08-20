@@ -15,11 +15,6 @@ import javax.swing.AbstractAction;
  */
 public class EditManifestTextAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1156471520813287003L;
-
     public EditManifestTextAction() {
         this(Bundle.getMessage("TitleManifestText"));
     }
@@ -30,6 +25,7 @@ public class EditManifestTextAction extends AbstractAction {
 
     EditManifestTextFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a settings frame
         if (f == null || !f.isVisible()) {
