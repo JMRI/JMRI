@@ -1,4 +1,3 @@
-// TrainManager.java
 package jmri.jmrit.operations.trains;
 
 import java.io.File;
@@ -31,8 +30,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
- * 2014
- * @version $Revision$
+ *         2014
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 
@@ -84,9 +82,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
     public static synchronized TrainManager instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("TrainManager creating instance");
-            }
+            log.debug("TrainManager creating instance");
             // create and load
             _instance = new TrainManager();
             OperationsSetupXml.instance(); // load setup
@@ -248,7 +244,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public void runStartUpScripts() {
         for (String scriptPathName : getStartUpScripts()) {
             try {
-                JmriScriptEngineManager.getDefault().runScript(new File(jmri.util.FileUtil.getExternalFilename(scriptPathName)));
+                JmriScriptEngineManager.getDefault()
+                        .runScript(new File(jmri.util.FileUtil.getExternalFilename(scriptPathName)));
             } catch (Exception e) {
                 log.error("Problem with script: {}", scriptPathName);
             }
@@ -282,18 +279,20 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public void runShutDownScripts() {
         for (String scriptPathName : getShutDownScripts()) {
             try {
-                JmriScriptEngineManager.getDefault().runScript(new File(jmri.util.FileUtil.getExternalFilename(scriptPathName)));
+                JmriScriptEngineManager.getDefault()
+                        .runScript(new File(jmri.util.FileUtil.getExternalFilename(scriptPathName)));
             } catch (Exception e) {
                 log.error("Problem with script: {}", scriptPathName);
             }
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "for testing")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "for testing")
     public void dispose() {
         _trainHashTable.clear();
         _id = 0;
-        _instance = null;	// we need to reset the instance for testing purposes
+        _instance = null; // we need to reset the instance for testing purposes
     }
 
     // stores known Train instances by id
@@ -411,24 +410,24 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         }
         return false;
     }
-    
+
     /**
-    *
-    * @return true if there's a train being built
-    */
-   public boolean isAnyTrainBuilding() {
-       for (Train train : getTrainsByIdList()) {
-           if (train.getStatusCode() == Train.CODE_BUILDING) {
-               return true;
-           }
-       }
-       return false;
-   }
+     *
+     * @return true if there's a train being built
+     */
+    public boolean isAnyTrainBuilding() {
+        for (Train train : getTrainsByIdList()) {
+            if (train.getStatusCode() == Train.CODE_BUILDING) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      *
      * @return Train that can service car from its current location to the its
-     * destination.
+     *         destination.
      */
     public Train getTrainForCar(Car car, PrintWriter buildReport) {
         return getTrainForCar(car, null, buildReport);
@@ -438,7 +437,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      *
      * @param excludeTrain The only train not to try.
      * @return Train that can service car from its current location to the its
-     * destination.
+     *         destination.
      */
     public Train getTrainForCar(Car car, Train excludeTrain, PrintWriter buildReport) {
         log.debug("Find train for car (" + car.toString() + ") location (" + car.getLocationName() + ", " // NOI18N
@@ -448,7 +447,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
             TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED, TrainCommon.BLANK_LINE);
             TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED, MessageFormat.format(Bundle
                     .getMessage("trainFindForCar"), new Object[]{car.toString(), car.getLocationName(),
-                        car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName()}));
+                            car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName()}));
         }
         for (Train train : getTrainsByIdList()) {
             if (train == excludeTrain) {
@@ -518,7 +517,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public List<Train> getTrainsByStatusList() {
         return getTrainsByList(getTrainsByTimeList(), GET_TRAIN_STATUS);
     }
-    
+
     /**
      * Sort by train description
      *
@@ -926,10 +925,12 @@ public class TrainManager implements java.beans.PropertyChangeListener {
                 if (isBuildMessagesEnabled()) {
                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                             .getMessage("NeedToBuildBeforePrinting"), new Object[]{train.getName(),
-                                (isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle.getMessage("print"))}),
+                                    (isPrintPreviewEnabled() ? Bundle.getMessage("preview")
+                                            : Bundle.getMessage("print"))}),
                             MessageFormat.format(Bundle.getMessage("CanNotPrintManifest"),
                                     new Object[]{isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
-                                                .getMessage("print")}), JOptionPane.ERROR_MESSAGE);
+                                            .getMessage("print")}),
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -946,7 +947,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
                     status = false;
                     int response = JOptionPane.showConfirmDialog(null, Bundle
                             .getMessage("WarningTrainManifestNotPrinted"), MessageFormat.format(Bundle
-                                    .getMessage("TerminateTrain"), new Object[]{train.getName(), train.getDescription()}),
+                                    .getMessage("TerminateTrain"),
+                                    new Object[]{train.getName(), train.getDescription()}),
                             JOptionPane.YES_NO_OPTION);
                     if (response == JOptionPane.YES_OPTION) {
                         train.terminate();
@@ -985,10 +987,12 @@ public class TrainManager implements java.beans.PropertyChangeListener {
                     _runFile = a.getValue().equals(Xml.TRUE);
                 }
                 // verify that the Trains Window action is valid
-                if ((a = e.getAttribute(Xml.TRAIN_ACTION)) != null
-                        && (a.getValue().equals(TrainsTableFrame.MOVE) || a.getValue().equals(TrainsTableFrame.RESET)
-                        || a.getValue().equals(TrainsTableFrame.TERMINATE) || a.getValue().equals(
-                                TrainsTableFrame.CONDUCTOR))) {
+                if ((a = e.getAttribute(Xml.TRAIN_ACTION)) != null &&
+                        (a.getValue().equals(TrainsTableFrame.MOVE) ||
+                                a.getValue().equals(TrainsTableFrame.RESET) ||
+                                a.getValue().equals(TrainsTableFrame.TERMINATE) ||
+                                a.getValue().equals(
+                                        TrainsTableFrame.CONDUCTOR))) {
                     _trainAction = a.getValue();
                 }
 
@@ -1118,8 +1122,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
             options.addContent(es);
         }
 
-        TrainCustomManifest.instance().store(options);	// save custom manifest elements
-        TrainCustomSwitchList.instance().store(options);	// save custom manifest elements
+        TrainCustomManifest.instance().store(options); // save custom manifest elements
+        TrainCustomSwitchList.instance().store(options); // save custom manifest elements
 
         root.addContent(options);
 
@@ -1138,8 +1142,12 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        log.debug("TrainManager sees property change: " + e.getPropertyName() + " old: "
-                + e.getOldValue() + " new " + e.getNewValue()); // NOI18N
+        log.debug("TrainManager sees property change: " +
+                e.getPropertyName() +
+                " old: " +
+                e.getOldValue() +
+                " new " +
+                e.getNewValue()); // NOI18N
         // TODO use listener to determine if load name has changed
         // if (e.getPropertyName().equals(CarLoads.LOAD_NAME_CHANGED_PROPERTY)){
         // replaceLoad((String)e.getOldValue(), (String)e.getNewValue());

@@ -1,4 +1,3 @@
-// SchedulesTableModel.java
 package jmri.jmrit.operations.locations.schedules;
 
 import java.awt.event.ActionEvent;
@@ -27,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of schedules used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009, 2011, 2013
- * @version $Revision$
  */
 public class SchedulesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -386,9 +384,6 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
         if (sef != null) {
             sef.dispose();
         }

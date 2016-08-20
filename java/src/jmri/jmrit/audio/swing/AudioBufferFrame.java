@@ -207,7 +207,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
      */
     @Override
     public void populateFrame(Audio a) {
-        if (a instanceof AudioBuffer) {
+        if (!(a instanceof AudioBuffer)) {
             throw new IllegalArgumentException(a.getSystemName() + " is not an AudioBuffer object");
         }
         super.populateFrame(a);

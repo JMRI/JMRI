@@ -78,9 +78,7 @@ public class JmriJFrameServlet extends HttpServlet {
             log.debug("Invoke directly on MouseListener, at {},{}", x, y);
             sendClickSequence((MouseListener) c, c, x, y);
         } else if (c instanceof jmri.jmrit.display.MultiSensorIcon) {
-            if (log.isDebugEnabled()) {
-                log.debug("Invoke Clicked on MultiSensorIcon");
-            }
+            log.debug("Invoke Clicked on MultiSensorIcon");
             MouseEvent e = new MouseEvent(c,
                     MouseEvent.MOUSE_CLICKED,
                     0, // time
@@ -91,9 +89,7 @@ public class JmriJFrameServlet extends HttpServlet {
             );
             ((Positionable) c).doMouseClicked(e);
         } else if (Positionable.class.isAssignableFrom(c.getClass())) {
-            if (log.isDebugEnabled()) {
-                log.debug("Invoke Pressed, Released and Clicked on Positionable");
-            }
+            log.debug("Invoke Pressed, Released and Clicked on Positionable");
             MouseEvent e = new MouseEvent(c,
                     MouseEvent.MOUSE_PRESSED,
                     0, // time
@@ -444,9 +440,7 @@ public class JmriJFrameServlet extends HttpServlet {
                 } else {
                     coords[0] = key;
                 }
-                if (log.isDebugEnabled()) {
-                    log.info("Setting click coords to " + coords[0]);
-                }
+                log.debug("Setting click coords to {}", coords[0]);
                 parameters.put("coords", coords); // NOI18N
             } else {
                 parameters.put(key, value);
