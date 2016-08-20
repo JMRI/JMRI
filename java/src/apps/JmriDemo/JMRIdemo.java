@@ -53,6 +53,9 @@ public class JMRIdemo extends Apps {
 
     /**
      * Show all systems in the menu bar.
+     *
+     * @param menuBar the menu bar to attach the systems menu(s) to
+     * @param frame   ignored; available for overriding methods to use
      */
     protected void systemsMenu(JMenuBar menuBar, JFrame frame) {
         menuBar.add(new jmri.jmrix.SystemsMenu());

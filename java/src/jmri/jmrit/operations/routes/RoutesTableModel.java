@@ -1,4 +1,3 @@
-// RoutesTableModel.java
 package jmri.jmrit.operations.routes;
 
 import java.beans.PropertyChangeEvent;
@@ -21,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of routes used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2015
- * @version $Revision$
  */
 public class RoutesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -172,7 +170,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 
     @Override
     public synchronized Object getValueAt(int row, int col) {
-        if (row >= sysList.size()) {
+        if (row >= getRowCount()) {
             return "ERROR unknown " + row; // NOI18N
         }
         Route route = sysList.get(row);
@@ -200,7 +198,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     @Override
-    public void setValueAt(Object value, int row, int col) {
+    public synchronized void setValueAt(Object value, int row, int col) {
         switch (col) {
             case EDIT_COLUMN:
                 editRoute(row);
@@ -260,9 +258,6 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
         if (ref != null) {
             ref.dispose();
         }

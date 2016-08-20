@@ -26,8 +26,8 @@ public class Z21Test extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.roco.z21.z21Test");  // no tests in this class itself
         suite.addTest(new TestSuite(Z21AdapterTest.class));
-        suite.addTest(new TestSuite(Z21MessageTest.class));
-        suite.addTest(new TestSuite(Z21ReplyTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Z21MessageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Z21ReplyTest.class));
         suite.addTest(new TestSuite(Z21TrafficControllerTest.class));
         suite.addTest(new TestSuite(Z21SystemConnectionMemoTest.class));
         suite.addTest(new TestSuite(Z21XPressNetTunnelTest.class));
@@ -38,6 +38,10 @@ public class Z21Test extends TestCase {
         suite.addTest(new TestSuite(Z21XNetTurnoutTest.class));
         suite.addTest(jmri.jmrix.roco.z21.simulator.Z21SimulatorTest.suite());
         suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.roco.z21.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Z21ReporterTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Z21ReporterManagerTest.class));
         return suite;
     }
 

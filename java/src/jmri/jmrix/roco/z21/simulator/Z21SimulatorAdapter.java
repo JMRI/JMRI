@@ -173,6 +173,10 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                 // get broadcast flags
                 reply = getZ21BroadCastFlagsReply();
                 break;
+             case 0x0089:
+                // Get Railcom Data
+                reply = getZ21RailComDataChangedReply();
+                break;
              case 0x0060:
                 // get loco mode
              case 0x0061:
@@ -187,8 +191,6 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                 // program RMBus module
              case 0x0085:
                 // get system state
-             case 0x0089:
-                  // Get Railcom Data
              case 0x00A2:
                   // loconet data from lan
              case 0x00A3:
@@ -246,6 +248,26 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
         reply.setElement(5,flags[1]);
         reply.setElement(6,flags[2]);
         reply.setElement(7,flags[3]);
+        return reply;
+    }
+
+    private Z21Reply getZ21RailComDataChangedReply(){
+        Z21Reply reply = new Z21Reply();
+        reply.setLength(0x0011);
+        reply.setOpCode(0x0088);
+        reply.setElement(4,0x00);// byte 5, LocoAddress msb.
+        reply.setElement(5,0x01);// byte 6, LocoAddress lsb.
+        reply.setElement(6,0x00);// bytes 7-10,32 bit reception counter.
+        reply.setElement(7,0x00);
+        reply.setElement(8,0x00); 
+        reply.setElement(9,0x01);
+        reply.setElement(10,0x00);// bytes 11-14,32 bit error counter.
+        reply.setElement(11,0x00);
+        reply.setElement(12,0x00); 
+        reply.setElement(13,0x00);
+        reply.setElement(14,0x00);//currently reserved.Speed in firmware<=1.12
+        reply.setElement(15,0x00);//currently reserved.Options in firmware<=1.12
+        reply.setElement(16,0x00);//currently reserved.Temp in firmware<=1.12
         return reply;
     }
 

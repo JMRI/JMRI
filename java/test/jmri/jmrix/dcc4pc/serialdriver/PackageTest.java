@@ -8,10 +8,11 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   ConnectionConfigTest.class
+   ConnectionConfigTest.class,
+   jmri.jmrix.dcc4pc.serialdriver.configurexml.PackageTest.class
 })
 /**
- * Tests for the jmri.jmrix.pi package
+ * Tests for the jmri.jmrix.dcc4pc.serialdriver package
  *
  * @author Paul Bender Copyright (C) 2016
  */

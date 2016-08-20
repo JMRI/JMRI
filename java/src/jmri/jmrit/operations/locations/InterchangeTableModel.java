@@ -53,7 +53,7 @@ public class InterchangeTableModel extends TrackTableModel {
 
     // this table listens for changes to a location and it's interchanges
     @Override
-    public void propertyChange(PropertyChangeEvent e) {
+    public synchronized void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());

@@ -1,4 +1,3 @@
-// TrainsScheduleTableModel.java
 package jmri.jmrit.operations.trains.timetable;
 
 import java.beans.PropertyChangeEvent;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of train schedules (Timetable) used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2012
- * @version $Revision$
  */
 public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -184,7 +182,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 
     @Override
     public synchronized Object getValueAt(int row, int col) {
-        if (row >= sysList.size()) {
+        if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
         Train train = sysList.get(row);
@@ -300,9 +298,6 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
     }
 
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
         trainManager.removePropertyChangeListener(this);
         scheduleManager.removePropertyChangeListener(this);
         removePropertyChangeTrains();

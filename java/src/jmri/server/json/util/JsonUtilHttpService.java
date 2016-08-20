@@ -1,16 +1,31 @@
 package jmri.server.json.util;
 
+import static jmri.server.json.JSON.CONTROL_PANEL;
+import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JSON.LAYOUT_PANEL;
+import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.PANEL;
+import static jmri.server.json.JSON.TYPE;
+import static jmri.server.json.JSON.URL;
+import static jmri.server.json.JSON.USERNAME;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
+import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.Metadata;
 import jmri.jmris.json.JsonServerPreferences;
+import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.SystemConnectionMemo;
@@ -19,6 +34,7 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 import jmri.util.ConnectionNameFromSystemName;
+import jmri.util.JmriJFrame;
 import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.web.server.WebServerPreferences;
@@ -51,6 +67,8 @@ public class JsonUtilHttpService extends JsonHttpService {
                 return this.getNetworkService(locale, name);
             case JSON.NODE:
                 return this.getNode(locale);
+            case JSON.PANELS:
+                return this.getPanels(locale);
             case JSON.RAILROAD:
                 return this.getRailroad(locale);
             case JSON.SYSTEM_CONNECTIONS:
@@ -207,6 +225,54 @@ public class JsonUtilHttpService extends JsonHttpService {
         return root;
     }
 
+    public ObjectNode getPanel(Locale locale, Editor editor, String format) {
+        if (editor.getAllowInFrameServlet()) {
+            String title = ((JmriJFrame) editor.getTargetPanel().getTopLevelAncestor()).getTitle();
+            if (!title.isEmpty() && !Arrays.asList(WebServerPreferences.getDefault().getDisallowedFrames()).contains(title)) {
+                String type = PANEL;
+                String name = "Panel";
+                if (editor instanceof ControlPanelEditor) {
+                    type = CONTROL_PANEL;
+                    name = "ControlPanel";
+                } else if (editor instanceof LayoutEditor) {
+                    type = LAYOUT_PANEL;
+                    name = "Layout";
+                }
+                ObjectNode root = this.mapper.createObjectNode();
+                root.put(TYPE, PANEL);
+                ObjectNode data = root.putObject(DATA);
+                data.put(NAME, name + "/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")); // NOI18N
+                data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=" + format); // NOI18N
+                data.put(USERNAME, title);
+                data.put(TYPE, type);
+                return root;
+            }
+        }
+        return null;
+    }
+
+    public JsonNode getPanels(Locale locale, String format) {
+        ArrayNode root = mapper.createArrayNode();
+        // list loaded Panels (ControlPanelEditor, PanelEditor, LayoutEditor)
+        // list ControlPanelEditors
+        Editor.getEditors(ControlPanelEditor.class).stream()
+                .map((editor) -> this.getPanel(locale, editor, format))
+                .filter((panel) -> (panel != null)).forEach((panel) -> {
+            root.add(panel);
+        });
+        // list LayoutEditors and PanelEditors
+        Editor.getEditors(PanelEditor.class).stream()
+                .map((editor) -> this.getPanel(locale, editor, format))
+                .filter((panel) -> (panel != null)).forEach((panel) -> {
+            root.add(panel);
+        });
+        return root;
+    }
+
+    public JsonNode getPanels(Locale locale) {
+        return this.getPanels(locale, JSON.XML);
+    }
+
     /**
      * Send a JSON {@link jmri.server.json.JSON#NODE} message containing the
      * Railroad from the Railroad Name preferences.
@@ -264,6 +330,25 @@ public class JsonUtilHttpService extends JsonHttpService {
             root.add(connection);
         }
         return root;
+    }
+
+    /**
+     * Gets the {@link jmri.DccLocoAddress} for a String in the form
+     * <code>number(type)</code> or <code>number</code>.
+     *
+     * Type may be <code>L</code> for long or <code>S</code> for short. If the
+     * type is not specified, type is assumed to be short.
+     *
+     * @return The DccLocoAddress for address.
+     */
+    static public DccLocoAddress addressForString(String address) {
+        String[] components = address.split("[()]");
+        int number = Integer.parseInt(components[0]);
+        boolean isLong = false;
+        if (components.length > 1 && "L".equals(components[1].toUpperCase())) {
+            isLong = true;
+        }
+        return new DccLocoAddress(number, isLong);
     }
 
 }

@@ -4,9 +4,9 @@ import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PUT;
-import static jmri.server.json.JSON.REPORT;
-import static jmri.server.json.JSON.REPORTER;
 import static jmri.server.json.JSON.TYPE;
+import static jmri.server.json.reporter.JsonReporter.REPORT;
+import static jmri.server.json.reporter.JsonReporter.REPORTER;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

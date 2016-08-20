@@ -5,26 +5,17 @@ import static jmri.server.json.JSON.CONSIST;
 import static jmri.server.json.JSON.CONSISTS;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.ENGINES;
-import static jmri.server.json.JSON.FORMAT;
 import static jmri.server.json.JSON.GOODBYE;
 import static jmri.server.json.JSON.HELLO;
 import static jmri.server.json.JSON.LIST;
 import static jmri.server.json.JSON.LOCALE;
 import static jmri.server.json.JSON.LOCATIONS;
 import static jmri.server.json.JSON.METHOD;
-import static jmri.server.json.JSON.PANELS;
 import static jmri.server.json.JSON.PING;
 import static jmri.server.json.JSON.PROGRAMMER;
-import static jmri.server.json.JSON.REPORTER;
-import static jmri.server.json.JSON.REPORTERS;
-import static jmri.server.json.JSON.SIGNAL_HEAD;
-import static jmri.server.json.JSON.SIGNAL_HEADS;
-import static jmri.server.json.JSON.SIGNAL_MAST;
-import static jmri.server.json.JSON.SIGNAL_MASTS;
 import static jmri.server.json.JSON.TRAIN;
 import static jmri.server.json.JSON.TRAINS;
 import static jmri.server.json.JSON.TYPE;
-import static jmri.server.json.JSON.XML;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -39,8 +30,6 @@ import jmri.jmris.json.JsonConsistServer;
 import jmri.jmris.json.JsonOperationsServer;
 import jmri.jmris.json.JsonProgrammerServer;
 import jmri.jmris.json.JsonReporterServer;
-import jmri.jmris.json.JsonSignalHeadServer;
-import jmri.jmris.json.JsonSignalMastServer;
 import jmri.jmris.json.JsonUtil;
 import jmri.spi.JsonServiceFactory;
 import org.slf4j.Logger;
@@ -58,8 +47,6 @@ public class JsonClientHandler {
     private final JsonOperationsServer operationsServer;
     private final JsonProgrammerServer programmerServer;
     private final JsonReporterServer reporterServer;
-    private final JsonSignalHeadServer signalHeadServer;
-    private final JsonSignalMastServer signalMastServer;
     private final JsonConnection connection;
     private final HashMap<String, HashSet<JsonSocketService>> services = new HashMap<>();
     private static final Logger log = LoggerFactory.getLogger(JsonClientHandler.class);
@@ -70,8 +57,6 @@ public class JsonClientHandler {
         this.operationsServer = new JsonOperationsServer(this.connection);
         this.programmerServer = new JsonProgrammerServer(this.connection);
         this.reporterServer = new JsonReporterServer(this.connection);
-        this.signalHeadServer = new JsonSignalHeadServer(this.connection);
-        this.signalMastServer = new JsonSignalMastServer(this.connection);
         for (JsonServiceFactory factory : ServiceLoader.load(JsonServiceFactory.class)) {
             for (String type : factory.getTypes()) {
                 JsonSocketService service = factory.getSocketService(connection);
@@ -92,8 +77,6 @@ public class JsonClientHandler {
         this.operationsServer.dispose();
         this.programmerServer.dispose();
         this.reporterServer.dispose();
-        this.signalHeadServer.dispose();
-        this.signalMastServer.dispose();
         services.values().stream().forEach((set) -> {
             set.stream().forEach((service) -> {
                 service.onClose();
@@ -143,7 +126,7 @@ public class JsonClientHandler {
     /**
      * Process a JSON node and handle appropriately.
      *
-     * See {@link #onMessage(java.lang.String) } for expected JSON objects.
+     * See {@link #onMessage(java.lang.String)} for expected JSON objects.
      *
      * @param root the JSON node.
      * @throws java.io.IOException if communications is broken with the client.
@@ -163,7 +146,8 @@ public class JsonClientHandler {
             if ((type.equals(HELLO) || type.equals(PING) || type.equals(GOODBYE))
                     && data.isMissingNode()) {
                 // these messages are not required to have a data payload,
-                // so create one if the message did not contain one
+                // so create one if the message did not contain one to avoid
+                // special casing later
                 data = this.connection.getObjectMapper().createObjectNode();
             }
             if (type.equals(LIST)) {
@@ -181,18 +165,6 @@ public class JsonClientHandler {
                         break;
                     case LOCATIONS:
                         reply = JsonUtil.getLocations(this.connection.getLocale());
-                        break;
-                    case PANELS:
-                        reply = JsonUtil.getPanels(this.connection.getLocale(), (data.path(FORMAT).isMissingNode()) ? XML : data.path(FORMAT).asText());
-                        break;
-                    case REPORTERS:
-                        reply = JsonUtil.getReporters(this.connection.getLocale());
-                        break;
-                    case SIGNAL_HEADS:
-                        reply = JsonUtil.getSignalHeads(this.connection.getLocale());
-                        break;
-                    case SIGNAL_MASTS:
-                        reply = JsonUtil.getSignalMasts(this.connection.getLocale());
                         break;
                     case TRAINS:
                         reply = JsonUtil.getTrains(this.connection.getLocale());
@@ -217,15 +189,6 @@ public class JsonClientHandler {
                         break;
                     case PROGRAMMER:
                         this.programmerServer.parseRequest(this.connection.getLocale(), data);
-                        break;
-                    case SIGNAL_HEAD:
-                        this.signalHeadServer.parseRequest(this.connection.getLocale(), data);
-                        break;
-                    case SIGNAL_MAST:
-                        this.signalMastServer.parseRequest(this.connection.getLocale(), data);
-                        break;
-                    case REPORTER:
-                        this.reporterServer.parseRequest(this.connection.getLocale(), data);
                         break;
                     case TRAIN:
                         this.operationsServer.parseTrainRequest(this.connection.getLocale(), data);
