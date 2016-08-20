@@ -58,7 +58,7 @@ public class Z21Reply extends AbstractMRReply {
     }
 
     public int getOpCode() {
-        return _dataChars[2] + (_dataChars[3] << 8);
+        return (0xff&_dataChars[2]) + ((0xff&_dataChars[3]) << 8);
     }
 
     public void setLength(int i) {
@@ -67,7 +67,7 @@ public class Z21Reply extends AbstractMRReply {
     }
 
     public int getLength() {
-        return _dataChars[0] + (_dataChars[1] << 8);
+        return (0xff & _dataChars[0] ) + ((0xff & _dataChars[1]) << 8);
     }
 
     protected int skipPrefix(int index) {
@@ -92,6 +92,100 @@ public class Z21Reply extends AbstractMRReply {
             }
         }
         return xnr;
+    }
+   
+    // handle RailCom data replies
+    boolean isRailComDataChangedMessage(){
+        return (getOpCode() == 0x0088);
+    }
+
+    /*
+     * @return the number of RailCom entries in this message.
+     *         the returned value is in the 0 to 19 range.
+     */
+    int getNumRailComDataEntries(){
+        if(!this.isRailComDataChangedMessage()){
+           return 0; // this isn't a RailCom message, so there are no entries.
+        }
+        // if this is a RailCom message, the length field is
+        // then the entries are n=(len-4)/13, per the Z21 protocol 
+        // manual, section 8.1.  Also, 0<=n<=19
+        return (((getLength() - 4)/13));
+    } 
+
+    /*
+     * Get a locomotive address from an entry in a railcom message.
+     *
+     * @param n the entry to get the address from.
+     * @return the locomotive address for the specified entry.
+     */
+    jmri.DccLocoAddress getRailComLocoAddress(int n){
+         int offset = 4+(n*13);
+         int address = ((0xff&getElement(offset))<<8)+(0xff&(getElement(offset+1)));
+         return new jmri.DccLocoAddress(address,address>=100);
+    }
+
+    /*
+     * Get the receive counter from an entry in a railcom message.
+     *
+     * @param n the entry to get the address from.
+     * @return the receive counter for the specified entry.
+     */
+    int getRailComRcvCount(int n){
+         int offset = 6+(n*13); // +2 to get past the address.
+         int rcvcount = ((0xff&getElement(offset))<<24) +
+                       ((0xff&(getElement(offset+1))<<16) + 
+                       ((0xff&getElement(offset+2))<<8) + 
+                       (0xff&(getElement(offset+3))));
+         return rcvcount;
+    }
+
+    /*
+     * Get the error counter from an entry in a railcom message.
+     *
+     * @param n the entry to get the address from.
+     * @return the error counter for the specified entry.
+     */
+    int getRailComErrCount(int n){
+         int offset = 10+(n*13); // +6 to get past the address and rcv count.
+         int errorcount = ((0xff&getElement(offset))<<24) +
+                       ((0xff&(getElement(offset+1))<<16) + 
+                       ((0xff&getElement(offset+2))<<8) + 
+                       (0xff&(getElement(offset+3))));
+         return errorcount;
+    }
+
+    /*
+     * Get the speed value from an entry in a railcom message.
+     *
+     * @param n the entry to get the address from.
+     * @return the error counter for the specified entry.
+     */
+    int getRailComSpeed(int n){
+         int offset = 14+(n*13); //+10 to get past the address and counters.
+         return (0xff&(getElement(offset)));
+    }
+
+    /*
+     * Get the options value from an entry in a railcom message.
+     *
+     * @param n the entry to get the address from.
+     * @return the options for the specified entry.
+     */
+    int getRailComOptions(int n){
+         int offset = 15+(n*13); //+10 to get past the address,counter,speed.
+         return (0xff&(getElement(offset)));
+    }
+
+    /*
+     * Get the Temperature value from an entry in a railcom message.
+     *
+     * @param n the entry to get the address from.
+     * @return the temperature for the specified entry.
+     */
+    int getRailComTemp(int n){
+         int offset = 16+(n*13); //+10 to get past the other data.
+         return (0xff&(getElement(offset)));
     }
 
 }

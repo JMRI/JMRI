@@ -1,4 +1,3 @@
-// LocationTrackBlockingOrderTableModel.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.beans.PropertyChangeEvent;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of tracks used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2015
- * @version $Revision: 28746 $
  */
 public class LocationTrackBlockingOrderTableModel extends AbstractTableModel implements PropertyChangeListener {
 
@@ -233,8 +231,6 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
     }
 
     public synchronized void dispose() {
-        // if (log.isDebugEnabled())
-        // log.debug("dispose");
         removePropertyChangeTracks();
         if (_location != null) {
             _location.removePropertyChangeListener(this);

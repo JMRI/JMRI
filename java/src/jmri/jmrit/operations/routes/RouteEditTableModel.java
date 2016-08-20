@@ -1,4 +1,3 @@
-// RouteEditTableModel.java
 package jmri.jmrit.operations.routes;
 
 import java.awt.BorderLayout;
@@ -31,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2013
- * @version $Revision$
  */
 public class RouteEditTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -672,9 +670,6 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     public synchronized void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
         removePropertyChangeRouteLocations();
         if (_route != null) {
             _route.removePropertyChangeListener(this);

@@ -1,4 +1,3 @@
-// LocationManagerXml.java
 package jmri.jmrit.operations.locations;
 
 import java.io.File;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Load and stores locations and schedules for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008 2009 2010
- * @version $Revision$
  */
 public class LocationManagerXml extends OperationsXml {
 
@@ -29,9 +27,7 @@ public class LocationManagerXml extends OperationsXml {
 
     public static synchronized LocationManagerXml instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("LocationManagerXml creating instance");
-            }
+            log.debug("LocationManagerXml creating instance");
             // create and load
             _instance = new LocationManagerXml();
             _instance.load();
@@ -44,9 +40,7 @@ public class LocationManagerXml extends OperationsXml {
 
     @Override
     public void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("writeFile {}", name);
-        }
+        log.debug("writeFile {}", name);
         // This is taken in large part from "Java and XML" page 368
         File file = findFile(name);
         if (file == null) {
@@ -109,8 +103,9 @@ public class LocationManagerXml extends OperationsXml {
 
     private String operationsFileName = "OperationsLocationRoster.xml"; // NOI18N
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "For testing")
-    public void dispose(){
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "For testing")
+    public void dispose() {
         _instance = null;
     }
 

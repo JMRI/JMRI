@@ -1,4 +1,3 @@
-// LocationManager.java
 package jmri.jmrit.operations.locations;
 
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2013, 2014
- * @version $Revision$
  */
 public class LocationManager implements java.beans.PropertyChangeListener {
 
@@ -37,9 +35,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 
     public static synchronized LocationManager instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("LocationManager creating instance");
-            }
+            log.debug("LocationManager creating instance");
             // create and load
             _instance = new LocationManager();
             OperationsSetupXml.instance(); // load setup
@@ -409,9 +405,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
         if (root.getChild(Xml.LOCATIONS) != null) {
             @SuppressWarnings("unchecked")
             List<Element> locs = root.getChild(Xml.LOCATIONS).getChildren(Xml.LOCATION);
-            if (log.isDebugEnabled()) {
-                log.debug("readFile sees {} locations", locs.size());
-            }
+            log.debug("readFile sees {} locations", locs.size());
             for (Element loc : locs) {
                 register(new Location(loc));
             }
