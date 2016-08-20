@@ -1,4 +1,3 @@
-// DefaultLogixManager.java
 package jmri.managers;
 
 import java.text.DecimalFormat;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * system name, then there is a capital C and a number.
  *
  * @author Dave Duchamp Copyright (C) 2007
- * @version	$Revision$
  */
 public class DefaultLogixManager extends AbstractManager
         implements LogixManager, java.beans.PropertyChangeListener {
@@ -33,11 +31,11 @@ public class DefaultLogixManager extends AbstractManager
         jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.signalHeadManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.signalMastManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.blockManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).addVetoableChangeListener(this);
+        jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).addVetoableChangeListener(this);
+        jmri.InstanceManager.getDefault(jmri.BlockManager.class).addVetoableChangeListener(this);
         jmri.InstanceManager.lightManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.conditionalManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.getDefault(jmri.ConditionalManager.class).addVetoableChangeListener(this);
         InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class).addVetoableChangeListener(this);
         InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).addVetoableChangeListener(this);
         InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).addVetoableChangeListener(this);
@@ -119,9 +117,9 @@ public class DefaultLogixManager extends AbstractManager
         if (numConditionals > 0) {
             Conditional c = null;
             for (int i = 0; i < numConditionals; i++) {
-                c = InstanceManager.conditionalManagerInstance().getBySystemName(
+                c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(
                         x.getConditionalByNumberOrder(i));
-                InstanceManager.conditionalManagerInstance().deleteConditional(c);
+                InstanceManager.getDefault(jmri.ConditionalManager.class).deleteConditional(c);
             }
         }
         // delete the Logix				
@@ -216,5 +214,3 @@ public class DefaultLogixManager extends AbstractManager
 
     private final static Logger log = LoggerFactory.getLogger(DefaultLogixManager.class.getName());
 }
-
-/* @(#)DefaultLogixManager.java */

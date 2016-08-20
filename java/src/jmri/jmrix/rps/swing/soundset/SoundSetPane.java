@@ -1,4 +1,3 @@
-// SoundSetPane.java
 package jmri.jmrix.rps.swing.soundset;
 
 import java.awt.FlowLayout;
@@ -24,15 +23,9 @@ import org.slf4j.LoggerFactory;
  * Frame for control of the sound speed for the RPS system
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public class SoundSetPane extends JPanel
         implements ReadingListener, MeasurementListener, PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6186717308223634637L;
 
     public SoundSetPane() {
         super();

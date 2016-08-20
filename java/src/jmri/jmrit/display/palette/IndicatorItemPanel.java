@@ -25,10 +25,6 @@ import org.slf4j.LoggerFactory;
  */
 public class IndicatorItemPanel extends FamilyItemPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -9163142250538558938L;
     private DetectionPanel _detectPanel;
 
     /**

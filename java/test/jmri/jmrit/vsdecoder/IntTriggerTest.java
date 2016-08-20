@@ -1,4 +1,3 @@
-// IntTriggerTest.java
 package jmri.jmrit.vsdecoder;
 
 import java.beans.PropertyChangeEvent;
@@ -12,7 +11,6 @@ import org.jdom2.Element;
  * Tests for the IntTrigger class
  *
  * @author Mark Underwood Copyright (C) 2011
- * @version $Revision$
  */
 public class IntTriggerTest extends TestCase {
 
@@ -161,7 +159,7 @@ public class IntTriggerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {IntTriggerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

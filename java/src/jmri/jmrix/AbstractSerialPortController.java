@@ -1,4 +1,3 @@
-// AbstractSerialPortController.java
 package jmri.jmrix;
 
 import java.util.Enumeration;
@@ -20,7 +19,6 @@ import purejavacomm.PortInUseException;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  */
 abstract public class AbstractSerialPortController extends AbstractPortController implements SerialPortAdapter {
 

@@ -1,4 +1,3 @@
-// CarTypes.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Represents the types of cars a railroad can have.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2014
- * @version $Revision$
  */
 public class CarTypes extends RollingStockAttribute {
 
@@ -34,18 +32,17 @@ public class CarTypes extends RollingStockAttribute {
 
     public static synchronized CarTypes instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("CarTypes creating instance");
-            }
+            log.debug("CarTypes creating instance");
             // create and load
             _instance = new CarTypes();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("CarTypes returns instance {}", _instance);
         }
         return _instance;
     }
 
+    @Override
     protected String getDefaultNames() {
         if (Setup.getCarTypes().equals(Setup.AAR)) {
             return ARR_TYPES;
@@ -101,12 +98,14 @@ public class CarTypes extends RollingStockAttribute {
         }
     }
 
+    @Override
     public void addName(String type) {
         super.addName(type);
         maxNameLengthSubType = 0; // reset
         setDirtyAndFirePropertyChange(CARTYPES_CHANGED_PROPERTY, null, type);
     }
 
+    @Override
     public void deleteName(String type) {
         super.deleteName(type);
         maxNameLengthSubType = 0; // reset
@@ -128,6 +127,7 @@ public class CarTypes extends RollingStockAttribute {
      *
      * @return the maximum character length of a car type
      */
+    @Override
     public int getMaxNameLength() {
         if (maxNameLengthSubType == 0) {
             String maxName = "";

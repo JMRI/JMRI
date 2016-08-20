@@ -14,11 +14,6 @@ import jmri.jmrit.signalling.EntryExitPairs;
 
 public class StackNXPanel extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8839931581946888647L;
-
     transient EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
 
     private JPanel entryExitPanel;

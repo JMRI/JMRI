@@ -239,7 +239,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * Checks message m to determine if it contains a IPL Identity Report
      * message.
      *
-     * @param m
      * @return true if message is report of IPL Identity
      */
     public static final boolean isIplIdentityQueryMessage(LocoNetMessage m) {
@@ -262,7 +261,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * Checks message m to determine if it contains a IPL Identity Report
      * message.
      *
-     * @param m
      * @return true if message is report of IPL Identity
      */
     public static final boolean isIplIdentityReportMessage(LocoNetMessage m) {
@@ -285,7 +283,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * Checks message m to determine if it contains a IPL Identity Report
      * message for a specific host manufacturer and specific host device type.
      *
-     * @param m
      * @return true if message is report of UR92 IPL Identity
      */
     public static final boolean isIplSpecificIdentityReportMessage(LocoNetMessage m,
@@ -304,7 +301,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * Checks message m to determine if it contains a UR92 IPL Identity Report
      * message.
      *
-     * @param m
      * @return true if message is report of UR92 IPL Identity
      */
     public static final boolean isIplUr92IdentityReportMessage(LocoNetMessage m) {
@@ -317,7 +313,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * Checks message m to determine if it contains a DT402 IPL Identity Report
      * message.
      *
-     * @param m
      * @return true if message is report of DT402 IPL Identity
      */
     public static final boolean isIplDt402IdentityReportMessage(LocoNetMessage m) {
@@ -330,7 +325,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * Checks message m to determine if it contains a UT4 IPL Identity Report
      * message.
      *
-     * @param m
      * @return true if message is report of UT4 IPL Identity
      */
     public static final boolean isIplUt4IdentityReportMessage(LocoNetMessage m) {
@@ -343,7 +337,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * Checks message m to determine if it contains a DSC51 IPL Identity Report
      * message.
      *
-     * @param m
      * @return true if message is report of DCS51 IPL Identity
      */
     public static final boolean isIplDcs51IdentityReportMessage(LocoNetMessage m) {
@@ -356,7 +349,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * Checks message m to determine if it contains a PR3 IPL Identity Report
      * message.
      * <p>
-     * @param m
      * @return true if message is report of PR3 IPL Identity
      */
     public static final boolean isIplPr3IdentityReportMessage(LocoNetMessage m) {
@@ -390,7 +382,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
     /**
      * Determines if message is IPL Identity Report with RF24 as slave device
      * <p>
-     * @param m
      * @return true if m contains IPL Identity Report with RF24 as slave, else
      *         false
      */
@@ -409,7 +400,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * <p>
      * If m is not a valid IPL Identity report, returns null
      * <p>
-     * @param m
      * @return String containing the interpreted IPL Host Manufacturer and
      *         Device
      */
@@ -450,7 +440,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * <p>
      * If m is not a valid IPL Identity report, returns null
      * <p>
-     * @param m
      * @return String containing the interpreted IPL Slave Manufacturer and
      *         Device
      */
@@ -469,7 +458,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * The invoking method should ensure that message m is is an IPL Identity
      * message before invoking this method.
      * <p>
-     * @param m
      * @return Integer containing the IPL host manufacturer number
      */
     public static final Integer extractIplIdentityHostManufacturer(LocoNetMessage m) {
@@ -482,7 +470,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * The invoking method should ensure that message m is is an IPL Identity
      * message before invoking this method.
      * <p>
-     * @param m
      * @return Integer containing the IPL device number
      */
     public static final Integer extractIplIdentityHostDevice(LocoNetMessage m) {
@@ -498,7 +485,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * <p>
      * NOTE: Not all IPL-capable devices implement a slave manufacturer number.
      * <p>
-     * @param m
      * @return Integer containing the IPL slave manufacturer number
      */
     public static final Integer extractIplIdentitySlaveManufacturer(LocoNetMessage m) {
@@ -513,7 +499,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * <p>
      * NOTE: Not all IPL-capable devices implement a slave device number.
      * <p>
-     * @param m
      * @return Integer containing the IPL slave device number
      */
     public static final Integer extractIplIdentitySlaveDevice(LocoNetMessage m) {
@@ -530,7 +515,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * NOTE: Not all IPL-capable devices implement a host firmware revision
      * number.
      * <p>
-     * @param m
      * @return String containing the IPL host firmware revision in the format
      *         x.y
      */
@@ -552,7 +536,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * NOTE: Not all IPL-capable devices implement a host firmware revision
      * number.
      * <p>
-     * @param m
      * @return Integer containing the IPL host firmware revision
      */
     public static final Integer extractIplIdentityHostFrimwareRevNum(LocoNetMessage m) {
@@ -569,7 +552,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * NOTE: Not all IPL-capable devices implement a Slave firmware revision
      * number.
      * <p>
-     * @param m
      * @return Integer containing the IPL Slave firmware revision
      */
     public static final Integer extractIplIdentitySlaveFrimwareRevNum(LocoNetMessage m) {
@@ -587,7 +569,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * NOTE: Not all IPL-capable devices implement a slave firmware revision
      * number.
      * <p>
-     * @param m
      * @return String containing the IPL slave firmware revision in the format
      *         x.y
      */
@@ -607,7 +588,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * <p>
      * NOTE: Not all IPL-capable devices implement a host serial number.
      * <p>
-     * @param m
      * @return Long containing the IPL host serial number
      */
     public static final Long extractIplIdentityHostSerialNumber(LocoNetMessage m) {
@@ -628,7 +608,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * <p>
      * NOTE: Not all IPL-capable devices implement a slave serial number.
      * <p>
-     * @param m
      * @return Long containing the IPL slave serial number
      */
     public static final Long extractIplIdentitySlaveSerialNumber(LocoNetMessage m) {
@@ -656,10 +635,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * return "Digitrax UT4(x)" in response to appropriate Host Manufacturer
      * number and appropriate Host Device number.
      * <p>
-     * @param hostMfr
-     * @param hostDevice
-     * @param slaveMfr
-     * @param slaveDevice
      * @return String containing Manufacturer name and Device model.
      */
     public static final String interpretHostManufacturerDevice(Integer hostMfr, Integer hostDevice,
@@ -724,8 +699,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * return "Digitrax UT4(x)" in response to appropriate Host Manufacturer
      * number and appropriate Host Device number.
      * <p>
-     * @param hostMfr
-     * @param hostDevice
      * @return String containing Manufacturer name and Device model.
      */
     public static final String interpretHostManufacturerDevice(Integer hostMfr, Integer hostDevice) {
@@ -779,8 +752,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * NOTE: Some IPL-capable devices may not be completely determined based
      * solely on Slave Manufacturer number and Slave Device number.
      * <p>
-     * @param slaveMfr
-     * @param slaveDevice
      * @return String containing Slave Manufacturer name and Device model.
      */
     public static final String interpretSlaveManufacturerDevice(Integer slaveMfr, Integer slaveDevice) {

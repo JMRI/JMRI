@@ -1,9 +1,10 @@
 // Mx1PowerManager.java
 package jmri.jmrix.zimo;
 
+import static jmri.jmrix.zimo.Mx1Message.ACKREP1;
+
 import jmri.JmriException;
 import jmri.PowerManager;
-import static jmri.jmrix.zimo.Mx1Message.ACKREP1;
 
 /**
  * PowerManager implementation for controlling layout power.

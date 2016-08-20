@@ -1,4 +1,3 @@
-// AlignTableAction.java
 package jmri.jmrix.rps.aligntable;
 
 import java.awt.event.ActionEvent;
@@ -15,14 +14,9 @@ import org.slf4j.LoggerFactory;
  * Note that we only allow one of these right now.
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2008
- * @version	$Revision$
  */
 public class AlignTableAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1629850954178461422L;
     static final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.rps.aligntable.AlignTableBundle");
 
     public AlignTableAction(String s) {
@@ -49,6 +43,3 @@ public class AlignTableAction extends AbstractAction {
     }
     private final static Logger log = LoggerFactory.getLogger(AlignTableAction.class.getName());
 }
-
-
-/* @(#)AlignTableAction.java */

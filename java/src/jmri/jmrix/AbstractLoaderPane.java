@@ -1,4 +1,3 @@
-// AbstractLoaderPane.java
 package jmri.jmrix;
 
 import java.awt.Color;
@@ -43,7 +42,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2005, 2015
  * @author B. Milhaupt Copyright (C) 2013, 2014
- * @version	$Revision$
  */
 public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         implements ActionListener {

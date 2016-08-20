@@ -1,4 +1,3 @@
-// NodeTableFrame.java
 package jmri.jmrix.grapevine.nodetable;
 
 import java.awt.Dimension;
@@ -34,14 +33,9 @@ import jmri.util.table.ButtonRenderer;
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2007, 2008
  * @author	Dave Duchamp Copyright (C) 2004, 2006
- * @version	$Revision$
  */
 public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grapevine.SerialListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1719197383229554709L;
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.grapevine.nodetable.NodeTableBundle");
 
     /**
@@ -84,11 +78,6 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
 
         // status info on bottom
         JPanel p = new JPanel() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2856738173612573500L;
-
             public Dimension getMaximumSize() {
                 int height = getPreferredSize().height;
                 int width = super.getMaximumSize().width;
@@ -218,11 +207,6 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
      * </ol>
      */
     public class NodesModel extends AbstractTableModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -5628722202249990632L;
         static private final int ADDRCOL = 0;
         static private final int STATUSCOL = 1;
         static private final int EDITCOL = 2;

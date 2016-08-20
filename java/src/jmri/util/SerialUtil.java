@@ -1,4 +1,3 @@
-// SocketUtil.java
 package jmri.util;
 
 import purejavacomm.SerialPort;
@@ -14,7 +13,6 @@ import purejavacomm.UnsupportedCommOperationException;
  * falling back to JavaComm 2 if necessary.
  *
  * @author Paul Bender Copyright 2007
- * @version $Revision$
  */
 public class SerialUtil {
 

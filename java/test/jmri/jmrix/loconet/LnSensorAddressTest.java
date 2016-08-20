@@ -1,4 +1,3 @@
-// LnSensorAddressTest.java
 package jmri.jmrix.loconet;
 
 import junit.framework.Assert;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the jmri.jmrix.loconet.LnSensorAddress class.
  *
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision$
  */
 public class LnSensorAddressTest extends TestCase {
 
@@ -107,7 +105,7 @@ public class LnSensorAddressTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {LnSensorAddressTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

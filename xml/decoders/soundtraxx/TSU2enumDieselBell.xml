@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2016 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new include file for SoundTraxx Tsunami2                   -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice>
+	<choice>ALCO 1: slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>ALCO 1: medium-slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>ALCO 1: medium-fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>ALCO 1: fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>ALCO 2: slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>ALCO 2: medium-slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>ALCO 2: medium-fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>ALCO 2: fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>ALCO 3: slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>ALCO 3: medium-slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>ALCO 3: medium-fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>ALCO 3: fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>EMD 1: slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>EMD 1: medium-slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>EMD 1: medium-fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>EMD 1: fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>EMD 2: slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>EMD 2: medium-slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>EMD 2: medium-fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>EMD 2: fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>EMD 3: slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>EMD 3: medium-slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>EMD 3: medium-fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>EMD 3: fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>EMD 4: slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>EMD 4: medium-slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>EMD 4: medium-fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>EMD 4: fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>Fairbanks-Morse: slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>Fairbanks-Morse: medium-slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>Fairbanks-Morse: medium-fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>Fairbanks-Morse: fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>GE FDL: slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>GE FDL: medium-slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>GE FDL: medium-fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>GE FDL: fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>Graham White Electronic: medium-fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>Western Cullen Hayes Gong: slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>Western Cullen Hayes Gong: medium-slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>Western Cullen Hayes Gong: medium-fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>Western Cullen Hayes Gong: fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>Rio Grande Southern Galloping Goose: slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>Rio Grande Southern Galloping Goose: medium-slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>Rio Grande Southern Galloping Goose: medium-fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>Rio Grande Southern Galloping Goose: fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>Canadian Brass: slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>Canadian Brass: medium-slow</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>Canadian Brass: medium-fast</choice>
+  </enumChoice>
+  <enumChoice>
+	<choice>Canadian Brass: fast</choice>
+  </enumChoice>
+</enumVal>

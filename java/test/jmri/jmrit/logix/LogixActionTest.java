@@ -1,4 +1,3 @@
-// LogixActionTest.java
 package jmri.jmrit.logix;
 
 import jmri.InstanceManager;
@@ -16,7 +15,6 @@ import junit.framework.TestSuite;
  * Tests for the OPath class
  *
  * @author	Pete Cressman Copyright 2014
- * @version $Revision: 17977 $
  */
 public class LogixActionTest extends TestCase {
 
@@ -32,7 +30,7 @@ public class LogixActionTest extends TestCase {
         // load and display sample file. Panel file does not display screen
         java.io.File f = new java.io.File("java/test/jmri/jmrit/logix/valid/LogixActionTest.xml");
         cm.load(f);
-        InstanceManager.logixManagerInstance().activateAllLogixs();
+        InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
 
         Memory im6 = InstanceManager.memoryManagerInstance().getMemory("IM6");
         Assert.assertNotNull("Memory IM6", im6);
@@ -51,7 +49,7 @@ public class LogixActionTest extends TestCase {
         sensor.setState(Sensor.ACTIVE);
         sensor.setState(Sensor.INACTIVE);
         sensor.setState(Sensor.ACTIVE);
-        SignalHead sh1 = InstanceManager.signalHeadManagerInstance().getSignalHead("IH1");
+        SignalHead sh1 = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH1");
         Assert.assertEquals("SignalHead IH1", SignalHead.RED, sh1.getAppearance());
 
         // do some buttons -Sensors
@@ -82,7 +80,7 @@ public class LogixActionTest extends TestCase {
         im3.setValue("IH2");
         is3.setState(Sensor.ACTIVE);		// activate logix action
         Assert.assertEquals("Contents IM3", "IH2", im3.getValue());
-        SignalHead sh2 = InstanceManager.signalHeadManagerInstance().getSignalHead("IH2");
+        SignalHead sh2 = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH2");
         Assert.assertEquals("Indirect SignalHead IH2", SignalHead.GREEN, sh2.getAppearance());
 
         // Turnout Buttons
@@ -158,7 +156,7 @@ public class LogixActionTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", LogixActionTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

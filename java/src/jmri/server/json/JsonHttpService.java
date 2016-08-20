@@ -29,11 +29,13 @@ public abstract class JsonHttpService {
      * If name is null, return a list of all objects for the given type, if
      * appropriate.
      *
+     * This method should throw a 500 Internal Server Error if type is not
+     * recognized.
+     *
      * @param type   the type of the requested object.
      * @param name   the name of the requested object.
      * @param locale the requesting client's Locale.
      * @return a JSON description of the requested object.
-     * @throws JsonException
      */
     public abstract JsonNode doGet(String type, String name, Locale locale) throws JsonException;
 
@@ -50,12 +52,14 @@ public abstract class JsonHttpService {
      * @param locale the requesting client's Locale.
      * @return a JSON description of the requested object after updates have
      *         been applied.
-     * @throws JsonException
      */
     public abstract JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException;
 
     /**
      * Respond to an HTTP PUT request for the requested name.
+     *
+     * Throw an HTTP 405 Method Not Allowed exception if new objects of the type
+     * are not intendended to be addable.
      *
      * @param type   the type of the requested object.
      * @param name   the name of the requested object.
@@ -63,7 +67,6 @@ public abstract class JsonHttpService {
      *               created or updated.
      * @param locale the requesting client's Locale.
      * @return a JSON description of the requested object.
-     * @throws JsonException
      */
     public JsonNode doPut(String type, String name, JsonNode data, Locale locale) throws JsonException {
         throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "PutNotAllowed", type));
@@ -74,13 +77,12 @@ public abstract class JsonHttpService {
      *
      * Throw an HTTP 405 Method Not Allowed exception if the object is not
      * intendended to be removable.
-     * 
+     *
      * Do not throw an error if the requested object does not exist.
      *
      * @param type   the type of the deleted object.
      * @param name   the name of the deleted object.
      * @param locale the requesting client's Locale.
-     * @throws JsonException
      */
     public void doDelete(String type, String name, Locale locale) throws JsonException {
         throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "DeleteNotAllowed", type));
@@ -98,7 +100,6 @@ public abstract class JsonHttpService {
      * @param type   the type of the requested list.
      * @param locale the requesting client's Locale.
      * @return a JSON list.
-     * @throws JsonException
      */
     public abstract JsonNode doGetList(String type, Locale locale) throws JsonException;
 }

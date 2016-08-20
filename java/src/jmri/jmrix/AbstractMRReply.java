@@ -1,4 +1,3 @@
-// AbstractMRReply.java
 package jmri.jmrix;
 
 import org.slf4j.Logger;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * given by the largest index written so far.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 abstract public class AbstractMRReply extends AbstractMessage {
     // is this logically an abstract class?

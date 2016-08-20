@@ -1,4 +1,3 @@
-//ComboCheckBox.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionListener;
@@ -11,14 +10,8 @@ import org.slf4j.LoggerFactory;
 /* Represents a JComboBox as a JCheckBox
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
  */
 public class ComboCheckBox extends JCheckBox {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2689282114387973266L;
 
     ComboCheckBox(JComboBox<String> box, EnumVariableValue var) {
         super();

@@ -52,7 +52,7 @@
             We choose to put the adapters in a separate package to
             encourage the reduction of coupling, and make it clear that
             they are separate (you can get a source tree without them
-            from CVS easily, for example).  But this means
+            easily, for example).  But this means
             that package-level member variables are not automatically
             visible.  For one class, you can get around this by subclassing.
             We'll have to see whether this is a real problem or not.
@@ -66,21 +66,16 @@
             loss, but for the time being it seems a reasonable compromise.
 
         <P>
-            The various types do still have element names (e.g. "turnouts")
-            so that we can have a rational DTD.
+            The various types do still have descriptive element names (e.g. "turnouts")
+            to help the reader and 
+            so that we can have an understandable schema.
 
         <P>The order of loading is the order in the XML file, as written.
-            The write order is the registration order.  This constrains
-            how certain registrations at startup are done.
-            In particular, the layout tree has a problem:  It seems it should be
-            instantiated before the turnout managers, etc, so that it can
-            listen as their contents are added.  But if it's created first, it
-            has no turnout manager instance to connect to yet.  The solution to
-            this seems to be support for an "InstanceListener" in the InstanceManager so
-            that objects can learn about the creation of new basic instances.
-
+            This constrains the write order: It has to make sure that the reading
+            process works, in that objects are created before others need to reference 
+            them.
         <P>
-            There are four levels of information, used to ensure
+            There are four levels of information, a coarse measure to ensure
             that prerequisites are present during a load:
         <UL>
             <LI>Pref
@@ -88,6 +83,11 @@
             <LI>Tool
             <LI>User
         </UL>
+        
+        <P>
+            Additionally, the {@link jmri.manager} class has a 
+            {@link jmri.manager#getXMLOrder} method that 
+            is used to order operations within a level.
 
         <a id="schema"></a>
         <h2>Schema management</h2>

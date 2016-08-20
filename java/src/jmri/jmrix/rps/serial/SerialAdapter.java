@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.rps.serial;
 
 import java.io.DataInputStream;
@@ -29,7 +28,6 @@ import purejavacomm.UnsupportedCommOperationException;
  * case)
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2008
- * @version	$Revision$
  */
 public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -37,7 +35,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
         super(new RpsSystemConnectionMemo());
         option1Name = "Protocol";
         options.put(option1Name, new Option("Protocol", validOptions1));
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.NAC;
+        this.manufacturerName = jmri.jmrix.rps.RpsConnectionTypeList.NAC;
     }
 
     transient SerialPort activeSerialPort = null;
@@ -87,12 +85,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
             sendBytes(new byte[]{(byte) 'A', 13});
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {

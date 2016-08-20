@@ -1,4 +1,3 @@
-// jmri.jmrit.display.configurexml.LayoutSlipXml.java
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.geom.Point2D;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 17977 $
  */
 public class LayoutSlipXml extends AbstractXmlAdapter {
 
@@ -147,7 +145,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
             states.addContent(state);
         }
         element.addContent(states);
-        element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutSlipXml");
+        element.setAttribute("class", getClass().getName());
         return element;
     }
 

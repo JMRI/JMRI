@@ -15,9 +15,9 @@ import javax.swing.ScrollPaneConstants;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Schedule;
-import jmri.jmrit.operations.locations.ScheduleItem;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.schedules.Schedule;
+import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
@@ -118,6 +118,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         initMinimumSize();
     }
 
+    @Override
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("combo box action");
         if (ae.getSource().equals(typeComboBox)) {
@@ -206,7 +207,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                 } // TODO need to do the same tests for caboose changes in the train's route
                 else if (_car != null &&
                         _car.isCaboose() &&
-                        (_train.getRequirements() & Train.CABOOSE) > 0
+                        (_train.getRequirements() & Train.CABOOSE) == Train.CABOOSE
                         &&
                         location.equals(_car.getLocation()) &&
                         track.equals(_car.getTrack())
@@ -218,7 +219,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                     op.setText(Bundle.getMessage("X(TrainRoad)"));
                 } else if (_car != null &&
                         _car.hasFred() &&
-                        (_train.getRequirements() & Train.FRED) > 0
+                        (_train.getRequirements() & Train.FRED) == Train.FRED
                         &&
                         location.equals(_car.getLocation()) &&
                         track.equals(_car.getTrack())
@@ -370,6 +371,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         CarTypes.instance().updateComboBox(typeComboBox);
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     private void updateCarsComboBox() {
         log.debug("update car combobox");
         carsComboBox.removeAllItems();
@@ -383,6 +385,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     private void adjustCarsComboBoxSize() {
         List<RollingStock> cars = CarManager.instance().getList();
         for (RollingStock rs : cars) {
@@ -429,6 +432,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         }
     }
 
+    @Override
     public void dispose() {
         locationManager.removePropertyChangeListener(this);
         CarTypes.instance().removePropertyChangeListener(this);
@@ -442,6 +446,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
         if (e.getSource().equals(_car) || e.getSource().equals(_train)

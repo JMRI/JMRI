@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2010
- * @version $Revision$
  */
 public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
 
@@ -66,7 +65,7 @@ public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         if (value != null) {
             FileUtil.setScriptsPath(value);
         }
-        jmri.InstanceManager.configureManagerInstance().registerPref(new FileLocationPane());
+        jmri.InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(new FileLocationPane());
         return result;
     }
 

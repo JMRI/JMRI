@@ -19,6 +19,7 @@ public class AutomationResetAction extends AbstractAction {
         _frame = frame;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (_frame._automation != null) {
             _frame._automation.reset();

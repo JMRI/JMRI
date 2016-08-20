@@ -7,6 +7,7 @@ import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.AbstractPowerServer;
 import jmri.jmris.JmriConnection;
+import jmri.server.json.JsonException;
 
 /**
  * Send power status over WebSockets as a JSON String

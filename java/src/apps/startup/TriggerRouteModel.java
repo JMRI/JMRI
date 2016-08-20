@@ -24,7 +24,7 @@ public class TriggerRouteModel extends AbstractStartupModel {
     /**
      * Set the user name of the Route.
      *
-     * @param name
+     * @param name user name to use
      */
     public void setUserName(String name) {
         this.setName(name);

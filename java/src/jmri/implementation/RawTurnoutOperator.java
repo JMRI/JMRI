@@ -1,12 +1,3 @@
-/**
- * Concrete subclass of TurnoutOperator for a turnout that has no feedback. This
- * operator sends raw NMRA accessory decoder packets to the layout instead of
- * using the built in turnout code. It should be used only with turnouts with
- * DIRECT, ONESENSOR or TWOSENSOR feedback. This class is based on the
- * NoFeedbackTurnoutOperator class.
- *
- * @author	Paul Bender	Copyright 2008
- */
 package jmri.implementation;
 
 import jmri.CommandStation;
@@ -16,6 +7,15 @@ import jmri.TurnoutOperator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Concrete subclass of TurnoutOperator for a turnout that has no feedback. This
+ * operator sends raw NMRA accessory decoder packets to the layout instead of
+ * using the built in turnout code. It should be used only with turnouts with
+ * DIRECT, ONESENSOR or TWOSENSOR feedback. This class is based on the
+ * NoFeedbackTurnoutOperator class.
+ *
+ * @author	Paul Bender	Copyright 2008
+ */
 public class RawTurnoutOperator extends TurnoutOperator {
 
     long interval;
@@ -39,7 +39,7 @@ public class RawTurnoutOperator extends TurnoutOperator {
             }
         }
         if (c == null) {
-            c = InstanceManager.commandStationInstance();
+            c = InstanceManager.getOptionalDefault(CommandStation.class);
             log.error("No match against the command station for " + sysName + ", so will use the default");
         }
         interval = i;

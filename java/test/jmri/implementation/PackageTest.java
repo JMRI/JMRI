@@ -4,7 +4,6 @@
  * Description:	tests for the jmri.implementation package
  *
  * @author	Bob Jacobsen 2009
- * @version $Revision$
  */
 package jmri.implementation;
 
@@ -22,7 +21,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -33,6 +32,7 @@ public class PackageTest extends TestCase {
         suite.addTest(NamedBeanTest.suite());
 
         // implementations
+        suite.addTest(AbstractSensorTest.suite());
         suite.addTest(AccessoryOpsModeProgrammerFacadeTest.suite());
         suite.addTest(AddressedHighCvProgrammerFacadeTest.suite());
         suite.addTest(DccSignalHeadTest.suite());
@@ -53,10 +53,14 @@ public class PackageTest extends TestCase {
         suite.addTest(SignalSystemFileCheckTest.suite());
         suite.addTest(SingleTurnoutSignalHeadTest.suite());
         suite.addTest(TwoIndexTcsProgrammerFacadeTest.suite());
+        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DccConsistTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NmraConsistTest.class));
 
         // sub-packages
-        suite.addTest(jmri.implementation.swing.SwingShutDownTaskTest.suite());
+        suite.addTest(jmri.implementation.swing.PackageTest.suite());
         suite.addTest(ReporterTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.implementation.configurexml.PackageTest.class));
 
         return suite;
     }

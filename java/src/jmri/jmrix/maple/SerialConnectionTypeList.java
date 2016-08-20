@@ -11,10 +11,18 @@ package jmri.jmrix.maple;
  */
 public class SerialConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String MAPLE = "Maple Systems";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.maple.serialdriver.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{MAPLE};
     }
 
 }

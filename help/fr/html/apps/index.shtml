@@ -2,7 +2,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <!-- UpDated by Blorec Herv&#233; le 2013-09-02-->
 <title>JMRI: Applications</title>
 
@@ -17,14 +16,14 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
       <!-- Page Body -->
-        <H2>
+        <h1>
 		JMRI: Applications
-        </H2>
+        </h1>
 
 	<P>JMRI offre plusieurs applications qui sont optimis&#233;es pour des objectifs sp&#233;cifiques. Vous pouvez bien s&#251;r &#233;galement &#233;crire les votres
 	    <dl>

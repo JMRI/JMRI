@@ -27,7 +27,7 @@ public class NodeConfigAction extends AbstractAction {
                 // find the first registered memo.
                 icm = jmri.InstanceManager.
                         getList(jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo.class).get(0);
-            } catch (java.lang.NullPointerException npe) {
+            } catch (java.lang.NullPointerException|java.lang.IndexOutOfBoundsException e) {
                 // no memo exists, are we configuring this for the first time?
                 log.debug("No IEEE 802.15.4 System Connection Memo available");
             }

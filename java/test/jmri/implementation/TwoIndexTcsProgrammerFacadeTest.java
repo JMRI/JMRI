@@ -1,4 +1,3 @@
-// TwoIndexTcsProgrammerFacadeTest.java
 package jmri.implementation;
 
 import jmri.ProgListener;
@@ -145,7 +144,7 @@ public class TwoIndexTcsProgrammerFacadeTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {TwoIndexTcsProgrammerFacadeTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

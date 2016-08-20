@@ -5,3 +5,5 @@ apps.startup.PerformActionModelFactory
 apps.startup.PerformFileModelFactory
 apps.startup.PerformScriptModelFactory
 apps.startup.TriggerRouteModelFactory
+apps.startup.ScriptButtonModelFactory
+apps.startup.StartupPauseFactory

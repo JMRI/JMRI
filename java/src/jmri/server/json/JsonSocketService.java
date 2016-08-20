@@ -66,4 +66,11 @@ public abstract class JsonSocketService {
      * Perform any teardown required when closing a connection.
      */
     public abstract void onClose();
+
+    /**
+     * @return the connection
+     */
+    public JsonConnection getConnection() {
+        return connection;
+    }
 }

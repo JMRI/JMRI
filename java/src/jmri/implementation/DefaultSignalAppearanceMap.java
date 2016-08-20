@@ -1,4 +1,3 @@
-// DefaultSignalAppearanceMap.java
 package jmri.implementation;
 
 import java.net.URL;
@@ -19,14 +18,8 @@ import org.slf4j.LoggerFactory;
  * makes creation a little more heavy-weight, but speeds operation.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmri.SignalAppearanceMap {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1448362198557086500L;
 
     public DefaultSignalAppearanceMap(String systemName, String userName) {
         super(systemName, userName);
@@ -415,5 +408,3 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     protected java.util.Hashtable<String, int[]> table = new jmri.util.OrderedHashtable<String, int[]>();
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalAppearanceMap.class.getName());
 }
-
-/* @(#)DefaultSignalAppearanceMap.java */

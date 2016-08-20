@@ -22,6 +22,7 @@ import jmri.AudioManager;
 import jmri.BlockManager;
 import jmri.CommandStation;
 import jmri.InstanceManager;
+import jmri.Light;
 import jmri.LightManager;
 import jmri.MemoryManager;
 import jmri.NamedBean;
@@ -40,6 +41,7 @@ import jmri.TurnoutManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.util.FileUtil;
+import jmri.util.FileUtilSupport;
 import org.apache.commons.io.FilenameUtils;
 import org.python.core.PySystemState;
 import org.python.util.PythonInterpreter;
@@ -57,7 +59,7 @@ import org.slf4j.LoggerFactory;
  * <li>{@link #eval(java.io.File, javax.script.Bindings)}</li>
  * <li>{@link #eval(java.io.File, javax.script.ScriptContext)}</li>
  * <li>{@link #eval(java.lang.String, javax.script.ScriptEngine)}</li>
- * <li>{@link #runScript(java.io.File)</li>
+ * <li>{@link #runScript(java.io.File)}</li>
  * </ul>
  * Evaluating a script using <code>getEngine*(java.lang.String).eval(...)</code>
  * methods will not respect the <code>jython.exec</code> property, although all
@@ -73,7 +75,6 @@ public final class JmriScriptEngineManager {
     private final HashMap<String, ScriptEngine> engines = new HashMap<>();
     private final ScriptContext context;
 
-    private static JmriScriptEngineManager instance = null;
     private static final Logger log = LoggerFactory.getLogger(JmriScriptEngineManager.class);
     private static final String jythonDefaults = "jmri_defaults.py"; // should be replaced with default context
 
@@ -108,22 +109,22 @@ public final class JmriScriptEngineManager {
             this.factories.put(factory.getEngineName(), factory);
         });
         Bindings bindings = new SimpleBindings();
-        bindings.put("turnouts", InstanceManager.getDefault(TurnoutManager.class));
-        bindings.put("sensors", InstanceManager.getDefault(SensorManager.class));
-        bindings.put("signals", InstanceManager.getDefault(SignalHeadManager.class));
-        bindings.put("masts", InstanceManager.getDefault(SignalMastManager.class));
-        bindings.put("lights", InstanceManager.getDefault(LightManager.class));
-        bindings.put("dcc", InstanceManager.getDefault(CommandStation.class));
-        bindings.put("reporters", InstanceManager.getDefault(ReporterManager.class));
-        bindings.put("memories", InstanceManager.getDefault(MemoryManager.class));
-        bindings.put("routes", InstanceManager.getDefault(RouteManager.class));
-        bindings.put("blocks", InstanceManager.getDefault(BlockManager.class));
-        bindings.put("powermanager", InstanceManager.getDefault(PowerManager.class));
-        bindings.put("programmers", InstanceManager.getDefault(ProgrammerManager.class));
-        bindings.put("shutdown", InstanceManager.getDefault(ShutDownManager.class));
-        bindings.put("audio", InstanceManager.getDefault(AudioManager.class));
-        bindings.put("layoutblocks", InstanceManager.getDefault(LayoutBlockManager.class));
-        bindings.put("warrants", InstanceManager.getDefault(WarrantManager.class));
+        bindings.put("turnouts", InstanceManager.getOptionalDefault(TurnoutManager.class));
+        bindings.put("sensors", InstanceManager.getOptionalDefault(SensorManager.class));
+        bindings.put("signals", InstanceManager.getOptionalDefault(SignalHeadManager.class));
+        bindings.put("masts", InstanceManager.getOptionalDefault(SignalMastManager.class));
+        bindings.put("lights", InstanceManager.getOptionalDefault(LightManager.class));
+        bindings.put("dcc", InstanceManager.getOptionalDefault(CommandStation.class));
+        bindings.put("reporters", InstanceManager.getOptionalDefault(ReporterManager.class));
+        bindings.put("memories", InstanceManager.getOptionalDefault(MemoryManager.class));
+        bindings.put("routes", InstanceManager.getOptionalDefault(RouteManager.class));
+        bindings.put("blocks", InstanceManager.getOptionalDefault(BlockManager.class));
+        bindings.put("powermanager", InstanceManager.getOptionalDefault(PowerManager.class));
+        bindings.put("programmers", InstanceManager.getOptionalDefault(ProgrammerManager.class));
+        bindings.put("shutdown", InstanceManager.getOptionalDefault(ShutDownManager.class));
+        bindings.put("audio", InstanceManager.getOptionalDefault(AudioManager.class));
+        bindings.put("layoutblocks", InstanceManager.getOptionalDefault(LayoutBlockManager.class));
+        bindings.put("warrants", InstanceManager.getOptionalDefault(WarrantManager.class));
         bindings.put("CLOSED", Turnout.CLOSED);
         bindings.put("THROWN", Turnout.THROWN);
         bindings.put("CABLOCKOUT", Turnout.CABLOCKOUT);
@@ -132,6 +133,8 @@ public final class JmriScriptEngineManager {
         bindings.put("LOCKED", Turnout.LOCKED);
         bindings.put("ACTIVE", Sensor.ACTIVE);
         bindings.put("INACTIVE", Sensor.INACTIVE);
+        bindings.put("ON", Light.ON);
+        bindings.put("OFF", Light.OFF);
         bindings.put("UNKNOWN", NamedBean.UNKNOWN);
         bindings.put("INCONSISTENT", NamedBean.INCONSISTENT);
         bindings.put("DARK", SignalHead.DARK);
@@ -143,7 +146,7 @@ public final class JmriScriptEngineManager {
         bindings.put("FLASHYELLOW", SignalHead.FLASHYELLOW);
         bindings.put("FLASHGREEN", SignalHead.FLASHGREEN);
         bindings.put("FLASHLUNAR", SignalHead.FLASHLUNAR);
-        bindings.put("FileUtil", FileUtil.class);
+        bindings.put("FileUtil", FileUtilSupport.getDefault());
         this.context = new SimpleScriptContext();
         this.context.setBindings(bindings, ScriptContext.GLOBAL_SCOPE);
     }
@@ -155,10 +158,10 @@ public final class JmriScriptEngineManager {
      * @return the default JmriScriptEngineManager
      */
     public static JmriScriptEngineManager getDefault() {
-        if (JmriScriptEngineManager.instance == null) {
-            JmriScriptEngineManager.instance = new JmriScriptEngineManager();
+        if (InstanceManager.getOptionalDefault(JmriScriptEngineManager.class) == null) {
+            InstanceManager.setDefault(JmriScriptEngineManager.class, new JmriScriptEngineManager());
         }
-        return JmriScriptEngineManager.instance;
+        return InstanceManager.getDefault(JmriScriptEngineManager.class);
     }
 
     /**
@@ -174,7 +177,7 @@ public final class JmriScriptEngineManager {
      * Given a file extension, get the ScriptEngine registered to handle that
      * extension.
      *
-     * @param extension
+     * @param extension a file extension
      * @return a ScriptEngine or null
      */
     public ScriptEngine getEngineByExtension(String extension) {
@@ -189,7 +192,7 @@ public final class JmriScriptEngineManager {
      * Given a mime type, get the ScriptEngine registered to handle that mime
      * type.
      *
-     * @param mimeType
+     * @param mimeType a mimeType for a script
      * @return a ScriptEngine or null
      */
     public ScriptEngine getEngineByMimeType(String mimeType) {
@@ -203,7 +206,7 @@ public final class JmriScriptEngineManager {
     /**
      * Given a short name, get the ScriptEngine registered by that name.
      *
-     * @param shortName
+     * @param shortName the short name for the ScriptEngine
      * @return a ScriptEngine or null
      */
     public ScriptEngine getEngineByName(String shortName) {
@@ -217,7 +220,7 @@ public final class JmriScriptEngineManager {
     /**
      * Get a ScriptEngine by it's name.
      *
-     * @param engineName
+     * @param engineName the complete name for the ScriptEngine
      * @return a ScriptEngine or null
      */
     public ScriptEngine getEngine(String engineName) {
@@ -238,10 +241,10 @@ public final class JmriScriptEngineManager {
     /**
      * Evaluate a script using the given ScriptEngine.
      *
-     * @param script
-     * @param engine
-     * @return
-     * @throws ScriptException
+     * @param script The script.
+     * @param engine The script engine.
+     * @return The results of evaluating the script.
+     * @throws javax.script.ScriptException if there is an error in the script.
      */
     public Object eval(String script, ScriptEngine engine) throws ScriptException {
         if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
@@ -254,31 +257,63 @@ public final class JmriScriptEngineManager {
     /**
      * Evaluate a script using the given ScriptEngine.
      *
-     * @param reader
-     * @param engine
-     * @return
-     * @throws ScriptException
+     * @param reader The script.
+     * @param engine The script engine.
+     * @return The results of evaluating the script.
+     * @throws javax.script.ScriptException if there is an error in the script.
      */
     public Object eval(Reader reader, ScriptEngine engine) throws ScriptException {
         return engine.eval(reader);
     }
 
     /**
+     * Evaluate a script using the given ScriptEngine and Bindings.
+     *
+     * @param reader   The script.
+     * @param engine   The script engine.
+     * @param bindings Bindings passed to the script.
+     * @return The results of evaluating the script.
+     * @throws javax.script.ScriptException if there is an error in the script.
+     */
+    public Object eval(Reader reader, ScriptEngine engine, Bindings bindings) throws ScriptException {
+        return engine.eval(reader, bindings);
+    }
+
+    /**
+     * Evaluate a script using the given ScriptEngine and Bindings.
+     *
+     * @param reader  The script.
+     * @param engine  The script engine.
+     * @param context Context for the script.
+     * @return The results of evaluating the script.
+     * @throws javax.script.ScriptException if there is an error in the script.
+     */
+    public Object eval(Reader reader, ScriptEngine engine, ScriptContext context) throws ScriptException {
+        return engine.eval(reader, context);
+    }
+
+    /**
      * Evaluate a script contained in a file. Uses the extension of the file to
      * determine which ScriptEngine to use.
      *
-     * @param file
-     * @return
-     * @throws ScriptException
-     * @throws FileNotFoundException
+     * @param file the script file to evaluate.
+     * @return the results of the evaluation.
+     * @throws javax.script.ScriptException  if there is an error evaluating the
+     *                                       script.
+     * @throws java.io.FileNotFoundException if the script file cannot be found.
+     * @throws java.io.IOException           if the script file cannot be read.
      */
-    public Object eval(File file) throws ScriptException, FileNotFoundException {
+    public Object eval(File file) throws ScriptException, FileNotFoundException, IOException {
         ScriptEngine engine = this.getEngineByExtension(FilenameUtils.getExtension(file.getName()));
         if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
-            this.jython.execfile(new FileInputStream(file));
+            try (FileInputStream fi = new FileInputStream(file)) {
+                this.jython.execfile(fi);
+            }
             return null;
         }
-        return engine.eval(new FileReader(file));
+        try (FileReader fr = new FileReader(file)) {
+            return engine.eval(fr);
+        }
     }
 
     /**
@@ -286,19 +321,25 @@ public final class JmriScriptEngineManager {
      * {@link javax.script.Bindings} to add to the script's context. Uses the
      * extension of the file to determine which ScriptEngine to use.
      *
-     * @param file
-     * @param n
-     * @return
-     * @throws ScriptException
-     * @throws FileNotFoundException
+     * @param file     the script file to evaluate.
+     * @param bindings script bindings to evaluate against.
+     * @return the results of the evaluation.
+     * @throws javax.script.ScriptException  if there is an error evaluating the
+     *                                       script.
+     * @throws java.io.FileNotFoundException if the script file cannot be found.
+     * @throws java.io.IOException           if the script file cannot be read.
      */
-    public Object eval(File file, Bindings n) throws ScriptException, FileNotFoundException {
+    public Object eval(File file, Bindings bindings) throws ScriptException, FileNotFoundException, IOException {
         ScriptEngine engine = this.getEngineByExtension(FilenameUtils.getExtension(file.getName()));
         if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
-            this.jython.execfile(new FileInputStream(file));
+            try (FileInputStream fi = new FileInputStream(file)) {
+                this.jython.execfile(fi);
+            }
             return null;
         }
-        return engine.eval(new FileReader(file), n);
+        try (FileReader fr = new FileReader(file)) {
+            return engine.eval(fr, bindings);
+        }
     }
 
     /**
@@ -306,19 +347,25 @@ public final class JmriScriptEngineManager {
      * script. Uses the extension of the file to determine which ScriptEngine to
      * use.
      *
-     * @param file
-     * @param context
-     * @return
-     * @throws ScriptException
-     * @throws FileNotFoundException
+     * @param file    the script file to evaluate.
+     * @param context script context to evaluate within.
+     * @return the results of the evaluation.
+     * @throws javax.script.ScriptException  if there is an error evaluating the
+     *                                       script.
+     * @throws java.io.FileNotFoundException if the script file cannot be found.
+     * @throws java.io.IOException           if the script file cannot be read.
      */
-    public Object eval(File file, ScriptContext context) throws ScriptException, FileNotFoundException {
+    public Object eval(File file, ScriptContext context) throws ScriptException, FileNotFoundException, IOException {
         ScriptEngine engine = this.getEngineByExtension(FilenameUtils.getExtension(file.getName()));
         if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
-            this.jython.execfile(new FileInputStream(file));
+            try (FileInputStream fi = new FileInputStream(file)) {
+                this.jython.execfile(fi);
+            }
             return null;
         }
-        return engine.eval(new FileReader(file), context);
+        try (FileReader fr = new FileReader(file)) {
+            return engine.eval(fr, context);
+        }
     }
 
     /**
@@ -332,6 +379,8 @@ public final class JmriScriptEngineManager {
             this.eval(file);
         } catch (FileNotFoundException ex) {
             log.error("File {} not found.", file);
+        } catch (IOException ex) {
+            log.error("Exception working with file {}", file);
         } catch (ScriptException ex) {
             log.error("Error in script {}.", file, ex);
         }
@@ -362,7 +411,7 @@ public final class JmriScriptEngineManager {
      * Given a file extension, get the ScriptEngineFactory registered to handle
      * that extension.
      *
-     * @param extension
+     * @param extension a file extension
      * @return a ScriptEngineFactory or null
      */
     public ScriptEngineFactory getFactoryByExtension(String extension) {
@@ -377,7 +426,7 @@ public final class JmriScriptEngineManager {
      * Given a mime type, get the ScriptEngineFactory registered to handle that
      * mime type.
      *
-     * @param mimeType
+     * @param mimeType the script mimeType
      * @return a ScriptEngineFactory or null
      */
     public ScriptEngineFactory getFactoryByMimeType(String mimeType) {
@@ -391,7 +440,7 @@ public final class JmriScriptEngineManager {
     /**
      * Given a short name, get the ScriptEngineFactory registered by that name.
      *
-     * @param shortName
+     * @param shortName the short name for the factory
      * @return a ScriptEngineFactory or null
      */
     public ScriptEngineFactory getFactoryByName(String shortName) {
@@ -405,7 +454,7 @@ public final class JmriScriptEngineManager {
     /**
      * Get a ScriptEngineFactory by it's name.
      *
-     * @param factoryName
+     * @param factoryName the complete name for a factory
      * @return a ScriptEngineFactory or null
      */
     public ScriptEngineFactory getFactory(String factoryName) {

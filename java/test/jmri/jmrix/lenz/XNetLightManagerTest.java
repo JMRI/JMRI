@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the jmri.jmrix.acela.AcelaTurnoutManager class.
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  */
 public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTest {
 
@@ -20,6 +19,12 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTest {
 
     public String getSystemName(int i) {
         return "XL" + i;
+    }
+
+    public void testctor(){
+        // create and register the manager object
+        XNetLightManager xlm = new XNetLightManager(xnis, "X");
+        Assert.assertNotNull(xlm);
     }
 
     public void testAsAbstractFactory() {
@@ -49,6 +54,26 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTest {
         Assert.assertTrue(null != lm.getByUserName("my name"));
     }
 
+    public void testGetSystemPrefix(){
+        // create and register the manager object
+        XNetLightManager xlm = new XNetLightManager(xnis, "X");
+        Assert.assertEquals("prefix","X",xlm.getSystemPrefix());
+    }
+
+    public void testAllowMultipleAdditions(){
+        // create and register the manager object
+        XNetLightManager xlm = new XNetLightManager(xnis, "X");
+        Assert.assertTrue(xlm.allowMultipleAdditions("foo"));
+    }
+
+    public void testValidSystemNameConfig(){
+        // create and register the manager object
+        XNetLightManager xlm = new XNetLightManager(xnis, "X");
+        Assert.assertTrue(xlm.validSystemNameConfig("foo"));
+    }
+
+
+
     // from here down is testing infrastructure
     public XNetLightManagerTest(String s) {
         super(s);
@@ -57,7 +82,7 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", XNetLightManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -69,17 +94,19 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTest {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
         // prepare an interface, register
         xnis = new XNetInterfaceScaffold(new LenzCommandStation());
         // create and register the manager object
-        l = new XNetLightManager(xnis, "X");
+        l = new XNetLightManager(xnis, "X"); // l is defined in AbstractLightMgrTest.
         jmri.InstanceManager.setLightManager(l);
-
+        
     }
 
     @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     private final static Logger log = LoggerFactory.getLogger(XNetLightManagerTest.class.getName());

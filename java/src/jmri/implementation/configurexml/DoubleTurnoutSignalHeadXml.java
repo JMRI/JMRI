@@ -86,7 +86,7 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
 
         loadCommon(h, shared);
 
-        InstanceManager.signalHeadManagerInstance().register(h);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         return true;
     }
 
@@ -110,8 +110,13 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
             return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
         } else {
             String name = e.getText();
-            Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(name);
-            return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
+            try {
+                Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(name);
+                return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
+            } catch (IllegalArgumentException ex) {
+                log.warn("Failed to provide Turnout \"{}\" in sendStatus", name);
+                return null;
+            }            
         }
     }
 

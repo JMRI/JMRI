@@ -1,4 +1,3 @@
-// SwingTest.java
 package jmri.jmrix.can.cbus.swing;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.cbus.swing package.
  *
  * @author Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class SwingTest extends TestCase {
 
@@ -24,7 +22,7 @@ public class SwingTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SwingTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

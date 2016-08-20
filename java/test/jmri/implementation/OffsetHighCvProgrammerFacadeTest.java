@@ -1,4 +1,3 @@
-// OffsetHighCvProgrammerFacadeTest.java
 package jmri.implementation;
 
 import jmri.ProgListener;
@@ -121,7 +120,7 @@ public class OffsetHighCvProgrammerFacadeTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {OffsetHighCvProgrammerFacadeTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

@@ -1,7 +1,10 @@
-// SignalMastManager.java
 package jmri;
 
 import java.util.List;
+
+import javax.annotation.CheckReturnValue;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 
 /**
  * Interface for obtaining signal masts.
@@ -22,7 +25,6 @@ import java.util.List;
  * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2009
- * @version	$Revision$
  */
 public interface SignalMastManager extends Manager {
 
@@ -33,10 +35,10 @@ public interface SignalMastManager extends Manager {
      * Locate via user name, then system name if needed. Does not create a new
      * one if nothing found
      *
-     * @param name
+     * @param name User name or system name to match
      * @return null if no match found
      */
-    public SignalMast getSignalMast(String name);
+    public @CheckForNull SignalMast getSignalMast(@Nonnull String name);
 
     /**
      * Locate via user name, then system name if needed. Create new one from
@@ -50,23 +52,20 @@ public interface SignalMastManager extends Manager {
      *                                  due to e.g. an illegal name or name that
      *                                  can't be parsed.
      */
-    public SignalMast provideSignalMast(String name);
+    public @Nonnull SignalMast provideSignalMast(@Nonnull String name);
 
-    public SignalMast provideSignalMast(String prefix, // nominally IF$shsm
-            String signalSystem,
-            String mastName,
-            String[] heads);
+    public @Nonnull SignalMast provideSignalMast(@Nonnull String prefix, // nominally IF$shsm
+            @Nonnull String signalSystem,
+            @Nonnull String mastName,
+            @Nonnull String[] heads);
 
-    public SignalMast getByUserName(String s);
+    public @CheckForNull SignalMast getByUserName(@Nonnull String s);
 
-    public SignalMast getBySystemName(String s);
+    public @CheckForNull SignalMast getBySystemName(@Nonnull String s);
 
     /**
      * Get a list of all SignalMast system names.
      */
-    public List<String> getSystemNameList();
+    public @Nonnull List<String> getSystemNameList();
 
 }
-
-
-/* @(#)SignalMastManager.java */

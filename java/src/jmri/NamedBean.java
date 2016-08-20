@@ -1,7 +1,9 @@
-// NamedBean.java
 package jmri;
 
 import java.util.ArrayList;
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 
 /**
  * Provides common services for classes representing objects on the layout, and
@@ -25,7 +27,6 @@ import java.util.ArrayList;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2004
- * @version	$Revision$
  * @see jmri.Manager
  */
 public interface NamedBean {
@@ -44,68 +45,100 @@ public interface NamedBean {
      */
     public static final int INCONSISTENT = 0x08;
 
-    // user identification, _bound_ parameter so manager(s) can listen
+    /**
+     * User's identification for the item. Bound parameter so manager(s) can
+     * listen
+     *
+     * @return null if not set
+     */
+    @CheckReturnValue
+    @CheckForNull
     public String getUserName();
 
-    public void setUserName(String s);
+    public void setUserName(@CheckForNull String s);
 
     /**
      * Get a system-specific name. This encodes the hardware addressing
      * information.
+     *
+     * @return the system-specific name.
      */
+    @CheckReturnValue
+    @Nonnull
     public String getSystemName();
 
     /**
      * return user name if it exists, otherwise return System name
+     *
+     * @return the user name or system-specific name
      */
+    @CheckReturnValue
+    @Nonnull
     public String getDisplayName();
 
     /**
      * Returns a fully formatted display that includes the SystemName and
-     * UserName if set. UserName (SystemName) or SystemName
+     * UserName if set.
+     *
+     * @return <code>UserName (SystemName)</code> or <code>SystemName</code>
      */
+    @CheckReturnValue
+    @Nonnull
     public String getFullyFormattedDisplayName();
 
     /**
      * Request a call-back when a bound property changes. Bound properties are
      * the known state, commanded state, user and system names.
      *
-     * @param l           - Listener
-     * @param name        - The name (either system or user) that the listener
+     * @param l           The listener. This may change in the future to be a
+     *                    subclass of NamedProprtyCHangeListener that carries
+     *                    the name and listenerRef values internally
+     * @param name        The name (either system or user) that the listener
      *                    uses for this namedBean, this parameter is used to
      *                    help determine when which listeners should be moved
-     *                    when the username is moved from one bean to another.
-     * @param listenerRef - A textual reference for the listener, that can be
+     *                    when the username is moved from one bean to another
+     * @param listenerRef A textual reference for the listener, that can be
      *                    presented to the user when a delete is called
      */
-    public void addPropertyChangeListener(java.beans.PropertyChangeListener l, String name, String listenerRef);
+    public void addPropertyChangeListener(@Nonnull java.beans.PropertyChangeListener l, String name, String listenerRef);
 
-    public void addPropertyChangeListener(java.beans.PropertyChangeListener l);
+    public void addPropertyChangeListener(@CheckForNull java.beans.PropertyChangeListener l);
 
     /**
      * Remove a request for a call-back when a bound property changes.
+     *
+     * @param l the listener to remove
      */
-    public void removePropertyChangeListener(java.beans.PropertyChangeListener l);
+    public void removePropertyChangeListener(@CheckForNull java.beans.PropertyChangeListener l);
 
-    public void updateListenerRef(java.beans.PropertyChangeListener l, String newName);
+    public void updateListenerRef(@Nonnull java.beans.PropertyChangeListener l, String newName);
 
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException;
+    public void vetoableChange(@Nonnull java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException;
 
     /**
      * Get the textual reference for the specific listener
      *
+     * @param l the listener of interest
+     * @return the textual reference
      */
-    public String getListenerRef(java.beans.PropertyChangeListener l);
+    @CheckReturnValue
+    public String getListenerRef(@Nonnull java.beans.PropertyChangeListener l);
 
     /**
-     * Returns a list of all the listerners references
+     * Returns a list of all the listeners references
+     *
+     * @return a list of textual references
      */
+    @CheckReturnValue
     public ArrayList<String> getListenerRefs();
 
     /**
      * Number of current listeners. May return -1 if the information is not
      * available for some reason.
+     *
+     * @return the number of listeners.
      */
+    @CheckReturnValue
     public int getNumPropertyChangeListeners();
 
     /**
@@ -114,8 +147,11 @@ public interface NamedBean {
      *
      * @param name - The name (either system or user) that the listener has
      *             registered as referencing this namedBean
+     * @return empty list if none
      */
-    public ArrayList<java.beans.PropertyChangeListener> getPropertyChangeListeners(String name);
+    @CheckReturnValue
+    @Nonnull
+    public java.beans.PropertyChangeListener[] getPropertyChangeListenersByReference(@Nonnull String name);
 
     /**
      * Deactivate this object, so that it releases as many resources as possible
@@ -140,10 +176,11 @@ public interface NamedBean {
      * Provide generic access to internal state.
      * <P>
      * This generally shouldn't be used by Java code; use the class-specific
-     * form instead. (E.g. setCommandedState in Turnout) This provided to make
-     * Jython script access easier to read.
+     * form instead (e.g. setCommandedState in Turnout). This is provided to
+     * make scripts access easier to read.
      *
-     * @throws JmriException general error when cant do the needed operation
+     * @param s the state
+     * @throws JmriException general error when setting the state fails
      */
     public void setState(int s) throws JmriException;
 
@@ -151,14 +188,21 @@ public interface NamedBean {
      * Provide generic access to internal state.
      * <P>
      * This generally shouldn't be used by Java code; use the class-specific
-     * form instead. (E.g. getCommandedState in Turnout) This provided to make
-     * Jython script access easier to read.
+     * form instead (e.g. getCommandedState in Turnout). This is provided to
+     * make scripts easier to read.
+     *
+     * @return the state
      */
+    @CheckReturnValue
     public int getState();
 
     /**
      * Get associated comment text.
+     *
+     * @return the comment or null
      */
+    @CheckReturnValue
+    @CheckForNull
     public String getComment();
 
     /**
@@ -166,32 +210,49 @@ public interface NamedBean {
      * <p>
      * Comments can be any valid text.
      *
-     * @param comment Null means no comment associated.
+     * @param comment the comment or null to remove an existing comment
      */
-    public void setComment(String comment);
+    public void setComment(@CheckForNull String comment);
 
     /**
      * Attach a key/value pair to the NamedBean, which can be retrieved later.
      * These are not bound properties as yet, and don't throw events on
      * modification. Key must not be null.
+     * <p>
+     * Prior to JMRI 4.3, the key was of Object type. It was constrained to
+     * String to make these more like normal Java Beans.
+     *
+     * @param key   the property to set
+     * @param value the value of the property
      */
-    public void setProperty(Object key, Object value);
+    public void setProperty(@Nonnull String key, Object value);
 
     /**
      * Retrieve the value associated with a key. If no value has been set for
      * that key, returns null.
+     *
+     * @param key the property to get
+     * @return The value of the property or null.
      */
-    public Object getProperty(Object key);
+    @CheckReturnValue
+    @CheckForNull
+    public Object getProperty(@Nonnull String key);
 
     /**
      * Remove the key/value pair against the NamedBean.
+     *
+     * @param key the property to remove
      */
-    public void removeProperty(Object key);
+    public void removeProperty(@Nonnull String key);
 
     /**
      * Retrieve the complete current set of keys.
+     *
+     * @return empty set if none
      */
-    public java.util.Set<Object> getPropertyKeys();
+    @CheckReturnValue
+    @Nonnull
+    public java.util.Set<String> getPropertyKeys();
 
     /**
      * For instances in the code where we are dealing with just a bean and a
@@ -199,7 +260,7 @@ public interface NamedBean {
      *
      * @return a string of the bean type, eg Turnout, Sensor etc
      */
+    @CheckReturnValue
+    @Nonnull
     public String getBeanType();
 }
-
-/* @(#)NamedBean.java */

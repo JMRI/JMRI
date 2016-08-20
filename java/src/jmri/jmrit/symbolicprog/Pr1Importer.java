@@ -1,4 +1,3 @@
-// Pr1Importer.java
 package jmri.jmrit.symbolicprog;
 
 import java.io.File;
@@ -26,7 +25,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Alex Shepherd Copyright (C) 2003
- * @version	$Revision$
  */
 public class Pr1Importer {
 

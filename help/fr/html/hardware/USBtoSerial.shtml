@@ -57,7 +57,7 @@ toutes les cartes ne puissent pas fournir. Le reste de cette page s'adresse &#22
 </P>
 
 <A NAME="MS100">
-<H2>LocoNet via Adaptateur MS100</H2></A>
+</a><h2>LocoNet via Adaptateur MS100</h2>
 
 Le MS100 exige un vitese sp&#233;ciale de transmission que la plupart des adaptateurs USB vers s&#233;rie
 ne peut pas fournir. Il faut aussi pouvoir &#234;tre aliment&#233; via le port RS232 et le 
@@ -78,7 +78,7 @@ n&#233;cessaire pour le MS100. <A HREF="loconet/KeyspanUSB.shtml"> (Plus de d&#2
 MS100 parce qu'il ne pouvait pas fournir la vitesse sp&#233;ciale de transmission n&#233;cessaire.</P></P>
 
 <A NAME="LocoBuffer">
-<H2>LocoNet via LocoBuffer, LocoBuffer-II</H2></A>
+</a><h2>LocoNet via LocoBuffer, LocoBuffer-II</h2>
 
 <P> Si vous n'avez pas encore achet&#233; un LocoBuffer, la meilleure chose est d'en commander un
 <A HREF="http://www.rr-cirkits.com"> LocoBuffer-USB</A>
@@ -105,7 +105,7 @@ ou un ordinateur Linux, assurez-vous de t&#233;l&#233;charger les pilotes les pl
 les premi&#232;res versions avaient des bugs.</P>
 
 <A NAME="LI100">
-<H2>XpressNet via LI100</H2></A>
+</a><h2>XpressNet via LI100</h2>
 
 
 Pour un fonctionnement fiable, l'interface LI100 XpressNet exige que le c&#226;ble de
@@ -114,7 +114,7 @@ Contr&#244;le RS232  fournisse le contr&#244;le de flux.
 <P>Les adaptateurs Keyspan  sont connus pour fonctionner avec le LI100. Nous avons des
 rapports des succ&#232;s obtenu par des utilisateurs &#224; partir de Windows 98, Windows XP, MacOS 9 et MacOS
 X .</P>
- <H2>XpressNet via LI101</H2></A>
+ </a><h2>XpressNet via LI101</h2>
 
 Pour un fonctionnement fiable, l'interface LI101 XpressNet exige que le c&#226;ble de
 Contr&#244;le RS232 fournisse le contr&#244;le de flux.

@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * jmri.jmrix.ieee802154.serialdriver.SerialSystemConnectionMemo class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class SerialSystemConnectionMemoTest extends TestCase {
 
@@ -29,7 +28,7 @@ public class SerialSystemConnectionMemoTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SerialSystemConnectionMemoTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

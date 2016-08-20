@@ -255,7 +255,9 @@ public class RosterSpeedProfile {
      * Set speed of a throttle to a speeed set by a float, using the block for
      * the length details
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="equality is specifically 'Unchanged' here")
     public void changeLocoSpeed(DccThrottle t, Block blk, float speed) {
+        // next line is the FE_FLOATING_POINT_EQUALITY annotated above
         if (blk == referenced && speed == desiredSpeedStep) {
             //if(log.isDebugEnabled()) log.debug("Already setting to desired speed step for this block");
             return;
@@ -278,7 +280,9 @@ public class RosterSpeedProfile {
      * the length details
      */
     //@TODO if a section contains multiple blocks then we could calibrate the change of speed based upon the block status change.
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="equality is specifically 'Unchanged' here")
     public void changeLocoSpeed(DccThrottle t, Section sec, float speed) {
+        // next line is the FE_FLOATING_POINT_EQUALITY annotated above
         if (sec == referenced && speed == desiredSpeedStep) {
             if (log.isDebugEnabled()) {
                 log.debug("Already setting to desired speed step for this section");
@@ -302,6 +306,7 @@ public class RosterSpeedProfile {
     /**
      * Set speed by float increment of a speed step.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="equality is specifically 'Unchanged' here")
     public void changeLocoSpeed(DccThrottle t, float distance, float speed) {
         if (log.isDebugEnabled()) {
             log.debug("Call to change speed over specific distance float " + speed + " distance " + distance);
@@ -315,6 +320,7 @@ public class RosterSpeedProfile {
             return;
         }
 
+        // next line is the FE_FLOATING_POINT_EQUALITY annotated above
         if (desiredSpeedStep == speed) {
             if (log.isDebugEnabled()) {
                 log.debug("Already setting to desired speed step");

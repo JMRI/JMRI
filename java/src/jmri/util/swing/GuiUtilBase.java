@@ -1,4 +1,3 @@
-// GuiUtilBase.java
 package jmri.util.swing;
 
 import java.util.HashMap;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Common utility methods for working with GUI items
  *
  * @author Bob Jacobsen Copyright 2010
- * @version $Revision$
  */
 public class GuiUtilBase {
 
@@ -97,7 +95,7 @@ public class GuiUtilBase {
                 }
                 log.warn("Did not find suitable ctor for " + classname + (icon != null ? " with" : " without") + " icon");
                 return createEmptyMenuItem(icon, name);
-            } catch (Exception e) {
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
                 log.warn("failed to load GUI adapter class: " + classname + " due to: " + e);
                 return createEmptyMenuItem(icon, name);
             }
@@ -160,11 +158,6 @@ public class GuiUtilBase {
 
     static class CallingAbstractAction extends javax.swing.AbstractAction {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6063626025483350164L;
-
         public CallingAbstractAction(String name, Icon icon) {
             super(name, icon);
         }
@@ -202,11 +195,6 @@ public class GuiUtilBase {
     static Action createEmptyMenuItem(Icon icon, String name) {
         if (icon != null) {
             AbstractAction act = new AbstractAction(name, icon) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 3780162682022372836L;
-
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                 }
 
@@ -218,10 +206,6 @@ public class GuiUtilBase {
             return act;
         } else { // then name must be present
             AbstractAction act = new AbstractAction(name) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -1746638499145752231L;
 
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                 }

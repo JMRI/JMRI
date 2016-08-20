@@ -1,4 +1,3 @@
-// WarrantManager.java
 package jmri.jmrit.logix;
 
 import java.io.File;
@@ -25,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision$
  */
 public class WarrantManager extends AbstractManager
         implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
@@ -137,7 +135,7 @@ public class WarrantManager extends AbstractManager
 
     static public WarrantPreferences warrantPreferencesInstance() {
         if (warrantPreferences == null) {
-            if (jmri.InstanceManager.getDefault(jmri.jmrit.logix.WarrantPreferences.class) == null) {
+            if (jmri.InstanceManager.getOptionalDefault(jmri.jmrit.logix.WarrantPreferences.class) == null) {
                 jmri.InstanceManager.store(new jmri.jmrit.logix.WarrantPreferences(FileUtil.getUserFilesPath()
                         + "signal" + File.separator + "WarrantPreferences.xml"), jmri.jmrit.logix.WarrantPreferences.class);
             }
@@ -153,5 +151,3 @@ public class WarrantManager extends AbstractManager
 
     private final static Logger log = LoggerFactory.getLogger(WarrantManager.class.getName());
 }
-
-/* @(#)WarrantManager.java */

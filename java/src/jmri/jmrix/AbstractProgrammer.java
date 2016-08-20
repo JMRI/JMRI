@@ -1,10 +1,9 @@
-// AbstractProgrammer.java
 package jmri.jmrix;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import javax.annotation.Nonnull;
 import java.util.List;
+import javax.annotation.Nonnull;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * Common implementations for the Programmer interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2012, 2013
- * @version $Revision$
  */
 public abstract class AbstractProgrammer implements Programmer {
 
@@ -103,8 +101,10 @@ public abstract class AbstractProgrammer implements Programmer {
         readCV(Integer.parseInt(CV), p);
     }
 
-    public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        confirmCV(Integer.parseInt(CV), val, p);
+    @Override
+    @SuppressWarnings("deprecation") // parent Programmer method deprecated, will remove at same time
+    public final void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
+        confirmCV(""+CV, val, p);
     }
 
     /**
@@ -213,7 +213,7 @@ public abstract class AbstractProgrammer implements Programmer {
     }
 
     /**
-     * Internal routine to handle timer starts & restarts
+     * Internal routine to handle timer starts {@literal &} restarts
      */
     protected synchronized void restartTimer(int delay) {
         if (log.isDebugEnabled()) {

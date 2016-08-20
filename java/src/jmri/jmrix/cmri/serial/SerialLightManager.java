@@ -1,10 +1,10 @@
-// SerialLightManager.java
 package jmri.jmrix.cmri.serial;
 
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Implement light manager for CMRI serial systems
@@ -14,24 +14,20 @@ import org.slf4j.LoggerFactory;
  * Based in part on SerialTurnoutManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
  */
 public class SerialLightManager extends AbstractLightManager {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6357999324956206115L;
+    private CMRISystemConnectionMemo _memo = null;
 
-    public SerialLightManager() {
-
+    public SerialLightManager(CMRISystemConnectionMemo memo) {
+        _memo = memo;
     }
 
     /**
      * Returns the system letter for CMRI
      */
     public String getSystemPrefix() {
-        return "C";
+        return _memo.getSystemPrefix();
     }
 
     /**
@@ -55,15 +51,15 @@ public class SerialLightManager extends AbstractLightManager {
         }
         String conflict = "";
         conflict = SerialAddress.isOutputBitFree(nAddress, bitNum);
-        if (conflict != "") {
+        if (!conflict.equals("")) {
             log.error("Assignment conflict with " + conflict + ".  Light not created.");
             notifyLightCreationError(conflict, bitNum);
             return (null);
         }
         // Validate the systemName
         if (SerialAddress.validSystemNameFormat(systemName, 'L')) {
-            lgt = new SerialLight(systemName, userName);
-            if (!SerialAddress.validSystemNameConfig(systemName, 'L')) {
+            lgt = new SerialLight(systemName, userName,_memo);
+            if (!SerialAddress.validSystemNameConfig(systemName, 'L',_memo.getTrafficController())) {
                 log.warn("Light system Name does not refer to configured hardware: "
                         + systemName);
             }
@@ -97,7 +93,7 @@ public class SerialLightManager extends AbstractLightManager {
      * 'false'
      */
     public boolean validSystemNameConfig(String systemName) {
-        return (SerialAddress.validSystemNameConfig(systemName, 'L'));
+        return (SerialAddress.validSystemNameConfig(systemName, 'L',_memo.getTrafficController()));
     }
 
     /**
@@ -122,17 +118,13 @@ public class SerialLightManager extends AbstractLightManager {
 
     /**
      * Allow access to SerialLightManager
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public SerialLightManager instance() {
-        if (_instance == null) {
-            _instance = new SerialLightManager();
-        }
-        return _instance;
+        return null;
     }
-    static SerialLightManager _instance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class.getName());
 
 }
-
-/* @(#)SerialLighttManager.java */

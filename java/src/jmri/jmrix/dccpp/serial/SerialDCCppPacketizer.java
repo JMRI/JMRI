@@ -11,11 +11,12 @@ import org.slf4j.LoggerFactory;
  * This is an extention of the DCCppPacketizer to handle the device specific
  * requirements of the DCC++.
  * <P>
- * In particular, SerialDCCppPacketizer adds functions to add and remove the "<" and ">"
- * bytes that appear around any message read in.
+ * In particular, SerialDCCppPacketizer adds functions to add and remove the
+ * {@literal "<" and ">"} bytes that appear around any message read in.
  *
- * Note that the bracket-adding could be pushed up to DCCppPacketizer, as it is a protocol
- * thing, not an interface implementation thing.  We'll come back to that later. 
+ * Note that the bracket-adding could be pushed up to DCCppPacketizer, as it is
+ * a protocol thing, not an interface implementation thing. We'll come back to
+ * that later.
  *
  * @author	Paul Bender Copyright (C) 2005
  * @author	Mark Underwood Copyright (C) 2015

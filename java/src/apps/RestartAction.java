@@ -1,4 +1,3 @@
-// RestartAction.java
 package apps;
 
 import java.awt.event.ActionEvent;
@@ -25,14 +24,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  */
 public class RestartAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6850455424770019609L;
 
     public RestartAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -49,9 +42,7 @@ public class RestartAction extends JmriAbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (log.isDebugEnabled()) {
-            log.debug("Source: " + e.getSource().toString() + "; class: " + e.getSource().getClass().getName());
-        }
+        log.debug("Source: {}; class: {}", e.getSource().toString(), e.getSource().getClass().getName());
 
         // Don't actually do this if launched as a start-up action
         // as we'll be in an endless loop

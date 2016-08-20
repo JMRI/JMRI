@@ -12,12 +12,15 @@ import jmri.jmrix.AbstractThrottleManager;
  */
 public class XpaThrottleManager extends AbstractThrottleManager implements ThrottleManager {
 
+    private XpaTrafficController tc = null;
+
     /**
      * Constructor.
      */
-    public XpaThrottleManager() {
-        super(null);
-        userName = "XPA";
+    public XpaThrottleManager(XpaSystemConnectionMemo m) {
+        super(m);
+        userName = m.getUserName();
+        tc = m.getXpaTrafficController();
     }
 
     /**
@@ -26,7 +29,7 @@ public class XpaThrottleManager extends AbstractThrottleManager implements Throt
      *
      */
     public void requestThrottleSetup(LocoAddress address, boolean control) {
-        XpaThrottle throttle = new XpaThrottle(address);
+        XpaThrottle throttle = new XpaThrottle(address,tc);
         notifyThrottleKnown(throttle, address);
     }
 

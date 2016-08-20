@@ -1,4 +1,3 @@
-// jmri.jmrit.display.NewPanelAction.java
 package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
@@ -13,14 +12,8 @@ import javax.swing.JOptionPane;
  *
  * @author	Dave Duchamp Copyright (C) 2007
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  */
 public class NewPanelAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4195350738625521948L;
 
     public NewPanelAction(String s) {
         super(s);

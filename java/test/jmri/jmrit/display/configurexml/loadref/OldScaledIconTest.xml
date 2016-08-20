@@ -7,7 +7,7 @@
     <test>2</test>
     <modifier>.2</modifier>
   </jmriversion>
-  <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
     <sensor systemName="ISCLOCKRUNNING" inverted="false">
       <systemName>ISCLOCKRUNNING</systemName>

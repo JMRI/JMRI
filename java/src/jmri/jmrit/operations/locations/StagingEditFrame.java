@@ -6,6 +6,9 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
+import jmri.jmrit.operations.locations.tools.ShowCarsByLocationAction;
+import jmri.jmrit.operations.locations.tools.ShowTrainsServingLocationAction;
+import jmri.jmrit.operations.locations.tools.TrackDestinationEditAction;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.trains.Train;
 
@@ -32,7 +35,9 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
         super();
     }
 
+    @Override
     public void initComponents(Location location, Track track) {
+        _type = Track.STAGING;
 
         // setup the optional panel with staging stuff
         panelLoad.setLayout(new BoxLayout(panelLoad, BoxLayout.X_AXIS));
@@ -65,7 +70,6 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
         panelLoad.add(p3);
 
         super.initComponents(location, track);
-        _type = Track.STAGING;
 
         _toolMenu.add(new TrackDestinationEditAction(this));
         _toolMenu.add(new ShowTrainsServingLocationAction(Bundle.getMessage("MenuItemShowTrainsTrack"), _location, _track));
@@ -114,6 +118,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
         setVisible(true);
     }
 
+    @Override
     protected void saveTrack(Track track) {
         track.setLoadSwapEnabled(swapLoadsCheckBox.isSelected());
         track.setLoadEmptyEnabled(emptyCheckBox.isSelected());
@@ -125,6 +130,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
         super.saveTrack(track);
     }
 
+    @Override
     protected void enableButtons(boolean enabled) {
         swapLoadsCheckBox.setEnabled(enabled);
         emptyCheckBox.setEnabled(enabled);
@@ -143,6 +149,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
         super.enableButtons(enabled);
     }
     
+    @Override
     protected void updateTrainComboBox() {
         super.updateTrainComboBox();
         // only show trains that depart from this staging location
@@ -165,6 +172,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
         }
     }
     
+    @Override
     protected void updateRouteComboBox() {
         super.updateRouteComboBox();
         // only show routes that depart from this staging location
@@ -187,6 +195,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
         }
     }
 
+    @Override
     public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == swapLoadsCheckBox) {
             if (swapLoadsCheckBox.isSelected()) {

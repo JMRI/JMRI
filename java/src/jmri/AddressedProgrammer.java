@@ -1,4 +1,3 @@
-/* AddressedProgrammer.java */
 package jmri;
 
 /**
@@ -48,6 +47,3 @@ public interface AddressedProgrammer extends Programmer {
 
     public String getAddress();
 }
-
-
-/* @(#)AddressedProgrammer.java */

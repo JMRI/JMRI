@@ -1,8 +1,8 @@
-// StatusPanel.java
 package jmri.jmrit.signalling;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
@@ -40,6 +40,7 @@ import jmri.SignalMast;
 import jmri.SignalMastLogic;
 import jmri.SignalMastManager;
 import jmri.Turnout;
+import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.com.sun.TableSorter;
@@ -50,14 +51,8 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision$
  */
 public class SignallingPanel extends jmri.util.swing.JmriPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6437500061146748574L;
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
 
@@ -65,8 +60,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     JmriBeanComboBox destMastBox;
     JLabel fixedSourceMastLabel = new JLabel();
     JLabel fixedDestMastLabel = new JLabel();
-    JLabel sourceMastLabel = new JLabel(rb.getString("SourceMast"));
-    JLabel destMastLabel = new JLabel(rb.getString("DestMast"));
+    JLabel sourceMastLabel = new JLabel(rb.getString("SourceMast")+":");
+    JLabel destMastLabel = new JLabel(rb.getString("DestMast")+":");
+    JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
     JButton updateButton = new JButton(rb.getString("UpdateLogic"));
     JCheckBox useLayoutEditor = new JCheckBox(rb.getString("UseLayoutEditorPaths"));
     JCheckBox useLayoutEditorTurnout = new JCheckBox(rb.getString("UseTurnoutDetails"));
@@ -78,7 +74,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     SignalMast destMast;
     SignalMastLogic sml;
 
-    SignalMastManager smm = InstanceManager.signalMastManagerInstance();
+    SignalMastManager smm = InstanceManager.getDefault(jmri.SignalMastManager.class);
 
     jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
@@ -95,7 +91,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         if (source != null) {
             this.sourceMast = source;
-            this.sml = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(source);
+            this.sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(source);
             fixedSourceMastLabel = new JLabel(sourceMast.getDisplayName());
             if (dest != null) {
                 frame.setTitle(source.getDisplayName() + " to " + dest.getDisplayName());
@@ -115,9 +111,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
             Float pathSpeed = sml.getMaximumSpeed(dest);
             if (pathSpeed == 0.0f) {
-                mastSpeed.setText(rb.getString("PathSpeed") + " : None Set");
+                mastSpeed.setText(rb.getString("PathSpeed") + " : " + rb.getString("NoneSet"));
             } else {
-                String speed = jmri.implementation.SignalSpeedMap.getMap().getNamedSpeed(pathSpeed);
+                String speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getNamedSpeed(pathSpeed);
                 if (speed != null) {
                     mastSpeed.setText(rb.getString("PathSpeed") + " : " + speed);
                 } else {
@@ -223,9 +219,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         header.add(allowAutoMastGeneration);
         header.add(lockTurnouts);
         JPanel py = new JPanel();
-        py.add(new JLabel(rb.getString("Show")));
+        py.add(new JLabel(Bundle.getMessage("Show")));
         selGroup = new ButtonGroup();
-        allButton = new JRadioButton(rb.getString("All"), true);
+        allButton = new JRadioButton(Bundle.getMessage("All"), true);
         selGroup.add(allButton);
         py.add(allButton);
         allButton.addActionListener(new ActionListener() {
@@ -240,7 +236,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 }
             }
         });
-        includedButton = new JRadioButton(rb.getString("Included"), false);
+        includedButton = new JRadioButton(Bundle.getMessage("Included"), false);
         selGroup.add(includedButton);
         py.add(includedButton);
         includedButton.addActionListener(new ActionListener() {
@@ -256,7 +252,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 }
             }
         });
-        py.add(new JLabel("  " + rb.getString("TurnoutSensors")));
+        py.add(new JLabel("  " + Bundle.getMessage("Elements")));
         header.add(py);
 
         containerPanel.add(header, BorderLayout.NORTH);
@@ -264,15 +260,25 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 //        JPanel sensorPanel = new JPanel();
 //        JPanel signalMastPanel = new JPanel();
         JTabbedPane detailsTab = new JTabbedPane();
-        detailsTab.add(rb.getString(java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle").getString("Blocks")), buildBlocksPanel());
-        detailsTab.add(rb.getString(java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle").getString("Turnouts")), buildTurnoutPanel());
-        detailsTab.add(rb.getString(java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle").getString("Sensors")), buildSensorPanel());
-        detailsTab.add(rb.getString(java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle").getString("SignalMasts")), buildSignalMastPanel());
+        detailsTab.add(Bundle.getMessage("Blocks"), buildBlocksPanel());
+        detailsTab.add(Bundle.getMessage("Turnouts"), buildTurnoutPanel());
+        detailsTab.add(Bundle.getMessage("Sensors"), buildSensorPanel());
+        detailsTab.add(Bundle.getMessage("SignalMasts"), buildSignalMastPanel());
 
         containerPanel.add(detailsTab, BorderLayout.CENTER);
 
         JPanel footer = new JPanel();
+        footer.setLayout(new FlowLayout(FlowLayout.TRAILING));
 
+        //Cancel button
+        footer.add(cancelButton);
+        cancelButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cancelPressed(e);
+            }
+        });
+
+        //Update button
         footer.add(updateButton);
         updateButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -345,7 +351,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         JPanel blockPanel = new JPanel();
         blockPanel.setLayout(new BoxLayout(blockPanel, BoxLayout.Y_AXIS));
 
-        jmri.BlockManager bm = jmri.InstanceManager.blockManagerInstance();
+        jmri.BlockManager bm = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
         List<String> systemNameList = bm.getSystemNameList();
         _manualBlockList = new ArrayList<ManualBlockList>(systemNameList.size());
         Iterator<String> iter = systemNameList.iterator();
@@ -374,11 +380,10 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         p2xcSpace.setLayout(new BoxLayout(p2xcSpace, BoxLayout.Y_AXIS));
         p2xcSpace.add(new JLabel("XXX"));
         p2xc.add(p2xcSpace);
+
         JPanel p21c = new JPanel();
         p21c.setLayout(new BoxLayout(p21c, BoxLayout.Y_AXIS));
-        p21c.add(new JLabel("Please select"));
-        p21c.add(new JLabel("Blocks to be "));
-        p21c.add(new JLabel("checked"));
+        p21c.add(new JLabel(Bundle.getMessage("LabelSelectChecked", Bundle.getMessage("Blocks"))));
         p2xc.add(p21c);
 
         _blockModel = new BlockModel();
@@ -428,11 +433,10 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         p2xaSpace.setLayout(new BoxLayout(p2xaSpace, BoxLayout.Y_AXIS));
         p2xaSpace.add(new JLabel("XXX"));
         p2xb.add(p2xaSpace);
+
         JPanel p21a = new JPanel();
         p21a.setLayout(new BoxLayout(p21a, BoxLayout.Y_AXIS));
-        p21a.add(new JLabel("These Blocks"));
-        p21a.add(new JLabel("are auto generated "));
-        p21a.add(new JLabel("and can not be changed"));
+        p21a.add(new JLabel(Bundle.getMessage("LabelAutogenerated", Bundle.getMessage("Blocks"))));
         p2xb.add(p21a);
 
         _autoBlockModel = new AutoBlockModel();
@@ -507,11 +511,10 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         p2xcSpace.setLayout(new BoxLayout(p2xcSpace, BoxLayout.Y_AXIS));
         p2xcSpace.add(new JLabel("XXX"));
         p2xt.add(p2xcSpace);
+
         JPanel p21c = new JPanel();
         p21c.setLayout(new BoxLayout(p21c, BoxLayout.Y_AXIS));
-        p21c.add(new JLabel("Please select"));
-        p21c.add(new JLabel("Turnouts to be "));
-        p21c.add(new JLabel("checked"));
+        p21c.add(new JLabel(Bundle.getMessage("LabelSelectChecked", Bundle.getMessage("Turnouts"))));
         p2xt.add(p21c);
 
         _turnoutModel = new TurnoutModel();
@@ -561,11 +564,10 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         p2xaSpace.setLayout(new BoxLayout(p2xaSpace, BoxLayout.Y_AXIS));
         p2xaSpace.add(new JLabel("XXX"));
         p2xa.add(p2xaSpace);
+
         JPanel p21a = new JPanel();
         p21a.setLayout(new BoxLayout(p21a, BoxLayout.Y_AXIS));
-        p21a.add(new JLabel("These Turnouts"));
-        p21a.add(new JLabel("are auto generated "));
-        p21a.add(new JLabel("and can not be changed"));
+        p21a.add(new JLabel(Bundle.getMessage("LabelAutogenerated", Bundle.getMessage("Turnouts"))));
         p2xa.add(p21a);
 
         _autoTurnoutModel = new AutoTurnoutModel();
@@ -624,11 +626,10 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         p2xsSpace.setLayout(new BoxLayout(p2xsSpace, BoxLayout.Y_AXIS));
         p2xsSpace.add(new JLabel("XXX"));
         p2xs.add(p2xsSpace);
+
         JPanel p21c = new JPanel();
         p21c.setLayout(new BoxLayout(p21c, BoxLayout.Y_AXIS));
-        p21c.add(new JLabel("Please select"));
-        p21c.add(new JLabel("Sensors to be "));
-        p21c.add(new JLabel("checked"));
+        p21c.add(new JLabel(Bundle.getMessage("LabelSelectChecked", Bundle.getMessage("Sensors"))));
         p2xs.add(p21c);
 
         _sensorModel = new SensorModel();
@@ -682,7 +683,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         JPanel SignalMastPanel = new JPanel();
         SignalMastPanel.setLayout(new BoxLayout(SignalMastPanel, BoxLayout.Y_AXIS));
 
-        jmri.SignalMastManager bm = jmri.InstanceManager.signalMastManagerInstance();
+        jmri.SignalMastManager bm = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
         List<String> systemNameList = bm.getSystemNameList();
         _manualSignalMastList = new ArrayList<ManualSignalMastList>(systemNameList.size());
         Iterator<String> iter = systemNameList.iterator();
@@ -696,11 +697,10 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         p2xmSpace.setLayout(new BoxLayout(p2xmSpace, BoxLayout.Y_AXIS));
         p2xmSpace.add(new JLabel("XXX"));
         p2xm.add(p2xmSpace);
+
         JPanel p21c = new JPanel();
         p21c.setLayout(new BoxLayout(p21c, BoxLayout.Y_AXIS));
-        p21c.add(new JLabel("Please select"));
-        p21c.add(new JLabel("SignalMasts to be "));
-        p21c.add(new JLabel("checked"));
+        p21c.add(new JLabel(Bundle.getMessage("LabelSelectChecked", Bundle.getMessage("SignalMasts"))));
         p2xm.add(p21c);
 
         _signalMastModel = new SignalMastModel();
@@ -737,11 +737,10 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         p2xaSpace.setLayout(new BoxLayout(p2xaSpace, BoxLayout.Y_AXIS));
         p2xaSpace.add(new JLabel("XXX"));
         p2xsm.add(p2xaSpace);
+
         JPanel p21a = new JPanel();
         p21a.setLayout(new BoxLayout(p21a, BoxLayout.Y_AXIS));
-        p21a.add(new JLabel("These SignalMasts"));
-        p21a.add(new JLabel("are auto generated "));
-        p21a.add(new JLabel("and can not be changed"));
+        p21a.add(new JLabel(Bundle.getMessage("LabelAutogenerated", Bundle.getMessage("SignalMasts"))));
         p2xsm.add(p21a);
 
         _autoSignalMastModel = new AutoMastModel();
@@ -781,6 +780,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         return SignalMastPanel;
     }
 
+    void cancelPressed(ActionEvent e) {
+        jFrame.setVisible(false);
+        jFrame.dispose();
+        jFrame = null;
+    }
     void updatePressed(ActionEvent e) {
         sourceMast = (SignalMast) sourceMastBox.getSelectedBean();
         destMast = (SignalMast) destMastBox.getSelectedBean();
@@ -800,7 +804,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
 
         if (sml == null) {
-            sml = InstanceManager.signalMastLogicManagerInstance().newSignalMastLogic(sourceMast);
+            sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).newSignalMastLogic(sourceMast);
             sml.setDestinationMast(destMast);
             fixedSourceMastLabel.setText(sourceMast.getDisplayName());
             fixedDestMastLabel.setText(destMast.getDisplayName());
@@ -833,7 +837,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
         Hashtable<Block, Integer> hashBlocks = new Hashtable<Block, Integer>();
         for (int i = 0; i < _includedManualBlockList.size(); i++) {
-            Block blk = jmri.InstanceManager.blockManagerInstance().getBlock(_includedManualBlockList.get(i).getSysName());
+            Block blk = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getBlock(_includedManualBlockList.get(i).getSysName());
             hashBlocks.put(blk, _includedManualBlockList.get(i).getState());
         }
         sml.setBlocks(hashBlocks, destMast);
@@ -982,8 +986,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
     private boolean showAll = true;   // false indicates show only included items
 
-    private static String SET_TO_ACTIVE = rb.getString("SensorActive");
-    private static String SET_TO_INACTIVE = rb.getString("SensorInactive");
+    private static String SET_TO_ACTIVE = Bundle.getMessage("SensorStateActive");
+    private static String SET_TO_INACTIVE = Bundle.getMessage("SensorStateInactive");
     private static String SET_TO_CLOSED = jmri.InstanceManager.turnoutManagerInstance().getClosedText();
     private static String SET_TO_THROWN = jmri.InstanceManager.turnoutManagerInstance().getThrownText();
 
@@ -1024,7 +1028,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         for (int i = _manualBlockList.size() - 1; i >= 0; i--) {
             ManualBlockList block = _manualBlockList.get(i);
             String tSysName = block.getSysName();
-            Block blk = InstanceManager.blockManagerInstance().getBlock(tSysName);
+            Block blk = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(tSysName);
             if (sml.isBlockIncluded(blk, destMast)) {
                 block.setIncluded(true);
                 block.setState(sml.getBlockState(blk, destMast));
@@ -1328,12 +1332,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     abstract class TableModel extends AbstractTableModel implements PropertyChangeListener {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7361250471794011296L;
-
         public Class<?> getColumnClass(int c) {
             if (c == INCLUDE_COLUMN) {
                 return Boolean.class;
@@ -1383,14 +1381,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     class BlockModel extends TableModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -7997858302507580484L;
-
         BlockModel() {
-            jmri.InstanceManager.blockManagerInstance().addPropertyChangeListener(this);
+            jmri.InstanceManager.getDefault(jmri.BlockManager.class).addPropertyChangeListener(this);
         }
 
         public int getRowCount() {
@@ -1472,11 +1464,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
     class TurnoutModel extends TableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8155668809998527577L;
-
         TurnoutModel() {
             jmri.InstanceManager.turnoutManagerInstance().addPropertyChangeListener(this);
         }
@@ -1534,12 +1521,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
      * Set up table for selecting Sensors and Sensor State
      */
     class SensorModel extends TableModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1976471188325126562L;
-
         SensorModel() {
             InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
         }
@@ -1600,13 +1581,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
     class SignalMastModel extends TableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3218114528313492508L;
-
         SignalMastModel() {
-            jmri.InstanceManager.signalMastManagerInstance().addPropertyChangeListener(this);
+            jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).addPropertyChangeListener(this);
         }
 
         public int getRowCount() {
@@ -1639,7 +1615,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
 
         public String getValue(String name) {
-            return InstanceManager.signalMastManagerInstance().getBySystemName(name).getAspect();
+            return InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name).getAspect();
         }
 
         public String getColumnName(int col) {
@@ -1677,11 +1653,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         protected JTable makeJTable(TableSorter srtr) {
             this.sorter = srtr;
             return new JTable(sorter) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 5719838067969573916L;
-
                 public boolean editCellAt(int row, int column, java.util.EventObject e) {
                     boolean res = super.editCellAt(row, column, e);
                     java.awt.Component c = this.getEditorComponent();
@@ -1733,7 +1704,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                     Vector<String> retval = boxMap.get(sorter.getValueAt(row, SNAME_COLUMN));
                     if (retval == null) {
                         // create a new one with right aspects
-                        Vector<String> v = InstanceManager.signalMastManagerInstance()
+                        Vector<String> v = InstanceManager.getDefault(jmri.SignalMastManager.class)
                                 .getSignalMast((String) sorter.getValueAt(row, SNAME_COLUMN)).getValidAspects();
                         v.add(0, "");
                         retval = v;
@@ -1748,11 +1719,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     abstract class AutoTableModel extends AbstractTableModel implements PropertyChangeListener {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -272666720986232529L;
 
         AutoTableModel() {
             smlValid();
@@ -1800,12 +1766,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     class AutoBlockModel extends AutoTableModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -1271144423340776473L;
-
         AutoBlockModel() {
             if (sml != null) {
                 sml.addPropertyChangeListener(this);
@@ -1877,11 +1837,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
     class AutoTurnoutModel extends AutoTableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3406404811666081205L;
-
         AutoTurnoutModel() {
             super();
         }
@@ -1913,12 +1868,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     class AutoMastModel extends AutoTableModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6641207901154262227L;
-
         AutoMastModel() {
             super();
         }
@@ -1950,24 +1899,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     public static class MyComboBoxEditor extends DefaultCellEditor {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5009970368789179788L;
-
         public MyComboBoxEditor(Vector<String> items) {
             super(new JComboBox<String>(items));
         }
     }
 
     public static class MyComboBoxRenderer extends JComboBox<String> implements TableCellRenderer {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1441539863361877122L;
-
         public MyComboBoxRenderer(Vector<String> items) {
             super(items);
         }
@@ -1991,4 +1928,3 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     private final static Logger log = LoggerFactory.getLogger(SignallingPanel.class.getName());
 }
 
-/* @(#)StatusPane.java */

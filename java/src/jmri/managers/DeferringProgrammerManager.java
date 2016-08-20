@@ -1,4 +1,3 @@
-/* DeferringProgrammerManager.java */
 package jmri.managers;
 
 import jmri.AddressedProgrammer;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2014
- * @version	$Revision$
  */
 public class DeferringProgrammerManager implements ProgrammerManager {
 
@@ -48,7 +46,7 @@ public class DeferringProgrammerManager implements ProgrammerManager {
     }
 
     public Programmer getGlobalProgrammer() {
-        GlobalProgrammerManager gp = InstanceManager.getDefault(GlobalProgrammerManager.class);
+        GlobalProgrammerManager gp = InstanceManager.getOptionalDefault(GlobalProgrammerManager.class);
         if (gp == null) {
             log.debug("no defaultGlobal ProgrammerManager, getGlobalProgrammer returns null" );
             return null;
@@ -60,7 +58,7 @@ public class DeferringProgrammerManager implements ProgrammerManager {
     }
 
     public Programmer reserveGlobalProgrammer() {
-        GlobalProgrammerManager gp = InstanceManager.getDefault(GlobalProgrammerManager.class);
+        GlobalProgrammerManager gp = InstanceManager.getOptionalDefault(GlobalProgrammerManager.class);
         if (gp == null) {
             return null;
         }
@@ -68,7 +66,7 @@ public class DeferringProgrammerManager implements ProgrammerManager {
     }
 
     public void releaseGlobalProgrammer(Programmer p) {
-        GlobalProgrammerManager gp = InstanceManager.getDefault(GlobalProgrammerManager.class);
+        GlobalProgrammerManager gp = InstanceManager.getOptionalDefault(GlobalProgrammerManager.class);
         if (gp == null) {
             return;
         }
@@ -81,7 +79,7 @@ public class DeferringProgrammerManager implements ProgrammerManager {
      * @return false if there's no chance of getting one
      */
     public boolean isGlobalProgrammerAvailable() {
-        GlobalProgrammerManager gp = InstanceManager.getDefault(GlobalProgrammerManager.class);
+        GlobalProgrammerManager gp = InstanceManager.getOptionalDefault(GlobalProgrammerManager.class);
         if (gp == null) {
             return false;
         }
@@ -89,7 +87,7 @@ public class DeferringProgrammerManager implements ProgrammerManager {
     }
 
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
-        AddressedProgrammerManager ap = InstanceManager.getDefault(AddressedProgrammerManager.class);
+        AddressedProgrammerManager ap = InstanceManager.getOptionalDefault(AddressedProgrammerManager.class);
         if (ap == null) {
             return null;
         }
@@ -97,7 +95,7 @@ public class DeferringProgrammerManager implements ProgrammerManager {
     }
 
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
-        AddressedProgrammerManager ap = InstanceManager.getDefault(AddressedProgrammerManager.class);
+        AddressedProgrammerManager ap = InstanceManager.getOptionalDefault(AddressedProgrammerManager.class);
         if (ap == null) {
             return null;
         }
@@ -105,7 +103,7 @@ public class DeferringProgrammerManager implements ProgrammerManager {
     }
 
     public void releaseAddressedProgrammer(AddressedProgrammer p) {
-        AddressedProgrammerManager ap = InstanceManager.getDefault(AddressedProgrammerManager.class);
+        AddressedProgrammerManager ap = InstanceManager.getOptionalDefault(AddressedProgrammerManager.class);
         if (ap == null) {
             return;
         }
@@ -118,7 +116,7 @@ public class DeferringProgrammerManager implements ProgrammerManager {
      * @return false if there's no chance of getting one
      */
     public boolean isAddressedModePossible() {
-        AddressedProgrammerManager ap = InstanceManager.getDefault(AddressedProgrammerManager.class);
+        AddressedProgrammerManager ap = InstanceManager.getOptionalDefault(AddressedProgrammerManager.class);
         if (ap == null) {
             return false;
         }
@@ -140,4 +138,4 @@ public class DeferringProgrammerManager implements ProgrammerManager {
 
     private final static Logger log = LoggerFactory.getLogger(DeferringProgrammerManager.class.getName());
 }
-/* @(#)DeferringProgrammerManager.java */
+

@@ -1,22 +1,16 @@
-// DCCppAdapter.java
 package jmri.jmrix.dccpp.serial;
 
-import java.io.DataInputStream;
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.TooManyListenersException;
+import java.io.InputStreamReader;
 import jmri.jmrix.dccpp.DCCppCommandStation;
+import jmri.jmrix.dccpp.DCCppInitializationManager;
 import jmri.jmrix.dccpp.DCCppSerialPortController;
 import jmri.jmrix.dccpp.DCCppTrafficController;
-import jmri.jmrix.dccpp.DCCppInitializationManager;
-/*
- * TODO: Replace these with DCC++ equivalents
- *
-import jmri.jmrix.lenz.XNetInitializationManager;
-*/
 import jmri.util.SerialUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +27,6 @@ import purejavacomm.UnsupportedCommOperationException;
  * Normally controlled by the lenz.liusb.LIUSBFrame class.
  *
  * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
  *
  * Based on jmri.jmirx.lenz.liusb.LIUSBAdapter by Paul Bender
  */
@@ -43,7 +36,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         super();
         //option1Name = "FlowControl";
         //options.put(option1Name, new Option("DCC++ connection uses : ", validOption1));
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.DCCPP;
+        this.manufacturerName = jmri.jmrix.dccpp.DCCppConnectionTypeList.DCCPP;
     }
 
     public String openPort(String portName, String appName) {
@@ -77,12 +70,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -233,8 +221,6 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         this.getSystemConnectionMemo().setDCCppTrafficController(packets);
 
         new DCCppInitializationManager(this.getSystemConnectionMemo());
-
-        jmri.jmrix.dccpp.ActiveFlag.setActive();
     }
 
     // base class methods for the XNetSerialPortController interface

@@ -1,4 +1,3 @@
-// DeleteRosterItemAction.java
 package jmri.jmrit.roster;
 
 import java.awt.Component;
@@ -8,6 +7,7 @@ import javax.swing.Icon;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import jmri.beans.Beans;
+import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.util.FileUtil;
 import jmri.util.swing.JmriAbstractAction;
@@ -36,15 +36,9 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  */
 public class DeleteRosterItemAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1566611248270959245L;
 
     public DeleteRosterItemAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -74,8 +68,8 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
         // rosterGroup may legitimately be null
         // but getProperty returns null if the property cannot be found, so
         // we test that the property exists before attempting to get its value
-        if (Beans.hasProperty(wi, "selectedRosterGroup")) {
-            rosterGroup = (String) Beans.getProperty(wi, "selectedRosterGroup");
+        if (Beans.hasProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP)) {
+            rosterGroup = (String) Beans.getProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP);
             log.debug("selectedRosterGroup was {}", rosterGroup);
         }
         if (Beans.hasProperty(wi, "selectedRosterEntries")) {

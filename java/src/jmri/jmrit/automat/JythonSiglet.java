@@ -1,4 +1,3 @@
-// JythonSiglet.java
 package jmri.jmrit.automat;
 
 import jmri.InstanceManager;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * code, the "non-reflection" statements are in the comments.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public class JythonSiglet extends Siglet {
 
@@ -56,8 +54,6 @@ public class JythonSiglet extends Siglet {
             interp = Class.forName("org.python.util.PythonInterpreter").newInstance();
 
             // load some general objects
-            // interp.set("dcc", InstanceManager.commandStationInstance());
-            // interp.set("self", this);
             java.lang.reflect.Method set
                     = interp.getClass().getMethod("set", new Class[]{String.class, Object.class});
             set.invoke(interp, new Object[]{"self", this});
@@ -67,8 +63,8 @@ public class JythonSiglet extends Siglet {
 
             set.invoke(interp, new Object[]{"turnouts", InstanceManager.turnoutManagerInstance()});
             set.invoke(interp, new Object[]{"sensors", InstanceManager.sensorManagerInstance()});
-            set.invoke(interp, new Object[]{"signals", InstanceManager.signalHeadManagerInstance()});
-            set.invoke(interp, new Object[]{"dcc", InstanceManager.commandStationInstance()});
+            set.invoke(interp, new Object[]{"signals", InstanceManager.getDefault(jmri.SignalHeadManager.class)});
+            set.invoke(interp, new Object[]{"dcc", InstanceManager.getOptionalDefault(jmri.CommandStation.class)});
 
             set.invoke(interp, new Object[]{"CLOSED", Integer.valueOf(jmri.Turnout.CLOSED)});
             set.invoke(interp, new Object[]{"THROWN", Integer.valueOf(jmri.Turnout.THROWN)});
@@ -125,5 +121,3 @@ public class JythonSiglet extends Siglet {
     private final static Logger log = LoggerFactory.getLogger(JythonSiglet.class.getName());
 
 }
-
-/* @(#)JythonAutomaton.java */

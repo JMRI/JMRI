@@ -5,7 +5,6 @@
  *
  * @author	Bob Jacobsen
  * @author	Mark Underwood
- * @version $Revision$
  */
 package jmri.jmrix.dccpp;
 

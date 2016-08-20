@@ -1,4 +1,3 @@
-// SignalSystemTestUtil.java
 package jmri.implementation;
 
 import java.io.File;

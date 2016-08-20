@@ -14,11 +14,6 @@ import jmri.jmrit.operations.OperationsFrame;
  */
 public class OperationsSetupFrame extends OperationsFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 852682446088800323L;
-
     public OperationsSetupFrame() {
         super(Bundle.getMessage("TitleOperationsSetup"), new OperationsSetupPanel());
     }
@@ -28,7 +23,7 @@ public class OperationsSetupFrame extends OperationsFrame {
         super.initComponents();
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new OptionAction(Bundle.getMessage("TitleOptions")));
         toolMenu.add(new PrintOptionAction());
         toolMenu.add(new BuildReportOptionAction());

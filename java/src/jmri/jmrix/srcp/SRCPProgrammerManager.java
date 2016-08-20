@@ -1,4 +1,3 @@
-/* SRCPProgrammerManager.java */
 package jmri.jmrix.srcp;
 
 import jmri.AddressedProgrammer;
@@ -11,7 +10,6 @@ import jmri.managers.DefaultProgrammerManager;
  *
  * @see jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002, 2008
- * @version	$Revision$
  */
 public class SRCPProgrammerManager extends DefaultProgrammerManager {
 

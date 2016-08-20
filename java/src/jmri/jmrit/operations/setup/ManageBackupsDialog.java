@@ -24,10 +24,6 @@ import javax.swing.event.ListSelectionListener;
 
 public class ManageBackupsDialog extends JDialog {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -149145687905176236L;
     private final JPanel contentPanel = new JPanel();
     private JLabel selectBackupSetsLabel;
     private JButton selectAllButton;
@@ -122,6 +118,7 @@ public class ManageBackupsDialog extends JDialog {
             {
                 selectAllButton = new JButton(Bundle.getMessage("ManageBackupsDialog.selectAllButton.text"));
                 selectAllButton.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         do_selectAllButton_actionPerformed(e);
                     }
@@ -135,6 +132,7 @@ public class ManageBackupsDialog extends JDialog {
             {
                 clearAllButton = new JButton(Bundle.getMessage("ManageBackupsDialog.clearAllButton.text"));
                 clearAllButton.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         do_clearAllButton_actionPerformed(e);
                     }
@@ -148,6 +146,7 @@ public class ManageBackupsDialog extends JDialog {
             {
                 deleteButton = new JButton(Bundle.getMessage("ManageBackupsDialog.deleteButton.text"));
                 deleteButton.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         do_deleteButton_actionPerformed(e);
                     }
@@ -162,6 +161,7 @@ public class ManageBackupsDialog extends JDialog {
             {
                 JButton closeButton = new JButton(Bundle.getMessage("ManageBackupsDialog.cancelButton.text"));
                 closeButton.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         do_cancelButton_actionPerformed(e);
                     }

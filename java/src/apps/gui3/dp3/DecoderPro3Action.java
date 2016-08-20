@@ -1,4 +1,3 @@
-// DecoderPro3Action.java
 package apps.gui3.dp3;
 
 import java.awt.Dimension;
@@ -19,10 +18,6 @@ import jmri.util.swing.WindowInterface;
  */
 public class DecoderPro3Action extends JmriAbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 908346452314380162L;
     DecoderPro3Window mainFrame;
     boolean allowQuit = true;
 
@@ -36,6 +31,10 @@ public class DecoderPro3Action extends JmriAbstractAction {
 
     /**
      * Method for opening a new window via the classic JMRI interface
+     *
+     * @param pName     the action name
+     * @param allowQuit true if closing the {@link DecoderPro3Window} should
+     *                  quit the application; false otherwise
      */
     public DecoderPro3Action(String pName, boolean allowQuit) {
         super(pName);

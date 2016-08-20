@@ -1,33 +1,30 @@
-/**
- * AbstractTurnoutMgrTest.java
- *
- * Description:	AbsBaseClass for TurnoutManager tests in specific jmrix.
- * packages
- *
- * @author	Bob Jacobsen
- * @version
- */
-/**
- * This is not itself a test class, e.g. should not be added to a suite.
- * Instead, this forms the base for test classes, including providing some
- * common tests
- */
 package jmri.managers;
 
 import java.beans.PropertyChangeListener;
 import jmri.Turnout;
-import jmri.TurnoutAddress;
 import jmri.TurnoutManager;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
+/**
+ * Base for TurnoutManager tests in specific jmrix.packages
+ * <p>
+ * This is not itself a test class, e.g. should not be added to a suite.
+ * Instead, this forms the base for test classes, including providing some
+ * common tests
+ *
+ * @author	Bob Jacobsen
+ */
 public abstract class AbstractTurnoutMgrTest extends TestCase {
 
-    // implementing classes must provide these abstract members:
-    //
-    abstract protected void setUp();    	// load t with actual object; create scaffolds as needed
-
+    // implementing classes must implement to convert integer (count) to a system name
     abstract public String getSystemName(int i);
+
+    /**
+     * Overload to load t with actual object; create scaffolds as needed
+     */
+    @javax.annotation.OverridingMethodsMustInvokeSuper
+    protected void setUp() throws Exception { super.setUp(); }    	
 
     public AbstractTurnoutMgrTest(String s) {
         super(s);
@@ -55,6 +52,18 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
         }
     }
 
+    public void testProvideFailure() {
+        boolean correct = false;
+        try {
+            Turnout t = l.provideTurnout("");
+            Assert.fail("didn't throw");
+        } catch (IllegalArgumentException ex) {
+            correct = true;
+        }
+        Assert.assertTrue("Exception thrown properly", correct);
+        jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for turnout: "+l.getSystemPrefix()+l.typeLetter()+" needed "+l.getSystemPrefix()+l.typeLetter());
+    }
+    
     public void testTurnoutPutGet() {
         // create
         Turnout t = l.newTurnout(getSystemName(getNumToTest1()), "mine");
@@ -86,20 +95,12 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
     }
 
     public void testMisses() {
-        // sample address object
-        TurnoutAddress a = new TurnoutAddress(getSystemName(getNumToTest2()), "user");
-
-        Assert.assertNotNull("real object returned ", a);
         // try to get nonexistant turnouts
         Assert.assertTrue(null == l.getByUserName("foo"));
         Assert.assertTrue(null == l.getBySystemName("bar"));
     }
 
     public void testUpperLower() {
-        // sample address object
-        TurnoutAddress a = new TurnoutAddress(getSystemName(31), "user");
-        Assert.assertNotNull("real object returned ", a);
-
         Turnout t = l.provideTurnout("" + getNumToTest2());
 
         Assert.assertNull(l.getTurnout(t.getSystemName().toLowerCase()));

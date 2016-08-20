@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2016 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new include file for SoundTraxx Tsunami2                   -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice>
+    <choice>Reverb Disabled</choice>
+    <choice xml:lang="it">Riverbero Abilitato</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Light Reverb</choice>
+    <choice xml:lang="it">Riverbero leggero</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Medium Reverb</choice>
+    <choice xml:lang="it">Riverbero medio</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Heavy Reverb in Exhaust</choice>
+    <choice xml:lang="it">Riverbero pesante</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Short Echo</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Long Echo</choice>
+  </enumChoice>
+  <enumChoice value="7">
+    <choice>User Adjustable</choice>
+    <choice xml:lang="it">Riverbero regolabile</choice>
+  </enumChoice>
+</enumVal>

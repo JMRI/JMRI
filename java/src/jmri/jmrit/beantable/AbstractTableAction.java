@@ -1,4 +1,3 @@
-// AbstractTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
@@ -17,14 +16,8 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a SignalHeadTable GUI
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 abstract public class AbstractTableAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7910901479004827844L;
 
     public AbstractTableAction(String actionName) {
         super(actionName);
@@ -61,10 +54,6 @@ abstract public class AbstractTableAction extends AbstractAction {
 
         // create the frame
         f = new BeanTableFrame(m, helpTarget(), dataTable) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1123302534258100353L;
 
             /**
              * Include an "add" button
@@ -174,4 +163,3 @@ abstract public class AbstractTableAction extends AbstractAction {
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTableAction.class.getName());
 }
-/* @(#)AbstractTableAction.java */

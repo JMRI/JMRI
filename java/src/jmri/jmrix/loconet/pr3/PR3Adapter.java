@@ -82,7 +82,6 @@ public class PR3Adapter extends LocoBufferAdapter {
 
             // start operation
             packets.startThreads();
-            jmri.jmrix.loconet.ActiveFlag.setActive();
 
             // set mode
             LocoNetMessage msg = new LocoNetMessage(6);
@@ -111,7 +110,6 @@ public class PR3Adapter extends LocoBufferAdapter {
 
             // start operation
             packets.startThreads();
-            jmri.jmrix.loconet.ActiveFlag.setActive();
 
             // set mode
             LocoNetMessage msg = new LocoNetMessage(6);

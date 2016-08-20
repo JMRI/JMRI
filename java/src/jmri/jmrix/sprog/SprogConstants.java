@@ -1,4 +1,3 @@
-// SprogConstants.java
 package jmri.jmrix.sprog;
 
 /**
@@ -7,7 +6,6 @@ package jmri.jmrix.sprog;
  * Description:	Constants to represent values seen in SPROG traffic
  *
  * @author	Andrew Crosland Copyright (C) 2006 from LnConstants.java
- * @version $Revision$
  */
 public final class SprogConstants {
 
@@ -66,7 +64,7 @@ public final class SprogConstants {
 
     public final static int CALC_BIT = 0x0008;        /* Add error byte */
 
-    protected final static int POWER_BIT = 0x0010;       /* Track power */
+    public final static int POWER_BIT = 0x0010;       /* Track power */
 
     public final static int ZTC_BIT = 0x0020;         /* Old ZTC bit timing */
 
@@ -77,10 +75,9 @@ public final class SprogConstants {
     public final static int STEP14_BIT = 0x0200;
     public final static int STEP28_BIT = 0x0400;
     public final static int STEP128_BIT = 0x0800;
-    protected final static int LONG_ADD = 0x1000;
+    public final static int LONG_ADD = 0x1000;
 
-    public final static int DEFAULT_I = 996;
+    public final static int DEFAULT_I = 996;            /* milliAmps */
 
 }
 
-/* @(#)SprogConstants.java */

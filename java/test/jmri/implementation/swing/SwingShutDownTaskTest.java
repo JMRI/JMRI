@@ -1,4 +1,3 @@
-// SwingShutDownTaskTest.java
 package jmri.implementation.swing;
 
 import junit.framework.Test;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Careful - tests are loaded via a separate class loader!
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public class SwingShutDownTaskTest extends TestCase {
 
@@ -76,7 +74,7 @@ public class SwingShutDownTaskTest extends TestCase {
         modalDialogStopsTest = true;
         // -noloading needed so we can set the same class-loaded static variable
         String[] testCaseName = {"-noloading", SwingShutDownTaskTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

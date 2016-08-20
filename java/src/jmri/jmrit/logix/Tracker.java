@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 /**
  * Track an occupied block to its adjacent blocks.
  *
- * @version $Revision: 22833 $
  * @author	Pete Cressman Copyright (C) 2013
  */
 public class Tracker {
@@ -39,8 +38,6 @@ public class Tracker {
     /**
      * Must Call setupCheck() after constructor to check environment of train
      *
-     * @param block
-     * @param name
      */
     Tracker(OBlock block, String name) {
         _trainName = name;
@@ -392,8 +389,6 @@ public class Tracker {
     /**
      * Called when _occupies is empty
      *
-     * @param block
-     * @return
      */
     private boolean recovery(OBlock block) {
         if (_occupies.size()==0) {

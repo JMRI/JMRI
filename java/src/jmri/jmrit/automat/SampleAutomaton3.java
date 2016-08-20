@@ -1,4 +1,3 @@
-// SampleAutomaton3.java
 package jmri.jmrit.automat;
 
 import jmri.DccThrottle;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * Layout Automation in Java page</a>.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  * @see jmri.jmrit.automat.SampleAutomaton3Action
  */
 public class SampleAutomaton3 extends AbstractAutomaton {
@@ -67,15 +65,9 @@ public class SampleAutomaton3 extends AbstractAutomaton {
 
         fwdSensor = InstanceManager.sensorManagerInstance().
                 provideSensor(fwdSensorName);
-        if (fwdSensor == null) {
-            log.error("Failure to provide forward sensor " + fwdSensorName + " on initialization");
-        }
 
         revSensor = InstanceManager.sensorManagerInstance().
                 provideSensor(revSensorName);
-        if (revSensor == null) {
-            log.error("Failure to provide reverse sensor " + revSensorName + " on initialization");
-        }
 
         throttle = getThrottle(locoNumber, locoLong);
     }
@@ -125,6 +117,3 @@ public class SampleAutomaton3 extends AbstractAutomaton {
     private final static Logger log = LoggerFactory.getLogger(SampleAutomaton3.class.getName());
 
 }
-
-
-/* @(#)SampleAutomaton3.java */

@@ -34,14 +34,8 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version $Revision$
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6313290252408712497L;
 
     private LearnThrottleFrame _throttleFrame;
 

@@ -1,4 +1,3 @@
-// HelpUtil.java
 package jmri.util;
 
 import apps.AboutAction;
@@ -29,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * It assumes that Java Help 1.1.8 is in use
  *
  * @author Bob Jacobsen Copyright 2007
- * @version $Revision$
  */
 public class HelpUtil {
 
@@ -191,10 +189,7 @@ public class HelpUtil {
 
     static public Action getHelpAction(final String name, final Icon icon, final String id) {
         return new AbstractAction(name, icon) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -6252106625080009829L;
+
             String helpID = id;
 
             public void actionPerformed(ActionEvent event) {

@@ -15,9 +15,9 @@
  <indexitem text="Blocks " target="html.tools.Blocks">
   <indexitem text="Add Blocks " target="package.jmri.jmrit.beantable.BlockAddEdit"/>
 
-  <indexitem text="Block Tracking " target="html.tools.tracker.index"/>
-
   <indexitem text="Block Table " target="package.jmri.jmrit.beantable.BlockTable"/>
+
+  <indexitem text="Block Tracking " target="html.tools.tracker.index"/>
 
   <indexitem text="Edit Blocks " target="package.jmri.jmrit.beantable.BlockEdit"/>
 
@@ -234,8 +234,6 @@
   <indexitem text="Slot Monitor " target="package.jmri.jmrix.loconet.slotmon.SlotMonFrame"/>
 
  </indexitem>
- <indexitem text="LocoTools " target="html.apps.LocoTools.index"/>
-
  <indexitem text="Logix ">
   <indexitem text="Add Logix " target="package.jmri.jmrit.beantable.LogixAddEdit"/>
 
@@ -319,6 +317,8 @@
 
  </indexitem>
  <indexitem text="Panels Menu " target="package.jmri.jmrit.display.PanelMenuHelp"/>
+
+ <indexitem text="Path (in OBlock) " target="package.jmri.jmrit.logix.OBlockTable"/>
 
  <indexitem text="Preferences " target="package.apps.TabbedPreferences"/>
 
@@ -467,6 +467,14 @@
  <indexitem text="Technical ">
   <indexitem text="Eclipse IDE " target="html.doc.Technical.Eclipse"/>
 
+  <indexitem text="Git ">
+   <indexitem text="Getting the Source Code Via Git " target="html.doc.Technical.getgitcode"/>
+
+   <indexitem text="Git FAQs " target="html.doc.Technical.GitFAQ"/>
+
+   <indexitem text="Git for Developers " target="html.doc.Technical.gitdeveloper"/>
+
+  </indexitem>
   <indexitem text="NetBeans IDE " target="html.doc.Technical.NetBeans"/>
 
   <indexitem text="Thread Monitor " target="package.jmri.jmrit.automat.monitor.AutomatTableFrame"/>

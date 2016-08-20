@@ -9,14 +9,8 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
  * Swing action to create and register a Block Routing Table.
  * <P>
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision$
  */
 public class LayoutBlockRouteTableAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2989828125582997520L;
 
     /**
      * Create an action with a specific title.
@@ -24,7 +18,6 @@ public class LayoutBlockRouteTableAction extends AbstractAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
      */
     public LayoutBlockRouteTableAction(String s, LayoutBlock lBlock) {
         super(s);

@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.openlcb.swing.hub;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.openlcb.swing.hub package.
  *
  * @author Bob Jacobsen Copyright 2009, 2012, 2013
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -25,7 +23,7 @@ public class PackageTest extends TestCase {
     static public void main(String[] args) {
         apps.tests.AllTest.initLogging();
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

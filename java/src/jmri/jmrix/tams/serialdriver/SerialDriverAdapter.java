@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.tams.serialdriver;
 
 import java.io.DataInputStream;
@@ -25,7 +24,6 @@ import purejavacomm.UnsupportedCommOperationException;
  * Based on work by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 17977 $
  */
 public class SerialDriverAdapter extends TamsPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -33,7 +31,7 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
 
     public SerialDriverAdapter() {
         super(new TamsSystemConnectionMemo());
-        setManufacturer(jmri.jmrix.DCCManufacturerList.TAMS);
+        setManufacturer(jmri.jmrix.tams.TamsConnectionTypeList.TAMS);
     }
 
     public String openPort(String portName, String appName) {
@@ -80,12 +78,7 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             if (log.isInfoEnabled()) {
                 log.info(portName + " port opened at "
@@ -129,9 +122,6 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
-
-        jmri.jmrix.tams.ActiveFlag.setActive();
-
     }
 
     // base class methods for the TamsPortController interface

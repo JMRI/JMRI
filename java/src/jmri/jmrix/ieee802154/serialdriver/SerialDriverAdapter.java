@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.ieee802154.serialdriver;
 
 import java.io.DataInputStream;
@@ -27,7 +26,6 @@ import purejavacomm.UnsupportedCommOperationException;
  * multiple connection
  * @author kcameron Copyright (C) 2011
  * @author Paul Bender Copyright (C) 2013
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends IEEE802154PortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -39,7 +37,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
 
     protected SerialDriverAdapter(IEEE802154SystemConnectionMemo connectionMemo) {
         super(connectionMemo);
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.IEEE802154;
+        this.manufacturerName = jmri.jmrix.ieee802154.SerialConnectionTypeList.IEEE802154;
     }
 
     public String openPort(String portName, String appName) {
@@ -63,12 +61,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -191,9 +184,6 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
         tc.connectPort(this);
         // Configure the form of serial address validation for this connection
 //        adaptermemo.setSerialAddress(new jmri.jmrix.ieee802154.SerialAddress(adaptermemo));
-
-        // declare up
-        jmri.jmrix.ieee802154.ActiveFlag.setActive();
     }
 
     // base class methods for the SerialPortController interface
@@ -211,7 +201,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
         }
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
-        } catch (java.io.IOException e) {
+        } catch (IOException e) {
             log.error("getOutputStream exception: " + e.getMessage());
         }
         return null;
@@ -274,9 +264,9 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
         return "Adapter";
     }
 
-    protected String[] validSpeeds = new String[]{"(automatic)"};
-    protected int[] validSpeedValues = new int[]{9600};
-    protected String selectedSpeed = validSpeeds[0];
+    private String[] validSpeeds = new String[]{"(automatic)"};
+    private int[] validSpeedValues = new int[]{9600};
+    private String selectedSpeed = validSpeeds[0];
 
     /**
      * Get an array of valid values for "option 2"; used to display valid
@@ -295,14 +285,8 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     }
 
     // private control members
-    protected boolean opened = false;
     protected InputStream serialStream = null;
 
-//    static public SerialDriverAdapter instance() {
-//        if (mInstance == null) mInstance = new SerialDriverAdapter();
-//        return mInstance;
-//    }
-//    static SerialDriverAdapter mInstance = null;
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

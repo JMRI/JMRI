@@ -1,16 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<html lang="en">
+<html lang="fr">
 <head>
  <TITLE>
       JMRI: Monitor Powerline Device Traffic
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <META name="keywords" content="JMRI help monitor powerline traffic message packet">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,17 +21,18 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1> Moniteur de trafic des Équipement  PowerLine.
-</H1>
+<h1> Moniteur de trafic des &Eacute;quipement PowerLine.
+</h1>
     
 Ceci est la page d'aide help/jmri/jmrix/powerline/serialmon/SerialMonFrame 
 
-<p>
 Pour plus d'informations sur les
-différents contrôles et les options, s'il vous pla�&reg;t voir la
-<a href="../../AbstractMonFrame.shtml"> page Fenêtre du Moniteur de Communication </a>.
+diff&eacute;rents contr&ocirc;les et les options, s'il vous pla&icirc;t voir la
+<a href="../../AbstractMonFrame.shtml"> page Fen&ecirc;tre du Moniteur de Communication</a>.
 
 <!--#include virtual="/Footer" -->
+        </div>
+      </div>
 </body>
 </html>
 

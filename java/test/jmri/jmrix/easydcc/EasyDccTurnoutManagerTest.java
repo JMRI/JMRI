@@ -16,7 +16,16 @@ import org.slf4j.LoggerFactory;
 
 public class EasyDccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
-    public void setUp() {
+    @Override
+    protected void tearDown() throws Exception {
+        apps.tests.Log4JFixture.tearDown();
+        super.tearDown();
+    }
+
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+        apps.tests.Log4JFixture.setUp();
         // create and register the manager object
         l = new EasyDccTurnoutManager();
         jmri.InstanceManager.setTurnoutManager(l);
@@ -56,7 +65,7 @@ public class EasyDccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrT
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", EasyDccTurnoutManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

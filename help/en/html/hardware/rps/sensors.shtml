@@ -48,17 +48,17 @@ area on the layout that it covers.
 You can enter a series of coordinates that list the corners 
 of the region to be covered.  For example, the points
 defining a square one unit on a side are:
-<code><pre>
+<pre style="font-family: monospace;">
  (0,0,0)
  (1,0,0)
  (1,1,0)
  (0,1,0)
-</pre></code>
+</pre>
 If you use the Sensor Table's "Add..." button
 to create a Sensor with the System Name
-<code><pre>
+<pre style="font-family: monospace;">
   RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)
-</pre></code>
+</pre>
 you'll get an RPS Sensor that shows "ACTIVE" when a 
 Transmitter is present in that area, and "INACTIVE" otherwise.
 <p>

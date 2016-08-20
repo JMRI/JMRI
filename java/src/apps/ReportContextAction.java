@@ -1,4 +1,3 @@
-// ReportContextAction.java
 package apps;
 
 import java.awt.BorderLayout;
@@ -24,14 +23,8 @@ import jmri.util.swing.WindowInterface;
  * @author	Bob Jacobsen Copyright (C) 2007
  * @author Matt Harris Copyright (C) 2008
  *
- * @version $Revision$
  */
 public class ReportContextAction extends jmri.util.swing.JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -483497612204078175L;
 
     public ReportContextAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -113,5 +106,3 @@ public class ReportContextAction extends jmri.util.swing.JmriAbstractAction {
     }
 
 }
-
-/* @(#)ReportContextAction.java */

@@ -1,4 +1,3 @@
-// CatalogTreeModel.java
 package jmri.jmrit.catalog;
 
 import java.io.File;
@@ -22,14 +21,8 @@ import jmri.util.FileUtil;
  * directories, or files whose name starts with a "."
  *
  * @author	Bob Jacobsen Copyright 2002
- * @version	$Revision$
  */
 public class CatalogTreeModel extends DefaultTreeModel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2743570810771604153L;
 
     public CatalogTreeModel() {
 

@@ -1,4 +1,3 @@
-// AbstractStreamConnectionConfig.java
 package jmri.jmrix;
 
 import java.awt.Color;
@@ -23,9 +22,7 @@ import org.slf4j.LoggerFactory;
  * ConnectionConfig 
  *
  * @author Kevin Dickerson Copyright (C) 2001, 2003
- * @version	$Revision$
  */
-//
 abstract public class AbstractStreamConnectionConfig extends AbstractConnectionConfig {
 
     /**

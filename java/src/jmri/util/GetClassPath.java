@@ -1,4 +1,3 @@
-// GetClassPath.java
 package jmri.util;
 
 import java.io.File;
@@ -7,7 +6,6 @@ import java.io.File;
  * Creates a classpath for JMRI from directories
  *
  * @author	Bob Jacobsen, Copyright (C) 2008
- * @version $Revision$
  */
 public class GetClassPath {
 
@@ -21,6 +19,10 @@ public class GetClassPath {
 
         // add the jar files from the base directory
         String[] programfiles = programdir.list();
+        if (programfiles == null) {
+             return ". wasn't a directory; failure";
+        }
+
         for (int i = 0; i < programfiles.length; i++) {
             String entry = programfiles[i];
             // check that this file should go on the class path
@@ -44,6 +46,10 @@ public class GetClassPath {
 
         // add entries from lib/
         String[] libfiles = libdir.list();
+        if (libfiles == null) {
+             return "lib wasn't a directory; failure";
+        }
+
         for (int i = 0; i < libfiles.length; i++) {
             String entry = libfiles[i];
             // check that this file should go on the class path

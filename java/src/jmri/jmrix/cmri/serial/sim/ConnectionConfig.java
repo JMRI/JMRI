@@ -1,17 +1,16 @@
-// ConnectionConfig.java
 package jmri.jmrix.cmri.serial.sim;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Definition of objects to handle configuring a layout connection via an C/MRI
  * Simulator object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008
- * @version	$Revision$
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
@@ -44,12 +43,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
 
         details.add(b);
 
-        b.addActionListener(new NodeConfigAction());
+        b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
 
     }
 
     /*protected Vector<String> getPortNames() {
-     Vector<String> portNameVector = new Vector<String>();
+     Vector<String> portNameVector = new Vector<>();
      portNameVector.addElement("(None)");
      return portNameVector;
      }*/

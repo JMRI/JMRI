@@ -12,7 +12,6 @@ package jmri;
  * function of the current bean setting(s).
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2008, 2010
- * @version	$Revision$
  */
 @net.jcip.annotations.Immutable
 public class BeanSetting {

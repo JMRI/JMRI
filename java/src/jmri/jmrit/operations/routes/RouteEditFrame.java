@@ -37,10 +37,6 @@ import org.slf4j.LoggerFactory;
  */
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8328598758571366786L;
     RouteEditTableModel routeModel = new RouteEditTableModel();
     JTable routeTable = new JTable(routeModel);
     JScrollPane routePane;
@@ -203,7 +199,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new RouteCopyAction(Bundle.getMessage("MenuItemCopy"), routeName));
         toolMenu.add(new SetTrainIconRouteAction(Bundle.getMessage("MenuSetTrainIconRoute"), routeName));
         toolMenu.add(new PrintRouteAction(Bundle.getMessage("MenuItemPrint"), false, _route));
@@ -220,6 +216,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     // Save, Delete, Add
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == addLocationButton) {
             log.debug("route add location button activated");
@@ -273,6 +270,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
+    @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         routeModel.setWait(showWait.isSelected());
     }
@@ -286,7 +284,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         Location l = (Location) locationBox.getSelectedItem();
         RouteLocation rl;
         if (addLocAtTop.isSelected()) {
-            rl = _route.addLocation(l, 0);
+            rl = _route.addLocation(l, Route.START);
         } else {
             rl = _route.addLocation(l);
         }
@@ -375,6 +373,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         addRouteButton.setEnabled(!enabled);
     }
 
+    @Override
     public void dispose() {
         routeModel.dispose();
         super.dispose();
@@ -396,8 +395,9 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

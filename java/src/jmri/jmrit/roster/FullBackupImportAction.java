@@ -28,12 +28,6 @@ import org.slf4j.LoggerFactory;
  */
 public class FullBackupImportAction extends ImportRosterItemAction {
 
-    /**
-     * Load from a file exported by {@link FullBackupImportAction}
-     *
-     * @author Bob Jacobsen Copyright 2014
-     */
-    private static final long serialVersionUID = 1L;
     private final static Logger log = LoggerFactory.getLogger(FullBackupImportAction.class);
 
     //private Component _who;

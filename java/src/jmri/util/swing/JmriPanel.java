@@ -1,7 +1,8 @@
-// JmriPanel.java
 package jmri.util.swing;
 
+import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 
@@ -28,14 +29,8 @@ import javax.swing.JPanel;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
- * @version $Revision$
  */
 public class JmriPanel extends JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 419130062777215699L;
 
     /**
      * Provide a help target string which an enclosing frame can provide as a
@@ -44,6 +39,8 @@ public class JmriPanel extends JPanel {
      * This automatically provides a reference to the usual place for JMRI
      * window-specific help pages that are named for the implementing class, but
      * note this is a Pane class, not a Frame class.
+     *
+     * @return the target String
      */
     public String getHelpTarget() {
         return "package." + this.getClass().getName();
@@ -51,6 +48,9 @@ public class JmriPanel extends JPanel {
 
     /**
      * Provide a recommended title for an enclosing frame.
+     *
+     * @return the title; a null value will be treated as "" by the enclosing
+     *         frame
      */
     public String getTitle() {
         return null;
@@ -58,16 +58,22 @@ public class JmriPanel extends JPanel {
 
     /**
      * Can multiple instances of a specific pane subclass exist?
+     *
+     * @return true if multiple panels of this class can be open at once; false
+     *         if only one instance of this panel can exist.
      */
     public boolean isMultipleInstances() {
         return true;
     }
 
     /**
-     * Provide menu items
+     * Provide menu items to add to a menu bar.
+     *
+     * @return a list of menu items to add or an empty list
      */
+    @Nonnull
     public List<JMenu> getMenus() {
-        return null;
+        return new ArrayList<>();
     }
 
     public WindowInterface getWindowInterface() {
@@ -80,13 +86,20 @@ public class JmriPanel extends JPanel {
     }
 
     /**
-     * 2nd stage of initialization, invoked after the constuctor is complete.
+     * 2nd stage of initialization, invoked after the constructor is complete.
+     *
+     * @throws java.lang.Exception if there is an exception initializing the
+     *                             components
      */
     public void initComponents() throws Exception {
     }
 
     /**
      * 3rd stage of initialization, invoked after Swing components exist.
+     *
+     * @param context the context that this panel may be initialized with
+     * @throws java.lang.Exception if there is an exception initializing the
+     *                             context
      */
     public void initContext(Object context) throws Exception {
     }

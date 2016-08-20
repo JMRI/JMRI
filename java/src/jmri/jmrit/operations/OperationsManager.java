@@ -1,19 +1,18 @@
 package jmri.jmrit.operations;
 
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
-
 import java.io.File;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.ScheduleManager;
+import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.AutoBackup;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,17 +24,11 @@ import org.slf4j.LoggerFactory;
 public final class OperationsManager {
 
     private ShutDownTask shutDownTask = null;
-    protected final String operationsFolderName;
 
     static private OperationsManager instance = null;
     static private final Logger log = LoggerFactory.getLogger(OperationsManager.class);
 
     private OperationsManager() {
-        this("operations"); // NOI18N
-    }
-
-    private OperationsManager(String operationsFolderName) {
-        this.operationsFolderName = operationsFolderName;
         // ensure the default instance of all operations managers
         // are initialized by calling their instance() methods
         // Is there a different, more optimal order for this?
@@ -63,7 +56,7 @@ public final class OperationsManager {
      *
      * @return The OperationsManager default instance.
      */
-    public static OperationsManager getInstance() {
+    public synchronized static OperationsManager getInstance() {
         if (instance == null) {
             instance = new OperationsManager();
         }
@@ -71,26 +64,13 @@ public final class OperationsManager {
     }
 
     /**
-     * Override the default OperationsManager. Used for unit testing.
-     *
-     * @param operationsFolderName
-     */
-    protected static void setInstance(String operationsFolderName) {
-        instance = new OperationsManager(operationsFolderName);
-    }
-
-    /**
      * Get the path to the Operations folder, rooted in the User's file path, as
      * a String.
      *
      * @return A path
-     * @see #getOperationsFolderName()
      */
     public String getPath() {
-        if (this.getOperationsFolderName().endsWith(File.separator)) {
-            return OperationsXml.getFileLocation() + this.getOperationsFolderName();
-        }
-        return OperationsXml.getFileLocation() + this.getOperationsFolderName() + File.separator;
+        return OperationsXml.getFileLocation() + OperationsXml.getOperationsDirectoryName() + File.separator;
     }
 
     /**
@@ -129,13 +109,13 @@ public final class OperationsManager {
      * @param shutDownTask The new ShutDownTask or null
      */
     public void setShutDownTask(ShutDownTask shutDownTask) {
-        if (InstanceManager.shutDownManagerInstance() != null) {
+        if (InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
             if (this.shutDownTask != null) {
-                InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
+                InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
             }
             this.shutDownTask = shutDownTask;
             if (this.shutDownTask != null) {
-                InstanceManager.shutDownManagerInstance().register(this.shutDownTask);
+                InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
             }
         }
     }
@@ -160,12 +140,5 @@ public final class OperationsManager {
                 return true;
             }
         };
-    }
-
-    /**
-     * @return the operationsFolderName
-     */
-    public String getOperationsFolderName() {
-        return operationsFolderName;
     }
 }

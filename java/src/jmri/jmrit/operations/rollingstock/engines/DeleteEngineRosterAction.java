@@ -16,16 +16,13 @@ import org.slf4j.LoggerFactory;
  */
 public class DeleteEngineRosterAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 361439686459687524L;
     EngineManager manager = EngineManager.instance();
 
     public DeleteEngineRosterAction(String actionName, Component frame) {
         super(actionName);
     }
 
+    @Override
     public void actionPerformed(ActionEvent ae) {
         if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("engineSureDelete"),
                 Bundle.getMessage("engineDeleteAll"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {

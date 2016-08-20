@@ -12,6 +12,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.locations.schedules.SchedulesTableAction;
+import jmri.jmrit.operations.locations.tools.LocationCopyAction;
+import jmri.jmrit.operations.locations.tools.ModifyLocationsAction;
+import jmri.jmrit.operations.locations.tools.ModifyLocationsCarLoadsAction;
+import jmri.jmrit.operations.locations.tools.PrintLocationsAction;
+import jmri.jmrit.operations.locations.tools.SetPhysicalLocationAction;
+import jmri.jmrit.operations.locations.tools.ShowCarsByLocationAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import org.slf4j.Logger;
@@ -26,10 +33,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LocationsTableFrame extends OperationsFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4984202877113842727L;
     LocationsTableModel locationsModel = new LocationsTableModel();
     javax.swing.JTable locationsTable = new javax.swing.JTable(locationsModel);
     JScrollPane locationsPane;
@@ -44,7 +47,6 @@ public class LocationsTableFrame extends OperationsFrame {
 
     // major buttons
     JButton addButton = new JButton(Bundle.getMessage("Add"));
-//	JButton printTableButton = new JButton("Print Table");
 
     public LocationsTableFrame() {
         super(Bundle.getMessage("TitleLocationsTable"));
@@ -56,7 +58,7 @@ public class LocationsTableFrame extends OperationsFrame {
         locationsPane = new JScrollPane(locationsTable);
         locationsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         locationsPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        locationsModel.initTable(locationsTable);
+        locationsModel.initTable(this, locationsTable);
         getContentPane().add(locationsPane);
 
         // Set up the control panel
@@ -68,7 +70,6 @@ public class LocationsTableFrame extends OperationsFrame {
         controlPanel.add(sortById);
         controlPanel.add(textSep);
         controlPanel.add(addButton);
-//		controlPanel.add (printTableButton);
         controlPanel.setMaximumSize(new Dimension(Control.panelWidth1025, 50));
 
         getContentPane().add(controlPanel);
@@ -77,14 +78,13 @@ public class LocationsTableFrame extends OperationsFrame {
 
         // setup buttons
         addButtonAction(addButton);
-//		addButtonAction(printTableButton);
 
         addRadioButtonAction(sortByName);
         addRadioButtonAction(sortById);
 
         //	build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new LocationCopyAction());
         toolMenu.add(new SchedulesTableAction(Bundle.getMessage("Schedules")));
         toolMenu.add(new ModifyLocationsAction(Bundle.getMessage("TitleModifyLocations")));
@@ -103,13 +103,14 @@ public class LocationsTableFrame extends OperationsFrame {
         initMinimumSize();
         // make panel a bit wider than minimum if the very first time opened
         if (getWidth() == Control.panelWidth500) {
-            setSize(850, getHeight());
+            setSize(Control.panelWidth700, getHeight());
         }
 
         // create ShutDownTasks
         createShutDownTask();
     }
 
+    @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
         if (ae.getSource() == sortByName) {
@@ -125,30 +126,21 @@ public class LocationsTableFrame extends OperationsFrame {
     }
 
     // add button
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 //		log.debug("location button activated");
         if (ae.getSource() == addButton) {
             LocationEditFrame f = new LocationEditFrame(null);
             f.setTitle(Bundle.getMessage("TitleLocationAdd"));
         }
-//		if (ae.getSource() == printTableButton){
-//			printTable();
-//		}
     }
-
-//	public void printTable() {
-//		try {
-//			locationsTable.print();
-//		} catch (PrinterException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
+    
+    @Override
     public void dispose() {
+        saveTableDetails(locationsTable);
         locationsModel.dispose();
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory
-            .getLogger(LocationsTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocationsTableFrame.class.getName());
 }

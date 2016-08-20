@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeTurnout class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class XBeeTurnoutTest extends TestCase {
 
@@ -98,7 +97,7 @@ public class XBeeTurnoutTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", XBeeTurnoutTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

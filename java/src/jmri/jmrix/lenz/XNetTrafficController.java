@@ -1,4 +1,3 @@
-// XNetTrafficController.java
 package jmri.jmrix.lenz;
 
 import java.util.Hashtable;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author	Paul Bender Copyright (C) 2004-2010
- * @version $Revision$
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
@@ -39,6 +37,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
      * static function setting this object as the TrafficController instance to
      * use.
      */
+    @Override
     @Deprecated
     protected void setInstance() {
         if (self == null) {
@@ -78,6 +77,9 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
      * @param m Message to send;
      */
     public void forwardMessage(AbstractMRListener reply, AbstractMRMessage m) {
+        if(!(reply instanceof XNetListener) || !(m instanceof XNetMessage)){
+           throw new IllegalArgumentException("");
+        }
         ((XNetListener) reply).message((XNetMessage) m);
     }
 
@@ -89,6 +91,9 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
      *          message
      */
     public void forwardReply(AbstractMRListener client, AbstractMRReply m) {
+        if(!(client instanceof XNetListener) || !(m instanceof XNetReply)){
+           throw new IllegalArgumentException("");
+        }
         // check parity
         if (!((XNetReply) m).checkParity()) {
             log.warn("Ignore packet with bad checksum: " + ((XNetReply) m).toString());
@@ -223,7 +228,15 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         if (mMemo == null) {
             return true;
         }
-        return !(((jmri.jmrix.lenz.XNetProgrammer) mMemo.getProgrammerManager().getGlobalProgrammer()).programmerBusy());
+        jmri.jmrix.lenz.XNetProgrammerManager pm = (XNetProgrammerManager) mMemo.getProgrammerManager();
+        if (pm == null) {
+            return true;
+        }
+        XNetProgrammer p = (XNetProgrammer) pm.getGlobalProgrammer();
+        if(p == null) {
+           return true;
+        }
+        return !(p.programmerBusy());
     }
 
     @Override
@@ -237,6 +250,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         }
     }
 
+    @Override
     protected AbstractMRReply newReply() {
         return new XNetReply();
     }
@@ -267,6 +281,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         }
     }
 
+    @Override
     protected void handleTimeout(AbstractMRMessage msg, AbstractMRListener l) {
         super.handleTimeout(msg, l);
         if (l != null) {
@@ -327,6 +342,3 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
 
     private final static Logger log = LoggerFactory.getLogger(XNetTrafficController.class.getName());
 }
-
-
-/* @(#)XNetTrafficController.java */

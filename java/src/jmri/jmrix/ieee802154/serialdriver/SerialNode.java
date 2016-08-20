@@ -1,6 +1,7 @@
 // SerialNode.java
 package jmri.jmrix.ieee802154.serialdriver;
 
+import java.util.Arrays;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.ieee802154.IEEE802154Node;
@@ -36,7 +37,7 @@ public class SerialNode extends IEEE802154Node {
         super(pan, user, global);
         if (log.isDebugEnabled()) {
             log.debug("Created new node with panId: "
-                    + pan + " userId: " + user + " and GUID: " + global);
+                    + Arrays.toString(pan) + " userId: " + Arrays.toString(user) + " and GUID: " + Arrays.toString(global));
         }
     }
 

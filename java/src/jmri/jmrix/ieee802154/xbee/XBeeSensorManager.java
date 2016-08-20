@@ -1,4 +1,3 @@
-// XBeeSensorManager.java
 package jmri.jmrix.ieee802154.xbee;
 
 import com.rapplogic.xbee.api.ApiId;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * "ZSstring:pin", where string is a node address and pin is the io pin used.
  *
  * @author	Paul Bender Copyright (C) 2003-2010
- * @version	$Revision$
  */
 public class XBeeSensorManager extends jmri.managers.AbstractSensorManager implements XBeeListener {
 
@@ -31,6 +29,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     static public XBeeSensorManager instance() {
         return mInstance;
     }
+    @Deprecated
     static private XBeeSensorManager mInstance = null;
 
     // to free resources when no longer used
@@ -131,9 +130,18 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
                                 + node.getPreferedName() + ":" + i;
                         XBeeSensor s = (XBeeSensor) getSensor(sName);
                         if (s == null) {
-                            s = (XBeeSensor) provideSensor(sName);
-                            if (log.isDebugEnabled()) {
-                                log.debug("DIO " + sName + " enabled as sensor");
+                            // the sensor doesn't exist, so provide a new one.
+                            try {
+                               provideSensor(sName);
+                               if (log.isDebugEnabled()) {
+                                   log.debug("DIO " + sName + " enabled as sensor");
+                               }
+                            } catch(java.lang.IllegalArgumentException iae){
+                               // if provideSensor fails, it will throw an IllegalArgumentException, so catch that,log it if debugging is enabled, and then re-throw it.
+                               if (log.isDebugEnabled()) {
+                                   log.debug("Attempt to enable DIO " + sName + " as sensor failed");
+                               }
+                               throw iae;
                             }
                         }
                     }
@@ -168,7 +176,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
         String encoderAddress = addressFromSystemName(prefix + typeLetter() + curAddress);
         int input = pinFromSystemName(prefix + typeLetter() + curAddress);
 
-        if (encoderAddress == "") {
+        if (encoderAddress.equals("")) {
             throw new JmriException("I unable to determine hardware address");
         }
         return prefix + typeLetter() + encoderAddress + ":" + input;
@@ -250,5 +258,3 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     private final static Logger log = LoggerFactory.getLogger(XBeeSensorManager.class.getName());
 
 }
-
-/* @(#)XBeeSensorManager.java */

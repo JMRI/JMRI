@@ -23,6 +23,11 @@ import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.swing.JCBHandle;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +52,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
  * @author Bob Jacobsen Copyright (2) 2014
- * @version $Revision$
  */
 public class PositionablePoint {
 
@@ -176,6 +180,7 @@ public class PositionablePoint {
         }
     }
 
+    @CheckReturnValue
     public LayoutEditor getLinkedEditor() {
         if (getLinkedPoint() != null) {
             return getLinkedPoint().getLayoutEditor();
@@ -183,11 +188,13 @@ public class PositionablePoint {
         return null;
     }
 
+    @CheckReturnValue
     protected LayoutEditor getLayoutEditor() {
         return layoutEditor;
     }
 
-    public String getEastBoundSignal() {
+    @CheckReturnValue
+    public @Nonnull String getEastBoundSignal() {
         SignalHead h = getEastBoundSignalHead();
         if (h != null) {
             return h.getDisplayName();
@@ -195,6 +202,8 @@ public class PositionablePoint {
         return "";
     }
 
+    @CheckForNull
+    @CheckReturnValue
     public SignalHead getEastBoundSignalHead() {
         if (getType() == EDGE_CONNECTOR) {
             int dir = getConnect1Dir();
@@ -238,13 +247,13 @@ public class PositionablePoint {
         }
     }
 
-    private void setEastBoundSignalName(String signalHead) {
+    private void setEastBoundSignalName(@CheckForNull String signalHead) {
         if (signalHead == null || signalHead.equals("")) {
             signalEastHeadNamed = null;
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalEastHeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -252,7 +261,8 @@ public class PositionablePoint {
         }
     }
 
-    public String getWestBoundSignal() {
+    @CheckReturnValue
+    public @Nonnull String getWestBoundSignal() {
         SignalHead h = getWestBoundSignalHead();
         if (h != null) {
             return h.getDisplayName();
@@ -260,6 +270,8 @@ public class PositionablePoint {
         return "";
     }
 
+    @CheckForNull
+    @CheckReturnValue
     public SignalHead getWestBoundSignalHead() {
         if (getType() == EDGE_CONNECTOR) {
             int dir = getConnect1Dir();
@@ -303,13 +315,13 @@ public class PositionablePoint {
         }
     }
 
-    private void setWestBoundSignalName(String signalHead) {
+    private void setWestBoundSignalName(@CheckForNull String signalHead) {
         if (signalHead == null || signalHead.equals("")) {
             signalWestHeadNamed = null;
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalWestHeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -317,13 +329,15 @@ public class PositionablePoint {
         }
     }
 
-    public String getEastBoundSensorName() {
+    @CheckReturnValue
+    public @Nonnull String getEastBoundSensorName() {
         if (eastBoundSensorNamed != null) {
             return eastBoundSensorNamed.getName();
         }
         return "";
     }
 
+    @CheckReturnValue
     public Sensor getEastBoundSensor() {
         if (eastBoundSensorNamed != null) {
             return eastBoundSensorNamed.getBean();
@@ -337,21 +351,23 @@ public class PositionablePoint {
             return;
         }
 
-        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-        if (sensor != null) {
+        try {
+            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
             eastBoundSensorNamed = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
-        } else {
+        } catch (IllegalArgumentException ex) {
             eastBoundSensorNamed = null;
         }
     }
 
-    public String getWestBoundSensorName() {
+    @CheckReturnValue
+    public @Nonnull String getWestBoundSensorName() {
         if (westBoundSensorNamed != null) {
             return westBoundSensorNamed.getName();
         }
         return "";
     }
 
+    @CheckReturnValue
     public Sensor getWestBoundSensor() {
         if (westBoundSensorNamed != null) {
             return westBoundSensorNamed.getBean();
@@ -364,21 +380,23 @@ public class PositionablePoint {
             westBoundSensorNamed = null;
             return;
         }
-        Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-        if (sensor != null) {
+        try {
+            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
             westBoundSensorNamed = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
-        } else {
+        } catch (IllegalArgumentException ex) {
             westBoundSensorNamed = null;
         }
     }
 
-    public String getEastBoundSignalMastName() {
+    @CheckReturnValue
+    public @Nonnull String getEastBoundSignalMastName() {
         if (getEastBoundSignalMastNamed() != null) {
             return getEastBoundSignalMastNamed().getName();
         }
         return "";
     }
 
+    @CheckReturnValue
     public SignalMast getEastBoundSignalMast() {
         if (getEastBoundSignalMastNamed() != null) {
             return getEastBoundSignalMastNamed().getBean();
@@ -386,6 +404,7 @@ public class PositionablePoint {
         return null;
     }
 
+    @CheckReturnValue
     private NamedBeanHandle<SignalMast> getEastBoundSignalMastNamed() {
         if (getType() == EDGE_CONNECTOR) {
             int dir = getConnect1Dir();
@@ -404,7 +423,7 @@ public class PositionablePoint {
     public void setEastBoundSignalMast(String signalMast) {
         SignalMast mast = null;
         if (signalMast != null && !signalMast.equals("")) {
-            mast = InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
+            mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast);
             if (mast == null) {
                 log.error("Unable to find Signal Mast " + signalMast);
                 return;
@@ -429,13 +448,15 @@ public class PositionablePoint {
         }
     }
 
-    public String getWestBoundSignalMastName() {
+    @CheckReturnValue
+    public @Nonnull String getWestBoundSignalMastName() {
         if (getWestBoundSignalMastNamed() != null) {
             return getWestBoundSignalMastNamed().getName();
         }
         return "";
     }
 
+    @CheckReturnValue
     public SignalMast getWestBoundSignalMast() {
         if (getWestBoundSignalMastNamed() != null) {
             return getWestBoundSignalMastNamed().getBean();
@@ -443,6 +464,7 @@ public class PositionablePoint {
         return null;
     }
 
+    @CheckReturnValue
     private NamedBeanHandle<SignalMast> getWestBoundSignalMastNamed() {
         if (getType() == EDGE_CONNECTOR) {
             int dir = getConnect1Dir();
@@ -461,7 +483,7 @@ public class PositionablePoint {
     public void setWestBoundSignalMast(String signalMast) {
         SignalMast mast = null;
         if (signalMast != null && !signalMast.equals("")) {
-            mast = InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
+            mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast);
             if (mast == null) {
                 log.error("Unable to find Signal Mast " + signalMast);
                 return;
@@ -617,7 +639,7 @@ public class PositionablePoint {
         if (signalMast == null) {
             return;
         }
-        if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(signalMast)) {
+        if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.getDefault(jmri.SignalMastLogicManager.class).isSignalMastUsed(signalMast)) {
             SignallingGuiTools.removeSignalMastLogic(null, signalMast);
         }
     }
@@ -1070,13 +1092,14 @@ public class PositionablePoint {
                     removelocal = getEastBoundSignal();
                     getLinkedPoint().setWestBoundSignal("");
                 }
-                if (removeremote != null && !removeremote.equals("")) {
-                    jmri.SignalHead sh = InstanceManager.signalHeadManagerInstance().getSignalHead(removeremote);
+                // removelocal and removeremote have been set here.
+                if (!removeremote.equals("")) {
+                    jmri.SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(removeremote);
                     getLinkedEditor().removeSignalHead(sh);
                     jmri.jmrit.blockboss.BlockBossLogic.getStoppedObject(removeremote);
                 }
-                if (removelocal != null && !removelocal.equals("")) {
-                    jmri.SignalHead sh = InstanceManager.signalHeadManagerInstance().getSignalHead(removelocal);
+                if (!removelocal.equals("")) {
+                    jmri.SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(removelocal);
                     layoutEditor.removeSignalHead(sh);
                     jmri.jmrit.blockboss.BlockBossLogic.getStoppedObject(removelocal);
                 }

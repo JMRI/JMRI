@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * confused with ThrottleManager
  *
  * @author Glen Oberhauser
- * @version $Revision$
  */
 public class ThrottleFrameManager {
 
@@ -43,7 +42,7 @@ public class ThrottleFrameManager {
     {
         throttleCycler = new ThrottleCyclingKeyListener();
         throttleWindows = new ArrayList<ThrottleWindow>(0);
-        if (jmri.InstanceManager.getDefault(jmri.jmrit.throttle.ThrottlesPreferences.class) == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.jmrit.throttle.ThrottlesPreferences.class) == null) {
             jmri.InstanceManager.store(new jmri.jmrit.throttle.ThrottlesPreferences(), jmri.jmrit.throttle.ThrottlesPreferences.class);
         }
         throttlesPref = jmri.InstanceManager.getDefault(jmri.jmrit.throttle.ThrottlesPreferences.class);

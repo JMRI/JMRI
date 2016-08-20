@@ -1,4 +1,3 @@
-// SeeedStudioRfidProtocol.java
 package jmri.jmrix.rfid.protocol.seeedstudio;
 
 import jmri.jmrix.AbstractMRReply;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris Copyright (C) 2014
- * @version $Revision$
  */
 public class SeeedStudioRfidProtocol extends RfidProtocol {
 
@@ -150,5 +148,3 @@ public class SeeedStudioRfidProtocol extends RfidProtocol {
     private static final Logger log = LoggerFactory.getLogger(SeeedStudioRfidProtocol.class.getName());
 
 }
-
-/* @(#)SeeedStudioRfidProtocol.java */

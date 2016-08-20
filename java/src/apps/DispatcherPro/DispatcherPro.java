@@ -1,4 +1,3 @@
-// DispatcherPro.java
 package apps.DispatcherPro;
 
 import apps.Apps;
@@ -35,14 +34,8 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright 2003
- * @version $Revision$
  */
 public class DispatcherPro extends Apps {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3275818803083884156L;
 
     DispatcherPro(JFrame p) {
         super(p);
@@ -72,11 +65,6 @@ public class DispatcherPro extends Apps {
 
         // Buttons
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -670021141772027717L;
-
             public void actionPerformed(ActionEvent e) {
                 Apps.handleQuit();
             }

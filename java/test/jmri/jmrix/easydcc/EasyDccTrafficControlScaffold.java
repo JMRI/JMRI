@@ -1,4 +1,3 @@
-// EasyDccInterfaceScaffold.java
 package jmri.jmrix.easydcc;
 
 import java.util.Vector;

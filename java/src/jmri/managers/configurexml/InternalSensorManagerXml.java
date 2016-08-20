@@ -12,8 +12,9 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision$
+ * @deprecated As of 4.3.5, see jmri.jmrix.internal.configurexml classes
  */
+@Deprecated
 public class InternalSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
     public InternalSensorManagerXml() {

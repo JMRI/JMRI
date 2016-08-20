@@ -17,7 +17,7 @@ public class JDOMUtil {
     private DOMOutputter outputter = null;
     private DOMBuilder builder = null;
 
-    private static JDOMUtil defaultJDomUtil = null;
+    private volatile static JDOMUtil defaultJDomUtil = null;
 
     private JDOMUtil() {
 

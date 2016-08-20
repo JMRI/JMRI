@@ -1,4 +1,3 @@
-// InsteonSequence.java
 package jmri.jmrix.powerline;
 
 /**
@@ -253,7 +252,7 @@ public class InsteonSequence {
      * Translate House Value (1 to 16) to text
      */
     public static String houseValueToText(int hV) {
-        if (hV >= 1 || hV <= 16) {
+        if (hV >= 1 && hV <= 16) {
             return X10Sequence.houseValueToText(hV);
         } else {
             return "??";
@@ -268,5 +267,3 @@ public class InsteonSequence {
     }
 
 }
-
-/* @(#)InsteonSequence.java */

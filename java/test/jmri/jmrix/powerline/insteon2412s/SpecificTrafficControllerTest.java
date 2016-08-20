@@ -1,4 +1,3 @@
-// SpecificTrafficControllerTest.java
 package jmri.jmrix.powerline.insteon2412s;
 
 import java.io.DataInputStream;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright 2005, 2007, 2008, 2009 Converted to multiple
  * connection
  * @author kcameron Copyright (C) 2011
- * @version $Revision$
  */
 public class SpecificTrafficControllerTest extends TestCase {
 
@@ -260,7 +258,7 @@ public class SpecificTrafficControllerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SpecificTrafficControllerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

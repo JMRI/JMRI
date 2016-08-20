@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeSensorManager class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class XBeeSensorManagerTest extends TestCase {
 
@@ -32,7 +31,7 @@ public class XBeeSensorManagerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", XBeeSensorManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

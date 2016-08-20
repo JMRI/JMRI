@@ -1,4 +1,3 @@
-// JavaSoundAudioSource.java
 package jmri.jmrit.audio;
 
 import javax.sound.sampled.Clip;
@@ -33,7 +32,6 @@ import org.slf4j.LoggerFactory;
  * <p>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class JavaSoundAudioSource extends AbstractAudioSource {
 
@@ -45,7 +43,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
     /**
      * Reference to current active AudioListener
      */
-    private AudioListener activeAudioListener = InstanceManager.audioManagerInstance().getActiveAudioFactory().getActiveAudioListener();
+    private AudioListener activeAudioListener = InstanceManager.getDefault(jmri.AudioManager.class).getActiveAudioFactory().getActiveAudioListener();
 
     /**
      * True if we've been initialised
@@ -365,7 +363,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         // Default value to start with (used for no distance attenuation)
         float currentGain = 1.0f;
 
-        if (InstanceManager.audioManagerInstance().getActiveAudioFactory().isDistanceAttenuated()) {
+        if (InstanceManager.getDefault(jmri.AudioManager.class).getActiveAudioFactory().isDistanceAttenuated()) {
             // Calculate gain of this source using clamped inverse distance
             // attenuation model
 
@@ -567,8 +565,4 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
             }
         }
     }
-
-    private static final long serialVersionUID = 1L;
 }
-
-/* $(#)JavaSoundAudioSource.java */

@@ -3,7 +3,7 @@ package jmri.jmrit.operations.trains;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.setup.Setup;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Tests for the TrainManager class Last manually cross-checked on 20090131
  *
  * @author Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision$
  */
 public class TrainManagerTest extends OperationsTestCase {
 
@@ -54,7 +53,7 @@ public class TrainManagerTest extends OperationsTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", TrainManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

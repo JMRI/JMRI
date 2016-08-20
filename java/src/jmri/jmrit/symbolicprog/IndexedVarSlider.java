@@ -1,4 +1,3 @@
-// IndexedVarSlider.java
 package jmri.jmrit.symbolicprog;
 
 import javax.swing.BoundedRangeModel;
@@ -14,16 +13,11 @@ import org.slf4j.LoggerFactory;
  * an underlying variable; we return one of these in IndexedVariableValue.getNewRep.
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision$
  * @deprecated // since 3.7.1
  */
 @Deprecated // since 3.7.1
 public class IndexedVarSlider extends JSlider implements ChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8095790142790464814L;
     IndexedVariableValue _iVar;
 
     IndexedVarSlider(IndexedVariableValue iVar, int min, int max) {

@@ -1,4 +1,3 @@
-// RouteEditTableModel.java
 package jmri.jmrit.operations.routes;
 
 import java.awt.BorderLayout;
@@ -31,14 +30,9 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2013
- * @version $Revision$
  */
 public class RouteEditTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4770884408356323253L;
     // Defines the columns
     private static final int ID_COLUMN = 0;
     private static final int NAME_COLUMN = ID_COLUMN + 1;
@@ -63,33 +57,32 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     private JTable _table;
     private Route _route;
     private RouteEditFrame _frame;
+    List<RouteLocation> _routeList = new ArrayList<RouteLocation>();
 
     public RouteEditTableModel() {
         super();
     }
 
-    public void setWait(boolean showWait) {
+    public synchronized void setWait(boolean showWait) {
         _showWait = showWait;
         fireTableStructureChanged();
         initTable(_table);
     }
 
-    synchronized void updateList() {
+    private synchronized void updateList() {
         if (_route == null) {
             return;
         }
         // first, remove listeners from the individual objects
         removePropertyChangeRouteLocations();
-        routeList = _route.getLocationsBySequenceList();
+        _routeList = _route.getLocationsBySequenceList();
         // and add them back in
-        for (RouteLocation rl : routeList) {
+        for (RouteLocation rl : _routeList) {
             rl.addPropertyChangeListener(this);
         }
     }
 
-    List<RouteLocation> routeList = new ArrayList<RouteLocation>();
-
-    void initTable(RouteEditFrame frame, JTable table, Route route) {
+    protected synchronized void initTable(RouteEditFrame frame, JTable table, Route route) {
         _frame = frame;
         _table = table;
         _route = route;
@@ -99,7 +92,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         initTable(table);
     }
 
-    void initTable(JTable table) {
+    private void initTable(JTable table) {
         // Install the button handlers
         TableColumnModel tcm = table.getColumnModel();
         ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -120,11 +113,12 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         // set row height
         table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         updateList();
+        table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
 
-    private void setPreferredWidths(JTable table) {
+    private synchronized void setPreferredWidths(JTable table) {
         // set column preferred widths
         if (_frame.loadTableDetails(table)) {
             return; // done
@@ -147,15 +141,18 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(70);
     }
 
-    public int getRowCount() {
-        return routeList.size();
+    @Override
+    public synchronized int getRowCount() {
+        return _routeList.size();
     }
 
+    @Override
     public int getColumnCount() {
         return HIGHEST_COLUMN;
     }
 
-    public String getColumnName(int col) {
+    @Override
+    public synchronized String getColumnName(int col) {
         switch (col) {
             case ID_COLUMN:
                 return Bundle.getMessage("Id");
@@ -199,7 +196,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
-    public Class<?> getColumnClass(int col) {
+    @Override
+    public synchronized Class<?> getColumnClass(int col) {
         switch (col) {
             case ID_COLUMN:
                 return String.class;
@@ -243,6 +241,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case DELETE_COLUMN:
@@ -265,11 +264,12 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
-    public Object getValueAt(int row, int col) {
-        if (row >= routeList.size()) {
+    @Override
+    public synchronized Object getValueAt(int row, int col) {
+        if (row >= getRowCount()) {
             return "ERROR unknown " + row; // NOI18N
         }
-        RouteLocation rl = routeList.get(row);
+        RouteLocation rl = _routeList.get(row);
         if (rl == null) {
             return "ERROR unknown route location " + row; // NOI18N
         }
@@ -335,77 +335,82 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
-    public void setValueAt(Object value, int row, int col) {
+    @Override
+    public synchronized void setValueAt(Object value, int row, int col) {
         if (value == null) {
             log.debug("Warning route table row {} still in edit", row);
             return;
         }
+        RouteLocation rl = _routeList.get(row);
+        if (rl == null) {
+            log.error("ERROR unknown route location for row: {}", row); // NOI18N
+        }
         switch (col) {
             case COMMENT_COLUMN:
-                setComment(row);
+                setComment(rl);
                 break;
             case UP_COLUMN:
-                moveUpRouteLocation(row);
+                moveUpRouteLocation(rl);
                 break;
             case DOWN_COLUMN:
-                moveDownRouteLocation(row);
+                moveDownRouteLocation(rl);
                 break;
             case DELETE_COLUMN:
-                deleteRouteLocation(row);
+                deleteRouteLocation(rl);
                 break;
             case TRAIN_DIRECTION_COLUMN:
-                setTrainDirection(value, row);
+                setTrainDirection(value, rl);
                 break;
             case MAXMOVES_COLUMN:
-                setMaxTrainMoves(value, row);
+                setMaxTrainMoves(value, rl);
                 break;
             case RANDOM_CONTROL_COLUMN:
-                setRandomControlValue(value, row);
+                setRandomControlValue(value, rl);
                 break;
             case PICKUP_COLUMN:
-                setPickup(value, row);
+                setPickup(value, rl);
                 break;
             case DROP_COLUMN:
-                setDrop(value, row);
+                setDrop(value, rl);
                 break;
             case WAIT_COLUMN: {
                 if (_showWait) {
-                    setWait(value, row);
+                    setWait(value, rl);
                 } else {
-                    setDepartureTime(value, row);
+                    setDepartureTime(value, rl);
                 }
             }
             break;
             case MAXLENGTH_COLUMN:
-                setMaxTrainLength(value, row);
+                setMaxTrainLength(value, rl);
                 break;
             case GRADE:
-                setGrade(value, row);
+                setGrade(value, rl);
                 break;
             case TRAINICONX:
-                setTrainIconX(value, row);
+                setTrainIconX(value, rl);
                 break;
             case TRAINICONY:
-                setTrainIconY(value, row);
+                setTrainIconY(value, rl);
                 break;
             default:
                 break;
         }
     }
 
-    private void moveUpRouteLocation(int row) {
+    private void moveUpRouteLocation(RouteLocation rl) {
         log.debug("move location up");
-        _route.moveLocationUp(routeList.get(row));
+        _route.moveLocationUp(rl);
     }
 
-    private void moveDownRouteLocation(int row) {
+    private void moveDownRouteLocation(RouteLocation rl) {
         log.debug("move location down");
-        _route.moveLocationDown(routeList.get(row));
+        _route.moveLocationDown(rl);
     }
 
-    private void deleteRouteLocation(int row) {
+    private void deleteRouteLocation(RouteLocation rl) {
         log.debug("Delete location");
-        _route.deleteLocation(routeList.get(row));
+        _route.deleteLocation(rl);
     }
 
     private int _trainDirection = Setup.getDirectionInt(Setup.getTrainDirectionList().get(0));
@@ -414,8 +419,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         return _trainDirection;
     }
 
-    private void setTrainDirection(Object value, int row) {
-        RouteLocation rl = routeList.get(row);
+    private void setTrainDirection(Object value, RouteLocation rl) {
         _trainDirection = Setup.getDirectionInt((String) ((JComboBox<?>) value).getSelectedItem());
         rl.setTrainDirection(_trainDirection);
         // update train icon
@@ -428,8 +432,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         return _maxTrainMoves;
     }
 
-    private void setMaxTrainMoves(Object value, int row) {
-        RouteLocation rl = routeList.get(row);
+    private void setMaxTrainMoves(Object value, RouteLocation rl) {
         int moves;
         try {
             moves = Integer.parseInt(value.toString());
@@ -446,17 +449,17 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
-    private void setRandomControlValue(Object value, int row) {
-        routeList.get(row).setRandomControl((String) ((JComboBox<?>) value).getSelectedItem());
+    private void setRandomControlValue(Object value, RouteLocation rl) {
+        rl.setRandomControl((String) ((JComboBox<?>) value).getSelectedItem());
     }
 
-    private void setDrop(Object value, int row) {
-        routeList.get(row).setDropAllowed(
+    private void setDrop(Object value, RouteLocation rl) {
+        rl.setDropAllowed(
                 ((String) ((JComboBox<?>) value).getSelectedItem()).equals(Bundle.getMessage("yes")));
     }
 
-    private void setPickup(Object value, int row) {
-        routeList.get(row).setPickUpAllowed(
+    private void setPickup(Object value, RouteLocation rl) {
+        rl.setPickUpAllowed(
                 ((String) ((JComboBox<?>) value).getSelectedItem()).equals(Bundle.getMessage("yes")));
     }
 
@@ -466,7 +469,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         return _maxTrainLength;
     }
 
-    private void setWait(Object value, int row) {
+    private void setWait(Object value, RouteLocation rl) {
         int wait;
         try {
             wait = Integer.parseInt(value.toString());
@@ -476,15 +479,14 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
                     .getMessage("WaitTimeNotValid"), JOptionPane.ERROR_MESSAGE);
             return;
         }
-        routeList.get(row).setWait(wait);
+        rl.setWait(wait);
     }
 
-    private void setDepartureTime(Object value, int row) {
-        routeList.get(row).setDepartureTime(((String) ((JComboBox<?>) value).getSelectedItem()));
+    private void setDepartureTime(Object value, RouteLocation rl) {
+        rl.setDepartureTime(((String) ((JComboBox<?>) value).getSelectedItem()));
     }
 
-    private void setMaxTrainLength(Object value, int row) {
-        RouteLocation rl = routeList.get(row);
+    private void setMaxTrainLength(Object value, RouteLocation rl) {
         int length;
         try {
             length = Integer.parseInt(value.toString());
@@ -517,7 +519,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
-    private void setGrade(Object value, int row) {
+    private void setGrade(Object value, RouteLocation rl) {
         double grade;
         try {
             grade = Double.parseDouble(value.toString());
@@ -526,7 +528,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             return;
         }
         if (grade <= 6 && grade >= -6) {
-            routeList.get(row).setGrade(grade);
+            rl.setGrade(grade);
         } else {
             log.error("Maximum grade is 6 percent");
             JOptionPane.showMessageDialog(null, Bundle.getMessage("MaxGrade"), Bundle.getMessage("CanNotChangeGrade"),
@@ -534,7 +536,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
-    private void setTrainIconX(Object value, int row) {
+    private void setTrainIconX(Object value, RouteLocation rl) {
         int x;
         try {
             x = Integer.parseInt(value.toString());
@@ -542,10 +544,10 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             log.error("Train icon x coordinate must be a number");
             return;
         }
-        routeList.get(row).setTrainIconX(x);
+        rl.setTrainIconX(x);
     }
 
-    private void setTrainIconY(Object value, int row) {
+    private void setTrainIconY(Object value, RouteLocation rl) {
         int y;
         try {
             y = Integer.parseInt(value.toString());
@@ -553,12 +555,10 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             log.error("Train icon y coordinate must be a number");
             return;
         }
-        routeList.get(row).setTrainIconY(y);
+        rl.setTrainIconY(y);
     }
 
-    private void setComment(int row) {
-        log.debug("Set comment for row {}", row);
-        final RouteLocation rl = routeList.get(row);
+    private void setComment(RouteLocation rl) {
         // Create comment panel
         final JDialog dialog = new JDialog();
         dialog.setLayout(new BorderLayout());
@@ -574,6 +574,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
         JButton okayButton = new JButton(Bundle.getMessage("Okay"));
         okayButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 rl.setComment(commentTextArea.getText());
                 dialog.dispose();
@@ -584,6 +585,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
         JButton cancelButton = new JButton(Bundle.getMessage("Cancel"));
         cancelButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 dialog.dispose();
                 return;
@@ -638,8 +640,9 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     // this table listens for changes to a route and it's locations
-    public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+    @Override
+    public synchronized void propertyChange(PropertyChangeEvent e) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -650,8 +653,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
         if (e.getSource().getClass().equals(RouteLocation.class)) {
             RouteLocation rl = (RouteLocation) e.getSource();
-            int row = routeList.indexOf(rl);
-            if (Control.showProperty) {
+            int row = _routeList.indexOf(rl);
+            if (Control.SHOW_PROPERTY) {
                 log.debug("Update route table row: {} id: {}", row, rl.getId());
             }
             if (row >= 0) {
@@ -660,21 +663,18 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
-    private void removePropertyChangeRouteLocations() {
-        for (RouteLocation rl : routeList) {
+    private synchronized void removePropertyChangeRouteLocations() {
+        for (RouteLocation rl : _routeList) {
             rl.removePropertyChangeListener(this);
         }
     }
 
-    public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
+    public synchronized void dispose() {
         removePropertyChangeRouteLocations();
         if (_route != null) {
             _route.removePropertyChangeListener(this);
         }
-        routeList.clear();
+        _routeList.clear();
         fireTableDataChanged();
     }
 

@@ -5,11 +5,6 @@ import jmri.Manager;
 
 public class TurnoutTableTabAction extends AbstractTableTabAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5514320062139920106L;
-
     public TurnoutTableTabAction(String s) {
         super(s);
     }

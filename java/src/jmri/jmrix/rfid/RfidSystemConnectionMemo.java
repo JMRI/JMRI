@@ -1,4 +1,3 @@
-// RfidSystemConnectionMemo.java
 package jmri.jmrix.rfid;
 
 import java.util.ResourceBundle;
@@ -26,7 +25,6 @@ import jmri.jmrix.swing.ComponentFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  */
 public class RfidSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -136,5 +134,3 @@ public class RfidSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
 }
-
-/* @(#)RfidSystemConnectionMemo.java */

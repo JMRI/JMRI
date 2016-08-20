@@ -13,12 +13,11 @@ import org.slf4j.LoggerFactory;
  * Represents a locomotive on the layout
  *
  * @author Daniel Boudreau (C) Copyright 2008
- * @version $Revision$
  */
 public class Engine extends RollingStock {
-    
+
     public static final int NCE_REAR_BLOCK_NUMBER = 8;
-    public static final int B_UNIT_BLOCKING = 10;  // block B Units after NCE Consists
+    public static final int B_UNIT_BLOCKING = 10; // block B Units after NCE Consists
 
     private Consist _consist = null;
     private String _model = NONE;
@@ -35,7 +34,6 @@ public class Engine extends RollingStock {
      * Set the locomotive's model. Note a model has only one length, type, and
      * horsepower rating.
      *
-     * @param model
      */
     public void setModel(String model) {
         String old = _model;
@@ -54,6 +52,7 @@ public class Engine extends RollingStock {
      *
      * @param type Locomotive type: Steam, Diesel, Gas Turbine, etc.
      */
+    @Override
     public void setTypeName(String type) {
         if (getModel() == null || getModel().equals(NONE)) {
             return;
@@ -65,6 +64,7 @@ public class Engine extends RollingStock {
         }
     }
 
+    @Override
     public String getTypeName() {
         String type = engineModels.getModelType(getModel());
         if (type == null) {
@@ -111,6 +111,7 @@ public class Engine extends RollingStock {
      *
      * @param length locomotive length
      */
+    @Override
     public void setLength(String length) {
         super.setLength(length);
         try {
@@ -125,6 +126,7 @@ public class Engine extends RollingStock {
         return;
     }
 
+    @Override
     public String getLength() {
         try {
             String length = super.getLength();
@@ -154,6 +156,7 @@ public class Engine extends RollingStock {
      *
      * @param weight locomotive weight
      */
+    @Override
     public void setWeightTons(String weight) {
         try {
             if (getModel().equals(NONE)) {
@@ -171,6 +174,7 @@ public class Engine extends RollingStock {
         }
     }
 
+    @Override
     public String getWeightTons() {
         String weight = null;
         try {
@@ -208,7 +212,6 @@ public class Engine extends RollingStock {
     /**
      * Place locomotive in a consist
      *
-     * @param consist
      */
     public void setConsist(Consist consist) {
         if (_consist == consist) {
@@ -252,25 +255,30 @@ public class Engine extends RollingStock {
      *
      * @return status, see RollingStock.java
      */
+    @Override
     public String testDestination(Location destination, Track track) {
         return super.testDestination(destination, track);
     }
 
     /**
-     * Determine if there's a change in the lead locomotive. There are two possible
-     * locations in a train's route. TODO this code places the last loco added to the
-     * train as the lead. It would be better if the first one became the lead loco.
+     * Determine if there's a change in the lead locomotive. There are two
+     * possible locations in a train's route. TODO this code places the last
+     * loco added to the train as the lead. It would be better if the first one
+     * became the lead loco.
      */
+    @Override
     protected void moveRollingStock(RouteLocation current, RouteLocation next) {
         if (current == getRouteLocation()) {
             if (getConsist() == null || getConsist().isLead(this)) {
-                if (getRouteLocation() != getRouteDestination() && getTrain() != null
-                        && !isBunit() && getTrain().getLeadEngine() != this) {
-                    if (((getTrain().getSecondLegStartLocation() == current
-                            && (getTrain().getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES))
-                            ||
-                            ((getTrain().getThirdLegStartLocation() == current
-                            && (getTrain().getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES))) {
+                if (getRouteLocation() != getRouteDestination() &&
+                        getTrain() != null &&
+                        !isBunit() &&
+                        getTrain().getLeadEngine() != this) {
+                    if (((getTrain().getSecondLegStartLocation() == current &&
+                            (getTrain().getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES)) ||
+                            ((getTrain().getThirdLegStartLocation() == current &&
+                                    (getTrain().getThirdLegOptions() &
+                                            Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES))) {
                         log.debug("New lead locomotive ({}) for train ({})", toString(), getTrain().getName());
                         getTrain().setLeadEngine(this);
                         getTrain().createTrainIcon(current);
@@ -281,6 +289,7 @@ public class Engine extends RollingStock {
         super.moveRollingStock(current, next);
     }
 
+    @Override
     public void dispose() {
         setConsist(null);
         EngineTypes.instance().removePropertyChangeListener(this);
@@ -360,6 +369,7 @@ public class Engine extends RollingStock {
         return e;
     }
 
+    @Override
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // Set dirty
         EngineManagerXml.instance().setDirty(true);
@@ -371,23 +381,20 @@ public class Engine extends RollingStock {
         EngineLengths.instance().addPropertyChangeListener(this);
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         super.propertyChange(e);
         if (e.getPropertyName().equals(EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY)) {
             if (e.getOldValue().equals(getTypeName())) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Loco ({} {}) sees type name change old: ({}) new: ({})", toString(), e.getOldValue(), e
-                            .getNewValue()); // NOI18N
-                }
+                log.debug("Loco ({} {}) sees type name change old: ({}) new: ({})", toString(), e.getOldValue(), e
+                        .getNewValue()); // NOI18N
                 setTypeName((String) e.getNewValue());
             }
         }
         if (e.getPropertyName().equals(EngineLengths.ENGINELENGTHS_NAME_CHANGED_PROPERTY)) {
             if (e.getOldValue().equals(getLength())) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Loco ({}) sees length name change old: {} new: {}", toString(), e.getOldValue(), e
-                            .getNewValue()); // NOI18N
-                }
+                log.debug("Loco ({}) sees length name change old: {} new: {}", toString(), e.getOldValue(), e
+                        .getNewValue()); // NOI18N
                 setLength((String) e.getNewValue());
             }
         }

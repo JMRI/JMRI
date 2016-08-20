@@ -29,18 +29,18 @@ JMRI: Menu Panneaux
 Le menu "Panneaux" JMRi contient les &#233;l&#233;ments suivants:
 
 <ul>
-<li> Nouveau Panneau ...:
+<li> Nouveau Panneau...:
 S&#233;lectionnez cette option pour cr&#233;er un nouveau panneau soit dans les deux'
  <a href="PanelEditor.shtml">&#201;diteur de panneau</a>
 ou
 <a href="LayoutEditor.shtml">&#201;diteur de R&#233;seau </a>.
 
  <li>Chargement de Panneau...:
-Charge un fichier Sauvegard&#233; pr&#233;c&#233;demment avec le choix ci-dessous "Sauvegarder Panneaux ...Â» .
+Charge un fichier Sauvegard&#233; pr&#233;c&#233;demment avec le choix ci-dessous "Sauvegarder Panneaux...».
 Si le fichier contient &#201;diteur de Panneaux ou l'&#201;diteur de R&#233;seau, ils seront ajout&#233;s &#224; tout ce
 qui existe d&#233;j&#224; dans le programme.
 
-<li>Sauvegarder Panneaux  ...:
+<li>Sauvegarder Panneaux...:
 Sauvegarde  la configuration actuelle du programme vers un fichier,
 incluant tous les &#201;diteur de Panneau actuel  et les &#201;diteurs de R&#233;seau et de Configuration.
 Utilisez "Montrer Panneau " ci-dessous pour voir la liste compl&#232;te.
@@ -55,7 +55,7 @@ Enregistre seulement les informations depuis JMRI 2.9.3 et versions ult&#233;rie
 Affiche la liste des TCO et/ou des panneaux des &#201;diteurs de Panneau actuellement dans le programme,
 et vous permet d'apporter l'un &#224; l'avant en le s&#233;lectionnant.
 
-<LI>Ex&#233;cuter le script ...:
+<LI>Ex&#233;cuter le script...:
 S&#233;lectionner et ex&#233;cuter un
  <a href="../../../../html/tools/scripting/index.shtml">fichier de script</a>.
 

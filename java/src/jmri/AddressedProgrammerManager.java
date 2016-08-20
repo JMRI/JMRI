@@ -1,10 +1,8 @@
-/* AddressedProgrammerManager.java */
 package jmri;
 
-import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
-
 import java.util.List;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 
 /**
  * Get access to available {@link Programmer} objects.
@@ -111,6 +109,3 @@ public interface AddressedProgrammerManager {
     @Nonnull
     public String toString();
 }
-
-
-/* @(#)AddressedProgrammerManager.java */

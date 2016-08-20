@@ -10,8 +10,9 @@ package jmri.jmrix.sprog;
  * number of unneeded class loading.
  *
  * @author	Andrew Crosland Copyright (C) 2006
- * @version $Revision$
+ * @deprecated since 4.5.1
  */
+@Deprecated
 abstract public class ActiveFlagCS {
 
     static private boolean flag = false;

@@ -1,4 +1,3 @@
-// RpsPositionIconTest.java
 package jmri.jmrit.display;
 
 import javax.swing.JButton;
@@ -28,14 +27,7 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
         rpsIcon = new RpsPositionIcon(panel);
         jf.getContentPane().add(rpsIcon);
 
-        jmri.InstanceManager i = new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = this;
-                store(new jmri.managers.InternalTurnoutManager(), jmri.TurnoutManager.class);
-            }
-        };
-        Assert.assertNotNull("Instance exists", i);
+        jmri.util.JUnitUtil.resetInstanceManager();
 
         // test buttons
         JButton originButton = new JButton("Set 0,0");
@@ -115,7 +107,7 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", RpsPositionIconTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

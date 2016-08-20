@@ -1,23 +1,5 @@
 package jmri.jmrit.vsdecoder;
 
-/*
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
- * <P>
- *
- * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
- */
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -39,8 +21,8 @@ import org.slf4j.LoggerFactory;
  * Save throttles to XML
  *
  * @author	Glen Oberhauser
+ * @author	Mark Underwood Copyright (C) 2011
  * @author Daniel Boudreau (C) Copyright 2008
- * @version $Revision$
  */
 @SuppressWarnings("serial")
 public class StoreXmlVSDecoderAction extends AbstractAction {
@@ -56,7 +38,7 @@ public class StoreXmlVSDecoderAction extends AbstractAction {
         super(s);
         // disable this ourselves if there is no throttle Manager
 	/*
-         if (jmri.InstanceManager.throttleManagerInstance() == null) {
+         if (jmri.InstanceManager.getOptionalDefault(jmri.ThrottleManager.class) == null) {
          setEnabled(false);
          }
          */

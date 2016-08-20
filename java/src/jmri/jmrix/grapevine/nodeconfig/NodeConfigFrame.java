@@ -1,4 +1,3 @@
-// NodeConfigFrame.java
 package jmri.jmrix.grapevine.nodeconfig;
 
 import java.awt.Container;
@@ -23,14 +22,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2007
  * @author	Dave Duchamp Copyright (C) 2004, 2006
- * @version	$Revision$
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4551239698434876302L;
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.grapevine.nodeconfig.NodeConfigBundle");
 
@@ -246,14 +239,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         // all ready, create the new node
         curNode = new SerialNode(nodeAddress, nodeType);
-        if (curNode == null) {
-            statusText1.setText(rb.getString("Error3"));
-            statusText1.setVisible(true);
-            log.error("Error creating Serial Node, constructor returned null");
-            errorInStatus1 = true;
-            resetNotes2();
-            return;
-        }
+
         // configure the new node
         setNodeParameters();
         // register any orphan sensors that this node may have

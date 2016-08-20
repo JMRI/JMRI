@@ -50,7 +50,7 @@ Un (au milieu), et B voie d&#233;vi&#233;e (signal bas), et un signal
 <p>
 Si n&#233;cessaire, cet outil va placer des ic&#244;nes de signal sur le panneau dans les six
 positions indiqu&#233;es ci-dessus et mettre en place une logique de contr&#244;le pour chacune des six signaux
- sp&#233;cifi&#233;s . Dans certaines situations, un utilisateur peut choisir de placer un seul
+ sp&#233;cifi&#233;s. Dans certaines situations, un utilisateur peut choisir de placer un seul
 signal &#224; la pointe, entra&#238;nant seulement quatre signaux autour de l'aiguillage triple. Cet outil va placer les quatre signaux sp&#233;cifi&#233;s, et mettre  en place une logique
 pour les signaux aux voies Divergentes A, Divergentes, B et la voie Droite, mais il
 ne peut pas mettre en place une logique pour le seul signal en pointe. Les instructions sur
@@ -87,10 +87,10 @@ manuellement, vous devez utiliser cet outil pour assigner le signal &#224; son
 <p>
 Apr&#232;s qu'un aiguillage triple ait &#233;t&#233; configur&#233; &#224; l'aide de cet outil d'installation, l'&#233;diteur de TCO garde la trace
 du fait que les aiguillage A et B sont li&#233;s. Donc, si vous s&#233;lectionnez
-<b> D&#233;finir des Signaux ...</b> dans le menu contextuel de l'un ou l'autre aiguillage, vous revenez &#224;
-cette bo&#238;te de dialogue avec les deux aiguillages remplis.Si vous voulez plus tard Â«dissocierÂ»
+<b> D&#233;finir des Signaux...</b> dans le menu contextuel de l'un ou l'autre aiguillage, vous revenez &#224;
+cette bo&#238;te de dialogue avec les deux aiguillages remplis.Si vous voulez plus tard «dissocier»
 les deux aiguillages et ajouter les signaux manquants, pour chacun des aiguillages, s&#233;lectionnez
- <b>D&#233;finir des Signaux &#224; l'aiguillage ...</b>, remplissez le nom de aiguillage manuellement, entrez les
+ <b>D&#233;finir des Signaux &#224; l'aiguillage...</b>, remplissez le nom de aiguillage manuellement, entrez les
 signaux, et cliquez sur <b>Termin&#233;</b>. Apr&#232;s que ceci soit fait pour les deux aiguillages,
 les aiguillages ne seront plus li&#233;s.</p>
 
@@ -116,7 +116,7 @@ L'outil fournit pour l'entr&#233;e  trois signaux &#224; la pointe et un dans ch
 trois autres voies. Les signaux de la pointe et de la voie D&#233;vi&#233; A 
  sont plac&#233;es avec l'aiguillage A. Les signaaux de la voie d&#233;vi&#233;e B et de la voie directe B 
 sont plac&#233;es avec l'aiguillage B. Le signal pointe directe (vert dans le haut de la
-figure) refl&#232;te le trajet de la voie Directe avec la voie en Pointe . Les deux autres signaux
+figure) refl&#232;te le trajet de la voie Directe avec la voie en Pointe. Les deux autres signaux
  refl&#232;tent le trajet des pointes avec leurs voies d&#233;vi&#233;es respectives. Si seulement
 un signal de pointe est entr&#233;, il doit &#234;tre entr&#233; &#224; la position Pointe Continue
 .</p>
@@ -155,7 +155,7 @@ devrait couvrir la plupart des cas. Si les signaux ne se comportent pas comme vo
 n'h&#233;sitez pas &#224; modifier la logique simple signal manuellement pour obtenir le r&#233;sultat recherch&#233;
 . Pour modifier la logique simple signal pour un signal, dans le mode &#233;diter,
 appeler le menu contextuel de l'ic&#244;ne du signal dont la logique doit &#234;tre &#233;dit&#233;e,
-et s&#233;lectionnez <b>&#233;diter Logique ...</b>. Habituellement l'ajout ou le retrait d'un capteur, ou
+et s&#233;lectionnez <b>&#233;diter Logique...</b>. Habituellement l'ajout ou le retrait d'un capteur, ou
 cocher ou d&#233;cocher une option, est tout ce qui est n&#233;cessaire. Dans des cas plus compliqu&#233;s
 , vous devrez peut-&#234;tre cr&#233;er un Logix pour d&#233;finir l'&#233;tat d'un capteur interne,
 qui est ensuite ajout&#233; &#224; la Logique Simple Signal.</p>
@@ -169,7 +169,7 @@ ne correspond pas &#224; un signal r&#233;el sur le r&#233;seau) &#224; la fin d
  qui relie la voie qui est signal&#233;e avec une voie qui n'est pas signal&#233;e.
 (Vous n'avez pas besoin d'ajouter une ic&#244;ne pour le signal virtuel &#224; votre panneau, mais elle
 doit exister dans votre table signal, et doit &#234;tre affect&#233;e &#224; un aiguillage ou &#224; une limite de canton
-&#224; l'aide d'un outil (D&#233;finir signalisation... .) Si un canton se termine par un
+&#224; l'aide d'un outil (D&#233;finir signalisation...). Si un canton se termine par un
 Heurtoir, aucun signal virtuel n'est requis &#224; la fin du heurtoir.</p>
 <p>
 Si un canton a un aiguillage interne (l'aiguillage, et les tron&#231;ons de voie de sa
@@ -192,7 +192,7 @@ signaux sont situ&#233;es, soit X est C (Droit) ou T (D&#233;vi&#233;), selon qu
  est situ&#233;e sur la voie Droite ou de la voie D&#233;vi&#233;e
 , O&#249; HHH est le nom  syst&#232;me du signal. Le but de cette Logix
 est de s'assurer que l'aspect du signal sera rouge si l'aiguillage n'est pas
-dans la logique simple signal de commutation contre la voie signal&#233;e par le signal .</p>
+dans la logique simple signal de commutation contre la voie signal&#233;e par le signal.</p>
 <p>
 Cet outil met en place trois aspects de signalisation. Quand un signal montre 
 l'&#233;tat vers &#224; une voie d&#233;vi&#233;e, l'outil sera mis en place pour limiter la
@@ -218,13 +218,13 @@ simple.
 <li> <p> D&#233;finir trois signaux virtuelles dans la Table Signal, et entrez les
 comme signaux <b> Pointe -Directe</b>, <b> Pointe - D&#233;vi&#233;e A</b> et
 <b>Pointe  - D&#233;vi&#233;e B</b> , avec les signaux r&#233;els <b>D&#233;vi&#233;e A</b>,
-<b>Directe </b>, et <b> D&#233;vi&#233;e B</b> . Les Signaux virtuels sont
+<b>Directe </b>, et <b> D&#233;vi&#233;e B</b>. Les Signaux virtuels sont
 les signaux qui ne sont pas sur le r&#233;seau- seulement dans l'ordinateur</p></li>
 <li> <p>Cochez <b> Mettre en place la Logique</b> pour chacune des signaux virtuels, mais ne pas
 cochez <b> Ajouter Ic&#244;ne de Signal au TCO</b> pour aucun de ces trois signaux virtuels.
 Cliquez <b> Termin&#233;</b>. Ceci mettra en place la logique pour les trois signaux virtuels.</Li>
 <p> <li> R&#233;ouvrir l'outil et effacer les noms des trois signaux virtuels. Placez
-le v&#233;ritable signal dans la position <b>Pointe- Directe</b> . Cochez
+le v&#233;ritable signal dans la position <b>Pointe- Directe</b>. Cochez
  <b>Ajouter Ic&#244;ne de Signal au TCO</b>, mais ne cochez pas <b> Configurer Logic</b> pour ce 
 signal. Cliquez <b>Termin&#233;</b>. Les trois aiguillages virtuels ne sont plus
 affect&#233; &#224; l'aiguillage triple, mais ils sont encore dans l'ordinateur et leur

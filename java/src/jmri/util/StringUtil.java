@@ -1,8 +1,11 @@
-// StringUtil.java
 package jmri.util;
 
 import java.util.Collection;
 import java.util.Iterator;
+
+import javax.annotation.Nonnull;
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
 
 /**
  * Common utility methods for working with Strings.
@@ -15,7 +18,6 @@ import java.util.Iterator;
  * an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen Copyright 2003
- * @version $Revision$
  */
 public class StringUtil {
 
@@ -25,6 +27,7 @@ public class StringUtil {
      *
      * @return -1 if not found
      */
+    @CheckReturnValue
     static public int getStateFromName(String name, int[] states, String[] names) {
         for (int i = 0; i < states.length; i++) {
             if (name.equals(names[i])) {
@@ -41,6 +44,7 @@ public class StringUtil {
      *
      * @return empty array if none found
      */
+    @CheckReturnValue
     static public String[] getNamesFromStateMasked(int state, int[] states, int[] masks, String[] names) {
         // first pass to count, get refs
         int count = 0;
@@ -66,7 +70,8 @@ public class StringUtil {
      *
      * @return null if not found
      */
-    static public String getNameFromState(int state, int[] states, String[] names) {
+    @CheckReturnValue
+    static public @CheckForNull String getNameFromState(int state, @Nonnull int[] states, @Nonnull String[] names) {
         for (int i = 0; i < states.length; i++) {
             if (state == states[i]) {
                 return names[i];
@@ -80,10 +85,10 @@ public class StringUtil {
     /**
      * Convert an int to a exactly two hexadecimal characters
      *
-     * @param val
      * @return String exactly two characters long
      */
-    static public String twoHexFromInt(int val) {
+    @CheckReturnValue
+    static public @Nonnull String twoHexFromInt(int val) {
         StringBuffer sb = new StringBuffer();
         sb.append(hexChars[(val & 0xF0) >> 4]);
         sb.append(hexChars[val & 0x0F]);
@@ -97,7 +102,8 @@ public class StringUtil {
      * @param inString String to be extended
      * @return String exactly two characters long
      */
-    static public String appendTwoHexFromInt(int val, String inString) {
+    @CheckReturnValue
+    static public @Nonnull String appendTwoHexFromInt(int val, @Nonnull String inString) {
         StringBuffer sb = new StringBuffer(inString);
         sb.append(hexChars[(val & 0xF0) >> 4]);
         sb.append(hexChars[val & 0x0F]);
@@ -109,7 +115,8 @@ public class StringUtil {
      *
      * @param msbLeft the MSB is on the left of the display
      */
-    static public String to8Bits(int val, boolean msbLeft) {
+    @CheckReturnValue
+    static public @Nonnull String to8Bits(int val, boolean msbLeft) {
         String result = "";
         for (int i = 0; i < 8; i++) {
             if (msbLeft) {
@@ -128,7 +135,8 @@ public class StringUtil {
      * @param bytes byte array. Can be zero length, but must not be null.
      * @return String of hex values, ala "01 02 0A B1 21 ".
      */
-    static public String hexStringFromBytes(byte[] bytes) {
+    @CheckReturnValue
+    static public @Nonnull String hexStringFromBytes(@Nonnull byte[] bytes) {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < bytes.length; i++) {
             sb.append(hexChars[(bytes[i] & 0xF0) >> 4]);
@@ -145,7 +153,8 @@ public class StringUtil {
      * @return byte array, with one byte for each pair. Can be zero length, but
      *         will not be null.
      */
-    static public byte[] bytesFromHexString(String s) {
+    @CheckReturnValue
+    static public @Nonnull byte[] bytesFromHexString(@Nonnull String s) {
         String ts = s + "  "; // ensure blanks on end to make scan easier
         int len = 0;
         // scan for length
@@ -189,9 +198,8 @@ public class StringUtil {
      * This is a lexagraphic sort; lower case goes to the end. Identical entries
      * are retained, so the output length is the same as the input length.
      *
-     * @param values
      */
-    static public void sort(String[] values) {
+    static public void sort(@Nonnull String[] values) {
         try {
             java.util.Arrays.sort(values);
         } catch (Throwable e1) {  // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
@@ -200,7 +208,7 @@ public class StringUtil {
     }
 
     // Internal method to do a case-preserving sort of Strings
-    static private void bubblesort(String[] values) {
+    static private void bubblesort(@Nonnull String[] values) {
         // no Java sort, so ugly bubble sort
         for (int i = 0; i <= values.length - 2; i++) { // stop sort early to save time!
             for (int j = values.length - 2; j >= i; j--) {
@@ -218,7 +226,7 @@ public class StringUtil {
 
     // Internal method to do a case-blind sort of the .toString values
     // of objects.
-    static private void bubblesort(Object[] values) {
+    static private void bubblesort(@Nonnull Object[] values) {
         for (int i = 0; i <= values.length - 2; i++) { // stop sort early to save time!
             for (int j = values.length - 2; j >= i; j--) {
                 // check that the jth value is smaller than j+1th,
@@ -237,9 +245,8 @@ public class StringUtil {
      * This is a case-blind sort. Identical entries are retained, so the output
      * length is the same as the input length.
      *
-     * @param values
      */
-    static public void sort(Object[] values) {
+    static public void sort(@Nonnull Object[] values) {
         try {
             java.util.Arrays.sort(values);
         } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
@@ -248,7 +255,7 @@ public class StringUtil {
         }
     }
 
-    static void bubblesortUpper(Object[] values) {
+    static void bubblesortUpper(@Nonnull Object[] values) {
         for (int i = 0; i <= values.length - 2; i++) { // stop sort early to save time!
             for (int j = values.length - 2; j >= i; j--) {
                 // check that the jth value is smaller than j+1th,
@@ -267,9 +274,8 @@ public class StringUtil {
      * This is a case-independent lexagraphic sort. Identical entries are
      * retained, so the output length is the same as the input length.
      *
-     * @param values
      */
-    static public void sortUpperCase(Object[] values) {
+    static public void sortUpperCase(@Nonnull Object[] values) {
         // no Java sort, so ugly bubble sort
         bubblesortUpper(values);
     }
@@ -277,10 +283,8 @@ public class StringUtil {
     /**
      * Sort String[] representing numbers, in ascending order.
      *
-     * @param values
-     * @throws NumberFormatException
      */
-    static public void numberSort(String[] values) throws NumberFormatException {
+    static public void numberSort(@Nonnull String[] values) throws NumberFormatException {
         for (int i = 0; i <= values.length - 2; i++) { // stop sort early to save time!
             for (int j = values.length - 2; j >= i; j--) {
                 // check that the jth value is larger than j+1th,
@@ -299,10 +303,10 @@ public class StringUtil {
      * Join a collection of strings, separated by a delimiter
      *
      * @param s	        collection of strings
-     * @param delimiter
-     * @return e.g. join({"abc","def,"ghi"}, ".") ==> "abc.def.ghi"
+     * @return e.g. {@code join({"abc","def,"ghi"}, ".") ==> "abc.def.ghi"}
      */
-    public static String join(Collection<String> s, String delimiter) {
+    @CheckReturnValue
+    public static @Nonnull String join(@Nonnull Collection<String> s, @Nonnull String delimiter) {
         StringBuffer buffer = new StringBuffer();
         Iterator<String> iter = s.iterator();
         while (iter.hasNext()) {
@@ -318,10 +322,10 @@ public class StringUtil {
      * Join an array of strings, separated by a delimiter
      *
      * @param s	        collection of strings
-     * @param delimiter
-     * @return e.g. join({"abc","def,"ghi"}, ".") ==> "abc.def.ghi"
+     * @return e.g. {@code join({"abc","def,"ghi"}, ".") ==> "abc.def.ghi"}
      */
-    public static String join(String[] s, String delimiter) {
+    @CheckReturnValue
+    public static @Nonnull String join(@Nonnull String[] s, @Nonnull String delimiter) {
         StringBuffer buffer = new StringBuffer();
         for (int i = 0; i < s.length; i++) {
             buffer.append(s[i]);
@@ -340,7 +344,8 @@ public class StringUtil {
      * @param input   String to split
      * @param divider Where to divide the input; this does not appear in output
      */
-    static public String[] split(String input, String divider) {
+    @CheckReturnValue
+    static public @Nonnull String[] split(@Nonnull String input, @Nonnull String divider) {
         int size = 0;
         String temp = input;
 
@@ -378,11 +383,15 @@ public class StringUtil {
     }
 
     /**
+     * Quotes unmatched closed parentheses; matched  ( ) pairs are left unchanged.
+     *
      * If there's an unmatched ), quote it with \, and quote \ with \ too.
+     * @return null if given null
      */
-    static public String parenQuote(String in) {
-        if (in.equals("")) {
-            return "";
+    @CheckReturnValue
+    static public @CheckForNull String parenQuote(@CheckForNull String in) {
+        if (in == null || in.equals("")) {
+            return in;
         }
         StringBuilder result = new StringBuilder();
         int level = 0;
@@ -406,10 +415,12 @@ public class StringUtil {
 
     /**
      * Undo parenQuote
+     * @return null if given null
      */
-    static String parenUnQuote(String in) {
-        if (in.equals("")) {
-            return "";
+    @CheckReturnValue
+    static @CheckForNull String parenUnQuote(@CheckForNull String in) {
+        if (in == null || in.equals("")) {
+            return in;
         }
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < in.length(); i++) {
@@ -427,9 +438,10 @@ public class StringUtil {
         return new String(result);
     }
 
-    static public java.util.List<String> splitParens(String in) {
+    @CheckReturnValue
+    static public @Nonnull java.util.List<String> splitParens(@CheckForNull String in) {
         java.util.ArrayList<String> result = new java.util.ArrayList<String>();
-        if (in.equals("")) {
+        if (in == null || in.equals("")) {
             return result;
         }
         int level = 0;
@@ -461,8 +473,9 @@ public class StringUtil {
      * @param s String to escape
      * @return String with escaped values
      */
-    static public String escapeString(String s) {
-        return s.replaceAll(" ", "%20").replaceAll("#", "%23").replaceAll("&", "%26").replaceAll("'", "%27").replaceAll("\"", "%22").replaceAll("<", "%3C").replaceAll(">", "%3E");
+    @CheckReturnValue
+    static public @Nonnull String escapeString(@Nonnull String s) {
+        return  s.replaceAll(" ", "%20").replaceAll("#", "%23").replaceAll("&", "%26").replaceAll("'", "%27").replaceAll("\"", "%22").replaceAll("<", "%3C").replaceAll(">", "%3E");
     }
 
     /**
@@ -472,7 +485,8 @@ public class StringUtil {
      * @param s String to unescape
      * @return String with escaped values replaced with regular values
      */
-    static public String unescapeString(String s) {
+    @CheckReturnValue
+    static public @Nonnull String unescapeString(@Nonnull String s) {
         return s.replaceAll("%20", " ").replaceAll("%23", "#").replaceAll("%26", "&").replaceAll("%27", "'").replaceAll("%22", "\"").replaceAll("%3C", "<").replaceAll("%3E", ">");
     }
 
@@ -480,7 +494,8 @@ public class StringUtil {
      * Convert an array of objects into a single string. Each object's toString
      * value is displayed within square brackets and separated by commas.
      */
-    static public <E> String arrayToString(E[] v) {
+    @CheckReturnValue
+    static public @Nonnull <E> String arrayToString(@Nonnull E[] v) {
         StringBuffer retval = new StringBuffer();
         boolean first = true;
         for (E e : v) {
@@ -499,7 +514,8 @@ public class StringUtil {
      * Convert an array of bytes into a single string. Each element is displayed
      * within square brackets and separated by commas.
      */
-    static public String arrayToString(byte[] v) {
+    @CheckReturnValue
+    static public @Nonnull String arrayToString(@Nonnull byte[] v) {
         StringBuffer retval = new StringBuffer();
         boolean first = true;
         for (byte e : v) {
@@ -518,7 +534,8 @@ public class StringUtil {
      * Convert an array of ints into a single string. Each element is displayed
      * within square brackets and separated by commas.
      */
-    static public String arrayToString(int[] v) {
+    @CheckReturnValue
+    static public @Nonnull String arrayToString(@Nonnull int[] v) {
         StringBuffer retval = new StringBuffer();
         boolean first = true;
         for (int e : v) {

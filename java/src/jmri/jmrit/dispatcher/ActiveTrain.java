@@ -1,10 +1,13 @@
-// ActiveTrain.java
 package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
+import jmri.Block;
 import jmri.NamedBeanHandle;
+import jmri.Path;
+import jmri.Section;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +44,7 @@ import org.slf4j.LoggerFactory;
  *                  to resume running. (automatic trains only)
  *       STOPPED - Train was stopped by the dispatcher. Dispatcher must resume. (automatic trains only)
  *       DONE -  Train has completed its transit of the layout and is ready to be terminated 
- *                  by the dispatcher. 
+ *                  by the dispatcher, or Restart pressed to repeat the automated run.
  * Status is a bound property.
  * <P>
  * The ActiveTrain status should maintained (setStatus) by the running class, or if running 
@@ -88,7 +91,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Dave Duchamp Copyright (C) 2008-2011
- * @version	$Revision$
  */
 public class ActiveTrain {
 
@@ -148,7 +150,7 @@ public class ActiveTrain {
     private jmri.Transit mTransit = null;
     private String mTrainName = "";
     private int mTrainSource = ROSTER;
-        private jmri.jmrit.roster.RosterEntry mRoster = null;
+    private jmri.jmrit.roster.RosterEntry mRoster = null;
     private int mStatus = WAITING;
     private int mMode = DISPATCHED;
     private boolean mTransitReversed = false;  // true if Transit is running in reverse
@@ -174,6 +176,7 @@ public class ActiveTrain {
         public final static int NODELAY = 0x00;
         public final static int TIMEDDELAY = 0x01;
         public final static int SENSORDELAY = 0x02;
+
         private int mDelayedRestart = NODELAY;
         private int mDelayedStart = NODELAY;
     private int mDepartureTimeHr = 8;
@@ -210,8 +213,8 @@ public class ActiveTrain {
     public String getTransitName() {
         String s = mTransit.getSystemName();
         String u = mTransit.getUserName();
-        if ((u != null) && (!u.equals(""))) {
-            return (s + "( " + u + " )");
+        if ((u != null) && (!u.equals("") && (!u.equals(s)))) {
+            return (s + "(" + u + ")");
         }
         return s;
     }
@@ -288,7 +291,7 @@ public class ActiveTrain {
                 return jmri.jmrit.beantable.LogixTableAction.formatTime(restartHr,
                         restartMin) + " " + rb.getString("START");
             } else if (restartPoint && getDelayedRestart() == SENSORDELAY) {
-                return (Bundle.getMessage("BeanNameSensor") + " " + getRestartDelaySensorName());
+                return (Bundle.getMessage("BeanNameSensor") + " " + getRestartSensorName());
             }
             return rb.getString("READY");
         } else if (mStatus == STOPPED) {
@@ -391,21 +394,21 @@ public class ActiveTrain {
         mStartSensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(s.getDisplayName(), s);
     }
 
-    public jmri.Sensor getRestartDelaySensor() {
+    public jmri.Sensor getRestartSensor() {
         if (mRestartSensor == null) {
             return null;
         }
         return mRestartSensor.getBean();
     }
 
-    public String getRestartDelaySensorName() {
+    public String getRestartSensorName() {
         if (mRestartSensor == null) {
             return null;
         }
         return mRestartSensor.getName();
     }
 
-    public void setRestartDelaySensor(jmri.Sensor s) {
+    public void setRestartSensor(jmri.Sensor s) {
         if (s == null) {
             mRestartSensor = null;
             return;
@@ -414,7 +417,7 @@ public class ActiveTrain {
     }
 
     private java.beans.PropertyChangeListener delaySensorListener = null;
-    private java.beans.PropertyChangeListener delayReStartSensorListener = null;
+    private java.beans.PropertyChangeListener restartSensorListener = null;
 
     public void initializeDelaySensor() {
         if (mStartSensor == null) {
@@ -444,24 +447,24 @@ public class ActiveTrain {
         getDelaySensor().addPropertyChangeListener(delaySensorListener);
     }
 
-    public void initializeReStartDelaySensor() {
+    public void initializeRestartSensor() {
         if (mRestartSensor == null) {
             log.error("Call to initialise delay on start sensor, but none specified");
             return;
         }
-        if (delayReStartSensorListener == null) {
+        if (restartSensorListener == null) {
             final ActiveTrain at = this;
-            delayReStartSensorListener = new java.beans.PropertyChangeListener() {
+            restartSensorListener = new java.beans.PropertyChangeListener() {
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     if (e.getPropertyName().equals("KnownState")) {
                         if (((Integer) e.getNewValue()).intValue() == jmri.Sensor.ACTIVE) {
-                            getRestartDelaySensor().removePropertyChangeListener(delayReStartSensorListener);
-                            delayReStartSensorListener = null;
+                            getRestartSensor().removePropertyChangeListener(restartSensorListener);
+                            restartSensorListener = null;
                             DispatcherFrame.instance().removeDelayedTrain(at);
                             restart();
                             DispatcherFrame.instance().forceScanOfAllocation();
                             try {
-                                getRestartDelaySensor().setKnownState(jmri.Sensor.INACTIVE);
+                                getRestartSensor().setKnownState(jmri.Sensor.INACTIVE);
                             } catch (jmri.JmriException ex) {
                                 log.error("Error reseting start sensor back to in active");
                             }
@@ -470,11 +473,33 @@ public class ActiveTrain {
                 }
             };
         }
-        getRestartDelaySensor().addPropertyChangeListener(delayReStartSensorListener);
+        getRestartSensor().addPropertyChangeListener(restartSensorListener);
     }
 
     public void setTrainType(int type) {
         mTrainType = type;
+    }
+
+    /** set train type using localized string name as stored
+     * 
+     * @param sType - name, such as "LOCAL_PASSENGER"
+     */
+    public void setTrainType(String sType) {
+        if (sType.equals(rb.getString("LOCAL_FREIGHT"))) {
+            setTrainType(LOCAL_FREIGHT);
+        } else if (sType.equals(rb.getString("LOCAL_PASSENGER"))) {
+            setTrainType(LOCAL_PASSENGER);
+        } else if (sType.equals(rb.getString("THROUGH_FREIGHT"))) {
+            setTrainType(THROUGH_FREIGHT);
+        } else if (sType.equals(rb.getString("THROUGH_PASSENGER"))) {
+            setTrainType(THROUGH_PASSENGER);
+        } else if (sType.equals(rb.getString("EXPRESS_FREIGHT"))) {
+            setTrainType(EXPRESS_FREIGHT);
+        } else if (sType.equals(rb.getString("EXPRESS_PASSENGER"))) {
+            setTrainType(EXPRESS_PASSENGER);
+        } else if (sType.equals(rb.getString("MOW"))) {
+            setTrainType(MOW);
+        }
     }
 
     public int getTrainType() {
@@ -678,6 +703,76 @@ public class ActiveTrain {
         return list;
     }
 
+    /**
+     * Returns list of all Blocks occupied by or allocated to this train. 
+     * They are in order from the tail of the train to the head 
+     * of the train then on to the forward-most allocated block.
+     * Note that unoccupied blocks can exist before and after the occupied
+     * blocks.
+     * TODO: doesn't handle reversing of adjacent mult-block sections well
+     */
+    public java.util.ArrayList<Block> getBlockList() {
+        ArrayList<Block> list = new ArrayList<Block>();
+        for (int i = 0; i < mAllocatedSections.size(); i++) { // loop thru allocated sections, then all blocks for each section
+            Section s = mAllocatedSections.get(i).getSection();
+            ArrayList<Block> bl = s.getBlockList();
+            if (bl.size() > 1) { //sections with multiple blocks need extra logic
+                
+                boolean blocksConnected = true;
+                //determine if blocks should be added in forward or reverse order based on connectivity
+                if (i==0) { //for first section, compare last block to first of next section
+                    if (mAllocatedSections.size() > 1 &&  //only one section, assume forward
+                            !connected(bl.get(bl.size()-1), mAllocatedSections.get(i+1).getSection().getBlockList().get(0))) {
+                        blocksConnected = false;
+                    }                    
+                } else { //not first section, check for connectivity between last block in list, and first block in this section
+                    if (!connected(list.get(list.size()-1), bl.get(0))) { //last block is not connected to first block, add reverse
+                        blocksConnected = false;
+                    }
+                }
+                if (blocksConnected) { //blocks were connected, so add to outgoing in forward order
+                    for (int j = 0; j < bl.size();j++) {
+                        Block b = bl.get(j);
+                        list.add(b);
+                        log.trace("block {} ({}) added to list for Section {} (fwd)", b.getDisplayName(),
+                                (b.getState()==Block.OCCUPIED?"OCCUPIED":"UNOCCUPIED"),
+                                s.getDisplayName());
+                    }
+                } else { //not connected, add in reverse order
+                    for (int j = bl.size()-1; j >= 0;j--) {
+                        Block b = bl.get(j);
+                        list.add(b);
+                        log.trace("block {} ({}) added to list for Section {} (rev)", b.getDisplayName(),
+                                (b.getState()==Block.OCCUPIED?"OCCUPIED":"UNOCCUPIED"),
+                                s.getDisplayName());
+                    }                    
+                }
+                
+            } else { //single block sections are simply added to the outgoing list 
+                Block b = bl.get(0);
+                list.add(b);                                                
+                log.trace("block {} ({}) added to list for Section {} (one)", b.getDisplayName(),
+                        (b.getState()==Block.OCCUPIED?"OCCUPIED":"UNOCCUPIED"),
+                        s.getDisplayName());
+            }
+        }
+        return list;
+    }
+
+    /* copied from Section.java */
+    private boolean connected(Block b1, Block b2) {
+        if ((b1 != null) && (b2 != null)) {
+            List<Path> paths = b1.getPaths();
+            for (int i = 0; i < paths.size(); i++) {
+                if (paths.get(i).getBlock() == b2) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
     public jmri.Section getLastAllocatedSection() {
         return mLastAllocatedSection;
     }
@@ -707,8 +802,8 @@ public class ActiveTrain {
     private String getSectionName(jmri.Section sc) {
         String s = sc.getSystemName();
         String u = sc.getUserName();
-        if ((u != null) && (!u.equals(""))) {
-            return (s + "( " + u + " )");
+        if ((u != null) && (!u.equals("") && (!u.equals(s)))) {
+            return (s + "(" + u + ")");
         }
         return s;
     }
@@ -900,7 +995,7 @@ public class ActiveTrain {
         setStatus(READY);
         restartPoint = true;
         if (getDelayedRestart() == TIMEDDELAY) {
-            Date now = jmri.InstanceManager.timebaseInstance().getTime();
+            Date now = jmri.InstanceManager.getDefault(jmri.Timebase.class).getTime();
             @SuppressWarnings("deprecation")
             int nowHours = now.getHours();
             @SuppressWarnings("deprecation")
@@ -943,8 +1038,8 @@ public class ActiveTrain {
         if (getDelaySensor() != null && delaySensorListener != null) {
             getDelaySensor().removePropertyChangeListener(delaySensorListener);
         }
-        if (getRestartDelaySensor() != null && delayReStartSensorListener != null) {
-            getRestartDelaySensor().removePropertyChangeListener(delayReStartSensorListener);
+        if (getRestartSensor() != null && restartSensorListener != null) {
+            getRestartSensor().removePropertyChangeListener(restartSensorListener);
         }
         mTransit.setState(jmri.Transit.IDLE);
     }
@@ -969,6 +1064,5 @@ public class ActiveTrain {
     }
 
     private final static Logger log = LoggerFactory.getLogger(ActiveTrain.class.getName());
-}
 
-/* @(#)ActiveTrain.java */
+}

@@ -1,4 +1,3 @@
-// CheckForUpdateAction.java
 package apps;
 
 import java.awt.Desktop;
@@ -12,6 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URL;
+import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -31,20 +31,14 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2007, 2014
  * @author Matt Harris Copyright (C) 2008
  *
- * @version $Revision$
  */
 public class CheckForUpdateAction extends jmri.util.swing.JmriAbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6718445705950604552L;
-
-    public CheckForUpdateAction(String s, WindowInterface wi) {
+    public CheckForUpdateAction(@Nonnull String s, @Nonnull WindowInterface wi) {
         super(s, wi);
     }
 
-    public CheckForUpdateAction(String s, Icon i, WindowInterface wi) {
+    public CheckForUpdateAction(@Nonnull String s, @Nonnull Icon i, @Nonnull WindowInterface wi) {
         super(s, i, wi);
     }
 
@@ -137,9 +131,10 @@ public class CheckForUpdateAction extends jmri.util.swing.JmriAbstractAction {
 
     }
 
-    String getNumber(BufferedReader reader) throws java.io.IOException {
+    @Nonnull String getNumber(@Nonnull BufferedReader reader) throws java.io.IOException {
+        reader.readLine();  // skip a line
         String line = reader.readLine();
-        line = reader.readLine();
+        if (line == null) return "";
         return line.substring(0, line.length() - 1);  // drop trailing :
     }
 
@@ -152,4 +147,3 @@ public class CheckForUpdateAction extends jmri.util.swing.JmriAbstractAction {
 
 }
 
-/* @(#)CheckForUpdateAction.java */

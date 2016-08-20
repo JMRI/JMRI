@@ -1,4 +1,3 @@
-// EcosSensorManager.java
 package jmri.jmrix.ecos;
 
 import java.util.Hashtable;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * s88 Bus Module and yy is the port on that module.
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision$
  */
 public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         implements EcosListener {
@@ -91,9 +89,11 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                                 sb.append("0");
                             }
                             sb.append(j);
-                            EcosReporter rp = (EcosReporter) memo.getReporterManager().provideReporter(sb.toString());
-                            if (rp != null) {
+                            try {
+                                EcosReporter rp = (EcosReporter) memo.getReporterManager().provideReporter(sb.toString());
                                 rp.decodeDetails(lines[i]);
+                            } catch (IllegalArgumentException ex) {
+                                log.warn("Failed to provide Reporter \"{}\" in reply", sb.toString());
                             }
                         }
 
@@ -144,12 +144,14 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                                                     sb.append("0");
                                                 }
                                                 sb.append(j);
-                                                EcosReporter rp = (EcosReporter) memo.getReporterManager().provideReporter(sb.toString());
-                                                if (rp != null) {
+                                                try {
+                                                    EcosReporter rp = (EcosReporter) memo.getReporterManager().provideReporter(sb.toString());
                                                     rp.setObjectPort(object, (j - 1));
                                                     es.setReporter(rp);
                                                     EcosMessage em = new EcosMessage("get(" + object + ", railcom[" + (j - 1) + "])");
                                                     tc.sendEcosMessage(em, this);
+                                                } catch (IllegalArgumentException ex) {
+                                                    log.warn("Failed to provide Reporter \"{}\"", sb.toString());
                                                 }
                                             }
                                         }
@@ -189,7 +191,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                 sb.append("0");
             }
             sb.append(port);
-            es = (EcosSensor) getSensor(sb.toString());
+            es = (EcosSensor) provideSensor(sb.toString());
             if (result == 0) {
                 es.setOwnState(Sensor.INACTIVE);
             } else {

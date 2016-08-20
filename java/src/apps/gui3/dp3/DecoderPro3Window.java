@@ -1,4 +1,3 @@
-// DecoderPro3Window.java
 package apps.gui3.dp3;
 
 import jmri.Application;
@@ -10,11 +9,6 @@ import jmri.jmrit.roster.swing.RosterFrame;
 public class DecoderPro3Window extends RosterFrame {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -7080210226059840968L;
-
-    /**
      * Loads Decoder Pro 3 with the default set of menus and toolbars
      */
     public DecoderPro3Window() {
@@ -22,7 +16,10 @@ public class DecoderPro3Window extends RosterFrame {
     }
 
     /**
-     * Loads Decoder Pro 3 with specific menu and toolbar files
+     * Loads Decoder Pro 3 with specific menu and toolbar files.
+     *
+     * @param menuFile XML file with menu structure
+     * @param toolbarFile XML file with toolbar structure
      */
     public DecoderPro3Window(String menuFile, String toolbarFile) {
         super(Application.getApplicationName(),

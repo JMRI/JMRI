@@ -1,24 +1,17 @@
-// OsIndicatorAction.java
 package jmri.jmrit.ussctc;
 
 /**
  * Swing action to create and register a OsIndicatorFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2007
- * @version $Revision$
  */
 public class OsIndicatorAction extends jmri.util.JmriJFrameAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5595732368842780074L;
 
     public OsIndicatorAction(String s) {
         super(s);
 
         // disable ourself if there is no route manager object available
-        if (jmri.InstanceManager.routeManagerInstance() == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.RouteManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -32,5 +25,3 @@ public class OsIndicatorAction extends jmri.util.JmriJFrameAction {
     }
 
 }
-
-/* @(#)OsIndicatorAction.java */

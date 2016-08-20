@@ -11,11 +11,6 @@ import org.slf4j.LoggerFactory;
 
 public class JmriBeanComboBox extends JComboBox<String> implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7690075595407232375L;
-
     /*
      * Create a default Jmri Combo box for the given bean manager
      * @param manager the jmri manager that is used to populate the combo box
@@ -303,7 +298,8 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         long lastKeyTime = 0;
         String pattern = "";
 
-        public int selectionForKey(char aKey, javax.swing.ComboBoxModel model) {
+        // FIXME: What is the correct type for the combo model here? This class may need refactored significantly to fix this?
+        public int selectionForKey(char aKey, @SuppressWarnings("rawtypes") javax.swing.ComboBoxModel model) {
             // Find index of selected item
             int selIx = 01;
             Object sel = model.getSelectedItem();

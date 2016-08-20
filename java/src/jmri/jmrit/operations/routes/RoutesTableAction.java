@@ -14,11 +14,6 @@ import javax.swing.AbstractAction;
  */
 public class RoutesTableAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5090064971975194515L;
-
     public RoutesTableAction(String s) {
         super(s);
     }
@@ -27,16 +22,17 @@ public class RoutesTableAction extends AbstractAction {
         this(Bundle.getMessage("MenuRoutes"));	// NOI18N
     }
 
-    static RoutesTableFrame f = null;
+    private static RoutesTableFrame routesTableFrame = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Show only one RouteTableFrame")
     public void actionPerformed(ActionEvent e) {
         // create a route table frame
-        if (f == null || !f.isVisible()) {
-            f = new RoutesTableFrame();
+        if (routesTableFrame == null || !routesTableFrame.isVisible()) {
+            routesTableFrame = new RoutesTableFrame();
         }
-        f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        routesTableFrame.setExtendedState(Frame.NORMAL);
+        routesTableFrame.setVisible(true);	// this also brings the frame into focus
     }
 }
 

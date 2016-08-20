@@ -1,4 +1,3 @@
-// AbstractNetworkPortController.java
 package jmri.jmrix;
 
 import java.io.DataInputStream;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2010
  * @author Based upon work originally done by Paul Bender Copyright (C) 2009
- * @version	$Revision$
  * @see jmri.jmrix.NetworkConfigException
  */
 abstract public class AbstractNetworkPortController extends AbstractPortController implements NetworkPortAdapter {
@@ -93,7 +91,6 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     /**
      * Remember the associated host name
      *
-     * @param s
      */
     @Override
     public void setHostName(String s) {
@@ -113,7 +110,6 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      * configuration. Public access to the IP address is through the hostname
      * field.
      *
-     * @param s
      */
     protected void setHostAddress(String s) {
         m_HostAddress = s;
@@ -132,7 +128,6 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     /**
      * Remember the associated port number
      *
-     * @param p
      *
      */
     @Override

@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.openlcb.swing;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.openlcb package.
  *
  * @author Bob Jacobsen Copyright 2009, 2012
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -25,7 +23,7 @@ public class PackageTest extends TestCase {
     static public void main(String[] args) {
         apps.tests.AllTest.initLogging();
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -35,6 +33,9 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.openlcb.swing.hub.PackageTest.suite());
         suite.addTest(jmri.jmrix.openlcb.swing.tie.PackageTest.suite());
         suite.addTest(jmri.jmrix.openlcb.swing.monitor.PackageTest.suite());
+        suite.addTest(jmri.jmrix.openlcb.swing.clockmon.PackageTest.suite());
+        suite.addTest(jmri.jmrix.openlcb.swing.downloader.PackageTest.suite());
+        suite.addTest(BundleTest.suite());
 
         return suite;
     }

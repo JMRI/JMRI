@@ -15,8 +15,10 @@ import junit.framework.TestSuite;
  */
 public class XpaTurnoutManagerTest extends TestCase {
 
+    private XpaSystemConnectionMemo memo = null;
+
     public void testCtor() {
-        XpaTurnoutManager t = new XpaTurnoutManager();
+        XpaTurnoutManager t = new XpaTurnoutManager(memo);
         Assert.assertNotNull(t);
     }
 
@@ -28,7 +30,7 @@ public class XpaTurnoutManagerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", XpaTurnoutManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -40,10 +42,13 @@ public class XpaTurnoutManagerTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        memo = new XpaSystemConnectionMemo();
+        memo.setXpaTrafficController(new XpaTrafficController());
     }
 
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
+        memo = null;
     }
 
 }

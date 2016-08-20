@@ -1,4 +1,3 @@
-// QuadOutputSignalHead.java
 package jmri.implementation;
 
 import jmri.NamedBeanHandle;
@@ -18,14 +17,8 @@ import jmri.Turnout;
  * changed via some other mechanism.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version	$Revision$
  */
 public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3055732456230925340L;
 
     public QuadOutputSignalHead(String sys, String user, NamedBeanHandle<Turnout> green, NamedBeanHandle<Turnout> yellow, NamedBeanHandle<Turnout> red, NamedBeanHandle<Turnout> lunar) {
         super(sys, user, green, yellow, red);
@@ -133,5 +126,3 @@ public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
         return false;
     }
 }
-
-/* @(#)QuadOutputSignalHead.java */

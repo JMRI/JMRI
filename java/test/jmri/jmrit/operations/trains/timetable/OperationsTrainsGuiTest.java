@@ -1,4 +1,3 @@
-// OperationsTrainsGuiTest.java
 package jmri.jmrit.operations.trains.timetable;
 
 import java.awt.Component;
@@ -11,7 +10,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.trains.TrainManager;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -19,7 +18,6 @@ import junit.framework.TestSuite;
  * Tests for the Operations Trains GUI class
  *
  * @author Dan Boudreau Copyright (C) 2009
- * @version $Revision$
  */
 public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
@@ -117,7 +115,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", OperationsTrainsGuiTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

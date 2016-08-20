@@ -1,4 +1,3 @@
-// PanelProPane.java
 package apps.PanelPro;
 
 import apps.Apps;
@@ -26,14 +25,8 @@ import javax.swing.JPanel;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright 2003, 2014
- * @version $Revision$
  */
 public class PanelProPane extends apps.AppsLaunchPane {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5742354704602024439L;
 
     PanelProPane() {
         super();
@@ -66,11 +59,6 @@ public class PanelProPane extends apps.AppsLaunchPane {
 
         // Buttons
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -9134833676932931297L;
-
             public void actionPerformed(ActionEvent e) {
                 Apps.handleQuit();
             }

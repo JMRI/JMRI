@@ -1,4 +1,3 @@
-// SerialTurnoutManagerTest.java
 package jmri.jmrix.maple;
 
 import jmri.Turnout;
@@ -13,11 +12,18 @@ import org.slf4j.LoggerFactory;
  * Description:	tests for the jmri.jmrix.maple.SerialTurnoutManager class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
-    public void setUp() {
+    protected void tearDown() throws Exception {
+        apps.tests.Log4JFixture.tearDown();
+        super.tearDown();
+    }
+
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+        apps.tests.Log4JFixture.setUp();
         // replace the SerialTrafficController
         SerialTrafficController t = new SerialTrafficController() {
             SerialTrafficController test() {
@@ -68,7 +74,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SerialTurnoutManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

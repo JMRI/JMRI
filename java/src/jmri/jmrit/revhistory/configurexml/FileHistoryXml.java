@@ -12,7 +12,6 @@ import org.jdom2.Element;
  * them. The "load()" method is therefore a null-op here.
  *
  * @author Bob Jacobsen Copyright (c) 2010
- * @version $Revision$
  */
 public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
 

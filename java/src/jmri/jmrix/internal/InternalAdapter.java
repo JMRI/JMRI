@@ -20,7 +20,7 @@ public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
     public InternalAdapter() {
         super(new InternalSystemConnectionMemo());
         opened = true;
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.NONE;
+        this.manufacturerName = InternalConnectionTypeList.NONE;
     }
 
     @Override

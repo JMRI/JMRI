@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2010
  * @author Mark Underwood Copyright (C) 2015
- * @version $Revision$
  */
 public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTest {
 
@@ -58,7 +57,7 @@ public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", DCCppLightManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

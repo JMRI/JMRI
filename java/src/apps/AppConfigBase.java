@@ -1,4 +1,3 @@
-// AppConfigBase.java
 package apps;
 
 import java.text.MessageFormat;
@@ -8,11 +7,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import jmri.Application;
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.swing.ManagingPreferencesPanel;
@@ -28,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2003, 2008, 2010
  * @author Matthew Harris copyright (c) 2009
  * @author	Ken Cameron Copyright (C) 2011
- * @version	$Revision$
  */
 public class AppConfigBase extends JmriPanel {
 
@@ -42,7 +40,6 @@ public class AppConfigBase extends JmriPanel {
 
     protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
-    private static final long serialVersionUID = -341194769406457667L;
     private static final Logger log = LoggerFactory.getLogger(AppConfigBase.class);
 
     /**
@@ -50,56 +47,6 @@ public class AppConfigBase extends JmriPanel {
      * configuration dialog with default number of connections.
      */
     public AppConfigBase() {
-    }
-
-    /**
-     * @deprecated as of 2.13.3, directly access the connection configuration
-     * from the instance list
-     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
-     */
-    @Deprecated
-    public static String getManufacturerName(int index) {
-        return JmrixConfigPane.instance(index).getCurrentManufacturerName();
-    }
-
-    /**
-     * @deprecated as of 2.13.3, directly access the connection configuration
-     * from the instance list
-     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
-     */
-    @Deprecated
-    public static String getConnection(int index) {
-        return JmrixConfigPane.instance(index).getCurrentProtocolName();
-    }
-
-    /**
-     * @deprecated as of 2.13.3, directly access the connection configuration
-     * from the instance list
-     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
-     */
-    @Deprecated
-    public static String getPort(int index) {
-        return JmrixConfigPane.instance(index).getCurrentProtocolInfo();
-    }
-
-    /**
-     * @deprecated as of 2.13.3, directly access the connection configuration
-     * from the instance list
-     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
-     */
-    @Deprecated
-    public static String getConnectionName(int index) {
-        return JmrixConfigPane.instance(index).getConnectionName();
-    }
-
-    /**
-     * @deprecated as of 2.13.3, directly access the connection configuration
-     * from the instance list
-     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
-     */
-    @Deprecated
-    public static boolean getDisabled(int index) {
-        return JmrixConfigPane.instance(index).getDisabled();
     }
 
     /**
@@ -175,17 +122,17 @@ public class AppConfigBase extends JmriPanel {
 
     public void saveContents() {
         // remove old prefs that are registered in ConfigManager
-        InstanceManager.configureManagerInstance().removePrefItems();
+        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).removePrefItems();
         // put the new GUI managedPreferences on the persistance list
         this.getPreferencesPanels().values().stream().forEach((panel) -> {
             this.registerWithConfigureManager(panel);
         });
-        InstanceManager.configureManagerInstance().storePrefs();
+        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).storePrefs();
     }
 
     private void registerWithConfigureManager(PreferencesPanel panel) {
         if (panel.isPersistant()) {
-            InstanceManager.configureManagerInstance().registerPref(panel);
+            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(panel);
         }
         if (panel instanceof ManagingPreferencesPanel) {
             log.debug("Iterating over managed panels within {}/{}", panel.getPreferencesItemText(), panel.getTabbedPreferencesTitle());
@@ -218,7 +165,7 @@ public class AppConfigBase extends JmriPanel {
         final UserPreferencesManager p;
         p = InstanceManager.getDefault(UserPreferencesManager.class);
         p.resetChangeMade();
-        if (restartRequired) {
+        if (restartRequired && !InstanceManager.getDefault(ShutDownManager.class).isShuttingDown()) {
             JLabel question = new JLabel(MessageFormat.format(rb.getString("MessageLongQuitWarning"), Application.getApplicationName()));
             Object[] options = {rb.getString("RestartNow"), rb.getString("RestartLater")};
             int retVal = JOptionPane.showOptionDialog(this,
@@ -242,7 +189,7 @@ public class AppConfigBase extends JmriPanel {
         }
         // don't restart the program, just close the window
         if (getTopLevelAncestor() != null) {
-            ((JFrame) getTopLevelAncestor()).setVisible(false);
+            getTopLevelAncestor().setVisible(false);
         }
     }
 

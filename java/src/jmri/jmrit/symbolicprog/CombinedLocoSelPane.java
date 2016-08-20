@@ -1,4 +1,3 @@
-// CombinedLocoSelPane.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.BorderLayout;
@@ -17,12 +16,13 @@ import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.decoderdefn.IdentifyDecoder;
+import jmri.jmrit.progsupport.ProgModeSelector;
 import jmri.jmrit.roster.IdentifyLoco;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
-import jmri.jmrit.progsupport.ProgModeSelector;
+import javax.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,22 +46,10 @@ import org.slf4j.LoggerFactory;
  * <LI>isDecoderSelected
  * <LI>selectedDecoderName
  * </UL>
- *
- * <P>
- * On MacOS Classic, this class was causing a problem with multiple
- * initialization of the programmer file default. See {@link ProgDefault} and
- * {@link jmri.jmrit.symbolicprog.configurexml.ProgrammerConfigPaneXml} for
- * further information.
- *
+ * *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8136064467797917479L;
 
     public CombinedLocoSelPane(JLabel s, ProgModeSelector selector) {
         _statusLabel = s;
@@ -111,9 +99,9 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
     JToggleButton addDecoderIdentButton() {
         JToggleButton iddecoder = new JToggleButton(Bundle.getMessage("ButtonReadType"));
         iddecoder.setToolTipText(Bundle.getMessage("TipSelectType"));
-        if (jmri.InstanceManager.programmerManagerInstance() != null
-                && jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null
-                && !jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().getCanRead()) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) != null
+                && jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer() != null
+                && !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer().getCanRead()) {
             // can't read, disable the button
             iddecoder.setEnabled(false);
             iddecoder.setToolTipText(Bundle.getMessage("TipNoRead"));
@@ -187,9 +175,9 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         });
         idloco = new JToggleButton(Bundle.getMessage("IDENT"));
         idloco.setToolTipText(Bundle.getMessage("READ THE LOCOMOTIVE'S ADDRESS AND ATTEMPT TO SELECT THE RIGHT SETTINGS"));
-        if (jmri.InstanceManager.programmerManagerInstance() != null
-                && jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null
-                && !jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().getCanRead()) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) != null
+                && jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer() != null
+                && !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer().getCanRead()) {
             // can't read, disable the button
             idloco.setEnabled(false);
             idloco.setToolTipText(Bundle.getMessage("BUTTON DISABLED BECAUSE CONFIGURED COMMAND STATION CAN'T READ CVS"));
@@ -275,7 +263,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         if (selector != null && selector.isSelected()) p = selector.getProgrammer();
         if (p == null) {
             log.warn("Selector did not provide a programmer, use default");
-            p = jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+            p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
         }
         IdentifyLoco id = new IdentifyLoco(p) {
             private CombinedLocoSelPane who = me;
@@ -310,7 +298,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         if (selector != null && selector.isSelected()) p = selector.getProgrammer();
         if (p == null) {
             log.warn("Selector did not provide a programmer, use default");
-            p = jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+            p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
         }
         IdentifyDecoder id = new IdentifyDecoder(p) {
             private CombinedLocoSelPane who = me;
@@ -348,7 +336,6 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      * Identify locomotive complete, act on it by setting the GUI. This will
      * fire "GUI changed" events which will reset the decoder GUI.
      *
-     * @param dccAddress
      */
     protected void selectLoco(int dccAddress) {
         // raise the button again
@@ -536,9 +523,15 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
     }
 
     /**
-     * meant to be overridden to start the desired type of programmer
+     * Start the desired type of programmer
+     * @param decoderFile defines the type of decoder installed; if null, check the RosterEntry re for that
+     * @param r Existing roster entry defining this locomotive
+     * @param progName name of the programmer (Layout connection) being used
      */
-    protected void startProgrammer(DecoderFile decoderFile, RosterEntry r, String progName) {
+    // TODO: Fix inheritance.  This is both a base class (where startProgrammer really isn't part of the contract_
+    //       and a first implementation (where this method is needed).  Because it's part of the contract, it can't be 
+    //       made abstract:  CombinedLocoSelListPane and CombinedLocoSelTreePane have no need for it.
+    protected void startProgrammer(@CheckForNull DecoderFile decoderFile, @Nonnull RosterEntry r, @Nonnull String progName) {
         log.error("startProgrammer method in CombinedLocoSelPane should have been overridden");
     }
 

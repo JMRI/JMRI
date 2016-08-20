@@ -1,4 +1,3 @@
-// LayoutSensorTextEdit.java
 package jmri.jmrit.display;
 
 import java.awt.Dimension;
@@ -17,14 +16,8 @@ import jmri.util.JmriJFrame;
  *
  * @author Dan Boudreau Copyright (C) 2007
  * @author Kevin Dickerson (SensorTextEditor version);
- * @version $Revision$
  */
 public class SensorTextEdit extends JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5713312554502509613L;
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 

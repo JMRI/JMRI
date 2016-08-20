@@ -18,7 +18,7 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
     
     protected LnNetworkPortController(LocoNetSystemConnectionMemo connectionMemo) {
         super(connectionMemo);
-        setManufacturer(jmri.jmrix.DCCManufacturerList.DIGITRAX);
+        setManufacturer(LnConnectionTypeList.DIGITRAX);
     }
 
     protected LnCommandStationType commandStationType = null;

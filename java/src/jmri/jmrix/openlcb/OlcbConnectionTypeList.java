@@ -11,6 +11,9 @@ package jmri.jmrix.openlcb;
  */
 public class OlcbConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String OPENLCB = "OpenLCB";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
 
         // set the connection types to have OPENLCB at the front
@@ -20,11 +23,17 @@ public class OlcbConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
         return new String[]{
             "jmri.jmrix.can.adapters.gridconnect.can2usbino.serialdriver.ConnectionConfig",
             "jmri.jmrix.can.adapters.gridconnect.canusb.serialdriver.ConnectionConfig",
+            "jmri.jmrix.can.adapters.gridconnect.lccbuffer.serialdriver.ConnectionConfig",
             "jmri.jmrix.can.adapters.gridconnect.net.ConnectionConfig",
             "jmri.jmrix.can.adapters.lawicell.canusb.serialdriver.ConnectionConfig",
             "jmri.jmrix.can.adapters.loopback.ConnectionConfig",
             "jmri.jmrix.can.adapters.gridconnect.canrs.serialdriver.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{OPENLCB};
     }
 
 }

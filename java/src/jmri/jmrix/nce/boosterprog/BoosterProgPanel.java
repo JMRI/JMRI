@@ -1,4 +1,3 @@
-// BoosterProgPanel.java
 package jmri.jmrix.nce.boosterprog;
 
 import java.util.ResourceBundle;
@@ -17,14 +16,9 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
  *
  * @author	ken cameron Copyright (C) 2010 Derived from BoosterProgFrame by
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version $Revision$
  */
 public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 418634505989298386L;
     JTextField start = new JTextField(6);
     JTextField length = new JTextField(12);
 

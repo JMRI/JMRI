@@ -1,4 +1,3 @@
-//JmriSRCPSensorServer.java
 package jmri.jmris.srcp;
 
 import java.io.DataInputStream;
@@ -8,15 +7,12 @@ import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.jmris.AbstractSensorServer;
 import jmri.jmrix.SystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * SRCP Server interface between the JMRI Sensor manager and a network
  * connection
  *
  * @author Paul Bender Copyright (C) 2011
- * @version $Revision$
  */
 public class JmriSRCPSensorServer extends AbstractSensorServer {
 
@@ -76,14 +72,18 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
         }
         String sensorName = memo.getSystemPrefix()
                 + "S" + address;
-        int Status = InstanceManager.sensorManagerInstance().provideSensor(sensorName).getKnownState();
-        if (Status == Sensor.ACTIVE) {
-            TimeStampedOutput.writeTimestamp(output, "100 INFO " + bus + " FB " + address + " 1\n\r");
-        } else if (Status == Sensor.INACTIVE) {
-            TimeStampedOutput.writeTimestamp(output, "100 INFO " + bus + " FB " + address + " 0\n\r");
-        } else {
-            //  unknown state
-            TimeStampedOutput.writeTimestamp(output, "411 ERROR unknown value\n\r");
+        try {
+            int Status = InstanceManager.sensorManagerInstance().provideSensor(sensorName).getKnownState();
+            if (Status == Sensor.ACTIVE) {
+                TimeStampedOutput.writeTimestamp(output, "100 INFO " + bus + " FB " + address + " 1\n\r");
+            } else if (Status == Sensor.INACTIVE) {
+                TimeStampedOutput.writeTimestamp(output, "100 INFO " + bus + " FB " + address + " 0\n\r");
+            } else {
+                //  unknown state
+                TimeStampedOutput.writeTimestamp(output, "411 ERROR unknown value\n\r");
+            }
+        } catch (IllegalArgumentException ex) {
+            log.warn("Failed to provide Sensor \"{}\" in sendStatus", sensorName);
         }
     }
 
@@ -152,5 +152,5 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
             }
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(JmriSRCPSensorServer.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriSRCPSensorServer.class.getName());
 }

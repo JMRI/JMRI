@@ -44,7 +44,13 @@ function showFiles() {
 
     $d = dir(".");
     while (false !== ($entry = $d->read())) {
-       if (endswith($entry, ".gif") || endswith($entry, ".jpg") || endswith($entry, ".png")) {
+       if (endswith($entry, ".gif") 
+            || endswith($entry, ".jpg") 
+            || endswith($entry, ".png")
+            || endswith($entry, ".EPS")
+            || endswith($entry, ".PSD")
+            || endswith($entry, ".md")
+            ) {
          $list[] = $entry;
        }
     }
@@ -52,7 +58,20 @@ function showFiles() {
     
     sort($list);
     foreach ($list as $entry) {
-        echo '<tr><td>'.$entry.' </td><td bgcolor="#C0C0C0"><a href="'.$entry.'"><img src="'.$entry.'"></a></td>'."\n";
+        echo '<tr>'."\n";
+        echo     '<td><a href="'.$entry.'">'.$entry.' </a></td>'."\n";
+       if (endswith($entry, ".gif") 
+            || endswith($entry, ".jpg") 
+            || endswith($entry, ".png")
+            ) {
+                // display as image
+                //   would be good to add a limiting size here
+                echo     '<td bgcolor="#C0C0C0"><a href="'.$entry.'"><img src="'.$entry.'" style="max-width:500px;max-height:500px;"></a></tr>'."\n";
+        } else {
+                // link without display
+                echo     '<td bgcolor="#C0C0C0"><a href="'.$entry.'" download="'.$entry.'">(download)</a></tr>'."\n";
+        }
+        echo '</tr>'."\n";
     }
 
     echo "</table>\n";

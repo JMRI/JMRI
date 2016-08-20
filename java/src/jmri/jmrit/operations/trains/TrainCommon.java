@@ -1,4 +1,3 @@
-// TrainCommon.java
 package jmri.jmrit.operations.trains;
 
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
@@ -39,7 +38,6 @@ import org.slf4j.LoggerFactory;
  * Common routines for trains
  *
  * @author Daniel Boudreau (C) Copyright 2008, 2009, 2010, 2011, 2012, 2013
- * @version $Revision: 1 $
  */
 public class TrainCommon {
 
@@ -72,13 +70,10 @@ public class TrainCommon {
 
     /**
      * Used to generate "Two Column" format for engines.
-     * 
-     * @param file
-     * @param engineList
-     * @param rl
-     * @param isManifest
+     *
      */
-    protected void blockLocosTwoColumn(PrintWriter file, List<Engine> engineList, RouteLocation rl, boolean isManifest) {
+    protected void blockLocosTwoColumn(PrintWriter file, List<Engine> engineList, RouteLocation rl,
+            boolean isManifest) {
         if (isThereWorkAtLocation(null, engineList, rl)) {
             printEngineHeader(file, isManifest);
         }
@@ -102,10 +97,6 @@ public class TrainCommon {
      * Adds a list of locomotive pick ups for the route location to the output
      * file. Used to generate "Standard" format.
      *
-     * @param file
-     * @param engineList
-     * @param rl
-     * @param isManifest
      */
     protected void pickupEngines(PrintWriter file, List<Engine> engineList, RouteLocation rl, boolean isManifest) {
         boolean printHeader = Setup.isPrintHeadersEnabled();
@@ -121,7 +112,8 @@ public class TrainCommon {
     }
 
     private void pickupEngine(PrintWriter file, Engine engine, boolean isManifest) {
-        StringBuffer buf = new StringBuffer(padAndTruncateString(Setup.getPickupEnginePrefix(), isManifest ? Setup.getManifestPrefixLength() : Setup.getSwitchListPrefixLength()));
+        StringBuffer buf = new StringBuffer(padAndTruncateString(Setup.getPickupEnginePrefix(),
+                isManifest ? Setup.getManifestPrefixLength() : Setup.getSwitchListPrefixLength()));
         String[] format = Setup.getPickupEngineMessageFormat();
         for (String attribute : format) {
             String s = getEngineAttribute(engine, attribute, PICKUP);
@@ -138,10 +130,6 @@ public class TrainCommon {
      * Adds a list of locomotive drops for the route location to the output
      * file. Used to generate "Standard" format.
      *
-     * @param file
-     * @param engineList
-     * @param rl
-     * @param isManifest
      */
     protected void dropEngines(PrintWriter file, List<Engine> engineList, RouteLocation rl, boolean isManifest) {
         boolean printHeader = Setup.isPrintHeadersEnabled();
@@ -157,7 +145,8 @@ public class TrainCommon {
     }
 
     private void dropEngine(PrintWriter file, Engine engine, boolean isManifest) {
-        StringBuffer buf = new StringBuffer(padAndTruncateString(Setup.getDropEnginePrefix(), isManifest ? Setup.getManifestPrefixLength() : Setup.getSwitchListPrefixLength()));
+        StringBuffer buf = new StringBuffer(padAndTruncateString(Setup.getDropEnginePrefix(),
+                isManifest ? Setup.getManifestPrefixLength() : Setup.getSwitchListPrefixLength()));
         String[] format = Setup.getDropEngineMessageFormat();
         for (String attribute : format) {
             String s = getEngineAttribute(engine, attribute, !PICKUP);
@@ -174,7 +163,6 @@ public class TrainCommon {
      * Returns the pick up string for a loco. Useful for frames like the train
      * conductor and yardmaster.
      *
-     * @param engine
      * @return engine pick up string
      */
     public String pickupEngine(Engine engine) {
@@ -189,7 +177,6 @@ public class TrainCommon {
      * Returns the drop string for a loco. Useful for frames like the train
      * conductor and yardmaster.
      *
-     * @param engine
      * @return engine drop string
      */
     public String dropEngine(Engine engine) {
@@ -209,7 +196,8 @@ public class TrainCommon {
      * Block cars by track, then pick up and set out for each location in a
      * train's route. This routine is used for the "Standard" format.
      */
-    protected void blockCarsByTrack(PrintWriter file, Train train, List<Car> carList, List<RouteLocation> routeList, RouteLocation rl, boolean printHeader, boolean isManifest) {
+    protected void blockCarsByTrack(PrintWriter file, Train train, List<Car> carList, List<RouteLocation> routeList,
+            RouteLocation rl, boolean printHeader, boolean isManifest) {
         if (printHeader) {
             printPickupHeader = true;
             printSetoutHeader = true;
@@ -251,10 +239,12 @@ public class TrainCommon {
                             printPickupCarHeader(file, isManifest, !IS_TWO_COLUMN_TRACK);
                             printPickupHeader = false;
                             // check to see if the other headers are needed. If they are identical, not needed
-                            if (getPickupCarHeader(isManifest, !IS_TWO_COLUMN_TRACK).equals(getDropCarHeader(isManifest, !IS_TWO_COLUMN_TRACK))) {
+                            if (getPickupCarHeader(isManifest, !IS_TWO_COLUMN_TRACK)
+                                    .equals(getDropCarHeader(isManifest, !IS_TWO_COLUMN_TRACK))) {
                                 printSetoutHeader = false;
                             }
-                            if (getPickupCarHeader(isManifest, !IS_TWO_COLUMN_TRACK).equals(getLocalMoveHeader(isManifest))) {
+                            if (getPickupCarHeader(isManifest, !IS_TWO_COLUMN_TRACK)
+                                    .equals(getLocalMoveHeader(isManifest))) {
                                 printLocalMoveHeader = false;
                             }
                         }
@@ -293,7 +283,8 @@ public class TrainCommon {
                         printDropCarHeader(file, isManifest, !IS_TWO_COLUMN_TRACK);
                         printSetoutHeader = false;
                         // check to see if the other headers are needed. If they are identical, not needed
-                        if (getPickupCarHeader(isManifest, !IS_TWO_COLUMN_TRACK).equals(getDropCarHeader(isManifest, !IS_TWO_COLUMN_TRACK))) {
+                        if (getPickupCarHeader(isManifest, !IS_TWO_COLUMN_TRACK)
+                                .equals(getDropCarHeader(isManifest, !IS_TWO_COLUMN_TRACK))) {
                             printPickupHeader = false;
                         }
                         if (getDropCarHeader(isManifest, !IS_TWO_COLUMN_TRACK).equals(getLocalMoveHeader(isManifest))) {
@@ -304,7 +295,8 @@ public class TrainCommon {
                         printLocalCarMoveHeader(file, isManifest);
                         printLocalMoveHeader = false;
                         // check to see if the other headers are needed. If they are identical, not needed
-                        if (getPickupCarHeader(isManifest, !IS_TWO_COLUMN_TRACK).equals(getLocalMoveHeader(isManifest))) {
+                        if (getPickupCarHeader(isManifest, !IS_TWO_COLUMN_TRACK)
+                                .equals(getLocalMoveHeader(isManifest))) {
                             printPickupHeader = false;
                         }
                         if (getDropCarHeader(isManifest, !IS_TWO_COLUMN_TRACK).equals(getLocalMoveHeader(isManifest))) {
@@ -325,7 +317,8 @@ public class TrainCommon {
                     }
                     dropCars = true;
                     cars--;
-                    if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(CarLoad.LOAD_TYPE_EMPTY)) {
+                    if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName())
+                            .equals(CarLoad.LOAD_TYPE_EMPTY)) {
                         emptyCars--;
                     }
                 }
@@ -341,7 +334,8 @@ public class TrainCommon {
      * track and then by destination. This routine is used for the "Two Column"
      * format.
      */
-    protected void blockCarsByTrackTwoColumn(PrintWriter file, Train train, List<Car> carList, List<RouteLocation> routeList, RouteLocation rl, boolean printHeader, boolean isManifest) {
+    protected void blockCarsByTrackTwoColumn(PrintWriter file, Train train, List<Car> carList,
+            List<RouteLocation> routeList, RouteLocation rl, boolean printHeader, boolean isManifest) {
         index = 0;
         int lineLength = getLineLength(isManifest);
         List<Track> tracks = rl.getLocation().getTrackByNameList(null);
@@ -390,7 +384,8 @@ public class TrainCommon {
                         }
                         s = padAndTruncateString(s, lineLength / 2, true);
                         if (isLocalMove(car)) {
-                            String sl = appendSetoutString(s, carList, car.getRouteDestination(), car, isManifest, !IS_TWO_COLUMN_TRACK);
+                            String sl = appendSetoutString(s, carList, car.getRouteDestination(), car, isManifest,
+                                    !IS_TWO_COLUMN_TRACK);
                             // check for utility car, and local route with two or more locations
                             if (!sl.equals(s)) {
                                 s = sl;
@@ -429,7 +424,8 @@ public class TrainCommon {
      * removed from format. This routine is used to generate the
      * "Two Column by Track" format.
      */
-    protected void blockCarsByTrackNameTwoColumn(PrintWriter file, Train train, List<Car> carList, List<RouteLocation> routeList, RouteLocation rl, boolean printHeader, boolean isManifest) {
+    protected void blockCarsByTrackNameTwoColumn(PrintWriter file, Train train, List<Car> carList,
+            List<RouteLocation> routeList, RouteLocation rl, boolean printHeader, boolean isManifest) {
         index = 0;
         int lineLength = getLineLength(isManifest);
         List<Track> tracks = rl.getLocation().getTrackByNameList(null);
@@ -543,7 +539,8 @@ public class TrainCommon {
      * Used by two column format. Local moves (pulls and spots) are lined up
      * when using this format,
      */
-    private String appendSetoutString(String s, List<Car> carList, RouteLocation rl, boolean local, boolean isManifest, boolean isTwoColumnTrack) {
+    private String appendSetoutString(String s, List<Car> carList, RouteLocation rl, boolean local, boolean isManifest,
+            boolean isTwoColumnTrack) {
         while (index < carList.size()) {
             Car car = carList.get(index++);
             if (local && isLocalMove(car)) {
@@ -563,7 +560,8 @@ public class TrainCommon {
     /*
      * Used by two column track format.
      */
-    private String appendSetoutString(String s, String trackName, List<Car> carList, RouteLocation rl, boolean isManifest, boolean isTwoColumnTrack) {
+    private String appendSetoutString(String s, String trackName, List<Car> carList, RouteLocation rl,
+            boolean isManifest, boolean isTwoColumnTrack) {
         for (Car car : carList) {
             if (!doneCars.contains(car) &&
                     car.getRouteDestination() == rl &&
@@ -583,7 +581,8 @@ public class TrainCommon {
      * Appends to string the vertical line character, and the car set out
      * string. Used in two column format.
      */
-    private String appendSetoutString(String s, List<Car> carList, RouteLocation rl, Car car, boolean isManifest, boolean isTwoColumnTrack) {
+    private String appendSetoutString(String s, List<Car> carList, RouteLocation rl, Car car, boolean isManifest,
+            boolean isTwoColumnTrack) {
         dropCars = true;
         cars--;
         if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
@@ -615,25 +614,27 @@ public class TrainCommon {
      * Adds the car's pick up string to the output file using the truncated
      * manifest format
      *
-     * @param file
-     * @param car
      */
     protected void pickUpCarTruncated(PrintWriter file, Car car, boolean isManifest) {
-        pickUpCar(file, car, new StringBuffer(padAndTruncateString(Setup.getPickupCarPrefix(), Setup.getManifestPrefixLength())), Setup.getPickupTruncatedManifestMessageFormat(), isManifest);
+        pickUpCar(file, car,
+                new StringBuffer(padAndTruncateString(Setup.getPickupCarPrefix(), Setup.getManifestPrefixLength())),
+                Setup.getPickupTruncatedManifestMessageFormat(), isManifest);
     }
 
     /**
      * Adds the car's pick up string to the output file using the manifest or
      * switch list format
      *
-     * @param file
-     * @param car
      */
     protected void pickUpCar(PrintWriter file, Car car, boolean isManifest) {
         if (isManifest) {
-            pickUpCar(file, car, new StringBuffer(padAndTruncateString(Setup.getPickupCarPrefix(), Setup.getManifestPrefixLength())), Setup.getPickupManifestMessageFormat(), isManifest);
+            pickUpCar(file, car,
+                    new StringBuffer(padAndTruncateString(Setup.getPickupCarPrefix(), Setup.getManifestPrefixLength())),
+                    Setup.getPickupManifestMessageFormat(), isManifest);
         } else {
-            pickUpCar(file, car, new StringBuffer(padAndTruncateString(Setup.getSwitchListPickupCarPrefix(), Setup.getSwitchListPrefixLength())), Setup.getPickupSwitchListMessageFormat(), isManifest);
+            pickUpCar(file, car, new StringBuffer(
+                    padAndTruncateString(Setup.getSwitchListPickupCarPrefix(), Setup.getSwitchListPrefixLength())),
+                    Setup.getPickupSwitchListMessageFormat(), isManifest);
         }
     }
 
@@ -661,7 +662,6 @@ public class TrainCommon {
      *
      * @param isManifest when true use manifest format, when false use switch
      *            list format
-     * @param car
      * @return pick up car string
      */
     public String pickupCar(Car car, boolean isManifest, boolean isTwoColumnTrack) {
@@ -688,28 +688,25 @@ public class TrainCommon {
      * manifest format. Does not print out local moves. Local moves are only
      * shown on the switch list for that location.
      *
-     * @param file
-     * @param car
      */
     protected void truncatedDropCar(PrintWriter file, Car car, boolean isManifest) {
         // local move?
         if (isLocalMove(car)) {
             return; // yes, don't print local moves on train manifest
         }
-        dropCar(file, car, new StringBuffer(Setup.getDropCarPrefix()), Setup.getDropTruncatedManifestMessageFormat(), false, isManifest);
+        dropCar(file, car, new StringBuffer(Setup.getDropCarPrefix()), Setup.getDropTruncatedManifestMessageFormat(),
+                false, isManifest);
     }
 
     /**
      * Adds the car's set out string to the output file using the manifest or
      * switch list format
      *
-     * @param file
-     * @param car
-     * @param isManifest
      */
     protected void dropCar(PrintWriter file, Car car, boolean isManifest) {
         if (isManifest) {
-            StringBuffer buf = new StringBuffer(padAndTruncateString(Setup.getDropCarPrefix(), Setup.getManifestPrefixLength()));
+            StringBuffer buf = new StringBuffer(
+                    padAndTruncateString(Setup.getDropCarPrefix(), Setup.getManifestPrefixLength()));
             String[] format = Setup.getDropManifestMessageFormat();
             boolean isLocal = isLocalMove(car);
             if (isLocal) {
@@ -718,18 +715,21 @@ public class TrainCommon {
             }
             dropCar(file, car, buf, format, isLocal, isManifest);
         } else {
-            StringBuffer buf = new StringBuffer(padAndTruncateString(Setup.getSwitchListDropCarPrefix(), Setup.getSwitchListPrefixLength()));
+            StringBuffer buf = new StringBuffer(
+                    padAndTruncateString(Setup.getSwitchListDropCarPrefix(), Setup.getSwitchListPrefixLength()));
             String[] format = Setup.getDropSwitchListMessageFormat();
             boolean isLocal = isLocalMove(car);
             if (isLocal) {
-                buf = new StringBuffer(padAndTruncateString(Setup.getSwitchListLocalPrefix(), Setup.getSwitchListPrefixLength()));
+                buf = new StringBuffer(
+                        padAndTruncateString(Setup.getSwitchListLocalPrefix(), Setup.getSwitchListPrefixLength()));
                 format = Setup.getLocalSwitchListMessageFormat();
             }
             dropCar(file, car, buf, format, isLocal, isManifest);
         }
     }
 
-    private void dropCar(PrintWriter file, Car car, StringBuffer buf, String[] format, boolean isLocal, boolean isManifest) {
+    private void dropCar(PrintWriter file, Car car, StringBuffer buf, String[] format, boolean isLocal,
+            boolean isManifest) {
         for (String attribute : format) {
             String s = getCarAttribute(car, attribute, !PICKUP, isLocal);
             if (!checkStringLength(buf.toString() + s, isManifest)) {
@@ -748,7 +748,6 @@ public class TrainCommon {
      * Returns the drop car string. Useful for frames like train conductor and
      * yardmaster.
      *
-     * @param car
      * @param isManifest when true use manifest format, when false use switch
      *            list format
      * @return drop car string
@@ -786,7 +785,6 @@ public class TrainCommon {
      *
      * @param isManifest when true use manifest format, when false use switch
      *            list format
-     * @param car
      * @return move car string
      */
     public String localMoveCar(Car car, boolean isManifest) {
@@ -811,10 +809,6 @@ public class TrainCommon {
      * Add a list of utility cars scheduled for pick up from the route location
      * to the output file. The cars are blocked by destination.
      *
-     * @param file
-     * @param carList
-     * @param car
-     * @param isManifest
      */
     protected void pickupUtilityCars(PrintWriter file, List<Car> carList, Car car, boolean isManifest) {
         // list utility cars by type, track, length, and load
@@ -828,7 +822,8 @@ public class TrainCommon {
         if (count == 0) {
             return; // already printed out this car type
         }
-        pickUpCar(file, car, new StringBuffer(padAndTruncateString(Setup.getPickupCarPrefix(), isManifest ? Setup.getManifestPrefixLength() : Setup.getSwitchListPrefixLength()) +
+        pickUpCar(file, car, new StringBuffer(padAndTruncateString(Setup.getPickupCarPrefix(),
+                isManifest ? Setup.getManifestPrefixLength() : Setup.getSwitchListPrefixLength()) +
                 " " +
                 padString(Integer.toString(count), UTILITY_CAR_COUNT_FIELD_SIZE)), format, isManifest);
     }
@@ -837,10 +832,6 @@ public class TrainCommon {
      * Add a list of utility cars scheduled for drop at the route location to
      * the output file.
      *
-     * @param file
-     * @param carList
-     * @param car
-     * @param isManifest
      */
     protected void setoutUtilityCars(PrintWriter file, List<Car> carList, Car car, boolean isManifest) {
         boolean isLocal = isLocalMove(car);
@@ -853,10 +844,12 @@ public class TrainCommon {
             buf = new StringBuffer(padAndTruncateString(Setup.getDropCarPrefix(), Setup.getManifestPrefixLength()));
             format = Setup.getDropUtilityManifestMessageFormat();
         } else if (isLocal && !isManifest) {
-            buf = new StringBuffer(padAndTruncateString(Setup.getSwitchListLocalPrefix(), Setup.getSwitchListPrefixLength()));
+            buf = new StringBuffer(
+                    padAndTruncateString(Setup.getSwitchListLocalPrefix(), Setup.getSwitchListPrefixLength()));
             format = Setup.getLocalUtilitySwitchListMessageFormat();
         } else {
-            buf = new StringBuffer(padAndTruncateString(Setup.getSwitchListDropCarPrefix(), Setup.getSwitchListPrefixLength()));
+            buf = new StringBuffer(
+                    padAndTruncateString(Setup.getSwitchListDropCarPrefix(), Setup.getSwitchListPrefixLength()));
             format = Setup.getDropUtilitySwitchListMessageFormat();
         }
         int count = countUtilityCars(format, carList, car, !PICKUP);
@@ -908,7 +901,8 @@ public class TrainCommon {
         return setoutUtilityCars(carList, car, isLocal, isManifest, !IS_TWO_COLUMN_TRACK);
     }
 
-    protected String setoutUtilityCars(List<Car> carList, Car car, boolean isLocal, boolean isManifest, boolean isTwoColumnTrack) {
+    protected String setoutUtilityCars(List<Car> carList, Car car, boolean isLocal, boolean isManifest,
+            boolean isTwoColumnTrack) {
         int count = countSetoutUtilityCars(carList, car, isLocal, isManifest);
         if (count == 0) {
             return null;
@@ -963,10 +957,6 @@ public class TrainCommon {
      * car provided. Returns 0 if this car type has already been processed,
      * otherwise the number of cars with the same attribute.
      *
-     * @param format
-     * @param carList
-     * @param car
-     * @param isPickup
      * @return 0 if the car type has already been processed
      */
     protected int countUtilityCars(String[] format, List<Car> carList, Car car, boolean isPickup) {
@@ -1083,9 +1073,7 @@ public class TrainCommon {
      * @param string string to write
      */
     protected static void addLine(PrintWriter file, String level, String string) {
-        if (log.isDebugEnabled()) {
-            log.debug(string);
-        }
+        log.debug(string);
         if (file != null) {
             String[] lines = string.split(NEW_LINE);
             for (String line : lines) {
@@ -1116,7 +1104,6 @@ public class TrainCommon {
     /**
      * Used to determine if car is a local move
      *
-     * @param car
      * @return true if the move is at the same location
      */
     protected boolean isLocalMove(Car car) {
@@ -1128,7 +1115,8 @@ public class TrainCommon {
         }
         if (car.getTrain() != null &&
                 car.getTrain().isLocalSwitcher() &&
-                splitString(car.getRouteLocation().getName()).equals(splitString(car.getRouteDestination().getName())) &&
+                splitString(car.getRouteLocation().getName())
+                        .equals(splitString(car.getRouteDestination().getName())) &&
                 car.getTrack() != null) {
             return true;
         }
@@ -1161,13 +1149,9 @@ public class TrainCommon {
     /**
      * Writes string to file. No line length wrap or protection.
      *
-     * @param file
-     * @param string
      */
     protected void addLine(PrintWriter file, String string) {
-        if (log.isDebugEnabled()) {
-            log.debug(string);
-        }
+        log.debug(string);
         if (file != null) {
             file.println(string);
         }
@@ -1177,8 +1161,6 @@ public class TrainCommon {
      * Writes a string to a file. Checks for string length, and will
      * automatically wrap lines.
      *
-     * @param file
-     * @param string
      * @param isManifest set true for manifest page orientation, false for
      *            switch list orientation
      */
@@ -1206,7 +1188,6 @@ public class TrainCommon {
     /**
      * Adds a blank line to the file.
      *
-     * @param file
      */
     protected void newLine(PrintWriter file) {
         file.println(BLANK_LINE);
@@ -1217,7 +1198,6 @@ public class TrainCommon {
      * is an integer or if the first character after the hyphen is a left
      * parenthesis "(".
      *
-     * @param name
      * @return First half of the string.
      */
     public static String splitString(String name) {
@@ -1236,8 +1216,7 @@ public class TrainCommon {
 
     /**
      * Splits a string if there's a hyphen followed by a left parenthesis "-(".
-     * 
-     * @param name
+     *
      * @return First half of the string.
      */
     private static String splitStringLeftParenthesis(String name) {
@@ -1270,8 +1249,6 @@ public class TrainCommon {
     /**
      * returns true if the train has work at the location
      *
-     * @param train
-     * @param location
      * @return true if the train has work at the location
      */
     public static boolean isThereWorkAtLocation(Train train, Location location) {
@@ -1288,9 +1265,11 @@ public class TrainCommon {
         for (RollingStock rs : list) {
             if ((rs.getRouteLocation() != null &&
                     rs.getTrack() != null &&
-                    TrainCommon.splitString(rs.getRouteLocation().getName()).equals(TrainCommon.splitString(location.getName()))) ||
+                    TrainCommon.splitString(rs.getRouteLocation().getName())
+                            .equals(TrainCommon.splitString(location.getName()))) ||
                     (rs.getRouteDestination() != null &&
-                            TrainCommon.splitString(rs.getRouteDestination().getName()).equals(TrainCommon.splitString(location.getName())))) {
+                            TrainCommon.splitString(rs.getRouteDestination().getName())
+                                    .equals(TrainCommon.splitString(location.getName())))) {
                 return true;
             }
         }
@@ -1323,7 +1302,8 @@ public class TrainCommon {
     private String getEngineAttribute(Engine engine, String attribute, boolean isPickup) {
         if (attribute.equals(Setup.MODEL)) {
             return " " +
-                    padAndTruncateString(splitStringLeftParenthesis(engine.getModel()), EngineModels.instance().getMaxNameLength());
+                    padAndTruncateString(splitStringLeftParenthesis(engine.getModel()),
+                            EngineModels.instance().getMaxNameLength());
         }
         if (attribute.equals(Setup.CONSIST)) {
             return " " + padAndTruncateString(engine.getConsistName(), engineManager.getConsistMaxNameLength());
@@ -1335,9 +1315,12 @@ public class TrainCommon {
         if (attribute.equals(Setup.LOAD)) {
             return ((car.isCaboose() && !Setup.isPrintCabooseLoadEnabled()) ||
                     (car.isPassenger() &&
-                            !Setup.isPrintPassengerLoadEnabled())) ? padAndTruncateString("", CarLoads.instance().getMaxNameLength() +
-                                    1) : " " +
-                                            padAndTruncateString(car.getLoadName(), CarLoads.instance().getMaxNameLength());
+                            !Setup.isPrintPassengerLoadEnabled())) ? padAndTruncateString("",
+                                    CarLoads.instance().getMaxNameLength() +
+                                            1)
+                                    : " " +
+                                            padAndTruncateString(car.getLoadName(),
+                                                    CarLoads.instance().getMaxNameLength());
         } else if (attribute.equals(Setup.HAZARDOUS)) {
             return (car.isHazardous() ? " " +
                     Setup.getHazardousMsg() : padAndTruncateString("", Setup.getHazardousMsg().length() + 1));
@@ -1360,7 +1343,8 @@ public class TrainCommon {
                                 " " +
                                 splitString(car.getReturnWhenEmptyDestinationName()) +
                                 " ," +
-                                splitString(car.getReturnWhenEmptyDestTrackName()), locationManager.getMaxLocationAndTrackNameLength() +
+                                splitString(car.getReturnWhenEmptyDestTrackName()),
+                                locationManager.getMaxLocationAndTrackNameLength() +
                                         TrainManifestHeaderText.getStringHeader_RWE().length() +
                                         3);
             }
@@ -1368,10 +1352,13 @@ public class TrainCommon {
         } else if (attribute.equals(Setup.FINAL_DEST)) {
             if (!car.getFinalDestinationName().equals(Car.NONE)) {
                 return Setup.isPrintHeadersEnabled() ? " " +
-                        padAndTruncateString(splitString(car.getFinalDestinationName()), locationManager.getMaxLocationNameLength()) : " " +
+                        padAndTruncateString(splitString(car.getFinalDestinationName()),
+                                locationManager.getMaxLocationNameLength())
+                        : " " +
                                 padAndTruncateString(TrainManifestText.getStringFinalDestination() +
                                         " " +
-                                        splitString(car.getFinalDestinationName()), locationManager.getMaxLocationNameLength() +
+                                        splitString(car.getFinalDestinationName()),
+                                        locationManager.getMaxLocationNameLength() +
                                                 TrainManifestText.getStringFinalDestination().length() +
                                                 1);
             }
@@ -1381,15 +1368,18 @@ public class TrainCommon {
                 return Setup.isPrintHeadersEnabled() ? " " +
                         padAndTruncateString(splitString(car.getFinalDestinationName()) +
                                 ", " +
-                                splitString(car.getFinalDestinationTrackName()), locationManager.getMaxLocationAndTrackNameLength() +
-                                        2) : " " +
-                                                padAndTruncateString(TrainManifestText.getStringFinalDestination() +
-                                                        " " +
-                                                        splitString(car.getFinalDestinationName()) +
-                                                        ", " +
-                                                        splitString(car.getFinalDestinationTrackName()), locationManager.getMaxLocationAndTrackNameLength() +
-                                                                TrainManifestText.getStringFinalDestination().length() +
-                                                                3);
+                                splitString(car.getFinalDestinationTrackName()),
+                                locationManager.getMaxLocationAndTrackNameLength() +
+                                        2)
+                        : " " +
+                                padAndTruncateString(TrainManifestText.getStringFinalDestination() +
+                                        " " +
+                                        splitString(car.getFinalDestinationName()) +
+                                        ", " +
+                                        splitString(car.getFinalDestinationTrackName()),
+                                        locationManager.getMaxLocationAndTrackNameLength() +
+                                                TrainManifestText.getStringFinalDestination().length() +
+                                                3);
             }
             return "";
         }
@@ -1413,20 +1403,26 @@ public class TrainCommon {
                 (attribute.equals(Setup.TRACK) && isPickup)) {
             if (rs.getTrack() != null) {
                 return Setup.isPrintHeadersEnabled() ? " " +
-                        padAndTruncateString(splitString(rs.getTrackName()), locationManager.getMaxTrackNameLength()) : " " +
+                        padAndTruncateString(splitString(rs.getTrackName()),
+                                locationManager.getMaxTrackNameLength())
+                        : " " +
                                 padAndTruncateString(TrainManifestText.getStringFrom() +
                                         " " +
-                                        splitString(rs.getTrackName()), TrainManifestText.getStringFrom().length() +
+                                        splitString(rs.getTrackName()),
+                                        TrainManifestText.getStringFrom().length() +
                                                 locationManager.getMaxTrackNameLength() +
                                                 1);
             }
             return "";
         } else if (attribute.equals(Setup.LOCATION) && !isPickup && !isLocal) {
             return Setup.isPrintHeadersEnabled() ? " " +
-                    padAndTruncateString(splitString(rs.getLocationName()), locationManager.getMaxLocationNameLength()) : " " +
+                    padAndTruncateString(splitString(rs.getLocationName()),
+                            locationManager.getMaxLocationNameLength())
+                    : " " +
                             padAndTruncateString(TrainManifestText.getStringFrom() +
                                     " " +
-                                    splitString(rs.getLocationName()), locationManager.getMaxLocationNameLength() +
+                                    splitString(rs.getLocationName()),
+                                    locationManager.getMaxLocationNameLength() +
                                             TrainManifestText.getStringFrom().length() +
                                             1);
         } else if (attribute.equals(Setup.DESTINATION) && isPickup) {
@@ -1434,7 +1430,8 @@ public class TrainCommon {
                 return "";
             if (Setup.isPrintHeadersEnabled()) {
                 return " " +
-                        padAndTruncateString(splitString(rs.getDestinationName()), locationManager.getMaxLocationNameLength());
+                        padAndTruncateString(splitString(rs.getDestinationName()),
+                                locationManager.getMaxLocationNameLength());
             }
             if (Setup.isTabEnabled()) {
                 return " " +
@@ -1448,25 +1445,31 @@ public class TrainCommon {
             }
         } else if ((attribute.equals(Setup.DESTINATION) || attribute.equals(Setup.TRACK)) && !isPickup) {
             return Setup.isPrintHeadersEnabled() ? " " +
-                    padAndTruncateString(splitString(rs.getDestinationTrackName()), locationManager.getMaxTrackNameLength()) : " " +
+                    padAndTruncateString(splitString(rs.getDestinationTrackName()),
+                            locationManager.getMaxTrackNameLength())
+                    : " " +
                             padAndTruncateString(TrainManifestText.getStringTo() +
                                     " " +
-                                    splitString(rs.getDestinationTrackName()), locationManager.getMaxTrackNameLength() +
+                                    splitString(rs.getDestinationTrackName()),
+                                    locationManager.getMaxTrackNameLength() +
                                             TrainManifestText.getStringTo().length() +
                                             1);
         } else if (attribute.equals(Setup.DEST_TRACK)) {
             return Setup.isPrintHeadersEnabled() ? " " +
                     padAndTruncateString(splitString(rs.getDestinationName()) +
                             ", " +
-                            splitString(rs.getDestinationTrackName()), locationManager.getMaxLocationAndTrackNameLength() +
-                                    2) : " " +
-                                            padAndTruncateString(TrainManifestText.getStringDest() +
-                                                    " " +
-                                                    splitString(rs.getDestinationName()) +
-                                                    ", " +
-                                                    splitString(rs.getDestinationTrackName()), locationManager.getMaxLocationAndTrackNameLength() +
-                                                            TrainManifestText.getStringDest().length() +
-                                                            3);
+                            splitString(rs.getDestinationTrackName()),
+                            locationManager.getMaxLocationAndTrackNameLength() +
+                                    2)
+                    : " " +
+                            padAndTruncateString(TrainManifestText.getStringDest() +
+                                    " " +
+                                    splitString(rs.getDestinationName()) +
+                                    ", " +
+                                    splitString(rs.getDestinationTrackName()),
+                                    locationManager.getMaxLocationAndTrackNameLength() +
+                                            TrainManifestText.getStringDest().length() +
+                                            3);
         } else if (attribute.equals(Setup.OWNER)) {
             return " " + padAndTruncateString(rs.getOwner(), CarOwners.instance().getMaxNameLength());
         } else if (attribute.equals(Setup.COMMENT)) {
@@ -1484,8 +1487,10 @@ public class TrainCommon {
             return " " + padAndTruncateString("", CarColors.instance().getMaxNameLength());
         } // there are four truncated manifest attributes
         else if (attribute.equals(Setup.NO_DEST_TRACK)) {
-            return Setup.isPrintHeadersEnabled() ? padAndTruncateString("", locationManager.getMaxLocationAndTrackNameLength() +
-                    2) : "";
+            return Setup.isPrintHeadersEnabled() ? padAndTruncateString("",
+                    locationManager.getMaxLocationAndTrackNameLength() +
+                            2)
+                    : "";
         } else if ((attribute.equals(Setup.NO_LOCATION) && !isPickup) ||
                 (attribute.equals(Setup.NO_DESTINATION) && isPickup)) {
             return Setup.isPrintHeadersEnabled() ? padAndTruncateString("", locationManager.getMaxLocationNameLength() +
@@ -1510,8 +1515,6 @@ public class TrainCommon {
     /**
      * Two column header format. Left side pick ups, right side set outs
      *
-     * @param file
-     * @param isManifest
      */
     public void printEngineHeader(PrintWriter file, boolean isManifest) {
         int lineLength = getLineLength(isManifest);
@@ -1547,8 +1550,6 @@ public class TrainCommon {
      * Prints the two column header for cars. Left side pick ups, right side set
      * outs.
      *
-     * @param file
-     * @param isManifest
      */
     public void printCarHeader(PrintWriter file, boolean isManifest, boolean isTwoColumnTrack) {
         int lineLength = getLineLength(isManifest);
@@ -1653,66 +1654,88 @@ public class TrainCommon {
                 continue;
             }
             if (attribute.equals(Setup.ROAD)) {
-                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Road(), CarRoads.instance().getMaxNameLength()) +
+                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Road(),
+                        CarRoads.instance().getMaxNameLength()) +
                         " ");
             } else if (attribute.equals(Setup.NUMBER) && !isEngine) {
-                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Number(), Control.max_len_string_print_road_number) +
+                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Number(),
+                        Control.max_len_string_print_road_number) +
                         " ");
             } else if (attribute.equals(Setup.NUMBER) && isEngine) {
-                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_EngineNumber(), Control.max_len_string_print_road_number) +
+                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_EngineNumber(),
+                        Control.max_len_string_print_road_number) +
                         " ");
             } else if (attribute.equals(Setup.TYPE)) {
-                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Type(), CarTypes.instance().getMaxNameLength()) +
+                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Type(),
+                        CarTypes.instance().getMaxNameLength()) +
                         " ");
             } else if (attribute.equals(Setup.MODEL)) {
-                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Model(), EngineModels.instance().getMaxNameLength()) +
+                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Model(),
+                        EngineModels.instance().getMaxNameLength()) +
                         " ");
             } else if (attribute.equals(Setup.CONSIST)) {
-                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Consist(), engineManager.getConsistMaxNameLength()) +
+                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Consist(),
+                        engineManager.getConsistMaxNameLength()) +
                         " ");
             } else if (attribute.equals(Setup.KERNEL)) {
-                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Kernel(), carManager.getKernelMaxNameLength()) +
+                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Kernel(),
+                        carManager.getKernelMaxNameLength()) +
                         " ");
             } else if (attribute.equals(Setup.KERNEL_SIZE)) {
                 buf.append("   "); // assume kernel size is 99 or less
             } else if (attribute.equals(Setup.LOAD)) {
-                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Load(), CarLoads.instance().getMaxNameLength()) +
+                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Load(),
+                        CarLoads.instance().getMaxNameLength()) +
                         " ");
             } else if (attribute.equals(Setup.COLOR)) {
-                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Color(), CarColors.instance().getMaxNameLength()) +
+                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Color(),
+                        CarColors.instance().getMaxNameLength()) +
                         " ");
             } else if (attribute.equals(Setup.OWNER)) {
-                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Owner(), CarOwners.instance().getMaxNameLength()) +
+                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Owner(),
+                        CarOwners.instance().getMaxNameLength()) +
                         " ");
             } else if (attribute.equals(Setup.LENGTH)) {
-                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Length(), Control.max_len_string_length_name) +
+                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Length(),
+                        Control.max_len_string_length_name) +
                         " ");
             } else if (attribute.equals(Setup.TRACK)) {
-                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Track(), locationManager.getMaxTrackNameLength()) +
+                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Track(),
+                        locationManager.getMaxTrackNameLength()) +
                         " ");
             } else if (attribute.equals(Setup.LOCATION) && (isPickup || isLocal)) {
-                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Location(), locationManager.getMaxTrackNameLength()) +
+                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Location(),
+                        locationManager.getMaxTrackNameLength()) +
                         " ");
             } else if (attribute.equals(Setup.LOCATION) && !isPickup) {
-                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Location(), locationManager.getMaxLocationNameLength()) +
+                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Location(),
+                        locationManager.getMaxLocationNameLength()) +
                         " ");
             } else if (attribute.equals(Setup.DESTINATION) && !isPickup) {
-                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Destination(), locationManager.getMaxTrackNameLength()) +
+                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Destination(),
+                        locationManager.getMaxTrackNameLength()) +
                         " ");
             } else if (attribute.equals(Setup.DESTINATION) && isPickup) {
-                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Destination(), locationManager.getMaxLocationNameLength()) +
+                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Destination(),
+                        locationManager.getMaxLocationNameLength()) +
                         " ");
             } else if (attribute.equals(Setup.DEST_TRACK)) {
-                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Dest_Track(), locationManager.getMaxLocationAndTrackNameLength() +
-                        2) + " ");
+                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Dest_Track(),
+                        locationManager.getMaxLocationAndTrackNameLength() +
+                                2) +
+                        " ");
             } else if (attribute.equals(Setup.FINAL_DEST)) {
-                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Final_Dest(), locationManager.getMaxLocationNameLength()) +
+                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Final_Dest(),
+                        locationManager.getMaxLocationNameLength()) +
                         " ");
             } else if (attribute.equals(Setup.FINAL_DEST_TRACK)) {
-                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Final_Dest_Track(), locationManager.getMaxLocationAndTrackNameLength() +
-                        2) + " ");
+                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Final_Dest_Track(),
+                        locationManager.getMaxLocationAndTrackNameLength() +
+                                2) +
+                        " ");
             } else if (attribute.equals(Setup.HAZARDOUS)) {
-                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Hazardous(), Setup.getHazardousMsg().length()) +
+                buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Hazardous(),
+                        Setup.getHazardousMsg().length()) +
                         " ");
             } else if (attribute.equals(Setup.RWE)) {
                 buf.append(TrainManifestHeaderText.getStringHeader_RWE() + " ");
@@ -1746,7 +1769,6 @@ public class TrainCommon {
     /**
      * Prints a line across the entire page.
      *
-     * @param file
      */
     public void printHorizontalLine(PrintWriter file, boolean isManifest) {
         printHorizontalLine(file, 0, getLineLength(isManifest));
@@ -1765,8 +1787,8 @@ public class TrainCommon {
 
     public static String getISO8601Date(boolean isModelYear) {
         Calendar calendar = Calendar.getInstance();
-        // use the JMRI timebase (which may be a fast clock).
-        calendar.setTime(jmri.InstanceManager.timebaseInstance().getTime());
+        // use the JMRI Timebase (which may be a fast clock).
+        calendar.setTime(jmri.InstanceManager.getDefault(jmri.Timebase.class).getTime());
         if (isModelYear && !Setup.getYearModeled().isEmpty()) {
             try {
                 calendar.set(Calendar.YEAR, Integer.parseInt(Setup.getYearModeled().trim()));
@@ -1778,17 +1800,17 @@ public class TrainCommon {
     }
 
     public static String getDate(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("M/dd/yyyy HH:mm");
+        SimpleDateFormat format = new SimpleDateFormat("M/dd/yyyy HH:mm"); // NOI18N
         if (Setup.is12hrFormatEnabled()) {
-            format = new SimpleDateFormat("M/dd/yyyy hh:mm a");
+            format = new SimpleDateFormat("M/dd/yyyy hh:mm a"); // NOI18N
         }
         return format.format(date);
     }
 
     public static String getDate(boolean isModelYear) {
         Calendar calendar = Calendar.getInstance();
-        // use the JMRI timebase (which may be a fast clock).
-        calendar.setTime(jmri.InstanceManager.timebaseInstance().getTime());
+        // use the JMRI Timebase (which may be a fast clock).
+        calendar.setTime(jmri.InstanceManager.getDefault(jmri.Timebase.class).getTime());
         if (isModelYear && !Setup.getYearModeled().equals(Setup.NONE)) {
             try {
                 calendar.set(Calendar.YEAR, Integer.parseInt(Setup.getYearModeled().trim()));
@@ -1800,52 +1822,10 @@ public class TrainCommon {
     }
 
     /**
-     * Returns a double in minutes representing the string date. Date string has
-     * to be in the order: Month / day / year hour:minute AM_PM
-     *
-     * @param date
-     * @return double in minutes @deprecated. Use date object comparisons
-     *         instead.
-     */
-    @Deprecated
-    public double convertStringDateToDouble(String date) {
-        double dateToDouble = 0;
-        try {
-            // log.debug("Convert date: " + date);
-            String[] breakdownDate = date.split("/");
-            // log.debug("Month: " + breakdownDate[0]);
-            // convert month to minutes
-            dateToDouble += 60 * 24 * 31 * Integer.parseInt(breakdownDate[0]);
-            // log.debug("Day: " + breakdownDate[1]);
-            dateToDouble += 60 * 24 * Integer.parseInt(breakdownDate[1]);
-            String[] breakDownYear = breakdownDate[2].split(" ");
-            // log.debug("Year: " + breakDownYear[0]);
-            dateToDouble += 60 * 24 * 365 * Integer.parseInt(breakDownYear[0]);
-            String[] breakDownTime = breakDownYear[1].split(":");
-            // log.debug("Hour: " + breakDownTime[0]);
-            dateToDouble += 60 * Integer.parseInt(breakDownTime[0]);
-            // log.debug("Minute: " + breakDownTime[1]);
-            dateToDouble += Integer.parseInt(breakDownTime[1]);
-            if (breakDownYear.length > 2) {
-                log.debug("AM_PM: " + breakDownYear[2]);
-                if (breakDownYear[2].equals(Bundle.getMessage("PM"))) {
-                    dateToDouble += 60 * 12;
-                }
-            }
-        } catch (NumberFormatException e) {
-            log.error("Not able to convert date: " + date + " to double");
-        }
-        // log.debug("Double: "+dateToDouble);
-        return dateToDouble;
-    }
-
-    /**
-     * Will pad out a string by adding spaces to the end of the string, and will
+     * Pads out a string by adding spaces to the end of the string, and will
      * remove characters from the end of the string if the string exceeds the
      * field size.
      *
-     * @param s
-     * @param fieldSize
      * @return A String the specified length
      */
     public static String padAndTruncateString(String s, int fieldSize) {
@@ -1867,8 +1847,6 @@ public class TrainCommon {
      * Adjusts string to be a certain number of characters by adding spaces to
      * the end of the string.
      *
-     * @param s
-     * @param fieldSize
      * @return A String the specified length
      */
     public static String padString(String s, int fieldSize) {
@@ -1882,8 +1860,6 @@ public class TrainCommon {
     /**
      * Adds the requested number of spaces to the start of the string.
      *
-     * @param s
-     * @param tabSize
      * @return A String the specified length
      */
     public static String tabString(String s, int tabSize) {
@@ -1903,7 +1879,8 @@ public class TrainCommon {
     }
 
     protected int getLineLength(boolean isManifest) {
-        return getLineLength(isManifest ? Setup.getManifestOrientation() : Setup.getSwitchListOrientation(), Setup.getManifestFontSize(), Setup.getFontName());
+        return getLineLength(isManifest ? Setup.getManifestOrientation() : Setup.getSwitchListOrientation(),
+                Setup.getManifestFontSize(), Setup.getFontName());
     }
 
     private static int getLineLength(String orientation, int fontSize, String fontName) {
@@ -1922,16 +1899,13 @@ public class TrainCommon {
     }
 
     private boolean checkStringLength(String string, boolean isManifest) {
-        return checkStringLength(string, isManifest ? Setup.getManifestOrientation() : Setup.getSwitchListOrientation(), Setup.getFontName(), Setup.getManifestFontSize());
+        return checkStringLength(string, isManifest ? Setup.getManifestOrientation() : Setup.getSwitchListOrientation(),
+                Setup.getFontName(), Setup.getManifestFontSize());
     }
 
     /**
      * Checks to see if the the string fits on the page.
      *
-     * @param string
-     * @param orientation
-     * @param fontName
-     * @param fontSize
      * @return false if string length is longer than page width.
      */
     private boolean checkStringLength(String string, String orientation, String fontName, int fontSize) {
@@ -1963,7 +1937,6 @@ public class TrainCommon {
      * Produces a string using commas and spaces between the strings provided in
      * the array. Does not check for embedded commas in the string array.
      *
-     * @param array
      * @return formated string using commas and spaces
      */
     public static String formatStringToCommaSeparated(String[] array) {

@@ -1,4 +1,3 @@
-// DefaultSignalSystemTest.java
 package jmri.implementation;
 
 import jmri.SignalSystem;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the DefaultSignalSystem interface implementation
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  */
 public class DefaultSignalSystemTest extends TestCase {
 
@@ -161,7 +159,7 @@ public class DefaultSignalSystemTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {DefaultSignalSystemTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

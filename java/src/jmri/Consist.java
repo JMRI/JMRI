@@ -1,4 +1,3 @@
-// Consist.java
 package jmri;
 
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import java.util.ArrayList;
  * <P>
  *
  * @author Paul Bender Copyright (C) 2003-2008
- * @version $Revision$
  */
 public interface Consist {
 

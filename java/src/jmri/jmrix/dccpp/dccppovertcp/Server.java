@@ -1,4 +1,3 @@
-// Server.java
 package jmri.jmrix.dccpp.dccppovertcp;
 
 import java.io.FileInputStream;
@@ -13,19 +12,18 @@ import java.util.LinkedList;
 import java.util.Properties;
 import jmri.InstanceManager;
 import jmri.implementation.QuietShutDownTask;
+import jmri.jmrix.dccpp.DCCppConstants;
 import jmri.util.FileUtil;
 import jmri.util.SocketUtil;
 import jmri.util.zeroconf.ZeroConfService;
-import jmri.jmrix.dccpp.DCCppConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of the LocoNetOverTcp LbServer Server Protocol
+ * Implementation of the DCCppOverTcp Server Protocol
  *
  * @author Alex Shepherd Copyright (C) 2006
  * @author Mark Underwood Copyright (C) 2015
- * @version	$Revision$
  */
 public class Server {
 
@@ -98,7 +96,7 @@ public class Server {
         try {
             OutputStream outStream = new FileOutputStream(settingsFileName);
             PrintStream settingsStream = new PrintStream(outStream);
-            settingsStream.println("# LocoNetOverTcp Configuration Settings");
+            settingsStream.println("# DCCppOverTcp Configuration Settings");
             settingsStream.println(AUTO_START_KEY + " = " + (autoStart ? "1" : "0"));
             settingsStream.println(PORT_NUMBER_KEY + " = " + portNumber);
 
@@ -170,8 +168,8 @@ public class Server {
                     }
                 };
             }
-            if (this.shutDownTask != null && InstanceManager.shutDownManagerInstance() != null) {
-                InstanceManager.shutDownManagerInstance().register(this.shutDownTask);
+            if (this.shutDownTask != null && InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+                InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
             }
         }
     }
@@ -200,8 +198,8 @@ public class Server {
             }
         }
         this.service.stop();
-        if (this.shutDownTask != null && InstanceManager.shutDownManagerInstance() != null) {
-            InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
+        if (this.shutDownTask != null && InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+            InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
         }
     }
 

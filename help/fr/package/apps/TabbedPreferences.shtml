@@ -3,14 +3,13 @@
 <html lang="fr">
 <head>
  <TITLE>
-      JMRI: Preferences Window
+      JMRI: Fen&#234;tre Pr&#233;f&#233;rences
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name="Author">
     <META name="keywords" content="JMRI help preferences">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,7 +22,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>JMRI:Fen&#234;tre Pr&#233;f&#233;rences</H1>
+<h1>JMRI: Fen&#234;tre Pr&#233;f&#233;rences</h1>
 
 La fen&#234;tre de pr&#233;f&#233;rences vous
 configure le fonctionnement de base de votre application JMRI.
@@ -56,7 +55,7 @@ En attendant, il y a quelques informations suppl&#233;mentaires sur les pr&#233;
  <a href="../../manual/Getting_Started.shtml#Preferences"> pages de tutoriels </a>.
 
 <a name="Connection">
-<h2>Connexions</h2></a>
+</a><h2>Connexions</h2>
 
 Vous pouvez s&#233;lectionner l'une des diverses connexions JMRI mise ici. <p>
 Chaque connexion a son propre onglet unique, pour commencer, choisissez d'abord le fabricant de votre syst&#232;me DCC, suivi par le type de connexion que vous utilisez. Il vous sera alors pr&#233;sent&#233; avec une s&#233;rie de param&#232;tres les plus souvent requis qui doivent &#234;tre fix&#233;s. Si vous devez modifier certains des param&#232;tres les plus avanc&#233;s, puis connexion, puis cochez la case "Connexion Param&#232;tres suppl&#233;mentaires"  et cela va vous fournir de plus amples d&#233;tails.
@@ -67,16 +66,17 @@ Pour plus d'informations sur comment configurer cela pour votre mat&#233;riel, c
 <p>
 Rappelez-vous de presser Enregistrer!
 <a name="Defaults">
-<h2>D&#233;fauts</h2></a>
+</a><h2>D&#233;fauts</h2>
 
 Si vous utilisez plusieurs connexions du m&#234;me type, par exemple 
 Connexions LocoNet multiples, ce volet vous permet de s&#233;lectionner celui qui est connect&#233;
 par exemple au programmateur de CV que vous souhaitez utiliser.
 <a name="FileLocations">
-<dt><h2>Emplacements des Fichiers</h2></a>
+<dt></a><h2>Emplacements des Fichiers</h2>
 Ils vous permettent de d&#233;finir l'emplacement par d&#233;faut o&#249; les scripts et les fichiers utilisateurs sont charg&#233;s et enregistr&#233;s.
 <p>
-Notez que lorsque vous changez le "Emplacements des fichiers utilisateur" cela va aussi changer l'emplacement par d&#233;faut o&#249; sont stock&#233;s les &#233;l&#233;ments suivants.
+Notez que lorsque vous changez le "Emplacements des fichiers utilisateur" cela va aussi changer l'emplacement par
+        d&#233;faut o&#249; sont stock&#233;s les &#233;l&#233;ments suivants:
 <dl> <dd> Panneaux <br>
 Listes <br>
 Exploitation <br>
@@ -84,9 +84,11 @@ R&#233;gulateur <br>
 Ressources <br>
 Options Dispatcheur <br>
 Exploitation <br>
-Rps <br> </dl>
+Rps <br>
+    </dl>
+
 <a name="Startup">
-<h2>D&#233;marrage</h2></a>
+</a><h2>D&#233;marrage</h2>
 Ceci traite de toutes les pr&#233;f&#233;rences qui sont invoqu&#233;es au d&#233;marrage, comme le chargement des fichiers de panneau et de l'ex&#233;cution de scripts.
 <dl>
 Actions <dt>
@@ -129,7 +131,7 @@ Cliquez sur "Ajouter un fichier", qui va ouvrir une fen&#234;tre de  section de 
 
 
 <a name="Display">
-<h2>Affichage</h2></a>
+</a><h2>Affichage</h2>
 
 <dl>
 <dt>Interface Graphique Utilisateur (GUI)
@@ -153,12 +155,12 @@ plus d'informations sur la fa&#231;on de le mettre en place, et en particulier l
 </dl>
 
 <a name="Messages">
-<h2>Messages</h2></a>
+</a><h2>Messages</h2>
 Cela vous permet de changer la fa&#231;on dont les messages d'information et d'alerte sont affich&#233;s dans JMRI. <br>
 Il vous permettra &#233;galement de configurer une des r&#233;ponses par d&#233;faut et la question affich&#233;e.
 
 <a name="Roster">
-<h2>Liste</h2></a>
+</a><h2>Liste</h2>
 
 <dl>
 <dt>Programmateur
@@ -169,10 +171,9 @@ pouvez s&#233;lectionner l'un dans le m&#234;me temps que vous
 mais ceci offre un endroit pratique pour d&#233;finir un par d&#233;faut si vous n'avez pas
 &#224; s&#233;lectionner &#224; chaque fois que vous ouvrez un d&#233;codeur.
 
-
-
-<a id="roster"> <a
-<dt> Liste<dd>
+<a id="roster">
+<dt> Liste</dt></a>
+<dd>
 Normalement, la liste est stock&#233;e dans un emplacement standard dans le cadre du  <a href="../../html/apps/DecoderPro/Files.shtml" > r&#233;pertoire pr&#233;f&#233;rences  </a>. Cette option  permet de vous d&#233;placer quelque part d'autre<p>
 <p>
 Le bouton "R&#233;init" restaure l'emplacement par d&#233;faut. Notez que
@@ -183,17 +184,16 @@ Vous pouvez &#233;galement entrer une valeur par d&#233;faut pour le champ "prop
  ici. Ceci comble  la valeur pour les nouvelles entr&#233;es, ce qui
 peut vous faire &#233;conomiser un peu de frappe. Elle n'a aucun effet sur les
 entr&#233;es existantes, m&#234;me si elle change.
-<p>
 
 </dl>
 
 <a name="Throttle">
-<h2>R&#233;gulateur</h2></a>
+</a><h2>R&#233;gulateur</h2>
 
 Ce panneau de pr&#233;f&#233;rences vous permet de choisir si lesfonctions &#233;tendues du R&#233;gulateur
 sont disponibles, et celles qui peuvent &#234;tre utilis&#233;es
 
-<a name="WiThrottle"><h2>R&#233;gulateur WI</h2></a>
+<a name="WiThrottle"></a><h2>R&#233;gulateur WI</h2>
 
 <dl>
 <dt>eStop
@@ -214,18 +214,21 @@ Automatique permettra &#224; l'ordinateur de s&#233;lectionner un num&#233;ro de
  <dt> Contr&#244;les Admis
 
 <dd> Cochez les cases pour permettre &#224; des fonctionnalit&#233;s sp&#233;cifiques d'&#234;tre contr&#244;l&#233;es par des dispositifs mobiles.
-Cela vous permettra de limiter ce que les utilisateurs ont la possibilit&#233; de contr&#244;ler.<ul>
+Cela vous permettra de limiter ce que les utilisateurs ont la possibilit&#233; de contr&#244;ler.
+    <ul>
     <li>Puissance Traction  - Choisissez si les appareils mobiles connect&#233;s via
          cette interface WiFi permet de contr&#244;ler l' Alimentation Traction
-    <li> Aiguillages  -
-     <li>Itin&#233;raires  -
-     <li>Couplages -
-</ul>
+    <li>Aiguillages  -
+    <li>Itin&#233;raires  -
+    <li>Couplages -
+    </ul>
 </dl>
 
 Le bouton "Sauvegarder" met les param&#232;tres actuels en vigueur. Pour qu'un <a href="../jmri/jmrit/withrottle/UserInterface.shtml">r&#233;gulateur</a> utilise les
 nouveaux param&#232;tres, quittez et red\u00e9marrez JMRI.
 
 <!--#include virtual="/Footer" -->
+        </div>
+      </div>
 </body>
 </html>

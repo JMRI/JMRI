@@ -149,7 +149,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
     @Override
     public String getManufacturer(){
-      return jmri.jmrix.DCCManufacturerList.PI;
+      return RaspberryPiConnectionTypeList.PI;
     }
 
     @Override

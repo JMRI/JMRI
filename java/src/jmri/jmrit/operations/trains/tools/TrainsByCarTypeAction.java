@@ -23,6 +23,7 @@ public class TrainsByCarTypeAction extends AbstractAction {
 
     TrainsByCarTypeFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a frame
         if (f == null || !f.isVisible()) {

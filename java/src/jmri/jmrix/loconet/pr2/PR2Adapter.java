@@ -77,7 +77,6 @@ public class PR2Adapter extends LocoBufferAdapter {
 
         // start operation
         packets.startThreads();
-        jmri.jmrix.loconet.ActiveFlag.setActive();
 
     }
 

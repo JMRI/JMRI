@@ -14,14 +14,9 @@ import org.slf4j.LoggerFactory;
  * execute. The user can cancel this dialog skipping any resets
  *
  * @author Howard G. Penny Copyright (C) 2005
- * @version $Revision$
  */
 public class FactoryResetAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -458358692285847216L;
     ResetTableModel rModel;
     JFrame mParent;
 

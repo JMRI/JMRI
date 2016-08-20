@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.wangrow.serialdriver;
 
 import java.io.DataInputStream;
@@ -8,7 +7,6 @@ import java.io.InputStream;
 import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
-import jmri.jmrix.wangrow.ActiveFlag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -31,7 +29,6 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends NcePortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -39,7 +36,7 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
 
     public SerialDriverAdapter() {
         super(new NceSystemConnectionMemo());
-        setManufacturer(jmri.jmrix.DCCManufacturerList.WANGROW);
+        setManufacturer(jmri.jmrix.wangrow.WangrowConnectionTypeList.WANGROW);
     }
 
     public String openPort(String portName, String appName) {
@@ -78,12 +75,7 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status
             if (log.isInfoEnabled()) {
@@ -119,9 +111,6 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
-
-        ActiveFlag.setActive();
-
     }
 
     // base class methods for the NcePortController interface
@@ -160,13 +149,6 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
     private boolean opened = false;
     InputStream serialStream = null;
 
-    /*
-     static public SerialDriverAdapter instance() {
-     if (mInstance == null) mInstance = new SerialDriverAdapter();
-     return mInstance;
-     }
-     static SerialDriverAdapter mInstance = null;
-     */
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

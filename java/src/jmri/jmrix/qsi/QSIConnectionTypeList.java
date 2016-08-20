@@ -11,10 +11,18 @@ package jmri.jmrix.qsi;
  */
 public class QSIConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String QSI = "QSI Solutions";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.qsi.serialdriver.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{QSI};
     }
 
 }

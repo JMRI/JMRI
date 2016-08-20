@@ -1,4 +1,3 @@
-// AddSensorPanel.java
 package jmri.jmrit.beantable;
 
 import java.awt.FlowLayout;
@@ -18,17 +17,11 @@ import javax.swing.JTextField;
  *
  * @author	Bob Jacobsen Copyright (C) 2009
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision$
  */
 public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -958394838638929630L;
-
     public AddNewHardwareDevicePanel(JTextField sysAddress, JTextField userName, JComboBox<String> prefixBox, JTextField endRange, JCheckBox addRange,
-            String addButtonLabel, ActionListener listener, ActionListener rangeListener) {
+            String addButtonLabel, ActionListener okListener, ActionListener cancelListener, ActionListener rangeListener) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         _endRange = endRange;
         _range = addRange;
@@ -68,9 +61,22 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         c.gridy = 2;
         p.add(userName, c);
         add(p);
-        JButton ok;
-        add(ok = new JButton(Bundle.getMessage(addButtonLabel)));
-        ok.addActionListener(listener);
+
+        finishLabel.setEnabled(false);
+        _endRange.setEnabled(false);
+
+        // cancel + add buttons at bottom of window
+        JPanel panelBottom = new JPanel();
+        panelBottom.setLayout(new FlowLayout(FlowLayout.TRAILING));
+
+        panelBottom.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+        cancel.addActionListener(cancelListener);
+
+        panelBottom.add(ok = new JButton(Bundle.getMessage(addButtonLabel)));
+        ok.addActionListener(okListener);
+
+        add(panelBottom);
+
         addRange.addItemListener(
                 new ItemListener() {
                     public void itemStateChanged(ItemEvent e) {
@@ -79,8 +85,6 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
                 });
         prefixBox.addActionListener(rangeListener);
 
-        finishLabel.setEnabled(false);
-        _endRange.setEnabled(false);
         /* System.out.println(jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class));
          java.util.List<jmri.jmrix.SystemConnectionMemo> list 
          = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
@@ -107,13 +111,12 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         }
     }
 
+    JButton ok;
+    JButton cancel;
     JTextField _endRange;
     JCheckBox _range;
-    JLabel sysNameLabel = new JLabel("System");
-    JLabel sysAddressLabel = new JLabel("Hardware Address");
+    JLabel sysNameLabel = new JLabel(Bundle.getMessage("ColumnSystemName"));
+    JLabel sysAddressLabel = new JLabel(Bundle.getMessage("LabelHardwareAddress"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
-    JLabel finishLabel = new JLabel("Number to Add");
+    JLabel finishLabel = new JLabel(Bundle.getMessage("LabelNumberToAdd"));
 }
-
-
-/* @(#)AddNewHardwareDevicePanel.java */

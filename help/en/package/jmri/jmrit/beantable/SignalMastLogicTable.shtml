@@ -27,7 +27,7 @@ the Signal Mast source and destination pairs, along with Blocks, Turnouts and th
 This information is managed via the Signal Mast Logic Table.
 	
 <br>
-<a href="SignalMastLogic.png"><img src="SignalMastLogic.png" width="530" height="166" align="right"></a>
+<a href="images/SignalMastLogic.png"><img src="images/SignalMastLogic.png" width="530" height="166" align="right"></a>
 	
 <h3>Signal Mast Logic Table Columns</h3>
 	  <p>The information in the Signal Mast Logic Table is displayed in 8 columns:

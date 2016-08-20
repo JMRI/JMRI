@@ -1,4 +1,3 @@
-// QsiSystemConnectionMemo.javaf
 package jmri.jmrix.qsi;
 
 import java.util.ResourceBundle;
@@ -14,7 +13,6 @@ import jmri.ProgrammerManager;
  *
  * @author	Kevin Dickerson Copyright (C) 2012
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision: 19712 $
  */
 public class QsiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -23,6 +21,8 @@ public class QsiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         this.st = st;
         register();
         InstanceManager.store(this, QsiSystemConnectionMemo.class); // also register as specific type
+        InstanceManager.store(cf = new jmri.jmrix.qsi.swing.QsiComponentFactory(this), 
+        jmri.jmrix.swing.ComponentFactory.class);
     }
 
     public QsiSystemConnectionMemo() {
@@ -30,9 +30,8 @@ public class QsiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         register(); // registers general type
         InstanceManager.store(this, QsiSystemConnectionMemo.class); // also register as specific type
 
-        //Needs to be implemented
-        /*InstanceManager.store(cf = new jmri.jmrix.ecos.swing.ComponentFactory(this), 
-         jmri.jmrix.swing.ComponentFactory.class);*/
+        InstanceManager.store(cf = new jmri.jmrix.qsi.swing.QsiComponentFactory(this), 
+        jmri.jmrix.swing.ComponentFactory.class);
     }
 
     jmri.jmrix.swing.ComponentFactory cf = null;
@@ -53,7 +52,7 @@ public class QsiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * Provide a menu with all items attached to this system connection
      */
     public javax.swing.JMenu getMenu() {
-        return new QSIMenu("QSI");
+        return new QSIMenu("QSI",this);
     }
 
     /**
@@ -113,7 +112,7 @@ public class QsiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public ProgrammerManager getProgrammerManager() {
         if (programmerManager == null) {
-            programmerManager = new jmri.managers.DefaultProgrammerManager(jmri.jmrix.qsi.QsiProgrammer.instance(), this);
+            programmerManager = new jmri.managers.DefaultProgrammerManager(new jmri.jmrix.qsi.QsiProgrammer(this), this);
         }
         return programmerManager;
     }

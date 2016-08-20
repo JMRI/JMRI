@@ -13,10 +13,6 @@ import javax.swing.AbstractAction;
  */
 public class ShowCheckboxesCarsTableAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7015631697067063039L;
     CarsTableModel _carsTableModel;
 
     public ShowCheckboxesCarsTableAction(String s) {
@@ -28,6 +24,7 @@ public class ShowCheckboxesCarsTableAction extends AbstractAction {
         _carsTableModel = carsTableModel;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         _carsTableModel.toggleSelectVisible();
     }

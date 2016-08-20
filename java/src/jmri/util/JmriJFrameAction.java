@@ -1,4 +1,3 @@
-// JmriJFrameAction.java
 package jmri.util;
 
 import java.awt.event.ActionEvent;
@@ -12,14 +11,8 @@ import org.slf4j.LoggerFactory;
  * loaded class.
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version	$Revision$
  */
 public class JmriJFrameAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8529364887679643165L;
 
     public JmriJFrameAction(String s) {
         super(s);
@@ -52,5 +45,3 @@ public class JmriJFrameAction extends AbstractAction {
 
     private final static Logger log = LoggerFactory.getLogger(JmriJFrameAction.class.getName());
 }
-
-/* @(#)JmriJFrameAction.java */

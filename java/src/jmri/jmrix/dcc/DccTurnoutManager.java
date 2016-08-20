@@ -1,4 +1,3 @@
-// EasyDccTurnoutManager.java
 package jmri.jmrix.dcc;
 
 import jmri.Turnout;
@@ -9,7 +8,6 @@ import jmri.Turnout;
  * System names are "BTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2014
- * @version	$Revision$
  */
 public class DccTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
@@ -29,14 +27,17 @@ public class DccTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         return t;
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public DccTurnoutManager instance() {
         if (_instance == null) {
             _instance = new DccTurnoutManager();
         }
         return _instance;
     }
-    static DccTurnoutManager _instance = null;
+    static volatile DccTurnoutManager _instance = null;
 
 }
 
-/* @(#)DccTurnoutManager.java */

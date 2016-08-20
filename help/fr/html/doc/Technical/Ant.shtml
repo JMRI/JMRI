@@ -1,74 +1,86 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!--  $Id$ -->
-<!-- UpDated by Blorec Herv&#233; le 2013-09-03--> 
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- UpDated by Blorec Herv&#233; le 2013-09-03-->
 
 <html lang="fr">
 <head>
-    <TITLE>
- 	JMRI: Building JMRI with Ant
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code ant">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Construction de JMRI avec Ant</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI technical code ant">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-	<div id="mainContent">
+<body>
+  <!--#include virtual="/Header" -->
 
-	     <H1>Construction de JMRI avec Ant</H1>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-Pour ceux d'entre vous qui pr&#233;f&#232;rent une approche en ligne de commande il conviendrait d'examiner "Ant", un des
-meilleurs utilitaires pour faire les projets Java. Ant est disponible en
-t&#233;l&#233;chargement &#224;
-<A HREF="http://jakarta.apache.org/ant/index.html"> http://jakarta.apache.org/ant/index.html/ </a>.
-Installez-le, puis:
-<UL>
-<LI> Cr&#233;er un r&#233;pertoire pour contenir votre projet.
-<LI> Dans ce r&#233;pertoire de projet, faire un
-<a href="http://jmri.org/help/en/html/doc/Technical/getgitcode.shtml"> checkout Git </a> de  "All"
- les module &#224; partir de notre r&#233;f&#233;rentiel (Repository). 
-Cela va cr&#233;er un sous-r&#233;pertoire "jmri" 
-o&#249; Ant s'ex&#233;cute, et le charge avec la source, des tests et des ressources.
-Il  cr&#233;era et peuplera aussi les r&#233;pertoires pour les fichiers xml, biblioth&#232;ques, etc dans le
-"project directory".
-<LI> Changer pour le sous-r&#233;pertoire "jmri" nouvellement cr&#233;&#233;. Pour compiler, tapez "ant debug".
-<LI> Pour ex&#233;cuter le programme, tapez "ant DecoderPro»ou « ant panelpro ", asseyez-vous et regarder ce qui se passe.
-<LI> Pour ex&#233;cuter la suite de tests, tapez "ant alltest".
-<LI> Pour cr&#233;er un fichier jmri.jar, type "ant dist".
-Notez que vous n'avez pas &#224; cr&#233;er le fichier "jmri.jar" pour ex&#233;cuter le programme.
-<LI> Pour effacer tous les r&#233;sultats pr&#233;c&#233;demment compil&#233;s et forcer le programme &#224;
-&#234;tre enti&#232;rement construit &#224; partir de z&#233;ro, tapez "ant clean".
-</ul>
+    <div id="mainContent">
+      <h1>Construction de JMRI avec Ant</h1>Pour ceux d'entre vous
+      qui pr&eacute;f&egrave;rent une approche en ligne de commande
+      il conviendrait d'examiner "Ant", un des meilleurs
+      utilitaires pour faire les projets Java. Ant est disponible
+      en t&eacute;l&eacute;chargement &agrave; <a href=
+      "http://jakarta.apache.org/ant/index.html">http://jakarta.apache.org/ant/index.html/</a>
+      . Installez-le, puis:
 
-<p>
-Pour s'assurer que tout fonctionne, par exemple, avant d'engager un Retour vers CVS, s'il vous pla&#238;t
-faire:
-<code>
-<pre>
-ant clean
+      <ul>
+        <li>Cr&eacute;er un r&eacute;pertoire pour contenir votre
+        projet.</li>
+
+        <li>Dans ce r&eacute;pertoire de projet, faire un <a href=
+        "http://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">
+        checkout Git</a> de "All" les module &agrave; partir de
+        notre r&eacute;f&eacute;rentiel (Repository). Cela va
+        cr&eacute;er un sous-r&eacute;pertoire "jmri" o&ugrave; Ant
+        s'ex&eacute;cute, et le charge avec la source, des tests et
+        des ressources. Il cr&eacute;era et peuplera aussi les
+        r&eacute;pertoires pour les fichiers xml,
+        biblioth&egrave;ques, etc dans le "project directory".</li>
+
+        <li>Changer pour le sous-r&eacute;pertoire "jmri"
+        nouvellement cr&eacute;&eacute;. Pour compiler, tapez "ant
+        debug".</li>
+
+        <li>Pour ex&eacute;cuter le programme, tapez "ant
+        DecoderPro&raquo;ou &laquo; ant panelpro ", asseyez-vous et
+        regarder ce qui se passe.</li>
+
+        <li>Pour ex&eacute;cuter la suite de tests, tapez "ant
+        alltest".</li>
+
+        <li>Pour cr&eacute;er un fichier jmri.jar, type "ant dist".
+        Notez que vous n'avez pas &agrave; cr&eacute;er le fichier
+        "jmri.jar" pour ex&eacute;cuter le programme.</li>
+
+        <li>Pour effacer tous les r&eacute;sultats
+        pr&eacute;c&eacute;demment compil&eacute;s et forcer le
+        programme &agrave; &ecirc;tre enti&egrave;rement construit
+        &agrave; partir de z&eacute;ro, tapez "ant clean".</li>
+      </ul>
+
+      <p>Pour s'assurer que tout fonctionne, par exemple, avant
+      d'engager un Retour vers CVS, s'il vous pla&icirc;t
+      faire:</p>
+      <pre>
+<code>ant clean
 ant alltests
-</pre>
 </code>
-et s'assurer que les tests soient effectu&#233;s proprement.
-<!--#include virtual="/Footer" -->
-
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+</pre>et s'assurer que les tests soient effectu&eacute;s
+proprement. <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-

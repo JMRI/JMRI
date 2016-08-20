@@ -4,8 +4,8 @@ package jmri.util.swing;
  * Wrap an object for easier null handling in a JComboBox. ("JCB" refers to
  * JComboBox)
  *
- * Define a JComboBox<JCBHandle<Foo>>, then fill it with a new JCBHandle("None
- * string") and your new JCBHandle(foo) entries.
+ * Define a {@code JComboBox<JCBHandle<Foo>>}, then fill it with a new
+ * {@code JCBHandle("None string")} and your new {@code JCBHandle(foo)} entries.
  */
 public class JCBHandle<T> {
 

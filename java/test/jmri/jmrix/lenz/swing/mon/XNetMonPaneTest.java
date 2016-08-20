@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.lenz.swing.mon.XNetMonPane class
  *
  * @author	Paul Bender Copyright (C) 2014
- * @version $Revision$
  */
 public class XNetMonPaneTest extends TestCase {
 
@@ -39,7 +38,7 @@ public class XNetMonPaneTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", XNetMonPaneTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

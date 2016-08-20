@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.loconet.locogen;
 
 import jmri.jmrix.loconet.LocoNetMessage;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.loconet.locogen.LocoGenPanel class
  *
  * @author Bob Jacobsen Copyright 2001, 2003
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -43,7 +41,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

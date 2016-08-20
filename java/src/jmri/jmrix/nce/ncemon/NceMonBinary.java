@@ -405,7 +405,7 @@ public class NceMonBinary {
     private String getLocoAddress(NceMessage m) {
         // show address type
         String appendix = " (short)";
-        if ((m.getElement(1) & 0xE0) > 0) {
+        if ((m.getElement(1) & 0xE0) != 0) {
             appendix = " (long)";
         }
         return Integer.toString((m.getElement(1) & 0x3F) * 256 + m.getElement(2)) + appendix;
@@ -416,27 +416,27 @@ public class NceMonBinary {
         switch (m.getElement(3)) {
             case (7): {
                 StringBuffer buf = new StringBuffer();
-                if ((m.getElement(4) & 0x10) > 0) {
+                if ((m.getElement(4) & 0x10) != 0) {
                     buf.append(rb.getString("F0_ON") + ", ");
                 } else {
                     buf.append(rb.getString("F0_OFF") + ", ");
                 }
-                if ((m.getElement(4) & 0x01) > 0) {
+                if ((m.getElement(4) & 0x01) != 0) {
                     buf.append(rb.getString("F1_ON") + ", ");
                 } else {
                     buf.append(rb.getString("F1_OFF") + ", ");
                 }
-                if ((m.getElement(4) & 0x02) > 0) {
+                if ((m.getElement(4) & 0x02) != 0) {
                     buf.append(rb.getString("F2_ON") + ", ");
                 } else {
                     buf.append(rb.getString("F2_OFF") + ", ");
                 }
-                if ((m.getElement(4) & 0x04) > 0) {
+                if ((m.getElement(4) & 0x04) != 0) {
                     buf.append(rb.getString("F3_ON") + ", ");
                 } else {
                     buf.append(rb.getString("F3_OFF") + ", ");
                 }
-                if ((m.getElement(4) & 0x08) > 0) {
+                if ((m.getElement(4) & 0x08) != 0) {
                     buf.append(rb.getString("F4_ON"));
                 } else {
                     buf.append(rb.getString("F4_OFF"));
@@ -445,22 +445,22 @@ public class NceMonBinary {
             }
             case (8): {
                 StringBuffer buf = new StringBuffer();
-                if ((m.getElement(4) & 0x01) > 0) {
+                if ((m.getElement(4) & 0x01) != 0) {
                     buf.append(rb.getString("F5_ON") + ", ");
                 } else {
                     buf.append(rb.getString("F5_OFF") + ", ");
                 }
-                if ((m.getElement(4) & 0x02) > 0) {
+                if ((m.getElement(4) & 0x02) != 0) {
                     buf.append(rb.getString("F6_ON") + ", ");
                 } else {
                     buf.append(rb.getString("F6_OFF") + ", ");
                 }
-                if ((m.getElement(4) & 0x04) > 0) {
+                if ((m.getElement(4) & 0x04) != 0) {
                     buf.append(rb.getString("F7_ON") + ", ");
                 } else {
                     buf.append(rb.getString("F7_OFF") + ", ");
                 }
-                if ((m.getElement(4) & 0x08) > 0) {
+                if ((m.getElement(4) & 0x08) != 0) {
                     buf.append(rb.getString("F8_ON"));
                 } else {
                     buf.append(rb.getString("F8_OFF"));
@@ -469,22 +469,22 @@ public class NceMonBinary {
             }
             case (9): {
                 StringBuffer buf = new StringBuffer();
-                if ((m.getElement(4) & 0x01) > 0) {
+                if ((m.getElement(4) & 0x01) != 0) {
                     buf.append(rb.getString("F9_ON") + ", ");
                 } else {
                     buf.append(rb.getString("F9_OFF") + ", ");
                 }
-                if ((m.getElement(4) & 0x02) > 0) {
+                if ((m.getElement(4) & 0x02) != 0) {
                     buf.append(rb.getString("F10_ON") + ", ");
                 } else {
                     buf.append(rb.getString("F10_OFF") + ", ");
                 }
-                if ((m.getElement(4) & 0x04) > 0) {
+                if ((m.getElement(4) & 0x04) != 0) {
                     buf.append(rb.getString("F11_ON") + ", ");
                 } else {
                     buf.append(rb.getString("F11_OFF") + ", ");
                 }
-                if ((m.getElement(4) & 0x08) > 0) {
+                if ((m.getElement(4) & 0x08) != 0) {
                     buf.append(rb.getString("F12_ON"));
                 } else {
                     buf.append(rb.getString("F12_OFF"));

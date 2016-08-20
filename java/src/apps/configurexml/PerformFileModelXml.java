@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Ken Cameron Copyright: 2014(c)
- * @version $Revision$
  * @see apps.startup.PerformFileModelFactory
  */
 public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
@@ -59,7 +58,7 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
         // load the file
         File file = new File(fileName);
-        result = InstanceManager.configureManagerInstance().load(file);
+        result = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).load(file);
 
         // leave an updated object around
         PerformFileModel m = new PerformFileModel();

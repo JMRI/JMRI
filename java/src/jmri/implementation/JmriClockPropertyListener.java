@@ -22,7 +22,6 @@ import jmri.Timebase;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Pete Cressman Copyright (C) 2009
- * @version	$Revision 1.0 $
  * @since 2.5.1
  */
 public class JmriClockPropertyListener extends JmriSimplePropertyListener {
@@ -43,7 +42,7 @@ public class JmriClockPropertyListener extends JmriSimplePropertyListener {
         _endTimes[0] = fixMidnight(endTime);
         _rangeList[0] = false;
         numRanges = 1;
-        _fastClock = InstanceManager.timebaseInstance();
+        _fastClock = InstanceManager.getDefault(jmri.Timebase.class);
         Date currentTime = _fastClock.getTime();
         _currentMinutes = (currentTime.getHours() * 60) + currentTime.getMinutes();
     }

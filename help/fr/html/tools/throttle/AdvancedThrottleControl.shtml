@@ -15,6 +15,7 @@
   
   <title>Advanced throttle control</title></head><body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">

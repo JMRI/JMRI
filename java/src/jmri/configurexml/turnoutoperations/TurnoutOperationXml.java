@@ -1,6 +1,3 @@
-/**
- *
- */
 package jmri.configurexml.turnoutoperations;
 
 import jmri.TurnoutOperation;
@@ -36,14 +33,13 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
         if (className == null) {
             log.error("class name missing in turnout operation \"" + e + "\"");
         } else {
+            log.debug("loadOperation for class {}", className);
             try {
                 Class<?> adapterClass = Class.forName(className);
-                if (adapterClass != null) {
-                    TurnoutOperationXml adapter = (TurnoutOperationXml) adapterClass.newInstance();
-                    result = adapter.loadOne(e);
-                    if (result.getName().charAt(0) == '*') {
-                        result.setNonce(true);
-                    }
+                TurnoutOperationXml adapter = (TurnoutOperationXml) adapterClass.newInstance();
+                result = adapter.loadOne(e);
+                if (result.getName().charAt(0) == '*') {
+                    result.setNonce(true);
                 }
             } catch (ClassNotFoundException e1) {
                 log.error("while creating TurnoutOperation", e1);
@@ -91,16 +87,19 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
     static public TurnoutOperationXml getAdapter(TurnoutOperation op) {
         TurnoutOperationXml adapter = null;
         String[] fullOpNameComponents = jmri.util.StringUtil.split(op.getClass().getName(), ".");
+        log.debug("getAdapter found class name {}", op.getClass().getName());
         String[] myNameComponents
                 = new String[]{"jmri", "configurexml", "turnoutoperations", "TurnoutOperationXml"};
         myNameComponents[myNameComponents.length - 1]
                 = fullOpNameComponents[fullOpNameComponents.length - 1];
         String fullConfigName = StringUtil.join(myNameComponents, ".") + "Xml";
+        log.debug("getAdapter looks for {}", fullConfigName);
         try {
             Class<?> configClass = Class.forName(fullConfigName);
             adapter = (TurnoutOperationXml) configClass.newInstance();
-        } catch (Throwable e) {
-        }		// too many to list!
+        } catch (Throwable e) { // too many possible to list them all
+            log.error("exception in getAdapter", e);
+        }
         if (adapter == null) {
             log.warn("could not create adapter class " + fullConfigName);
         }

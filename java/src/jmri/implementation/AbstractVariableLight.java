@@ -1,4 +1,3 @@
-// AbstractVariableLight.java
 package jmri.implementation;
 
 import java.util.Date;
@@ -18,14 +17,14 @@ import org.slf4j.LoggerFactory;
  * The structure is in part dictated by the limitations of the X10 protocol and
  * implementations. However, it is not limited to X10 devices only. Other
  * interfaces that have a way to provide a dimmable light should use it.
- *
+ * <p>
  * X10 has on/off commands, and separate commands for setting a variable
  * intensity via "dim" commands. Some X10 implementations use relative dimming,
  * some use absolute dimming. Some people set the dim level of their Lights and
  * then just use on/off to turn control the lamps; in that case we don't want to
  * send dim commands. Further, X10 communications is very slow, and sending a
- * complete set of dim operations can take a long time. So the algorithm is:
- * <ol>
+ * complete set of dim operations can take a long time. So the algorithm is: </p>
+ * <ul>
  * <li>Until the intensity has been explicitly set different from 1.0 or 0.0, no
  * intensity commands are to be sent over the power line.
  * </ul>
@@ -36,29 +35,20 @@ import org.slf4j.LoggerFactory;
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Ken Cameron Copyright (C) 2008,2009
  * @author	Bob Jacobsen Copyright (C) 2008,2009
- * @version $Revision$
  */
 public abstract class AbstractVariableLight extends AbstractLight
         implements java.io.Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2569969486641421337L;
     private final static Logger log = LoggerFactory.getLogger(AbstractVariableLight.class);
 
     public AbstractVariableLight(String systemName, String userName) {
         super(systemName, userName);
-        if (internalClock == null) {
-            initClocks();
-        }
+        initClocks();
     }
 
     public AbstractVariableLight(String systemName) {
         super(systemName);
-        if (internalClock == null) {
-            initClocks();
-        }
+        initClocks();
     }
 
     /**
@@ -68,6 +58,7 @@ public abstract class AbstractVariableLight extends AbstractLight
      * ON and OFF avoid use of variable intensity if MaxIntensity = 1.0 or
      * MinIntensity = 0.0, and no transition is being used.
      */
+    @Override
     public void setState(int newState) {
         if (log.isDebugEnabled()) {
             log.debug("setState " + newState + " was " + mState);
@@ -153,6 +144,7 @@ public abstract class AbstractVariableLight extends AbstractLight
      * @throws IllegalArgumentException when intensity is less than 0.0 or more
      *                                  than 1.0
      */
+    @Override
     public void setTargetIntensity(double intensity) {
         if (log.isDebugEnabled()) {
             log.debug("setTargetIntensity " + intensity);
@@ -193,6 +185,7 @@ public abstract class AbstractVariableLight extends AbstractLight
 
     /**
      * Set up to start a transition
+     * @param intensity target intensity
      */
     protected void startTransition(double intensity) {
         // set target value
@@ -218,11 +211,13 @@ public abstract class AbstractVariableLight extends AbstractLight
 
     /**
      * Send a Dim/Bright commands to the hardware to reach a specific intensity.
+     * @param intensity new intensity
      */
     abstract protected void sendIntensity(double intensity);
 
     /**
      * Send a On/Off Command to the hardware
+     * @param newState new state
      */
     abstract protected void sendOnOffCommand(int newState);
 
@@ -249,15 +244,14 @@ public abstract class AbstractVariableLight extends AbstractLight
             return; // already done
         }
         // Create a Timebase listener for the Minute change events
-        internalClock = InstanceManager.timebaseInstance();
+        internalClock = InstanceManager.getOptionalDefault(jmri.Timebase.class);
         if (internalClock == null) {
             log.error("No Timebase Instance");
+            return;
         }
-        minuteChangeListener = new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                //process change to new minute
-                newInternalMinute();
-            }
+        minuteChangeListener = (java.beans.PropertyChangeEvent e) -> {
+            //process change to new minute
+            newInternalMinute();
         };
         internalClock.addMinuteChangeListener(minuteChangeListener);
     }
@@ -267,7 +261,7 @@ public abstract class AbstractVariableLight extends AbstractLight
      * having on intensity. Currently, this implementation assumes there's a
      * fixed number of steps between min and max brightness.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
     protected void newInternalMinute() {
         double origCurrent = mCurrentIntensity;
         int origState = mState;
@@ -316,7 +310,7 @@ public abstract class AbstractVariableLight extends AbstractLight
             }
         }
         if (origCurrent != mCurrentIntensity) {
-            firePropertyChange("CurrentIntensity", new Double(origCurrent), new Double(mCurrentIntensity));
+            firePropertyChange("CurrentIntensity", Double.valueOf(origCurrent), Double.valueOf(mCurrentIntensity));
             if (log.isDebugEnabled()) {
                 log.debug("firePropertyChange intensity " + origCurrent + " -> " + mCurrentIntensity);
             }
@@ -331,6 +325,7 @@ public abstract class AbstractVariableLight extends AbstractLight
 
     /**
      * Provide the number of steps available between min and max intensity
+     * @return number of steps
      */
     abstract protected int getNumberOfSteps();
 
@@ -338,12 +333,13 @@ public abstract class AbstractVariableLight extends AbstractLight
      * Change the stored target intensity value and do notification, but don't
      * change anything in the hardware
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
+    @Override
     protected void notifyTargetIntensityChange(double intensity) {
         double oldValue = mCurrentIntensity;
         mCurrentIntensity = intensity;
         if (oldValue != intensity) {
-            firePropertyChange("TargetIntensity", new Double(oldValue), new Double(intensity));
+            firePropertyChange("TargetIntensity", Double.valueOf(oldValue), Double.valueOf(intensity));
         }
     }
 
@@ -352,6 +348,7 @@ public abstract class AbstractVariableLight extends AbstractLight
      * <P>
      * @return true, as this abstract class implements variable intensity.
      */
+    @Override
     public boolean isIntensityVariable() {
         return true;
     }
@@ -364,7 +361,9 @@ public abstract class AbstractVariableLight extends AbstractLight
      * intensity level to another.
      * <p>
      * Unbound property
+     * @return can transition
      */
+    @Override
     public boolean isTransitionAvailable() {
         return true;
     }
@@ -377,6 +376,7 @@ public abstract class AbstractVariableLight extends AbstractLight
      * <p>
      * @throws IllegalArgumentException if minutes is not valid
      */
+    @Override
     public void setTransitionTime(double minutes) {
         if (minutes < 0.0) {
             throw new IllegalArgumentException("Invalid transition time: " + minutes);
@@ -390,6 +390,7 @@ public abstract class AbstractVariableLight extends AbstractLight
      * <p>
      * @return 0.0 if the output intensity transition is instantaneous
      */
+    @Override
     public double getTransitionTime() {
         return mTransitionDuration;
     }
@@ -400,8 +401,10 @@ public abstract class AbstractVariableLight extends AbstractLight
      * <p>
      * Bound property so that listeners can conveniently learn when the
      * transition is over.
+     * @return is transitioning
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
+    @Override
     public boolean isTransitioning() {
         if (mTransitionTargetIntensity != mCurrentIntensity) {
             return true;
@@ -411,5 +414,3 @@ public abstract class AbstractVariableLight extends AbstractLight
     }
 
 }
-
-/* @(#)AbstractVariableLight.java */

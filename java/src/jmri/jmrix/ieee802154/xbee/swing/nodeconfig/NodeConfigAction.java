@@ -26,7 +26,7 @@ public class NodeConfigAction extends jmri.jmrix.ieee802154.swing.nodeconfig.Nod
             try {
                 xcm = jmri.InstanceManager.
                         getList(jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo.class).get(0);
-            } catch (java.lang.NullPointerException npe) {
+            } catch (java.lang.NullPointerException|java.lang.IndexOutOfBoundsException e) {
                 // no memo is registered, is this the first time the
                 // connection has been configured?
                 log.debug("No XBee System Connection Memo available");

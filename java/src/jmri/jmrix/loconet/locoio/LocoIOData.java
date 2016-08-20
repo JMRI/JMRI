@@ -709,7 +709,7 @@ public class LocoIOData
     }
 
     /**
-     * Internal routine to handle timer starts & restarts
+     * Internal routine to handle timer starts {@literal &} restarts
      */
     protected void restartTimer(int delay) {
         if (timer == null) {
@@ -728,9 +728,6 @@ public class LocoIOData
     /**
      * Read a SV from a given LocoIO device
      *
-     * @param locoIOAddress
-     * @param locoIOSubAddress
-     * @param cv
      */
     void sendReadCommand(int locoIOAddress, int locoIOSubAddress, int cv) {
         // remember current op is read
@@ -747,10 +744,6 @@ public class LocoIOData
     /**
      * Write an SV to a given LocoIO device
      *
-     * @param locoIOAddress
-     * @param locoIOSubAddress
-     * @param cv
-     * @param data
      */
     void sendWriteCommand(int locoIOAddress, int locoIOSubAddress, int cv, int data) {
         // remember current op is write

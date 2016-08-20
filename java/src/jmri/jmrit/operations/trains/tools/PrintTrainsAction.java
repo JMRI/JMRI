@@ -32,14 +32,16 @@ public class PrintTrainsAction extends PrintTrainAction {
     static final char FORM_FEED = '\f'; // NOI18N
 
     TrainManager trainManager = TrainManager.instance();
-    TrainsTableFrame panel;
+    TrainsTableFrame trainsTableFrame;
 
     public static final int MAX_NAME_LENGTH = Control.max_len_string_train_name - 10;
 
-    public PrintTrainsAction(String actionName, Frame mframe, boolean preview, Frame frame) {
-        super(actionName, mframe, preview, frame);
+    public PrintTrainsAction(String actionName, Frame mframe, boolean preview, TrainsTableFrame frame) {
+        super(actionName, mframe, preview);
+        trainsTableFrame = frame;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         // obtain a HardcopyWriter to do this
@@ -50,9 +52,8 @@ public class PrintTrainsAction extends PrintTrainAction {
             log.debug("Print cancelled");
             return;
         }
-
-        panel = (TrainsTableFrame) frame;
-        List<Train> trains = panel.getSortByList();
+        
+        List<Train> trains = trainsTableFrame.getSortByList();
 
         printSummaryTrains(writer, trains);
 
@@ -63,7 +64,7 @@ public class PrintTrainsAction extends PrintTrainAction {
 
             // now do the details for each train
             for (Train train : trains) {
-                if ((train.isBuildEnabled() || panel.showAllBox.isSelected()) && train.getRoute() != null) {
+                if ((train.isBuildEnabled() || trainsTableFrame.showAllBox.isSelected()) && train.getRoute() != null) {
                     List<RouteLocation> route = train.getRoute().getLocationsBySequenceList();
                     // determine if another detailed summary can fit on the same page
                     if (numberOfLines - writer.getCurrentLineNumber() < route.size() + NUMBER_OF_HEADER_LINES) {
@@ -89,7 +90,7 @@ public class PrintTrainsAction extends PrintTrainAction {
                     + Bundle.getMessage("Time") + "  " + Bundle.getMessage("Terminates") + TAB + NEW_LINE;
             writer.write(s, 0, s.length());
             for (Train train : trains) {
-                if (train.isBuildEnabled() || panel.showAllBox.isSelected()) {
+                if (train.isBuildEnabled() || trainsTableFrame.showAllBox.isSelected()) {
                     String name = train.getName();
                     name = truncate(name);
                     String desc = train.getDescription();

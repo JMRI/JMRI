@@ -32,7 +32,6 @@ import org.slf4j.LoggerFactory;
 public class MemoryComboIcon extends PositionableJPanel
         implements java.beans.PropertyChangeListener, ActionListener {
 
-    private static final long serialVersionUID = 5312988172386396581L;
     JComboBox<String> _comboBox;
     ComboModel _model;
 
@@ -121,16 +120,13 @@ public class MemoryComboIcon extends PositionableJPanel
         if (debug) {
             log.debug("setMemory for memory= " + pName);
         }
-        if (InstanceManager.memoryManagerInstance() != null) {
-            Memory memory = InstanceManager.memoryManagerInstance().
-                    provideMemory(pName);
-            if (memory != null) {
+        if (InstanceManager.getOptionalDefault(jmri.MemoryManager.class) != null) {
+            try {
+                Memory memory = InstanceManager.memoryManagerInstance().provideMemory(pName);
                 setMemory(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, memory));
-            } else {
-                log.error("Memory '" + pName + "' not available, icon won't see changes");
+            } catch (IllegalArgumentException e) {
+                log.error("No MemoryManager for this protocol, icon won't see changes");
             }
-        } else {
-            log.error("No MemoryManager for this protocol, icon won't see changes");
         }
         updateSize();
     }

@@ -6,6 +6,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.locations.tools.PrintSwitchListAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -29,7 +30,7 @@ public class YardmasterFrame extends OperationsFrame {
 
             // build menu
             JMenuBar menuBar = new JMenuBar();
-            JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+            JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
             toolMenu.add(new YardmasterByTrackAction(location));
             JMenuItem print = toolMenu.add(new PrintSwitchListAction(Bundle.getMessage("MenuItemPrint"), location,
                     false));

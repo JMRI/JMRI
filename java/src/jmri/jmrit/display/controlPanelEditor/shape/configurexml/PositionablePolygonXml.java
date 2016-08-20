@@ -10,7 +10,6 @@ import org.jdom2.Element;
  * Handle configuration for display.PositionableShape objects
  *
  * @author Pete Cressman Copyright: Copyright (c) 2012
- * @version $Revision: 1 $
  */
 public class PositionablePolygonXml extends PositionableShapeXml {
 
@@ -89,7 +88,7 @@ public class PositionablePolygonXml extends PositionableShapeXml {
                     path.quadTo(coord[0], coord[1], coord[2], coord[3]);
                     break;
                 case PathIterator.SEG_CUBICTO:
-                    path.curveTo(coord[0], coord[1], coord[2], coord[3], coord[4], coord[53]);
+                    path.curveTo(coord[0], coord[1], coord[2], coord[3], coord[4], coord[5]);
                     break;
                 case PathIterator.SEG_CLOSE:
                     path.closePath();

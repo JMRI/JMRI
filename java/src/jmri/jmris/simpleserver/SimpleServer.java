@@ -1,4 +1,3 @@
-// SimpleServer.java
 package jmri.jmris.simpleserver;
 
 import java.io.DataInputStream;
@@ -12,7 +11,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmris.JmriServer;
 import jmri.util.node.NodeIdentity;
-import jmri.web.server.WebServerManager;
+import jmri.web.server.WebServerPreferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,20 +20,17 @@ import org.slf4j.LoggerFactory;
  * handshaking in this server. You may just start sending commands.
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  *
  */
 public class SimpleServer extends JmriServer {
 
-    private static JmriServer _instance = null;
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmris.simpleserver.SimpleServerBundle");
 
     public static JmriServer instance() {
-        if (_instance == null) {
-            int port = Integer.parseInt(rb.getString("SimpleServerPort"));
-            _instance = new SimpleServer(port);
+        if (InstanceManager.getOptionalDefault(SimpleServer.class) == null) {
+            InstanceManager.store(new SimpleServer(),SimpleServer.class);
         }
-        return _instance;
+        return InstanceManager.getDefault(SimpleServer.class);
     }
 
     // Create a new server using the default port
@@ -44,6 +40,7 @@ public class SimpleServer extends JmriServer {
 
     public SimpleServer(int port) {
         super(port);
+        InstanceManager.setDefault(SimpleServer.class,this);
         log.info("JMRI SimpleServer started on port " + port);
     }
 
@@ -70,7 +67,7 @@ public class SimpleServer extends JmriServer {
 
         // Start by sending a welcome message
         outStream.writeBytes("JMRI " + jmri.Version.name() + " \n");
-        outStream.writeBytes("RAILROAD " + WebServerManager.getWebServerPreferences().getRailRoadName() + " \n");
+        outStream.writeBytes("RAILROAD " + WebServerPreferences.getDefault().getRailRoadName() + " \n");
         outStream.writeBytes("NODE " + NodeIdentity.identity() + " \n");
 
         while (true) {
@@ -90,7 +87,7 @@ public class SimpleServer extends JmriServer {
             if (cmd.startsWith("POWER")) {
                 try {
                     powerServer.parseStatus(cmd);
-                    powerServer.sendStatus(InstanceManager.powerManagerInstance().getPower());
+                    powerServer.sendStatus(InstanceManager.getDefault(jmri.PowerManager.class).getPower());
                 } catch (JmriException je) {
                     outStream.writeBytes("not supported\n");
                 }

@@ -14,7 +14,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.lenz.swing.lzv100.LZV100Frame class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class LZV100FrameTest extends TestCase {
 
@@ -34,7 +33,7 @@ public class LZV100FrameTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", LZV100FrameTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

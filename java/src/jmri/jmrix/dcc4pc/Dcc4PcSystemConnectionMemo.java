@@ -169,7 +169,7 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
                 return null;
             }
             List<SystemConnectionMemo> connList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
-            if (connList == null) {
+            if (connList.isEmpty()) {
                 return null;
             }
             for (int i = 0; i < connList.size(); i++) {

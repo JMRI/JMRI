@@ -1,5 +1,13 @@
 package jmri.server.json.power;
 
+import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JSON.OFF;
+import static jmri.server.json.JSON.ON;
+import static jmri.server.json.JSON.STATE;
+import static jmri.server.json.JSON.TYPE;
+import static jmri.server.json.JSON.UNKNOWN;
+import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -8,15 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
-import static jmri.jmris.json.JSON.DATA;
-import static jmri.jmris.json.JSON.OFF;
-import static jmri.jmris.json.JSON.ON;
-import static jmri.jmris.json.JSON.STATE;
-import static jmri.jmris.json.JSON.TYPE;
-import static jmri.jmris.json.JSON.UNKNOWN;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
-import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +39,7 @@ public class JsonPowerHttpService extends JsonHttpService {
         root.put(TYPE, POWER);
         ObjectNode data = root.putObject(DATA);
         try {
-            switch (InstanceManager.powerManagerInstance().getPower()) {
+            switch (InstanceManager.getDefault(jmri.PowerManager.class).getPower()) {
                 case PowerManager.OFF:
                     data.put(STATE, OFF);
                     break;
@@ -65,10 +66,10 @@ public class JsonPowerHttpService extends JsonHttpService {
         try {
             switch (state) {
                 case OFF:
-                    InstanceManager.powerManagerInstance().setPower(PowerManager.OFF);
+                    InstanceManager.getDefault(jmri.PowerManager.class).setPower(PowerManager.OFF);
                     break;
                 case ON:
-                    InstanceManager.powerManagerInstance().setPower(PowerManager.ON);
+                    InstanceManager.getDefault(jmri.PowerManager.class).setPower(PowerManager.ON);
                     break;
                 case UNKNOWN:
                     // quietly ignore

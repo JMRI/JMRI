@@ -3,21 +3,18 @@
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
 <!-- UpDated  by Blorec Herv&#233; 2013-09-19-->
-<!-- $Id$ -->
 <title>JMRI: Configuring SRCP Connection</title>
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -65,10 +62,10 @@ Enfin, enregistrez les pr&#233;f&#233;rences et red&#233;marrer le programme.
 
 Le soutien SRCP a &#233;t&#233; introduit en JMRI 2.1.6 au cours du printemps 2008.
 Cette version pr&#233;sente plusieurs limites:
-<ul>
-<li> Il ne supporte pas le "mode service" pour la configuration de d&#233;codeurs, par exemple les CV.
-<li>Il a besoins de beaucoup plus de test, surtout avec Marklin et autres syst&#232;mes DCC.
-</ ul>
+    <ul>
+    <li> Il ne supporte pas le "mode service" pour la configuration de d&#233;codeurs, par exemple les CV.
+    <li>Il a besoins de beaucoup plus de test, surtout avec Marklin et autres syst&#232;mes DCC.
+    </ul>
 
 <h2> plus d'information</h2>
 
@@ -76,10 +73,8 @@ Il ya beaucoup de bonnes informations sur SRCP et comment il s'int&#232;gre dans
  syst&#232;me globale de mod&#232;le ferroviaire 
 <a href="http://www.der-moba.de/index.php/Digitalprojekt"> en allemand</a>
 
-
-
-
-    
 <!--#include virtual="/Footer" -->
+        </div>
+      </div>
 </body>
 </html>

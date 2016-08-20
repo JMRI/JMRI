@@ -1,4 +1,3 @@
-// NceSensor.java
 package jmri.jmrix.nce;
 
 import jmri.implementation.AbstractSensor;
@@ -7,14 +6,8 @@ import jmri.implementation.AbstractSensor;
  * Extend jmri.AbstractSensor for NCE systems
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public class NceSensor extends AbstractSensor {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4481645243243035759L;
 
     public NceSensor(String systemName) {
         super(systemName);
@@ -35,5 +28,3 @@ public class NceSensor extends AbstractSensor {
     }
 
 }
-
-/* @(#)NceSensor.java */

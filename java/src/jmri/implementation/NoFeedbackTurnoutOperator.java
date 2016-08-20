@@ -1,12 +1,12 @@
+package jmri.implementation;
+
+import jmri.TurnoutOperator;
+
 /**
  * Concrete subclass of TurnoutOperator for a turnout that has no feedback.
  *
  * @author	John Harper	Copyright 2005
  */
-package jmri.implementation;
-
-import jmri.TurnoutOperator;
-
 public class NoFeedbackTurnoutOperator extends TurnoutOperator {
 
     long interval;

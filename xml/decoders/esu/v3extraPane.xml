@@ -88,7 +88,7 @@
       </display>
     <display item="Steam Shift Cycle Earliest Start Position" format="hslider">
       </display>
-    <display item="Steam Shift Cycle Latest Start Poition" format="hslider">
+    <display item="Steam Shift Cycle Latest Start Position" format="hslider">
       </display>
   </column>
   <name>ESU Extra</name>

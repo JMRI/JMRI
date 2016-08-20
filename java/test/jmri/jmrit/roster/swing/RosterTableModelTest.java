@@ -1,6 +1,6 @@
-// RosterTableModelTest.java
 package jmri.jmrit.roster.swing;
 
+import jmri.InstanceManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import junit.framework.Assert;
@@ -13,7 +13,6 @@ import org.jdom2.Element;
  * Tests for the roster.swing.RosterTableModel class.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  */
 public class RosterTableModelTest extends TestCase {
 
@@ -60,7 +59,8 @@ public class RosterTableModelTest extends TestCase {
         apps.tests.Log4JFixture.setUp();
 
         // Create empty test instance
-        Roster.installNullInstance();
+        InstanceManager.reset(Roster.class);
+        InstanceManager.setDefault(Roster.class, new Roster());
 
         // first entry
         Element e;
@@ -151,7 +151,7 @@ public class RosterTableModelTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", RosterTableModelTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

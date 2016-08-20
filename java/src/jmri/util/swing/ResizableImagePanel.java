@@ -33,10 +33,6 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
 
     public static final String IMAGE_PATH = "imagePath";
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4576214324220842001L;
     private String _imagePath;
     protected JLabel bgImg = null;
     private BufferedImage image = null;
@@ -94,7 +90,6 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
     /**
      * Allows this ResizableImagePanel to force resize of its container
      *
-     * @param b
      */
     public void setResizingContainer(boolean b) {
         _resizeContainer = b;
@@ -122,7 +117,6 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
      * Allow this ResizableImagePanel to respect aspect ratio when resizing
      * content
      *
-     * @param b
      */
     public void setRespectAspectRatio(boolean b) {
         _respectAspectRatio = b;
@@ -141,7 +135,6 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
      * Set image file path, display will be updated if passed value is null,
      * blank image
      *
-     * @param s
      */
     public void setImagePath(String s) {
         String old = _imagePath;

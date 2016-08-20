@@ -2,11 +2,11 @@
 package jmri.jmrix.nce;
 
 /**
- * USB -> Cab bus adapter: When used with PowerCab V1.28 - 6.3.0 When used with
+ * USB {@literal ->} Cab bus adapter: When used with PowerCab V1.28 - 6.3.0 When used with
  * SB3 V1.28 - 6.3.1 (No program track on an SB3) When used with PH-Pro or PH-10
  * - 6.3.2 (limited set of features available through cab bus)
  * <P>
- * From NCE 2007 (with some minor corrections, formatting & additional info):
+ * From NCE 2007 (with some minor corrections, formatting {@literal &} additional info):
  * <P>
  * I've added two new binary commands on the Power Cab. They are for OPs
  * programming of locomotives and OPs programming of accessories/signals The
@@ -139,7 +139,7 @@ package jmri.jmrix.nce;
  * <P>
  * --------------------------------------------------------------------------
  * <P>
- * 0xAD <4 data bytes> Accy/signal and macro commands (1) !,1
+ * 0xAD {@code <4 data bytes>} Accy/signal and macro commands (1) !,1
  * <P>
  * Command Format: 0xAD (addr_h) (addr_l) (op_1) (data_1)
  * <P>
@@ -177,8 +177,8 @@ package jmri.jmrix.nce;
  * <P>
  * --------------------------------------------------------------------------
  * <P>
- * 0xAF <5 data bytes> OPs program accessory/signal (1) !,1,3. Not supported by
- * PH
+ * 0xAF {@code <5 data bytes>} OPs program accessory/signal (1) !,1,3. Not 
+ * supported by PH
  * <P>
  * Command Format: 0xAF (addr_h) (addr_l) (CV_h) (CV_l) (data)
  * <P>

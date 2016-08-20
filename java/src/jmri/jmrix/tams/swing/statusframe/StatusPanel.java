@@ -1,4 +1,3 @@
-// StatusPanel.java
 package jmri.jmrix.tams.swing.statusframe;
 
 import java.util.ResourceBundle;
@@ -18,14 +17,9 @@ import jmri.jmrix.tams.TamsTrafficController;
  * Based on work by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 19655 $
  */
 public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements TamsListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5401219799607877348L;
     String appString = "Application Version : ";
     String serString = "Serial Number : ";
     JLabel appVersion = new JLabel(appString + "<unknown>");
@@ -120,6 +114,3 @@ public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements Tams
     }
 
 }
-
-
-/* @(#)StatusPane.java */

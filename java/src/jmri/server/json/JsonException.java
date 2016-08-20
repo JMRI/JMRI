@@ -1,10 +1,11 @@
 package jmri.server.json;
 
+import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JSON.TYPE;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import static jmri.server.json.JSON.DATA;
-import static jmri.server.json.JSON.TYPE;
 
 /**
  * Throw an exception, but include an HTTP error code.

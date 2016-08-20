@@ -216,7 +216,7 @@ public class PanelEditor extends Editor implements ItemListener {
         {
             JPanel namep = new JPanel();
             namep.setLayout(new FlowLayout());
-            JButton b = new JButton("Set panel name");
+            JButton b = new JButton(Bundle.getMessage("ButtonSetName"));
             b.addActionListener(new ActionListener() {
                 PanelEditor editor;
 
@@ -396,7 +396,7 @@ public class PanelEditor extends Editor implements ItemListener {
         }
 
         // register the resulting panel for later configuration
-        InstanceManager.configureManagerInstance().registerUser(this);
+        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerUser(this);
 
         // when this window closes, set contents of target uneditable
         addWindowListener(new java.awt.event.WindowAdapter() {

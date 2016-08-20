@@ -40,6 +40,7 @@
     <aspect>
       <name></name>
       <title></title>
+      <rule></rule>
       <indication></indication>
       <description></description>
       <reference></reference>
@@ -49,6 +50,12 @@
     </aspect>
 
   </aspects>
+  
+  <imagetypes>
+    <imagetype type="large" />
+    <imagetype type="small" />
+  </imagetypes>
+  
   <appearancefiles>
     <appearancefile href="sample-appearance-file.xml"/>
   </appearancefiles>

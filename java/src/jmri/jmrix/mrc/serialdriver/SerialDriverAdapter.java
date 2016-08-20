@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.mrc.serialdriver;
 
 import java.io.DataInputStream;
@@ -25,7 +24,6 @@ import purejavacomm.UnsupportedCommOperationException;
  * any other options at configuration time.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends MrcPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -33,7 +31,7 @@ public class SerialDriverAdapter extends MrcPortController implements jmri.jmrix
 
     public SerialDriverAdapter() {
         super(new MrcSystemConnectionMemo());
-        setManufacturer(jmri.jmrix.DCCManufacturerList.MRC);
+        setManufacturer(jmri.jmrix.mrc.MrcConnectionTypeList.MRC);
         options.put("CabAddress", new Option("Cab Address:", validOption1, false)); //IN18N
     }
 
@@ -73,12 +71,7 @@ public class SerialDriverAdapter extends MrcPortController implements jmri.jmrix
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");//IN18N
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -122,7 +115,6 @@ public class SerialDriverAdapter extends MrcPortController implements jmri.jmrix
         this.getSystemConnectionMemo().configureManagers();
 
         packets.startThreads();
-        jmri.jmrix.mrc.ActiveFlag.setActive();
     }
 
     // base class methods for the MrcPortController interface

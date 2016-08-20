@@ -1,4 +1,3 @@
-// AudioSource.java
 package jmri.jmrit.audio;
 
 import java.util.Queue;
@@ -20,22 +19,19 @@ import jmri.Audio;
  * form, and can be used for any purpose. The "system" name is provided by the
  * system-specific implementations, and provides a unique mapping to the layout
  * control system (e.g. LocoNet, NCE, etc) and address within that system.
- * <P>
- *
  * <hr>
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * </P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public interface AudioSource extends Audio {
 
@@ -314,10 +310,10 @@ public interface AudioSource extends Audio {
      * Default value = 1.0f
      * <p>
      * Applies only to sub-types:
-     * <ul>
+     * </p><ul>
      * <li>Listener
      * <li>Source
-     * <ul>
+     * </ul>
      *
      * @param gain the gain of this AudioSource
      */
@@ -331,7 +327,7 @@ public interface AudioSource extends Audio {
      * Default value = 1.0f
      * <p>
      * Applies only to sub-types:
-     * <ul>
+     * </p><ul>
      * <li>Source
      * </ul>
      *
@@ -347,7 +343,7 @@ public interface AudioSource extends Audio {
      * Default value = 1.0f
      * <p>
      * Applies only to sub-types:
-     * <ul>
+     * </p><ul>
      * <li>Source
      * </ul>
      *
@@ -361,7 +357,7 @@ public interface AudioSource extends Audio {
      * Default value = 1.0f
      * <p>
      * Applies only to sub-types:
-     * <ul>
+     * </p><ul>
      * <li>Source
      * </ul>
      *
@@ -382,7 +378,7 @@ public interface AudioSource extends Audio {
      * a quarter volume, etc ...
      * <p>
      * Applies only to sub-types:
-     * <ul>
+     * </p><ul>
      * <li>Source
      * </ul>
      *
@@ -399,7 +395,7 @@ public interface AudioSource extends Audio {
      * be zero.
      * <p>
      * Applies only to sub-types:
-     * <ul>
+     * </p><ul>
      * <li>Source
      * </ul>
      */
@@ -550,7 +546,7 @@ public interface AudioSource extends Audio {
      * this method will return a different random number that lies between the
      * two settings:
      * <pre>
-     * minimum &lt= number of loops &lt= maximum
+     * minimum {@literal <=} number of loops {@literal <=} maximum
      * </pre> Default value = 0
      * <p>
      * Applies only to sub-types:
@@ -833,5 +829,3 @@ public interface AudioSource extends Audio {
     public void fadeOut();
 
 }
-
-/* @(#)AudioSource.java */

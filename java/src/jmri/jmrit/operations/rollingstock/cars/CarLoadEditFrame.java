@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.ScheduleManager;
+import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -32,11 +32,6 @@ import org.slf4j.LoggerFactory;
  * @version $Revision$
  */
 public class CarLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8066884161999922218L;
 
     public static final String NONE = "";
 
@@ -151,7 +146,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new CarLoadAttributeAction(Bundle.getMessage("CarQuanity"), this));
         toolMenu.add(new PrintCarLoadsAction(Bundle.getMessage("MenuItemPreview"), true, this));
         toolMenu.add(new PrintCarLoadsAction(Bundle.getMessage("MenuItemPrint"), false, this));
@@ -164,6 +159,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
     }
 
     // add, delete, replace, and save buttons
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == addButton) {
             String addLoad = addTextBox.getText().trim();
@@ -259,6 +255,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         }
     }
 
+    @Override
     protected void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("Combo box action");
         updateCarQuanity();
@@ -349,13 +346,15 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         dropCommentTextField.setText(carLoads.getDropComment(_type, (String) loadComboBox.getSelectedItem()));
     }
 
+    @Override
     public void dispose() {
         carLoads.removePropertyChangeListener(this);
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

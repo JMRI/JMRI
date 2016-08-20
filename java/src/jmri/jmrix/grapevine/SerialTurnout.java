@@ -1,4 +1,3 @@
-// SerialTurnout.java
 package jmri.jmrix.grapevine;
 
 import jmri.Turnout;
@@ -15,14 +14,8 @@ import org.slf4j.LoggerFactory;
  * allowed.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version	$Revision$
  */
 public class SerialTurnout extends AbstractTurnout {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3011820487721949195L;
 
     /**
      * Create a Turnout object, with both system and user names.
@@ -59,9 +52,9 @@ public class SerialTurnout extends AbstractTurnout {
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states
-        if ((s & Turnout.CLOSED) > 0) {
+        if ((s & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) > 0) {
+            if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both CLOSED and THROWN " + s);
                 return;
@@ -122,5 +115,3 @@ public class SerialTurnout extends AbstractTurnout {
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
 }
-
-/* @(#)SerialTurnout.java */

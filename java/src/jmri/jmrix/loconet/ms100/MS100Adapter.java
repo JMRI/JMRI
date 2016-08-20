@@ -1,4 +1,3 @@
-// MS100Adapter.java
 package jmri.jmrix.loconet.ms100;
 
 import java.io.DataInputStream;
@@ -28,7 +27,6 @@ import purejavacomm.UnsupportedCommOperationException;
  * used.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -165,9 +163,6 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
 
         // start operation
         packets.startThreads();
-
-        jmri.jmrix.loconet.ActiveFlag.setActive();
-
     }
 
     // base class methods for the LnPortController interface

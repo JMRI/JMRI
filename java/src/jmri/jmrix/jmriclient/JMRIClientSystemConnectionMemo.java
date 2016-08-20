@@ -74,7 +74,7 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     public void configureManagers() {
 
         setPowerManager(new jmri.jmrix.jmriclient.JMRIClientPowerManager(this));
-        jmri.InstanceManager.setPowerManager(getPowerManager());
+        jmri.InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
         setTurnoutManager(new jmri.jmrix.jmriclient.JMRIClientTurnoutManager(this));
         jmri.InstanceManager.setTurnoutManager(getTurnoutManager());
         setSensorManager(new jmri.jmrix.jmriclient.JMRIClientSensorManager(this));

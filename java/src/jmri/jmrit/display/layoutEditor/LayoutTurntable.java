@@ -66,7 +66,6 @@ import org.slf4j.LoggerFactory;
  * circle in the direction of the turntable center.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision$
  */
 public class LayoutTurntable {
 
@@ -358,14 +357,9 @@ public class LayoutTurntable {
     }
 
     public void scaleCoords(float xFactor, float yFactor) {
-        Point2D pt = new Point2D.Double(round(center.getX() * xFactor),
-                round(center.getY() * yFactor));
+        Point2D pt = new Point2D.Double(Math.round(center.getX() * xFactor),
+                Math.round(center.getY() * yFactor));
         center = pt;
-    }
-
-    double round(double x) {
-        int i = (int) (x + 0.5);
-        return i;
     }
 
     /**
@@ -962,7 +956,7 @@ public class LayoutTurntable {
             border.setTitle("Ray : " + connectionIndex);
             if (connect == null) {
                 border.setTitle(rb.getString("Unconnected") + " : " + connectionIndex);
-            } else if (connect != null && connect.getLayoutBlock() != null) {
+            } else if (connect.getLayoutBlock() != null) {
                 border.setTitle(rb.getString("Connected") + " : " + connect.getLayoutBlock().getDisplayName());
             }
             return panel;

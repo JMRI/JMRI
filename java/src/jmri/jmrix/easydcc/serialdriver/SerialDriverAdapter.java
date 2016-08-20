@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.easydcc.serialdriver;
 
 import java.io.DataInputStream;
@@ -25,13 +24,12 @@ import purejavacomm.UnsupportedCommOperationException;
  * any other options at configuration time.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends EasyDccPortController implements jmri.jmrix.SerialPortAdapter {
 
     public SerialDriverAdapter() {
         super(new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial"));
-        setManufacturer(jmri.jmrix.DCCManufacturerList.EASYDCC);
+        setManufacturer(jmri.jmrix.easydcc.EasyDccConnectionTypeList.EASYDCC);
     }
 
     SerialPort activeSerialPort = null;
@@ -71,12 +69,7 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {

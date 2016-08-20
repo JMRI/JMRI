@@ -1,4 +1,3 @@
-// SerialTurnoutManagerTest.java
 package jmri.jmrix.cmri.serial;
 
 import jmri.Turnout;
@@ -13,26 +12,34 @@ import org.slf4j.LoggerFactory;
  * Description:	tests for the jmri.jmrix.cmri.SerialTurnoutManager class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
+    private jmri.jmrix.cmri.CMRISystemConnectionMemo memo = null;
+    private SerialTrafficControlScaffold stcs = null;
+
     @Override
     public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
         // replace the SerialTrafficController
-        SerialTrafficController t = new SerialTrafficController() {
-            SerialTrafficController test() {
-                setInstance();
-                return this;
-            }
-        }.test();
-        t.registerNode(new SerialNode());
+        stcs = new SerialTrafficControlScaffold();
+        stcs.registerNode(new SerialNode(stcs));
+        memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
+        memo.setTrafficController(stcs);
         // create and register the turnout manager object
-        l = new SerialTurnoutManager() {
+        l = new SerialTurnoutManager(memo) {
             public void notifyTurnoutCreationError(String conflict, int bitNum) {
             }
         };
         jmri.InstanceManager.setTurnoutManager(l);
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        stcs = null;
+        memo = null;
     }
 
     public String getSystemName(int n) {
@@ -69,7 +76,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SerialTurnoutManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

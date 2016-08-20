@@ -1,4 +1,3 @@
-// OpenLcbMenu.java
 package jmri.jmrix.openlcb;
 
 import java.util.ResourceBundle;

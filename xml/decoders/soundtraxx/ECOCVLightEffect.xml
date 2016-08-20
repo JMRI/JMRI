@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2016 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!--                                                                        -->
+<!-- version 1 - created from ECOCV.xml v2.0 (Alain Le Marchand)            -->
+
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <!-- Lighting Configuration follows -->
+    <variable item="Headlight F0(f) Effect Selection" CV="49" mask="XXXVVVVV" default="1" tooltip="Determines the effect generated from the headlight">
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumEffect.xml"/>
+      <label>Headlight F0(f) Effect Selection</label>
+    </variable>
+    <variable item="Backup Light F0(r) Effect Selection" CV="50" mask="XXXVVVVV" default="1" tooltip="Determines the effect generated from the backup light">
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumEffect.xml"/>
+      <label>Backup Light F0(r) Effect Selection</label>
+    </variable>
+    <variable item="FX5 Effect Selection" CV="51" mask="XXXVVVVV" default="0" minOut="3" tooltip="Determines the effect generated from the FX3 light output">
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumEffect.xml"/>
+      <label>FX3 Effect Selection</label>
+    </variable>
+    <variable item="FX6 Effect Selection" CV="52" mask="XXXVVVVV" default="0" minOut="4" tooltip="Determines the effect generated from the FX4 light output">
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumEffect.xml"/>
+      <label>FX4 Effect Selection</label>
+    </variable>
+    <variable item="FX5B Effect Selection" CV="53" mask="XXXVVVVV" default="0" minOut="5" tooltip="Determines the second effect associated with the FX5 light output">
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumEffect.xml"/>
+      <label>FX5 Effect Selection</label>
+    </variable>
+    <variable item="FX6B Effect Selection" CV="54" mask="XXXVVVVV" default="0" minOut="6"  tooltip="Determines the second effect associated with the FX6 light output">
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumEffect.xml"/>
+      <label>FX6 Effect Selection</label>
+    </variable>
+</variables>

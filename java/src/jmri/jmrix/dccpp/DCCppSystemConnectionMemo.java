@@ -6,12 +6,12 @@ import jmri.CommandStation;
 import jmri.ConsistManager;
 import jmri.InstanceManager;
 import jmri.LightManager;
+import jmri.MultiMeter;
 import jmri.PowerManager;
 import jmri.ProgrammerManager;
 import jmri.SensorManager;
 import jmri.ThrottleManager;
 import jmri.TurnoutManager;
-import jmri.MultiMeter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

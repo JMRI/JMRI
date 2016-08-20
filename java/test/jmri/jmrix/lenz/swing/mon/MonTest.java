@@ -1,4 +1,3 @@
-// MonTest.java
 package jmri.jmrix.lenz.swing.mon;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.lenz.swing.mon package
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class MonTest extends TestCase {
 
@@ -21,7 +19,7 @@ public class MonTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {MonTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

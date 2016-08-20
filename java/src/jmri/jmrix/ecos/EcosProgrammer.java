@@ -1,21 +1,19 @@
-// EcosProgrammer.java
 package jmri.jmrix.ecos;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.*;
+import java.util.ArrayList;
+import java.util.List;
+import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import jmri.jmrix.ecos.utilities.GetEcosObjectNumber;
-
-import java.util.*;
 import jmri.managers.DefaultProgrammerManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements the jmri.Programmer interface via commands for the Ecos
  * programmer. This provides a service mode programmer.
  *
  * @author Karl Johan Lisby Copyright (C) 2015
- * @version	$Revision$
  */
 public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
 
@@ -66,7 +64,8 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
         tc.sendEcosMessage(m, this);
     }
 
-    synchronized public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    @Override
+    synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 

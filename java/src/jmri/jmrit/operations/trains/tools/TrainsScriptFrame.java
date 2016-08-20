@@ -51,6 +51,7 @@ public class TrainsScriptFrame extends OperationsFrame {
         super();
     }
 
+    @Override
     public void initComponents() {
         // Set up script options in a Scroll Pane..
         startUpScriptPane = new JScrollPane(pStartUpScript);
@@ -110,6 +111,7 @@ public class TrainsScriptFrame extends OperationsFrame {
             JButton removeStartUpScripts = new JButton(Bundle.getMessage("RemoveScript"));
             removeStartUpScripts.setName(scripts.get(i));
             removeStartUpScripts.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     buttonActionRemoveStartUpScript(e);
                 }
@@ -135,6 +137,7 @@ public class TrainsScriptFrame extends OperationsFrame {
             JButton removeShutDownScripts = new JButton(Bundle.getMessage("RemoveScript"));
             removeShutDownScripts.setName(scripts.get(i));
             removeShutDownScripts.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     buttonActionRemoveShutDownScript(e);
                 }
@@ -146,6 +149,7 @@ public class TrainsScriptFrame extends OperationsFrame {
     }
 
     // Save train, add scripts buttons
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == addStartUpScriptButton) {
             log.debug("train add move script button activated");
@@ -245,6 +249,7 @@ public class TrainsScriptFrame extends OperationsFrame {
         pack();
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }

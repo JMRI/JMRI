@@ -17,10 +17,6 @@ import jmri.util.ConnectionNameFromSystemName;
 
 public class BeanSelectCreatePanel extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8850883067365493880L;
     Manager _manager;
     NamedBean _defaultSelect;
     String _reference = null;
@@ -83,7 +79,7 @@ public class BeanSelectCreatePanel extends JPanel {
                 jmri.managers.ProxyLightManager proxy = (jmri.managers.ProxyLightManager) InstanceManager.lightManagerInstance();
                 managerList = proxy.getManagerList();
             } else if (_manager instanceof jmri.ReporterManager) {
-                jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) InstanceManager.reporterManagerInstance();
+                jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) InstanceManager.getDefault(jmri.ReporterManager.class);
                 managerList = proxy.getManagerList();
             }
             for (int x = 0; x < managerList.size(); x++) {
@@ -217,7 +213,7 @@ public class BeanSelectCreatePanel extends JPanel {
                 }
             } else if (_manager instanceof jmri.Block) {
                 try {
-                    nBean = InstanceManager.blockManagerInstance().provideBlock(sName);
+                    nBean = InstanceManager.getDefault(jmri.BlockManager.class).provideBlock(sName);
                 } catch (IllegalArgumentException ex) {
                     // user input no good
                     throw new jmri.JmriException("ErrorBlockAddFailed");

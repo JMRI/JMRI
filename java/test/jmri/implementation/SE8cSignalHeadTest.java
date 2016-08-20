@@ -1,4 +1,3 @@
-// SE8cSignalHeadTest.java
 package jmri.implementation;
 
 import jmri.InstanceManager;
@@ -15,7 +14,6 @@ import junit.framework.TestSuite;
  * Tests for the SE8cSignalHead implmentation
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  */
 public class SE8cSignalHeadTest extends TestCase {
 
@@ -171,7 +169,7 @@ public class SE8cSignalHeadTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SE8cSignalHeadTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

@@ -1,4 +1,3 @@
-// DCCppLightManager.java
 package jmri.jmrix.dccpp;
 
 import jmri.Light;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Paul Bender Copyright (C) 2008
  * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
  */
 public class DCCppLightManager extends AbstractLightManager {
 
@@ -122,5 +120,3 @@ public class DCCppLightManager extends AbstractLightManager {
     private final static Logger log = LoggerFactory.getLogger(DCCppLightManager.class.getName());
 
 }
-
-/* @(#)DCCppLightManager.java */

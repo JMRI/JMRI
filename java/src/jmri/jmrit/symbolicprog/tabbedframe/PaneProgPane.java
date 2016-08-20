@@ -1,4 +1,3 @@
-// PaneProgPane.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.Color;
@@ -85,6 +84,7 @@ import org.slf4j.LoggerFactory;
  * a variable depending on what has previously happened. It should write every
  * variable (at least) once.
  * <DT>Read All<DD>This should read every variable once.
+ * <img src="doc-files/PaneProgPane-ReadAllSequenceDiagram.png" alt="UML Sequence diagram">
  * <DT>Read Changes<DD>This should read every variable that's marked as changed.
  * Currently, we use a common definition of changed with the write operations,
  * and that someday might have to change.
@@ -95,17 +95,91 @@ import org.slf4j.LoggerFactory;
  * @author D Miller Copyright 2003
  * @author Howard G. Penny Copyright (C) 2005
  * @author Dave Heap Copyright (C) 2014
- * @version $Revision$
  * @see jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
+ */
+/*
+ * @startuml jmri/jmrit/symbolicprog/tabbedframe/doc-files/PaneProgPane-ReadAllSequenceDiagram.png
+ * actor User
+ * box "PaneProgPane"
+ * participant readPaneAll
+ * participant prepReadPane
+ * participant nextRead
+ * participant executeRead
+ * participant propertyChange
+ * participant replyWhileProgrammingVar
+ * participant restartProgramming
+ * end box
+ * box "VariableValue"
+ * participant readAll
+ * participant readChanges
+ * end box
+ *
+ * control Programmer
+ * User -> readPaneAll: Read All Sheets
+ * activate readPaneAll
+ * readPaneAll -> prepReadPane
+ * activate prepReadPane
+ * prepReadPane --> readPaneAll
+ * deactivate prepReadPane
+ * deactivate prepReadPane
+ * readPaneAll -> nextRead
+ * activate nextRead
+ * nextRead -> executeRead
+ * activate executeRead
+ * executeRead -> readAll
+ * activate readAll
+ * readAll -> Programmer
+ * activate Programmer 
+ * readAll --> executeRead
+ * deactivate readAll
+ * executeRead --> nextRead
+ * deactivate executeRead
+ * nextRead --> readPaneAll
+ * deactivate nextRead
+ * deactivate readPaneAll
+ * == Callback after read completes ==
+ * Programmer -> propertyChange
+ * activate propertyChange
+ * note over propertyChange
+ * if the first read failed, 
+ * setup a second read of 
+ * the same value.
+ * otherwise, setup a read of 
+ * the next value.
+ * end note
+ * deactivate Programmer
+ * propertyChange -> User: CV value or error
+ * propertyChange -> replyWhileProgrammingVar
+ * activate replyWhileProgrammingVar
+ * replyWhileProgrammingVar -> restartProgramming
+ * activate restartProgramming
+ * restartProgramming -> nextRead
+ * activate nextRead
+ * nextRead -> executeRead
+ * activate executeRead
+ * executeRead -> readAll
+ * activate readAll
+ * readAll -> Programmer
+ * activate Programmer 
+ * readAll --> executeRead
+ * deactivate readAll
+ * executeRead -> nextRead
+ * deactivate executeRead
+ * nextRead --> restartProgramming
+ * deactivate nextRead
+ * restartProgramming --> replyWhileProgrammingVar
+ * deactivate restartProgramming
+ * replyWhileProgrammingVar --> propertyChange
+ * deactivate replyWhileProgrammingVar
+ * deactivate propertyChange 
+ * deactivate Programmer
+ * == callaback triggered repeat occurs until no more values ==
+ * @enduml 
  */
 public class PaneProgPane extends javax.swing.JPanel
         implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1884950541914044865L;
     static final String LAST_GRIDX = "last_gridx";
     static final String LAST_GRIDY = "last_gridy";
 
@@ -230,7 +304,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     l.setAlignmentX(Component.CENTER_ALIGNMENT);
                     pe.add(l);
                     line++;
-                } catch (Exception e) {
+                } catch (java.util.MissingResourceException e) {  // deliberately runs until exception
                     line = -1;
                 }
             }
@@ -242,9 +316,9 @@ public class PaneProgPane extends javax.swing.JPanel
         // add glue to the right to allow resize - but this isn't working as expected? Alignment?
         add(Box.createHorizontalGlue());
 
-            add(new JScrollPane(p));
+        add(new JScrollPane(p));
 
-            // add buttons in a new panel
+        // add buttons in a new panel
         bottom = new JPanel();
         panelList.add(p);
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
@@ -454,7 +528,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * operation. They are stored as a list of Integer objects, each of which is
      * the index of the Variable in the VariableTable.
      */
-    List<Integer> varList = new ArrayList<Integer>();
+    List<Integer> varList = new ArrayList<>();
     int varListIndex;
     /**
      * This remembers the CVs on this pane for the Read/Write sheet operation.
@@ -463,7 +537,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * the CVs that are represented by variables are not entered here. So far
      * (sic), the only use of this is for the cvtable rep.
      */
-    protected TreeSet<Integer> cvList = new TreeSet<Integer>(); //  TreeSet is iterated in order
+    protected TreeSet<Integer> cvList = new TreeSet<>(); //  TreeSet is iterated in order
     protected Iterator<Integer> cvListIterator;
     /**
      * This remembers the indexed CVs on this pane for the Read/Write sheet
@@ -472,7 +546,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * can read/write them as a variable. So far (sic), the only use of this is
      * for the IndexedCvTable rep.
      */
-    List<Integer> indexedCvList = new ArrayList<Integer>();
+    List<Integer> indexedCvList = new ArrayList<>();
     int indexedCvListIndex;
 
     protected JToggleButton readChangesButton = new JToggleButton(SymbolicProgBundle.getMessage("ButtonReadChangesSheet"));
@@ -519,7 +593,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
             // must decide whether this one should be counted
             if (!changes
-                    || (changes && var.isChanged())) {
+                    || var.isChanged()) {
 
                 CvValue[] cvs = var.usesCVs();
                 for (int j = 0; j < cvs.length; j++) {
@@ -557,8 +631,9 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Read changes on sheet" button, this sets in motion a
-     * continuing sequence of "read" operations on the variables & CVs in the
-     * Pane. Only variables in states marked as "changed" will be read.
+     * continuing sequence of "read" operations on the variables {@literal &}
+     * CVs in the Pane. Only variables in states marked as "changed" will be
+     * read.
      *
      * @return true is a read has been started, false if the pane is complete.
      */
@@ -581,10 +656,11 @@ public class PaneProgPane extends javax.swing.JPanel
      * first setting all variables and CVs on this pane to TOREAD via this
      * method
      *
+     * @param onlyChanges true if only reading changes; false if reading all
      */
     public void prepReadPane(boolean onlyChanges) {
         if (log.isDebugEnabled()) {
-            log.debug("start prepReadPane with onlyChanges=" + onlyChanges);
+            log.debug("start prepReadPane with onlyChanges={}", onlyChanges);
         }
         justChanges = onlyChanges;
 
@@ -610,13 +686,13 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Read Full Sheet" button, this sets in motion a continuing
-     * sequence of "read" operations on the variables & CVs in the Pane. The
-     * read mechanism only reads variables in certain states (and needs to do
-     * that to handle error processing right now), so this is implemented by
-     * first setting all variables and CVs on this pane to TOREAD in
-     * prepReadPaneAll, then starting the execution.
+     * sequence of "read" operations on the variables {@literal &} CVs in the
+     * Pane. The read mechanism only reads variables in certain states (and
+     * needs to do that to handle error processing right now), so this is
+     * implemented by first setting all variables and CVs on this pane to TOREAD
+     * in prepReadPaneAll, then starting the execution.
      *
-     * @return true is a read has been started, false if the pane is complete.
+     * @return true is a read has been started, false if the pane is complete
      */
     public boolean readPaneAll() {
         if (log.isDebugEnabled()) {
@@ -638,7 +714,8 @@ public class PaneProgPane extends javax.swing.JPanel
      *                     cleaning up at end
      */
     void setToRead(boolean justChanges, boolean startProcess) {
-        if (!container.isBusy() || // the frame has already setToRead
+        if (!container.isBusy()
+                || // the frame has already setToRead
                 (!startProcess)) {  // we want to setToRead false if the pane's process is being stopped
             for (int i = 0; i < varList.size(); i++) {
                 int varNum = varList.get(i).intValue();
@@ -696,7 +773,8 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) {
             log.debug("start setToWrite method with " + justChanges + "," + startProcess);
         }
-        if (!container.isBusy() || // the frame has already setToWrite
+        if (!container.isBusy()
+                || // the frame has already setToWrite
                 (!startProcess)) {  // we want to setToWrite false if the pane's process is being stopped
             log.debug("about to start setToWrite of varList");
             for (int i = 0; i < varList.size(); i++) {
@@ -798,7 +876,7 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) {
             log.debug("nextRead scans " + varList.size() + " variables");
         }
-        while ((varList.size() >= 0) && (varListIndex < varList.size())) {
+        while ((varList.size() > 0) && (varListIndex < varList.size())) {
             int varNum = varList.get(varListIndex).intValue();
             int vState = _varModel.getState(varNum);
             VariableValue var = _varModel.getVariable(varNum);
@@ -856,7 +934,7 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) {
             log.debug("nextRead scans " + indexedCvList.size() + " indexed CVs");
         }
-        while ((indexedCvList.size() >= 0) && (indexedCvListIndex < indexedCvList.size())) {
+        while ((indexedCvList.size() > 0) && (indexedCvListIndex < indexedCvList.size())) {
             int indxVarNum = indexedCvList.get(indexedCvListIndex).intValue();
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) {
@@ -944,7 +1022,7 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // found no CVs needing read, try indexed CVs
-        while ((indexedCvList.size() >= 0) && (indexedCvListIndex < indexedCvList.size())) {
+        while ((indexedCvList.size() > 0) && (indexedCvListIndex < indexedCvList.size())) {
             int indxVarNum = indexedCvList.get(indexedCvListIndex).intValue();
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) {
@@ -994,8 +1072,8 @@ public class PaneProgPane extends javax.swing.JPanel
      * continuing sequence of "write" operations on the variables in the Pane.
      * Only variables in isChanged states are written; other states don't need
      * to be.
-     * <P>
-     * Returns true if a write has been started, false if the pane is complete.
+     *
+     * @return true if a write has been started, false if the pane is complete
      */
     public boolean writePaneChanges() {
         if (log.isDebugEnabled()) {
@@ -1011,8 +1089,8 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Write full sheet" button to write all CVs.
-     * <P>
-     * Returns true if a write has been started, false if the pane is complete.
+     *
+     * @return true if a write has been started, false if the pane is complete
      */
     public boolean writePaneAll() {
         prepWritePane(false);
@@ -1021,6 +1099,8 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Prepare a "write full sheet" operation.
+     *
+     * @param onlyChanges true if only writing changes; false if writing all
      */
     public void prepWritePane(boolean onlyChanges) {
         if (log.isDebugEnabled()) {
@@ -1054,7 +1134,7 @@ public class PaneProgPane extends javax.swing.JPanel
     boolean nextWrite() {
         log.debug("start nextWrite");
         // look for possible variables
-        while ((varList.size() >= 0) && (varListIndex < varList.size())) {
+        while ((varList.size() > 0) && (varListIndex < varList.size())) {
             int varNum = varList.get(varListIndex).intValue();
             int vState = _varModel.getState(varNum);
             VariableValue var = _varModel.getVariable(varNum);
@@ -1104,7 +1184,7 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // check for Indexed CVs to handle (e.g. for Indexed CV table)
-        while ((indexedCvList.size() >= 0) && (indexedCvListIndex < indexedCvList.size())) {
+        while ((indexedCvList.size() > 0) && (indexedCvListIndex < indexedCvList.size())) {
             int indxVarNum = indexedCvList.get(indexedCvListIndex).intValue();
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) {
@@ -1159,6 +1239,8 @@ public class PaneProgPane extends javax.swing.JPanel
      * first setting all variables and CVs on this pane to TOREAD via this
      * method
      *
+     * @param onlyChanges true if only confirming changes; false if confirming
+     *                    all
      */
     public void prepConfirmPane(boolean onlyChanges) {
         if (log.isDebugEnabled()) {
@@ -1191,8 +1273,9 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Compare changes on sheet" button, this sets in motion a
-     * continuing sequence of "confirm" operations on the variables & CVs in the
-     * Pane. Only variables in states marked as "changed" will be checked.
+     * continuing sequence of "confirm" operations on the variables {@literal &}
+     * CVs in the Pane. Only variables in states marked as "changed" will be
+     * checked.
      *
      * @return true is a confirm has been started, false if the pane is
      *         complete.
@@ -1210,11 +1293,11 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Compare Full Sheet" button, this sets in motion a continuing
-     * sequence of "confirm" operations on the variables & CVs in the Pane. The
-     * read mechanism only reads variables in certain states (and needs to do
-     * that to handle error processing right now), so this is implemented by
-     * first setting all variables and CVs on this pane to TOREAD in
-     * prepReadPaneAll, then starting the execution.
+     * sequence of "confirm" operations on the variables {@literal &} CVs in the
+     * Pane. The read mechanism only reads variables in certain states (and
+     * needs to do that to handle error processing right now), so this is
+     * implemented by first setting all variables and CVs on this pane to TOREAD
+     * in prepReadPaneAll, then starting the execution.
      *
      * @return true is a confirm has been started, false if the pane is
      *         complete.
@@ -1281,6 +1364,14 @@ public class PaneProgPane extends javax.swing.JPanel
                 if (retry == 0) {
                     varListIndex--;
                     retry++;
+                    if (_read) {
+                        _programmingVar.setToRead(true); // set the variable
+                        // to read again.
+                    } else {
+                        _programmingVar.setToWrite(true); // set the variable
+                        // to attempt another 
+                        // write.
+                    }
                 } else {
                     retry = 0;
                 }
@@ -1399,6 +1490,11 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Create a new group from the JDOM group Element
+     *
+     * @param element     element containing group contents
+     * @param showStdName show the name following the rules for the <em>nameFmt</em> element
+     * @param modelElem   element containing the decoder model
+     * @return a panel containing the group
      */
     protected JPanel newGroup(Element element, boolean showStdName, Element modelElem) {
 
@@ -1543,7 +1639,14 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     /**
-     * Create a new grid group from the JDOM group Element
+     * Create a new grid group from the JDOM group Element.
+     *
+     * @param element     element containing group contents
+     * @param c           the panel to create the grid in
+     * @param g           the layout manager for the panel
+     * @param globs       properties to configure g
+     * @param showStdName show the name following the rules for the <em>nameFmt</em> element
+     * @param modelElem   element containing the decoder model
      */
     protected void newGridGroup(Element element, final JPanel c, GridBagLayout g, GridGlobals globs, boolean showStdName, Element modelElem) {
 
@@ -1597,7 +1700,12 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     /**
-     * Create a single column from the JDOM column Element
+     * Create a single column from the JDOM column Element.
+     *
+     * @param element     element containing column contents
+     * @param showStdName show the name following the rules for the <em>nameFmt</em> element
+     * @param modelElem   element containing the decoder model
+     * @return a panel containing the group
      */
     public JPanel newColumn(Element element, boolean showStdName, Element modelElem) {
 
@@ -1742,6 +1850,11 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Create a single row from the JDOM column Element
+     *
+     * @param element     element containing row contents
+     * @param showStdName show the name following the rules for the <em>nameFmt</em> element
+     * @param modelElem   element containing the decoder model
+     * @return a panel containing the group
      */
     public JPanel newRow(Element element, boolean showStdName, Element modelElem) {
 
@@ -1886,7 +1999,12 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     /**
-     * Create a grid from the JDOM Element
+     * Create a grid from the JDOM Element.
+     *
+     * @param element     element containing group contents
+     * @param showStdName show the name following the rules for the <em>nameFmt</em> element
+     * @param modelElem   element containing the decoder model
+     * @return a panel containing the group
      */
     public JPanel newGrid(Element element, boolean showStdName, Element modelElem) {
 
@@ -1945,7 +2063,7 @@ public class PaneProgPane extends javax.swing.JPanel
         return c;
     }
 
-    class GridGlobals {
+    protected static class GridGlobals {
 
         public int gridxCurrent = -1;
         public int gridyCurrent = -1;
@@ -1954,7 +2072,13 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     /**
-     * Create a griditem from the JDOM Element
+     * Create a grid item from the JDOM Element
+     *
+     * @param element     element containing grid item contents
+     * @param showStdName show the name following the rules for the <em>nameFmt</em> element
+     * @param modelElem   element containing the decoder model
+     * @param globs       properties to configure the layout
+     * @return a panel containing the group
      */
     public JPanel newGridItem(Element element, boolean showStdName, Element modelElem, GridGlobals globs) {
 
@@ -2223,7 +2347,12 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     /**
-     * Create label from Element
+     * Create label from Element.
+     *
+     * @param e  element containing label contents
+     * @param c  panel to insert label into
+     * @param g  panel layout manager
+     * @param cs constraints on layout manager
      */
     protected void makeLabel(Element e, JPanel c, GridBagLayout g, GridBagConstraints cs) {
         String text = LocaleSelector.getAttribute(e, "text");
@@ -2256,7 +2385,12 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     /**
-     * Create sound label from Element
+     * Create sound label from Element.
+     *
+     * @param e  element containing label contents
+     * @param c  panel to insert label into
+     * @param g  panel layout manager
+     * @param cs constraints on layout manager
      */
     protected void makeSoundLabel(Element e, JPanel c, GridBagLayout g, GridBagConstraints cs) {
         String labelText = rosterEntry.getSoundLabel(Integer.valueOf(LocaleSelector.getAttribute(e, "num")));
@@ -2297,8 +2431,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
         sorter.setComparator(CvTableModel.NUMCOLUMN, new jmri.util.PreferNumericComparator());
 
-        List<RowSorter.SortKey> sortKeys
-                = new ArrayList<RowSorter.SortKey>();
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
         sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         sorter.setSortKeys(sortKeys);
 
@@ -2340,13 +2473,19 @@ public class PaneProgPane extends javax.swing.JPanel
      * Pick an appropriate function map panel depending on model attribute.
      * <dl>
      * <dt>If attribute extFnsESU="yes":</dt>
-     * <dd>Invoke FnMapPanelESU(VariableTableModel v, List<Integer> varsUsed,
-     * Element model)</dd>
+     * <dd>Invoke
+     * {@code FnMapPanelESU(VariableTableModel v, List<Integer> varsUsed, Element model)}</dd>
      * <dt>Otherwise:</dt>
-     * <dd>Invoke FnMapPanel(VariableTableModel v, List<Integer> varsUsed,
-     * Element model)</dd>
+     * <dd>Invoke
+     * {@code FnMapPanel(VariableTableModel v, List<Integer> varsUsed, Element model)}</dd>
      * </dl>
+     *
+     * @param modelElem element containing model attributes
+     * @param c         panel to add function map panel to
+     * @param g         panel layout manager
+     * @param cs        constraints on layout manager
      */
+    // why does this use a different parameter order than all similar methods?
     void pickFnMapPanel(JPanel c, GridBagLayout g, GridBagConstraints cs, Element modelElem) {
         boolean extFnsESU = false;
         Attribute a = modelElem.getAttribute("extFnsESU");
@@ -2377,6 +2516,12 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * Add the representation of a single variable. The variable is defined by a
      * JDOM variable Element from the XML file.
+     *
+     * @param var         element containing variable
+     * @param col         column to insert label into
+     * @param g           panel layout manager
+     * @param cs          constraints on layout manager
+     * @param showStdName show the name following the rules for the <em>nameFmt</em> element
      */
     public void newVariable(Element var, JComponent col,
             GridBagLayout g, GridBagConstraints cs, boolean showStdName) {
@@ -2413,14 +2558,12 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // get representation; store into the list to be programmed
         JComponent rep = getRepresentation(name, var);
-        if (i >= 0) {
-            varList.add(Integer.valueOf(i));
-        }
+        varList.add(Integer.valueOf(i));
 
         // create the paired label
         JLabel l = new WatchingLabel(label, rep);
 
-        int spaceWidth = getFontMetrics(l. getFont()).stringWidth(" ");
+        int spaceWidth = getFontMetrics(l.getFont()).stringWidth(" ");
 
         // now handle the four orientations
         // assemble v from label, rep
@@ -2516,10 +2659,14 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     /**
-     * Takes default tooltip text, e.g. from the decoder element, and modifies
+     * Takes default tool tip text, e.g. from the decoder element, and modifies
      * it as needed.
-     *
+     * <p>
      * Intended to handle e.g. adding CV numbers to variables.
+     *
+     * @param start    existing tool tip text
+     * @param variable the CV
+     * @return new tool tip text
      */
     String modifyToolTipText(String start, VariableValue variable) {
         log.trace("modifyToolTipText: {}", variable.label());
@@ -2557,9 +2704,9 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * Appends text to a String possibly in HTML format (as used in many Swing
      * components).
-     *
-     * Ensures any appended text is added prior to the closing </html> tag, if
-     * there is one.
+     * <p>
+     * Ensures any appended text is added prior to the closing {@code </html>}
+     * tag, if there is one.
      *
      * @param baseText  original text
      * @param extraText text to be appended to original text
@@ -2570,12 +2717,10 @@ public class PaneProgPane extends javax.swing.JPanel
 
         if (baseText == null || baseText.length() < 1) {
             result = extraText;
+        } else if (baseText.endsWith(HTML_CLOSE_TAG)) {
+            result = baseText.substring(0, baseText.length() - HTML_CLOSE_TAG.length()) + extraText + HTML_CLOSE_TAG;
         } else {
-            if (baseText.endsWith(HTML_CLOSE_TAG)) {
-                result = baseText.substring(0, baseText.length() - HTML_CLOSE_TAG.length()) + extraText + HTML_CLOSE_TAG;
-            } else {
-                result = baseText + extraText;
-            }
+            result = baseText + extraText;
         }
         return result;
     }
@@ -2583,10 +2728,15 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * Optionally add CV numbers and bit numbers to tool tip text based on
      * Roster Preferences setting.
-     *
+     * <p>
      * Needs to be independent of VariableValue methods to allow use by
      * non-standard elements such as SpeedTableVarValue, DccAddressPanel,
      * FnMapPanel.
+     *
+     * @param toolTip       existing tool tip text
+     * @param cvDescription description of CV
+     * @param mask          a bitmask
+     * @return new tool tip text
      */
     public static String addCvDescription(String toolTip, String cvDescription, String mask) {
         // start with CV description
@@ -2595,7 +2745,7 @@ public class PaneProgPane extends javax.swing.JPanel
         // add bit numbers from bitmask if applicable
         String temp = getMaskDescription(mask);
         if (temp.length() > 0) {
-                        descString = descString + " " + temp;
+            descString = descString + " " + temp;
         }
 
         // add to tool tip if Show CV Numbers enabled
@@ -2606,22 +2756,23 @@ public class PaneProgPane extends javax.swing.JPanel
             } else {
                 toolTip = addTextHTMLaware(toolTip, " (" + descString + ")");
             }
-        } else {
-            if (toolTip == null) {
-                toolTip = "";
-            }
+        } else if (toolTip == null) {
+            toolTip = "";
         }
 
         return toolTip;
     }
 
     /**
-     * Generate bit numbers from bitmask if applicable.
-     * Returns empty String if not applicable.
+     * Generate bit numbers from bitmask if applicable. Returns empty String if
+     * not applicable.
      *
      * Needs to be independent of VariableValue methods to allow use by
      * non-standard elements such as SpeedTableVarValue, DccAddressPanel,
      * FnMapPanel.
+     *
+     * @param mask a bitmask
+     * @return bit numbers or empty string
      */
     public static String getMaskDescription(String mask) {
         String maskDescString = "";
@@ -2670,12 +2821,12 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * list of fnMapping objects to dispose
      */
-    ArrayList<FnMapPanel> fnMapList = new ArrayList<FnMapPanel>();
-    ArrayList<FnMapPanelESU> fnMapListESU = new ArrayList<FnMapPanelESU>();
+    ArrayList<FnMapPanel> fnMapList = new ArrayList<>();
+    ArrayList<FnMapPanelESU> fnMapListESU = new ArrayList<>();
     /**
      * list of JPanel objects to removeAll
      */
-    ArrayList<JPanel> panelList = new ArrayList<JPanel>();
+    ArrayList<JPanel> panelList = new ArrayList<>();
 
     public void dispose() {
         if (log.isDebugEnabled()) {
@@ -2817,7 +2968,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 // Check if variable has been printed.  If not store it and print
                 boolean alreadyPrinted = false;
                 for (int j = 0; j < printedVariables.size(); j++) {
-                    if (printedVariables.elementAt(j).toString() == name) {
+                    if (name.equals(printedVariables.elementAt(j))) {
                         alreadyPrinted = true;
                     }
                 }
@@ -2986,7 +3137,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 w.write(s, 0, s.length());
                 w.setFontStyle(0); //set font back to Normal
                 //           }
-              /*create an array to hold CV/Value strings to allow reformatting and sorting
+                /*create an array to hold CV/Value strings to allow reformatting and sorting
                  Same size as the table drawn above (TABLE_COLS columns*tableHeight; heading rows
                  not included). Use the count of how many CVs there are to determine the number
                  of table rows required.  Add one more row if the divison into TABLE_COLS columns

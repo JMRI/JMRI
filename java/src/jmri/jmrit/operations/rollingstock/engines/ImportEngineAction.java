@@ -13,15 +13,11 @@ import javax.swing.AbstractAction;
  */
 public class ImportEngineAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2708260245204450029L;
-
     public ImportEngineAction(String actionName, Component frame) {
         super(actionName);
     }
 
+    @Override
     public void actionPerformed(ActionEvent ae) {
         Thread mb = new ImportEngines();
         mb.setName("Import Engines"); // NOI18N

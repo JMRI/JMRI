@@ -1,4 +1,3 @@
-// OffsetHighCvProgrammerFacade.java
 package jmri.implementation;
 
 import jmri.ProgListener;
@@ -29,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * @see jmri.implementation.ProgrammerFacadeSelector
  *
  * @author Bob Jacobsen Copyright (C) 2013
- * @version	$Revision: 24246 $
  */
 public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
@@ -76,11 +74,6 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
             state = ProgState.FINISHWRITE;
             prog.writeCV(addrCV, (_cv / modulo) * cvFactor, this);
         }
-    }
-
-    @Override
-    public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        confirmCV("" + CV, val, p);
     }
 
     @Override

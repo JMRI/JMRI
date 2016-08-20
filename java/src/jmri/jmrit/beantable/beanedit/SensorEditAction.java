@@ -1,4 +1,3 @@
-// StatusPanel.java
 package jmri.jmrit.beantable.beanedit;
 
 import java.awt.event.ActionEvent;
@@ -11,14 +10,8 @@ import jmri.Sensor;
  * Provides an edit panel for a sensor object
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision: 19923 $
  */
 public class SensorEditAction extends BeanEditAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3309738587501961767L;
 
     public String helpTarget() {
         return "package.jmri.jmrit.beantable.SensorTable";

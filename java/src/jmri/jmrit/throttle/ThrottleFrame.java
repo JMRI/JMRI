@@ -47,14 +47,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Glen Oberhauser
  * @author Andrew Berridge Copyright 2010
- * @version $Revision$
  */
 public class ThrottleFrame extends JDesktopPane implements ComponentListener, AddressListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2843734025583850839L;
     private final Integer BACKPANEL_LAYER = Integer.valueOf(Integer.MIN_VALUE);
     private final Integer PANEL_LAYER_FRAME = Integer.valueOf(1);
     private final Integer PANEL_LAYER_PANEL = Integer.valueOf(2);
@@ -467,10 +462,6 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
     private static class TranslucentJPanel extends JPanel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -7447697024958214244L;
         private Color TRANS_COL = new Color(100, 100, 100, 100);
 
         public TranslucentJPanel() {

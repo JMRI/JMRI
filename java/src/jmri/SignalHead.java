@@ -1,4 +1,3 @@
-// SignalHead.java
 package jmri;
 
 /**
@@ -52,7 +51,6 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2008
- * @version	$Revision$
  */
 public interface SignalHead extends NamedBean {
 
@@ -100,6 +98,3 @@ public interface SignalHead extends NamedBean {
     public String[] getValidStateNames();
 
 }
-
-
-/* @(#)SignalHead.java */

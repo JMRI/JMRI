@@ -15,7 +15,7 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import junit.swingui.TestRunner;
+import junit.textui.TestRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +41,7 @@ public class JsonPowerHttpServiceTest extends TestCase {
             power.setPower(PowerManager.UNKNOWN);
             result = service.doGet(JsonPowerServiceFactory.POWER, null, Locale.ENGLISH);
             Assert.assertNotNull(result);
+            Assert.assertEquals(JsonPowerServiceFactory.POWER, result.path(JSON.TYPE).asText());
             Assert.assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
             power.setPower(PowerManager.ON);
             result = service.doGet(JsonPowerServiceFactory.POWER, null, Locale.ENGLISH);

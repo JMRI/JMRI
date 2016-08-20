@@ -6,7 +6,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.EventObject;
 import javax.swing.CellEditor;
-import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
@@ -108,7 +107,6 @@ public class BasicCellEditor implements CellEditor,
         }
     }
 
-    static JCheckBox checkBox = new JCheckBox();
     static ChangeEvent changeEvent;
     protected JComponent editor;
     protected EventListenerList listeners = new EventListenerList();

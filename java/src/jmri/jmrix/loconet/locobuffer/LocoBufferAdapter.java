@@ -1,4 +1,3 @@
-// LocoBufferAdapter.java
 package jmri.jmrix.loconet.locobuffer;
 
 import java.io.DataInputStream;
@@ -27,7 +26,6 @@ import purejavacomm.UnsupportedCommOperationException;
  * Normally controlled by the LocoBufferFrame class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2010
- * @version	$Revision$
  */
 public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -96,12 +94,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -234,8 +227,6 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 
         // start operation
         packets.startThreads();
-        jmri.jmrix.loconet.ActiveFlag.setActive();
-
     }
 
     // base class methods for the LnPortController interface

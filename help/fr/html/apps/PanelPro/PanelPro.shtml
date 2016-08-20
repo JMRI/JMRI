@@ -2,13 +2,11 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!--  $Id$ -->
-<!-- UpDlated by Blorec Herv&#233;  2013-09-02--> 
-<title>JMRI: PanelPro, An Application For Making Control Panels</title>
+<!-- Updated by Blorec Herv&#233;  2013-09-02-->
+<title>JMRI: PanelPro, Fabriquer de Panneaux de Commande</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset= iso-8859-1
-">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -18,11 +16,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<H1>JMRI: PanelPro, Une Application pour Fabriquer de Panneaux de Commande</H1>
+<h1>JMRI: PanelPro, Une Application pour Fabriquer de Panneaux de Commande</h1>
 
 Les biblioth&#232;ques JMRI contiennent l'application PanelPro pour la cr&#233;ation de simples tableaux de commande.
 Cette page d&#233;crit cette application, et comment l'utiliser.
@@ -40,7 +38,6 @@ peu la fa&#231;on dont le panneau apparait, mais il peut vous faire &#233;conomi
 </UL>
 
 <h2>Lequel utiliser? L'&#201;diteur de R&#233;seau ou l'&#201;diteur de Panneau? </h2>
- 
 
 <p>
 L'&#201;diteur de R&#233;seau cr&#233;e un "Sch&#233;ma" qui est une <i>description logique </i> de
@@ -88,11 +85,8 @@ pour des exemples pour voir comment des mod&#233;listes ont utilis&#233; ceci su
 Voir aussi un exemple d'utilisation de PanelPro pour
 <a href="http://jmri.org/community/examples/Modules.shtml"> des r&#233;seaux modulaires</a>.
 
-
 L'application <a href="http://cats4ctc.org/"> CATS </a>
 de Rodney Black est un autre outil pour cr&#233;er des panneaux de contr&#244;le de style moderne.
-
-
 
 <h2>L'Editeur de Panneau</h2>
 <IMG SRC="../../../images/PiecedPanel.gif" ALT="Screen shot of panel" WIDTH="292" HEIGHT="107" HSPACE="0" VSPACE="0">
@@ -162,7 +156,7 @@ pour repr&#233;senter les aiguillages, les capteurs (sur certains syst&#232;mes)
 Le reste de cette page vous prom&#232;ne &#224; travers le
 processus. Si vous souhaitez voir les vid&#233;os d'animation qui
 montrer comment chacune de ces choses sont r&#233;ellement effectu&#233;es sur l'&#233;cran d'ordinateur, s'il vous pla&#238;t voir la
-<A HREF="http://www.rr-cirkits.com/Clinics/Clinics.html"> page vid&#233;o de Dick Bronson </a>.
+<a HREF="http://www.rr-cirkits.com/Clinics/Clinics.html">page vid&#233;o de Dick Bronson</a>.
 <P>
 Vous d&#233;marrez l'&#233;diteur en s&#233;lectionnant "Nouveau Panneau ..." puis "&#201;diteur de Ppanneau" dans le menu "Panneaux" 
 sur la fen&#234;tre principale. Vous aurez un panneau de commande vide, ainsi que les
@@ -209,7 +203,6 @@ WIDTH="148" HEIGHT="214" HSPACE="0" VSPACE="0" align="right"></a><br>
 Tapez le num&#233;ro de capteur (par exemple 74) dans le champ et cliquez sur "Ajouter capteur:".
 </UL>
 
-
 Il y a &#233;galement des boutons pour ajouter des objets plus avanc&#233;s, y compris un cadran d'horloge,
 et cases &#224; cocher qui contr&#244;lent le fonctionnement du panneau.
 Plus d'informations sur ceux-ci est disponible sur la
@@ -217,8 +210,6 @@ Plus d'informations sur ceux-ci est disponible sur la
 <P>
 Apr&#232;s avoir obtenu le panneau comme vous le souhaitez, vous pouvez utiliser l'entr&#233;e "Enregistrer Panneau  ..."
  dans le menu "Panneaux" pour l'&#233;crire dans un fichier XML.
- 
-.
 
 <h3>Ic&#244;nes Disponibles</h3>
 La biblioth&#232;que contient beaucoup d'ic&#244;nes JMRI contributives
@@ -255,29 +246,25 @@ Parce que c'est &#224; base d'ic&#244;nes, vous peuvez cr&#233;er des panneaux q
 voulez. Par exemple, au lieu d'utiliser des ic&#244;nes sch&#233;matique de voie pour les aiguillages, vous
 pourriez utiliser de petites images des niveaux et des plaques sur la machine de la CTC. Ceux-ci vous
  donneraient des leviers "m&#233;caniques" que vous pourriez basculer avec un clic.
-Cela peut &#234;tre un prototype, ou peut &#234;tre simplifi&#233; pour faciliter le fonctionnement et le rendre plus rapide
-, comme vous pr&#233;f&#233;rez.
+Cela peut &#234;tre un prototype, ou peut &#234;tre simplifi&#233; pour faciliter le fonctionnement et le rendre plus rapide,
+    comme vous pr&#233;f&#233;rez.
 
 <P> Il est &#233;galement possible de cr&#233;er un groupe o&#249; les "voies" 
 changent de couleur pour indiquer si la voie est occup&#233;e. La
 proc&#233;dure &#224; suivre est d&#233;crite sur une
-<A HREF="ColorTrack.shtml"> page s&#233;par&#233;e </a>.
+<a HREF="ColorTrack.shtml">page s&#233;par&#233;e</a>.
 
 <h2>Utilisation de l'&#201;diteur de R&#233;seau</h2>
 
-<A href="../../../package/jmri/jmrit/display/images/EnhancedPanel.gif">
-<IMG src="../../../package/jmri/jmrit/display/images/EnhancedPanel.gif" ALIGN="right" ALT="screen shot of layout editor panel" WIDTH="296" HEIGHT="86" HSPACE="0" VSPACE="0"></A>
+<a href="../../../package/jmri/jmrit/display/images/EnhancedPanel.gif">
+<IMG src="../../../package/jmri/jmrit/display/images/EnhancedPanel.gif" ALIGN="right" ALT="screen shot of layout editor panel" WIDTH="296" HEIGHT="86" HSPACE="0" VSPACE="0"></a>
 
 L' 
 <a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Editeur de R&#233;seau</a>
 vous aide &#224; cr&#233;er de simples panneaux sch&#233;matiques, et met en place simultan&#233;ment la logique de canton et de signalisation n&#233;cessaire au fonctionnement du r&#233;seau. Sa force r&#233;side dans sa capacit&#233; &#224; saisir la fa&#231;on dont les voies sont reli&#233;es, chaque canton est situ&#233; et comment chaque signal est li&#233; &#224; des cantons. D'autre part, il pr&#233;voit une capacit&#233; limit&#233;e de personnaliser la mani&#232;re dont le panneau appara&#238;t.
 <p>
-
-<A href="../../../package/jmri/jmrit/display/images/OvalLayoutEditMode.gif">
-<IMG src="../../../package/jmri/jmrit/display/images/OvalLayoutEditMode.gif" ALIGN="right" ALT="screen shot of layout editor panel" WIDTH="271" HEIGHT="85" HSPACE="0" VSPACE="0"></A>
-
-<A href="../../../package/jmri/jmrit/display/images/OvalLayoutEditMode.gif">
-<IMG ="../../../ src / jmri / jmrit / affichage / images / OvalLayoutEditMode.gif "ALIGN ="right"ALT =" capture d'&#233;cran du panneau l'&#233;diteur mise en page "WIDTH =" 271 "HEIGHT = "85" hspace = "0"vspace = "0"></A>
+<a href="../../../package/jmri/jmrit/display/images/OvalLayoutEditMode.gif">
+<IMG src="../../../package/jmri/jmrit/display/images/OvalLayoutEditMode.gif" ALIGN="right" ALT ="capture d'&#233;cran du panneau l'&#233;diteur mise en page" WIDTH ="271" HEIGHT="85" hspace="0" vspace ="0"></a>
 
 Vous pouvez &#233;diter via "Edit Mode", ce qui rend les connexions entre les &#233;l&#233;ments et
 le sch&#233;ma visible (voir figure &#224; droite). Par exemple, vous pouvez cliquer sur
@@ -287,9 +274,7 @@ lorsque la voie est occup&#233;e. Vous pouvez configurer les couleurs utilis&#23
 d'autres d&#233;tails de la pr&#233;sentation.
 
 <p>
-Pour plus d'informations, s'il vous pla&#238;t voir <a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">la page d'aide &#233;diteur R&#233;seau </a>.
-
-
+Pour plus d'informations, s'il vous pla&#238;t voir <a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">la page d'aide &#233;diteur R&#233;seau</a>.
 
 <h2>Communiquer avec les Syst&#232;mes Multiples</h2>
 
@@ -304,9 +289,9 @@ il sera attribu&#233; au premier syst&#232;me sur le panneau pr&#233;f&#233;renc
 acc&#233;der au 2&#232;me syst&#232;me, vous devrez utiliser les
 <A HREF="../../doc/Technical/Names.shtml"> noms de syst&#232;me </a> JMRI. Par exemple, si la deuxi&#232;me pi&#232;ce jointe est
 sur un syst&#232;me LocoNet, vous vous r&#233;f&#233;rez &#224; un aiguillage LocoNet tel que LT13, un capteur LocoNet tel que LS21, etc. Voir la page sur les <A href="../../doc/Technical/Names.shtml"> noms </a> pour plus d'informations.
+</P>
 
-
-    
 <!--#include virtual="/Footer" -->
+</div>
 </body>
 </html>

@@ -27,7 +27,7 @@
 <li><a href="#properties">Properties</a>
 </ul>
 
-<a name="basic"><h2>Basic</h2></a>
+<a name="basic"></a><h2>Basic</h2>
 <p>This provides basic information about the Block, as entered on its creation:</p>
 <img src="BlocksEditBasicTab.png" width="460" height="155">
 <ul>
@@ -44,13 +44,13 @@ set by Layout Editor and should not be changed.</p></li>
 distinguish this Block from other Blocks, or provide useful notes about its use.</p></li>
 </ul>
 
-<a name="sensor"><h2>Sensor</h2></a>
+<a name="sensor"></a><h2>Sensor</h2>
 <p>This tab allows you to assign a Sensor to the Block to change the occupancy state. It
 also allows certain information about the Sensor to be changed:</p>
 <img src="BlocksEditSensorTab.png" width="460" height="155">
 <ul>
 <li><p><b>Sensor</b>
-Select the sensor from the drop down list that will be assoicated with this block.</li>
+Select the Sensor from the drop down list that will be associated with this Block.</li>
 
 You can edit the Sensor Debounce options from this tab; setting the Sensor Debounce 
 helps to prevent false triggers of a Sensor being passed into the system and triggering 
@@ -62,7 +62,7 @@ specify the amount of time in milliSeconds that the system waits before register
 the state change of a sensor.</li>
 </ul>
 
-<a name="reporter"><h2>Reporter</h2></a>
+<a name="reporter"></a><h2>Reporter</h2>
 <img src="BlocksEditReporterTab.png" width="460" height="62">
 <ul>
 <li><b>Reporter</b>
@@ -95,7 +95,7 @@ With 'Use Current?' selected the Block value will switch between 1 and 2,
 whereas with 'Use Current?' unselected the Block value will switch between 3 and 4.</li>
 </ul>
 
-<a name="physicaldetails"><h2>Physical Details</h2></a>
+<a name="physicaldetails"></a><h2>Physical Details</h2>
 <p>Describe the geometry of the Block using the fields shown.</p>
 <p><img src="BlocksEditPhysicalTab.png" width="460" height="155"></p>
 <table><tr valign="top"><td><img src="BlocksEditCurvaturePopup.png" width="193" height="107"></td>
@@ -117,6 +117,7 @@ whereas with 'Use Current?' unselected the Block value will switch between 3 and
 </ul>
 </td>
 </tr></table>
+
 <ul>
 <li><b>Length</b> (optional) - Displays the length of the Block.  Optionally, you may 
 enter the length of the Block here.  The length is used for automatic running of trains. 
@@ -129,32 +130,33 @@ the Block. Curvature is used for automatic running of trains, and need not be en
 if trains will not be run automatically. Curvature, if present, indicates to the computer 
 that it should slow the train as it runs through the Block. If <b>None</b> or 
 <b>Gradual</b> are selected, an automatic train will proceed at normal speed. <b>Tight</b> 
-should be selected if the train should slow down some; <b>Severe </b>should be selected 
+should be selected if the train should slow down some; <b>Severe</b> should be selected 
 if the train should slow by a maximum amount. If the Block has variable curvature, your 
 selection should be made according to the most limiting part of the Block.</li>
 
 <li><b>Speed</b> - The speed is used with certain automation tools and logic, to help
 determine the speed at which a train can be set through the block.
-It is also used by the signal mast logic for determining which aspect should
+It is also used by the Signal Mast Logic for determining which Aspect should
 be displayed in a signal path.<br>
 In the drop down list, you are presented a set of named fixed speeds that
 have been predefined in the signalSpeed.xml file, in addition to a global option.<br>
-It is also possible to enter in a numerical value to represent a speed.
+It is also possible to enter a numerical value to represent a speed.
 The global value is set via the <b>Speeds</b> menu option.</li>
 
-<li><b>Permissive</b> - The Permissive option is used to identify Blocks that can be entered by another Train while it is already occupied. This option is used with certain automation tools and Logix to help
+<li><b>Permissive</b> - The Permissive option is used to identify Blocks that can be entered by another Train 
+while it is already occupied. This option is used with certain automation tools and Logix to help
 determine if a Train can enter an occupied Block and what Aspect should be displayed on its Signal Mast.</li>
 </ul>
 
-<a name="usage"><h2>Usage</h2></a>
+<a name="usage"></a><h2>Usage</h2>
 <p>This is an information field, showing where you have the Block displayed on a Panel:</p>
 <img src="BlocksEditUsageTab.png" width="392" height="120">
 
-<a name="properties"><h2>Properties</h2></a>
+<a name="properties"></a><h2>Properties</h2>
 <img src="BlocksEditPropsTab.png" width="392" height="89">
 
 <p><a href="../../../../html/tools/tracker/index.shtml">More information on Blocks</a></p>
-<p><a href="../display/LayoutEditor.shtml">More information on using Blocks with Layout Editor</a>
+<p><a href="../display/LayoutEditor.shtml">More information on using Blocks with Layout Editor</a></p>
 <p>Back to the <a href="BlockTable.shtml">Block Table Help page<a>.</p>
 
 Located at package/jmri/jmrt/beantable/BlockEdit

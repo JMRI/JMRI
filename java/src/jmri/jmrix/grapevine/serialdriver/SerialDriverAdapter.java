@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.grapevine.serialdriver;
 
 import java.io.DataInputStream;
@@ -6,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.TooManyListenersException;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.jmrix.grapevine.SerialPortController;
 import jmri.jmrix.grapevine.SerialSensorManager;
 import jmri.jmrix.grapevine.SerialTrafficController;
@@ -24,15 +24,15 @@ import purejavacomm.UnsupportedCommOperationException;
  * controlled by the serialdriver.SerialDriverFrame class.
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2007
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
     SerialPort activeSerialPort = null;
 
     public SerialDriverAdapter() {
-        super(null);
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.PROTRAK;
+        // needs to provide a SystemConnectionMemo
+        super(new GrapevineSystemConnectionMemo());
+        this.manufacturerName = jmri.jmrix.grapevine.SerialConnectionTypeList.PROTRAK;
     }
 
     public String openPort(String portName, String appName) {
@@ -65,12 +65,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {

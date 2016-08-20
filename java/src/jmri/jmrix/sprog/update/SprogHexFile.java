@@ -20,10 +20,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SprogHexFile extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4982055575560612793L;
     private File file;
     private FileInputStream in;
     private BufferedInputStream buffIn;

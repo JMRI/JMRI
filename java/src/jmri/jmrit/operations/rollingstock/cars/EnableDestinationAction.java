@@ -13,10 +13,6 @@ import javax.swing.AbstractAction;
  */
 public class EnableDestinationAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6780168973942677595L;
     CarSetFrame _csFrame;
 
     public EnableDestinationAction(String s, CarSetFrame frame) {
@@ -24,6 +20,7 @@ public class EnableDestinationAction extends AbstractAction {
         _csFrame = frame;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         _csFrame.setDestinationEnabled(true);
     }

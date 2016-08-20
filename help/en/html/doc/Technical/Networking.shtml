@@ -1,153 +1,237 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
+
 <html lang="en">
 <head>
-    <TITLE>
- 	JMRI: Network Access
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI network access">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Network Access</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI network access">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head><!--#include virtual="/Header" -->
 
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+    <div id="mainContent">
+      <h1>JMRI: Network Access</h1>This page describes various
+      forms of network access available in JMRI. More capabilities
+      are added all the time, so please check with the user group
+      for up-to-date information.
 
-<H1>JMRI: Network Access</H1>
+      <h2>Methods of Network Access</h2>JMRI interacts with
+      networks in two basic forms: downstream connections and
+      upstream connections.
 
-This page describes various forms of network access available in 
-JMRI.  More capabilities are added all the time, so 
-please check with the user group for up-to-date information.
+      <p>A downstream connection allows JMRI to connect to a layout
+      via a network for operations and control. This uses a network
+      connection to do the same kinds of things that are often done
+      via serial RS232 and USB links.</p>
 
-<h2>Methods of Network Access</h2>
+      <p>An upstream connection allows other devices to command
+      JMRI over a network connection. In this case, the network
+      connection allows other devices and/or programs to do things
+      that are normally done via scripts and the graphical user
+      interface.</p>
 
-JMRI interacts with networks in two basic forms: 
-downstream connections and 
-upstream connections.
-<p>
-A downstream connection allows JMRI to connect to a layout via a network
-for operations and control.  This uses a network connection to do the same 
-kinds of things that are often done via serial RS232 and USB links.
-<p>
-An upstream connection allows other devices to command JMRI over a network connection.
-In this case, the network connection allows other devices and/or programs to do things
-that are normally done via scripts and the graphical user interface.
-<p>
-In the rest of this page, we provide links to the various examples of those two general areas.
+      <p>In the rest of this page, we provide links to the various
+      examples of those two general areas.</p>
 
-<h2>Downstream (networked layout hardware) connections</h2>
+      <h2>Downstream (networked layout hardware) connections</h2>
 
-<ul>
-<li>LocoNet systems
-    <ul>
-    <li><a href="../../hardware/loconet/LocoNetServer.shtml">LocoNet RMI client server connection<a/>
-        <p>
-        This uses Java RMI to provide client-server access to the LocoNet message stream.
-    <li><a href="../../hardware/loconet/LbServer.shtml">LocoNetOverTcp to LbServer<a/>
-        <p>
-        This uses Java RMI to provides access to the LocoNet message stream via the 
-        <a href="http://loconetovertcp.sourceforge.net/">LbServer protocol</a>.
-    </ul>
-<li>C/MRI
-    <ul>
-    <li>This exchanges the C/MRI poll/response protocol via a <a href="../../hardware/TerminalServer.shtml">terminal server<a/>
-    </ul>
-<li>EasyDCC
-    <ul>
-    <li>This exchanges the EasyDCC ASCII command station protocol via a <a href="../../hardware/TerminalServer.shtml">terminal server<a/>
-    </ul>
-<li>JMRIClient
-    <ul>
-    <li><a href="../../hardware/jmriclient/index.shtml">Via network connection to a JMRI Simple  Server<a/>
-    </ul>
-<li>NCE
-    <ul>
-    <li>This exchanges the NCE command station protocol via a <a href="../../hardware/TerminalServer.shtml">terminal server<a/>
-    </ul>
-<li>SRCP
-    <ul>
-    <li><a href="../../hardware/SRCP/index.shtml">Via network connection to SRCP server<a/>
-    </ul>
-<li>ECOS
-    <ul>
-    <li><a href="../../hardware/ecos/index.shtml">Via network connection to ECOS command station<a/>
-    </ul>
-<li>XPressNet
-    <ul>
-    <li><a href="../../hardware/XPressNet/index.shtml">Via network connection to an XnTcp adapter<a/>
-    <li><a href="../../hardware/XPressNet/index.shtml">Via network connection to the Lenz LIUSB Server (Windows only)<a/>
-    </ul>
-</ul>
+      <ul>
+        <li>LocoNet systems
 
-<h2>Upstream (networked JMRI operations) connections</h2>
+          <ul>
+            <li>
+              <a href=
+              "../../hardware/loconet/LocoNetServer.shtml">LocoNet
+              RMI client server connection</a>
 
-<ul>
-<li>Built-in <a href="../../web/index.shtml">web server</a>
-    (<a href="http://jmri.org/JavaDoc/doc/jmri/web/server/package-summary.html">code</a>)
-    <p>
-    This is advertised on Bonjour/Zeroconf as a "_http._tcp.local." service.
-    In particular, this contains the 
-    <a href="http://jmri.org/JavaDoc/doc/jmri/web/xmlio/package-summary.html">JMRI XMLIO support</a>, 
-    which allows web browsers (with or without AJAX) to 
-    monitor and control a layout by accessing a 
-    <a href="http://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">JMRI XMLIO Servlet</a>
-    via the web.
-    It also includes facilities for displaying and clicking on any
-    <a href="http://jmri.org/JavaDoc/doc/jmri/web/servlet/frameimage/package-summary.html">open JMRI window</a>.
-<li>Via Python/jython scripting
-<li>For <a href="../../../package/jmri/jmrit/withrottle/UserInterface.shtml">remote throttles</a>
-    such as the iPhone or Android.
-    (<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">code</a>) 
-    (<a href="http://withrottle.com">WiThrottle product web site</a>)
-    (<a href="../../../package/jmri/jmrit/withrottle/EngineDriverAndroidThrottle.shtml">Android Engine Driver page</a>)
-    <p>
-    This is advertised on Bonjour/Zeroconf as a "_withrottle._tcp.local." service.
-<li>Via running JMRI as an 
-    <a href="http://www.modelrailroadmanager.com/MRRM_Advanced_Edition/Software_Architecture.html">Enterprise Java Bean</a>
-<li>Via providing a <a href="../../hardware/loconet/LocoNetServer.shtml">LocoNet RMI server<a/>.
-    <p>
-    This is advertised on Bonjour/Zeroconf as a "_jmri-locormi._tcp.local." service.
-<li>Via providing a <a href="http://loconetovertcp.sourceforge.net/">LbServer</a> implementation.
-    <p>
-    This is advertised on Bonjour/Zeroconf as a "_loconetovertcpserver._tcp.local." service. (Name
-    pending approval from the original protocol developers)
-<li>Via providing an <a href="http://srcpd.sourceforge.net/">SRCP</a> server implementation.
-    <p>
-    This is advertised on Bonjour/Zeroconf as a "_srcp._tcp.local." service.
-<li>Via providing a <a href="../../hardware/jmriclient/index.shtml">JMRI Server</a> implementation.
-</ul>
+              <p>This uses Java RMI to provide client-server access
+              to the LocoNet message stream.</p>
+            </li>
 
-See also the 
-<a href="http://jmri.org/JavaDoc/doc/jmri/util/zeroconf/ZeroConfUtil.html">jmri.util.zeroconf</a> package of Zeroconf/Bonjour utilities for use in JMRI.
+            <li>
+              <a href=
+              "../../hardware/loconet/LbServer.shtml">LocoNetOverTcp
+              to LbServer</a>
 
-<p>
-See also the 
-<a href="http://www.dns-sd.org">DNS-SD</a> page for more information on Zeroconf/Bonjour/"DNS Service Discovery" networking. 
+              <p>This uses Java RMI to provides access to the
+              LocoNet message stream via the <a href=
+              "http://loconetovertcp.sourceforge.net/">LbServer
+              protocol</a>.</p>
+            </li>
+          </ul>
+        </li>
 
-<p>
-See also "man dns-sd" for more information on the dns-sd debugging command-line tool.
+        <li>C/MRI
 
+          <ul>
+            <li>This exchanges the C/MRI poll/response protocol via
+            a <a href=
+            "../../hardware/TerminalServer.shtml">terminal
+            server</a></li>
+          </ul>
+        </li>
 
-<!--#include virtual="/Footer" -->
+        <li>EasyDCC
 
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+          <ul>
+            <li>This exchanges the EasyDCC ASCII command station
+            protocol via a <a href=
+            "../../hardware/TerminalServer.shtml">terminal
+            server</a></li>
+          </ul>
+        </li>
+
+        <li>JMRIClient
+
+          <ul>
+            <li><a href="../../hardware/jmriclient/index.shtml">Via
+            network connection to a JMRI Simple Server</a></li>
+          </ul>
+        </li>
+
+        <li>NCE
+
+          <ul>
+            <li>This exchanges the NCE command station protocol via
+            a <a href=
+            "../../hardware/TerminalServer.shtml">terminal
+            server</a></li>
+          </ul>
+        </li>
+
+        <li>SRCP
+
+          <ul>
+            <li><a href="../../hardware/SRCP/index.shtml">Via
+            network connection to SRCP server</a></li>
+          </ul>
+        </li>
+
+        <li>ECOS
+
+          <ul>
+            <li><a href="../../hardware/ecos/index.shtml">Via
+            network connection to ECOS command station</a></li>
+          </ul>
+        </li>
+
+        <li>XPressNet
+
+          <ul>
+            <li><a href="../../hardware/XPressNet/index.shtml">Via
+            network connection to an XnTcp adapter</a></li>
+
+            <li><a href="../../hardware/XPressNet/index.shtml">Via
+            network connection to the Lenz LIUSB Server (Windows
+            only)</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <h2>Upstream (networked JMRI operations) connections</h2>
+
+      <ul>
+        <li>Built-in <a href="../../web/index.shtml">web server</a>
+        (<a href=
+        "http://jmri.org/JavaDoc/doc/jmri/web/server/package-summary.html">code</a>)
+
+          <p>This is advertised on Bonjour/Zeroconf as a
+          "_http._tcp.local." service. In particular, this contains
+          the <a href=
+          "http://jmri.org/JavaDoc/doc/jmri/web/xmlio/package-summary.html">
+          JMRI XMLIO support</a>, which allows web browsers (with
+          or without AJAX) to monitor and control a layout by
+          accessing a <a href=
+          "http://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">
+          JMRI XMLIO Servlet</a> via the web. It also includes
+          facilities for displaying and clicking on any <a href=
+          "http://jmri.org/JavaDoc/doc/jmri/web/servlet/frameimage/package-summary.html">
+          open JMRI window</a>.</p>
+        </li>
+
+        <li>Via Python/jython scripting</li>
+
+        <li>For <a href=
+        "../../../package/jmri/jmrit/withrottle/UserInterface.shtml">
+          remote throttles</a> such as the iPhone or Android.
+          (<a href=
+          "http://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">code</a>)
+          (<a href="http://withrottle.com">WiThrottle product web
+          site</a>) (<a href=
+          "../../../package/jmri/jmrit/withrottle/EngineDriverAndroidThrottle.shtml">Android
+          Engine Driver page</a>)
+
+          <p>This is advertised on Bonjour/Zeroconf as a
+          "_withrottle._tcp.local." service.</p>
+        </li>
+
+        <li>Via running JMRI as an <a href=
+        "http://www.modelrailroadmanager.com/MRRM_Advanced_Edition/Software_Architecture.html">
+        Enterprise Java Bean</a></li>
+
+        <li>Via providing a <a href=
+        "../../hardware/loconet/LocoNetServer.shtml">LocoNet RMI
+        server</a>.
+
+          <p>This is advertised on Bonjour/Zeroconf as a
+          "_jmri-locormi._tcp.local." service.</p>
+        </li>
+
+        <li>Via providing a <a href=
+        "http://loconetovertcp.sourceforge.net/">LbServer</a>
+        implementation.
+
+          <p>This is advertised on Bonjour/Zeroconf as a
+          "_loconetovertcpserver._tcp.local." service. (Name
+          pending approval from the original protocol
+          developers)</p>
+        </li>
+
+        <li>Via providing an <a href=
+        "http://srcpd.sourceforge.net/">SRCP</a> server
+        implementation.
+
+          <p>This is advertised on Bonjour/Zeroconf as a
+          "_srcp._tcp.local." service.</p>
+        </li>
+
+        <li>Via providing a <a href=
+        "../../hardware/jmriclient/index.shtml">JMRI Server</a>
+        implementation.</li>
+      </ul>See also the <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/util/zeroconf/ZeroConfUtil.html">
+      jmri.util.zeroconf</a> package of Zeroconf/Bonjour utilities
+      for use in JMRI.
+
+      <p>See also the <a href="http://www.dns-sd.org">DNS-SD</a>
+      page for more information on Zeroconf/Bonjour/"DNS Service
+      Discovery" networking.</p>
+
+      <p>See also "man dns-sd" for more information on the dns-sd
+      debugging command-line tool. 
+      <!--#include virtual="/Footer" --></p>
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-

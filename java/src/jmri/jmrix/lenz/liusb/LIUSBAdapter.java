@@ -1,4 +1,3 @@
-// LIUSBAdapter.java
 package jmri.jmrix.lenz.liusb;
 
 import java.io.DataInputStream;
@@ -26,7 +25,6 @@ import purejavacomm.UnsupportedCommOperationException;
  * Normally controlled by the lenz.liusb.LIUSBFrame class.
  *
  * @author	Paul Bender Copyright (C) 2005-2010
- * @version	$Revision$
  */
 public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -34,7 +32,7 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
         super();
         option1Name = "FlowControl";
         options.put(option1Name, new Option("LIUSB connection uses : ", validOption1));
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
+        this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
     public String openPort(String portName, String appName) {
@@ -68,12 +66,7 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -224,8 +217,6 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
 
         new XNetInitializationManager(this.getSystemConnectionMemo());
-
-        jmri.jmrix.lenz.ActiveFlag.setActive();
     }
 
     // base class methods for the XNetSerialPortController interface
@@ -243,7 +234,7 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
         }
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
-        } catch (java.io.IOException e) {
+        } catch (IOException e) {
             log.error("getOutputStream exception: " + e.getMessage());
         }
         return null;

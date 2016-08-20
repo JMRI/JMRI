@@ -11,6 +11,9 @@ package jmri.jmrix.powerline;
  */
 public class SerialConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String POWERLINE = "Powerline";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.powerline.cm11.ConnectionConfig",
@@ -18,6 +21,11 @@ public class SerialConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
             "jmri.jmrix.powerline.insteon2412s.ConnectionConfig",
             "jmri.jmrix.powerline.simulator.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{POWERLINE};
     }
 
 }

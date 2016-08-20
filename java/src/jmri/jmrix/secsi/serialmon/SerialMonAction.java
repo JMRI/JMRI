@@ -1,4 +1,3 @@
-// SerialMonAction.java
 package jmri.jmrix.secsi.serialmon;
 
 import java.awt.event.ActionEvent;
@@ -41,6 +40,3 @@ public class SerialMonAction extends AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(SerialMonAction.class.getName());
 
 }
-
-
-/* @(#)SerialMonAction.java */

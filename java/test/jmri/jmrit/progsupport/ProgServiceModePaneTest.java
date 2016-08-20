@@ -1,4 +1,3 @@
-// ProgServiceModePaneTest.java
 package jmri.jmrit.progsupport;
 
 import javax.swing.BoxLayout;
@@ -15,7 +14,6 @@ import junit.framework.TestSuite;
  * Tests for the ProgServiceModePane
  *
  * @author	Bob Jacobsen 2008
- * @version $Revision$
  */
 public class ProgServiceModePaneTest extends TestCase {
 
@@ -33,7 +31,7 @@ public class ProgServiceModePaneTest extends TestCase {
         // add dummy DCC
         InstanceManager.setProgrammerManager(new DefaultProgrammerManager(
                 (new ProgrammerScaffold(DefaultProgrammerManager.DIRECTBYTEMODE))));
-        Assert.assertTrue("programer manager available", InstanceManager.programmerManagerInstance() != null);
+        Assert.assertTrue("programer manager available", InstanceManager.getDefault(jmri.ProgrammerManager.class) != null);
         // create and show
         jmri.util.JmriJFrame f = new jmri.util.JmriJFrame("Horizontal DIRECTBYTEMODE");
         f.getContentPane().add(
@@ -62,7 +60,7 @@ public class ProgServiceModePaneTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {ProgServiceModePaneTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -75,12 +73,7 @@ public class ProgServiceModePaneTest extends TestCase {
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         // clear InstanceManager
-        new InstanceManager() {
-            protected void init() {
-                root = this;
-                super.init();
-            }
-        };
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     protected void tearDown() {

@@ -28,6 +28,7 @@ public class TrainCopyAction extends AbstractAction {
 
     TrainCopyFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a copy train frame
         if (f == null || !f.isVisible()) {

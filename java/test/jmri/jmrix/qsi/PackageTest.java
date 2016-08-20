@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.qsi;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.qsi package
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -26,7 +24,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

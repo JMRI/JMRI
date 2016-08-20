@@ -75,8 +75,12 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
             closeTurnout(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
         } else {
             // default case, return status for this turnout
-            sendStatus(statusString.substring(index),
+            try {
+                sendStatus(statusString.substring(index),
                     InstanceManager.turnoutManagerInstance().provideTurnout(statusString.substring(index).toUpperCase()).getKnownState());
+            } catch (IllegalArgumentException ex) {
+                log.warn("Failed to provide Turnout \"{}\" in parseStatus", statusString.substring(index).toUpperCase());
+            }
         }
     }
 

@@ -105,6 +105,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * skipPrefix is not used at this point in time, but is 
      *  defined as abstract in AbstractMRReply 
      */
+    @Override
     protected int skipPrefix(int index) {
         return -1;
     }

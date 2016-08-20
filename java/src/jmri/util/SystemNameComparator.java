@@ -13,14 +13,8 @@ import java.util.Comparator;
  * @author	Bob Jacobsen Copyright (C) 2004
  * @author Howard Penny
  * @author Pete Cressman
- * @version	$Revision$
  */
 public class SystemNameComparator implements Comparator<Object>, java.io.Serializable {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3811487999466749129L;
 
     public SystemNameComparator() {
     }

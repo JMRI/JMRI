@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.oaktree;
 
 import junit.framework.Assert;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.oaktree package.
  *
  * @author Bob Jacobsen Copyright 2003
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -27,7 +25,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -41,6 +39,8 @@ public class PackageTest extends TestCase {
         suite.addTest(SerialMessageTest.suite());
         suite.addTest(SerialTrafficControllerTest.suite());
         suite.addTest(SerialAddressTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.oaktree.serialdriver.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.oaktree.configurexml.PackageTest.class));
         return suite;
     }
 

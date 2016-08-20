@@ -1,4 +1,3 @@
-// SerialPacketGenFrame.java
 package jmri.jmrix.cmri.serial.packetgen;
 
 import java.awt.Dimension;
@@ -11,19 +10,16 @@ import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialReply;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.util.StringUtil;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+
 
 /**
  * Frame for user input of CMRI serial messages
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2003
- * @version	$Revision$
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.cmri.serial.SerialListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8913914338966964330L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
@@ -32,8 +28,11 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     javax.swing.JButton pollButton = new javax.swing.JButton("Send poll");
     javax.swing.JTextField uaAddrField = new javax.swing.JTextField(5);
 
-    public SerialPacketGenFrame() {
+    private CMRISystemConnectionMemo _memo = null;
+
+    public SerialPacketGenFrame(CMRISystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
     public void initComponents() throws Exception {
@@ -92,11 +91,11 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
 
     public void pollButtonActionPerformed(java.awt.event.ActionEvent e) {
         SerialMessage msg = SerialMessage.getPoll(Integer.valueOf(uaAddrField.getText()).intValue());
-        SerialTrafficController.instance().sendSerialMessage(msg, this);
+        _memo.getTrafficController().sendSerialMessage(msg, this);
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        SerialTrafficController.instance().sendSerialMessage(createPacket(packetTextField.getText()), this);
+        _memo.getTrafficController().sendSerialMessage(createPacket(packetTextField.getText()), this);
     }
 
     SerialMessage createPacket(String s) {

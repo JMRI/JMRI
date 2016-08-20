@@ -1,4 +1,3 @@
-// JCBHandleTest.java
 package jmri.util.swing;
 
 import junit.framework.Assert;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
 /**
  *
  * @author	Bob Jacobsen Copyright 2014
- * @version $Revision$
  */
 public class JCBHandleTest extends TestCase {
 
@@ -38,7 +36,7 @@ public class JCBHandleTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", JCBHandleTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

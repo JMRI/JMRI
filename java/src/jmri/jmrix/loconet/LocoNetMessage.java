@@ -354,7 +354,6 @@ public class LocoNetMessage implements Serializable {
      * Check if a high bit is set, usually used to store it in some other
      * location (LocoNet does not allow the high bit to be set in data bytes)
      *
-     * @param val
      * @return True if the argument has the high bit set
      */
     static protected boolean highBit(int val) {

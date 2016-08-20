@@ -1,4 +1,3 @@
-// MergMessageTest.java
 package jmri.jmrix.can.adapters.gridconnect.canrs;
 
 import jmri.jmrix.can.CanMessage;
@@ -12,7 +11,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.adapters.gridconnect.canrs.MergMessage class
  *
  * @author Bob Jacobsen Copyright 2008, 2009
- * @version $Revision$
  */
 public class MergMessageTest extends TestCase {
 
@@ -68,7 +66,7 @@ public class MergMessageTest extends TestCase {
     static public void main(String[] args) {
         apps.tests.AllTest.initLogging();
         String[] testCaseName = {"-noloading", MergMessageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

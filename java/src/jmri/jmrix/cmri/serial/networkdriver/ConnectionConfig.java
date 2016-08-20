@@ -1,16 +1,15 @@
-// ConnectionConfig.java
 package jmri.jmrix.cmri.serial.networkdriver;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Definition of objects to handle configuring a layout connection via a
  * NetworkDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2015
- * @version	$Revision: 28746 $
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
@@ -39,7 +38,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
 
     public void loadDetails(JPanel details) {
 
-        b.addActionListener(new NodeConfigAction());
+        b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
         if (!additionalItems.contains(b)) {
             additionalItems.add(b);
         }

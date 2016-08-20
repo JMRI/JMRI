@@ -11,6 +11,7 @@ package jmri.jmrix.can;
  */
 public class CanConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    @Override
     public String[] getAvailableProtocolClasses() {
 
         // set the connection types to have MERG at the front
@@ -24,6 +25,12 @@ public class CanConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
             "jmri.jmrix.can.adapters.lawicell.canusb.serialdriver.ConnectionConfig",
             "jmri.jmrix.can.adapters.loopback.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        // Not in DCCManufacturerList, and not in META-INF, so returning class name.
+        return new String[]{CanConnectionTypeList.class.getCanonicalName()};
     }
 
 }

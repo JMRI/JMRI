@@ -1,4 +1,3 @@
-// TMCCMenu.java
 package jmri.jmrix.tmcc;
 
 import java.util.ResourceBundle;
@@ -8,14 +7,8 @@ import javax.swing.JMenu;
  * Create a "Systems" menu containing the Jmri TMCC-specific tools
  *
  * @author	Bob Jacobsen Copyright 2003, 2006
- * @version $Revision$
  */
 public class TMCCMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1759987972791093919L;
 
     public TMCCMenu(String name) {
         this();

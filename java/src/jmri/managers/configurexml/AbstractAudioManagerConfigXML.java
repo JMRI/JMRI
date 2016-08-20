@@ -1,4 +1,3 @@
-// AbstractAudioManagerConfigXML.java
 package jmri.managers.configurexml;
 
 import java.util.List;
@@ -40,7 +39,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
  * @author Matthew Harris copyright (c) 2009, 2011
- * @version $Revision$
  */
 public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -235,10 +233,8 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 
                     ce = new Element("distances");
                     ce.setAttribute("ref", "" + as.getReferenceDistance());
-                    float f;
-                    if ((f = as.getMaximumDistance()) != Audio.MAX_DISTANCE) {
-                        ce.setAttribute("max", "" + f);
-                    }
+                    float f = as.getMaximumDistance();
+                    ce.setAttribute("max", "" + f);
                     e.addContent(ce);
 
                     ce = new Element("loops");
@@ -294,7 +290,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
     @SuppressWarnings("unchecked")
     public void loadAudio(Element audio) {
 
-        AudioManager am = InstanceManager.audioManagerInstance();
+        AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
 
         // Count number of loaded Audio objects
         int loadedObjects = 0;
@@ -539,10 +535,8 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 
     @Override
     public int loadOrder() {
-        return InstanceManager.audioManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(jmri.AudioManager.class).getXMLOrder();
     }
 
     private static final Logger log = LoggerFactory.getLogger(AbstractAudioManagerConfigXML.class.getName());
 }
-
-/* $(#)AbstractAudioManagerConfigXML.java */

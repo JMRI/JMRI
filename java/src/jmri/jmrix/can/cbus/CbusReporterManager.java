@@ -1,12 +1,12 @@
 package jmri.jmrix.can.cbus;
 
+import jmri.Reporter;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.TrafficController;
 import jmri.managers.AbstractReporterManager;
-import jmri.Reporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Mark Riddoch Copyright (C) 2015
- * @version $Revision$
  */
 public class CbusReporterManager extends AbstractReporterManager implements
         CanListener {

@@ -1,8 +1,8 @@
 package jmri.profile;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 import javax.annotation.Nonnull;
@@ -28,13 +28,16 @@ public class Profile implements Comparable<Profile> {
     public static final String SHARED_PROPERTIES = PROFILE + "/" + PROPERTIES; // NOI18N
     public static final String SHARED_CONFIG = PROFILE + "/" + CONFIG; // NOI18N
     public static final String CONFIG_FILENAME = "ProfileConfig.xml"; // NOI18N
+    public static final String UI_CONFIG = "user-interface.xml"; // NOI18N
+    public static final String SHARED_UI_CONFIG = PROFILE + "/" + UI_CONFIG; // NOI18N
+    public static final String UI_CONFIG_FILENAME = "UserPrefsProfileConfig.xml"; // NOI18N
 
     /**
      * Create a Profile object given just a path to it. The Profile must exist
      * in storage on the computer.
      *
      * @param path The Profile's directory
-     * @throws IOException
+     * @throws java.io.IOException If unable to read the Profile from path
      */
     public Profile(File path) throws IOException {
         this(path, true);
@@ -49,11 +52,12 @@ public class Profile implements Comparable<Profile> {
      * read-only property of the Profile. The {@link ProfileManager} will only
      * load a single profile with a given id.
      *
-     * @param name
-     * @param id
-     * @param path
-     * @throws IOException
-     * @throws IllegalArgumentException
+     * @param name Name of the profile. Will not be used to enforce uniqueness
+     *             contraints.
+     * @param id   Id of the profile. Will be prepended to a random String to
+     *             enforce uniqueness constraints.
+     * @param path Location to store the profile
+     * @throws java.io.IOException If unable to create the profile at path
      */
     public Profile(String name, String id, File path) throws IOException, IllegalArgumentException {
         if (!path.getName().equals(id)) {
@@ -71,7 +75,9 @@ public class Profile implements Comparable<Profile> {
         this.name = name;
         this.id = id + "." + ProfileManager.createUniqueId();
         this.path = path;
-        path.mkdirs();
+        if (!path.exists() && !path.mkdirs()) {
+            throw new IOException("Unable to create directory " + path); // NOI18N
+        }
         if (!path.isDirectory()) {
             throw new IllegalArgumentException(path + " is not a directory"); // NOI18N
         }
@@ -88,8 +94,10 @@ public class Profile implements Comparable<Profile> {
      * This method exists purely to support subclasses.
      *
      * @param path       The Profile's directory
-     * @param isReadable
-     * @throws IOException
+     * @param isReadable True if the profile has storage. See
+     *                   {@link jmri.profile.NullProfile} for a Profile subclass
+     *                   where this is not true.
+     * @throws java.io.IOException If the profile's preferences cannot be read.
      */
     protected Profile(File path, boolean isReadable) throws IOException {
         this.path = path;
@@ -102,33 +110,6 @@ public class Profile implements Comparable<Profile> {
         ProfileProperties p = new ProfileProperties(this);
         p.put(NAME, this.name, true);
         p.put(ID, this.id, true);
-        this.saveXml();
-    }
-
-    /*
-     * Remove when or after support for writing ProfileConfig.xml is removed.
-     */
-    @Deprecated
-    protected final void saveXml() throws IOException {
-        Properties p = new Properties();
-        File f = new File(this.path, PROPERTIES);
-        FileOutputStream os = null;
-
-        p.setProperty(NAME, this.name);
-        p.setProperty(ID, this.id);
-        if (!f.exists() && !f.createNewFile()) {
-            throw new IOException("Unable to create file at " + f.getAbsolutePath()); // NOI18N
-        }
-        try {
-            os = new FileOutputStream(f);
-            p.storeToXML(os, "JMRI Profile"); // NOI18N
-            os.close();
-        } catch (IOException ex) {
-            if (os != null) {
-                os.close();
-            }
-            throw ex;
-        }
     }
 
     /**
@@ -160,7 +141,7 @@ public class Profile implements Comparable<Profile> {
     }
 
     private void readProfile() throws IOException {
-        ProfileProperties p = new ProfileProperties(this);
+        ProfileProperties p = new ProfileProperties(this.path);
         this.id = p.get(ID, true);
         this.name = p.get(NAME, true);
         if (this.id == null) {
@@ -169,8 +150,9 @@ public class Profile implements Comparable<Profile> {
         }
     }
 
-    /*
-     * Remove sometime after the new profiles get entrenched (JMRI 5.0, 6.0?)
+    /**
+     * @deprecated since 4.1.1; Remove sometime after the new profiles get
+     * entrenched (JMRI 5.0, 6.0?)
      */
     @Deprecated
     private void readProfileXml() throws IOException {
@@ -241,10 +223,11 @@ public class Profile implements Comparable<Profile> {
     /**
      * Test if the given path or subdirectories contains a Profile.
      *
-     * @param path
+     * @param path Path to test.
      * @return true if path or subdirectories contains a Profile.
      * @since 3.9.4
      */
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "listFiles() is only null if path is not a directory")
     public static boolean containsProfile(File path) {
         if (path.isDirectory()) {
             if (Profile.isProfile(path)) {
@@ -263,7 +246,7 @@ public class Profile implements Comparable<Profile> {
     /**
      * Test if the given path is within a directory that is a Profile.
      *
-     * @param path
+     * @param path Path to test.
      * @return true if path or parent directories is a Profile.
      * @since 3.9.4
      */
@@ -280,7 +263,7 @@ public class Profile implements Comparable<Profile> {
     /**
      * Test if the given path is a Profile.
      *
-     * @param path
+     * @param path Path to test.
      * @return true if path is a Profile.
      * @since 3.9.4
      */

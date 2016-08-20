@@ -1,4 +1,3 @@
-// OrderedHashtableTest.java
 package jmri.util;
 
 import java.util.Enumeration;
@@ -13,7 +12,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.util.OrderedHashtable class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision$
  */
 public class OrderedHashtableTest extends TestCase {
 
@@ -26,11 +24,6 @@ public class OrderedHashtableTest extends TestCase {
         OrderedHashtable<String, Turnout> oht = new OrderedHashtable<String, Turnout>();
 
         Turnout t1 = new AbstractTurnout("t1") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2727946283337403138L;
-
             protected void forwardCommandChangeToLayout(int s) {
             }
 
@@ -165,7 +158,7 @@ public class OrderedHashtableTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", OrderedHashtableTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -175,11 +168,6 @@ public class OrderedHashtableTest extends TestCase {
     }
 
     class TestTurnout extends AbstractTurnout {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -4925238066324681487L;
 
         TestTurnout(String s) {
             super(s);

@@ -1,25 +1,25 @@
-// LoaderPane.java
 package jmri.jmrix.openlcb.swing.downloader;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import jmri.jmrit.MemoryContents;
-
 import jmri.jmrix.can.CanSystemConnectionMemo;
-
+import org.openlcb.MimicNodeStore;
+import org.openlcb.NodeID;
 import org.openlcb.implementations.DatagramService;
 import org.openlcb.implementations.MemoryConfigurationService;
-import org.openlcb.MimicNodeStore;
 import org.openlcb.swing.NodeSelector;
-import org.openlcb.NodeID;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Pane for downloading .hex files files to OpenLCB devices which
- * support firmware updates via LocoNet IPL messages.
+ * support firmware updates.
  *<p>
  * This version relies on the file contents interpretation mechanisms built into
  * the readHex() methods found in class jmri.jmrit.MemoryContents to
@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
  * display in the status line of the pane.
  *
  * @author	Bob Jacobsen Copyright (C) 2005, 2015 (from the LocoNet version by B. Milhaupt Copyright (C) 2013, 2014)
- * @version	$Revision$
  */
 public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         implements ActionListener, jmri.jmrix.can.swing.CanPanelInterface {
@@ -47,9 +46,6 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     JPanel selectorPane;
     JTextField spaceField;
     JCheckBox lockNode;
-    /**
-     * LnPanelInterface implementation creates standard form of title
-     */
     public String getTitle(String menuTitle) { return Bundle.getMessage("TitleLoader"); }
 
     public void initComponents(CanSystemConnectionMemo memo) throws Exception {
@@ -117,7 +113,6 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         space = Integer.valueOf(spaceField.getText());
 
         // start the download itself
-        //operation = PXCT2SENDDATA;
         sendSequence();
     }
 
@@ -183,7 +178,6 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
     }
 
-
     /**
      * Do an OpenLCB write operation for up to 64 bytes from the current
      * memory location.
@@ -209,31 +203,35 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                 int addr = location; // next call back might be instantaneous
                 location = location + count; 
                 log.info("Sending write to 0x{} length {}", Integer.toHexString(location).toUpperCase(), count);
-                mcs.request(new MemoryConfigurationService.McsWriteMemo(destNodeID(), space, addr, data) {
-                    public void handleWriteReply(int code) { 
-                        log.debug("Start of handleWriteReply "+code);
+                mcs.requestWrite(destNodeID(), space, addr, data, new MemoryConfigurationService.McsWriteHandler() {
+                    @Override
+                    public void handleSuccess() {
+                        log.debug("Start of handleWriteSuccess");
                         // update GUI intermittently
                         sentmsgs++;
                         if ((sentmsgs % 20) == 0) {
                             // update progress bar via the queue to ensure synchronization
                             updateGUI(100 * sentmsgs / totalmsgs);
                         }
-                
-                        if (code == 0 && !isOperationAborted()) {
+                        if (!isOperationAborted()) {
                             // normal reply - queue next
                             location = inputContent.nextContent(location);
                             if (location < 0) {
                                 log.info("   Download completed normally");
                                 sendDataDone(true);
                             } else {
-                                if (log.isDebugEnabled()) log.debug("   Continue to 0x{}", Integer.toHexString(location).toUpperCase());
+                                if (log.isDebugEnabled())
+                                    log.debug("   Continue to 0x{}", Integer.toHexString(location).toUpperCase());
                                 sendNext();
                             }
-                        } else {
-                            // non-normal reply
-                            log.info("   Done abnormal code:{}", code);
-                            sendDataDone(false);
                         }
+                    }
+
+                    @Override
+                    public void handleFailure(int errorCode) {
+                        log.warn("Download failed 0x{}", Integer.toHexString
+                                (errorCode));
+                        sendDataDone(false);
                     }
                 });
             }
@@ -286,21 +284,33 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
     void sendFreeze() {
         dcs.sendData(new DatagramService.DatagramServiceTransmitMemo(destNodeID(),new int[]{0x20, 0xA1, space}) {
-                public void handleReply(int code) { 
-                    log.info("freeze reply");
-                    sendNext();
-                }
+            @Override
+            public void handleSuccess(int flags) {
+                log.debug("freeze reply");
+                sendNext();
+            }
+
+            @Override
+            public void handleFailure(int errorCode) {
+                log.warn("freeze failed 0x{}", Integer.toHexString(errorCode));
+            }
             });
     }
+
     void sendUnfreeze() {
          dcs.sendData(new DatagramService.DatagramServiceTransmitMemo(destNodeID(),new int[]{0x20, 0xA0, space}) {
-                public void handleReply(int code) { 
-                    log.info("unfreeze reply");
-                }
+
+             @Override
+             public void handleSuccess(int flags) {
+                 log.info("unfreeze success");
+             }
+
+             @Override
+             public void handleFailure(int errorCode) {
+                 log.warn("freeze failed 0x{}", Integer.toHexString(errorCode));
+             }
             });
     }
-
-
 
     /**
      * Get NodeID from the GUI
@@ -311,8 +321,8 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     
     @Override
     protected void setDefaultFieldValues() {
-
-        parametersAreValid();
+        // currently, doesn't do anything, as just loading raw hex files.
+        log.debug("setDefaultFieldValues leaves fields unchanged");
     }
 
     /**
@@ -334,7 +344,6 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         return true;
     }
 
-
     /**
      * Nested class to create one of these using old-style defaults
      */
@@ -349,5 +358,4 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     }
 
     private final static Logger log = LoggerFactory.getLogger(LoaderPane.class.getName());
-
 }

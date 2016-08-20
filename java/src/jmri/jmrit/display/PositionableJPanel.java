@@ -18,10 +18,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3059313202546618168L;
     protected Editor _editor = null;
     protected boolean debug = false;
 

@@ -1,4 +1,3 @@
-// CsvImporter.java
 package jmri.jmrit.symbolicprog;
 
 import java.io.BufferedReader;
@@ -26,21 +25,23 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Alex Shepherd Copyright (C) 2003
  * @author	Dave Heap Copyright (C) 2014
- * @version	$Revision: 24747 $
  */
 public class CsvImporter {
 
     private final static Logger log = LoggerFactory.getLogger(CsvImporter.class.getName());
 
     public CsvImporter(File file, CvTableModel cvModel) throws IOException {
+        FileReader fileReader=null;
+        BufferedReader bufferedReader=null;
+
         try {
             CvValue cvObject;
             String line = null;
             String name = null;
             int value = 0;
 
-            FileReader fileReader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            fileReader = new FileReader(file);
+            bufferedReader = new BufferedReader(fileReader);
 
             while ((line = bufferedReader.readLine()) != null) {
                 String[] lineStrings = line.split(" *, *");
@@ -61,10 +62,15 @@ public class CsvImporter {
                     cvObject.setValue(value);
                 }
             }
-            bufferedReader.close();
-            fileReader.close();
         } catch (IOException e) {
             log.error("Error reading file: " + e);
+        } finally {
+            if(bufferedReader!=null) {
+               bufferedReader.close();
+            }
+            if(fileReader!=null) {
+               fileReader.close();
+            }
         }
     }
 

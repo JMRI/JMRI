@@ -1,4 +1,3 @@
-// BundleTest.java
 package jmri.jmrit.roster.swing;
 
 import junit.framework.Assert;
@@ -37,7 +36,7 @@ public class BundleTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {BundleTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

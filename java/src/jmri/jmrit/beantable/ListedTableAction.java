@@ -11,14 +11,9 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision$
  */
 public class ListedTableAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6097143838837199839L;
     String gotoListItem = null;
     String title = Bundle.getMessage("TitleListedTable");
 
@@ -28,7 +23,7 @@ public class ListedTableAction extends AbstractAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
+     * @param s title of the action
      */
     public ListedTableAction(String s, String selection) {
         super(s);
@@ -67,13 +62,7 @@ public class ListedTableAction extends AbstractAction {
          hog Swing/AWT execution, then finally display on Swing */
         Runnable r = new Runnable() {
             public void run() {
-                f = new ListedTableFrame(title) {
-
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -2029385586619585289L;
-                };
+                f = new ListedTableFrame(title) {};
                 f.initComponents();
                 addToFrame(f);
 
