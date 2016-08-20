@@ -1,5 +1,8 @@
 package jmri.managers;
 
+import static jmri.swing.JmriJTablePersistenceManager.TABLES_ELEMENT;
+import static jmri.swing.JmriJTablePersistenceManager.TABLES_NAMESPACE;
+
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -31,6 +34,7 @@ import jmri.beans.Bean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
+import jmri.swing.JmriJTablePersistenceManager.TableColumnPreferences;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.jdom.JDOMUtil;
@@ -62,8 +66,6 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     private final static String COMBOBOX_ELEMENT = "comboBoxLastValue"; // NOI18N
     private final static String SETTINGS_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/settings-4-3-5.xsd"; // NOI18N
     private final static String SETTINGS_ELEMENT = "settings"; // NOI18N
-    private final static String TABLES_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/table-details-4-3-5.xsd"; // NOI18N
-    private final static String TABLES_ELEMENT = "tableDetails"; // NOI18N
     private final static String WINDOWS_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/window-details-4-3-5.xsd"; // NOI18N
     private final static String WINDOWS_ELEMENT = "windowDetails"; // NOI18N
     private final static Logger log = LoggerFactory.getLogger(JmriUserPreferencesManager.class);
@@ -1603,34 +1605,4 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     }
 
-    protected final static class TableColumnPreferences {
-
-        int order;
-        int width;
-        SortOrder sort;
-        boolean hidden;
-
-        TableColumnPreferences(int order, int width, SortOrder sort, boolean hidden) {
-            this.order = order;
-            this.width = width;
-            this.sort = sort;
-            this.hidden = hidden;
-        }
-
-        int getOrder() {
-            return order;
-        }
-
-        int getWidth() {
-            return width;
-        }
-
-        SortOrder getSort() {
-            return sort;
-        }
-
-        boolean getHidden() {
-            return hidden;
-        }
-    }
 }
