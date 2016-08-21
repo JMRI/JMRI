@@ -45,6 +45,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.JmriBeanComboBox;
+import org.python.jline.internal.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -617,8 +618,13 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         Iterator<String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
             String systemName = iter.next();
-            String userName = bm.getBySystemName(systemName).getUserName();
-            _manualSensorList.add(new ManualSensorList(systemName, userName));
+            Sensor ss = bm.getBySystemName(systemName);
+            if (ss != null) {
+                String userName = ss.getUserName();
+                _manualSensorList.add(new ManualSensorList(systemName, userName));
+            } else {
+                Log.error("Failed to get sensor {}", systemName);
+            }
         }
 
         p2xs = new JPanel();
@@ -1615,7 +1621,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
 
         public String getValue(String name) {
-            return InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name).getAspect();
+            SignalMast sm = InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name);
+            if (sm != null) {
+                return sm.getAspect();
+            } else {
+                return null;
+            }
         }
 
         public String getColumnName(int col) {

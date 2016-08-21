@@ -38,6 +38,7 @@ import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
+import org.python.jline.internal.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -376,11 +377,16 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         Iterator<String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
             String systemName = iter.next();
-            if (shm.getBySystemName(systemName).getClass().getName().contains("SingleTurnoutSignalHead")) {
-                String userName = shm.getBySystemName(systemName).getUserName();
-                _signalList.add(new SignalGroupSignal(systemName, userName));
+            SignalHead sh = shm.getBySystemName(systemName);
+            if (sh != null) {
+                if (sh.getClass().getName().contains("SingleTurnoutSignalHead")) {
+                    String userName = sh.getUserName();
+                    _signalList.add(new SignalGroupSignal(systemName, userName));
+                } else {
+                    log.debug("Signal Head " + systemName + " is not a single Turnout Controlled Signal Head");
+                }
             } else {
-                log.debug("Signal Head " + systemName + " is not a single Turnout Controlled Signal Head");
+                Log.error("Failed to get signal head {}", systemName);
             }
         }
 
@@ -823,12 +829,15 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         curSignalGroup = g;
 
         jmri.SignalMast sh = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(g.getSignalMastName());
-        java.util.Vector<String> appear = sh.getValidAspects();
+        if (sh != null ) {
+            java.util.Vector<String> appear = sh.getValidAspects();
+            _mastAppearancesList = new ArrayList<SignalMastAppearances>(appear.size());
 
-        _mastAppearancesList = new ArrayList<SignalMastAppearances>(appear.size());
-
-        for (int i = 0; i < appear.size(); i++) {
-            _mastAppearancesList.add(new SignalMastAppearances(appear.get(i)));
+            for (int i = 0; i < appear.size(); i++) {
+                _mastAppearancesList.add(new SignalMastAppearances(appear.get(i)));
+            }
+        } else {
+            Log.error("Failed to get signal mast {}", g.getSignalMastName());
         }
 
         fixedSystemName.setText(sName);
@@ -1272,11 +1281,20 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             /*_sysName = sysName;
              _userName = userName;*/
             _included = false;
-            if (InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(sysName).getClass().getName().contains("SingleTurnoutSignalHead")) {
-                jmri.implementation.SingleTurnoutSignalHead signal = (jmri.implementation.SingleTurnoutSignalHead) InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(sysName);
-                _onState = signal.getOnAppearance();
-                _offState = signal.getOffAppearance();
-                _signal = signal;
+            SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(sysName);
+            if (sh != null) {
+                if (sh.getClass().getName().contains("SingleTurnoutSignalHead")) {
+                    jmri.implementation.SingleTurnoutSignalHead signal = (jmri.implementation.SingleTurnoutSignalHead) InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(sysName);
+                    if (signal != null) {
+                        _onState = signal.getOnAppearance();
+                        _offState = signal.getOffAppearance();
+                        _signal = signal;
+                    } else {
+                        Log.error("Failed to get signal head {}", sysName);
+                    }
+                }
+            } else {
+                Log.error("Failed to get signal head {}",  sysName);
             }
 
         }

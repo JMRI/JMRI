@@ -50,6 +50,7 @@ import jmri.implementation.DefaultConditionalAction;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemNameComparator;
+import org.python.jline.internal.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -374,10 +375,15 @@ public class LRouteTableAction extends AbstractTableAction {
         iter = systemNameList.iterator();
         while (iter.hasNext()) {
             String systemName = iter.next();
-            String userName = sm.getBySystemName(systemName).getUserName();
-            inputTS.add(new RouteInputSensor(systemName, userName));
-            outputTS.add(new RouteOutputSensor(systemName, userName));
-            alignTS.add(new AlignElement(systemName, userName));
+            Sensor sen = sm.getBySystemName(systemName);
+            if (sen != null) {
+                String userName = sen.getUserName();
+                inputTS.add(new RouteInputSensor(systemName, userName));
+                outputTS.add(new RouteOutputSensor(systemName, userName));
+                alignTS.add(new AlignElement(systemName, userName));
+            } else {
+                Log.error("Failed to get sensor {}", systemName);
+            }
         }
 
         jmri.LightManager lm = InstanceManager.lightManagerInstance();
@@ -385,18 +391,28 @@ public class LRouteTableAction extends AbstractTableAction {
         iter = systemNameList.iterator();
         while (iter.hasNext()) {
             String systemName = iter.next();
-            String userName = lm.getBySystemName(systemName).getUserName();
-            inputTS.add(new RouteInputLight(systemName, userName));
-            outputTS.add(new RouteOutputLight(systemName, userName));
+            Light l = lm.getBySystemName(systemName);
+            if (l != null) {
+                String userName = l.getUserName();
+                inputTS.add(new RouteInputLight(systemName, userName));
+                outputTS.add(new RouteOutputLight(systemName, userName));
+            } else {
+                Log.error("Failed to get light {}", systemName);
+            }
         }
         jmri.SignalHeadManager shm = InstanceManager.getDefault(jmri.SignalHeadManager.class);
         systemNameList = shm.getSystemNameList();
         iter = systemNameList.iterator();
         while (iter.hasNext()) {
             String systemName = iter.next();
-            String userName = shm.getBySystemName(systemName).getUserName();
-            inputTS.add(new RouteInputSignal(systemName, userName));
-            outputTS.add(new RouteOutputSignal(systemName, userName));
+            SignalHead sh = shm.getBySystemName(systemName);
+            if (sh != null) {
+                String userName = sh.getUserName();
+                inputTS.add(new RouteInputSignal(systemName, userName));
+                outputTS.add(new RouteOutputSignal(systemName, userName));
+            } else {
+                Log.error("Failed to get signal head {}", systemName);
+            }
         }
         _includedInputList = new ArrayList<RouteInputElement>();
         _includedOutputList = new ArrayList<RouteOutputElement>();

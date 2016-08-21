@@ -10,6 +10,7 @@ import jmri.NamedBeanHandle;
 import jmri.Route;
 import jmri.RouteManager;
 import jmri.Sensor;
+import org.python.jline.internal.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +58,12 @@ public class RouteController extends AbstractController implements PropertyChang
         try {
             if (message.charAt(0) == 'A') {
                 if (message.charAt(1) == '2') {
-                    manager.getBySystemName(message.substring(2)).setRoute();
+                    Route r = manager.getBySystemName(message.substring(2));
+                    if (r != null) {
+                        r.setRoute();
+                    } else {
+                        Log.warn("Message \"{}\" contained invalid system name.", message);
+                    }
                 } else {
                     log.warn("Message \"" + message + "\" does not match a route.");
                 }

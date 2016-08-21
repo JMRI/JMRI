@@ -5,7 +5,9 @@ import java.awt.Component;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
+import jmri.Route;
 import jmri.RouteManager;
+import org.python.jline.internal.Log;
 
 /**
  * Factory to create {@link apps.startup.TriggerRouteModel} objects.
@@ -39,9 +41,14 @@ public class TriggerRouteModelFactory implements StartupModelFactory {
         if (this.getModelClass().isInstance(model)) {
             ArrayList<String> userNames = new ArrayList<>();
             InstanceManager.getDefault(RouteManager.class).getSystemNameList().stream().forEach((systemName) -> {
-                String userName = InstanceManager.getDefault(RouteManager.class).getBySystemName(systemName).getUserName();
-                if (userName != null && !userName.isEmpty()) {
-                    userNames.add(userName);
+                Route r = InstanceManager.getDefault(RouteManager.class).getBySystemName(systemName);
+                if (r != null) {
+                    String userName = r.getUserName();
+                    if (userName != null && !userName.isEmpty()) {
+                        userNames.add(userName);
+                    }
+                } else {
+                    Log.error("Failed to get route {}", systemName);
                 }
             });
             userNames.sort(null);
