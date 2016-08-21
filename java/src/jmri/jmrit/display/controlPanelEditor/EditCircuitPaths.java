@@ -196,7 +196,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 //      pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
         _length.setText("0.0");
         pp.add(CircuitBuilder.makeTextBoxPanel(
-                false, _length, "length", true, "TooltipPathLength"));
+                false, _length, "Length", true, "TooltipPathLength"));
         _length.setPreferredSize(new Dimension(100, _length.getPreferredSize().height));
         _length.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent event) {
@@ -222,7 +222,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         l = new JLabel(Bundle.getMessage("selectPathIcons"));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(l);
-        l = new JLabel(Bundle.getMessage("pressAddButton"));
+        l = new JLabel(Bundle.getMessage("pressAddButton", Bundle.getMessage("buttonAddPath")));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(l);
         panel.add(Box.createVerticalStrut(STRUT_SIZE / 2));

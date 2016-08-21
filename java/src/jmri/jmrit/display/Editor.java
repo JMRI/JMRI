@@ -2447,7 +2447,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                         (add ? Bundle.getMessage("ButtonAddIcon") : Bundle.getMessage("ButtonUpdateIcon")));
             } else {
                 if ("MultiSensor".equals(name)) {
-                    txt = java.text.MessageFormat.format(Bundle.getMessage("SelectMultiSensor"),
+                    txt = java.text.MessageFormat.format(Bundle.getMessage("SelectMultiSensor", Bundle.getMessage("ButtonAddIcon")),
                             (add ? Bundle.getMessage("ButtonAddIcon") : Bundle.getMessage("ButtonUpdateIcon")));
                 } else {
                     txt = java.text.MessageFormat.format(Bundle.getMessage("IconSelect"), Bundle.getMessage(BundleName),

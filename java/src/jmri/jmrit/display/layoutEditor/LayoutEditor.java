@@ -173,8 +173,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JCheckBox turnoutLHBox = new JCheckBox(rb.getString("LeftHandAbbreviation"));
     private JCheckBox turnoutWYEBox = new JCheckBox(rb.getString("WYEAbbreviation"));
     private JCheckBox doubleXoverBox = new JCheckBox(rb.getString("DoubleCrossOver"));
-    private JCheckBox rhXoverBox = new JCheckBox(rb.getString("RHCrossOver"));
-    private JCheckBox lhXoverBox = new JCheckBox(rb.getString("LHCrossOver"));
+    private JCheckBox rhXoverBox = new JCheckBox(Bundle.getMessage("RightCrossOver")); // key is also used by Control Panel Editor, placed in DisplayBundle
+    private JCheckBox lhXoverBox = new JCheckBox(Bundle.getMessage("LeftCrossOver")); // idem
     private JPanel rotationPanel = new JPanel();
     private JTextField rotationField = new JTextField(3);
     private JTextField nextTurnout = new JTextField(5);
@@ -217,7 +217,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private MultiIconEditor iconEditor = null;
     private JFrame iconFrame = null;
 
-    private JCheckBox multiSensorBox = new JCheckBox(rb.getString("MultiSensor") + "...");
+    private JCheckBox multiSensorBox = new JCheckBox(Bundle.getMessage("MultiSensor") + "...");
     private MultiSensorIconFrame multiSensorFrame = null;
 
     private JLabel xLabel = new JLabel("00");
@@ -588,7 +588,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         top2.add(new JLabel(rb.getString("BlockID")));
         top2.add(blockIDField);
         blockIDField.setToolTipText(rb.getString("BlockIDToolTip"));
-        top2.add(new JLabel(rb.getString("OccupancySensor")));
+        top2.add(new JLabel(Bundle.getMessage("BeanNameSensor")));
         top2.add(blockSensor);
         blockSensor.setText("");
         blockSensor.setToolTipText(rb.getString("OccupancySensorToolTip"));

@@ -582,11 +582,11 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         NamedIcon icon = new NamedIcon(fileName, fileName);
         JPanel panel = new JPanel();
         panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
-                Bundle.getMessage("portal")));
+                Bundle.getMessage("BeanNamePortal")));
         try {
             JLabel label = new IconDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
             label.setIcon(icon);
-            label.setName(Bundle.getMessage("portal"));
+            label.setName(Bundle.getMessage("BeanNamePortal"));
             panel.add(label);
         } catch (java.lang.ClassNotFoundException cnfe) {
             cnfe.printStackTrace();

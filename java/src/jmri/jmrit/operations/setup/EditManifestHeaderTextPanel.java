@@ -93,7 +93,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
         pManifest.add(pType_TextField);
 
         JPanel pLength_TextField = new JPanel();
-        pLength_TextField.setBorder(BorderFactory.createTitledBorder(rb.getString("Length")));
+        pLength_TextField.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Length")));
         pLength_TextField.add(length_TextField);
         length_TextField.setText(TrainManifestHeaderText.getStringHeader_Length());
         pManifest.add(pLength_TextField);
@@ -230,7 +230,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
             number_TextField.setText(rb.getString("Number"));
             engineNumber_TextField.setText(rb.getString("Number"));
             type_TextField.setText(rb.getString("Type"));
-            length_TextField.setText(rb.getString("Length"));
+            length_TextField.setText(Bundle.getMessage("Length"));
             owner_TextField.setText(rb.getString("Owner"));
             track_TextField.setText(rb.getString("Track"));
             location_TextField.setText(rb.getString("Location"));
