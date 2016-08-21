@@ -111,16 +111,33 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      * Remove any messages stored up, returning how many there were. This is
      * used to skip over messages that don't matter, e.g. during setting up a
      * test.
+     * @param level lowest level counted in return value, e.g. WARN means WARN and higher will be counted
+     * @return count of skipped messages
+     * @see #clearBacklog()
      */
-    public static int clearBacklog() {
+    public static int clearBacklog(Level level) {
         if (list.isEmpty()) {
             return 0;
         }
-        int retval = list.size();
+        int retval = 0;
+        for (LoggingEvent event : list) {
+            if (event.getLevel().toInt() >= level.toInt()) retval++;  // higher number -> more severe, specific, limited
+            // with Log4J 2, this could have used isMoreSpecificThan(level)
+        }
         list.clear();
         return retval;
     }
-
+    /**
+     * Remove any messages stored up, returning how many of WARN or higher severity there are. This is
+     * used to skip over messages that don't matter, e.g. during setting up a
+     * test.
+     * @return count of skipped messages of WARN or more specific level
+     * @see #clearBacklog(Level)
+     */
+    public static int clearBacklog() {
+        return clearBacklog(Level.WARN);
+    }
+    
     /**
      * Verify that no messages were emitted, logging any that were. Does not
      * stop the logging. Clears the accumulated list.
