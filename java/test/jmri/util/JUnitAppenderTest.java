@@ -93,6 +93,10 @@ public class JUnitAppenderTest extends TestCase {
         }
     }
 
+    public void testClearBacklogDefaultNone() {
+        Assert.assertEquals(0,JUnitAppender.clearBacklog());
+    }
+        
     public void testClearBacklogDefaultWarn() {
         log.warn("warn message");
         Assert.assertEquals(1,JUnitAppender.clearBacklog());
@@ -120,6 +124,10 @@ public class JUnitAppenderTest extends TestCase {
     
     public void testClearBacklogAtInfoWithInfo() {
         log.info("info message");
+
+        // this test skipped if INFO is not being logged
+        if (org.apache.log4j.Category.getRoot().getLevel().toInt() > Level.INFO.toInt()) return;  // redo for Log4J2
+        
         Assert.assertEquals(1,JUnitAppender.clearBacklog(org.apache.log4j.Level.INFO));
         Assert.assertEquals(0,JUnitAppender.clearBacklog(org.apache.log4j.Level.INFO));
     }
