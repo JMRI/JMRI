@@ -46,9 +46,8 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
      */
     @Override
     public void configure() {
-        if (log.isDebugEnabled()) {
-            log.debug("configure called");
-        }
+        log.debug("configure called");
+
         // connect to a packetizing traffic controller
         Z21TrafficController packets = new Z21TrafficController();
         packets.connectPort(this);
@@ -65,9 +64,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
 
     @Override
     public void connect() throws Exception {
-        if (log.isDebugEnabled()) {
-            log.debug("connect called");
-        }
+        log.debug("connect called");
 
        setHostAddress("localhost"); // always localhost for the simulation.
        super.connect();
@@ -151,7 +148,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
              case 0x0040:
                 // XPressNet tunnel message.
                 XNetMessage xnm = getXNetMessage(m);
-                log.debug("Received XNet Message: " + m);
+                log.debug("Received XNet Message: {}",  m);
                 XNetReply xnr=xnetadapter.generateReply(xnm);
                 reply = getZ21ReplyFromXNet(xnr);
                 break;
