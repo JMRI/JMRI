@@ -42,6 +42,7 @@ public class Z21Test extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.roco.z21.configurexml.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(Z21ReporterTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(Z21ReporterManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RocoZ21CommandStationTest.class));
         return suite;
     }
 
