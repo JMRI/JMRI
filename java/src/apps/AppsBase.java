@@ -282,9 +282,10 @@ public abstract class AppsBase {
         if (sharedConfig != null) {
             // sharedConfigs do not need deferred loads
             configDeferredLoadOK = true;
-        } else // To avoid possible locks, deferred load should be
-        // performed on the Swing thread
-         if (SwingUtilities.isEventDispatchThread()) {
+        } else { 
+            // To avoid possible locks, deferred load should be
+            // performed on the Swing thread
+            if (SwingUtilities.isEventDispatchThread()) {
                 configDeferredLoadOK = doDeferredLoad(file);
             } else {
                 try {
@@ -297,6 +298,7 @@ public abstract class AppsBase {
                     log.error("Exception creating system console frame: " + ex);
                 }
             }
+        }
         if (sharedConfig == null && configOK == true && configDeferredLoadOK == true) {
             log.info("Migrating preferences to new format...");
             // migrate preferences
