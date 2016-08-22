@@ -2,9 +2,11 @@ package apps.startup.configurexml;
 
 import apps.StartupActionsManager;
 import apps.startup.StartupModel;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import org.jdom2.Element;
+import org.python.jline.internal.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,8 +32,13 @@ public class StartupActionsPreferencesPanelXml extends AbstractXmlAdapter {
      */
     @Override
     public Element store(Object o) {
-        for (StartupModel model : InstanceManager.getDefault(StartupActionsManager.class).getActions()) {
-            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(model);
+        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        if (cm == null) {
+            Log.error("Failed to getOptionalDefault config mgr, can not store.");
+        } else {
+            for (StartupModel model : InstanceManager.getDefault(StartupActionsManager.class).getActions()) {
+                cm.registerPref(model);
+            }
         }
         return null;
     }

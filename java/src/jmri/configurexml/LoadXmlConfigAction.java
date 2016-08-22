@@ -2,8 +2,10 @@ package jmri.configurexml;
 
 import java.awt.event.ActionEvent;
 import javax.swing.JFileChooser;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import org.python.jline.internal.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,12 +45,17 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
         java.io.File file = getFile(fileChooser);
         if (file != null) {
             try {
-                results = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).load(file);
-                if (results) {
-                    // insure logix etc fire up
-                    InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
-                    InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
-                    new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
+                ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+                if (cm == null) {
+                    Log.error("Failed to getOptionalDefault config mgr");
+                } else {
+                    results = cm.load(file);
+                    if (results) {
+                        // insure logix etc fire up
+                        InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
+                        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+                        new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
+                    }
                 }
             } catch (JmriException e) {
                 log.error("Unhandled problem in loadFile: " + e);

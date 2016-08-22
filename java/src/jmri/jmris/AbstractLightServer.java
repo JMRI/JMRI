@@ -8,6 +8,7 @@ import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Light;
+import org.python.jline.internal.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,15 +38,25 @@ abstract public class AbstractLightServer {
 
     synchronized protected void addLightToList(String lightName) {
         if (!lights.containsKey(lightName)) {
-            lights.put(lightName, new LightListener(lightName));
-            InstanceManager.lightManagerInstance().getLight(lightName).addPropertyChangeListener(lights.get(lightName));
+            Light li = InstanceManager.lightManagerInstance().getLight(lightName);
+            if (li != null) {
+                lights.put(lightName, new LightListener(lightName));
+                li.addPropertyChangeListener(lights.get(lightName));
+            } else {
+                Log.error("Failed to get light {}", lightName);
+            }
         }
     }
 
     synchronized protected void removeLightFromList(String lightName) {
         if (lights.containsKey(lightName)) {
-            InstanceManager.lightManagerInstance().getLight(lightName).removePropertyChangeListener(lights.get(lightName));
-            lights.remove(lightName);
+            Light li = InstanceManager.lightManagerInstance().getLight(lightName);
+            if (li != null) {
+                li.removePropertyChangeListener(lights.get(lightName));
+                lights.remove(lightName);
+            } else {
+                Log.error("Failed to get light {}", lightName);
+            }
         }
     }
 
@@ -95,7 +106,10 @@ abstract public class AbstractLightServer {
 
     public void dispose() {
         for (Map.Entry<String, LightListener> light : this.lights.entrySet()) {
-            InstanceManager.lightManagerInstance().getLight(light.getKey()).removePropertyChangeListener(light.getValue());
+            Light li = InstanceManager.lightManagerInstance().getLight(light.getKey());
+            if (li != null) {
+                li.removePropertyChangeListener(light.getValue());
+            }
         }
         this.lights.clear();
     }
