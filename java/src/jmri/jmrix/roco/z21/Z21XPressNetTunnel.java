@@ -71,9 +71,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
         // this thread has one task.  It repeatedly reads from the input pipe
         // and writes modified data to the output pipe.  This is the heart
         // of the command station simulation.
-        if (log.isDebugEnabled()) {
-            log.debug("Simulator Thread Started");
-        }
+        log.debug("Simulator Thread Started");
         for (;;) {
             XNetMessage m = readMessage();
             message(m);
@@ -205,10 +203,8 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
     public void message(XNetMessage msg) {
         // when an XPressNet message shows up here, package it in a Z21Message
         Z21Message message = new Z21Message(msg);
-        if (log.isDebugEnabled()) {
-            log.debug("XPressNet Message {} forwarded to z21 Interface as {}",
+        log.debug("XPressNet Message {} forwarded to z21 Interface as {}",
                     msg, message);
-        }
         // and send the z21 message to the interface
         _memo.getTrafficController().sendz21Message(message, this);
     }
@@ -243,5 +239,3 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
     private final static Logger log = LoggerFactory.getLogger(Z21XPressNetTunnel.class.getName());
 
 }
-
-/* @(#)Z21XPressNetTunnel.java */
