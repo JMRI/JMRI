@@ -34,7 +34,6 @@ import jmri.Turnout;
 import jmri.util.JmriJFrame;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.python.jline.internal.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -139,7 +138,7 @@ public class SignalGroupSubTableAction {
             String result = jmri.util.StringUtil.getNameFromState(mode, sig.getValidStates(), sig.getValidStateNames());
             box.setSelectedItem(result);
         } else {
-            Log.error("Failed to get signal {}", curSignal);
+            log.error("Failed to get signal {}", curSignal);
         }
     }
 
@@ -263,7 +262,7 @@ public class SignalGroupSubTableAction {
                         g.setSignalHeadOffState(curSignalHead, Signal.getOffAppearance());
                     }
                 } else {
-                    Log.error("Failed to get signal {}", curSignal);
+                    log.error("Failed to get signal {}", curSignal);
                 }
             }
 

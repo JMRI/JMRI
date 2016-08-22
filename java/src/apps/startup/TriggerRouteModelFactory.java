@@ -7,7 +7,8 @@ import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.Route;
 import jmri.RouteManager;
-import org.python.jline.internal.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Factory to create {@link apps.startup.TriggerRouteModel} objects.
@@ -16,6 +17,8 @@ import org.python.jline.internal.Log;
  */
 public class TriggerRouteModelFactory implements StartupModelFactory {
 
+    private final static Logger log = LoggerFactory.getLogger(TriggerRouteModelFactory.class.getName());
+    
     @Override
     public Class<? extends StartupModel> getModelClass() {
         return TriggerRouteModel.class;
@@ -48,7 +51,7 @@ public class TriggerRouteModelFactory implements StartupModelFactory {
                         userNames.add(userName);
                     }
                 } else {
-                    Log.error("Failed to get route {}", systemName);
+                    log.error("Failed to get route {}", systemName);
                 }
             });
             userNames.sort(null);

@@ -6,7 +6,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
-import org.python.jline.internal.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +46,7 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
         // make a backup file
         ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
         if (cm == null) {
-            Log.error("Failed to make backup due to getOptionalDefault null");
+            log.error("Failed to make backup due to getOptionalDefault null");
         } else {
             cm.makeBackup(file);
             // and finally store

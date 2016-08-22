@@ -97,7 +97,6 @@ import jmri.util.swing.JFrameInterface;
 import jmri.util.swing.SliderSnap;
 import jmri.util.swing.WindowInterface;
 import jmri.web.server.WebServerAction;
-import org.python.jline.internal.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -268,7 +267,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 if (cmOD != null) {
                     configOK = cmOD.load(file, true);
                 } else {
-                    Log.error("Failed to getOptionalDefault config mgr");
+                    log.error("Failed to getOptionalDefault config mgr");
                     configOK = false;
                 }
             } catch (JmriException e) {
@@ -479,7 +478,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             if (cmOD != null) {
                 result = cmOD.loadDeferred(file);
             } else {
-                Log.error("Failed to getOptionalDefault config mgr");
+                log.error("Failed to getOptionalDefault config mgr");
                 result = false;
             }
         } catch (JmriException e) {
@@ -1173,7 +1172,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 log.warn("Could not find {} config file", name);
             }
         } else {
-            Log.error("Failed to getOptionalDefault config mgr");
+            log.error("Failed to getOptionalDefault config mgr");
         }
     }
     

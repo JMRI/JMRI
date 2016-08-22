@@ -7,7 +7,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
-import org.python.jline.internal.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,7 +89,7 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
         // and finally store
         ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
         if (cm == null) {
-            Log.error("Failed to getOptionalDefaults config mgr");
+            log.error("Failed to getOptionalDefaults config mgr");
         } else {
             boolean results = cm.storeConfig(file);
             System.out.println(results);

@@ -50,7 +50,6 @@ import jmri.implementation.DefaultConditionalAction;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemNameComparator;
-import org.python.jline.internal.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -382,7 +381,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 outputTS.add(new RouteOutputSensor(systemName, userName));
                 alignTS.add(new AlignElement(systemName, userName));
             } else {
-                Log.error("Failed to get sensor {}", systemName);
+                log.error("Failed to get sensor {}", systemName);
             }
         }
 
@@ -397,7 +396,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 inputTS.add(new RouteInputLight(systemName, userName));
                 outputTS.add(new RouteOutputLight(systemName, userName));
             } else {
-                Log.error("Failed to get light {}", systemName);
+                log.error("Failed to get light {}", systemName);
             }
         }
         jmri.SignalHeadManager shm = InstanceManager.getDefault(jmri.SignalHeadManager.class);
@@ -411,7 +410,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 inputTS.add(new RouteInputSignal(systemName, userName));
                 outputTS.add(new RouteOutputSignal(systemName, userName));
             } else {
-                Log.error("Failed to get signal head {}", systemName);
+                log.error("Failed to get signal head {}", systemName);
             }
         }
         _includedInputList = new ArrayList<RouteInputElement>();

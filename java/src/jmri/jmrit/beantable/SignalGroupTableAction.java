@@ -38,7 +38,6 @@ import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.python.jline.internal.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -386,7 +385,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     log.debug("Signal Head " + systemName + " is not a single Turnout Controlled Signal Head");
                 }
             } else {
-                Log.error("Failed to get signal head {}", systemName);
+                log.error("Failed to get signal head {}", systemName);
             }
         }
 
@@ -837,7 +836,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                 _mastAppearancesList.add(new SignalMastAppearances(appear.get(i)));
             }
         } else {
-            Log.error("Failed to get signal mast {}", g.getSignalMastName());
+            log.error("Failed to get signal mast {}", g.getSignalMastName());
         }
 
         fixedSystemName.setText(sName);
@@ -1290,11 +1289,11 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                         _offState = signal.getOffAppearance();
                         _signal = signal;
                     } else {
-                        Log.error("Failed to get signal head {}", sysName);
+                        log.error("Failed to get signal head {}", sysName);
                     }
                 }
             } else {
-                Log.error("Failed to get signal head {}",  sysName);
+                log.error("Failed to get signal head {}",  sysName);
             }
 
         }

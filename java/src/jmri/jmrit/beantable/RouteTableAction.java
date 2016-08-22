@@ -43,7 +43,6 @@ import jmri.implementation.DefaultConditionalAction;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriBeanComboBox;
-import org.python.jline.internal.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -453,7 +452,7 @@ public class RouteTableAction extends AbstractTableAction {
                 String userName = s.getUserName();
                 _sensorList.add(new RouteSensor(systemName, userName));
             } else {
-                Log.error("Failed to get sensor {}", systemName);
+                log.error("Failed to get sensor {}", systemName);
             }
         }
         initializeIncludedList();

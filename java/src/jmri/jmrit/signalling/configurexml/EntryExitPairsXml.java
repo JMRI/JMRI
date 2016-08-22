@@ -12,7 +12,6 @@ import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.signalling.EntryExitPairs;
 import org.jdom2.Element;
-import org.python.jline.internal.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -158,7 +157,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         if (cm != null) {
             loadedPanel = cm.getInstanceList(LayoutEditor.class);
         } else {
-            Log.error("Failed getting optional default config manager");
+            log.error("Failed getting optional default config manager");
             loadedPanel = new ArrayList<Object>();
         }
         if (shared.getChild("dispatcherintegration") != null && shared.getChild("dispatcherintegration").getText().equals("yes")) {

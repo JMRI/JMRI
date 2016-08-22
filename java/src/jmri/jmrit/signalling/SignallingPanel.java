@@ -45,7 +45,6 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.JmriBeanComboBox;
-import org.python.jline.internal.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -623,7 +622,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 String userName = ss.getUserName();
                 _manualSensorList.add(new ManualSensorList(systemName, userName));
             } else {
-                Log.error("Failed to get sensor {}", systemName);
+                log.error("Failed to get sensor {}", systemName);
             }
         }
 

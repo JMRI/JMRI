@@ -26,7 +26,6 @@ import jmri.profile.ProfileManager;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
 import jmri.util.Log4JUtil;
-import org.python.jline.internal.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -327,7 +326,7 @@ public abstract class AppsBase {
             if (cm != null) {
                 result = cm.loadDeferred(file);
             } else {
-                Log.error("Failed to getOptionalDefault config mgr");
+                log.error("Failed to getOptionalDefault config mgr");
                 result = false;
             }
         } catch (JmriException e) {

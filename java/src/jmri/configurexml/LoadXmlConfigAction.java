@@ -5,7 +5,6 @@ import javax.swing.JFileChooser;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
-import org.python.jline.internal.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +46,7 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
             try {
                 ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
                 if (cm == null) {
-                    Log.error("Failed to getOptionalDefault config mgr");
+                    log.error("Failed to getOptionalDefault config mgr");
                 } else {
                     results = cm.load(file);
                     if (results) {
