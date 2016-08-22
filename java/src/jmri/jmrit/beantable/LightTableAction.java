@@ -150,7 +150,11 @@ public class LightTableAction extends AbstractTableAction {
             }
 
             public String getValue(String name) {
-                int val = lightManager.getBySystemName(name).getState();
+                Light l = lightManager.getBySystemName(name);
+                if (l == null) {
+                    return("Failed to find " + name);
+                }
+                int val = l.getState();
                 switch (val) {
                     case Light.ON:
                         return Bundle.getMessage("LightStateOn");
