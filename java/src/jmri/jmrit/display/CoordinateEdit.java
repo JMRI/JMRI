@@ -63,11 +63,11 @@ public class CoordinateEdit extends JmriJFrame {
     javax.swing.JSpinner spinY;
 
     public static AbstractAction getCoordinateEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("SetXY") + "...") {
+        return new AbstractAction(Bundle.getMessage("SetXY", "...")) {
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                f.init(Bundle.getMessage("SetXY"), pos, true);
+                f.init(Bundle.getMessage("SetXY", ""), pos, true); // use property without ellipsis in variable
                 f.initSetXY();
                 f.setVisible(true);
                 f.setLocationRelativeTo((Component) pos);
@@ -77,12 +77,12 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getLevelEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("SetLevel") + "...") {
+        return new AbstractAction(Bundle.getMessage("SetLevel", "...")) {
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                f.init(Bundle.getMessage("SetLevel"), pos, true);
+                f.init(Bundle.getMessage("SetLevel", ""), pos, true); // use property without ellipsis in variable
                 f.initSetLevel();
                 f.setVisible(true);
                 f.setLocationRelativeTo((Component) pos);
@@ -92,12 +92,12 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getTooltipEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("SetTooltip") + "...") {
+        return new AbstractAction(Bundle.getMessage("SetTooltip", "...")) {
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                f.init(Bundle.getMessage("SetTooltip"), pos, true);
+                f.init(Bundle.getMessage("SetTooltip", ""), pos, true); // use property without ellipsis in variable
                 f.initSetTip();
                 f.setVisible(true);
                 f.setLocationRelativeTo((Component) pos);
@@ -107,12 +107,12 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getBorderEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("SetBorderSize") + "...") {
+        return new AbstractAction(Bundle.getMessage("SetBorderSize", "...")) {
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                f.init(Bundle.getMessage("SetBorderSize"), pos, true);
+                f.init(Bundle.getMessage("SetBorderSize", ""), pos, true);
                 f.initBorder();
                 f.setVisible(true);
                 f.setLocationRelativeTo((Component) pos);
@@ -122,12 +122,12 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getMarginEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("SetMarginSize") + "...") {
+        return new AbstractAction(Bundle.getMessage("SetMarginSize", "...")) {
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                f.init(Bundle.getMessage("SetMarginSize"), pos, true);
+                f.init(Bundle.getMessage("SetMarginSize", ""), pos, true);
                 f.initMargin();
                 f.setVisible(true);
                 f.setLocationRelativeTo((Component) pos);
@@ -137,12 +137,12 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getFixedSizeEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("SetFixedSize") + "...") {
+        return new AbstractAction(Bundle.getMessage("SetFixedSize", "...")) {
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                f.init(Bundle.getMessage("SetFixedSize"), pos, true);
+                f.init(Bundle.getMessage("SetFixedSize", ""), pos, true);
                 f.initFixedSize();
                 f.setVisible(true);
                 f.setLocationRelativeTo((Component) pos);
@@ -152,12 +152,12 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getRotateEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("rotate") + "...") {
+        return new AbstractAction(Bundle.getMessage("rotate", "...")) {
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                f.init(Bundle.getMessage("rotate"), pos, true);
+                f.init(Bundle.getMessage("rotate", ""), pos, true);
                 f.initRotate();
                 f.setVisible(true);
                 f.setLocationRelativeTo((Component) pos);
@@ -167,12 +167,12 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getScaleEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("scale") + "...") {
+        return new AbstractAction(Bundle.getMessage("scale", "...")) {
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                f.init(Bundle.getMessage("scale"), pos, true);
+                f.init(Bundle.getMessage("scale", ""), pos, true);
                 f.initScale();
                 f.setVisible(true);
                 f.setLocationRelativeTo((Component) pos);
@@ -211,12 +211,12 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getZoomEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("Zoom") + "...") {
+        return new AbstractAction(Bundle.getMessage("Zoom", "...")) {
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                f.init(Bundle.getMessage("Zoom"), pos, false);
+                f.init(Bundle.getMessage("Zoom", ""), pos, false);
                 f.initZoom();
                 f.setVisible(true);
                 //f.setLocation(100,100);
@@ -227,12 +227,12 @@ public class CoordinateEdit extends JmriJFrame {
     ////////////////////////////////////////////////////////////// 
 
     public static AbstractAction getNameEditAction(final Positionable pos) {
-        return new AbstractAction(Bundle.getMessage("renamePanelMenu")) {
+        return new AbstractAction(Bundle.getMessage("renamePanelMenu", "...")) {
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                f.init(Bundle.getMessage("renamePanelMenu"), pos, false);
+                f.init(Bundle.getMessage("renamePanelMenu", ""), pos, false);
                 f.initSetName();
                 f.setVisible(true);
                 //f.setLocation(100,100);
@@ -274,10 +274,10 @@ public class CoordinateEdit extends JmriJFrame {
         oldY = pl.getY();
 
         textX = new javax.swing.JLabel();
-        textX.setText("X = " + pl.getX());
+        textX.setText("X: " + pl.getX());
         textX.setVisible(true);
         textY = new javax.swing.JLabel();
-        textY.setText("Y = " + pl.getY());
+        textY.setText("Y: " + pl.getY());
         textY.setVisible(true);
 
         SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 10000, 1);
@@ -313,8 +313,8 @@ public class CoordinateEdit extends JmriJFrame {
                 int x = ((Number) spinX.getValue()).intValue();
                 int y = ((Number) spinY.getValue()).intValue();
                 pl.setLocation(x, y);
-                textX.setText("X = " + pl.getX());
-                textY.setText("Y = " + pl.getY());
+                textX.setText("X: " + pl.getX());
+                textY.setText("Y: " + pl.getY());
                 dispose();
             }
         });
@@ -507,8 +507,8 @@ public class CoordinateEdit extends JmriJFrame {
                 PositionablePopupUtil util = pl.getPopupUtility();
                 util.setFixedSize(width, height);
                 pl.getEditor().setAttributes(util, pl);
-                textX.setText("Height = " + util.getFixedHeight());
-                textY.setText("Width = " + util.getFixedWidth());
+                textX.setText("Height: " + util.getFixedHeight());
+                textY.setText("Width: " + util.getFixedWidth());
                 dispose();
             }
         });
