@@ -273,7 +273,12 @@ public abstract class AppsBase {
         }
         preferenceFileExists = true;
         try {
-            configOK = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).load(file);
+            ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+            if (cm != null) {
+                configOK = cm.load(file);
+            } else {
+                configOK = false;
+            }
             log.debug("end load config file {}, OK={}", file.getName(), configOK);
         } catch (JmriException e) {
             configOK = false;
@@ -302,7 +307,10 @@ public abstract class AppsBase {
             // migrate preferences
             InstanceManager.tabbedPreferencesInstance().init();
             InstanceManager.tabbedPreferencesInstance().saveContents();
-            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).storePrefs();
+            ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+            if (cm != null) {
+                cm.storePrefs();
+            }
             // notify user of change
             log.info("Preferences have been migrated to new format.");
             log.info("New preferences format will be used after JMRI is restarted.");
@@ -314,7 +322,13 @@ public abstract class AppsBase {
         boolean result;
         log.debug("start deferred load from config file {}", file.getName());
         try {
-            result = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).loadDeferred(file);
+            ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+            if (cm != null) {
+                result = cm.loadDeferred(file);
+            } else {
+                log.error("Failed to getOptionalDefault config mgr");
+                result = false;
+            }
         } catch (JmriException e) {
             log.error("Unhandled problem loading deferred configuration: " + e);
             result = false;

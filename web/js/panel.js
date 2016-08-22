@@ -1398,7 +1398,7 @@ var $getNextState = function($widget) {
                 var $firstState = undefined;
                 var $currentState = undefined;
                 for (k in $widget) {
-                    var s = k.substr(4); //extract the state from current icon var
+                    var s = k.substr(4) * 1; //extract the state from current icon var, insure it is treated as numeric
                     if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && k != 'icon' + HELD) { //valid value, name starts with 'icon', but not the HELD one
                         if (typeof $firstState == "undefined")
                             $firstState = s;  //remember the first state (for last one)
@@ -1406,7 +1406,7 @@ var $getNextState = function($widget) {
                             $nextState = s; //last one was the current, so this one must be next
                         if (s == $widget.state)
                             $currentState = s;
-//                        jmri.log('key: ' + k + " first=" + $firstState);
+//                        jmri.log('key: '+k+" first="+$firstState+" current="+$currentState+" next="+$nextState);
                     }
                 }
                 if (typeof $nextState == "undefined")

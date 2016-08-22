@@ -60,17 +60,22 @@ public class JsonSignalHeadHttpService extends JsonNamedBeanHttpService {
         if (signalHead != null) {
             if (data.path(STATE).isInt()) {
                 int state = data.path(STATE).asInt();
-                boolean isValid = false;
-                for (int validState : signalHead.getValidStates()) {
-                    if (state == validState) {
-                        isValid = true;
-                        // TODO: completely insulate JSON state from SignalHead state
-                        signalHead.setAppearance(state);
-                        break;
+                if (state == SignalHead.HELD) {
+                    signalHead.setHeld(true);                    
+                } else {
+                    boolean isValid = false;
+                    for (int validState : signalHead.getValidStates()) {
+                        if (state == validState) {
+                            isValid = true;
+                            // TODO: completely insulate JSON state from SignalHead state
+                            if (signalHead.getHeld()) signalHead.setHeld(false);
+                            signalHead.setAppearance(state);
+                            break;
+                        }
                     }
-                }
-                if (!isValid) {
-                    throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", SIGNAL_HEAD, state));
+                    if (!isValid) {
+                        throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", SIGNAL_HEAD, state));
+                    }
                 }
             }
         }
