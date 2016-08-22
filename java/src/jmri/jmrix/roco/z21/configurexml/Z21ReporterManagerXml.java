@@ -15,9 +15,9 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2016
  * @since 4.5.4
  */
-public class Z21ReporterManagerConfigXml extends jmri.managers.configurexml.AbstractReporterManagerConfigXML {
+public class Z21ReporterManagerXml extends jmri.managers.configurexml.AbstractReporterManagerConfigXML {
 
-    public Z21ReporterManagerConfigXml() {
+    public Z21ReporterManagerXml() {
         super();
     }
 
@@ -37,5 +37,5 @@ public class Z21ReporterManagerConfigXml extends jmri.managers.configurexml.Abst
         return loadReporters(shared);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(Z21ReporterManagerConfigXml.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(Z21ReporterManagerXml.class.getName());
 }
