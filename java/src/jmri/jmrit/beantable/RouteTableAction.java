@@ -447,8 +447,13 @@ public class RouteTableAction extends AbstractTableAction {
         iter = systemNameList.iterator();
         while (iter.hasNext()) {
             String systemName = iter.next();
-            String userName = sm.getBySystemName(systemName).getUserName();
-            _sensorList.add(new RouteSensor(systemName, userName));
+            Sensor s = sm.getBySystemName(systemName);
+            if (s != null) {
+                String userName = s.getUserName();
+                _sensorList.add(new RouteSensor(systemName, userName));
+            } else {
+                log.error("Failed to get sensor {}", systemName);
+            }
         }
         initializeIncludedList();
 

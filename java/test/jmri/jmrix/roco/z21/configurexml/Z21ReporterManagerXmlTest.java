@@ -7,17 +7,17 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Z21ReporterManagerConfigXml.java
+ * Z21ReporterManagerXml.java
  *
- * Description: tests for the Z21ReporterManagerConfigXml class
+ * Description: tests for the Z21ReporterManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
-public class Z21ReporterManagerConfigXmlTest {
+public class Z21ReporterManagerXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("Z21ReporterManagerConfigXml constructor",new Z21ReporterManagerConfigXml());
+      Assert.assertNotNull("Z21ReporterManagerXml constructor",new Z21ReporterManagerXml());
     }
 
     // The minimal setup for log4J

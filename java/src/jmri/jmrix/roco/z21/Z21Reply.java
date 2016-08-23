@@ -55,6 +55,7 @@ public class Z21Reply extends AbstractMRReply {
     public void setOpCode(int i) {
         _dataChars[2] = (char) (i & 0x00ff);
         _dataChars[3] = (char) ((i & 0xff00) >> 8);
+        _nDataChars = Math.max(_nDataChars, 4);  //smallest reply is of length 4.
     }
 
     public int getOpCode() {
@@ -64,6 +65,7 @@ public class Z21Reply extends AbstractMRReply {
     public void setLength(int i) {
         _dataChars[0] = (char) (i & 0x00ff);
         _dataChars[1] = (char) ((i & 0xff00) >> 8);
+        _nDataChars = Math.max(_nDataChars, i);
     }
 
     public int getLength() {
