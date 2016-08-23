@@ -75,6 +75,15 @@ public interface JTablePersistenceManager {
     public void cacheState(@Nonnull JTable table) throws NullPointerException;
 
     /**
+     * Reset the table state to the cached state. This does not cause the
+     * JTablePersistanceManager to start persisting the table.
+     *
+     * @param table the table to reset
+     * @throws NullPointerException if the table name is null
+     */
+    public void resetState(@Nonnull JTable table) throws NullPointerException;
+
+    /**
      * Pause saving persistence data to storage. If setting paused to false,
      * pending persistence data is written immediately.
      *
