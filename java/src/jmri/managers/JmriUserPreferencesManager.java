@@ -1,8 +1,5 @@
 package jmri.managers;
 
-import static jmri.swing.JmriJTablePersistenceManager.TABLES_ELEMENT;
-import static jmri.swing.JmriJTablePersistenceManager.TABLES_NAMESPACE;
-
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -24,7 +21,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -34,6 +30,7 @@ import jmri.beans.Bean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
+import jmri.swing.JmriJTablePersistenceManager;
 import jmri.swing.JmriJTablePersistenceManager.TableColumnPreferences;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
@@ -51,10 +48,9 @@ import org.slf4j.LoggerFactory;
  *
  * This class is intended to be a transitional class from a single user
  * interface preferences manager to multiple, domain-specific (windows, tables,
- * dialogs, etc) user interface preferences managers. I believe that
- * domain-specific managers could more efficiently, both in the API and at
- * runtime, handle each user interface preference need than a single monolithic
- * manager.
+ * dialogs, etc) user interface preferences managers. Domain-specific managers
+ * can more efficiently, both in the API and at runtime, handle each user
+ * interface preference need than a single monolithic manager.
  *
  * @author Randall Wood (C) 2016
  */
@@ -98,7 +94,6 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     private ArrayList<ComboBoxLastSelection> _comboBoxLastSelection = new ArrayList<>();
     private HashMap<String, WindowLocations> windowDetails = new HashMap<>();
     private HashMap<String, ClassPreferences> classPreferenceList = new HashMap<>();
-    private HashMap<String, HashMap<String, TableColumnPreferences>> tableColumnPrefs = new HashMap<>();
     private File file;
 
     public JmriUserPreferencesManager() {
@@ -884,20 +879,19 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     @Override
     public void setTableColumnPreferences(String table, String column, int order, int width, SortOrder sort, boolean hidden) {
-        if (!tableColumnPrefs.containsKey(table)) {
-            tableColumnPrefs.put(table, new HashMap<>());
+        JmriJTablePersistenceManager manager = InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class);
+        if (manager != null) {
+            manager.setTableColumnPreferences(table, column, order, width, sort, hidden);
         }
-        HashMap<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
-        columnPrefs.put(column, new TableColumnPreferences(order, width, sort, hidden));
-        this.saveTableColumnPreferences();
     }
 
     @Override
     public int getTableColumnOrder(String table, String column) {
-        if (tableColumnPrefs.containsKey(table)) {
-            HashMap<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
-            if (columnPrefs.containsKey(column)) {
-                return columnPrefs.get(column).getOrder();
+        JmriJTablePersistenceManager manager = InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class);
+        if (manager != null) {
+            TableColumnPreferences preferences = manager.getTableColumnPreferences(table, column);
+            if (preferences != null) {
+                return preferences.getOrder();
             }
         }
         return -1;
@@ -905,10 +899,11 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     @Override
     public int getTableColumnWidth(String table, String column) {
-        if (tableColumnPrefs.containsKey(table)) {
-            HashMap<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
-            if (columnPrefs.containsKey(column)) {
-                return columnPrefs.get(column).getWidth();
+        JmriJTablePersistenceManager manager = InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class);
+        if (manager != null) {
+            TableColumnPreferences preferences = manager.getTableColumnPreferences(table, column);
+            if (preferences != null) {
+                return preferences.getWidth();
             }
         }
         return -1;
@@ -916,10 +911,11 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     @Override
     public SortOrder getTableColumnSort(String table, String column) {
-        if (tableColumnPrefs.containsKey(table)) {
-            HashMap<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
-            if (columnPrefs.containsKey(column)) {
-                return columnPrefs.get(column).getSort();
+        JmriJTablePersistenceManager manager = InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class);
+        if (manager != null) {
+            TableColumnPreferences preferences = manager.getTableColumnPreferences(table, column);
+            if (preferences != null) {
+                return preferences.getSort();
             }
         }
         return SortOrder.UNSORTED;
@@ -927,10 +923,11 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     @Override
     public boolean getTableColumnHidden(String table, String column) {
-        if (tableColumnPrefs.containsKey(table)) {
-            HashMap<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
-            if (columnPrefs.containsKey(column)) {
-                return columnPrefs.get(column).getHidden();
+        JmriJTablePersistenceManager manager = InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class);
+        if (manager != null) {
+            TableColumnPreferences preferences = manager.getTableColumnPreferences(table, column);
+            if (preferences != null) {
+                return preferences.getHidden();
             }
         }
         return false;
@@ -938,29 +935,34 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     @Override
     public String getTableColumnAtNum(String table, int i) {
-        if (tableColumnPrefs.containsKey(table)) {
-            HashMap<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
-            for (Map.Entry<String, TableColumnPreferences> e : columnPrefs.entrySet()) {
-                Map.Entry<String, TableColumnPreferences> entry = e;
+        JmriJTablePersistenceManager manager = InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class);
+        if (manager != null) {
+            Map<String, TableColumnPreferences> map = manager.getTableColumnPreferences(table);
+            for (Map.Entry<String, TableColumnPreferences> entry : map.entrySet()) {
                 if ((entry.getValue()).getOrder() == i) {
                     return entry.getKey();
                 }
             }
-
         }
         return null;
     }
 
+    /**
+     * Returns an empty list, since this class does not track table state.
+     *
+     * @return an empty list
+     */
     @Override
     public List<String> getTablesList() {
-        return new ArrayList<>(tableColumnPrefs.keySet());
+        return new ArrayList<>();
     }
 
     @Override
     public List<String> getTablesColumnList(String table) {
-        if (tableColumnPrefs.containsKey(table)) {
-            HashMap<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
-            return new ArrayList<>(columnPrefs.keySet());
+        JmriJTablePersistenceManager manager = InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class);
+        if (manager != null) {
+            Map<String, TableColumnPreferences> map = manager.getTableColumnPreferences(table);
+            return new ArrayList<>(map.keySet());
         }
         return new ArrayList<>();
     }
@@ -1002,7 +1004,6 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
             this.readComboBoxLastSelections();
             this.readPreferencesState();
             this.readSimplePreferenceState();
-            this.readTableColumnPreferences();
             this.readWindowDetails();
         } else {
             try {
@@ -1144,94 +1145,6 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         }
     }
 
-    private void readTableColumnPreferences() {
-        Element element = this.readElement(TABLES_ELEMENT, TABLES_NAMESPACE);
-        if (element != null) {
-            element.getChildren("table").stream().forEach((table) -> {
-                String tableName = table.getAttributeValue("name");
-                int sortColumn = -1;
-                SortOrder sortOrder = SortOrder.UNSORTED;
-                Element sortKeys = table.getChild("sortOrder");
-                if (sortKeys != null) {
-                    for (Element sortKey : sortKeys.getChildren()) {
-                        sortOrder = SortOrder.valueOf(sortKey.getAttributeValue("sortOrder"));
-                        try {
-                            sortColumn = sortKey.getAttribute("column").getIntValue();
-                        } catch (DataConversionException ex) {
-                            log.error("Unable to get sort column as integer");
-                        }
-                    }
-                }
-                log.trace("Table {} column {} is sorted {}", tableName, sortColumn, sortOrder);
-                for (Element column : table.getChild("columns").getChildren()) {
-                    String columnName = column.getAttribute("name").getValue();
-                    int order = -1;
-                    int width = -1;
-                    boolean hidden = false;
-                    try {
-                        if (column.getAttributeValue("order") != null) {
-                            order = column.getAttribute("order").getIntValue();
-                        }
-                        if (column.getAttributeValue("width") != null) {
-                            width = column.getAttribute("width").getIntValue();
-                        }
-                        if (column.getAttribute("hidden") != null) {
-                            hidden = column.getAttribute("hidden").getBooleanValue();
-                        }
-                    } catch (DataConversionException ex) {
-                        log.error("Unable to parse column \"{}\"", columnName);
-                        continue;
-                    }
-                    if (sortColumn == order) {
-                        this.setTableColumnPreferences(tableName, columnName, order, width, sortOrder, hidden);
-                    } else {
-                        this.setTableColumnPreferences(tableName, columnName, order, width, SortOrder.UNSORTED, hidden);
-                    }
-                }
-            });
-        }
-    }
-
-    private void saveTableColumnPreferences() {
-        this.setChangeMade(false);
-        if (this.allowSave) {
-            if (!this.tableColumnPrefs.isEmpty()) {
-                Element element = new Element(TABLES_ELEMENT, TABLES_NAMESPACE);
-                this.tableColumnPrefs.entrySet().stream().map((entry) -> {
-                    Element table = new Element("table").setAttribute("name", entry.getKey());
-                    RowSorter.SortKey sortKey = new RowSorter.SortKey(0, SortOrder.UNSORTED);
-                    Element columns = new Element("columns");
-                    for (Entry<String, TableColumnPreferences> column : entry.getValue().entrySet()) {
-                        Element columnElement = new Element("column").setAttribute("name", column.getKey());
-                        if (column.getValue().getOrder() != -1) {
-                            columnElement.setAttribute("order", Integer.toString(column.getValue().getOrder()));
-                        }
-                        if (column.getValue().getWidth() != -1) {
-                            columnElement.setAttribute("width", Integer.toString(column.getValue().getWidth()));
-                        }
-                        columnElement.setAttribute("hidden", Boolean.toString(column.getValue().getHidden()));
-                        columns.addContent(columnElement);
-                        if (column.getValue().getSort() != SortOrder.UNSORTED) {
-                            sortKey = new RowSorter.SortKey(column.getValue().getOrder(), column.getValue().getSort());
-                        }
-                    }
-                    table.addContent(columns);
-                    if (sortKey.getSortOrder() != SortOrder.UNSORTED) {
-                        table.addContent(new Element("sortOrder").addContent(new Element("sortKey")
-                                .setAttribute("column", Integer.toString(sortKey.getColumn()))
-                                .setAttribute("sortOrder", sortKey.getSortOrder().name())
-                        ));
-                    }
-                    return table;
-                }).forEach((table) -> {
-                    element.addContent(table);
-                });
-                this.saveElement(element);
-                this.resetChangeMade();
-            }
-        }
-    }
-
     private void readWindowDetails() {
         // TODO: COMPLETE!
         Element element = this.readElement(WINDOWS_ELEMENT, WINDOWS_NAMESPACE);
@@ -1349,7 +1262,6 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         this.saveComboBoxLastSelections();
         this.savePreferencesState();
         this.saveSimplePreferenceState();
-        this.saveTableColumnPreferences();
         this.saveWindowDetails();
         this.resetChangeMade();
     }

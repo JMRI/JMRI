@@ -42,7 +42,7 @@
                 It is the current development version.
             </xs:documentation>
             <xs:appinfo>
-                <jmri:usingclass configurexml="false">jmri.managers.JmriUserMessagePreferences</jmri:usingclass>
+                <jmri:usingclass configurexml="false">jmri.managers.JmriJTablePersistenceManager</jmri:usingclass>
             </xs:appinfo>
         </xs:annotation>
         <xs:complexType>
