@@ -1145,11 +1145,12 @@ public class Llnmon {
                                 + ((l.getElement(1) & 0x1F) * 128 + l.getElement(2) + 1);
 
                         jmri.Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
-                        String uname = reporter.getUserName();
-                        if ((reporter != null) && (uname != null) && (!uname.isEmpty())) {
-                            reporterUserName = "(" + uname + ")";
-                        } else {
-                            reporterUserName = "()";
+                        reporterUserName = "()";
+                        if (reporter != null) {
+                            String uname = reporter.getUserName();
+                            if ((uname != null) && (!uname.isEmpty())) {
+                                reporterUserName = "(" + uname + ")";
+                            }
                         }
                         return "Transponder address "
                                 + ((l.getElement(3) == 0x7d)
