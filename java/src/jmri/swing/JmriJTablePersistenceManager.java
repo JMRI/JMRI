@@ -8,7 +8,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 import javax.annotation.CheckForNull;
@@ -55,6 +54,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
     public final String PAUSED = "paused";
     public final static String TABLES_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/table-details-4-3-5.xsd"; // NOI18N
     public final static String TABLES_ELEMENT = "tableDetails"; // NOI18N
+    private final static String SORT_ORDER = "sortOrder"; // NOI18N
     private final static Logger log = LoggerFactory.getLogger(JmriJTablePersistenceManager.class);
 
     @Override
@@ -129,7 +129,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
             this.setPersistedState(table.getName(), name, index, width, sorted, hidden);
         }
         if (sorter != null) {
-            this.sortKeys.put(table.getName(), sorter.getSortKeys());
+            this.sortKeys.put(table.getName(), new ArrayList<>(sorter.getSortKeys()));
         }
         this.dirty = true;
     }
@@ -145,10 +145,10 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
         RowSorter sorter = table.getRowSorter();
         boolean isXModel = model instanceof XTableColumnModel;
         Map<Integer, String> indexes = new HashMap<>();
-        for (Entry<String, TableColumnPreferences> entry : this.columns.get(table.getName()).entrySet()) {
+        this.columns.get(table.getName()).entrySet().stream().forEach((entry) -> {
             int index = entry.getValue().getOrder();
             indexes.put(index, entry.getKey());
-        }
+        });
         // order columns
         for (int i = 0; i < model.getColumnCount(); i++) {
             String name = indexes.get(i);
@@ -222,11 +222,11 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
                 String tableName = table.getAttributeValue("name");
                 int sortColumn = -1;
                 SortOrder sortOrder = SortOrder.UNSORTED;
-                Element sortElement = table.getChild("sortOrder");
+                Element sortElement = table.getChild(SORT_ORDER);
                 if (sortElement != null) {
                     List<SortKey> keys = new ArrayList<>();
                     for (Element sortKey : sortElement.getChildren()) {
-                        sortOrder = SortOrder.valueOf(sortKey.getAttributeValue("sortOrder"));
+                        sortOrder = SortOrder.valueOf(sortKey.getAttributeValue(SORT_ORDER));
                         try {
                             sortColumn = sortKey.getAttribute("column").getIntValue();
                             SortKey key = new SortKey(sortColumn, sortOrder);
@@ -278,7 +278,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
             this.columns.entrySet().stream().map((entry) -> {
                 Element table = new Element("table").setAttribute("name", entry.getKey());
                 Element columnsElement = new Element("columns");
-                for (Map.Entry<String, TableColumnPreferences> column : entry.getValue().entrySet()) {
+                entry.getValue().entrySet().stream().map((column) -> {
                     Element columnElement = new Element("column").setAttribute("name", column.getKey());
                     if (column.getValue().getOrder() != -1) {
                         columnElement.setAttribute("order", Integer.toString(column.getValue().getOrder()));
@@ -287,16 +287,18 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
                         columnElement.setAttribute("width", Integer.toString(column.getValue().getWidth()));
                     }
                     columnElement.setAttribute("hidden", Boolean.toString(column.getValue().getHidden()));
+                    return columnElement;
+                }).forEach((columnElement) -> {
                     columnsElement.addContent(columnElement);
-                }
+                });
                 table.addContent(columnsElement);
                 List<SortKey> keys = this.sortKeys.get(entry.getKey());
                 if (keys != null) {
-                    Element sorter = new Element("SortOrder");
+                    Element sorter = new Element(SORT_ORDER);
                     keys.stream().forEach((key) -> {
                         sorter.addContent(new Element("sortKey")
                                 .setAttribute("column", Integer.toString(key.getColumn()))
-                                .setAttribute("sortOrder", key.getSortOrder().name())
+                                .setAttribute(SORT_ORDER, key.getSortOrder().name())
                         );
                     });
                     table.addContent(sorter);
