@@ -9,11 +9,10 @@ import jmri.SignalHead;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
@@ -21,13 +20,15 @@ import junit.textui.TestRunner;
  * @author Randall Wood
  * @author Steve Todd
  */
-public class JsonSignalHeadHttpServiceTest extends TestCase {
+public class JsonSignalHeadHttpServiceTest {
 
+    @Test
     public void testCtorSuccess() {
         JsonSignalHeadHttpService service = new JsonSignalHeadHttpService(new ObjectMapper());
         Assert.assertNotNull(service);
     }
 
+    @Test
     public void testDoGet() throws JmriException {
         
         //create a signalhead for testing
@@ -70,6 +71,7 @@ public class JsonSignalHeadHttpServiceTest extends TestCase {
         }
     }
 
+    @Test
     public void testDoPost() throws JmriException {
         //create a signalhead for testing
         String sysName = "IH1";
@@ -130,6 +132,7 @@ public class JsonSignalHeadHttpServiceTest extends TestCase {
         }
     }
    
+    @Test
     public void testDoGetList() {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -148,38 +151,18 @@ public class JsonSignalHeadHttpServiceTest extends TestCase {
         }
     }
     
-    // from here down is testing infrastructure
-    public JsonSignalHeadHttpServiceTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {JsonSignalHeadHttpServiceTest.class.getName()};
-        TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JsonSignalHeadHttpServiceTest.class);
-
-        return suite;
-    }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         Log4JFixture.setUp();
-        super.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initDebugThrottleManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         JUnitUtil.resetInstanceManager();
-        super.tearDown();
         Log4JFixture.tearDown();
     }
 
