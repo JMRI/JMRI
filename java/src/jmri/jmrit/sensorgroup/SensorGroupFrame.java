@@ -171,7 +171,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
             String name = logix.getConditionalByNumberOrder(i);
             Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(name);
             String uname = c.getUserName();
-            if (c != null && uname != null) {
+            if (uname != null) {
                 groupModel.addElement(uname.substring(ConditionalUserPrefix.length()));
             }
         }
