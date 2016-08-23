@@ -205,6 +205,15 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         }
     }
 
+    /**
+     * Return the column model used by the table wrapped by this class.
+     *
+     * @return the column model used by this table
+     * @deprecated since 4.5.4 without replacement; there is no longer a special
+     * need to provide the specific subclass of
+     * {@link javax.swing.table.TableColumnModel}.
+     */
+    @Deprecated
     public XTableColumnModel getXTableColumnModel() {
         return columnModel;
     }
