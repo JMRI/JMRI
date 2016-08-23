@@ -93,6 +93,7 @@ public class ListedTableFrame extends BeanTableFrame {
             addTable("jmri.jmrit.beantable.TransitTableAction", Bundle.getMessage("MenuItemTransitTable"), true);
             addTable("jmri.jmrit.beantable.AudioTableAction", Bundle.getMessage("MenuItemAudioTable"), false);
             addTable("jmri.jmrit.beantable.IdTagTableAction", Bundle.getMessage("MenuItemIdTagTable"), true);
+            addTable("jmri.jmrit.beantable.RailComTableAction", Bundle.getMessage("MenuItemRailComTable"), true);
             init = true;
         }
     }
