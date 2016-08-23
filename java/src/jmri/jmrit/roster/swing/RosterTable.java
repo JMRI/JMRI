@@ -92,7 +92,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         TableColumn tc = columnModel.getColumnByModelIndex(RosterTableModel.PROTOCOL);
         columnModel.setColumnVisible(tc, false);
 
-        for (String s : Roster.instance().getAllAttributeKeys()) {
+        for (String s : Roster.getDefault().getAllAttributeKeys()) {
             if (!s.contains("RosterGroup") && !s.toLowerCase().startsWith("sys") && !s.toUpperCase().startsWith("VSD")) { // NOI18N
                 String[] r = s.split("(?=\\p{Lu})"); // NOI18N
                 StringBuilder sb = new StringBuilder();
@@ -136,7 +136,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
             if (!e.getValueIsAdjusting()) {
                 selectedRosterEntries = null; // clear cached list of selections
                 if (dataTable.getSelectedRowCount() == 1) {
-                    re = Roster.instance().getEntryForId(dataModel.getValueAt(sorter.convertRowIndexToModel(dataTable.getSelectedRow()), RosterTableModel.IDCOL).toString());
+                    re = Roster.getDefault().getEntryForId(dataModel.getValueAt(sorter.convertRowIndexToModel(dataTable.getSelectedRow()), RosterTableModel.IDCOL).toString());
                 } else if (dataTable.getSelectedRowCount() > 1) {
                     re = null;
                 } // leave last selected item visible if no selection
@@ -146,7 +146,6 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
             }
         };
         dataTable.getSelectionModel().addListSelectionListener(tableSelectionListener);
-
     }
 
     public JTable getTable() {
@@ -254,7 +253,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
             int[] rows = dataTable.getSelectedRows();
             selectedRosterEntries = new RosterEntry[rows.length];
             for (int idx = 0; idx < rows.length; idx++) {
-                selectedRosterEntries[idx] = Roster.instance().getEntryForId(dataModel.getValueAt(sorter.convertRowIndexToModel(rows[idx]), RosterTableModel.IDCOL).toString());
+                selectedRosterEntries[idx] = Roster.getDefault().getEntryForId(dataModel.getValueAt(sorter.convertRowIndexToModel(rows[idx]), RosterTableModel.IDCOL).toString());
             }
         }
         return selectedRosterEntries;
