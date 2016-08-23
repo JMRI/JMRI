@@ -28,7 +28,7 @@ class Z21SimulatorLocoData {
              return address_msb;
          } else {
              // this is a long address with an offset added.
-             int address = ( address_msb<<8 + address_lsb) - 0xC000;
+             int address = ( (address_msb<<8) + address_lsb) - 0xC000;
              return (byte)(( 0xff00 & address)>>8);
          }
     }
