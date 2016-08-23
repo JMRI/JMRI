@@ -36,7 +36,10 @@ log4j.appender.A1=jmri.util.JUnitAppender
 # A1 writes to system.err to synchronize with e.g. exception traces
 log4j.appender.A1.target=System.err
 
-# Default A1 to only logging WARN for tests, even though DEFAULT is turned on for coverage
+# To reduce the volume of logging stored while the tests are running, 
+# while still causing the debug code to run (isDebugEnabled will 
+# be true if log4j.rootCategory is set to DEBUG)
+# Note: comment on this line if you want DEBUG output from specific categories below
 log4j.appender.A1.Threshold=WARN
 
 # A1 uses PatternLayout to control the format of the log messages.
