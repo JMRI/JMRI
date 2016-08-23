@@ -271,8 +271,9 @@ public class Llnmon {
                         + SENSOR_ADR(l.getElement(1), l.getElement(2));
 
                 jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
-                if ((turnout != null) && (turnout.getUserName() != null) && (!turnout.getUserName().isEmpty())) {
-                    turnoutUserName = "(" + turnout.getUserName() + ")";
+                String uname = turnout.getUserName();
+                if ((turnout != null) && (uname != null) && (!uname.isEmpty())) {
+                    turnoutUserName = "(" + uname + ")";
                 } else {
                     turnoutUserName = "()";
                 }
@@ -298,8 +299,9 @@ public class Llnmon {
                 turnoutSystemName = locoNetTurnoutPrefix
                         + SENSOR_ADR(l.getElement(1), l.getElement(2));
                 jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
-                if ((turnout != null) && (turnout.getUserName() != null) && (!turnout.getUserName().isEmpty())) {
-                    turnoutUserName = "(" + turnout.getUserName() + ")";
+                String uname = turnout.getUserName();
+                if ((turnout != null) && (uname != null) && (!uname.isEmpty())) {
+                    turnoutUserName = "(" + uname + ")";
                 } else {
                     turnoutUserName = "()";
                 }
@@ -589,8 +591,9 @@ public class Llnmon {
                 sensorSystemName = locoNetSensorPrefix + contactNum;
                 jmri.Sensor sensor = sensorManager.getBySystemName(
                             sensorSystemName);
-                if ((sensor != null) && (sensor.getUserName() != null) && (!sensor.getUserName().isEmpty())) {
-                    sensorUserName = " (" + sensor.getUserName() + ")";
+                String uname = sensor.getUserName();
+                if ((sensor != null) && (uname != null) && (!uname.isEmpty())) {
+                    sensorUserName = " (" + uname + ")";
                 } else {
                     sensorUserName = "()";
                 }
@@ -662,8 +665,9 @@ public class Llnmon {
                         + SENSOR_ADR(sn1, sn2);
 
                 jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
-                if ((turnout != null) && (turnout.getUserName() != null ) && (!turnout.getUserName().isEmpty() )) {
-                    turnoutUserName = "(" + turnout.getUserName() + ")";
+                String uname = turnout.getUserName();
+                if ((turnout != null) && (uname != null ) && (!uname.isEmpty() )) {
+                    turnoutUserName = "(" + uname + ")";
                 } else {
                     turnoutUserName = "()";
                 }
@@ -775,8 +779,9 @@ public class Llnmon {
                     turnoutSystemName = locoNetTurnoutPrefix
                             + SENSOR_ADR(l.getElement(1), l.getElement(2));
                     jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
-                    if ((turnout != null) && (turnout.getUserName() != null ) && (!turnout.getUserName().isEmpty() )) {
-                        turnoutUserName = "(" + turnout.getUserName() + ")";
+                    String uname = turnout.getUserName();
+                    if ((turnout != null) && (uname != null ) && (!uname.isEmpty() )) {
+                        turnoutUserName = "(" + uname + ")";
                     } else {
                         turnoutUserName = "()";
                     }
@@ -1140,8 +1145,9 @@ public class Llnmon {
                                 + ((l.getElement(1) & 0x1F) * 128 + l.getElement(2) + 1);
 
                         jmri.Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
-                        if ((reporter != null) && (reporter.getUserName() != null) && (!reporter.getUserName().isEmpty())) {
-                            reporterUserName = "(" + reporter.getUserName() + ")";
+                        String uname = reporter.getUserName();
+                        if ((reporter != null) && (uname != null) && (!uname.isEmpty())) {
+                            reporterUserName = "(" + uname + ")";
                         } else {
                             reporterUserName = "()";
                         }
@@ -2828,8 +2834,9 @@ public class Llnmon {
                                         + ((l.getElement(5) & 0x1F) * 128 + l.getElement(6) + 1);
 
                                 jmri.Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
-                                if ((reporter != null) && (reporter.getUserName() != null) && (!reporter.getUserName().isEmpty())) {
-                                    reporterUserName = "(" + reporter.getUserName() + ")";
+                                String uname = reporter.getUserName();
+                                if ((reporter != null) && (uname != null) && (!uname.isEmpty())) {
+                                    reporterUserName = "(" + uname + ")";
                                 } else {
                                     reporterUserName = "()";
                                 }

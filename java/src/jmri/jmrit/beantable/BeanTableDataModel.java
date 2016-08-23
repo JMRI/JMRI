@@ -164,6 +164,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
     }
 
     public boolean isCellEditable(int row, int col) {
+        String uname;
         switch (col) {
             case VALUECOL:
             case COMMENTCOL:
@@ -171,7 +172,8 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 return true;
             case USERNAMECOL:
                 NamedBean b = getBySystemName(sysNameList.get(row));
-                if ((b.getUserName() == null) || b.getUserName().equals("")) {
+                uname = b.getUserName();
+                if ((uname == null) || uname.equals("")) {
                     return true;
                 }
             //$FALL-THROUGH$
