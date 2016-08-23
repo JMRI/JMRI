@@ -1,11 +1,11 @@
-package jmri.jmrix.can.swing.eventtable;
+package jmri.jmrix.can.cbus.swing.eventtable;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the jmri.jmrix.can.swing.eventtable package.
+ * Tests for the jmri.jmrix.can.cbus.swing.eventtable package.
  *
  * @author Bob Jacobsen Copyright 2008
  */

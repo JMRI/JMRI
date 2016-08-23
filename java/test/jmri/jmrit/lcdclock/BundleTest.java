@@ -5,6 +5,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.framework.TestCase;
 
+import java.util.Locale;
 /**
  * Tests for the Bundle class
  *

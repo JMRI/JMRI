@@ -1,6 +1,7 @@
 package jmri.jmrit.lcdclock;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.util.Locale;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -55,6 +56,24 @@ public class Bundle extends jmri.jmrit.Bundle {
      */
     static String getMessage(String key, Object... subs) {
         return b.handleGetMessage(key, subs);
+    }
+
+    /**
+     * Merges user data with a translated string for a given key in a given
+     * locale from the package resource bundle or parent.
+     * <p>
+     * Uses the transformation conventions of the Java MessageFormat utility.
+     * <p>
+     * Note that this is intentionally package-local access.
+     *
+     * @see java.text.MessageFormat
+     * @param locale The locale to be used
+     * @param key    Bundle key to be translated
+     * @param subs   One or more objects to be inserted into the message
+     * @return Internationalized text
+     */
+    static String getMessage(Locale locale, String key, Object... subs) {
+        return b.handleGetMessage(locale, key, subs);
     }
 
     private final static Bundle b = new Bundle();
