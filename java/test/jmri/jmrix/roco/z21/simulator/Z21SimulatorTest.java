@@ -29,6 +29,7 @@ public class Z21SimulatorTest extends TestCase {
         suite.addTest(new TestSuite(Z21XNetSimulatorAdapterTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.roco.z21.simulator.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Z21SimulatorLocoDataTest.class));
         return suite;
     }
 

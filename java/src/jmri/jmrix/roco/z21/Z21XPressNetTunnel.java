@@ -233,7 +233,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
         xsc.getSystemConnectionMemo().setUserName(_memo.getUserName() + "XPressNet");
 
         // register a connection config object for this stream port.
-        jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).registerPref(new Z21XNetConnectionConfig(xsc));
+        //jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).registerPref(new Z21XNetConnectionConfig(xsc));
     }
 
     private final static Logger log = LoggerFactory.getLogger(Z21XPressNetTunnel.class.getName());
