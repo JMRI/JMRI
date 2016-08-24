@@ -469,7 +469,11 @@ public interface UserPreferencesManager {
      * @param width  The width of the column
      * @param sort   The sort order of the column
      * @param hidden Should the column be hidden
+     * @deprecated since 4.5.4 without direct replacement. Use the
+     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
+     * interface state.
      */
+    @Deprecated
     public void setTableColumnPreferences(String table, String column, int order, int width, SortOrder sort, boolean hidden);
 
     /**
@@ -478,7 +482,11 @@ public interface UserPreferencesManager {
      * @param table  The reference for the table
      * @param column The column name
      * @return -1 if not found
+     * @deprecated since 4.5.4 without direct replacement. Use the
+     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
+     * interface state.
      */
+    @Deprecated
     public int getTableColumnOrder(String table, String column);
 
     /**
@@ -487,7 +495,11 @@ public interface UserPreferencesManager {
      * @param table  The reference for the table
      * @param column The column name
      * @return -1 if not found
+     * @deprecated since 4.5.4 without direct replacement. Use the
+     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
+     * interface state.
      */
+    @Deprecated
     public int getTableColumnWidth(String table, String column);
 
     /**
@@ -496,7 +508,11 @@ public interface UserPreferencesManager {
      * @param table  The reference for the table
      * @param column The column name
      * @return {@link javax.swing.SortOrder#UNSORTED} if not found
+     * @deprecated since 4.5.4 without direct replacement. Use the
+     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
+     * interface state.
      */
+    @Deprecated
     public SortOrder getTableColumnSort(String table, String column);
 
     /**
@@ -505,7 +521,11 @@ public interface UserPreferencesManager {
      * @param table  The reference for the table
      * @param column The column name
      * @return 0 if not found
+     * @deprecated since 4.5.4 without direct replacement. Use the
+     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
+     * interface state.
      */
+    @Deprecated
     public boolean getTableColumnHidden(String table, String column);
 
     /**
@@ -514,7 +534,11 @@ public interface UserPreferencesManager {
      * @param table The reference for the table
      * @param i     The column index returns null if not found, otherwise the
      *              column name
+     * @deprecated since 4.5.4 without direct replacement. Use the
+     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
+     * interface state.
      */
+    @Deprecated
     public String getTableColumnAtNum(String table, int i);
 
     /**
@@ -522,7 +546,11 @@ public interface UserPreferencesManager {
      *
      * @return a List of all the tables, if no tables exist then an empty list
      *         is returned
+     * @deprecated since 4.5.4 without direct replacement. Use the
+     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
+     * interface state.
      */
+    @Deprecated
     public List<String> getTablesList();
 
     /**
@@ -531,7 +559,11 @@ public interface UserPreferencesManager {
      * @param table table to retrieve column settings for
      * @return a List of all the columns in a table, if the table is not valid
      *         an empty list is returned
+     * @deprecated since 4.5.4 without direct replacement. Use the
+     * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
+     * interface state.
      */
+    @Deprecated
     public List<String> getTablesColumnList(String table);
     /*
      Example informational message dialog box.

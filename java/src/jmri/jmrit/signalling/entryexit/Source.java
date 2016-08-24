@@ -311,7 +311,8 @@ public class Source {
 
     public DestinationPoints getByUserName(String id) {
         for (DestinationPoints d : pointToDest.values()) {
-            if (d.getUserName().equals(id)) {
+            String uname = d.getUserName();
+            if (uname != null && uname.equals(id)) {
                 return d;
             }
         }

@@ -546,13 +546,16 @@ public class LayoutEditorTools {
                                 new Object[]{str}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
                 return false;
-            } else if ((turnout.getUserName() == null) || (turnout.getUserName().equals(""))
-                    || !turnout.getUserName().equals(str)) {
-                str = str.toUpperCase();
-                if (!crossover) {
-                    turnoutNameField.setText(str);
-                } else {
-                    xoverTurnoutName = str;
+            } else {
+                String uname = turnout.getUserName();
+                if ((uname == null) || (uname.equals(""))
+                    || !uname.equals(str)) {
+                    str = str.toUpperCase();
+                    if (!crossover) {
+                        turnoutNameField.setText(str);
+                    } else {
+                        xoverTurnoutName = str;
+                    }
                 }
             }
             for (int i = 0; i < layoutEditor.turnoutList.size(); i++) {
@@ -1083,10 +1086,13 @@ public class LayoutEditorTools {
                             new Object[]{str}), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return null;
-        } else if ((head.getUserName() == null) || (head.getUserName().equals(""))
-                || !head.getUserName().equals(str)) {
-            str = str.toUpperCase();
-            signalName.setText(str);
+        } else {
+            String uname = head.getUserName();
+            if ((uname == null) || (uname.equals(""))
+                || !uname.equals(str)) {
+                str = str.toUpperCase();
+                signalName.setText(str);
+            }
         }
         return (head);
     }
@@ -4767,8 +4773,9 @@ public class LayoutEditorTools {
                         JOptionPane.ERROR_MESSAGE);
                 return false;
             }
-            if ((turnout2.getUserName() == null) || (turnout2.getUserName().equals(""))
-                    || !turnout2.getUserName().equals(str)) {
+            String uname = turnout2.getUserName();
+            if ((uname == null) || (uname.equals(""))
+                    || !uname.equals(str)) {
                 str = str.toUpperCase();
                 turnout2NameField.setText(str);
             }
@@ -4818,8 +4825,9 @@ public class LayoutEditorTools {
                         JOptionPane.ERROR_MESSAGE);
                 return false;
             }
-            if ((turnout1.getUserName() == null) || (turnout1.getUserName().equals(""))
-                    || !turnout1.getUserName().equals(str)) {
+            String uname = turnout1.getUserName();
+            if ((uname == null) || (uname.equals(""))
+                    || !uname.equals(str)) {
                 str = str.toUpperCase();
                 turnout1NameField.setText(str);
             }
@@ -4874,8 +4882,9 @@ public class LayoutEditorTools {
                             JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
-                if ((turnout2.getUserName() == null) || (turnout2.getUserName().equals(""))
-                        || !turnout2.getUserName().equals(str)) {
+                uname = turnout2.getUserName();
+                if ((uname == null) || (uname.equals(""))
+                        || !uname.equals(str)) {
                     str = str.toUpperCase();
                     turnout2NameField.setText(str);
                 }
@@ -6296,8 +6305,9 @@ public class LayoutEditorTools {
                         JOptionPane.ERROR_MESSAGE);
                 return false;
             }
-            if ((turnoutB.getUserName() == null) || (turnoutB.getUserName().equals(""))
-                    || !turnoutB.getUserName().equals(str)) {
+            String uname = turnoutB.getUserName();
+            if ((uname == null) || (uname.equals(""))
+                    || !uname.equals(str)) {
                 str = str.toUpperCase();
                 turnoutBNameField.setText(str);
             }
@@ -6347,8 +6357,9 @@ public class LayoutEditorTools {
                         JOptionPane.ERROR_MESSAGE);
                 return false;
             }
-            if ((turnoutA.getUserName() == null) || (turnoutA.getUserName().equals(""))
-                    || !turnoutA.getUserName().equals(str)) {
+            String uname = turnoutA.getUserName();
+            if ((uname == null) || (uname.equals(""))
+                    || !uname.equals(str)) {
                 str = str.toUpperCase();
                 turnoutANameField.setText(str);
             }
@@ -6403,8 +6414,9 @@ public class LayoutEditorTools {
                             JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
-                if ((turnoutB.getUserName() == null) || (turnoutB.getUserName().equals(""))
-                        || !turnoutB.getUserName().equals(str)) {
+                uname = turnoutB.getUserName();
+                if ((uname == null) || (uname.equals(""))
+                        || !uname.equals(str)) {
                     str = str.toUpperCase();
                     turnoutBNameField.setText(str);
                 }
@@ -9500,9 +9512,12 @@ public class LayoutEditorTools {
                             new Object[]{str}), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return false;
-        } else if ((turnout.getUserName() == null) || (turnout.getUserName().equals(""))
-                || !turnout.getUserName().equals(str)) {
-            turnoutMastNameField.setText(str);
+        } else {
+            String uname = turnout.getUserName();
+            if ((uname == null) || (uname.equals(""))
+                    || !uname.equals(str)) {
+                turnoutMastNameField.setText(str);
+            }
         }
         for (int i = 0; i < layoutEditor.turnoutList.size(); i++) {
             t = layoutEditor.turnoutList.get(i);
@@ -11049,9 +11064,12 @@ public class LayoutEditorTools {
                             new Object[]{str}), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return false;
-        } else if ((turnout.getUserName() == null) || (turnout.getUserName().equals(""))
-                || !turnout.getUserName().equals(str)) {
-            turnoutSensorNameField.setText(str);
+        } else {
+            String uname = turnout.getUserName();
+            if ((uname == null) || (uname.equals(""))
+                    || !uname.equals(str)) {
+                turnoutSensorNameField.setText(str);
+            }
         }
         for (int i = 0; i < layoutEditor.turnoutList.size(); i++) {
             t = layoutEditor.turnoutList.get(i);
