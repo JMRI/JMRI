@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.Bundle {
 
-    private final static String name = "null"; // NOI18N
+    private final static String name = null; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
@@ -90,8 +90,8 @@ public class Bundle extends jmri.Bundle {
     }
 
     @Override
-    protected String retry(String key) {
-        return super.getBundle().handleGetMessage(key);
+    protected String retry(Locale locale, String key) {
+        return super.getBundle().handleGetMessage(locale,key);
     }
 
 }

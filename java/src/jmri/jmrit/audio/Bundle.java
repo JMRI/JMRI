@@ -85,6 +85,10 @@ public class Bundle extends jmri.jmrit.Bundle {
     private final static Bundle b = new Bundle();
     @Override @Nullable protected String bundleName() {return name; }
     @Override protected jmri.Bundle getBundle() { return b; }
-    @Override protected String retry(String key) { return super.getBundle().handleGetMessage(key); }
+
+    @Override 
+    protected String retry(Locale locale,String key) { 
+        return super.getBundle().handleGetMessage(locale,key); 
+    }
 
 }
