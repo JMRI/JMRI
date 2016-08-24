@@ -25,7 +25,7 @@
     <p>
     The Roco z21/Z21 is a command stations with support for LocoNet,R-Bus and XPressNet devices and it includes a built in Ethernet port.  The device is also sold under the Fleischmann name. 
     <p>
-    For connection to the device via the Loconet or XPressNet interface, please see the <a href="../../loconet/">LocoNet</a> and <a href="../../XPressNet/>XPressNet</a> connection pages.
+    For connection to the device via the Loconet or XPressNet interface, please see the <a href="../../loconet/">LocoNet</a> and <a href="../../XPressNet/">XPressNet</a> connection pages.
     <p>  
     This page specifies connection to the z21/Z21 via the Ethernet port as documented on the <a href="http://www.z21.eu/en/Downloads">Z21 website</a>) 
     </p>
@@ -55,20 +55,24 @@ Roco has sells two devices it sells as the White Z21 and the Black Z21.  The Whi
   <dl>
   <dt class=left>JMRI</dt>
 	<dd class=first>
-	<p>JMRI supports the current version (XBus/XPressNet Version 3.0).  We
-	may add XBus Version 1.0 and 2.0 support in the future, which will allow
-	all XBus based systems to work with JMRI.
+	<p>JMRI Currently supports the Z21 XPressNet over Ethernet implementation.  JMRI also provides support for configuring connection flags and the Z21 RailCom interface.
+        </p>
 	</dd>
 
-	<dt class="left">white Z21</dt>
+	<dt class="left">White Z21</dt>
 	<dd>
 	<p>
+        The White z21 does not provide access to the LocoNet interface.
+        </p>
+        <p>
+        The White z21 does not include a seperate programming track output.  It is unclear as to whether or not reading decoder values in service mode is possible..
         </p>
         </dd>
 
-	<dt class="left">black Z21</dt>
+	<dt class="left">Black Z21</dt>
 	<dd>
 	<p>
+        There are no known limitations of the Black Z21 at this time.
         </p>
         </dd>
 </dl>
@@ -118,7 +122,6 @@ Roco has sells two devices it sells as the White Z21 and the Black Z21.  The Whi
 </ol> 
 
 <a name="tools"></a><h2>JMRI z21/Z21 Tools</h2>
-<img src="images/XpressNetMenu.png" width="236" height="224" align="right" alt="Menu">
 	<p>The following tools are available from the  menu when this connection is active:
 		<ul>
 		<li>Open Z21 Monitor - This tool allows you to monitor traffic to and from the Z21.</li>
