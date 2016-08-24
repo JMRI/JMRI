@@ -169,7 +169,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         editMenu.setMnemonic(KeyEvent.VK_E);
         TransferActionListener actionListener = new TransferActionListener();
 
-        JMenuItem menuItem = new JMenuItem(rb.getString("MenuItemCut"));
+        JMenuItem menuItem = new JMenuItem(Bundle.getMessage("MenuItemCut"));
         menuItem.setActionCommand((String) TransferHandler.getCutAction().getValue(Action.NAME));
         menuItem.addActionListener(actionListener);
         if (SystemType.isMacOSX()) {
@@ -182,7 +182,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         menuItem.setMnemonic(KeyEvent.VK_T);
         editMenu.add(menuItem);
 
-        menuItem = new JMenuItem(rb.getString("MenuItemCopy"));
+        menuItem = new JMenuItem(Bundle.getMessage("MenuItemCopy"));
         menuItem.setActionCommand((String) TransferHandler.getCopyAction().getValue(Action.NAME));
         menuItem.addActionListener(actionListener);
         if (SystemType.isMacOSX()) {
@@ -195,7 +195,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         menuItem.setMnemonic(KeyEvent.VK_C);
         editMenu.add(menuItem);
 
-        menuItem = new JMenuItem(rb.getString("MenuItemPaste"));
+        menuItem = new JMenuItem(Bundle.getMessage("MenuItemPaste"));
         menuItem.setActionCommand((String) TransferHandler.getPasteAction().getValue(Action.NAME));
         menuItem.addActionListener(actionListener);
         if (SystemType.isMacOSX()) {
