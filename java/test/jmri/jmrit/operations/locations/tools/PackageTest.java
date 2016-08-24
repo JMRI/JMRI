@@ -1,13 +1,13 @@
-package jmri.jmrit.vsdecoder.swing;
+package jmri.jmrit.operations.locations.tools;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Invokes complete set of tests in the jmri.jmrit.vsdecoder.swing tree
+ * Tests for the jmrit.operations.locations package
  *
- * @author	Bob Jacobsen Copyright 2001, 2003, 2012
+ * @author	Bob Coleman
  */
 public class PackageTest extends TestCase {
 
@@ -24,23 +24,15 @@ public class PackageTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrit.vsdecoder.swing.PackageTest");   // no tests in this class itself
-
+        TestSuite suite = new TestSuite("jmri.jmrit.operations.locations.tools.PackageTest"); // no tests in class itself
         suite.addTest(BundleTest.suite());
-        suite.addTest(VSDSwingBundleTest.suite());
 
+        // GUI tests start here
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+            suite.addTest(PoolTrackGuiTest.suite());
         }
 
         return suite;
     }
 
-    // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-    }
-
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
-    }
 }
