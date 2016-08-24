@@ -1,11 +1,11 @@
-package apps.PacketPro;
+package apps.SoundPro;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Invoke complete set of tests for the apps.PacketPro package
+ * Invoke complete set of tests for the apps.SoundPro package
  *
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007, 2012
  * @version $Revision$

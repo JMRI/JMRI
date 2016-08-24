@@ -1,4 +1,4 @@
-package apps.PacketPro;
+package apps.SoundPro;
 
 import junit.framework.Assert;
 import junit.framework.Test;
