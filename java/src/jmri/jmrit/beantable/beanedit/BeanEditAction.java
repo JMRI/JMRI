@@ -187,9 +187,10 @@ abstract class BeanEditAction extends AbstractAction {
     }
 
     protected void saveBasicItems(ActionEvent e) {
-        if (bean.getUserName() == null && !userNameField.getText().equals("")) {
+        String uname = bean.getUserName();
+        if (uname == null && !userNameField.getText().equals("")) {
             renameBean(userNameField.getText());
-        } else if (bean.getUserName() != null && !bean.getUserName().equals(userNameField.getText())) {
+        } else if (uname != null && !uname.equals(userNameField.getText())) {
             if (userNameField.getText().equals("")) {
                 removeName();
             } else {

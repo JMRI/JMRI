@@ -1,4 +1,4 @@
-package jmri.jmrix.mrc.swing;
+package jmri.jmrix.can.cbus.swing.eventtable;
 
 import java.util.Locale;
 
