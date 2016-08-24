@@ -60,6 +60,10 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
     static public final int DELETECOL = 4;
 
     static public final int NUMCOLUMN = 5;
+    private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class.getName());
+    protected List<String> sysNameList = null;
+    boolean noWarnDelete = false;
+    jmri.NamedBeanHandleManager nbMan = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
     public BeanTableDataModel() {
         super();
@@ -84,8 +88,6 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
             getBySystemName(sysNameList.get(i)).addPropertyChangeListener(this, null, "Table View");
         }
     }
-
-    protected List<String> sysNameList = null;
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -317,125 +319,6 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         DeleteBeanWorker worker = new DeleteBeanWorker(t);
         worker.execute();
     }
-
-    class DeleteBeanWorker extends SwingWorker<Void, Void> {
-
-        NamedBean t;
-
-        public DeleteBeanWorker(NamedBean bean) {
-            t = bean;
-        }
-
-        @Override
-        public java.lang.Void doInBackground() throws Exception {
-            StringBuilder message = new StringBuilder();
-            try {
-                getManager().deleteBean(t, "CanDelete");  //IN18N
-            } catch (java.beans.PropertyVetoException e) {
-                if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { //IN18N
-                    log.warn(e.getMessage());
-                    message.append(Bundle.getMessage("VetoDeleteBean", t.getBeanType(), t.getFullyFormattedDisplayName(), e.getMessage()));
-                    JOptionPane.showMessageDialog(null, message.toString(),
-                            Bundle.getMessage("WarningTitle"),
-                            JOptionPane.ERROR_MESSAGE);
-                    return null;
-                }
-                message.append(e.getMessage());
-            }
-            int count = t.getNumPropertyChangeListeners();
-            if (log.isDebugEnabled()) {
-                log.debug("Delete with " + count);
-            }
-            if (getDisplayDeleteMsg() == 0x02 && message.toString().equals("")) {
-                doDelete(t);
-            } else {
-                final JDialog dialog = new JDialog();
-                dialog.setTitle(Bundle.getMessage("WarningTitle"));
-                dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
-                JPanel container = new JPanel();
-                container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-                container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-                if (count > 0) { // warn of listeners attached before delete
-
-                    JLabel question = new JLabel(Bundle.getMessage("DeletePrompt", t.getFullyFormattedDisplayName()));
-                    question.setAlignmentX(Component.CENTER_ALIGNMENT);
-                    container.add(question);
-
-                    ArrayList<String> listenerRefs = t.getListenerRefs();
-                    if (listenerRefs.size() > 0) {
-                        ArrayList<String> listeners = new ArrayList<>();
-                        for (int i = 0; i < listenerRefs.size(); i++) {
-                            if (!listeners.contains(listenerRefs.get(i))) {
-                                listeners.add(listenerRefs.get(i));
-                            }
-                        }
-
-                        message.append("<br>");
-                        message.append(Bundle.getMessage("ReminderInUse", count));
-                        message.append("<ul>");
-                        for (int i = 0; i < listeners.size(); i++) {
-                            message.append("<li>");
-                            message.append(listeners.get(i));
-                            message.append("</li>");
-                        }
-                        message.append("</ul>");
-
-                        JEditorPane pane = new JEditorPane();
-                        pane.setContentType("text/html");
-                        pane.setText("<html>" + message.toString() + "</html>");
-                        pane.setEditable(false);
-                        JScrollPane jScrollPane = new JScrollPane(pane);
-                        container.add(jScrollPane);
-                    }
-                } else {
-                    String msg = java.text.MessageFormat.format(
-                            Bundle.getMessage("DeletePrompt"),
-                            new Object[]{t.getSystemName()});
-                    JLabel question = new JLabel(msg);
-                    question.setAlignmentX(Component.CENTER_ALIGNMENT);
-                    container.add(question);
-                }
-
-                final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting"));
-                remember.setFont(remember.getFont().deriveFont(10f));
-                remember.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-                JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));
-                JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));
-                JPanel button = new JPanel();
-                button.setAlignmentX(Component.CENTER_ALIGNMENT);
-                button.add(yesButton);
-                button.add(noButton);
-                container.add(button);
-
-                noButton.addActionListener((ActionEvent e) -> {
-                    //there is no point in remembering this the user will never be
-                    //able to delete a bean!
-                    dialog.dispose();
-                });
-
-                yesButton.addActionListener((ActionEvent e) -> {
-                    if (remember.isSelected()) {
-                        setDisplayDeleteMsg(0x02);
-                    }
-                    doDelete(t);
-                    dialog.dispose();
-                });
-                container.add(remember);
-                container.setAlignmentX(Component.CENTER_ALIGNMENT);
-                container.setAlignmentY(Component.CENTER_ALIGNMENT);
-                dialog.getContentPane().add(container);
-                dialog.pack();
-                dialog.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width) / 2 - dialog.getWidth() / 2, (Toolkit.getDefaultToolkit().getScreenSize().height) / 2 - dialog.getHeight() / 2);
-                dialog.setModal(true);
-                dialog.setVisible(true);
-            }
-            return null;
-        }
-
-    }
-
-    boolean noWarnDelete = false;
 
     /**
      * Delete the bean after all the checking has been done.
@@ -670,24 +553,6 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
      return "Bean";
      }*/
 
-
-    class PopupListener extends MouseAdapter {
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-            if (e.isPopupTrigger()) {
-                showPopup(e);
-            }
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            if (e.isPopupTrigger()) {
-                showPopup(e);
-            }
-        }
-    }
-
     protected void showPopup(MouseEvent e) {
         JTable source = (JTable) e.getSource();
         TableSorter tmodel = ((TableSorter) source.getModel());
@@ -732,22 +597,6 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         popupMenu.show(e.getComponent(), e.getX(), e.getY());
 
     }
-
-    class popupmenuRemoveName implements ActionListener {
-
-        int row;
-
-        popupmenuRemoveName(int row) {
-            this.row = row;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            deleteBean(row, 0);
-        }
-    }
-
-    jmri.NamedBeanHandleManager nbMan = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
     public void copyName(int row, int column) {
         NamedBean nBean = getBySystemName(sysNameList.get(row));
@@ -900,61 +749,9 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         popupMenu.show(e.getComponent(), e.getX(), e.getY());
     }
 
-    static class headerActionListener implements ActionListener {
-
-        TableColumn tc;
-        XTableColumnModel tcm;
-
-        headerActionListener(TableColumn tc, XTableColumnModel tcm) {
-            this.tc = tc;
-            this.tcm = tcm;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            JCheckBoxMenuItem check = (JCheckBoxMenuItem) e.getSource();
-            //Do not allow the last column to be hidden
-            if (!check.isSelected() && tcm.getColumnCount(true) == 1) {
-                return;
-            }
-            tcm.setColumnVisible(tc, check.isSelected());
-        }
-    }
-
     protected void addMouseListenerToHeader(JTable table) {
         MouseListener mouseHeaderListener = new TableHeaderListener(table);
         table.getTableHeader().addMouseListener(mouseHeaderListener);
-    }
-
-    class TableHeaderListener extends MouseAdapter {
-
-        JTable table;
-
-        TableHeaderListener(JTable tbl) {
-            super();
-            table = tbl;
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-            if (e.isPopupTrigger()) {
-                showTableHeaderPopup(e, table);
-            }
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            if (e.isPopupTrigger()) {
-                showTableHeaderPopup(e, table);
-            }
-        }
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            if (e.isPopupTrigger()) {
-                showTableHeaderPopup(e, table);
-            }
-        }
     }
 
     public void saveTableColumnDetails(JTable table) {
@@ -1031,6 +828,205 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
             }
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class.getName());
+
+    static class headerActionListener implements ActionListener {
+
+        TableColumn tc;
+        XTableColumnModel tcm;
+
+        headerActionListener(TableColumn tc, XTableColumnModel tcm) {
+            this.tc = tc;
+            this.tcm = tcm;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JCheckBoxMenuItem check = (JCheckBoxMenuItem) e.getSource();
+            //Do not allow the last column to be hidden
+            if (!check.isSelected() && tcm.getColumnCount(true) == 1) {
+                return;
+            }
+            tcm.setColumnVisible(tc, check.isSelected());
+        }
+    }
+
+    class DeleteBeanWorker extends SwingWorker<Void, Void> {
+
+        NamedBean t;
+
+        public DeleteBeanWorker(NamedBean bean) {
+            t = bean;
+        }
+
+        @Override
+        public java.lang.Void doInBackground() throws Exception {
+            StringBuilder message = new StringBuilder();
+            try {
+                getManager().deleteBean(t, "CanDelete");  //IN18N
+            } catch (java.beans.PropertyVetoException e) {
+                if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { //IN18N
+                    log.warn(e.getMessage());
+                    message.append(Bundle.getMessage("VetoDeleteBean", t.getBeanType(), t.getFullyFormattedDisplayName(), e.getMessage()));
+                    JOptionPane.showMessageDialog(null, message.toString(),
+                            Bundle.getMessage("WarningTitle"),
+                            JOptionPane.ERROR_MESSAGE);
+                    return null;
+                }
+                message.append(e.getMessage());
+            }
+            int count = t.getNumPropertyChangeListeners();
+            if (log.isDebugEnabled()) {
+                log.debug("Delete with " + count);
+            }
+            if (getDisplayDeleteMsg() == 0x02 && message.toString().equals("")) {
+                doDelete(t);
+            } else {
+                final JDialog dialog = new JDialog();
+                dialog.setTitle(Bundle.getMessage("WarningTitle"));
+                dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+                JPanel container = new JPanel();
+                container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+                if (count > 0) { // warn of listeners attached before delete
+
+                    JLabel question = new JLabel(Bundle.getMessage("DeletePrompt", t.getFullyFormattedDisplayName()));
+                    question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    container.add(question);
+
+                    ArrayList<String> listenerRefs = t.getListenerRefs();
+                    if (listenerRefs.size() > 0) {
+                        ArrayList<String> listeners = new ArrayList<>();
+                        for (int i = 0; i < listenerRefs.size(); i++) {
+                            if (!listeners.contains(listenerRefs.get(i))) {
+                                listeners.add(listenerRefs.get(i));
+                            }
+                        }
+
+                        message.append("<br>");
+                        message.append(Bundle.getMessage("ReminderInUse", count));
+                        message.append("<ul>");
+                        for (int i = 0; i < listeners.size(); i++) {
+                            message.append("<li>");
+                            message.append(listeners.get(i));
+                            message.append("</li>");
+                        }
+                        message.append("</ul>");
+
+                        JEditorPane pane = new JEditorPane();
+                        pane.setContentType("text/html");
+                        pane.setText("<html>" + message.toString() + "</html>");
+                        pane.setEditable(false);
+                        JScrollPane jScrollPane = new JScrollPane(pane);
+                        container.add(jScrollPane);
+                    }
+                } else {
+                    String msg = java.text.MessageFormat.format(
+                            Bundle.getMessage("DeletePrompt"),
+                            new Object[]{t.getSystemName()});
+                    JLabel question = new JLabel(msg);
+                    question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    container.add(question);
+                }
+
+                final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting"));
+                remember.setFont(remember.getFont().deriveFont(10f));
+                remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));
+                JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));
+                JPanel button = new JPanel();
+                button.setAlignmentX(Component.CENTER_ALIGNMENT);
+                button.add(yesButton);
+                button.add(noButton);
+                container.add(button);
+
+                noButton.addActionListener((ActionEvent e) -> {
+                    //there is no point in remembering this the user will never be
+                    //able to delete a bean!
+                    dialog.dispose();
+                });
+
+                yesButton.addActionListener((ActionEvent e) -> {
+                    if (remember.isSelected()) {
+                        setDisplayDeleteMsg(0x02);
+                    }
+                    doDelete(t);
+                    dialog.dispose();
+                });
+                container.add(remember);
+                container.setAlignmentX(Component.CENTER_ALIGNMENT);
+                container.setAlignmentY(Component.CENTER_ALIGNMENT);
+                dialog.getContentPane().add(container);
+                dialog.pack();
+                dialog.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width) / 2 - dialog.getWidth() / 2, (Toolkit.getDefaultToolkit().getScreenSize().height) / 2 - dialog.getHeight() / 2);
+                dialog.setModal(true);
+                dialog.setVisible(true);
+            }
+            return null;
+        }
+
+    }
+
+    class PopupListener extends MouseAdapter {
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            if (e.isPopupTrigger()) {
+                showPopup(e);
+            }
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            if (e.isPopupTrigger()) {
+                showPopup(e);
+            }
+        }
+    }
+
+    class popupmenuRemoveName implements ActionListener {
+
+        int row;
+
+        popupmenuRemoveName(int row) {
+            this.row = row;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            deleteBean(row, 0);
+        }
+    }
+
+    class TableHeaderListener extends MouseAdapter {
+
+        JTable table;
+
+        TableHeaderListener(JTable tbl) {
+            super();
+            table = tbl;
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            if (e.isPopupTrigger()) {
+                showTableHeaderPopup(e, table);
+            }
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            if (e.isPopupTrigger()) {
+                showTableHeaderPopup(e, table);
+            }
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (e.isPopupTrigger()) {
+                showTableHeaderPopup(e, table);
+            }
+        }
+    }
 
 }
