@@ -10,10 +10,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyVetoException;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.EventObject;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -23,6 +27,7 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JEditorPane;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -35,8 +40,12 @@ import javax.swing.SwingWorker;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
+import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.NamedBeanHandleManager;
+import jmri.UserPreferencesManager;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.swing.XTableColumnModel;
@@ -63,7 +72,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
     private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class.getName());
     protected List<String> sysNameList = null;
     boolean noWarnDelete = false;
-    jmri.NamedBeanHandleManager nbMan = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
+    NamedBeanHandleManager nbMan = InstanceManager.getDefault(NamedBeanHandleManager.class);
 
     public BeanTableDataModel() {
         super();
@@ -90,7 +99,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
     }
 
     @Override
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
+    public void propertyChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals("length")) {
             // a new NamedBean is available in the manager
             updateNameList();
@@ -124,7 +133,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
      * @param e the event to match
      * @return true if the property name is of interest, false otherwise
      */
-    protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
+    protected boolean matchPropertyName(PropertyChangeEvent e) {
         return (e.getPropertyName().contains("State")
                 || e.getPropertyName().contains("Appearance")
                 || e.getPropertyName().contains("Comment"))
@@ -248,11 +257,11 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
     abstract protected void clickOn(NamedBean t);
 
     public int getDisplayDeleteMsg() {
-        return jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getMasterClassName(), "deleteInUse");
+        return InstanceManager.getDefault(UserPreferencesManager.class).getMultipleChoiceOption(getMasterClassName(), "deleteInUse");
     }
 
     public void setDisplayDeleteMsg(int boo) {
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getMasterClassName(), "deleteInUse", boo);
+        InstanceManager.getDefault(UserPreferencesManager.class).setMultipleChoiceOption(getMasterClassName(), "deleteInUse", boo);
     }
 
     abstract protected String getMasterClassName();
@@ -287,7 +296,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                         //This will update the bean reference from the systemName to the userName
                         try {
                             nbMan.updateBeanFromSystemToUser(nBean);
-                        } catch (jmri.JmriException ex) {
+                        } catch (JmriException ex) {
                             //We should never get an exception here as we already check that the username is not valid
                         }
                     }
@@ -329,7 +338,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
     void doDelete(NamedBean bean) {
         try {
             getManager().deleteBean(bean, "DoDelete");
-        } catch (java.beans.PropertyVetoException e) {
+        } catch (PropertyVetoException e) {
             //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
             log.error(e.getMessage());
         }
@@ -532,10 +541,10 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
     public JTable makeJTable(TableSorter sorter) {
         JTable table = new JTable(sorter) {
             @Override
-            public boolean editCellAt(int row, int column, java.util.EventObject e) {
+            public boolean editCellAt(int row, int column, EventObject e) {
                 boolean res = super.editCellAt(row, column, e);
-                java.awt.Component c = this.getEditorComponent();
-                if (c instanceof javax.swing.JTextField) {
+                Component c = this.getEditorComponent();
+                if (c instanceof JTextField) {
                     ((JTextField) c).selectAll();
                 }
                 return res;
@@ -651,7 +660,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                     //This will update the bean reference from the systemName to the userName
                     try {
                         nbMan.updateBeanFromSystemToUser(nBean);
-                    } catch (jmri.JmriException ex) {
+                    } catch (JmriException ex) {
                         //We should never get an exception here as we already check that the username is not valid
                     }
                 }
@@ -713,20 +722,20 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         if (oldNameBean != newNameBean) {
             oldNameBean.setUserName("");
             newNameBean.setUserName(currentName);
-            jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).moveBean(oldNameBean, newNameBean, currentName);
+            InstanceManager.getDefault(NamedBeanHandleManager.class).moveBean(oldNameBean, newNameBean, currentName);
             if (nbMan.inUse(newNameBean.getSystemName(), newNameBean)) {
                 String msg = Bundle.getMessage("UpdateToUserName", new Object[]{getBeanType(), currentName, sysNameList.get(row)});
                 int optionPane = JOptionPane.showConfirmDialog(null, msg, Bundle.getMessage("UpdateToUserNameTitle"), JOptionPane.YES_NO_OPTION);
                 if (optionPane == JOptionPane.YES_OPTION) {
                     try {
                         nbMan.updateBeanFromSystemToUser(newNameBean);
-                    } catch (jmri.JmriException ex) {
+                    } catch (JmriException ex) {
                         //We should never get an exception here as we already check that the username is not valid
                     }
                 }
             }
             fireTableRowsUpdated(row, row);
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+            InstanceManager.getDefault(UserPreferencesManager.class).
                     showInfoMessage("Reminder", getBeanType() + " " + Bundle.getMessage("UpdateComplete"), getMasterClassName(), "remindSaveReLoad");
             //JOptionPane.showMessageDialog(null, getBeanType() + " " + Bundle.getMessage("UpdateComplete"));
         }
@@ -759,7 +768,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
     }
 
     public void saveTableColumnDetails(JTable table, String beantableref) {
-        jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
         XTableColumnModel tcm = (XTableColumnModel) table.getColumnModel();
         TableSorter tmodel = ((TableSorter) table.getModel());
         Enumeration<TableColumn> en = tcm.getColumns(false);
@@ -784,7 +793,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
     }
 
     public void loadTableColumnDetails(JTable table, String beantableref) {
-        jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
         //Set all the sort and width details of the table first.
 
         //Reorder the columns first
@@ -859,11 +868,11 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         }
 
         @Override
-        public java.lang.Void doInBackground() throws Exception {
+        public Void doInBackground() throws Exception {
             StringBuilder message = new StringBuilder();
             try {
                 getManager().deleteBean(t, "CanDelete");  //IN18N
-            } catch (java.beans.PropertyVetoException e) {
+            } catch (PropertyVetoException e) {
                 if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { //IN18N
                     log.warn(e.getMessage());
                     message.append(Bundle.getMessage("VetoDeleteBean", t.getBeanType(), t.getFullyFormattedDisplayName(), e.getMessage()));
@@ -883,7 +892,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
             } else {
                 final JDialog dialog = new JDialog();
                 dialog.setTitle(Bundle.getMessage("WarningTitle"));
-                dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+                dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 JPanel container = new JPanel();
                 container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
@@ -920,7 +929,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                         container.add(jScrollPane);
                     }
                 } else {
-                    String msg = java.text.MessageFormat.format(
+                    String msg = MessageFormat.format(
                             Bundle.getMessage("DeletePrompt"),
                             new Object[]{t.getSystemName()});
                     JLabel question = new JLabel(msg);
