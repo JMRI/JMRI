@@ -61,7 +61,7 @@ for information about configuration.
 	the <b>Circuit Builder</b> tool found in the Control Panel Editor.  Intially, the
 	Circuit Builder can be opened using the <b>Open Circuit Builder</b> menu item 
 	under the <b>Warrants</b> menu. Instructions for use are found in 
-	<a href="..\display\CircuitBuilder.shtml">The Circuit Builder</a>.</li>
+	<a href="../display/CircuitBuilder.shtml">The Circuit Builder</a>.</li>
 </ul>
 <p>
 <h3>More About Circuit Builder</h3>
@@ -73,7 +73,7 @@ Indicator Track and Indicator Turnout icons.  These icons display the
 status of the OBlock they represent by color - whether the track circuit of the OBlock is
 occupied or unoccupied, whether a warrant has allocated it or whether a train 
 under warrant currently is proceeding over the circuit.  Details are found at
-<a href="..\display\CircuitBuilder.shtml">The Circuit Builder</a>, 
+<a href="../display/CircuitBuilder.shtml">The Circuit Builder</a>,
 <p> 
 <h3>Compatibility With Layout Editor</h3>
 OBlocks, Portals and Paths can be used with Layout Editor.  Compatibility is 
