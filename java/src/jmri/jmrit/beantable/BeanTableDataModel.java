@@ -32,6 +32,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import jmri.Manager;
@@ -50,8 +51,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2006
  */
-abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
-        implements PropertyChangeListener {
+abstract public class BeanTableDataModel extends AbstractTableModel implements PropertyChangeListener {
 
     static public final int SYSNAMECOL = 0;
     static public final int USERNAMECOL = 1;
@@ -87,6 +87,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 
     protected List<String> sysNameList = null;
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("length")) {
             // a new NamedBean is available in the manager
@@ -117,20 +118,28 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
      * <P>
      * Note that events will come both from the NamedBeans and also from the
      * manager
+     *
+     * @param e the event to match
+     * @return true if the property name is of interest, false otherwise
      */
     protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-        return (e.getPropertyName().indexOf("State") >= 0 || e.getPropertyName().indexOf("Appearance") >= 0
-                || e.getPropertyName().indexOf("Comment") >= 0) || e.getPropertyName().indexOf("UserName") >= 0;
+        return (e.getPropertyName().contains("State")
+                || e.getPropertyName().contains("Appearance")
+                || e.getPropertyName().contains("Comment"))
+                || e.getPropertyName().contains("UserName");
     }
 
+    @Override
     public int getRowCount() {
         return sysNameList.size();
     }
 
+    @Override
     public int getColumnCount() {
         return NUMCOLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case SYSNAMECOL:
@@ -149,6 +158,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case SYSNAMECOL:
@@ -163,6 +173,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         String uname;
         switch (col) {
@@ -182,6 +193,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         }
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         NamedBean b;
         switch (col) {
@@ -243,51 +255,59 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 
     abstract protected String getMasterClassName();
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
-        if (col == USERNAMECOL) {
-            //Directly changing the username should only be possible if the username was previously null or ""
-            // check to see if user name already exists
-            if (((String) value).equals("")) {
-                value = null;
-            } else {
-                NamedBean nB = getByUserName((String) value);
-                if (nB != null) {
-                    log.error("User name is not unique " + value);
-                    String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
-                    JOptionPane.showMessageDialog(null, msg,
-                            Bundle.getMessage("WarningTitle"),
-                            JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-            }
-            NamedBean nBean = getBySystemName(sysNameList.get(row));
-            nBean.setUserName((String) value);
-            if (nbMan.inUse(sysNameList.get(row), nBean)) {
-                String msg = Bundle.getMessage("UpdateToUserName", new Object[]{getBeanType(), value, sysNameList.get(row)});
-                int optionPane = JOptionPane.showConfirmDialog(null,
-                        msg, Bundle.getMessage("UpdateToUserNameTitle"),
-                        JOptionPane.YES_NO_OPTION);
-                if (optionPane == JOptionPane.YES_OPTION) {
-                    //This will update the bean reference from the systemName to the userName
-                    try {
-                        nbMan.updateBeanFromSystemToUser(nBean);
-                    } catch (jmri.JmriException ex) {
-                        //We should never get an exception here as we already check that the username is not valid
+        switch (col) {
+            case USERNAMECOL:
+                //Directly changing the username should only be possible if the username was previously null or ""
+                // check to see if user name already exists
+                if (((String) value).equals("")) {
+                    value = null;
+                } else {
+                    NamedBean nB = getByUserName((String) value);
+                    if (nB != null) {
+                        log.error("User name is not unique " + value);
+                        String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
+                        JOptionPane.showMessageDialog(null, msg,
+                                Bundle.getMessage("WarningTitle"),
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
                     }
                 }
-            }
-            fireTableRowsUpdated(row, row);
-        } else if (col == COMMENTCOL) {
-            getBySystemName(sysNameList.get(row)).setComment(
-                    (String) value);
-            fireTableRowsUpdated(row, row);
-        } else if (col == VALUECOL) {
-            // button fired, swap state
-            NamedBean t = getBySystemName(sysNameList.get(row));
-            clickOn(t);
-        } else if (col == DELETECOL) {
-            // button fired, delete Bean
-            deleteBean(row, col);
+                NamedBean nBean = getBySystemName(sysNameList.get(row));
+                nBean.setUserName((String) value);
+                if (nbMan.inUse(sysNameList.get(row), nBean)) {
+                    String msg = Bundle.getMessage("UpdateToUserName", new Object[]{getBeanType(), value, sysNameList.get(row)});
+                    int optionPane = JOptionPane.showConfirmDialog(null,
+                            msg, Bundle.getMessage("UpdateToUserNameTitle"),
+                            JOptionPane.YES_NO_OPTION);
+                    if (optionPane == JOptionPane.YES_OPTION) {
+                        //This will update the bean reference from the systemName to the userName
+                        try {
+                            nbMan.updateBeanFromSystemToUser(nBean);
+                        } catch (jmri.JmriException ex) {
+                            //We should never get an exception here as we already check that the username is not valid
+                        }
+                    }
+                }
+                fireTableRowsUpdated(row, row);
+                break;
+            case COMMENTCOL:
+                getBySystemName(sysNameList.get(row)).setComment(
+                        (String) value);
+                fireTableRowsUpdated(row, row);
+                break;
+            case VALUECOL:
+                // button fired, swap state
+                NamedBean t = getBySystemName(sysNameList.get(row));
+                clickOn(t);
+                break;
+            case DELETECOL:
+                // button fired, delete Bean
+                deleteBean(row, col);
+                break;
+            default:
+                break;
         }
     }
 
@@ -343,7 +363,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 
                     ArrayList<String> listenerRefs = t.getListenerRefs();
                     if (listenerRefs.size() > 0) {
-                        ArrayList<String> listeners = new ArrayList<String>();
+                        ArrayList<String> listeners = new ArrayList<>();
                         for (int i = 0; i < listenerRefs.size(); i++) {
                             if (!listeners.contains(listenerRefs.get(i))) {
                                 listeners.add(listenerRefs.get(i));
@@ -388,22 +408,18 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 button.add(noButton);
                 container.add(button);
 
-                noButton.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        //there is no point in remembering this the user will never be
-                        //able to delete a bean!
-                        dialog.dispose();
-                    }
+                noButton.addActionListener((ActionEvent e) -> {
+                    //there is no point in remembering this the user will never be
+                    //able to delete a bean!
+                    dialog.dispose();
                 });
 
-                yesButton.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        if (remember.isSelected()) {
-                            setDisplayDeleteMsg(0x02);
-                        }
-                        doDelete(t);
-                        dialog.dispose();
+                yesButton.addActionListener((ActionEvent e) -> {
+                    if (remember.isSelected()) {
+                        setDisplayDeleteMsg(0x02);
                     }
+                    doDelete(t);
+                    dialog.dispose();
                 });
                 container.add(remember);
                 container.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -433,7 +449,6 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         } catch (java.beans.PropertyVetoException e) {
             //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
             log.error(e.getMessage());
-            return;
         }
     }
 
@@ -524,11 +539,9 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
      * columns across the page with headings and vertical lines between each
      * column. Data is word wrapped within a column. Can handle data as strings,
      * comboboxes or booleans
+     *
+     * @param w the printer writer
      */
-    @SuppressWarnings("unchecked")
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     public void printTable(HardcopyWriter w) {
         // determine the column size - evenly sized, with space between for lines
         int columnSize = (w.getCharactersPerLine() - this.getColumnCount() - 1) / this.getColumnCount();
@@ -575,9 +588,6 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         w.close();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize) {
         String columnString = "";
         String lineString = "";
@@ -638,6 +648,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 
     public JTable makeJTable(TableSorter sorter) {
         JTable table = new JTable(sorter) {
+            @Override
             public boolean editCellAt(int row, int column, java.util.EventObject e) {
                 boolean res = super.editCellAt(row, column, e);
                 java.awt.Component c = this.getEditorComponent();
@@ -662,12 +673,14 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 
     class PopupListener extends MouseAdapter {
 
+        @Override
         public void mousePressed(MouseEvent e) {
             if (e.isPopupTrigger()) {
                 showPopup(e);
             }
         }
 
+        @Override
         public void mouseReleased(MouseEvent e) {
             if (e.isPopupTrigger()) {
                 showPopup(e);
@@ -687,42 +700,32 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem menuItem = new JMenuItem(Bundle.getMessage("CopyName"));
-        menuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                copyName(rowindex, 0);
-            }
+        menuItem.addActionListener((ActionEvent e1) -> {
+            copyName(rowindex, 0);
         });
         popupMenu.add(menuItem);
 
         menuItem = new JMenuItem(Bundle.getMessage("Rename"));
-        menuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                renameBean(rowindex, 0);
-            }
+        menuItem.addActionListener((ActionEvent e1) -> {
+            renameBean(rowindex, 0);
         });
         popupMenu.add(menuItem);
 
         menuItem = new JMenuItem(Bundle.getMessage("Clear"));
-        menuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                removeName(rowindex, 0);
-            }
+        menuItem.addActionListener((ActionEvent e1) -> {
+            removeName(rowindex, 0);
         });
         popupMenu.add(menuItem);
 
         menuItem = new JMenuItem(Bundle.getMessage("Move"));
-        menuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                moveBean(rowindex, 0);
-            }
+        menuItem.addActionListener((ActionEvent e1) -> {
+            moveBean(rowindex, 0);
         });
         popupMenu.add(menuItem);
 
         menuItem = new JMenuItem(Bundle.getMessage("Delete"));
-        menuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                deleteBean(rowindex, 0);
-            }
+        menuItem.addActionListener((ActionEvent e1) -> {
+            deleteBean(rowindex, 0);
         });
         popupMenu.add(menuItem);
 
@@ -738,6 +741,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             this.row = row;
         }
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             deleteBean(row, 0);
         }
@@ -836,7 +840,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             return;
         }
 
-        JComboBox<String> box = new JComboBox<String>();
+        JComboBox<String> box = new JComboBox<>();
         List<String> nameList = getManager().getSystemNameList();
         for (int i = 0; i < nameList.size(); i++) {
             NamedBean nb = getBySystemName(nameList.get(i));
@@ -906,6 +910,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             this.tcm = tcm;
         }
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             JCheckBoxMenuItem check = (JCheckBoxMenuItem) e.getSource();
             //Do not allow the last column to be hidden
@@ -972,8 +977,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                     p.setTableColumnPreferences(beantableref, columnName, index, tc.getPreferredWidth(), TableSorter.getSortOrder(tmodel.getSortingStatus(tc.getModelIndex())), !tcm.isColumnVisible(tc));
                 }
             } catch (Exception e) {
-                log.warn("unable to store settings for table column " + tc.getHeaderValue());
-                e.printStackTrace();
+                log.warn("unable to store settings for table column {}", tc.getHeaderValue(), e);
             }
         }
     }
