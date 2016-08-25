@@ -123,7 +123,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
         }
         int retval = 0;
         for (LoggingEvent event : list) {
-            if (event.getLevel().toInt() >= level.toInt()) retval++;  // higher number -> more severe, specific, limited
+            if (event != null && event.getLevel() != null && event.getLevel().toInt() >= level.toInt()) retval++;  // higher number -> more severe, specific, limited
             // with Log4J 2, this could have used isMoreSpecificThan(level)
         }
         list.clear();
