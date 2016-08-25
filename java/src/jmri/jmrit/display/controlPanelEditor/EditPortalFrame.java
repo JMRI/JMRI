@@ -555,7 +555,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     private String iconIntersectsBlock(PortalIcon icon, OBlock block) {
         java.util.List<Positionable> list = _parent.getCircuitIcons(block);
         if (list == null || list.size() == 0) {
-            return Bundle.getMessage("needIcons", block.getDisplayName());
+            return Bundle.getMessage("needIcons", block.getDisplayName(), Bundle.getMessage("editCircuitItem"));
         }
         Rectangle rect = new Rectangle();
         Rectangle iconRect = icon.getBounds(new Rectangle());

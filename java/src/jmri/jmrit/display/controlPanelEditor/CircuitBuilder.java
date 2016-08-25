@@ -1132,7 +1132,7 @@ public class CircuitBuilder {
                 convertIcons(_circuitMap.get(block));
             }
         } else {
-            JOptionPane.showMessageDialog(_editor, Bundle.getMessage("needIcons", block.getDisplayName()),
+            JOptionPane.showMessageDialog(_editor, Bundle.getMessage("needIcons", block.getDisplayName(), Bundle.getMessage("editCircuitItem")),
                     Bundle.getMessage("noIcons"), JOptionPane.INFORMATION_MESSAGE);
         }
     }

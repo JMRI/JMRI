@@ -137,7 +137,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
 //        pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
         _length.setText(Float.toString(_block.getLengthIn()));
         pp.add(CircuitBuilder.makeTextBoxPanel(
-                false, _length, "length", true, "TooltipBlockLength"));
+                false, _length, "Length", true, "TooltipBlockLength"));
         _length.setPreferredSize(new Dimension(100, _length.getPreferredSize().height));
         _units = new JToggleButton("foo", !_block.isMetric());
         _units.setToolTipText(Bundle.getMessage("TooltipBlockLength"));
@@ -200,7 +200,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         blurb.add(new JLabel(Bundle.getMessage("DragOccupancyName", Bundle.getMessage("DetectionSensor"))));
-        blurb.add(new JLabel(Bundle.getMessage("DragErrorName")));
+        blurb.add(new JLabel(Bundle.getMessage("DragErrorName", Bundle.getMessage("ErrorSensor"))));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);
