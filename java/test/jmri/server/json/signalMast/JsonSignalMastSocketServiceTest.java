@@ -13,11 +13,10 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
@@ -25,13 +24,15 @@ import junit.textui.TestRunner;
  * @author Randall Wood
  * @author Steve Todd
  */
-public class JsonSignalMastSocketServiceTest extends TestCase {
+public class JsonSignalMastSocketServiceTest {
 
+    @Test
     public void testCtorSuccess() {
         JsonSignalMastSocketService service = new JsonSignalMastSocketService(new JsonMockConnection((DataOutputStream) null));
         Assert.assertNotNull(service);
     }
 
+    @Test
     public void testSignalMastChange() {
         try {
             //create a signalmast for testing
@@ -70,6 +71,7 @@ public class JsonSignalMastSocketServiceTest extends TestCase {
         }
     }
 
+    @Test
     public void testOnMessageChange() {
         JsonNode message;
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
@@ -117,36 +119,18 @@ public class JsonSignalMastSocketServiceTest extends TestCase {
     }
 
     // from here down is testing infrastructure
-    public JsonSignalMastSocketServiceTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {JsonSignalMastSocketServiceTest.class.getName()};
-        TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JsonSignalMastSocketServiceTest.class);
-
-        return suite;
-    }
 
     // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         Log4JFixture.setUp();
-        super.setUp();
         JUnitUtil.resetInstanceManager();
 //        JUnitUtil.initInternalSignalMastManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         JUnitUtil.resetInstanceManager();
-        super.tearDown();
         Log4JFixture.tearDown();
     }
 
