@@ -145,6 +145,9 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
         RowSorter sorter = table.getRowSorter();
         boolean isXModel = model instanceof XTableColumnModel;
         Map<Integer, String> indexes = new HashMap<>();
+        if (this.columns.get(table.getName()) == null) {
+            this.columns.put(table.getName(), new HashMap<>());
+        }
         this.columns.get(table.getName()).entrySet().stream().forEach((entry) -> {
             int index = entry.getValue().getOrder();
             indexes.put(index, entry.getKey());

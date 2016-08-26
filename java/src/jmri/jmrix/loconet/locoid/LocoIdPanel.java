@@ -5,7 +5,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrix.loconet.LnTrafficController;
-import jmri.jmrix.loconet.LocoNetBundle;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -74,7 +73,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
     }
 
     public String getTitle() {
-        return getTitle(LocoNetBundle.bundle().getString("MenuItemSetID"));
+        return getTitle(Bundle.getMessage("MenuItemSetID"));
     }
 
     public void initComponents(LocoNetSystemConnectionMemo memo) {

@@ -103,7 +103,7 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     public String getTitle() {
-        return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemPM4Programmer"));
+        return getTitle(Bundle.getMessage("MenuItemPM4Programmer"));
     }
 
     void setSpeedFromDisplay(int offset, JComboBox<String> box) {
