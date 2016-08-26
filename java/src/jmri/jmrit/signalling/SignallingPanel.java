@@ -617,8 +617,13 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         Iterator<String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
             String systemName = iter.next();
-            String userName = bm.getBySystemName(systemName).getUserName();
-            _manualSensorList.add(new ManualSensorList(systemName, userName));
+            Sensor ss = bm.getBySystemName(systemName);
+            if (ss != null) {
+                String userName = ss.getUserName();
+                _manualSensorList.add(new ManualSensorList(systemName, userName));
+            } else {
+                log.error("Failed to get sensor {}", systemName);
+            }
         }
 
         p2xs = new JPanel();
@@ -1615,7 +1620,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
 
         public String getValue(String name) {
-            return InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name).getAspect();
+            SignalMast sm = InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name);
+            if (sm != null) {
+                return sm.getAspect();
+            } else {
+                return null;
+            }
         }
 
         public String getColumnName(int col) {

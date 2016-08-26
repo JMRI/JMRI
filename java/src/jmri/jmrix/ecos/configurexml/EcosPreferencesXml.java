@@ -1,5 +1,6 @@
 package jmri.jmrix.ecos.configurexml;
 
+import jmri.ConfigureManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +32,10 @@ public class EcosPreferencesXml extends jmri.configurexml.AbstractXmlAdapter /*e
     protected void register() {
         /*log.error("unexpected call to register()");
          new Exception().printStackTrace();*/
-        jmri.InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(this);
+        ConfigureManager cm = jmri.InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerPref(this);
+        }
     }
     /*protected void register(String host, String port, String mode) {
      InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(new ConnectionConfig(host, port, mode));

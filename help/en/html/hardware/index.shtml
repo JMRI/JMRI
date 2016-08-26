@@ -169,6 +169,10 @@
     <dd><p class="dl">Configure: 
         <a href="loconet/Fleischmann.shtml">Twin Centre communications</a> (LocoNet)</p> 
     </dd>
+    <dd>
+	    <p class="dl">Configure: Fleischmann Z21 and z21 via
+			<a href="roco/z21/index.shtml">Ethernet</a>.</p>
+   </dd>
 
     <dt class="im">
 			<a href="http://www.hornby.com/uk-en/">
@@ -303,7 +307,11 @@
 	    <p class="dl">Configure: Roco LocoMaus 2 (Roco Part number 10760), Roco MultiMaus (Roco Part number 10810), or Roco multiZENTRAL-Pro (Roco Part number 10830) via
 			<a href="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB or GenLi XPressNet interfaces, ZTC Controls ZTC640 interface, or an XPA and Hayes compatible modem</a>.</p>
 			<p>Please check the notes above for system specific restrictions on what JMRI can do.</p>
-		</dd>
+   </dd>
+    <dd>
+	    <p class="dl">Configure: Roco Z21 and z21 via
+			<a href="roco/z21/index.shtml">Ethernet</a>.</p>
+   </dd>
 
     <dt class="im"><a href="http://www.sprog-dcc.co.uk/"><img src="http://www.sprog-dcc.co.uk/images/SprogDCC300.jpg" alt="SPROG" height="41" width="150"></a></dt>
     <dt><a href="sprog/SPROG.shtml">SPROG</a></dt>

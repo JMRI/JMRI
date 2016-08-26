@@ -250,12 +250,16 @@ public class SimpleClockFrame extends JmriJFrame
         clockStartBox.addItem(Bundle.getMessage("MenuItemAnalogClock"));
         clockStartBox.addItem(Bundle.getMessage("MenuItemLcdClock"));
         clockStartBox.setSelectedIndex(startNone);
-        if (clock.getStartClockOption() == InstanceManager.getDefault(jmri.Timebase.class).NIXIE_CLOCK) {
+        if (clock.getStartClockOption() == Timebase.NIXIE_CLOCK) {
             clockStartBox.setSelectedIndex(startNixieClock);
-        } else if (clock.getStartClockOption() == InstanceManager.getDefault(jmri.Timebase.class).ANALOG_CLOCK) {
-            clockStartBox.setSelectedIndex(startAnalogClock);
-        } else if (clock.getStartClockOption() == InstanceManager.getDefault(jmri.Timebase.class).LCD_CLOCK) {
-            clockStartBox.setSelectedIndex(startLcdClock);
+        } else {
+            if (clock.getStartClockOption() == Timebase.ANALOG_CLOCK) {
+                clockStartBox.setSelectedIndex(startAnalogClock);
+            } else {
+                if (clock.getStartClockOption() == Timebase.LCD_CLOCK) {
+                    clockStartBox.setSelectedIndex(startLcdClock);
+                }
+            }
         }
         clockStartBox.setToolTipText(Bundle.getMessage("TipClockStartOption"));
         clockStartBox.addActionListener(new java.awt.event.ActionListener() {
@@ -545,13 +549,13 @@ public class SimpleClockFrame extends JmriJFrame
      * Method to handle start clock combo box change
      */
     private void setClockStartChanged() {
-        int sel = InstanceManager.getDefault(jmri.Timebase.class).NONE;
+        int sel = Timebase.NONE;
         if (clockStartBox.getSelectedIndex() == startNixieClock) {
-            sel = InstanceManager.getDefault(jmri.Timebase.class).NIXIE_CLOCK;
+            sel = Timebase.NIXIE_CLOCK;
         } else if (clockStartBox.getSelectedIndex() == startAnalogClock) {
-            sel = InstanceManager.getDefault(jmri.Timebase.class).ANALOG_CLOCK;
+            sel = Timebase.ANALOG_CLOCK;
         } else if (clockStartBox.getSelectedIndex() == startLcdClock) {
-            sel = InstanceManager.getDefault(jmri.Timebase.class).LCD_CLOCK;
+            sel = Timebase.LCD_CLOCK;
         }
         clock.setStartClockOption(sel);
         changed = true;

@@ -54,6 +54,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.NamedBean;
@@ -752,7 +753,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         helpBar.setVisible(false);
 
         // register the resulting panel for later configuration
-        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerUser(this);
+        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerUser(this);
+        }
         // confirm that panel hasn't already been loaded
         if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)) {
             log.warn("File contains a panel with the same name (" + name + ") as an existing panel");
@@ -6279,8 +6283,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 to2 = t.getSecondTurnout();
             }
             if (to != null) {
+                String uname = to.getUserName();
                 if ((to.getSystemName().equals(turnoutName.toUpperCase()))
-                        || ((to.getUserName() != null) && (to.getUserName().equals(turnoutName)))) {
+                        || ((uname != null) && (uname.equals(turnoutName)))) {
                     JOptionPane.showMessageDialog(openPane,
                             java.text.MessageFormat.format(rb.getString("Error4"),
                                     new Object[]{turnoutName}),
@@ -6289,8 +6294,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }
             if (to2 != null) {
+                String uname = to2.getUserName();
                 if ((to2.getSystemName().equals(turnoutName.toUpperCase()))
-                        || ((to2.getUserName() != null) && (to2.getUserName().equals(turnoutName)))) {
+                        || ((uname != null) && (uname.equals(turnoutName)))) {
                     JOptionPane.showMessageDialog(openPane,
                             java.text.MessageFormat.format(rb.getString("Error4"),
                                     new Object[]{turnoutName}),
@@ -6302,7 +6308,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (LayoutSlip slip : slipList) {
             Turnout to = slip.getTurnout();
             if (to != null) {
-                if (to.getSystemName().equals(turnoutName) || (to.getUserName() != null && to.getUserName().equals(turnoutName))) {
+                String uname = to.getUserName();
+                if (to.getSystemName().equals(turnoutName) || (uname != null && uname.equals(turnoutName))) {
                     JOptionPane.showMessageDialog(openPane,
                             java.text.MessageFormat.format(rb.getString("Error4"),
                                     new Object[]{turnoutName}),
@@ -6312,7 +6319,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
             to = slip.getTurnoutB();
             if (to != null) {
-                if (to.getSystemName().equals(turnoutName) || (to.getUserName() != null && to.getUserName().equals(turnoutName))) {
+                String uname = to.getUserName();
+                if (to.getSystemName().equals(turnoutName) || (uname != null && uname.equals(turnoutName))) {
                     JOptionPane.showMessageDialog(openPane,
                             java.text.MessageFormat.format(rb.getString("Error4"),
                                     new Object[]{turnoutName}),
@@ -7403,8 +7411,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         l.setMemory(textMemory.getText().trim());
         Memory xMemory = l.getMemory();
         if (xMemory != null) {
-            if ((xMemory.getUserName() == null)
-                    || (!(xMemory.getUserName().equals(textMemory.getText().trim())))) {
+            String uname = xMemory.getUserName();
+            if ((uname == null)
+                    || (!(uname.equals(textMemory.getText().trim())))) {
                 // put the system name in the memory field
                 textMemory.setText(xMemory.getSystemName());
             }
@@ -7427,8 +7436,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         l.setBlock(blockContents.getText().trim());
         jmri.Block xMemory = l.getBlock();
         if (xMemory != null) {
-            if ((xMemory.getUserName() == null)
-                    || (!(xMemory.getUserName().equals(blockContents.getText().trim())))) {
+            String uname = xMemory.getUserName();
+            if ((uname == null)
+                    || (!(uname.equals(blockContents.getText().trim())))) {
                 // put the system name in the memory field
                 blockContents.setText(xMemory.getSystemName());
             }
@@ -9608,8 +9618,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
                 for (LayoutTurnout t : turnoutList) {
                     if (t.getLinkedTurnoutName() != null) {
+                        String uname = nb.getUserName();
                         if (nb.getSystemName().equals(t.getLinkedTurnoutName())
-                                || (nb.getUserName() != null && nb.getUserName().equals(t.getLinkedTurnoutName()))) {
+                                || (uname != null && uname.equals(t.getLinkedTurnoutName()))) {
                             found = true;
                             message.append("<li>");
                             message.append(Bundle.getMessage("VetoLinkedTurnout", t.getTurnoutName()));

@@ -773,8 +773,9 @@ public class ActivateTrainFrame {
             if (free) {
                 String tName = t.getSystemName();
                 transitBoxList.add(t);
-                if ((t.getUserName() != null) && (!t.getUserName().equals("")) && (!t.getUserName().equals(tName))) {
-                    tName = tName + "(" + t.getUserName() + ")";
+                String uname = t.getUserName();
+                if ((uname != null) && (!uname.equals("")) && (!uname.equals(tName))) {
+                    tName = tName + "(" + uname + ")";
                 }
                 transitSelectBox.addItem(tName);
             }
