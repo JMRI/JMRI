@@ -503,7 +503,8 @@ public class CircuitBuilder {
                 }
                 // must have converted icons for paths
                 if (!iconsConverted(_currentBlock)) {
-                    JOptionPane.showMessageDialog(_editor, Bundle.getMessage("needConversion", _currentBlock.getDisplayName()),
+                    JOptionPane.showMessageDialog(_editor,
+                            Bundle.getMessage("needConversion", _currentBlock.getDisplayName(), Bundle.getMessage("ButtonEdit"), Bundle.getMessage("EditTrackSegment")),
                             Bundle.getMessage("noIcons"), JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     _editor.setSelectionGroup(makeSelectionGroup(_currentBlock, true));

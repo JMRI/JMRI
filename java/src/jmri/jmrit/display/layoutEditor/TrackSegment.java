@@ -567,7 +567,7 @@ public class TrackSegment {
         }
         // Initialize if needed
         if (editTrackSegmentFrame == null) {
-            editTrackSegmentFrame = new JmriJFrame(rb.getString("EditTrackSegment"), false, true);
+            editTrackSegmentFrame = new JmriJFrame(Bundle.getMessage("EditTrackSegment"), false, true); // key moved to DisplayBundle to be found by CircuitBuilder.java
             editTrackSegmentFrame.addHelpMenu("package.jmri.jmrit.display.EditTrackSegment", true);
             editTrackSegmentFrame.setLocation(50, 30);
             Container contentPane = editTrackSegmentFrame.getContentPane();

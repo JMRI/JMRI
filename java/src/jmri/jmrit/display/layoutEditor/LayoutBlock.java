@@ -1215,8 +1215,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     private void initializeColorCombo(JComboBox<String> colorCombo) {
         colorCombo.removeAllItems();
         for (int i = 0; i < numColors; i++) {
-            colorCombo.addItem(rb.getString(colorText[i])); // TODO use higher level Bundle, remove duplicates
-            // Colors are also in Operations-, Display, EntryExitBundles
+            colorCombo.addItem(Bundle.getMessage(colorText[i])); // use higher level Bundle, removed duplicates
+            // Colors are also used in Operations-, Display, EntryExitBundles
         }
     }
 
