@@ -462,15 +462,15 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
 
         // now print each row of data
         // create a base string the width of the column
-        String spaces = "";
+        StringBuilder spaces = new StringBuilder(""); // NOI18N
         for (int i = 0; i < columnSize; i++) {
-            spaces = spaces + " ";
+            spaces.append(" "); // NOI18N
         }
         for (int i = 0; i < this.getRowCount(); i++) {
             for (int j = 0; j < this.getColumnCount(); j++) {
                 //check for special, non string contents
                 if (this.getValueAt(i, j) == null) {
-                    columnStrings[j] = spaces;
+                    columnStrings[j] = spaces.toString();
                 } else if (this.getValueAt(i, j) instanceof JComboBox) {
                     columnStrings[j] = (String) ((JComboBox<String>) this.getValueAt(i, j)).getSelectedItem();
                 } else if (this.getValueAt(i, j) instanceof Boolean) {
@@ -487,18 +487,18 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
     }
 
     protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize) {
-        String columnString = "";
-        String lineString = "";
         // create a base string the width of the column
-        String spaces = "";
+        StringBuilder spaces = new StringBuilder(""); // NOI18N
         for (int i = 0; i < columnSize; i++) {
-            spaces = spaces + " ";
+            spaces.append(" "); // NOI18N
         }
         // loop through each column
         boolean complete = false;
         while (!complete) {
+            StringBuilder lineString = new StringBuilder(""); // NOI18N
             complete = true;
             for (int i = 0; i < columnStrings.length; i++) {
+                String columnString = ""; // NOI18N
                 // if the column string is too wide cut it at word boundary (valid delimiters are space, - and _)
                 // use the intial part of the text,pad it with spaces and place the remainder back in the array
                 // for further processing on next line
@@ -527,17 +527,15 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                     columnString = columnStrings[i] + spaces.substring(columnStrings[i].length());
                     columnStrings[i] = "";
                 }
-                lineString = lineString + columnString + " ";
+                lineString.append(columnString).append(" "); // NOI18N
             }
             try {
-                w.write(lineString);
+                w.write(lineString.toString());
                 //write vertical dividing lines
                 for (int i = 0; i < w.getCharactersPerLine(); i = i + columnSize + 1) {
                     w.write(w.getCurrentLineNumber(), i, w.getCurrentLineNumber() + 1, i);
                 }
-                lineString = "\n";
-                w.write(lineString);
-                lineString = "";
+                w.write("\n"); // NOI18N
             } catch (IOException e) {
                 log.warn("error during printing: " + e);
             }
