@@ -16,9 +16,11 @@ import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.EventObject;
 import java.util.List;
+import java.util.Objects;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -36,16 +38,19 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowSorter;
 import javax.swing.SwingWorker;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandleManager;
 import jmri.UserPreferencesManager;
+import jmri.swing.JTablePersistenceManager;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.swing.XTableColumnModel;
@@ -347,7 +352,8 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
     /**
      * Configure a table to have our standard rows and columns. This is
      * optional, in that other table formats can use this table model. But we
-     * put it here to help keep it consistent.
+     * put it here to help keep it consistent. This also persists the table user
+     * interface state.
      *
      * @param table {@link JTable} to configure
      */
@@ -371,7 +377,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         MouseListener popupListener = new PopupListener();
         table.addMouseListener(popupListener);
 
-        loadTableColumnDetails(table);
+        this.persistTable(table);
 
     }
 
@@ -538,6 +544,48 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         }
     }
 
+    /**
+     * Create and configure a new table using the given model and row sorter.
+     *
+     * @param name   the name of the table
+     * @param model  the data model for the table
+     * @param sorter the row sorter for the table; if null, the table will not
+     *               be sortable
+     * @return the table
+     * @throws NullPointerException if name or model are null
+     */
+    public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @Nullable RowSorter<? extends TableModel> sorter) {
+        Objects.requireNonNull(name, "the table name must be nonnull");
+        Objects.requireNonNull(model, "the table model must be nonnull");
+        JTable table = new JTable(model) {
+            @Override
+            public boolean editCellAt(int row, int column, EventObject e) {
+                boolean res = super.editCellAt(row, column, e);
+                Component c = this.getEditorComponent();
+                if (c instanceof JTextField) {
+                    ((JTextField) c).selectAll();
+                }
+                return res;
+            }
+        };
+        table.setName(name);
+        table.setRowSorter(sorter);
+        table.getTableHeader().setReorderingAllowed(true);
+        table.setColumnModel(new XTableColumnModel());
+        table.createDefaultColumnsFromModel();
+
+        addMouseListenerToHeader(table);
+        return table;
+    }
+
+    /**
+     * Create a new table.
+     *
+     * @param sorter the sorter and model for the table
+     * @return a new table
+     * @deprecated since 4.5.4
+     */
+    @Deprecated
     public JTable makeJTable(TableSorter sorter) {
         JTable table = new JTable(sorter) {
             @Override
@@ -564,13 +612,13 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
 
     protected void showPopup(MouseEvent e) {
         JTable source = (JTable) e.getSource();
-        TableSorter tmodel = ((TableSorter) source.getModel());
+        TableModel tmodel = source.getModel();
         int row = source.rowAtPoint(e.getPoint());
         int column = source.columnAtPoint(e.getPoint());
         if (!source.isRowSelected(row)) {
             source.changeSelection(row, column, false, false);
         }
-        final int rowindex = tmodel.modelIndex(row);
+        final int rowindex = source.convertRowIndexToModel(row);
 
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem menuItem = new JMenuItem(Bundle.getMessage("CopyName"));
@@ -763,79 +811,85 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         table.getTableHeader().addMouseListener(mouseHeaderListener);
     }
 
+    /**
+     * Rendered obsolete by changes to
+     * {@link #loadTableColumnDetails(javax.swing.JTable)}.
+     *
+     * @param table the table to save
+     * @deprecated since 4.5.4 without direct replacement
+     */
+    @Deprecated
     public void saveTableColumnDetails(JTable table) {
-        saveTableColumnDetails(table, getMasterClassName());
+        // do nothing 
     }
 
+    /**
+     * Rendered obsolete by changes to
+     * {@link #loadTableColumnDetails(javax.swing.JTable, java.lang.String)}.
+     *
+     * @param table        the table to save
+     * @param beantableref the name of the table
+     * @deprecated since 4.5.4 without direct replacement
+     */
+    @Deprecated
     public void saveTableColumnDetails(JTable table, String beantableref) {
-        UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
-        XTableColumnModel tcm = (XTableColumnModel) table.getColumnModel();
-        TableSorter tmodel = ((TableSorter) table.getModel());
-        Enumeration<TableColumn> en = tcm.getColumns(false);
-        while (en.hasMoreElements()) {
-            TableColumn tc = en.nextElement();
+        // do nothing
+    }
 
-            try {
-                String columnName = (String) tc.getHeaderValue();
-                //skip empty or blank columns
-                if (columnName != null && !columnName.equals("")) {
-                    int index = tcm.getColumnIndex(tc.getIdentifier(), false);
-                    p.setTableColumnPreferences(beantableref, columnName, index, tc.getPreferredWidth(), TableSorter.getSortOrder(tmodel.getSortingStatus(tc.getModelIndex())), !tcm.isColumnVisible(tc));
-                }
-            } catch (Exception e) {
-                log.warn("unable to store settings for table column {}", tc.getHeaderValue(), e);
-            }
+    /**
+     * Persist the state of the table after first setting the table to the last
+     * persisted state.
+     *
+     * @param table the table to persist
+     * @throws NullPointerException if the name of the table is null
+     */
+    public void persistTable(@Nonnull JTable table) throws NullPointerException {
+        JTablePersistenceManager manager = InstanceManager.getOptionalDefault(JTablePersistenceManager.class);
+        if (manager != null) {
+            manager.resetState(table); // throws NPE if table name is null
+            manager.persist(table);
         }
     }
 
+    /**
+     * Stop persisting the state of the table.
+     *
+     * @param table the table to stop persisting
+     * @throws NullPointerException if the name of the table is null
+     */
+    public void stopPersistingTable(@Nonnull JTable table) throws NullPointerException {
+        JTablePersistenceManager manager = InstanceManager.getOptionalDefault(JTablePersistenceManager.class);
+        if (manager != null) {
+            manager.stopPersisting(table); // throws NPE if table name is null
+        }
+    }
+
+    /**
+     * Load table column settings from persistent storage.
+     *
+     * @param table the table
+     * @deprecated since 4.5.4; use
+     * {@link #persistTableState(javax.swing.JTable)} instead.
+     */
+    @Deprecated
     public void loadTableColumnDetails(JTable table) {
         loadTableColumnDetails(table, getMasterClassName());
     }
 
+    /**
+     * Load table column settings from persistent storage.
+     *
+     * @param table        the table
+     * @param beantableref name of the table
+     * @deprecated since 4.5.4; use
+     * {@link #persistTableState(javax.swing.JTable)} instead.
+     */
+    @Deprecated
     public void loadTableColumnDetails(JTable table, String beantableref) {
-        UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
-        //Set all the sort and width details of the table first.
-
-        //Reorder the columns first
-        for (int i = 0; i < table.getColumnCount(); i++) {
-            String columnName = p.getTableColumnAtNum(beantableref, i);
-            if (columnName != null) {
-                int originalLocation = -1;
-                for (int j = 0; j < table.getColumnCount(); j++) {
-                    if (table.getColumnName(j).equals(columnName)) {
-                        originalLocation = j;
-                        break;
-                    }
-                }
-                if (originalLocation != -1 && (originalLocation != i)) {
-                    table.moveColumn(originalLocation, i);
-                }
-            }
+        if (table.getName() == null) {
+            table.setName(beantableref);
         }
-
-        //Set column widths, sort order and hidden status
-        XTableColumnModel tcm = (XTableColumnModel) table.getColumnModel();
-        Enumeration<TableColumn> en = tcm.getColumns(false);
-        //jtable.setDefaultEditor(Object.class, new RosterCellEditor());
-        TableSorter tmodel = ((TableSorter) table.getModel());
-        while (en.hasMoreElements()) {
-            TableColumn tc = en.nextElement();
-            String columnName = (String) tc.getHeaderValue();
-            if (p.getTableColumnWidth(beantableref, columnName) != -1) {
-                int width = p.getTableColumnWidth(beantableref, columnName);
-                tc.setPreferredWidth(width);
-
-                int sort = TableSorter.getSortStatus(p.getTableColumnSort(beantableref, columnName));
-                tmodel.setSortingStatus(tc.getModelIndex(), sort);
-
-                if (p.getTableColumnHidden(beantableref, columnName)) {
-                    tcm.setColumnVisible(tc, false);
-                } else {
-                    tcm.setColumnVisible(tc, true);
-                }
-
-            }
-        }
+        this.persistTable(table);
     }
 
     static class headerActionListener implements ActionListener {
