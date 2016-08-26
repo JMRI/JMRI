@@ -45,8 +45,6 @@ import javax.swing.WindowConstants;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.JTextComponent;
 import jmri.ConfigureManager;
-import jmri.IdTagManager;
-import jmri.RailComManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.JmriPlugin;
@@ -75,8 +73,6 @@ import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
-import jmri.managers.DefaultIdTagManager;
-import jmri.managers.DefaultRailComManager;
 import jmri.managers.DefaultShutDownManager;
 import jmri.managers.JmriUserPreferencesManager;
 import jmri.plaf.macosx.Application;
@@ -223,11 +219,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // Install a user preferences manager
         InstanceManager.store(JmriUserPreferencesManager.getDefault(), UserPreferencesManager.class);
         InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
-        // Install an IdTag manager
-        InstanceManager.store(new DefaultIdTagManager(), IdTagManager.class);
-
-        // Install a RailCom manager
-        InstanceManager.store(new DefaultRailComManager(), RailComManager.class);
 
         // install preference manager
         InstanceManager.store(new TabbedPreferences(), TabbedPreferences.class);
