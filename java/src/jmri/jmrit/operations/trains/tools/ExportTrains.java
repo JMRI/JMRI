@@ -1,4 +1,3 @@
-// ExportTrainss.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.io.BufferedWriter;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * summary of the train's route and work is provided.
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2011
- * @version $Revision: 29118 $
  *
  */
 public class ExportTrains extends XmlFile {
@@ -67,9 +65,7 @@ public class ExportTrains extends XmlFile {
     }
 
     public void writeFile(String name) {
-        if (log.isDebugEnabled()) {
-            log.debug("writeFile {}", name);
-        }
+        log.debug("writeFile {}", name);
         // This is taken in large part from "Java and XML" page 368
         File file = findFile(name);
         if (file == null) {
@@ -161,13 +157,13 @@ public class ExportTrains extends XmlFile {
                 continue;
 
             if (train.isBuilt() && train.getRoute() != null) {
-                StringBuffer line = new StringBuffer (ESC + train.getName() + ESC + del + Bundle.getMessage("Route"));
+                StringBuffer line = new StringBuffer(ESC + train.getName() + ESC + del + Bundle.getMessage("Route"));
                 for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
                     line.append(del + ESC + rl.getName() + ESC);
                 }
                 fileOut.println(line);
 
-                line = new StringBuffer (ESC + train.getName() + ESC + del + Bundle.getMessage("csvArrivalTime"));
+                line = new StringBuffer(ESC + train.getName() + ESC + del + Bundle.getMessage("csvArrivalTime"));
                 for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
                     line.append(del + ESC + train.getExpectedArrivalTime(rl) + ESC);
                 }

@@ -1,4 +1,3 @@
-// SchedulesByLoadFrame.java
 package jmri.jmrit.operations.locations.schedules;
 
 import java.awt.Dimension;
@@ -31,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * Frame to display spurs with schedules and their loads
  *
  * @author Dan Boudreau Copyright (C) 2012, 2015
- * @version $Revision: 17977 $
  */
 public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -132,8 +130,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
     private void updateLoadComboBox() {
         if (allTypesCheckBox.isSelected()) {
             CarLoads.instance().updateComboBox(loadsComboBox);
-        }
-        else if (typesComboBox.getSelectedItem() != null) {
+        } else if (typesComboBox.getSelectedItem() != null) {
             String type = (String) typesComboBox.getSelectedItem();
             CarLoads.instance().updateComboBox(type, loadsComboBox);
         }
@@ -168,12 +165,12 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                 sch.addPropertyChangeListener(this);
                 // determine if schedule is requesting car type and load
                 for (ScheduleItem si : sch.getItemsBySequenceList()) {
-                    if ((allTypesCheckBox.isSelected() || si.getTypeName().equals(type))
-                            && (allLoadsCheckBox.isSelected()
-                                    || si.getReceiveLoadName().equals(load)
-                                    || si.getReceiveLoadName().equals(ScheduleItem.NONE)
-                                    || si.getShipLoadName().equals(load)
-                                    || si.getShipLoadName().equals(ScheduleItem.NONE))) {
+                    if ((allTypesCheckBox.isSelected() || si.getTypeName().equals(type)) &&
+                            (allLoadsCheckBox.isSelected() ||
+                                    si.getReceiveLoadName().equals(load) ||
+                                    si.getReceiveLoadName().equals(ScheduleItem.NONE) ||
+                                    si.getShipLoadName().equals(load) ||
+                                    si.getShipLoadName().equals(ScheduleItem.NONE))) {
                         // is the schedule item valid?
                         String status = spur.checkScheduleValid();
                         if (!status.equals(Track.SCHEDULE_OKAY)) {
@@ -183,9 +180,13 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                                 new JLabel(spur.getName() + " (" + spur.getScheduleName() + ")"), 1, x);
                         // create string Receive(type, delivery, road, load)
                         String s = si.getTypeName();
-                        if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE)
-                                && TrainScheduleManager.instance().getScheduleById(si.getSetoutTrainScheduleId()) != null) {
-                            s = s  + ", " + TrainScheduleManager.instance().getScheduleById(si.getSetoutTrainScheduleId()).getName();
+                        if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) &&
+                                TrainScheduleManager.instance()
+                                        .getScheduleById(si.getSetoutTrainScheduleId()) != null) {
+                            s = s +
+                                    ", " +
+                                    TrainScheduleManager.instance().getScheduleById(si.getSetoutTrainScheduleId())
+                                            .getName();
                         } else {
                             s = s + ",";
                         }
@@ -198,23 +199,32 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Receive") + " (" + s + ")"), 2, x);
                         // create string Ship(load, pickup)
                         s = "";
-                        if (!si.getPickupTrainScheduleId().equals(ScheduleItem.NONE)
-                                && TrainScheduleManager.instance().getScheduleById(si.getPickupTrainScheduleId()) != null) {
-                            s = ", "+ TrainScheduleManager.instance().getScheduleById(si.getPickupTrainScheduleId()).getName();
+                        if (!si.getPickupTrainScheduleId().equals(ScheduleItem.NONE) &&
+                                TrainScheduleManager.instance()
+                                        .getScheduleById(si.getPickupTrainScheduleId()) != null) {
+                            s = ", " +
+                                    TrainScheduleManager.instance().getScheduleById(si.getPickupTrainScheduleId())
+                                            .getName();
                         }
                         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Ship") +
-                                " (" + si.getShipLoadName() + s + ")"), 3, x++);
+                                " (" +
+                                si.getShipLoadName() +
+                                s +
+                                ")"), 3, x++);
                         // now the destination and track
                         if (si.getDestination() != null) {
-                            addItemLeft(locationsPanel, new JLabel(si.getDestinationName() + " ("
-                                    + si.getDestinationTrackName() + ")"), 4, x - 1);
+                            addItemLeft(locationsPanel,
+                                    new JLabel(si.getDestinationName() + " (" + si.getDestinationTrackName() + ")"), 4,
+                                    x - 1);
                         }
                         // report if spur can't service the selected load
                         if (!allLoadsCheckBox.isSelected() &&
                                 si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
                                 !spur.acceptsLoad(load, type)) {
-                            addItemLeft(locationsPanel, new JLabel(MessageFormat.format(Bundle.getMessage("spurNotTypeLoad"),
-                                    new Object[]{spur.getName(), type, load})), 2, x++);
+                            addItemLeft(locationsPanel,
+                                    new JLabel(MessageFormat.format(Bundle.getMessage("spurNotTypeLoad"),
+                                            new Object[]{spur.getName(), type, load})),
+                                    2, x++);
                         }
                     }
                 }
@@ -243,8 +253,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (log.isDebugEnabled())
-            log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
+        log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
 
         if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)) {
             CarTypes.instance().updateComboBox(typesComboBox);
@@ -252,8 +261,9 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         if (e.getSource().getClass().equals(CarLoads.class)) {
             CarLoads.instance().updateComboBox((String) typesComboBox.getSelectedItem(), loadsComboBox);
         }
-        if (e.getSource().getClass().equals(Schedule.class) || e.getSource().getClass().equals(LocationManager.class)
-                || e.getPropertyName().equals(Track.LOADS_CHANGED_PROPERTY)) {
+        if (e.getSource().getClass().equals(Schedule.class) ||
+                e.getSource().getClass().equals(LocationManager.class) ||
+                e.getPropertyName().equals(Track.LOADS_CHANGED_PROPERTY)) {
             updateLocations();
         }
     }

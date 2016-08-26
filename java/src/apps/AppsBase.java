@@ -273,7 +273,12 @@ public abstract class AppsBase {
         }
         preferenceFileExists = true;
         try {
-            configOK = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).load(file);
+            ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+            if (cm != null) {
+                configOK = cm.load(file);
+            } else {
+                configOK = false;
+            }
             log.debug("end load config file {}, OK={}", file.getName(), configOK);
         } catch (JmriException e) {
             configOK = false;
@@ -284,8 +289,7 @@ public abstract class AppsBase {
             configDeferredLoadOK = true;
         } else // To avoid possible locks, deferred load should be
         // performed on the Swing thread
-        {
-            if (SwingUtilities.isEventDispatchThread()) {
+         if (SwingUtilities.isEventDispatchThread()) {
                 configDeferredLoadOK = doDeferredLoad(file);
             } else {
                 try {
@@ -298,13 +302,15 @@ public abstract class AppsBase {
                     log.error("Exception creating system console frame: " + ex);
                 }
             }
-        }
         if (sharedConfig == null && configOK == true && configDeferredLoadOK == true) {
             log.info("Migrating preferences to new format...");
             // migrate preferences
             InstanceManager.tabbedPreferencesInstance().init();
             InstanceManager.tabbedPreferencesInstance().saveContents();
-            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).storePrefs();
+            ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+            if (cm != null) {
+                cm.storePrefs();
+            }
             // notify user of change
             log.info("Preferences have been migrated to new format.");
             log.info("New preferences format will be used after JMRI is restarted.");
@@ -314,18 +320,20 @@ public abstract class AppsBase {
     //abstract protected void addToActionModel();
     private boolean doDeferredLoad(File file) {
         boolean result;
-        if (log.isDebugEnabled()) {
-            log.debug("start deferred load from config file " + file.getName());
-        }
+        log.debug("start deferred load from config file {}", file.getName());
         try {
-            result = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).loadDeferred(file);
+            ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+            if (cm != null) {
+                result = cm.loadDeferred(file);
+            } else {
+                log.error("Failed to getOptionalDefault config mgr");
+                result = false;
+            }
         } catch (JmriException e) {
             log.error("Unhandled problem loading deferred configuration: " + e);
             result = false;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("end deferred load from config file " + file.getName() + ", OK=" + result);
-        }
+        log.debug("end deferred load from config file {}, OK={}", file.getName(), result);
         return result;
     }
 
@@ -345,9 +353,7 @@ public abstract class AppsBase {
         // `kill -s 9 pid`
         jmri.util.RuntimeUtil.addShutdownHook(new Thread(new Runnable() {
             public void run() {
-                if (log.isDebugEnabled()) {
-                    log.debug("Shutdown hook called");
-                }
+                log.debug("Shutdown hook called");
                 handleQuit();
             }
         }));

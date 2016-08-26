@@ -654,7 +654,6 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
 
     @Override
     public void propertyChange(PropertyChangeEvent e) {
-        // if (Control.showProperty && log.isDebugEnabled())
         log.debug("Property change {} for: {} old: {} new: {}", e.getPropertyName(), e.getSource().toString(), e
                 .getOldValue(), e.getNewValue()); // NOI18N
     }

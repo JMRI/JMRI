@@ -69,8 +69,9 @@ public class JsonConsistServer {
     public JsonConsistServer(JmriConnection connection) {
         this.connection = connection;
         this.mapper = new ObjectMapper();
-        if (InstanceManager.getOptionalDefault(jmri.ConsistManager.class) != null) {
-            InstanceManager.getOptionalDefault(jmri.ConsistManager.class).requestUpdateFromLayout();
+        ConsistManager cm = InstanceManager.getOptionalDefault(jmri.ConsistManager.class);
+        if (cm != null) {
+            cm.requestUpdateFromLayout();
             try {
                 (new ConsistFile()).readFile();
             } catch (IOException e) {

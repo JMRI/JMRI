@@ -38,6 +38,7 @@ public class JsonLightHttpServiceTest extends TestCase {
         try {
             result = service.doGet(JsonLight.LIGHT, "IL1", Locale.ENGLISH);
             Assert.assertNotNull(result);
+            Assert.assertEquals(JsonLight.LIGHT, result.path(JSON.TYPE).asText());
             Assert.assertEquals("IL1", result.path(JSON.DATA).path(JSON.NAME).asText());
             Assert.assertEquals(JSON.OFF, result.path(JSON.DATA).path(JSON.STATE).asInt());
             light1.setState(Light.ON);

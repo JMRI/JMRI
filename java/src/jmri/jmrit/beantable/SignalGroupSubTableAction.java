@@ -134,8 +134,12 @@ public class SignalGroupSubTableAction {
 
     void setSignalStateBox(int mode, JComboBox<String> box) {
         SignalHead sig = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(curSignal);
-        String result = jmri.util.StringUtil.getNameFromState(mode, sig.getValidStates(), sig.getValidStateNames());
-        box.setSelectedItem(result);
+        if (sig != null) {
+            String result = jmri.util.StringUtil.getNameFromState(mode, sig.getValidStates(), sig.getValidStateNames());
+            box.setSelectedItem(result);
+        } else {
+            log.error("Failed to get signal {}", curSignal);
+        }
     }
 
     int turnoutModeFromBox(JComboBox<String> box) {
@@ -215,8 +219,11 @@ public class SignalGroupSubTableAction {
         iter = systemNameList.iterator();
         while (iter.hasNext()) {
             String systemName = iter.next();
-            String userName = sm.getBySystemName(systemName).getUserName();
-            _sensorList.add(new SignalGroupSensor(systemName, userName));
+            Sensor sen = sm.getBySystemName(systemName);
+            if (sen != null) {
+                String userName = sen.getUserName();
+                _sensorList.add(new SignalGroupSensor(systemName, userName));
+            }
         }
         initializeIncludedList();
 
@@ -249,9 +256,13 @@ public class SignalGroupSubTableAction {
             contentPane.add(p);
             if (curSignalHead.getClass().getName().contains("SingleTurnoutSignalHead")) {
                 jmri.implementation.SingleTurnoutSignalHead Signal = (jmri.implementation.SingleTurnoutSignalHead) InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(curSignal);
-                if ((g.getSignalHeadOnState(curSignalHead) == 0x00) && (g.getSignalHeadOffState(curSignalHead) == 0x00)) {
-                    g.setSignalHeadOnState(curSignalHead, Signal.getOnAppearance());
-                    g.setSignalHeadOffState(curSignalHead, Signal.getOffAppearance());
+                if (Signal != null) {
+                    if ((g.getSignalHeadOnState(curSignalHead) == 0x00) && (g.getSignalHeadOffState(curSignalHead) == 0x00)) {
+                        g.setSignalHeadOnState(curSignalHead, Signal.getOnAppearance());
+                        g.setSignalHeadOffState(curSignalHead, Signal.getOffAppearance());
+                    }
+                } else {
+                    log.error("Failed to get signal {}", curSignal);
                 }
             }
 

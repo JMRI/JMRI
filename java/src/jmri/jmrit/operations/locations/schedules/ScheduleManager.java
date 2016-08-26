@@ -1,4 +1,3 @@
-// ScheduleManager.java
 package jmri.jmrit.operations.locations.schedules;
 
 import java.util.ArrayList;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2013
- * @version $Revision$
  */
 public class ScheduleManager implements java.beans.PropertyChangeListener {
 
@@ -41,9 +39,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 
     public static synchronized ScheduleManager instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("ScheduleManager creating instance");
-            }
+            log.debug("ScheduleManager creating instance");
             // create and load
             _instance = new ScheduleManager();
         }
@@ -192,8 +188,8 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
         }
         return out;
     }
-    
-    public Schedule copySchedule (Schedule schedule, String newScheduleName) {
+
+    public Schedule copySchedule(Schedule schedule, String newScheduleName) {
         Schedule newSchedule = newSchedule(newScheduleName);
         for (ScheduleItem si : schedule.getItemsBySequenceList()) {
             ScheduleItem newSi = newSchedule.addItem(si.getTypeName());
@@ -294,7 +290,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
             }
         }
     }
-    
+
     public void replaceTrack(Track oldTrack, Track newTrack) {
         for (Schedule sch : getSchedulesByIdList()) {
             for (ScheduleItem si : sch.getItemsBySequenceList()) {
