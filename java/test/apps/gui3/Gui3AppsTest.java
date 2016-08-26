@@ -44,7 +44,8 @@ public class Gui3AppsTest extends TestCase {
         TestSuite suite = new TestSuite("Gui3AppsTest");  // no tests in this class itself
         // all tests from other classes
         //suite.addTest(jmri.JmriTest.suite());
-
+        suite.addTest(BundleTest.suite());
+        suite.addTest(apps.gui3.dp3.PackageTest.suite());
         return suite;
     }
 

@@ -58,6 +58,11 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
     }
 
     protected void setInstance() {
-        adapter = SimDriverAdapter.instance();
+        if(adapter == null ) {
+           adapter = new SimDriverAdapter();
+           adapter.configure(); // make sure the traffic controller 
+                                // loads so that node details can be 
+                                // saved.
+        }
     }
 }
