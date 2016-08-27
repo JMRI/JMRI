@@ -65,7 +65,7 @@ public class AudioTablePanel extends JPanel {
 
         super();
         listenerDataModel = listenerModel;
-        TableRowSorter sorter = new TableRowSorter<>(listenerDataModel);
+        TableRowSorter<AudioTableDataModel> sorter = new TableRowSorter<>(listenerDataModel);
         sorter.setComparator(AudioTableDataModel.SYSNAMECOL, new SystemNameComparator());
         RowSorterUtil.setSortOrder(sorter, AudioTableDataModel.SYSNAMECOL, SortOrder.ASCENDING);
         listenerDataTable = listenerDataModel.makeJTable(listenerDataModel.getMasterClassName(), listenerDataModel, sorter);

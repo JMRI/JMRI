@@ -24,7 +24,6 @@ import javax.swing.event.TableColumnModelEvent;
 import javax.swing.event.TableColumnModelListener;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import jmri.UserPreferencesManager;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
@@ -45,35 +44,39 @@ import org.slf4j.LoggerFactory;
  */
 public class JmriJTablePersistenceManager extends AbstractPreferencesManager implements JTablePersistenceManager, PropertyChangeListener {
 
-    private final HashMap<String, JTableListener> listeners = new HashMap<>();
-    private final HashMap<String, HashMap<String, TableColumnPreferences>> columns = new HashMap<>();
-    private final HashMap<String, List<SortKey>> sortKeys = new HashMap<>();
+    protected final HashMap<String, JTableListener> listeners = new HashMap<>();
+    protected final HashMap<String, HashMap<String, TableColumnPreferences>> columns = new HashMap<>();
+    protected final HashMap<String, List<SortKey>> sortKeys = new HashMap<>();
     private boolean paused = false;
     private boolean dirty = false;
-    UserPreferencesManager manager = null;
     public final String PAUSED = "paused";
     public final static String TABLES_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/table-details-4-3-5.xsd"; // NOI18N
     public final static String TABLES_ELEMENT = "tableDetails"; // NOI18N
-    private final static String SORT_ORDER = "sortOrder"; // NOI18N
+    public final static String SORT_ORDER = "sortOrder"; // NOI18N
     private final static Logger log = LoggerFactory.getLogger(JmriJTablePersistenceManager.class);
 
+    /**
+     * {@inheritDoc} Persisting a table that is already persisted may cause the
+     * persistence state to be updated, but will not cause additional listeners
+     * to be added to the table.
+     */
     @Override
-    public void persist(@Nonnull JTable table) throws IllegalArgumentException {
-        if (table.getName() == null) {
-            throw new IllegalArgumentException("Table name must be nonnull");
-        }
+    public void persist(@Nonnull JTable table) throws IllegalArgumentException, NullPointerException {
+        Objects.requireNonNull(table.getName(), "Table name must be nonnull");
         if (this.listeners.containsKey(table.getName()) && !this.listeners.get(table.getName()).getTable().equals(table)) {
             throw new IllegalArgumentException("Table name must be unique");
         }
-        JTableListener listener = new JTableListener(table, this);
-        this.listeners.put(table.getName(), listener);
-        if (!Arrays.asList(table.getPropertyChangeListeners()).contains(this)) {
-            table.addPropertyChangeListener(this);
-            table.addPropertyChangeListener(listener);
-            table.getColumnModel().addColumnModelListener(listener);
-            RowSorter sorter = table.getRowSorter();
-            if (sorter != null) {
-                sorter.addRowSorterListener(listener);
+        if (!this.listeners.containsKey(table.getName())) {
+            JTableListener listener = new JTableListener(table, this);
+            this.listeners.put(table.getName(), listener);
+            if (!Arrays.asList(table.getPropertyChangeListeners()).contains(this)) {
+                table.addPropertyChangeListener(this);
+                table.addPropertyChangeListener(listener);
+                table.getColumnModel().addColumnModelListener(listener);
+                RowSorter sorter = table.getRowSorter();
+                if (sorter != null) {
+                    sorter.addRowSorterListener(listener);
+                }
             }
         }
         if (this.columns.get(table.getName()) == null) {
