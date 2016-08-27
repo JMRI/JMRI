@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import apps.tests.Log4JFixture;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashSet;
 import java.util.Set;
@@ -338,14 +337,23 @@ public class JmriJTablePersistenceManagerTest {
      * Test of propertyChange method, of class JmriJTablePersistenceManager.
      */
     @Test
-    @Ignore
     public void testPropertyChange() {
-        System.out.println("propertyChange");
-        PropertyChangeEvent evt = null;
-        JmriJTablePersistenceManager instance = new JmriJTablePersistenceManager();
-        instance.propertyChange(evt);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
+        JTable table = new JTable();
+        String name1 = "test name";
+        String name2 = "name test";
+        table.setName(name1);
+        try {
+            instance.persist(table);
+            // passes
+        } catch (NullPointerException ex) {
+            Assert.fail("threw unexpected NPE");
+        }
+        Assert.assertNotNull(instance.getListener(name1));
+        Assert.assertNull(instance.getListener(name2));
+        table.setName(name2);
+        Assert.assertNull(instance.getListener(name1));
+        Assert.assertNotNull(instance.getListener(name2));
     }
 
     private final static class JmriJTablePersistenceManagerSpy extends JmriJTablePersistenceManager {
@@ -354,6 +362,10 @@ public class JmriJTablePersistenceManagerTest {
         JTableListener getListener(JTable table) {
             return this.listeners.get(table.getName());
         }
-
+        
+        //default access
+        JTableListener getListener(String name) {
+            return this.listeners.get(name);
+        }
     }
 }
