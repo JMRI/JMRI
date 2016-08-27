@@ -64,7 +64,11 @@ public class ReporterTableAction extends AbstractTableAction {
 
             public String getValue(String name) {
                 Object value;
-                return (value = reportManager.getBySystemName(name).getCurrentReport()) == null ? "" : value.toString();
+                Reporter r = reportManager.getBySystemName(name);
+                if (r == null) {
+                    return "";
+                }
+                return (value = r.getCurrentReport()) == null ? "" : value.toString();
             }
 
             public Manager getManager() {

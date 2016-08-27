@@ -64,9 +64,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
         for (int i = 0; i < cnt; i++) {
             QsiListener client = v.elementAt(i);
             if (notMe != client) {
-                if (log.isDebugEnabled()) {
-                    log.debug("notify client: " + client);
-                }
+                log.debug("notify client: {}", client);
                 try {
                     client.message(m);
                 } catch (Exception e) {
@@ -101,9 +99,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
                // disable flow control
                ((SerialDriverAdapter)controller).setHandshake(0);
            }
-           if (log.isDebugEnabled()) {
-               log.debug("Setting qsiState " + s);
-           }
+           log.debug("Setting qsiState {}", s);
        }
     }
 
@@ -130,9 +126,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
         int cnt = v.size();
         for (int i = 0; i < cnt; i++) {
             QsiListener client = v.elementAt(i);
-            if (log.isDebugEnabled()) {
-                log.debug("notify client: " + client);
-            }
+            log.debug("notify client: {}", client);
             try {
                 // skip forwarding to the last sender for now, we'll get them later
                 if (lastSender != client) {
@@ -155,9 +149,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
      * Forward a preformatted message to the actual interface.
      */
     public void sendQsiMessage(QsiMessage m, QsiListener reply) {
-        if (log.isDebugEnabled()) {
-            log.debug("sendQsiMessage message: [" + m + "]");
-        }
+        log.debug("sendQsiMessage message: [{}]", m);
         // remember who sent this
         lastSender = reply;
 
@@ -198,7 +190,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
         try {
             if (ostream != null) {
                 if (log.isDebugEnabled()) {
-                    log.debug("write message: " + jmri.util.StringUtil.hexStringFromBytes(msg));
+                    log.debug("write message: {}", jmri.util.StringUtil.hexStringFromBytes(msg));
                 }
                 ostream.write(msg);
             } else {
@@ -281,7 +273,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
         for (i = 0; i < QsiReply.MAXSIZE; i++) {
             byte char1 = istream.readByte();
             if (log.isDebugEnabled()) {
-                log.debug("   Rcv char: " + jmri.util.StringUtil.twoHexFromInt(char1));
+                log.debug("   Rcv char: {}", jmri.util.StringUtil.twoHexFromInt(char1));
             }
             msg.setElement(i, char1);
             if (endReply(msg)) {
@@ -290,9 +282,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
         }
 
         // message is complete, dispatch it !!
-        if (log.isDebugEnabled()) {
-            log.debug("dispatch reply of length " + i);
-        }
+        log.debug("dispatch reply of length {}",i);
         {
             final QsiReply thisMsg = msg;
             final QsiTrafficController thisTC = this;

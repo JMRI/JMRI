@@ -1,4 +1,3 @@
-// TrainsTableModel.java
 package jmri.jmrit.operations.trains;
 
 import java.awt.Color;
@@ -32,7 +31,6 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2012
- * @version $Revision$
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -258,7 +256,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     @Override
     public synchronized Object getValueAt(int row, int col) {
-        if (row >= sysList.size()) {
+        if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
         Train train = sysList.get(row);
@@ -319,8 +317,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 if (train.getBuildFailed()) {
                     return Bundle.getMessage("Report");
                 }
-                if (train.getCurrentLocation() == train.getTrainTerminatesRouteLocation()
-                        && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
+                if (train.getCurrentLocation() == train.getTrainTerminatesRouteLocation() &&
+                        trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
                     return Bundle.getMessage("Terminate");
                 }
                 return trainManager.getTrainsFrameTrainAction();
@@ -359,7 +357,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     public synchronized Color getRowColor(int row) {
         Train train = sysList.get(row);
-//		log.debug("Row: {} train: {} color: {}", row, train.getName(), train.getTableRowColorName());
+        //		log.debug("Row: {} train: {} color: {}", row, train.getName(), train.getTableRowColorName());
         return train.getTableRowColor();
     }
 
@@ -442,9 +440,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         if (train.getBuildFailed()) {
             train.printBuildReport();
         } else if (trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.RESET)) {
-            if (log.isDebugEnabled()) {
-                log.debug("Reset train (" + train.getName() + ")");
-            }
+            log.debug("Reset train ({})", train.getName());
             // check to see if departure track was reused
             if (checkDepartureTrack(train)) {
                 log.debug("Train is departing staging that already has inbound cars");
@@ -461,39 +457,38 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                     new Object[]{train.getName()}), Bundle.getMessage("CanNotPerformAction"),
                     JOptionPane.INFORMATION_MESSAGE);
         } else if (train.isBuilt() && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
-            if (log.isDebugEnabled()) {
-                log.debug("Move train (" + train.getName() + ")");
-            }
+            log.debug("Move train ({})", train.getName());
             train.move();
         } else if (train.isBuilt() && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.TERMINATE)) {
-            if (log.isDebugEnabled()) {
-                log.debug("Terminate train (" + train.getName() + ")");
-            }
+            log.debug("Terminate train ({})", train.getName());
             int status = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("TerminateTrain"),
                     new Object[]{train.getName(), train.getDescription()}), MessageFormat.format(Bundle
-                            .getMessage("DoYouWantToTermiate"), new Object[]{train.getName()}), JOptionPane.YES_NO_OPTION);
+                            .getMessage("DoYouWantToTermiate"), new Object[]{train.getName()}),
+                    JOptionPane.YES_NO_OPTION);
             if (status == JOptionPane.YES_OPTION) {
                 train.terminate();
             }
         } else if (train.isBuilt() && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.CONDUCTOR)) {
-            if (log.isDebugEnabled()) {
-                log.debug("Enable conductor for train (" + train.getName() + ")");
-            }
+            log.debug("Enable conductor for train (" + train.getName() + ")");
             launchConductor(train);
         }
     }
 
     /*
-     * Check to see if the departure track in staging has been taken by another train. return true if track has been
-     * allocated to another train.
+     * Check to see if the departure track in staging has been taken by another
+     * train. return true if track has been allocated to another train.
      */
     private boolean checkDepartureTrack(Train train) {
-        return (Setup.isStagingTrackImmediatelyAvail() && !train.isTrainEnRoute() && train.getDepartureTrack() != null
-                && train.getDepartureTrack().getTrackType().equals(Track.STAGING)
-                && train.getDepartureTrack() != train.getTerminationTrack() && train.getDepartureTrack().getDropRS() > 0);
+        return (Setup.isStagingTrackImmediatelyAvail() &&
+                !train.isTrainEnRoute() &&
+                train.getDepartureTrack() != null &&
+                train.getDepartureTrack().getTrackType().equals(Track.STAGING) &&
+                train.getDepartureTrack() != train.getTerminationTrack() &&
+                train.getDepartureTrack().getDropRS() > 0);
     }
 
-    private static Hashtable<String, TrainConductorFrame> _trainConductorHashTable = new Hashtable<String, TrainConductorFrame>();
+    private static Hashtable<String, TrainConductorFrame> _trainConductorHashTable =
+            new Hashtable<String, TrainConductorFrame>();
 
     private void launchConductor(Train train) {
         // use invokeLater so new window appears on top
@@ -519,18 +514,14 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             log.debug("Property change {} old: {} new: {}",
                     e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
         }
-//        if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)
-//                || e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
-//            _frame.setModifiedFlag(true);
-//        }
-        if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(TrainManager.PRINTPREVIEW_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(TrainManager.OPEN_FILE_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(TrainManager.RUN_FILE_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Setup.MANIFEST_CSV_PROPERTY_CHANGE)
-                || e.getPropertyName().equals(TrainManager.TRAIN_ACTION_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Train.DEPARTURETIME_CHANGED_PROPERTY)
-                || (e.getPropertyName().equals(Train.BUILD_CHANGED_PROPERTY) && !isShowAll())) {
+        if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(TrainManager.PRINTPREVIEW_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(TrainManager.OPEN_FILE_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(TrainManager.RUN_FILE_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Setup.MANIFEST_CSV_PROPERTY_CHANGE) ||
+                e.getPropertyName().equals(TrainManager.TRAIN_ACTION_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Train.DEPARTURETIME_CHANGED_PROPERTY) ||
+                (e.getPropertyName().equals(Train.BUILD_CHANGED_PROPERTY) && !isShowAll())) {
             updateList();
             fireTableDataChanged();
         } else if (e.getSource().getClass().equals(Train.class)) {
@@ -573,9 +564,6 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
         if (tef != null) {
             tef.dispose();
         }
@@ -593,7 +581,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             if (!isSelected) {
                 TableSorter sorter = (TableSorter) table.getModel();
                 int modelRow = sorter.modelIndex(row);
-//				log.debug("View row: {} Column: {} Model row: {}", row, column, modelRow);
+                //				log.debug("View row: {} Column: {} Model row: {}", row, column, modelRow);
                 Color background = getRowColor(modelRow);
                 component.setBackground(background);
                 component.setForeground(getForegroundColor(background));
@@ -616,7 +604,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                     return Color.WHITE;
                 }
             }
-            return Color.BLACK;	// all others get black lettering
+            return Color.BLACK; // all others get black lettering
         }
     }
 

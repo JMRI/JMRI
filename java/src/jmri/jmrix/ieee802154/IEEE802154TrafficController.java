@@ -47,7 +47,7 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
     @Override
     @Deprecated
     public void setInstance() {
-        log.error("Deprecated Method setInstance called");
+        log.debug("Deprecated Method setInstance called");
     }
 
     /**
@@ -185,12 +185,14 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
     //    m.setElement(0)=0x7E;
     //    return 1;
     //}
+
     /**
      * <p>
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
      */
     //protected AbstractMRReply newReply() {return new IEEE802154Reply();}
+
     /*
      * Build a new IEEE802154 Node.
      * Must be implemented by derived classes

@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   jmri.jmrix.dcc4pc.serialdriver.PackageTest.class
+   jmri.jmrix.dcc4pc.serialdriver.PackageTest.class,
+   jmri.jmrix.dcc4pc.configurexml.PackageTest.class
 })
 /**
  * Tests for the jmri.jmrix.pi package

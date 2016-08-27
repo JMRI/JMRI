@@ -1307,6 +1307,7 @@
 
     <target name="logalltest" depends="tests, runtime-library-selection" description="run headless test suite">
         <jacoco:coverage destfile="jacoco.exec" excludes="org.slf4j.*">
+
         <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1317,11 +1318,14 @@
 
             <classpath refid="test.class.path"/>
 
+            <!-- use different log4j settings to pick up additional coverage -->
+            <sysproperty key="jmri.log4jconfigfilename" value="tests_jacoco.lcf"/>
+
             <test name="apps.tests.AllTest" outfile="junit-results">
                 <formatter type="xml"/>
             </test>
-
         </junit>
+        
         </jacoco:coverage>
     </target>
 
@@ -1463,7 +1467,7 @@
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="6000"/><!-- change from default 100 warnings -->
+            <arg value="5500"/><!-- change from default 100 warnings -->
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
 
@@ -1690,7 +1694,7 @@
         </findbugs>
     </target>
 
-<!--  Start for checker framework -->
+    <!--  Start for checker framework -->
 
     <property environment="env"/>
     <property name="checkerframework" value="${libdir}/checker-framework/" />

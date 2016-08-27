@@ -26,7 +26,6 @@ public class XBeeNodeManagerTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         tc = new XBeeInterfaceScaffold();
-        jmri.util.JUnitAppender.assertErrorMessage("Deprecated Method setInstance called");
     }
 
     @After

@@ -36,7 +36,11 @@ package jmri.server.json;
  *
  * JSON messages sent to the client will be in the form:
  * <ul>
- * <li>{"type":
+ * <li><code>{"type":"<em>type</em>","data":{"name":"<em>name</em>",...}}</code></li>
+ * <li><code>{"type":"pong"}</code> in response to a <code>{"type":"ping"}</code> message.</li>
+ * <li>a sign off in the form: <code>{"type":"goodbye"}</code> before the connection gets closed.</li>
+ * <li><code>[<em>message</em>,<em>message</em>]</code>, an array of any of the above message types.</li>
+ * </ul>
  *
  * @since 4.3.4
  */

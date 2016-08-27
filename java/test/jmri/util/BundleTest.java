@@ -1,5 +1,7 @@
 package jmri.util;
 
+import java.util.Locale;
+
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;

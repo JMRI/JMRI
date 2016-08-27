@@ -58,6 +58,7 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.NamedBean;
@@ -2559,7 +2560,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             frame.dispose();
         }
         // delete panel - deregister the panel for saving
-        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).deregister(this);
+        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.deregister(this);
+        }
         jmri.jmrit.display.PanelMenu.instance().deletePanel(this);
         Editor.editors.remove(this);
         setVisible(false);
@@ -2869,7 +2873,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         protected JPanel makeDoneButtonPanel() {
             JPanel panel0 = new JPanel();
             panel0.setLayout(new FlowLayout());
-            JButton doneButton = new JButton(Bundle.getMessage("Done"));
+            JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
             doneButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent a) {
@@ -2885,7 +2889,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             });
             panel0.add(doneButton);
 
-            JButton cancelButton = new JButton(Bundle.getMessage("Cancel"));
+            JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
             cancelButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent a) {

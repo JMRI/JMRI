@@ -70,12 +70,12 @@ sera utilisable pendant un certain temps.
     <li> Lorsque vous commencez &#224; faire de la signalisation alors "tout change". Parce que la signalisation exige que les 
 occupation de cantons et de l'&#233;tat des aiguillages soient utilis&#233;s dans le processus de prise de d&#233;cision :"quel aspect doit 
 &#234;tre affich&#233; sur lequel des signaux &#224; ce stade? ". Cela n&#233;cessite  une ensemble de code sp&#233;cifique/logique. Je suppose que 
-vous voulez utiliser un ordinateur pour prendre ces d&#233;cisions. Il est possible de mettre en œuvre un syst&#232;me o&#249; un &#234;tre humain, 
+vous voulez utiliser un ordinateur pour prendre ces d&#233;cisions. Il est possible de mettre en &oelig;uvre un syst&#232;me o&#249; un &#234;tre humain, 
 g&#233;n&#233;ralement les dispatcheurs, prend l'ensemble des d&#233;cisions ...les plus complexe le r&#233;seau/syst&#232;me de signalisation plus 
 les erreurs que les r&#233;partiteur feront. Et il y a aussi la question (s) de la "charge de travail" ...mais un ordinateur utilisant 
 PanelPro est habituellement de repos et a plus qu'assez de puissance pour devancer les besoins du r&#233;seau.
 <p>
-La mise en œuvre de commande du r&#233;seau (aiguillages, occupation de cantons, signaux, etc) n'est pas un "accord facile". Et, &#224; mon 
+La mise en &oelig;uvre de commande du r&#233;seau (aiguillages, occupation de cantons, signaux, etc) n'est pas un "accord facile". Et, &#224; mon 
 avis, c'est quelque chose que vous ne devriez pas essayer d'apprendre tout seul  - ou de le faire seul avec les aides/des conseils 
 pris sur les listes en ligne comme celle-ci. Je ne dis pas "ne pas utiliser en ligne" ... Je dis que si vous voulez le faire aussi 
 facilement que possible, vous devriez chercher ceux qui nous ont pr&#233;c&#233;d&#233;s et obtenir leur appui .
@@ -83,7 +83,7 @@ Oui, vous pouvez le faire vous-m&#234;me - non, ce n'est pas les meilleure fa&#2
  erreurs qui entra&#238neront des retards consid&#233;rables et des rec&#226;blages. De nombreux projets d'automatisation de r&#233;seaux sont au point 
 mort justement pour cette m&#234;me raison.
 <p>
-Et juste pour cela soit mentionn&#233;s ...Ajouter des capacit&#233;s telles que la d&#233;tection d'occupation de cantons, aiguillages contr&#244;l&#233;s 
+Et juste pour cela soit mentionn&#233;s... Ajouter des capacit&#233;s telles que la d&#233;tection d'occupation de cantons, aiguillages contr&#244;l&#233;s 
 par ordinateur, et les signaux ne sont pas bon march&#233;s et doivent &#234;tre budg&#233;tis&#233;s. Et vous pouvez constater que vous aurez besoin 
 de rec&#226;bler m&#234;me des parties importantes de votre r&#233;seau afin de les aider &#224; fonctionner correctement.
 </ol>
@@ -114,7 +114,7 @@ Si vous faites cela, vous pouvez &#233;galement enregistrer vos panneaux dans le
 Pour ce faire:
 
 <UL>
-<LI><LI> Aller &#224; l'un des outils de Tableau (par exemple Tableau Itin&#233;raire ) et choisissez "configuration enregistrement du menu "Fichier".
+<LI> Aller &#224; l'un des outils de Tableau (par exemple Tableau Itin&#233;raire ) et choisissez "configuration enregistrement du menu "Fichier".
 <LI> Cela vous permettra de s&#233;lectionner un nom de fichier; assurez-vous qu'il n'a _PAS_ le m&#234;me que le nom de fichier du panneau
  (par exemple l'utilisation "MyConfig.xml"au lieu de "MyPanel.xml").
 <LI> Rappelez-vous le nom et l'emplacement, puis enregistrer.
@@ -137,7 +137,7 @@ Maintenant, assurez vous que ces informations de configuration se chargent autom
 Le meilleur endroit pour mettre vos propres fichiers est dans le r&#233;pertoire pr&#233;f&#233;rences du programme. (DecoderPro utilise
 <A HREF="../DecoderPro/Files.shtml#location"> le m&#234;me r&#233;pertoire </a>)
 Vous devez mettre toutes les versions locales des fichiers modifi&#233;s ici afin qu'elles ne soient pas &#233;cras&#233;es par une nouvelle 
-version du programme. Tous les fichiers que le programme &#233;crit pour contenir" des informations locales, par exemple entr&#233;es liste, sont aussi &#233;crits ici..
+version du programme. Tous les fichiers que le programme &#233;crit pour contenir" des informations locales, par exemple entr&#233;es liste, sont aussi &#233;crits ici.
 <p>L'emplacement de celui-ci varie selon le type d'ordinateur.
 <ul>
 <li> Sur une machine Linux, vous trouverez un r&#233;pertoire. jmri dans votre r&#233;pertoire personnel.
@@ -146,7 +146,7 @@ version du programme. Tous les fichiers que le programme &#233;crit pour conteni
 Biblioth&#232;que/Pr&#233;f&#233;rences dans votre r&#233;pertoire utilisateur sur Mac OS X.
 
 <li> Sur Windows, cela peut &#234;tre dans un certain nombre de places selon la version Windows que vous utilisez et si vous avez configur&#233;
- plusieurs utilisateurs; Recherche d'un r&#233;pertoire "JMRI" .
+ plusieurs utilisateurs; Recherche d'un r&#233;pertoire "JMRI".
 </ul>
 Assurez-vous de trouver les pr&#233;f&#233;rences, et <em>pas</em> le dossier d'application d'origine. Ils sont s&#233;par&#233;s pour simplifier la mise &#224; jour de la version du programme.
 
@@ -163,8 +163,8 @@ Si vous avez cr&#233;&#233; des ic&#244;nes et que vous voulez  qu'elles soient 
 vous obtiendrez l'affichage du fichier affich&#233; &#224; droite.
 <code>
 <PRE>
-> ls Ressources/icons green.gif decoderpro.gif red.gif tester.gif
-> ls ressources/tester/ic&#244;nes/quelque chose &#224; tester.gif/
+> ls Ressources/icons green.gif decoderpro.gif red.gif tester.gif<br>
+> ls ressources/tester/ic&#244;nes/quelque chose &#224; tester.gif/<br>
 > ls ressources/icons/quelque chose/tester.gif
 </PRE>
 </code>
