@@ -140,7 +140,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
                 false, _length, "Length", true, "TooltipBlockLength"));
         _length.setPreferredSize(new Dimension(100, _length.getPreferredSize().height));
         _units = new JToggleButton("foo", !_block.isMetric());
-        _units.setToolTipText(Bundle.getMessage("TooltipBlockLength"));
+        _units.setToolTipText(Bundle.getMessage("TooltipPathUnitButton"));
         _units.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 changeUnits();

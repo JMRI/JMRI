@@ -204,7 +204,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
             }            
         });
         _units = new JToggleButton("", !_block.isMetric());
-        _units.setToolTipText(Bundle.getMessage("TooltipPathLength"));
+        _units.setToolTipText(Bundle.getMessage("TooltipPathUnitButton"));
         _units.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 changeUnits();
