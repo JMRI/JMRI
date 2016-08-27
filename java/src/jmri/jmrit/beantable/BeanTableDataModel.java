@@ -847,7 +847,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
      *
      * @param table the table
      * @deprecated since 4.5.4; use
-     * {@link #persistTableState(javax.swing.JTable)} instead.
+     * {@link #persistTable(javax.swing.JTable)} instead.
      */
     @Deprecated
     public void loadTableColumnDetails(JTable table) {
@@ -860,7 +860,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
      * @param table        the table
      * @param beantableref name of the table
      * @deprecated since 4.5.4; use
-     * {@link #persistTableState(javax.swing.JTable)} instead.
+     * {@link #persistTable(javax.swing.JTable)} instead.
      */
     @Deprecated
     public void loadTableColumnDetails(JTable table, String beantableref) {
