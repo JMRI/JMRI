@@ -34,7 +34,12 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     static public final int HELDCOL = LITCOL + 1;
 
     public String getValue(String name) {
-        return InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name).getAspect();
+        SignalMast sm = InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name);
+        if (sm != null) {
+            return sm.getAspect();
+        } else {
+            return null;
+        }
     }
 
     public int getColumnCount() {

@@ -50,6 +50,7 @@ public class JsonUtilServiceFactoryTest {
             JSON.METADATA,
             JSON.NETWORK_SERVICES,
             JSON.NODE,
+            JSON.PANELS,
             JSON.PING,
             JSON.RAILROAD,
             JSON.SYSTEM_CONNECTIONS};

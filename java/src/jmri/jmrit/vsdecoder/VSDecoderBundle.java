@@ -14,7 +14,6 @@
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
  */
 package jmri.jmrit.vsdecoder;
 

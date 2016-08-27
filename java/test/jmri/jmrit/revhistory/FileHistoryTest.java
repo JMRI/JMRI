@@ -1,21 +1,24 @@
 package jmri.jmrit.revhistory;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Tests for the jmrit.revhistory package & jmrit.revhistory.FileHistory class.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
  */
-public class FileHistoryTest extends TestCase {
+public class FileHistoryTest{
 
+    @Test
     public void testCtor() {
         new FileHistory();
     }
 
+    @Test
     public void testAdd2() {
         FileHistory r = new FileHistory();
         r.addOperation("load", "foo.xml", null);
@@ -30,6 +33,7 @@ public class FileHistoryTest extends TestCase {
         Assert.assertEquals("load", r.list.get(1).type);
     }
 
+    @Test
     public void testNest() {
         FileHistory r1 = new FileHistory();
         r1.addOperation("load", "date 1", "file 1", null);
@@ -45,6 +49,7 @@ public class FileHistoryTest extends TestCase {
         Assert.assertEquals("date 1", r2.list.get(0).history.list.get(0).date);
     }
 
+    @Test
     public void testPurge() {
         FileHistory r1 = new FileHistory();
         r1.addOperation("load", "date 1", "file 1", null);
@@ -65,6 +70,7 @@ public class FileHistoryTest extends TestCase {
         Assert.assertEquals("post-purge r2", null, r2.list.get(0).history);
     }
 
+    @Test
     public void testToString() {
         FileHistory r1 = new FileHistory();
         r1.addOperation("load", "date 1", "file 1", null);
@@ -81,29 +87,14 @@ public class FileHistoryTest extends TestCase {
         Assert.assertEquals(expected, result);
     }
 
-    // from here down is testing infrastructure
-    public FileHistoryTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", FileHistoryTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(FileHistoryTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 

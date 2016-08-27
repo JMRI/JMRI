@@ -93,6 +93,7 @@ public class ListedTableFrame extends BeanTableFrame {
             addTable("jmri.jmrit.beantable.TransitTableAction", Bundle.getMessage("MenuItemTransitTable"), true);
             addTable("jmri.jmrit.beantable.AudioTableAction", Bundle.getMessage("MenuItemAudioTable"), false);
             addTable("jmri.jmrit.beantable.IdTagTableAction", Bundle.getMessage("MenuItemIdTagTable"), true);
+            addTable("jmri.jmrit.beantable.RailComTableAction", Bundle.getMessage("MenuItemRailComTable"), true);
             init = true;
         }
     }
@@ -201,7 +202,9 @@ public class ListedTableFrame extends BeanTableFrame {
         }
     }
 
+    @Override
     public void dispose() {
+        pref.disallowSave();
         for (int x = 0; x < tabbedTableArray.size(); x++) {
             tabbedTableArray.get(x).dispose();
         }
@@ -209,6 +212,7 @@ public class ListedTableFrame extends BeanTableFrame {
             list.removeListSelectionListener(list.getListSelectionListeners()[0]);
         }
         super.dispose();
+        pref.allowSave();
     }
 
     void buildMenus(final TabbedTableItem item) {

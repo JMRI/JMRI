@@ -117,7 +117,8 @@ public class AudioTableAction extends AbstractTableAction {
     @Override
     protected void createModel() {
         // ensure that the AudioFactory has been initialised
-        if (InstanceManager.getOptionalDefault(jmri.AudioManager.class).getActiveAudioFactory() == null) {
+        AudioManager cm = InstanceManager.getOptionalDefault(jmri.AudioManager.class);
+        if (cm == null || cm.getActiveAudioFactory() == null) {
             InstanceManager.getDefault(jmri.AudioManager.class).init();
             if(InstanceManager.getDefault(jmri.AudioManager.class).getActiveAudioFactory() instanceof jmri.jmrit.audio.NullAudioFactory) {
                 InstanceManager.getDefault(jmri.UserPreferencesManager.class).

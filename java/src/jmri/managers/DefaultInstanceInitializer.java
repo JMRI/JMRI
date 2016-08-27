@@ -11,6 +11,7 @@ import jmri.LightManager;
 import jmri.LogixManager;
 import jmri.MemoryManager;
 import jmri.ProgrammerManager;
+import jmri.RailComManager;
 import jmri.ReporterManager;
 import jmri.RouteManager;
 import jmri.SectionManager;
@@ -93,6 +94,10 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
 
         if (type == ProgrammerManager.class) {
             return new DeferringProgrammerManager();
+        }
+
+        if (type == RailComManager.class) {
+            return new DefaultRailComManager();
         }
 
         if (type == ReporterManager.class) {

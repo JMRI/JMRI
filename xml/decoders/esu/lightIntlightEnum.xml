@@ -2,13 +2,13 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Dimmer" value="0">
     <choice>Dimmer</choice>
-    <choice xml:lang="de">Dimmer</choice>
+    <choice xml:lang="de">Dimmbares Licht</choice>
     <choice xml:lang="it">Dimmer</choice>
   </enumChoice>
   <enumChoice choice="Zoom" value="1">
-    <choice>Zoom</choice>
-    <choice xml:lang="de">Zoom</choice>
-    <choice xml:lang="it">Zoom</choice>
+    <choice>Fade in-out</choice>
+    <choice xml:lang="de">Ein- und Ausblenden</choice>
+    <choice xml:lang="it">Fade in-out</choice>
   </enumChoice>
   <enumChoice choice="Neon light" value="2">
     <choice>Neon light</choice>
@@ -31,13 +31,13 @@
     <choice xml:lang="it">Luce a Flash (fase 2)</choice>
   </enumChoice>
   <enumChoice choice="Strobe" value="6">
-    <choice>Strobe</choice>
-    <choice xml:lang="de">Strobe</choice>
-    <choice xml:lang="it">Strobe</choice>
+    <choice>Single strobe</choice>
+    <choice xml:lang="de">Single Strobe</choice>
+    <choice xml:lang="it">Single strobe</choice>
   </enumChoice>
   <enumChoice choice="Flickering" value="7">
-    <choice>Flickering light</choice>
-    <choice xml:lang="de">Flackerlicht</choice>
-    <choice xml:lang="it">Flickering light</choice>
+    <choice>Flickering light (Firebox)</choice>
+    <choice xml:lang="de">Flackerlicht (Feuerbüchse)</choice>
+    <choice xml:lang="it">Flickering light (Firebox)</choice>
   </enumChoice>
 </enumVal>

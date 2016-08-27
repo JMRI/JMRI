@@ -545,7 +545,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         if (family == null || family.length() == 0) {
             JOptionPane.showMessageDialog(frame,
                     Bundle.getMessage("EnterFamilyName"),
-                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
         }
         while (it.hasNext()) {
@@ -553,7 +553,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
                 JOptionPane.showMessageDialog(frame,
                         java.text.MessageFormat.format(Bundle.getMessage("DuplicateFamilyName"),
                                 new Object[]{family, type}),
-                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return false;
             }
         }

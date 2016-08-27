@@ -8,22 +8,13 @@ import static jmri.server.json.JSON.CONSISTS;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.ENGINE;
 import static jmri.server.json.JSON.ENGINES;
-import static jmri.server.json.JSON.FORMAT;
 import static jmri.server.json.JSON.LOCATION;
 import static jmri.server.json.JSON.LOCATIONS;
 import static jmri.server.json.JSON.NAME;
-import static jmri.server.json.JSON.PANELS;
-import static jmri.server.json.JSON.REPORTER;
-import static jmri.server.json.JSON.REPORTERS;
-import static jmri.server.json.JSON.SIGNAL_HEAD;
-import static jmri.server.json.JSON.SIGNAL_HEADS;
-import static jmri.server.json.JSON.SIGNAL_MAST;
-import static jmri.server.json.JSON.SIGNAL_MASTS;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.TRAIN;
 import static jmri.server.json.JSON.TRAINS;
 import static jmri.server.json.JSON.VALUE;
-import static jmri.server.json.JSON.XML;
 import static jmri.server.json.JsonException.CODE;
 import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
 import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
@@ -47,6 +38,7 @@ import jmri.jmris.json.JsonUtil;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonWebSocket;
+import jmri.server.json.util.JsonUtilHttpService;
 import jmri.spi.JsonServiceFactory;
 import jmri.util.FileUtil;
 import jmri.web.servlet.ServletUtil;
@@ -174,18 +166,6 @@ public class JsonServlet extends WebSocketServlet {
                         case LOCATIONS:
                             reply = JsonUtil.getLocations(request.getLocale());
                             break;
-                        case PANELS:
-                            reply = JsonUtil.getPanels(request.getLocale(), (request.getParameter(FORMAT) != null) ? request.getParameter(FORMAT) : XML);
-                            break;
-                        case REPORTERS:
-                            reply = JsonUtil.getReporters(request.getLocale());
-                            break;
-                        case SIGNAL_HEADS:
-                            reply = JsonUtil.getSignalHeads(request.getLocale());
-                            break;
-                        case SIGNAL_MASTS:
-                            reply = JsonUtil.getSignalMasts(request.getLocale());
-                            break;
                         case TRAINS:
                             reply = JsonUtil.getTrains(request.getLocale());
                             break;
@@ -227,22 +207,13 @@ public class JsonServlet extends WebSocketServlet {
                             reply = JsonUtil.getCar(request.getLocale(), name);
                             break;
                         case CONSIST:
-                            reply = JsonUtil.getConsist(request.getLocale(), JsonUtil.addressForString(name));
+                            reply = JsonUtil.getConsist(request.getLocale(), JsonUtilHttpService.addressForString(name));
                             break;
                         case ENGINE:
                             reply = JsonUtil.getEngine(request.getLocale(), name);
                             break;
                         case LOCATION:
                             reply = JsonUtil.getLocation(request.getLocale(), name);
-                            break;
-                        case REPORTER:
-                            reply = JsonUtil.getReporter(request.getLocale(), name);
-                            break;
-                        case SIGNAL_HEAD:
-                            reply = JsonUtil.getSignalHead(request.getLocale(), name);
-                            break;
-                        case SIGNAL_MAST:
-                            reply = JsonUtil.getSignalMast(request.getLocale(), name);
                             break;
                         case TRAIN:
                             reply = JsonUtil.getTrain(request.getLocale(), name);
@@ -336,6 +307,7 @@ public class JsonServlet extends WebSocketServlet {
                 }
             }
             if (type != null) {
+                // for historical reasons, set the name to POWER on a power request
                 if (type.equals(POWER)) {
                     name = POWER;
                 } else if (name == null) {
@@ -345,20 +317,8 @@ public class JsonServlet extends WebSocketServlet {
                 if (name != null) {
                     switch (type) {
                         case CONSIST:
-                            JsonUtil.setConsist(request.getLocale(), JsonUtil.addressForString(name), data);
-                            reply = JsonUtil.getConsist(request.getLocale(), JsonUtil.addressForString(name));
-                            break;
-                        case REPORTER:
-                            JsonUtil.setReporter(request.getLocale(), name, data);
-                            reply = JsonUtil.getReporter(request.getLocale(), name);
-                            break;
-                        case SIGNAL_HEAD:
-                            JsonUtil.setSignalHead(request.getLocale(), name, data);
-                            reply = JsonUtil.getSignalHead(request.getLocale(), name);
-                            break;
-                        case SIGNAL_MAST:
-                            JsonUtil.setSignalMast(request.getLocale(), name, data);
-                            reply = JsonUtil.getSignalMast(request.getLocale(), name);
+                            JsonUtil.setConsist(request.getLocale(), JsonUtilHttpService.addressForString(name), data);
+                            reply = JsonUtil.getConsist(request.getLocale(), JsonUtilHttpService.addressForString(name));
                             break;
                         case TRAIN:
                             JsonUtil.setTrain(request.getLocale(), name, data);
@@ -438,6 +398,7 @@ public class JsonServlet extends WebSocketServlet {
                 throw new JsonException(400, "PUT request must be a JSON object"); // need to I18N
             }
             if (type != null) {
+                // for historical reasons, set the name to POWER on a power request
                 if (type.equals(POWER)) {
                     name = POWER;
                 } else if (name == null) {
@@ -446,12 +407,8 @@ public class JsonServlet extends WebSocketServlet {
                 if (name != null) {
                     switch (type) {
                         case CONSIST:
-                            JsonUtil.putConsist(request.getLocale(), JsonUtil.addressForString(name), data);
-                            reply = JsonUtil.getConsist(request.getLocale(), JsonUtil.addressForString(name));
-                            break;
-                        case REPORTER:
-                            JsonUtil.putReporter(request.getLocale(), name, data);
-                            reply = JsonUtil.getReporter(request.getLocale(), name);
+                            JsonUtil.putConsist(request.getLocale(), JsonUtilHttpService.addressForString(name), data);
+                            reply = JsonUtil.getConsist(request.getLocale(), JsonUtilHttpService.addressForString(name));
                             break;
                         default:
                             if (this.services.get(type) != null) {
@@ -521,7 +478,7 @@ public class JsonServlet extends WebSocketServlet {
                     throw new JsonException(400, "name must be specified"); // need to I18N
                 }
                 if (type.equals(CONSIST)) {
-                    JsonUtil.delConsist(request.getLocale(), JsonUtil.addressForString(name));
+                    JsonUtil.delConsist(request.getLocale(), JsonUtilHttpService.addressForString(name));
                 } else if (this.services.get(type) != null) {
                     for (JsonHttpService service : this.services.get(type)) {
                         service.doDelete(type, name, request.getLocale());

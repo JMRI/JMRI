@@ -36,7 +36,7 @@ public class PackageTest extends TestCase {
         suite.addTest(BundleTest.suite());
         suite.addTest(DccLocoAddressSelectorTest.suite());
         suite.addTest(MemoryContentsTest.suite());
-        suite.addTest(SoundTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SoundTest.class));
         suite.addTest(XmlFileTest.suite());
 
         suite.addTest(jmri.jmrit.automat.AutomatTest.suite());
@@ -59,7 +59,6 @@ public class PackageTest extends TestCase {
             //suite.addTest(jmri.jmrit.mastbuilder.MastBuilderTest.suite());
             suite.addTest(jmri.jmrit.powerpanel.PowerPanelTest.suite());
         }
-        suite.addTest(jmri.jmrit.revhistory.FileHistoryTest.suite());
         suite.addTest(jmri.jmrit.roster.PackageTest.suite());
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrit.sendpacket.SendPacketTest.suite());
@@ -85,7 +84,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.picker.PackageTest.suite());
         suite.addTest(jmri.jmrit.speedometer.PackageTest.suite());
         suite.addTest(jmri.jmrit.analogclock.PackageTest.suite());
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.revhistory.PackageTest.class));
         return suite;
     }
 
