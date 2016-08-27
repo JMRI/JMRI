@@ -570,9 +570,9 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
     String[] clearOptions = {"Prompt User", "Clear Route", "Cancel Route"};
     JComboBox<String> clearEntry = new JComboBox<String>(clearOptions);
     JTextField durationSetting = new JTextField(10);
-    String[] colorText = {"None", "Black", "DarkGray", "Gray",
+    String[] colorText = {"ColorClear", "Black", "DarkGray", "Gray",
         "LightGray", "White", "Red", "Pink", "Orange",
-        "Yellow", "Green", "Blue", "Magenta", "Cyan"}; // TODO I18N using Bundle.getMessage from higher level color list
+        "Yellow", "Green", "Blue", "Magenta", "Cyan"}; // I18N using Bundle.getMessage from higher level color list
     Color[] colorCode = {null, Color.black, Color.darkGray, Color.gray,
         Color.lightGray, Color.white, Color.red, Color.pink, Color.orange,
         Color.yellow, Color.green, Color.blue, Color.magenta, Color.cyan};
@@ -584,7 +584,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
     private void initializeColorCombo(JComboBox<String> colorCombo) {
         colorCombo.removeAllItems();
         for (int i = 0; i < numColors; i++) {
-            colorCombo.addItem(rb.getString(colorText[i]));
+            colorCombo.addItem(Bundle.getMessage(colorText[i]));
         }
     }
 

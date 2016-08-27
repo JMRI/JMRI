@@ -883,7 +883,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
     }
 
-    String[] working = {"Bi-Directional", "Recieve Only", "Send Only"};
+    String[] working = {"Bi-Directional", "Receive Only", "Send Only"};
     //TODO I18N in ManagersBundle.properties
 
     ArrayList<JComboBox<String>> neighbourDir;
