@@ -6,6 +6,10 @@ import javax.swing.BoxLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SortOrder;
+import javax.swing.table.TableRowSorter;
+import jmri.swing.RowSorterUtil;
+import jmri.util.SystemNameComparator;
 import jmri.util.com.sun.TableSorter;
 
 /**
@@ -35,18 +39,14 @@ public class BeanTablePane extends jmri.util.swing.JmriPanel {
 
         dataModel = model;
 
-        TableSorter sorter = new TableSorter(dataModel);
-        dataTable = makeJTable(sorter);
-        sorter.setTableHeader(dataTable.getTableHeader());
+        TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter<>(dataModel);
+        dataTable = dataModel.makeJTable(dataModel.getMasterClassName(), dataModel, sorter);
         dataScroll = new JScrollPane(dataTable);
 
         // give system name column as smarter sorter and use it initially
-        try {
-            TableSorter tmodel = ((TableSorter) dataTable.getModel());
-            tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            tmodel.setSortingStatus(BeanTableDataModel.SYSNAMECOL, TableSorter.ASCENDING);
-        } catch (java.lang.ClassCastException e) {
-        }  // happens if not sortable table
+        sorter.setComparator(BeanTableDataModel.SYSNAMECOL, new SystemNameComparator());
+        RowSorterUtil.setSortOrder(sorter, BeanTableDataModel.SYSNAMECOL, SortOrder.ASCENDING);
+        this.dataTable.setRowSorter(sorter);
 
         // configure items for GUI
         dataModel.configureTable(dataTable);
@@ -86,7 +86,13 @@ public class BeanTablePane extends jmri.util.swing.JmriPanel {
 
     /**
      * Hook to allow sub-typing of JTable created
+     *
+     * @param sorter the sorter model
+     * @deprecated since 4.5.4; use
+     * {@link jmri.jmrit.beantable.BeanTableDataModel#makeJTable(java.lang.String, javax.swing.table.TableModel, javax.swing.RowSorter)}
+     * instead.
      */
+    @Deprecated
     protected JTable makeJTable(TableSorter sorter) {
         return new JTable(sorter) {
 

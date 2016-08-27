@@ -404,7 +404,7 @@ public class ListedTableFrame extends BeanTableFrame {
                     }
                 });
             }
-            dataModel.loadTableColumnDetails(dataTable);
+            dataModel.persistTable(dataTable);
         }
 
         void addPanelModel() {
@@ -450,7 +450,7 @@ public class ListedTableFrame extends BeanTableFrame {
 
         void dispose() {
             if (dataModel != null) {
-                dataModel.saveTableColumnDetails(dataTable);
+                dataModel.stopPersistingTable(dataTable);
                 dataModel.dispose();
             }
             if (tableAction != null) {

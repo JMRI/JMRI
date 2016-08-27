@@ -7,8 +7,8 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.table.TableRowSorter;
 import jmri.Manager;
-import jmri.util.com.sun.TableSorter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,12 +42,12 @@ abstract public class AbstractTableAction extends AbstractAction {
 
     protected BeanTableFrame f;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create the JTable model, with changes for specific NamedBean
         createModel();
-        TableSorter sorter = new TableSorter(m);
-        JTable dataTable = m.makeJTable(sorter);
-        sorter.setTableHeader(dataTable.getTableHeader());
+        TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter<>(m);
+        JTable dataTable = m.makeJTable(m.getMasterClassName(), m, sorter);
 
         // allow reordering of the columns
         dataTable.getTableHeader().setReorderingAllowed(true);
@@ -136,7 +136,7 @@ abstract public class AbstractTableAction extends AbstractAction {
     }
 
     public void setMessagePreferencesDetails() {
-        HashMap< Integer, String> options = new HashMap< Integer, String>(3);
+        HashMap<Integer, String> options = new HashMap<>(3);
         options.put(0x00, Bundle.getMessage("DeleteAsk"));
         options.put(0x01, Bundle.getMessage("DeleteNever"));
         options.put(0x02, Bundle.getMessage("DeleteAlways"));
