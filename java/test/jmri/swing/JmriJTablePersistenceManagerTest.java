@@ -3,11 +3,14 @@ package jmri.swing;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import apps.tests.Log4JFixture;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.JTable;
 import javax.swing.SortOrder;
+import javax.swing.table.TableRowSorter;
 import jmri.profile.Profile;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -18,42 +21,127 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
+ * Tests the {@link jmri.swing.JmriJTablePersistenceManager}. Some tests use a
+ * {@link jmri.swing.JmriJTablePersistenceManagerTest.JmriJTablePersistenceManagerSpy}
+ * class that exposes some protected properties for testing purposes.
  *
- * @author rhwood
+ * @author Randall Wood (C) 2016
  */
 public class JmriJTablePersistenceManagerTest {
-    
+
     public JmriJTablePersistenceManagerTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
+        Log4JFixture.setUp();
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
+        Log4JFixture.tearDown();
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
 
     /**
-     * Test of persist method, of class JmriJTablePersistenceManager.
+     * Test of persist method, of class JmriJTablePersistenceManager. This tests
+     * persistence by verifying that tables get the expected listeners attached.
      */
     @Test
-    @Ignore
     public void testPersist() {
-        System.out.println("persist");
+        JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
+        // null table
         JTable table = null;
-        JmriJTablePersistenceManager instance = new JmriJTablePersistenceManager();
-        instance.persist(table);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            instance.persist(table);
+            Assert.fail("did not throw NPE on null table");
+        } catch (NullPointerException ex) {
+            // passes
+        }
+        // null table name
+        table = new JTable();
+        try {
+            instance.persist(table);
+            Assert.fail("did not throw NPE on table with null name");
+        } catch (NullPointerException ex) {
+            // passes
+        }
+        // correct table
+        table.setName("test name");
+        try {
+            instance.persist(table);
+            // passes
+        } catch (NullPointerException ex) {
+            Assert.fail("threw unexpected NPE");
+        }
+        int managers = 0;
+        int listeners = 0;
+        for (PropertyChangeListener listener : table.getPropertyChangeListeners()) {
+            if (listener.equals(instance)) {
+                managers++;
+            }
+            if (listener.equals(instance.getListener(table))) {
+                listeners++;
+            }
+        }
+        Assert.assertEquals(1, managers);
+        Assert.assertEquals(1, listeners);
+        // allow table twice
+        try {
+            instance.persist(table);
+            // passes
+        } catch (IllegalArgumentException ex) {
+            Assert.fail("threw unexpected IllegalArgumentException");
+        }
+        managers = 0;
+        listeners = 0;
+        for (PropertyChangeListener listener : table.getPropertyChangeListeners()) {
+            if (listener.equals(instance)) {
+                managers++;
+            }
+            if (listener.equals(instance.getListener(table))) {
+                listeners++;
+            }
+        }
+        Assert.assertEquals(1, managers);
+        Assert.assertEquals(1, listeners);
+        // duplicate table name
+        JTable table2 = new JTable();
+        table2.setRowSorter(new TableRowSorter<>(table2.getModel()));
+        table2.setName("test name");
+        try {
+            instance.persist(table2);
+            Assert.fail("Accepted duplicate name");
+        } catch (IllegalArgumentException ex) {
+            // passes
+        }
+        // a second table
+        table2.setName("test name 2");
+        try {
+            instance.persist(table);
+            // passes
+        } catch (IllegalArgumentException ex) {
+            Assert.fail("threw unexpected IllegalArgumentException");
+        }
+        managers = 0;
+        listeners = 0;
+        for (PropertyChangeListener listener : table.getPropertyChangeListeners()) {
+            if (listener.equals(instance)) {
+                managers++;
+            }
+            if (listener.equals(instance.getListener(table))) {
+                listeners++;
+            }
+        }
+        Assert.assertEquals(1, managers);
+        Assert.assertEquals(1, listeners);
     }
 
     /**
@@ -227,5 +315,13 @@ public class JmriJTablePersistenceManagerTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
+    private final static class JmriJTablePersistenceManagerSpy extends JmriJTablePersistenceManager {
+
+        //default access
+        JTableListener getListener(JTable table) {
+            return this.listeners.get(table.getName());
+        }
+
+    }
 }
