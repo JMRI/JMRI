@@ -469,14 +469,14 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         for (int i = 0; i < this.getRowCount(); i++) {
             for (int j = 0; j < this.getColumnCount(); j++) {
                 //check for special, non string contents
-                if (this.getValueAt(i, j) == null) {
+                Object value = this.getValueAt(i, j);
+                if (value == null) {
                     columnStrings[j] = spaces.toString();
-                } else if (this.getValueAt(i, j) instanceof JComboBox) {
-                    columnStrings[j] = (String) ((JComboBox<String>) this.getValueAt(i, j)).getSelectedItem();
-                } else if (this.getValueAt(i, j) instanceof Boolean) {
-                    columnStrings[j] = (this.getValueAt(i, j)).toString();
+                } else if (value instanceof JComboBox) {
+                    columnStrings[j] = (String) ((JComboBox<String>) value).getSelectedItem();
                 } else {
-                    columnStrings[j] = (String) this.getValueAt(i, j);
+                    // Boolean or String
+                    columnStrings[j] = value.toString();
                 }
             }
             printColumns(w, columnStrings, columnSize);
@@ -590,7 +590,6 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
 
     protected void showPopup(MouseEvent e) {
         JTable source = (JTable) e.getSource();
-        TableModel tmodel = source.getModel();
         int row = source.rowAtPoint(e.getPoint());
         int column = source.columnAtPoint(e.getPoint());
         if (!source.isRowSelected(row)) {

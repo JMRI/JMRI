@@ -549,7 +549,7 @@ public class RouteTableAction extends AbstractTableAction {
             p2xt.add(p21t);
             _routeTurnoutModel = new RouteTurnoutModel();
             JTable routeTurnoutTable = new JmriTable(_routeTurnoutModel);
-            TableRowSorter rtSorter = new TableRowSorter(_routeTurnoutModel);
+            TableRowSorter<RouteTurnoutModel> rtSorter = new TableRowSorter<>(_routeTurnoutModel);
             rtSorter.setComparator(RouteTurnoutModel.SNAME_COLUMN, new SystemNameComparator());
             RowSorterUtil.setSortOrder(rtSorter, RouteTurnoutModel.SNAME_COLUMN, SortOrder.ASCENDING);
             routeTurnoutTable.setRowSorter(rtSorter);
@@ -601,7 +601,7 @@ public class RouteTableAction extends AbstractTableAction {
             p2xs.add(p21s);
             _routeSensorModel = new RouteSensorModel();
             JTable routeSensorTable = new JmriTable(_routeSensorModel);
-            TableRowSorter rsSorter = new TableRowSorter(_routeSensorModel);
+            TableRowSorter<RouteSensorModel> rsSorter = new TableRowSorter<>(_routeSensorModel);
             rsSorter.setComparator(RouteSensorModel.SNAME_COLUMN, new SystemNameComparator());
             RowSorterUtil.setSortOrder(rsSorter, RouteSensorModel.SNAME_COLUMN, SortOrder.ASCENDING);
             routeSensorTable.setRowSorter(rsSorter);
