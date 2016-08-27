@@ -5,9 +5,9 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.SortOrder;
 import javax.swing.table.TableRowSorter;
+import jmri.swing.JmriTable;
 import jmri.swing.RowSorterUtil;
 import jmri.util.SystemNameComparator;
 import jmri.util.com.sun.TableSorter;
@@ -94,17 +94,7 @@ public class BeanTablePane extends jmri.util.swing.JmriPanel {
      */
     @Deprecated
     protected JTable makeJTable(TableSorter sorter) {
-        return new JTable(sorter) {
-
-            public boolean editCellAt(int row, int column, java.util.EventObject e) {
-                boolean res = super.editCellAt(row, column, e);
-                java.awt.Component c = this.getEditorComponent();
-                if (c instanceof javax.swing.JTextField) {
-                    ((JTextField) c).selectAll();
-                }
-                return res;
-            }
-        };
+        return new JmriTable(sorter);
     }
 
     protected Box getBottomBox() {

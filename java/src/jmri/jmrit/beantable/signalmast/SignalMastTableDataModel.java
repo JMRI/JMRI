@@ -17,6 +17,7 @@ import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.beantable.SignalMastTableAction.MyComboBoxEditor;
 import jmri.jmrit.beantable.SignalMastTableAction.MyComboBoxRenderer;
 import jmri.jmrit.signalling.SignallingSourceAction;
+import jmri.swing.JmriTable;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -245,7 +246,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     SignalMastJTable table;
 
     //The JTable is extended so that we can reset the available aspect in the drop down when required
-    class SignalMastJTable extends JTable {
+    class SignalMastJTable extends JmriTable {
 
         public SignalMastJTable(TableModel srtr) {
             super(srtr);
@@ -256,15 +257,6 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             boxMap.remove(getModel().getValueAt(row, SYSNAMECOL));
             editorMap.remove(getModel().getValueAt(row, SYSNAMECOL));
             rendererMap.remove(getModel().getValueAt(row, SYSNAMECOL));
-        }
-
-        public boolean editCellAt(int row, int column, java.util.EventObject e) {
-            boolean res = super.editCellAt(row, column, e);
-            java.awt.Component c = this.getEditorComponent();
-            if (c instanceof javax.swing.JTextField) {
-                ((JTextField) c).selectAll();
-            }
-            return res;
         }
 
         public TableCellRenderer getCellRenderer(int row, int column) {

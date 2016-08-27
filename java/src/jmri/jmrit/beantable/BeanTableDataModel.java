@@ -16,7 +16,6 @@ import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.EventObject;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nonnull;
@@ -51,6 +50,7 @@ import jmri.NamedBean;
 import jmri.NamedBeanHandleManager;
 import jmri.UserPreferencesManager;
 import jmri.swing.JTablePersistenceManager;
+import jmri.swing.JmriTable;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.swing.XTableColumnModel;
@@ -555,17 +555,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
     public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @Nullable RowSorter<? extends TableModel> sorter) {
         Objects.requireNonNull(name, "the table name must be nonnull");
         Objects.requireNonNull(model, "the table model must be nonnull");
-        JTable table = new JTable(model) {
-            @Override
-            public boolean editCellAt(int row, int column, EventObject e) {
-                boolean res = super.editCellAt(row, column, e);
-                Component c = this.getEditorComponent();
-                if (c instanceof JTextField) {
-                    ((JTextField) c).selectAll();
-                }
-                return res;
-            }
-        };
+        JTable table = new JmriTable(model);
         table.setName(name);
         table.setRowSorter(sorter);
         table.getTableHeader().setReorderingAllowed(true);
@@ -585,17 +575,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
      */
     @Deprecated
     public JTable makeJTable(TableSorter sorter) {
-        JTable table = new JTable(sorter) {
-            @Override
-            public boolean editCellAt(int row, int column, EventObject e) {
-                boolean res = super.editCellAt(row, column, e);
-                Component c = this.getEditorComponent();
-                if (c instanceof JTextField) {
-                    ((JTextField) c).selectAll();
-                }
-                return res;
-            }
-        };
+        JTable table = new JmriTable(sorter);
         table.getTableHeader().setReorderingAllowed(true);
         table.setColumnModel(new XTableColumnModel());
         table.createDefaultColumnsFromModel();
