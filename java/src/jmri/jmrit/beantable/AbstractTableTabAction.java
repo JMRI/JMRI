@@ -2,7 +2,6 @@ package jmri.jmrit.beantable;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Box;
@@ -12,11 +11,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.SortOrder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.table.TableRowSorter;
 import jmri.Manager;
+import jmri.swing.RowSorterUtil;
 import jmri.util.ConnectionNameFromSystemName;
-import jmri.util.com.sun.TableSorter;
+import jmri.util.SystemNameComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -170,20 +172,14 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
                 tableAction.setManager(manager);
             }
             dataModel = tableAction.getTableDataModel();
-            TableSorter sorter = new TableSorter(dataModel);
-            dataTable = dataModel.makeJTable(sorter);
-            sorter.setTableHeader(dataTable.getTableHeader());
+            TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter(dataModel);
+            dataTable = dataModel.makeJTable(dataModel.getMasterClassName() + ":" + getItemString(), dataModel, sorter);
             dataScroll = new JScrollPane(dataTable);
 
-            try {
-                TableSorter tmodel = ((TableSorter) dataTable.getModel());
-                tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-                tmodel.setSortingStatus(BeanTableDataModel.SYSNAMECOL, TableSorter.ASCENDING);
-            } catch (java.lang.ClassCastException e) {
-            }  // happens if not sortable table
+            sorter.setComparator(BeanTableDataModel.SYSNAMECOL, new SystemNameComparator());
+            RowSorterUtil.setSortOrder(sorter, BeanTableDataModel.SYSNAMECOL, SortOrder.ASCENDING);
 
             dataModel.configureTable(dataTable);
-            dataModel.loadTableColumnDetails(dataTable, dataModel.getMasterClassName() + ":" + getItemString());
 
             java.awt.Dimension dataTableSize = dataTable.getPreferredSize();
             // width is right, but if table is empty, it's not high
@@ -202,10 +198,8 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
             if (tableAction.includeAddButton()) {
                 JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
                 addToBottomBox(addButton);
-                addButton.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        tableAction.addPressed(e);
-                    }
+                addButton.addActionListener((ActionEvent e) -> {
+                    tableAction.addPressed(e);
                 });
             }
         }
@@ -256,7 +250,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
 
         protected void dispose() {
             if (dataModel != null) {
-                dataModel.saveTableColumnDetails(dataTable, dataModel.getMasterClassName() + ":" + getItemString());
+                dataModel.stopPersistingTable(dataTable);
                 dataModel.dispose();
             }
             dataModel = null;

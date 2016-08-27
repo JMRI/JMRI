@@ -2,9 +2,13 @@ package jmri.swing;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.swing.RowSorter;
+import javax.swing.RowSorter.SortKey;
 import javax.swing.SortOrder;
+import javax.swing.event.RowSorterEvent;
+import javax.swing.event.RowSorterListener;
 import javax.swing.table.TableModel;
 
 /**
@@ -24,7 +28,7 @@ public final class RowSorterUtil {
      * containing the column.
      *
      * @param rowSorter the sorter
-     * @param column the column index in the model, not the view
+     * @param column    the column index in the model, not the view
      * @return the sort order or {@link javax.swing.SortOrder#UNSORTED}.
      */
     @Nonnull
@@ -45,7 +49,7 @@ public final class RowSorterUtil {
      * also specified to be unsorted.
      *
      * @param rowSorter the sorter
-     * @param column the column index in the model, not the view
+     * @param column    the column index in the model, not the view
      * @param sortOrder the sort order
      */
     public static void setSortOrder(@Nonnull RowSorter<? extends TableModel> rowSorter, int column, @Nonnull SortOrder sortOrder) {
@@ -54,5 +58,35 @@ public final class RowSorterUtil {
             keys.add(new RowSorter.SortKey(column, sortOrder));
         }
         rowSorter.setSortKeys(keys);
+    }
+
+    /**
+     * Add a RowSorterListener to the rowSorter that prevents multiple columns
+     * from being considered while sorting.
+     *
+     * @param rowSorter the sorter to add the listener to
+     * @return the added listener
+     * @throws NullPointerException if rowSorter is null
+     */
+    public static RowSorterListener addSingleSortableColumnListener(@Nonnull RowSorter<? extends TableModel> rowSorter) {
+        Objects.requireNonNull(rowSorter, "rowSorter must be nonnull.");
+        RowSorterListener listener = new RowSorterListener() {
+            List<SortKey> priorSortKeys = new ArrayList<>();
+
+            @Override
+            public void sorterChanged(RowSorterEvent e) {
+                if (e.getType().equals(RowSorterEvent.Type.SORT_ORDER_CHANGED)) {
+                    List<RowSorter.SortKey> newSortKeys = new ArrayList<>(e.getSource().getSortKeys());
+                    newSortKeys.removeAll(priorSortKeys);
+                    if (!newSortKeys.isEmpty()) {
+                        priorSortKeys = newSortKeys;
+                        e.getSource().setSortKeys(priorSortKeys);
+                        e.getSource().allRowsChanged();
+                    }
+                }
+            }
+        };
+        rowSorter.addRowSorterListener(listener);
+        return listener;
     }
 }
