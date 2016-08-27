@@ -148,14 +148,46 @@ public class JmriJTablePersistenceManagerTest {
      * Test of stopPersisting method, of class JmriJTablePersistenceManager.
      */
     @Test
-    @Ignore
     public void testStopPersisting() {
-        System.out.println("stopPersisting");
-        JTable table = null;
-        JmriJTablePersistenceManager instance = new JmriJTablePersistenceManager();
-        instance.stopPersisting(table);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
+        JTable table = new JTable();
+        table.setName("test name");
+        try {
+            instance.persist(table);
+            // passes
+        } catch (NullPointerException ex) {
+            Assert.fail("threw unexpected NPE");
+        }
+        int managers = 0;
+        int listeners = 0;
+        for (PropertyChangeListener listener : table.getPropertyChangeListeners()) {
+            if (listener.equals(instance)) {
+                managers++;
+            }
+            if (listener.equals(instance.getListener(table))) {
+                listeners++;
+            }
+        }
+        Assert.assertEquals(1, managers);
+        Assert.assertEquals(1, listeners);
+        try {
+            instance.stopPersisting(table);
+            // passes
+        } catch (NullPointerException ex) {
+            Assert.fail("threw unexpected NPE");
+        }
+        managers = 0;
+        listeners = 0;
+        for (PropertyChangeListener listener : table.getPropertyChangeListeners()) {
+            if (listener.equals(instance)) {
+                managers++;
+            }
+            if (listener.equals(instance.getListener(table))) {
+                listeners++;
+            }
+        }
+        Assert.assertEquals(0, managers);
+        Assert.assertEquals(0, listeners);
     }
 
     /**
