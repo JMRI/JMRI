@@ -8,8 +8,6 @@ import java.lang.reflect.InvocationTargetException;
 import javax.swing.SwingUtilities;
 import jmri.Application;
 import jmri.ConfigureManager;
-import jmri.IdTagManager;
-import jmri.RailComManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBeanHandleManager;
@@ -19,8 +17,6 @@ import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.BlockValueFile;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.jmrit.signalling.EntryExitPairs;
-import jmri.managers.DefaultIdTagManager;
-import jmri.managers.DefaultRailComManager;
 import jmri.managers.DefaultShutDownManager;
 import jmri.managers.JmriUserPreferencesManager;
 import jmri.profile.Profile;
@@ -236,12 +232,6 @@ public abstract class AppsBase {
 
         // install the named bean handler
         InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
-
-        // Install an IdTag manager
-        InstanceManager.store(new DefaultIdTagManager(), IdTagManager.class);
-
-        // Install a RailCom manager
-        InstanceManager.store(new DefaultRailComManager(), RailComManager.class);
 
         //Install Entry Exit Pairs Manager
         InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);

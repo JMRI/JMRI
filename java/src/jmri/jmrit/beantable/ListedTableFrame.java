@@ -28,10 +28,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SortOrder;
 import javax.swing.Timer;
+import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
-import jmri.util.com.sun.TableSorter;
+import jmri.swing.RowSorterUtil;
+import jmri.util.SystemNameComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -370,17 +373,13 @@ public class ListedTableFrame extends BeanTableFrame {
 
         void createDataModel() {
             dataModel = tableAction.getTableDataModel();
-            TableSorter sorter = new TableSorter(dataModel);
-            dataTable = dataModel.makeJTable(sorter);
-            sorter.setTableHeader(dataTable.getTableHeader());
+            TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter<>(dataModel);
+            dataTable = dataModel.makeJTable(dataModel.getMasterClassName() + ":" + getItemString(), dataModel, sorter);
             dataScroll = new JScrollPane(dataTable);
 
-            try {
-                TableSorter tmodel = ((TableSorter) dataTable.getModel());
-                tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-                tmodel.setSortingStatus(BeanTableDataModel.SYSNAMECOL, TableSorter.ASCENDING);
-            } catch (java.lang.ClassCastException e) {
-            }  // happens if not sortable table
+            sorter.setComparator(BeanTableDataModel.SYSNAMECOL, new SystemNameComparator());
+            RowSorterUtil.setSortOrder(sorter, BeanTableDataModel.SYSNAMECOL, SortOrder.ASCENDING);
+
             dataModel.configureTable(dataTable);
 
             java.awt.Dimension dataTableSize = dataTable.getPreferredSize();
@@ -405,7 +404,7 @@ public class ListedTableFrame extends BeanTableFrame {
                     }
                 });
             }
-            dataModel.loadTableColumnDetails(dataTable);
+            dataModel.persistTable(dataTable);
         }
 
         void addPanelModel() {
@@ -451,7 +450,7 @@ public class ListedTableFrame extends BeanTableFrame {
 
         void dispose() {
             if (dataModel != null) {
-                dataModel.saveTableColumnDetails(dataTable);
+                dataModel.stopPersistingTable(dataTable);
                 dataModel.dispose();
             }
             if (tableAction != null) {
