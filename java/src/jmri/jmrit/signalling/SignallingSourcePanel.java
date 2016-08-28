@@ -258,7 +258,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         @Override
         public String getColumnName(int col) {
             if (col == USERNAME_COLUMN) {
-                return rb.getString("ColumnUserName");
+                return Bundle.getMessage("ColumnUserName");
             }
             if (col == SYSNAME_COLUMN) {
                 return rb.getString("DestMast");

@@ -151,7 +151,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
                 JOptionPane.showMessageDialog(null, rb.getString("LayoutBlockRoutingEnabled"));
             }
         }
-        entryExitFrame = new jmri.util.JmriJFrame("Discover Entry Exit Pairs", false, false);
+        entryExitFrame = new jmri.util.JmriJFrame("Discover Entry Exit Pairs", false, false); // TODO I18N
         entryExitFrame.setPreferredSize(null);
         JPanel panel1 = new JPanel();
         sourceLabel = new JLabel("Discovering Entry Exit Pairs");
@@ -382,7 +382,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
             }
             if (col == TYPECOL) {
                 String val = (String) value;
-                if (val.equals("Turnout")) {
+                if (val.equals("Turnout")) { // TODO I18N see line 514
                     nxPairs.setEntryExitType(source.get(row), panel, dest.get(row), 0x00);
                 } else if (val.equals("Signal Mast")) {
                     nxPairs.setEntryExitType(source.get(row), panel, dest.get(row), 0x01);
@@ -511,15 +511,15 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
         }
     }
 
-    String[] NXTYPE_NAMES = {"Turnout", "Signal Mast", "Full InterLock"};
+    String[] NXTYPE_NAMES = {"Turnout", "Signal Mast", "Full InterLock"}; // TODO I18N
 
     protected void configDeleteColumn(JTable table) {
         // have the delete column hold a button
         setColumnToHoldButton(table, DELETECOL,
-                new JButton(rb.getString("ButtonDelete")));
+                new JButton(Bundle.getMessage("ButtonDelete")));
 
         setColumnToHoldButton(table, CLEARCOL,
-                new JButton(rb.getString("ButtonClear")));
+                new JButton(Bundle.getMessage("ButtonClear")));
 
         JComboBox<String> typeCombo = new JComboBox<String>(NXTYPE_NAMES);
 
@@ -570,9 +570,9 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
     String[] clearOptions = {"Prompt User", "Clear Route", "Cancel Route"};
     JComboBox<String> clearEntry = new JComboBox<String>(clearOptions);
     JTextField durationSetting = new JTextField(10);
-    String[] colorText = {"None", "Black", "DarkGray", "Gray",
+    String[] colorText = {"ColorClear", "Black", "DarkGray", "Gray",
         "LightGray", "White", "Red", "Pink", "Orange",
-        "Yellow", "Green", "Blue", "Magenta", "Cyan"};
+        "Yellow", "Green", "Blue", "Magenta", "Cyan"}; // I18N using Bundle.getMessage from higher level color list
     Color[] colorCode = {null, Color.black, Color.darkGray, Color.gray,
         Color.lightGray, Color.white, Color.red, Color.pink, Color.orange,
         Color.yellow, Color.green, Color.blue, Color.magenta, Color.cyan};
@@ -584,7 +584,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
     private void initializeColorCombo(JComboBox<String> colorCombo) {
         colorCombo.removeAllItems();
         for (int i = 0; i < numColors; i++) {
-            colorCombo.addItem(rb.getString(colorText[i]));
+            colorCombo.addItem(Bundle.getMessage(colorText[i]));
         }
     }
 
@@ -652,7 +652,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
             dispatcherUse.setSelected(nxPairs.getDispatcherIntegration());
             optionsPane.add(p4);
 
-            JButton ok = new JButton(Bundle.getMessage("ButtonOkay"));
+            JButton ok = new JButton(Bundle.getMessage("ButtonOK"));
             optionsPane.add(ok);
             ok.addActionListener(
                     new ActionListener() {

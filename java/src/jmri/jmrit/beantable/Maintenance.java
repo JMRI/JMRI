@@ -598,7 +598,7 @@ public class Maintenance {
             tempText = new StringBuffer();
             String uName = x.getUserName();
             String line1 = MessageFormat.format(rbm.getString("ReferenceTitle"),
-                    new Object[]{"", rbm.getString("Logix"), uName, sName});
+                    new Object[]{"", Bundle.getMessage("BeanNameLogix"), uName, sName});
             for (int i = 0; i < x.getNumConditionals(); i++) {
                 sName = x.getConditionalByNumberOrder(i);
                 if (sName == null) {
@@ -612,7 +612,7 @@ public class Maintenance {
                 }
                 uName = c.getUserName();
                 String line2 = MessageFormat.format(rbm.getString("ReferenceTitle"),
-                        new Object[]{"\t", rbm.getString("Conditional"), uName, sName});
+                        new Object[]{"\t", Bundle.getMessage("BeanNameConditional"), uName, sName});
                 String line = MessageFormat.format(rbm.getString("ConditionalReference"), "\t");
                 if (sysName.equals(sName) || (userName != null && userName.length() > 0 && userName.equals(uName))) {
                     if (testName(sysName, found, names, line1, null, line, tempText)) {
@@ -674,7 +674,7 @@ public class Maintenance {
             jmri.jmrit.logix.OBlock block = oBlockManager.getBySystemName(sName);
             String uName = block.getUserName();
             String line1 = MessageFormat.format(rbm.getString("ReferenceTitle"),
-                    new Object[]{" ", rbm.getString("OBlock"), uName, sName});
+                    new Object[]{" ", Bundle.getMessage("BeanNameOBlock"), uName, sName});
             Sensor sensor = block.getSensor();
             if (sensor != null) {
                 String line = MessageFormat.format(rbm.getString("OBlockSensor"), "\t");
@@ -713,7 +713,7 @@ public class Maintenance {
             }
             String uName = r.getUserName();
             String line1 = MessageFormat.format(rbm.getString("ReferenceTitle"),
-                    new Object[]{" ", rbm.getString("Route"), uName, sName});
+                    new Object[]{" ", Bundle.getMessage("BeanNameRoute"), uName, sName});
             for (int i = 0; i < jmri.Route.MAX_CONTROL_SENSORS; i++) {
                 String line = MessageFormat.format(rbm.getString("ControlReference"), Bundle.getMessage("BeanNameSensor"));
                 if (testName(r.getRouteSensorName(i), found, names, line1, null, line, tempText)) {
@@ -780,7 +780,7 @@ public class Maintenance {
             }
             String uName = transit.getUserName();
             String line1 = MessageFormat.format(rbm.getString("ReferenceTitle"),
-                    new Object[]{" ", rbm.getString("Transit"), uName, sName});
+                    new Object[]{" ", Bundle.getMessage("BeanNameTransit"), uName, sName});
             ArrayList<jmri.TransitSection> sectionList = transit.getTransitSectionList();
             for (int i = 0; i < sectionList.size(); i++) {
                 jmri.TransitSection transitSection = sectionList.get(i);
