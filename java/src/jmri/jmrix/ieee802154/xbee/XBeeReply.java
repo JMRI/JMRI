@@ -1,7 +1,7 @@
 // XBeeReply.java
 package jmri.jmrix.ieee802154.xbee;
 
-import com.rapplogic.xbee.api.XBeeResponse;
+import com.digi.xbee.api.packet.XBeePacket;
 
 /**
  * Contains the data payload of a serial reply packet. Note that its _only_ the
@@ -15,7 +15,7 @@ import com.rapplogic.xbee.api.XBeeResponse;
  */
 public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
 
-    XBeeResponse xbresponse = null;
+    XBeePacket xbresponse = null;
 
     // create a new one
     public XBeeReply() {
@@ -42,7 +42,7 @@ public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
         setBinary(true);
     }
 
-    public XBeeReply(XBeeResponse xbr) {
+    public XBeeReply(XBeePacket xbr) {
         super();
         xbresponse = xbr;
         _dataChars = xbr.getRawPacketBytes();
@@ -62,11 +62,11 @@ public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
         return s;
     }
 
-    public XBeeResponse getXBeeResponse() {
+    public XBeePacket getXBeeResponse() {
         return xbresponse;
     }
 
-    public void setXBeeResponse(XBeeResponse xbr) {
+    public void setXBeeResponse(XBeePacket xbr) {
         xbresponse = xbr;
     }
 

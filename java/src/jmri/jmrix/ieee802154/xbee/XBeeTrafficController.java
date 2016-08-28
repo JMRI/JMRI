@@ -1,8 +1,8 @@
 // XBeeTrafficController
 package jmri.jmrix.ieee802154.xbee;
 
-import com.digi.xbee.api.models.ATCommandResponsePacket;
-import com.rapplogic.xbee.api.XBee;
+import com.digi.xbee.api.models.ATCommandResponse;
+import com.digi.xbee.api.XBeeDevice;
 import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.packet.common.ReceivePacket;
 import jmri.jmrix.AbstractMRListener;
@@ -20,12 +20,11 @@ import org.slf4j.LoggerFactory;
  * Traffic Controller interface for communicating with XBee devices directly
  * using the XBee API.
  *
- * @author Paul Bender Copyright (C) 2013
- * @version $Revision$
+ * @author Paul Bender Copyright (C) 2013,2016
  */
-public class XBeeTrafficController extends IEEE802154TrafficController implements com.rapplogic.xbee.api.PacketListener, XBeeInterface {
+public class XBeeTrafficController extends IEEE802154TrafficController implements com.digi.xbee.api.listeners.IPacketReceiveListener, XBeeInterface {
 
-    private XBee xbee = null;
+    private XBeeDevice xbee = null;
 
     /**
      * Get a message of a specific length for filling in.
@@ -52,11 +51,9 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     @Override
     public void connectPort(AbstractPortController p) {
         // Attach XBee to the port
-        if (xbee == null) {
-            xbee = new XBee();
-        }
         try {
             if( p instanceof XBeeAdapter) {
+               xbee = new XBeeDevice(p);
                XBeeAdapter xbp = (XBeeAdapter) p;
                xbee.initProviderConnection(xbp);
                xbee.addPacketListener(this);
@@ -182,25 +179,25 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     // from the the handleOneIncomingReply() in 
     // AbstractMRTrafficController.
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"NO_NOTIFY_NOT_NOTIFYALL","UW_UNCOND_WAIT","WA_NOT_IN_LOOP"}, justification="There should only be one thread waiting on xmtRunnable. wait() on xmtRunnable is unconditional and not in a loop because it is used to wait for the hardware when switching modes.")
-    public void processResponse(XBeeResponse response) {
+    public void packetReceived(ReceivedPacket response) {
 
         // before we forward this on to the listeners, handle
         // responses that may modify how the message is interpreted.
         try {
-            // set the hardware type from a response to an "HV" ATCommandResponsePacket
-            if (response instanceof ATCommandResponsePacket
-                    && ((ATCommandResponsePacket) response).getCommand().equals("HV")) {
+            // set the hardware type from a response to an "HV" ATCommandResponse
+            if (response instanceof ATCommandResponse
+                    && ((ATCommandResponse) response).getCommand().equals("HV")) {
                 setSeries(com.rapplogic.xbee.api.HardwareVersion.parse(
-                        (ATCommandResponsePacket) response));
+                        (ATCommandResponse) response));
             }
         } catch (XBeeException xbe) {
             setSeries(com.rapplogic.xbee.api.HardwareVersion.RadioType.UNKNOWN);
         }
 
-        // set the firmware version after a "VR" ATCommandResponsePacket
-        if (response instanceof ATCommandResponsePacket
-                && ((ATCommandResponsePacket) response).getCommand().equals("VR")) {
-            setVersion(((ATCommandResponsePacket) response).getValue());
+        // set the firmware version after a "VR" ATCommandResponse
+        if (response instanceof ATCommandResponse
+                && ((ATCommandResponse) response).getCommand().equals("VR")) {
+            setVersion(((ATCommandResponse) response).getValue());
         }
 
         //if(response.isError()) {
@@ -435,6 +432,14 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         }
         return (null);
     }
+
+    /*
+     * @return the XBeeDevice associated with this traffic controller.
+     */
+    public XBeeDevice getXBee(){
+        return xbee;
+    }
+
 
     private final static Logger log = LoggerFactory.getLogger(XBeeTrafficController.class);
 

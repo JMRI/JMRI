@@ -2,9 +2,11 @@
 package jmri.jmrix.ieee802154.xbee;
 
 import com.digi.xbee.api.models.ATCommandResponse;
-import com.rapplogic.xbee.api.XBeeResponse;
-import com.rapplogic.xbee.api.wpan.WpanNodeDiscover;
-import com.rapplogic.xbee.api.zigbee.ZBNodeDiscover;
+import com.digi.xbee.api.models.DiscoveryOptions;
+import com.digi.xbee.api.XBeeDevice;
+import com.digi.xbee.api.XBeeNetwork;
+import com.digi.xbee.api.RemoteXBeeDevice;
+import com.digi.xbee.api.listeners.IDiscoveryListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,14 +16,13 @@ import org.slf4j.LoggerFactory;
  * response packets.  If a node is discovered, it is added to the traffic
  * controller's node list.
  */
-public class XBeeNodeManager implements XBeeListener {
+public class XBeeNodeManager implements IDiscoveryListener {
 
     private XBeeTrafficController xtc;
+    private XBeeNetwork xbeeNetwork = null;
 
     public XBeeNodeManager(XBeeTrafficController tc) {
         xtc = tc;
-        // register to receive responses
-        xtc.addXBeeListener(this);
         startNodeDiscovery();
     }
 
@@ -29,19 +30,86 @@ public class XBeeNodeManager implements XBeeListener {
      * send out a node discovery request.
      */
     public void startNodeDiscovery() {
-        XBeeMessage m = new XBeeMessage(new com.rapplogic.xbee.api.AtCommand("ND"));
-        xtc.sendXBeeMessage(m, this);
+       // XBeeMessage m = new XBeeMessage(new com.rapplogic.xbee.api.AtCommand("ND"));
+       // xtc.sendXBeeMessage(m, this);
+       xbeeNetwork = xtc.getXBee().getNetwork();
+
+       // set the discovery timeout
+       xbeeNetwork.setDiscoveryTimeout(10000);
+
+       // set options
+       // Append the device type identifier and the local device to the
+       // network information.
+       xbeeNetwork.setDiscoveryOptions(EnumSet.of(DiscoveryOptions.APEND_DD,DiscoveryOptions.DISCOVER_MYSELF));
+
+       // add this class as a listener for node discovery.
+       xbeeNetwork.addDiscoveryListener(this);
+
+       // and start the discovery process.
+       xbeeNetwork.startDiscoveryProcess();
     }
 
-    /* This class ignores outgoing messages */
-    public void message(XBeeMessage m) {
+    /*
+     * @return true if the network discovery process is running
+     */
+    public boolean isDiscoveryRunning(){
+       if(xbeeNetwork==null) { 
+          return false;
+       }
+       return xbeeNetwork.isDiscoveryRunning();
     }
+
+    /*
+     * stop the discovery process, if it is running.
+     */
+    public void stopNodeDiscovery() {
+      if(isDiscoveryRunning()){
+         xbeeNetwork.stopDiscoveryProcess();
+      }
+    }
+
+    // IDiscoveryListener interface methods
+    
+    /*
+     * Device discovered callback.
+     */
+    @Override
+    public void deviceDiscovered(RemoteXBeeDevice discoveredDevice){
+        log.debug("New Device discovered {}", discoveredDevice.toString());
+    }
+
+    /*
+     * Discovery error callback.
+     */
+    public void discoveryError(String error){
+        log.error("Error durring node discovery process: {}",error);
+    }
+
+    /*
+     * Discovery finished callback.
+     */
+    public void discoveryFinished(String error){
+       if(error != null){
+         log.error("Node discovery processed finished with error: {}", error);
+       } else {
+         log.debug("Node discovery process completed successfully.");
+         // retrieve the node list from the network.
+         List<RemoteXBeeDevice> nodeList = xbeeNetwork.getDevice();
+
+         // add the previously unkonwn nodes to the network.
+
+         // and remove this class from the list of discovery listeners.
+         xbeeNetwork.removeDiscoveryListener(this);
+       }
+    }
+
+
 
     /* Incoming messages are searched for Node Discovery packets 
      * If one is found, the responding node is added to the
      * Traffic Controller's node list.
      */
-    public void reply(XBeeReply m) {
+/*    public void reply(XBeeReply m) {
         // NOTE: portions of this code are derived from the XBeeAPI node
         // discovery examples for wpan and zigbee.
         XBeeResponse response = m.getXBeeResponse();
@@ -175,6 +243,7 @@ public class XBeeNodeManager implements XBeeListener {
             }
         }
     }
+*/
 
     private static final Logger log = LoggerFactory.getLogger(XBeeNodeManager.class);
 
