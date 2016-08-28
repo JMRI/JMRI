@@ -472,7 +472,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                 Object value = this.getValueAt(i, j);
                 if (value == null) {
                     columnStrings[j] = spaces.toString();
-                } else if (value instanceof JComboBox) {
+                } else if (value instanceof JComboBox<?>) {
                     columnStrings[j] = (String) ((JComboBox<String>) value).getSelectedItem();
                 } else {
                     // Boolean or String
