@@ -22,6 +22,13 @@ import org.slf4j.LoggerFactory;
 @Deprecated
 public class JTableUtil {
 
+    /**
+     *
+     * @param dataModel model for table
+     * @return a table
+     * @deprecated since 4.5.4; create a {@link jmri.swing.JmriTable} and add a
+     * {@link javax.swing.RowSorter} to that table instead.
+     */
     @Deprecated
     static public JTable sortableDataModel(TableModel dataModel) {
 
