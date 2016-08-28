@@ -424,7 +424,7 @@ public class TrackSegment {
             }
         });
         JMenu lineType = new JMenu(rb.getString("ChangeTo"));
-        lineType.add(new AbstractAction(rb.getString("Line")) {
+        lineType.add(new AbstractAction(Bundle.getMessage("Line")) {
             /**
              *
              */
@@ -434,7 +434,7 @@ public class TrackSegment {
                 changeType(0);
             }
         });
-        lineType.add(new AbstractAction(rb.getString("Circle")) {
+        lineType.add(new AbstractAction(Bundle.getMessage("Circle")) {
             /**
              *
              */
@@ -444,7 +444,7 @@ public class TrackSegment {
                 changeType(1);
             }
         });
-        lineType.add(new AbstractAction(rb.getString("Elipse")) {
+        lineType.add(new AbstractAction(Bundle.getMessage("Ellipse")) {
             /**
              *
              */
@@ -1080,12 +1080,12 @@ public class TrackSegment {
                     setCentreSegY(getCentreY() - java.lang.Math.sin(startRad + halfAngle) * radius);
 
                 } else {
-                    // Elipse - Round start angle to the closest multiple of 90
+                    // Ellipse - Round start angle to the closest multiple of 90
                     setStartadj(java.lang.Math.round(getStartadj() / 90.0D) * 90.0D);
-                    // Elipse - Compute rectangle required by Arc2D.Double
+                    // Ellipse - Compute rectangle required by Arc2D.Double
                     setCW(java.lang.Math.abs(a) * 2.0D);
                     setCH(java.lang.Math.abs(o) * 2.0D);
-                    // Elipse - Adjust rectangle corner, depending on quadrant
+                    // Ellipse - Adjust rectangle corner, depending on quadrant
                     if (o * a < 0.0D) {
                         a = -a;
                     } else {
