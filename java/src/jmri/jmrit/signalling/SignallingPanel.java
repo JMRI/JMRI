@@ -26,7 +26,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
@@ -43,6 +42,7 @@ import jmri.Turnout;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+import jmri.swing.JmriTable;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
@@ -1662,15 +1662,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         protected JTable makeJTable(TableSorter srtr) {
             this.sorter = srtr;
-            return new JTable(sorter) {
-                public boolean editCellAt(int row, int column, java.util.EventObject e) {
-                    boolean res = super.editCellAt(row, column, e);
-                    java.awt.Component c = this.getEditorComponent();
-                    if (c instanceof javax.swing.JTextField) {
-                        ((JTextField) c).selectAll();
-                    }
-                    return res;
-                }
+            return new JmriTable(sorter) {
 
                 public TableCellRenderer getCellRenderer(int row, int column) {
                     if (column == STATE_COLUMN) {

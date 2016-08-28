@@ -41,10 +41,10 @@ public interface JTablePersistenceManager {
      *
      * @param table the table to persist
      * @throws IllegalArgumentException if another table instance is already
-     *                                  persisted by the same name or if the
-     *                                  table name is null
+     *                                  persisted by the same name
+     * @throws NullPointerException     if the table name is null
      */
-    public void persist(@Nonnull JTable table) throws IllegalArgumentException;
+    public void persist(@Nonnull JTable table) throws IllegalArgumentException, NullPointerException;
 
     /**
      * Stop persisting the table. This does not clear the persistence state, but
