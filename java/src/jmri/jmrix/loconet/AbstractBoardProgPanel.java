@@ -529,7 +529,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
             readAllButton.setSelected(false);
             writeAllButton.setSelected(false);
             if (origState != 0) {
-                status.setText(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("DONE"));
+                status.setText(Bundle.getMessage("ButtonDone"));
             } else {
                 status.setText(rb.getString("ERROR_ABORTED_DUE_TO_TIMEOUT"));
             }

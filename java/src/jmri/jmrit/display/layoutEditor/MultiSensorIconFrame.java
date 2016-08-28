@@ -33,8 +33,8 @@ public class MultiSensorIconFrame extends JmriJFrame {
     JmriJFrame defaultsFrame;
     MultiIconEditor defaultIcons;
     LayoutEditor layoutEditor = null;
-    JRadioButton updown = new JRadioButton("Up - Down");
-    JRadioButton rightleft = new JRadioButton("Right - Left");
+    JRadioButton updown = new JRadioButton("Up <> Down");
+    JRadioButton rightleft = new JRadioButton("Right <> Left");
     ButtonGroup group = new ButtonGroup();
 
     MultiSensorIconFrame(LayoutEditor p) {

@@ -99,7 +99,7 @@ How OBlocks, Portals and OPaths are used is described in the
  <p>
  OBlocks, Portals and OPaths can be created and edited by the using the methods described below,
  or they can also be created and edited from a WYSIWYG graphical interface described in the
- <a href="../display/Circuitbuilder.shtml">Circuit Builder</a> Help.</p>
+ <a href="../display/CircuitBuilder.shtml">Circuit Builder</a> Help.</p>
  <p>Circuit Builder can be
  used you if you have a track diagram using track icons showing your layout.
  Otherwise you will need to use the tables below. See 
@@ -269,7 +269,7 @@ This menu has the standard menu items for JMRI help.
 automated train Scripts, see <a href="../logix/Warrant.shtml">Warrants</a>.
 <p>See <a href="../logix/OBlockEdit.shtml">Creating and Editing OBlocks, Portals and OPaths</a>
 for more details on using these Tables.
-<p>See <a href="..\display\Circuitbuilder.shtml">Circuit Builder</a>
+<p>See <a href="../display/CircuitBuilder.shtml">Circuit Builder</a>
 for creating and editing OBlocks, Portals and OPaths from a graphical representation of your track plan.</p>
 
 <!--#include virtual="/Footer" -->

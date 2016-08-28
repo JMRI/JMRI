@@ -1359,13 +1359,13 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         public String getColumnName(int col) {
             switch (col) {
                 case SNAME_COLUMN:
-                    return rb.getString("ColumnSystemName");
+                    return Bundle.getMessage("ColumnSystemName");
                 case UNAME_COLUMN:
-                    return rb.getString("ColumnUserName");
+                    return Bundle.getMessage("ColumnUserName");
                 case INCLUDE_COLUMN:
                     return rb.getString("ColumnInclude");
                 case STATE_COLUMN:
-                    return rb.getString("ColumnState");
+                    return rb.getString("ColumnState"); // pick up via rb. from SignallingBundle as it is a different "State" label than non-signal tables
                 default:
                     return "unknown";
             }
@@ -1743,11 +1743,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         public String getColumnName(int col) {
             switch (col) {
                 case SNAME_COLUMN:
-                    return rb.getString("ColumnSystemName");
+                    return Bundle.getMessage("ColumnSystemName");
                 case UNAME_COLUMN:
-                    return rb.getString("ColumnUserName");
+                    return Bundle.getMessage("ColumnUserName");
                 case STATE_COLUMN:
-                    return rb.getString("ColumnState");
+                    return rb.getString("ColumnState"); // pick up via rb. from SignallingBundle as it is a different "State" label than non-signal tables
 
                 default:
                     return "unknown";

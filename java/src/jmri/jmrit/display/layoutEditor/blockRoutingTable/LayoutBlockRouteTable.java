@@ -18,7 +18,7 @@ import jmri.util.com.sun.TableSorter;
  */
 public class LayoutBlockRouteTable extends jmri.util.swing.JmriPanel {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
+    //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     LayoutBlockRouteTableModel dataModel;
     LayoutBlockNeighbourTableModel neighbourDataModel;
@@ -148,17 +148,17 @@ public class LayoutBlockRouteTable extends jmri.util.swing.JmriPanel {
 
         JPanel neigh = new JPanel();
         neigh.setLayout(new BoxLayout(neigh, BoxLayout.Y_AXIS));
-        neigh.add(new JLabel(rb.getString("Neighbouring")));
+        neigh.add(new JLabel(Bundle.getMessage("Neighbouring")));
         neigh.add(neighbourDataScroll);
 
         JPanel through = new JPanel();
         through.setLayout(new BoxLayout(through, BoxLayout.Y_AXIS));
-        through.add(new JLabel(rb.getString("ValidPaths")));
+        through.add(new JLabel(Bundle.getMessage("ValidPaths")));
         through.add(throughPathsDataScroll);
 
         JPanel routePane = new JPanel();
         routePane.setLayout(new BoxLayout(routePane, BoxLayout.Y_AXIS));
-        routePane.add(new JLabel(rb.getString("Accessible")));
+        routePane.add(new JLabel(Bundle.getMessage("Accessible")));
         routePane.add(dataScroll);
 
         JSplitPane splitTopPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,

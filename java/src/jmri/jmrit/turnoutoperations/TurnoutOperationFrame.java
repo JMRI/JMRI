@@ -45,7 +45,7 @@ public class TurnoutOperationFrame extends JDialog {
         outerBox.add(tabPane);
         Box bottomBox = Box.createHorizontalBox();
         bottomBox.add(Box.createHorizontalGlue());
-        JButton okButton = new JButton(Bundle.getMessage("OK"));
+        JButton okButton = new JButton(Bundle.getMessage("ButtonOK"));
         okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 self.doOK();
@@ -53,7 +53,7 @@ public class TurnoutOperationFrame extends JDialog {
         }
         );
         bottomBox.add(okButton);
-        JButton cancelButton = new JButton(Bundle.getMessage("Cancel"));
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 setVisible(false);
@@ -61,7 +61,7 @@ public class TurnoutOperationFrame extends JDialog {
         }
         );
         bottomBox.add(cancelButton);
-        JButton deleteButton = new JButton(Bundle.getMessage("Delete"));
+        JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
         deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 self.doDelete();
