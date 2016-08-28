@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<!-- UpDated by Blorec Herv&#233; 2016-08-28-->
+<head>
+  <title>
+ 	JMRI: Blocks Documentation
+  </title>
+  <meta name="Author" content="Bob Jacobsen">
+  <meta name="keywords" content="layout java model railroad JMRI tools dcc">
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1>JMRI: Documentation Canton</h1>
+
+<h2>Qu'est ce que les Cantons</h2>
+<p>Les Cantons sont des sections de voies dont l'occupation peut &#234;tre surveill&#233;e individuellement. La division
+de la voie en Cantons est optionnelle. Les Cantons d&#233;finis dans un sch&#233;ma de voie correspondent 
+normalement aux Cantons physiques du r&#233;seau. L'occupation du Canton est indiqu&#233;e par l'&#233;tat d'un 
+<a href="Sensors.shtml">Capteur</a> d'occupation. Quand une voie d'un r&#233;seau est partag&#233;e en Cantons, toute la voie 
+n'appartient pas obligatoirement &#224; un Canton. Par exemple, des voies de triage peuvent ne pas &#234;tre dans un Canton,
+tandis que la voie principale sera presque toujours partag&#233;e en Cantons. Le principal usage des Cantons est de faciliter 
+la Signalisation, mais les Cantons peuvent &#234;tre utilis&#233;s pour d'autres fonctions de commande et d'animations.</p>
+
+<h2>Comment d&#233;finir des Cantons</h2>
+
+<h3>Propri&#233;t&#233;s des Cantons</h3>
+<p>Les Cantons peuvent &#234;tre d&#233;finis manuellement depuis le Tableau Canton, en utilisant un script ou automatiquement dans un &#201;diteur de Panneau de R&#233;seau.
+Quand un Canton est d&#233;fini sur l'&#201;diteur de Panneau de R&#233;seau, un nouveau Canton est cr&#233;er, s'il n'existe pas d&#233;j&#224;.
+Dans l'&#201;diteur de Panneau de R&#233;seau, les Cantons sont identifi&#233;s par leur Nom Utilisateur, donc si un bloc repr&#233;sent&#233;
+dans le Tableau Canton est utilis&#233; dans un &#201;diteur de Panneau de R&#233;seau, son Nom Utilisateur ne peut pas &#234;tre chang&#233;<br>
+Si vous voulez changer le Nom Utilisateur d'un Canton utilis&#233; dans l'&#201;diteur de Panneau de R&#233;seau, faites le 
+changement dans l'&#201;diteur de R&#233;seau, pas dans le Tableau Canton.</p>
+<p>Pour compl&#233;ter la d&#233;finition d'un Canton, les Chemins et les r&#233;glages Bean doivent &#234;tre attach&#233;s &#224; 
+chaque Canton. Les Chemins d&#233;crivent les points d'entr&#233;e du Canton. Chaque Canton a un ou plusieurs 
+Chemin associ&#233;s. Parfois un Aiguillage doit d&#233;finir un certain trajet pour utiliser un Chemin; Les 
+r&#233;glages Bean apportent l'information. Les Chemins et les r&#233;glages Bean sont d&#233;finis automatiquement pour 
+un Canton dans l'&#201;diteur de Panneau de R&#233;seau. Ils peuvent aussi &#234;tre d&#233;finis dans un script. Il n'y a 
+actuellement aucun moyen d'entrer manuellement les Chemins ou les param&#233;tres Bean. Chemins ou les param&#233;tres Bean ne sont
+montr&#233;s dans le Tableau Cantons, et sont d&#233;crits ici seulement par souci d'exhaustivit&#233;.<br>
+Les Chemins peuvent &#234;tre effac&#233;s en utilisant le menu Chemins</p>.
+
+<h3>Le Tableau Canton</h3>
+<p>Les Cantons sont cr&#233;&#233;s et modifi&#233;s dans le <a href="../../package/jmri/jmrit/beantable/BlockTable.shtml">Tableau Canton</a>.</p>
+<p>Pour une exploitation automatique des Trains, un attribut Longueur et un attribut Courbure peuvent &#234;tre assign&#233;s 
+optionnellement &#224; un Canton. Ces attributs optionnels sont saisis manuellement
+ dans ce tableau. Si les trains ne circulent pas automatiquement dans 
+un Canton, il n'est pas n&#233;cessaire d'ajouter ces attributs.</p>
+
+ 
+<h4>Commandes du Tableau Canton</h4>
+		<ul>
+		<li>Au dessous du tableau Canton, vous trouverez le bouton <b>Ajouter...</b></li>
+		<li>Le menu <b> Chemins</b> contient un &#233;l&#233;ment Effacer Chemins...</li>
+		<li>Le menu <b>Vitesse</b> vous permet de d&#233;finir l'&#233;chelle du syst&#233;me par d&#233;faut </li>
+
+<a name="addBlock"></a><h3>Ajouter un nouveau Canton</h3>
+<p>Pour ajouter un nouveau Canton suivre cette <a href="../../package/jmri/jmrit/beantable/BlockEdit.shtml">proc&#233;dure</a></p>
+
+<h3>Modification d'un Canton Existant</h3>
+<p>Pour v&#233;rifier et ou modifier les propri&#233;t&#233;s d'un Canton, suivre cette <a href="../../package/jmri/jmrit/beantable/BlockEdit.shtml">proc&#233;dure</a></p>
+
+<h3>Sauvegarde des Cantons sur le disque</h3>
+<p>Les Cantons sont sauvegard&#233;s dans votre fichier de configuration du r&#233;seau, avec les Aiguillages, 
+les Capteurs, les Feux de Signalisation, etc. Pour stocker ces informations sur le disque, utilisez <b>Stocker 
+Configuration..</b> dans le menu <b>Fichier</b> en haut du tableau 
+Canton ( ou autres tables depuis le menu Outils ), ou s&#233;lectionnez <b>Stocker Panneau...</b>
+dans le menu <b>Panneau</b>. Notez que l'&#233;tat libre/occup&#233; de chaque Canton 
+n'est pas sauvegard&#233; dans le fichier de configuration. Quand les cantons sont charg&#233;s depuis 
+un fichier de configuration, leurs &#233;tats sont lus depuis les Capteurs.
+
+<!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
