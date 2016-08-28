@@ -22,8 +22,16 @@ public class Z21XNetSimulatorAdapter {
     // 0x00 means normal mode.
     private final static int csNormalMode = 0x00;
 
+    // package protected array of Z21SimulatorLocoData objects.
+    Z21SimulatorLocoData locoData[];
+    int locoCount; // counter for locoData array.
+    int locoPosition; // Position for locoData array.
+
     public Z21XNetSimulatorAdapter() {
        csStatus = csNormalMode;
+       int locoCount = 0;
+       int locoPosition = 0;
+       locoData = new Z21SimulatorLocoData[20];
     }
 
     // generateReply is the heart of the simulation.  It translates an 
@@ -84,6 +92,13 @@ public class Z21XNetSimulatorAdapter {
                         reply.setElement(8, 0x00);  // set F21-F28 off
                         reply.setElement(9, 0x00);  // set the parity byte to 0
                         reply.setParity();         // set the parity correctly.
+                        // save the address and speed information for
+                        // the simulator's RailCom values.
+                        locoData[locoPosition]=new Z21SimulatorLocoData((byte)(m.getElement(2)&0xff),(byte)(m.getElement(3)&0xff),(byte)(m.getElement(4)&0xff));
+                        locoCount = (locoCount +1) %19;
+                        if(locoCount<19) // 19 is the limit, set by the protocol.
+                           locoCount++;
+                        locoPosition = (locoPosition +1) %19;
                         break;
                      case XNetConstants.LOCO_SPEED_27:
                         log.debug("Unsupoorted requested received: {}", m.toString());
@@ -105,6 +120,10 @@ public class Z21XNetSimulatorAdapter {
                         reply.setElement(8, 0x00);  // set F21-F28 off
                         reply.setElement(9, 0x00);  // set the parity byte to 0
                         reply.setParity();         // set the parity correctly.
+                        locoData[locoPosition]=new Z21SimulatorLocoData((byte)(m.getElement(2)&0xff),(byte)(m.getElement(3)&0xff),(byte)(m.getElement(4)&0xff));
+                        if(locoCount<19) // 19 is the limit, set by the protocol.
+                           locoCount++;
+                        locoPosition = (locoPosition +1) %19;
                         break;
                      case XNetConstants.LOCO_SPEED_128:
                         // z21 specific locomotive information reply is expected.
@@ -122,6 +141,10 @@ public class Z21XNetSimulatorAdapter {
                         reply.setElement(8, 0x00);  // set F21-F28 off
                         reply.setElement(9, 0x00);  // set the parity byte to 0
                         reply.setParity();         // set the parity correctly.
+                        locoData[locoPosition]=new Z21SimulatorLocoData((byte)(m.getElement(2)&0xff),(byte)(m.getElement(3)&0xff),(byte)(m.getElement(4)&0xff));
+                        if(locoCount<19) // 19 is the limit, set by the protocol.
+                           locoCount++;
+                        locoPosition = (locoPosition +1) %19;
                         break;
                      case Z21Constants.LAN_X_SET_LOCO_FUNCTION:
                         // z21 specific locomotive information reply is expected.

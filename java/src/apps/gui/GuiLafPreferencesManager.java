@@ -293,7 +293,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * for each.
      */
     private void applyFontSize() {
-        logAllFonts();
+        if (log.isDebugEnabled()) logAllFonts();
         if (this.getFontSize() != this.getDefaultFontSize()) {
 //            UIManager.getDefaults().keySet().stream().forEach((key) -> {
             Enumeration<Object> keys = UIManager.getDefaults().keys();
@@ -304,7 +304,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
                     UIManager.put(key, UIManager.getFont(key).deriveFont(((Font) value).getStyle(), getCalcFontSize(((Font) value).getSize())));
                 }
             }
-            logAllFonts();
+            if (log.isDebugEnabled()) logAllFonts();
         }
     }
 

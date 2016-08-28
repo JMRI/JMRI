@@ -21,17 +21,22 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SortOrder;
 import javax.swing.border.Border;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SignalGroup;
 import jmri.SignalHead;
 import jmri.Turnout;
+import jmri.swing.JmriTable;
+import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.SystemNameComparator;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -134,8 +139,12 @@ public class SignalGroupSubTableAction {
 
     void setSignalStateBox(int mode, JComboBox<String> box) {
         SignalHead sig = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(curSignal);
-        String result = jmri.util.StringUtil.getNameFromState(mode, sig.getValidStates(), sig.getValidStateNames());
-        box.setSelectedItem(result);
+        if (sig != null) {
+            String result = jmri.util.StringUtil.getNameFromState(mode, sig.getValidStates(), sig.getValidStateNames());
+            box.setSelectedItem(result);
+        } else {
+            log.error("Failed to get signal {}", curSignal);
+        }
     }
 
     int turnoutModeFromBox(JComboBox<String> box) {
@@ -215,8 +224,11 @@ public class SignalGroupSubTableAction {
         iter = systemNameList.iterator();
         while (iter.hasNext()) {
             String systemName = iter.next();
-            String userName = sm.getBySystemName(systemName).getUserName();
-            _sensorList.add(new SignalGroupSensor(systemName, userName));
+            Sensor sen = sm.getBySystemName(systemName);
+            if (sen != null) {
+                String userName = sen.getUserName();
+                _sensorList.add(new SignalGroupSensor(systemName, userName));
+            }
         }
         initializeIncludedList();
 
@@ -249,9 +261,13 @@ public class SignalGroupSubTableAction {
             contentPane.add(p);
             if (curSignalHead.getClass().getName().contains("SingleTurnoutSignalHead")) {
                 jmri.implementation.SingleTurnoutSignalHead Signal = (jmri.implementation.SingleTurnoutSignalHead) InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(curSignal);
-                if ((g.getSignalHeadOnState(curSignalHead) == 0x00) && (g.getSignalHeadOffState(curSignalHead) == 0x00)) {
-                    g.setSignalHeadOnState(curSignalHead, Signal.getOnAppearance());
-                    g.setSignalHeadOffState(curSignalHead, Signal.getOffAppearance());
+                if (Signal != null) {
+                    if ((g.getSignalHeadOnState(curSignalHead) == 0x00) && (g.getSignalHeadOffState(curSignalHead) == 0x00)) {
+                        g.setSignalHeadOnState(curSignalHead, Signal.getOnAppearance());
+                        g.setSignalHeadOffState(curSignalHead, Signal.getOffAppearance());
+                    }
+                } else {
+                    log.error("Failed to get signal {}", curSignal);
                 }
             }
 
@@ -306,13 +322,11 @@ public class SignalGroupSubTableAction {
             //p21t.add(new JLabel("this Signal Group."));
             p2xt.add(p21t);
             _SignalGroupTurnoutModel = new SignalGroupTurnoutModel();
-            JTable SignalGroupTurnoutTable = jmri.util.JTableUtil.sortableDataModel(_SignalGroupTurnoutModel);
-            try {
-                jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter) SignalGroupTurnoutTable.getModel());
-                tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-                tmodel.setSortingStatus(SignalGroupTurnoutModel.SNAME_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
-            } catch (ClassCastException e3) {
-            }  // if not a sortable table model
+            JTable SignalGroupTurnoutTable = new JmriTable(_SignalGroupTurnoutModel);
+            TableRowSorter<SignalGroupTurnoutModel> sgtSorter = new TableRowSorter<>(_SignalGroupTurnoutModel);
+            sgtSorter.setComparator(SignalGroupTurnoutModel.SNAME_COLUMN, new SystemNameComparator());
+            RowSorterUtil.setSortOrder(sgtSorter, SignalGroupTurnoutModel.SNAME_COLUMN, SortOrder.ASCENDING);
+            SignalGroupTurnoutTable.setRowSorter(sgtSorter);
             SignalGroupTurnoutTable.setRowSelectionAllowed(false);
             SignalGroupTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 80));
 
@@ -368,13 +382,11 @@ public class SignalGroupSubTableAction {
             //p21s.add(new JLabel(" in this SignalGroup."));
             p2xs.add(p21s);
             _SignalGroupSensorModel = new SignalGroupSensorModel();
-            JTable SignalGroupSensorTable = jmri.util.JTableUtil.sortableDataModel(_SignalGroupSensorModel);
-            try {
-                jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter) SignalGroupSensorTable.getModel());
-                tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-                tmodel.setSortingStatus(SignalGroupSensorModel.SNAME_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
-            } catch (ClassCastException e3) {
-            }  // if not a sortable table model
+            JTable SignalGroupSensorTable = new JmriTable(_SignalGroupSensorModel);
+            TableRowSorter<SignalGroupSensorModel> sgsSorter = new TableRowSorter<>(_SignalGroupSensorModel);
+            sgsSorter.setComparator(SignalGroupSensorModel.SNAME_COLUMN, new SystemNameComparator());
+            RowSorterUtil.setSortOrder(sgsSorter, SignalGroupSensorModel.SNAME_COLUMN, SortOrder.ASCENDING);
+            SignalGroupSensorTable.setRowSorter(sgsSorter);
             SignalGroupSensorTable.setRowSelectionAllowed(false);
             SignalGroupSensorTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 80));
             JComboBox<String> stateSCombo = new JComboBox<String>();

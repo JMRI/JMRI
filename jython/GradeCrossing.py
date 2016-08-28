@@ -1,7 +1,7 @@
 # Sample script showing how to operate a grade crossing with block detection.
 #
-# This scrip requires an already configured audio buffer loaded with a .wav 
-# file of the users choice. It also requires an audio source configure to use
+# This script requires an already configured audio buffer loaded with a .wav 
+# file of the users choice. It also requires an audio source configured to use
 # the audio buffer.
 #
 # This script will detect a train entering any approach block that is listed in 
@@ -28,7 +28,7 @@ bell = audio.provideAudio("IAS1")
 # Timer delay in seconds, adjust as necessary.
 delay = 20 
 
-# A list that holds each approch block by userName, should contain at least two
+# A list that holds each approach block by userName, should contain at least two
 # blocks for each track crossing the grade, but may contain more. Adjust the 
 # string names as necessary. The blocks named will be created if they do not
 # already exist.
@@ -46,7 +46,7 @@ class GradeCrossingListener(java.beans.PropertyChangeListener):
     def propertyChange(self, event):
         
         # Is this event for an approach block?       
-        if (approachBlocks.contains(event.source.userName)) :    
+        if (event.propertyName == "state" and approachBlocks.contains(event.source.userName)) :    
             print "change",event.propertyName
             print "source userName", event.source.userName
             
@@ -61,10 +61,9 @@ class GradeCrossingListener(java.beans.PropertyChangeListener):
                         break
                     else : 
                         self.StartGradeCrossing()
-                        timer.start()
                         
             # Has the train exited the approach block?        
-            elif (event.newValue == jmri.Block.UNOCCUPIED) :
+            if (event.newValue == jmri.Block.UNOCCUPIED) :
                 
                 # Is any island block occupied? Yes, break. No, stop the grade
                 # crossing.
@@ -76,19 +75,16 @@ class GradeCrossingListener(java.beans.PropertyChangeListener):
                         self.StopGradeCrossing()
                
         # Is this event for an island block?
-        if (islandBlocks.contains(event.source.userName)) :
+        if (event.propertyName == "state" and islandBlocks.contains(event.source.userName)) :
             print "change",event.propertyName            
             print "source userName", event.source.userName
             
             # Has the train entered the island block?
             if (event.newValue == jmri.Block.OCCUPIED):
                 print "OCCUPIED"
-                if (bell.getState() == jmri.Audio.STATE_STOPPED):
-                    self.StartGradeCrossing()
-                    
-                else :
-                    timer.stop()
-                    print "Stopping Timer"
+                self.StartGradeCrossing()                 
+                timer.stop()
+                print "Stopping Timer"
             
             # Has the train exited the island? Yes, stop the grade crossing. No,
             # break.
@@ -96,46 +92,53 @@ class GradeCrossingListener(java.beans.PropertyChangeListener):
                     if (blocks.getBlock(islandBlocks.get(i)).getState() == jmri.Block.OCCUPIED):
                         break
                     else :
-                        if (bell.getState() == jmri.Audio.STATE_PLAYING) :
-                            print "UNOCCUPIED"
-                            self.StopGradeCrossing()
+                        print "UNOCCUPIED"
+                        self.StopGradeCrossing()
                  
             
     # Start the grade crossing method.                
     def StartGradeCrossing(self) :
-        print "Playing Sound"                    
-        bell.fadeIn()
+        if (bell.getState() != jmri.Audio.STATE_PLAYING) :
+            print "Grade Crossing Started"                    
+            bell.fadeIn()
+            
+        if (not timer.isRunning()) :
+            timer.start()
      
     # Stop the grade crossing method.
     def StopGradeCrossing(self):
-        print "Stopping Sound"
-        bell.fadeOut()
-        timer.stop()              
+        if (bell.getState() != jmri.Audio.STATE_STOPPED) :
+            print "Grade Crossing Stopped"
+            bell.fadeOut()
+            
+        if (timer.isRunning) :
+            timer.stop()              
 
 # Timer elapsed listener
 class timerElapsed(ActionListener):
+    
+    # Handles the timer elapsed event
     def actionPerformed(self, e):
         for i in range(islandBlocks.size()) :
             if (blocks.getBlock(islandBlocks.get(i)).getState() == jmri.Block.OCCUPIED):
                 break
             else :
-                bell.fadeOut()        
-                timer.stop()
-                print "Timer Stopped Sound"
+                print "Timer Fired"
+                listener.StopGradeCrossing()
 
 # Create the grade crossing listener
 listener = GradeCrossingListener()
 
-# Create a timer that calls its elaps listener after a delay. Stops the grade
+# Create a timer that calls its elapsed listener after a delay. Stops the grade
 # crossing after the delay if the island is not occupied by a train.
 timer = Timer(1000 * delay, timerElapsed())
 
-# Add PropertyChangeListner for each approach block and create the block if it
+# Add a PropertyChangeListner for each approach block and create the block if it
 # does not already exist.
 for i in range(approachBlocks.size()) :
     blocks.provideBlock(approachBlocks.get(i)).addPropertyChangeListener(listener)
     
-# Add PropertyChangeListner for each island block and create the block if it
+# Add a PropertyChangeListner for each island block and create the block if it
 # does not already exist.
 for i in range(islandBlocks.size()) :
     blocks.provideBlock(islandBlocks.get(i)).addPropertyChangeListener(listener)

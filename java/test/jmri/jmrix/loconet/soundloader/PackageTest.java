@@ -34,6 +34,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite(PackageTest.class);
         suite.addTest(LoaderEngineTest.suite());
+        suite.addTest(BundleTest.suite());
         return suite;
     }
 

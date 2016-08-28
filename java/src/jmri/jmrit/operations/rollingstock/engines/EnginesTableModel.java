@@ -8,8 +8,6 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -371,7 +369,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 return s;
             }
             case RFID_WHERE_LAST_SEEN_COLUMN: {
-                return eng.getWhereLastSeenName() + " (" + eng.getTrackLastSeenName() +")";
+                return eng.getWhereLastSeenName() +
+                        (eng.getTrackLastSeenName().equals(Engine.NONE) ? "" : " (" + eng.getTrackLastSeenName() + ")");
             }
             case RFID_WHEN_LAST_SEEN_COLUMN: {
                 return eng.getWhenLastSeenDate();

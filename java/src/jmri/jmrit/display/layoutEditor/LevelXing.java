@@ -966,7 +966,7 @@ public class LevelXing {
                 blockBDAssigned = true;
             }
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
-            popup.add(new AbstractAction(rb.getString("Edit")) {
+            popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 /**
                  *
                  */
@@ -1217,7 +1217,7 @@ public class LevelXing {
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
-            panel5.add(xingEditDone = new JButton(rb.getString("Done")));
+            panel5.add(xingEditDone = new JButton(Bundle.getMessage("ButtonDone")));
             xingEditDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     xingEditDonePressed(e);
@@ -1225,7 +1225,7 @@ public class LevelXing {
             });
             xingEditDone.setToolTipText(rb.getString("DoneHint"));
             // Cancel
-            panel5.add(xingEditCancel = new JButton(rb.getString("Cancel")));
+            panel5.add(xingEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             xingEditCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     xingEditCancelPressed(e);
@@ -1280,7 +1280,7 @@ public class LevelXing {
         if (blockAC == null) {
             JOptionPane.showMessageDialog(editLevelXingFrame,
                     rb.getString("Error1"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         blockAC.editLayoutBlock(editLevelXingFrame);
@@ -1319,7 +1319,7 @@ public class LevelXing {
         if (blockBD == null) {
             JOptionPane.showMessageDialog(editLevelXingFrame,
                     rb.getString("Error1"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         blockBD.editLayoutBlock(editLevelXingFrame);

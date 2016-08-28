@@ -1,7 +1,6 @@
 // LocoMonPane.java
 package jmri.jmrix.loconet.locomon;
 
-import jmri.jmrix.loconet.LocoNetBundle;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -40,7 +39,7 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
                 uName = "";
             }
         }
-        return uName + LocoNetBundle.bundle().getString("MenuItemLocoNetMonitor");
+        return uName + Bundle.getMessage("MenuItemLocoNetMonitor");
     }
 
     public void dispose() {
@@ -120,7 +119,7 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
         private static final long serialVersionUID = -3893647635865243864L;
 
         public Default() {
-            super(LocoNetBundle.bundle().getString("MenuItemLocoNetMonitor"),
+            super(Bundle.getMessage("MenuItemLocoNetMonitor"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     LocoMonPane.class.getName(),
                     jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));

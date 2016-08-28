@@ -39,6 +39,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextField;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
@@ -94,8 +95,8 @@ public class PanelEditor extends Editor implements ItemListener {
      *
      */
     private static final long serialVersionUID = -3568655156437993712L;
-    JTextField nextX = new JTextField(Bundle.getMessage("DefaultX"), 4);
-    JTextField nextY = new JTextField(Bundle.getMessage("DefaultY"), 4);
+    JTextField nextX = new JTextField("0", 4);
+    JTextField nextY = new JTextField("0", 4);
 
     JCheckBox editableBox = new JCheckBox(Bundle.getMessage("CheckBoxEditable"));
     JCheckBox positionableBox = new JCheckBox(Bundle.getMessage("CheckBoxPositionable"));
@@ -290,7 +291,7 @@ public class PanelEditor extends Editor implements ItemListener {
         _addIconBox.addItem(new ComboBoxItem("RightTurnout"));
         _addIconBox.addItem(new ComboBoxItem("LeftTurnout"));
         _addIconBox.addItem(new ComboBoxItem("SlipTOEditor"));
-        _addIconBox.addItem(new ComboBoxItem("Sensor"));
+        _addIconBox.addItem(new ComboBoxItem("Sensor")); // NOI18N
         _addIconBox.addItem(new ComboBoxItem("SignalHead"));
         _addIconBox.addItem(new ComboBoxItem("SignalMast"));
         _addIconBox.addItem(new ComboBoxItem("Memory"));
@@ -396,7 +397,10 @@ public class PanelEditor extends Editor implements ItemListener {
         }
 
         // register the resulting panel for later configuration
-        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerUser(this);
+        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerUser(this);
+        }
 
         // when this window closes, set contents of target uneditable
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -467,6 +471,7 @@ public class PanelEditor extends Editor implements ItemListener {
     static class ComboBoxItem {
 
         String name;
+        String BundleName;
 
         ComboBoxItem(String n) {
             name = n;
@@ -478,7 +483,24 @@ public class PanelEditor extends Editor implements ItemListener {
 
         @Override
         public String toString() {
-            return Bundle.getMessage(name);
+            // I18N split Bundle name
+            // use NamedBeanBundle property for basic beans like "Turnout" I18N
+            if ("Sensor".equals(name)) {
+                BundleName = "BeanNameSensor";
+            } else if ("SignalHead".equals(name)) {
+                BundleName = "BeanNameSignalHead";
+            } else if ("SignalMast".equals(name)) {
+                BundleName = "BeanNameSignalMast";
+            } else if ("Memory".equals(name)) {
+                BundleName = "BeanNameMemory";
+            } else if ("Reporter".equals(name)) {
+                BundleName = "BeanNameReporter";
+            } else if ("Light".equals(name)) {
+                BundleName = "BeanNameLight";
+            } else {
+                BundleName = name;
+            }
+            return Bundle.getMessage(BundleName); // use NamedBeanBundle property for basic beans like "Turnout" I18N
         }
     }
 
@@ -1074,7 +1096,8 @@ public class PanelEditor extends Editor implements ItemListener {
         if (!isEditable()) {
             return;
         }
-        JMenu _add = new JMenu("Add Item"/*Bundle.getMessage("FontBackgroundColor")*/);
+        JMenu _add = new JMenu("Add Item"); // NOI18N
+        // for the following list, I18N picked up later on
         addItemPopUp(new ComboBoxItem("RightTurnout"), _add);
         addItemPopUp(new ComboBoxItem("LeftTurnout"), _add);
         addItemPopUp(new ComboBoxItem("SlipTOEditor"), _add);
@@ -1327,7 +1350,7 @@ public class PanelEditor extends Editor implements ItemListener {
         addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Green"), Color.green);
         addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Blue"), Color.blue);
         addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Magenta"), Color.magenta);
-        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Clear"), null);
+        addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("ColorClear"), null);
     }
 
     protected void addColorMenuEntry(JMenu menu, ButtonGroup colorButtonGroup,

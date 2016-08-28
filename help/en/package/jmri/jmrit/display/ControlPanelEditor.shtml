@@ -141,7 +141,7 @@ are available from Panel Editor.</p>
 The <b>Occupancy Table</b> menu item opens a window where occupancy block (also called track circuits),
 <i>OBlocks</i> can be defined , along with <i>Portals</i> that join OBlocks and paths <i>OPath</i>
 that are trackage routes which traverse the OBlock.  More information may be found at 
-<a href="..\logix\OBlockTable.shtml">The Occupancy Block Tables</a>.</p>
+<a href="../logix/OBlockTable.shtml">The Occupancy Block Tables</a>.</p>
 <p>
 The <b>Item Table List</b> menu item opens the device table list.  The menu item can also
 be invoked with the accelerator key, Control T.</p>
@@ -156,7 +156,7 @@ Warrants will appear. These menu items are described in <a href="..\logix\Warran
 When two or more Occupancy Blocks are defined this menu appears.
 The items under this menu provide a graphic user interface (GUI) for defining Occupancy Blocks,
 Portals and Paths, that is, a track circuit. Descriptions of the menu items are found in
-<a href="Circuitbuilder.shtml">Circuit Builder</a>.</p>
+<a href="CircuitBuilder.shtml">Circuit Builder</a>.</p>
 <p>
 
 <h3>Draw Shapes</h3>

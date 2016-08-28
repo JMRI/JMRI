@@ -26,7 +26,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
@@ -43,6 +42,7 @@ import jmri.Turnout;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+import jmri.swing.JmriTable;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
@@ -617,8 +617,13 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         Iterator<String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
             String systemName = iter.next();
-            String userName = bm.getBySystemName(systemName).getUserName();
-            _manualSensorList.add(new ManualSensorList(systemName, userName));
+            Sensor ss = bm.getBySystemName(systemName);
+            if (ss != null) {
+                String userName = ss.getUserName();
+                _manualSensorList.add(new ManualSensorList(systemName, userName));
+            } else {
+                log.error("Failed to get sensor {}", systemName);
+            }
         }
 
         p2xs = new JPanel();
@@ -1354,13 +1359,13 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         public String getColumnName(int col) {
             switch (col) {
                 case SNAME_COLUMN:
-                    return rb.getString("ColumnSystemName");
+                    return Bundle.getMessage("ColumnSystemName");
                 case UNAME_COLUMN:
-                    return rb.getString("ColumnUserName");
+                    return Bundle.getMessage("ColumnUserName");
                 case INCLUDE_COLUMN:
                     return rb.getString("ColumnInclude");
                 case STATE_COLUMN:
-                    return rb.getString("ColumnState");
+                    return rb.getString("ColumnState"); // pick up via rb. from SignallingBundle as it is a different "State" label than non-signal tables
                 default:
                     return "unknown";
             }
@@ -1615,7 +1620,12 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
 
         public String getValue(String name) {
-            return InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name).getAspect();
+            SignalMast sm = InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name);
+            if (sm != null) {
+                return sm.getAspect();
+            } else {
+                return null;
+            }
         }
 
         public String getColumnName(int col) {
@@ -1652,15 +1662,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         protected JTable makeJTable(TableSorter srtr) {
             this.sorter = srtr;
-            return new JTable(sorter) {
-                public boolean editCellAt(int row, int column, java.util.EventObject e) {
-                    boolean res = super.editCellAt(row, column, e);
-                    java.awt.Component c = this.getEditorComponent();
-                    if (c instanceof javax.swing.JTextField) {
-                        ((JTextField) c).selectAll();
-                    }
-                    return res;
-                }
+            return new JmriTable(sorter) {
 
                 public TableCellRenderer getCellRenderer(int row, int column) {
                     if (column == STATE_COLUMN) {
@@ -1741,11 +1743,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         public String getColumnName(int col) {
             switch (col) {
                 case SNAME_COLUMN:
-                    return rb.getString("ColumnSystemName");
+                    return Bundle.getMessage("ColumnSystemName");
                 case UNAME_COLUMN:
-                    return rb.getString("ColumnUserName");
+                    return Bundle.getMessage("ColumnUserName");
                 case STATE_COLUMN:
-                    return rb.getString("ColumnState");
+                    return rb.getString("ColumnState"); // pick up via rb. from SignallingBundle as it is a different "State" label than non-signal tables
 
                 default:
                     return "unknown";

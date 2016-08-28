@@ -23,18 +23,23 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SortOrder;
 import javax.swing.border.Border;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.SignalGroup;
 import jmri.SignalHead;
 import jmri.SignalMast;
+import jmri.swing.JmriTable;
+import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.SystemNameComparator;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -376,11 +381,16 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         Iterator<String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
             String systemName = iter.next();
-            if (shm.getBySystemName(systemName).getClass().getName().contains("SingleTurnoutSignalHead")) {
-                String userName = shm.getBySystemName(systemName).getUserName();
-                _signalList.add(new SignalGroupSignal(systemName, userName));
+            SignalHead sh = shm.getBySystemName(systemName);
+            if (sh != null) {
+                if (sh.getClass().getName().contains("SingleTurnoutSignalHead")) {
+                    String userName = sh.getUserName();
+                    _signalList.add(new SignalGroupSignal(systemName, userName));
+                } else {
+                    log.debug("Signal Head " + systemName + " is not a single Turnout Controlled Signal Head");
+                }
             } else {
-                log.debug("Signal Head " + systemName + " is not a single Turnout Controlled Signal Head");
+                log.error("Failed to get signal head {}", systemName);
             }
         }
 
@@ -471,13 +481,11 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
             p3xsi.add(p31si);
             _AppearanceModel = new SignalMastAppearanceModel();
-            JTable SignalAppearanceTable = jmri.util.JTableUtil.sortableDataModel(_AppearanceModel);
-            try {
-                jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter) SignalAppearanceTable.getModel());
-                tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-                tmodel.setSortingStatus(SignalGroupTableAction.SignalMastAppearanceModel.APPEAR_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
-            } catch (ClassCastException e3) {
-            }  // if not a sortable table model
+            JTable SignalAppearanceTable = new JmriTable(_AppearanceModel);
+            TableRowSorter<SignalMastAppearanceModel> smaSorter = new TableRowSorter<>(_AppearanceModel);
+            smaSorter.setComparator(SignalMastAppearanceModel.APPEAR_COLUMN, new SystemNameComparator());
+            RowSorterUtil.setSortOrder(smaSorter, SignalMastAppearanceModel.APPEAR_COLUMN, SortOrder.ASCENDING);
+            SignalAppearanceTable.setRowSorter(smaSorter);
             SignalAppearanceTable.setRowSelectionAllowed(false);
             SignalAppearanceTable.setPreferredScrollableViewportSize(new java.awt.Dimension(200, 80));
             TableColumnModel SignalAppearanceColumnModel = SignalAppearanceTable.getColumnModel();
@@ -529,13 +537,11 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             p21si.add(new JLabel(Bundle.getMessage("SelectInGroup", Bundle.getMessage("SignalHeads"))));
             p2xsi.add(p21si);
             _SignalGroupSignalModel = new SignalGroupSignalModel();
-            JTable SignalGroupSignalTable = jmri.util.JTableUtil.sortableDataModel(_SignalGroupSignalModel);
-            try {
-                jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter) SignalGroupSignalTable.getModel());
-                tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-                tmodel.setSortingStatus(SignalGroupSignalModel.SNAME_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
-            } catch (ClassCastException e3) {
-            }  // if not a sortable table model
+            JTable SignalGroupSignalTable = new JmriTable(_SignalGroupSignalModel);
+            TableRowSorter<SignalGroupSignalModel> sgsSorter = new TableRowSorter<>(_SignalGroupSignalModel);
+            sgsSorter.setComparator(SignalGroupSignalModel.SNAME_COLUMN, new SystemNameComparator());
+            RowSorterUtil.setSortOrder(sgsSorter, SignalGroupSignalModel.SNAME_COLUMN, SortOrder.ASCENDING);
+            SignalAppearanceTable.setRowSorter(sgsSorter);
             SignalGroupSignalTable.setRowSelectionAllowed(false);
             SignalGroupSignalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 160));
             TableColumnModel SignalGroupSignalColumnModel = SignalGroupSignalTable.getColumnModel();
@@ -823,12 +829,15 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         curSignalGroup = g;
 
         jmri.SignalMast sh = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(g.getSignalMastName());
-        java.util.Vector<String> appear = sh.getValidAspects();
+        if (sh != null ) {
+            java.util.Vector<String> appear = sh.getValidAspects();
+            _mastAppearancesList = new ArrayList<SignalMastAppearances>(appear.size());
 
-        _mastAppearancesList = new ArrayList<SignalMastAppearances>(appear.size());
-
-        for (int i = 0; i < appear.size(); i++) {
-            _mastAppearancesList.add(new SignalMastAppearances(appear.get(i)));
+            for (int i = 0; i < appear.size(); i++) {
+                _mastAppearancesList.add(new SignalMastAppearances(appear.get(i)));
+            }
+        } else {
+            log.error("Failed to get signal mast {}", g.getSignalMastName());
         }
 
         fixedSystemName.setText(sName);
@@ -1272,11 +1281,20 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             /*_sysName = sysName;
              _userName = userName;*/
             _included = false;
-            if (InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(sysName).getClass().getName().contains("SingleTurnoutSignalHead")) {
-                jmri.implementation.SingleTurnoutSignalHead signal = (jmri.implementation.SingleTurnoutSignalHead) InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(sysName);
-                _onState = signal.getOnAppearance();
-                _offState = signal.getOffAppearance();
-                _signal = signal;
+            SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(sysName);
+            if (sh != null) {
+                if (sh.getClass().getName().contains("SingleTurnoutSignalHead")) {
+                    jmri.implementation.SingleTurnoutSignalHead signal = (jmri.implementation.SingleTurnoutSignalHead) InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(sysName);
+                    if (signal != null) {
+                        _onState = signal.getOnAppearance();
+                        _offState = signal.getOffAppearance();
+                        _signal = signal;
+                    } else {
+                        log.error("Failed to get signal head {}", sysName);
+                    }
+                }
+            } else {
+                log.error("Failed to get signal head {}",  sysName);
             }
 
         }

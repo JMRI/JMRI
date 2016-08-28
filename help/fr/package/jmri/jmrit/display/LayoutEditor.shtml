@@ -5,7 +5,7 @@
  <TITLE>
       JMRI: L'&#201;diteur de R&#233;seau
  </TITLE>
-    <META content="Dave Duchamp" name=Author>
+    <META content="Dave Duchamp" name="Author">
     <META name="keywords" content="JMRI help Layout Editor panel">
 
 <!-- Style -->
@@ -171,17 +171,17 @@ d'un aiguillage, faites glisser le point central de l'aiguillage avec la touche 
 <P>
 9. Ensuite compl&#233;ter l'embranchement industriel. Le point de connexion de la voie divergente de 
 l'aiguillage inf&#233;rieur devrait &#234;tre la seule case n&#233;cessitant une connexion (couleur rouge). Cochez Heurtoir
-dans la barre d'outils. Un< b>Heurtoir</b> est un n&#339;uds dans un diagramme de la voie qui peut accepter
+dans la barre d'outils. Un <b>Heurtoir</b> est un n&#339;uds dans un diagramme de la voie qui peut accepter
 une seule connexion. <b>Avec Maj enfonc&#233;e </b>, cliquez sur un point exactement &#224; la droite du
  point de connexion divergent de l'aiguillage. Connectez votre heurtoir au point de connexion
 divergent en gardant Maj enfonc&#233;e, tout en appuyant sur la bouton droit de la souris
  sur le point de connexion divergents et en le faisant glisser vers le Heurtoir. Votre diagramme de voie doit ressembler &#224; ceci:</P>
 <p>
-<A href="./images/OvalLayoutEditMode.gif"> <IMG SRC = "./Images/OvalLayoutEditMode.gif"
+<A href="./images/OvalLayoutEditMode.gif"> <IMG SRC = "./images/OvalLayoutEditMode.gif"
 ALIGN="CENTER" WIDTH = "563" height = "169" hspace = "0" vspace = "0"></A>
 <p>
 10. S&#233;lectionnez <b>Mode &#201;diter</b> dans le menu Options pour masquer la barre d'outil (et la barre 
-d'aide ) et voir &#224; quoi ressemblerait votre diagramme de voie d'un dessin d'un simple ovale dans  un
+d'aide) et voir &#224; quoi ressemblerait votre diagramme de voie d'un dessin d'un simple ovale dans  un
 panneau final. Vous devriez voir les points de connexion et les cercles disparaitre. Notez &#233;galement
 que, lorsqu'il est dans le mode &#201;diter, les &#233;l&#233;ments ne peuvent &#234;tre repositionn&#233;s et les menus contextuels ne sont pas
 actifs.</p>
@@ -406,7 +406,7 @@ op&#233;rations qui ne surviennent pas tr&#232;s souvent lors de la cr&#233;atio
  <li> <b>Ajouter Pont Tournant</b> - La s&#233;lection de cet &#233;l&#233;ment ajoute une plaque tournante pour le
  R&#233;seau au centre du panneau. Vous pouvez ensuite le faire glisser avec la touche m&#233;ta
  press&#233;e &#224; n'importe quel endroit sur le panneau.</li>
- <li>  <b>Ajouter &#201;tiquette Rapport..</b> - La s&#233;lection de cet &#233;l&#233;ment affiche une boite de dialogue qui
+ <li>  <b>Ajouter &#201;tiquette Rapport...</b> - La s&#233;lection de cet &#233;l&#233;ment affiche une boite de dialogue qui
  permet l'entr&#233;e d'un nom de Rapport (nom  syst&#232;me ou nom utilisateur) et les coordonn&#233;es x, y
  o&#249; l'&#233;tiquette doit &#234;tre plac&#233;e initialement. Les coordonn&#233;es x, y s'appliquent au
   coin sup&#233;rieur gauche de l'&#233;tiquette. Pour cr&#233;er une &#233;tiquette Rapport, entrez le
@@ -437,7 +437,7 @@ op&#233;rations qui ne surviennent pas tr&#232;s souvent lors de la cr&#233;atio
   Si vousvoulez  basculer les aiguillages en cliquant sur eux.</li>
   <li> <b>Couleurs Cercle Aiguillage</b> - Fixe la couleur du cercle de l'aiguillage. Par D&#233;faut il
   utilise la couleur dela voie par d&#233;faut.</li>
-  <li> <b>Taille Cercle Aiguillage </b> - D&#233;finit la taille relative du cercle de l'aiguillage</li>.
+  <li> <b>Taille Cercle Aiguillage </b> - D&#233;finit la taille relative du cercle de l'aiguillage</li>
   <li> <b>Dessiner la Branche Inutilis&#233;e de l'Aiguillage</b> - Lorsqu'elle est activ&#233;e, dessine la voie non s&#233;lectionn&#233;e de chaque aiguillage.
   Lorsqu'elle est d&#233;sactiv&#233;e, cette voie n'est pas dessin&#233;e. Cela rend la position des aiguillages plus visibles lorsque
   l'angle de divergence est faible.</li>
@@ -893,7 +893,7 @@ entr&#233;e ou modifi&#233;e. (les cantons sont discut&#233;s plus en d&#233;tai
 Un <b>Connecteur</b> est utilis&#233; pour indiquer que la voie en cours se termine sur ce panneau
 et peut se poursuivre sur un autre. Le connecteur utilise les m&#234;mes &#233;tats rouge/vert d'un
 Point d'ancrage, avec un troisi&#232;me &#233;tat bleu qui signifie que le connecteur n'a pas &#233;t&#233;
-li&#233;e &#224; un segment de piste sur un panneau diff&#233;rent. Pour faire le lien, faites un clic droit sur ​​l'
+li&#233;e &#224; un segment de piste sur un panneau diff&#233;rent. Pour faire le lien, faites un clic droit sur le
 connecteur et s&#233;lectionnez "&#201;dition lien", la bo&#238;te de dialogue qui s'affiche sera remplie par
 une liste des panneaux de r&#233;seau disponibles, et les connecteurs de bord valides.
 Un connecteur de bord valide est d&#233;fini comme un qui n'est pas d&#233;j&#224; connect&#233;, est reli&#233; &#224; un segment
@@ -1168,7 +1168,7 @@ ALIGN="CENTER" WIDTH="592" HEIGHT="171" HSPACE="0" VSPACE="0"></a>
  <li>La voie du R&#233;seau a &#233;t&#233; divis&#233;e en cantons par l'affectation de noms de cantons &#224;
  tous les segments de voies et aiguillages. Quand un nom de canton est entr&#233;, si un canton
  de ce nom n'existe pas, un nouveau canton est cr&#233;&#233; automatiquement. Les aiguillages
- ont &#233;t&#233; plac&#233;s dans le m&#234;me canton que le segment de voie reli&#233; &#224; la pointe( cot&#233; &#233;quipage mobile),
+ ont &#233;t&#233; plac&#233;s dans le m&#234;me canton que le segment de voie reli&#233; &#224; la pointe (cot&#233; &#233;quipage mobile),
   et les points des segments  direct et d&#233;vi&#233; de l'aiguillage
   ont &#233;t&#233; plac&#233;s dans des cantons diff&#233;rents.</li>
  <li>Les noms de cantons sont &#233;t&#233; plac&#233;s sur le panneau en utilisant <b>l'&#201;tiquette Texte</b> sur la

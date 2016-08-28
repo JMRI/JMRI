@@ -80,21 +80,22 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                 nBean = _manager.getBeanBySystemName(name);
 
                 if (nBean != null) {
+                    String uname = nBean.getUserName();
                     switch (_displayOrder) {
                         case DISPLAYNAME:
                             displayList[i] = nBean.getDisplayName();
                             break;
 
                         case USERNAME:
-                            if (nBean.getUserName() != null && !nBean.getUserName().equals("")) {
-                                displayList[i] = nBean.getUserName();
+                            if (uname != null && !uname.equals("")) {
+                                displayList[i] = uname;
                             } else {
                                 displayList[i] = name;
                             }
                             break;
 
                         case USERNAMESYSTEMNAME:
-                            if (nBean.getUserName() != null && !nBean.getUserName().equals("")) {
+                            if (uname != null && !uname.equals("")) {
                                 displayList[i] = nBean.getUserName() + " - " + name;
                             } else {
                                 displayList[i] = name;
@@ -102,7 +103,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                             break;
 
                         case SYSTEMNAMEUSERNAME:
-                            if (nBean.getUserName() != null && !nBean.getUserName().equals("")) {
+                            if (uname != null && !uname.equals("")) {
                                 displayList[i] = name + " - " + nBean.getUserName();
                             } else {
                                 displayList[i] = name;
@@ -206,6 +207,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     public void setSelectedBean(NamedBean nBean) {
         String selectedItem = "";
         if (nBean != null) {
+            String uname = nBean.getUserName();
             switch (_displayOrder) {
                 case DISPLAYNAME:
                     selectedItem = nBean.getDisplayName();
@@ -220,16 +222,16 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                     break;
 
                 case USERNAMESYSTEMNAME:
-                    if (nBean.getUserName() != null && !nBean.getUserName().equals("")) {
-                        selectedItem = nBean.getUserName() + " - " + nBean.getSystemName();
+                    if (uname != null && !uname.equals("")) {
+                        selectedItem = uname + " - " + nBean.getSystemName();
                     } else {
                         selectedItem = nBean.getSystemName();
                     }
                     break;
 
                 case SYSTEMNAMEUSERNAME:
-                    if (nBean.getUserName() != null && !nBean.getUserName().equals("")) {
-                        selectedItem = nBean.getSystemName() + " - " + nBean.getUserName();
+                    if (uname != null && !uname.equals("")) {
+                        selectedItem = nBean.getSystemName() + " - " + uname;
                     } else {
                         selectedItem = nBean.getSystemName();
                     }

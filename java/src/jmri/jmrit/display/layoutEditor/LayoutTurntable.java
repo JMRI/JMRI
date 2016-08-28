@@ -396,7 +396,7 @@ public class LayoutTurntable {
         }
         popup.add(rb.getString("Turntable"));
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
-        popup.add(new AbstractAction(rb.getString("Edit")) {
+        popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
             /**
              *
              */
@@ -554,7 +554,7 @@ public class LayoutTurntable {
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
-            panel5.add(turntableEditDone = new JButton(rb.getString("Done")));
+            panel5.add(turntableEditDone = new JButton(Bundle.getMessage("ButtonDone")));
             turntableEditDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     turntableEditDonePressed(e);
@@ -562,7 +562,7 @@ public class LayoutTurntable {
             });
             turntableEditDone.setToolTipText(rb.getString("DoneHint"));
             // Cancel
-            panel5.add(turntableEditCancel = new JButton(rb.getString("Cancel")));
+            panel5.add(turntableEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             turntableEditCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     turntableEditCancelPressed(e);
@@ -622,7 +622,7 @@ public class LayoutTurntable {
             ang = Float.parseFloat(angleField.getText());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(editTurntableFrame, rb.getString("EntryError") + ": "
-                    + e + rb.getString("TryAgain"), rb.getString("Error"),
+                    + e + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -638,7 +638,7 @@ public class LayoutTurntable {
             ang = Float.parseFloat(angleField.getText());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(editTurntableFrame, rb.getString("EntryError") + ": "
-                    + e + rb.getString("TryAgain"), rb.getString("Error"),
+                    + e + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -654,7 +654,7 @@ public class LayoutTurntable {
         }
         if (bestDel > 30.0) {
             JOptionPane.showMessageDialog(editTurntableFrame, rb.getString("Error13"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         deleteRay(closest);
@@ -688,7 +688,7 @@ public class LayoutTurntable {
                 rad = Float.parseFloat(str);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(editTurntableFrame, rb.getString("EntryError") + ": "
-                        + e + rb.getString("TryAgain"), rb.getString("Error"),
+                        + e + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -906,7 +906,7 @@ public class LayoutTurntable {
                                     Float.parseFloat(angle.getText());
                                 } catch (Exception ex) {
                                     JOptionPane.showMessageDialog(editTurntableFrame, rb.getString("EntryError") + ": "
-                                            + ex + rb.getString("TryAgain"), rb.getString("Error"),
+                                            + ex + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
                                             JOptionPane.ERROR_MESSAGE);
                                     return;
                                 }
@@ -965,7 +965,7 @@ public class LayoutTurntable {
         void delete() {
             int n = JOptionPane.showConfirmDialog(null,
                     rb.getString("Question7"),
-                    rb.getString("WarningTitle"),
+                    Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_OPTION);
             if (n == JOptionPane.NO_OPTION) {
                 return;

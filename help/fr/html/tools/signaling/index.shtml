@@ -2,7 +2,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <!-- Translated by Blorec Herv&#233; le 2013-09-30-->
 <title>JMRI: Signaling</title>
 
@@ -170,7 +169,7 @@ pour commander le signal. Cela varie en fonction de votre mat&#233;riel, et doit
 <A name="Tableau"></a>
 <h3>Tableau T&#234;te de Signal</h3>
 
-<A href="../../../images/SigTableau.gif"><IMG SRC="../../../images/SigTableau.gif" ALIGN=RIGHT WIDTH="296" HEIGHT="355" HSPACE="0" VSPACE="0"></A>
+<A href="../../../images/SigTable.gif"><IMG SRC="../../../images/SigTable.gif" ALIGN="RIGHT" WIDTH="296" HEIGHT="355" HSPACE="0" VSPACE="0"></A>
 Toutes les t&#234;tes de signal que JMRI conna&#238;t peuvent &#234;tre r&#233;f&#233;renc&#233;es
 en utilisant l'outil "Tableau de T&#234;te de Signal" dans le menu Outils de la plupart des programmes JMRI.
 Il ya cinq colonnes dans la Tableau:
@@ -388,6 +387,7 @@ Pr&#233;cisez la t&#234;te du signal en entrant son nom syst&#232;me ou nom util
 </li><li><b>Joue Fichier Son</b>: Joue le fichier son sp&#233;cifi&#233;. (pour
 par exemple des clics relais de la CTC)
  </li><li><b>Ex&#233;cuter le script</b>: D&#233;marre le script sp&#233;cifi&#233;.
+</ul>
 
 <A Les classes name="automat"></a><h3> Classe d'Automatisation</h3>
 
@@ -446,7 +446,11 @@ Lexique:
 <li>
 * Maintenu= signal maintenu au rouge m&#234;me si la voie est libre, pour obtenir l'arr&#234;t d'un train
 <li>
+</ul>
+
 <!--#include virtual="/Footer" -->
+</div>
+</div>
 </body>
 </html>
 
