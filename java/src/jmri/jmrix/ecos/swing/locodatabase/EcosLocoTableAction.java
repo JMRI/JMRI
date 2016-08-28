@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.Hashtable;
 import java.util.List;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
@@ -18,9 +20,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowSorter;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -191,34 +195,32 @@ public class EcosLocoTableAction extends AbstractTableAction {
                     String ecosObjectNo = ecosObjectIdList.get(row);
                     if (value == null) {
                         return;
-                    } else {
-                        if (value instanceof RosterEntry) {
-                            re = (RosterEntry) value;
-                            if ((re.getAttribute(getRosterAttribute()) != null && !re.getAttribute(getRosterAttribute()).equals(""))) {
-                                JOptionPane.showMessageDialog(f, ecosObjectNo + " This roster entry already has an ECOS loco assigned to it ");
-                                log.error(ecosObjectNo + " This roster entry already has an ECOS loco assigned to it ");
-                                return;
-                            }
-                            String oldRoster = getByEcosObject(ecosObjectNo).getRosterId();
-                            RosterEntry oldre;
-                            if (oldRoster != null) {
-                                oldre = Roster.instance().getEntryForId(oldRoster);
-                                if (oldre != null) {
-                                    oldre.deleteAttribute(getRosterAttribute());
-                                }
-                            }
-                            re.putAttribute(getRosterAttribute(), ecosObjectNo);
-                            getByEcosObject(ecosObjectNo).setRosterId(re.getId());
-                            re.updateFile();
-                        } else if (value instanceof String) {
-                            List<RosterEntry> r = Roster.instance().getEntriesWithAttributeKeyValue(getRosterAttribute(), ecosObjectNo);
-                            if (r.isEmpty()) {
-                                r.get(0).deleteAttribute(getRosterAttribute());
-                                getByEcosObject(ecosObjectNo).setRosterId(null);
-                                r.get(0).updateFile();
-                            }
-
+                    } else if (value instanceof RosterEntry) {
+                        re = (RosterEntry) value;
+                        if ((re.getAttribute(getRosterAttribute()) != null && !re.getAttribute(getRosterAttribute()).equals(""))) {
+                            JOptionPane.showMessageDialog(f, ecosObjectNo + " This roster entry already has an ECOS loco assigned to it ");
+                            log.error(ecosObjectNo + " This roster entry already has an ECOS loco assigned to it ");
+                            return;
                         }
+                        String oldRoster = getByEcosObject(ecosObjectNo).getRosterId();
+                        RosterEntry oldre;
+                        if (oldRoster != null) {
+                            oldre = Roster.instance().getEntryForId(oldRoster);
+                            if (oldre != null) {
+                                oldre.deleteAttribute(getRosterAttribute());
+                            }
+                        }
+                        re.putAttribute(getRosterAttribute(), ecosObjectNo);
+                        getByEcosObject(ecosObjectNo).setRosterId(re.getId());
+                        re.updateFile();
+                    } else if (value instanceof String) {
+                        List<RosterEntry> r = Roster.instance().getEntriesWithAttributeKeyValue(getRosterAttribute(), ecosObjectNo);
+                        if (r.isEmpty()) {
+                            r.get(0).deleteAttribute(getRosterAttribute());
+                            getByEcosObject(ecosObjectNo).setRosterId(null);
+                            r.get(0).updateFile();
+                        }
+
                     }
                     Roster.writeRosterFile();
                 } else if (col == ADDTOROSTERCOL) {
@@ -239,14 +241,25 @@ public class EcosLocoTableAction extends AbstractTableAction {
                 }
             }
 
+            /**
+             * {@inheritDoc }
+             */
             @Override
-            public JTable makeJTable(TableSorter srtr) {
-                JTable table = new JTable(srtr) {
+            @Deprecated
+            public JTable makeJTable(TableSorter sorter) {
+                return this.makeJTable((TableModel) sorter);
+            }
 
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -3389761480752952913L;
+            @Override
+            public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @Nullable RowSorter sorter) {
+                JTable table = this.makeJTable(model);
+                table.setName(name);
+                table.setRowSorter(sorter);
+                return table;
+            }
+
+            private JTable makeJTable(@Nonnull TableModel model) {
+                JTable table = new JTable(model) {
 
                     @Override
                     public TableCellRenderer getCellRenderer(int row, int column) {
@@ -279,7 +292,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
                         }
                         return retval;
                     }
-                    Hashtable<Object, TableCellRenderer> rendererMap = new Hashtable<Object, TableCellRenderer>();
+                    Hashtable<Object, TableCellRenderer> rendererMap = new Hashtable<>();
 
                     TableCellEditor getEditor(int row) {
                         TableCellEditor retval = editorMap.get(ecosObjectIdList.get(row));
@@ -302,7 +315,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
                         }
                         return retval;
                     }
-                    Hashtable<Object, TableCellEditor> editorMap = new Hashtable<Object, TableCellEditor>();
+                    Hashtable<Object, TableCellEditor> editorMap = new Hashtable<>();
                 };
                 table.getTableHeader().setReorderingAllowed(true);
                 table.setColumnModel(new XTableColumnModel());
