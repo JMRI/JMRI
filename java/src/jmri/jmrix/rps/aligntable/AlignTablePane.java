@@ -14,12 +14,16 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SortOrder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableRowSorter;
 import javax.vecmath.Point3d;
 import jmri.jmrix.rps.Algorithms;
 import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Receiver;
+import jmri.swing.JmriTable;
+import jmri.swing.RowSorterUtil;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -54,7 +58,7 @@ public class AlignTablePane extends javax.swing.JPanel {
 
         alignModel = new AlignModel();
 
-        JTable alignTable = jmri.util.JTableUtil.sortableDataModel(alignModel);
+        JTable alignTable = new JmriTable(alignModel);
 
         // install a button renderer & editor
         ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -62,11 +66,8 @@ public class AlignTablePane extends javax.swing.JPanel {
         TableCellEditor buttonEditor = new ButtonEditor(new JButton());
         alignTable.setDefaultEditor(JButton.class, buttonEditor);
 
-        try {
-            jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter) alignTable.getModel());
-            tmodel.setSortingStatus(AlignTablePane.AlignModel.NUMCOL, jmri.util.com.sun.TableSorter.ASCENDING);
-        } catch (ClassCastException e3) {
-        }  // if not a sortable table model
+        TableRowSorter<AlignModel> sorter = new TableRowSorter<>(alignModel);
+        RowSorterUtil.setSortOrder(sorter, AlignModel.NUMCOL, SortOrder.ASCENDING);
         alignTable.setRowSelectionAllowed(false);
         alignTable.setPreferredScrollableViewportSize(new java.awt.Dimension(580, 80));
 

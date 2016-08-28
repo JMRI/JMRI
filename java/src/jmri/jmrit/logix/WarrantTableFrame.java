@@ -27,7 +27,9 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import jmri.util.com.sun.TableSorter;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import jmri.swing.JmriTable;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -116,20 +118,11 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     public void initComponents() throws Exception {
 
         //Casts at getTableCellEditorComponent() now fails with 3.0 ??            
-        JTable table;   // = new JTable(_model);
+        JTable table = new JmriTable(_model);
         ComboBoxCellEditor comboEd;
-        try {   // following might fail due to a missing method on Mac Classic
-            TableSorter sorter = new jmri.util.com.sun.TableSorter(_model);
-            table = jmri.util.JTableUtil.sortableDataModel(sorter);
-            sorter.setTableHeader(table.getTableHeader());
-            comboEd = new ComboBoxCellEditor(new JComboBox<String>(), sorter);
-            // set model last so later casts will work
-            ((jmri.util.com.sun.TableSorter) table.getModel()).setTableModel(_model);
-        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
-            log.error("WarrantTable: Unexpected error: " + e);
-            table = new JTable(_model);
-            comboEd = new ComboBoxCellEditor(new JComboBox<String>());
-        }
+        TableRowSorter<WarrantTableModel> sorter = new TableRowSorter<>(_model);
+        comboEd = new ComboBoxCellEditor(new JComboBox<>());
+        table.setRowSorter(sorter);
         // Use XTableColumnModel so we can control which columns are visible
         XTableColumnModel tcm = new XTableColumnModel();
         table.setColumnModel(tcm);
@@ -140,7 +133,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         table.setDefaultRenderer(Boolean.class, new ButtonRenderer());
         table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
-        JComboBox<String> box = new JComboBox<String>(controls);
+        JComboBox<String> box = new JComboBox<>(controls);
         box.setFont(new Font(null, Font.PLAIN, 12));
         table.getColumnModel().getColumn(WarrantTableModel.CONTROL_COLUMN).setCellEditor(new DefaultCellEditor(box));
         table.getColumnModel().getColumn(WarrantTableModel.ROUTE_COLUMN).setCellEditor(comboEd);
@@ -341,32 +334,37 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
      */
     static public class ComboBoxCellEditor extends DefaultCellEditor {
 
-        TableSorter _sorter;
-
         ComboBoxCellEditor(JComboBox<String> comboBox) {
             super(comboBox);
             comboBox.setFont(new Font(null, Font.PLAIN, 12));
         }
 
-        ComboBoxCellEditor(JComboBox<String> comboBox, TableSorter sorter) {
-            super(comboBox);
-            comboBox.setFont(new Font(null, Font.PLAIN, 12));
-            _sorter = sorter;
-        }
-
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value,
                 boolean isSelected, int r, int column) {
-            jmri.util.com.sun.TableSorter m = ((jmri.util.com.sun.TableSorter) table.getModel());
-            WarrantTableModel model = (WarrantTableModel) m.getTableModel();
+            TableModel m = table.getModel();
+            WarrantTableModel model = null;
+            if (m instanceof WarrantTableModel) {
+                model = (WarrantTableModel) m;
+            }
+            if (model == null) {
+                log.error("Unexpected table model of class: {}", m.getClass().getName());
+            }
 
             // If table has been sorted, table row no longer is the same as array index
             int row = r;
-            if (_sorter != null) {
-                row = _sorter.modelIndex(row);
+            if (table.getRowSorter() != null) {
+                row = table.convertRowIndexToModel(row);
             }
-            Warrant warrant = model.getWarrantAt(row);
-            @SuppressWarnings("unchecked")
+            Warrant warrant = null;
+            if (model != null) {
+                warrant = model.getWarrantAt(row);
+            }
+            Component component = getComponent();
+            if (!(component instanceof JComboBox<?>)) {
+                log.error("Unexpected editor component of class: {}", component.getClass().getName());
+                return component;
+            }
             JComboBox<String> comboBox = (JComboBox<String>) getComponent();
             if (warrant == null) {
                 log.warn("getWarrantAt row= " + row + " Warrant is null!");

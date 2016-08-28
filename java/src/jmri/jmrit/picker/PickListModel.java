@@ -311,7 +311,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     public void makeSorter(JTable table) {
         _sorter = new TableRowSorter<>(this);
         _sorter.setComparator(SNAME_COLUMN, new SystemNameComparator());
-        _table.setRowSorter(_sorter);
+        table.setRowSorter(_sorter);
     }
 
     public JTable getTable() {
