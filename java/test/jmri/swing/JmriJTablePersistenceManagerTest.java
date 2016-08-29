@@ -65,7 +65,7 @@ public class JmriJTablePersistenceManagerTest {
             // passes
         }
         // null table name
-        table = new JTable();
+        table = testTable(null);
         try {
             instance.persist(table);
             Assert.fail("did not throw NPE on table with null name");
@@ -81,17 +81,24 @@ public class JmriJTablePersistenceManagerTest {
             Assert.fail("threw unexpected NPE");
         }
         int managers = 0;
-        int listeners = 0;
+        int tableListeners = 0;
+        int columnListeners = 0;
         for (PropertyChangeListener listener : table.getPropertyChangeListeners()) {
             if (listener.equals(instance)) {
                 managers++;
             }
             if (listener.equals(instance.getListener(table))) {
-                listeners++;
+                tableListeners++;
+            }
+        }
+        for (PropertyChangeListener listener : table.getColumn("c0").getPropertyChangeListeners()) {
+            if (listener.equals(instance.getListener(table))) {
+                columnListeners++;
             }
         }
         Assert.assertEquals(1, managers);
-        Assert.assertEquals(1, listeners);
+        Assert.assertEquals(1, tableListeners);
+        Assert.assertEquals(1, columnListeners);
         // allow table twice
         try {
             instance.persist(table);
@@ -100,21 +107,27 @@ public class JmriJTablePersistenceManagerTest {
             Assert.fail("threw unexpected IllegalArgumentException");
         }
         managers = 0;
-        listeners = 0;
+        tableListeners = 0;
+        columnListeners = 0;
         for (PropertyChangeListener listener : table.getPropertyChangeListeners()) {
             if (listener.equals(instance)) {
                 managers++;
             }
             if (listener.equals(instance.getListener(table))) {
-                listeners++;
+                tableListeners++;
+            }
+        }
+        for (PropertyChangeListener listener : table.getColumn("c0").getPropertyChangeListeners()) {
+            if (listener.equals(instance.getListener(table))) {
+                columnListeners++;
             }
         }
         Assert.assertEquals(1, managers);
-        Assert.assertEquals(1, listeners);
+        Assert.assertEquals(1, tableListeners);
+        Assert.assertEquals(1, columnListeners);
         // duplicate table name
-        JTable table2 = new JTable();
+        JTable table2 = testTable("test name");
         table2.setRowSorter(new TableRowSorter<>(table2.getModel()));
-        table2.setName("test name");
         try {
             instance.persist(table2);
             Assert.fail("Accepted duplicate name");
@@ -124,23 +137,30 @@ public class JmriJTablePersistenceManagerTest {
         // a second table
         table2.setName("test name 2");
         try {
-            instance.persist(table);
+            instance.persist(table2);
             // passes
         } catch (IllegalArgumentException ex) {
             Assert.fail("threw unexpected IllegalArgumentException");
         }
         managers = 0;
-        listeners = 0;
-        for (PropertyChangeListener listener : table.getPropertyChangeListeners()) {
+        tableListeners = 0;
+        columnListeners = 0;
+        for (PropertyChangeListener listener : table2.getPropertyChangeListeners()) {
             if (listener.equals(instance)) {
                 managers++;
             }
-            if (listener.equals(instance.getListener(table))) {
-                listeners++;
+            if (listener.equals(instance.getListener(table2))) {
+                tableListeners++;
+            }
+        }
+        for (PropertyChangeListener listener : table2.getColumn("c0").getPropertyChangeListeners()) {
+            if (listener.equals(instance.getListener(table2))) {
+                columnListeners++;
             }
         }
         Assert.assertEquals(1, managers);
-        Assert.assertEquals(1, listeners);
+        Assert.assertEquals(1, tableListeners);
+        Assert.assertEquals(1, columnListeners);
     }
 
     /**
@@ -149,8 +169,7 @@ public class JmriJTablePersistenceManagerTest {
     @Test
     public void testStopPersisting() {
         JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
-        JTable table = new JTable();
-        table.setName("test name");
+        JTable table = testTable("test name");
         try {
             instance.persist(table);
             // passes
@@ -158,35 +177,54 @@ public class JmriJTablePersistenceManagerTest {
             Assert.fail("threw unexpected NPE");
         }
         int managers = 0;
-        int listeners = 0;
+        int tableListeners = 0;
+        int columnListeners = 0;
         for (PropertyChangeListener listener : table.getPropertyChangeListeners()) {
             if (listener.equals(instance)) {
                 managers++;
             }
             if (listener.equals(instance.getListener(table))) {
-                listeners++;
+                tableListeners++;
+            }
+        }
+        for (PropertyChangeListener listener : table.getColumn("c0").getPropertyChangeListeners()) {
+            if (listener.equals(instance.getListener(table))) {
+                columnListeners++;
             }
         }
         Assert.assertEquals(1, managers);
-        Assert.assertEquals(1, listeners);
+        Assert.assertEquals(1, tableListeners);
+        Assert.assertEquals(1, columnListeners);
         try {
             instance.stopPersisting(table);
             // passes
         } catch (NullPointerException ex) {
             Assert.fail("threw unexpected NPE");
         }
+        for (PropertyChangeListener listener : table.getColumn("c0").getPropertyChangeListeners()) {
+            if (listener.equals(instance.getListener(table))) {
+                columnListeners++;
+            }
+        }
         managers = 0;
-        listeners = 0;
+        tableListeners = 0;
+        columnListeners = 0;
         for (PropertyChangeListener listener : table.getPropertyChangeListeners()) {
             if (listener.equals(instance)) {
                 managers++;
             }
             if (listener.equals(instance.getListener(table))) {
-                listeners++;
+                tableListeners++;
+            }
+        }
+        for (PropertyChangeListener listener : table.getColumn("c0").getPropertyChangeListeners()) {
+            if (listener.equals(instance.getListener(table))) {
+                columnListeners++;
             }
         }
         Assert.assertEquals(0, managers);
-        Assert.assertEquals(0, listeners);
+        Assert.assertEquals(0, tableListeners);
+        Assert.assertEquals(0, columnListeners);
     }
 
     /**
@@ -339,10 +377,9 @@ public class JmriJTablePersistenceManagerTest {
     @Test
     public void testPropertyChange() {
         JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
-        JTable table = new JTable();
         String name1 = "test name";
         String name2 = "name test";
-        table.setName(name1);
+        JTable table = testTable(name1);
         try {
             instance.persist(table);
             // passes
@@ -356,13 +393,28 @@ public class JmriJTablePersistenceManagerTest {
         Assert.assertNotNull(instance.getListener(name2));
     }
 
+    /**
+     * Create a simple table with some columns and rows. Use only defaults for
+     * all other values.
+     *
+     * @param name the name of the table; can be null
+     * @return a new table
+     */
+    private JTable testTable(String name) {
+        JTable table = new JTable(2, 2);
+        table.getColumnModel().getColumn(0).setHeaderValue("c0");
+        table.getColumnModel().getColumn(1).setHeaderValue("c1");
+        table.setName(name);
+        return table;
+    }
+
     private final static class JmriJTablePersistenceManagerSpy extends JmriJTablePersistenceManager {
 
         //default access
         JTableListener getListener(JTable table) {
             return this.listeners.get(table.getName());
         }
-        
+
         //default access
         JTableListener getListener(String name) {
             return this.listeners.get(name);
