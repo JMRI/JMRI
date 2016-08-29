@@ -2,7 +2,7 @@
 package jmri.jmrix.ieee802154.xbee;
 
 import com.digi.xbee.api.packet.GenericXBeePacket;
-import com.digi.xbee.api.packet.ATCommandPacket;
+import com.digi.xbee.api.packet.common.ATCommandPacket;
 
 /**
  * This is a wrapper class for a Digi GenericXBeePacket.

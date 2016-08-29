@@ -179,7 +179,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     // from the the handleOneIncomingReply() in 
     // AbstractMRTrafficController.
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"NO_NOTIFY_NOT_NOTIFYALL","UW_UNCOND_WAIT","WA_NOT_IN_LOOP"}, justification="There should only be one thread waiting on xmtRunnable. wait() on xmtRunnable is unconditional and not in a loop because it is used to wait for the hardware when switching modes.")
-    public void packetReceived(ReceivedPacket response) {
+    public void packetReceived(ReceivePacket response) {
 
         // before we forward this on to the listeners, handle
         // responses that may modify how the message is interpreted.

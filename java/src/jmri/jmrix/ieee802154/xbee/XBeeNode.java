@@ -3,6 +3,7 @@ package jmri.jmrix.ieee802154.xbee;
 
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
+import com.digi.xbee.api.RemoteXBeeDevice;
 import java.util.HashMap;
 import jmri.NamedBean;
 import jmri.jmrix.AbstractMRListener;
@@ -35,6 +36,7 @@ public class XBeeNode extends IEEE802154Node {
     private HashMap<Integer, NamedBean> pinObjects = null;
     private boolean isPolled;
     private XBeeTrafficController tc = null;
+    private RemoteXBeeDevice device = null;
 
     /**
      * Creates a new instance of XBeeNode
@@ -56,6 +58,8 @@ public class XBeeNode extends IEEE802154Node {
         }
         pinObjects = new HashMap<Integer, NamedBean>();
         isPolled = false;
+        XBee16BitAddress = new XBee16BitAddress(user);
+        XBee64BitAddress = new XBee64BitAddress(global);
     }
 
     /*
@@ -242,7 +246,8 @@ public class XBeeNode extends IEEE802154Node {
      *         return the 64 bit GUID.
      *
      */
-    public com.rapplogic.xbee.api.XBeeAddress getPreferedTransmitAddress() {
+    @Deprecated
+    public Object getPreferedTransmitAddress() {
         if (!(getXBeeAddress16().equals(XBeeAddress16.BROADCAST))
                 && !(getXBeeAddress16().equals(XBeeAddress16.ZNET_BROADCAST))) {
             return getXBeeAddress16();
