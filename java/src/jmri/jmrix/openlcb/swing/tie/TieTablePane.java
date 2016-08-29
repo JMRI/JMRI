@@ -8,7 +8,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import jmri.swing.JmriTable;
 
 /**
  * Pane for showing the tie table
@@ -27,7 +28,7 @@ public class TieTablePane extends JPanel {
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
 
     protected JTable table = null;
-    protected TableModel tableModel = null;
+    protected TieTableModel tableModel = null;
 
     public void initComponents() throws Exception {
 
@@ -36,7 +37,8 @@ public class TieTablePane extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         tableModel = new TieTableModel();
-        table = jmri.util.JTableUtil.sortableDataModel(tableModel);
+        table = new JmriTable(tableModel);
+        table.setRowSorter(new TableRowSorter<>(tableModel));
         table.setRowSelectionAllowed(true);
         table.setPreferredScrollableViewportSize(new java.awt.Dimension(300, 350));
 

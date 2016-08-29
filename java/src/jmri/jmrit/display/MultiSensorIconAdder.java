@@ -179,7 +179,7 @@ public class MultiSensorIconAdder extends IconAdder {
             k.setVisible(false);
             p3.add(k);
             JPanel p4 = new JPanel();
-            p4.add(new JLabel(Bundle.getMessage("Sensor")));
+            p4.add(new JLabel(Bundle.getMessage("BeanNameSensor")));
             p3.add(p4);
             p4 = new JPanel();
             NamedBeanHandle<Sensor> sensor = _sensorMap.get(key);

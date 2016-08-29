@@ -13,10 +13,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import jmri.jmrix.sprog.SprogCommandStation;
+import javax.swing.table.TableRowSorter;
 import jmri.jmrix.sprog.SprogConstants;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
-import jmri.util.JTableUtil;
+import jmri.swing.JmriTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +49,8 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
         _memo = memo;
         slotModel = new SprogSlotMonDataModel(SprogConstants.MAX_SLOTS, 8,_memo);
 
-        slotTable = JTableUtil.sortableDataModel(slotModel);
+        slotTable = new JmriTable(slotModel);
+        slotTable.setRowSorter(new TableRowSorter<>(slotModel));
         slotScroll = new JScrollPane(slotTable);
 
         // configure items for GUI

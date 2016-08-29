@@ -238,7 +238,7 @@ done
 if [ -f "${settingsdir}/jmri.conf" ] ; then
     default_options=""
     source "${settingsdir}/jmri.conf"
-    parse_args "${default_options}"
+    parse_args ${default_options}
 fi
 
 # process environment and command line arguments

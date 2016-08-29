@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JTable;
@@ -24,7 +26,6 @@ import javax.swing.event.TableColumnModelEvent;
 import javax.swing.event.TableColumnModelListener;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import jmri.UserPreferencesManager;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
@@ -45,35 +46,47 @@ import org.slf4j.LoggerFactory;
  */
 public class JmriJTablePersistenceManager extends AbstractPreferencesManager implements JTablePersistenceManager, PropertyChangeListener {
 
-    private final HashMap<String, JTableListener> listeners = new HashMap<>();
-    private final HashMap<String, HashMap<String, TableColumnPreferences>> columns = new HashMap<>();
-    private final HashMap<String, List<SortKey>> sortKeys = new HashMap<>();
+    protected final HashMap<String, JTableListener> listeners = new HashMap<>();
+    protected final HashMap<String, HashMap<String, TableColumnPreferences>> columns = new HashMap<>();
+    protected final HashMap<String, List<SortKey>> sortKeys = new HashMap<>();
     private boolean paused = false;
     private boolean dirty = false;
-    UserPreferencesManager manager = null;
     public final String PAUSED = "paused";
     public final static String TABLES_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/table-details-4-3-5.xsd"; // NOI18N
     public final static String TABLES_ELEMENT = "tableDetails"; // NOI18N
-    private final static String SORT_ORDER = "sortOrder"; // NOI18N
+    public final static String SORT_ORDER = "sortOrder"; // NOI18N
     private final static Logger log = LoggerFactory.getLogger(JmriJTablePersistenceManager.class);
 
+    /**
+     * {@inheritDoc} Persisting a table that is already persisted may cause the
+     * persistence state to be updated, but will not cause additional listeners
+     * to be added to the table.
+     */
     @Override
-    public void persist(@Nonnull JTable table) throws IllegalArgumentException {
-        if (table.getName() == null) {
-            throw new IllegalArgumentException("Table name must be nonnull");
-        }
+    public void persist(@Nonnull JTable table) throws IllegalArgumentException, NullPointerException {
+        Objects.requireNonNull(table.getName(), "Table name must be nonnull");
         if (this.listeners.containsKey(table.getName()) && !this.listeners.get(table.getName()).getTable().equals(table)) {
             throw new IllegalArgumentException("Table name must be unique");
         }
-        JTableListener listener = new JTableListener(table, this);
-        this.listeners.put(table.getName(), listener);
-        if (!Arrays.asList(table.getPropertyChangeListeners()).contains(this)) {
-            table.addPropertyChangeListener(this);
-            table.addPropertyChangeListener(listener);
-            table.getColumnModel().addColumnModelListener(listener);
-            RowSorter sorter = table.getRowSorter();
-            if (sorter != null) {
-                sorter.addRowSorterListener(listener);
+        if (!this.listeners.containsKey(table.getName())) {
+            JTableListener listener = new JTableListener(table, this);
+            this.listeners.put(table.getName(), listener);
+            if (!Arrays.asList(table.getPropertyChangeListeners()).contains(this)) {
+                table.addPropertyChangeListener(this);
+                table.addPropertyChangeListener(listener);
+                table.getColumnModel().addColumnModelListener(listener);
+                RowSorter sorter = table.getRowSorter();
+                if (sorter != null) {
+                    sorter.addRowSorterListener(listener);
+                }
+                Enumeration<TableColumn> e = table.getColumnModel().getColumns();
+                while (e.hasMoreElements()) {
+                    TableColumn column = e.nextElement();
+                    column.addPropertyChangeListener(listener);
+                    if (column.getIdentifier() == null) {
+                        column.setIdentifier(column.getHeaderValue().toString());
+                    }
+                }
             }
         }
         if (this.columns.get(table.getName()) == null) {
@@ -91,6 +104,11 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
         RowSorter sorter = table.getRowSorter();
         if (sorter != null) {
             sorter.removeRowSorterListener(listener);
+        }
+        Enumeration<TableColumn> e = table.getColumnModel().getColumns();
+        while (e.hasMoreElements()) {
+            TableColumn column = e.nextElement();
+            column.removePropertyChangeListener(listener);
         }
     }
 
@@ -124,7 +142,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
             SortOrder sorted = SortOrder.UNSORTED;
             if (sorter != null) {
                 sorted = RowSorterUtil.getSortOrder(sorter, index);
-                log.debug("Column {} (model index {}) is {}", name, index, sorted);
+                log.trace("Column {} (model index {}) is {}", name, index, sorted);
             }
             this.setPersistedState(table.getName(), name, index, width, sorted, hidden);
         }
@@ -144,6 +162,18 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
         Objects.requireNonNull(model, "table " + table.getName() + " has a null columnModel");
         RowSorter sorter = table.getRowSorter();
         boolean isXModel = model instanceof XTableColumnModel;
+        Enumeration<TableColumn> e;
+        if (isXModel) {
+            e = ((XTableColumnModel) model).getColumns(false);
+        } else {
+            e = model.getColumns();
+        }
+        while (e.hasMoreElements()) {
+            TableColumn column = e.nextElement();
+            if (column.getIdentifier() == null) {
+                column.setIdentifier(column.getHeaderValue().toString());
+            }
+        }
         Map<Integer, String> indexes = new HashMap<>();
         if (this.columns.get(table.getName()) == null) {
             this.columns.put(table.getName(), new HashMap<>());
@@ -169,7 +199,6 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
             }
         }
         // configure columns
-        Enumeration<TableColumn> e;
         if (isXModel) {
             e = ((XTableColumnModel) model).getColumns(false);
         } else {
@@ -177,12 +206,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
         }
         while (e.hasMoreElements()) {
             TableColumn column = e.nextElement();
-            String name;
-            if (isXModel) {
-                name = table.getModel().getColumnName(((XTableColumnModel) model).getColumnIndex(column.getIdentifier(), false));
-            } else {
-                name = table.getColumnName(column.getModelIndex());
-            }
+            String name = column.getIdentifier().toString();
             TableColumnPreferences preferences = this.columns.get(table.getName()).get(name);
             if (preferences != null) {
                 column.setPreferredWidth(preferences.getWidth());
@@ -276,6 +300,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
 
     @Override
     public synchronized void savePreferences(Profile profile) {
+        log.debug("Saving preferences (dirty={})...", this.dirty);
         Element element = new Element(TABLES_ELEMENT, TABLES_NAMESPACE);
         if (!this.columns.isEmpty()) {
             this.columns.entrySet().stream().map((entry) -> {
@@ -413,7 +438,9 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
     }
 
     /**
-     * Set the persisted state for the given column in the given table.
+     * Set the persisted state for the given column in the given table. The
+     * persisted state is not saved until
+     * {@link #savePreferences(jmri.profile.Profile)} is called.
      *
      * @param table  the table name
      * @param column the column name
@@ -431,7 +458,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
         }
         HashMap<String, TableColumnPreferences> columnPrefs = this.columns.get(table);
         columnPrefs.put(column, new TableColumnPreferences(order, width, sort, hidden));
-        this.savePreferences(ProfileManager.getDefault().getActiveProfile());
+        this.dirty = true;
     }
 
     @Override
@@ -448,6 +475,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
                 }
                 this.listeners.remove(oldName);
                 this.columns.remove(oldName);
+                this.dirty = true;
             }
         }
     }
@@ -487,6 +515,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
 
         private final JTable table;
         private final JmriJTablePersistenceManager manager;
+        private Timer delay = null;
 
         public JTableListener(JTable table, JmriJTablePersistenceManager manager) {
             this.table = table;
@@ -499,55 +528,67 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            switch (evt.getPropertyName()) {
-                case "name": // NOI18N
-                    break;
-                case "Frame.active": // NOI18N
-                    break;
-                case "ancestor": // NOI18N
-                    break;
-                case "selectionForeground": // NOI18N
-                    break;
-                case "selectionBackground": // NOI18N
-                    break;
-                case "JComponent_TRANSFER_HANDLER": // NOI18N
-                    break;
-                case "transferHandler": // NOI18N
-                    break;
-                default:
-                    // log unrecognized events
-                    log.debug("Got propertyChange {} for {} (\"{}\" -> \"{}\")", evt.getPropertyName(), this.table.getName(), evt.getOldValue(), evt.getNewValue());
+            if (evt.getSource() instanceof JTable) {
+                switch (evt.getPropertyName()) {
+                    case "name": // NOI18N
+                        break;
+                    case "Frame.active": // NOI18N
+                        break;
+                    case "ancestor": // NOI18N
+                        break;
+                    case "selectionForeground": // NOI18N
+                        break;
+                    case "selectionBackground": // NOI18N
+                        break;
+                    case "JComponent_TRANSFER_HANDLER": // NOI18N
+                        break;
+                    case "transferHandler": // NOI18N
+                        break;
+                    default:
+                        // log unrecognized events
+                        log.trace("Got propertyChange {} for {} (\"{}\" -> \"{}\")", evt.getPropertyName(), this.table.getName(), evt.getOldValue(), evt.getNewValue());
+                }
+            } else if (evt.getSource() instanceof TableColumn) {
+                TableColumn column = ((TableColumn) evt.getSource());
+                String name = column.getIdentifier().toString();
+                switch (evt.getPropertyName()) {
+                    case "preferredWidth": // NOI18N
+                        log.debug("Column {} has modelIndex {} viewIndex {}", name, column.getModelIndex(), this.table.convertColumnIndexToView(column.getModelIndex()));
+                        this.saveState();
+                        break;
+                    case "width": // NOI18N
+                        break;
+                    default:
+                        // log unrecognized events
+                        log.trace("Got propertyChange {} for {} (\"{}\" -> \"{}\")", evt.getPropertyName(), name, evt.getOldValue(), evt.getNewValue());
+                }
             }
         }
 
         @Override
         public void sorterChanged(RowSorterEvent e) {
             if (e.getType() == RowSorterEvent.Type.SORT_ORDER_CHANGED) {
-                this.manager.cacheState(this.table);
-                this.manager.savePreferences(ProfileManager.getDefault().getActiveProfile());
+                this.saveState();
                 log.debug("Sort order changed for {}", this.table.getName());
             }
         }
 
         @Override
         public void columnAdded(TableColumnModelEvent e) {
-            this.manager.cacheState(this.table);
-            this.manager.savePreferences(ProfileManager.getDefault().getActiveProfile());
+            this.saveState();
             log.debug("Got columnAdded for {} ({} -> {})", this.table.getName(), e.getFromIndex(), e.getToIndex());
         }
 
         @Override
         public void columnRemoved(TableColumnModelEvent e) {
-            this.manager.cacheState(this.table);
-            this.manager.savePreferences(ProfileManager.getDefault().getActiveProfile());
+            this.saveState();
             log.debug("Got columnRemoved for {} ({} -> {})", this.table.getName(), e.getFromIndex(), e.getToIndex());
         }
 
         @Override
         public void columnMoved(TableColumnModelEvent e) {
             if (e.getFromIndex() != e.getToIndex()) {
-                this.manager.cacheState(this.table);
-                this.manager.savePreferences(ProfileManager.getDefault().getActiveProfile());
+                this.saveState();
                 log.debug("Got columnMoved for {} ({} -> {})", this.table.getName(), e.getFromIndex(), e.getToIndex());
             }
         }
@@ -562,6 +603,31 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
         public void columnSelectionChanged(ListSelectionEvent e) {
             // do nothing - we don't retain selections
             log.trace("Got columnSelectionChanged for {} ({} -> {})", this.table.getName(), e.getFirstIndex(), e.getLastIndex());
+        }
+
+        /**
+         * Saves the state after a 1/2 second delay. Every time the listener
+         * triggers this method any pending save is canceled and a new delay is
+         * created. This is intended to prevent excessive writes to disk while
+         * (for example) a column is being resized or moved. Calling
+         * {@link JmriJTablePersistenceManager#savePreferences(jmri.profile.Profile)}
+         * is not subject to this timer.
+         */
+        private void saveState() {
+            if (delay != null) {
+                delay.cancel();
+                delay = null;
+            }
+            delay = new Timer();
+            delay.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    JTableListener.this.manager.cacheState(JTableListener.this.table);
+                    if (!JTableListener.this.manager.paused && JTableListener.this.manager.dirty) {
+                        JTableListener.this.manager.savePreferences(ProfileManager.getDefault().getActiveProfile());
+                    }
+                }
+            }, 500); // milliseconds
         }
     }
 }

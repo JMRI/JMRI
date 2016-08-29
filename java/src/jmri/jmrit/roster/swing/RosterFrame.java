@@ -50,12 +50,10 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.RowSorter;
 import javax.swing.Timer;
 import javax.swing.TransferHandler;
 import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.RowSorterEvent;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
@@ -90,6 +88,7 @@ import jmri.jmrix.ConnectionStatus;
 import jmri.profile.ProfileManager;
 import jmri.progdebugger.ProgDebugger;
 import jmri.swing.JTablePersistenceManager;
+import jmri.swing.RowSorterUtil;
 import jmri.util.FileUtil;
 import jmri.util.HelpUtil;
 import jmri.util.WindowMenu;
@@ -123,7 +122,6 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     protected boolean allowQuit = true;
     protected String baseTitle = "Roster";
     protected JmriAbstractAction newWindowAction;
-    private List<RowSorter.SortKey> sortKeys;
 
     public RosterFrame() {
         this("Roster");
@@ -143,7 +141,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     int clickDelay = 0;
-    JRadioButtonMenuItem contextEdit = new JRadioButtonMenuItem(Bundle.getMessage("Edit"));
+    JRadioButtonMenuItem contextEdit = new JRadioButtonMenuItem(Bundle.getMessage("ButtonEdit"));
     JRadioButtonMenuItem contextOps = new JRadioButtonMenuItem(Bundle.getMessage("ProgrammingOnMain"));
     JRadioButtonMenuItem contextService = new JRadioButtonMenuItem(Bundle.getMessage("ProgrammingTrack"));
     JTextPane dateUpdated = new JTextPane();
@@ -486,24 +484,13 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         //Set all the sort and width details of the table first.
         String rostertableref = getWindowFrameRef() + ":roster";
         rtable.getTable().setName(rostertableref);
-        sortKeys = new ArrayList<>(rtable.getTable().getRowSorter().getSortKeys());
         
         // Allow only one column to be sorted at a time - 
         // Java allows multiple column sorting, but to effectly persist that, we
         // need to be intelligent about which columns can be meaningfully sorted
         // with other columns; this bypasses the problem by only allowing the
         // last column sorted to affect sorting
-        rtable.getTable().getRowSorter().addRowSorterListener((RowSorterEvent e) -> {
-            if (e.getType().equals(RowSorterEvent.Type.SORT_ORDER_CHANGED)) {
-                List<RowSorter.SortKey> newKeys = new ArrayList<>(e.getSource().getSortKeys());
-                newKeys.removeAll(sortKeys);
-                if (!newKeys.isEmpty()) {
-                    sortKeys = newKeys;
-                    e.getSource().setSortKeys(sortKeys);
-                    e.getSource().allRowsChanged();
-                }
-            }
-        });
+        RowSorterUtil.addSingleSortableColumnListener(rtable.getTable().getRowSorter());
 
         // Reset and then persist the table's ui state
         JTablePersistenceManager tpm = InstanceManager.getOptionalDefault(JTablePersistenceManager.class);

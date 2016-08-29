@@ -1264,6 +1264,10 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         this.saveSimplePreferenceState();
         this.saveWindowDetails();
         this.resetChangeMade();
+        JmriJTablePersistenceManager manager = InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class);
+        if (manager != null) {
+            manager.savePreferences(ProfileManager.getDefault().getActiveProfile());
+        }
     }
 
     protected final static class ComboBoxLastSelection {
