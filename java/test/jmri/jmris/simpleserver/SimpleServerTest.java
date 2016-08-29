@@ -1,10 +1,6 @@
 //SimpleServerTest.java
 package jmri.jmris.simpleserver;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,26 +8,10 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-   jmri.jmris.simpleserver.parser.JmriServerParserTests.class,
-   SimpleTurnoutServerTest.class,
-   SimplePowerServerTest.class,
-   SimpleReporterServerTest.class,
-   SimpleSensorServerTest.class,
-   SimpleLightServerTest.class,
-   SimpleSignalHeadServerTest.class,
-   SimpleOperationsServerTest.class,
-   SimpleServerManagerTest.class,
-   BundleTest.class,
-   SimpleServerFrameTest.class,
-   SimpleServerActionTest.class
-})
-
 /**
- * Tests for the jmri.jmris.simpleserver package
+ * Tests for the jmri.jmris.simpleserver.SimpleServer class 
  *
- * @author Paul Bender
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class SimpleServerTest {
 
