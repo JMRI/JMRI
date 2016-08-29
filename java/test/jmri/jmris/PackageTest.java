@@ -28,7 +28,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmris.JmrisTest");
 
         suite.addTest(jmri.jmris.srcp.SRCPTest.suite());
-        suite.addTest(jmri.jmris.simpleserver.SimpleServerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmris.simpleserver.SimpleServerTest.class));
         suite.addTest(jmri.jmris.json.JsonServerTest.suite());
         suite.addTest(jmri.jmris.JmriServerTest.suite());
         suite.addTest(jmri.jmris.JmriConnectionTest.suite());
