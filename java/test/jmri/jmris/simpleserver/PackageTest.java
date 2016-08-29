@@ -20,7 +20,10 @@ import org.slf4j.LoggerFactory;
    SimpleServerManagerTest.class,
    BundleTest.class,
    SimpleServerFrameTest.class,
-   SimpleServerActionTest.class
+   SimpleServerActionTest.class,
+   SimpleServerMenuTest.class,
+   SimpleServerPreferencesPanelTest.class,
+   SimpleServerPreferencesTest.class
 })
 
 /**
