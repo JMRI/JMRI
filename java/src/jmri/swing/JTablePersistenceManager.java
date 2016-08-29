@@ -24,7 +24,10 @@ import javax.swing.JTable;
  * Column attributes (order, visibility, and width) are persisted by listening
  * to changes in the {@link javax.swing.table.TableColumnModel} of the table.
  * Column visibility is persisted only if the TableColumnModel is assignable
- * from {@link jmri.util.swing.XTableColumnModel}.
+ * from {@link jmri.util.swing.XTableColumnModel}. Columns will be saved using
+ * the String representation of either
+ * {@link javax.swing.table.TableColumn#getIdentifier()} or
+ * {@link javax.swing.table.TableColumn#getHeaderValue()}.
  * <p>
  * <strong>Note:</strong> A JTable with UI state being persisted must have a
  * unique non-null name.
