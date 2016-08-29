@@ -1,45 +1,30 @@
-//SRCPTest.java
 package jmri.jmris.srcp;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        JmriSRCPServerTest.class,
+        jmri.jmris.srcp.parser.SRCPParserTests.class,
+        JmriSRCPTurnoutServerTest.class,
+        JmriSRCPSensorServerTest.class,
+        JmriSRCPPowerServerTest.class,
+        JmriSRCPProgrammerServerTest.class,
+        JmriSRCPTimeServerTest.class,
+        BundleTest.class,
+        JmriSRCPServerFrameTest.class,
+        JmriSRCPServerActionTest.class,
+        JmriSRCPServerManagerTest.class,
+        JmriSRCPThrottleServerTest.class
+})
 
 /**
  * Tests for the jmri.jmris.srcp package
  *
- * @author Paul Bender
+ * @author Paul Bender Copyright (C) 2012,2016
  */
-public class SRCPTest extends TestCase {
-
-    // from here down is testing infrastructure
-    public SRCPTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SRCPTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmris.srcp.SRCPTest");  // no tests in this class itself
-        suite.addTest(jmri.jmris.srcp.JmriSRCPServerTest.suite());
-        suite.addTest(jmri.jmris.srcp.parser.SRCPParserTests.suite());
-        suite.addTest(jmri.jmris.srcp.JmriSRCPTurnoutServerTest.suite());
-        suite.addTest(jmri.jmris.srcp.JmriSRCPSensorServerTest.suite());
-        suite.addTest(jmri.jmris.srcp.JmriSRCPPowerServerTest.suite());
-        suite.addTest(jmri.jmris.srcp.JmriSRCPProgrammerServerTest.suite());
-        suite.addTest(jmri.jmris.srcp.JmriSRCPTimeServerTest.suite());
-        suite.addTest(BundleTest.suite());
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            // put any tests that require a UI here.
-        }
-
-        return suite;
-    }
-
+public class SRCPTest {
 }
