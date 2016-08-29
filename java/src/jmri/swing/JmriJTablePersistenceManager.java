@@ -546,21 +546,20 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
                         break;
                     default:
                         // log unrecognized events
-                        log.trace("Got propertyChange {} for {} (\"{}\" -> \"{}\")", evt.getPropertyName(), this.table.getName(), evt.getOldValue(), evt.getNewValue());
+                        log.trace("Got propertyChange {} for table {} (\"{}\" -> \"{}\")", evt.getPropertyName(), this.table.getName(), evt.getOldValue(), evt.getNewValue());
                 }
             } else if (evt.getSource() instanceof TableColumn) {
                 TableColumn column = ((TableColumn) evt.getSource());
                 String name = column.getIdentifier().toString();
                 switch (evt.getPropertyName()) {
                     case "preferredWidth": // NOI18N
-                        log.debug("Column {} has modelIndex {} viewIndex {}", name, column.getModelIndex(), this.table.convertColumnIndexToView(column.getModelIndex()));
                         this.saveState();
                         break;
                     case "width": // NOI18N
                         break;
                     default:
                         // log unrecognized events
-                        log.trace("Got propertyChange {} for {} (\"{}\" -> \"{}\")", evt.getPropertyName(), name, evt.getOldValue(), evt.getNewValue());
+                        log.trace("Got propertyChange {} for column {} (\"{}\" -> \"{}\")", evt.getPropertyName(), name, evt.getOldValue(), evt.getNewValue());
                 }
             }
         }
