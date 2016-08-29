@@ -18,7 +18,10 @@ import org.slf4j.LoggerFactory;
         JmriSRCPServerFrameTest.class,
         JmriSRCPServerActionTest.class,
         JmriSRCPServerManagerTest.class,
-        JmriSRCPThrottleServerTest.class
+        JmriSRCPThrottleServerTest.class,
+	JmriSRCPServerMenuTest.class,
+	JmriSRCPServerPreferencesPanelTest.class,
+	JmriSRCPServerPreferencesTest.class
 })
 
 /**
