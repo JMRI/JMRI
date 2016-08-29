@@ -23,6 +23,11 @@ public class SimpleServerPreferencesTest {
         Assert.assertNotNull(a);
     }
 
+    @Test public void defaultPort() {
+        SimpleServerPreferences a = new SimpleServerPreferences();
+        Assert.assertEquals("Default Port",2048,a.getDefaultPort());
+    }
+
     @Before public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
