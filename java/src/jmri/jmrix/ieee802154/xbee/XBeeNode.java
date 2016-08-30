@@ -230,8 +230,8 @@ public class XBeeNode extends IEEE802154Node {
     public String getPreferedName() {
         if (!Identifier.equals("")) {
             return Identifier;
-        } else if (!(getXBee16BitAddress().equals(XBee16BitAddress.BROADCAST_ADDRESS))
-                && !(getXBee16BitAddress().equals(XBee16BitAddress.UNKNOWN_ADDRESS))) {
+        } else if (!(getXBeeAddress16().equals(XBee16BitAddress.BROADCAST_ADDRESS))
+                && !(getXBeeAddress16().equals(XBee16BitAddress.UNKNOWN_ADDRESS))) {
             return jmri.util.StringUtil.hexStringFromBytes(useraddress);
         } else {
             return jmri.util.StringUtil.hexStringFromBytes(globaladdress);
@@ -248,8 +248,8 @@ public class XBeeNode extends IEEE802154Node {
      */
     @Deprecated
     public Object getPreferedTransmitAddress() {
-        if (!(getXBeeAddress16().equals(XBeeAddress16.BROADCAST))
-                && !(getXBeeAddress16().equals(XBeeAddress16.ZNET_BROADCAST))) {
+        if (!(getXBeeAddress16().equals(XBee16BitAddress.BROADCAST_ADDRESS))
+                && !(getXBeeAddress16().equals(XBee16BitAddress.UNKNOWN_ADDRESS))) {
             return getXBeeAddress16();
         } else {
             return getXBeeAddress64();

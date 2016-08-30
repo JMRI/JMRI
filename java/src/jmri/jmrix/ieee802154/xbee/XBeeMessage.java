@@ -1,8 +1,11 @@
-// XBeeMessage.java
 package jmri.jmrix.ieee802154.xbee;
 
 import com.digi.xbee.api.packet.GenericXBeePacket;
 import com.digi.xbee.api.packet.common.ATCommandPacket;
+import com.digi.xbee.api.packet.common.RemoteATCommandPacket;
+import com.digi.xbee.api.models.XBee16BitAddress;
+import com.digi.xbee.api.models.XBee64BitAddress;
+
 
 /**
  * This is a wrapper class for a Digi GenericXBeePacket.
@@ -50,8 +53,8 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
      * @param request an GenericXBeePacket of bytes to send
      */
     public XBeeMessage(GenericXBeePacket request) {
-        _nDataChars = request.getRFData().length;
-        _dataChars = request.getRFData();
+        _nDataChars = request.getPacketData().length;
+        _dataChars = request.getPacketData();
         xbm = request;
     }
 
@@ -73,7 +76,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
 
     public String toString() {
         String s = "";
-        int packet[] = xbm.getFrameData();
+        int packet[] = xbm.getPacketData();
         for (int i = 0; i < packet.length; i++) {
             s=jmri.util.StringUtil.appendTwoHexFromInt(packet[i],s);
         }
@@ -111,11 +114,11 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
 
     // a few canned messages
     public static XBeeMessage getHardwareVersionRequest() {
-        return new XBeeMessage(new ATCommandPacket(0,"HV",null));
+        return new XBeeMessage((GenericXBeePacket) new ATCommandPacket(0,"HV",""));
     }
 
     public static XBeeMessage getFirmwareVersionRequest() {
-        return new XBeeMessage(new ATCommandPacket(0,"VR",null));
+        return new XBeeMessage((GenericXBeePacket) new ATCommandPacket(0,"VR",""));
     }
 
     /*
@@ -130,10 +133,10 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
     public static XBeeMessage getRemoteDoutMessage(Object address, int pin, boolean on) {
         int onValue[] = {0x5};
         int offValue[] = {0x4};
-        if (address instanceof com.digi.xbee.api.models.XBee16BitAddress) {
-            return new XBeeMessage(new com.digi.xbee.api.packet.common.RemoteATCommandPacket((com.digi.xbee.api.models.XBee16BitAddress) address, "D" + pin, on ? onValue : offValue));
+        if (address instanceof XBee16BitAddress) {
+            return new XBeeMessage((GenericXBeePacket) new RemoteATCommandPacket((XBee16BitAddress) address, "D" + pin, on ? onValue : offValue));
         } else {
-            return new XBeeMessage(new com.digi.xbee.api.packet.common.RemoteATCommandPacket((com.digi.xbee.api.models.XBee64BitAddress) address, "D" + pin, on ? onValue : offValue));
+            return new XBeeMessage((GenericXBeePacket) new RemoteATCommandPacket((XBee64BitAddress) address, "D" + pin, on ? onValue : offValue));
         }
     }
 
@@ -146,9 +149,9 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
     public static XBeeMessage getRemoteDoutMessage(Object address, int pin) {
         if (address instanceof com.digi.xbee.api.models.XBee16BitAddress) {
-            return new XBeeMessage(new com.digi.xbee.api.packet.common.RemoteATCommandPacket((com.digi.xbee.api.models.XBee16BitAddress) address, "D" + pin));
+            return new XBeeMessage((GenericXBeePacket) new RemoteATCommandPacket((XBee16BitAddress) address, "D" + pin));
         } else {
-            return new XBeeMessage(new com.digi.xbee.api.packet.common.RemoteATCommandPacket((com.digi.xbee.api.models.XBee64BitAddress) address, "D" + pin));
+            return new XBeeMessage((GenericXBeePacket) new RemoteATCommandPacket((XBee64BitAddress) address, "D" + pin));
         }
     }
 

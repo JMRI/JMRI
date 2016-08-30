@@ -7,6 +7,10 @@ import com.digi.xbee.api.XBeeDevice;
 import com.digi.xbee.api.XBeeNetwork;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.listeners.IDiscoveryListener;
+import com.digi.xbee.api.models.XBee16BitAddress;
+import com.digi.xbee.api.models.XBee64BitAddress;
+import java.util.EnumSet;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +44,7 @@ public class XBeeNodeManager implements IDiscoveryListener {
        // set options
        // Append the device type identifier and the local device to the
        // network information.
-       xbeeNetwork.setDiscoveryOptions(EnumSet.of(DiscoveryOptions.APEND_DD,DiscoveryOptions.DISCOVER_MYSELF));
+       xbeeNetwork.setDiscoveryOptions(EnumSet.of(DiscoveryOptions.APPEND_DD,DiscoveryOptions.DISCOVER_MYSELF));
 
        // add this class as a listener for node discovery.
        xbeeNetwork.addDiscoveryListener(this);
@@ -94,7 +98,7 @@ public class XBeeNodeManager implements IDiscoveryListener {
        } else {
          log.debug("Node discovery process completed successfully.");
          // retrieve the node list from the network.
-         List<RemoteXBeeDevice> nodeList = xbeeNetwork.getDevice();
+         List<RemoteXBeeDevice> nodeList = xbeeNetwork.getDevices();
 
          // add the previously unkonwn nodes to the network.
 

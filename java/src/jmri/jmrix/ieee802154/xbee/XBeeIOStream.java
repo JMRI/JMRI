@@ -40,8 +40,8 @@ final public class XBeeIOStream extends AbstractPortController implements XBeeLi
 
     public XBeeIOStream(XBeeNode node, XBeeTrafficController tc) {
         super(tc.getAdapterMemo());
-        nodeAddress16 = node.getXBee16BitAddress();
-        nodeAddress64 = node.getXBee64BitAddress();
+        nodeAddress16 = node.getXBeeAddress16();
+        nodeAddress64 = node.getXBeeAddress64();
         try {
             PipedOutputStream tempPipeI = new PipedOutputStream();
             pout = new DataOutputStream(tempPipeI);

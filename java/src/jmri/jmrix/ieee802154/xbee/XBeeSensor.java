@@ -9,6 +9,8 @@ import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.io.IOLine;
 import com.digi.xbee.api.io.IOValue;
 import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
+import com.digi.xbee.api.models.XBee16BitAddress;
+import com.digi.xbee.api.models.XBee64BitAddress;
 
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
@@ -106,7 +108,6 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
            }
            // Finally, request the current state from the layout.
            this.requestUpdateFromLayout();
-           tc.addXBeeListener(this);
         } 
     }
 
@@ -130,12 +131,12 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
             log.debug("recieved io sample {} from {}",ioSample,remoteDevice);
         }
 
-        int address[] = ioSample.get16BitSourceAddress().getValue();
+        int address[] = remoteDevice.get16BitSourceAddress().getValue();
         XBeeNode sourcenode = (XBeeNode) tc.getNodeFromXBeeDevice(remoteDevice);
 
         if (node.equals(sourcenode)) {
           if ( ioSample.hasDigitalValues()){
-              if ((ioSsample.getDigitalValue(IOLine.getDIO(pin))==IOValue.HIGH) ^ _inverted) {
+              if ((ioSample.getDigitalValue(IOLine.getDIO(pin))==IOValue.HIGH) ^ _inverted) {
                  setOwnState(Sensor.ACTIVE);
              } else {
                  setOwnState(Sensor.INACTIVE);
@@ -154,7 +155,6 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
 
     public void dispose() {
         super.dispose();
-        tc.removeXBeeListener(this);
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeSensor.class.getName());

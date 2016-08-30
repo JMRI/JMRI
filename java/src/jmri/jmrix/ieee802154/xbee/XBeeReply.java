@@ -2,6 +2,7 @@
 package jmri.jmrix.ieee802154.xbee;
 
 import com.digi.xbee.api.packet.XBeePacket;
+import com.digi.xbee.api.packet.GenericXBeePacket;
 
 /**
  * Contains the data payload of a serial reply packet. Note that its _only_ the
@@ -26,26 +27,26 @@ public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
     public XBeeReply(String s) {
         super(s);
         setBinary(true);
-        xbresponse = new com.rapplogic.xbee.api.GenericResponse();
+        xbresponse = new GenericXBeePacket();
         byte ba[] = jmri.util.StringUtil.bytesFromHexString(s);
         int ia[] = new int[ba.length];
         for (int i = 0; i < ba.length; i++) {
             ia[i] = ba[i];
         }
-        xbresponse.setRawPacketBytes(ia);
+        xbresponse.setPacketData(ia);
     }
 
     public XBeeReply(XBeeReply l) {
         super(l);
         xbresponse = l.xbresponse;
-        _dataChars = xbresponse.getRawPacketBytes();
+        _dataChars = xbresponse.getPacketData();
         setBinary(true);
     }
 
     public XBeeReply(XBeePacket xbr) {
         super();
         xbresponse = xbr;
-        _dataChars = xbr.getRawPacketBytes();
+        _dataChars = xbr.getPacketData();
         setBinary(true);
     }
 
