@@ -22,7 +22,6 @@ import jmri.SignalMast;
 import jmri.SignalMastLogic;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.swing.JmriTable;
 import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemNameComparator;
@@ -71,7 +70,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         add(header, BorderLayout.NORTH);
 
         _AppearanceModel = new SignalMastAppearanceModel();
-        JTable table = new JmriTable(_AppearanceModel);
+        JTable table = new JTable(_AppearanceModel);
         TableRowSorter<SignalMastAppearanceModel> sorter = new TableRowSorter<>(_AppearanceModel);
         sorter.setComparator(SignalMastAppearanceModel.SYSNAME_COLUMN, new SystemNameComparator());
         RowSorterUtil.setSortOrder(sorter, SignalMastAppearanceModel.SYSNAME_COLUMN, SortOrder.ASCENDING);

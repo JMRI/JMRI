@@ -16,7 +16,6 @@ import javax.swing.JTextField;
 import javax.swing.table.TableRowSorter;
 import jmri.jmrix.tams.TamsMessage;
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
-import jmri.swing.JmriTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,7 +49,7 @@ public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
         super.initComponents(memo);
 
         locoModel = new LocoDataModel(128, 16, memo);
-        locoTable = new JmriTable(locoModel);
+        locoTable = new JTable(locoModel);
         locoTable.setRowSorter(new TableRowSorter<>(locoModel));
         locoScroll = new JScrollPane(locoTable);
 

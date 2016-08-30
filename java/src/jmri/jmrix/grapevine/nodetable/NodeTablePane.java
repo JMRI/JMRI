@@ -19,7 +19,6 @@ import jmri.jmrix.grapevine.SerialMessage;
 import jmri.jmrix.grapevine.SerialReply;
 import jmri.jmrix.grapevine.SerialTrafficController;
 import jmri.jmrix.grapevine.nodeconfig.NodeConfigFrame;
-import jmri.swing.JmriTable;
 import jmri.swing.RowSorterUtil;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -61,7 +60,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
 
         nodesModel = new NodesModel();
 
-        JTable nodesTable = new JmriTable(nodesModel);
+        JTable nodesTable = new JTable(nodesModel);
 
         // install a button renderer & editor
         ButtonRenderer buttonRenderer = new ButtonRenderer();
