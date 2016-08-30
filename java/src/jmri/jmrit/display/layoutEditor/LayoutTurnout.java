@@ -2034,7 +2034,7 @@ public class LayoutTurnout {
                 });
             }
             if (disableItem == null) {
-                disableItem = new JCheckBoxMenuItem(rb.getString("Disabled"));
+                disableItem = new JCheckBoxMenuItem(Bundle.getMessage("Disabled"));
             }
             disableItem.setSelected(disabled);
             popup.add(disableItem);

@@ -27,7 +27,7 @@ public class AddEntryExitPairFrame extends jmri.util.JmriJFrame {
 
         nxPanel = new AddEntryExitPairPanel(panel);
 
-        setTitle("Add Entry Exit Points");
+        setTitle(Bundle.getMessage("AddEntryExitPoints"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         getContentPane().add(nxPanel);

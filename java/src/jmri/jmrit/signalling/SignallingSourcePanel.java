@@ -264,10 +264,10 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                 return rb.getString("DestMast");
             }
             if (col == ACTIVE_COLUMN) {
-                return rb.getString("ColumnActive");
+                return Bundle.getMessage("SensorStateActive"); // "Active"
             }
             if (col == ENABLE_COLUMN) {
-                return rb.getString("ColumnEnabled");
+                return Bundle.getMessage("ColumnHeadEnabled");
             }
             if (col == EDIT_COLUMN) {
                 return ""; //no title above Edit buttons
