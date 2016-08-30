@@ -1,5 +1,4 @@
-//SimpleServerFrameTest.java
-package jmri.jmris.simpleserver;
+package jmri.jmris.srcp;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -10,16 +9,16 @@ import org.junit.Test;
 import java.awt.GraphicsEnvironment;
 
 /**
- * Tests for the jmri.jmris.simpleserver.SimpleServerFrame class 
+ * Tests for the jmri.jmris.srcp.JmriSRCPServerFrame class 
  *
  * @author Paul Bender
  */
-public class SimpleServerFrameTest {
+public class JmriSRCPServerFrameTest {
 
     @Test
     public void testCtorDefault() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SimpleServerFrame a = new SimpleServerFrame();
+        JmriSRCPServerFrame a = new JmriSRCPServerFrame();
         Assert.assertNotNull(a);
     }
 
