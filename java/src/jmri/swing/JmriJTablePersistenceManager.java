@@ -223,6 +223,26 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
         }
     }
 
+    /**
+     * Set dirty (needs to be saved) state. Protected so that subclasses can
+     * manipulate this state.
+     *
+     * @param dirty true if needs to be saved
+     */
+    protected void setDirty(boolean dirty) {
+        this.dirty = dirty;
+    }
+
+    /**
+     * Get dirty (needs to be saved) state. Protected so that subclasses can
+     * manipulate this state.
+     *
+     * @return true if needs to be saved
+     */
+    protected boolean getDirty() {
+        return this.dirty;
+    }
+
     @Override
     public void setPaused(boolean paused) {
         boolean old = this.paused;

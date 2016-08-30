@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 import apps.tests.Log4JFixture;
 import java.beans.PropertyChangeListener;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import javax.swing.JTable;
 import javax.swing.SortOrder;
@@ -231,14 +232,18 @@ public class JmriJTablePersistenceManagerTest {
      * Test of clearState method, of class JmriJTablePersistenceManager.
      */
     @Test
-    @Ignore
     public void testClearState() {
-        System.out.println("clearState");
-        JTable table = null;
-        JmriJTablePersistenceManager instance = new JmriJTablePersistenceManager();
+        String name = "test name";
+        JTable table = testTable(name);
+        JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
+        Assert.assertFalse(instance.getDirty());
+        instance.cacheState(table);
+        Assert.assertTrue(instance.getDirty());
+        Assert.assertNotNull(instance.getColumnsMap(name));
+        instance.setDirty(false);
         instance.clearState(table);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertNull(instance.getColumnsMap(name));
+        Assert.assertTrue(instance.getDirty());
     }
 
     /**
@@ -410,14 +415,26 @@ public class JmriJTablePersistenceManagerTest {
 
     private final static class JmriJTablePersistenceManagerSpy extends JmriJTablePersistenceManager {
 
-        //default access
-        JTableListener getListener(JTable table) {
+        @Override
+        public boolean getDirty() {
+            return super.getDirty();
+        }
+
+        @Override
+        public void setDirty(boolean state) {
+            super.setDirty(state);
+        }
+
+        public JTableListener getListener(JTable table) {
             return this.listeners.get(table.getName());
         }
 
-        //default access
-        JTableListener getListener(String name) {
+        public JTableListener getListener(String name) {
             return this.listeners.get(name);
+        }
+
+        public Map<String, TableColumnPreferences> getColumnsMap(String table) {
+            return this.columns.get(table);
         }
     }
 }
