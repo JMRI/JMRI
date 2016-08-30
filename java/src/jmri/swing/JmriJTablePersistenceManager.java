@@ -223,6 +223,26 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
         }
     }
 
+    /**
+     * Set dirty (needs to be saved) state. Protected so that subclasses can
+     * manipulate this state.
+     *
+     * @param dirty true if needs to be saved
+     */
+    protected void setDirty(boolean dirty) {
+        this.dirty = dirty;
+    }
+
+    /**
+     * Get dirty (needs to be saved) state. Protected so that subclasses can
+     * manipulate this state.
+     *
+     * @return true if needs to be saved
+     */
+    protected boolean getDirty() {
+        return this.dirty;
+    }
+
     @Override
     public void setPaused(boolean paused) {
         boolean old = this.paused;
@@ -546,21 +566,20 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
                         break;
                     default:
                         // log unrecognized events
-                        log.trace("Got propertyChange {} for {} (\"{}\" -> \"{}\")", evt.getPropertyName(), this.table.getName(), evt.getOldValue(), evt.getNewValue());
+                        log.trace("Got propertyChange {} for table {} (\"{}\" -> \"{}\")", evt.getPropertyName(), this.table.getName(), evt.getOldValue(), evt.getNewValue());
                 }
             } else if (evt.getSource() instanceof TableColumn) {
                 TableColumn column = ((TableColumn) evt.getSource());
                 String name = column.getIdentifier().toString();
                 switch (evt.getPropertyName()) {
                     case "preferredWidth": // NOI18N
-                        log.debug("Column {} has modelIndex {} viewIndex {}", name, column.getModelIndex(), this.table.convertColumnIndexToView(column.getModelIndex()));
                         this.saveState();
                         break;
                     case "width": // NOI18N
                         break;
                     default:
                         // log unrecognized events
-                        log.trace("Got propertyChange {} for {} (\"{}\" -> \"{}\")", evt.getPropertyName(), name, evt.getOldValue(), evt.getNewValue());
+                        log.trace("Got propertyChange {} for column {} (\"{}\" -> \"{}\")", evt.getPropertyName(), name, evt.getOldValue(), evt.getNewValue());
                 }
             }
         }
