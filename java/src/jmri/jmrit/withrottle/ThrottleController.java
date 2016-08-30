@@ -572,13 +572,12 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
         float newSpeed = (rawSpeed * speedMultiplier);
 
-        if (log.isDebugEnabled()) {
-            log.debug("raw: " + rawSpeed + ", NewSpd: " + newSpeed);
-        }
+        log.debug("raw: {}, NewSpd: {}",rawSpeed, newSpeed);
         throttle.setSpeedSetting(newSpeed);
     }
 
     protected void setDirection(boolean isForward) {
+        log.debug("set direction to: {}",(isForward?"Fwd":"Rev"));
         throttle.setIsForward(isForward);
     }
 
