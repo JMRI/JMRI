@@ -1,5 +1,4 @@
-//SimpleServerFrameTest.java
-package jmri.jmris.simpleserver;
+package jmri.jmris.srcp;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -7,21 +6,21 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
+
 
 /**
- * Tests for the jmri.jmris.simpleserver.SimpleServerFrame class 
+ * Tests for the jmri.jmris.srcp.JmriSRCPServerManager class 
  *
- * @author Paul Bender
+ * @author Paul Bender Copyright (C) 2016
  */
-public class SimpleServerFrameTest {
+public class JmriSRCPServerManagerTest {
 
     @Test
-    public void testCtorDefault() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SimpleServerFrame a = new SimpleServerFrame();
+    public void testGetInstance() {
+        JmriSRCPServerManager a = JmriSRCPServerManager.getInstance();
         Assert.assertNotNull(a);
     }
+
 
     // The minimal setup for log4J
     @Before
