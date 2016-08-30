@@ -626,7 +626,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         switch (state) {
             case Turnout.UNKNOWN:
                 if (isText()) {
-                    super.setText(Bundle.getMessage("UnKnown"));
+                    super.setText(Bundle.getMessage("BeanStateUnknown"));
                 }
                 if (isIcon()) {
                     super.setIcon(unknown);
@@ -666,7 +666,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                 break;
             default:
                 if (isText()) {
-                    super.setText(Bundle.getMessage("Inconsistent"));
+                    super.setText(Bundle.getMessage("BeanStateInconsistent"));
                 }
                 if (isIcon()) {
                     super.setIcon(inconsistent);

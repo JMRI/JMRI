@@ -819,7 +819,7 @@ public class ConditionalVariable {
             case Conditional.ITEM_TYPE_WARRANT:
                 return (Bundle.getMessage("BeanNameWarrant"));
             case Conditional.ITEM_TYPE_CLOCK:
-                return (rbx.getString("FastClock"));
+                return (Bundle.getMessage("FastClock"));
             case Conditional.ITEM_TYPE_OBLOCK:
                 return (Bundle.getMessage("BeanNameOBlock"));
             case Conditional.ITEM_TYPE_ENTRYEXIT:
@@ -1081,31 +1081,31 @@ public class ConditionalVariable {
                 if ((_type == Conditional.TYPE_SIGNAL_MAST_LIT)
                         || (_type == Conditional.TYPE_SIGNAL_MAST_HELD)) {
                     return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                            new Object[]{rbx.getString("SignalMast"), getName(), type});
+                            new Object[]{rbean.getString("BeanNameSignalMast"), getName(), type});
                 } else {
                     return java.text.MessageFormat.format(rbx.getString("SignalMastStateDescrpt"),
-                            new Object[]{rbx.getString("SignalMast"), getName(), _dataString});
+                            new Object[]{rbean.getString("BeanNameSignalMast"), getName(), _dataString});
                 }
             case Conditional.ITEM_TYPE_MEMORY:
                 if ((_type == Conditional.TYPE_MEMORY_EQUALS)
                         || (_type == Conditional.TYPE_MEMORY_EQUALS_INSENSITIVE)) {
                     return java.text.MessageFormat.format(rbx.getString("MemoryValueDescrpt"),
-                            new Object[]{rbx.getString("Memory"), getName(),
+                            new Object[]{rbean.getString("BeanNameMemory"), getName(),
                                 getCompareSymbols(_num1), _dataString});
                 } else {
                     return java.text.MessageFormat.format(rbx.getString("MemoryCompareDescrpt"),
-                            new Object[]{rbx.getString("Memory"), getName(),
+                            new Object[]{rbean.getString("BeanNameMemory"), getName(),
                                 getCompareSymbols(_num1), _dataString});
                 }
             case Conditional.ITEM_TYPE_CONDITIONAL:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                        new Object[]{rbx.getString("Conditional"), getName(), type});
+                        new Object[]{rbean.getString("BeanNameConditional"), getName(), type});
             case Conditional.ITEM_TYPE_WARRANT:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
                         new Object[]{rbx.getString("WarrantRoute"), getName(), type});
             case Conditional.ITEM_TYPE_CLOCK:
                 return java.text.MessageFormat.format(rbx.getString("FastClockDescrpt"),
-                        new Object[]{rbx.getString("FastClock"),
+                        new Object[]{Bundle.getMessage("FastClock"),
                             LogixTableAction.formatTime(_num1 / 60, _num1 - ((_num1 / 60) * 60)),
                             LogixTableAction.formatTime(_num2 / 60, _num2 - ((_num2 / 60) * 60))});
             case Conditional.ITEM_TYPE_OBLOCK:
@@ -1113,7 +1113,7 @@ public class ConditionalVariable {
                         new Object[]{rbx.getString("OBlockStatus"), getName(), _dataString});
             case Conditional.ITEM_TYPE_ENTRYEXIT:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                        new Object[]{rbx.getString("EntryExit"), getBean().getUserName(), type});
+                        new Object[]{rbean.getString("EntryExit"), getBean().getUserName(), type});
             case Conditional.TYPE_NONE:
                 return getName() + " type " + type;
         }

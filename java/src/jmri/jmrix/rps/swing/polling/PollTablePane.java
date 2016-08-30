@@ -17,9 +17,13 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SortOrder;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableRowSorter;
 import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.PollingFile;
+import jmri.swing.JmriTable;
+import jmri.swing.RowSorterUtil;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -47,7 +51,7 @@ public class PollTablePane extends javax.swing.JPanel {
 
         pollModel = new PollDataModel(modifiedFlag);
 
-        JTable pollTable = jmri.util.JTableUtil.sortableDataModel(pollModel);
+        JTable pollTable = new JmriTable(pollModel);
 
         // install a button renderer & editor
         ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -57,11 +61,9 @@ public class PollTablePane extends javax.swing.JPanel {
         pollTable.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         pollTable.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
-        try {
-            jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter) pollTable.getModel());
-            tmodel.setSortingStatus(PollDataModel.ADDRCOL, jmri.util.com.sun.TableSorter.ASCENDING);
-        } catch (ClassCastException e3) {
-        }  // if not a sortable table model
+        TableRowSorter<PollDataModel> sorter = new TableRowSorter<>(pollModel);
+        RowSorterUtil.setSortOrder(sorter, PollDataModel.ADDRCOL, SortOrder.ASCENDING);
+        pollTable.setRowSorter(sorter);
         pollTable.setRowSelectionAllowed(false);
         pollTable.setPreferredScrollableViewportSize(new java.awt.Dimension(580, 80));
 

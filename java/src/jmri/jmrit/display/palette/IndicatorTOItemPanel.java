@@ -69,7 +69,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             _detectPanel = new DetectionPanel(this);
             add(_detectPanel, 1);
             add(_iconFamilyPanel, 2);
-            _buttonPostion = 2;
+            _buttonPosition = 2;
         }
     }
 
@@ -80,7 +80,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     public void init(ActionListener doneAction) {
         super.init(doneAction);
         add(_iconFamilyPanel, 0);
-        _buttonPostion = 0;
+        _buttonPosition = 0;
     }
 
     /**
@@ -95,7 +95,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         _detectPanel = new DetectionPanel(this);
         add(_detectPanel, 1);
         add(_iconFamilyPanel, 2);
-        _buttonPostion = 2;
+        _buttonPosition = 2;
     }
 
     /**
@@ -250,7 +250,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             _iconPanel.add(panel);
             c.gridx++;
             HashMap<String, NamedIcon> iconMap = entry.getValue();
-            ItemPanel.checkIconMap("Turnout", iconMap);
+            ItemPanel.checkIconMap("Turnout", iconMap); // NOI18N
             Iterator<Entry<String, NamedIcon>> iter = iconMap.entrySet().iterator();
             while (iter.hasNext()) {
                 Entry<String, NamedIcon> ent = iter.next();
@@ -396,7 +396,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     private void createNewFamily() {
         _iconGroupsMap = new HashMap<String, HashMap<String, NamedIcon>>();
         for (int i = 0; i < STATUS_KEYS.length; i++) {
-            _iconGroupsMap.put(STATUS_KEYS[i], makeNewIconMap("Turnout"));
+            _iconGroupsMap.put(STATUS_KEYS[i], makeNewIconMap("Turnout")); // NOI18N
         }
         ItemPalette.addLevel4Family(_editor, _itemType, _family, _iconGroupsMap);
         resetFamiliesPanel();
@@ -439,7 +439,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             removeIconFamiliesPanel();
         }
         initIconFamiliesPanel();
-        add(_iconFamilyPanel, _buttonPostion);
+        add(_iconFamilyPanel, _buttonPosition);
         showIcons();
         _iconFamilyPanel.invalidate();
         invalidate();

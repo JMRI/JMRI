@@ -443,7 +443,7 @@ public class DefaultConditionalAction implements ConditionalAction {
             case Conditional.ITEM_TYPE_OBLOCK:
                 return (Bundle.getMessage("BeanNameOBlock"));
             case Conditional.ITEM_TYPE_CLOCK:
-                return (rbx.getString("FastClock"));
+                return (Bundle.getMessage("FastClock"));
             case Conditional.ITEM_TYPE_AUDIO:
                 return (Bundle.getMessage("BeanNameAudio"));
             case Conditional.ITEM_TYPE_SCRIPT:

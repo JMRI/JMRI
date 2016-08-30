@@ -472,7 +472,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                 Object value = this.getValueAt(i, j);
                 if (value == null) {
                     columnStrings[j] = spaces.toString();
-                } else if (value instanceof JComboBox) {
+                } else if (value instanceof JComboBox<?>) {
                     columnStrings[j] = (String) ((JComboBox<String>) value).getSelectedItem();
                 } else {
                     // Boolean or String
@@ -571,7 +571,9 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
      *
      * @param sorter the sorter and model for the table
      * @return a new table
-     * @deprecated since 4.5.4
+     * @deprecated since 4.5.4; use
+     * {@link #makeJTable(java.lang.String, javax.swing.table.TableModel, javax.swing.RowSorter)}
+     * instead.
      */
     @Deprecated
     public JTable makeJTable(TableSorter sorter) {
@@ -845,8 +847,8 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
      * Load table column settings from persistent storage.
      *
      * @param table the table
-     * @deprecated since 4.5.4; use
-     * {@link #persistTable(javax.swing.JTable)} instead.
+     * @deprecated since 4.5.4; use {@link #persistTable(javax.swing.JTable)}
+     * instead.
      */
     @Deprecated
     public void loadTableColumnDetails(JTable table) {
@@ -858,8 +860,8 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
      *
      * @param table        the table
      * @param beantableref name of the table
-     * @deprecated since 4.5.4; use
-     * {@link #persistTable(javax.swing.JTable)} instead.
+     * @deprecated since 4.5.4; use {@link #persistTable(javax.swing.JTable)}
+     * instead.
      */
     @Deprecated
     public void loadTableColumnDetails(JTable table, String beantableref) {
