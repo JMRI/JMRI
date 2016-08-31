@@ -355,6 +355,10 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
+        final String TO = Bundle.getMessage("BeanNameTurnout");
+        final String SM = Bundle.getMessage("BeanNameSignalMast");
+        final String FI = Bundle.getMessage("FullInterlock");
+
         @Override
         public void setValueAt(Object value, int row, int col) {
             if (col == DELETECOL) {
@@ -374,13 +378,13 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
             }
             if (col == TYPECOL) {
                 switch ((String) value) {
-                    case Bundle.getMessage("BeanNameTurnout"): // I18N see NXTYPE_NAMES definition
+                    case TO: // I18N see NXTYPE_NAMES definition and declarations above
                         nxPairs.setEntryExitType(source.get(row), panel, dest.get(row), 0x00);
                         break;
-                    case Bundle.getMessage("BeanNameSignalMast"):
+                    case SM:
                         nxPairs.setEntryExitType(source.get(row), panel, dest.get(row), 0x01);
                         break;
-                    case Bundle.getMessage("FullInterLock"):
+                    case FI:
                         nxPairs.setEntryExitType(source.get(row), panel, dest.get(row), 0x02);
                         break;
                     default:

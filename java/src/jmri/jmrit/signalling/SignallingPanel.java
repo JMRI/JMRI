@@ -62,8 +62,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     JmriBeanComboBox destMastBox;
     JLabel fixedSourceMastLabel = new JLabel();
     JLabel fixedDestMastLabel = new JLabel();
-    JLabel sourceMastLabel = new JLabel(rb.getString("SourceMast") + ":");
-    JLabel destMastLabel = new JLabel(rb.getString("DestMast") + ":");
+    JLabel sourceMastLabel = new JLabel(Bundle.getMessage("SourceMast") + ":");
+    JLabel destMastLabel = new JLabel(Bundle.getMessage("DestMast") + ":");
     JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
     JButton updateButton = new JButton(rb.getString("UpdateLogic"));
     JCheckBox useLayoutEditor = new JCheckBox(rb.getString("UseLayoutEditorPaths"));
@@ -1355,7 +1355,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 case UNAME_COLUMN:
                     return Bundle.getMessage("ColumnUserName");
                 case INCLUDE_COLUMN:
-                    return rb.getString("ColumnInclude");
+                    return Bundle.getMessage("Include");
                 case STATE_COLUMN:
                     return rb.getString("ColumnState"); // pick up via rb. from SignallingBundle as it is a different "State" label than non-signal tables
                 default:
