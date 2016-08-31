@@ -399,8 +399,8 @@ public class PositionableShape extends PositionableJComponent
             }
         }
         if (msg != null) {
-            JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("ErrorSensor"),
-                    JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("ErrorSensor") + ":",
+                    JOptionPane.INFORMATION_MESSAGE); // key ErrorSensor is also used to quote the name of the field in instruction
         }
         setControlSensorHandle(senHandle);
     }

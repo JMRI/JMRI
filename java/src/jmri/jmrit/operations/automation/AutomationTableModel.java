@@ -1,4 +1,3 @@
-// AutomationTableModel.java
 package jmri.jmrit.operations.automation;
 
 import java.awt.BorderLayout;
@@ -65,7 +64,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     AutomationTableFrame _frame;
     boolean _matchMode = false;
 
-    synchronized void updateList() {
+    private synchronized void updateList() {
         if (_automation == null) {
             return;
         }
@@ -80,7 +79,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
 
     List<AutomationItem> _list = new ArrayList<AutomationItem>();
 
-    void initTable(AutomationTableFrame frame, JTable table, Automation automation) {
+    protected synchronized void initTable(AutomationTableFrame frame, JTable table, Automation automation) {
         _automation = automation;
         _table = table;
         _frame = frame;
@@ -140,7 +139,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     @Override
-    public int getRowCount() {
+    public synchronized int getRowCount() {
         return _list.size();
     }
 
@@ -214,7 +213,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     @Override
-    public boolean isCellEditable(int row, int col) {
+    public synchronized boolean isCellEditable(int row, int col) {
         switch (col) {
             case ACTION_COLUMN:
             case TRAIN_COLUMN:
@@ -239,8 +238,8 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     @Override
-    public Object getValueAt(int row, int col) {
-        if (row >= _list.size()) {
+    public synchronized Object getValueAt(int row, int col) {
+        if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
         AutomationItem item = _list.get(row);
@@ -281,7 +280,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     @Override
-    public void setValueAt(Object value, int row, int col) {
+    public synchronized void setValueAt(Object value, int row, int col) {
         if (value == null) {
             log.debug("Warning automation table row {} still in edit", row);
             return;
@@ -492,7 +491,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
 
     // this table listens for changes to a automation and it's car types
     @Override
-    public void propertyChange(PropertyChangeEvent e) {
+    public synchronized void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY)
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
@@ -518,16 +517,13 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
     }
 
-    private void removePropertyChangeAutomationItems() {
+    private synchronized void removePropertyChangeAutomationItems() {
         for (AutomationItem item : _list) {
             item.removePropertyChangeListener(this);
         }
     }
 
-    public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
+    public synchronized void dispose() {
         if (_automation != null) {
             removePropertyChangeAutomationItems();
             _automation.removePropertyChangeListener(this);

@@ -102,10 +102,15 @@
           </ul>
         </li>
       </ul>
-
+    
       <ul>
         <li><a href="#issues">Issues</a></li>
-      </ul><a name="Introduction"></a> JUnit is a
+      </ul>
+      <ul>
+        <li><a href="#junit4">Migrating to JUnit4</a></li>
+      </ul>
+      
+      <a name="Introduction"></a> JUnit is a
       system for building "unit tests" of software. Unit tests are
       small tests that make sure that individual parts of the
       software do what they're supposed to do. In a distributed
@@ -688,7 +693,143 @@ environment.
       <code>test/junit/runner/excluded.properties</code> file.
       JUnit uses those properties to decide how to handle loading
       and reloading of classes. 
-      <!--#include virtual="/Footer" --></p>
+      </p>
+      
+      <h2><a name="junit4">Migrating to JUnit4</a></h2>
+      
+      JUnit4 is a significant upgrade of the JUnit tool.
+      It brings new capabilities, but also changes to the how tests are structured.
+      As of this writing (Summer 2016), we're still supporting the existing
+      test structures described above, while also using new capabilities
+      in some new and migrated tests.  
+      <p>
+      How, when and even if to migrate previously-existing test cases is a question
+      that's still to be discussed and resolved.</p>
+      <p>The rest of this section discusses some aspects of moving to 
+      and using JUnit4.</p>
+      
+      <p>We may want to consider:
+        <ul>
+            <li>using <a href="https://jemmy.java.net/">Jemmy</a>
+                    for UI tests instead of JFCUnit, since Jemmy can be used by Junit 4 tests, 
+                    while JFCUnit requires extending Junit 3 TestCase class.
+            <li><a href="https://github.com/junit-team/junit4/wiki/Ignoring-tests">Ignoring Tests</a>
+                    - marking a test as not to be run because the test itself is broken
+            <li><a href="https://github.com/junit-team/junit4/wiki/Timeout-for-tests">Timeouts for Tests</a> 
+                    - failing a test because it takes too long
+            <li><a href="https://github.com/junit-team/junit4/wiki/Categories">Categories</a>
+                    - useful ones in our case could be headless/not headless, 
+                    hardware specific (loco buffer attached, NCE PowerPro attached, etc)
+            <li><a href="http://junit.sourceforge.net/javadoc/org/junit/Assume.html">Assumptions</a>
+                    - to conditionally ignore a test. For example, a test that would fail in a headless environment 
+                    can be ignored in headless mode if the first line of the test method is:<br>
+                    <code>Assume.assumeFalse(GraphicsEnvironment.isHeadless());</code>
+        </ul>
+
+        <p><a href="https://github.com/rhwood/JMRI/blob/12a4b433fb704c3454480fdc576def16f0271b2c/java/test/jmri/server/json/roster/JsonRosterHttpServiceTest.java">Example of JUnit4 test</a>
+        and 
+        <a href="https://github.com/rhwood/JMRI/blob/12a4b433fb704c3454480fdc576def16f0271b2c/java/test/jmri/server/json/roster/PackageTest.java">corresponding PackageTest.java file</a>; 
+        note lack of main() procedure and other traditional boilerplate code. These files are the result of this
+        <a href="https://github.com/JMRI/JMRI/pull/1725/files#diff-3">commit that migrated a test package to JUnit4</a></p>
+        
+        <p><a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/jmrix/cmri/PackageTest.java">Example of JUnit4 tests with a <code>main()</code> procedure</a></p>
+        
+        <p>A possible set of steps for conversion:
+        <ol>
+        <li>Change the imports.  Typically, these can be removed:<br>
+        <pre style="font-family: monospace;">
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+</pre><br>
+and you'll typically need
+<br>
+<pre style="font-family: monospace;">
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+</pre><br>
+
+        <li>The test class no longer inherits from TestCase, so replace 
+        <code>public class MyClassTest extends TestCase</code>
+        with 
+        <code>public class MyClassTest</code>.
+
+        <li>Mark test methods with the &quot;<code>@Test</code>&quot; annotation:
+        <pre style="font-family: monospace;">
+    @Test
+    public void testSomething() {
+        ...
+    }
+        </pre>
+
+        <li>More of our Test classes have a 
+        "from here down is testing infrastructure" comment, followed by
+        setup code.  Some of that can be removed.
+        First, remove the class constructor, e.g. 
+<pre style="font-family: monospace;">
+    public MyClassTest(String s) {
+           super(s);
+    }      
+</pre>
+        <li>Next, remove the main method if there is one, e.g.:
+<pre style="font-family: monospace;">
+    // Main entry point
+    static public void main(String[] args) {
+        apps.tests.Log4JFixture.initLogging();
+        String[] testCaseName = {"-noloading", MyClassTest.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
+    }
+</pre>
+
+        <li>Finally, annotate the <code>setUp()</code> and <code>tearDown()</code>
+        methods.  Note: They have to be &quot;public&quot; methods, not
+        &quot;protected&quot; or &quot;private&quot;. They should end up looking
+        like (plus your own content, of course):
+ 
+<pre style="font-family: monospace;">
+    @Before
+    public void setUp() {
+          apps.tests.Log4JFixture.setUp();
+    }
+
+    @After 
+    public void tearDown() {
+          apps.tests.Log4JFixture.tearDown();
+    }
+</pre>
+
+        <li>Finally, replace the test suite definition.  JUnit3 was normally
+        used with "run everything in this class automatically" by having a method
+        that looked like this:
+<pre style="font-family: monospace;">
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite(Z21MessageTest.class);
+        return suite;
+    }
+</pre>
+<br>
+If that's what you've got, just remove it and you're done.  If you've got more
+logic in the suite() routine, ask for help on the jmri-developers list. An example 
+of the result of migrating a more complex case:
+<pre style="font-family: monospace;">
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+   CMRISystemConnectionMemoTest.class,
+   jmri.jmrix.cmri.serial.PackageTest.class})
+</pre>
+        <li>Run the tests and check
+        that all your tests were successfully included and run.
+</ol>
+That's it! You've successfully migrated to native JUnit4.  
+
+
+      <!--#include virtual="/Footer" -->
+      
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

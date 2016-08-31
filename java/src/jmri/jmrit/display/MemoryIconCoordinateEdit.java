@@ -61,10 +61,10 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
         oldY = pl.getOriginalY();
 
         textX = new javax.swing.JLabel();
-        textX.setText("x= " + pl.getOriginalX());
+        textX.setText("X: " + pl.getOriginalX());
         textX.setVisible(true);
         textY = new javax.swing.JLabel();
-        textY.setText("y= " + pl.getOriginalY());
+        textY.setText("Y: " + pl.getOriginalY());
         textY.setVisible(true);
 
         SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 10000, 1);
@@ -73,20 +73,20 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
                 int x = ((Number) spinX.getValue()).intValue();
                 int y = ((Number) spinY.getValue()).intValue();
                 pl.setLocation(x, y);
-                textX.setText("x= " + pl.getOriginalX());
-                textY.setText("y= " + pl.getOriginalY());
+                textX.setText(" X: " + pl.getOriginalX());
+                textY.setText(" Y: " + pl.getOriginalY());
             }
         };
         spinX = new javax.swing.JSpinner(model);
         spinX.setValue(Integer.valueOf(pl.getOriginalX()));
-        spinX.setToolTipText("Enter x coordinate");
+        spinX.setToolTipText(Bundle.getMessage("EnterXcoord"));
         spinX.setMaximumSize(new Dimension(
                 spinX.getMaximumSize().width, spinX.getPreferredSize().height));
         spinX.addChangeListener(listener);
         model = new javax.swing.SpinnerNumberModel(0, 0, 10000, 1);
         spinY = new javax.swing.JSpinner(model);
         spinY.setValue(Integer.valueOf(pl.getOriginalY()));
-        spinY.setToolTipText("Enter y coordinate");
+        spinY.setToolTipText(Bundle.getMessage("EnterYcoord"));
         spinY.setMaximumSize(new Dimension(
                 spinY.getMaximumSize().width, spinY.getPreferredSize().height));
         spinY.addChangeListener(listener);
@@ -100,8 +100,8 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
                 int x = ((Number) spinX.getValue()).intValue();
                 int y = ((Number) spinY.getValue()).intValue();
                 pl.setLocation(x, y);
-                textX.setText("x= " + pl.getOriginalX());
-                textY.setText("y= " + pl.getOriginalY());
+                textX.setText(" X: " + pl.getOriginalX());
+                textY.setText(" Y: " + pl.getOriginalY());
                 dispose();
             }
         });

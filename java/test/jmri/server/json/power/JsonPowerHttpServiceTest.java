@@ -41,6 +41,7 @@ public class JsonPowerHttpServiceTest extends TestCase {
             power.setPower(PowerManager.UNKNOWN);
             result = service.doGet(JsonPowerServiceFactory.POWER, null, Locale.ENGLISH);
             Assert.assertNotNull(result);
+            Assert.assertEquals(JsonPowerServiceFactory.POWER, result.path(JSON.TYPE).asText());
             Assert.assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
             power.setPower(PowerManager.ON);
             result = service.doGet(JsonPowerServiceFactory.POWER, null, Locale.ENGLISH);

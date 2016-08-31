@@ -1,5 +1,8 @@
 package jmri.server.json.layoutblock;
 
+import static jmri.server.json.layoutblock.JsonLayoutBlock.LAYOUTBLOCK;
+import static jmri.server.json.layoutblock.JsonLayoutBlock.LAYOUTBLOCKS;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonHttpService;
@@ -13,8 +16,6 @@ import jmri.spi.JsonServiceFactory;
  */
 public class JsonLayoutBlockServiceFactory implements JsonServiceFactory {
 
-    public static final String LAYOUTBLOCK = "layoutBlock"; // NOI18N
-    public static final String LAYOUTBLOCKS = "layoutBlocks"; // NOI18N
 
     @Override
     public String[] getTypes() {

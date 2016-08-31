@@ -22,6 +22,16 @@ import org.slf4j.LoggerFactory;
 @Deprecated
 public class JTableUtil {
 
+    /**
+     *
+     * @param dataModel model for table
+     * @return a table
+     * @deprecated since 4.5.4; create a standard {@link javax.swing.JTable} and
+     * add a {@link javax.swing.RowSorter} to that table instead. If you need
+     * custom {@link javax.swing.table.TableCellEditor} selection behavior,
+     * provide custom TableCellEditors for the columns that need the custom
+     * behavior.
+     */
     @Deprecated
     static public JTable sortableDataModel(TableModel dataModel) {
 

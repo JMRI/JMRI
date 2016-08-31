@@ -1,6 +1,9 @@
 package jmri.jmrit.dispatcher;
 
 import java.util.ResourceBundle;
+import jmri.InstanceManager;
+import jmri.Sensor;
+import jmri.SensorManager;
 
 /**
  * TrainInfo is a temporary object specifying New Train information just read
@@ -20,41 +23,42 @@ public class TrainInfo {
     public TrainInfo() {
     }
 
-    static final ResourceBundle rb = ResourceBundle
+    private static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.dispatcher.DispatcherBundle");
 
     // instance variables for both manual and automatic operation
-    String transitName = "";
-    String trainName = "";
-    String dccAddress = "";
-    boolean trainInTransit = false;
-    String startBlockName = "";
-    String destinationBlockName = "";
-    boolean trainFromRoster = true;
-    boolean trainFromTrains = false;
-    boolean trainFromUser = false;
-    String priority = "";
-    boolean autoRun = false;
-    boolean resetWhenDone = false;
-    boolean reverseAtEnd = false;
-    int delayedStart = ActiveTrain.NODELAY;
-    String departureTimeHr = "08";
-    String departureTimeMin = "00";
-    String delaySensor = null;
-    int delayedRestart = ActiveTrain.NODELAY;
-    String restartDelaySensor = null;
-    String delayedRestartTime = "0";
-    String trainType = "";
-    boolean terminateWhenDone = false;
+    private String transitName = "";
+    private String trainName = "";
+    private String dccAddress = "";
+    private boolean trainInTransit = false;
+    private String startBlockName = "";
+    private String destinationBlockName = "";
+    private boolean trainFromRoster = true;
+    private boolean trainFromTrains = false;
+    private boolean trainFromUser = false;
+    private int priority = 5;
+    private boolean autoRun = false;
+    private boolean resetWhenDone = false;
+    private boolean reverseAtEnd = false;
+    private int delayedStart = ActiveTrain.NODELAY;
+    private int delayedRestart = ActiveTrain.NODELAY;
+    private int departureTimeHr = 8;
+    private int departureTimeMin = 00;
+    private String delaySensorName = null;
+    private String restartSensorName = null;
+    private int restartDelayMin = 0;
+    private String trainType = "";
+    private boolean terminateWhenDone = false;
+    private boolean loadAtStartup = false;
 
     // instance variables for automatic operation
-    String speedFactor = "" + 1.0f;
-    String maxSpeed = "" + 0.6f;
-    String rampRate = rb.getString("RAMP_NONE");
-    boolean resistanceWheels = true;
-    boolean runInReverse = false;
-    boolean soundDecoder = false;
-    String maxTrainLength = "200.0";
+    private float speedFactor = 1.0f;
+    private float maxSpeed = 0.6f;
+    private String rampRate = rb.getString("RAMP_NONE");
+    private boolean resistanceWheels = true;
+    private boolean runInReverse = false;
+    private boolean soundDecoder = false;
+    private float maxTrainLength = 200.0f;
 
     // temporary instance variables
     /**
@@ -140,19 +144,19 @@ public class TrainInfo {
         return terminateWhenDone;
     }
 
-    protected void setPriority(String s) {
-        priority = s;
+    protected void setPriority(int pri) {
+        priority = pri;
     }
 
-    protected String getPriority() {
+    protected int getPriority() {
         return priority;
     }
 
-    protected void setRunAuto(boolean b) {
+    protected void setAutoRun(boolean b) {
         autoRun = b;
     }
 
-    protected boolean getRunAuto() {
+    protected boolean getAutoRun() {
         return autoRun;
     }
 
@@ -175,33 +179,47 @@ public class TrainInfo {
     protected void setDelayedStart(int ds) {
         delayedStart = ds;
     }
-
+    /**
+     * delayed start code for this train 
+     * @return one of ActiveTrain.NODELAY,TIMEDDELAY,SENSORDELAY 
+     */
     protected int getDelayedStart() {
         return delayedStart;
     }
 
-    protected void setDepartureTimeHr(String s) {
-        departureTimeHr = s;
+    protected void setDepartureTimeHr(int hr) {
+        departureTimeHr = hr;
     }
 
-    protected String getDepartureTimeHr() {
+    protected int getDepartureTimeHr() {
         return departureTimeHr;
     }
 
-    protected void setDepartureTimeMin(String s) {
-        departureTimeMin = s;
+    protected void setDepartureTimeMin(int min) {
+        departureTimeMin = min;
     }
 
-    protected String getDepartureTimeMin() {
+    protected int getDepartureTimeMin() {
         return departureTimeMin;
     }
 
-    protected void setDelaySensor(String sen) {
-        delaySensor = sen;
+    protected void setDelaySensorName(String sen) {
+        delaySensorName = sen;
     }
 
-    protected String getDelaySensor() {
-        return delaySensor;
+    protected String getDelaySensorName() {
+        return delaySensorName;
+    }
+
+    /**
+     * retrieve the startup delay sensor using the delay sensor name 
+     * @return delay sensor, or null if delay sensor name not set
+     */
+    protected Sensor getDelaySensor() {
+        if (delaySensorName == null) {
+            return null;
+        }
+        return InstanceManager.getDefault(SensorManager.class).getSensor(delaySensorName);
     }
 
     protected void setTrainType(String s) {
@@ -211,47 +229,71 @@ public class TrainInfo {
     protected String getTrainType() {
         return trainType;
     }
-
     protected void setDelayedRestart(int ds) {
         delayedRestart = ds;
     }
-
+    /**
+     * return restart code for this train, only used for continuous running 
+     * @return one of ActiveTrain.NODELAY,TIMEDDELAY,SENSORDELAY 
+     */
     protected int getDelayedRestart() {
         return delayedRestart;
     }
 
-    protected void setRestartDelaySensor(String sen) {
-        restartDelaySensor = sen;
+    protected void setRestartSensorName(String sen) {
+        restartSensorName = sen;
     }
 
-    protected String getRestartDelaySensor() {
-        return restartDelaySensor;
+    protected String getRestartSensorName() {
+        return restartSensorName;
+    }
+    /**
+     * retrieve the restart sensor using the restart sensor name 
+     * @return restart sensor, or null if the restart sensor name not set
+     */
+    protected Sensor getRestartSensor() {
+        if (restartSensorName == null) {
+            return null;
+        }
+        return jmri.InstanceManager.sensorManagerInstance().getSensor(restartSensorName);
     }
 
-    protected void setRestartDelayTime(String s) {
-        delayedRestartTime = s;
+    /**
+     * number of minutes to delay between restarting for continuous runs
+     * @param s number of minutes to delay
+     */
+    protected void setRestartDelayMin(int s) {
+        restartDelayMin = s;
     }
 
-    protected String getRestartDelayTime() {
-        return delayedRestartTime;
+    protected int getRestartDelayMin() {
+        return restartDelayMin;
+    }
+
+    protected boolean getLoadAtStartup() {
+        return loadAtStartup;
+    }
+
+    protected void setLoadAtStartup(boolean loadAtStartup) {
+        this.loadAtStartup = loadAtStartup;
     }
 
     /**
      * Access methods for automatic operation instance variables
      */
-    protected void setSpeedFactor(String s) {
-        speedFactor = s;
+    protected void setSpeedFactor(Float f) {
+        speedFactor = f;
     }
 
-    protected String getSpeedFactor() {
+    protected Float getSpeedFactor() {
         return speedFactor;
     }
 
-    protected void setMaxSpeed(String s) {
-        maxSpeed = s;
+    protected void setMaxSpeed(Float f) {
+        maxSpeed = f;
     }
 
-    protected String getMaxSpeed() {
+    protected Float getMaxSpeed() {
         return maxSpeed;
     }
 
@@ -287,11 +329,11 @@ public class TrainInfo {
         return soundDecoder;
     }
 
-    protected void setMaxTrainLength(String s) {
-        maxTrainLength = s;
+    protected void setMaxTrainLength(float f) {
+        maxTrainLength = f;
     }
 
-    protected String getMaxTrainLength() {
+    protected float getMaxTrainLength() {
         return maxTrainLength;
     }
 }

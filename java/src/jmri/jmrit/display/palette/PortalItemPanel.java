@@ -35,7 +35,7 @@ public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {
     /**
      * Init for creation _bottom1Panel and _bottom2Panel alternate visibility in
      * bottomPanel depending on whether icon families exist. They are made first
-     * because they are referenced in initIconFamiliesPanel() subclasses will
+     * because they are referenced in initIconFamiliesPanel(). Subclasses will
      * insert other panels
      */
     public void init() {

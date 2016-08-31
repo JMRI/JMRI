@@ -1,4 +1,3 @@
-// NetworkDriverAdapter.java
 package jmri.jmrix.cmri.serial.networkdriver;
 
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
@@ -13,7 +12,6 @@ import jmri.jmrix.cmri.serial.SerialTrafficController;
  * controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2015
- * @version	$Revision: 28746 $
  */
 public class NetworkDriverAdapter extends SerialNetworkPortController {
 

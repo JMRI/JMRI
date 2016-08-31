@@ -232,6 +232,8 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
             addItem(pRfid, rfidComboBox, 1, 0);
             jmri.InstanceManager.getDefault(jmri.IdTagManager.class).getNamedBeanList()
                     .forEach((tag) -> rfidComboBox.addItem((jmri.IdTag) tag));
+            rfidComboBox.insertItemAt((jmri.IdTag)null,0); // must have a blank in the list, for the default.
+            rfidComboBox.setSelectedIndex(0);
             pOptional.add(pRfid);
         }
 
@@ -593,7 +595,11 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
             }
             _engine.setComment(commentTextField.getText());
             _engine.setValue(valueTextField.getText());
-            _engine.setIdTag((IdTag) rfidComboBox.getSelectedItem());
+            // save the IdTag for this engine
+            IdTag idTag = (IdTag) rfidComboBox.getSelectedItem();
+            if (idTag != null) {
+                _engine.setRfid(idTag.toString());
+            }
         }
     }
 

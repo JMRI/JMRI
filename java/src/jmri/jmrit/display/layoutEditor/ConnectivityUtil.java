@@ -887,7 +887,7 @@ public class ConnectivityUtil {
     }
 
     /**
-     * Returns the Signal Head at the Anchor block boundary If 'facing' is
+     * Returns the SignalHead at the Anchor block boundary If 'facing' is
      * 'true', returns the head that faces toward the specified Block If
      * 'facing' is 'false', returns the head that faces away from the specified
      * Block
@@ -919,7 +919,7 @@ public class ConnectivityUtil {
     }
 
     /**
-     * Returns the Signal Mast at the Anchor block boundary If 'facing' is
+     * Returns the SignalMast at the Anchor block boundary If 'facing' is
      * 'true', returns the head that faces toward the specified Block If
      * 'facing' is 'false', returns the head that faces away from the specified
      * Block
@@ -970,7 +970,7 @@ public class ConnectivityUtil {
     }
 
     /**
-     * Returns the Signal Head at the level crossing If 'facing' is 'true',
+     * Returns the SignalHead at the level crossing If 'facing' is 'true',
      * returns the head that faces toward the specified Block If 'facing' is
      * 'false', returns the head that faces away from the specified Block
      */

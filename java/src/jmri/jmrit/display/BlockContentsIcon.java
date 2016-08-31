@@ -274,7 +274,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
     }
 
     public boolean setEditIconMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Block"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameBlock"));
         popup.add(new AbstractAction(txt) {
             /**
              *
@@ -289,7 +289,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
     }
 
     protected void edit() {
-        makeIconEditorFrame(this, "Block", true, null);
+        makeIconEditorFrame(this, "Block", true, null); // NOI18N
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.blockPickModelInstance());
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
@@ -332,7 +332,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         if (getBlock().getValue() != null) {
             newBlock.setText(getBlock().getValue().toString());
         }
-        Object[] options = {"Cancel", "OK", newBlock};
+        Object[] options = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), newBlock};
         int retval = JOptionPane.showOptionDialog(this,
                 Bundle.getMessage("EditCurrentBlockValue"), namedBlock.getName(),
                 0, JOptionPane.INFORMATION_MESSAGE, null,

@@ -56,20 +56,26 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
                         for (int ii = 0; ii < sensors.size(); ii++) {
                             String sName = sensors.get(ii);
                             if (newHouseCode.compareTo(tc.getAdapterMemo().getSerialAddress().houseCodeFromSystemName(sName)) == 0) {
-                                sensor = provideSensor(sName);
-                                if (sensor != null) {
-                                    try {
-                                        if (newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_UNITS_OFF) {
-                                            sensor.setKnownState(Sensor.INACTIVE);
-                                        } else {
-                                            sensor.setKnownState(Sensor.ACTIVE);
-                                        }
-                                    } catch (jmri.JmriException e) {
-                                        if (newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_UNITS_OFF) {
-                                            log.error("Exception setting " + sName + " sensor INACTIVE: " + e);
-                                        } else {
-                                            log.error("Exception setting " + sName + " sensor ACTIVE: " + e);
-                                        }
+                                try {
+                                    sensor = provideSensor(sName);
+                                } catch(java.lang.IllegalArgumentException iae){
+                                    // if provideSensor fails, it will throw an IllegalArgumentException, so catch that,log it if debugging is enabled, and then re-throw it.
+                                    if (log.isDebugEnabled()) {
+                                        log.debug("Attempt access sensor " + sName + " failed");
+                                    }
+                                    throw iae;
+                                }
+                                try {
+                                    if (newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_UNITS_OFF) {
+                                        sensor.setKnownState(Sensor.INACTIVE);
+                                    } else {
+                                        sensor.setKnownState(Sensor.ACTIVE);
+                                    }
+                                } catch (jmri.JmriException e) {
+                                    if (newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_UNITS_OFF) {
+                                        log.error("Exception setting " + sName + " sensor INACTIVE: " + e);
+                                    } else {
+                                        log.error("Exception setting " + sName + " sensor ACTIVE: " + e);
                                     }
                                 }
                             }
@@ -110,21 +116,27 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
                 sysName.append(".");
                 sysName.append(StringUtil.twoHexFromInt(lowAddr));
                 Sensor sensor = null;
-                sensor = provideSensor(new String(sysName));
-                if (sensor != null) {
-                    if (cmd1 == Constants.CMD_LIGHT_ON_FAST || cmd1 == Constants.CMD_LIGHT_ON_RAMP) {
-                        try {
-                            sensor.setKnownState(Sensor.ACTIVE);
-                        } catch (jmri.JmriException e) {
-                            log.error("Exception setting " + sysName + " sensor ACTIVE: " + e);
-                        }
+                try {
+                    sensor = provideSensor(new String(sysName));
+                } catch(java.lang.IllegalArgumentException iae){
+                    // if provideSensor fails, it will throw an IllegalArgumentException, so catch that,log it if debugging is enabled, and then re-throw it.
+                    if (log.isDebugEnabled()) {
+                        log.debug("Attempt access sensor " + sysName + " failed");
                     }
-                    if (cmd1 == Constants.CMD_LIGHT_OFF_FAST || cmd1 == Constants.CMD_LIGHT_OFF_RAMP) {
-                        try {
-                            sensor.setKnownState(Sensor.INACTIVE);
-                        } catch (jmri.JmriException e) {
-                            log.error("Exception setting " + sysName + " sensor INACTIVE: " + e);
-                        }
+                    throw iae;
+                }
+                if (cmd1 == Constants.CMD_LIGHT_ON_FAST || cmd1 == Constants.CMD_LIGHT_ON_RAMP) {
+                    try {
+                        sensor.setKnownState(Sensor.ACTIVE);
+                    } catch (jmri.JmriException e) {
+                        log.error("Exception setting " + sysName + " sensor ACTIVE: " + e);
+                    }
+                }
+                if (cmd1 == Constants.CMD_LIGHT_OFF_FAST || cmd1 == Constants.CMD_LIGHT_OFF_RAMP) {
+                    try {
+                        sensor.setKnownState(Sensor.INACTIVE);
+                    } catch (jmri.JmriException e) {
+                        log.error("Exception setting " + sysName + " sensor INACTIVE: " + e);
                     }
                 }
             }

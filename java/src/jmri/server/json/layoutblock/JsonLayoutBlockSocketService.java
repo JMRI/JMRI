@@ -3,7 +3,7 @@ package jmri.server.json.layoutblock;
 import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PUT;
-import static jmri.server.json.layoutblock.JsonLayoutBlockServiceFactory.LAYOUTBLOCK;
+import static jmri.server.json.layoutblock.JsonLayoutBlock.LAYOUTBLOCK;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import java.beans.PropertyChangeEvent;
@@ -20,7 +20,6 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 /**
  *
@@ -81,8 +80,8 @@ public class JsonLayoutBlockSocketService extends JsonSocketService {
         @Override
         public void propertyChange(PropertyChangeEvent e) {
             if (e.getPropertyName().equals("redraw")) {
-//                log.debug("{} property '{}' changed from '{}' to '{}'", this.layoutBlock.getUserName(), 
-//                        e.getPropertyName(), e.getOldValue(), e.getNewValue());
+                log.debug("{} property '{}' changed from '{}' to '{}'", this.layoutBlock.getUserName(),
+                        e.getPropertyName(), e.getOldValue(), e.getNewValue());
                 try {
                     try {
                         connection.sendMessage(service.doGet(LAYOUTBLOCK, this.layoutBlock.getSystemName(), locale));

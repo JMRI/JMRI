@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
  */
 public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDefault {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
+    //ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle"); // seems not to be used
 
     public int routingMethod = LayoutBlockConnectivityTools.METRIC;
 

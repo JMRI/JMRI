@@ -26,7 +26,7 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
     @Override
     public void configure() {
         log.debug("configure() called.");
-        SprogTrafficController control = SprogTrafficController.instance();
+        SprogTrafficController control = new SprogTrafficController(this.getSystemConnectionMemo());
 
         // connect to the traffic controller
         this.getSystemConnectionMemo().setSprogTrafficController(control);
@@ -38,9 +38,6 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
         // start thread to notify controller when data is available
         rcvNotice = new Thread(new rcvCheck(input, control));
         rcvNotice.start();
-
-        // declare up
-        ActiveFlag.setActive();
 
     }
 
@@ -65,17 +62,17 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
     // SPROG Interface methods.
     @Override
     public void addSprogListener(SprogListener l) {
-        SprogTrafficController.instance().addSprogListener(l);
+        this.getSystemConnectionMemo().getSprogTrafficController().addSprogListener(l);
     }
 
     @Override
     public void removeSprogListener(SprogListener l) {
-        SprogTrafficController.instance().removeSprogListener(l);
+        this.getSystemConnectionMemo().getSprogTrafficController().removeSprogListener(l);
     }
 
     @Override
     public void sendSprogMessage(SprogMessage m, SprogListener l) {
-        SprogTrafficController.instance().sendSprogMessage(m, l);
+        this.getSystemConnectionMemo().getSprogTrafficController().sendSprogMessage(m, l);
     }
 
     @Override

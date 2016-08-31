@@ -8,7 +8,6 @@ import java.lang.reflect.InvocationTargetException;
 import javax.swing.SwingUtilities;
 import jmri.Application;
 import jmri.ConfigureManager;
-import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBeanHandleManager;
@@ -18,7 +17,6 @@ import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.BlockValueFile;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.jmrit.signalling.EntryExitPairs;
-import jmri.managers.DefaultIdTagManager;
 import jmri.managers.DefaultShutDownManager;
 import jmri.managers.JmriUserPreferencesManager;
 import jmri.profile.Profile;
@@ -48,7 +46,7 @@ public abstract class AppsBase {
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT",
             justification = "not a library pattern")
-    private final static String configFilename = "/JmriConfig3.xml";
+    private final static String configFilename = System.getProperty("org.jmri.Apps.configFilename", "/JmriConfig3.xml");
     protected boolean configOK;
     protected boolean configDeferredLoadOK;
     protected boolean preferenceFileExists;
@@ -58,6 +56,8 @@ public abstract class AppsBase {
     /**
      * Initial actions before frame is created, invoked in the applications
      * main() routine.
+     *
+     * @param applicationName The application name as presented to the user
      */
     static public void preInit(String applicationName) {
         Log4JUtil.initLogging();
@@ -77,6 +77,10 @@ public abstract class AppsBase {
 
     /**
      * Create and initialize the application object.
+     *
+     * @param applicationName user-visible name of application
+     * @param configFileDef   default config filename
+     * @param args            arguments passed to application at launch
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SC_START_IN_CTOR",
             justification = "The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage")
@@ -229,9 +233,6 @@ public abstract class AppsBase {
         // install the named bean handler
         InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
 
-        // Install an IdTag manager
-        InstanceManager.store(new DefaultIdTagManager(), IdTagManager.class);
-
         //Install Entry Exit Pairs Manager
         InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
 
@@ -267,7 +268,12 @@ public abstract class AppsBase {
         }
         preferenceFileExists = true;
         try {
-            configOK = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).load(file);
+            ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+            if (cm != null) {
+                configOK = cm.load(file);
+            } else {
+                configOK = false;
+            }
             log.debug("end load config file {}, OK={}", file.getName(), configOK);
         } catch (JmriException e) {
             configOK = false;
@@ -276,8 +282,8 @@ public abstract class AppsBase {
         if (sharedConfig != null) {
             // sharedConfigs do not need deferred loads
             configDeferredLoadOK = true;
-        } else {
-        // To avoid possible locks, deferred load should be
+        } else { 
+            // To avoid possible locks, deferred load should be
             // performed on the Swing thread
             if (SwingUtilities.isEventDispatchThread()) {
                 configDeferredLoadOK = doDeferredLoad(file);
@@ -298,7 +304,10 @@ public abstract class AppsBase {
             // migrate preferences
             InstanceManager.tabbedPreferencesInstance().init();
             InstanceManager.tabbedPreferencesInstance().saveContents();
-            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).storePrefs();
+            ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+            if (cm != null) {
+                cm.storePrefs();
+            }
             // notify user of change
             log.info("Preferences have been migrated to new format.");
             log.info("New preferences format will be used after JMRI is restarted.");
@@ -308,18 +317,20 @@ public abstract class AppsBase {
     //abstract protected void addToActionModel();
     private boolean doDeferredLoad(File file) {
         boolean result;
-        if (log.isDebugEnabled()) {
-            log.debug("start deferred load from config file " + file.getName());
-        }
+        log.debug("start deferred load from config file {}", file.getName());
         try {
-            result = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).loadDeferred(file);
+            ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+            if (cm != null) {
+                result = cm.loadDeferred(file);
+            } else {
+                log.error("Failed to getOptionalDefault config mgr");
+                result = false;
+            }
         } catch (JmriException e) {
             log.error("Unhandled problem loading deferred configuration: " + e);
             result = false;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("end deferred load from config file " + file.getName() + ", OK=" + result);
-        }
+        log.debug("end deferred load from config file {}, OK={}", file.getName(), result);
         return result;
     }
 
@@ -339,9 +350,7 @@ public abstract class AppsBase {
         // `kill -s 9 pid`
         jmri.util.RuntimeUtil.addShutdownHook(new Thread(new Runnable() {
             public void run() {
-                if (log.isDebugEnabled()) {
-                    log.debug("Shutdown hook called");
-                }
+                log.debug("Shutdown hook called");
                 handleQuit();
             }
         }));
@@ -395,8 +404,11 @@ public abstract class AppsBase {
      * @param args Argument array from the main routine
      */
     static protected void setConfigFilename(String def, String[] args) {
+        // skip if org.jmri.Apps.configFilename is set
+        if (System.getProperty("org.jmri.Apps.configFilename") != null) {
+            return;
+        }
         // save the configuration filename if present on the command line
-
         if (args.length >= 1 && args[0] != null && !args[0].equals("") && !args[0].contains("=")) {
             def = args[0];
             log.debug("Config file was specified as: " + args[0]);
@@ -440,6 +452,9 @@ public abstract class AppsBase {
 
     /**
      * The application decided to quit, handle that.
+     *
+     * @return true if successfully ran all shutdown tasks and can quit; false
+     *         otherwise
      */
     static public boolean handleQuit() {
         log.debug("Start handleQuit");
@@ -453,6 +468,9 @@ public abstract class AppsBase {
 
     /**
      * The application decided to restart, handle that.
+     *
+     * @return true if successfully ran all shutdown tasks and can quit; false
+     *         otherwise
      */
     static public boolean handleRestart() {
         log.debug("Start handleRestart");
