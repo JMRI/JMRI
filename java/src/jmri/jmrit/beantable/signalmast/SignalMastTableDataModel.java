@@ -17,7 +17,6 @@ import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.beantable.SignalMastTableAction.MyComboBoxEditor;
 import jmri.jmrit.beantable.SignalMastTableAction.MyComboBoxRenderer;
 import jmri.jmrit.signalling.SignallingSourceAction;
-import jmri.swing.JmriTable;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -246,7 +245,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     SignalMastJTable table;
 
     //The JTable is extended so that we can reset the available aspect in the drop down when required
-    class SignalMastJTable extends JmriTable {
+    class SignalMastJTable extends JTable {
 
         public SignalMastJTable(TableModel srtr) {
             super(srtr);

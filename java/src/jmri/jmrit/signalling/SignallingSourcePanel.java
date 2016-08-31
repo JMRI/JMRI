@@ -14,13 +14,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SortOrder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableRowSorter;
 import jmri.SignalMast;
 import jmri.SignalMastLogic;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.SystemNameComparator;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -66,19 +70,15 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         add(header, BorderLayout.NORTH);
 
         _AppearanceModel = new SignalMastAppearanceModel();
-        JTable SignalAppearanceTable = jmri.util.JTableUtil.sortableDataModel(_AppearanceModel);
-
-        try {
-            jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter) SignalAppearanceTable.getModel());
-            tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            tmodel.setSortingStatus(SignalMastAppearanceModel.SYSNAME_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
-        } catch (ClassCastException e3) {
-        }  // if not a sortable table model
-
-        SignalAppearanceTable.setRowSelectionAllowed(false);
-        SignalAppearanceTable.setPreferredScrollableViewportSize(new java.awt.Dimension(600, 120));
-        _AppearanceModel.configureTable(SignalAppearanceTable);
-        _SignalAppearanceScrollPane = new JScrollPane(SignalAppearanceTable);
+        JTable table = new JTable(_AppearanceModel);
+        TableRowSorter<SignalMastAppearanceModel> sorter = new TableRowSorter<>(_AppearanceModel);
+        sorter.setComparator(SignalMastAppearanceModel.SYSNAME_COLUMN, new SystemNameComparator());
+        RowSorterUtil.setSortOrder(sorter, SignalMastAppearanceModel.SYSNAME_COLUMN, SortOrder.ASCENDING);
+        table.setRowSorter(sorter);
+        table.setRowSelectionAllowed(false);
+        table.setPreferredScrollableViewportSize(new java.awt.Dimension(600, 120));
+        _AppearanceModel.configureTable(table);
+        _SignalAppearanceScrollPane = new JScrollPane(table);
         _AppearanceModel.fireTableDataChanged();
         add(_SignalAppearanceScrollPane, BorderLayout.CENTER);
 
