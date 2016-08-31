@@ -3,8 +3,9 @@ package jmri.jmrix.ieee802154.xbee;
 
 import com.digi.xbee.api.models.ATCommandResponse;
 import com.digi.xbee.api.XBeeDevice;
+import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.exceptions.XBeeException;
-import com.digi.xbee.api.packet.common.ReceivePacket;
+import com.digi.xbee.api.packet.common.XBeePacket;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -179,7 +180,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     // from the the handleOneIncomingReply() in 
     // AbstractMRTrafficController.
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"NO_NOTIFY_NOT_NOTIFYALL","UW_UNCOND_WAIT","WA_NOT_IN_LOOP"}, justification="There should only be one thread waiting on xmtRunnable. wait() on xmtRunnable is unconditional and not in a loop because it is used to wait for the hardware when switching modes.")
-    public void packetReceived(ReceivePacket response) {
+    public void packetReceived(XBeePacket response) {
 
         // before we forward this on to the listeners, handle
         // responses that may modify how the message is interpreted.
@@ -423,10 +424,27 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      * @return the node if found, or null otherwise.
      */
     synchronized public jmri.jmrix.AbstractNode getNodeFromName(String Name) {
-        log.debug("getNodeFromName called with " + Name);
+        log.debug("getNodeFromName called with {}",Name);
         for (int i = 0; i < numNodes; i++) {
             XBeeNode node = (XBeeNode) getNode(i);
             if (node.getIdentifier().equals(Name)) {
+                return node;
+            }
+        }
+        return (null);
+    }
+ 
+   /**
+     * Public method to identify an XBeeNode from its RemoteXBeeDevice object.
+     *
+     * @param device the RemoteXBeeDevice to search for.
+     * @return the node if found, or null otherwise.
+     */
+    synchronized public jmri.jmrix.AbstractNode getNodeFromDevice(RemoteXBeeDevice device) {
+        log.debug("getNodeFromDevice called with {}",device);
+        for (int i = 0; i < numNodes; i++) {
+            XBeeNode node = (XBeeNode) getNode(i);
+            if (node.getXBee().equals(device)) {
                 return node;
             }
         }

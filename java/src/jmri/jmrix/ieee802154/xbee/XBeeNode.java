@@ -257,6 +257,13 @@ public class XBeeNode extends IEEE802154Node {
     }
 
     /*
+     * @return RemoteXBeeDevice associated with this node.
+     */
+    public RemoteXBeeDevice getXBee() {
+           return device;
+    }
+
+    /*
      * get the stream object associated with this node.  Create it if it does
      * not exist.
      */
