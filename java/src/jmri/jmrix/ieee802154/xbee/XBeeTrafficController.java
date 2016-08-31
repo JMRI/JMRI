@@ -5,7 +5,7 @@ import com.digi.xbee.api.models.ATCommandResponse;
 import com.digi.xbee.api.XBeeDevice;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.exceptions.XBeeException;
-import com.digi.xbee.api.packet.common.XBeePacket;
+import com.digi.xbee.api.packet.XBeePacket;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -182,29 +182,6 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"NO_NOTIFY_NOT_NOTIFYALL","UW_UNCOND_WAIT","WA_NOT_IN_LOOP"}, justification="There should only be one thread waiting on xmtRunnable. wait() on xmtRunnable is unconditional and not in a loop because it is used to wait for the hardware when switching modes.")
     public void packetReceived(XBeePacket response) {
 
-        // before we forward this on to the listeners, handle
-        // responses that may modify how the message is interpreted.
-        try {
-            // set the hardware type from a response to an "HV" ATCommandResponse
-            if (response instanceof ATCommandResponse
-                    && ((ATCommandResponse) response).getCommand().equals("HV")) {
-                setSeries(com.rapplogic.xbee.api.HardwareVersion.parse(
-                        (ATCommandResponse) response));
-            }
-        } catch (XBeeException xbe) {
-            setSeries(com.rapplogic.xbee.api.HardwareVersion.RadioType.UNKNOWN);
-        }
-
-        // set the firmware version after a "VR" ATCommandResponse
-        if (response instanceof ATCommandResponse
-                && ((ATCommandResponse) response).getCommand().equals("VR")) {
-            setVersion(((ATCommandResponse) response).getValue());
-        }
-
-        //if(response.isError()) {
-        //    log.error("XBee API Reports error in parsing reply");
-        //    return;
-        //}
         XBeeReply reply = new XBeeReply(response);
 
         // message is complete, dispatch it !!
@@ -384,37 +361,6 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
             // that only registeres as an IEEE802154Listener.
             ((IEEE802154Listener) client).reply((IEEE802154Reply) r);
         }
-    }
-
-    // keep track of the XBee Series
-    private com.rapplogic.xbee.api.HardwareVersion.RadioType series = com.rapplogic.xbee.api.HardwareVersion.RadioType.UNKNOWN;
-
-    private void setSeries(com.rapplogic.xbee.api.HardwareVersion.RadioType type) {
-        series = type;
-    }
-
-    // if we are using Series 1 XBees, use wpan classes from the XBee API library
-    public boolean isSeries1() {
-        return ((!((firmwareVersion[0] & 0xF0) == 0x80))
-                && (series == com.rapplogic.xbee.api.HardwareVersion.RadioType.SERIES1
-                || series == com.rapplogic.xbee.api.HardwareVersion.RadioType.SERIES1_PRO
-                || series == com.rapplogic.xbee.api.HardwareVersion.RadioType.UNKNOWN));
-    }
-
-    // if we are using Series 2 XBees, use zigbee classes from the XBee API library
-    public boolean isSeries2() {
-        return ((firmwareVersion[0] & 0xF0) == 0x80
-                || series == com.rapplogic.xbee.api.HardwareVersion.RadioType.SERIES2
-                || series == com.rapplogic.xbee.api.HardwareVersion.RadioType.SERIES2_PRO
-                || series == com.rapplogic.xbee.api.HardwareVersion.RadioType.SERIES2B_PRO);
-    }
-
-    // keep track of the XBee Firmware Version
-    private int firmwareVersion[] = {0xFF, 0xFF};
-
-    private void setVersion(int version[]) {
-        firmwareVersion[0] = version[0];
-        firmwareVersion[1] = version[1];
     }
 
     /**

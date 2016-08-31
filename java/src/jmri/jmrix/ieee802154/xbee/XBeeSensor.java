@@ -1,7 +1,6 @@
 // XBeeSensor.java
 package jmri.jmrix.ieee802154.xbee;
 
-import com.rapplogic.xbee.api.ApiId;
 import com.digi.xbee.api.packet.common.RemoteATCommandResponsePacket;
 import com.digi.xbee.api.io.IOSample;
 import com.digi.xbee.api.packet.common.IODataSampleRxIndicatorPacket;
