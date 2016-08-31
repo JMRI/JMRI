@@ -36,7 +36,6 @@ import jmri.NamedBean;
 import jmri.SignalGroup;
 import jmri.SignalHead;
 import jmri.SignalMast;
-import jmri.swing.JmriTable;
 import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemNameComparator;
@@ -481,7 +480,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
             p3xsi.add(p31si);
             _AppearanceModel = new SignalMastAppearanceModel();
-            JTable SignalAppearanceTable = new JmriTable(_AppearanceModel);
+            JTable SignalAppearanceTable = new JTable(_AppearanceModel);
             TableRowSorter<SignalMastAppearanceModel> smaSorter = new TableRowSorter<>(_AppearanceModel);
             smaSorter.setComparator(SignalMastAppearanceModel.APPEAR_COLUMN, new SystemNameComparator());
             RowSorterUtil.setSortOrder(smaSorter, SignalMastAppearanceModel.APPEAR_COLUMN, SortOrder.ASCENDING);
@@ -537,7 +536,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             p21si.add(new JLabel(Bundle.getMessage("SelectInGroup", Bundle.getMessage("SignalHeads"))));
             p2xsi.add(p21si);
             _SignalGroupSignalModel = new SignalGroupSignalModel();
-            JTable SignalGroupSignalTable = new JmriTable(_SignalGroupSignalModel);
+            JTable SignalGroupSignalTable = new JTable(_SignalGroupSignalModel);
             TableRowSorter<SignalGroupSignalModel> sgsSorter = new TableRowSorter<>(_SignalGroupSignalModel);
             sgsSorter.setComparator(SignalGroupSignalModel.SNAME_COLUMN, new SystemNameComparator());
             RowSorterUtil.setSortOrder(sgsSorter, SignalGroupSignalModel.SNAME_COLUMN, SortOrder.ASCENDING);

@@ -33,7 +33,6 @@ import jmri.Sensor;
 import jmri.SignalGroup;
 import jmri.SignalHead;
 import jmri.Turnout;
-import jmri.swing.JmriTable;
 import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemNameComparator;
@@ -322,7 +321,7 @@ public class SignalGroupSubTableAction {
             //p21t.add(new JLabel("this Signal Group."));
             p2xt.add(p21t);
             _SignalGroupTurnoutModel = new SignalGroupTurnoutModel();
-            JTable SignalGroupTurnoutTable = new JmriTable(_SignalGroupTurnoutModel);
+            JTable SignalGroupTurnoutTable = new JTable(_SignalGroupTurnoutModel);
             TableRowSorter<SignalGroupTurnoutModel> sgtSorter = new TableRowSorter<>(_SignalGroupTurnoutModel);
             sgtSorter.setComparator(SignalGroupTurnoutModel.SNAME_COLUMN, new SystemNameComparator());
             RowSorterUtil.setSortOrder(sgtSorter, SignalGroupTurnoutModel.SNAME_COLUMN, SortOrder.ASCENDING);
@@ -382,7 +381,7 @@ public class SignalGroupSubTableAction {
             //p21s.add(new JLabel(" in this SignalGroup."));
             p2xs.add(p21s);
             _SignalGroupSensorModel = new SignalGroupSensorModel();
-            JTable SignalGroupSensorTable = new JmriTable(_SignalGroupSensorModel);
+            JTable SignalGroupSensorTable = new JTable(_SignalGroupSensorModel);
             TableRowSorter<SignalGroupSensorModel> sgsSorter = new TableRowSorter<>(_SignalGroupSensorModel);
             sgsSorter.setComparator(SignalGroupSensorModel.SNAME_COLUMN, new SystemNameComparator());
             RowSorterUtil.setSortOrder(sgsSorter, SignalGroupSensorModel.SNAME_COLUMN, SortOrder.ASCENDING);

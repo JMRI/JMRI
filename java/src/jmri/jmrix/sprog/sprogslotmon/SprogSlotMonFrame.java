@@ -16,7 +16,6 @@ import javax.swing.JTextArea;
 import javax.swing.table.TableRowSorter;
 import jmri.jmrix.sprog.SprogConstants;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
-import jmri.swing.JmriTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +48,7 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
         _memo = memo;
         slotModel = new SprogSlotMonDataModel(SprogConstants.MAX_SLOTS, 8,_memo);
 
-        slotTable = new JmriTable(slotModel);
+        slotTable = new JTable(slotModel);
         slotTable.setRowSorter(new TableRowSorter<>(slotModel));
         slotScroll = new JScrollPane(slotTable);
 

@@ -50,7 +50,6 @@ import jmri.NamedBean;
 import jmri.NamedBeanHandleManager;
 import jmri.UserPreferencesManager;
 import jmri.swing.JTablePersistenceManager;
-import jmri.swing.JmriTable;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.swing.XTableColumnModel;
@@ -555,7 +554,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
     public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @Nullable RowSorter<? extends TableModel> sorter) {
         Objects.requireNonNull(name, "the table name must be nonnull");
         Objects.requireNonNull(model, "the table model must be nonnull");
-        JTable table = new JmriTable(model);
+        JTable table = new JTable(model);
         table.setName(name);
         table.setRowSorter(sorter);
         table.getTableHeader().setReorderingAllowed(true);
@@ -577,7 +576,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
      */
     @Deprecated
     public JTable makeJTable(TableSorter sorter) {
-        JTable table = new JmriTable(sorter);
+        JTable table = new JTable(sorter);
         table.getTableHeader().setReorderingAllowed(true);
         table.setColumnModel(new XTableColumnModel());
         table.createDefaultColumnsFromModel();
