@@ -267,7 +267,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
                 break;
             default:
                 if (isText()) {
-                    super.setText(Bundle.getMessage("Inconsistent"));
+                    super.setText(Bundle.getMessage("BeanStateInconsistent"));
                 }
                 if (isIcon()) {
                     super.setIcon(inconsistent);

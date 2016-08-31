@@ -316,7 +316,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
                 return Bundle.getMessage("Error");
             }
         }
-        return Bundle.getMessage("Okay");
+        return Bundle.getMessage("ButtonOK");
     }
 
     private JComboBox<LocationTrackPair> getComboBox(int row, Schedule schedule) {

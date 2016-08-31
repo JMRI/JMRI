@@ -52,8 +52,8 @@ import org.slf4j.LoggerFactory;
  * When LayoutSlips are first created, there are no connections. Block
  * information and connections are added when available.
  * <P>
- * Signal Head names are saved here to keep track of where signals are.
- * LayoutSlip only serves as a storage place for signal head names. The names
+ * SignalHead names are saved here to keep track of where signals are.
+ * LayoutSlip only serves as a storage place for SignalHead names. The names
  * are placed here by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
@@ -528,7 +528,7 @@ public class LayoutSlip extends LayoutTurnout {
             }
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
-            popup.add(new AbstractAction(rb.getString("Edit")) {
+            popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 /**
                  *
                  */
@@ -574,7 +574,7 @@ public class LayoutSlip extends LayoutTurnout {
                                 rot = Double.parseDouble(newAngle);
                             } catch (Exception e) {
                                 JOptionPane.showMessageDialog(layoutEditor, rb.getString("Error3")
-                                        + " " + e, rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                                        + " " + e, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                                 error = true;
                                 newAngle = "";
                             }
@@ -732,14 +732,14 @@ public class LayoutSlip extends LayoutTurnout {
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
-            JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " A " + rb.getString("Name"));
+            JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " A " + Bundle.getMessage("Name"));
             turnoutAComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DISPLAYNAME);
             panel1.add(turnoutNameLabel);
             panel1.add(turnoutAComboBox);
             contentPane.add(panel1);
             JPanel panel1a = new JPanel();
             panel1a.setLayout(new FlowLayout());
-            JLabel turnoutBNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " B " + rb.getString("Name"));
+            JLabel turnoutBNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " B " + Bundle.getMessage("Name"));
             turnoutBComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getTurnoutB(), JmriBeanComboBox.DISPLAYNAME);
             panel1a.add(turnoutBNameLabel);
             panel1a.add(turnoutBComboBox);
@@ -796,7 +796,7 @@ public class LayoutSlip extends LayoutTurnout {
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
-            panel5.add(slipEditDone = new JButton(rb.getString("Done")));
+            panel5.add(slipEditDone = new JButton(Bundle.getMessage("ButtonDone")));
             slipEditDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     slipEditDonePressed(e);
@@ -804,7 +804,7 @@ public class LayoutSlip extends LayoutTurnout {
             });
             slipEditDone.setToolTipText(rb.getString("DoneHint"));
             // Cancel
-            panel5.add(slipEditCancel = new JButton(rb.getString("Cancel")));
+            panel5.add(slipEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             slipEditCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     slipEditCancelPressed(e);

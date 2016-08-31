@@ -26,11 +26,13 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.SortOrder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
@@ -42,8 +44,8 @@ import jmri.Turnout;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
-import jmri.swing.JmriTable;
-import jmri.util.com.sun.TableSorter;
+import jmri.swing.RowSorterUtil;
+import jmri.util.SystemNameComparator;
 import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,8 +62,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     JmriBeanComboBox destMastBox;
     JLabel fixedSourceMastLabel = new JLabel();
     JLabel fixedDestMastLabel = new JLabel();
-    JLabel sourceMastLabel = new JLabel(rb.getString("SourceMast")+":");
-    JLabel destMastLabel = new JLabel(rb.getString("DestMast")+":");
+    JLabel sourceMastLabel = new JLabel(rb.getString("SourceMast") + ":");
+    JLabel destMastLabel = new JLabel(rb.getString("DestMast") + ":");
     JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
     JButton updateButton = new JButton(rb.getString("UpdateLogic"));
     JCheckBox useLayoutEditor = new JCheckBox(rb.getString("UseLayoutEditorPaths"));
@@ -387,16 +389,14 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         p2xc.add(p21c);
 
         _blockModel = new BlockModel();
-        JTable manualBlockTable = jmri.util.JTableUtil.sortableDataModel(_blockModel);
-        try {
-            jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter) manualBlockTable.getModel());
-            tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            tmodel.setSortingStatus(BlockModel.SNAME_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
-        } catch (ClassCastException e3) {
-        }  // if not a sortable table model
+        JTable manualBlockTable = new JTable(_blockModel);
+        TableRowSorter<BlockModel> manualBlockSorter = new TableRowSorter<>(_blockModel);
+        manualBlockSorter.setComparator(BlockModel.SNAME_COLUMN, new SystemNameComparator());
+        RowSorterUtil.setSortOrder(manualBlockSorter, BlockModel.SNAME_COLUMN, SortOrder.ASCENDING);
+        manualBlockTable.setRowSorter(manualBlockSorter);
         manualBlockTable.setRowSelectionAllowed(false);
         manualBlockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 100));
-        JComboBox<String> stateCCombo = new JComboBox<String>();
+        JComboBox<String> stateCCombo = new JComboBox<>();
         stateCCombo.addItem(SET_TO_UNOCCUPIED);
         stateCCombo.addItem(SET_TO_OCCUPIED);
         stateCCombo.addItem(SET_TO_ANY);
@@ -440,13 +440,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         p2xb.add(p21a);
 
         _autoBlockModel = new AutoBlockModel();
-        JTable autoBlockTable = jmri.util.JTableUtil.sortableDataModel(_autoBlockModel);
-        try {
-            jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter) autoBlockTable.getModel());
-            tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            tmodel.setSortingStatus(AutoBlockModel.SNAME_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
-        } catch (ClassCastException e3) {
-        }  // if not a sortable table model
+        JTable autoBlockTable = new JTable(_autoBlockModel);
+        TableRowSorter<AutoBlockModel> autoBlockSorter = new TableRowSorter<>(_autoBlockModel);
+        autoBlockSorter.setComparator(AutoBlockModel.SNAME_COLUMN, new SystemNameComparator());
+        RowSorterUtil.setSortOrder(autoBlockSorter, AutoBlockModel.SNAME_COLUMN, SortOrder.ASCENDING);
+        autoBlockTable.setRowSorter(autoBlockSorter);
         autoBlockTable.setRowSelectionAllowed(false);
         autoBlockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 100));
 
@@ -518,16 +516,14 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         p2xt.add(p21c);
 
         _turnoutModel = new TurnoutModel();
-        JTable manualTurnoutTable = jmri.util.JTableUtil.sortableDataModel(_turnoutModel);
-        try {
-            jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter) manualTurnoutTable.getModel());
-            tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            tmodel.setSortingStatus(TurnoutModel.SNAME_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
-        } catch (ClassCastException e3) {
-        }  // if not a sortable table model
+        JTable manualTurnoutTable = new JTable(_turnoutModel);
+        TableRowSorter<TurnoutModel> manualTurnoutSorter = new TableRowSorter<>(_turnoutModel);
+        manualTurnoutSorter.setComparator(TurnoutModel.SNAME_COLUMN, new SystemNameComparator());
+        RowSorterUtil.setSortOrder(manualTurnoutSorter, TurnoutModel.SNAME_COLUMN, SortOrder.ASCENDING);
+        manualTurnoutTable.setRowSorter(manualTurnoutSorter);
         manualTurnoutTable.setRowSelectionAllowed(false);
         manualTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 100));
-        JComboBox<String> stateCCombo = new JComboBox<String>();
+        JComboBox<String> stateCCombo = new JComboBox<>();
         stateCCombo.addItem(SET_TO_THROWN);
         stateCCombo.addItem(SET_TO_CLOSED);
         stateCCombo.addItem(SET_TO_ANY);
@@ -571,13 +567,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         p2xa.add(p21a);
 
         _autoTurnoutModel = new AutoTurnoutModel();
-        JTable autoTurnoutTable = jmri.util.JTableUtil.sortableDataModel(_autoTurnoutModel);
-        try {
-            jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter) autoTurnoutTable.getModel());
-            tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            tmodel.setSortingStatus(AutoTurnoutModel.SNAME_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
-        } catch (ClassCastException e3) {
-        }  // if not a sortable table model
+        JTable autoTurnoutTable = new JTable(_autoTurnoutModel);
+        TableRowSorter<AutoTurnoutModel> autoTurnoutSorter = new TableRowSorter<>(_autoTurnoutModel);
+        autoTurnoutSorter.setComparator(AutoTurnoutModel.SNAME_COLUMN, new SystemNameComparator());
+        RowSorterUtil.setSortOrder(autoTurnoutSorter, AutoTurnoutModel.SNAME_COLUMN, SortOrder.ASCENDING);
+        autoTurnoutTable.setRowSorter(autoTurnoutSorter);
         autoTurnoutTable.setRowSelectionAllowed(false);
         autoTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 100));
 
@@ -638,16 +632,14 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         p2xs.add(p21c);
 
         _sensorModel = new SensorModel();
-        JTable manualSensorTable = jmri.util.JTableUtil.sortableDataModel(_sensorModel);
-        try {
-            jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter) manualSensorTable.getModel());
-            tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            tmodel.setSortingStatus(SensorModel.SNAME_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
-        } catch (ClassCastException e3) {
-        }  // if not a sortable table model
+        JTable manualSensorTable = new JTable(_sensorModel);
+        TableRowSorter<SensorModel> manualSensorSorter = new TableRowSorter<>(_sensorModel);
+        manualSensorSorter.setComparator(SensorModel.SNAME_COLUMN, new SystemNameComparator());
+        RowSorterUtil.setSortOrder(manualSensorSorter, SensorModel.SNAME_COLUMN, SortOrder.ASCENDING);
+        manualSensorTable.setRowSorter(manualSensorSorter);
         manualSensorTable.setRowSelectionAllowed(false);
         manualSensorTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 100));
-        JComboBox<String> stateCCombo = new JComboBox<String>();
+        JComboBox<String> stateCCombo = new JComboBox<>();
         stateCCombo.addItem(SET_TO_INACTIVE);
         stateCCombo.addItem(SET_TO_ACTIVE);
 
@@ -710,9 +702,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         _signalMastModel = new SignalMastModel();
 
-        TableSorter sorter = new TableSorter(_signalMastModel);
-        JTable manualSignalMastTable = _signalMastModel.makeJTable(sorter);
-        sorter.setTableHeader(manualSignalMastTable.getTableHeader());
+        TableRowSorter<SignalMastModel> sorter = new TableRowSorter<>(_signalMastModel);
+        JTable manualSignalMastTable = _signalMastModel.makeJTable(_signalMastModel);
+        manualSignalMastTable.setRowSorter(sorter);
 
         manualSignalMastTable.setRowSelectionAllowed(false);
         manualSignalMastTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 100));
@@ -749,13 +741,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         p2xsm.add(p21a);
 
         _autoSignalMastModel = new AutoMastModel();
-        JTable autoMastTable = jmri.util.JTableUtil.sortableDataModel(_autoSignalMastModel);
-        try {
-            jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter) autoMastTable.getModel());
-            tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            tmodel.setSortingStatus(AutoMastModel.SNAME_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
-        } catch (ClassCastException e3) {
-        }  // if not a sortable table model
+        JTable autoMastTable = new JTable(_autoSignalMastModel);
+        TableRowSorter<AutoMastModel> autoMastSorter = new TableRowSorter<>(_autoSignalMastModel);
+        autoMastSorter.setComparator(AutoMastModel.SNAME_COLUMN, new SystemNameComparator());
+        RowSorterUtil.setSortOrder(autoMastSorter, AutoMastModel.SNAME_COLUMN, SortOrder.ASCENDING);
+        autoMastTable.setRowSorter(autoMastSorter);
         autoMastTable.setRowSelectionAllowed(false);
         autoMastTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 100));
 
@@ -790,6 +780,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         jFrame.dispose();
         jFrame = null;
     }
+
     void updatePressed(ActionEvent e) {
         sourceMast = (SignalMast) sourceMastBox.getSelectedBean();
         destMast = (SignalMast) destMastBox.getSelectedBean();
@@ -1337,6 +1328,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     abstract class TableModel extends AbstractTableModel implements PropertyChangeListener {
+
         public Class<?> getColumnClass(int c) {
             if (c == INCLUDE_COLUMN) {
                 return Boolean.class;
@@ -1359,13 +1351,13 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         public String getColumnName(int col) {
             switch (col) {
                 case SNAME_COLUMN:
-                    return rb.getString("ColumnSystemName");
+                    return Bundle.getMessage("ColumnSystemName");
                 case UNAME_COLUMN:
-                    return rb.getString("ColumnUserName");
+                    return Bundle.getMessage("ColumnUserName");
                 case INCLUDE_COLUMN:
                     return rb.getString("ColumnInclude");
                 case STATE_COLUMN:
-                    return rb.getString("ColumnState");
+                    return rb.getString("ColumnState"); // pick up via rb. from SignallingBundle as it is a different "State" label than non-signal tables
                 default:
                     return "unknown";
             }
@@ -1386,6 +1378,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     class BlockModel extends TableModel {
+
         BlockModel() {
             jmri.InstanceManager.getDefault(jmri.BlockManager.class).addPropertyChangeListener(this);
         }
@@ -1526,6 +1519,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
      * Set up table for selecting Sensors and Sensor State
      */
     class SensorModel extends TableModel {
+
         SensorModel() {
             InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
         }
@@ -1658,11 +1652,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
-        TableSorter sorter;
-
-        protected JTable makeJTable(TableSorter srtr) {
-            this.sorter = srtr;
-            return new JmriTable(sorter) {
+        protected JTable makeJTable(SignalMastModel model) {
+            return new JTable(model) {
 
                 public TableCellRenderer getCellRenderer(int row, int column) {
                     if (column == STATE_COLUMN) {
@@ -1681,36 +1672,36 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 }
 
                 TableCellRenderer getRenderer(int row) {
-                    TableCellRenderer retval = rendererMap.get(sorter.getValueAt(row, SNAME_COLUMN));
+                    TableCellRenderer retval = rendererMap.get(getModel().getValueAt(row, SNAME_COLUMN));
                     if (retval == null) {
                         // create a new one with right aspects
                         retval = new MyComboBoxRenderer(getAspectVector(row));
-                        rendererMap.put(sorter.getValueAt(row, SNAME_COLUMN), retval);
+                        rendererMap.put(getModel().getValueAt(row, SNAME_COLUMN), retval);
                     }
                     return retval;
                 }
                 Hashtable<Object, TableCellRenderer> rendererMap = new Hashtable<Object, TableCellRenderer>();
 
                 TableCellEditor getEditor(int row) {
-                    TableCellEditor retval = editorMap.get(sorter.getValueAt(row, SNAME_COLUMN));
+                    TableCellEditor retval = editorMap.get(getModel().getValueAt(row, SNAME_COLUMN));
                     if (retval == null) {
                         // create a new one with right aspects
                         retval = new MyComboBoxEditor(getAspectVector(row));
-                        editorMap.put(sorter.getValueAt(row, SNAME_COLUMN), retval);
+                        editorMap.put(getModel().getValueAt(row, SNAME_COLUMN), retval);
                     }
                     return retval;
                 }
                 Hashtable<Object, TableCellEditor> editorMap = new Hashtable<Object, TableCellEditor>();
 
                 Vector<String> getAspectVector(int row) {
-                    Vector<String> retval = boxMap.get(sorter.getValueAt(row, SNAME_COLUMN));
+                    Vector<String> retval = boxMap.get(getModel().getValueAt(row, SNAME_COLUMN));
                     if (retval == null) {
                         // create a new one with right aspects
                         Vector<String> v = InstanceManager.getDefault(jmri.SignalMastManager.class)
-                                .getSignalMast((String) sorter.getValueAt(row, SNAME_COLUMN)).getValidAspects();
+                                .getSignalMast((String) getModel().getValueAt(row, SNAME_COLUMN)).getValidAspects();
                         v.add(0, "");
                         retval = v;
-                        boxMap.put(sorter.getValueAt(row, SNAME_COLUMN), retval);
+                        boxMap.put(getModel().getValueAt(row, SNAME_COLUMN), retval);
                     }
                     return retval;
                 }
@@ -1743,11 +1734,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         public String getColumnName(int col) {
             switch (col) {
                 case SNAME_COLUMN:
-                    return rb.getString("ColumnSystemName");
+                    return Bundle.getMessage("ColumnSystemName");
                 case UNAME_COLUMN:
-                    return rb.getString("ColumnUserName");
+                    return Bundle.getMessage("ColumnUserName");
                 case STATE_COLUMN:
-                    return rb.getString("ColumnState");
+                    return rb.getString("ColumnState"); // pick up via rb. from SignallingBundle as it is a different "State" label than non-signal tables
 
                 default:
                     return "unknown";
@@ -1768,6 +1759,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     class AutoBlockModel extends AutoTableModel {
+
         AutoBlockModel() {
             if (sml != null) {
                 sml.addPropertyChangeListener(this);
@@ -1786,7 +1778,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 case SPEED_COLUMN:
                     return rb.getString("ColumnSpeed");
                 case PERMISSIVE_COLUMN:
-                    return rb.getString("ColumnPermissive"); /*AbstractTableAction.rb.getString("ColumnUserName"); //"User Name";*/
+                    return rb.getString("ColumnPermissive");
+                /*AbstractTableAction.rb.getString("ColumnUserName"); //"User Name";*/
 
             }
             return super.getColumnName(col);
@@ -1870,6 +1863,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     class AutoMastModel extends AutoTableModel {
+
         AutoMastModel() {
             super();
         }
@@ -1901,12 +1895,14 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     public static class MyComboBoxEditor extends DefaultCellEditor {
+
         public MyComboBoxEditor(Vector<String> items) {
             super(new JComboBox<String>(items));
         }
     }
 
     public static class MyComboBoxRenderer extends JComboBox<String> implements TableCellRenderer {
+
         public MyComboBoxRenderer(Vector<String> items) {
             super(items);
         }
@@ -1929,4 +1925,3 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
     private final static Logger log = LoggerFactory.getLogger(SignallingPanel.class.getName());
 }
-

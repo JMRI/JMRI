@@ -172,7 +172,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
                 tableAction.setManager(manager);
             }
             dataModel = tableAction.getTableDataModel();
-            TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter(dataModel);
+            TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter<>(dataModel);
             dataTable = dataModel.makeJTable(dataModel.getMasterClassName() + ":" + getItemString(), dataModel, sorter);
             dataScroll = new JScrollPane(dataTable);
 
