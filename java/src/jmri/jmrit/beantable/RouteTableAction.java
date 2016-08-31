@@ -42,7 +42,6 @@ import jmri.Route;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.implementation.DefaultConditionalAction;
-import jmri.swing.JmriTable;
 import jmri.swing.RowSorterUtil;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
@@ -548,7 +547,7 @@ public class RouteTableAction extends AbstractTableAction {
             p21t.add(new JLabel(Bundle.getMessage("SelectInRoute", Bundle.getMessage("Turnouts"))));
             p2xt.add(p21t);
             _routeTurnoutModel = new RouteTurnoutModel();
-            JTable routeTurnoutTable = new JmriTable(_routeTurnoutModel);
+            JTable routeTurnoutTable = new JTable(_routeTurnoutModel);
             TableRowSorter<RouteTurnoutModel> rtSorter = new TableRowSorter<>(_routeTurnoutModel);
             rtSorter.setComparator(RouteTurnoutModel.SNAME_COLUMN, new SystemNameComparator());
             RowSorterUtil.setSortOrder(rtSorter, RouteTurnoutModel.SNAME_COLUMN, SortOrder.ASCENDING);
@@ -600,7 +599,7 @@ public class RouteTableAction extends AbstractTableAction {
             p21s.add(new JLabel(Bundle.getMessage("SelectInRoute", Bundle.getMessage("Sensors"))));
             p2xs.add(p21s);
             _routeSensorModel = new RouteSensorModel();
-            JTable routeSensorTable = new JmriTable(_routeSensorModel);
+            JTable routeSensorTable = new JTable(_routeSensorModel);
             TableRowSorter<RouteSensorModel> rsSorter = new TableRowSorter<>(_routeSensorModel);
             rsSorter.setComparator(RouteSensorModel.SNAME_COLUMN, new SystemNameComparator());
             RowSorterUtil.setSortOrder(rsSorter, RouteSensorModel.SNAME_COLUMN, SortOrder.ASCENDING);

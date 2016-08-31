@@ -44,7 +44,6 @@ import jmri.Turnout;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
-import jmri.swing.JmriTable;
 import jmri.swing.RowSorterUtil;
 import jmri.util.SystemNameComparator;
 import jmri.util.swing.JmriBeanComboBox;
@@ -390,7 +389,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         p2xc.add(p21c);
 
         _blockModel = new BlockModel();
-        JTable manualBlockTable = new JmriTable(_blockModel);
+        JTable manualBlockTable = new JTable(_blockModel);
         TableRowSorter<BlockModel> manualBlockSorter = new TableRowSorter<>(_blockModel);
         manualBlockSorter.setComparator(BlockModel.SNAME_COLUMN, new SystemNameComparator());
         RowSorterUtil.setSortOrder(manualBlockSorter, BlockModel.SNAME_COLUMN, SortOrder.ASCENDING);
@@ -441,7 +440,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         p2xb.add(p21a);
 
         _autoBlockModel = new AutoBlockModel();
-        JTable autoBlockTable = new JmriTable(_autoBlockModel);
+        JTable autoBlockTable = new JTable(_autoBlockModel);
         TableRowSorter<AutoBlockModel> autoBlockSorter = new TableRowSorter<>(_autoBlockModel);
         autoBlockSorter.setComparator(AutoBlockModel.SNAME_COLUMN, new SystemNameComparator());
         RowSorterUtil.setSortOrder(autoBlockSorter, AutoBlockModel.SNAME_COLUMN, SortOrder.ASCENDING);
@@ -517,7 +516,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         p2xt.add(p21c);
 
         _turnoutModel = new TurnoutModel();
-        JTable manualTurnoutTable = new JmriTable(_turnoutModel);
+        JTable manualTurnoutTable = new JTable(_turnoutModel);
         TableRowSorter<TurnoutModel> manualTurnoutSorter = new TableRowSorter<>(_turnoutModel);
         manualTurnoutSorter.setComparator(TurnoutModel.SNAME_COLUMN, new SystemNameComparator());
         RowSorterUtil.setSortOrder(manualTurnoutSorter, TurnoutModel.SNAME_COLUMN, SortOrder.ASCENDING);
@@ -568,7 +567,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         p2xa.add(p21a);
 
         _autoTurnoutModel = new AutoTurnoutModel();
-        JTable autoTurnoutTable = new JmriTable(_autoTurnoutModel);
+        JTable autoTurnoutTable = new JTable(_autoTurnoutModel);
         TableRowSorter<AutoTurnoutModel> autoTurnoutSorter = new TableRowSorter<>(_autoTurnoutModel);
         autoTurnoutSorter.setComparator(AutoTurnoutModel.SNAME_COLUMN, new SystemNameComparator());
         RowSorterUtil.setSortOrder(autoTurnoutSorter, AutoTurnoutModel.SNAME_COLUMN, SortOrder.ASCENDING);
@@ -633,7 +632,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         p2xs.add(p21c);
 
         _sensorModel = new SensorModel();
-        JTable manualSensorTable = new JmriTable(_sensorModel);
+        JTable manualSensorTable = new JTable(_sensorModel);
         TableRowSorter<SensorModel> manualSensorSorter = new TableRowSorter<>(_sensorModel);
         manualSensorSorter.setComparator(SensorModel.SNAME_COLUMN, new SystemNameComparator());
         RowSorterUtil.setSortOrder(manualSensorSorter, SensorModel.SNAME_COLUMN, SortOrder.ASCENDING);
@@ -742,7 +741,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         p2xsm.add(p21a);
 
         _autoSignalMastModel = new AutoMastModel();
-        JTable autoMastTable = new JmriTable(_autoSignalMastModel);
+        JTable autoMastTable = new JTable(_autoSignalMastModel);
         TableRowSorter<AutoMastModel> autoMastSorter = new TableRowSorter<>(_autoSignalMastModel);
         autoMastSorter.setComparator(AutoMastModel.SNAME_COLUMN, new SystemNameComparator());
         RowSorterUtil.setSortOrder(autoMastSorter, AutoMastModel.SNAME_COLUMN, SortOrder.ASCENDING);
@@ -1654,7 +1653,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
 
         protected JTable makeJTable(SignalMastModel model) {
-            return new JmriTable(model) {
+            return new JTable(model) {
 
                 public TableCellRenderer getCellRenderer(int row, int column) {
                     if (column == STATE_COLUMN) {

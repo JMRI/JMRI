@@ -9,7 +9,6 @@ import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
-import jmri.swing.JmriTable;
 
 /**
  * Pane for showing the producer table
@@ -37,7 +36,7 @@ public class ProducerTablePane extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         tableModel = new ProducerTableModel();
-        table = new JmriTable(tableModel);
+        table = new JTable(tableModel);
         table.setRowSorter(new TableRowSorter<>(tableModel));
         table.setRowSelectionAllowed(true);
         table.setPreferredScrollableViewportSize(new java.awt.Dimension(300, 350));
