@@ -13,7 +13,6 @@ import javax.swing.JTextField;
 import javax.swing.SortOrder;
 import javax.swing.table.TableRowSorter;
 import jmri.jmrix.loconet.spjfile.SpjFile;
-import jmri.swing.JmriTable;
 import jmri.swing.RowSorterUtil;
 import jmri.util.SystemNameComparator;
 import org.slf4j.Logger;
@@ -49,7 +48,7 @@ public class EditorFilePane extends javax.swing.JPanel {
         // create and include table
         dataModel = new EditorTableDataModel(file);
 
-        JTable dataTable = new JmriTable(dataModel);
+        JTable dataTable = new JTable(dataModel);
         JScrollPane dataScroll = new JScrollPane(dataTable);
 
         // give system name column a smarter sorter and use it initially

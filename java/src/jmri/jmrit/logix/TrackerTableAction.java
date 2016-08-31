@@ -31,7 +31,6 @@ import jmri.InstanceManager;
 import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.picker.PickPanel;
-import jmri.swing.JmriTable;
 import jmri.util.JmriJFrame;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -129,7 +128,7 @@ public class TrackerTableAction extends AbstractAction {
         TableFrame() {
             setTitle(Bundle.getMessage("TrackerTable"));
             _model = new TrackerTableModel(this);
-            JTable table = new JmriTable(_model);
+            JTable table = new JTable(_model);
             TableRowSorter<TrackerTableModel> sorter = new TableRowSorter<>(_model);
             table.setRowSorter(sorter);
             table.getColumnModel().getColumn(TrackerTableModel.STOP_COL).setCellEditor(new ButtonEditor(new JButton()));

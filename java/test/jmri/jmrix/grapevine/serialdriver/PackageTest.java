@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
-   jmri.jmrix.grapevine.configurexml.PackageTest.class
+   jmri.jmrix.grapevine.serialdriver.configurexml.PackageTest.class
 })
 /**
  * Tests for the jmri.jmrix.grapevine.serialdriver package.
