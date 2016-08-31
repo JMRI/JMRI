@@ -9,6 +9,7 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCsvSwitchLists;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainSwitchLists;
+import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,16 +51,27 @@ public class RunSwitchListChangesAction extends Action {
                 return;
             }
             // we do need one of these!
-            if (!TrainCustomSwitchList.manifestCreatorFileExists()) {
-                log.warn("Manifest creator file not found!, directory name: {}, file name: {}", TrainCustomSwitchList
-                        .getDirectoryName(), TrainCustomSwitchList.getFileName());
+            if (!TrainCustomSwitchList.instance().excelFileExists()) {
+                log.warn("Manifest creator file not found!, directory name: {}, file name: {}", TrainCustomSwitchList.instance()
+                        .getDirectoryName(), TrainCustomSwitchList.instance().getFileName());
                 finishAction(false);
                 return;
             }
             setRunning(true);
             TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
             TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
-            new TrainCustomSwitchList().checkProcessComplete(); // this can wait thread
+            // this can wait thread
+            if (!new TrainCustomManifest().checkProcessReady()) {
+                log.warn(
+                        "Timeout waiting for excel manifest program to complete previous opeation, timeout value: {} seconds",
+                        Control.excelWaitTime);
+            }
+            // this can wait thread
+            if (!new TrainCustomSwitchList().checkProcessReady()) {
+                log.warn(
+                        "Timeout waiting for excel switch list program to complete previous opeation, timeout value: {} seconds",
+                        Control.excelWaitTime);                
+            }
             for (Location location : LocationManager.instance().getLocationsByNameList()) {
                 if (location.isSwitchListEnabled() &&
                         (!isChanged || (isChanged && location.getStatus().equals(Location.MODIFIED)))) {
@@ -73,15 +85,14 @@ public class RunSwitchListChangesAction extends Action {
                         finishAction(false);
                         return;
                     }
-                    TrainCustomSwitchList.addCVSFile(csvFile);
+                    TrainCustomSwitchList.instance().addCVSFile(csvFile);
                 }
             }
             // Processes the CSV Manifest files using an external custom program.
-            int fileCount = TrainCustomSwitchList.getFileCount();
-            boolean status = TrainCustomSwitchList.process();
+            boolean status = TrainCustomSwitchList.instance().process();
             if (status) {
                 try {
-                    TrainCustomSwitchList.waitForProcessToComplete(Control.excelWaitTime * fileCount); // wait up to 60 seconds per file
+                    status = TrainCustomSwitchList.instance().waitForProcessToComplete(); // wait up to 60 seconds per file
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

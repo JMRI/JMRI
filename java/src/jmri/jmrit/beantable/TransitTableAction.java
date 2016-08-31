@@ -835,14 +835,16 @@ public class TransitTableAction extends AbstractTableAction {
                     && (s != afterSection) && (!inSectionList(s, altOldList))) {
                 if (beforeSection != null) {
                     if (forwardConnected(s, beforeSection, beforeSectionDirection)) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            mayBeName = mayBeName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            mayBeName = mayBeName + "( " + uname + " )";
                         }
                         mayBeSection = s;
                         mayBeDirection = Section.FORWARD;
                     } else if (reverseConnected(s, beforeSection, beforeSectionDirection)) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            mayBeName = mayBeName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            mayBeName = mayBeName + "( " + uname + " )";
                         }
                         mayBeSection = s;
                         mayBeDirection = Section.REVERSE;
@@ -860,14 +862,16 @@ public class TransitTableAction extends AbstractTableAction {
                     }
                 } else if (afterSection != null) {
                     if (forwardConnected(s, afterSection, afterSectionDirection)) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            mayBeName = mayBeName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            mayBeName = mayBeName + "( " + uname + " )";
                         }
                         mayBeSection = s;
                         mayBeDirection = Section.REVERSE;
                     } else if (reverseConnected(s, afterSection, afterSectionDirection)) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            mayBeName = mayBeName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            mayBeName = mayBeName + "( " + uname + " )";
                         }
                         mayBeSection = s;
                         mayBeDirection = Section.FORWARD;
@@ -1027,14 +1031,16 @@ public class TransitTableAction extends AbstractTableAction {
                     && (s != afterSection) && (!inSectionList(s, altOldList))) {
                 if (beforeSection != null) {
                     if (forwardConnected(s, beforeSection, beforeSectionDirection)) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            mayBeName = mayBeName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            mayBeName = mayBeName + "( " + uname + " )";
                         }
                         mayBeSection = s;
                         mayBeDirection = Section.FORWARD;
                     } else if (reverseConnected(s, beforeSection, beforeSectionDirection)) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            mayBeName = mayBeName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            mayBeName = mayBeName + "( " + uname + " )";
                         }
                         mayBeSection = s;
                         mayBeDirection = Section.REVERSE;
@@ -1052,14 +1058,16 @@ public class TransitTableAction extends AbstractTableAction {
                     }
                 } else if (afterSection != null) {
                     if (forwardConnected(s, afterSection, afterSectionDirection)) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            mayBeName = mayBeName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            mayBeName = mayBeName + "( " + uname + " )";
                         }
                         mayBeSection = s;
                         mayBeDirection = Section.REVERSE;
                     } else if (reverseConnected(s, afterSection, afterSectionDirection)) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            mayBeName = mayBeName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            mayBeName = mayBeName + "( " + uname + " )";
                         }
                         mayBeSection = s;
                         mayBeDirection = Section.FORWARD;
@@ -1252,8 +1260,9 @@ public class TransitTableAction extends AbstractTableAction {
                 String sName = allSections.get(i);
                 Section s = sectionManager.getBySystemName(sName);
                 if (s != null) {
-                    if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                        sName = sName + "( " + s.getUserName() + " )";
+                    String uname = s.getUserName();
+                    if ((uname != null) && (!uname.equals(""))) {
+                        sName = sName + "( " + uname + " )";
                     }
                     primarySectionBox.addItem(sName);
                     primarySectionBoxList.add(s);
@@ -1267,15 +1276,17 @@ public class TransitTableAction extends AbstractTableAction {
                 Section s = sectionManager.getBySystemName(sName);
                 if (s != null) {
                     if ((s != prevSection) && (forwardConnected(s, curSection, curSectionDirection))) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            sName = sName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            sName = sName + "( " + uname + " )";
                         }
                         primarySectionBox.addItem(sName);
                         primarySectionBoxList.add(s);
                         priSectionDirection[primarySectionBoxList.size() - 1] = Section.FORWARD;
                     } else if ((s != prevSection) && (reverseConnected(s, curSection, curSectionDirection))) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            sName = sName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            sName = sName + "( " + uname + " )";
                         }
                         primarySectionBox.addItem(sName);
                         primarySectionBoxList.add(s);
@@ -1291,16 +1302,18 @@ public class TransitTableAction extends AbstractTableAction {
                     if (s != null) {
                         if ((notIncludedWithSeq(s, curSequenceNum))
                                 && forwardConnected(s, prevSection, prevSectionDirection)) {
-                            if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                                sName = sName + "( " + s.getUserName() + " )";
+                            String uname = s.getUserName();
+                            if ((uname != null) && (!uname.equals(""))) {
+                                sName = sName + "( " + uname + " )";
                             }
                             alternateSectionBox.addItem(sName);
                             alternateSectionBoxList.add(s);
                             altSectionDirection[alternateSectionBoxList.size() - 1] = Section.FORWARD;
                         } else if (notIncludedWithSeq(s, curSequenceNum)
                                 && reverseConnected(s, prevSection, prevSectionDirection)) {
-                            if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                                sName = sName + "( " + s.getUserName() + " )";
+                            String uname = s.getUserName();
+                            if ((uname != null) && (!uname.equals(""))) {
+                                sName = sName + "( " + uname + " )";
                             }
                             alternateSectionBox.addItem(sName);
                             alternateSectionBoxList.add(s);
@@ -1320,15 +1333,17 @@ public class TransitTableAction extends AbstractTableAction {
                 Section s = sectionManager.getBySystemName(sName);
                 if (s != null) {
                     if ((s != firstSection) && (forwardConnected(s, firstSection, testDirection))) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            sName = sName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            sName = sName + "( " + uname + " )";
                         }
                         insertAtBeginningBox.addItem(sName);
                         insertAtBeginningBoxList.add(s);
                         insertAtBeginningDirection[insertAtBeginningBoxList.size() - 1] = Section.REVERSE;
                     } else if ((s != firstSection) && (reverseConnected(s, firstSection, testDirection))) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            sName = sName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            sName = sName + "( " + uname + " )";
                         }
                         insertAtBeginningBox.addItem(sName);
                         insertAtBeginningBoxList.add(s);
@@ -1741,6 +1756,7 @@ public class TransitTableAction extends AbstractTableAction {
 
     private void setWhat(int code) {
         whatBox.setSelectedIndex(code - 1);
+        //hide all the possible input boxes, to be set visible as needed
         whatStringField.setVisible(false);
         whatData1Field.setVisible(false);
         whatData2Field.setVisible(false);
@@ -2175,8 +2191,9 @@ public class TransitTableAction extends AbstractTableAction {
         blockBox.removeAllItems();
         for (int i = 0; i < blockList.size(); i++) {
             String s = blockList.get(i).getSystemName();
-            if ((blockList.get(i).getUserName() != null) && (!blockList.get(i).getUserName().equals(""))) {
-                s = s + "(" + blockList.get(i).getUserName() + ")";
+            String uname = blockList.get(i).getUserName();
+            if ((uname != null) && (!uname.equals(""))) {
+                s = s + "(" + uname + ")";
             }
             blockBox.addItem(s);
         }

@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
+import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.Metadata;
 import jmri.jmris.json.JsonServerPreferences;
@@ -329,6 +330,25 @@ public class JsonUtilHttpService extends JsonHttpService {
             root.add(connection);
         }
         return root;
+    }
+
+    /**
+     * Gets the {@link jmri.DccLocoAddress} for a String in the form
+     * <code>number(type)</code> or <code>number</code>.
+     *
+     * Type may be <code>L</code> for long or <code>S</code> for short. If the
+     * type is not specified, type is assumed to be short.
+     *
+     * @return The DccLocoAddress for address.
+     */
+    static public DccLocoAddress addressForString(String address) {
+        String[] components = address.split("[()]");
+        int number = Integer.parseInt(components[0]);
+        boolean isLong = false;
+        if (components.length > 1 && "L".equals(components[1].toUpperCase())) {
+            isLong = true;
+        }
+        return new DccLocoAddress(number, isLong);
     }
 
 }

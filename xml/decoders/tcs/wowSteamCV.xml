@@ -451,10 +451,6 @@
 		<decVal max="126"/>
 		<label>Random Sound Cutout Speed Step</label>
 	</variable>
-		<variable item="Sound Setting 34" CV="T2CV.4.9" default="10" >
-			<decVal max="126"/>
-			<label>Proto chuff start speed step</label>
-		</variable>
 		<variable item="Sound Group 5 Checkbox 2" CV="T2CV.4.12" default="1" mask="XXXXXXXXXXXXXXVX">
 			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
 			<label>Rod clank enable</label>
@@ -580,9 +576,5 @@
 		<variable item="Sound Setting 36" CV="T2CV.4.20" default="240" mask="VVVVVVVVVVVVVVVV">
 			<decVal max="65535"/>
 			<label>Articulated Chuff Slip Rate</label>
-		</variable>
-		<variable item="Sound Setting 2" CV="T2CV.4.21" default="256" mask="VVVVVVVVVVVVVVVV">
-			<decVal max="65535"/>
-			<label>Audio Auto Shut-off Time</label>
 		</variable>
 </variables>

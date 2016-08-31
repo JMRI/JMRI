@@ -1,5 +1,8 @@
 package jmri.server.json.memory;
 
+import static jmri.server.json.memory.JsonMemory.MEMORIES;
+import static jmri.server.json.memory.JsonMemory.MEMORY;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonHttpService;
@@ -12,8 +15,6 @@ import jmri.spi.JsonServiceFactory;
  */
 public class JsonMemoryServiceFactory implements JsonServiceFactory {
 
-    public static final String MEMORY = "memory"; // NOI18N
-    public static final String MEMORIES = "memories"; // NOI18N
 
     @Override
     public String[] getTypes() {

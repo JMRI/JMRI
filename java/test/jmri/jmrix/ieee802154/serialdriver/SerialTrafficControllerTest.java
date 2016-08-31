@@ -157,7 +157,6 @@ public class SerialTrafficControllerTest extends TestCase {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
         m = new SerialTrafficController();
-        jmri.util.JUnitAppender.assertErrorMessage("Deprecated Method setInstance called");
     }
 
     protected void tearDown() throws Exception {

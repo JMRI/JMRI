@@ -356,7 +356,6 @@ public final class SystemConsole extends JTextArea {
      * @param which the stream that this text is for
      */
     private void updateTextArea(final String text, final int which) {
-
         // Append message to the original System.out / System.err streams
         if (which == STD_OUT) {
             originalOut.append(text);
@@ -368,6 +367,9 @@ public final class SystemConsole extends JTextArea {
         // As append method is thread safe, we don't need to run this on
         // the Swing dispatch thread
         console.append(text);
+        
+        // but we do have to run this on the Swing thread
+        jmri.util.ThreadingUtil.runOnGUIEventually( ()->{ truncateTextArea(); } );
     }
 
     /**
@@ -424,6 +426,20 @@ public final class SystemConsole extends JTextArea {
         System.setErr(this.getErrorStream());
     }
 
+    final public int MAX_CONSOLE_LINES = 5000;  // public, not static so can be modified via e.g. a script
+    public void truncateTextArea() {
+        int numLinesToRemove = console.getLineCount() -1 - MAX_CONSOLE_LINES; // There's a blank at the end
+        if(numLinesToRemove > 0) {
+            try {
+                int posOfLastLineToRemove = console.getLineEndOffset(numLinesToRemove - 1);
+                console.replaceRange("",0,posOfLastLineToRemove);
+            }
+            catch (javax.swing.text.BadLocationException ex) {
+                log.error("trouble truncating SystemConsole window", ex);
+            }
+        }
+    }
+    
     /**
      * Set the console wrapping style to one of the following:
      *

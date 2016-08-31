@@ -1,4 +1,3 @@
-// Bundle.java
 package jmri.web.servlet.panel;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -106,10 +105,8 @@ public class Bundle extends jmri.web.servlet.Bundle {
     }
 
     @Override
-    protected String retry(String key) {
-        return super.getBundle().handleGetMessage(key);
+    protected String retry(Locale locale, String key) {
+        return super.getBundle().handleGetMessage(locale,key);
     }
 
 }
-
-/* @(#)Bundle.java */

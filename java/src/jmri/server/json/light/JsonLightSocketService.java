@@ -3,7 +3,7 @@ package jmri.server.json.light;
 import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PUT;
-import static jmri.server.json.light.JsonLightServiceFactory.LIGHT;
+import static jmri.server.json.light.JsonLight.LIGHT;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import java.beans.PropertyChangeEvent;

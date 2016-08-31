@@ -54,6 +54,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.NamedBean;
@@ -168,12 +169,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JTextField blockIDField = new JTextField(8);
     private JTextField blockSensor = new JTextField(5);
 
+    // TODO: all the following JCheckBoxes should be JRadioButtons instead of check boxes (only 1 selected at a given time)
     private JCheckBox turnoutRHBox = new JCheckBox(rb.getString("RightHandAbbreviation"));
     private JCheckBox turnoutLHBox = new JCheckBox(rb.getString("LeftHandAbbreviation"));
     private JCheckBox turnoutWYEBox = new JCheckBox(rb.getString("WYEAbbreviation"));
     private JCheckBox doubleXoverBox = new JCheckBox(rb.getString("DoubleCrossOver"));
-    private JCheckBox rhXoverBox = new JCheckBox(rb.getString("RHCrossOver"));
-    private JCheckBox lhXoverBox = new JCheckBox(rb.getString("LHCrossOver"));
+    private JCheckBox rhXoverBox = new JCheckBox(Bundle.getMessage("RightCrossOver")); // key is also used by Control Panel Editor, placed in DisplayBundle
+    private JCheckBox lhXoverBox = new JCheckBox(Bundle.getMessage("LeftCrossOver")); // idem
     private JPanel rotationPanel = new JPanel();
     private JTextField rotationField = new JTextField(3);
     private JTextField nextTurnout = new JTextField(5);
@@ -204,19 +206,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JCheckBox signalMastBox = new JCheckBox(rb.getString("SignalMastIcon"));
     private JTextField nextSignalMast = new JTextField(5);
 
-    private JCheckBox textLabelBox = new JCheckBox(rb.getString("TextLabel"));
+    private JCheckBox textLabelBox = new JCheckBox(Bundle.getMessage("TextLabel"));
     private JTextField textLabel = new JTextField(8);
 
     private JCheckBox blockContentsBox = new JCheckBox("Block Contents");
     private JTextField blockContents = new JTextField(8);
-    private JCheckBox memoryBox = new JCheckBox(rb.getString("Memory"));
+    private JCheckBox memoryBox = new JCheckBox(Bundle.getMessage("BeanNameMemory"));
     private JTextField textMemory = new JTextField(8);
 
     private JCheckBox iconLabelBox = new JCheckBox(rb.getString("IconLabel"));
     private MultiIconEditor iconEditor = null;
     private JFrame iconFrame = null;
 
-    private JCheckBox multiSensorBox = new JCheckBox(rb.getString("MultiSensor") + "...");
+    private JCheckBox multiSensorBox = new JCheckBox(Bundle.getMessage("MultiSensor") + "...");
     private MultiSensorIconFrame multiSensorFrame = null;
 
     private JLabel xLabel = new JLabel("00");
@@ -435,7 +437,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // initialize menu bar
         JMenuBar menuBar = new JMenuBar();
         // set up File menu
-        JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
+        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         fileMenu.setMnemonic(stringsToVTCodes.get(rb.getString("MenuFileMnemonic")));
         menuBar.add(fileMenu);
         jmri.configurexml.StoreXmlUserAction store = new jmri.configurexml.StoreXmlUserAction(rbx.getString("MenuItemStore"));
@@ -549,8 +551,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         top1.add(new JLabel(" y:"));
         top1.add(yLabel);
         // add turnout items
-        top1.add(new JLabel("    " + rb.getString("Turnout") + ": "));
-        top1.add(new JLabel(rb.getString("Name")));
+        top1.add(new JLabel("    " + Bundle.getMessage("BeanNameTurnout") + ": "));
+        top1.add(new JLabel(Bundle.getMessage("Name")));
         top1.add(nextTurnout);
         nextTurnout.setToolTipText(rb.getString("TurnoutNameToolTip"));
         JLabel extraTurnLabel = new JLabel(rb.getString("SecondName"));
@@ -560,7 +562,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         extraTurnoutPanel.add(extraTurnout);
         extraTurnout.setToolTipText(rb.getString("TurnoutNameToolTip"));
         top1.add(extraTurnoutPanel);
-        top1.add(new JLabel(rb.getString("Type")));
+        top1.add(new JLabel(Bundle.getMessage("Type")));
         top1.add(turnoutRHBox);
         turnoutRHBox.setToolTipText(rb.getString("RHToolTip"));
         top1.add(turnoutLHBox);
@@ -587,7 +589,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         top2.add(new JLabel(rb.getString("BlockID")));
         top2.add(blockIDField);
         blockIDField.setToolTipText(rb.getString("BlockIDToolTip"));
-        top2.add(new JLabel(rb.getString("OccupancySensor")));
+        top2.add(new JLabel(Bundle.getMessage("BeanNameSensor")));
         top2.add(blockSensor);
         blockSensor.setText("");
         blockSensor.setToolTipText(rb.getString("OccupancySensorToolTip"));
@@ -616,8 +618,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         top3.add(textLabel);
         textLabel.setToolTipText(rb.getString("TextToolTip"));
         top3.add(memoryBox);
-        memoryBox.setToolTipText(rb.getString("MemoryBoxToolTip"));
-        blockContentsBox.setToolTipText(rb.getString("MemoryBoxToolTip"));
+        memoryBox.setToolTipText(Bundle.getMessage("MemoryBoxToolTip", Bundle.getMessage("Memory")));
+        blockContentsBox.setToolTipText(Bundle.getMessage("MemoryBoxToolTip", Bundle.getMessage("Memory")));
         top3.add(textMemory);
         textMemory.setToolTipText(rb.getString("MemoryToolTip"));
         top3.add(blockContentsBox);
@@ -653,10 +655,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         top4.add(nextSensor);
         nextSensor.setToolTipText(rb.getString("SensorIconToolTip"));
         sensorIconEditor = new MultiIconEditor(4);
-        sensorIconEditor.setIcon(0, "Active:", "resources/icons/smallschematics/tracksegments/circuit-occupied.gif");
-        sensorIconEditor.setIcon(1, "Inactive", "resources/icons/smallschematics/tracksegments/circuit-empty.gif");
-        sensorIconEditor.setIcon(2, "Inconsistent:", "resources/icons/smallschematics/tracksegments/circuit-error.gif");
-        sensorIconEditor.setIcon(3, "Unknown:", "resources/icons/smallschematics/tracksegments/circuit-error.gif");
+        sensorIconEditor.setIcon(0, Bundle.getMessage("SensorStateActive") + ":", "resources/icons/smallschematics/tracksegments/circuit-occupied.gif");
+        sensorIconEditor.setIcon(1, Bundle.getMessage("SensorStateInactive") + ":", "resources/icons/smallschematics/tracksegments/circuit-empty.gif");
+        sensorIconEditor.setIcon(2, Bundle.getMessage("BeanStateInconsistent") + ":", "resources/icons/smallschematics/tracksegments/circuit-error.gif");
+        sensorIconEditor.setIcon(3, Bundle.getMessage("BeanStateUnknown") + ":", "resources/icons/smallschematics/tracksegments/circuit-error.gif");
         sensorIconEditor.complete();
         sensorFrame = new JFrame(rb.getString("EditSensorIcons"));
         sensorFrame.getContentPane().add(new JLabel("  " + rb.getString("IconChangeInfo") + "  "), BorderLayout.NORTH);
@@ -751,7 +753,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         helpBar.setVisible(false);
 
         // register the resulting panel for later configuration
-        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerUser(this);
+        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerUser(this);
+        }
         // confirm that panel hasn't already been loaded
         if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)) {
             log.warn("File contains a panel with the same name (" + name + ") as an existing panel");
@@ -845,7 +850,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     jmri.jmrit.signalling.AddEntryExitPairAction entryExit = null;
 
     void setupToolsMenu(JMenuBar menuBar) {
-        JMenu toolsMenu = new JMenu(rb.getString("MenuTools"));
+        JMenu toolsMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolsMenu.setMnemonic(stringsToVTCodes.get(rb.getString("MenuToolsMnemonic")));
         menuBar.add(toolsMenu);
         // scale track diagram
@@ -978,7 +983,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         });
 
-        JMenuItem entryExitItem = new JMenuItem("Entry Exit" + "...");
+        JMenuItem entryExitItem = new JMenuItem(Bundle.getMessage("EntryExit") + "...");
         toolsMenu.add(entryExitItem);
         entryExitItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -992,7 +997,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     protected JMenu setupOptionMenu(JMenuBar menuBar) {
-        JMenu optionMenu = new JMenu(rbx.getString("Options"));
+        JMenu optionMenu = new JMenu(Bundle.getMessage("MenuOptions"));
         optionMenu.setMnemonic(stringsToVTCodes.get(rb.getString("OptionsMnemonic")));
         menuBar.add(optionMenu);
         // edit mode item
@@ -1286,22 +1291,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         JMenu backgroundColorMenu = new JMenu(rb.getString("SetBackgroundColor"));
         backgroundColorButtonGroup = new ButtonGroup();
-        addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("Black"), Color.black);
-        addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("DarkGray"), Color.darkGray);
-        addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("Gray"), Color.gray);
-        addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("LightGray"), Color.lightGray);
-        addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("White"), Color.white);
-        addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("Red"), Color.red);
-        addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("Pink"), Color.pink);
-        addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("Orange"), Color.orange);
-        addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("Yellow"), Color.yellow);
-        addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("Green"), Color.green);
-        addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("Blue"), Color.blue);
-        addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("Magenta"), Color.magenta);
-        addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("Cyan"), Color.cyan);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Black"), Color.black);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("DarkGray"), Color.darkGray);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Gray"), Color.gray);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("LightGray"), Color.lightGray);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("White"), Color.white);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Red"), Color.red);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Pink"), Color.pink);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Orange"), Color.orange);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Yellow"), Color.yellow);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Green"), Color.green);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Blue"), Color.blue);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Magenta"), Color.magenta);
+        addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Cyan"), Color.cyan);
         optionMenu.add(backgroundColorMenu);
         // add fast clock
-        JMenuItem clockItem = new JMenuItem(rb.getString("AddFastClock"));
+        JMenuItem clockItem = new JMenuItem(Bundle.getMessage("AddThing", Bundle.getMessage("FastClock")));
         optionMenu.add(clockItem);
         clockItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -1354,70 +1359,70 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         optionMenu.add(trkColourMenu);
         JMenu trackColorMenu = new JMenu(rb.getString("DefaultTrackColor"));
         trackColorButtonGroup = new ButtonGroup();
-        addTrackColorMenuEntry(trackColorMenu, rb.getString("Black"), Color.black);
-        addTrackColorMenuEntry(trackColorMenu, rb.getString("DarkGray"), Color.darkGray);
-        addTrackColorMenuEntry(trackColorMenu, rb.getString("Gray"), Color.gray);
-        addTrackColorMenuEntry(trackColorMenu, rb.getString("LightGray"), Color.lightGray);
-        addTrackColorMenuEntry(trackColorMenu, rb.getString("White"), Color.white);
-        addTrackColorMenuEntry(trackColorMenu, rb.getString("Red"), Color.red);
-        addTrackColorMenuEntry(trackColorMenu, rb.getString("Pink"), Color.pink);
-        addTrackColorMenuEntry(trackColorMenu, rb.getString("Orange"), Color.orange);
-        addTrackColorMenuEntry(trackColorMenu, rb.getString("Yellow"), Color.yellow);
-        addTrackColorMenuEntry(trackColorMenu, rb.getString("Green"), Color.green);
-        addTrackColorMenuEntry(trackColorMenu, rb.getString("Blue"), Color.blue);
-        addTrackColorMenuEntry(trackColorMenu, rb.getString("Magenta"), Color.magenta);
-        addTrackColorMenuEntry(trackColorMenu, rb.getString("Cyan"), Color.cyan);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Black"), Color.black);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("DarkGray"), Color.darkGray);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Gray"), Color.gray);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("LightGray"), Color.lightGray);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("White"), Color.white);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Red"), Color.red);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Pink"), Color.pink);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Orange"), Color.orange);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Yellow"), Color.yellow);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Green"), Color.green);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Blue"), Color.blue);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Magenta"), Color.magenta);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Cyan"), Color.cyan);
         trkColourMenu.add(trackColorMenu);
 
         JMenu trackOccupiedColorMenu = new JMenu(rb.getString("DefaultOccupiedTrackColor"));
         trackOccupiedColorButtonGroup = new ButtonGroup();
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("Black"), Color.black);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("DarkGray"), Color.darkGray);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("Gray"), Color.gray);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("LightGray"), Color.lightGray);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("White"), Color.white);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("Red"), Color.red);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("Pink"), Color.pink);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("Orange"), Color.orange);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("Yellow"), Color.yellow);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("Green"), Color.green);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("Blue"), Color.blue);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("Magenta"), Color.magenta);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("Cyan"), Color.cyan);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Black"), Color.black);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("DarkGray"), Color.darkGray);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Gray"), Color.gray);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("LightGray"), Color.lightGray);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("White"), Color.white);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Red"), Color.red);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Pink"), Color.pink);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Orange"), Color.orange);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Yellow"), Color.yellow);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Green"), Color.green);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Blue"), Color.blue);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Magenta"), Color.magenta);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Cyan"), Color.cyan);
         trkColourMenu.add(trackOccupiedColorMenu);
 
         JMenu trackAlternativeColorMenu = new JMenu(rb.getString("DefaultAlternativeTrackColor"));
         trackAlternativeColorButtonGroup = new ButtonGroup();
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("Black"), Color.black);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("DarkGray"), Color.darkGray);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("Gray"), Color.gray);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("LightGray"), Color.lightGray);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("White"), Color.white);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("Red"), Color.red);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("Pink"), Color.pink);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("Orange"), Color.orange);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("Yellow"), Color.yellow);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("Green"), Color.green);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("Blue"), Color.blue);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("Magenta"), Color.magenta);
-        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("Cyan"), Color.cyan);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("Black"), Color.black);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("DarkGray"), Color.darkGray);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("Gray"), Color.gray);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("LightGray"), Color.lightGray);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("White"), Color.white);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("Red"), Color.red);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("Pink"), Color.pink);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("Orange"), Color.orange);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("Yellow"), Color.yellow);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("Green"), Color.green);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("Blue"), Color.blue);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("Magenta"), Color.magenta);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("Cyan"), Color.cyan);
         trkColourMenu.add(trackAlternativeColorMenu);
 
         JMenu textColorMenu = new JMenu(rb.getString("DefaultTextColor"));
         textColorButtonGroup = new ButtonGroup();
-        addTextColorMenuEntry(textColorMenu, rb.getString("Black"), Color.black);
-        addTextColorMenuEntry(textColorMenu, rb.getString("DarkGray"), Color.darkGray);
-        addTextColorMenuEntry(textColorMenu, rb.getString("Gray"), Color.gray);
-        addTextColorMenuEntry(textColorMenu, rb.getString("LightGray"), Color.lightGray);
-        addTextColorMenuEntry(textColorMenu, rb.getString("White"), Color.white);
-        addTextColorMenuEntry(textColorMenu, rb.getString("Red"), Color.red);
-        addTextColorMenuEntry(textColorMenu, rb.getString("Pink"), Color.pink);
-        addTextColorMenuEntry(textColorMenu, rb.getString("Orange"), Color.orange);
-        addTextColorMenuEntry(textColorMenu, rb.getString("Yellow"), Color.yellow);
-        addTextColorMenuEntry(textColorMenu, rb.getString("Green"), Color.green);
-        addTextColorMenuEntry(textColorMenu, rb.getString("Blue"), Color.blue);
-        addTextColorMenuEntry(textColorMenu, rb.getString("Magenta"), Color.magenta);
-        addTextColorMenuEntry(textColorMenu, rb.getString("Cyan"), Color.cyan);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Black"), Color.black);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("DarkGray"), Color.darkGray);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Gray"), Color.gray);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("LightGray"), Color.lightGray);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("White"), Color.white);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Red"), Color.red);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Pink"), Color.pink);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Orange"), Color.orange);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Yellow"), Color.yellow);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Green"), Color.green);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Blue"), Color.blue);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Magenta"), Color.magenta);
+        addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Cyan"), Color.cyan);
         optionMenu.add(textColorMenu);
 
         //turnout options submenu
@@ -1438,20 +1443,20 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // select turnout circle color
         JMenu turnoutCircleColorMenu = new JMenu(rb.getString("TurnoutCircleColor"));
         turnoutCircleColorButtonGroup = new ButtonGroup();
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("UseDefaultTrackColor"), null);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("Black"), Color.black);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("DarkGray"), Color.darkGray);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("Gray"), Color.gray);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("LightGray"), Color.lightGray);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("White"), Color.white);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("Red"), Color.red);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("Pink"), Color.pink);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("Orange"), Color.orange);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("Yellow"), Color.yellow);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("Green"), Color.green);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("Blue"), Color.blue);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("Magenta"), Color.magenta);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("Cyan"), Color.cyan);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("UseDefaultTrackColor"), null);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Black"), Color.black);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("DarkGray"), Color.darkGray);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Gray"), Color.gray);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("LightGray"), Color.lightGray);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("White"), Color.white);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Red"), Color.red);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Pink"), Color.pink);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Orange"), Color.orange);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Yellow"), Color.yellow);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Green"), Color.green);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Blue"), Color.blue);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Magenta"), Color.magenta);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Cyan"), Color.cyan);
         turnoutOptionsMenu.add(turnoutCircleColorMenu);
 
         // select turnout circle size
@@ -1521,7 +1526,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     private void setupZoomMenu(JMenuBar menuBar) {
-        JMenu zoomMenu = new JMenu(rb.getString("MenuZoom"));
+        JMenu zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
         zoomMenu.setMnemonic(stringsToVTCodes.get(rb.getString("MenuZoomMnemonic")));
         menuBar.add(zoomMenu);
         ButtonGroup zoomButtonGroup = new ButtonGroup();
@@ -1851,7 +1856,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
-            panel5.add(trackWidthDone = new JButton(rb.getString("Done")));
+            panel5.add(trackWidthDone = new JButton(Bundle.getMessage("ButtonDone")));
             trackWidthDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     trackWidthDonePressed(e);
@@ -1859,7 +1864,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             });
             trackWidthDone.setToolTipText(rb.getString("DoneHint"));
             // Cancel
-            panel5.add(trackWidthCancel = new JButton(rb.getString("Cancel")));
+            panel5.add(trackWidthCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             trackWidthCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     trackWidthCancelPressed(e);
@@ -2002,7 +2007,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             });
             reporterDone.setToolTipText(rb.getString("ReporterDoneHint"));
             // Cancel
-            panel5.add(reporterCancel = new JButton(rb.getString("Cancel")));
+            panel5.add(reporterCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             reporterCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     reporterCancelPressed(e);
@@ -2181,7 +2186,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             });
             scaleTrackDiagramDone.setToolTipText(rb.getString("ScaleTranslateHint"));
-            panel5.add(scaleTrackDiagramCancel = new JButton(rb.getString("Cancel")));
+            panel5.add(scaleTrackDiagramCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             scaleTrackDiagramCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     scaleTrackDiagramCancelPressed(e);
@@ -2420,7 +2425,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             });
             moveSelectionDone.setToolTipText(rb.getString("MoveSelectionHint"));
-            panel5.add(moveSelectionCancel = new JButton(rb.getString("Cancel")));
+            panel5.add(moveSelectionCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             moveSelectionCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     moveSelectionCancelPressed(e);
@@ -4872,10 +4877,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private void deleteSelectedItems() {
         if (!noWarnGlobalDelete) {
             int selectedValue = JOptionPane.showOptionDialog(this,
-                    rb.getString("Question6"), rb.getString("WarningTitle"),
+                    rb.getString("Question6"), Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
-                        rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
+                    new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
+                        rb.getString("ButtonYesPlus")}, Bundle.getMessage("ButtonNo"));
             if (selectedValue == 1) {
                 return;   // return without creating if "No" response
             }
@@ -6126,7 +6131,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 rot = Double.parseDouble(s);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, rb.getString("Error3") + " "
-                        + e, rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                        + e, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
@@ -6200,7 +6205,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 rot = Double.parseDouble(s);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, rb.getString("Error3") + " "
-                        + e, rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                        + e, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
@@ -6278,22 +6283,24 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 to2 = t.getSecondTurnout();
             }
             if (to != null) {
+                String uname = to.getUserName();
                 if ((to.getSystemName().equals(turnoutName.toUpperCase()))
-                        || ((to.getUserName() != null) && (to.getUserName().equals(turnoutName)))) {
+                        || ((uname != null) && (uname.equals(turnoutName)))) {
                     JOptionPane.showMessageDialog(openPane,
                             java.text.MessageFormat.format(rb.getString("Error4"),
                                     new Object[]{turnoutName}),
-                            rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
             }
             if (to2 != null) {
+                String uname = to2.getUserName();
                 if ((to2.getSystemName().equals(turnoutName.toUpperCase()))
-                        || ((to2.getUserName() != null) && (to2.getUserName().equals(turnoutName)))) {
+                        || ((uname != null) && (uname.equals(turnoutName)))) {
                     JOptionPane.showMessageDialog(openPane,
                             java.text.MessageFormat.format(rb.getString("Error4"),
                                     new Object[]{turnoutName}),
-                            rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
             }
@@ -6301,21 +6308,23 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (LayoutSlip slip : slipList) {
             Turnout to = slip.getTurnout();
             if (to != null) {
-                if (to.getSystemName().equals(turnoutName) || (to.getUserName() != null && to.getUserName().equals(turnoutName))) {
+                String uname = to.getUserName();
+                if (to.getSystemName().equals(turnoutName) || (uname != null && uname.equals(turnoutName))) {
                     JOptionPane.showMessageDialog(openPane,
                             java.text.MessageFormat.format(rb.getString("Error4"),
                                     new Object[]{turnoutName}),
-                            rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
             }
             to = slip.getTurnoutB();
             if (to != null) {
-                if (to.getSystemName().equals(turnoutName) || (to.getUserName() != null && to.getUserName().equals(turnoutName))) {
+                String uname = to.getUserName();
+                if (to.getSystemName().equals(turnoutName) || (uname != null && uname.equals(turnoutName))) {
                     JOptionPane.showMessageDialog(openPane,
                             java.text.MessageFormat.format(rb.getString("Error4"),
                                     new Object[]{turnoutName}),
-                            rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
             }
@@ -6327,7 +6336,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             JOptionPane.showMessageDialog(openPane,
                     java.text.MessageFormat.format(rb.getString("Error8"),
                             new Object[]{turnoutName}),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -6592,7 +6601,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         StringBuilder sb = new StringBuilder();
         sb.append("This ");
         if (sm instanceof SignalMast) {
-            sb.append("Signal Mast");
+            sb.append("Signal Mast"); // TODO I18N using Bundle.getMessage("BeanNameSignalMast");
             sb.append(" is linked to the following items<br> do you want to remove those references");
             if (InstanceManager.getDefault(jmri.SignalMastLogicManager.class).isSignalMastUsed((SignalMast) sm)) {
                 jmri.SignalMastLogic sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic((SignalMast) sm);
@@ -6602,10 +6611,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }
         } else if (sm instanceof Sensor) {
-            sb.append("Sensor");
+            sb.append("Sensor"); // TODO I18N using Bundle.getMessage("BeanNameSensor");
             sb.append(" is linked to the following items<br> do you want to remove those references");
         } else if (sm instanceof SignalHead) {
-            sb.append("SignalHead");
+            sb.append("SignalHead"); // TODO I18N using Bundle.getMessage("BeanNameSignalHead");
             sb.append(" is linked to the following items<br> do you want to remove those references");
         }
 
@@ -6634,7 +6643,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             found = true;
         }
         if ((lt = finder.findLayoutTurnoutByBean(sm)) != null) {
-            sb.append("<br>Turnout " + lt.getTurnoutName());
+            sb.append("<br>Turnout " + lt.getTurnoutName()); // I18N using Bundle.getMessage("BeanNameTurnout");
             found = true;
         }
         if ((lx = finder.findLevelXingByBean(sm)) != null) {
@@ -6657,9 +6666,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (usage != null) {
             usage = "<html>" + usage + "</html>";
             int selectedValue = JOptionPane.showOptionDialog(this,
-                    usage, rb.getString("WarningTitle"),
+                    usage, Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"), rb.getString("ButtonCancel")}, rb.getString("ButtonYes"));
+                    new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
+                            Bundle.getMessage("ButtonCancel")}, Bundle.getMessage("ButtonYes"));
             if (selectedValue == 1) {
                 return (true); // return leaving the references in place but allow the icon to be deleted.
             }
@@ -6705,10 +6715,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (o.getConnect1() != null || o.getConnect2() != null) {
             if (!noWarnPositionablePoint) {
                 int selectedValue = JOptionPane.showOptionDialog(this,
-                        rb.getString("Question2"), rb.getString("WarningTitle"),
+                        rb.getString("Question2"), Bundle.getMessage("WarningTitle"),
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                        new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
-                            rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
+                        new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
+                            rb.getString("ButtonYesPlus")}, Bundle.getMessage("ButtonNo"));
                 if (selectedValue == 1) {
                     return (false);   // return without creating if "No" response
                 }
@@ -6757,10 +6767,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // First verify with the user that this is really wanted
         if (!noWarnLayoutTurnout) {
             int selectedValue = JOptionPane.showOptionDialog(this,
-                    rb.getString("Question1r"), rb.getString("WarningTitle"),
+                    rb.getString("Question1r"), Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
-                        rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
+                    new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
+                        rb.getString("ButtonYesPlus")}, Bundle.getMessage("ButtonNo"));
             if (selectedValue == 1) {
                 return (false);   // return without removing if "No" response
             }
@@ -6849,10 +6859,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // First verify with the user that this is really wanted
         if (!noWarnLevelXing) {
             int selectedValue = JOptionPane.showOptionDialog(this,
-                    rb.getString("Question3r"), rb.getString("WarningTitle"),
+                    rb.getString("Question3r"), Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
-                        rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
+                    new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
+                        rb.getString("ButtonYesPlus")}, Bundle.getMessage("ButtonNo"));
             if (selectedValue == 1) {
                 return (false);   // return without creating if "No" response
             }
@@ -6918,10 +6928,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // First verify with the user that this is really wanted
         if (!noWarnSlip) {
             int selectedValue = JOptionPane.showOptionDialog(this,
-                    rb.getString("Question5r"), rb.getString("WarningTitle"),
+                    rb.getString("Question5r"), Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
-                        rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
+                    new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
+                        rb.getString("ButtonYesPlus")}, Bundle.getMessage("ButtonNo"));
             if (selectedValue == 1) {
                 return (false);   // return without creating if "No" response
             }
@@ -6984,10 +6994,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // First verify with the user that this is really wanted
         if (!noWarnTurntable) {
             int selectedValue = JOptionPane.showOptionDialog(this,
-                    rb.getString("Question4r"), rb.getString("WarningTitle"),
+                    rb.getString("Question4r"), Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
-                        rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
+                    new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
+                        rb.getString("ButtonYesPlus")}, Bundle.getMessage("ButtonNo"));
             if (selectedValue == 1) {
                 return (false);   // return without creating if "No" response
             }
@@ -7179,7 +7189,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     void addSensor() {
         if ((nextSensor.getText()).trim().length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error10"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         SensorIcon l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
@@ -7232,7 +7242,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             JOptionPane.showMessageDialog(thisPanel,
                     java.text.MessageFormat.format(rb.getString("Error9"),
                             new Object[]{tName}),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         // create and set up signal icon
@@ -7313,7 +7323,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             JOptionPane.showMessageDialog(thisPanel,
                     java.text.MessageFormat.format(rb.getString("Error9"),
                             new Object[]{tName}),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         // create and set up signal icon
@@ -7395,15 +7405,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     void addMemory() {
         if ((textMemory.getText()).trim().length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error11"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         MemoryIcon l = new MemoryIcon("   ", this);
         l.setMemory(textMemory.getText().trim());
         Memory xMemory = l.getMemory();
         if (xMemory != null) {
-            if ((xMemory.getUserName() == null)
-                    || (!(xMemory.getUserName().equals(textMemory.getText().trim())))) {
+            String uname = xMemory.getUserName();
+            if ((uname == null)
+                    || (!(uname.equals(textMemory.getText().trim())))) {
                 // put the system name in the memory field
                 textMemory.setText(xMemory.getSystemName());
             }
@@ -7419,15 +7430,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     void addBlockContents() {
         if ((blockContents.getText()).trim().length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error11"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         BlockContentsIcon l = new BlockContentsIcon("   ", this);
         l.setBlock(blockContents.getText().trim());
         jmri.Block xMemory = l.getBlock();
         if (xMemory != null) {
-            if ((xMemory.getUserName() == null)
-                    || (!(xMemory.getUserName().equals(blockContents.getText().trim())))) {
+            String uname = xMemory.getUserName();
+            if ((uname == null)
+                    || (!(uname.equals(blockContents.getText().trim())))) {
                 // put the system name in the memory field
                 blockContents.setText(xMemory.getSystemName());
             }
@@ -9607,8 +9619,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
                 for (LayoutTurnout t : turnoutList) {
                     if (t.getLinkedTurnoutName() != null) {
+                        String uname = nb.getUserName();
                         if (nb.getSystemName().equals(t.getLinkedTurnoutName())
-                                || (nb.getUserName() != null && nb.getUserName().equals(t.getLinkedTurnoutName()))) {
+                                || (uname != null && uname.equals(t.getLinkedTurnoutName()))) {
                             found = true;
                             message.append("<li>");
                             message.append(Bundle.getMessage("VetoLinkedTurnout", t.getTurnoutName()));

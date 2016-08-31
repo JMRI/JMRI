@@ -16,8 +16,8 @@ import javax.swing.JOptionPane;
 import jmri.Version;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.ScheduleItem;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
@@ -4751,8 +4751,8 @@ public class TrainBuilder extends TrainCommon {
             throw new BuildFailedException(Bundle.getMessage("buildErrorEngHp"));
         }
     }
-    
-    private void removeRollingStockFromTrain(RollingStock rs) {  
+
+    private void removeRollingStockFromTrain(RollingStock rs) {
         // adjust train length and weight for each location that the rolling stock is in the train
         boolean inTrain = false;
         for (RouteLocation routeLocation : _routeList) {
@@ -4914,9 +4914,8 @@ public class TrainBuilder extends TrainCommon {
         _train.setBuildFailedMessage(msg);
         _train.setStatusCode(Train.CODE_BUILD_FAILED);
         _train.setBuildFailed(true);
-        if (log.isDebugEnabled()) {
-            log.debug(msg);
-        }
+        log.debug(msg);
+
         if (TrainManager.instance().isBuildMessagesEnabled()) {
             if (e.getExceptionType().equals(BuildFailedException.NORMAL)) {
                 JOptionPane.showMessageDialog(null, msg, MessageFormat.format(Bundle.getMessage("buildErrorMsg"),

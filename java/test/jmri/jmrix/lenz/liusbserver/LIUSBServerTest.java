@@ -29,6 +29,7 @@ public class LIUSBServerTest extends TestCase {
         suite.addTest(new TestSuite(LIUSBServerAdapterTest.class));
         suite.addTest(new TestSuite(LIUSBServerXNetPacketizerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.lenz.liusbserver.configurexml.PackageTest.class));
         return suite;
     }
 

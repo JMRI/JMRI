@@ -64,6 +64,7 @@ public class PackageTest extends TestCase {
         suite.addTest(BundleTest.suite());
 
         suite.addTest(jmri.jmrix.lenz.swing.SwingTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.lenz.configurexml.PackageTest.class));
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
         }

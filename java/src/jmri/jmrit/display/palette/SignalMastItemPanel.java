@@ -244,7 +244,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             NamedBean bean = getNamedBean();
             if (bean == null) {
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("noRowSelected"),
-                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }
 

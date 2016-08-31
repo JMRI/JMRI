@@ -1,4 +1,3 @@
-//BackupFilesAction.java
 package jmri.jmrit.operations.setup;
 
 import java.awt.event.ActionEvent;
@@ -8,7 +7,8 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import jmri.jmrit.operations.OperationsXml;
-import org.python.jline.internal.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to backup operation files to a directory selected by the user.
@@ -19,7 +19,7 @@ import org.python.jline.internal.Log;
  */
 public class BackupFilesAction extends AbstractAction {
 
-//    private final static Logger log = LoggerFactory.getLogger(BackupFilesAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BackupFilesAction.class.getName());
 
     public BackupFilesAction(String s) {
         super(s);
@@ -62,7 +62,7 @@ public class BackupFilesAction extends AbstractAction {
         try {
             backup.backupFilesToDirectory(directory);
         } catch (IOException ex) {
-            Log.error("backup failed");
+            log.error("backup failed");
         }
     }
 
