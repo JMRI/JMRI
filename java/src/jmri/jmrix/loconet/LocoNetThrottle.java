@@ -171,16 +171,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 | (getF2() ? LnConstants.DIRF_F2 : 0)
                 | (getF3() ? LnConstants.DIRF_F3 : 0)
                 | (getF4() ? LnConstants.DIRF_F4 : 0));
-        if (new_dirf != layout_dirf) {
-            log.debug("sendFunctionGroup1 sending {} to LocoNet slot {}", new_dirf, slot.getSlot());
-            LocoNetMessage msg = new LocoNetMessage(4);
-            msg.setOpCode(LnConstants.OPC_LOCO_DIRF);
-            msg.setElement(1, slot.getSlot());
-            msg.setElement(2, new_dirf);
-            network.sendLocoNetMessage(msg);
-        } else {
-            log.debug("sendFunctionGroup1 NOT sending unchanged {} to LocoNet slot {}", new_dirf, slot.getSlot());
-        }
+        log.debug("sendFunctionGroup1 sending {} to LocoNet slot {}", new_dirf, slot.getSlot());
+        LocoNetMessage msg = new LocoNetMessage(4);
+        msg.setOpCode(LnConstants.OPC_LOCO_DIRF);
+        msg.setElement(1, slot.getSlot());
+        msg.setElement(2, new_dirf);
+        network.sendLocoNetMessage(msg);
     }
 
     /**
@@ -191,13 +187,11 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 | (getF7() ? LnConstants.SND_F7 : 0)
                 | (getF6() ? LnConstants.SND_F6 : 0)
                 | (getF5() ? LnConstants.SND_F5 : 0));
-        if (new_snd != layout_snd) {
-            LocoNetMessage msg = new LocoNetMessage(4);
-            msg.setOpCode(LnConstants.OPC_LOCO_SND);
-            msg.setElement(1, slot.getSlot());
-            msg.setElement(2, new_snd);
-            network.sendLocoNetMessage(msg);
-        }
+        LocoNetMessage msg = new LocoNetMessage(4);
+        msg.setOpCode(LnConstants.OPC_LOCO_SND);
+        msg.setElement(1, slot.getSlot());
+        msg.setElement(2, new_snd);
+        network.sendLocoNetMessage(msg);
     }
 
     protected void sendFunctionGroup3() {

@@ -63,7 +63,7 @@ public class SerialNodeTest extends TestCase {
     }
 
     public void testConstructor3() {
-        SerialNode d = new SerialNode(4, SerialNode.USIC_SUSIC,stcs);;
+        SerialNode d = new SerialNode(4, SerialNode.USIC_SUSIC,stcs);
         Assert.assertEquals("check ctor type", SerialNode.USIC_SUSIC, d.getNodeType());
         Assert.assertEquals("check ctor address", 4, d.getNodeAddress());
         Assert.assertEquals("check ctor default bitsPerCard", 24, d.getNumBitsPerCard());
