@@ -1,8 +1,14 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import com.rapplogic.xbee.api.ApiId;
 import com.digi.xbee.api.packet.common.RemoteATCommandResponsePacket;
 import com.digi.xbee.api.models.XBee64BitAddress;
+import com.digi.xbee.api.packet.XBeePacket;
+import com.digi.xbee.api.packet.common.IODataSampleRxIndicatorPacket;
+import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
+import com.digi.xbee.api.listeners.IPacketReceiveListener;
+import com.digi.xbee.api.RemoteXBeeDevice;
+import com.digi.xbee.api.io.IOLine;
+import com.digi.xbee.api.io.IOSample;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -14,9 +20,9 @@ import org.slf4j.LoggerFactory;
  * System names are "ZSnnn", where nnn is the sensor number without padding. or
  * "ZSstring:pin", where string is a node address and pin is the io pin used.
  *
- * @author	Paul Bender Copyright (C) 2003-2010
+ * @author	Paul Bender Copyright (C) 2003-2016
  */
-public class XBeeSensorManager extends jmri.managers.AbstractSensorManager implements XBeeListener {
+public class XBeeSensorManager extends jmri.managers.AbstractSensorManager implements IIOSampleReceiveListener,IPacketReceiveListener {
 
     public String getSystemPrefix() {
         return prefix;
@@ -71,45 +77,30 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
         this.prefix = prefix;
     }
 
-    // listen for sensors, creating them as needed
-    public void reply(XBeeReply l) {
+    // IIOSampleReceiveListener methods
+    public synchronized void ioSampleReceived(RemoteXBeeDevice remoteDevice,IOSample ioSample) {
         if (log.isDebugEnabled()) {
-            log.debug("recieved message: " + l);
+            log.debug("recieved io sample {} from {}",ioSample,remoteDevice);
         }
 
-        com.rapplogic.xbee.api.XBeeResponse response = l.getXBeeResponse();
+        XBeeNode sourcenode = (XBeeNode) tc.getNodeFromXBeeDevice(remoteDevice);
 
-        if (response.getApiId() == ApiId.RX_64_IO_RESPONSE
-                || response.getApiId() == ApiId.RX_16_IO_RESPONSE) {
-            com.rapplogic.xbee.api.wpan.RxResponseIoSample ioSample = (com.rapplogic.xbee.api.wpan.RxResponseIoSample) response;
-
-            int address[] = ioSample.getSourceAddress().getAddress();
-            XBeeNode node = (XBeeNode) tc.getNodeFromAddress(address);
-
-            for (int i = 0; i <= 8; i++) {
-                if (!node.getPinAssigned(i)
-                        && ioSample.isDigitalEnabled(i)) {
-                    // request pin direction.
-                    tc.sendXBeeMessage(XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(), i), this);
+        XBeeNode node = (XBeeNode) tc.getNodeFromAddress(address);
+        for (int i = 0; i <= 8; i++) {
+            if (!node.getPinAssigned(i)
+                && ioSample.hasDigitalValue(IOLine.getDIO(i))) {
+                // request pin direction.
+                tc.sendXBeeMessage(XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(), i), this);
                 }
             }
-        } else if (response.getApiId() == ApiId.ZNET_IO_SAMPLE_RESPONSE) {
-            com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse ioSample
-                    = (com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse) response;
+        }
 
-            XBee64BitAddress xBeeAddr = ioSample.getRemoteAddress64();
-            XBeeNode node = (XBeeNode) tc.getNodeFromAddress(xBeeAddr.getAddress());
+   @Override
+   public void PacketReceived(XBeePacket receivedPacket) {
+        // the only packets we care about here are the replies to
+        // our request for pin direction.  We ignore anything else.
 
-            // series 2 xbees can go up to 12.  We'll leave it at 8 like
-            // the series 1 xbees to start with.
-            for (int i = 0; i <= 7; i++) {
-                if (!node.getPinAssigned(i)
-                        && ioSample.isDigitalEnabled(i)) {
-                    // request pin direction.
-                    tc.sendXBeeMessage(XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(), i), this);
-                }
-            }
-        } else if (response instanceof RemoteATCommandResponsePacket) {
+        /*} else if (response instanceof RemoteATCommandResponsePacket) {
             RemoteATCommandResponsePacket atResp = (RemoteATCommandResponsePacket) response;
             // check to see if this is a Dx responsponse.
             for (int i = 0; i < 7; i++) {
@@ -147,26 +138,13 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
                     }
                 }
             }
-        } else {
-            // not what we expected
-            log.debug("Ignoring mystery packet " + response.toString());
-        }
+       */
 
-    }
-
-    // listen for the messages to the XBee  
-    public void message(XBeeMessage l) {
-    }
-
-    // Handle a timeout notification
-    public void notifyTimeout(XBeeMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
-        }
     }
 
     // for now, set this to false. multiple additions currently works
     // partially, but not for all possible cases.
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return false;
     }

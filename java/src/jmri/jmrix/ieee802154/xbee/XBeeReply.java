@@ -27,13 +27,8 @@ public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
     public XBeeReply(String s) {
         super(s);
         setBinary(true);
-        xbresponse = new GenericXBeePacket();
         byte ba[] = jmri.util.StringUtil.bytesFromHexString(s);
-        int ia[] = new int[ba.length];
-        for (int i = 0; i < ba.length; i++) {
-            ia[i] = ba[i];
-        }
-        xbresponse.setPacketData(ia);
+        xbresponse = new GenericXBeePacket(ba);
     }
 
     public XBeeReply(XBeeReply l) {

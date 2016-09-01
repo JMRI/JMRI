@@ -54,7 +54,10 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
      */
     public XBeeMessage(GenericXBeePacket request) {
         _nDataChars = request.getPacketData().length;
-        _dataChars = request.getPacketData();
+        byte data[] = request.getPacketData();
+        for(int i=0;i<_nDataChars;i++) {
+           _dataChars[i] = (int) data[i];
+        }
         xbm = request;
     }
 
@@ -76,7 +79,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
 
     public String toString() {
         String s = "";
-        int packet[] = xbm.getPacketData();
+        byte packet[] = xbm.getPacketData();
         for (int i = 0; i < packet.length; i++) {
             s=jmri.util.StringUtil.appendTwoHexFromInt(packet[i],s);
         }
