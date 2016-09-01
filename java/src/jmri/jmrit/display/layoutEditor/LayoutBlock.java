@@ -853,7 +853,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     JTextField sensorNameField = new JTextField(16);
     JTextField sensorDebounceInactiveField = new JTextField(5);
     JTextField sensorDebounceActiveField = new JTextField(5);
-    JCheckBox sensorDebounceGlobalCheck = new JCheckBox(rb.getString("OccupancySensorUseGlobal"));
+    JCheckBox sensorDebounceGlobalCheck = new JCheckBox(Bundle.getMessage("SensorUseGlobalDebounce"));
     JTextField memoryNameField = new JTextField(16);
     JTextField metricField = new JTextField(10);
     JComboBox<String> senseBox = new JComboBox<String>();

@@ -8,6 +8,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
@@ -33,8 +34,8 @@ public class MultiSensorIconFrame extends JmriJFrame {
     JmriJFrame defaultsFrame;
     MultiIconEditor defaultIcons;
     LayoutEditor layoutEditor = null;
-    JRadioButton updown = new JRadioButton("Up <> Down");
-    JRadioButton rightleft = new JRadioButton("Right <> Left");
+    JRadioButton updown = new JRadioButton(Bundle.getMessage("UpDown"));
+    JRadioButton rightleft = new JRadioButton(Bundle.getMessage("RightLeft"));
     ButtonGroup group = new ButtonGroup();
 
     MultiSensorIconFrame(LayoutEditor p) {
@@ -43,6 +44,8 @@ public class MultiSensorIconFrame extends JmriJFrame {
 
         addHelpMenu("package.jmri.jmrit.display.MultiSensorIconFrame", true);
     }
+
+    int isEmpty = 0; // check for empty Fields in panel
 
     public void initComponents() {
         this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
@@ -85,7 +88,7 @@ public class MultiSensorIconFrame extends JmriJFrame {
         this.getContentPane().add(b);
 
         this.getContentPane().add(new JSeparator());
-        b = new JButton("Set icons for inactive, ...");
+        b = new JButton("Set icons for Inactive etc.");
         defaultIcons = new MultiIconEditor(3);
         defaultIcons.setIcon(0, "Unknown:", "resources/icons/USS/plate/levers/l-inactive.gif");
         defaultIcons.setIcon(1, "Inconsistent:", "resources/icons/USS/plate/levers/l-unknown.gif");
@@ -104,11 +107,13 @@ public class MultiSensorIconFrame extends JmriJFrame {
         this.getContentPane().add(b);
 
         this.getContentPane().add(new JSeparator());
-        b = new JButton("Create and Add Icon To Panel");
+        b = new JButton("Create and add Icon to Panel");
         b.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 make();
-                removeWindows();
+                if (isEmpty != 1){
+                    removeWindows();
+                }
             }
         });
         this.getContentPane().add(b);
@@ -129,6 +134,13 @@ public class MultiSensorIconFrame extends JmriJFrame {
 
         for (int i = 0; i < content.getComponentCount(); i++) {
             Entry e = (Entry) content.getComponent(i);
+            if (e.sensor.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("Error19", i+1),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                isEmpty = 1;
+                return; // TODO Keep Panel open to retry
+            }
             m.addEntry(e.sensor.getText(), e.ed.getIcon(0));
         }
         m.setUpDown(updown.isSelected());
@@ -164,11 +176,11 @@ public class MultiSensorIconFrame extends JmriJFrame {
         Entry(JPanel self, JmriJFrame frame, String name) {
             this.self = self;
             this.setLayout(new FlowLayout());
-            this.add(new JLabel("Sensor:"));
+            this.add(new JLabel(Bundle.getMessage("BeanNameSensor") + ":"));
 
             this.add(sensor);
 
-            ed.setIcon(0, "Active:", name);
+            ed.setIcon(0, Bundle.getMessage("SensorStateActive") + ":", name);
             ed.complete();
             edf.getContentPane().add(new JLabel("  Select new file, then click on icon to change  "), BorderLayout.NORTH);
             edf.getContentPane().add(ed);
@@ -183,7 +195,7 @@ public class MultiSensorIconFrame extends JmriJFrame {
             this.add(b);
 
             // button to remove this entry from it's parent 
-            b = new JButton("Delete");
+            b = new JButton(Bundle.getMessage("ButtonDelete"));
             ActionListener a = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     // remove this entry

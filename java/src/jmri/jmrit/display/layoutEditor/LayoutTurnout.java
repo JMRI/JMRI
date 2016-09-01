@@ -1969,10 +1969,10 @@ public class LayoutTurnout {
         if (editable) {
             switch (getTurnoutType()) {
                 case RH_TURNOUT:
-                    popup.add(rb.getString("RHTurnout"));
+                    popup.add(Bundle.getMessage("RightTurnout"));
                     break;
                 case LH_TURNOUT:
-                    popup.add(rb.getString("LHTurnout"));
+                    popup.add(Bundle.getMessage("LeftTurnout"));
                     break;
                 case WYE_TURNOUT:
                     popup.add(rb.getString("WYETurnout"));
@@ -1981,10 +1981,10 @@ public class LayoutTurnout {
                     popup.add(rb.getString("XOverTurnout"));
                     break;
                 case RH_XOVER:
-                    popup.add(rb.getString("RHXOverTurnout"));
+                    popup.add(Bundle.getMessage("RightCrossOver"));
                     break;
                 case LH_XOVER:
-                    popup.add(rb.getString("LHXOverTurnout"));
+                    popup.add(Bundle.getMessage("LeftCrossOver"));
                     break;
                 default:
                     break;
