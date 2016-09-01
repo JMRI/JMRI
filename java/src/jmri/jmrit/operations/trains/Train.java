@@ -3026,7 +3026,12 @@ public class Train implements java.beans.PropertyChangeListener {
         if (departs != null) {
             printerName = departs.getDefaultPrinterName();
         }
-        TrainPrintUtilities.printReport(file, getDescription(), isPreview, Setup.getFontName(), false, logoURL,
+        // the train description shouldn't exceed half of the page width or the page number will be overwritten
+        String name = getDescription();
+        if (name.length() > TrainCommon.getManifestHeaderLineLength()/2) {
+            name = name.substring(0, TrainCommon.getManifestHeaderLineLength()/2);
+        }
+        TrainPrintUtilities.printReport(file, name, isPreview, Setup.getFontName(), false, logoURL,
                 printerName, Setup.getManifestOrientation(), Setup.getManifestFontSize());
         if (!isPreview) {
             setPrinted(true);
