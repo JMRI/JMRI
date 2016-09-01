@@ -355,10 +355,6 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
-        final String TO = Bundle.getMessage("BeanNameTurnout");
-        final String SM = Bundle.getMessage("BeanNameSignalMast");
-        final String FI = Bundle.getMessage("FullInterlock");
-
         @Override
         public void setValueAt(Object value, int row, int col) {
             if (col == DELETECOL) {
@@ -377,18 +373,13 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
                 nxPairs.setEnabled(source.get(row), panel, dest.get(row), b);
             }
             if (col == TYPECOL) {
-                switch ((String) value) {
-                    case TO: // I18N see NXTYPE_NAMES definition and declarations above
-                        nxPairs.setEntryExitType(source.get(row), panel, dest.get(row), 0x00);
-                        break;
-                    case SM:
-                        nxPairs.setEntryExitType(source.get(row), panel, dest.get(row), 0x01);
-                        break;
-                    case FI:
-                        nxPairs.setEntryExitType(source.get(row), panel, dest.get(row), 0x02);
-                        break;
-                    default:
-                        break;
+                String val = (String) value;
+                if (val.equals(Bundle.getMessage("SetTurnoutsOnly"))) { // I18N matching needs if-else
+                    nxPairs.setEntryExitType(source.get(row), panel, dest.get(row), 0x00);
+                } else if (val.equals(Bundle.getMessage("SetTurnoutsAndSignalMasts"))) {
+                    nxPairs.setEntryExitType(source.get(row), panel, dest.get(row), 0x01);
+                } else if (val.equals(Bundle.getMessage("FullInterlock"))) {
+                    nxPairs.setEntryExitType(source.get(row), panel, dest.get(row), 0x02);
                 }
             }
         }
@@ -516,7 +507,8 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
         }
     }
 
-    String[] NXTYPE_NAMES = {Bundle.getMessage("BeanNameTurnout"), Bundle.getMessage("BeanNameSignalMast"), Bundle.getMessage("FullInterlock")};
+    String[] NXTYPE_NAMES = {Bundle.getMessage("SetTurnoutsOnly"), Bundle.getMessage("SetTurnoutsAndSignalMasts"), Bundle.getMessage("FullInterlock")};
+    // Picked up in setValueAt() to read back from table
 
     protected void configDeleteColumn(JTable table) {
         // have the delete column hold a button
