@@ -1896,9 +1896,12 @@ public class TrainBuilder extends TrainCommon {
      * locations requesting the most moves.
      */
     private void blockByLocationMoves() throws BuildFailedException {
-        // start at the second location in the route to begin blocking
         List<RouteLocation> routeList = _train.getRoute().getLocationsBySequenceList();
         for (RouteLocation rl : routeList) {
+            // start at the second location in the route to begin blocking
+            if (rl == _train.getTrainDepartsRouteLocation()) {
+                continue;
+            }
             int possibleMoves = rl.getMaxCarMoves() - rl.getCarMoves();
             if (rl.isDropAllowed() && possibleMoves > 0) {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("blockLocationHasMoves"),
@@ -1936,20 +1939,20 @@ public class TrainBuilder extends TrainCommon {
                                 addLine(_buildReport, SEVEN, MessageFormat.format(
                                         Bundle.getMessage("blockNotAbleDest"), new Object[]{car.toString(),
                                                 car.getDestinationName()}));
-                                continue;
+                                continue; // can't block this car
                             }
                             if (car.getFinalDestination() != null) {
                                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
                                         .getMessage("blockNotAbleFinalDest"), new Object[]{car.toString(),
                                                 car.getFinalDestination().getName()}));
-                                continue;
+                                continue; // can't block this car
                             }
                             if (!car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName()) &&
                                     !car.getLoadName().equals(CarLoads.instance().getDefaultLoadName())) {
                                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
                                         .getMessage("blockNotAbleCustomLoad"), new Object[]{car.toString(),
                                                 car.getLoadName()}));
-                                continue;
+                                continue; // can't block this car
                             }
                             if (car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName()) &&
                                     (_departStageTrack.isAddCustomLoadsEnabled() ||
@@ -1959,7 +1962,7 @@ public class TrainBuilder extends TrainCommon {
                                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
                                         .getMessage("blockNotAbleCarTypeGenerate"), new Object[]{car.toString(),
                                                 car.getLoadName()}));
-                                continue;
+                                continue; // can't block this car
                             }
                             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("blockingCar"),
                                     new Object[]{car.toString(), loc.getName(), rld.getName()}));

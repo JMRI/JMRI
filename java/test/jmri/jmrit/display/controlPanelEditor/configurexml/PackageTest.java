@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+   ControlPanelEditorXmlTest.class,
+   PortalIconXmlTest.class
 })
 /**
  * Tests for the jmri.jmrit.display.controlPanelEditor.configurexml package.

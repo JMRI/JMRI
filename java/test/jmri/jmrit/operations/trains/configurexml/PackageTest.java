@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+   TrainIconXmlTest.class
 })
 /**
  * Tests for the jmri.jmrit.operations.trains.configurexml package.
