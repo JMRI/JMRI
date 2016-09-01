@@ -1,54 +1,67 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- UpDated by Blorec Herv&#233;  2013-09-03-->
+
 <html lang="fr">
 <head>
-<meta name="generator" content=
-"HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-<title>JMRI: Structure de l'Application</title>
-<meta content="Bob Jacobsen" name="Author">
-<meta name="keywords" content="JMRI technical code"><!-- Style -->
-<meta http-equiv="Content-Type" content=
-"text/html; charset=us-ascii">
-<link rel="stylesheet" type="text/css" href="/css/default.css"
-media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media=
-"print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Structure de l'Application</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI technical code">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
+
 <body>
-<!--#include virtual="/Header" -->
-<div id="mBody"><!--#include virtual="Sidebar" -->
-<div id="mainContent">
-<h1>JMRI: Structure de l'Application</h1>
-Le programme JmriDemo est juste un exemple, mais il est
-cens&eacute; &ecirc;tre un bon.
-<p>La source de la classe principale est actuellement dans
-apps/JmriDemo/JMRIdemo.java, qui d&eacute;finit la classe
-principale apps.JmriDemo.JMRIdemo.</p>
-<p>La d&eacute;mo principale cr&eacute;e juste la barre de menus,
-et la remplit avec les menus et les &eacute;l&eacute;ments
-d&eacute;sir&eacute;s. Chaque &eacute;l&eacute;ment a comme une
-classe objet "Action" qui lui est associ&eacute;e qui fera l'
-initialisation n&eacute;cessaire en cas de besoin.</p>
-<p>Parce que nous nous attendons &agrave; avoir des interfaces
-diff&eacute;rentes dans le paquet jmrix, les outils JMRI ne
-cr&eacute;ent pas directement les objets d'interface dont ils ont
-besoin. Plut&ocirc;t, ils demandent des exemples d'interfaces. Pour
-les interfaces dans le package jmri, qui pourraient &ecirc;tre
-mises en &Aring;"uvre par beaucoup de types de r&eacute;seau
-diff&eacute;rents, jmri.InstanceManager r&eacute;pond &agrave; ces
-demandes.</p>
-<p>Plus d'informations sur la fa&ccedil;on dont les choses (par
-exemple des objets repr&eacute;sentant les &eacute;l&eacute;ments
-sur le sch&eacute;ma) sont nomm&eacute;s <a href="Names.shtml">sont
-disponibles sur une page s&eacute;par&eacute;e</a> .</p>
-<p>Voir aussi la page sur <a href="IntroStructure.shtml">Structure
-de la biblioth&egrave;que JMRI</a>. 
-<!--#include virtual="/Footer" --></p>
-</div>
-<!-- closes #mainContent--></div>
-<!-- closes #mBody-->
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Structure de l'Application</h1>Le programme
+      JmriDemo est juste un exemple, mais il est cens&eacute;
+      &ecirc;tre un bon.
+
+      <p>La source de la classe principale est actuellement dans
+      apps/JmriDemo/JMRIdemo.java, qui d&eacute;finit la classe
+      principale apps.JmriDemo.JMRIdemo.</p>
+
+      <p>La d&eacute;mo principale cr&eacute;e juste la barre de
+      menus, et la remplit avec les menus et les
+      &eacute;l&eacute;ments d&eacute;sir&eacute;s. Chaque
+      &eacute;l&eacute;ment a comme une classe objet "Action" qui
+      lui est associ&eacute;e qui fera l' initialisation
+      n&eacute;cessaire en cas de besoin.</p>
+
+      <p>Parce que nous nous attendons &agrave; avoir des
+      interfaces diff&eacute;rentes dans le paquet jmrix, les
+      outils JMRI ne cr&eacute;ent pas directement les objets
+      d'interface dont ils ont besoin. Plut&ocirc;t, ils demandent
+      des exemples d'interfaces. Pour les interfaces dans le
+      package jmri, qui pourraient &ecirc;tre mises en &Aring;"uvre
+      par beaucoup de types de r&eacute;seau diff&eacute;rents,
+      jmri.InstanceManager r&eacute;pond &agrave; ces demandes.</p>
+
+      <p>Plus d'informations sur la fa&ccedil;on dont les choses
+      (par exemple des objets repr&eacute;sentant les
+      &eacute;l&eacute;ments sur le sch&eacute;ma) sont
+      nomm&eacute;s <a href="Names.shtml">sont disponibles sur une
+      page s&eacute;par&eacute;e</a> .</p>
+
+      <p>Voir aussi la page sur <a href=
+      "IntroStructure.shtml">Structure de la biblioth&egrave;que
+      JMRI</a>. <!--#include virtual="/Footer" --></p>
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

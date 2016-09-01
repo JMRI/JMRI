@@ -1,45 +1,59 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- UpDated by Blorec Herv&#233; le 2013-09-30-->
+
 <html lang="fr">
 <head>
-<meta name="generator" content=
-"HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
-<title>JMRI: Simple Signal Logic</title>
-<!-- Style -->
-<meta http-equiv="Content-Type" content=
-"text/html; charset=us-ascii">
-<link rel="stylesheet" type="text/css" href="/css/default.css"
-media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media=
-"print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- $Id$ -->
+
+  <title>JMRI: Simple Signal Logic</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
+
 <body>
-<!--#include virtual="/Header" -->
-<div id="mBody"><!--#include virtual="Sidebar" -->
-<div id="mainContent">
-<h1>JMRI: Logique Simple Signal</h1>
-<p class="subtitle">Informations g&#233;n&#233;rales sur la logique
-utilis&#233;e pour la commande de signaux simples</p>
-<div class="para">
-<p>Cette page d&#233;crit la logique utilis&#233;e par le panneau
-JMRI Simple Signal pour commandes les signaux .</p>
-<p>Nous affichons le code r&#233;el, il n'y a donc aucune
-ambigu&#195;&#175;t&#233; sur ce qu'il fait. C'est &#224; partir
-des test de lib&#233;ration de JMRI 2.9.1.</p>
-</div>
-<div name="single">
-<h2><a class="section">Sur le Canton Simple</a></h2>
-<div class="para"><a class="section"></a>
-<p>Ce signal prot&#232;ge l'extr&#233;mit&#233; d'une droite
-passant par le canton, sans aiguillage signal&#233;.</p>
-</div>
-<div class="para">
-<pre class="code">
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Logique Simple Signal</h1>
+
+      <p class="subtitle">Informations g&#233;n&#233;rales sur la
+      logique utilis&#233;e pour la commande de signaux simples</p>
+
+      <div class="para">
+        <p>Cette page d&#233;crit la logique utilis&#233;e par le
+        panneau JMRI Simple Signal pour commandes les signaux .</p>
+
+        <p>Nous affichons le code r&#233;el, il n'y a donc aucune
+        ambigu&#195;&#175;t&#233; sur ce qu'il fait. C'est &#224;
+        partir des test de lib&#233;ration de JMRI 2.9.1.</p>
+      </div>
+
+      <div name="single">
+        <h2><a class="section">Sur le Canton Simple</a></h2>
+
+        <div class="para">
+          <a class="section"></a>
+
+          <p>Ce signal prot&#232;ge l'extr&#233;mit&#233; d'une
+          droite passant par le canton, sans aiguillage
+          signal&#233;.</p>
+        </div>
+
+        <div class="para">
+          <pre class="code">
 ulle doSingleBlock () {
 int = apparence SignalHead.GREEN;
 int oldAppearance = ((SignalHead)outputs [0]) getAppearance ().;
@@ -79,21 +93,28 @@ if (apparence! oldAppearance =) {
 if (log.isDebugEnabled ()) Log.DEBUG ("Change appearance of "+name+" to "+appearance";
 }
 }
-</pre></div>
-</div>
-<div name="trailmain">
-<h2><a class="section">Sur la Branche Droite d'un Aiguillage prit
-en Talon</a></h2>
-<div class="para"><a class="section"></a>
-<p>Ce signal est le long de l'itin&#233;raire principale &#224;
-travers un aiguillage, qui est d&#233;finie comme la direction
-prise par les trains lorsque l'aiguillage est droit. C'est la
-protection de la partie mobile de l'aiguillage de sorte que les
-trains s'arr&#234;tent avant de circuler &#224; travers une
-s&#233;rie d'aiguillages.</p>
-</div>
-<div class="para">
-<pre class="code">
+</pre>
+        </div>
+      </div>
+
+      <div name="trailmain">
+        <h2><a class="section">Sur la Branche Droite d'un
+        Aiguillage prit en Talon</a></h2>
+
+        <div class="para">
+          <a class="section"></a>
+
+          <p>Ce signal est le long de l'itin&#233;raire principale
+          &#224; travers un aiguillage, qui est d&#233;finie comme
+          la direction prise par les trains lorsque l'aiguillage
+          est droit. C'est la protection de la partie mobile de
+          l'aiguillage de sorte que les trains s'arr&#234;tent
+          avant de circuler &#224; travers une s&#233;rie
+          d'aiguillages.</p>
+        </div>
+
+        <div class="para">
+          <pre class="code">
 doTrailingMain void () {
 int = apparence SignalHead.GREEN;
 int oldAppearance = ((SignalHead) sorties [0]) getAppearance ().;
@@ -139,21 +160,28 @@ if (watchTurnout! = null &amp; &amp; watchTurnout.getBean (). getKnownState ()! 
 &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; if (log.isDebugEnabled ()) Log.DEBUG ("Change appearance of "+name+" to "+appearance);
 &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; }
 &#194; &#194; &#194; &#194; }
-</pre></div>
-</div>
-<div name="traildiv">
-<h2><a class="section">Sur Branche D&#233;vi&#233;e d'un Aiguillage
-en Talon</a></h2>
-<div class="para"><a class="section"></a>
-<p>Ce signal est le long de la voie d&#233;vi&#233;e d' un
-aiguillage, qui est d&#233;finie comme la direction prise par les
-trains lorsque l'aiguillage est d&#233;fini &#224;
-"d&#233;vi&#233;&#194;&#187;. C'est la protection de la partie
-mobile de l'aiguillage afin que les trains s'arr&#234;tent avant de
-traverser une s&#233;rie d'aiguillages .</p>
-</div>
-<div class="para">
-<pre class="code">
+</pre>
+        </div>
+      </div>
+
+      <div name="traildiv">
+        <h2><a class="section">Sur Branche D&#233;vi&#233;e d'un
+        Aiguillage en Talon</a></h2>
+
+        <div class="para">
+          <a class="section"></a>
+
+          <p>Ce signal est le long de la voie d&#233;vi&#233;e d'
+          un aiguillage, qui est d&#233;finie comme la direction
+          prise par les trains lorsque l'aiguillage est d&#233;fini
+          &#224; "d&#233;vi&#233;&#194;&#187;. C'est la protection
+          de la partie mobile de l'aiguillage afin que les trains
+          s'arr&#234;tent avant de traverser une s&#233;rie
+          d'aiguillages .</p>
+        </div>
+
+        <div class="para">
+          <pre class="code">
 nulle doTrailingDiverging () {
 int = apparence SignalHead.GREEN;
 int oldAppearance = ((SignalHead) sorties [0]) getAppearance ().;
@@ -198,17 +226,24 @@ if (apparence! oldAppearance =) {
 ((SignalHead) sorties [0]) setAppearance (apparence).;
 if (log.isDebugEnabled ()) Log.DEBUG ("Change appearance of "+name+" to "+appearance");
 }
-</pre></div>
-</div>
-<h2><a class="section">Aiguillage en Pointe</a></h2>
-<div class="para"><a class="section"></a>
-<p>Ce signal est pour prot&#233;ger les sorties du talon d'un
-aiguillage. Selon que l'aiguillage est d&#233;vi&#233; ou direct,
-le train prend deux voies diff&#233;rentes, et le signal doit
-prot&#233;ger les diff&#233;rents cantons suivants.</p>
-</div>
-<div class="para">
-<pre class="code">
+</pre>
+        </div>
+      </div>
+
+      <h2><a class="section">Aiguillage en Pointe</a></h2>
+
+      <div class="para">
+        <a class="section"></a>
+
+        <p>Ce signal est pour prot&#233;ger les sorties du talon
+        d'un aiguillage. Selon que l'aiguillage est d&#233;vi&#233;
+        ou direct, le train prend deux voies diff&#233;rentes, et
+        le signal doit prot&#233;ger les diff&#233;rents cantons
+        suivants.</p>
+      </div>
+
+      <div class="para">
+        <pre class="code">
     void doFacing() {
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
@@ -274,8 +309,9 @@ prot&#233;ger les diff&#233;rents cantons suivants.</p>
         // show result if changed
         if (appearance != oldAppearance)
             ((SignalHead)outputs[0]).setAppearance(appearance);
-</pre></div>
-</div>
-<!--#include virtual="/Footer" --></div>
+</pre>
+      </div>
+    </div><!--#include virtual="/Footer" -->
+  </div>
 </body>
 </html>

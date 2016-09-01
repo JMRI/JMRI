@@ -1,83 +1,104 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="fr">
 <head>
-<meta name="generator" content=
-"HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-<!-- Copyright Bob Jacobsen 2008 -->
-<!--Updated by Herv&#233; Blorec le 2013-08-31 -->
-<title>JMRI: Fonction Mapping dans les Fichiers
-Programmateur</title>
-<!-- Style -->
-<meta http-equiv="Content-Type" content=
-"text/html; charset=us-ascii">
-<link rel="stylesheet" type="text/css" href="/css/default.css"
-media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media=
-"print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!--Updated by Herv&#233; Blorec le 2013-08-31 -->
+
+  <title>JMRI: Fonction Mapping dans les Fichiers
+  Programmateur</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
+
 <body>
-<!--#include virtual="/Header" -->
-<div id="mBody"><!--#include virtual="Sidebar" -->
-<div id="mainContent">
-<h1>JMRI: Guide Utilisateur DecoderPro - Fonction Mapping dans les
-Fichiers Programmateur</h1>
-L'&eacute;l&eacute;ment "fnmapping" fournit un moyen pratique pour
-afficher les bits CV utilis&eacute;s pour la fonction Map et
-sorties dans un d&eacute;codeur .
-<p>Vous pouvez faire une chose similaire avec beaucoup de lignes et
-de colonnes dans l'affichage, mais &ccedil;a repr&eacute;senet
-beaucoup plus de travail, et l'affichage ne serait pas bien
-r&eacute;gl&eacute;.</p>
-<p>L'&eacute;l&eacute;ment "fnmapping" travaille en regardant les
-variables avec des noms comme "F2 commande sortie 1".
-Sp&eacute;cifiquement, il cherche un nom compos&eacute; de trois
-parties:</p>
-<ol>
-<li>Un nom de fonction. Ce peut &ecirc;tree "Fn" ou "Fnn",
-o&ugrave; n est un nombre d&eacute;cimal. Deux noms sp&eacute;ciaux
-pour F0 sont aussi reconnus : "FL(f)" et "FL(r)"</li>
-<li>La chaine de caract&egrave;res exacte " controls output ".
-Notez les espaces!</li>
-<li>un num&eacute;ro d&eacute;cimal de sortie.</li>
-</ol>
-<p>Apr&egrave;s avoir trouv&eacute; toutes les variables
-correspondantes dans le fichier de configuration,
-L'&eacute;l&eacute;ment "fnmapping" cr&eacute;e une grille
-rectangulaire pour les afficher.</p>
-<p>Dans le contexte d'un &eacute;l&eacute;ment fnmapping, les
-variables ont plusieurs attributs et &eacute;l&eacute;ments
-utiles:</p>
-<ul>
-<li>Default - Peut &ecirc;tre utilis&eacute; pour mettre les
-valeurs par d&eacute;faut. Ceci est particuli&egrave;rement utile
-pour des variables constantes (en lecture seulement),comme
-autrement elles n'ont aucune autre valeur utile.</li>
-<li>minOut - Fixe le nombre minimum de sorties que le
-d&eacute;codeur a besoin d'avoir d&eacute;fini avant que cette
-variable soit effective. Ainsi les d&eacute;codeurs de la
-m&ecirc;me famille ont souvent un nombre de fils de sorties
-diff&eacute;rent, ceci permet un fichier de configuration simple
-pour g&eacute;rer de multiples d&eacute;codeurs. (voir ci-dessous
-pour un exemple)</li>
-<li>minFn - similaire &agrave; minOut, mais travaillant sur le
-nombre de fonctions auquelles le d&eacute;codeur r&eacute;pond. Ce
-n'est g&eacute;n&eacute;ralement pas tr&egrave;s utile..</li>
-<li>constant - c'est un &eacute;l&eacute;ment, pas un attribut, qui
-vous permet de d&eacute;finir une variable comme ayant une valeur
-constante que l'utilisateur ne peut pas changer. Un exemple
-d'utilisation de cette option pour afficher une carte fixe est
-affich&eacute;e ci-dessous.</li>
-</ul>
-<h2>Exemple de Cartographie</h2>
-Ces exemples sont pris depuis le fichier de d&eacute;finition de
-d&eacute;codeur <a href=
-"../../xml/decoders/Digitrax_01x3.xml">Digitrax_01x3.xml</a>.
-<p>Le bloc de d&eacute;finitions pour la fonction z&eacute;ro dans
-la direction avant est comme suit:</p>
-<pre>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Guide Utilisateur DecoderPro - Fonction Mapping
+      dans les Fichiers Programmateur</h1>L'&eacute;l&eacute;ment
+      "fnmapping" fournit un moyen pratique pour afficher les bits
+      CV utilis&eacute;s pour la fonction Map et sorties dans un
+      d&eacute;codeur .
+
+      <p>Vous pouvez faire une chose similaire avec beaucoup de
+      lignes et de colonnes dans l'affichage, mais &ccedil;a
+      repr&eacute;senet beaucoup plus de travail, et l'affichage ne
+      serait pas bien r&eacute;gl&eacute;.</p>
+
+      <p>L'&eacute;l&eacute;ment "fnmapping" travaille en regardant
+      les variables avec des noms comme "F2 commande sortie 1".
+      Sp&eacute;cifiquement, il cherche un nom compos&eacute; de
+      trois parties:</p>
+
+      <ol>
+        <li>Un nom de fonction. Ce peut &ecirc;tree "Fn" ou "Fnn",
+        o&ugrave; n est un nombre d&eacute;cimal. Deux noms
+        sp&eacute;ciaux pour F0 sont aussi reconnus : "FL(f)" et
+        "FL(r)"</li>
+
+        <li>La chaine de caract&egrave;res exacte " controls output
+        ". Notez les espaces!</li>
+
+        <li>un num&eacute;ro d&eacute;cimal de sortie.</li>
+      </ol>
+
+      <p>Apr&egrave;s avoir trouv&eacute; toutes les variables
+      correspondantes dans le fichier de configuration,
+      L'&eacute;l&eacute;ment "fnmapping" cr&eacute;e une grille
+      rectangulaire pour les afficher.</p>
+
+      <p>Dans le contexte d'un &eacute;l&eacute;ment fnmapping, les
+      variables ont plusieurs attributs et &eacute;l&eacute;ments
+      utiles:</p>
+
+      <ul>
+        <li>Default - Peut &ecirc;tre utilis&eacute; pour mettre
+        les valeurs par d&eacute;faut. Ceci est
+        particuli&egrave;rement utile pour des variables constantes
+        (en lecture seulement),comme autrement elles n'ont aucune
+        autre valeur utile.</li>
+
+        <li>minOut - Fixe le nombre minimum de sorties que le
+        d&eacute;codeur a besoin d'avoir d&eacute;fini avant que
+        cette variable soit effective. Ainsi les d&eacute;codeurs
+        de la m&ecirc;me famille ont souvent un nombre de fils de
+        sorties diff&eacute;rent, ceci permet un fichier de
+        configuration simple pour g&eacute;rer de multiples
+        d&eacute;codeurs. (voir ci-dessous pour un exemple)</li>
+
+        <li>minFn - similaire &agrave; minOut, mais travaillant sur
+        le nombre de fonctions auquelles le d&eacute;codeur
+        r&eacute;pond. Ce n'est g&eacute;n&eacute;ralement pas
+        tr&egrave;s utile..</li>
+
+        <li>constant - c'est un &eacute;l&eacute;ment, pas un
+        attribut, qui vous permet de d&eacute;finir une variable
+        comme ayant une valeur constante que l'utilisateur ne peut
+        pas changer. Un exemple d'utilisation de cette option pour
+        afficher une carte fixe est affich&eacute;e
+        ci-dessous.</li>
+      </ul>
+
+      <h2>Exemple de Cartographie</h2>Ces exemples sont pris depuis
+      le fichier de d&eacute;finition de d&eacute;codeur <a href=
+      "../../xml/decoders/Digitrax_01x3.xml">Digitrax_01x3.xml</a>.
+
+      <p>Le bloc de d&eacute;finitions pour la fonction z&eacute;ro
+      dans la direction avant est comme suit:</p>
+      <pre>
                 &lt;variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1"&gt; &lt;enumVal&gt; 
                         &lt;enumChoice choice="No"/&gt; &lt;enumChoice choice="Yes"/&gt; &lt;/enumVal&gt; &lt;/variable&gt;
                 &lt;variable label="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2"&gt; &lt;enumVal&gt; 
@@ -94,11 +115,10 @@ la direction avant est comme suit:</p>
                         &lt;enumChoice choice="No"/&gt; &lt;enumChoice choice="Yes"/&gt; &lt;/enumVal&gt; &lt;/variable&gt;
                 &lt;variable label="FL(f) controls output 8" CV="33" mask="VXXXXXXX" minOut="8"&gt; &lt;enumVal&gt; 
                         &lt;enumChoice choice="No"/&gt; &lt;enumChoice choice="Yes"/&gt; &lt;/enumVal&gt; &lt;/variable&gt;
-</pre>
-Notez que l'attribut "minOut" assure que seule les fonctions
+</pre>Notez que l'attribut "minOut" assure que seule les fonctions
 actuellement d&eacute;finies comme pr&eacute;sentes sont
 affich&eacute;es.
-<pre>
+      <pre>
 Le bloc similaire de d&eacute;finitions pour la fonction deux configure un CV diff&eacute;rent, mais qui sont autrement tr&egrave;s similaires:
                 &lt;variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2"&gt; &lt;enumVal&gt; 
                         &lt;enumChoice choice="No"/&gt; &lt;enumChoice choice="Yes"/&gt; &lt;/enumVal&gt; &lt;/variable&gt;
@@ -116,17 +136,18 @@ Le bloc similaire de d&eacute;finitions pour la fonction deux configure un CV di
                         &lt;enumChoice choice="No"/&gt; &lt;enumChoice choice="Yes"/&gt; &lt;/enumVal&gt; &lt;/variable&gt;
                 &lt;variable label="F2 controls output 8" CV="36" mask="VXXXXXXX" minOut="8" minFn="2"&gt; &lt;enumVal&gt; 
                         &lt;enumChoice choice="No"/&gt; &lt;enumChoice choice="Yes"/&gt; &lt;/enumVal&gt; &lt;/variable&gt;
-</pre>
-La seule nouvelle chose est l'utilisation de l'attribut "minFn".
-Ceci est utile quand une famille de d&eacute;codeur supporte
-diff&eacute;rents nombres de fonctions (pas de sorties) dans des
-mod&egrave;les de d&eacute;codeurs diff&eacute;rents.
-<p>Comme vous allez vers les num&eacute;ros de fonctions plus
-&eacute;l&eacute;v&eacute;s, la cartographie NMRA entre les bits
-dans les CVs et le num&eacute;ro de sortie change. Vous pouvez voir
-ceci en regardant un exemple de la fa&ccedil;on dont la fonction
-dix est cartographi&eacute;e pour les sorties 7 &agrave; 14:</p>
-<pre>
+</pre>La seule nouvelle chose est l'utilisation de l'attribut
+"minFn". Ceci est utile quand une famille de d&eacute;codeur
+supporte diff&eacute;rents nombres de fonctions (pas de sorties)
+dans des mod&egrave;les de d&eacute;codeurs diff&eacute;rents.
+
+      <p>Comme vous allez vers les num&eacute;ros de fonctions plus
+      &eacute;l&eacute;v&eacute;s, la cartographie NMRA entre les
+      bits dans les CVs et le num&eacute;ro de sortie change. Vous
+      pouvez voir ceci en regardant un exemple de la fa&ccedil;on
+      dont la fonction dix est cartographi&eacute;e pour les
+      sorties 7 &agrave; 14:</p>
+      <pre>
                 &lt;variable label="F10 controls output 7" CV="44" mask="XXXXXXXV" minOut="7" minFn="10"&gt; &lt;enumVal&gt; 
                         &lt;enumChoice choice="No"/&gt; &lt;enumChoice choice="Yes"/&gt; &lt;/enumVal&gt; &lt;/variable&gt;
                 &lt;variable label="F10 controls output 8" CV="44" mask="XXXXXXVX" minOut="8" minFn="10"&gt; &lt;enumVal&gt; 
@@ -144,12 +165,13 @@ dix est cartographi&eacute;e pour les sorties 7 &agrave; 14:</p>
                 &lt;variable label="F10 controls output 14" CV="44" mask="VXXXXXXX" minOut="14" minFn="10"&gt; &lt;enumVal&gt; 
                         &lt;enumChoice choice="No"/&gt; &lt;enumChoice choice="Yes"/&gt; &lt;/enumVal&gt; &lt;/variable&gt;
 </pre>
-<h2>Exemple de Cartographie Fixe</h2>
-Vous pourriez encore vouloir inclure les valeurs de cartographie
-dans un fichier de configuration, m&ecirc;me si le d&eacute;codeur
-n'a pas la possibilit&eacute; de les changer. C'est un exemple de
-cartographie constante:
-<pre>
+
+      <h2>Exemple de Cartographie Fixe</h2>Vous pourriez encore
+      vouloir inclure les valeurs de cartographie dans un fichier
+      de configuration, m&ecirc;me si le d&eacute;codeur n'a pas la
+      possibilit&eacute; de les changer. C'est un exemple de
+      cartographie constante:
+      <pre>
         &lt;!-- Define the fixed Function-Output mapping --&gt;
         &lt;constant label="FL(f) controls output 1" minOut="1" default="1" /&gt; 
         &lt;constant label="FL(r) controls output 2" minOut="2" default="1" /&gt; 
@@ -161,11 +183,11 @@ cartographie constante:
         &lt;constant label="F6 controls output 8" minOut="8" minFn="6" default="1" /&gt; 
         &lt;constant label="F7 controls output 9" minOut="9" minFn="7" default="1" /&gt; 
         &lt;constant label="F8 controls output 10" minOut="10" minFn="8" default="1" /&gt; 
-</pre>
-Elle sera affich&eacute;e de la m&ecirc;me mani&egrave;re que les
-autres cartographies, except&eacute;es les cases individuelles qui
-seront inactives (gris&eacute;es). 
-<!--#include virtual="/Footer" --></div>
-</div>
+</pre>Elle sera affich&eacute;e de la m&ecirc;me mani&egrave;re que
+les autres cartographies, except&eacute;es les cases individuelles
+qui seront inactives (gris&eacute;es). 
+<!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

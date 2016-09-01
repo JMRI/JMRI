@@ -1,139 +1,172 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!-- UpDated by Blorec Herv&#233;  2013-10-04-->
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta name="generator" content=
-"HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org" />
-<meta content="text/html; charset=us-ascii" http-equiv=
-"content-type" />
-<title>Throttles Preferences Pane</title>
-<meta name="keywords" content=
-"JMRI decoderpro dcc nmra throttle throttlepro" />
-<meta name="Description" content=
-"Throttle documentation for JMRI project" />
-<meta name="Keywords" content="JMRI" />
-<meta name="Author" content="Lionel Jeanson" />
-<meta name="Language" content="fr" />
-<meta name="Robots" content="Index, Follow" />
-<meta name="Revisit-After" content="7 Days" />
-<!-- The combination of "Define" and {Header,Style, Logo and Footer} comments --><!-- are an arbitrary design pattern used by the update.pl script to --><!-- easily replace the common header/footer code for all the web pages --><!-- delete the following 2 Defines if you want to use the default JMRI logo --><!-- or change them to reflect your alternative logo --><!-- Style -->
-<meta http-equiv="Content-Type" content=
-"text/html; charset=us-ascii" />
-<link rel="stylesheet" type="text/css" href="/css/default.css"
-media="screen" />
-<link rel="stylesheet" type="text/css" href="/css/print.css" media=
-"print" />
-<link rel="icon" href="/images/jmri.ico" type="image/png" />
-<link rel="home" title="Home" href="/" /><!-- /Style -->
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org" />
+  <meta content="text/html; charset=us-ascii" http-equiv=
+  "content-type" />
+
+  <title>Throttles Preferences Pane</title>
+  <meta name="keywords" content=
+  "JMRI decoderpro dcc nmra throttle throttlepro" />
+  <meta name="Description" content=
+  "Throttle documentation for JMRI project" />
+  <meta name="Keywords" content="JMRI" />
+  <meta name="Author" content="Lionel Jeanson" />
+  <meta name="Language" content="fr" />
+  <meta name="Robots" content="Index, Follow" />
+  <meta name="Revisit-After" content="7 Days" />
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments --><!-- are an arbitrary design pattern used by the update.pl script to --><!-- easily replace the common header/footer code for all the web pages --><!-- delete the following 2 Defines if you want to use the default JMRI logo --><!-- or change them to reflect your alternative logo --><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii" />
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen" />
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print" />
+  <link rel="icon" href="/images/jmri.ico" type="image/png" />
+  <link rel="home" title="Home" href="/" /><!-- /Style -->
 </head>
+
 <body>
-<!--#include virtual="/Header" -->
-<div id="mBody"><!--#include virtual="Sidebar" -->
-<div id="mainContent">
-<h1>Volet des pr&eacute;f&eacute;rences R&eacute;gulateurs</h1>
-<img src="images/ThrottlesPreferencesPane.png" alt="" /><br />
-<br />
-Pour une meilleure exp&eacute;rience, le choix recommand&eacute;
-est cellui illustr&eacute;e ici.<br />
-<br />
-Ce panneau de pr&eacute;f&eacute;rences est accessible &agrave;
-partir des <a href="ToolsMenuThrottleEntry.shtml">des sous-menus
-R&eacute;gulateur dans l'entr&eacute;e du menu Outils</a> .<br />
-<br />
-Il est recommand&eacute; de fermer toutes les fen&ecirc;tres
-R&eacute;gulateurs avant d'appliquer une nouvel ensemble de
-pr&eacute;f&eacute;rences, puis rouvrez les une fois les nouveaux
-param&egrave;tres appliqu&eacute;e ou sauv&eacute;s.<br />
-<ul>
-<li>Le bouton Annuler ferme la fen&ecirc;tre et laisse les
-param&egrave;tres actuels des r&eacute;gulateurs comme ils
-sont.</li>
-<li>Le bouton Appliquer appliquera l'ensemble actuel des
-pr&eacute;f&eacute;rences et la fen&ecirc;tre des
-pr&eacute;f&eacute;rences restera ouverte.</li>
-<li>Le bouton Enregistrer enregistrera vos
-pr&eacute;f&eacute;rences actuelles, et fermerera les
-fen&ecirc;tres Pr&eacute;f&eacute;rences, les r&eacute;glages
-seront charg&eacute;s automatiquement au prochain d&eacute;marrage
-du JMRI.</li>
-</ul>
-<h2>Utilisez le R&eacute;gulateur &eacute;tendu</h2>
-<p>Ce r&eacute;glage activera/d&eacute;sactivera toutes les
-fonctionnalit&eacute;s &eacute;tendues des r&eacute;gulateurs.</p>
-<h2>R&eacute;glez les Commandes transparentes</h2>
-<p>Mettra le fond de la fen&ecirc;tre interne du r&eacute;gulateur
-en transparence ou semi- transparence.</p>
-<span style="font-style: italic;">Cette fonctionnalit&eacute; est
-appel&eacute;e &agrave; bien travailler sur OS X, mais Linux et
-Windows peuvent aussi fonctionner, cela varie compl&egrave;tement
-suivant l'interface actuelle Java (modifiable dans
-pr&eacute;f&eacute;rences principales JMRI )</span>
-<h2>Utiliser l'image de la Liste comme fond</h2>
-<p>Quand une liste est s&eacute;lectionn&eacute;e, l'image
-d&eacute;finie dans son <a href="RostersMediaPane.shtml">Panneau
-des m&eacute;dias</a> sera charg&eacute;e comme un fond pour la
-fen&ecirc;tre de commande du r&eacute;gulateur.<br />
-<br />
-Lorsque cette option est activ&eacute;e et l'adresse
-s&eacute;lectionn&eacute;e est 0 ou 3, une image par d&eacute;faut
-sera charg&eacute;e.</p>
-<h2>Redimensionnez la fen&ecirc;tre &agrave; la taille de
-l'image</h2>
-<p>Quand une image de fond est charg&eacute;e pour le
-r&eacute;gulateur actuel, cela va forcer la taille de la
-Fen&ecirc;tre du R&eacute;gulateur &agrave; celle de cette
-image.</p>
-<h2>Rechercher les infos liste quand l'adresse est
-indiqu&eacute;e</h2>
-<p>Quand une adresse est inscrite dans <a href=
-"BasicThrottleWindow.shtml">l'AdressPanel</a> , la base de
-donn&eacute;es JMRI recherchera une entr&eacute;e de registre
-correspondante (et sera donc des options de d&eacute;clenchements
-d&eacute;crites ci-dessus et ci-dessous si elles sont
-activ&eacute;s).</p>
-<h2>Chargement automatique de la fen&ecirc;tre de
-pr&eacute;f&eacute;rences r&eacute;gulateurs lorsqu'un lien est
-trouv&eacute; avec la Liste</h2>
-Quand une liste est s&eacute;lectionn&eacute;e, si un fichier de
-d&eacute;finition r&eacute;gulateur correspondant existe, JMRI le
-chargera automatiquement.<br />
-<br />
-Ces fichiers sont stock&eacute;s dans &lt;le R&eacute;pertoire
-Preference JMRI &gt;/Throttle/XYZ.xml o&ugrave; XYZ est dans l'ID
-de la Liste.<br />
-Utiliser Le <a href="ThrottleWindowMenus.shtml">l'entr&eacute;e
-Enregistrer du Menu Fichier</a> dans une fen&ecirc;tre
-r&eacute;gulateur va cr&eacute;er ou mettre &agrave; jour ces
-fichiers.<br />
-<br />
-<h2>Ignorer position du cadre R&eacute;gulateur</h2>
-Pour les vieux fichiers r&eacute;gulateurs qui contiennent des
-position de Fen&ecirc;tre R&eacute;gulateur en eux. Faites comme
-d&eacute;crit.<br />
-<span style="font-style: italic;">Remarque: les positions des
-Fen&ecirc;tre R&eacute;gulateurs sont maintenant
-sauvegard&eacute;es dans le Fichier de Sauvegar <span style=
-"font-weight: bold;">Configuration R&eacute;gulateur</span> (pas
-dans n'importe quels fichiers de sauvegardes R&eacute;gulateurs
-)</span>
-<h2>Masquage ind&eacute;fini de la Liste Boutons</h2>
-Quand une liste est s&eacute;lectionn&eacute;e, les boutons des
-panneaux d'adresse sont initialis&eacute;s comme d&eacute;finis
-dans le panneau de Fonctions dans DecoderPro, si cette option est
-activ&eacute;e, les boutons non d&eacute;finis (sans texte) dans
-PanelPro seront automatiquement cach&eacute;s dans le <a href=
-"BasicThrottleWindow.shtml">Panneau Fonction</a> .<br />
-<br />
-<span style="font-style: italic;">Remarque: vous pouvez
-r&eacute;initialiser la visibilit&eacute; des boutons de Fonctions
-dans une fen&ecirc;tre r&eacute;gulateur en allant dans le Menu
-Afficher <a href="ThrottleWindowMenus.shtml">et cliquer sur
-"afficher tous les boutons de fonction"</a> .</span><br />
-<h2>Activer la barre d'outils papillon</h2>
-Cette option activera une <a href="ThrottleToolBar.shtml">barre
-d'outils qui appara&icirc;tra dans toutes les Fen&ecirc;tres
-R&eacute;gulateurs</a> . <!--#include virtual="/Footer" --></div>
-</div>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>Volet des pr&eacute;f&eacute;rences
+      R&eacute;gulateurs</h1><img src=
+      "images/ThrottlesPreferencesPane.png" alt="" /><br />
+      <br />
+      Pour une meilleure exp&eacute;rience, le choix
+      recommand&eacute; est cellui illustr&eacute;e ici.<br />
+      <br />
+      Ce panneau de pr&eacute;f&eacute;rences est accessible
+      &agrave; partir des <a href=
+      "ToolsMenuThrottleEntry.shtml">des sous-menus
+      R&eacute;gulateur dans l'entr&eacute;e du menu Outils</a>
+      .<br />
+      <br />
+      Il est recommand&eacute; de fermer toutes les fen&ecirc;tres
+      R&eacute;gulateurs avant d'appliquer une nouvel ensemble de
+      pr&eacute;f&eacute;rences, puis rouvrez les une fois les
+      nouveaux param&egrave;tres appliqu&eacute;e ou
+      sauv&eacute;s.<br />
+
+      <ul>
+        <li>Le bouton Annuler ferme la fen&ecirc;tre et laisse les
+        param&egrave;tres actuels des r&eacute;gulateurs comme ils
+        sont.</li>
+
+        <li>Le bouton Appliquer appliquera l'ensemble actuel des
+        pr&eacute;f&eacute;rences et la fen&ecirc;tre des
+        pr&eacute;f&eacute;rences restera ouverte.</li>
+
+        <li>Le bouton Enregistrer enregistrera vos
+        pr&eacute;f&eacute;rences actuelles, et fermerera les
+        fen&ecirc;tres Pr&eacute;f&eacute;rences, les
+        r&eacute;glages seront charg&eacute;s automatiquement au
+        prochain d&eacute;marrage du JMRI.</li>
+      </ul>
+
+      <h2>Utilisez le R&eacute;gulateur &eacute;tendu</h2>
+
+      <p>Ce r&eacute;glage activera/d&eacute;sactivera toutes les
+      fonctionnalit&eacute;s &eacute;tendues des
+      r&eacute;gulateurs.</p>
+
+      <h2>R&eacute;glez les Commandes transparentes</h2>
+
+      <p>Mettra le fond de la fen&ecirc;tre interne du
+      r&eacute;gulateur en transparence ou semi-
+      transparence.</p><span style="font-style: italic;">Cette
+      fonctionnalit&eacute; est appel&eacute;e &agrave; bien
+      travailler sur OS X, mais Linux et Windows peuvent aussi
+      fonctionner, cela varie compl&egrave;tement suivant
+      l'interface actuelle Java (modifiable dans
+      pr&eacute;f&eacute;rences principales JMRI )</span>
+
+      <h2>Utiliser l'image de la Liste comme fond</h2>
+
+      <p>Quand une liste est s&eacute;lectionn&eacute;e, l'image
+      d&eacute;finie dans son <a href=
+      "RostersMediaPane.shtml">Panneau des m&eacute;dias</a> sera
+      charg&eacute;e comme un fond pour la fen&ecirc;tre de
+      commande du r&eacute;gulateur.<br />
+      <br />
+      Lorsque cette option est activ&eacute;e et l'adresse
+      s&eacute;lectionn&eacute;e est 0 ou 3, une image par
+      d&eacute;faut sera charg&eacute;e.</p>
+
+      <h2>Redimensionnez la fen&ecirc;tre &agrave; la taille de
+      l'image</h2>
+
+      <p>Quand une image de fond est charg&eacute;e pour le
+      r&eacute;gulateur actuel, cela va forcer la taille de la
+      Fen&ecirc;tre du R&eacute;gulateur &agrave; celle de cette
+      image.</p>
+
+      <h2>Rechercher les infos liste quand l'adresse est
+      indiqu&eacute;e</h2>
+
+      <p>Quand une adresse est inscrite dans <a href=
+      "BasicThrottleWindow.shtml">l'AdressPanel</a> , la base de
+      donn&eacute;es JMRI recherchera une entr&eacute;e de registre
+      correspondante (et sera donc des options de
+      d&eacute;clenchements d&eacute;crites ci-dessus et ci-dessous
+      si elles sont activ&eacute;s).</p>
+
+      <h2>Chargement automatique de la fen&ecirc;tre de
+      pr&eacute;f&eacute;rences r&eacute;gulateurs lorsqu'un lien
+      est trouv&eacute; avec la Liste</h2>Quand une liste est
+      s&eacute;lectionn&eacute;e, si un fichier de
+      d&eacute;finition r&eacute;gulateur correspondant existe,
+      JMRI le chargera automatiquement.<br />
+      <br />
+      Ces fichiers sont stock&eacute;s dans &lt;le
+      R&eacute;pertoire Preference JMRI &gt;/Throttle/XYZ.xml
+      o&ugrave; XYZ est dans l'ID de la Liste.<br />
+      Utiliser Le <a href=
+      "ThrottleWindowMenus.shtml">l'entr&eacute;e Enregistrer du
+      Menu Fichier</a> dans une fen&ecirc;tre r&eacute;gulateur va
+      cr&eacute;er ou mettre &agrave; jour ces fichiers.<br />
+      <br />
+
+      <h2>Ignorer position du cadre R&eacute;gulateur</h2>Pour les
+      vieux fichiers r&eacute;gulateurs qui contiennent des
+      position de Fen&ecirc;tre R&eacute;gulateur en eux. Faites
+      comme d&eacute;crit.<br />
+      <span style="font-style: italic;">Remarque: les positions des
+      Fen&ecirc;tre R&eacute;gulateurs sont maintenant
+      sauvegard&eacute;es dans le Fichier de Sauvegar <span style=
+      "font-weight: bold;">Configuration R&eacute;gulateur</span>
+      (pas dans n'importe quels fichiers de sauvegardes
+      R&eacute;gulateurs )</span>
+
+      <h2>Masquage ind&eacute;fini de la Liste Boutons</h2>Quand
+      une liste est s&eacute;lectionn&eacute;e, les boutons des
+      panneaux d'adresse sont initialis&eacute;s comme
+      d&eacute;finis dans le panneau de Fonctions dans DecoderPro,
+      si cette option est activ&eacute;e, les boutons non
+      d&eacute;finis (sans texte) dans PanelPro seront
+      automatiquement cach&eacute;s dans le <a href=
+      "BasicThrottleWindow.shtml">Panneau Fonction</a> .<br />
+      <br />
+      <span style="font-style: italic;">Remarque: vous pouvez
+      r&eacute;initialiser la visibilit&eacute; des boutons de
+      Fonctions dans une fen&ecirc;tre r&eacute;gulateur en allant
+      dans le Menu Afficher <a href="ThrottleWindowMenus.shtml">et
+      cliquer sur "afficher tous les boutons de fonction"</a>
+      .</span><br />
+
+      <h2>Activer la barre d'outils papillon</h2>Cette option
+      activera une <a href="ThrottleToolBar.shtml">barre d'outils
+      qui appara&icirc;tra dans toutes les Fen&ecirc;tres
+      R&eacute;gulateurs</a> . <!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

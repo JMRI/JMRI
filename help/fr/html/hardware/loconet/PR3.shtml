@@ -2,205 +2,264 @@
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
 <!-- UpDated  by Blorec Herv&#233;  2013-09-14 -->
+
 <html lang="fr">
 <head>
-<meta name="generator" content=
-"HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-<title>JMRI Hardware Guide: Connecting to a Digitrax PR3</title>
-<meta http-equiv="Content-Type" content=
-"text/html; charset=us-ascii">
-<meta content="Bob Jacobsen" name="Author">
-<meta name="keywords" content=
-"Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
-<!-- Style -->
-<meta http-equiv="Content-Type" content=
-"text/html; charset=us-ascii">
-<link rel="stylesheet" type="text/css" href="/css/default.css"
-media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media=
-"print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI Hardware Guide: Connecting to a Digitrax PR3</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content=
+  "Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
+
 <body>
-<!--#include virtual="/Header" -->
-<div class="nomenu" id="mBody">
-<div id="mainContent">
-<h1>Guide Mat&eacute;riel JMRI: Connexion &agrave; un Digitrax
-PR3</h1>
-<a href="http://digitrax.com/prd_compint_pr3.php"><img src=
-"http://www.digitrax.com/static/apps/products/computer-control/pr3/images/PR3_jpg_350x900_q85.jpg"
-alt="PR3 picture"></a><br>
-La PR3 Digitrax peut &ecirc;tre utilis&eacute;e soit comme un
-programmateur autonome de d&eacute;codeurs un peu comme le PR2, ou
-comme une interface entre votre ordinateur et un LocoNet&reg;,
-beaucoup comme un MS100. Il ne peut faire que l'une ou l'autre de
-ces fonctions &agrave; un moment donn&eacute;. Vous
-s&eacute;lectionnez le mode de fonctionnement dans les
-pr&eacute;f&eacute;rences JMRI pendant l'installation.
-<p>Lorsque la PR3 agit en tant que programmateur, il peut
-&ecirc;tre utilis&eacute; pour r&eacute;gler les CV dans tous les
-d&eacute;codeurs que DecoderPro prend en charge. Il peut
-&eacute;galement &ecirc;tre utilis&eacute; pour
-t&eacute;l&eacute;charger des informations sonores dans les
-D&eacute;codeurs sonores Digitrax et, dans ses limites de
-capacit&eacute; en intensit&eacute;, faire rouler une locomotive
-pour la tester. Lorsqu'elle est utilis&eacute;e avec un
-d&eacute;codeurs Digitrax SFX, Le "mode neutre", vous permet de
-varier la rampe de vitesse sans que le d&eacute;codeur
-d&eacute;place le moteur, de sorte que vous pouvez entendre comment
-la locomotive r&eacute;agit aux sons en fonctions des tensions
-moteurs. (Notez que Digitrax ne garantit que la programmation pour
-les d&eacute;codeurs SFX Digitrax avec des charges correctement
-install&eacute;es, etc, mais nos tests ont constat&eacute; que la
-PR3 peut travailler avec de nombreux d&eacute;codeurs communs)</p>
-<p>Lorsqu'elle agit comme une interface, la PR3 donne &agrave; JMRI
-le plein contr&ntilde;le de LocoNet et les dispositifs qui s'y
-rattachent. Cela inclut la programmation des d&eacute;codeurs sur
-une voie de programmation attach&eacute;e &agrave; une centrale
-LocoNet, ou sur la voie principale. La PR3 peut aussi servir comme
-"terminaison LocoNet", ce qui lui permet de conduire un LocoNet
-sans une centrale de commande jointe, par exemple si vous voulez
-avoir un LocoNet d&eacute;di&eacute; &agrave; la signalisation.</p>
-<p>Pour plus d'informations sur la PR3 lui-m&ecirc;me, s'il vous
-pla&icirc;t voir la <a href=
-"http://digitrax.com/prd_compint_pr3.php">page Digitrax PR3</a> et
-la <a href="http://www.digitrax.com/kb/index.php?c=338">page
-PR3</a> dans la <a href="http://www.digitrax.com/kb/index.php">Base
-connaissances Digitrax</a> .</p>
-<h3>Pilotes</h3>
-Le PR3 a besoin d'avoir un pilote install&eacute; lorsqu'il est
-utilis&eacute; avec Microsoft Windows. Voir la <a href=
-"http://digitrax.com/prd_compint_pr3.php">page Digitrax PR3</a>
-pour plus d'informations. Assurez-vous de suivre les instructions
-exactement, en particulier sur l'ordre d'installation des pilotes
-et de branchement de l'appareil.
-<p>Vous n'avez pas besoin d'installer un pilote
-s&eacute;par&eacute; lors de l'utilisation des versions actuelles
-de Mac OS X ou Linux.</p>
-<h2>Utilisation de la PR3 comme une Interface LocoNet</h2>
-<img src="images/PR3toCommandStation.png" alt=
-"PR3 Connection to Digitrax Command Station"> Pour utiliser le PR3
-comme une interface, connecter un c&acirc;ble &agrave; LocoNet et
-au Connecteur LocoNet sur la PR3. (Bien que non requis, il est
-&eacute;galement OK de connecter une alimentation &agrave; la PR3).
-Enfin, connectez un c&acirc;ble USB entre la PR3 et votre
-ordinateur.
-<h3>Configuration Recommand&eacute;e</h3>
-<p>Pour configurer une application JMRI et utiliser le PR3 comme
-une interface:</p>
-<ul>
-<li>D&eacute;marrez le programme.</li>
-<li>Ouvrez la fen&ecirc;tre Pr&eacute;f&eacute;rences du menu
-&eacute;dition et configurer la connexion par:
-<ul>
-<li>S&eacute;lectionnez LocoNet PR3</li>
-<li>S&eacute;lectionnez le port s&eacute;rie qui est
-connect&eacute; &agrave; la PR3</li>
-<li>La vitesse sera fix&eacute;e &agrave; 57 600 bauds, ne pas
-essayer de changer celle-ci dans les param&egrave;tres de votre
-ordinateur</li>
-<li>L'option "Flow Control" par d&eacute;faut, "Utiliser le
-contr&ntilde;le de flux mat&eacute;riel", qui utilise les fils de
-statut dans la connexion s&eacute;rie pour d&eacute;terminer quand
-la PR3 est pr&ecirc;t &agrave; envoyer et &agrave; recevoir. Vous
-devriez essayer d'abord, quel est le mode le plus fiable. Seulement
-si vous ne pouvez pas vous connecter &agrave; votre LocoNet avec ce
-r&eacute;glage, et seulement apr&egrave;s avoir
-v&eacute;rifi&eacute; que vous utilisez le bon port, vous
-s&eacute;lectionnez "Aucun" pour cette pr&eacute;f&eacute;rence et
-essayez &agrave; nouveau.</li>
-<li>Dans l'option "Command Station" , s&eacute;lectionnez le type
-de centrale de commande que vous avez sur votre LocoNet, par
-exemple DCS100 Chief), DCS050 (Zephyr), etc L'option "Stand-alone
-LocoNet" doit &ecirc;tre s&eacute;lectionn&eacute;e si vous n'avez
-pas une centrale connect&eacute;e.</li>
-</ul>
-</li>
-<li>Cliquez sur Enregistrer au bas de la fen&ecirc;tre des
-pr&eacute;f&eacute;rences, quittez le programme et
-red&eacute;marrer.
-<h2>Utiliser la Voie de Programmation PR3</h2>
-<img src="images/PR3standAlone.png" alt=
-"PR3 Connection to Programming Track"> Pour utiliser le PR3 sur
-voie de programmation, connecter la PR3 &agrave; son alimentation
-Base Power et &agrave; un morceau de voie d&eacute;di&eacute;e que
-vous allez utiliser comme voie de programmation. Enfin, connectez
-un c&acirc;ble USB entre la PR3 et votre ordinateur.
-<h3>D&eacute;marrage Conseill&eacute;</h3>
-<p>Pour configurer DecoderPro d'utiliser la PR3:</p>
-<ul>
-<li>D&eacute;marrer DecoderPro.</li>
-<li>Ouvrez la fen&ecirc;tre Pr&eacute;f&eacute;rences du menu
-&eacute;dition et configurer la connexion par:
-<ul>
-<li>S&eacute;lectionnez LocoNet PR3</li>
-<li>S&eacute;lectionnez le port s&eacute;rie qui est
-connect&eacute; &agrave; la PR3</li>
-<li>La vitesse sera fix&eacute;e &agrave; 57 600 bauds, ne pas
-essayer de changer celle-ci dans les param&egrave;tres de votre
-ordinateur</li>
-<li>L'option "Flow Control" par d&eacute;faut ("Utiliser le
-contr&ntilde;le de flux mat&eacute;riel"), qui utilise les fils de
-statut dans la connexion s&eacute;rie pour d&eacute;terminer quand
-la PR3 est pr&ecirc;t &agrave; envoyer et &agrave; recevoir. Vous
-devriez essayer d'abord, quel est le mode le plus fiable. Seulement
-si vous ne pouvez pas programmer les d&eacute;codeurs en utilisant
-ce choix, et seulement apr&egrave;s avoir v&eacute;rifi&eacute; que
-vous utilisez le bon port, vous s&eacute;lectionnez "Aucun" pour
-cette pr&eacute;f&eacute;rence et essayez &agrave; nouveau.</li>
-<li>Dans l'option de la "Centrale de Commande", s&eacute;lectionnez
-"Programmateur PR3".</li>
-</ul>
-</li>
-<li>Cliquez sur Enregistrer au bas de la fen&ecirc;tre des
-pr&eacute;f&eacute;rences, quittez le programme et
-red&eacute;marrer.</li>
-</ul>
-<h3>Suggestions d'Utilisation</h3>
-<p>Vous pouvez utiliser un r&eacute;gulateur JMRI pour
-contr&ntilde;ler la locomotive connect&eacute;e au programmateur
-PR3. Utilisez la commande d'alimentation de JMRI ou de
-l'&eacute;l&eacute;ment "Power" sur la barre de menu du
-r&eacute;gulateur pour mettre en service l'alimentation de la voie
-et la locomotive fonctionnera normalement.</p>
-<p>PR3 ne peut fournir qu'un courant tr&egrave;s limit&eacute;,
-alors Digitrax a construit un "mode neutre" dans leurs
-d&eacute;codeurs sonores. Lorsque JMRI et la PR3 font fonctionner
-un un d&eacute;codeur son Digitrax, le moteur est
-d&eacute;connect&eacute; pour r&eacute;duire la charge. Vous pouvez
-toujours avoir la rampe de la vitesse de haut en bas avec le
-r&eacute;gulateur et d'&eacute;couter les r&eacute;actions du son ,
-mais le moteur ne d&eacute;placera pas la locomotive.</p>
-<p>Les autres d&eacute;codeurs , y compris les d&eacute;codeurs
-d'autres fabricants, peuvent &ecirc;tre gourmand en courant pour
-leur moteur et d&eacute;clencher le disjoncteur interne de PR3.
-JMRI verra la voie comme non aliment&eacute;e. Attendre
-justequelques secondes et tourner l'alimentation de la voie en
-arri&egrave;re pour effacer le d&eacute;faut.</p>
-<h4>Utilisation de PR3 avec des D&eacute;codeurs Non-Digitrax</h4>
-Pour mettre en &Aring;&ldquo;uvre ce mode "neutre" d&eacute;crit
-ci-dessus, le PR3 a &eacute;crit automatiquement dans CV128 la
-valeur 0 ou 1. Cela arrive quand un r&eacute;gulateur est
-utilis&eacute; pour JMRI pour utiliser la locomotive sur la voie de
-programmation PR3, et il n'y a rien que JMRI puisset faire pour
-l'emp&ecirc;cher. Malheureusement, cela peut interf&eacute;rer avec
-la Programmation CV sur certains d&eacute;codeurs non Digitrax. Par
-exemple, il pourra mettre le "Master Volume" CV128 sur certains
-d&eacute;codeurs Soundtraxx &agrave; un volume tr&egrave;s faible.
-<p>Si vous utilisez le PR3 avec un d&eacute;codeur qui utilise le
-CV128 pour quelque chose, vous devez soit ne pas utiliser un
-r&eacute;gulateur JMRI pour utiliser la locomotive sur la voie de
-programmation PR3, ou de se souvenir de r&eacute;&eacute;crire
-CV128 avec la bonne valeur juste avant de retirer la locomotive de
-la voie.</p>
-<p>LocoNet&reg; est une marque d&eacute;pos&eacute;e de <a href=
-"http://www.digitrax.com">Digitrax, Inc. &lt;/ a&gt; &lt;/ p&gt;
-&lt;/ div&gt; &lt;/ div&gt; 
-<!--#include virtual="/Footer" --></a></p>
-</li>
-</ul>
-</div>
-</div>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Guide Mat&eacute;riel JMRI: Connexion &agrave; un
+      Digitrax PR3</h1><a href=
+      "http://digitrax.com/prd_compint_pr3.php"><img src=
+      "http://www.digitrax.com/static/apps/products/computer-control/pr3/images/PR3_jpg_350x900_q85.jpg"
+      alt="PR3 picture"></a><br>
+      La PR3 Digitrax peut &ecirc;tre utilis&eacute;e soit comme un
+      programmateur autonome de d&eacute;codeurs un peu comme le
+      PR2, ou comme une interface entre votre ordinateur et un
+      LocoNet&reg;, beaucoup comme un MS100. Il ne peut faire que
+      l'une ou l'autre de ces fonctions &agrave; un moment
+      donn&eacute;. Vous s&eacute;lectionnez le mode de
+      fonctionnement dans les pr&eacute;f&eacute;rences JMRI
+      pendant l'installation.
+
+      <p>Lorsque la PR3 agit en tant que programmateur, il peut
+      &ecirc;tre utilis&eacute; pour r&eacute;gler les CV dans tous
+      les d&eacute;codeurs que DecoderPro prend en charge. Il peut
+      &eacute;galement &ecirc;tre utilis&eacute; pour
+      t&eacute;l&eacute;charger des informations sonores dans les
+      D&eacute;codeurs sonores Digitrax et, dans ses limites de
+      capacit&eacute; en intensit&eacute;, faire rouler une
+      locomotive pour la tester. Lorsqu'elle est utilis&eacute;e
+      avec un d&eacute;codeurs Digitrax SFX, Le "mode neutre", vous
+      permet de varier la rampe de vitesse sans que le
+      d&eacute;codeur d&eacute;place le moteur, de sorte que vous
+      pouvez entendre comment la locomotive r&eacute;agit aux sons
+      en fonctions des tensions moteurs. (Notez que Digitrax ne
+      garantit que la programmation pour les d&eacute;codeurs SFX
+      Digitrax avec des charges correctement install&eacute;es,
+      etc, mais nos tests ont constat&eacute; que la PR3 peut
+      travailler avec de nombreux d&eacute;codeurs communs)</p>
+
+      <p>Lorsqu'elle agit comme une interface, la PR3 donne
+      &agrave; JMRI le plein contr&ntilde;le de LocoNet et les
+      dispositifs qui s'y rattachent. Cela inclut la programmation
+      des d&eacute;codeurs sur une voie de programmation
+      attach&eacute;e &agrave; une centrale LocoNet, ou sur la voie
+      principale. La PR3 peut aussi servir comme "terminaison
+      LocoNet", ce qui lui permet de conduire un LocoNet sans une
+      centrale de commande jointe, par exemple si vous voulez avoir
+      un LocoNet d&eacute;di&eacute; &agrave; la signalisation.</p>
+
+      <p>Pour plus d'informations sur la PR3 lui-m&ecirc;me, s'il
+      vous pla&icirc;t voir la <a href=
+      "http://digitrax.com/prd_compint_pr3.php">page Digitrax
+      PR3</a> et la <a href=
+      "http://www.digitrax.com/kb/index.php?c=338">page PR3</a>
+      dans la <a href="http://www.digitrax.com/kb/index.php">Base
+      connaissances Digitrax</a> .</p>
+
+      <h3>Pilotes</h3>Le PR3 a besoin d'avoir un pilote
+      install&eacute; lorsqu'il est utilis&eacute; avec Microsoft
+      Windows. Voir la <a href=
+      "http://digitrax.com/prd_compint_pr3.php">page Digitrax
+      PR3</a> pour plus d'informations. Assurez-vous de suivre les
+      instructions exactement, en particulier sur l'ordre
+      d'installation des pilotes et de branchement de l'appareil.
+
+      <p>Vous n'avez pas besoin d'installer un pilote
+      s&eacute;par&eacute; lors de l'utilisation des versions
+      actuelles de Mac OS X ou Linux.</p>
+
+      <h2>Utilisation de la PR3 comme une Interface
+      LocoNet</h2><img src="images/PR3toCommandStation.png" alt=
+      "PR3 Connection to Digitrax Command Station"> Pour utiliser
+      le PR3 comme une interface, connecter un c&acirc;ble &agrave;
+      LocoNet et au Connecteur LocoNet sur la PR3. (Bien que non
+      requis, il est &eacute;galement OK de connecter une
+      alimentation &agrave; la PR3). Enfin, connectez un
+      c&acirc;ble USB entre la PR3 et votre ordinateur.
+
+      <h3>Configuration Recommand&eacute;e</h3>
+
+      <p>Pour configurer une application JMRI et utiliser le PR3
+      comme une interface:</p>
+
+      <ul>
+        <li>D&eacute;marrez le programme.</li>
+
+        <li>Ouvrez la fen&ecirc;tre Pr&eacute;f&eacute;rences du
+        menu &eacute;dition et configurer la connexion par:
+
+          <ul>
+            <li>S&eacute;lectionnez LocoNet PR3</li>
+
+            <li>S&eacute;lectionnez le port s&eacute;rie qui est
+            connect&eacute; &agrave; la PR3</li>
+
+            <li>La vitesse sera fix&eacute;e &agrave; 57 600 bauds,
+            ne pas essayer de changer celle-ci dans les
+            param&egrave;tres de votre ordinateur</li>
+
+            <li>L'option "Flow Control" par d&eacute;faut,
+            "Utiliser le contr&ntilde;le de flux mat&eacute;riel",
+            qui utilise les fils de statut dans la connexion
+            s&eacute;rie pour d&eacute;terminer quand la PR3 est
+            pr&ecirc;t &agrave; envoyer et &agrave; recevoir. Vous
+            devriez essayer d'abord, quel est le mode le plus
+            fiable. Seulement si vous ne pouvez pas vous connecter
+            &agrave; votre LocoNet avec ce r&eacute;glage, et
+            seulement apr&egrave;s avoir v&eacute;rifi&eacute; que
+            vous utilisez le bon port, vous s&eacute;lectionnez
+            "Aucun" pour cette pr&eacute;f&eacute;rence et essayez
+            &agrave; nouveau.</li>
+
+            <li>Dans l'option "Command Station" ,
+            s&eacute;lectionnez le type de centrale de commande que
+            vous avez sur votre LocoNet, par exemple DCS100 Chief),
+            DCS050 (Zephyr), etc L'option "Stand-alone LocoNet"
+            doit &ecirc;tre s&eacute;lectionn&eacute;e si vous
+            n'avez pas une centrale connect&eacute;e.</li>
+          </ul>
+        </li>
+
+        <li>Cliquez sur Enregistrer au bas de la fen&ecirc;tre des
+        pr&eacute;f&eacute;rences, quittez le programme et
+        red&eacute;marrer.
+
+          <h2>Utiliser la Voie de Programmation PR3</h2><img src=
+          "images/PR3standAlone.png" alt=
+          "PR3 Connection to Programming Track"> Pour utiliser le
+          PR3 sur voie de programmation, connecter la PR3 &agrave;
+          son alimentation Base Power et &agrave; un morceau de
+          voie d&eacute;di&eacute;e que vous allez utiliser comme
+          voie de programmation. Enfin, connectez un c&acirc;ble
+          USB entre la PR3 et votre ordinateur.
+
+          <h3>D&eacute;marrage Conseill&eacute;</h3>
+
+          <p>Pour configurer DecoderPro d'utiliser la PR3:</p>
+
+          <ul>
+            <li>D&eacute;marrer DecoderPro.</li>
+
+            <li>Ouvrez la fen&ecirc;tre Pr&eacute;f&eacute;rences
+            du menu &eacute;dition et configurer la connexion par:
+
+              <ul>
+                <li>S&eacute;lectionnez LocoNet PR3</li>
+
+                <li>S&eacute;lectionnez le port s&eacute;rie qui
+                est connect&eacute; &agrave; la PR3</li>
+
+                <li>La vitesse sera fix&eacute;e &agrave; 57 600
+                bauds, ne pas essayer de changer celle-ci dans les
+                param&egrave;tres de votre ordinateur</li>
+
+                <li>L'option "Flow Control" par d&eacute;faut
+                ("Utiliser le contr&ntilde;le de flux
+                mat&eacute;riel"), qui utilise les fils de statut
+                dans la connexion s&eacute;rie pour
+                d&eacute;terminer quand la PR3 est pr&ecirc;t
+                &agrave; envoyer et &agrave; recevoir. Vous devriez
+                essayer d'abord, quel est le mode le plus fiable.
+                Seulement si vous ne pouvez pas programmer les
+                d&eacute;codeurs en utilisant ce choix, et
+                seulement apr&egrave;s avoir v&eacute;rifi&eacute;
+                que vous utilisez le bon port, vous
+                s&eacute;lectionnez "Aucun" pour cette
+                pr&eacute;f&eacute;rence et essayez &agrave;
+                nouveau.</li>
+
+                <li>Dans l'option de la "Centrale de Commande",
+                s&eacute;lectionnez "Programmateur PR3".</li>
+              </ul>
+            </li>
+
+            <li>Cliquez sur Enregistrer au bas de la fen&ecirc;tre
+            des pr&eacute;f&eacute;rences, quittez le programme et
+            red&eacute;marrer.</li>
+          </ul>
+
+          <h3>Suggestions d'Utilisation</h3>
+
+          <p>Vous pouvez utiliser un r&eacute;gulateur JMRI pour
+          contr&ntilde;ler la locomotive connect&eacute;e au
+          programmateur PR3. Utilisez la commande d'alimentation de
+          JMRI ou de l'&eacute;l&eacute;ment "Power" sur la barre
+          de menu du r&eacute;gulateur pour mettre en service
+          l'alimentation de la voie et la locomotive fonctionnera
+          normalement.</p>
+
+          <p>PR3 ne peut fournir qu'un courant tr&egrave;s
+          limit&eacute;, alors Digitrax a construit un "mode
+          neutre" dans leurs d&eacute;codeurs sonores. Lorsque JMRI
+          et la PR3 font fonctionner un un d&eacute;codeur son
+          Digitrax, le moteur est d&eacute;connect&eacute; pour
+          r&eacute;duire la charge. Vous pouvez toujours avoir la
+          rampe de la vitesse de haut en bas avec le
+          r&eacute;gulateur et d'&eacute;couter les
+          r&eacute;actions du son , mais le moteur ne
+          d&eacute;placera pas la locomotive.</p>
+
+          <p>Les autres d&eacute;codeurs , y compris les
+          d&eacute;codeurs d'autres fabricants, peuvent &ecirc;tre
+          gourmand en courant pour leur moteur et d&eacute;clencher
+          le disjoncteur interne de PR3. JMRI verra la voie comme
+          non aliment&eacute;e. Attendre justequelques secondes et
+          tourner l'alimentation de la voie en arri&egrave;re pour
+          effacer le d&eacute;faut.</p>
+
+          <h4>Utilisation de PR3 avec des D&eacute;codeurs
+          Non-Digitrax</h4>Pour mettre en &Aring;"uvre ce mode
+          "neutre" d&eacute;crit ci-dessus, le PR3 a &eacute;crit
+          automatiquement dans CV128 la valeur 0 ou 1. Cela arrive
+          quand un r&eacute;gulateur est utilis&eacute; pour JMRI
+          pour utiliser la locomotive sur la voie de programmation
+          PR3, et il n'y a rien que JMRI puisset faire pour
+          l'emp&ecirc;cher. Malheureusement, cela peut
+          interf&eacute;rer avec la Programmation CV sur certains
+          d&eacute;codeurs non Digitrax. Par exemple, il pourra
+          mettre le "Master Volume" CV128 sur certains
+          d&eacute;codeurs Soundtraxx &agrave; un volume
+          tr&egrave;s faible.
+
+          <p>Si vous utilisez le PR3 avec un d&eacute;codeur qui
+          utilise le CV128 pour quelque chose, vous devez soit ne
+          pas utiliser un r&eacute;gulateur JMRI pour utiliser la
+          locomotive sur la voie de programmation PR3, ou de se
+          souvenir de r&eacute;&eacute;crire CV128 avec la bonne
+          valeur juste avant de retirer la locomotive de la
+          voie.</p>
+
+          <p>LocoNet&reg; est une marque d&eacute;pos&eacute;e de
+          <a href="http://www.digitrax.com">Digitrax, Inc. &lt;/
+          a&gt; &lt;/ p&gt; &lt;/ div&gt; &lt;/ div&gt; 
+          <!--#include virtual="/Footer" --></a></p>
+        </li>
+      </ul>
+    </div>
+  </div>
 </body>
 </html>

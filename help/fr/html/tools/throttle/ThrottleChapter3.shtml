@@ -1,344 +1,447 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <!-- UpDated by Blorec Herv&#233; 2013-10-02-->
+
 <html lang="fr">
 <head>
-<meta name="generator" content=
-"HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-<title>Throttle: Advanced Configuration</title>
-<meta name="keywords" content=
-"JMRI decoderpro dcc nmra throttlepro">
-<meta name="Description" content=
-"Throttle documentation for JMRI project">
-<meta name="Author" content="Paul Fraker (paul@frakers.com)">
-<meta name="Language" content="fr">
-<meta name="Robots" content="Index, Follow">
-<meta name="Revisit-After" content="7 Days"><!-- Style -->
-<meta http-equiv="content-type" content=
-"text/html; charset=us-ascii">
-<link rel="stylesheet" type="text/css" href="/css/default.css"
-media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media=
-"print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>Throttle: Advanced Configuration</title>
+  <meta name="keywords" content=
+  "JMRI decoderpro dcc nmra throttlepro">
+  <meta name="Description" content=
+  "Throttle documentation for JMRI project">
+  <meta name="Author" content="Paul Fraker (paul@frakers.com)">
+  <meta name="Language" content="fr">
+  <meta name="Robots" content="Index, Follow">
+  <meta name="Revisit-After" content="7 Days"><!-- Style -->
+  <meta http-equiv="content-type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
+
 <body>
-<!--#include virtual="/Header" -->
-<div id="mBody"><!--#include virtual="Sidebar" -->
-<div id="mainContent">
-<h1 style="color:#ff0000">Mise &agrave; jour de la Version
-documentation du R&eacute;gulateur</h1>
-<p>S'il vous pla&icirc;t noter que cette documentation a
-&eacute;t&eacute; mise &agrave; jour, reportez-vous aux liens
-ci-dessous:</p>
-<ul>
-<li>Le <a href="ToolsMenuThrottleEntry.shtml">Menu
-R&eacute;gulateur dans JMRI</a></li>
-<li>La <a href="BasicThrottleWindow.shtml">Fen&ecirc;tre
-R&eacute;gulateur elle-m&ecirc;me</a></li>
-<li>Les <a href="ThrottleWindowMenus.shtml">Menus Fen&ecirc;tre
-R&eacute;gulateur</a></li>
-<li>La <a href="ThrottleToolBar.shtml">Fen&ecirc;tre barre d'outils
-R&eacute;gulateur</a></li>
-<li>La <a href="AdvancedThrottleControl.shtml">Fen&ecirc;tre
-Commandes R&eacute;gulateur</a></li>
-<li>La <a href="ThrottlesListWindow.shtml">Fen&ecirc;tres Liste des
-R&eacute;gulateurs</a></li>
-<li>Le <a href="ThrottlesPreferencesPane.shtml">Volet
-pr&eacute;f&eacute;rences R&eacute;gulateurs</a></li>
-</ul>
-<h1>Configuration Avanc&eacute;e du Panneau Fonction</h1>
-Quand une fen&ecirc;tre d'un nouveau r&eacute;gulateur est
-initialis&eacute;e, toutes les &eacute;tiquettes des bouton de
-fonction sont mises en place avec un ensemble par d&eacute;faut
-(F1. .. F2 ... F3 ... etc.) Celles-ci sont &eacute;troitement
-li&eacute;es au r&eacute;gulateur &agrave; main . Mais l'une des
-caract&eacute;ristiques sympa que les r&eacute;gulateurs JMRI
-peuvent offrir en plus de r&eacute;gulateurs &agrave; main, c'est
-la possibilit&eacute; de personnaliser les &eacute;tiquettes des
-boutons . En outre, chaque bouton peut &ecirc;tre cach&eacute;
-&agrave; la vue ou commut&eacute; en un bouton
-"d&eacute;verrouill&eacute;".
-<p>L'image par exemple sur la droite montre la fen&ecirc;tre du
-panneau de fonction par d&eacute;faut . Lorsque le pointeur de la
-souris survole la partie sup&eacute;rieure de la touche, un
-<strong>clic droit</strong> de la souris affiche un menu avec la
-seule option de ce menu, &agrave; ce moment
-"<b>Propri&eacute;t&eacute;s</b>".</p>
-<p style="text-align: center; font-size: xx-small"><img width="206"
-height="250" src="images/jmri022.jpg" title=
-"Function Button Properties"><br>
-Figure 3-1: Propri&eacute;t&eacute;s des boutons de fonction</p>
-<table>
-<tr>
-<td><img width="20" height="20" src="images/spacer.gif"></td>
-<td align="center" valign="top"><br></td>
-<td></td>
-<td></td>
-</tr>
-</table>
-<br>
-<table border="0" width="100%" cellpadding="0" cellspacing="0">
-<tbody>
-<tr>
-<td align="left" valign="top"><br>
-<p style="text-align: center; font-size: xx-small"><img width="180"
-height="181" src="images/jmri023.jpg" title=
-"Edit Function Button"><br>
-Figure 3-2: Modifier les bouton de fonction</p>
-</td>
-<td><img width="20" height="20" src="images/spacer.gif"></td>
-<td align="left" valign="top">
-<p>Quand l'option "<b>Propri&eacute;t&eacute;s</b>" est
-cliqu&eacute;e sur le <b>"bouton Modifier Fonction</b>" la
-fen&ecirc;tre s'ouvre (voir l'image par exemple du
-c&ocirc;t&eacute; gauche).</p>
-<ul>
-<li><strong>Num&eacute;ro de Fonction</strong> &mdash; associe le
-bouton avec un num&eacute;ro de fonction</li>
-<li><strong>Texte</strong> &mdash; Un texte de l'&eacute;tiquette
-du bouton personnalisable</li>
-<li><strong>Taille de la police</strong> &mdash; taille du texte
-affich&eacute; sur le bouton</li>
-<li><strong>verrouillable</strong> &mdash; indique si le bouton
-agit comme un interrupteur &agrave; bascule "marche/arr&ecirc;t",
-ou comme un bouton momentan&eacute;</li>
-<li><strong>visible</strong> &mdash; indique si le bouton est
-visible dans la fen&ecirc;tre du Panneau de Fonction</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<br>
-<p>Par d&eacute;faut, le <strong>num&eacute;ro de fonction</strong>
-est associ&eacute; au num&eacute;ro du bouton sur lequel vous avez
-fait initialement un clic droit. Par exemple, dans les chiffres
-montr&eacute;s ci-dessus, le num&eacute;ro de fonction "1" (F1) est
-en cours d'&eacute;dition. Il est recommand&eacute; que vous
-laissiez ce num&eacute;ro comme il est, cependant, vous
-<u>pouvez</u> le modifier pour un autre num&eacute;ro de fonction
-si vous voulez vraiment. Un exemple de pourquoi vous pourriez
-vouloir faire cela est si vous voulez vraiment un bouton
-"lumi&egrave;res" &mdash; qui est habituellement F0 (situ&eacute;
-comme le dernier bouton/bas par d&eacute;faut) &mdash; pour
-&ecirc;tre situ&eacute; aussi sur le premier bouton dans le Panneau
-de fonction.</p>
-<p class="important"><b>Attention! Si des modifications sont
-effectu&eacute;es dans le champs "Num&eacute;ro de la fonction" ,
-v&eacute;rifier qu'il n'y a pas deux boutons assign&eacute;s au
-m&ecirc;me num&eacute;ro de fonction, &mdash; certaines
-cons&eacute;quences ind&eacute;sirables pourraient en
-r&eacute;sulter</b></p>
-<br>
-<p>Le champ <strong>Texte</strong> sera le champ bienvenu et
-modifi&eacute;. Par d&eacute;faut, il est similaire au
-r&eacute;gulateur &agrave; main: F1 ... F2 F3 ... ... etc. Le
-contenu du champ est assez largement ouvert &agrave; l'imagination,
-cependant, il va arriver un point o&ugrave; la longueur du texte ne
-va <u>pas</u> tenir sur le bouton. La <strong>taille de la
-police</strong> est disponible pour aussi aider &agrave; obtenir le
-texte voulu pour l'adapter au bouton. Un peu
-d'exp&eacute;rimentation sera n&eacute;cessaire ici pour
-d&eacute;terminer ce qui vous semblera bon .</p>
-<p>La case &agrave; cocher<strong>Verrouillable</strong> peut
-&ecirc;tre un peu d&eacute;routante au premier abord. Lorsqu'elle
-est activ&eacute;e &mdash; comme elle l'est par d&eacute;faut
-&mdash; cela signifie simplement que lorsque l'on clique sur le
-bouton , il va se "verrouiller" lui-m&ecirc;me soit dans un
-&eacute;tat "On" ou un &eacute;tat "Off". Autrement dit, le bouton
-agira comme un interrupteur &agrave; bascule &mdash; cliquez une
-fois pour la fonction "On" cliquez &agrave; nouveau pour activer la
-fonction "Off". Le contraire de ce qui se produit lorsque la case
-est <b>d&eacute;sactiv&eacute;e</b>. L'appui sur le bouton agit
-comme un commutateur momentan&eacute; #8212; fournissant une
-commande "On" passag&egrave;re aussi longtemps que le bouton de la
-souris est cliqu&eacute; <i>et tenu</i> sur le bouton. Quand le
-bouton de la souris est rel&acirc;ch&eacute;, une commande "Off"
-est envoy&eacute;e &agrave; la fonction. Un bon exemple est lors de
-la personnalisation d'une configuration pour le d&eacute;codeur
-sonore d'un r&eacute;gulateur . La corne/sifflet est plus
-fonctionnelle lorsque cette option est d&eacute;sactiv&eacute;e.
-Selon la vitesse du syst&egrave;me informatique et du
-syst&egrave;me DCC, un clic court et rapide donnerait un bref coup
-de klaxon ou de coup de sifflet. Maintenez la touche un peu plus
-long donnerait un coup de sifflet plus long.</p>
-<p>La case &agrave; cocher <strong>Visible</strong> permet la
-"suppression" des boutons ind&eacute;sirables . Par d&eacute;faut,
-tous les boutons de fonction sont activ&eacute;s comme "visible" de
-sorte qu'ils peuvent &eacute;videmment &ecirc;tre vus. Mais s'il
-n'y a qu'une seule fonction d'utilis&eacute;e &mdash; pour par
-exemple les "lumi&egrave;res" (F0) &mdash; Alors cette option
-fournit la capacit&eacute; de "cacher" tous les autres boutons.</p>
-<p class="important"><b>Attention! La d&eacute;sactivation de la
-case "Visible" doit &ecirc;tre l'une des derni&egrave;res
-&eacute;tapes effectu&eacute;es lors de ce processus de
-personnalisation. La raison pour cela est qu'une fois que le bouton
-est marqu&eacute; comme "invisible" (en enlevant les case &agrave;
-cocher), il est en effet invisible pour l'utilisateur et ne peut
-donc pas obtenir la fen&ecirc;tre "Editer des Boutons Fonctions"
-avec un clic droit avec la souris. Pour rendre tous les boutons
-visibles s&eacute;lectionnez "Affichage-&gt;Afficher toutes les
-"Boutons de Fonctions" . "</b></p>
-<br>
-<br>
-<table border="0" width="100%" cellpadding="0" cellspacing="0">
-<tbody>
-<tr>
-<td align="left" valign="top">
-<p>L'image pr&eacute;sent&eacute;e sur la droite montre un exemple
-d'un panneau de fonctions personnalis&eacute;es fini. Cet exemple
-particulier a &eacute;t&eacute; fait pour une locomotive &agrave;
-vapeur avec un d&eacute;codeur audio install&eacute;, il y a donc
-des fonctions suppl&eacute;mentaires n&eacute;cessaires pour
-certains sons.</p>
-<p>Ces boutons de fonction ont tous &eacute;t&eacute; mis en place
-en utilisant les proc&eacute;dures &eacute;nonc&eacute;es
-ci-dessus.</p>
-</td>
-<td><img width="20" height="20" src="images/spacer.gif"></td>
-<td align="center" valign="top"><br>
-<p style="text-align: center; font-size: xx-small"><img width="200"
-height="205" src="images/jmri041.jpg" title=
-"Customized Function Panel"><br>
-Figure 3-3: Panneau de fonction personnalis&eacute;e</p>
-</td>
-</tr>
-</tbody>
-</table>
-<br>
-<a name="WinMenuOptions" id="WinMenuOptions"></a>
-<h1>Fen&ecirc;tre R&eacute;gulateur Options de menu</h1>
-<p>Il ya quelques options facultatives qui affectent les
-pr&eacute;f&eacute;rences g&eacute;n&eacute;rales de la
-fen&ecirc;tre globale R&eacute;gulateur JMRI. On les trouve dans un
-couple d'options de menu situ&eacute; juste sous la barre de titre
-principal de la fen&ecirc;tre.</p>
-<br>
-<br>
-<a name="ViewPanels" id="ViewPanels"></a> Voir (panneaux)
-<div style="margin-left: 2em">
-<table border="0" width="100%" cellpadding="0" cellspacing="0">
-<tbody>
-<tr>
-<td align="left" valign="top">
-<p>cliquer sur le bouton "<big>Voir</big>" option menu affiche un
-petit menu de 3 &eacute;l&eacute;ments par d&eacute;faut, chacun
-avec une coche pr&eacute;c&eacute;dant l'article. Cela correspond
-&agrave; 3 sous-fen&ecirc;tres (Panneau d'adresses, Panneau de
-fonction, et Panneau de contr&ocirc;le) qui composent la
-fen&ecirc;tre globale du R&eacute;gulateur.</p>
-</td>
-<td><img width="20" height="20" src="images/spacer.gif"></td>
-<td align="center" valign="top"><br>
-<p style="text-align: center; font-size: xx-small"><img width="308"
-height="148" src="images/jmri018.jpg" title=
-"View Menu Options"><br>
-Figure 3-4: Options de menu View</p>
-</td>
-</tr>
-<tr>
-<td align="left" valign="top">
-<p>Comme indiqu&eacute; dans le <a href=
-"ThrottleChapter1.shtml">Chapitre 1</a>, parce que chaque
-sous-fen&ecirc;tre a des boutons pour minimiser ou fermer, si l'on
-obtient une fermeture de la fen&ecirc;tre par erreur, cette option
-de menu vous permet de restaurer la fen&ecirc;tre.</p>
-pour les d&eacute;codeurs qui ne sont <u>pas</u> associ&eacute;
-&agrave; un moteur (comme une voiture de passagers
-&eacute;clair&eacute;e ou fourgon de queue ou une unit&eacute; de
-Fred). Dans ces cas, une succession d'&eacute;cran r&eacute;el
-critique peut &ecirc;tre sauv&eacute; en &eacute;tant capable de
-d&eacute;sactiver (ou fermer) le Panneau de Commande. Soyez un peu
-cr&eacute;atif avec le redimensionnement de la fen&ecirc;tre, et
-vous pourriez avoir plusieurs de ces fen&ecirc;tres de
-R&eacute;gulateur personnalis&eacute;es dans la m&ecirc;me zone
-comme une fen&ecirc;tre r&eacute;gulateur unique
-compl&egrave;te.</td>
-</tr>
-</tbody>
-</table>
-</div>
-<br>
-<br>
-<br>
-<a name="EditFrameProperties" id="EditFrameProperties"></a>
-<h2>Edition (Propri&eacute;t&eacute;s du Cadre)</h2>
-<div style="margin-left: 2em">
-<table border="0" width="100%" cellpadding="0" cellspacing="0">
-<tbody>
-<tr>
-<td align="left" valign="top">
-<p>Cliquer sur l'option "<big>Modifier</big>" du menu affiche un
-menu unique optionnel sous des Cadres "
-<strong>Propri&eacute;t&eacute;s</strong>". Cette
-fonctionnalit&eacute; vous permet de nommer l'ensemble des
-fen&ecirc;tre du r&eacute;gulateur.</p>
-<p>Par d&eacute;faut, le titre de la fen&ecirc;tre globale
-r&eacute;gulateur est intitul&eacute; "<b>R&eacute;gulateur</b>" et
-est affich&eacute;e dans la bordure de fen&ecirc;tre (voir la
-figure de droite).</p>
-</td>
-<td><img width="20" height="20" src="images/spacer.gif"></td>
-<td align="center" valign="top"><br>
-<p style="text-align: center; font-size: xx-small"><img width="308"
-height="147" src="images/jmri019.jpg" title=
-"Edit Frame Properties"><br>
-Figure 3-5: Modifier les Propri&eacute;t&eacute;s du Cadre<br>
-<br>
-<br>
-<img width="263" height="77" src="images/jmri020.jpg" title=
-"Frame Properties Dialog"><br>
-Figure 3-6:Dialogues Propri&eacute;t&eacute;s du Cadre</p>
-</td>
-</tr>
-<tr>
-<td colspan="3" align="left" valign="top">
-<p>Quand "<b>Propri&eacute;t&eacute;s du Cadre</b>" est
-cliqu&eacute;, une bo&icirc;te unique avec un champ de dialogue
-appara&icirc;tra. Tapez le titre de votre fen&ecirc;tre de
-R&eacute;gulateur dans ce domaine. Par exemple, "Santa Fe # 8259
-EMD SD60-" peut &ecirc;tre suffisamment descriptif pour une seule
-locomotive. Si le R&eacute;gulateur est pour un couplage, vous
-pouvez l'identifier comme quelque chose du genre "couplage # 221".
-Votre seule limitation est le nombre de caract&egrave;res que vous
-pouvez entrer dans la largeur de la fen&ecirc;tre de titre</p>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<br>
-<p>Ce chapitre termine les options avanc&eacute;es du
-r&eacute;gulateur qui sont actuellement disponibles. Le chapitre
-suivant montre comment enregistrer toutes ces r&eacute;gulateurs
-personnalis&eacute;s dans une <b>Configuration
-R&eacute;gulateur</b>", puis comment les charger &agrave; nouveau.
-Vous pouvez utiliser la fl&egrave;che de droite ci-dessous pour
-aller &agrave; ce chapitre maintenant.</p>
-<table border="0" width="100%" cellpadding="0" cellspacing="0">
-<tbody>
-<tr>
-<td align="right">
-<dl>
-<dt><a href="ThrottleChapter2.shtml" title=
-"Return to the previous chapter"><img width="18" height="18" src=
-"images/LeftArrow2.jpg"></a></dt>
-</dl>
-</td>
-<td><img src="images/spacer.gif" width="30" height="10"></td>
-<td align="center"><b><a href="ThrottleTOC.shtml" title=
-"Jump to the Table Of Contents page">TOC</a></b></td>
-<td><img src="images/spacer.gif" width="30" height="10"></td>
-<td align="left"><b><a href="ThrottleChapter4.shtml" title=
-"Advance to the next chapter"><img width="18" height="18" src=
-"images/RightArrow2.jpg"></a></b></td>
-</tr>
-</tbody>
-</table>
-<br>
-<!--#include virtual="/Footer" --></div>
-</div>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1 style="color:#ff0000">Mise &agrave; jour de la Version
+      documentation du R&eacute;gulateur</h1>
+
+      <p>S'il vous pla&icirc;t noter que cette documentation a
+      &eacute;t&eacute; mise &agrave; jour, reportez-vous aux liens
+      ci-dessous:</p>
+
+      <ul>
+        <li>Le <a href="ToolsMenuThrottleEntry.shtml">Menu
+        R&eacute;gulateur dans JMRI</a></li>
+
+        <li>La <a href="BasicThrottleWindow.shtml">Fen&ecirc;tre
+        R&eacute;gulateur elle-m&ecirc;me</a></li>
+
+        <li>Les <a href="ThrottleWindowMenus.shtml">Menus
+        Fen&ecirc;tre R&eacute;gulateur</a></li>
+
+        <li>La <a href="ThrottleToolBar.shtml">Fen&ecirc;tre barre
+        d'outils R&eacute;gulateur</a></li>
+
+        <li>La <a href=
+        "AdvancedThrottleControl.shtml">Fen&ecirc;tre Commandes
+        R&eacute;gulateur</a></li>
+
+        <li>La <a href="ThrottlesListWindow.shtml">Fen&ecirc;tres
+        Liste des R&eacute;gulateurs</a></li>
+
+        <li>Le <a href="ThrottlesPreferencesPane.shtml">Volet
+        pr&eacute;f&eacute;rences R&eacute;gulateurs</a></li>
+      </ul>
+
+      <h1>Configuration Avanc&eacute;e du Panneau
+      Fonction</h1>Quand une fen&ecirc;tre d'un nouveau
+      r&eacute;gulateur est initialis&eacute;e, toutes les
+      &eacute;tiquettes des bouton de fonction sont mises en place
+      avec un ensemble par d&eacute;faut (F1. .. F2 ... F3 ...
+      etc.) Celles-ci sont &eacute;troitement li&eacute;es au
+      r&eacute;gulateur &agrave; main . Mais l'une des
+      caract&eacute;ristiques sympa que les r&eacute;gulateurs JMRI
+      peuvent offrir en plus de r&eacute;gulateurs &agrave; main,
+      c'est la possibilit&eacute; de personnaliser les
+      &eacute;tiquettes des boutons . En outre, chaque bouton peut
+      &ecirc;tre cach&eacute; &agrave; la vue ou commut&eacute; en
+      un bouton "d&eacute;verrouill&eacute;".
+
+      <p>L'image par exemple sur la droite montre la fen&ecirc;tre
+      du panneau de fonction par d&eacute;faut . Lorsque le
+      pointeur de la souris survole la partie sup&eacute;rieure de
+      la touche, un <strong>clic droit</strong> de la souris
+      affiche un menu avec la seule option de ce menu, &agrave; ce
+      moment "<b>Propri&eacute;t&eacute;s</b>".</p>
+
+      <p style="text-align: center; font-size: xx-small">
+      <img width="206" height="250" src="images/jmri022.jpg" title=
+      "Function Button Properties"><br>
+      Figure 3-1: Propri&eacute;t&eacute;s des boutons de
+      fonction</p>
+
+      <table>
+        <tr>
+          <td><img width="20" height="20" src=
+          "images/spacer.gif"></td>
+
+          <td align="center" valign="top"><br></td>
+
+          <td></td>
+
+          <td></td>
+        </tr>
+      </table><br>
+
+      <table border="0" width="100%" cellpadding="0" cellspacing=
+      "0">
+        <tbody>
+          <tr>
+            <td align="left" valign="top">
+              <br>
+
+              <p style="text-align: center; font-size: xx-small">
+              <img width="180" height="181" src=
+              "images/jmri023.jpg" title=
+              "Edit Function Button"><br>
+              Figure 3-2: Modifier les bouton de fonction</p>
+            </td>
+
+            <td><img width="20" height="20" src=
+            "images/spacer.gif"></td>
+
+            <td align="left" valign="top">
+              <p>Quand l'option "<b>Propri&eacute;t&eacute;s</b>"
+              est cliqu&eacute;e sur le <b>"bouton Modifier
+              Fonction</b>" la fen&ecirc;tre s'ouvre (voir l'image
+              par exemple du c&ocirc;t&eacute; gauche).</p>
+
+              <ul>
+                <li><strong>Num&eacute;ro de Fonction</strong> -
+                associe le bouton avec un num&eacute;ro de
+                fonction</li>
+
+                <li><strong>Texte</strong> - Un texte de
+                l'&eacute;tiquette du bouton personnalisable</li>
+
+                <li><strong>Taille de la police</strong> - taille
+                du texte affich&eacute; sur le bouton</li>
+
+                <li><strong>verrouillable</strong> - indique si le
+                bouton agit comme un interrupteur &agrave; bascule
+                "marche/arr&ecirc;t", ou comme un bouton
+                momentan&eacute;</li>
+
+                <li><strong>visible</strong> - indique si le bouton
+                est visible dans la fen&ecirc;tre du Panneau de
+                Fonction</li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table><br>
+
+      <p>Par d&eacute;faut, le <strong>num&eacute;ro de
+      fonction</strong> est associ&eacute; au num&eacute;ro du
+      bouton sur lequel vous avez fait initialement un clic droit.
+      Par exemple, dans les chiffres montr&eacute;s ci-dessus, le
+      num&eacute;ro de fonction "1" (F1) est en cours
+      d'&eacute;dition. Il est recommand&eacute; que vous laissiez
+      ce num&eacute;ro comme il est, cependant, vous <u>pouvez</u>
+      le modifier pour un autre num&eacute;ro de fonction si vous
+      voulez vraiment. Un exemple de pourquoi vous pourriez vouloir
+      faire cela est si vous voulez vraiment un bouton
+      "lumi&egrave;res" - qui est habituellement F0 (situ&eacute;
+      comme le dernier bouton/bas par d&eacute;faut) - pour
+      &ecirc;tre situ&eacute; aussi sur le premier bouton dans le
+      Panneau de fonction.</p>
+
+      <p class="important"><b>Attention! Si des modifications sont
+      effectu&eacute;es dans le champs "Num&eacute;ro de la
+      fonction" , v&eacute;rifier qu'il n'y a pas deux boutons
+      assign&eacute;s au m&ecirc;me num&eacute;ro de fonction, -
+      certaines cons&eacute;quences ind&eacute;sirables pourraient
+      en r&eacute;sulter</b></p><br>
+
+      <p>Le champ <strong>Texte</strong> sera le champ bienvenu et
+      modifi&eacute;. Par d&eacute;faut, il est similaire au
+      r&eacute;gulateur &agrave; main: F1 ... F2 F3 ... ... etc. Le
+      contenu du champ est assez largement ouvert &agrave;
+      l'imagination, cependant, il va arriver un point o&ugrave; la
+      longueur du texte ne va <u>pas</u> tenir sur le bouton. La
+      <strong>taille de la police</strong> est disponible pour
+      aussi aider &agrave; obtenir le texte voulu pour l'adapter au
+      bouton. Un peu d'exp&eacute;rimentation sera
+      n&eacute;cessaire ici pour d&eacute;terminer ce qui vous
+      semblera bon .</p>
+
+      <p>La case &agrave; cocher<strong>Verrouillable</strong> peut
+      &ecirc;tre un peu d&eacute;routante au premier abord.
+      Lorsqu'elle est activ&eacute;e - comme elle l'est par
+      d&eacute;faut - cela signifie simplement que lorsque l'on
+      clique sur le bouton , il va se "verrouiller" lui-m&ecirc;me
+      soit dans un &eacute;tat "On" ou un &eacute;tat "Off".
+      Autrement dit, le bouton agira comme un interrupteur &agrave;
+      bascule - cliquez une fois pour la fonction "On" cliquez
+      &agrave; nouveau pour activer la fonction "Off". Le contraire
+      de ce qui se produit lorsque la case est
+      <b>d&eacute;sactiv&eacute;e</b>. L'appui sur le bouton agit
+      comme un commutateur momentan&eacute; #8212; fournissant une
+      commande "On" passag&egrave;re aussi longtemps que le bouton
+      de la souris est cliqu&eacute; <i>et tenu</i> sur le bouton.
+      Quand le bouton de la souris est rel&acirc;ch&eacute;, une
+      commande "Off" est envoy&eacute;e &agrave; la fonction. Un
+      bon exemple est lors de la personnalisation d'une
+      configuration pour le d&eacute;codeur sonore d'un
+      r&eacute;gulateur . La corne/sifflet est plus fonctionnelle
+      lorsque cette option est d&eacute;sactiv&eacute;e. Selon la
+      vitesse du syst&egrave;me informatique et du syst&egrave;me
+      DCC, un clic court et rapide donnerait un bref coup de klaxon
+      ou de coup de sifflet. Maintenez la touche un peu plus long
+      donnerait un coup de sifflet plus long.</p>
+
+      <p>La case &agrave; cocher <strong>Visible</strong> permet la
+      "suppression" des boutons ind&eacute;sirables . Par
+      d&eacute;faut, tous les boutons de fonction sont
+      activ&eacute;s comme "visible" de sorte qu'ils peuvent
+      &eacute;videmment &ecirc;tre vus. Mais s'il n'y a qu'une
+      seule fonction d'utilis&eacute;e - pour par exemple les
+      "lumi&egrave;res" (F0) - Alors cette option fournit la
+      capacit&eacute; de "cacher" tous les autres boutons.</p>
+
+      <p class="important"><b>Attention! La d&eacute;sactivation de
+      la case "Visible" doit &ecirc;tre l'une des derni&egrave;res
+      &eacute;tapes effectu&eacute;es lors de ce processus de
+      personnalisation. La raison pour cela est qu'une fois que le
+      bouton est marqu&eacute; comme "invisible" (en enlevant les
+      case &agrave; cocher), il est en effet invisible pour
+      l'utilisateur et ne peut donc pas obtenir la fen&ecirc;tre
+      "Editer des Boutons Fonctions" avec un clic droit avec la
+      souris. Pour rendre tous les boutons visibles
+      s&eacute;lectionnez "Affichage-&gt;Afficher toutes les
+      "Boutons de Fonctions" . "</b></p><br>
+      <br>
+
+      <table border="0" width="100%" cellpadding="0" cellspacing=
+      "0">
+        <tbody>
+          <tr>
+            <td align="left" valign="top">
+              <p>L'image pr&eacute;sent&eacute;e sur la droite
+              montre un exemple d'un panneau de fonctions
+              personnalis&eacute;es fini. Cet exemple particulier a
+              &eacute;t&eacute; fait pour une locomotive &agrave;
+              vapeur avec un d&eacute;codeur audio install&eacute;,
+              il y a donc des fonctions suppl&eacute;mentaires
+              n&eacute;cessaires pour certains sons.</p>
+
+              <p>Ces boutons de fonction ont tous &eacute;t&eacute;
+              mis en place en utilisant les proc&eacute;dures
+              &eacute;nonc&eacute;es ci-dessus.</p>
+            </td>
+
+            <td><img width="20" height="20" src=
+            "images/spacer.gif"></td>
+
+            <td align="center" valign="top">
+              <br>
+
+              <p style="text-align: center; font-size: xx-small">
+              <img width="200" height="205" src=
+              "images/jmri041.jpg" title=
+              "Customized Function Panel"><br>
+              Figure 3-3: Panneau de fonction
+              personnalis&eacute;e</p>
+            </td>
+          </tr>
+        </tbody>
+      </table><br>
+      <a name="WinMenuOptions" id="WinMenuOptions"></a>
+
+      <h1>Fen&ecirc;tre R&eacute;gulateur Options de menu</h1>
+
+      <p>Il ya quelques options facultatives qui affectent les
+      pr&eacute;f&eacute;rences g&eacute;n&eacute;rales de la
+      fen&ecirc;tre globale R&eacute;gulateur JMRI. On les trouve
+      dans un couple d'options de menu situ&eacute; juste sous la
+      barre de titre principal de la fen&ecirc;tre.</p><br>
+      <br>
+      <a name="ViewPanels" id="ViewPanels"></a> Voir (panneaux)
+
+      <div style="margin-left: 2em">
+        <table border="0" width="100%" cellpadding="0" cellspacing=
+        "0">
+          <tbody>
+            <tr>
+              <td align="left" valign="top">
+                <p>cliquer sur le bouton "<big>Voir</big>" option
+                menu affiche un petit menu de 3
+                &eacute;l&eacute;ments par d&eacute;faut, chacun
+                avec une coche pr&eacute;c&eacute;dant l'article.
+                Cela correspond &agrave; 3 sous-fen&ecirc;tres
+                (Panneau d'adresses, Panneau de fonction, et
+                Panneau de contr&ocirc;le) qui composent la
+                fen&ecirc;tre globale du R&eacute;gulateur.</p>
+              </td>
+
+              <td><img width="20" height="20" src=
+              "images/spacer.gif"></td>
+
+              <td align="center" valign="top">
+                <br>
+
+                <p style="text-align: center; font-size: xx-small">
+                <img width="308" height="148" src=
+                "images/jmri018.jpg" title="View Menu Options"><br>
+                Figure 3-4: Options de menu View</p>
+              </td>
+            </tr>
+
+            <tr>
+              <td align="left" valign="top">
+                <p>Comme indiqu&eacute; dans le <a href=
+                "ThrottleChapter1.shtml">Chapitre 1</a>, parce que
+                chaque sous-fen&ecirc;tre a des boutons pour
+                minimiser ou fermer, si l'on obtient une fermeture
+                de la fen&ecirc;tre par erreur, cette option de
+                menu vous permet de restaurer la
+                fen&ecirc;tre.</p>pour les d&eacute;codeurs qui ne
+                sont <u>pas</u> associ&eacute; &agrave; un moteur
+                (comme une voiture de passagers
+                &eacute;clair&eacute;e ou fourgon de queue ou une
+                unit&eacute; de Fred). Dans ces cas, une succession
+                d'&eacute;cran r&eacute;el critique peut &ecirc;tre
+                sauv&eacute; en &eacute;tant capable de
+                d&eacute;sactiver (ou fermer) le Panneau de
+                Commande. Soyez un peu cr&eacute;atif avec le
+                redimensionnement de la fen&ecirc;tre, et vous
+                pourriez avoir plusieurs de ces fen&ecirc;tres de
+                R&eacute;gulateur personnalis&eacute;es dans la
+                m&ecirc;me zone comme une fen&ecirc;tre
+                r&eacute;gulateur unique compl&egrave;te.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div><br>
+      <br>
+      <br>
+      <a name="EditFrameProperties" id="EditFrameProperties"></a>
+
+      <h2>Edition (Propri&eacute;t&eacute;s du Cadre)</h2>
+
+      <div style="margin-left: 2em">
+        <table border="0" width="100%" cellpadding="0" cellspacing=
+        "0">
+          <tbody>
+            <tr>
+              <td align="left" valign="top">
+                <p>Cliquer sur l'option "<big>Modifier</big>" du
+                menu affiche un menu unique optionnel sous des
+                Cadres "
+                <strong>Propri&eacute;t&eacute;s</strong>". Cette
+                fonctionnalit&eacute; vous permet de nommer
+                l'ensemble des fen&ecirc;tre du
+                r&eacute;gulateur.</p>
+
+                <p>Par d&eacute;faut, le titre de la fen&ecirc;tre
+                globale r&eacute;gulateur est intitul&eacute;
+                "<b>R&eacute;gulateur</b>" et est affich&eacute;e
+                dans la bordure de fen&ecirc;tre (voir la figure de
+                droite).</p>
+              </td>
+
+              <td><img width="20" height="20" src=
+              "images/spacer.gif"></td>
+
+              <td align="center" valign="top">
+                <br>
+
+                <p style="text-align: center; font-size: xx-small">
+                <img width="308" height="147" src=
+                "images/jmri019.jpg" title=
+                "Edit Frame Properties"><br>
+                Figure 3-5: Modifier les Propri&eacute;t&eacute;s
+                du Cadre<br>
+                <br>
+                <br>
+                <img width="263" height="77" src=
+                "images/jmri020.jpg" title=
+                "Frame Properties Dialog"><br>
+                Figure 3-6:Dialogues Propri&eacute;t&eacute;s du
+                Cadre</p>
+              </td>
+            </tr>
+
+            <tr>
+              <td colspan="3" align="left" valign="top">
+                <p>Quand "<b>Propri&eacute;t&eacute;s du Cadre</b>"
+                est cliqu&eacute;, une bo&icirc;te unique avec un
+                champ de dialogue appara&icirc;tra. Tapez le titre
+                de votre fen&ecirc;tre de R&eacute;gulateur dans ce
+                domaine. Par exemple, "Santa Fe # 8259 EMD SD60-"
+                peut &ecirc;tre suffisamment descriptif pour une
+                seule locomotive. Si le R&eacute;gulateur est pour
+                un couplage, vous pouvez l'identifier comme quelque
+                chose du genre "couplage # 221". Votre seule
+                limitation est le nombre de caract&egrave;res que
+                vous pouvez entrer dans la largeur de la
+                fen&ecirc;tre de titre</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div><br>
+
+      <p>Ce chapitre termine les options avanc&eacute;es du
+      r&eacute;gulateur qui sont actuellement disponibles. Le
+      chapitre suivant montre comment enregistrer toutes ces
+      r&eacute;gulateurs personnalis&eacute;s dans une
+      <b>Configuration R&eacute;gulateur</b>", puis comment les
+      charger &agrave; nouveau. Vous pouvez utiliser la
+      fl&egrave;che de droite ci-dessous pour aller &agrave; ce
+      chapitre maintenant.</p>
+
+      <table border="0" width="100%" cellpadding="0" cellspacing=
+      "0">
+        <tbody>
+          <tr>
+            <td align="right">
+              <dl>
+                <dt><a href="ThrottleChapter2.shtml" title=
+                "Return to the previous chapter"><img width="18"
+                height="18" src="images/LeftArrow2.jpg"></a></dt>
+              </dl>
+            </td>
+
+            <td><img src="images/spacer.gif" width="30" height=
+            "10"></td>
+
+            <td align="center"><b><a href="ThrottleTOC.shtml"
+            title="Jump to the Table Of Contents page">TOC</a></b></td>
+
+            <td><img src="images/spacer.gif" width="30" height=
+            "10"></td>
+
+            <td align="left"><b><a href="ThrottleChapter4.shtml"
+            title="Advance to the next chapter"><img width="18"
+            height="18" src="images/RightArrow2.jpg"></a></b></td>
+          </tr>
+        </tbody>
+      </table><br>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

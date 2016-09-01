@@ -1,96 +1,129 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- UpDlated  by Blorec Herv&#233; le 2013-09-10-->
+
 <html lang="fr">
 <head>
-<meta name="generator" content=
-"HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-<title>JMRI Hardware Guide: EasyDCC</title>
-<meta content="Bob Jacobsen" name="Author">
-<meta name="keywords" content=
-"EasyDCC CVP Products java model railroad JMRI install windows">
-<!-- Style -->
-<meta http-equiv="Content-Type" content=
-"text/html; charset=us-ascii">
-<link rel="stylesheet" type="text/css" href="/css/default.css"
-media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media=
-"print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI Hardware Guide: EasyDCC</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content=
+  "EasyDCC CVP Products java model railroad JMRI install windows">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
+
 <body>
-<!--#include virtual="/Header" -->
-<div class="nomenu" id="mBody">
-<div id="mainContent">
-<h1>Guide Mat&eacute;riel JMRI: EasyDCC</h1>
-<h3>Mat&eacute;riel Support&eacute;</h3>
-<ul>
-<li>EDCSK - EasyDCC Kit Centrale de Commande</li>
-<li>EDCSA - EasyDCC Centrale de Commande assembl&eacute;e</li>
-<li>EDCSB - EasyDCC "Circuit seul" de la Centrale de Commande</li>
-</ul>
-<h3>Limites</h3>
-<p>Certains anciens syst&egrave;mes EasyDCC peuvent avoir besoin
-d'une mise &agrave; jour de leur programme. Ceci est fait en
-rempla&ccedil;ant la "PROM" dans la centrale de commande avec une
-version plus r&eacute;cente. La version 207 est connue pour bien
-fonctionner, et la version 022 est connue pour avoir des
-probl&egrave;mes de communication avec l' ordinateur. La plupart
-des stations de commande r&eacute;centes sont OK.</p>
-<h3>D&eacute;marrage</h3>
-<ol>
-<li>Pour connecter votre ordinateur &agrave; un syst&egrave;me
-EasyDCC, vous devez connecter la centrale de commande au port
-s&eacute;rie de l'ordinateur en utilisant un c&acirc;ble
-sp&eacute;cial. Malheureusement, ce n'est pas un
-&eacute;l&eacute;ment que les magasins ont
-g&eacute;n&eacute;ralement en stock, due au connecteur RJ11
-n&eacute;cessaire &agrave; l'extr&eacute;mit&eacute; du c&acirc;ble
-de la centrale de commande. Vous aurez probablement &agrave; faire
-ce c&acirc;ble vous-m&ecirc;me ou un autre utilisateur CVP le faire
-&agrave; votre place.
-<p>Pour plus d'informations sur la fa&ccedil;on dont le c&acirc;ble
-est connect&eacute;, voir page 134 du manuel de la centrale de
-commande EasyDCC V4 ou de la page 143 du manuel de V6 (une <a href=
-"http://www.cvpusa.com/doc_center/6_97_easydcc_manual_web_sec.pdf">version
-dans un fichier PDF</a> disponible sur le web)</p>
-<p>Un moyen facile de le faire est d'acheter un c&acirc;ble
-s&eacute;rie &agrave; 9 broches et d'un c&acirc;ble de
-t&eacute;l&eacute;phone, puis les couper et les &eacute;pissurrer
-ensemble.</p>
-</li>
-<li>Ensuite aller dans le panneau des pr&eacute;f&eacute;rences
-d'un programme bas&eacute; sur JMRI. Celui ci s'ouvre
-automatiquement la premi&egrave;re fois qu'un programme est
-ex&eacute;cut&eacute;, ou vous pouvez le s&eacute;lectionner dans
-le menu "Modification".</li>
-<li>S&eacute;lectionnez "EasyDCC" dans la bo&icirc;te de
-s&eacute;lection en haut. Vous pouvez ensuite s&eacute;lectionnez
-le port s&eacute;rie appropri&eacute; dans la seconde bo&icirc;te
-de s&eacute;lection.</li>
-<li>La vitesse de transmission s&eacute;lectionn&eacute;e sera
-fix&eacute;e &agrave; 9600 bauds.</li>
-<li>La s&eacute;rie de boutons radio "style graphique" vous permet
-de s&eacute;lectionner la fa&ccedil;on dont se fait l'affichage.
-"Metal" est l'apparence native de Java disponible sur tous les
-types. D'autres choix sont possiblev en fonction de votre type d'
-ordinateur . "Motif", "Windows", "MacOS"et "MacOS Adaptive"
-apparence native sous Linux, Windows, MacOS "Classic" et Mac OS X
-respectivement.</li>
-<li>Dans la bo&icirc;te de s&eacute;lection en bas, vous pouvez
-choisir la valeur par d&eacute;faut du format programmateur . Vous
-pouvez le remplacer chaque fois que vous ouvrez le programmateur,
-il s'agit donc ici seulement d'une commodit&eacute;.</li>
-<li>Cliquez sur "Enregistrer". Il vous sera demand&eacute; si c'est
-OK pour quitter le programme, cliquez sur "Oui".</li>
-<li>Red&eacute;marrez le programme. Vous devez &ecirc;tre
-op&eacute;rationnel.</li>
-</ol>
-<h3>D&eacute;bogage</h3>
-<p><a href="http://www.cvpusa.com/easydcc/default.htm">Manuels CVP
-EasyDCC</a></p>
-<!--#include virtual="/Footer" --></div>
-</div>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Guide Mat&eacute;riel JMRI: EasyDCC</h1>
+
+      <h3>Mat&eacute;riel Support&eacute;</h3>
+
+      <ul>
+        <li>EDCSK - EasyDCC Kit Centrale de Commande</li>
+
+        <li>EDCSA - EasyDCC Centrale de Commande
+        assembl&eacute;e</li>
+
+        <li>EDCSB - EasyDCC "Circuit seul" de la Centrale de
+        Commande</li>
+      </ul>
+
+      <h3>Limites</h3>
+
+      <p>Certains anciens syst&egrave;mes EasyDCC peuvent avoir
+      besoin d'une mise &agrave; jour de leur programme. Ceci est
+      fait en rempla&ccedil;ant la "PROM" dans la centrale de
+      commande avec une version plus r&eacute;cente. La version 207
+      est connue pour bien fonctionner, et la version 022 est
+      connue pour avoir des probl&egrave;mes de communication avec
+      l' ordinateur. La plupart des stations de commande
+      r&eacute;centes sont OK.</p>
+
+      <h3>D&eacute;marrage</h3>
+
+      <ol>
+        <li>Pour connecter votre ordinateur &agrave; un
+        syst&egrave;me EasyDCC, vous devez connecter la centrale de
+        commande au port s&eacute;rie de l'ordinateur en utilisant
+        un c&acirc;ble sp&eacute;cial. Malheureusement, ce n'est
+        pas un &eacute;l&eacute;ment que les magasins ont
+        g&eacute;n&eacute;ralement en stock, due au connecteur RJ11
+        n&eacute;cessaire &agrave; l'extr&eacute;mit&eacute; du
+        c&acirc;ble de la centrale de commande. Vous aurez
+        probablement &agrave; faire ce c&acirc;ble vous-m&ecirc;me
+        ou un autre utilisateur CVP le faire &agrave; votre place.
+
+          <p>Pour plus d'informations sur la fa&ccedil;on dont le
+          c&acirc;ble est connect&eacute;, voir page 134 du manuel
+          de la centrale de commande EasyDCC V4 ou de la page 143
+          du manuel de V6 (une <a href=
+          "http://www.cvpusa.com/doc_center/6_97_easydcc_manual_web_sec.pdf">
+          version dans un fichier PDF</a> disponible sur le
+          web)</p>
+
+          <p>Un moyen facile de le faire est d'acheter un
+          c&acirc;ble s&eacute;rie &agrave; 9 broches et d'un
+          c&acirc;ble de t&eacute;l&eacute;phone, puis les couper
+          et les &eacute;pissurrer ensemble.</p>
+        </li>
+
+        <li>Ensuite aller dans le panneau des
+        pr&eacute;f&eacute;rences d'un programme bas&eacute; sur
+        JMRI. Celui ci s'ouvre automatiquement la premi&egrave;re
+        fois qu'un programme est ex&eacute;cut&eacute;, ou vous
+        pouvez le s&eacute;lectionner dans le menu
+        "Modification".</li>
+
+        <li>S&eacute;lectionnez "EasyDCC" dans la bo&icirc;te de
+        s&eacute;lection en haut. Vous pouvez ensuite
+        s&eacute;lectionnez le port s&eacute;rie appropri&eacute;
+        dans la seconde bo&icirc;te de s&eacute;lection.</li>
+
+        <li>La vitesse de transmission s&eacute;lectionn&eacute;e
+        sera fix&eacute;e &agrave; 9600 bauds.</li>
+
+        <li>La s&eacute;rie de boutons radio "style graphique" vous
+        permet de s&eacute;lectionner la fa&ccedil;on dont se fait
+        l'affichage. "Metal" est l'apparence native de Java
+        disponible sur tous les types. D'autres choix sont
+        possiblev en fonction de votre type d' ordinateur .
+        "Motif", "Windows", "MacOS"et "MacOS Adaptive" apparence
+        native sous Linux, Windows, MacOS "Classic" et Mac OS X
+        respectivement.</li>
+
+        <li>Dans la bo&icirc;te de s&eacute;lection en bas, vous
+        pouvez choisir la valeur par d&eacute;faut du format
+        programmateur . Vous pouvez le remplacer chaque fois que
+        vous ouvrez le programmateur, il s'agit donc ici seulement
+        d'une commodit&eacute;.</li>
+
+        <li>Cliquez sur "Enregistrer". Il vous sera demand&eacute;
+        si c'est OK pour quitter le programme, cliquez sur
+        "Oui".</li>
+
+        <li>Red&eacute;marrez le programme. Vous devez &ecirc;tre
+        op&eacute;rationnel.</li>
+      </ol>
+
+      <h3>D&eacute;bogage</h3>
+
+      <p><a href=
+      "http://www.cvpusa.com/easydcc/default.htm">Manuels CVP
+      EasyDCC</a></p><!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

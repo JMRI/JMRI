@@ -1,43 +1,59 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-<meta name="generator" content=
-"HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
-<title>JMRI: Simple Signal Logic</title>
-<!-- Style -->
-<meta http-equiv="Content-Type" content=
-"text/html; charset=us-ascii">
-<link rel="stylesheet" type="text/css" href="/css/default.css"
-media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media=
-"print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- $Id$ -->
+
+  <title>JMRI: Simple Signal Logic</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
+
 <body>
-<!--#include virtual="/Header" -->
-<div id="mBody"><!--#include virtual="Sidebar" -->
-<div id="mainContent">
-<h1>JMRI: Simple Signal Logic</h1>
-<p class="subtitle">Background information of the logic used to
-control simple signals</p>
-<div class="para">
-<p>This page describes the logic used by the JMRI Simple Signal
-panel to control signals.</p>
-<p>We display the actual code, so there's no ambiguity about what
-it's doing. This is from JMRI test release 2.9.1.</p>
-</div>
-<div class="section"><a name="single" id="single"></a>
-<h2><a name="single" id="single">On Single Block</a></h2>
-<div class="para"><a name="single" id="single"></a>
-<p>This signal protects one end of a straight through block, with
-no signaled turnouts.</p>
-</div>
-<div class="para">
-<pre class="code">
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Simple Signal Logic</h1>
+
+      <p class="subtitle">Background information of the logic used
+      to control simple signals</p>
+
+      <div class="para">
+        <p>This page describes the logic used by the JMRI Simple
+        Signal panel to control signals.</p>
+
+        <p>We display the actual code, so there's no ambiguity
+        about what it's doing. This is from JMRI test release
+        2.9.1.</p>
+      </div>
+
+      <div class="section">
+        <a name="single" id="single"></a>
+
+        <h2><a name="single" id="single">On Single Block</a></h2>
+
+        <div class="para">
+          <a name="single" id="single"></a>
+
+          <p>This signal protects one end of a straight through
+          block, with no signaled turnouts.</p>
+        </div>
+
+        <div class="para">
+          <pre class="code">
     void doSingleBlock() {
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
@@ -78,19 +94,28 @@ no signaled turnouts.</p>
             if (log.isDebugEnabled()) log.debug("Change appearance of "+name+" to "+appearance);
         }
     }
-</pre></div>
-</div>
-<div class="section"><a name="trailmain" id="trailmain"></a>
-<h2><a name="trailmain" id="trailmain">On Main Leg of
-Trailing-Point Turnout</a></h2>
-<div class="para"><a name="trailmain" id="trailmain"></a>
-<p>This signal is along the main route through a turnout, which is
-defined as the direction taken by trains when the turnout is
-closed. It's protecting the frog of the turnout so that trains will
-stop before running through a turnout set against them.</p>
-</div>
-<div class="para">
-<pre class="code">
+</pre>
+        </div>
+      </div>
+
+      <div class="section">
+        <a name="trailmain" id="trailmain"></a>
+
+        <h2><a name="trailmain" id="trailmain">On Main Leg of
+        Trailing-Point Turnout</a></h2>
+
+        <div class="para">
+          <a name="trailmain" id="trailmain"></a>
+
+          <p>This signal is along the main route through a turnout,
+          which is defined as the direction taken by trains when
+          the turnout is closed. It's protecting the frog of the
+          turnout so that trains will stop before running through a
+          turnout set against them.</p>
+        </div>
+
+        <div class="para">
+          <pre class="code">
     void doTrailingMain() {
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
@@ -136,20 +161,29 @@ stop before running through a turnout set against them.</p>
             if (log.isDebugEnabled()) log.debug("Change appearance of "+name+" to "+appearance);
         }
     }
-</pre></div>
-</div>
-<div class="section"><a name="traildiv" id="traildiv"></a>
-<h2><a name="traildiv" id="traildiv">On Diverging Leg of
-Trailing-Point Turnout</a></h2>
-<div class="para"><a name="traildiv" id="traildiv"></a>
-<p>This signal is along the diverging route through a turnout,
-which is defined as the direction taken by trains when the turnout
-is set to "thrown". It's protecting the frog of the turnout so that
-trains will stop before running through a turnout set against
-them.</p>
-</div>
-<div class="para">
-<pre class="code">
+</pre>
+        </div>
+      </div>
+
+      <div class="section">
+        <a name="traildiv" id="traildiv"></a>
+
+        <h2><a name="traildiv" id="traildiv">On Diverging Leg of
+        Trailing-Point Turnout</a></h2>
+
+        <div class="para">
+          <a name="traildiv" id="traildiv"></a>
+
+          <p>This signal is along the diverging route through a
+          turnout, which is defined as the direction taken by
+          trains when the turnout is set to "thrown". It's
+          protecting the frog of the turnout so that trains will
+          stop before running through a turnout set against
+          them.</p>
+        </div>
+
+        <div class="para">
+          <pre class="code">
     void doTrailingDiverging() {
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
@@ -195,18 +229,27 @@ them.</p>
             if (log.isDebugEnabled()) log.debug("Change appearance of "+name+" to "+appearance);
         }
     }
-</pre></div>
-</div>
-<div class="section"><a name="face" id="face"></a>
-<h2><a name="face" id="face">On Facing-Point Turnout</a></h2>
-<div class="para"><a name="face" id="face"></a>
-<p>This signal is protecting the points-end of a turnout. Depending
-on whether the turnout is thrown or closed, the train will take two
-different routes, and the signal will protect different next
-blocks.</p>
-</div>
-<div class="para">
-<pre class="code">
+</pre>
+        </div>
+      </div>
+
+      <div class="section">
+        <a name="face" id="face"></a>
+
+        <h2><a name="face" id="face">On Facing-Point
+        Turnout</a></h2>
+
+        <div class="para">
+          <a name="face" id="face"></a>
+
+          <p>This signal is protecting the points-end of a turnout.
+          Depending on whether the turnout is thrown or closed, the
+          train will take two different routes, and the signal will
+          protect different next blocks.</p>
+        </div>
+
+        <div class="para">
+          <pre class="code">
     void doFacing() {
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
@@ -272,9 +315,10 @@ blocks.</p>
         if (appearance != oldAppearance)
             ((SignalHead)outputs[0]).setAppearance(appearance);
     }
-</pre></div>
-</div>
-<!--#include virtual="/Footer" --></div>
-</div>
+</pre>
+        </div>
+      </div><!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

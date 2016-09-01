@@ -1,59 +1,74 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="fr">
 <head>
-<meta name="generator" content=
-"HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-<!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233; 2013-09-20 --><!-- Style -->
-<meta http-equiv="Content-Type" content=
-"text/html; charset=us-ascii">
-<link rel="stylesheet" type="text/css" href="/css/default.css"
-media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media=
-"print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style -->
-<title></title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- $Id$ -->
+  <!-- UpDated by Blorec Herv&#233; 2013-09-20 --><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+
+  <title></title>
 </head>
+
 <body>
-<!--#include virtual="/Header" -->
-<div class="nomenu" id="mBody">
-<div id="mainContent">
-<h2>L'utilitaire de configuration JMRI LI101F</h2>
-<img src="images/LI101ConfigurationUtility.jpg" alt=
-"LI101 Configuration Tool">
-<p>L'outil de configuration LI101 est utilis&eacute; pour
-configurer l'LI101F.</p>
-<p>En partant du haut:</p>
-<p>La premi&egrave;re liste d&eacute;roulante permet de
-s&eacute;lectionner l'adresse de l'appareil &agrave; utiliser sur
-le XPressNet. Cette adresse doit &ecirc;tre diff&eacute;rente de
-celle de tous les autres p&eacute;riph&eacute;riques sur votre
-XpressNet.</p>
-<p>La seconde liste d&eacute;roulante affiche les boites fixant la
-vitesse du port LI101F. Cette vitesse devrait correspondre &agrave;
-ce que vous avez utilis&eacute; pour le "Port Speed"
-param&egrave;tre dans le volet pr&eacute;f&eacute;rences</p>
-<p>A partir du c&ocirc;t&eacute; gauche de l'&eacute;cran, le
-bouton "Read from LI101" (Lire depuis LI101), va lire les
-param&egrave;tres actuels de l'LI101F.</p>
-<p>Le bouton "Write to LI101"(&eacute;crire dans LI101),
-&eacute;crira les param&egrave;tres sur l'&eacute;cran de l'LI101F.
-Si vous avez chang&eacute; le r&eacute;glage de la vitesse LI101,
-vous aurez &eacute;galement besoin de changer le r&eacute;glage de
-la vitesse dans vos pr&eacute;f&eacute;rences.</p>
-<p>Le bouton "Reset to Factory Defaults" (Remettre aux
-param&egrave;tres par d&eacute;faut) r&eacute;initialise
-<b>l'&eacute;cran</b> d'usine par d&eacute;faut. Ceci ne veut pas
-envoyer une instruction de r&eacute;initialisation &agrave;
-l'LI101F &agrave; ce moment.</p>
-<p>Le dernier bouton, &eacute;tiquet&eacute; "Fermer" va fermer
-l'&eacute;cran, sans envoyer aucune information &agrave; la
-LI101F.</p>
-<hr>
-Paul Bender<br>
-paul.bender@acm.org <!--#include virtual="/Footer" --></div>
-</div>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h2>L'utilitaire de configuration JMRI LI101F</h2><img src=
+      "images/LI101ConfigurationUtility.jpg" alt=
+      "LI101 Configuration Tool">
+
+      <p>L'outil de configuration LI101 est utilis&eacute; pour
+      configurer l'LI101F.</p>
+
+      <p>En partant du haut:</p>
+
+      <p>La premi&egrave;re liste d&eacute;roulante permet de
+      s&eacute;lectionner l'adresse de l'appareil &agrave; utiliser
+      sur le XPressNet. Cette adresse doit &ecirc;tre
+      diff&eacute;rente de celle de tous les autres
+      p&eacute;riph&eacute;riques sur votre XpressNet.</p>
+
+      <p>La seconde liste d&eacute;roulante affiche les boites
+      fixant la vitesse du port LI101F. Cette vitesse devrait
+      correspondre &agrave; ce que vous avez utilis&eacute; pour le
+      "Port Speed" param&egrave;tre dans le volet
+      pr&eacute;f&eacute;rences</p>
+
+      <p>A partir du c&ocirc;t&eacute; gauche de l'&eacute;cran, le
+      bouton "Read from LI101" (Lire depuis LI101), va lire les
+      param&egrave;tres actuels de l'LI101F.</p>
+
+      <p>Le bouton "Write to LI101"(&eacute;crire dans LI101),
+      &eacute;crira les param&egrave;tres sur l'&eacute;cran de
+      l'LI101F. Si vous avez chang&eacute; le r&eacute;glage de la
+      vitesse LI101, vous aurez &eacute;galement besoin de changer
+      le r&eacute;glage de la vitesse dans vos
+      pr&eacute;f&eacute;rences.</p>
+
+      <p>Le bouton "Reset to Factory Defaults" (Remettre aux
+      param&egrave;tres par d&eacute;faut) r&eacute;initialise
+      <b>l'&eacute;cran</b> d'usine par d&eacute;faut. Ceci ne veut
+      pas envoyer une instruction de r&eacute;initialisation
+      &agrave; l'LI101F &agrave; ce moment.</p>
+
+      <p>Le dernier bouton, &eacute;tiquet&eacute; "Fermer" va
+      fermer l'&eacute;cran, sans envoyer aucune information
+      &agrave; la LI101F.</p>
+      <hr>
+      Paul Bender<br>
+      paul.bender@acm.org <!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

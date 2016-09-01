@@ -1,217 +1,265 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="fr">
 <head>
-<meta name="generator" content=
-"HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
-<!-- UpDated  by Blorec Herv&#233; 2013-09-29-->
-<title>JMRI: Aspect Signaling</title>
-<!-- Style -->
-<meta http-equiv="Content-Type" content=
-"text/html; charset=us-ascii">
-<link rel="stylesheet" type="text/css" href="/css/default.css"
-media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media=
-"print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- $Id$ -->
+  <!-- UpDated  by Blorec Herv&#233; 2013-09-29-->
+
+  <title>JMRI: Aspect Signaling</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
+
 <body>
-<!--#include virtual="/Header" -->
-<div id="mBody"><!--#include virtual="Sidebar" -->
-<div id="mainContent">
-<h1>JMRI: Aspect de la Signalisation</h1>
-<p class="subtitle">La Signalisation contr&ocirc;le de
-mani&egrave;re prototypique</p>
-<a href="images/Rule282.png"><img height="241" width="159" src=
-"images/Rule282.png" align="right"></a> Le Syst&egrave;mes de
-signalisation Prototypical pr&eacute;sente des "aspects" au
-conducteur pour lui dire comment faire fonctionner son train.
-L'aspect "Stop" , par exemple, est assez simple: arr&ecirc;ter le
-train. L'aspect "Approche au ralenti" indique quelque chose de plus
-compliqu&eacute;: "Proc&eacute;der &agrave; l'approche du signal
-suivant &agrave; vitesse moyenne". Chaque aspect est associ&eacute;
-&agrave; un "indication", qui est habituellement codifi&eacute;
-dans le livre de r&egrave;gle du chemin de fer.
-<p>Diff&eacute;rents signaux peuvent montrent un aspect en
-utilisant diff&eacute;rentes combinaisons de lumi&egrave;res, les
-positions du s&eacute;maphore, et/ou des pancartes; on les appelle
-"apparences". Par exemple, l'aspect "stop" sera une lumi&egrave;re
-rouge simple sur un m&acirc;t de signal avec une lampe, rouge
-au-dessus des lampes rouges pour un m&acirc;t de signal avec deux
-lampes, etc.</p>
-<h2>JMRI Support pour l'Aspect de Signalisation</h2>
-Le support original JMRI pour les signaux a &eacute;t&eacute; par
-l'interm&eacute;diaire "t&ecirc;tes de signals", qui pourrait
-&ecirc;tre r&eacute;gl&eacute; &agrave; des apparences (couleurs)
-particuli&egrave;res.
-<p>En commen&ccedil;ant par JMRI 2.9.1 (d&eacute;but 2010), JMRI
-contient &eacute;galement " <a href="SignalMasts.shtml">m&acirc;t
-signal</a> "qui sont des objets qui repr&eacute;sentent un signal
-entier, pas seulement une t&ecirc;te individuelle. Un m&acirc;t de
-signal peut fonctionner avec des t&ecirc;tes multiples, telles que
-requises pour faire une signalisation prototypique compl&egrave;te
-bas&eacute;e sur des aspects. Lorsque son "aspect" est
-r&eacute;gl&eacute; par exemple "Approche au ralenti", il
-g&egrave;re les op&eacute;rations de mise en page
-n&eacute;cessaires pour faire que les signaux sur le r&eacute;seau
-apparaissent correctement.</p>
-<p><a href=
-"../../../package/jmri/jmrit/beantable/SignalMastTable.png"><img src="../../../package/JMRI/jmrit/beantable/SignalMastTable.png"
-height="86" width="338" align="right"></a> Les M&acirc;ts de
-signaux sont configur&eacute;s via la <a href=
-"../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">table
-M&acirc;t de signal</a> Vous pouvez en ajouter de nouveaux avec le
-bouton "Ajouter ..." sur la table, qui vous emm&egrave;ne &agrave;
-la <a href=
-"../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">fen&ecirc;tre
-"Ajouter m&acirc;t de signal"</a> . Pour ajouter un m&acirc;t de
-signal, vous sp&eacute;cifirez quel genre de syst&egrave;me de
-signalisation il utilisera ( <a href="#systems">voir ci-dessous</a>
-), le type de signal sp&eacute;cifique tel que "feux doubles" ou
-"nain &agrave; double t&ecirc;te" et quelle t&ecirc;te signal il va
-conduire.</p>
-<p>De la table, vous pouvez d&eacute;finir des m&acirc;ts de
-signaux individuels pour tous les aspects qu'ils sont capables
-d'afficher en cliquant dans "l'aspect" colonne.</p>
-<p>Les M&acirc;ts de signaux peuvent &ecirc;tre test&eacute;s de
-deux mani&egrave;res (dans les conditions) et exploitation(Action)
-via Logix. Lorsque vous modifiez une Condition Logix ou une action,
-vous devez taper le nom du m&acirc;t des signaux et tapez
-Entr&eacute;e/retour afin que le programme puissent rechercher les
-aspects possibles de ce signal de m&acirc;t en particulier.</p>
-<p>Vous pouvez &eacute;galement ajouter une ic&ocirc;ne de
-m&acirc;t de signal dans l'&eacute;diteur de Panneau de la
-mani&egrave;re habituelle . L'ic&ocirc;ne affichera les images de
-la d&eacute;finition de l'apparence pour ce m&acirc;t de signal
-particulier.</p>
-<h2>Logique m&acirc;t de Signal</h2>
-Depuis JMRI 2.11.7 (mi 2011), JMRI contient un outil " <a href=
-"SignalMastLogic.shtml">Logique m&acirc;t de signal</a> ", qui
-permet &agrave; la logique de signalisation d'&ecirc;tre construite
-entre les m&acirc;ts de signaux sur le r&eacute;seau. La logique
-m&acirc;t de signal va utiliser les &eacute;tats de cantons, des
-aiguillages, des capteurs et autres M&acirc;ts de Signal pour
-d&eacute;terminer quelle apparence un m&acirc;t de signalisation
-doit afficher. Si le trac&Atilde;&copy; a
-&Atilde;&copy;t&Atilde;&copy; &Atilde;&copy;tabli sur
-l'&Atilde;&copy;diteur de r&Atilde;&copy;seau et les SignalMasts
-ont &Atilde;&copy;t&Atilde;&copy; plac&Atilde;&copy;s sur le
-panneau &Atilde;&nbsp; l'aide des diff&Atilde;&copy;rents outils,
-il est possible pour tous la logique de M&acirc;t de Signalisation
-d'&ecirc;tre construite de mani&Atilde;&uml;re dynamique, avec peu
-d'intervention de l'utilisateur.
-<h2>Syst&egrave;mes de Signalisation Disponibles</h2>
-Les utilisateurs JMRI ont fourni un certain nombre de
-syst&egrave;mes de signalisation pr&eacute;-d&eacute;finis:
-<dl>
-<dt><a href=
-"../../../../../xml/signals/basic/index.shtml">base</a></dt>
-<dd>un ensemble non prototypiques des aspects et des apparences que
-la plupart des mod&eacute;listes comprendront facilement.</dd>
-<dt><a href=
-"../../../../../xml/signals/AAR-1946/index.shtml">AAR-1946</a></dt>
-<dd>livre r&egrave;gle de 1946 Association am&eacute;ricaine des
-chemins de fer</dd>
-<dt><a href=
-"../../../../../xml/signals/BR-2003/index.shtml">BR-2003</a></dt>
-<dd>livre de r&egrave;gles British Rail 2003</dd>
-<dt><a href=
-"../../../../../xml/signals/CSX-1998/index.shtml">CSX-1998</a></dt>
-<dd>CSX 1998 rule book</dd>
-<dt><a href="../../../../../xml/signals/DB-HV-1969/index.shtml">DB
-HV 1969</a></dt>
-<dd>1969 Deutsche Bundesbahn "Einheitsbauform" Home Signal/Distant
-signal (Hauptsignal/Vorsignal) r&eacute;vision du
-syst&egrave;me</dd>
-<dt><a href=
-"../../../../../xml/signals/NYCS-1937/index.shtml">NYCS-1937</a></dt>
-<dd>New York Central System 1937 rule book</dd>
-<dt><a href=
-"../../../../../xml/signals/SLSF-1973/index.shtml">SLSF-1973</a></dt>
-<dd>SLSF (Frisco) 1973 rule book</dd>
-<dt><a href=
-"../../../../../xml/signals/SPTCO-1960/index.shtml">SPTCO-1960</a></dt>
-<dd>Livre des r&egrave;glements 1960 Southern Pacific Railway et la
-Compagnie de transport</dd>
-</dl>
-Il y a des instructions pour la cr&eacute;ation de vos propres
-d&eacute;finitions de syst&egrave;me signal sur <a href=
-"DefineNewAspects.shtml">une page s&eacute;par&eacute;e</a> . Si
-vous cr&eacute;ez une nouvelle d&eacute;finition pour une autre
-voie ferr&eacute;e prototype ou une &eacute;poque, S'il vous
-pla&icirc;t, faites contribuer le nouveau projet afin que nous JMRI
-puissions le distribuer avec les futures versions du projet aux
-autres d'utilisateur. Comme les d&eacute;finitions de
-d&eacute;codeur dans DecoderPro, nous avons plusieurs
-d&eacute;finitions de syst&egrave;me de signal, les plus utile du
-programme que les gens passent du temps &agrave; am&eacute;liorer.
-Nous avons tous &agrave; gagner de cette mani&egrave;re!
-<h2>Acc&egrave;s &agrave; l'information Aspect du code</h2>
-Un programme (en Java ou Python) peut avoir acc&egrave;s &agrave;
-l' informations aspect de deux fa&ccedil;ons. Si elle a une
-r&eacute;f&eacute;rence &agrave; un SignalMast sp&eacute;cifiques
-"m", il peut utiliser
-<pre>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Aspect de la Signalisation</h1>
+
+      <p class="subtitle">La Signalisation contr&ocirc;le de
+      mani&egrave;re prototypique</p><a href=
+      "images/Rule282.png"><img height="241" width="159" src=
+      "images/Rule282.png" align="right"></a> Le Syst&egrave;mes de
+      signalisation Prototypical pr&eacute;sente des "aspects" au
+      conducteur pour lui dire comment faire fonctionner son train.
+      L'aspect "Stop" , par exemple, est assez simple:
+      arr&ecirc;ter le train. L'aspect "Approche au ralenti"
+      indique quelque chose de plus compliqu&eacute;:
+      "Proc&eacute;der &agrave; l'approche du signal suivant
+      &agrave; vitesse moyenne". Chaque aspect est associ&eacute;
+      &agrave; un "indication", qui est habituellement
+      codifi&eacute; dans le livre de r&egrave;gle du chemin de
+      fer.
+
+      <p>Diff&eacute;rents signaux peuvent montrent un aspect en
+      utilisant diff&eacute;rentes combinaisons de lumi&egrave;res,
+      les positions du s&eacute;maphore, et/ou des pancartes; on
+      les appelle "apparences". Par exemple, l'aspect "stop" sera
+      une lumi&egrave;re rouge simple sur un m&acirc;t de signal
+      avec une lampe, rouge au-dessus des lampes rouges pour un
+      m&acirc;t de signal avec deux lampes, etc.</p>
+
+      <h2>JMRI Support pour l'Aspect de Signalisation</h2>Le
+      support original JMRI pour les signaux a &eacute;t&eacute;
+      par l'interm&eacute;diaire "t&ecirc;tes de signals", qui
+      pourrait &ecirc;tre r&eacute;gl&eacute; &agrave; des
+      apparences (couleurs) particuli&egrave;res.
+
+      <p>En commen&ccedil;ant par JMRI 2.9.1 (d&eacute;but 2010),
+      JMRI contient &eacute;galement " <a href=
+      "SignalMasts.shtml">m&acirc;t signal</a> "qui sont des objets
+      qui repr&eacute;sentent un signal entier, pas seulement une
+      t&ecirc;te individuelle. Un m&acirc;t de signal peut
+      fonctionner avec des t&ecirc;tes multiples, telles que
+      requises pour faire une signalisation prototypique
+      compl&egrave;te bas&eacute;e sur des aspects. Lorsque son
+      "aspect" est r&eacute;gl&eacute; par exemple "Approche au
+      ralenti", il g&egrave;re les op&eacute;rations de mise en
+      page n&eacute;cessaires pour faire que les signaux sur le
+      r&eacute;seau apparaissent correctement.</p>
+
+      <p><a href=
+      "../../../package/jmri/jmrit/beantable/SignalMastTable.png"><img src="../../../package/JMRI/jmrit/beantable/SignalMastTable.png"
+      height="86" width="338" align="right"></a> Les M&acirc;ts de
+      signaux sont configur&eacute;s via la <a href=
+      "../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">
+      table M&acirc;t de signal</a> Vous pouvez en ajouter de
+      nouveaux avec le bouton "Ajouter ..." sur la table, qui vous
+      emm&egrave;ne &agrave; la <a href=
+      "../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">
+      fen&ecirc;tre "Ajouter m&acirc;t de signal"</a> . Pour
+      ajouter un m&acirc;t de signal, vous sp&eacute;cifirez quel
+      genre de syst&egrave;me de signalisation il utilisera (
+      <a href="#systems">voir ci-dessous</a> ), le type de signal
+      sp&eacute;cifique tel que "feux doubles" ou "nain &agrave;
+      double t&ecirc;te" et quelle t&ecirc;te signal il va
+      conduire.</p>
+
+      <p>De la table, vous pouvez d&eacute;finir des m&acirc;ts de
+      signaux individuels pour tous les aspects qu'ils sont
+      capables d'afficher en cliquant dans "l'aspect" colonne.</p>
+
+      <p>Les M&acirc;ts de signaux peuvent &ecirc;tre test&eacute;s
+      de deux mani&egrave;res (dans les conditions) et
+      exploitation(Action) via Logix. Lorsque vous modifiez une
+      Condition Logix ou une action, vous devez taper le nom du
+      m&acirc;t des signaux et tapez Entr&eacute;e/retour afin que
+      le programme puissent rechercher les aspects possibles de ce
+      signal de m&acirc;t en particulier.</p>
+
+      <p>Vous pouvez &eacute;galement ajouter une ic&ocirc;ne de
+      m&acirc;t de signal dans l'&eacute;diteur de Panneau de la
+      mani&egrave;re habituelle . L'ic&ocirc;ne affichera les
+      images de la d&eacute;finition de l'apparence pour ce
+      m&acirc;t de signal particulier.</p>
+
+      <h2>Logique m&acirc;t de Signal</h2>Depuis JMRI 2.11.7 (mi
+      2011), JMRI contient un outil " <a href=
+      "SignalMastLogic.shtml">Logique m&acirc;t de signal</a> ",
+      qui permet &agrave; la logique de signalisation d'&ecirc;tre
+      construite entre les m&acirc;ts de signaux sur le
+      r&eacute;seau. La logique m&acirc;t de signal va utiliser les
+      &eacute;tats de cantons, des aiguillages, des capteurs et
+      autres M&acirc;ts de Signal pour d&eacute;terminer quelle
+      apparence un m&acirc;t de signalisation doit afficher. Si le
+      trac&Atilde;&copy; a &Atilde;&copy;t&Atilde;&copy;
+      &Atilde;&copy;tabli sur l'&Atilde;&copy;diteur de
+      r&Atilde;&copy;seau et les SignalMasts ont
+      &Atilde;&copy;t&Atilde;&copy; plac&Atilde;&copy;s sur le
+      panneau &Atilde;  l'aide des diff&Atilde;&copy;rents outils,
+      il est possible pour tous la logique de M&acirc;t de
+      Signalisation d'&ecirc;tre construite de mani&Atilde;&uml;re
+      dynamique, avec peu d'intervention de l'utilisateur.
+
+      <h2>Syst&egrave;mes de Signalisation Disponibles</h2>Les
+      utilisateurs JMRI ont fourni un certain nombre de
+      syst&egrave;mes de signalisation pr&eacute;-d&eacute;finis:
+
+      <dl>
+        <dt><a href=
+        "../../../../../xml/signals/basic/index.shtml">base</a></dt>
+
+        <dd>un ensemble non prototypiques des aspects et des
+        apparences que la plupart des mod&eacute;listes
+        comprendront facilement.</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/AAR-1946/index.shtml">AAR-1946</a></dt>
+
+        <dd>livre r&egrave;gle de 1946 Association
+        am&eacute;ricaine des chemins de fer</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/BR-2003/index.shtml">BR-2003</a></dt>
+
+        <dd>livre de r&egrave;gles British Rail 2003</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/CSX-1998/index.shtml">CSX-1998</a></dt>
+
+        <dd>CSX 1998 rule book</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/DB-HV-1969/index.shtml">DB HV
+        1969</a></dt>
+
+        <dd>1969 Deutsche Bundesbahn "Einheitsbauform" Home
+        Signal/Distant signal (Hauptsignal/Vorsignal)
+        r&eacute;vision du syst&egrave;me</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/NYCS-1937/index.shtml">NYCS-1937</a></dt>
+
+        <dd>New York Central System 1937 rule book</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/SLSF-1973/index.shtml">SLSF-1973</a></dt>
+
+        <dd>SLSF (Frisco) 1973 rule book</dd>
+
+        <dt><a href=
+        "../../../../../xml/signals/SPTCO-1960/index.shtml">SPTCO-1960</a></dt>
+
+        <dd>Livre des r&egrave;glements 1960 Southern Pacific
+        Railway et la Compagnie de transport</dd>
+      </dl>Il y a des instructions pour la cr&eacute;ation de vos
+      propres d&eacute;finitions de syst&egrave;me signal sur
+      <a href="DefineNewAspects.shtml">une page
+      s&eacute;par&eacute;e</a> . Si vous cr&eacute;ez une nouvelle
+      d&eacute;finition pour une autre voie ferr&eacute;e prototype
+      ou une &eacute;poque, S'il vous pla&icirc;t, faites
+      contribuer le nouveau projet afin que nous JMRI puissions le
+      distribuer avec les futures versions du projet aux autres
+      d'utilisateur. Comme les d&eacute;finitions de
+      d&eacute;codeur dans DecoderPro, nous avons plusieurs
+      d&eacute;finitions de syst&egrave;me de signal, les plus
+      utile du programme que les gens passent du temps &agrave;
+      am&eacute;liorer. Nous avons tous &agrave; gagner de cette
+      mani&egrave;re!
+
+      <h2>Acc&egrave;s &agrave; l'information Aspect du code</h2>Un
+      programme (en Java ou Python) peut avoir acc&egrave;s
+      &agrave; l' informations aspect de deux fa&ccedil;ons. Si
+      elle a une r&eacute;f&eacute;rence &agrave; un SignalMast
+      sp&eacute;cifiques "m", il peut utiliser
+      <pre>
 <code>    m.getValidAspects ()
 </code>
-</pre>
-pour obtenir la liste des noms aspect que ce m&acirc;t de signal
-peut afficher. Le programme peut alors acc&eacute;der &agrave; la
-d&eacute;finition du syst&egrave;me du signal avec
-<pre>
+</pre>pour obtenir la liste des noms aspect que ce m&acirc;t de
+signal peut afficher. Le programme peut alors acc&eacute;der
+&agrave; la d&eacute;finition du syst&egrave;me du signal avec
+      <pre>
 <code>    SignalSystem sys = m.getSignalSystem ()
      </code>
-</pre>
-et ensuite se renseigner sur les propri&eacute;t&eacute;s de
+</pre>et ensuite se renseigner sur les propri&eacute;t&eacute;s de
 l'aspect:
-<pre>
+      <pre>
 <code>    sys.getProperty ("Effacer", "vitesse");
 </code>
-</pre>
-o&ugrave; le premier argument est le nom d'aspect (l'utilisation,
-par exemple, <code>m.getAspect ()</code> pour obtenir l'aspect
-actuel sur le m&acirc;t) et le second est une
+</pre>o&ugrave; le premier argument est le nom d'aspect
+(l'utilisation, par exemple, <code>m.getAspect ()</code> pour
+obtenir l'aspect actuel sur le m&acirc;t) et le second est une
 propri&eacute;t&eacute; sp&eacute;cifique. Les
 propri&eacute;t&eacute;s peuvent &ecirc;tre d&eacute;finies par
 programmation, par exemple par <code>m.setProperty ("Effacer",
 "vitesse", "69");</code> ou les charg&eacute;es automatiquement
-&agrave; partir des &eacute;l&eacute;ments dans le fichier <a href=
-"DefineNewAspects.shtml">aspect.xml</a> qui d&eacute;finit le
-syst&egrave;me de signalisation sp&eacute;cifiques.
-<p>En plus des propri&eacute;t&eacute;s globales d'un aspect, il
-peut &eacute;galement y avoir des propri&eacute;t&eacute;s locales
-d'un type de m&acirc;t de signal sp&eacute;cifique. Un exemple de
-ceci est l'image d'ic&ocirc;ne par d&eacute;faut: L'image d'un
-m&acirc;t de signal &agrave; deux t&ecirc;tes est diff&eacute;rent
-de celui d'un m&acirc;t de signal une t&ecirc;te, m&ecirc;me si
-elles repr&eacute;sentent tous les deux "Effacer".</p>
-<p>Pour obtenir celles-ci:</p>
-<pre>
+&agrave; partir des &eacute;l&eacute;ments dans le fichier
+      <a href="DefineNewAspects.shtml">aspect.xml</a> qui
+      d&eacute;finit le syst&egrave;me de signalisation
+      sp&eacute;cifiques.
+
+      <p>En plus des propri&eacute;t&eacute;s globales d'un aspect,
+      il peut &eacute;galement y avoir des propri&eacute;t&eacute;s
+      locales d'un type de m&acirc;t de signal sp&eacute;cifique.
+      Un exemple de ceci est l'image d'ic&ocirc;ne par
+      d&eacute;faut: L'image d'un m&acirc;t de signal &agrave; deux
+      t&ecirc;tes est diff&eacute;rent de celui d'un m&acirc;t de
+      signal une t&ecirc;te, m&ecirc;me si elles
+      repr&eacute;sentent tous les deux "Effacer".</p>
+
+      <p>Pour obtenir celles-ci:</p>
+      <pre>
 <code>    . m.getAppearanceMap () getProperty ("clear", "IMAGELINK");
 </code>
-</pre>
-Autrement dit, c'est en disant "Obtenir l'info apparence pour ce
-m&acirc;t, puis v&eacute;rifiez la propri&eacute;t&eacute;
+</pre>Autrement dit, c'est en disant "Obtenir l'info apparence pour
+ce m&acirc;t, puis v&eacute;rifiez la propri&eacute;t&eacute;
 imagelink de l'aspect Clair ".
-<p>Alternativement, si vous connaissez le nom du syst&egrave;me du
-signal dans l'utilisation, vous pouvez aller directement &agrave;
-lui par l'InstanceManager:</p>
-<pre>
+
+      <p>Alternativement, si vous connaissez le nom du
+      syst&egrave;me du signal dans l'utilisation, vous pouvez
+      aller directement &agrave; lui par l'InstanceManager:</p>
+      <pre>
 <code>    SignalSystem sys = InstanceManager.signalSystemManagerInstance () getSystem ("basic");
 </code>
 </pre>
-<ul>
-<li>Lexique:</li>
-<li>* SignalMast = M&acirc;t de Signalisation</li>
-<li>* SignalHead = T&ecirc;te de signal (1 lampe)</li>
-<li>* Aspect= couleur du feu</li>
-<li>* Apparence (du M&acirc;t)= ce qu'il signifie ex: Rappel de
-ralentissement . <!--#include virtual="/Footer" --></li>
-</ul>
-</div>
-</div>
+
+      <ul>
+        <li>Lexique:</li>
+
+        <li>* SignalMast = M&acirc;t de Signalisation</li>
+
+        <li>* SignalHead = T&ecirc;te de signal (1 lampe)</li>
+
+        <li>* Aspect= couleur du feu</li>
+
+        <li>* Apparence (du M&acirc;t)= ce qu'il signifie ex:
+        Rappel de ralentissement . 
+        <!--#include virtual="/Footer" --></li>
+      </ul>
+    </div>
+  </div>
 </body>
 </html>

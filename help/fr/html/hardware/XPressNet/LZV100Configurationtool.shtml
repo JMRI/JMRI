@@ -1,75 +1,92 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="fr">
 <head>
-<meta name="generator" content=
-"HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-<!-- $Id$ -->
-<!-- UpDated  by Blorec Herv&#233; 2013-09-20-->
-<title>The JMRI LZV100 Configuration Utility</title>
-<!-- Style -->
-<meta http-equiv="Content-Type" content=
-"text/html; charset=us-ascii">
-<link rel="stylesheet" type="text/css" href="/css/default.css"
-media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media=
-"print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- $Id$ -->
+  <!-- UpDated  by Blorec Herv&#233; 2013-09-20-->
+
+  <title>The JMRI LZV100 Configuration Utility</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
+
 <body>
-<!--#include virtual="/Header" -->
-<div class="nomenu" id="mBody">
-<div id="mainContent">
-<h2>L'utilitaire de configuration JMRI LZV100</h2>
-<img src="images/LZV100ConfigurationUtility.jpg" alt=
-"Configuration LZV100 Image Tool ">
-<p>L'outil de configuration LZV100 est utilis&eacute; pour
-configurer la LZV100 travers une interface informatique LI100 ou
-LI101 .</p>
-<p>Commen&ccedil;ant par le haut, nous avons des informations de
-configuration pour la partie alimentation de la centrale de la
-LZV100.</p>
-<p>Le menu d&eacute;roulant s&eacute;lectionne la tension
-piste.</p>
-<p>La seconde liste d&eacute;roulante de boites indique si le
-"E-Line" doit &ecirc;tre active ou inactive. Quand elle est active
-l'alimentation des centrales utilise cette interface pour couper le
-r&eacute;seau quand il y a un court-circuit, ou comme un
-arr&ecirc;t d'urgence .</p>
-<p>A partir du c&ocirc;t&eacute; gauche de l'&eacute;cran dans la
-premi&egrave;re rang&eacute;e de boutons, le bouton "Write to
-LZV100"(Ecrire &agrave; LZV100), &eacute;crira les r&eacute;glages
-dessus de cette ligne dans la LZV100.</p>
-<p>Le bouton "Reset to Factory Defaults"(Reset aux
-param&egrave;tres par d&eacute;faut)" r&eacute;initialise
-l'<b>&eacute;cran</b> d'usine par d&eacute;faut. Ceci ne va pas
-envoyer une instruction de r&eacute;initialisation &agrave; la
-LZV100 .</p>
-<p>Le dernier bouton, &eacute;tiquet&eacute; "Fermer" va fermer
-l'&eacute;cran, sans envoyer aucune information &agrave; la
-LI101F.</p>
-<p>La deuxi&egrave;me rang&eacute;e de boutons est des options pour
-la station de commande. ces options travaille aussi avec la
-LV100.</p>
-<p>Le bouton "Reset Command Station"(Reset station de commande)
-envoie &agrave; l'adresse de locomotive 0 des instructions fonction
-indiqu&eacute;e dans le manuel LZV100 pour une commande de
-r&eacute;initialisation de centrale. Ceci permet de
-r&eacute;initialiser la centrale de commande aux parm&agrave;tres
-d'usine . Voir le manuel LZV100 pour plus d'informations pour
-savoir exactement ce que cela fait.</p>
-<p>Le bouton "Auto/Manuel mode toggle" envoie &agrave; la
-locomotive &agrave; l'adresse 0 des instructions fonction
-indiqu&eacute; dans le Manuel LZV100 pour basculer entre le mode de
-d&eacute;marrage manuel et automatique. Dans le mode manuel , la
-LZV100 fonctionnera sur toutes les fonctions des locomotives qui
-&eacute;taient en service la derni&egrave;re fois que la LZV100 a
-&eacute;t&eacute; allum&eacute;e. En mode automatique, les
-locomotives reprendront &eacute;galement la vitesse et les
-r&eacute;glages de direction pr&eacute;c&eacute;dents .</p>
-<hr>
-<!--#include virtual="/Footer" --></div>
-</div>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h2>L'utilitaire de configuration JMRI LZV100</h2><img src=
+      "images/LZV100ConfigurationUtility.jpg" alt=
+      "Configuration LZV100 Image Tool ">
+
+      <p>L'outil de configuration LZV100 est utilis&eacute; pour
+      configurer la LZV100 travers une interface informatique LI100
+      ou LI101 .</p>
+
+      <p>Commen&ccedil;ant par le haut, nous avons des informations
+      de configuration pour la partie alimentation de la centrale
+      de la LZV100.</p>
+
+      <p>Le menu d&eacute;roulant s&eacute;lectionne la tension
+      piste.</p>
+
+      <p>La seconde liste d&eacute;roulante de boites indique si le
+      "E-Line" doit &ecirc;tre active ou inactive. Quand elle est
+      active l'alimentation des centrales utilise cette interface
+      pour couper le r&eacute;seau quand il y a un court-circuit,
+      ou comme un arr&ecirc;t d'urgence .</p>
+
+      <p>A partir du c&ocirc;t&eacute; gauche de l'&eacute;cran
+      dans la premi&egrave;re rang&eacute;e de boutons, le bouton
+      "Write to LZV100"(Ecrire &agrave; LZV100), &eacute;crira les
+      r&eacute;glages dessus de cette ligne dans la LZV100.</p>
+
+      <p>Le bouton "Reset to Factory Defaults"(Reset aux
+      param&egrave;tres par d&eacute;faut)" r&eacute;initialise
+      l'<b>&eacute;cran</b> d'usine par d&eacute;faut. Ceci ne va
+      pas envoyer une instruction de r&eacute;initialisation
+      &agrave; la LZV100 .</p>
+
+      <p>Le dernier bouton, &eacute;tiquet&eacute; "Fermer" va
+      fermer l'&eacute;cran, sans envoyer aucune information
+      &agrave; la LI101F.</p>
+
+      <p>La deuxi&egrave;me rang&eacute;e de boutons est des
+      options pour la station de commande. ces options travaille
+      aussi avec la LV100.</p>
+
+      <p>Le bouton "Reset Command Station"(Reset station de
+      commande) envoie &agrave; l'adresse de locomotive 0 des
+      instructions fonction indiqu&eacute;e dans le manuel LZV100
+      pour une commande de r&eacute;initialisation de centrale.
+      Ceci permet de r&eacute;initialiser la centrale de commande
+      aux parm&agrave;tres d'usine . Voir le manuel LZV100 pour
+      plus d'informations pour savoir exactement ce que cela
+      fait.</p>
+
+      <p>Le bouton "Auto/Manuel mode toggle" envoie &agrave; la
+      locomotive &agrave; l'adresse 0 des instructions fonction
+      indiqu&eacute; dans le Manuel LZV100 pour basculer entre le
+      mode de d&eacute;marrage manuel et automatique. Dans le mode
+      manuel , la LZV100 fonctionnera sur toutes les fonctions des
+      locomotives qui &eacute;taient en service la derni&egrave;re
+      fois que la LZV100 a &eacute;t&eacute; allum&eacute;e. En
+      mode automatique, les locomotives reprendront
+      &eacute;galement la vitesse et les r&eacute;glages de
+      direction pr&eacute;c&eacute;dents .</p>
+      <hr>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

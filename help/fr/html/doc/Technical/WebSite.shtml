@@ -1,160 +1,207 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- UpDated by Blorec Herv&#233; 2013-09-09-->
+
 <html lang="fr">
 <head>
-<meta name="generator" content=
-"HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-<title>JMRI: Web Site</title>
-<meta content="Bob Jacobsen" name="Author">
-<meta name="keywords" content="JMRI technical code web site">
-<!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-<!-- are an arbitrary design pattern used by the update.pl script to -->
-<!-- easily replace the common header/footer code for all the web pages -->
-<!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-<!-- or change them to reflect your alternative logo -->
-<!-- Style -->
-<meta http-equiv="Content-Type" content=
-"text/html; charset=us-ascii">
-<link rel="stylesheet" type="text/css" href="/css/default.css"
-media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media=
-"print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style -->
-</head>
-<!--#include virtual="/Header" -->
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Web Site</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI technical code web site">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head><!--#include virtual="/Header" -->
+
 <body>
-<div id="mBody"><!--#include virtual="Sidebar" -->
-<div id="mainContent">
-<h1>JMRI: Site Web</h1>
-Cette page pr&eacute;sente les aspects techniques du site web JMRI.
-<p>Si vous voulez juste savoir comment faire un petit changement
-dans le site Web ou la page d'aide, s'il vous pla&icirc;t voir la
-page s&eacute;par&eacute;e <a href=
-"webupdate/UpdatingDocs.shtml">des instructions</a>.</p>
-<h2>Structure de l'Information</h2>
-Nous distinguons trois types d'informations sur le site Web
-principal:
-<ol>
-<li>Les informations pour l'usager qui sont utile au moment de
-l'ex&eacute;cution. Ceci est rendu disponible &agrave; la fois via
-notre <a href="Help.shtml">JavaHelp</a>, et aussi directement en
-pla&ccedil;ant les fichiers sur le Web.</li>
-<li>Les Informations pour l'usager qui sont soit inutile au moment
-de l'ex&eacute;cution, tels que les instructions pour
-l'installation du logiciel, ou sont trop grande pour l'inclusion
-dans les version, par exemple, tutoriels vid&eacute;o.</li>
-<li>Les informations de r&eacute;f&eacute;rences &agrave; partir de
-versions, telles que les d&eacute;finitions d&eacute;codeur, des
-copies de scripts, JavaDocs, etc Nous fournissons ces informations
-s&eacute;par&eacute;ment:
-<ol>
-<li>L'utilisateur Run-time est disponible en pla&ccedil;ant le
-syst&egrave;me d'aide sur le site web.</li>
-<li>Les informations d'autres utilisateurs sont stock&eacute;es
-dans Subversion comme le r&eacute;pertoire
-<tt>trunk/jmri-website</tt> et plac&eacute; directement sur le site
-web..Subversion, ou cr&eacute;&eacute;s par des scripts Ant
-automatis&eacute;s au cours de la constructions des versions.</li>
-</ol>
-</li>
-</ol>
-<h2>Technologie</h2>
-<p>La mise en page se fait en utilisant CSS, initialement
-cr&eacute;&eacute; par John Plocher. Toutes les pages doivent
-r&eacute;f&eacute;rencer les fichiers CSS pour l'&eacute;cran et
-l'impression du r&eacute;pertoire "/css" . Cela signifie
-&eacute;galement que vous devez quitter le formatage des feuilles
-de style, et de minimiser le formatage explicite que vous faites
-directement dans HTML.</p>
-<p>Parce que nous utilisons nos pages Web dans JavaHelp, il y a des
-restrictions sur l'utilisation des &eacute;tiquettes. Voir nos
-<a href="Help.shtml">pages web JavaHelp</a> pour plus de
-d&eacute;tails.</p>
-<p>Nous utilisons <a href=
-"http://httpd.apache.org/docs/1.3/howto/ssi.html">le serveur -Side
-inclut</a> pour fournir une information coh&eacute;rente pour les
-en-t&ecirc;tes,les encadr&eacute;s et les pieds de page. Cela
-permettra &eacute;galement de nous faire part du contenu HTML entre
-le web et le syst&egrave;me JavaHelp utilis&eacute; par le
-programme lui-m&ecirc;me. Chaque page ne contiendra que le contenu,
-en plus elle comprendra les fichiers nomm&eacute;s "Header",
-"Sidebar" et "footer" qui contiennent les informations de
-navigation. Finalement, toutes mais quelques pages qui ont
-l'extension ". shtml". (Les autres pages index.html gardent ce nom
-afin que les gens qui demandent juste une URL r&eacute;pertoire
-soient servi avec quelque chose d'utile)</p>
-<h2>Organisation des R&eacute;pertoires</h2>
-Le site web contient plusieurs zones s&eacute;par&eacute;es, qui
-traduisent diff&eacute;rents r&eacute;pertoires SVN:
-<ul>
-<li>Jython,ressources, xml, web - ils sont prises directement
-&agrave; partir des r&eacute;pertoires du m&ecirc;me nom sous
-<tt>trunk/jmri/</tt>. Ils ne sont que rarement mentionn&eacute;s
-directement.</li>
-<li>help - &agrave; partir du module Subversion et syst&egrave;me
-JavaHelp, ce qui a la structure interne d&eacute;crite ci-dessous
-et sur notre page <a href="Help.shtml">JavaHelp</a>.</li>
-</ul>
-<p>Le reste est depuis le <tt>trunk/jmri-website</tt>, et sont
-extraits de la racine du serveur web..</p>
-<ul>
-<li>Notes de Version - Des informations sp&eacute;cifiques sur
-chaque test et lib&eacute;ration de version</li>
-<li>installer - Renseignements sur la fa&ccedil;on d'installer le
-logiciel JMRI sur diff&eacute;rents types d'ordinateurs</li>
-<li>Communaut&eacute; - Tutoriels, pages web, et autres
-communaut&eacute;s qui ont fourni des informations</li>
-<li>images - (Les images utilis&eacute;es par les pages web)</li>
-<li>contact -</li>
-</ul>
-<h2>Mise &agrave; Jour du site jmri.org</h2>
-<p>La plupart du contenu du site web est mis &agrave; jour toutes
-les 15 minutes &agrave; partir d'un travail en cours sur l'un des
-serveurs Jenkins de compilation du projet. Les r&eacute;pertoires
-list&eacute;s ci-dessus constituent la majeure partie du site, et
-ce contenu est mis &agrave; jour depuis le serveur SVN sans aucun
-travail suppl&eacute;mentaire.</p>
-<p>la plupart du site est g&eacute;n&eacute;r&eacute;e &agrave;
-partir de la source JMRI elle-m&ecirc;me, plut&icirc;t que
-d'&ecirc;tre contenues dans la source. Le <a href=
-"/JavaDoc/doc">JavaDoc</a> est une section, avec une partie de l'
-information sur les d&eacute;codeurs disponibles pour
-l'utilisation. Ces mises &agrave; jour, en particulier la JavaDoc,
-impliquent nettement plus de travail que de simplement mettre
-&agrave; jour un r&eacute;pertoire, et donc ils sont
-effectu&eacute;s de nuit.</p>
-<p>Ces mesures sont bas&eacute;es sur checkins dans le
-d&eacute;p&icirc;t SVN - l'acte de v&eacute;rification dans les
-fichiers modifi&eacute;s est suffisant pour d&eacute;clencher une
-mise &agrave; jour du site web, si cela est n&eacute;cessaire.</p>
-<p>L'&eacute;tat des mises &agrave; jour du site web est disponible
-<a href=
-"https://jmri.ci.cloudbees.com/job/Development/job/Web%20Site/">sur
-ce serveur JMRI CI</a>.</p>
-<h2>Site local Web: Mac OS X</h2>
-<p>Si vous voulez h&eacute;berger une copie du site Web JMRI sur
-votre machine locale Mac OS X, suivez ces instructions pour
-configurer en premier le serveur Apache pour faire des inclusions
-c&icirc;t&eacute; serveur, et ensuite faire une copie du site Web
-avec les fichiers disponibles sur le serveur.</p>
-<ol>
-<li>Vous devez &eacute;diter le fichier de configuration du serveur
-Web Apache.
-<ul>
-<li>Sur Mac OS X 10.4 (Tiger), c'est le fichier
-/etc/httpd/httpd.conf</li>
-<li>Sur Mac OS X 10.5 (Leopard) et, plus tard, c'est le
-fichier/etc/apache2/httpd.conf</li>
-</ul>
-Une fois que vous avez trouv&eacute; le fichier, ouvrez-le avec
-votre &eacute;diteur favori (Vous devez vous authentifier avec le
-mot de passe administrateur pour modifier ce fichier).
-<ul>
-<li>Pour activer les inclusions c&icirc;t&eacute; serveur, trouver
-la section qui ressemble &agrave; ce qui suit
-<pre>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Site Web</h1>Cette page pr&eacute;sente les aspects
+      techniques du site web JMRI.
+
+      <p>Si vous voulez juste savoir comment faire un petit
+      changement dans le site Web ou la page d'aide, s'il vous
+      pla&icirc;t voir la page s&eacute;par&eacute;e <a href=
+      "webupdate/UpdatingDocs.shtml">des instructions</a>.</p>
+
+      <h2>Structure de l'Information</h2>Nous distinguons trois
+      types d'informations sur le site Web principal:
+
+      <ol>
+        <li>Les informations pour l'usager qui sont utile au moment
+        de l'ex&eacute;cution. Ceci est rendu disponible &agrave;
+        la fois via notre <a href="Help.shtml">JavaHelp</a>, et
+        aussi directement en pla&ccedil;ant les fichiers sur le
+        Web.</li>
+
+        <li>Les Informations pour l'usager qui sont soit inutile au
+        moment de l'ex&eacute;cution, tels que les instructions
+        pour l'installation du logiciel, ou sont trop grande pour
+        l'inclusion dans les version, par exemple, tutoriels
+        vid&eacute;o.</li>
+
+        <li>Les informations de r&eacute;f&eacute;rences &agrave;
+        partir de versions, telles que les d&eacute;finitions
+        d&eacute;codeur, des copies de scripts, JavaDocs, etc Nous
+        fournissons ces informations s&eacute;par&eacute;ment:
+
+          <ol>
+            <li>L'utilisateur Run-time est disponible en
+            pla&ccedil;ant le syst&egrave;me d'aide sur le site
+            web.</li>
+
+            <li>Les informations d'autres utilisateurs sont
+            stock&eacute;es dans Subversion comme le
+            r&eacute;pertoire <tt>trunk/jmri-website</tt> et
+            plac&eacute; directement sur le site web..Subversion,
+            ou cr&eacute;&eacute;s par des scripts Ant
+            automatis&eacute;s au cours de la constructions des
+            versions.</li>
+          </ol>
+        </li>
+      </ol>
+
+      <h2>Technologie</h2>
+
+      <p>La mise en page se fait en utilisant CSS, initialement
+      cr&eacute;&eacute; par John Plocher. Toutes les pages doivent
+      r&eacute;f&eacute;rencer les fichiers CSS pour l'&eacute;cran
+      et l'impression du r&eacute;pertoire "/css" . Cela signifie
+      &eacute;galement que vous devez quitter le formatage des
+      feuilles de style, et de minimiser le formatage explicite que
+      vous faites directement dans HTML.</p>
+
+      <p>Parce que nous utilisons nos pages Web dans JavaHelp, il y
+      a des restrictions sur l'utilisation des &eacute;tiquettes.
+      Voir nos <a href="Help.shtml">pages web JavaHelp</a> pour
+      plus de d&eacute;tails.</p>
+
+      <p>Nous utilisons <a href=
+      "http://httpd.apache.org/docs/1.3/howto/ssi.html">le serveur
+      -Side inclut</a> pour fournir une information
+      coh&eacute;rente pour les en-t&ecirc;tes,les encadr&eacute;s
+      et les pieds de page. Cela permettra &eacute;galement de nous
+      faire part du contenu HTML entre le web et le syst&egrave;me
+      JavaHelp utilis&eacute; par le programme lui-m&ecirc;me.
+      Chaque page ne contiendra que le contenu, en plus elle
+      comprendra les fichiers nomm&eacute;s "Header", "Sidebar" et
+      "footer" qui contiennent les informations de navigation.
+      Finalement, toutes mais quelques pages qui ont l'extension ".
+      shtml". (Les autres pages index.html gardent ce nom afin que
+      les gens qui demandent juste une URL r&eacute;pertoire soient
+      servi avec quelque chose d'utile)</p>
+
+      <h2>Organisation des R&eacute;pertoires</h2>Le site web
+      contient plusieurs zones s&eacute;par&eacute;es, qui
+      traduisent diff&eacute;rents r&eacute;pertoires SVN:
+
+      <ul>
+        <li>Jython,ressources, xml, web - ils sont prises
+        directement &agrave; partir des r&eacute;pertoires du
+        m&ecirc;me nom sous <tt>trunk/jmri/</tt>. Ils ne sont que
+        rarement mentionn&eacute;s directement.</li>
+
+        <li>help - &agrave; partir du module Subversion et
+        syst&egrave;me JavaHelp, ce qui a la structure interne
+        d&eacute;crite ci-dessous et sur notre page <a href=
+        "Help.shtml">JavaHelp</a>.</li>
+      </ul>
+
+      <p>Le reste est depuis le <tt>trunk/jmri-website</tt>, et
+      sont extraits de la racine du serveur web..</p>
+
+      <ul>
+        <li>Notes de Version - Des informations sp&eacute;cifiques
+        sur chaque test et lib&eacute;ration de version</li>
+
+        <li>installer - Renseignements sur la fa&ccedil;on
+        d'installer le logiciel JMRI sur diff&eacute;rents types
+        d'ordinateurs</li>
+
+        <li>Communaut&eacute; - Tutoriels, pages web, et autres
+        communaut&eacute;s qui ont fourni des informations</li>
+
+        <li>images - (Les images utilis&eacute;es par les pages
+        web)</li>
+
+        <li>contact -</li>
+      </ul>
+
+      <h2>Mise &agrave; Jour du site jmri.org</h2>
+
+      <p>La plupart du contenu du site web est mis &agrave; jour
+      toutes les 15 minutes &agrave; partir d'un travail en cours
+      sur l'un des serveurs Jenkins de compilation du projet. Les
+      r&eacute;pertoires list&eacute;s ci-dessus constituent la
+      majeure partie du site, et ce contenu est mis &agrave; jour
+      depuis le serveur SVN sans aucun travail
+      suppl&eacute;mentaire.</p>
+
+      <p>la plupart du site est g&eacute;n&eacute;r&eacute;e
+      &agrave; partir de la source JMRI elle-m&ecirc;me,
+      plut&icirc;t que d'&ecirc;tre contenues dans la source. Le
+      <a href="/JavaDoc/doc">JavaDoc</a> est une section, avec une
+      partie de l' information sur les d&eacute;codeurs disponibles
+      pour l'utilisation. Ces mises &agrave; jour, en particulier
+      la JavaDoc, impliquent nettement plus de travail que de
+      simplement mettre &agrave; jour un r&eacute;pertoire, et donc
+      ils sont effectu&eacute;s de nuit.</p>
+
+      <p>Ces mesures sont bas&eacute;es sur checkins dans le
+      d&eacute;p&icirc;t SVN - l'acte de v&eacute;rification dans
+      les fichiers modifi&eacute;s est suffisant pour
+      d&eacute;clencher une mise &agrave; jour du site web, si cela
+      est n&eacute;cessaire.</p>
+
+      <p>L'&eacute;tat des mises &agrave; jour du site web est
+      disponible <a href=
+      "https://jmri.ci.cloudbees.com/job/Development/job/Web%20Site/">
+      sur ce serveur JMRI CI</a>.</p>
+
+      <h2>Site local Web: Mac OS X</h2>
+
+      <p>Si vous voulez h&eacute;berger une copie du site Web JMRI
+      sur votre machine locale Mac OS X, suivez ces instructions
+      pour configurer en premier le serveur Apache pour faire des
+      inclusions c&icirc;t&eacute; serveur, et ensuite faire une
+      copie du site Web avec les fichiers disponibles sur le
+      serveur.</p>
+
+      <ol>
+        <li>Vous devez &eacute;diter le fichier de configuration du
+        serveur Web Apache.
+
+          <ul>
+            <li>Sur Mac OS X 10.4 (Tiger), c'est le fichier
+            /etc/httpd/httpd.conf</li>
+
+            <li>Sur Mac OS X 10.5 (Leopard) et, plus tard, c'est le
+            fichier/etc/apache2/httpd.conf</li>
+          </ul>Une fois que vous avez trouv&eacute; le fichier,
+          ouvrez-le avec votre &eacute;diteur favori (Vous devez
+          vous authentifier avec le mot de passe administrateur
+          pour modifier ce fichier).
+
+          <ul>
+            <li>Pour activer les inclusions c&icirc;t&eacute;
+            serveur, trouver la section qui ressemble &agrave; ce
+            qui suit
+              <pre>
 # Cela peut &ecirc;tre aussi "None", "All", ou n'importe quelle combinaison de "index",
 # "Includes", "FollowSymLinks", "ExecCGI", ou "MultiViews".
 #
@@ -162,41 +209,46 @@ la section qui ressemble &agrave; ce qui suit
 # Ne  vous est pas donn&eacute;.
 #
      Options Index FollowSymLinks MultiViews
-</pre>
-Ajouter le mot "Includes" &agrave; la derni&egrave;re ligne de
-sorte qu'elle ressemble &agrave;:
-<pre>
+</pre>Ajouter le mot "Includes" &agrave; la derni&egrave;re ligne
+de sorte qu'elle ressemble &agrave;:
+              <pre>
      Options Includes Indexes FollowSymLinks MultiViews
-</pre></li>
-<li>Maintenant, configurez le serveur pour g&eacute;rer les
-fichiers avec l'extension ".shtml" . Trouvez la section qui
-ressemble (le premier commentaire peut &ecirc;tre
-diff&eacute;rent):
-<pre>
+</pre>
+            </li>
+
+            <li>Maintenant, configurez le serveur pour g&eacute;rer
+            les fichiers avec l'extension ".shtml" . Trouvez la
+            section qui ressemble (le premier commentaire peut
+            &ecirc;tre diff&eacute;rent):
+              <pre>
      # Pour utiliser les fichiers HTML analys&eacute;s par le serveur
      #
      # AddType text/html.shtml
      # AddHandler server-parsed.shtml
-</pre>
-et non commenter les deux derni&egrave;res lignes de sorte qu'elle
-ressemble &agrave;
-<pre>
+</pre>et non commenter les deux derni&egrave;res lignes de sorte
+qu'elle ressemble &agrave;
+              <pre>
      #
      # Pour utiliser les fichiers HTML analys&eacute;s par le serveur
      #
      AddType text/html.shtml
      AddHandler server-parsed.shtml
-</pre></li>
-</ul>
-</li>
-<li>Pour consulter une copie des fichiers:
-<ul>
-<li>Allez dans le r&eacute;pertoire du serveur web
-<pre>
+</pre>
+            </li>
+          </ul>
+        </li>
+
+        <li>Pour consulter une copie des fichiers:
+
+          <ul>
+            <li>Allez dans le r&eacute;pertoire du serveur web
+              <pre>
 cd/Library/WebServer/Documents
-</pre></li>
-<li>Consultez les fichiers concern&eacute;s
-<pre>
+</pre>
+            </li>
+
+            <li>Consultez les fichiers concern&eacute;s
+              <pre>
 # Le point de fuite sur la ligne suivante, c'est important!
 svn checkout svn ://svn.code.sf.net/p/jmri/code/trunk/jmri site web .
 svn checkout svn ://svn.code.sf.net/p/jmri/code/trunk/jmri/aide
@@ -204,17 +256,19 @@ svn checkout svn ://svn.code.sf.net/p/jmri/code/trunk/jmri/Jython
 svn checkout svn ://svn.code.sf.net/p/jmri/code/trunk/jmri/ressources
 svn checkout svn ://svn.code.sf.net/p/jmri/code/trunk/jmri/web
 svn checkout svn ://svn.code.sf.net/p/jmri/code/trunk/jmri/xml
-</pre></li>
-</ul>
-</li>
-<li>Red&eacute;marrez votre ordinateur pour r&eacute;initialiser le
-serveur web.</li>
-<li>Testez-le en essayant d'afficher l'URL <a href=
-"http://localhost/">http://localhost/</a> , ce qui devrait vous
-donner une page d'index JMRI.</li>
-</ol>
-<!--#include virtual="/Footer" --></div>
-<!-- closes #mainContent--></div>
-<!-- closes #mBody-->
+</pre>
+            </li>
+          </ul>
+        </li>
+
+        <li>Red&eacute;marrez votre ordinateur pour
+        r&eacute;initialiser le serveur web.</li>
+
+        <li>Testez-le en essayant d'afficher l'URL <a href=
+        "http://localhost/">http://localhost/</a> , ce qui devrait
+        vous donner une page d'index JMRI.</li>
+      </ol><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

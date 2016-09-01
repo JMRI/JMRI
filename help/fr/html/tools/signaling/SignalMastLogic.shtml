@@ -1,252 +1,326 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="fr">
 <head>
-<meta name="generator" content=
-"HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-<!-- Copyright Kevin Dickerson 2011 -->
-<!-- $Id$ -->
-<!-- UpDated  by Blorec Herv&#233; 2011-10-01-->
-<title>JMRI: Signal Mast Logic</title>
-<!-- Style -->
-<meta http-equiv="Content-Type" content=
-"text/html; charset=us-ascii">
-<link rel="stylesheet" type="text/css" href="/css/default.css"
-media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media=
-"print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Kevin Dickerson 2011 -->
+  <!-- $Id$ -->
+  <!-- UpDated  by Blorec Herv&#233; 2011-10-01-->
+
+  <title>JMRI: Signal Mast Logic</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
+
 <body>
-<!--#include virtual="/Header" -->
-<div id="mBody"><!--#include virtual="Sidebar" -->
-<div id="mainContent">
-<h1>JMRI: Logiques M&acirc;t de Signal</h1>
-<p class="subtitle">Informations g&eacute;n&eacute;rales sur la
-Logique M&acirc;t Signal</p>
-<div class="para">Le "SignalMastLogic" JMRI vous permet de
-construire un ensemble de crit&egrave;res pour un m&acirc;t de
-signal pour savoir quel aspect il faut afficher pour un
-itin&eacute;raire sp&eacute;cifique vers un m&acirc;t de
-destination.
-<p>Chaque logique de m&acirc;t de signal est construite &agrave;
-partir d'une paire de m&acirc;ts de signal, source et destination
-ainsi qu'une s&eacute;rie de cantons, d'aiguillages et de capteurs
-entre les deux m&acirc;ts et l'&eacute;tat qu'ils doivent avoir
-pour que le m&acirc;t de la source soit lib&eacute;r&eacute; d'un
-danger ou de l' Aspect d'arr&ecirc;t..</p>
-<p><img src="images/logic1.png" height="92" width="437"><br>
-Exemple 1</p>
-<p>Dans l'exemple ci-dessus, vous avez un m&acirc;t de signal
-source de SM20, il y a alors deux m&acirc;ts destination SM22 et
-SM23.<br>
-La logique derri&egrave;re la paire de signalisation, SM20 et SM23,
-veut que les cantons 2 et 3 doivent &ecirc;tre inoccup&eacute;s, et
-l'aiguillage IT1 doit &ecirc;tre r&eacute;gl&eacute; sur "Droit".
-Une fois que les crit&egrave;res sont respect&eacute;s, alors le
-signal de SM20, passera de Danger &agrave; Ralenti, si le m&acirc;t
-de signal SM23 a &eacute;t&eacute; mis &agrave; Ralenti, alors SM20
-serait mis &agrave; Libre et montrera un aspect Vert. D&egrave;s
-que les canton 2 ou 3 deviennent occup&eacute;s ou si l'aiguillage
-est d&eacute;vi&eacute;, le signal SM20 est remis sur Danger .</p>
-<p>Chaque de m&acirc;t de signal de la paire doit &ecirc;tre
-directement accessible &agrave; partir de l'autre, sans aucun autre
-m&acirc;t de signal entre les deux dans la m&ecirc;me
-direction.</p>
-<p><img src="images/logic2.png" height="93" width="511"><br>
-Exemple 2</p>
-<p>Dans l'exemple ci-dessus, une logique de signalisation de SM20
-&agrave; SM24 serait invalide sii SM23 est entre les deux. Vous
-avez &agrave; cr&eacute;er deux logiques distinctes, l'une comme
-ci-dessus pour SM20 &agrave; SM23, la secondd pour SM23 &agrave;
-SM24.</p>
-<hr>
-L' aspect que notre m&acirc;t source affiche apr&egrave;s avoir
-&eacute;t&eacute; lib&eacute;r&eacute; de Danger est d'abord
-d&eacute;termin&eacute; par la cartographie aspect qui a
-&eacute;t&eacute; d&eacute;fini dans le fichier apparence du
-m&acirc;t signal . S'il y a un seul aspect qui pourrait &ecirc;tre
-affich&eacute;e, alors le m&acirc;t de signal sera fix&eacute;
-&agrave; cet aspect. Cependant, s'il y a de multiples aspects qui
-pourraient &ecirc;tre potentiellement affich&eacute;s, alors la
-logique regarde deux z&ocirc;nes afin de d&eacute;terminer l'aspect
-r&eacute;sultant qui sera affich&eacute;<br>
-<ul>
-<li>Itin&eacute;raire divergent<br>
-<ul>
-<li>S'il y a des aspects pour un itin&eacute;raire
-d&eacute;vi&eacute; et l'un des aiguillages sur le chemin est
-d&eacute;vi&eacute;, il utilisera alors l'aspect d'un
-itin&eacute;raire d&eacute;vi&eacute;.</li>
-<li>Si aucun des aiguillages sur l'itin&eacute;raire n'est
-d&eacute;vi&eacute;s, alors l'aspect qui n'est pas
-d&eacute;sign&eacute;e comme un aspect divergent sera
-utilis&eacute;</li>
-</ul>
-</li>
-<li>Canton/Signal de Vitesse<br>
-<ul>
-<li>Si l'itin&eacute;raire n'est pas disponible sur les aspects de
-signal, ou il ne retourne pas un seul aspect potentiel, alors la
-vitesse du canton et la vitesse de l'aspect est utilis&eacute;.<br>
-Chaque aspect de canton peut &ecirc;tre configur&eacute; avec une
-valeur de Vitesse, la logique sera la plus faible vitesse
-d&eacute;finie sur les cantons dans l'itin&eacute;raire et choisir
-l'aspect avec la vitesse la plus &eacute;lev&eacute;e qui est sous
-la plus basse vitesse de parcours. C'est &agrave; dire si la
-vitesse minimale est 65 mph (105 kmh), alors il va choisir l'aspect
-qui a une vitesse &eacute;gale ou inf&eacute;rieure &agrave; 65 mph
-(105 kmh)..</li>
-</ul>
-<p>En plus d'&ecirc;tre en mesure de pr&eacute;ciser les
-aiguillages, les cantons et les capteurs qui composent une logique,
-vous pouvez aussi sp&eacute;cifier quels autres m&acirc;ts signal
-doivent &ecirc;tre r&eacute;gl&eacute;s sur un aspect
-sp&eacute;cifique avant que le m&acirc;t source soit
-lib&eacute;r&eacute;. En g&eacute;n&eacute;ral, il ne devrait pas y
-avoir besoin d'ajouter de m&acirc;ts de signal
-suppl&eacute;mentaire car l'itin&eacute;raire entre tous les
-diff&eacute;rents m&acirc;ts sources et m&acirc;ts de destination
-doit avoir un crit&egrave;re unique. Cependant, il y a certaine
-situation, comme deux voies se croisant au m&ecirc;me niveau
-o&oslash; un itin&eacute;raire imcompatible devrait &ecirc;tre
-d&eacute;termin&eacute;. Par cons&eacute;quent, pour contourner ce
-probl&egrave;me, le m&acirc;t de signal ou les m&acirc;ts qui sont
-pour prot&eacute;ger le croisement devraientt faire partie de
-chacun des autres crit&egrave;res.</p>
-<h2>Information G&eacute;n&eacute;r&eacute;e Manuellement et
-Automatiquement</h2>
-La logique de signalisation est tributaire de deux ensembles de
-cantons et de l'information de l'aiguillage, le premier est d'abord
-g&eacute;n&eacute;r&eacute; par l'utilisateur, le deuxi&egrave;me
-est celui o&oslash; un outil tel que celui utilis&eacute; avec
-l'&eacute;diteur de TCO (voir ci dessous) a automatiquement mis en
-place un ensemble de cantons ou d'aiguillages depuis l'agencement
-du panneau comme crit&egrave;re de signalisation.
-<p>Les deux ensembles de donn&eacute;es sont utilis&eacute;s par la
-logique de signalisation afin de d&eacute;terminer si un signal
-peut &ecirc;tre lib&eacute;r&eacute; ou pas, cependant les
-informations manuellement cr&eacute;&eacute;es ont une plus grande
-priorit&eacute; sur les informations g&eacute;n&eacute;r&eacute;es
-automatiquement. Permettant ainsi &agrave; l'utilisateur de
-l'emporter sur ce que le syst&egrave;me a
-d&eacute;termin&eacute;.</p>
-<p>Les informations g&eacute;n&eacute;r&eacute;es automatiquement
-ne sont pas enregistr&eacute;es avec le reste des informations du
-panneau, mais les informations utilisateurs
-g&eacute;n&eacute;r&eacute;es manuellement le sont. Si
-l'&eacute;diteur de r&eacute;seau est utilis&eacute; comme base de
-la logique de signalisation (Voir ci-dessous), alors la logique de
-signalisation red&eacute;couvrira ces informations depuis le
-panneau &agrave; chaque fois qu'il est charg&eacute;, donc si des
-modifications ont &eacute;t&eacute; faites, elles seront
-d&eacute;couvertes. S'il vous pla&icirc;t noter que cette nouvelle
-g&eacute;n&eacute;ration d'informations n'est pas faite au "vol"
-quand le panneau de l'&eacute;diteur de TCO est
-modifi&eacute;e.</p>
-<h2>Logique d'une Zone Non Signal&eacute;e ou Z&ocirc;ne
-d'arr&ecirc;ts</h2>
-La logique de signalisation ne fonctionne qu'entr'un m&acirc;t de
-signal source et m&acirc;t de signal destination , si vous avez un
-itin&eacute;raire valide pour un Heurtoir/z&ocirc;ne
-d'arr&ecirc;t/zone sans surveillance, alors il n'y a pas de
-m&acirc;t de signal de destination sp&eacute;cifique. Dans ce cas,
-vous devez cr&eacute;er un m&acirc;t de signal "factice" pour agir
-en tant que m&acirc;t de votre destination , il n'a pas besoin
-d'&ecirc;tre un m&acirc;t de signal r&eacute;el sur le
-syst&egrave;me ou t&ecirc;tes de signal r&eacute;elles
-associ&eacute;es. Tout ce que ce m&acirc;t de signal fictif a
-&agrave; faire est d'afficher un aspect Danger.
-<h2>Utilisation de l'&eacute;diteur de r&eacute;seau pour la
-Logique M&acirc;t de Signal</h2>
-En utilisant l'&eacute;diteur de mise en page de canton , il est
-possible d'avoir la logique M&acirc;t de Signal qui
-d&eacute;termine les paires de signalisation, ainsi que les cantons
-et les aiguillages qui forment les crit&egrave;res. Cela peut
-&ecirc;tre fait dans tous les m&acirc;ts de signal sur
-l'&eacute;diteur r&eacute;seau ou sur une source de base du
-m&acirc;t du signal.
-<p>Il a l'avantage que si le panneau de l'&eacute;diteur de
-r&eacute;seau est modifi&eacute;, la logique de signalisation
-d&eacute;couvrira ce changement lorsque le panneau est
-recharg&eacute; et utilisera le nouveau canton et l'information de
-l'aiguillage. S'il vous pla&icirc;t soyez conscient que la remise
-&agrave; jour lors du chargement du panneau ne sera pas de
-d&eacute;couvrir toutes les nouvelles paires de signalisation ou
-d'enlever des paires de signalisation invalides, il sera tout
-simplement de mettre &agrave; jour les informations entre les
-paires existantes..</p>
-<h3>Placer les M&acirc;ts de Signaux</h3>
-Les m&acirc;ts de signaaux peuvent &ecirc;tre plac&eacute;s
-pr&egrave;s des aiguillages, des points d'ancrage et les
-travers&eacute;es jonctions, mais seulement o&oslash; il y a une
-fronti&egrave;re entre deux cantons diff&eacute;rent sur le
-r&eacute;seau .
-<p>Pour ajouter le m&acirc;t de signal, un clic droit sur
-l'aiguillage, la travers&eacute;e ou le point d'ancrage et si une
-limite de cantons existant, il vous sera donn&eacute; la
-possibilit&eacute; de "mettre M&acirc;t de Signal .."</p>
-<p><img src="images/popup.png" height="316" exemple="" width=
-"300"><br></p>
-<p>Il Vous sera alors pr&eacute;sent&eacute; une fen&ecirc;tre
-rafraichie qui vous permet d'entrer le nom du m&acirc;t de signal
-qui va prot&eacute;ger une fronti&egrave;re entre deux cantons.<br>
-Pour les aiguillages et les travers&eacute;es, vous ne pouvez
-ajouter un m&acirc;t de signal pour entrer dans la limite de
-l'aiguillage ou de la travers&eacute;e, il n'est pas possible
-d'ajouter un m&acirc;t de signal pour la limite de sortie de
-l'aiguillage ou de la travers&eacute;e. Par exemple, si le canton A
-est la section de la voie attach&eacute;e &agrave; l'aiguillage et
-que l'aiguillage est dans le canton B, vous pouvez seulement
-ajouter un m&acirc;t de signal qui fait face au canton A, qui
-prot&egrave;ge le canton B, vous ne pouvez pas ajouter un m&acirc;t
-de signal qui fait face au canton B pour prot&eacute;ger le canton
-A.</p>
-<h3>G&eacute;n&eacute;rer la Logique de Signalisation</h3>
-La logique de signalisation peut &ecirc;tre automatiquement
-g&eacute;n&eacute;r&eacute;e de deux mani&egrave;res
-diff&eacute;rentes.<br>
-La premi&egrave;re est de la construire sur un m&acirc;t de signal
-&agrave; partir d'un m&acirc;t de signal de base. Cela peut
-&ecirc;tre fait en s&eacute;lectionnant "Logique M&acirc;t de
-Signal" &agrave; partir du menu contextuel de l'ic&ocirc;ne de
-m&acirc;t de signal sur le panneau, &agrave; partir de l&agrave;,
-vous cliquez ensuite sur le bouton "D&eacute;couverte" , le
-syst&egrave;me va chercher tous les m&acirc;ts de destination
-potentielles qui sont valides par rapport au m&acirc;t
-s&eacute;lectionn&eacute;.
-<p><img src="images/discover.png" height="209" width="502"></p>
-<p>La deuxi&egrave;me m&eacute;thode est l'option "Paire" du menu
-dans le tableau de logiques m&acirc;t de signal, cela va
-g&eacute;n&eacute;rer une logique bas&eacute;e sur l'ensemble de
-m&acirc;t de signal sur le panneau de l'&eacute;diteur de
-r&eacute;seau.</p>
-<p><img src="images/pairs.png" height="125" width="308"></p>
-<p>S'il vous pla&icirc;t soyez conscient que sur les grands
-r&eacute;seaux avec un grand nombre de m&acirc;ts de signal
-configur&eacute;s, cela peut prendre un certain temps</p>
-<p>L' acc&egrave;s &agrave; la configuration de Logiques M&acirc;t
-de Signal peut &ecirc;tre fait &agrave; partir de trois endroit
-diff&eacute;rent</p>
-<ul>
-<li><a href=
-"../../../package/jmri/jmrit/beantable/SignalMastLogicTable.shtml">Tableau
-Logique M&acirc;t Signal</a></li>
-<li>Sur le Tableau de M&acirc;t de Signal, il y a un bouton
-Modifier contre chaque M&acirc;t de Signal</li>
-<li>Le menu contextuel sur l'Ic&ocirc;ne M&acirc;t Signal, il y a
-un &eacute;l&eacute;ment de menu pour Logique M&acirc;t Signal</li>
-</ul>
-Vous pouvez ajouter de nouveaux avec le bouton "Ajouter ..." sur
-chacun des tableaux suivants, qui vous emm&egrave;ne &agrave; la
-<a href=
-"../../../package/jmri/jmrit/signalling/AddEditSignallingLogic.shtml">
-fen&ecirc;tre "Ajouter &eacute;diter Logiques Mat de Signal"</a>. 
-<!--#include virtual="/Footer" --></li>
-</ul>
-</div>
-</div>
-</div>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Logiques M&acirc;t de Signal</h1>
+
+      <p class="subtitle">Informations g&eacute;n&eacute;rales sur
+      la Logique M&acirc;t Signal</p>
+
+      <div class="para">
+        Le "SignalMastLogic" JMRI vous permet de construire un
+        ensemble de crit&egrave;res pour un m&acirc;t de signal
+        pour savoir quel aspect il faut afficher pour un
+        itin&eacute;raire sp&eacute;cifique vers un m&acirc;t de
+        destination.
+
+        <p>Chaque logique de m&acirc;t de signal est construite
+        &agrave; partir d'une paire de m&acirc;ts de signal, source
+        et destination ainsi qu'une s&eacute;rie de cantons,
+        d'aiguillages et de capteurs entre les deux m&acirc;ts et
+        l'&eacute;tat qu'ils doivent avoir pour que le m&acirc;t de
+        la source soit lib&eacute;r&eacute; d'un danger ou de l'
+        Aspect d'arr&ecirc;t..</p>
+
+        <p><img src="images/logic1.png" height="92" width=
+        "437"><br>
+        Exemple 1</p>
+
+        <p>Dans l'exemple ci-dessus, vous avez un m&acirc;t de
+        signal source de SM20, il y a alors deux m&acirc;ts
+        destination SM22 et SM23.<br>
+        La logique derri&egrave;re la paire de signalisation, SM20
+        et SM23, veut que les cantons 2 et 3 doivent &ecirc;tre
+        inoccup&eacute;s, et l'aiguillage IT1 doit &ecirc;tre
+        r&eacute;gl&eacute; sur "Droit". Une fois que les
+        crit&egrave;res sont respect&eacute;s, alors le signal de
+        SM20, passera de Danger &agrave; Ralenti, si le m&acirc;t
+        de signal SM23 a &eacute;t&eacute; mis &agrave; Ralenti,
+        alors SM20 serait mis &agrave; Libre et montrera un aspect
+        Vert. D&egrave;s que les canton 2 ou 3 deviennent
+        occup&eacute;s ou si l'aiguillage est d&eacute;vi&eacute;,
+        le signal SM20 est remis sur Danger .</p>
+
+        <p>Chaque de m&acirc;t de signal de la paire doit
+        &ecirc;tre directement accessible &agrave; partir de
+        l'autre, sans aucun autre m&acirc;t de signal entre les
+        deux dans la m&ecirc;me direction.</p>
+
+        <p><img src="images/logic2.png" height="93" width=
+        "511"><br>
+        Exemple 2</p>
+
+        <p>Dans l'exemple ci-dessus, une logique de signalisation
+        de SM20 &agrave; SM24 serait invalide sii SM23 est entre
+        les deux. Vous avez &agrave; cr&eacute;er deux logiques
+        distinctes, l'une comme ci-dessus pour SM20 &agrave; SM23,
+        la secondd pour SM23 &agrave; SM24.</p>
+        <hr>
+        L' aspect que notre m&acirc;t source affiche apr&egrave;s
+        avoir &eacute;t&eacute; lib&eacute;r&eacute; de Danger est
+        d'abord d&eacute;termin&eacute; par la cartographie aspect
+        qui a &eacute;t&eacute; d&eacute;fini dans le fichier
+        apparence du m&acirc;t signal . S'il y a un seul aspect qui
+        pourrait &ecirc;tre affich&eacute;e, alors le m&acirc;t de
+        signal sera fix&eacute; &agrave; cet aspect. Cependant,
+        s'il y a de multiples aspects qui pourraient &ecirc;tre
+        potentiellement affich&eacute;s, alors la logique regarde
+        deux z&ocirc;nes afin de d&eacute;terminer l'aspect
+        r&eacute;sultant qui sera affich&eacute;<br>
+
+        <ul>
+          <li>Itin&eacute;raire divergent<br>
+
+            <ul>
+              <li>S'il y a des aspects pour un itin&eacute;raire
+              d&eacute;vi&eacute; et l'un des aiguillages sur le
+              chemin est d&eacute;vi&eacute;, il utilisera alors
+              l'aspect d'un itin&eacute;raire
+              d&eacute;vi&eacute;.</li>
+
+              <li>Si aucun des aiguillages sur l'itin&eacute;raire
+              n'est d&eacute;vi&eacute;s, alors l'aspect qui n'est
+              pas d&eacute;sign&eacute;e comme un aspect divergent
+              sera utilis&eacute;</li>
+            </ul>
+          </li>
+
+          <li>Canton/Signal de Vitesse<br>
+
+            <ul>
+              <li>Si l'itin&eacute;raire n'est pas disponible sur
+              les aspects de signal, ou il ne retourne pas un seul
+              aspect potentiel, alors la vitesse du canton et la
+              vitesse de l'aspect est utilis&eacute;.<br>
+              Chaque aspect de canton peut &ecirc;tre
+              configur&eacute; avec une valeur de Vitesse, la
+              logique sera la plus faible vitesse d&eacute;finie
+              sur les cantons dans l'itin&eacute;raire et choisir
+              l'aspect avec la vitesse la plus &eacute;lev&eacute;e
+              qui est sous la plus basse vitesse de parcours. C'est
+              &agrave; dire si la vitesse minimale est 65 mph (105
+              kmh), alors il va choisir l'aspect qui a une vitesse
+              &eacute;gale ou inf&eacute;rieure &agrave; 65 mph
+              (105 kmh)..</li>
+            </ul>
+
+            <p>En plus d'&ecirc;tre en mesure de pr&eacute;ciser
+            les aiguillages, les cantons et les capteurs qui
+            composent une logique, vous pouvez aussi
+            sp&eacute;cifier quels autres m&acirc;ts signal doivent
+            &ecirc;tre r&eacute;gl&eacute;s sur un aspect
+            sp&eacute;cifique avant que le m&acirc;t source soit
+            lib&eacute;r&eacute;. En g&eacute;n&eacute;ral, il ne
+            devrait pas y avoir besoin d'ajouter de m&acirc;ts de
+            signal suppl&eacute;mentaire car l'itin&eacute;raire
+            entre tous les diff&eacute;rents m&acirc;ts sources et
+            m&acirc;ts de destination doit avoir un crit&egrave;re
+            unique. Cependant, il y a certaine situation, comme
+            deux voies se croisant au m&ecirc;me niveau o&oslash;
+            un itin&eacute;raire imcompatible devrait &ecirc;tre
+            d&eacute;termin&eacute;. Par cons&eacute;quent, pour
+            contourner ce probl&egrave;me, le m&acirc;t de signal
+            ou les m&acirc;ts qui sont pour prot&eacute;ger le
+            croisement devraientt faire partie de chacun des autres
+            crit&egrave;res.</p>
+
+            <h2>Information G&eacute;n&eacute;r&eacute;e
+            Manuellement et Automatiquement</h2>La logique de
+            signalisation est tributaire de deux ensembles de
+            cantons et de l'information de l'aiguillage, le premier
+            est d'abord g&eacute;n&eacute;r&eacute; par
+            l'utilisateur, le deuxi&egrave;me est celui o&oslash;
+            un outil tel que celui utilis&eacute; avec
+            l'&eacute;diteur de TCO (voir ci dessous) a
+            automatiquement mis en place un ensemble de cantons ou
+            d'aiguillages depuis l'agencement du panneau comme
+            crit&egrave;re de signalisation.
+
+            <p>Les deux ensembles de donn&eacute;es sont
+            utilis&eacute;s par la logique de signalisation afin de
+            d&eacute;terminer si un signal peut &ecirc;tre
+            lib&eacute;r&eacute; ou pas, cependant les informations
+            manuellement cr&eacute;&eacute;es ont une plus grande
+            priorit&eacute; sur les informations
+            g&eacute;n&eacute;r&eacute;es automatiquement.
+            Permettant ainsi &agrave; l'utilisateur de l'emporter
+            sur ce que le syst&egrave;me a
+            d&eacute;termin&eacute;.</p>
+
+            <p>Les informations g&eacute;n&eacute;r&eacute;es
+            automatiquement ne sont pas enregistr&eacute;es avec le
+            reste des informations du panneau, mais les
+            informations utilisateurs g&eacute;n&eacute;r&eacute;es
+            manuellement le sont. Si l'&eacute;diteur de
+            r&eacute;seau est utilis&eacute; comme base de la
+            logique de signalisation (Voir ci-dessous), alors la
+            logique de signalisation red&eacute;couvrira ces
+            informations depuis le panneau &agrave; chaque fois
+            qu'il est charg&eacute;, donc si des modifications ont
+            &eacute;t&eacute; faites, elles seront
+            d&eacute;couvertes. S'il vous pla&icirc;t noter que
+            cette nouvelle g&eacute;n&eacute;ration d'informations
+            n'est pas faite au "vol" quand le panneau de
+            l'&eacute;diteur de TCO est modifi&eacute;e.</p>
+
+            <h2>Logique d'une Zone Non Signal&eacute;e ou
+            Z&ocirc;ne d'arr&ecirc;ts</h2>La logique de
+            signalisation ne fonctionne qu'entr'un m&acirc;t de
+            signal source et m&acirc;t de signal destination , si
+            vous avez un itin&eacute;raire valide pour un
+            Heurtoir/z&ocirc;ne d'arr&ecirc;t/zone sans
+            surveillance, alors il n'y a pas de m&acirc;t de signal
+            de destination sp&eacute;cifique. Dans ce cas, vous
+            devez cr&eacute;er un m&acirc;t de signal "factice"
+            pour agir en tant que m&acirc;t de votre destination ,
+            il n'a pas besoin d'&ecirc;tre un m&acirc;t de signal
+            r&eacute;el sur le syst&egrave;me ou t&ecirc;tes de
+            signal r&eacute;elles associ&eacute;es. Tout ce que ce
+            m&acirc;t de signal fictif a &agrave; faire est
+            d'afficher un aspect Danger.
+
+            <h2>Utilisation de l'&eacute;diteur de r&eacute;seau
+            pour la Logique M&acirc;t de Signal</h2>En utilisant
+            l'&eacute;diteur de mise en page de canton , il est
+            possible d'avoir la logique M&acirc;t de Signal qui
+            d&eacute;termine les paires de signalisation, ainsi que
+            les cantons et les aiguillages qui forment les
+            crit&egrave;res. Cela peut &ecirc;tre fait dans tous
+            les m&acirc;ts de signal sur l'&eacute;diteur
+            r&eacute;seau ou sur une source de base du m&acirc;t du
+            signal.
+
+            <p>Il a l'avantage que si le panneau de
+            l'&eacute;diteur de r&eacute;seau est modifi&eacute;,
+            la logique de signalisation d&eacute;couvrira ce
+            changement lorsque le panneau est recharg&eacute; et
+            utilisera le nouveau canton et l'information de
+            l'aiguillage. S'il vous pla&icirc;t soyez conscient que
+            la remise &agrave; jour lors du chargement du panneau
+            ne sera pas de d&eacute;couvrir toutes les nouvelles
+            paires de signalisation ou d'enlever des paires de
+            signalisation invalides, il sera tout simplement de
+            mettre &agrave; jour les informations entre les paires
+            existantes..</p>
+
+            <h3>Placer les M&acirc;ts de Signaux</h3>Les m&acirc;ts
+            de signaaux peuvent &ecirc;tre plac&eacute;s
+            pr&egrave;s des aiguillages, des points d'ancrage et
+            les travers&eacute;es jonctions, mais seulement
+            o&oslash; il y a une fronti&egrave;re entre deux
+            cantons diff&eacute;rent sur le r&eacute;seau .
+
+            <p>Pour ajouter le m&acirc;t de signal, un clic droit
+            sur l'aiguillage, la travers&eacute;e ou le point
+            d'ancrage et si une limite de cantons existant, il vous
+            sera donn&eacute; la possibilit&eacute; de "mettre
+            M&acirc;t de Signal .."</p>
+
+            <p><img src="images/popup.png" height="316" exemple=""
+            width="300"><br></p>
+
+            <p>Il Vous sera alors pr&eacute;sent&eacute; une
+            fen&ecirc;tre rafraichie qui vous permet d'entrer le
+            nom du m&acirc;t de signal qui va prot&eacute;ger une
+            fronti&egrave;re entre deux cantons.<br>
+            Pour les aiguillages et les travers&eacute;es, vous ne
+            pouvez ajouter un m&acirc;t de signal pour entrer dans
+            la limite de l'aiguillage ou de la travers&eacute;e, il
+            n'est pas possible d'ajouter un m&acirc;t de signal
+            pour la limite de sortie de l'aiguillage ou de la
+            travers&eacute;e. Par exemple, si le canton A est la
+            section de la voie attach&eacute;e &agrave;
+            l'aiguillage et que l'aiguillage est dans le canton B,
+            vous pouvez seulement ajouter un m&acirc;t de signal
+            qui fait face au canton A, qui prot&egrave;ge le canton
+            B, vous ne pouvez pas ajouter un m&acirc;t de signal
+            qui fait face au canton B pour prot&eacute;ger le
+            canton A.</p>
+
+            <h3>G&eacute;n&eacute;rer la Logique de
+            Signalisation</h3>La logique de signalisation peut
+            &ecirc;tre automatiquement g&eacute;n&eacute;r&eacute;e
+            de deux mani&egrave;res diff&eacute;rentes.<br>
+            La premi&egrave;re est de la construire sur un
+            m&acirc;t de signal &agrave; partir d'un m&acirc;t de
+            signal de base. Cela peut &ecirc;tre fait en
+            s&eacute;lectionnant "Logique M&acirc;t de Signal"
+            &agrave; partir du menu contextuel de l'ic&ocirc;ne de
+            m&acirc;t de signal sur le panneau, &agrave; partir de
+            l&agrave;, vous cliquez ensuite sur le bouton
+            "D&eacute;couverte" , le syst&egrave;me va chercher
+            tous les m&acirc;ts de destination potentielles qui
+            sont valides par rapport au m&acirc;t
+            s&eacute;lectionn&eacute;.
+
+            <p><img src="images/discover.png" height="209" width=
+            "502"></p>
+
+            <p>La deuxi&egrave;me m&eacute;thode est l'option
+            "Paire" du menu dans le tableau de logiques m&acirc;t
+            de signal, cela va g&eacute;n&eacute;rer une logique
+            bas&eacute;e sur l'ensemble de m&acirc;t de signal sur
+            le panneau de l'&eacute;diteur de r&eacute;seau.</p>
+
+            <p><img src="images/pairs.png" height="125" width=
+            "308"></p>
+
+            <p>S'il vous pla&icirc;t soyez conscient que sur les
+            grands r&eacute;seaux avec un grand nombre de
+            m&acirc;ts de signal configur&eacute;s, cela peut
+            prendre un certain temps</p>
+
+            <p>L' acc&egrave;s &agrave; la configuration de
+            Logiques M&acirc;t de Signal peut &ecirc;tre fait
+            &agrave; partir de trois endroit diff&eacute;rent</p>
+
+            <ul>
+              <li><a href=
+              "../../../package/jmri/jmrit/beantable/SignalMastLogicTable.shtml">
+              Tableau Logique M&acirc;t Signal</a></li>
+
+              <li>Sur le Tableau de M&acirc;t de Signal, il y a un
+              bouton Modifier contre chaque M&acirc;t de
+              Signal</li>
+
+              <li>Le menu contextuel sur l'Ic&ocirc;ne M&acirc;t
+              Signal, il y a un &eacute;l&eacute;ment de menu pour
+              Logique M&acirc;t Signal</li>
+            </ul>Vous pouvez ajouter de nouveaux avec le bouton
+            "Ajouter ..." sur chacun des tableaux suivants, qui
+            vous emm&egrave;ne &agrave; la <a href=
+            "../../../package/jmri/jmrit/signalling/AddEditSignallingLogic.shtml">
+            fen&ecirc;tre "Ajouter &eacute;diter Logiques Mat de
+            Signal"</a>. <!--#include virtual="/Footer" -->
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
