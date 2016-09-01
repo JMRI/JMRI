@@ -1,86 +1,98 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!--UpDated by Herv&#233; Blorec  2013/9/09-->
+
 <html lang="fr">
 <head>
-    <TITLE>
- 	JMRI: Utilisation de Sch&#233;ma XML
-   </TITLE> 
-    <meta content="Bob Jacobsen" name="Author">
-    <meta name="keywords" content="JMRI technical code xml schema usage">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
-<!-- Style -->
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Utilisation de Sch&eacute;ma XML</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content=
+  "JMRI technical code xml schema usage">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header" -->
 
-	<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h1>JMRI: Utilisation de Sch&#233;ma XML</h1>
+    <div id="mainContent">
+      <h1>JMRI: Utilisation de Sch&eacute;ma XML</h1>JMRI utilise
+      XML pour un certain nombre d'objectifs: tenir les
+      d&eacute;finitions d&eacute;codeur, pour son <a href=
+      "XmlPersistance.shtml">syst&egrave;me de persistance</a> des
+      informations de configuration et de panneau, et de
+      cr&eacute;er des parties du site web &agrave; partir d'autres
+      fichiers. Cette page d&eacute;crit comment nous
+      pr&eacute;ciser le contenu de ces fichiers &agrave; l'aide de
+      <a href=
+      "http://www.w3schools.com/schema/schema_intro.asp">schema
+      XML</a>.
 
-JMRI utilise XML pour un certain nombre d'objectifs:
- tenir les d&#233;finitions d&#233;codeur, pour son
-<a href="XmlPersistance.shtml">syst&#232;me de persistance</a>
-des informations de configuration et de panneau, et de cr&#233;er des parties du site web &#224; partir d'autres fichiers.
-Cette page d&#233;crit comment nous pr&#233;ciser le contenu de ces fichiers &#224; l'aide de 
-<a href="http://www.w3schools.com/schema/schema_intro.asp">schema XML</a>.
+      <p>Pour des exemples (pas un tutoriel!) sur la structure de
+      notre sch&eacute;ma, voir la <a href=
+      "XmlSchemaExamples.shtml">page exemples</a>.</p>
 
-<p>
-Pour des exemples (pas un tutoriel!) sur la structure de
-notre sch&#233;ma, voir la
-<a href="XmlSchemaExamples.shtml">page exemples</a>.
+      <p>Le sch&eacute;ma courant peut &ecirc;tre vu en ligne dans
+      le <a href="http://jmri.org/xml/schema">r&eacute;pertoire
+      schema</a>. Le plus couramment utilis&eacute; est le <a href=
+      "http://jmri.org/xml/schema/layout.xsd">sh&eacute;ma pour
+      fichiers de panneau layout.xsd</a>. Voir ci-dessous comment
+      il est organis&eacute;.</p>
 
-<p>
-Le sch&#233;ma courant peut &#234;tre vu en ligne dans le 
-<a href="http://jmri.org/xml/schema"> r&#233;pertoire schema</a>.
-Le plus couramment utilis&#233; est le 
-<a href="http://jmri.org/xml/schema/layout.xsd">sh&#233;ma pour fichiers de panneau layout.xsd</a>.  
-Voir ci-dessous comment il est organis&#233;.
+      <h2>Acc&egrave;s aux D&eacute;finitions de
+      Sch&eacute;ma</h2>JMRI utilise Schema XML pour d&eacute;finir
+      le format de ses fichiers.
 
-<h2>Acc&#232;s aux D&#233;finitions de Sch&#233;ma</h2>
-JMRI utilise Schema XML pour d&#233;finir le format de ses fichiers.
-<P>
-Ces sch&#233;ma XML peuvent &#234;tre disponibles pour le programme quand il
-lit les fichiers, car ils d&#233;finissent les valeurs par d&#233;faut pour les 
-attributs manquants et les autres informations n&#233;cessaires.
-<P>
-Dans les distributions JMRI, celles-ci sont stock&#233;es dans le r&#233;pertoire
-<a href="/xml/schema">xml/schema</a>.  
-Notez qu'elles ne sont pas enregistr&#233;es dans chaque r&#233;pertoire
-aux c&#244;t&#233;s des fichiers XML. Il y a tout simplement de trop nombreux
-lieux pour garder un tel ensemble de fichiers de d&#233;finitions de sch&#233;ma &#224; jour.
-JMRI lui-m&#234;me, via la classe jmri.jmrit.XmlFile, fournit une
-aide pour localiser ces fichiers lorsque l'analyseur XML
-en a besoin.  
-<p/>
+      <p>Ces sch&eacute;ma XML peuvent &ecirc;tre disponibles pour
+      le programme quand il lit les fichiers, car ils
+      d&eacute;finissent les valeurs par d&eacute;faut pour les
+      attributs manquants et les autres informations
+      n&eacute;cessaires.</p>
 
-<h2>D&#233;veloppement de Sch&#233;ma JMRI</h2>
+      <p>Dans les distributions JMRI, celles-ci sont
+      stock&eacute;es dans le r&eacute;pertoire <a href=
+      "/xml/schema">xml/schema</a>. Notez qu'elles ne sont pas
+      enregistr&eacute;es dans chaque r&eacute;pertoire aux
+      c&ocirc;t&eacute;s des fichiers XML. Il y a tout simplement
+      de trop nombreux lieux pour garder un tel ensemble de
+      fichiers de d&eacute;finitions de sch&eacute;ma &agrave;
+      jour. JMRI lui-m&ecirc;me, via la classe jmri.jmrit.XmlFile,
+      fournit une aide pour localiser ces fichiers lorsque
+      l'analyseur XML en a besoin.</p>
 
-Notre organisation pr&#233;f&#233;r&#233;e pour le sch&#233;ma XML
-est bas&#233;e sur la structure du code sous-jacent:
-Une *classe XML particuli&#232;re est l'unit&#233; de r&#233;utilisation
-<p>
-Beaucoup de classes descendent de jmri.configurexml.XmAdapter:
-(<a href="http://jmri.org/JavaDoc/doc/jmri/configurexml/XmlAdapter.html">voir JavaDoc</a>)
+      <h2>D&eacute;veloppement de Sch&eacute;ma JMRI</h2>Notre
+      organisation pr&eacute;f&eacute;r&eacute;e pour le
+      sch&eacute;ma XML est bas&eacute;e sur la structure du code
+      sous-jacent: Une *classe XML particuli&egrave;re est
+      l'unit&eacute; de r&eacute;utilisation
 
-<p>
-Par convention, fournir des &#233;l&#233;ments &lt;xsd:appinfo&gt;&lt;xsd:annotation&gt; contenant le nom de classe qui lit/&#233;crit l'&#233;l&#233;ment:
-<pre style="font-family: monospace;">
+      <p>Beaucoup de classes descendent de
+      jmri.configurexml.XmAdapter: (<a href=
+      "http://jmri.org/JavaDoc/doc/jmri/configurexml/XmlAdapter.html">voir
+      JavaDoc</a>)</p>
+
+      <p>Par convention, fournir des &eacute;l&eacute;ments
+      &lt;xsd:appinfo&gt;&lt;xsd:annotation&gt; contenant le nom de
+      classe qui lit/&eacute;crit l'&eacute;l&eacute;ment:</p>
+      <pre style="font-family: monospace;">
     &lt;xs:annotation&gt;
         &lt;xs:documentation&gt;
         beaucoup de docs lisibles sont ici
@@ -91,230 +103,327 @@ Par convention, fournir des &#233;l&#233;ments &lt;xsd:appinfo&gt;&lt;xsd:annota
     &lt;/xs:annotation&gt;
 </pre>
 
-<h3>Le Mod&#232;le de Store V&#233;nitien</h3>
+      <h3>Le Mod&egrave;le de Store V&eacute;nitien</h3>Nous nous
+      dirigeons vers la structuration de notre XML en utilisant le
+      "Mod&egrave;le Store V&eacute;nitien". Dans ce style, les
+      &eacute;l&eacute;ments de haut niveau qui sont &eacute;crits
+      par les classes ont des types d&eacute;finis pour eux. Tous
+      les &eacute;l&eacute;ments qui rel&egrave;vent de ceux-ci
+      sont d&eacute;finis de fa&ccedil;on anonyme, au sein de ces
+      &eacute;l&eacute;ments. Pour un exemple, voir le fichier
+      <a href=
+      "http://jmri.org/xml/schema/types/sensors.xsd">types/sensors.xsd</a>,
+      qui d&eacute;finit un type pour les &eacute;l&eacute;ments
+      "capteurs" &eacute;crit pour SensorManagers. Dans cela, il
+      est inclu une d&eacute;finition d'un &eacute;l&eacute;ment
+      "capteur", et un &eacute;l&eacute;ment "commentaire" au sein
+      de celui-ci.
 
-Nous nous dirigeons vers la structuration de notre XML en utilisant le "Mod&#232;le Store V&#233;nitien".
-Dans ce style, les &#233;l&#233;ments de haut niveau qui sont &#233;crits par les classes ont des types d&#233;finis pour eux.
-Tous les &#233;l&#233;ments qui rel&#232;vent de ceux-ci sont d&#233;finis de fa&#231;on anonyme, au sein de ces &#233;l&#233;ments.
-Pour un exemple, voir le fichier
-<a href="http://jmri.org/xml/schema/types/sensors.xsd">types/sensors.xsd</a>,
-qui d&#233;finit un type pour les &#233;l&#233;ments "capteurs"  &#233;crit pour SensorManagers.
-Dans cela, il est inclu une d&#233;finition d'un  &#233;l&#233;ment "capteur", et un  &#233;l&#233;ment "commentaire" au sein de celui-ci.
+      <p>Cela limite le nombre de types, et conserve les fichiers
+      sch&eacute;ma &agrave; peu pr&egrave;s align&eacute;s avec
+      les classes qui font la lecture et l'&eacute;criture.</p>
 
-<p>
-Cela limite le nombre de types, et conserve les fichiers sch&#233;ma &#224; peu pr&#232;s align&#233;s avec
-les classes qui font la lecture et l'&#233;criture.
+      <p>Il y a quelques &eacute;l&eacute;ments
+      (&eacute;l&eacute;ments et groupes d'attributs) qui
+      s'&eacute;tendent sur plusieurs types. Ils sont
+      d&eacute;finis dans le fichier <a href=
+      "http://jmri.org/xml/schema/types/general.xsd">types/general.xsd</a>.</p>
 
-<p>
-Il y a quelques &#233;l&#233;ments (&#233;l&#233;ments et groupes d'attributs) qui s'&#233;tendent sur plusieurs types.
-Ils sont d&#233;finis dans le fichier
-<a href="http://jmri.org/xml/schema/types/general.xsd">types/general.xsd</a>.
+      <p>Plus d'informations sur des mod&egrave;les de conception
+      de sch&eacute;ma XML sont disponible &agrave; <a href=
+      "http://www.ibm.com/developerworks/xml/library/ws-soa-xmlwsdl.html#N1012B">
+      DeveloperWorks</a>. <a href=
+      "http://developers.sun.com/jsenterprise/archive/nb_enterprise_pack/reference/techart/design_patterns.html">
+      developers.sun</a>, et <a href=
+      "http://www.javapassion.com/webservices/XMLSchemaDesignPatterns.pdf">
+      javapassion</a>.</p>
 
+      <h3>Types D&eacute;finis Disponibles</h3>
 
-<p>
-Plus d'informations sur des mod&#232;les de conception de sch&#233;ma XML sont disponible &#224;
-<a href="http://www.ibm.com/developerworks/xml/library/ws-soa-xmlwsdl.html#N1012B">DeveloperWorks</a>.
-<a href="http://developers.sun.com/jsenterprise/archive/nb_enterprise_pack/reference/techart/design_patterns.html">developers.sun</a>, et
-<a href="http://www.javapassion.com/webservices/XMLSchemaDesignPatterns.pdf">javapassion</a>.
+      <dl>
+        <dt>systemNameType</dt>
 
-<h3>Types D&#233;finis Disponibles</h3>
+        <dd>Noms Syst&egrave;me, pour finalement &ecirc;tre
+        resserr&eacute; &agrave; un v&eacute;ritable test de
+        validit&eacute;</dd>
 
-<dl>
-<dt>systemNameType<dd>Noms Syst&#232;me, pour finalement &#234;tre resserr&#233; &#224; un v&#233;ritable test de validit&#233;
-<dt>userNameType<dd>Noms utilisateurs, non compris le nom vide
-<dt>nullUserNameType<dd>Des noms d'utilisateurs, avec une valeur vide permise
-<dt>beanNameType<dd>Soit le nom utilisateur ou le nom syst&#232;me
-<dt>turnoutStateType<dd>droit, d&#233;vi&#233;
-<dt>signalColorType<dd>rouge,jaune, etc
-<dt>yesNoType<dd>oui, non
-<dt>trueFalseType<dd>vrai,faux
-</dl>
+        <dt>userNameType</dt>
 
-<h3>Versions des Sch&#233;mas</h3>
+        <dd>Noms utilisateurs, non compris le nom vide</dd>
 
-Les exigences pour les versions de XML Schema sont beaucoup
-plus simples que celles des DTDs, surtout parce les articles individuels
- ont une port&#233;e beaucoup plus claire
-.  
+        <dt>nullUserNameType</dt>
 
-<ul>
-<li>Vous <em>faites</em>une
-Version d'un sch&#233;ma quand vous faites un changement dans
-le sch&#233;ma tel que des fichiers pr&#233;c&#233;dents ne seront plus valides
-avec le sch&#233;ma actuel.
-<p>
- 
-<p>
-Dans ce cas, juste faire vos changements de sch&#233;ma dans le
-document courant de sch&#233;ma, et les soumettre en retour &#224; CVS.
-<li>
-Vous <em> ne faites pas</em> une nouvelle
-version du sch&#233;ma, si vous ajoutez ou modifiez des choses telles que les
-fichiers existants continuent &#224; &#234;tre valides.
-<p>
-Dans ce cas, les &#233;tapes pour la nouvelle version du sch&#233;ma sont:
-     <ol>
-     <li> Copiez le fichier du sch&#233;ma actuel pour un nouveau avec
-         le num&#233;ro de version<em> suivant</em>. Par exemple 
-        Copier types/turnouts-2-9-6.xsd dans types/turnouts-2-9-8.xsd.
-        Faites vos changements et soumettez la nouvelle version.
-    <li>Si c'est un sous-fichier, tel que le types/turnouts-2-9-6.xsd,
-        qui est inclut dans un sch&#233;ma principal comme un layout-2-9-6.xsd,
-     le fichier principal a aussi besoin d'&#234;tre copi&#233;, en incluant les changements et soumit &#224; CVS.
-    <li> Ensuite, modifiez le code Java qui &#233;crit la
-r&#233;f&#233;rence de sch&#233;ma pour le sommet de fichiers de sortie
-pour utiliser le nouveau nom de fichier. Par exemple, les fichiers r&#233;seau (panneau)
-sont &#233;crits par
-<code> src/JMRI/configurexml/ConfigXmlManager.java
-    <li>Si les feuilles de style XML (s) en XMLXSLT doivent &#234;tre modifi&#233;es,
-         les versions sont modifi&#233;es d'une fa&#231;on similaire, y compris le
-         changement de code o&#249; la r&#233;f&#233;rence de style est incluse.
-   </ol>
-</ul>
+        <dd>Des noms d'utilisateurs, avec une valeur vide
+        permise</dd>
 
-Dans tous les cas, il est important d'inclure suffisamment de
-fichiers de test pour que les tests unitaires trouvent tous les probl&#232;mes avec le nouveau sch&#233;ma 
-et l'ancien. Voir la 
-<a href="#test">Section test ci-dessous</a>.
+        <dt>beanNameType</dt>
 
-<h2>V&#233;rification des Sch&#233;mas JMRI</h2>
+        <dd>Soit le nom utilisateur ou le nom syst&egrave;me</dd>
 
-XML Schema est plus prolixe que les DTDs auquels nous sommes habitu&#233;s.
-Avec cette complexit&#233;, nous exprimons plus de puissance, mais
-dans le m&#234;me temps les moyens mettent plus de d&#233;sordre.
-<p>
-Il est important que les d&#233;finitions du sch&#233;ma JMRI soient s&#233;mantiquement
-correctes. Il y a certains aspects subtils des sch&#233;ma XML pour lesquels il nous faudra
-du temps pour nous familiariser avec, et si nous laissons trop de probl&#232;mes
-s'accumuler dans l'intervalle, nous finirons par avoir beaucoup de retour de correction &#224; faire.
-La ligne de l'
-<a href="http://www.w3.org/2001/03/webdata/xsv">outil W3C de validation schema</a>
-est un tr&#232;s bon outil pour v&#233;rifier que les modifications du sch&#233;ma JMRI sont encore techniquement
-correctes. Vous devriez v&#233;rifier vos modifications avec lui avant de les soumettre &#224; CVS.
-Malheureusement, il ne semble pas v&#233;rifier la conformit&#233; avec les &#233;l&#233;ments du sch&#233;ma imbriqu&#233;,
-par exemple de DocBook (voir ci-dessous) ou JMRIschema,
-mais c'est toujours un contr&#244;le tr&#232;s utile.
+        <dt>turnoutStateType</dt>
 
-<p>
-L'utilisation de l'outil JMRI "Valider le fichier XML" dans le menu "Debogage" 
-valide un fichier. xml ("fichier d'exemple") qui utilise votre nouveau sch&#233;ma ou
-sch&#233;ma mis &#224; jour est un frein important. 
+        <dd>droit, d&eacute;vi&eacute;</dd>
 
-<p>
-Vous devez aussi ajouter  
-<a href="JUnit.shtml">test JUnit</a>
-qui v&#233;rifie le sch&#233;ma et un sch&#233;ma typique.
-La fa&#231;on la plus facile de le faire (voir par exemple
-test/jmri/configurexml/SchemaTest.java
-) est d'h&#233;riter de votre classe de test depuis
- jmri.configurexml.LoadFileTestBase, et puis appelez <code>validate(File f)</code>
-dans un fichier test. Le fichier test XML peut &#234;tre mis avec
-le fichier de test Java dans l'arborescence de fichier "test/" 
-<pre style="font-family: monospace;">
+        <dt>signalColorType</dt>
+
+        <dd>rouge,jaune, etc</dd>
+
+        <dt>yesNoType</dt>
+
+        <dd>oui, non</dd>
+
+        <dt>trueFalseType</dt>
+
+        <dd>vrai,faux</dd>
+      </dl>
+
+      <h3>Versions des Sch&eacute;mas</h3>Les exigences pour les
+      versions de XML Schema sont beaucoup plus simples que celles
+      des DTDs, surtout parce les articles individuels ont une
+      port&eacute;e beaucoup plus claire .
+
+      <ul>
+        <li>Vous <em>faites</em>une Version d'un sch&eacute;ma
+        quand vous faites un changement dans le sch&eacute;ma tel
+        que des fichiers pr&eacute;c&eacute;dents ne seront plus
+        valides avec le sch&eacute;ma actuel.
+
+          <p>Dans ce cas, juste faire vos changements de
+          sch&eacute;ma dans le document courant de sch&eacute;ma,
+          et les soumettre en retour &agrave; CVS.</p>
+        </li>
+
+        <li>Vous <em>ne faites pas</em> une nouvelle version du
+        sch&eacute;ma, si vous ajoutez ou modifiez des choses
+        telles que les fichiers existants continuent &agrave;
+        &ecirc;tre valides.
+
+          <p>Dans ce cas, les &eacute;tapes pour la nouvelle
+          version du sch&eacute;ma sont:</p>
+
+          <ol>
+            <li>Copiez le fichier du sch&eacute;ma actuel pour un
+            nouveau avec le num&eacute;ro de version
+            <em>suivant</em>. Par exemple Copier
+            types/turnouts-2-9-6.xsd dans types/turnouts-2-9-8.xsd.
+            Faites vos changements et soumettez la nouvelle
+            version.</li>
+
+            <li>Si c'est un sous-fichier, tel que le
+            types/turnouts-2-9-6.xsd, qui est inclut dans un
+            sch&eacute;ma principal comme un layout-2-9-6.xsd, le
+            fichier principal a aussi besoin d'&ecirc;tre
+            copi&eacute;, en incluant les changements et soumit
+            &agrave; CVS.</li>
+
+            <li>Ensuite, modifiez le code Java qui &eacute;crit la
+            r&eacute;f&eacute;rence de sch&eacute;ma pour le sommet
+            de fichiers de sortie pour utiliser le nouveau nom de
+            fichier. Par exemple, les fichiers r&eacute;seau
+            (panneau) sont &eacute;crits par
+            <code>src/JMRI/configurexml/ConfigXmlManager.java</code></li>
+
+            <li><code>Si les feuilles de style XML (s) en XMLXSLT
+            doivent &ecirc;tre modifi&eacute;es, les versions sont
+            modifi&eacute;es d'une fa&ccedil;on similaire, y
+            compris le changement de code o&ugrave; la
+            r&eacute;f&eacute;rence de style est
+            incluse.</code></li>
+          </ol>
+        </li>
+      </ul><code>Dans tous les cas, il est important d'inclure
+      suffisamment de fichiers de test pour que les tests unitaires
+      trouvent tous les probl&egrave;mes avec le nouveau
+      sch&eacute;ma et l'ancien. Voir la <a href="#test">Section
+      test ci-dessous</a>.</code>
+
+      <h2><code>V&eacute;rification des Sch&eacute;mas
+      JMRI</code></h2><code>XML Schema est plus prolixe que les
+      DTDs auquels nous sommes habitu&eacute;s. Avec cette
+      complexit&eacute;, nous exprimons plus de puissance, mais
+      dans le m&ecirc;me temps les moyens mettent plus de
+      d&eacute;sordre.</code>
+
+      <p><code>Il est important que les d&eacute;finitions du
+      sch&eacute;ma JMRI soient s&eacute;mantiquement correctes. Il
+      y a certains aspects subtils des sch&eacute;ma XML pour
+      lesquels il nous faudra du temps pour nous familiariser avec,
+      et si nous laissons trop de probl&egrave;mes s'accumuler dans
+      l'intervalle, nous finirons par avoir beaucoup de retour de
+      correction &agrave; faire. La ligne de l' <a href=
+      "http://www.w3.org/2001/03/webdata/xsv">outil W3C de
+      validation schema</a> est un tr&egrave;s bon outil pour
+      v&eacute;rifier que les modifications du sch&eacute;ma JMRI
+      sont encore techniquement correctes. Vous devriez
+      v&eacute;rifier vos modifications avec lui avant de les
+      soumettre &agrave; CVS. Malheureusement, il ne semble pas
+      v&eacute;rifier la conformit&eacute; avec les
+      &eacute;l&eacute;ments du sch&eacute;ma imbriqu&eacute;, par
+      exemple de DocBook (voir ci-dessous) ou JMRIschema, mais
+      c'est toujours un contr&ocirc;le tr&egrave;s
+      utile.</code></p>
+
+      <p><code>L'utilisation de l'outil JMRI "Valider le fichier
+      XML" dans le menu "Debogage" valide un fichier. xml ("fichier
+      d'exemple") qui utilise votre nouveau sch&eacute;ma ou
+      sch&eacute;ma mis &agrave; jour est un frein
+      important.</code></p>
+
+      <p><code>Vous devez aussi ajouter <a href="JUnit.shtml">test
+      JUnit</a> qui v&eacute;rifie le sch&eacute;ma et un
+      sch&eacute;ma typique. La fa&ccedil;on la plus facile de le
+      faire (voir par exemple
+      test/jmri/configurexml/SchemaTest.java ) est d'h&eacute;riter
+      de votre classe de test depuis
+      jmri.configurexml.LoadFileTestBase, et puis appelez</code>
+      validate(File f) dans un fichier test. Le fichier test XML
+      peut &ecirc;tre mis avec le fichier de test Java dans
+      l'arborescence de fichier "test/"</p>
+      <pre style="font-family: monospace;">
 
     public void testValidateRoster() {
         validate(new java.io.File("java/test/jmri/configurexml/RosterSchemaTest.xml"));
     }
 </pre>
 
-<p>
-Pour une v&#233;rification rapide de fichiers,les utilisateurs de Linux et Mac OS X peuvent valider &#224; partir de la ligne de commande avec par exemple 
-<pre style="font-family: monospace;">
+      <p>Pour une v&eacute;rification rapide de fichiers,les
+      utilisateurs de Linux et Mac OS X peuvent valider &agrave;
+      partir de la ligne de commande avec par exemple</p>
+      <pre style="font-family: monospace;">
 
  cd xml
  xmllint -schema schema/aspecttable.xsd -noout signals/sample-aspects.xml
-</pre>
-<code>xmllint</code> ne peut pas v&#233;rifier les fichiers de sch&#233;ma eux-m&#234;mes, malheureusement, parce que leur sch&#233;ma n'est pas quelque chose qu'il peut g&#233;rer
+</pre><code>xmllint</code> ne peut pas v&eacute;rifier les fichiers
+de sch&eacute;ma eux-m&ecirc;mes, malheureusement, parce que leur
+sch&eacute;ma n'est pas quelque chose qu'il peut g&eacute;rer
 
-<p>
-Votre docs sch&#233;ma doit pointer sur notre feuille de style standard dans
-leur en-t&#234;te:
-<pre style="font-family: monospace;">
+      <p>Votre docs sch&eacute;ma doit pointer sur notre feuille de
+      style standard dans leur en-t&ecirc;te:</p>
+      <pre style="font-family: monospace;">
 &lt;?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?&gt;
-</pre>
-C'est un style assez basique, vraiment suffisant pour
-montrer la structure de base. Pour un exemple de la sortie qu'il
-produit, cliquez sur ce lien vers le fichier de sch&#233;mas <a href="http://jmri.org/xml/schema/aspecttable.xsd">aspecttable.xsd</a>  e.
-Si quelqu'un connait une meilleure feuille de style, nous
-pouvons certainement basculer vers elle.
+</pre>C'est un style assez basique, vraiment suffisant pour montrer
+la structure de base. Pour un exemple de la sortie qu'il produit,
+cliquez sur ce lien vers le fichier de sch&eacute;mas
+      <a href="http://jmri.org/xml/schema/aspecttable.xsd">aspecttable.xsd</a>
+      e. Si quelqu'un connait une meilleure feuille de style, nous
+      pouvons certainement basculer vers elle.
 
-<a id="test">
-<h3>Test JUnit</h3>
+      <h3><a id="test" name="test">Test JUnit</a></h3><a id="test"
+      name="test">Nous testons les sch&eacute;ma XML et les
+      fichiers de deux mani&egrave;res: Les faire valider
+      correctement, et pouvoir correctement lire et
+      r&eacute;&eacute;crire certains fichiers. Le deuxi&egrave;me
+      test est plus compliqu&eacute;, bien s&ucirc;r, mais aussi
+      plus pr&eacute;cieux.</a>
 
-Nous testons les sch&#233;ma XML et les fichiers de deux mani&#232;res:
-Les faire valider correctement, et pouvoir  correctement lire et r&#233;&#233;crire certains fichiers. Le deuxi&#232;me test est plus compliqu&#233;, bien s&#251;r, mais aussi plus pr&#233;cieux. 
+      <p>Pour tester la validation, d&eacute;poser un fichier XML
+      dans le r&eacute;pertoire
+      <code>test/jmri/configurexml/files</code> . Celui-ci va
+      automatiquement &ecirc;tre test&eacute; pour s'assurer qu'il
+      est valide. Si vous changez la version d'un sch&eacute;ma,
+      vous devez ex&eacute;cuter quelques-uns de ces fichiers par
+      le biais de PanelPro (par exemple, les lire et ensuite les
+      r&eacute;&eacute;crire avec le nouveau format) et inclure de
+      nouvelles copies pour tester le nouveau format.</p>
 
-<p>
-Pour tester la validation, d&#233;poser un fichier XML dans le r&#233;pertoire 
-<code>test/jmri/configurexml/files</code> .
-Celui-ci va automatiquement &#234;tre test&#233; pour s'assurer qu'il est valide.
-Si vous changez la version d'un sch&#233;ma, vous devez ex&#233;cuter quelques-uns de ces fichiers par le biais de PanelPro (par exemple, les lire et ensuite les r&#233;&#233;crire avec le nouveau format) et inclure de nouvelles copies pour tester le nouveau format.
-<p>
-De petits fragments qui d&#233;montrent les caract&#233;ristiques sp&#233;cifiques du sch&#233;ma 
-peuvent &#234;tre mis dans les r&#233;pertoires (les dossiers du r&#233;pertoire "&#233;chec" sont attendus pour "&#233;chouer" 
-pour une raison sp&#233;cifique document&#233;e via les commentaires dans le fichier)
-<code>test/jmri/configurexml/pass</code>
-et<code>test/jmri/configurexml/fail</code>.
+      <p>De petits fragments qui d&eacute;montrent les
+      caract&eacute;ristiques sp&eacute;cifiques du sch&eacute;ma
+      peuvent &ecirc;tre mis dans les r&eacute;pertoires (les
+      dossiers du r&eacute;pertoire "&eacute;chec" sont attendus
+      pour "&eacute;chouer" pour une raison sp&eacute;cifique
+      document&eacute;e via les commentaires dans le fichier)
+      <code>test/jmri/configurexml/pass</code>
+      et<code>test/jmri/configurexml/fail</code>.</p>
 
+      <p>Pour lire et &eacute;crire , voir l'exemple dans
+      <code>test/jmri/configurexml/LoadFileTest.java</code></p>
 
-<p>
-Pour lire et &#233;crire , voir l'exemple dans
-<code>test/jmri/configurexml/LoadFileTest.java</code>
+      <h2>Normes Externes et Travaux Futurs&gt;</h2>La <a href=
+      "http://www.oasis-open.org/">collaboration OASIS</a>
+      d&eacute;finit un certain nombre de sch&eacute;mas et
+      d'&eacute;l&eacute;ments de sch&eacute;ma qui sont devenus
+      des standards bien connus. Si possible, nous devrions
+      utiliser ces <a href=
+      "http://www.oasis-open.org/specs/index.php">&eacute;l&eacute;ments
+      standards</a> pour am&eacute;liorer
+      l'interop&eacute;rabilit&eacute;. Les premiers
+      int&eacute;r&ecirc;t sont:
 
-<h2> Normes Externes et Travaux Futurs></h2>
+      <ul>
+        <li>
+          <a href="http://docbook.org/">DockBook</a>qui
+          d&eacute;finit les &eacute;l&eacute;ments de plusieurs
+          concepts que nous utilisons:
 
-La
-<a href="http://www.oasis-open.org/">collaboration OASIS</a>
-d&#233;finit un certain nombre de sch&#233;mas et d'&#233;l&#233;ments de sch&#233;ma qui sont devenus
-des standards bien connus. Si possible, nous devrions utiliser ces 
-<a href="http://www.oasis-open.org/specs/index.php"> &#233;l&#233;ments standards</a>
-pour am&#233;liorer l'interop&#233;rabilit&#233;. Les premiers int&#233;r&#234;t sont:
-<ul>
-<li><a href="http://docbook.org/">DockBook</a>qui d&#233;finit les &#233;l&#233;ments de plusieurs concepts que nous utilisons:
-    <ul>
-    <li>auteur (http://www.docbook.org/tdg/en/html/author.html)
-    <li>adresse (http://www.docbook.org/tdg/en/html/address.html)
-    <li>historique des r&#233;visions (http://www.docbook.org/tdg/en/html/revhistory.html)
-   </ul>
+          <ul>
+            <li>auteur
+            (http://www.docbook.org/tdg/en/html/author.html)</li>
 
-Voir
-<ul>
-<li><a href="http://www.docbook.org/specs/docbook-5.0-spec-cs-01.html">http://www.docbook.org/specs/docbook-5.0-spec-cs-01.html</a>
-<li><a href="http://www.docbook.org/xml/5.0/xsd/">http://www.docbook.org/xml/5.0/xsd/</a>
-<li><a href="http://www.docbook.org/xml/5.0/xsd/docbook.xsd">http://www.docbook.org/xml/5.0/xsd/docbook.xsd</a>
-</ul>
-<p>
-Nous avons nos propres sous-ensemble DocBook que nous utilisons, parce que le sch&#233;ma DocBook complet 5.0 prend un temps tr&#232;s long &#224; analyser, et n'est pas totalement compatible avec les versions d'autres logiciels que nous utilisons.
-Nous utilisons l'espace de noms 5.0 DocBook normal, donc on peut facilement convertir plus tard, &#224; un sch&#233;ma plus complet de mani&#232;re transparente. Notre petit sch&#233;ma est situ&#233; &#224;:
-<a href="http://jmri.org/xml/schema/docbook/docbook.xsd">http://jmri.org/xml/schema/docbook/docbook.xsd</a>
-(notre emplacement du sch&#233;ma habituel). Il est <em> seulement</em>
-r&#233;f&#233;renc&#233; &#224; partir de fichiers de sch&#233;ma JMRI, non par des exemples de fichiers,
-de sorte que nous pouvons le transformer plus tard, avec les travaux finis.
+            <li>adresse
+            (http://www.docbook.org/tdg/en/html/address.html)</li>
 
-<li><a href="http://www.oasis-open.org/committees/ubl/faq.php">UBL</a>, 
-bien destin&#233;s aux op&#233;rations d'entreprises
-, d&#233;finit les &#233;l&#233;ments pour repr&#233;senter des parties (entreprises, personnes),
-p&#233;riph&#233;riques, les num&#233;ros de mod&#232;le, etc.
+            <li>historique des r&eacute;visions
+            (http://www.docbook.org/tdg/en/html/revhistory.html)</li>
+          </ul>Voir
 
-<li><a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=office">OpenDocument</a> 
-(OODF) d&#233;finit un ensemble d'&#233;l&#233;ments et de structures pour
-calculs dans le cadre de son module de tableur. (Mais ils fournissent Relax-NG sch&#233;ma, pas W3C XML Schema,
-donc cela n'aide pas tellement)
-</ul>
+          <ul>
+            <li><a href=
+            "http://www.docbook.org/specs/docbook-5.0-spec-cs-01.html">
+            http://www.docbook.org/specs/docbook-5.0-spec-cs-01.html</a></li>
 
-Apprendre &#224; les utiliser n&#233;cessitera quelques travaux, comme
-nous ne pouvons pas supposer que les ordinateurs utilisant JMRI aient acc&#232;s &#224; Internet,
-on ne peut donc pas simplement faire r&#233;f&#233;rence au sch&#233;ma entier comme des entit&#233;s isol&#233;es.
+            <li><a href=
+            "http://www.docbook.org/xml/5.0/xsd/">http://www.docbook.org/xml/5.0/xsd/</a></li>
 
-<h2>Copyright, Auteur et Information des Versions</h2>
+            <li><a href=
+            "http://www.docbook.org/xml/5.0/xsd/docbook.xsd">http://www.docbook.org/xml/5.0/xsd/docbook.xsd</a></li>
+          </ul>
 
-Pour diverses raisons, nous devons passer au format DocBook
-pour les informations de copyright, l'auteur et des versions dans notre XML
-(fichiers exemple).
+          <p>Nous avons nos propres sous-ensemble DocBook que nous
+          utilisons, parce que le sch&eacute;ma DocBook complet 5.0
+          prend un temps tr&egrave;s long &agrave; analyser, et
+          n'est pas totalement compatible avec les versions
+          d'autres logiciels que nous utilisons. Nous utilisons
+          l'espace de noms 5.0 DocBook normal, donc on peut
+          facilement convertir plus tard, &agrave; un sch&eacute;ma
+          plus complet de mani&egrave;re transparente. Notre petit
+          sch&eacute;ma est situ&eacute; &agrave;: <a href=
+          "http://jmri.org/xml/schema/docbook/docbook.xsd">http://jmri.org/xml/schema/docbook/docbook.xsd</a>
+          (notre emplacement du sch&eacute;ma habituel). Il est
+          <em>seulement</em> r&eacute;f&eacute;renc&eacute;
+          &agrave; partir de fichiers de sch&eacute;ma JMRI, non
+          par des exemples de fichiers, de sorte que nous pouvons
+          le transformer plus tard, avec les travaux finis.</p>
+        </li>
 
-<p>
-Exemple XML:
-<pre style="font-family: monospace;">
+        <li><a href=
+        "http://www.oasis-open.org/committees/ubl/faq.php">UBL</a>,
+        bien destin&eacute;s aux op&eacute;rations d'entreprises ,
+        d&eacute;finit les &eacute;l&eacute;ments pour
+        repr&eacute;senter des parties (entreprises, personnes),
+        p&eacute;riph&eacute;riques, les num&eacute;ros de
+        mod&egrave;le, etc.</li>
+
+        <li><a href=
+        "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=office">
+        OpenDocument</a> (OODF) d&eacute;finit un ensemble
+        d'&eacute;l&eacute;ments et de structures pour calculs dans
+        le cadre de son module de tableur. (Mais ils fournissent
+        Relax-NG sch&eacute;ma, pas W3C XML Schema, donc cela
+        n'aide pas tellement)</li>
+      </ul>Apprendre &agrave; les utiliser n&eacute;cessitera
+      quelques travaux, comme nous ne pouvons pas supposer que les
+      ordinateurs utilisant JMRI aient acc&egrave;s &agrave;
+      Internet, on ne peut donc pas simplement faire
+      r&eacute;f&eacute;rence au sch&eacute;ma entier comme des
+      entit&eacute;s isol&eacute;es.
+
+      <h2>Copyright, Auteur et Information des Versions</h2>Pour
+      diverses raisons, nous devons passer au format DocBook pour
+      les informations de copyright, l'auteur et des versions dans
+      notre XML (fichiers exemple).
+
+      <p>Exemple XML:</p>
+      <pre style="font-family: monospace;">
   &lt;db:copyright&gt;
         &lt;db:year&gt;2009&lt;/db:year&gt;
         &lt;db:year&gt;2010&lt;/db:year&gt;&lt;
@@ -336,9 +445,9 @@ Exemple XML:
   &lt;/db:revhistory&gt;
 </pre>
 
-<p>
-Exemple de description de sch&#233;ma: (Mais voir le vrai, qui est fourni dans le sch&#233;ma/docbookok)
-<pre style="font-family: monospace;">
+      <p>Exemple de description de sch&eacute;ma: (Mais voir le
+      vrai, qui est fourni dans le sch&eacute;ma/docbookok)</p>
+      <pre style="font-family: monospace;">
     &lt;xs:element ref="docbook:copyright" minOccurs="1" maxOccurs="1" &gt;
       &lt;xs:annotation&gt;&lt;xs:documentation&gt;
       DocBook element(s) providing copyright information in standard form.
@@ -357,13 +466,8 @@ Exemple de description de sch&#233;ma: (Mais voir le vrai, qui est fourni dans l
       DocBook element(s) describing the revision history in standard form
       &lt;/xs:documentation&gt;&lt;/xs:annotation&gt;
     &lt;/xs:element&gt;
-</pre>
-
-
-<!--#include virtual="/Footer" -->
-
-	 </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+</pre><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-
