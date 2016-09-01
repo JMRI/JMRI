@@ -1,48 +1,47 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
+<meta name="generator" content=
+"HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 <!-- $Id$ -->
- <!--UpDated by Herv&#233; Blorec le 2013-09-20-->
-<Title>How to Create an XPressNet Log File</Title>
-
+<!--UpDated by Herv&#233; Blorec le 2013-09-20-->
+<title>How to Create an XPressNet Log File</title>
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
-
-<BODY>
+<meta http-equiv="Content-Type" content=
+"text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="/css/default.css"
+media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media=
+"print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+<body>
 <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
-
-<H2>Comment Cr&#233;er un Fichier de Connexion XPressNet </H2>
-<P>
- D&#233;marrer Decoder Pro (ou la d&#233;mo JMRI)
-  Ouvrez le Moniteur XpressNet ( qui est dans le sous-menu du menu "Syst&#232;me" de XPressNet)
-<P>
-  Vous verrez une fen&#234;tre comme la suivante:
-  <img src="images/XPressNetTrafficMonitor.jpg" alt="XPressNet Traffic Monitor Image">
- <BR> 
- Ensuite cliquez sur le bouton «Choisir le fichier Rapport" , et choisissez un fichier Rapport &#224; utiliser
-  (vous pouvez utiliser le nom par d&#233;faut, la chose importante est de savoir o&#249; est le
-  fichier )
-  <Br>
-  Une fois que vous avez cliquez sur Enregistrer dans la bo&#238;te de dialogue, cliquez sur le bouton "D&#233;marrer Connexion" 
-  sur le moniteur.
-  <Br>
-  Maintenant, vous pouvez effectuer toutes les actions que vous souhaitez effectuer.
-   <Br>
-  Enfin, retournez &#224; la fen&#234;tre Moniteur XPressNet , puis cliquez sur le bouton "Stop Connexion"
-    <Br>
- Maintenant vous pouvez quitter l'application ou continuer &#224; travailler.
-
-<!--#include virtual="/Footer" -->
+<div class="nomenu" id="mBody">
+<div id="mainContent">
+<h2>Comment Cr&eacute;er un Fichier de Connexion XPressNet</h2>
+<p>D&eacute;marrer Decoder Pro (ou la d&eacute;mo JMRI) Ouvrez le
+Moniteur XpressNet ( qui est dans le sous-menu du menu
+"Syst&egrave;me" de XPressNet)</p>
+<p>Vous verrez une fen&ecirc;tre comme la suivante: <img src=
+"images/XPressNetTrafficMonitor.jpg" alt=
+"XPressNet Traffic Monitor Image"><br>
+Ensuite cliquez sur le bouton &Acirc;&laquo;Choisir le fichier
+Rapport" , et choisissez un fichier Rapport &agrave; utiliser (vous
+pouvez utiliser le nom par d&eacute;faut, la chose importante est
+de savoir o&ugrave; est le fichier )<br>
+Une fois que vous avez cliquez sur Enregistrer dans la bo&icirc;te
+de dialogue, cliquez sur le bouton "D&eacute;marrer Connexion" sur
+le moniteur.<br>
+Maintenant, vous pouvez effectuer toutes les actions que vous
+souhaitez effectuer.<br>
+Enfin, retournez &agrave; la fen&ecirc;tre Moniteur XPressNet ,
+puis cliquez sur le bouton "Stop Connexion"<br>
+Maintenant vous pouvez quitter l'application ou continuer &agrave;
+travailler. <!--#include virtual="/Footer" --></p>
+</div>
+</div>
 </body>
 </html>

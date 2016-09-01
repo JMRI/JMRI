@@ -1,59 +1,56 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
+<meta name="generator" content=
+"HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 <!-- Copyright ($Author$) 2008 -->
 <!-- $Id$ -->
 <!--UpDated by Herv&#233; Blorec 2013-09-17-->
 <title>JMRI: OpenLCB Naming</title>
-
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
-
-<BODY>
+<meta http-equiv="Content-Type" content=
+"text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="/css/default.css"
+media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media=
+"print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+<body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
-
-<h1> 
-JMRI: D&#233;signation OpenLCB 
-</h1>
-
-Cette page explique comment JMRI utilise les noms syst&#232;me pour
-acc&#233;der aux ressources li&#233;es-OpenLCB.
-
-<p>
-Pour plus d'information sur le support de JMRI OpenLCB, voir la
-<a href="index.shtml">page principale OpenLCB </a>.
-
+<div class="nomenu" id="mBody">
+<div id="mainContent">
+<h1>JMRI: D&eacute;signation OpenLCB</h1>
+Cette page explique comment JMRI utilise les noms syst&egrave;me
+pour acc&eacute;der aux ressources li&eacute;es-OpenLCB.
+<p>Pour plus d'information sur le support de JMRI OpenLCB, voir la
+<a href="index.shtml">page principale OpenLCB</a> .</p>
 <h2>Utilisation des Noms JMRI</h2>
-JMRI fournit une interface pour la configuration r&#233;elle via des
-objets internes tels que les aiguillages, les capteurs, etc qui
-sont &#233;troitement associ&#233;s &#224; des dispositifs physiques correspondants.
-Cette cartographie se fait via "Noms syst&#232;mes», qui &#224; la fois
-identifient comment acc&#233;der &#224; un p&#233;riph&#233;rique particulier, et
-sont la cl&#233; de la recherche jusqu'&#224; l'objet correspondant dans JMRI.
-
-<h2>&#233;v&#232;nements OpenLCB</h2>
-
-<a href="http://openlcb.org">OpenLCB</a>
-communique les &#233;v&#233;nements via des messages avec un format fixe: huit octets de
-contenu. Nous convertissons celui-ci en un code de 16 chiffres hexad&#233;cimaux avec un
- caract&#232;re de t&#234;te "x", par exemple "x1234567890ABCDEF".
-Nous vous recommandons d'utiliser les majuscules pour les lettres A-F..
-
-Vous pouvez &#233;galement y entrer avec des p&#233;riodes s&#233;parant les octets: "12.34.56.78.90.AB.CD.EF".
-Dans ce cas seulement, un z&#233;ro en t&#234;te par octet peut &#234;tre omit lors de la frappe de l'&#233;v&#233;nement;
-JMRI va les ins&#233;rer automatiquement dans les noms. Par exemple, "00.01.02.03.04.05.06.07» peut &#234;tre tap&#233; comme «0.1.2.3.4.5.6.7"
-
-    
-<!--#include virtual="/Footer" -->
+JMRI fournit une interface pour la configuration r&eacute;elle via
+des objets internes tels que les aiguillages, les capteurs, etc qui
+sont &eacute;troitement associ&eacute;s &agrave; des dispositifs
+physiques correspondants. Cette cartographie se fait via "Noms
+syst&egrave;mes&Acirc;&raquo;, qui &agrave; la fois identifient
+comment acc&eacute;der &agrave; un p&eacute;riph&eacute;rique
+particulier, et sont la cl&eacute; de la recherche jusqu'&agrave;
+l'objet correspondant dans JMRI.
+<h2>&eacute;v&egrave;nements OpenLCB</h2>
+<a href="http://openlcb.org">OpenLCB</a> communique les
+&eacute;v&eacute;nements via des messages avec un format fixe: huit
+octets de contenu. Nous convertissons celui-ci en un code de 16
+chiffres hexad&eacute;cimaux avec un caract&egrave;re de t&ecirc;te
+"x", par exemple "x1234567890ABCDEF". Nous vous recommandons
+d'utiliser les majuscules pour les lettres A-F.. Vous pouvez
+&eacute;galement y entrer avec des p&eacute;riodes s&eacute;parant
+les octets: "12.34.56.78.90.AB.CD.EF". Dans ce cas seulement, un
+z&eacute;ro en t&ecirc;te par octet peut &ecirc;tre omit lors de la
+frappe de l'&eacute;v&eacute;nement; JMRI va les ins&eacute;rer
+automatiquement dans les noms. Par exemple,
+"00.01.02.03.04.05.06.07&Acirc;&raquo; peut &ecirc;tre tap&eacute;
+comme &Acirc;&laquo;0.1.2.3.4.5.6.7" 
+<!--#include virtual="/Footer" --></div>
+</div>
 </body>
 </html>

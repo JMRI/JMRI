@@ -1,238 +1,206 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- UpDated by Blorec Herv&#233; 2013-09-25-->
-
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: FAQ CVS</title>
-  <meta content="Bob Jacobsen" name="Author">
-  <meta name="keywords" content="JMRI technical code CVS FAQ">
-  <!-- Style -->
-  <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+<meta name="generator" content=
+"HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+<title>JMRI: FAQ CVS</title>
+<meta content="Bob Jacobsen" name="Author">
+<meta name="keywords" content="JMRI technical code CVS FAQ">
+<!-- Style -->
+<meta http-equiv="content-type" content=
+"text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="/css/default.css"
+media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media=
+"print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
-    <div id="mainContent">
-      <h1>JMRI: Foire Aux Questions CVS (FAQ)</h1>
-
-      <p>Ceci est une liste de questions fr&eacute;quemment
-      pos&eacute;es sur CVS, en particulier sur la fa&ccedil;on
-      dont nous l'utilisons avec JMRI.</p>
-
-      <p>Voir aussi l' <a href="index.shtml">Index Technique</a>
-      pour plus d'informations sur la maintenance du code JMRI.
-      <a name="cvstool" id="cvstool"></a></p>
-
-      <h3>Comment puis-je obtenir une copie de CVS?</h3>De nombreux
-      ordinateurs sont livr&eacute;s avec CVS install&eacute;, y
-      compris Linux et Mac OS X. Si vous utilisez Windows, vous
-      aurez besoin d'installer un programme CVS "client" comme
-      <a href=
-      "http://sourceforge.net/project/showfiles.php?group_id=10072&amp;release_id=24467">
-      WinCVS</a>. Une version r&eacute;cente peut &ecirc;tre
-      t&eacute;l&eacute;charg&eacute;e &agrave; partir de: <a href=
-      "http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip">WinCvs120.zip</a>.
-      <a name="jmrisource" id="jmrisource"></a>
-
-      <h3>Comment puis-je obtenir ma propre copie du code
-      JMRI?</h3>Pour obtenir une copie de la source pour votre
-      propre usage, vous pouvez utiliser "checkout anonyme". Pour
-      un client en ligne de commande cvs, cr&eacute;ez un nouveau
-      r&eacute;pertoire pour le projet, allez dans ce
-      r&eacute;pertoire, et dites &agrave; CVS que vous existez
-      avec
-      <pre>
+<!--#include virtual="/Header" -->
+<div id="mBody"><!--#include virtual="Sidebar" -->
+<div id="mainContent">
+<h1>JMRI: Foire Aux Questions CVS (FAQ)</h1>
+<p>Ceci est une liste de questions fr&eacute;quemment pos&eacute;es
+sur CVS, en particulier sur la fa&ccedil;on dont nous l'utilisons
+avec JMRI.</p>
+<p>Voir aussi l' <a href="index.shtml">Index Technique</a> pour
+plus d'informations sur la maintenance du code JMRI. <a name=
+"cvstool" id="cvstool"></a></p>
+<h3>Comment puis-je obtenir une copie de CVS?</h3>
+De nombreux ordinateurs sont livr&eacute;s avec CVS
+install&eacute;, y compris Linux et Mac OS X. Si vous utilisez
+Windows, vous aurez besoin d'installer un programme CVS "client"
+comme <a href=
+"http://sourceforge.net/project/showfiles.php?group_id=10072&amp;release_id=24467">
+WinCVS</a>. Une version r&eacute;cente peut &ecirc;tre
+t&eacute;l&eacute;charg&eacute;e &agrave; partir de: <a href=
+"http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip">WinCvs120.zip</a>.
+<a name="jmrisource" id="jmrisource"></a>
+<h3>Comment puis-je obtenir ma propre copie du code JMRI?</h3>
+Pour obtenir une copie de la source pour votre propre usage, vous
+pouvez utiliser "checkout anonyme". Pour un client en ligne de
+commande cvs, cr&eacute;ez un nouveau r&eacute;pertoire pour le
+projet, allez dans ce r&eacute;pertoire, et dites &agrave; CVS que
+vous existez avec
+<pre>
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri login
-</pre>Ce "login " en ligne de connexion n'est n&eacute;cessaire
-qu'une seule fois, apr&egrave;s quoi, il sera rappel&eacute; de
-votre machine locale. On peut vous demander un mot de passe. Si
-oui, appuyez simplement sur retour, sinon le mot de passe vide ne
-sera pas accept&eacute;. Vous pouvez alors obtenir une copie du
-code avec
-      <pre>
+</pre>
+Ce "login " en ligne de connexion n'est n&eacute;cessaire qu'une
+seule fois, apr&egrave;s quoi, il sera rappel&eacute; de votre
+machine locale. On peut vous demander un mot de passe. Si oui,
+appuyez simplement sur retour, sinon le mot de passe vide ne sera
+pas accept&eacute;. Vous pouvez alors obtenir une copie du code
+avec
+<pre>
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri co all
 </pre>
-
-      <p>Si vous utilisez un client graphique comme WinCVS,
-      d&eacute;roulez le menu "admin" et s&eacute;lectionnez "ligne
-      de commande" pour obtenir une place pour taper ces commandes.
-      Sur d'autres ordinateurs, vous pouvez taper directement sur
-      la ligne de commande.</p>
-
-      <p>Pour plus d'information voir la page pour <a href=
-      "getcvscode.shtml">obtenir sa propre copie du code
-      source</a>. <a name="update" id="update"></a></p>
-
-      <h3>Comment puis-je mettre &agrave; jour ma copie du code
-      JMRI ?</h3>Les gens contribuent &agrave; la mises &agrave;
-      jour du code JMRI presque chaque semaine. Votre copie locale
-      ne re&ccedil;oit pas ces changements jusqu'&agrave; ce que
-      vous les demandiez, de sorte que vous avez quelque chose de
-      stable pour travailler avec. Si vous avez une copie existante
-      du code et que vous souhaitez mettre &agrave; jour avec le
-      contenu le plus r&eacute;cent de CVS, le commande CVS est:
-      <pre>
+<p>Si vous utilisez un client graphique comme WinCVS,
+d&eacute;roulez le menu "admin" et s&eacute;lectionnez "ligne de
+commande" pour obtenir une place pour taper ces commandes. Sur
+d'autres ordinateurs, vous pouvez taper directement sur la ligne de
+commande.</p>
+<p>Pour plus d'information voir la page pour <a href=
+"getcvscode.shtml">obtenir sa propre copie du code source</a>.
+<a name="update" id="update"></a></p>
+<h3>Comment puis-je mettre &agrave; jour ma copie du code JMRI
+?</h3>
+Les gens contribuent &agrave; la mises &agrave; jour du code JMRI
+presque chaque semaine. Votre copie locale ne re&ccedil;oit pas ces
+changements jusqu'&agrave; ce que vous les demandiez, de sorte que
+vous avez quelque chose de stable pour travailler avec. Si vous
+avez une copie existante du code et que vous souhaitez mettre
+&agrave; jour avec le contenu le plus r&eacute;cent de CVS, le
+commande CVS est:
+<pre>
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri -q update -dA
-</pre>L'option "-q" supprime un grand nombre de messages de
-routine. L'option "-d " est n&eacute;cessaire pour dire &agrave;
-CVS d'apporter aussi de nouveaux r&eacute;pertoires. L'option "-A
-", ici combin&eacute; avec "-d", signifie que vous voulez le
-contenu le plus r&eacute;cent. <a name="release" id="release">
-      </a>
-
-      <h3>Comment puis-je obtenir le code pour une version
-      particuli&egrave;re?</h3>CVS utilise des
-      &laquo;balises&raquo; pour faire des ensembles de contenu
-      sp&eacute;cifique. Nous les utilisons pour marquer le code
-      pour chaque version que nous construisons. Pour obtenir le
-      code pour une version, vous pouvez la demander avec une
-      commande comme ceci:
-      <pre>
+</pre>
+L'option "-q" supprime un grand nombre de messages de routine.
+L'option "-d " est n&eacute;cessaire pour dire &agrave; CVS
+d'apporter aussi de nouveaux r&eacute;pertoires. L'option "-A ",
+ici combin&eacute; avec "-d", signifie que vous voulez le contenu
+le plus r&eacute;cent. <a name="release" id="release"></a>
+<h3>Comment puis-je obtenir le code pour une version
+particuli&egrave;re?</h3>
+CVS utilise des &laquo;balises&raquo; pour faire des ensembles de
+contenu sp&eacute;cifique. Nous les utilisons pour marquer le code
+pour chaque version que nous construisons. Pour obtenir le code
+pour une version, vous pouvez la demander avec une commande comme
+ceci:
+<pre>
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri -q co -rRelease-2-1-5
-</pre>Dans cet exemple, "Release-2-1-5 " est le mot-cl&eacute; pour
-la version 2.1.5. Vous pouvez ajuster le mot cl&eacute; au besoin.
-Si vous avez d&eacute;j&agrave; une version v&eacute;rifi&eacute;e
-et que vous souhaitiez mettre &agrave; jour une version
+</pre>
+Dans cet exemple, "Release-2-1-5 " est le mot-cl&eacute; pour la
+version 2.1.5. Vous pouvez ajuster le mot cl&eacute; au besoin. Si
+vous avez d&eacute;j&agrave; une version v&eacute;rifi&eacute;e et
+que vous souhaitiez mettre &agrave; jour une version
 sp&eacute;cifique, changer le commandement "co" par "update-d"
-
-      <h3><a name="refid" id="refid">Quelles sont ces lignes comme
-      <i>$Revision$</i> and <i>$Id$</i>?</a></h3>Elles sont
-      automatiquement mises &agrave; jour par CVS &agrave; chaque
-      fois qu'une nouvelle version du fichier est
-      v&eacute;rifi&eacute;, dans le r&eacute;f&eacute;rentiel.
-      S'il vous pla&icirc;t ne pas les modifier! Si vous contribuez
-      avec vos modifications au projet, ces lignes doivent
-      &ecirc;tre intactes dans le fichier de contribution.
-
-      <h3><a name="update" id="update">Comment puis-je mettre
-      &agrave; jour une copie existante de la source de la version
-      actuelle?</a></h3>Comme le code commun change, vous pouvez
-      mettre &agrave; jour votre copie pour contenir la
-      derni&egrave;re version. Pour ce faire, utilisez:
-      <pre>
+<h3><a name="refid" id="refid">Quelles sont ces lignes comme
+<i>$Revision$</i> and <i>$Id$</i>?</a></h3>
+Elles sont automatiquement mises &agrave; jour par CVS &agrave;
+chaque fois qu'une nouvelle version du fichier est
+v&eacute;rifi&eacute;, dans le r&eacute;f&eacute;rentiel. S'il vous
+pla&icirc;t ne pas les modifier! Si vous contribuez avec vos
+modifications au projet, ces lignes doivent &ecirc;tre intactes
+dans le fichier de contribution.
+<h3><a name="update" id="update">Comment puis-je mettre &agrave;
+jour une copie existante de la source de la version
+actuelle?</a></h3>
+Comme le code commun change, vous pouvez mettre &agrave; jour votre
+copie pour contenir la derni&egrave;re version. Pour ce faire,
+utilisez:
+<pre>
 cvs -q update
-</pre>Toute modification sera fusionn&eacute;e dans les fichiers
-sur votre disque, et vous devriez &ecirc;tre &agrave; jour avec vos
+</pre>
+Toute modification sera fusionn&eacute;e dans les fichiers sur
+votre disque, et vous devriez &ecirc;tre &agrave; jour avec vos
 propres modifications encore pr&eacute;sentes.
-
-      <p>L'option "-q" supprime un grand nombre de messages
-      d'information pour CVS entre les diff&eacute;rents
-      r&eacute;pertoires dans le projet, la commande fonctionne
-      encore si vous l'omettez, mais il sera plus difficile de voir
-      les messages d'erreur r&eacute;elle.</p>
-
-      <h3><a name="ds_store" id="ds_store">Quels sont ces messages
-      sur .DS_Store files?</a></h3>Si vous utilisez Mac OS X, CVS
-      peut vous donner des messages &agrave; propos de ". DS_Store
-      ".Ils sont utilis&eacute;s pour garder une trace de la
-      disposition des fen&ecirc;tres, etc. Pour supprimer ces
-      messages, il suffit de cr&eacute;er un fichier dans votre
-      r&eacute;pertoire appel&eacute; ". cvsignore" et ajouter une
-      ligne de ". DS_Store" (sans les guillemets). CVS va ignorer
-      tous les . DS_Store dans tous les arbres extrait de votre
-      r&eacute;pertoire extrait.
-
-      <h3><a name="tags" id="tags">Quelle est la convention pour
-      les noms de balise?</a></h3>En r&egrave;gle
-      g&eacute;n&eacute;rale, trois types de noms de balises sont
-      utilis&eacute;s:
-
-      <ol>
-        <li>"Release-1-5-4 &raquo; - la balise d&eacute;finissant
-        une version sp&eacute;cifique du code publi&eacute;. Elles
-        sont cr&eacute;&eacute;es lors de la lib&eacute;ration de
-        la version, et ne devrait pas &ecirc;tre
-        chang&eacute;es.</li>
-
-        <li>"Release-1-5-4-branch" - c'est la branche-balise
-        d&eacute;finissant une "branche patch" pour une version
-        sp&eacute;cifique. C'est la seule fois que nous font usage
-        de branches CVS, s'il vous pla&icirc;t noter que nous
-        n'utilisons pas de branches pour le d&eacute;veloppement
-        normal.</li>
-
-        <li>"rgj20050603a" - de la forme "initiales" "date"
-        "quelque lettre", ne peut &ecirc;tre utilis&eacute; que par
-        des d&eacute;veloppeurs individuels pour garder une trace
-        de ce qu'ils font. Tout ce que nous demandons, c'est que
-        vous commenciez une &eacute;tiquette avec vos
-        initiales.</li>
-      </ol><a name="structure" id="structure"></a>
-
-      <h3>Comment JMRI est sauvegarder dans CVS?</h3>JMRI se
-      compose de deux grandes arborescences de code, et un certain
-      nombre de r&eacute;pertoires auxiliaires. Le code est
-      divis&eacute; en "jmri", le code principal JMRI, et "test",
-      l'ensemble des tests est automatis&eacute;s. Ils sont
-      s&eacute;par&eacute;s de sorte qu'il est facile de construire
-      tout le logiciel distribu&eacute;, sans y inclure le code de
-      test. (Si vous regardez directement le d&eacute;p&ocirc;t
-      CVS, vous verrez aussi les r&eacute;pertoires "jmrit&raquo;
-      et "jmrix" , qui sont obsol&egrave;tes, et conserv&eacute;s
-      exclusivement pour des raisons historiques).
-
-      <p>De m&ecirc;me, l'information auxiliaire est gard&eacute;s
-      dans "lib", "xml", "ressources", "jython",
-      r&eacute;pertoires, etc.</p>
-
-      <p>Enfin, il y a un tas d'informations qui ne font pas partie
-      de la zone de d&eacute;veloppement d'applications, y compris
-      le r&eacute;pertoire des outils "scripts" pour la
-      lib&eacute;ration des constructions, le site web, et
-      d'autres.</p>
-
-      <p>Nous stockons tout ceci s&eacute;par&eacute;ment dans le
-      CVS de sorte que vous pouvez v&eacute;rifier uniquement celle
-      dont vous avez besoin.</p>
-
-      <p>Pour simplifier l'extraction d'un arbre de
-      d&eacute;veloppement, nous offrons un module CVS nomm&eacute;
-      "all". Cela v&eacute;rifie les r&eacute;pertoires
-      n&eacute;cessaires et les met dans les endroits
-      n&eacute;cessaires pour construire en ligne droite. <a name=
-      "lcok" id="lcok"></a></p>
-
-      <h3>Certains fichiers semblent &ecirc;tre en lecture seule,
-      pourquoi ceci?</h3>Comme le logiciel &eacute;volue, les
-      fichiers deviennent parfois obsol&egrave;tes. S'ils ne sont
-      pas tous n&eacute;cessaires, CVS nous permet de les supprimer
-      des versions ult&eacute;rieures. Dans ce cas, ils ne se
-      montrent pas du tout lorsque vous v&eacute;rifiez une copie
-      &agrave; jour.
-
-      <p>Mais parfois, le fichier doit rester, mais nous voulons
-      qu'il ne soit plus modifiable. Par exemple, un sch&eacute;ma
-      plus &acirc;g&eacute;s ou fichier DTD doit rester de telle
-      sorte que les r&eacute;f&eacute;rences plus anciennes
-      continuer &agrave; travailler, mais nous ne voulons pas que
-      quelqu'un puissent modifier accidentellement l'ancienne
-      version au lieu de la version actuelle du fichier.</p>
-
-      <p>Dans de tels cas, nous utilisons le "cvs watch on " option
-      pour verrouiller efficacement le fichier. La version
-      archiv&eacute;e du fichier est prot&eacute;g&eacute;e en
-      &eacute;criture ainsi vous ne pouvez pas le modifier sans
-      remarquer le probl&egrave;me, et les changements ne peuvent
-      pas &ecirc;tre v&eacute;rifi&eacute;es de nouveau dans CVS
-      &agrave; moins que la montre de fichier soit
-      d&eacute;sactiv&eacute;e. 
-      <!--#include virtual="/Footer" --></p>
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+<p>L'option "-q" supprime un grand nombre de messages d'information
+pour CVS entre les diff&eacute;rents r&eacute;pertoires dans le
+projet, la commande fonctionne encore si vous l'omettez, mais il
+sera plus difficile de voir les messages d'erreur
+r&eacute;elle.</p>
+<h3><a name="ds_store" id="ds_store">Quels sont ces messages sur
+.DS_Store files?</a></h3>
+Si vous utilisez Mac OS X, CVS peut vous donner des messages
+&agrave; propos de ". DS_Store ".Ils sont utilis&eacute;s pour
+garder une trace de la disposition des fen&ecirc;tres, etc. Pour
+supprimer ces messages, il suffit de cr&eacute;er un fichier dans
+votre r&eacute;pertoire appel&eacute; ". cvsignore" et ajouter une
+ligne de ". DS_Store" (sans les guillemets). CVS va ignorer tous
+les . DS_Store dans tous les arbres extrait de votre
+r&eacute;pertoire extrait.
+<h3><a name="tags" id="tags">Quelle est la convention pour les noms
+de balise?</a></h3>
+En r&egrave;gle g&eacute;n&eacute;rale, trois types de noms de
+balises sont utilis&eacute;s:
+<ol>
+<li>"Release-1-5-4 &raquo; - la balise d&eacute;finissant une
+version sp&eacute;cifique du code publi&eacute;. Elles sont
+cr&eacute;&eacute;es lors de la lib&eacute;ration de la version, et
+ne devrait pas &ecirc;tre chang&eacute;es.</li>
+<li>"Release-1-5-4-branch" - c'est la branche-balise
+d&eacute;finissant une "branche patch" pour une version
+sp&eacute;cifique. C'est la seule fois que nous font usage de
+branches CVS, s'il vous pla&icirc;t noter que nous n'utilisons pas
+de branches pour le d&eacute;veloppement normal.</li>
+<li>"rgj20050603a" - de la forme "initiales" "date" "quelque
+lettre", ne peut &ecirc;tre utilis&eacute; que par des
+d&eacute;veloppeurs individuels pour garder une trace de ce qu'ils
+font. Tout ce que nous demandons, c'est que vous commenciez une
+&eacute;tiquette avec vos initiales.</li>
+</ol>
+<a name="structure" id="structure"></a>
+<h3>Comment JMRI est sauvegarder dans CVS?</h3>
+JMRI se compose de deux grandes arborescences de code, et un
+certain nombre de r&eacute;pertoires auxiliaires. Le code est
+divis&eacute; en "jmri", le code principal JMRI, et "test",
+l'ensemble des tests est automatis&eacute;s. Ils sont
+s&eacute;par&eacute;s de sorte qu'il est facile de construire tout
+le logiciel distribu&eacute;, sans y inclure le code de test. (Si
+vous regardez directement le d&eacute;p&ocirc;t CVS, vous verrez
+aussi les r&eacute;pertoires "jmrit&raquo; et "jmrix" , qui sont
+obsol&egrave;tes, et conserv&eacute;s exclusivement pour des
+raisons historiques).
+<p>De m&ecirc;me, l'information auxiliaire est gard&eacute;s dans
+"lib", "xml", "ressources", "jython", r&eacute;pertoires, etc.</p>
+<p>Enfin, il y a un tas d'informations qui ne font pas partie de la
+zone de d&eacute;veloppement d'applications, y compris le
+r&eacute;pertoire des outils "scripts" pour la lib&eacute;ration
+des constructions, le site web, et d'autres.</p>
+<p>Nous stockons tout ceci s&eacute;par&eacute;ment dans le CVS de
+sorte que vous pouvez v&eacute;rifier uniquement celle dont vous
+avez besoin.</p>
+<p>Pour simplifier l'extraction d'un arbre de d&eacute;veloppement,
+nous offrons un module CVS nomm&eacute; "all". Cela v&eacute;rifie
+les r&eacute;pertoires n&eacute;cessaires et les met dans les
+endroits n&eacute;cessaires pour construire en ligne droite.
+<a name="lcok" id="lcok"></a></p>
+<h3>Certains fichiers semblent &ecirc;tre en lecture seule,
+pourquoi ceci?</h3>
+Comme le logiciel &eacute;volue, les fichiers deviennent parfois
+obsol&egrave;tes. S'ils ne sont pas tous n&eacute;cessaires, CVS
+nous permet de les supprimer des versions ult&eacute;rieures. Dans
+ce cas, ils ne se montrent pas du tout lorsque vous v&eacute;rifiez
+une copie &agrave; jour.
+<p>Mais parfois, le fichier doit rester, mais nous voulons qu'il ne
+soit plus modifiable. Par exemple, un sch&eacute;ma plus
+&acirc;g&eacute;s ou fichier DTD doit rester de telle sorte que les
+r&eacute;f&eacute;rences plus anciennes continuer &agrave;
+travailler, mais nous ne voulons pas que quelqu'un puissent
+modifier accidentellement l'ancienne version au lieu de la version
+actuelle du fichier.</p>
+<p>Dans de tels cas, nous utilisons le "cvs watch on " option pour
+verrouiller efficacement le fichier. La version archiv&eacute;e du
+fichier est prot&eacute;g&eacute;e en &eacute;criture ainsi vous ne
+pouvez pas le modifier sans remarquer le probl&egrave;me, et les
+changements ne peuvent pas &ecirc;tre v&eacute;rifi&eacute;es de
+nouveau dans CVS &agrave; moins que la montre de fichier soit
+d&eacute;sactiv&eacute;e. <!--#include virtual="/Footer" --></p>
+</div>
+<!-- closes #mainContent--></div>
+<!-- closes #mBody-->
 </body>
 </html>

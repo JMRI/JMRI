@@ -1,71 +1,66 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 <!-- $Id$ -->
 <!-- UpDated by Herv&#233; Blorec  2013-09-09-->
 <html lang="fr">
 <head>
- <TITLE>
- JMRI: MacOS Serial Port conections
- 
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META content="Dick Bronson" name=Author>
-    <META content="Walter Thompson" name=Author>
-    <META content="John Plocher" name=Author>
-    <META name="keywords" content="java model railroad JMRI install windows">
-
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
-
-<BODY>
+<meta name="generator" content=
+"HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+<title>JMRI: MacOS Serial Port conections</title>
+<meta http-equiv="Content-Type" content=
+"text/html; charset=us-ascii">
+<meta content="Bob Jacobsen" name="Author">
+<meta content="Dick Bronson" name="Author">
+<meta content="Walter Thompson" name="Author">
+<meta content="John Plocher" name="Author">
+<meta name="keywords" content=
+"java model railroad JMRI install windows"><!-- Style -->
+<meta http-equiv="Content-Type" content=
+"text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="/css/default.css"
+media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media=
+"print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+<body>
 <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
-
-      <H2> 
-      JMRI Guide d'installation: Connexions port s&#233;rie MacOS 
-</H2>
-
-<p>Le ports s&#233;rie Macintosh utiliser un connecteur "mini-DIN-8",  qui ne
-contient pas tous les signaux d'un connecteur RS232 typiques Cette page
-explique comment c&#226;bler un adaptateur de sorte qu'un Macintosh puissent travailler avec JMRI
-et/ou un LocoBuffer ou LocoBuffer II. Le m&#234;me adaptateur peut &#233;galement travailler avec
-d'autres protocoles, en particulier ceux qui utilisent le "contr&#244;le de flux mat&#233;riel".</p>
-
- <p> Une bonne &#233;tude de connexions Macintosh s&#233;rie, y compris les bonnes
-techniques de d&#233;bogage, est disponible &#224;
-<a href="http://francis.courtois.free.fr/jc1/serial/main.html">http://francis.courtois.free.fr/jc1/serial/main.html</a>. lien cass&#233; le 2013-09-09.
-<p>
-<img src="./images/LB-II-Mac.gif" ALT="Mac DIN-8 wirin diagram" WIDTH="374" HEIGHT="192" hspace="10" VSPACE="0"/>
-</ p>
-
-
-<p> Notez que le Macintosh ne poss&#232;de qu'une seule sortie d'&#233;tat et d'entr&#233;e.</p>
-
-<p> Si le p&#233;riph&#233;rique s&#233;rie utilise le "contr&#244;le de flux mat&#233;riel", il entend faire valoir
-que le fil CTS  indique quand il est OK pour envoyer des donn&#233;es. Cela doit &#234;tre
-connect&#233; au fil d'entr&#233;e du Macintosh, ou le programme ne sera pas en mesure d'envoyer.</p>
-
-<p> Le statut sortie sera activ&#233; par JMRI au d&#233;marrage. Il devrait
-&#234;tre connect&#233; &#224; n'importe quel fil de statut (par exemple RTS) que le p&#233;riph&#233;rique s&#233;rie
-surveille.</p>
-
-<p> Les informations sur cette page ont &#233;t&#233; fournies par Dick Bronson et
-Walter Thompson.</P>
-
-
-      <hr class="hide">
-
-<!--#include virtual="/Footer" -->
+<div class="nomenu" id="mBody">
+<div id="mainContent">
+<h2>JMRI Guide d'installation: Connexions port s&eacute;rie
+MacOS</h2>
+<p>Le ports s&eacute;rie Macintosh utiliser un connecteur
+"mini-DIN-8", qui ne contient pas tous les signaux d'un connecteur
+RS232 typiques Cette page explique comment c&acirc;bler un
+adaptateur de sorte qu'un Macintosh puissent travailler avec JMRI
+et/ou un LocoBuffer ou LocoBuffer II. Le m&ecirc;me adaptateur peut
+&eacute;galement travailler avec d'autres protocoles, en
+particulier ceux qui utilisent le "contr&ocirc;le de flux
+mat&eacute;riel".</p>
+<p>Une bonne &eacute;tude de connexions Macintosh s&eacute;rie, y
+compris les bonnes techniques de d&eacute;bogage, est disponible
+&agrave; <a href=
+"http://francis.courtois.free.fr/jc1/serial/main.html">http://francis.courtois.free.fr/jc1/serial/main.html</a>.
+lien cass&eacute; le 2013-09-09.</p>
+<p><img src="./images/LB-II-Mac.gif" alt="Mac DIN-8 wirin diagram"
+width="374" height="192" hspace="10" vspace="0"> &lt;/ p&gt;</p>
+<p>Notez que le Macintosh ne poss&egrave;de qu'une seule sortie
+d'&eacute;tat et d'entr&eacute;e.</p>
+<p>Si le p&eacute;riph&eacute;rique s&eacute;rie utilise le
+"contr&ocirc;le de flux mat&eacute;riel", il entend faire valoir
+que le fil CTS indique quand il est OK pour envoyer des
+donn&eacute;es. Cela doit &ecirc;tre connect&eacute; au fil
+d'entr&eacute;e du Macintosh, ou le programme ne sera pas en mesure
+d'envoyer.</p>
+<p>Le statut sortie sera activ&eacute; par JMRI au
+d&eacute;marrage. Il devrait &ecirc;tre connect&eacute; &agrave;
+n'importe quel fil de statut (par exemple RTS) que le
+p&eacute;riph&eacute;rique s&eacute;rie surveille.</p>
+<p>Les informations sur cette page ont &eacute;t&eacute; fournies
+par Dick Bronson et Walter Thompson.</p>
+<hr class="hide">
+<!--#include virtual="/Footer" --></div>
+</div>
 </body>
 </html>
-
