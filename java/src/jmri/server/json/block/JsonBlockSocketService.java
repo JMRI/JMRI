@@ -3,7 +3,7 @@ package jmri.server.json.block;
 import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PUT;
-import static jmri.server.json.block.JsonBlockServiceFactory.BLOCK;
+import static jmri.server.json.block.JsonBlock.BLOCK;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import java.beans.PropertyChangeEvent;
@@ -46,9 +46,11 @@ public class JsonBlockSocketService extends JsonSocketService {
         }
         if (!this.blocks.containsKey(name)) {
             Block block = InstanceManager.getDefault(BlockManager.class).getBlock(name);
-            BlockListener listener = new BlockListener(block);
-            block.addPropertyChangeListener(listener);
-            this.blocks.put(name, listener);
+            if (block != null) {
+                BlockListener listener = new BlockListener(block);
+                block.addPropertyChangeListener(listener);
+                this.blocks.put(name, listener);
+            }
         }
     }
 

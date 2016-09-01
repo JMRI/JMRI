@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JFrame;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
@@ -269,7 +270,10 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         panel.setAllEditable(panel.isEditable());
 
         // register the resulting panel for later configuration
-        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerUser(panel);
+        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerUser(panel);
+        }
 
         // reset the size and position, in case the display caused it to change
         panel.getTargetFrame().setLocation(x, y);

@@ -50,7 +50,7 @@ import org.slf4j.LoggerFactory;
  * @author Rodney Black Copyright (C) 2011
  */
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
-        justification = "CarManager only provides Car Objects")  // NOI18N
+        justification = "CarManager only provides Car Objects") // NOI18N
 public class Train implements java.beans.PropertyChangeListener {
     /*
      * WARNING DO NOT LOAD CAR OR ENGINE MANAGERS WHEN Train.java IS CREATED IT
@@ -1671,7 +1671,8 @@ public class Train implements java.beans.PropertyChangeListener {
                                     getTerminationTrack() != null &&
                                     getTerminationTrack().getLocation() == rldest.getLocation()) {
                                 if (debugFlag) {
-                                    log.debug("Car ({}) destination is staging, check train ({}) termination track ({})",
+                                    log.debug(
+                                            "Car ({}) destination is staging, check train ({}) termination track ({})",
                                             car.toString(), getName(), getTerminationTrack().getName());
                                 }
                                 String status = car.testDestination(getTerminationTrack().getLocation(),
@@ -1719,14 +1720,15 @@ public class Train implements java.beans.PropertyChangeListener {
                                     status = track.accepts(car);
                                     if (status.equals(Track.OKAY) || status.startsWith(Track.LENGTH)) {
                                         if (debugFlag) {
-                                            log.debug("Found track ({}) for car ({})",  track.getName(), car.toString());
+                                            log.debug("Found track ({}) for car ({})", track.getName(), car.toString());
                                         }
                                         break; // yes, done
                                     }
                                 }
                                 if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
                                     if (debugFlag) {
-                                        log.debug("Destination ({}) can not service car ({}) using train ({}) no track available",
+                                        log.debug(
+                                                "Destination ({}) can not service car ({}) using train ({}) no track available",
                                                 car.getDestinationName(), car.toString(), getName()); // NOI18N
                                     }
                                     if (addToReport) {
@@ -3024,7 +3026,12 @@ public class Train implements java.beans.PropertyChangeListener {
         if (departs != null) {
             printerName = departs.getDefaultPrinterName();
         }
-        TrainPrintUtilities.printReport(file, getDescription(), isPreview, Setup.getFontName(), false, logoURL,
+        // the train description shouldn't exceed half of the page width or the page number will be overwritten
+        String name = getDescription();
+        if (name.length() > TrainCommon.getManifestHeaderLineLength()/2) {
+            name = name.substring(0, TrainCommon.getManifestHeaderLineLength()/2);
+        }
+        TrainPrintUtilities.printReport(file, name, isPreview, Setup.getFontName(), false, logoURL,
                 printerName, Setup.getManifestOrientation(), Setup.getManifestFontSize());
         if (!isPreview) {
             setPrinted(true);
@@ -3049,12 +3056,13 @@ public class Train implements java.beans.PropertyChangeListener {
             return false;
         }
         // Set up to process the CSV file by the external Manifest program
-        TrainCustomManifest.addCVSFile(file);
-        if (!TrainCustomManifest.process()) {
-            if (!TrainCustomManifest.manifestCreatorFileExists()) {
+        TrainCustomManifest.instance().addCVSFile(file);
+        if (!TrainCustomManifest.instance().process()) {
+            if (!TrainCustomManifest.instance().excelFileExists()) {
                 JOptionPane.showMessageDialog(null, MessageFormat.format(
                         Bundle.getMessage("LoadDirectoryNameFileName"), new Object[]{
-                                TrainCustomManifest.getDirectoryName(), TrainCustomManifest.getFileName()}),
+                                TrainCustomManifest.instance().getDirectoryName(),
+                                TrainCustomManifest.instance().getFileName()}),
                         Bundle
                                 .getMessage("ManifestCreatorNotFound"),
                         JOptionPane.ERROR_MESSAGE);
@@ -3148,6 +3156,10 @@ public class Train implements java.beans.PropertyChangeListener {
         log.debug("Move train (" + getName() + ")");
         if (getRoute() == null || getCurrentLocation() == null) {
             setBuilt(false); // break terminate loop
+            return;
+        }
+        if (!isBuilt()) {
+            log.error("ERROR attempt to move train ({}) that hasn't been built", getName());
             return;
         }
         RouteLocation rl = getCurrentLocation();
@@ -3426,7 +3438,6 @@ public class Train implements java.beans.PropertyChangeListener {
         }
     }
 
-    // LocationManager locationManager = LocationManager.instance();
     private void updateStatus(RouteLocation old, RouteLocation next) {
         if (next != null) {
             setStatusCode(CODE_TRAIN_EN_ROUTE);
@@ -3566,7 +3577,7 @@ public class Train implements java.beans.PropertyChangeListener {
             if ((a = e.getAttribute(Xml.SKIP)) != null) {
                 String locationIds = a.getValue();
                 String[] locs = locationIds.split("%%"); // NOI18N
-                // if (log.isDebugEnabled()) log.debug("Train skips : "+locationIds);
+                // log.debug("Train skips: {}", locationIds);
                 setTrainSkipsLocations(locs);
             }
         }
@@ -3596,7 +3607,7 @@ public class Train implements java.beans.PropertyChangeListener {
         else if ((a = e.getAttribute(Xml.CAR_TYPES)) != null) {
             String names = a.getValue();
             String[] types = names.split("%%"); // NOI18N
-            // if (log.isDebugEnabled()) log.debug("Car types: "+names);
+            // log.debug("Car types: {}", names);
             setTypeNames(types);
         }
         // old misspelled format
@@ -3622,9 +3633,7 @@ public class Train implements java.beans.PropertyChangeListener {
         else if ((a = e.getAttribute(Xml.CAR_ROADS)) != null) {
             String names = a.getValue();
             String[] roads = names.split("%%"); // NOI18N
-            if (log.isDebugEnabled()) {
-                log.debug("Train (" + getName() + ") " + getRoadOption() + " car roads: " + names);
-            }
+            log.debug("Train ({}) {} car roads: {}", getName(), getRoadOption(), names);
             setRoadNames(roads);
         }
 
@@ -3656,9 +3665,7 @@ public class Train implements java.beans.PropertyChangeListener {
         else if ((a = e.getAttribute(Xml.CAR_LOADS)) != null) {
             String names = a.getValue();
             String[] loads = names.split("%%"); // NOI18N
-            if (log.isDebugEnabled()) {
-                log.debug("Train (" + getName() + ") " + getLoadOption() + " car loads: " + names);
-            }
+            log.debug("Train ({}) {} car loads: {}", getName(), getLoadOption(), names);
             setLoadNames(loads);
         }
         // new way of reading car owners using elements
@@ -3677,9 +3684,7 @@ public class Train implements java.beans.PropertyChangeListener {
         else if ((a = e.getAttribute(Xml.CAR_OWNERS)) != null) {
             String names = a.getValue();
             String[] owners = names.split("%%"); // NOI18N
-            if (log.isDebugEnabled()) {
-                log.debug("Train (" + getName() + ") " + getOwnerOption() + " car owners: " + names);
-            }
+            log.debug("Train ({}) {} car owners: {}", getName(), getOwnerOption(), names);
             setOwnerNames(owners);
         }
 

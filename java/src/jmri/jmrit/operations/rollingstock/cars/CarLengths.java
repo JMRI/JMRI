@@ -1,4 +1,3 @@
-// CarLengths.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Represents the lengths that cars can have.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2014
- * @version $Revision$
  */
 public class CarLengths extends RollingStockAttribute {
 
@@ -29,9 +27,7 @@ public class CarLengths extends RollingStockAttribute {
 
     public static synchronized CarLengths instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("CarLengths creating instance");
-            }
+            log.debug("CarLengths creating instance");
             // create and load
             _instance = new CarLengths();
         }

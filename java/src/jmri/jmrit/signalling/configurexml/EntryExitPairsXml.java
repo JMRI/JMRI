@@ -3,6 +3,7 @@ package jmri.jmrit.signalling.configurexml;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import jmri.ConfigureManager;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SignalHead;
@@ -151,7 +152,14 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
             //Considered normal if it doesn't exists
         }
         // get attributes
-        ArrayList<Object> loadedPanel = jmri.InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).getInstanceList(LayoutEditor.class);
+        ConfigureManager cm = jmri.InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ArrayList<Object> loadedPanel;
+        if (cm != null) {
+            loadedPanel = cm.getInstanceList(LayoutEditor.class);
+        } else {
+            log.error("Failed getting optional default config manager");
+            loadedPanel = new ArrayList<Object>();
+        }
         if (shared.getChild("dispatcherintegration") != null && shared.getChild("dispatcherintegration").getText().equals("yes")) {
             eep.setDispatcherIntegration(true);
         }

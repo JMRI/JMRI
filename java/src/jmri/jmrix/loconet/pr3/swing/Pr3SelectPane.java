@@ -8,7 +8,6 @@ import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LocoNetBundle;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -34,7 +33,7 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
     }
 
     public String getTitle() {
-        return getTitle(LocoNetBundle.bundle().getString("MenuItemPr3ModeSelect"));
+        return getTitle(Bundle.getMessage("MenuItemPr3ModeSelect"));
     }
 
     public Pr3SelectPane() {
@@ -131,7 +130,7 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         private static final long serialVersionUID = -3595956373670767395L;
 
         public Default() {
-            super(LocoNetBundle.bundle().getString("MenuItemPr3ModeSelect"),
+            super(Bundle.getMessage("MenuItemPr3ModeSelect"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     Pr3SelectPane.class.getName(),
                     jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));

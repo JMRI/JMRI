@@ -68,7 +68,7 @@ public class DS64Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     public String getTitle() {
-        return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemDS64Programmer"));
+        return getTitle(Bundle.getMessage("MenuItemDS64Programmer"));
     }
 
     /**

@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LocoNetBundle;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -56,7 +55,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
     }
 
     public String getTitle() {
-        return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemLocoStats"));
+        return getTitle(Bundle.getMessage("MenuItemLocoStats"));
     }
 
     public LocoStatsPanel() {
@@ -297,7 +296,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
         private static final long serialVersionUID = -5534308120479708337L;
 
         public Default() {
-            super(LocoNetBundle.bundle().getString("MenuItemLocoStats"),
+            super(Bundle.getMessage("MenuItemLocoStats"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     LocoStatsPanel.class.getName(),
                     jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));

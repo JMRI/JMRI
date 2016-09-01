@@ -54,7 +54,7 @@ public class ProfileUtilsTest extends TestCase {
             return;
         }
         File profile = new File(destination.getPath(), Profile.PROFILE);
-        for (File file : profile.listFiles((File pathname) -> (pathname.getName().endsWith(source.getUniqueId())))) {
+        if (profile.listFiles((File pathname) -> (pathname.getName().endsWith(source.getUniqueId()))).length > 0) {
             TestCase.fail("Source ID remains in destination profile.");
         }
     }

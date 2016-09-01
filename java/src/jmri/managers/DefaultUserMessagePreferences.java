@@ -36,12 +36,13 @@ import org.slf4j.LoggerFactory;
  * next time"
  *
  * @author Kevin Dickerson Copyright (C) 2010
+ * @deprecated Since 4.5.4; use {@link jmri.managers.JmriUserPreferencesManager} instead.
  */
 @net.jcip.annotations.NotThreadSafe  // intended for access from Swing thread only
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
         value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
         justification = "Class is single-threaded, and uses statics extensively")
-
+@Deprecated
 public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements UserPreferencesManager {
 
     private boolean allowSave = true;
@@ -1067,6 +1068,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
 
     Hashtable<String, Hashtable<String, TableColumnPreferences>> tableColumnPrefs = new Hashtable<String, Hashtable<String, TableColumnPreferences>>();
 
+    @Override
     public void setTableColumnPreferences(String table, String column, int order, int width, SortOrder sort, boolean hidden) {
         if (!tableColumnPrefs.containsKey(table)) {
             tableColumnPrefs.put(table, new Hashtable<String, TableColumnPreferences>());
@@ -1075,6 +1077,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         columnPrefs.put(column, new TableColumnPreferences(order, width, sort, hidden));
     }
 
+    @Override
     public int getTableColumnOrder(String table, String column) {
         if (tableColumnPrefs.containsKey(table)) {
             Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
@@ -1085,6 +1088,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         return -1;
     }
 
+    @Override
     public int getTableColumnWidth(String table, String column) {
         if (tableColumnPrefs.containsKey(table)) {
             Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
@@ -1095,6 +1099,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         return -1;
     }
 
+    @Override
     public SortOrder getTableColumnSort(String table, String column) {
         if (tableColumnPrefs.containsKey(table)) {
             Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
@@ -1105,6 +1110,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         return SortOrder.UNSORTED;
     }
 
+    @Override
     public boolean getTableColumnHidden(String table, String column) {
         if (tableColumnPrefs.containsKey(table)) {
             Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
@@ -1115,6 +1121,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         return false;
     }
 
+    @Override
     public String getTableColumnAtNum(String table, int i) {
         if (tableColumnPrefs.containsKey(table)) {
             Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
@@ -1129,10 +1136,12 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         return null;
     }
 
+    @Override
     public List<String> getTablesList() {
         return new ArrayList<String>(tableColumnPrefs.keySet());
     }
 
+    @Override
     public List<String> getTablesColumnList(String table) {
         if (tableColumnPrefs.containsKey(table)) {
             Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);

@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LayoutBlockManager extends AbstractManager implements jmri.InstanceManagerAutoDefault {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
+    //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     public LayoutBlockManager() {
         super();
@@ -251,8 +251,8 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             }
         }
         if (badBeanErrors > 0) {
-            JOptionPane.showMessageDialog(null, "" + badBeanErrors + " " + rb.getString("Warn2"),
-                    rb.getString("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "" + badBeanErrors + " " + Bundle.getMessage("Warn2"),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
         }
         try {
             new BlockValueFile().readBlockValues();

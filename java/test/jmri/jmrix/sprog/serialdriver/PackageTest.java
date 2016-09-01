@@ -10,7 +10,10 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   SerialDriverAdapterTest.class
+   SerialDriverAdapterTest.class,
+   ConnectionConfigTest.class,
+   jmri.jmrix.sprog.serialdriver.configurexml.PackageTest.class
+
 })
 public class PackageTest {
 }

@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.cmri.serial.SerialTurnout class
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 
