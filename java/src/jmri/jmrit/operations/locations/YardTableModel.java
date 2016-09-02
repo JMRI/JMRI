@@ -16,11 +16,6 @@ import org.slf4j.LoggerFactory;
  */
 public class YardTableModel extends TrackTableModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7919234279596604386L;
-
     public YardTableModel() {
         super();
     }
@@ -58,7 +53,7 @@ public class YardTableModel extends TrackTableModel {
 
     // this table listens for changes to a location and it's yards
     @Override
-    public void propertyChange(PropertyChangeEvent e) {
+    public synchronized void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());

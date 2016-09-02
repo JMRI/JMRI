@@ -17,8 +17,6 @@ import jmri.util.FileUtil;
  */
 public class ScriptFileChooser extends JFileChooser {
 
-    private static final long serialVersionUID = 7442984045295516630L;
-
     public ScriptFileChooser() {
         super(FileUtil.getScriptsPath());
         this.init();

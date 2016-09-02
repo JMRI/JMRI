@@ -15,17 +15,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.JComponent;
-import jmri.jmris.json.JSON;
-import jmri.jmris.json.JsonUtil;
+import jmri.server.json.JSON;
 import jmri.jmrit.display.Editor;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
 import jmri.web.server.WebServer;
 import jmri.web.servlet.ServletUtil;
+
 import static jmri.web.servlet.ServletUtil.IMAGE_PNG;
 import static jmri.web.servlet.ServletUtil.UTF8;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
 import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
+
+import jmri.server.json.util.JsonUtilHttpService;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -131,7 +133,8 @@ abstract class AbstractPanelServlet extends HttpServlet {
         if (JSON.JSON.equals(request.getParameter("format"))) {
             response.setContentType(UTF8_APPLICATION_JSON);
             ServletUtil.getInstance().setNonCachingHeaders(response);
-            response.getWriter().print(JsonUtil.getPanels(request.getLocale(), JSON.XML));
+            JsonUtilHttpService service = new JsonUtilHttpService(new ObjectMapper());
+            response.getWriter().print(service.getPanels(request.getLocale(), JSON.XML));
         } else {
             response.setContentType(UTF8_TEXT_HTML);
             response.getWriter().print(String.format(request.getLocale(),
@@ -215,7 +218,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
     //  element names are cleaned-up aspect names, aspect attribute is actual name of aspect
     Element getSignalMastIconsElement(String name) {
         Element icons = new Element("icons");
-        jmri.SignalMast signalMast = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(name);
+        jmri.SignalMast signalMast = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
         for (String aspect : signalMast.getValidAspects()) {
             Element ea = new Element(aspect.replaceAll("[ ()]", "")); //create element for aspect after removing invalid chars
             String url = signalMast.getAppearanceMap().getImageLink(aspect, "default");  //TODO: use correct imageset

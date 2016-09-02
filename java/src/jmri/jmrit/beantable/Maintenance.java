@@ -101,7 +101,7 @@ public class Maintenance {
                 names.add(name);
             }
         }
-        iter = InstanceManager.signalHeadManagerInstance().getSystemNameList().iterator();
+        iter = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSystemNameList().iterator();
         while (iter.hasNext()) {
             String name = iter.next();
             if (!search(name, null)) {
@@ -119,7 +119,7 @@ public class Maintenance {
                 names.add(name);
             }
         }
-        iter = InstanceManager.conditionalManagerInstance().getSystemNameList().iterator();
+        iter = InstanceManager.getDefault(jmri.ConditionalManager.class).getSystemNameList().iterator();
         while (iter.hasNext()) {
             String name = iter.next();
             if (!search(name, null)) {
@@ -128,7 +128,7 @@ public class Maintenance {
                 names.add(name);
             }
         }
-        iter = InstanceManager.sectionManagerInstance().getSystemNameList().iterator();
+        iter = InstanceManager.getDefault(jmri.SectionManager.class).getSystemNameList().iterator();
         while (iter.hasNext()) {
             String name = iter.next();
             if (!search(name, null)) {
@@ -137,7 +137,7 @@ public class Maintenance {
                 names.add(name);
             }
         }
-        iter = InstanceManager.blockManagerInstance().getSystemNameList().iterator();
+        iter = InstanceManager.getDefault(jmri.BlockManager.class).getSystemNameList().iterator();
         while (iter.hasNext()) {
             String name = iter.next();
             if (!search(name, null)) {
@@ -192,11 +192,11 @@ public class Maintenance {
                         }
                         InstanceManager.turnoutManagerInstance().deregister(t);
                     } else if (names[0].equals("SignalHead")) {
-                        SignalHead sh = InstanceManager.signalHeadManagerInstance().getBySystemName(names[2]);
+                        SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(names[2]);
                         if (sh == null) {
-                            sh = InstanceManager.signalHeadManagerInstance().getBySystemName(names[1]);
+                            sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(names[1]);
                         }
-                        InstanceManager.signalHeadManagerInstance().deregister(sh);
+                        InstanceManager.getDefault(jmri.SignalHeadManager.class).deregister(sh);
                     } else if (names[0].equals("Light")) {
                         Light l = InstanceManager.lightManagerInstance().getBySystemName(names[2]);
                         if (l == null) {
@@ -204,23 +204,23 @@ public class Maintenance {
                         }
                         InstanceManager.lightManagerInstance().deregister(l);
                     } else if (names[0].equals("Conditional")) {
-                        Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(names[2]);
+                        Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(names[2]);
                         if (c == null) {
-                            c = InstanceManager.conditionalManagerInstance().getBySystemName(names[1]);
+                            c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(names[1]);
                         }
-                        InstanceManager.conditionalManagerInstance().deregister(c);
+                        InstanceManager.getDefault(jmri.ConditionalManager.class).deregister(c);
                     } else if (names[0].equals("Section")) {
-                        jmri.Section sec = InstanceManager.sectionManagerInstance().getBySystemName(names[2]);
+                        jmri.Section sec = InstanceManager.getDefault(jmri.SectionManager.class).getBySystemName(names[2]);
                         if (sec == null) {
-                            sec = InstanceManager.sectionManagerInstance().getBySystemName(names[1]);
+                            sec = InstanceManager.getDefault(jmri.SectionManager.class).getBySystemName(names[1]);
                         }
-                        InstanceManager.sectionManagerInstance().deregister(sec);
+                        InstanceManager.getDefault(jmri.SectionManager.class).deregister(sec);
                     } else if (names[0].equals("Block")) {
-                        jmri.Block b = InstanceManager.blockManagerInstance().getBySystemName(names[2]);
+                        jmri.Block b = InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(names[2]);
                         if (b == null) {
-                            b = InstanceManager.blockManagerInstance().getBySystemName(names[1]);
+                            b = InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(names[1]);
                         }
-                        InstanceManager.blockManagerInstance().deregister(b);
+                        InstanceManager.getDefault(jmri.BlockManager.class).deregister(b);
                     }
                     model.remove(index);
                     n.remove(index);
@@ -249,8 +249,8 @@ public class Maintenance {
         Vector<String> names = new Vector<String>();
 
         log.debug("findEmptyPressed");
-        Iterator<String> iter = InstanceManager.conditionalManagerInstance().getSystemNameList().iterator();
-        jmri.ConditionalManager cm = InstanceManager.conditionalManagerInstance();
+        Iterator<String> iter = InstanceManager.getDefault(jmri.ConditionalManager.class).getSystemNameList().iterator();
+        jmri.ConditionalManager cm = InstanceManager.getDefault(jmri.ConditionalManager.class);
         while (iter.hasNext()) {
             String name = iter.next();
             Conditional c = cm.getBySystemName(name);
@@ -298,15 +298,15 @@ public class Maintenance {
                 while (index >= min) {
                     String[] names = getTypeAndNames(name.get(index));
                     model.remove(index);
-                    Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(names[2]);
+                    Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(names[2]);
                     if (c != null) {
-                        Logix x = InstanceManager.conditionalManagerInstance().getParentLogix(names[2]);
+                        Logix x = InstanceManager.getDefault(jmri.ConditionalManager.class).getParentLogix(names[2]);
                         if (x != null) {
                             x.deActivateLogix();
                             x.deleteConditional(names[2]);
                             x.activateLogix();
                         }
-                        InstanceManager.conditionalManagerInstance().deregister(c);
+                        InstanceManager.getDefault(jmri.ConditionalManager.class).deregister(c);
                         name.remove(index);
                         index--;
                     }
@@ -415,7 +415,7 @@ public class Maintenance {
                 Integer.toString(l.getNumPropertyChangeListeners())});
         }
 
-        jmri.SignalHeadManager signalManager = InstanceManager.signalHeadManagerInstance();
+        jmri.SignalHeadManager signalManager = InstanceManager.getDefault(jmri.SignalHeadManager.class);
         SignalHead sh = signalManager.getBySystemName(sysName);
         if (sh != null) {
             userName = sh.getUserName();
@@ -439,7 +439,7 @@ public class Maintenance {
                 Integer.toString(sh.getNumPropertyChangeListeners())});
         }
 
-        jmri.ConditionalManager cm = InstanceManager.conditionalManagerInstance();
+        jmri.ConditionalManager cm = InstanceManager.getDefault(jmri.ConditionalManager.class);
         Conditional c = cm.getBySystemName(sysName);
         if (c != null) {
             userName = c.getUserName();
@@ -463,7 +463,7 @@ public class Maintenance {
                 Integer.toString(c.getNumPropertyChangeListeners())});
         }
 
-        jmri.BlockManager blockManager = InstanceManager.blockManagerInstance();
+        jmri.BlockManager blockManager = InstanceManager.getDefault(jmri.BlockManager.class);
         jmri.Block b = blockManager.getBySystemName(sysName);
         if (b != null) {
             userName = b.getUserName();
@@ -487,7 +487,7 @@ public class Maintenance {
                 Integer.toString(b.getNumPropertyChangeListeners())});
         }
 
-        jmri.SectionManager sectionManager = InstanceManager.sectionManagerInstance();
+        jmri.SectionManager sectionManager = InstanceManager.getDefault(jmri.SectionManager.class);
         jmri.Section sec = sectionManager.getBySystemName(sysName);
         if (sec != null) {
             userName = sec.getUserName();
@@ -586,11 +586,11 @@ public class Maintenance {
         boolean found = false;
         boolean empty = true;
         // search for references among each class known to be listeners
-        Iterator<String> iter1 = InstanceManager.logixManagerInstance().getSystemNameList().iterator();
+        Iterator<String> iter1 = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNameList().iterator();
         while (iter1.hasNext()) {
             // get the next Logix
             String sName = iter1.next();
-            Logix x = InstanceManager.logixManagerInstance().getBySystemName(sName);
+            Logix x = InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(sName);
             if (x == null) {
                 log.error("Error getting Logix  - " + sName);
                 break;
@@ -598,21 +598,21 @@ public class Maintenance {
             tempText = new StringBuffer();
             String uName = x.getUserName();
             String line1 = MessageFormat.format(rbm.getString("ReferenceTitle"),
-                    new Object[]{"", rbm.getString("Logix"), uName, sName});
+                    new Object[]{"", Bundle.getMessage("BeanNameLogix"), uName, sName});
             for (int i = 0; i < x.getNumConditionals(); i++) {
                 sName = x.getConditionalByNumberOrder(i);
                 if (sName == null) {
                     log.error("Null conditional system name");
                     break;
                 }
-                Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(sName);
+                Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(sName);
                 if (c == null) {
                     log.error("Invalid conditional system name - " + sName);
                     break;
                 }
                 uName = c.getUserName();
                 String line2 = MessageFormat.format(rbm.getString("ReferenceTitle"),
-                        new Object[]{"\t", rbm.getString("Conditional"), uName, sName});
+                        new Object[]{"\t", Bundle.getMessage("BeanNameConditional"), uName, sName});
                 String line = MessageFormat.format(rbm.getString("ConditionalReference"), "\t");
                 if (sysName.equals(sName) || (userName != null && userName.length() > 0 && userName.equals(uName))) {
                     if (testName(sysName, found, names, line1, null, line, tempText)) {
@@ -674,7 +674,7 @@ public class Maintenance {
             jmri.jmrit.logix.OBlock block = oBlockManager.getBySystemName(sName);
             String uName = block.getUserName();
             String line1 = MessageFormat.format(rbm.getString("ReferenceTitle"),
-                    new Object[]{" ", rbm.getString("OBlock"), uName, sName});
+                    new Object[]{" ", Bundle.getMessage("BeanNameOBlock"), uName, sName});
             Sensor sensor = block.getSensor();
             if (sensor != null) {
                 String line = MessageFormat.format(rbm.getString("OBlockSensor"), "\t");
@@ -701,7 +701,7 @@ public class Maintenance {
         tempText = new StringBuffer();
         found = false;
         empty = true;
-        jmri.RouteManager routeManager = InstanceManager.routeManagerInstance();
+        jmri.RouteManager routeManager = InstanceManager.getDefault(jmri.RouteManager.class);
         iter1 = routeManager.getSystemNameList().iterator();
         while (iter1.hasNext()) {
             // get the next Logix
@@ -713,38 +713,38 @@ public class Maintenance {
             }
             String uName = r.getUserName();
             String line1 = MessageFormat.format(rbm.getString("ReferenceTitle"),
-                    new Object[]{" ", rbm.getString("Route"), uName, sName});
+                    new Object[]{" ", Bundle.getMessage("BeanNameRoute"), uName, sName});
             for (int i = 0; i < jmri.Route.MAX_CONTROL_SENSORS; i++) {
-                String line = MessageFormat.format(rbm.getString("ControlReference"), rbm.getString("Sensor"));
+                String line = MessageFormat.format(rbm.getString("ControlReference"), Bundle.getMessage("BeanNameSensor"));
                 if (testName(r.getRouteSensorName(i), found, names, line1, null, line, tempText)) {
                     found = true;
                     referenceCount++;
                 }
             }
-            String line = MessageFormat.format("TurnoutsAlignedSensor", rbm.getString("Sensor"));
+            String line = MessageFormat.format("TurnoutsAlignedSensor", Bundle.getMessage("BeanNameSensor"));
             if (testName(r.getTurnoutsAlignedSensor(), found, names, line1, null, line, tempText)) {
                 found = true;
                 referenceCount++;
             }
-            line = MessageFormat.format(rbm.getString("ControlReference"), rbm.getString("Turnout"));
+            line = MessageFormat.format(rbm.getString("ControlReference"), Bundle.getMessage("BeanNameTurnout"));
             if (testName(r.getControlTurnout(), found, names, line1, null, line, tempText)) {
                 found = true;
                 referenceCount++;
             }
-            line = MessageFormat.format("LockControlTurnout", rbm.getString("Turnout"));
+            line = MessageFormat.format("LockControlTurnout", Bundle.getMessage("BeanNameTurnout"));
             if (testName(r.getLockControlTurnout(), found, names, line1, null, line, tempText)) {
                 found = true;
                 referenceCount++;
             }
             for (int i = 0; i < r.getNumOutputTurnouts(); i++) {
-                line = MessageFormat.format(rbm.getString("OutputReference"), rbm.getString("Turnout"));
+                line = MessageFormat.format(rbm.getString("OutputReference"), Bundle.getMessage("BeanNameTurnout"));
                 if (testName(r.getOutputTurnoutByIndex(i), found, names, line1, null, line, tempText)) {
                     found = true;
                     referenceCount++;
                 }
             }
             for (int i = 0; i < r.getNumOutputSensors(); i++) {
-                line = MessageFormat.format(rbm.getString("OutputReference"), rbm.getString("Sensor"));
+                line = MessageFormat.format(rbm.getString("OutputReference"), Bundle.getMessage("BeanNameSensor"));
                 if (testName(r.getOutputSensorByIndex(i), found, names, line1, null, line, tempText)) {
                     found = true;
                     referenceCount++;
@@ -768,7 +768,7 @@ public class Maintenance {
         tempText = new StringBuffer();
         found = false;
         empty = true;
-        jmri.TransitManager transitManager = InstanceManager.transitManagerInstance();
+        jmri.TransitManager transitManager = InstanceManager.getDefault(jmri.TransitManager.class);
         iter1 = transitManager.getSystemNameList().iterator();
         while (iter1.hasNext()) {
             // get the next Logix
@@ -780,7 +780,7 @@ public class Maintenance {
             }
             String uName = transit.getUserName();
             String line1 = MessageFormat.format(rbm.getString("ReferenceTitle"),
-                    new Object[]{" ", rbm.getString("Transit"), uName, sName});
+                    new Object[]{" ", Bundle.getMessage("BeanNameTransit"), uName, sName});
             ArrayList<jmri.TransitSection> sectionList = transit.getTransitSectionList();
             for (int i = 0; i < sectionList.size(); i++) {
                 jmri.TransitSection transitSection = sectionList.get(i);
@@ -823,7 +823,7 @@ public class Maintenance {
                     sName = block.getSystemName();
                     uName = block.getUserName();
                     tempText.append(MessageFormat.format(rbm.getString("ReferenceTitle"),
-                            new Object[]{"\t\t", rbm.getString("Block"), uName, sName}));
+                            new Object[]{"\t\t", Bundle.getMessage("BeanNameBlock"), uName, sName}));
                     if (sName.equals(sysName) || uName.equals(userName)) {
                         tempText.append(MessageFormat.format(rbm.getString("BlockReference"), "\t\t"));
                         found = true;
@@ -867,10 +867,10 @@ public class Maintenance {
         tempText = new StringBuffer();
         found = false;
         empty = true;
-        jmri.SectionManager sectionManager = InstanceManager.sectionManagerInstance();
+        jmri.SectionManager sectionManager = InstanceManager.getDefault(jmri.SectionManager.class);
         java.util.List<String> sysNameList = sectionManager.getSystemNameList();
 
-        transitManager = InstanceManager.transitManagerInstance();
+        transitManager = InstanceManager.getDefault(jmri.TransitManager.class);
         iter1 = transitManager.getSystemNameList().iterator();
         while (iter1.hasNext()) {
             // get the next Logix
@@ -896,7 +896,7 @@ public class Maintenance {
             }
             String uName = section.getUserName();
             String line1 = MessageFormat.format(rbm.getString("ReferenceTitle"),
-                    new Object[]{" ", rbm.getString("Section"), uName, sName});
+                    new Object[]{" ", Bundle.getMessage("BeanNameSection"), uName, sName});
             if (sName.equals(sysName) || uName.equals(userName)) {
                 tempText.append(MessageFormat.format(rbm.getString("SectionReference"), "\t"));
 
@@ -930,7 +930,7 @@ public class Maintenance {
                 sName = block.getSystemName();
                 uName = block.getUserName();
                 String line2 = MessageFormat.format(rbm.getString("ReferenceTitle"),
-                        new Object[]{"\t", rbm.getString("Block"), uName, sName});
+                        new Object[]{"\t", Bundle.getMessage("BeanNameBlock"), uName, sName});
                 if (sName.equals(sysName) || (uName != null && uName.equals(userName))) {
                     tempText.append(line2);
                     tempText.append(MessageFormat.format(rbm.getString("BlockReference"), "\t"));
@@ -964,10 +964,10 @@ public class Maintenance {
         tempText = new StringBuffer();
         found = false;
         empty = true;
-        jmri.BlockManager blockManager = InstanceManager.blockManagerInstance();
+        jmri.BlockManager blockManager = InstanceManager.getDefault(jmri.BlockManager.class);
         sysNameList = blockManager.getSystemNameList();
 
-        sectionManager = InstanceManager.sectionManagerInstance();
+        sectionManager = InstanceManager.getDefault(jmri.SectionManager.class);
         iter1 = sectionManager.getSystemNameList().iterator();
         while (iter1.hasNext()) {
             String sName = iter1.next();
@@ -985,7 +985,7 @@ public class Maintenance {
             jmri.Block b = blockManager.getBySystemName(sName);
             String uName = b.getUserName();
             String line1 = MessageFormat.format(rbm.getString("ReferenceTitle"),
-                    new Object[]{" ", rbm.getString("Block"), uName, sName});
+                    new Object[]{" ", Bundle.getMessage("BeanNameBlock"), uName, sName});
             if (sName.equals(sysName) || (uName != null && uName.equals(userName))) {
                 tempText.append(line1);
                 tempText.append(MessageFormat.format(rbm.getString("BlockReference"), "\t"));
@@ -1159,13 +1159,13 @@ public class Maintenance {
         tempText = new StringBuffer();
         found = false;
         empty = true;
-        jmri.ConditionalManager conditionalManager = InstanceManager.conditionalManagerInstance();
+        jmri.ConditionalManager conditionalManager = InstanceManager.getDefault(jmri.ConditionalManager.class);
         sysNameList = conditionalManager.getSystemNameList();
 
-        iter1 = InstanceManager.logixManagerInstance().getSystemNameList().iterator();
+        iter1 = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNameList().iterator();
         while (iter1.hasNext()) {
             String sName = iter1.next();
-            Logix x = InstanceManager.logixManagerInstance().getBySystemName(sName);
+            Logix x = InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(sName);
             for (int i = 0; i < x.getNumConditionals(); i++) {
                 sName = x.getConditionalByNumberOrder(i);
                 sysNameList.remove(sName);
@@ -1182,7 +1182,7 @@ public class Maintenance {
             }
             String uName = c.getUserName();
             String line1 = MessageFormat.format(rbm.getString("ReferenceTitle"),
-                    new Object[]{" ", rbm.getString("Conditional"), uName, sName});
+                    new Object[]{" ", Bundle.getMessage("BeanNameConditional"), uName, sName});
             if (sName.equals(sysName) || uName.equals(userName)) {
                 tempText.append(line1);
                 tempText.append(MessageFormat.format(rbm.getString("ConditionalReference"), "\t"));
@@ -1238,7 +1238,7 @@ public class Maintenance {
                 if (o.getClass().getName().equals("jmri.jmrit.display.SensorIcon")) {
                     name = ((jmri.jmrit.display.SensorIcon) o).getSensor().getSystemName();
                     String line = MessageFormat.format(rbm.getString("PanelReference"),
-                            new Object[]{"\t", rbm.getString("Sensor")});
+                            new Object[]{"\t", Bundle.getMessage("BeanNameSensor")});
                     if (testName(name, found, names, line1, null, line, tempText)) {
                         found = true;
                         referenceCount++;
@@ -1246,7 +1246,7 @@ public class Maintenance {
                 } else if (o.getClass().getName().equals("jmri.jmrit.display.TurnoutIcon")) {
                     name = ((jmri.jmrit.display.TurnoutIcon) o).getTurnout().getSystemName();
                     String line = MessageFormat.format(rbm.getString("PanelReference"),
-                            new Object[]{"\t", rbm.getString("Turnout")});
+                            new Object[]{"\t", Bundle.getMessage("BeanNameTurnout")});
                     if (testName(name, found, names, line1, null, line, tempText)) {
                         found = true;
                         referenceCount++;
@@ -1254,7 +1254,7 @@ public class Maintenance {
                 } else if (o.getClass().getName().equals("jmri.jmrit.display.SignalHeadIcon")) {
                     name = ((jmri.jmrit.display.SignalHeadIcon) o).getSignalHead().getSystemName();
                     String line = MessageFormat.format(rbm.getString("PanelReference"),
-                            new Object[]{"\t", rbm.getString("SignalHead")});
+                            new Object[]{"\t", Bundle.getMessage("BeanNameSignalHead")});
                     if (testName(name, found, names, line1, null, line, tempText)) {
                         found = true;
                         referenceCount++;

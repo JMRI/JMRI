@@ -1,4 +1,3 @@
-// LayoutBlockNeighbourTableModel.java
 package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 
 import java.beans.PropertyChangeListener;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Any desired ordering, etc, is handled outside this class.
  *
  * @author Kevin Dickerson Copyright (C) 2011
- * @version $Revision$
  */
 public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -23,7 +21,7 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
      */
     private static final long serialVersionUID = -4104722631566472444L;
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
+    //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     public static final int NEIGHBOURCOL = 0;
     static final int DIRECTIONCOL = 1;
@@ -53,15 +51,15 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
     public String getColumnName(int col) {
         switch (col) {
             case NEIGHBOURCOL:
-                return rb.getString("Neighbour");
+                return Bundle.getMessage("Neighbour");
             case DIRECTIONCOL:
-                return rb.getString("Direction");
+                return Bundle.getMessage("Direction");
             case MUTUALCOL:
-                return rb.getString("Mutual");
+                return Bundle.getMessage("Mutual");
             case RELATCOL:
-                return rb.getString("TrafficFlow");
+                return Bundle.getMessage("TrafficFlow");
             case METRICCOL:
-                return rb.getString("Metric");
+                return Bundle.getMessage("Metric");
 
             default:
                 return "<UNKNOWN>";
@@ -120,9 +118,9 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
             case MUTUALCOL:
                 Boolean mutual = lBlock.isNeighbourMutual(row);
                 if (mutual) {
-                    return rb.getString("Yes");
+                    return Bundle.getMessage("ButtonYes");
                 }
-                return rb.getString("No");
+                return Bundle.getMessage("ButtonNo");
             case DIRECTIONCOL:
                 return jmri.Path.decodeDirection(Integer.valueOf(lBlock.getNeighbourDirection(row)));
             case METRICCOL:

@@ -1,4 +1,3 @@
-// SensorTableDataModel.java
 package jmri.jmrit.beantable.sensor;
 
 import java.util.ResourceBundle;
@@ -21,14 +20,9 @@ import org.slf4j.LoggerFactory;
  * Data model for a SensorTable
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2009
- * @version $Revision$
  */
 public class SensorTableDataModel extends BeanTableDataModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9025503488977960491L;
     static public final int INVERTCOL = NUMCOLUMN;
     static public final int EDITCOL = INVERTCOL + 1;
     static public final int USEGLOBALDELAY = EDITCOL + 1;
@@ -59,7 +53,11 @@ public class SensorTableDataModel extends BeanTableDataModel {
     }
 
     public String getValue(String name) {
-        int val = senManager.getBySystemName(name).getKnownState();
+        Sensor sen = senManager.getBySystemName(name);
+        if (sen == null) {
+            return "Failed to get sensor " + name;
+        }
+        int val = sen.getKnownState();
         switch (val) {
             case Sensor.ACTIVE:
                 return Bundle.getMessage("SensorStateActive");
@@ -190,10 +188,15 @@ public class SensorTableDataModel extends BeanTableDataModel {
         //Need to do something here to make it disable 
         if (col == ACTIVEDELAY || col == INACTIVEDELAY) {
             String name = sysNameList.get(row);
-            if (senManager.getBySystemName(name).useDefaultTimerSettings()) {
+            Sensor sen = senManager.getBySystemName(name);
+            if (sen == null) {
                 return false;
             } else {
-                return true;
+                if (sen.useDefaultTimerSettings()) {
+                    return false;
+                } else {
+                    return true;
+                }
             }
         } else {
             return super.isCellEditable(row, col);
@@ -323,5 +326,3 @@ public class SensorTableDataModel extends BeanTableDataModel {
 
     private final static Logger log = LoggerFactory.getLogger(SensorTableDataModel.class.getName());
 }
-
-/* @(#)SensorTableDataModel.java */

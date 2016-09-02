@@ -2,6 +2,10 @@ package jmri.jmrit.logix;
 
 import jmri.managers.AbstractManager;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import javax.annotation.CheckReturnValue;
+
 /**
  * Basic Implementation of a OBlockManager.
  * <P>
@@ -38,7 +42,7 @@ public class OBlockManager extends AbstractManager
         return jmri.Manager.OBLOCKS;
     }
 
-    public String getSystemPrefix() {
+    public @Nonnull String getSystemPrefix() {
         return "O";
     }
 
@@ -106,13 +110,18 @@ public class OBlockManager extends AbstractManager
         return (OBlock) _tuser.get(key);
     }
 
-    public OBlock provideOBlock(String name) {
+    public @Nonnull OBlock provideOBlock(String name) throws IllegalArgumentException {
         if (name == null || name.length() == 0) {
-            return null;
+            throw new IllegalArgumentException("name \""+name+"\" invalid");
         }
         OBlock ob = getByUserName(name);
         if (ob == null) {
             ob = getBySystemName(name);
+        }
+        if (ob == null) {
+            ob = createNewOBlock(name, null);
+            if (ob == null) throw new IllegalArgumentException("could not create OBlock \""+name+"\"");
+            register(ob);
         }
         return ob;
     }

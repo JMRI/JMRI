@@ -4,7 +4,6 @@ package jmri.jmris.simpleserver;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -311,7 +310,7 @@ public class SimpleSignalHeadServerTest {
         jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.JUnitUtil.initInternalSignalHeadManager();
         jmri.util.JUnitUtil.initDebugThrottleManager();
-        jmri.InstanceManager.signalHeadManagerInstance().register(new jmri.implementation.VirtualSignalHead("IH1","Head 1"));
+        jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).register(new jmri.implementation.VirtualSignalHead("IH1","Head 1"));
     }
 
     @After public void tearDown() throws Exception {

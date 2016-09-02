@@ -1,4 +1,3 @@
-//AbstractLightServer.java
 package jmri.jmris;
 
 import java.beans.PropertyChangeEvent;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2010
  * @author Randall Wood Copyright (C) 2013, 2014
- * @version $Revision$
  */
 abstract public class AbstractLightServer {
 
@@ -39,22 +37,32 @@ abstract public class AbstractLightServer {
 
     synchronized protected void addLightToList(String lightName) {
         if (!lights.containsKey(lightName)) {
-            lights.put(lightName, new LightListener(lightName));
-            InstanceManager.lightManagerInstance().getLight(lightName).addPropertyChangeListener(lights.get(lightName));
+            Light li = InstanceManager.lightManagerInstance().getLight(lightName);
+            if (li != null) {
+                lights.put(lightName, new LightListener(lightName));
+                li.addPropertyChangeListener(lights.get(lightName));
+            } else {
+                log.error("Failed to get light {}", lightName);
+            }
         }
     }
 
     synchronized protected void removeLightFromList(String lightName) {
         if (lights.containsKey(lightName)) {
-            InstanceManager.lightManagerInstance().getLight(lightName).removePropertyChangeListener(lights.get(lightName));
-            lights.remove(lightName);
+            Light li = InstanceManager.lightManagerInstance().getLight(lightName);
+            if (li != null) {
+                li.removePropertyChangeListener(lights.get(lightName));
+                lights.remove(lightName);
+            } else {
+                log.error("Failed to get light {}", lightName);
+            }
         }
     }
 
-    public Light initLight(String lightName) {
+    public Light initLight(String lightName)  throws IllegalArgumentException {
         Light light = InstanceManager.lightManagerInstance().provideLight(lightName);
         this.addLightToList(lightName);
-        return light;
+        return light;        
     }
 
     public void lightOff(String lightName) {
@@ -97,7 +105,10 @@ abstract public class AbstractLightServer {
 
     public void dispose() {
         for (Map.Entry<String, LightListener> light : this.lights.entrySet()) {
-            InstanceManager.lightManagerInstance().getLight(light.getKey()).removePropertyChangeListener(light.getValue());
+            Light li = InstanceManager.lightManagerInstance().getLight(light.getKey());
+            if (li != null) {
+                li.removePropertyChangeListener(light.getValue());
+            }
         }
         this.lights.clear();
     }

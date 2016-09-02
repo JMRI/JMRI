@@ -1,4 +1,3 @@
-// Log4JTreePane.java
 package jmri.jmrit.log;
 
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import org.apache.log4j.spi.LoggerRepository;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
- * @version $Revision$
  */
 public class Log4JTreePane extends jmri.util.swing.JmriPanel {
 
@@ -24,10 +22,6 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
      * help reference.
      */
     //public String getHelpTarget() { return "Acknowledgements.shtml"; }
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8179937923267615464L;
 
     /**
      * Provide a recommended title for an enclosing frame.

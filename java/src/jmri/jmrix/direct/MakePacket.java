@@ -1,4 +1,3 @@
-// MakePacket.java
 package jmri.jmrix.direct;
 
 
@@ -84,7 +83,6 @@ package jmri.jmrix.direct;
  * </pre>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  *
  */
 public class MakePacket {
@@ -456,5 +454,3 @@ public class MakePacket {
         }
     }
 }
-
-/* @(#)MakePacket.java */

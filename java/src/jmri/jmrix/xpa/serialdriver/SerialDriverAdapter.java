@@ -127,9 +127,6 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
         tc.startTransmitThread();
         sinkThread = new Thread(tc);
         sinkThread.start();
-
-        jmri.jmrix.xpa.ActiveFlag.setActive();
-
     }
 
     private Thread sinkThread;

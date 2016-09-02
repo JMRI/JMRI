@@ -8,11 +8,6 @@ import org.slf4j.LoggerFactory;
 
 final class CarDeleteAttributeAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6118522896008395241L;
-
     public CarDeleteAttributeAction(String actionName, CarAttributeEditFrame caef) {
         super(actionName);
         this.caef = caef;

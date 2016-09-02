@@ -4,7 +4,6 @@ package jmri.jmris.simpleserver;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -137,14 +136,100 @@ public class SimpleReporterServerTest {
         }
     }
 
+    @Test
+    // test sending a Report message.
+    public void testSendReport() {
+        StringBuilder sb = new StringBuilder();
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+                    @Override
+                    public void write(int b) throws java.io.IOException {
+                        sb.append((char)b);
+                    }
+                });
+        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
+        SimpleReporterServer a = new SimpleReporterServer(input, output);
+        try {
+            a.initReporter("IR1");
+            a.sendReport("IR1","Hello World");
+            Assert.assertEquals("sendErrorStatus check","REPORTER IR1 Hello World\n",sb.toString());
+        } catch(java.io.IOException ioe){
+            Assert.fail("Exception sending Error Status");
+        }
+    }
+
+    @Test
+    // test sending a null Report message.
+    public void testSendNullReport() {
+        StringBuilder sb = new StringBuilder();
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+                    @Override
+                    public void write(int b) throws java.io.IOException {
+                        sb.append((char)b);
+                    }
+                });
+        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
+        SimpleReporterServer a = new SimpleReporterServer(input, output);
+        try {
+            a.initReporter("IR1");
+            a.sendReport("IR1",null);
+            // null report, sends back the reporter name only.
+            Assert.assertEquals("sendErrorStatus check","REPORTER IR1\n",sb.toString());
+        } catch(java.io.IOException ioe){
+            Assert.fail("Exception sending Error Status");
+        }
+    }
+
+    @Test
+    // test parsing a Report message.
+    public void testParseStatus() {
+        StringBuilder sb = new StringBuilder();
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+                    @Override
+                    public void write(int b) throws java.io.IOException {
+                        sb.append((char)b);
+                    }
+                });
+        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
+        SimpleReporterServer a = new SimpleReporterServer(input, output);
+        try {
+            a.parseStatus("REPORTER IR1 Hello World\n\r");
+            Assert.assertEquals("sendErrorStatus check","REPORTER IR1 Hello World\n",sb.toString());
+        } catch(jmri.JmriException | java.io.IOException ioe){
+            Assert.fail("Exception sending Error Status");
+        }
+    }
+
+    @Test
+    // test parsing a null Report message.
+    public void testParseNullStatus() {
+        StringBuilder sb = new StringBuilder();
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+                    @Override
+                    public void write(int b) throws java.io.IOException {
+                        sb.append((char)b);
+                    }
+                });
+        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
+        SimpleReporterServer a = new SimpleReporterServer(input, output);
+        try {
+            a.parseStatus("REPORTER IR1\n\r");
+            Assert.assertEquals("sendErrorStatus check","REPORTER IR1\n",sb.toString());
+        } catch(jmri.JmriException | java.io.IOException ioe){
+            Assert.fail("Exception sending Error Status");
+        }
+    }
+
+
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
+        jmri.util.JUnitUtil.initReporterManager();
     }
 
     @After

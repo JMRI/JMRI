@@ -31,9 +31,9 @@ public class SignalMastRepeater {
     }
 
     public SignalMastRepeater(String master, String slave) {
-        SignalMast masterMast = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(master);
+        SignalMast masterMast = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(master);
         _master = nbhm.getNamedBeanHandle(master, masterMast);
-        SignalMast slaveMast = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(slave);
+        SignalMast slaveMast = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(slave);
         _slave = nbhm.getNamedBeanHandle(slave, slaveMast);
     }
 

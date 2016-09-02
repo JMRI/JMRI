@@ -37,10 +37,6 @@ import org.slf4j.LoggerFactory;
  */
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8328598758571366786L;
     RouteEditTableModel routeModel = new RouteEditTableModel();
     JTable routeTable = new JTable(routeModel);
     JScrollPane routePane;
@@ -288,7 +284,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         Location l = (Location) locationBox.getSelectedItem();
         RouteLocation rl;
         if (addLocAtTop.isSelected()) {
-            rl = _route.addLocation(l, 0);
+            rl = _route.addLocation(l, Route.START);
         } else {
             rl = _route.addLocation(l);
         }

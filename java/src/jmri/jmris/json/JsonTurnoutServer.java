@@ -1,9 +1,9 @@
 package jmri.jmris.json;
 
-import static jmri.jmris.json.JSON.METHOD;
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.PUT;
-import static jmri.jmris.json.JSON.TURNOUT;
+import static jmri.server.json.JSON.METHOD;
+import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.PUT;
+import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUT;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

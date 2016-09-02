@@ -1,74 +1,120 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
-<head><title>Formating the Decoder Definition</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>Formating the Decoder Definition</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<a name="Top"></a>
-<h1>Decoder Definition</h1>
-<h2>Format</h2>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<div align="right">
-<p><a href="Dcode_Start.shtml">Previous</a> | <a href="Dcode_Testing.shtml">Next</a></p>
-<p><a href="index.shtml#DecoderDefinition">Back to Index</a></p>
-</div>
+      <h1>Decoder Definition</h1>
 
-<hr>
-<h4>Formatting the decoder definition</h4>
-<p>The easiest way to create a new decoder definition is to edit one
-that already exists that has parameters similar to your new
-decoder.&nbsp; Hundreds of decoder definitions are available in JMRI,
-so you should be able to find one that is similar as a starting
-point.&nbsp; Don&#8217;t feel bad about standing on someone else&#8217;s shoulders,
-that&#8217;s the spirit of JMRI and open source software in general.&nbsp;
-Although you can call this new file anything you like, it will work
-best if you use the same convention as the provided files. That is "<strong>manufacturer  name</strong>"_"<strong>decoder family</strong>".xml, for example: <strong>Digitrax_1x2.xml</strong>  and <strong>Atlas_DualMode.xml</strong>. </p>
-<p>Now that you have located a Decoder Definition file as a starting point  open the file with an XML editor 
-(editors recommended by JMRI are discussed on a  
-<a target="_blank" href="http://jmri.org/help/en/html/doc/Technical/XmlDtdUsage.shtml">separate page)</a>  or your favorite text editor.
-<strong>DO NOT</strong> try an advanced word processor like  Word.
-Use a basic text file editor like  Notepad, or an XML editor, XML Marker is a good one and it&#8217;s free.</p>
-<p>The beginning XML lines deal with the Header:</p>
-<p><strong> Author</strong></p>
-<p><img src="images/Dcode01.png" alt="author" class="UPDATE" border="2" height="103" width="486"></p>
-<p><strong>Decoder Family and  Model</strong></p>
-<p><img src="images/Dcode02.png" alt="decoder famil" border="2" height="310" width="429"></p>
-<p><strong>Programming modes the decoder will accept:</strong></p>
-<p><img src="images/Dcode03.png" alt="Programming Modes" border="2" height="62" width="426"></p>
-<p>The next part of the file consists of a set of 'variable' elements
-defining specific variables, nested inside a 'variables' (note the
-extra "s") element.&nbsp; Here&#8217;s where the real definition is
-determined.&nbsp; </p>
-<p>Each variable represents one thing to configure. They can represent
-a single CV, e.g. address, or a few bits that can be configured to
-control a particular function. If some of these aren't appropriate to
-your decoder, you can just remove them. Make sure you remove the entire
-element from the <span class="ACCENT">&lt;variable&gt;</span> to the matching <span class="ACCENT">&lt;/variable&gt;</span>. You can also rearrange them  if you'd prefer a different sequence.</p>
-<p><img src="images/Dcode04.png" alt="variable" border="2" height="81" width="522"></p>
-<p><img src="images/Dcode05.png" alt="variable sample" border="2" height="398" width="594"><br>
-  Once you get your variables all in order, it&#8217;s time to test the definition.</p>
+      <h2>Format</h2>
 
-<hr>
-<div align="right">
-<p><a href="Dcode_Testing.shtml"></a><a href="Dcode_Start.shtml">Previous</a> | <a href="Dcode_Testing.shtml">Next</a></p>
-<p><a href="index.shtml#DecoderDefinition">Back to Index</a><a href="index.shtml#Main"></a></p>
-</div>
+      <div align="right">
+        <p><a href="Dcode_Start.shtml">Previous</a> | <a href=
+        "Dcode_Testing.shtml">Next</a></p>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
- </body>
+        <p><a href="index.shtml#DecoderDefinition">Back to
+        Index</a></p>
+      </div>
+      <hr>
+
+      <h4>Formatting the decoder definition</h4>
+
+      <p>The easiest way to create a new decoder definition is to
+      edit one that already exists that has parameters similar to
+      your new decoder. Hundreds of decoder definitions are
+      available in JMRI, so you should be able to find one that is
+      similar as a starting point. Don't feel bad about standing on
+      someone else's shoulders, that's the spirit of JMRI and open
+      source software in general. Although you can call this new
+      file anything you like, it will work best if you use the same
+      convention as the provided files. That is
+      "<strong>manufacturer name</strong>"_"<strong>decoder
+      family</strong>".xml, for example:
+      <strong>Digitrax_1x2.xml</strong> and
+      <strong>Atlas_DualMode.xml</strong>.</p>
+
+      <p>Now that you have located a Decoder Definition file as a
+      starting point open the file with an XML editor (editors
+      recommended by JMRI are discussed on a <a target="_blank"
+      href=
+      "http://jmri.org/help/en/html/doc/Technical/XmlDtdUsage.shtml">
+      separate page)</a> or your favorite text editor. <strong>DO
+      NOT</strong> try an advanced word processor like Word. Use a
+      basic text file editor like Notepad, or an XML editor, XML
+      Marker is a good one and it's free.</p>
+
+      <p>The beginning XML lines deal with the Header:</p>
+
+      <p><strong>Author</strong></p>
+
+      <p><img src="images/Dcode01.png" alt="author" class="UPDATE"
+      border="2" height="103" width="486"></p>
+
+      <p><strong>Decoder Family and Model</strong></p>
+
+      <p><img src="images/Dcode02.png" alt="decoder famil" border=
+      "2" height="310" width="429"></p>
+
+      <p><strong>Programming modes the decoder will
+      accept:</strong></p>
+
+      <p><img src="images/Dcode03.png" alt="Programming Modes"
+      border="2" height="62" width="426"></p>
+
+      <p>The next part of the file consists of a set of 'variable'
+      elements defining specific variables, nested inside a
+      'variables' (note the extra "s") element. Here's where the
+      real definition is determined.</p>
+
+      <p>Each variable represents one thing to configure. They can
+      represent a single CV, e.g. address, or a few bits that can
+      be configured to control a particular function. If some of
+      these aren't appropriate to your decoder, you can just remove
+      them. Make sure you remove the entire element from the
+      <span class="ACCENT">&lt;variable&gt;</span> to the matching
+      <span class="ACCENT">&lt;/variable&gt;</span>. You can also
+      rearrange them if you'd prefer a different sequence.</p>
+
+      <p><img src="images/Dcode04.png" alt="variable" border="2"
+      height="81" width="522"></p>
+
+      <p><img src="images/Dcode05.png" alt="variable sample"
+      border="2" height="398" width="594"><br>
+      Once you get your variables all in order, it's time to test
+      the definition.</p>
+      <hr>
+
+      <div align="right">
+        <p><a href="Dcode_Testing.shtml"></a><a href=
+        "Dcode_Start.shtml">Previous</a> | <a href=
+        "Dcode_Testing.shtml">Next</a></p>
+
+        <p><a href="index.shtml#DecoderDefinition">Back to
+        Index</a><a href="index.shtml#Main"></a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
 </html>

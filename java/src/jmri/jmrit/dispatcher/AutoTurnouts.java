@@ -1,4 +1,3 @@
-// AutoTurnouts.java
 package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
@@ -31,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Dave Duchamp Copyright (C) 2008-2009
- * @version	$Revision$
  */
 public class AutoTurnouts {
 

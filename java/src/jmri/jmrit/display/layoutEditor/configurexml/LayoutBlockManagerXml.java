@@ -2,6 +2,7 @@ package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.Color;
 import java.util.List;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
@@ -201,8 +202,8 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
             return;
         }
         // if old manager exists, remove it from configuration process
-        if (InstanceManager.getDefault(LayoutBlockManager.class) != null) {
-            InstanceManager.configureManagerInstance().deregister(
+        if (InstanceManager.getOptionalDefault(LayoutBlockManager.class) != null) {
+            InstanceManager.getDefault(jmri.ConfigureManager.class).deregister(
                     InstanceManager.getDefault(LayoutBlockManager.class));
         }
 
@@ -210,7 +211,10 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
         LayoutBlockManager pManager = LayoutBlockManager.instance();
         InstanceManager.store(pManager, jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
         // register new one for configuration
-        InstanceManager.configureManagerInstance().registerConfig(pManager, jmri.Manager.LAYOUTBLOCKS);
+        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerConfig(pManager, jmri.Manager.LAYOUTBLOCKS);
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutBlockManagerXml.class.getName());

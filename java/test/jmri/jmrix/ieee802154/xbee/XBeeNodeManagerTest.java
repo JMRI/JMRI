@@ -3,7 +3,6 @@ package jmri.jmrix.ieee802154.xbee;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -27,7 +26,6 @@ public class XBeeNodeManagerTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         tc = new XBeeInterfaceScaffold();
-        jmri.util.JUnitAppender.assertErrorMessage("Deprecated Method setInstance called");
     }
 
     @After

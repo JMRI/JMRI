@@ -602,6 +602,7 @@ public class ProfileManager extends Bean {
      * When a JMRI application is starting there are eight potential
      * Profile-related states requiring preparation to use profiles:
      * <table>
+     * <caption>Matrix of states determining if migration required.</caption>
      * <tr><th>Profile Catalog</th><th>Profile Config</th><th>App
      * Config</th><th>Action</th></tr>
      * <tr><td>YES</td><td>YES</td><td>YES</td><td>No preparation required -

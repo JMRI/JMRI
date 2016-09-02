@@ -1,4 +1,3 @@
-// SerialNode.java
 package jmri.jmrix.cmri.serial;
 
 import jmri.JmriException;
@@ -27,7 +26,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision$
  */
 public class SerialNode extends AbstractNode {
 
@@ -77,8 +75,8 @@ public class SerialNode extends AbstractNode {
      * is used, actual node address must be set using setNodeAddress, and actual
      * node type using 'setNodeType'
      */
-    public SerialNode() {
-        this(0, SMINI);
+    public SerialNode(SerialTrafficController tc) {
+        this(0, SMINI,tc);
     }
 
     /**
@@ -86,7 +84,7 @@ public class SerialNode extends AbstractNode {
      * address - Address of node on CMRI serial bus (0-127) type - SMINI,
      * USIC_SUSIC,
      */
-    public SerialNode(int address, int type) {
+    public SerialNode(int address, int type,SerialTrafficController tc) {
         // set address and type and check validity
         setNodeAddress(address);
         setNodeType(type);
@@ -112,7 +110,7 @@ public class SerialNode extends AbstractNode {
         setMustSend();
         hasActiveSensors = false;
         // register this node
-        SerialTrafficController.instance().registerNode(this);
+        tc.registerNode(this);
     }
 
     public int getNum2LSearchLights() {
@@ -855,5 +853,3 @@ public class SerialNode extends AbstractNode {
 
     private final static Logger log = LoggerFactory.getLogger(SerialNode.class.getName());
 }
-
-/* @(#)SerialNode.java */

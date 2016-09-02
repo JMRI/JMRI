@@ -8,6 +8,7 @@ import java.util.Locale;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.FontUIResource;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
@@ -22,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * Instead, this interacts directly with Swing and the default Locale.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2010
- * @see jmri.GuiLafConfigPane
+ * @see apps.GuiLafConfigPane
  * @since 2.9.5
  */
 public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
@@ -102,7 +103,10 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setNonStandardMouseEvent(nonStandardMouseEvent);
         }
         GuiLafConfigPane g = new GuiLafConfigPane();
-        jmri.InstanceManager.configureManagerInstance().registerPref(g);
+        ConfigureManager cm = jmri.InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerPref(g);
+        }
 
         Attribute fontsize = shared.getAttribute("fontsize");
         if (fontsize != null) {

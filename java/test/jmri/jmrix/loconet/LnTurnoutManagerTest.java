@@ -24,7 +24,16 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
     LocoNetInterfaceScaffold lnis;
 
-    public void setUp() {
+    @Override
+    protected void tearDown() throws Exception {
+        apps.tests.Log4JFixture.tearDown();
+        super.tearDown();
+    }
+
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+        apps.tests.Log4JFixture.setUp();
         // prepare an interface, register
         lnis = new LocoNetInterfaceScaffold();
         // create and register the manager object

@@ -43,7 +43,6 @@ import org.slf4j.LoggerFactory;
  * TrackSegments may be hidden when the panel is not in EditMode.
  *
  * @author Dave Duchamp Copyright (c) 2004-2009
- * @version $Revision$
  */
 public class TrackSegment {
 
@@ -237,11 +236,9 @@ public class TrackSegment {
     public void trackRedrawn() {
         changed = false;
     }
-    //public int getRadius() {return radius;}
-    //public void setRadius(int x) {radius = x;} 
 
     public LayoutBlock getLayoutBlock() {
-        if ((block == null) && (blockName != null) && (blockName != "")) {
+        if ((block == null) && (blockName != null) && (!blockName.equals(""))) {
             block = layoutEditor.provideLayoutBlock(blockName);
         }
         return block;
@@ -396,7 +393,7 @@ public class TrackSegment {
         if (blockName.equals("")) {
             popup.add(rb.getString("NoBlock"));
         } else {
-            popup.add(rb.getString("Block") + ": " + getLayoutBlock().getID());
+            popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getID());
         }
         if (hidden) {
             popup.add(rb.getString("Hidden"));
@@ -404,7 +401,7 @@ public class TrackSegment {
             popup.add(rb.getString("NotHidden"));
         }
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
-        popup.add(new AbstractAction(rb.getString("Edit")) {
+        popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
             /**
              *
              */
@@ -570,7 +567,7 @@ public class TrackSegment {
         }
         // Initialize if needed
         if (editTrackSegmentFrame == null) {
-            editTrackSegmentFrame = new JmriJFrame(rb.getString("EditTrackSegment"), false, true);
+            editTrackSegmentFrame = new JmriJFrame(Bundle.getMessage("EditTrackSegment"), false, true); // key moved to DisplayBundle to be found by CircuitBuilder.java
             editTrackSegmentFrame.addHelpMenu("package.jmri.jmrit.display.EditTrackSegment", true);
             editTrackSegmentFrame.setLocation(50, 30);
             Container contentPane = editTrackSegmentFrame.getContentPane();
@@ -633,7 +630,7 @@ public class TrackSegment {
                 }
             });
             segmentEditBlock.setToolTipText(rb.getString("EditBlockHint"));
-            panel5.add(segmentEditDone = new JButton(rb.getString("Done")));
+            panel5.add(segmentEditDone = new JButton(Bundle.getMessage("ButtonDone")));
             segmentEditDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     segmentEditDonePressed(e);
@@ -641,7 +638,7 @@ public class TrackSegment {
             });
             segmentEditDone.setToolTipText(rb.getString("DoneHint"));
             // Cancel
-            panel5.add(segmentEditCancel = new JButton(rb.getString("Cancel")));
+            panel5.add(segmentEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             segmentEditCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     segmentEditCancelPressed(e);
@@ -682,8 +679,9 @@ public class TrackSegment {
             }
             // get new block, or null if block has been removed
             blockName = blockNameField.getText().trim();
-            block = layoutEditor.provideLayoutBlock(blockName);
-            if (block == null) {
+            try {
+                block = layoutEditor.provideLayoutBlock(blockName);
+            } catch (IllegalArgumentException ex) {
                 blockName = "";
             }
             needsRedraw = true;
@@ -694,7 +692,7 @@ public class TrackSegment {
         if (block == null) {
             JOptionPane.showMessageDialog(editTrackSegmentFrame,
                     rb.getString("Error1"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         block.editLayoutBlock(editTrackSegmentFrame);
@@ -743,8 +741,9 @@ public class TrackSegment {
             }
             // get new block, or null if block has been removed
             blockName = blockNameField.getText().trim();
-            block = layoutEditor.provideLayoutBlock(blockName);
-            if (block == null) {
+            try {
+                block = layoutEditor.provideLayoutBlock(blockName);
+            } catch (IllegalArgumentException ex) {
                 blockName = "";
             }
             needsRedraw = true;

@@ -13,10 +13,6 @@ import javax.swing.AbstractAction;
  */
 public class ShowCheckboxesCarsTableAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7015631697067063039L;
     CarsTableModel _carsTableModel;
 
     public ShowCheckboxesCarsTableAction(String s) {

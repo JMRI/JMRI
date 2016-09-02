@@ -14,10 +14,6 @@ import org.slf4j.LoggerFactory;
 public class QsiTrafficControlScaffold extends QsiTrafficController {
 
     public QsiTrafficControlScaffold() {
-        if (log.isDebugEnabled()) {
-            log.debug("setting instance: " + this);
-        }
-        self = this;
     }
 
     // override some QsiTrafficController methods for test purposes

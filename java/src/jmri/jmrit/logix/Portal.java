@@ -292,9 +292,9 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     }
 
     static public NamedBean getSignal(String name) {
-        NamedBean signal = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+        NamedBean signal = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
         if (signal == null) {
-            signal = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+            signal = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name);
         }
         return signal;
     }

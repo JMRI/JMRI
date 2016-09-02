@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Greg</firstname><surname>McCartney</surname></personname>
+        <email>gpmccartney@gmail.com</email>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2016-07-28</date>
+        <authorinitials>GM</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+   </revhistory>
+
+  <aspecttable>B&amp;O 1980</aspecttable>
+  <name>NJ International #1214 CPL Signal</name>
+  <reference>As described in the 1980 version of the Chessie System Operating Rules.</reference>
+  <description>Appearances for B&amp;O color position light mast signals.  This is for the stock NJ International B&amp;O signal part numbner 1214.</description>
+  
+  <appearances>
+  
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>green</show>
+      <reference>Page 128</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-NJInternational/rule-281.gif</imagelink>
+    </appearance>
+	
+    <appearance>
+      <aspectname>Approach Limited</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <reference>Page 129</reference>
+      <comment>Signal is identical to Approach Medium except for the addition of a triangle flag on signal mast</comment>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-NJInternational/rule-282.gif</imagelink>
+    </appearance>
+	
+    <appearance>
+      <aspectname>Limited Clear</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <reference>Page 130</reference>
+      <comment>Signal is identical to Medium Clear except for the addition of a triangle flag on signal mast</comment>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-NJInternational/rule-283.gif</imagelink>
+    </appearance>
+	
+    <appearance>
+      <aspectname>Approach Medium</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <reference>Page 129</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-NJInternational/rule-282A.gif</imagelink>
+    </appearance>
+	
+    <appearance>
+      <aspectname>Medium Clear</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <reference>Page 130</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-NJInternational/rule-283A.gif</imagelink>
+    </appearance>
+	
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>green</show>
+      <show>yellow</show>
+      <reference>Page 133</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-NJInternational/rule-285.gif</imagelink>
+    </appearance>
+	
+    <appearance>
+      <aspectname>Medium Approach</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <reference>Page 134</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-NJInternational/rule-286.gif</imagelink>
+    </appearance>
+	
+    <appearance>
+      <aspectname>Slow Approach Slow</aspectname>
+      <show>dark</show>
+      <show>green</show>
+      <reference>Page 135</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-NJInternational/rule-287.gif</imagelink>
+    </appearance>
+	
+    <appearance>
+      <aspectname>Slow Approach</aspectname>
+      <show>dark</show>
+      <show>yellow</show>
+      <reference>Page 136</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-NJInternational/rule-288.gif</imagelink>
+    </appearance>
+	
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>dark</show>
+      <show>lunar</show>
+      <reference>Page 137</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-NJInternational/rule-290.gif</imagelink>
+    </appearance>
+	
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>dark</show>
+      <show>red</show>
+      <reference>Page 140</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-NJInternational/rule-292.gif</imagelink>
+    </appearance>
+	
+	<appearance>
+	  <aspectname>unlit</aspectname>
+	  <show>dark</show>
+	  <show>dark</show>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-NJInternational/unlit.gif</imagelink>
+	</appearance>
+	
+  </appearances>
+  
+  <specificappearances>
+  
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+	
+    <permissive>
+      <aspect>Restricting</aspect>
+    </permissive>
+	
+    <held>
+      <aspect>Stop</aspect>
+    </held>
+	
+	<dark>
+	  <aspect>unlit</aspect>
+	</dark>
+	
+  </specificappearances>
+  
+  <aspectMappings>
+  
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+	  <ourAspect>Limited Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Approach Slow</ourAspect>
+	  <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+	
+    <aspectMapping>
+      <advancedAspect>Approach Limited</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+	  <ourAspect>Limited Clear</ourAspect>
+	  <ourAspect>Medium Clear</ourAspect>
+	  <ourAspect>Slow Approach Slow</ourAspect>
+	  <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+	
+    <aspectMapping>
+      <advancedAspect>Approach Medium</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+	  <ourAspect>Limited Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Approach Slow</ourAspect>
+	  <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+	
+    <aspectMapping>
+      <advancedAspect>Limited Clear</advancedAspect>
+      <ourAspect>Approach Limited</ourAspect>
+	  <ourAspect>Approach Medium</ourAspect>
+	  <ourAspect>Slow Approach Slow</ourAspect>
+	  <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+	
+    <aspectMapping>
+      <advancedAspect>Medium Clear</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Slow Approach Slow</ourAspect>
+	  <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+	
+    <aspectMapping>
+      <advancedAspect>Medium Approach Medium</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Slow Approach Slow</ourAspect>
+	  <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+	
+    <aspectMapping>
+      <advancedAspect>Medium Approach Slow</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+	  <ourAspect>Approach Slow</ourAspect>
+      <ourAspect>Slow Approach Slow</ourAspect>
+	  <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+	
+    <aspectMapping>
+      <advancedAspect>Approach Slow</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Limited Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Approach Slow</ourAspect>
+	  <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+	
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Limited Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Approach Slow</ourAspect>
+	  <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+	
+    <aspectMapping>
+      <advancedAspect>Medium Approach</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Slow Approach Slow</ourAspect>
+	  <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+	
+    <aspectMapping>
+      <advancedAspect>Slow Approach Slow</advancedAspect>
+      <ourAspect>Approach Slow</ourAspect>
+      <ourAspect>Slow Approach Slow</ourAspect>
+	  <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+	
+    <aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
+      <ourAspect>Approach Slow</ourAspect>
+      <ourAspect>Slow Approach Slow</ourAspect>
+	  <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+	
+    <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+	  <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+	
+    <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+	  <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+	
+    <aspectMapping>
+      <advancedAspect>Stop and Proceed Medium</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+	  <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+	
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+	  <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+	
+  </aspectMappings>
+  
+</appearancetable>

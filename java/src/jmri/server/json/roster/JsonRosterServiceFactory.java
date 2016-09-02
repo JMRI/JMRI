@@ -2,8 +2,6 @@ package jmri.server.json.roster;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JsonConnection;
-import jmri.server.json.JsonHttpService;
-import jmri.server.json.JsonSocketService;
 import jmri.spi.JsonServiceFactory;
 
 /**
@@ -18,12 +16,12 @@ public class JsonRosterServiceFactory implements JsonServiceFactory {
     }
 
     @Override
-    public JsonSocketService getSocketService(JsonConnection connection) {
+    public JsonRosterSocketService getSocketService(JsonConnection connection) {
         return new JsonRosterSocketService(connection);
     }
 
     @Override
-    public JsonHttpService getHttpService(ObjectMapper mapper) {
+    public JsonRosterHttpService getHttpService(ObjectMapper mapper) {
         return new JsonRosterHttpService(mapper);
     }
 

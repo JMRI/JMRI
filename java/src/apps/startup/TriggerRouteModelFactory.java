@@ -1,12 +1,14 @@
 package apps.startup;
 
 import apps.StartupActionsManager;
-import apps.StartupModel;
 import java.awt.Component;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
+import jmri.Route;
 import jmri.RouteManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Factory to create {@link apps.startup.TriggerRouteModel} objects.
@@ -15,6 +17,8 @@ import jmri.RouteManager;
  */
 public class TriggerRouteModelFactory implements StartupModelFactory {
 
+    private final static Logger log = LoggerFactory.getLogger(TriggerRouteModelFactory.class.getName());
+    
     @Override
     public Class<? extends StartupModel> getModelClass() {
         return TriggerRouteModel.class;
@@ -40,9 +44,14 @@ public class TriggerRouteModelFactory implements StartupModelFactory {
         if (this.getModelClass().isInstance(model)) {
             ArrayList<String> userNames = new ArrayList<>();
             InstanceManager.getDefault(RouteManager.class).getSystemNameList().stream().forEach((systemName) -> {
-                String userName = InstanceManager.getDefault(RouteManager.class).getBySystemName(systemName).getUserName();
-                if (userName != null && !userName.isEmpty()) {
-                    userNames.add(userName);
+                Route r = InstanceManager.getDefault(RouteManager.class).getBySystemName(systemName);
+                if (r != null) {
+                    String userName = r.getUserName();
+                    if (userName != null && !userName.isEmpty()) {
+                        userNames.add(userName);
+                    }
+                } else {
+                    log.error("Failed to get route {}", systemName);
                 }
             });
             userNames.sort(null);

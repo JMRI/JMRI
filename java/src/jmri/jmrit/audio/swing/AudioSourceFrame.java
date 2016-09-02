@@ -301,12 +301,12 @@ public class AudioSourceFrame extends AbstractAudioFrame {
      */
     @Override
     public void populateFrame(Audio a) {
-        if (a instanceof AudioSource) {
+        if (!(a instanceof AudioSource)) {
             throw new IllegalArgumentException(a.getSystemName() + " is not an AudioSource object");
         }
         super.populateFrame(a);
         AudioSource s = (AudioSource) a;
-        AudioManager am = InstanceManager.audioManagerInstance();
+        AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
         String ab = s.getAssignedBufferName();
         Audio b = am.getAudio(ab);
         if (b != null) {
@@ -332,7 +332,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     }
 
     public void updateBufferList() {
-        AudioManager am = InstanceManager.audioManagerInstance();
+        AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
         assignedBuffer.removeAllItems();
         assignedBuffer.addItem("Select buffer from list");
         am.getSystemNameList(Audio.BUFFER).stream().forEach((s) -> {
@@ -353,9 +353,10 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         String sName = sysName.getText().toUpperCase();
         AudioSource s;
         try {
-            AudioManager am = InstanceManager.audioManagerInstance();
-            s = (AudioSource) am.provideAudio(sName);
-            if (s == null) {
+            AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
+            try {
+                s = (AudioSource) am.provideAudio(sName);
+            } catch (IllegalArgumentException ex) {
                 throw new AudioException("Problem creating source");
             }
             if (newSource && am.getByUserName(user) != null) {

@@ -1,4 +1,3 @@
-// AddSensorPanel.java
 package jmri.jmrit.signalling;
 
 import java.awt.Color;
@@ -23,6 +22,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -31,7 +31,6 @@ import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import jmri.util.JmriJFrame;
-import jmri.util.com.sun.TableSorter;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -41,20 +40,15 @@ import org.slf4j.LoggerFactory;
  * JPanel to create a new JMRI devices HiJacked to serve other beantable tables.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.2 $
  */
 public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4871721972825766572L;
-    JComboBox<String> selectPanel = new JComboBox<String>();
-    JComboBox<String> fromPoint = new JComboBox<String>();
-    JComboBox<String> toPoint = new JComboBox<String>();
+    JComboBox<String> selectPanel = new JComboBox<>();
+    JComboBox<String> fromPoint = new JComboBox<>();
+    JComboBox<String> toPoint = new JComboBox<>();
 
     String[] interlockTypes = {"Set Turnouts Only", "Set Turnouts and Signal Masts", "Full Interlock"};
-    JComboBox<String> typeBox = new JComboBox<String>(interlockTypes);
+    JComboBox<String> typeBox = new JComboBox<>(interlockTypes);
 
     ArrayList<LayoutEditor> panels;
 
@@ -82,11 +76,9 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
 
         top.add(new JLabel(rb.getString("FromLocation")));
         top.add(fromPoint);
-        ActionListener selectPanelListener = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                selectPointsFromPanel();
-                nxModel.setPanel(panels.get(selectPanel.getSelectedIndex()));
-            }
+        ActionListener selectPanelListener = (ActionEvent e) -> {
+            selectPointsFromPanel();
+            nxModel.setPanel(panels.get(selectPanel.getSelectedIndex()));
         };
         selectPointsFromPanel();
         selectPanel.addActionListener(selectPanelListener);
@@ -101,28 +93,21 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
         JPanel p = new JPanel();
         JButton ok = new JButton(rb.getString("Add"));
         p.add(ok);
-        ok.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        addButton();
-                    }
-                });
+        ok.addActionListener((ActionEvent e) -> {
+            addButton();
+        });
 
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         JButton auto;
         p.add(auto = new JButton(rb.getString("AutoGenerate")));
-        auto.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        autoDiscovery();
-                    }
-                });
+        auto.addActionListener((ActionEvent e) -> {
+            autoDiscovery();
+        });
         p.add(auto);
         add(p);
         nxModel = new TableModel(panel);
-        nxSorter = new TableSorter(nxModel);
-        nxDataTable = new JTable(nxSorter);
-        nxSorter.setTableHeader(nxDataTable.getTableHeader());
+        nxDataTable = new JTable(nxModel);
+        nxDataTable.setRowSorter(new TableRowSorter<>(nxModel));
         nxDataScroll = new JScrollPane(nxDataTable);
         nxModel.configureTable(nxDataTable);
         java.awt.Dimension dataTableSize = nxDataTable.getPreferredSize();
@@ -157,7 +142,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
                 JOptionPane.showMessageDialog(null, rb.getString("LayoutBlockRoutingEnabled"));
             }
         }
-        entryExitFrame = new jmri.util.JmriJFrame("Discover Entry Exit Pairs", false, false);
+        entryExitFrame = new jmri.util.JmriJFrame("Discover Entry Exit Pairs", false, false); // TODO I18N
         entryExitFrame.setPreferredSize(null);
         JPanel panel1 = new JPanel();
         sourceLabel = new JLabel("Discovering Entry Exit Pairs");
@@ -210,7 +195,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
         return null;
     }
 
-    ArrayList<ValidPoints> validPoints = new ArrayList<ValidPoints>();
+    ArrayList<ValidPoints> validPoints = new ArrayList<>();
 
     private void selectPointsFromPanel() {
         if (selectPanel.getSelectedIndex() == -1) {
@@ -249,10 +234,9 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
     }
 
     void addPointToCombo(String signalMastName, String sensorName) {
-        NamedBean source = null;
         if (sensorName != null && !sensorName.isEmpty()) {
             String description = sensorName;
-            source = InstanceManager.sensorManagerInstance().getSensor(sensorName);
+            NamedBean source = InstanceManager.sensorManagerInstance().getSensor(sensorName);
             if (signalMastName != null && !signalMastName.isEmpty()) {
                 description = sensorName + " (" + signalMastName + ")";
             }
@@ -262,7 +246,6 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
         }
     }
 
-    TableSorter nxSorter;
     JTable nxDataTable;
     JScrollPane nxDataScroll;
 
@@ -320,6 +303,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
 
         int rowCount = 0;
 
+        @Override
         public int getRowCount() {
             return rowCount;
         }
@@ -342,6 +326,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
 
         }
 
+        @Override
         public Object getValueAt(int row, int col) {
             // get roster entry for row
             if (panel == null) {
@@ -370,6 +355,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             if (col == DELETECOL) {
                 // button fired, delete Bean
@@ -379,21 +365,26 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
                 nxPairs.cancelInterlock(source.get(row), panel, dest.get(row));
             }
             if (col == BOTHWAYCOL) {
-                boolean b = !((Boolean) value).booleanValue();
+                boolean b = !((Boolean) value);
                 nxPairs.setUniDirection(source.get(row), panel, dest.get(row), b);
             }
             if (col == ENABLEDCOL) {
-                boolean b = !((Boolean) value).booleanValue();
+                boolean b = !((Boolean) value);
                 nxPairs.setEnabled(source.get(row), panel, dest.get(row), b);
             }
             if (col == TYPECOL) {
-                String val = (String) value;
-                if (val.equals("Turnout")) {
-                    nxPairs.setEntryExitType(source.get(row), panel, dest.get(row), 0x00);
-                } else if (val.equals("Signal Mast")) {
-                    nxPairs.setEntryExitType(source.get(row), panel, dest.get(row), 0x01);
-                } else if (val.equals("Full InterLock")) {
-                    nxPairs.setEntryExitType(source.get(row), panel, dest.get(row), 0x02);
+                switch ((String) value) {
+                    case "Turnout": // TODO I18N see NXTYPE_NAMES definition
+                        nxPairs.setEntryExitType(source.get(row), panel, dest.get(row), 0x00);
+                        break;
+                    case "Signal Mast":
+                        nxPairs.setEntryExitType(source.get(row), panel, dest.get(row), 0x01);
+                        break;
+                    case "Full InterLock":
+                        nxPairs.setEntryExitType(source.get(row), panel, dest.get(row), 0x02);
+                        break;
+                    default:
+                        break;
                 }
             }
         }
@@ -455,6 +446,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
+        @Override
         public Class<?> getColumnClass(int col) {
             switch (col) {
                 case FROMPOINTCOL:
@@ -474,6 +466,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
+        @Override
         public boolean isCellEditable(int row, int col) {
             switch (col) {
                 case BOTHWAYCOL:
@@ -504,10 +497,12 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
             }
         }
 
+        @Override
         public int getColumnCount() {
             return NUMCOL;
         }
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("length") || e.getPropertyName().equals("active")) {
                 rowCount = nxPairs.getNxPairNumbers(panel);
@@ -517,17 +512,17 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
         }
     }
 
-    String[] NXTYPE_NAMES = {"Turnout", "Signal Mast", "Full InterLock"};
+    String[] NXTYPE_NAMES = {"Turnout", "Signal Mast", "Full InterLock"}; // TODO I18N
 
     protected void configDeleteColumn(JTable table) {
         // have the delete column hold a button
         setColumnToHoldButton(table, DELETECOL,
-                new JButton(rb.getString("ButtonDelete")));
+                new JButton(Bundle.getMessage("ButtonDelete")));
 
         setColumnToHoldButton(table, CLEARCOL,
-                new JButton(rb.getString("ButtonClear")));
+                new JButton(Bundle.getMessage("ButtonClear")));
 
-        JComboBox<String> typeCombo = new JComboBox<String>(NXTYPE_NAMES);
+        JComboBox<String> typeCombo = new JComboBox<>(NXTYPE_NAMES);
 
         TableColumn col = table.getColumnModel().getColumn(TYPECOL);
         col.setCellEditor(new DefaultCellEditor(typeCombo));
@@ -537,6 +532,8 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
      * Service method to setup a column so that it will hold a button for it's
      * values
      *
+     * @param table  the table
+     * @param column the column
      * @param sample Typical button, used for size
      */
     protected void setColumnToHoldButton(JTable table, int column, JButton sample) {
@@ -574,23 +571,23 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
     JmriJFrame optionsFrame = null;
     Container optionsPane = null;
     String[] clearOptions = {"Prompt User", "Clear Route", "Cancel Route"};
-    JComboBox<String> clearEntry = new JComboBox<String>(clearOptions);
+    JComboBox<String> clearEntry = new JComboBox<>(clearOptions);
     JTextField durationSetting = new JTextField(10);
-    String[] colorText = {"None", "Black", "DarkGray", "Gray",
+    String[] colorText = {"ColorClear", "Black", "DarkGray", "Gray",
         "LightGray", "White", "Red", "Pink", "Orange",
-        "Yellow", "Green", "Blue", "Magenta", "Cyan"};
+        "Yellow", "Green", "Blue", "Magenta", "Cyan"}; // I18N using Bundle.getMessage from higher level color list
     Color[] colorCode = {null, Color.black, Color.darkGray, Color.gray,
         Color.lightGray, Color.white, Color.red, Color.pink, Color.orange,
         Color.yellow, Color.green, Color.blue, Color.magenta, Color.cyan};
     int numColors = 14;  // number of entries in the above arrays
     JCheckBox dispatcherUse = new JCheckBox(Bundle.getMessage("DispatcherInt"));
 
-    JComboBox<String> settingTrackColorBox = new JComboBox<String>();
+    JComboBox<String> settingTrackColorBox = new JComboBox<>();
 
     private void initializeColorCombo(JComboBox<String> colorCombo) {
         colorCombo.removeAllItems();
         for (int i = 0; i < numColors; i++) {
-            colorCombo.addItem(rb.getString(colorText[i]));
+            colorCombo.addItem(Bundle.getMessage(colorText[i]));
         }
     }
 
@@ -608,8 +605,10 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
     }
 
     /**
-     * Utility methods for converting between string and color Note: These names
-     * are only used internally, so don't need a resource bundle
+     * Utility methods for converting between string and color. Note: These
+     * names are only used internally, so don't need a resource bundle.
+     *
+     * @param e the action event
      */
     protected void optionWindow(ActionEvent e) {
         if (optionsFrame == null) {
@@ -627,14 +626,11 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
             JPanel p2 = new JPanel();
             initializeColorCombo(settingTrackColorBox);
             setColorCombo(settingTrackColorBox, nxPairs.getSettingRouteColor());
-            ActionListener settingTrackColorListener = new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-
-                    if (getSelectedColor(settingTrackColorBox) != null) {
-                        durationSetting.setEnabled(true);
-                    } else {
-                        durationSetting.setEnabled(false);
-                    }
+            ActionListener settingTrackColorListener = (ActionEvent e1) -> {
+                if (getSelectedColor(settingTrackColorBox) != null) {
+                    durationSetting.setEnabled(true);
+                } else {
+                    durationSetting.setEnabled(false);
                 }
             };
 
@@ -658,14 +654,11 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
             dispatcherUse.setSelected(nxPairs.getDispatcherIntegration());
             optionsPane.add(p4);
 
-            JButton ok = new JButton(Bundle.getMessage("ButtonOkay"));
+            JButton ok = new JButton(Bundle.getMessage("ButtonOK"));
             optionsPane.add(ok);
-            ok.addActionListener(
-                    new ActionListener() {
-                        public void actionPerformed(ActionEvent e) {
-                            optionSaveButton();
-                        }
-                    });
+            ok.addActionListener((ActionEvent e1) -> {
+                optionSaveButton();
+            });
         }
         optionsFrame.pack();
         optionsFrame.setVisible(true);
@@ -689,6 +682,3 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
 
     private final static Logger log = LoggerFactory.getLogger(AddEntryExitPairPanel.class.getName());
 }
-
-
-/* @(#)AddNewHardwareDevicePanel.java */

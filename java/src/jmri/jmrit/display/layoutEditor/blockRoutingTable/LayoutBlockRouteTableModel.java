@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
+    //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     public static final int DESTCOL = 0;
     static final int NEXTHOPCOL = 1;
@@ -54,21 +54,21 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
     public String getColumnName(int col) {
         switch (col) {
             case DESTCOL:
-                return rb.getString("Destination");
+                return Bundle.getMessage("Destination");
             case NEXTHOPCOL:
-                return rb.getString("NextHop");
+                return Bundle.getMessage("NextHop");
             case HOPCOUNTCOL:
-                return rb.getString("HopCount");
+                return Bundle.getMessage("HopCount");
             case DIRECTIONCOL:
-                return rb.getString("Direction");
+                return Bundle.getMessage("Direction");
             case METRICCOL:
-                return rb.getString("Metric");
+                return Bundle.getMessage("Metric");
             case LENGTHCOL:
-                return rb.getString("Length");
+                return Bundle.getMessage("Length");
             case STATECOL:
-                return rb.getString("State");
+                return Bundle.getMessage("State");
             case VALIDCOL:
-                return rb.getString("Valid");
+                return Bundle.getMessage("Valid");
 
             default:
                 return "<UNKNOWN>";
@@ -99,7 +99,7 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("length")) {
             fireTableDataChanged();
-        } else if (e.getPropertyName().toString().equals("routing")) {
+        } else if (e.getPropertyName().equals("routing")) {
             fireTableDataChanged();
         } else if (matchPropertyName(e)) {
             // a value changed.  Find it, to avoid complete redraw
@@ -130,7 +130,7 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
             case NEXTHOPCOL:
                 String nextBlock = lBlock.getRouteNextBlockAtIndex(row).getDisplayName();
                 if (nextBlock.equals(lBlock.getDisplayName())) {
-                    nextBlock = rb.getString("DirectConnect");
+                    nextBlock = Bundle.getMessage("DirectConnect");
                 }
                 return nextBlock;
             case HOPCOUNTCOL:

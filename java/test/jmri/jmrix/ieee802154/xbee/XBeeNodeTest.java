@@ -3,7 +3,6 @@ package jmri.jmrix.ieee802154.xbee;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -67,6 +66,61 @@ public class XBeeNodeTest{
         for (int i = 0; i < gad.length; i++) {
             Assert.assertEquals("Node global address byte " + i, gad[i], node.getGlobalAddress()[i]);
         }
+    }
+
+    @Test
+    public void testGetPreferedNameAsUserAddress() {
+        byte pan[] = {(byte) 0x00, (byte) 0x42};
+        byte uad[] = {(byte) 0x6D, (byte) 0x97};
+        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        XBeeNode node = new XBeeNode(pan,uad,gad);
+        Assert.assertEquals("Short Address Name","6D 97 ",node.getPreferedName());
+    }
+
+    @Test
+    public void testGetPreferedNameAsGlobalAddress() {
+        byte pan[] = {(byte) 0x00, (byte) 0x42};
+        byte uad[] = {(byte) 0xFF, (byte) 0xFF};
+        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        XBeeNode node = new XBeeNode(pan,uad,gad);
+        Assert.assertEquals("Global Address Name","00 13 A2 00 40 A0 4D 2D ",node.getPreferedName());
+    }
+
+    @Test
+    public void testGetPreferedNameAsNodeIdentifier() {
+        byte pan[] = {(byte) 0x00, (byte) 0x42};
+        byte uad[] = {(byte) 0xFF, (byte) 0xFF};
+        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        XBeeNode node = new XBeeNode(pan,uad,gad);
+        node.setIdentifier("Hello World");
+        Assert.assertEquals("Identifier Name",node.getPreferedName(),"Hello World");
+    }
+
+    @Test
+    public void testGetPreferedTransmitUserAddress() {
+        byte pan[] = {(byte) 0x00, (byte) 0x42};
+        byte uad[] = {(byte) 0x6D, (byte) 0x97};
+        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        XBeeNode node = new XBeeNode(pan,uad,gad);
+        Assert.assertEquals("Short Transmit Address",node.getXBeeAddress16(),node.getPreferedTransmitAddress());
+    }
+
+    @Test
+    public void testGetPreferedTransmitGlobalAddress() {
+        byte pan[] = {(byte) 0x00, (byte) 0x42};
+        byte uad[] = {(byte) 0xFF, (byte) 0xFF};
+        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        XBeeNode node = new XBeeNode(pan,uad,gad);
+        Assert.assertEquals("Global Transmit Address",node.getXBeeAddress64(),node.getPreferedTransmitAddress());
+    }
+
+    @Test
+    public void testGetPreferedTransmitGlobalAddressWithMaskRequired() {
+        byte pan[] = {(byte) 0x00, (byte) 0x42};
+        byte uad[] = {(byte) 0x0fffffff, (byte) 0x0ffffffe};
+        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        XBeeNode node = new XBeeNode(pan,uad,gad);
+        Assert.assertEquals("Global Transmit Address",node.getXBeeAddress64(),node.getPreferedTransmitAddress());
     }
 
     // The minimal setup for log4J

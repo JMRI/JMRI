@@ -1,12 +1,5 @@
 package jmri.jmrit.withrottle;
 
-/**
- * FacelessServer.java Copied from UserInterface, but with the UI stuff removed.
- * Sets up to advertise service, and creates a thread for it to run in.
- *
- * @author Brett Hoffman Copyright (C) 2009, 2010
- * @version $Revision: 20499 $
- */
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.Inet4Address;
@@ -22,13 +15,20 @@ import jmri.util.zeroconf.ZeroConfServiceListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//	listen() has to run in a separate thread.
+/**
+ * Copied from UserInterface, but with the UI stuff removed.
+ * Sets up to advertise service, and creates a thread for it to run in.
+ *
+ *	listen() has to run in a separate thread.
+ *
+ * @author Brett Hoffman Copyright (C) 2009, 2010
+ */
 public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfServiceListener {
 
     private final static Logger log = LoggerFactory.getLogger(FacelessServer.class.getName());
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
 
-    UserPreferencesManager userPreferences = InstanceManager.getDefault(UserPreferencesManager.class);
+    UserPreferencesManager userPreferences = InstanceManager.getOptionalDefault(UserPreferencesManager.class);
 
 //	Server iVars
     int port;

@@ -2,7 +2,6 @@ package jmri.jmrit.audio.swing;
 
 import java.awt.FlowLayout;
 import java.util.Hashtable;
-import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;

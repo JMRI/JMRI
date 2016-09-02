@@ -1,4 +1,3 @@
-// SignalMastTableDataModel.java
 package jmri.jmrit.beantable.signalmast;
 
 import java.util.Hashtable;
@@ -9,6 +8,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -17,7 +17,6 @@ import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.beantable.SignalMastTableAction.MyComboBoxEditor;
 import jmri.jmrit.beantable.SignalMastTableAction.MyComboBoxRenderer;
 import jmri.jmrit.signalling.SignallingSourceAction;
-import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,21 +25,21 @@ import org.slf4j.LoggerFactory;
  * Data model for a SignalMastTable
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2009
- * @version $Revision$
  */
 public class SignalMastTableDataModel extends BeanTableDataModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2753901812548953185L;
     static public final int EDITMASTCOL = NUMCOLUMN;
     static public final int EDITLOGICCOL = EDITMASTCOL + 1;
     static public final int LITCOL = EDITLOGICCOL + 1;
     static public final int HELDCOL = LITCOL + 1;
 
     public String getValue(String name) {
-        return InstanceManager.signalMastManagerInstance().getBySystemName(name).getAspect();
+        SignalMast sm = InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name);
+        if (sm != null) {
+            return sm.getAspect();
+        } else {
+            return null;
+        }
     }
 
     public int getColumnCount() {
@@ -100,7 +99,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             return true;
         } else if (col == EDITMASTCOL) {
             String name = sysNameList.get(row);
-            SignalMast s = InstanceManager.signalMastManagerInstance().getBySystemName(name);
+            SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name);
             if (s instanceof jmri.implementation.TurnoutSignalMast) {
                 return true;
             } else {
@@ -114,15 +113,15 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     }
 
     protected Manager getManager() {
-        return InstanceManager.signalMastManagerInstance();
+        return InstanceManager.getDefault(jmri.SignalMastManager.class);
     }
 
     protected NamedBean getBySystemName(String name) {
-        return InstanceManager.signalMastManagerInstance().getBySystemName(name);
+        return InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name);
     }
 
     protected NamedBean getByUserName(String name) {
-        return InstanceManager.signalMastManagerInstance().getByUserName(name);
+        return InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName(name);
     }
 
     protected String getMasterClassName() {
@@ -140,7 +139,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             return "error";
         }
         String name = sysNameList.get(row);
-        SignalMast s = InstanceManager.signalMastManagerInstance().getBySystemName(name);
+        SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name);
         if (s == null) {
             return Boolean.valueOf(false); // if due to race condition, the device is going away
         }
@@ -164,7 +163,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
 
     public void setValueAt(Object value, int row, int col) {
         String name = sysNameList.get(row);
-        SignalMast s = InstanceManager.signalMastManagerInstance().getBySystemName(name);
+        SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name);
         if (s == null) {
             return;  // device is going away anyway
         }
@@ -224,11 +223,16 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         javax.swing.SwingUtilities.invokeLater(t);
     }
 
-    TableSorter sorter;
-
-    public JTable makeJTable(TableSorter srtr) {
-        this.sorter = srtr;
-        table = new SignalMastJTable(sorter);
+    /**
+     * Does not appear to be used.
+     * 
+     * @param srtr a table model
+     * @return a new table
+     * @deprecated since 4.5.4 without direct replacement
+     */
+    @Deprecated
+    public JTable makeJTable(TableModel srtr) {
+        table = new SignalMastJTable(srtr);
 
         table.getTableHeader().setReorderingAllowed(true);
         table.setColumnModel(new XTableColumnModel());
@@ -243,29 +247,15 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     //The JTable is extended so that we can reset the available aspect in the drop down when required
     class SignalMastJTable extends JTable {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7888512352829953819L;
-
-        public SignalMastJTable(TableSorter srtr) {
+        public SignalMastJTable(TableModel srtr) {
             super(srtr);
         }
 
         public void clearAspectVector(int row) {
             //Clear the old aspect combobox and forces it to be rebuilt
-            boxMap.remove(sorter.getValueAt(row, SYSNAMECOL));
-            editorMap.remove(sorter.getValueAt(row, SYSNAMECOL));
-            rendererMap.remove(sorter.getValueAt(row, SYSNAMECOL));
-        }
-
-        public boolean editCellAt(int row, int column, java.util.EventObject e) {
-            boolean res = super.editCellAt(row, column, e);
-            java.awt.Component c = this.getEditorComponent();
-            if (c instanceof javax.swing.JTextField) {
-                ((JTextField) c).selectAll();
-            }
-            return res;
+            boxMap.remove(getModel().getValueAt(row, SYSNAMECOL));
+            editorMap.remove(getModel().getValueAt(row, SYSNAMECOL));
+            rendererMap.remove(getModel().getValueAt(row, SYSNAMECOL));
         }
 
         public TableCellRenderer getCellRenderer(int row, int column) {
@@ -285,35 +275,35 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         }
 
         TableCellRenderer getRenderer(int row) {
-            TableCellRenderer retval = rendererMap.get(sorter.getValueAt(row, SYSNAMECOL));
+            TableCellRenderer retval = rendererMap.get(getModel().getValueAt(row, SYSNAMECOL));
             if (retval == null) {
                 // create a new one with right aspects
                 retval = new MyComboBoxRenderer(getAspectVector(row));
-                rendererMap.put(sorter.getValueAt(row, SYSNAMECOL), retval);
+                rendererMap.put(getModel().getValueAt(row, SYSNAMECOL), retval);
             }
             return retval;
         }
         Hashtable<Object, TableCellRenderer> rendererMap = new Hashtable<Object, TableCellRenderer>();
 
         TableCellEditor getEditor(int row) {
-            TableCellEditor retval = editorMap.get(sorter.getValueAt(row, SYSNAMECOL));
+            TableCellEditor retval = editorMap.get(getModel().getValueAt(row, SYSNAMECOL));
             if (retval == null) {
                 // create a new one with right aspects
                 retval = new MyComboBoxEditor(getAspectVector(row));
-                editorMap.put(sorter.getValueAt(row, SYSNAMECOL), retval);
+                editorMap.put(getModel().getValueAt(row, SYSNAMECOL), retval);
             }
             return retval;
         }
         Hashtable<Object, TableCellEditor> editorMap = new Hashtable<Object, TableCellEditor>();
 
         Vector<String> getAspectVector(int row) {
-            Vector<String> retval = boxMap.get(sorter.getValueAt(row, SYSNAMECOL));
+            Vector<String> retval = boxMap.get(getModel().getValueAt(row, SYSNAMECOL));
             if (retval == null) {
                 // create a new one with right aspects
-                Vector<String> v = InstanceManager.signalMastManagerInstance()
-                        .getSignalMast((String) sorter.getValueAt(row, SYSNAMECOL)).getValidAspects();
+                Vector<String> v = InstanceManager.getDefault(jmri.SignalMastManager.class)
+                        .getSignalMast((String) getModel().getValueAt(row, SYSNAMECOL)).getValidAspects();
                 retval = v;
-                boxMap.put(sorter.getValueAt(row, SYSNAMECOL), retval);
+                boxMap.put(getModel().getValueAt(row, SYSNAMECOL), retval);
             }
             return retval;
         }
@@ -362,5 +352,3 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     private final static Logger log = LoggerFactory.getLogger(SignalMastTableDataModel.class.getName());
 
 }
-
-/* @(#)SignalMastTableDataModel.java */

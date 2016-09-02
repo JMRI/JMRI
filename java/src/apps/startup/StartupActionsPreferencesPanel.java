@@ -2,7 +2,6 @@ package apps.startup;
 
 import apps.ConfigBundle;
 import apps.StartupActionsManager;
-import apps.StartupModel;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -281,7 +280,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
     JButton upBtn;
     // End of variables declaration//GEN-END:variables
 
-    private class TableModel extends AbstractTableModel implements PropertyChangeListener {
+    private static class TableModel extends AbstractTableModel implements PropertyChangeListener {
 
         private final StartupActionsManager manager;
 

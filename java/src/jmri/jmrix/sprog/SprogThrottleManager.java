@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Updated by Andrew Crosland February 2012 to enable 28 step speed packets</P>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  */
 public class SprogThrottleManager extends AbstractThrottleManager {
 
@@ -22,16 +21,14 @@ public class SprogThrottleManager extends AbstractThrottleManager {
      */
     public SprogThrottleManager(SprogSystemConnectionMemo memo) {
         super(memo);
-        if (mInstance != null) {
-            log.warn("Creating too many objects");
-    }
-        mInstance = this;
     }
 
-    static private SprogThrottleManager mInstance = null;
-
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public SprogThrottleManager instance() {
-        return mInstance;
+        return null;
     }
 
     boolean throttleInUse = false;
@@ -56,7 +53,7 @@ public class SprogThrottleManager extends AbstractThrottleManager {
             for (int j = 0; j < addr.length(); j++) {
                 m.setElement(i++, addr.charAt(j));
             }
-            SprogTrafficController.instance().sendSprogMessage(m, null);
+            ((SprogSystemConnectionMemo) adapterMemo).getSprogTrafficController().sendSprogMessage(m, null);
             notifyThrottleKnown(new SprogThrottle((SprogSystemConnectionMemo) adapterMemo, address), address);
         } else {
             failedThrottleRequest(address, "Only one Throttle can be in use at anyone time with the Sprog.");

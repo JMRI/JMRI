@@ -1,4 +1,3 @@
-// EcosProgrammer.java
 package jmri.jmrix.ecos;
 
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * programmer. This provides a service mode programmer.
  *
  * @author Karl Johan Lisby Copyright (C) 2015
- * @version	$Revision$
  */
 public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
 
@@ -66,7 +64,8 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
         tc.sendEcosMessage(m, this);
     }
 
-    synchronized public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    @Override
+    synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 

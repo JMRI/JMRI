@@ -1,4 +1,3 @@
-// EngineEditFrame.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.Dimension;
@@ -31,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of engine
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision$
  */
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -92,6 +90,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
         super(Bundle.getMessage("TitleEngineAdd")); // default is add engine
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Checks for null")
     @Override
     public void initComponents() {
         // set tips
@@ -226,13 +225,15 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
         }
 
         // row 20
-        if (Setup.isRfidEnabled()) {
+        if (Setup.isRfidEnabled() && jmri.InstanceManager.getOptionalDefault(jmri.IdTagManager.class) != null) {
             JPanel pRfid = new JPanel();
             pRfid.setLayout(new GridBagLayout());
             pRfid.setBorder(BorderFactory.createTitledBorder(Setup.getRfidLabel()));
             addItem(pRfid, rfidComboBox, 1, 0);
             jmri.InstanceManager.getDefault(jmri.IdTagManager.class).getNamedBeanList()
                     .forEach((tag) -> rfidComboBox.addItem((jmri.IdTag) tag));
+            rfidComboBox.insertItemAt((jmri.IdTag)null,0); // must have a blank in the list, for the default.
+            rfidComboBox.setSelectedIndex(0);
             pOptional.add(pRfid);
         }
 
@@ -594,7 +595,11 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
             }
             _engine.setComment(commentTextField.getText());
             _engine.setValue(valueTextField.getText());
-            _engine.setIdTag((IdTag) rfidComboBox.getSelectedItem());
+            // save the IdTag for this engine
+            IdTag idTag = (IdTag) rfidComboBox.getSelectedItem();
+            if (idTag != null) {
+                _engine.setRfid(idTag.toString());
+            }
         }
     }
 

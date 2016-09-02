@@ -61,7 +61,6 @@ import org.slf4j.LoggerFactory;
  */
 public final class ProfilePreferencesPanel extends JPanel implements PreferencesPanel {
 
-    private static final long serialVersionUID = -1375670900469426701L;
     private static final Logger log = LoggerFactory.getLogger(ProfilePreferencesPanel.class);
 
     /**

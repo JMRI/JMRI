@@ -6,6 +6,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.locations.tools.PrintSwitchListAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 

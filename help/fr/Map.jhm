@@ -846,6 +846,8 @@
 
 <mapID target="html.hardware.maple.index" url="html/hardware/maple/index.shtml"/>
 
+<mapID target="html.setup.Errors_erreurs" url="html/setup/Errors.shtml#erreurs"/>
+
 <mapID target="html.doc.Technical.XmlPersistance" url="html/doc/Technical/XmlPersistance.shtml"/>
 
 <mapID target="html.hardware.can.cbus.Details" url="html/hardware/can/cbus/Details.shtml"/>

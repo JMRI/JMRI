@@ -123,7 +123,7 @@ abstract public class AbstractProxyManager implements Manager {
      *
      * @return Never null under normal circumstances
      */
-    protected NamedBean provideNamedBean(String name) {
+    protected NamedBean provideNamedBean(String name) throws IllegalArgumentException {
         // make sure internal present
         initInternal();
 

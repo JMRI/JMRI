@@ -15,6 +15,11 @@ import jmri.Reporter;
 import jmri.implementation.DefaultIdTag;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
+
+import javax.annotation.Nonnull;
+import javax.annotation.CheckForNull;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -63,7 +68,7 @@ public class DefaultIdTagManager extends AbstractManager
 
             // Create shutdown task to save
             log.debug("Register ShutDown task");
-            InstanceManager.shutDownManagerInstance().
+            InstanceManager.getDefault(jmri.ShutDownManager.class).
                     register(new jmri.implementation.AbstractShutDownTask("Writing IdTags") { // NOI18N
                         @Override
                         public boolean execute() {
@@ -102,7 +107,7 @@ public class DefaultIdTagManager extends AbstractManager
     }
 
     @Override
-    public IdTag provideIdTag(String name) {
+    public IdTag provideIdTag(String name) throws IllegalArgumentException {
         if (!initialised && !loading) {
             init();
         }
@@ -170,8 +175,18 @@ public class DefaultIdTagManager extends AbstractManager
         return new DefaultIdTag(systemName, userName);
     }
 
+    @SuppressFBWarnings(value="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE", justification="defensive programming check of @Nonnull argument")
+    private void checkSystemName(@Nonnull String systemName, @CheckForNull String userName) {
+        if (systemName == null) {
+            log.error("SystemName cannot be null. UserName was "
+                    + ((userName == null) ? "null" : userName));
+            throw new IllegalArgumentException("SystemName cannot be null. UserName was "
+                    + ((userName == null) ? "null" : userName));
+        }
+    }
+
     @Override
-    public IdTag newIdTag(String systemName, String userName) {
+    public IdTag newIdTag(@Nonnull String systemName, @CheckForNull String userName) {
         if (!initialised && !loading) {
             init();
         }
@@ -180,12 +195,8 @@ public class DefaultIdTagManager extends AbstractManager
                     + ((systemName == null) ? "null" : systemName) // NOI18N
                     + ";" + ((userName == null) ? "null" : userName)); // NOI18N
         }
-        if (systemName == null) {
-            log.error("SystemName cannot be null. UserName was "
-                    + ((userName == null) ? "null" : userName)); // NOI18N
-            throw new IllegalArgumentException("SystemName cannot be null. UserName was "
-                    + ((userName == null) ? "null" : userName));
-        }
+        checkSystemName(systemName, userName);
+
         // return existing if there is one
         IdTag s;
         if ((userName != null) && ((s = getByUserName(userName)) != null)) {
@@ -436,7 +447,7 @@ public class DefaultIdTagManager extends AbstractManager
             writeXML(file, doc);
         }
 
-        private void readFile(String fileName) throws org.jdom2.JDOMException, java.io.IOException {
+        private void readFile(String fileName) throws org.jdom2.JDOMException, java.io.IOException, IllegalArgumentException {
             // Check file exists
             if (findFile(fileName) == null) {
                 log.debug(fileName + " file could not be found");

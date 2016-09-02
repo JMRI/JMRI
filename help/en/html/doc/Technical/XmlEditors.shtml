@@ -1,109 +1,138 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-    <title>
- 	JMRI: XML Editors
-    </title>
-    <meta name="Author"content="Bob Jacobsen">
-    <meta name="keywords" content="JMRI technical code xml editors">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <!--#include virtual="/Style" -->
+  <title>JMRI: XML Editors</title>
+  <meta name="Author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI technical code xml editors">
+  <!--#include virtual="/Style" -->
 </head>
+
 <body>
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header" -->
 
-	<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h1>JMRI: XML Editors</h1>
+    <div id="mainContent">
+      <h1>JMRI: XML Editors</h1>JMRI uses XML for a number of
+      purposes: to hold decoder definitions, for its <a href=
+      "XmlPersistance.shtml">persistance system</a> for
+      configuration and panel information, and to create parts of
+      the web site from other files.
 
-JMRI uses XML for a number of purposes: 
-to hold decoder definitions, for its
-<a href="XmlPersistance.shtml">persistance system</a>
-for configuration and panel information,
-and to create parts of the web site from other files.
-<p>
-XML is a text format, and you can edit it with 
-any convenient text editor (though you might have trouble
-with word processors that insist on reformatting the content).
-<p>
-Still, using an editor that's "XML aware" can make things
-easier.  Those editors can check the syntax as you work, give
-you useful hints, and provide more powerful editing tools.
+      <p>XML is a text format, and you can edit it with any
+      convenient text editor (though you might have trouble with
+      word processors that insist on reformatting the content).</p>
 
-<p>
-This page lists XML editors that have been mentioned 
-on the 
-<a href="http://groups.yahoo.com/group/jmriusers/">JMRI users discussion group</a>.
+      <p>Still, using an editor that's "XML aware" can make things
+      easier. Those editors can check the syntax as you work, give
+      you useful hints, and provide more powerful editing
+      tools.</p>
 
-<p>
-For more information on XML itself, please see our
-<a href="../../apps/DecoderPro/IntroXML.shtml">introductory page</a>.
+      <p>This page lists XML editors that have been mentioned on
+      the <a href="http://groups.yahoo.com/group/jmriusers/">JMRI
+      users discussion group</a>.</p>
 
-<h2>Free Editors</h2>
+      <p>For more information on XML itself, please see our
+      <a href="../../apps/DecoderPro/IntroXML.shtml">introductory
+      page</a>.</p>
 
-<dl>
-<dt>Crimson Editor
-<dd><a href="http://www.crimsoneditor.com/">http://www.crimsoneditor.com/</a>
+      <h2>Free Editors</h2>
 
-<dt>CotEditor
-<dd><a href="http://coteditor.com">http://coteditor.com</a> (OS X)
+      <dl>
+        <dt>Crimson Editor</dt>
 
-<dt>Editra
-<dd><a href="http://editra.org/">http://editra.org/</a>
+        <dd><a href=
+        "http://www.crimsoneditor.com/">http://www.crimsoneditor.com/</a></dd>
 
-<dt>Edxor
-<dd><a href="http://www.snapfiles.com/get/edxor.html">http://www.snapfiles.com/get/edxor.html</a>
+        <dt>CotEditor</dt>
 
-<dt>jEdit
-<dd><a href="http://www.jedit.org/">http://www.jedit.org/</a>
+        <dd><a href="http://coteditor.com">http://coteditor.com</a>
+        (OS X)</dd>
 
-<dt>Komodo Edit
-<dd><a href="http://www.openkomodo.com/">http://www.openkomodo.com/</a>
+        <dt>Editra</dt>
 
-<dt>LopeEdit
-<dd><a href="http://www.lopesoft.com/en/index.html">http://www.lopesoft.com/en/index.html</a>
+        <dd><a href=
+        "http://editra.org/">http://editra.org/</a></dd>
 
-<dt>Notepad++
-<dd><a href="http://notepad-plus-plus.org/">http://notepad-plus-plus.org/</a>
+        <dt>Edxor</dt>
 
-<dt>XML Marker
-<dd><a href="http://symbolclick.com/">http://symbolclick.com/</a>
+        <dd><a href=
+        "http://www.snapfiles.com/get/edxor.html">http://www.snapfiles.com/get/edxor.html</a></dd>
 
-<dt>PSpad
-<dd><a href="http://www.pspad.com/">http://www.pspad.com/</a>
-</dl>
+        <dt>jEdit</dt>
 
-<h2>Commercial Editors</h2>
+        <dd><a href=
+        "http://www.jedit.org/">http://www.jedit.org/</a></dd>
 
-<dl>
-<dt>SynText
-<dd><a href="http://www.syntext.com/">http://www.syntext.com/</a>
+        <dt>Komodo Edit</dt>
 
-<dt>UltraEdit
-<dd><a href="http://www.ultraedit.com/">http://www.ultraedit.com/</a>
+        <dd><a href=
+        "http://www.openkomodo.com/">http://www.openkomodo.com/</a></dd>
 
-<dt>EditPlus
-<dd><a href="http://www.editplus.com/">http://www.editplus.com/</a>
-</dl>
+        <dt>LopeEdit</dt>
 
-<h2>Not Recommended</h2>
+        <dd><a href=
+        "http://www.lopesoft.com/en/index.html">http://www.lopesoft.com/en/index.html</a></dd>
 
-The following tools have been reported to <i>not</i> work well with JMRI.
+        <dt>Notepad++</dt>
 
-<dl>
+        <dd><a href=
+        "http://notepad-plus-plus.org/">http://notepad-plus-plus.org/</a></dd>
 
-<dt>XML Notepad 2007
-<dd><a href="http://www.microsoft.com/downloads/details.aspx?familyid=72d6aa49-787d-4118-ba5f-4f30fe913628&displaylang=en">http://www.microsoft.com/downloads/details.aspx?familyid=72d6aa49-787d-4118-ba5f-4f30fe913628&displaylang=en</a>
-<p>
-Several users have reported problems with XML Notepad 2007 writing files that can no longer
-be read by JMRI.  This appears to be a problem with its UDF output format.
+        <dt>XML Marker</dt>
 
-</dl>
-<!--#include virtual="/Footer" -->
+        <dd><a href=
+        "http://symbolclick.com/">http://symbolclick.com/</a></dd>
 
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+        <dt>PSpad</dt>
+
+        <dd><a href=
+        "http://www.pspad.com/">http://www.pspad.com/</a></dd>
+      </dl>
+
+      <h2>Commercial Editors</h2>
+
+      <dl>
+        <dt>SynText</dt>
+
+        <dd><a href=
+        "http://www.syntext.com/">http://www.syntext.com/</a></dd>
+
+        <dt>UltraEdit</dt>
+
+        <dd><a href=
+        "http://www.ultraedit.com/">http://www.ultraedit.com/</a></dd>
+
+        <dt>EditPlus</dt>
+
+        <dd><a href=
+        "http://www.editplus.com/">http://www.editplus.com/</a></dd>
+      </dl>
+
+      <h2>Not Recommended</h2>The following tools have been
+      reported to <i>not</i> work well with JMRI.
+
+      <dl>
+        <dt>XML Notepad 2007</dt>
+
+        <dd>
+          <a href=
+          "http://www.microsoft.com/downloads/details.aspx?familyid=72d6aa49-787d-4118-ba5f-4f30fe913628&amp;displaylang=en">
+          http://www.microsoft.com/downloads/details.aspx?familyid=72d6aa49-787d-4118-ba5f-4f30fe913628&amp;displaylang=en</a>
+
+          <p>Several users have reported problems with XML Notepad
+          2007 writing files that can no longer be read by JMRI.
+          This appears to be a problem with its UDF output
+          format.</p>
+        </dd>
+      </dl><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-

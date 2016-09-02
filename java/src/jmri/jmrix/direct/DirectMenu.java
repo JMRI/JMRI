@@ -1,4 +1,3 @@
-// NceMenu.java
 package jmri.jmrix.direct;
 
 import java.util.ResourceBundle;
@@ -9,14 +8,8 @@ import javax.swing.JMenu;
  * <P>
  *
  * @author	Bob Jacobsen Copyright 2003
- * @version $Revision$
  */
 public class DirectMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4869945275533906814L;
 
     public DirectMenu(String name) {
         this();

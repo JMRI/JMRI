@@ -3,7 +3,6 @@ package apps.gui3;
 import apps.AppsBase;
 import apps.SplashWindow;
 import apps.SystemConsole;
-import apps.startup.StartupActionModelUtil;
 import java.awt.AWTEvent;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -15,7 +14,6 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.EventObject;
 import java.util.ResourceBundle;
 import javax.help.SwingHelpUtilities;
@@ -25,7 +23,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
-import jmri.InstanceManager;
 import jmri.plaf.macosx.AboutHandler;
 import jmri.plaf.macosx.PreferencesHandler;
 import jmri.plaf.macosx.QuitHandler;
@@ -59,6 +56,8 @@ public abstract class Apps3 extends AppsBase {
     /**
      * Initial actions before frame is created, invoked in the applications
      * main() routine.
+     *
+     * @param applicationName application name
      */
     static public void preInit(String applicationName) {
         AppsBase.preInit(applicationName);
@@ -78,6 +77,10 @@ public abstract class Apps3 extends AppsBase {
      * Create and initialize the application object.
      * <p>
      * Expects initialization from preInit() to already be done.
+     *
+     * @param applicationName application name
+     * @param configFileDef   default configuration file name
+     * @param args            command line arguments set at application launch
      */
     public Apps3(String applicationName, String configFileDef, String[] args) {
         // pre-GUI work
@@ -86,7 +89,6 @@ public abstract class Apps3 extends AppsBase {
         // Prepare font lists
         prepareFontLists();
 
-        addToActionModel();
         // create GUI
         initializeHelpSystem();
         if (SystemType.isMacOSX()) {
@@ -151,27 +153,28 @@ public abstract class Apps3 extends AppsBase {
         displayMainFrame(mainFrame.getMaximumSize());
     }
 
+    /**
+     * Provides a list of {@link apps.startup.AbstractActionModel} objects that
+     * could be used with the implementing class in {@link #addToActionModel()}.
+     *
+     * @return the list of action models.
+     * @deprecated since 4.5.3
+     */
+    @Deprecated
     abstract protected ResourceBundle getActionModelResourceBundle();
 
-    protected void addToActionModel() {
-        StartupActionModelUtil util = InstanceManager.getDefault(StartupActionModelUtil.class);
-        ResourceBundle rb = getActionModelResourceBundle();
-        if (rb == null || util == null) {
-            return;
-        }
-        Enumeration<String> e = rb.getKeys();
-        while (e.hasMoreElements()) {
-            String key = e.nextElement();
-            try {
-                util.addAction(key, rb.getString(key));
-            } catch (ClassNotFoundException ex) {
-                log.error("Did not find class \"{}\"", key);
-            }
-        }
+    /**
+     * @deprecated since 4.5.1
+     */
+    @Deprecated
+    protected final void addToActionModel() {
+        // StartupActionModelUtil populates itself, so do nothing
     }
 
     /**
      * Set a toolbar to be initially floating. This doesn't quite work right.
+     *
+     * @param toolBar the toolbar to float
      */
     protected void setFloating(JToolBar toolBar) {
         //((javax.swing.plaf.basic.BasicToolBarUI) toolBar.getUI()).setFloatingLocation(100,100);
@@ -216,7 +219,7 @@ public abstract class Apps3 extends AppsBase {
                          and the if the debugFired hasn't been set, this allows us to ensure that we don't
                          miss the user pressing F8, while we are checking*/
                         debugmsg = true;
-                        if (e.getID() == KeyEvent.KEY_PRESSED && e instanceof KeyEvent && ((KeyEvent)e).getKeyCode() == 119) {
+                        if (e.getID() == KeyEvent.KEY_PRESSED && e instanceof KeyEvent && ((KeyEvent) e).getKeyCode() == 119) {
                             startupDebug();
                         } else {
                             debugmsg = false;

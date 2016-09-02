@@ -382,7 +382,7 @@ public class PositionableShape extends PositionableJComponent
         }
         _saveLevel = getDisplayLevel();
         if (msg == null) {
-            if (InstanceManager.sensorManagerInstance() != null) {
+            if (InstanceManager.getOptionalDefault(jmri.SensorManager.class) != null) {
                 Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(pName);
                 senHandle = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor);
                 if (sensor != null) {
@@ -399,8 +399,8 @@ public class PositionableShape extends PositionableJComponent
             }
         }
         if (msg != null) {
-            JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("ErrorSensor"),
-                    JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("ErrorSensor") + ":",
+                    JOptionPane.INFORMATION_MESSAGE); // key ErrorSensor is also used to quote the name of the field in instruction
         }
         setControlSensorHandle(senHandle);
     }

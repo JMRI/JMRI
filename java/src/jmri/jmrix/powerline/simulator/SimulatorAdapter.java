@@ -71,8 +71,6 @@ public class SimulatorAdapter extends SerialPortController implements
         // Configure the form of serial address validation for this connection
         this.getSystemConnectionMemo().setSerialAddress(new jmri.jmrix.powerline.SerialAddress(this.getSystemConnectionMemo()));
 
-        jmri.jmrix.powerline.ActiveFlag.setActive();
-
         // start the simulator
         sourceThread = new Thread(this);
         sourceThread.setName("Powerline Simulator");

@@ -99,7 +99,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validOption1() {
         List<SystemConnectionMemo> connList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
-        if (connList != null) {
+        if (!connList.isEmpty()) {
             ArrayList<String> progConn = new ArrayList<String>();
             progConn.add("");
             String userName = "Dcc4Pc";
@@ -172,6 +172,10 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
 
     InputStream serialStream = null;
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public SerialDriverAdapter instance() {
         if (mInstance == null) {
             SerialDriverAdapter m = new SerialDriverAdapter();
@@ -181,6 +185,10 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
         return mInstance;
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static volatile SerialDriverAdapter mInstance = null;
 
     /**

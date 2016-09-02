@@ -35,7 +35,7 @@ import jmri.util.swing.SwingSettings;
  * <P>
  * Provides GUI configuration for SWING LAF by displaying radio buttons for each
  * LAF implementation available. This information is then persisted separately
- * (e.g. by {@link jmri.configurexml.GuiLafConfigPaneXml})
+ * (e.g. by {@link apps.configurexml.GuiLafConfigPaneXml})
  * <P>
  * Locale default language and country is also considered a GUI (and perhaps
  * LAF) configuration item.

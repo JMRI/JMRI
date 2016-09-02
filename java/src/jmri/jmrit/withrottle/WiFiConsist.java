@@ -50,7 +50,7 @@ public class WiFiConsist extends DccConsist {
             if (log.isDebugEnabled()) {
                 log.debug(java.util.Arrays.toString(packet));
             }
-            jmri.InstanceManager.commandStationInstance().sendPacket(packet, 1);
+            jmri.InstanceManager.getDefault(jmri.CommandStation.class).sendPacket(packet, 1);
         }
     }
 

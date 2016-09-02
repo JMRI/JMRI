@@ -1,6 +1,7 @@
 package apps;
 
 import apps.gui.GuiLafPreferencesManager;
+import apps.startup.StartupModel;
 import apps.startup.StartupModelFactory;
 import java.util.ArrayList;
 import java.util.HashMap;

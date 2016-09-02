@@ -1,53 +1,68 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!--  $Id$ -->
-<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12--> 
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
+
 <html lang="fr">
 <head>
- <TITLE>
-      JMRI: Speedometer
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Route Add Edit">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Speedometer</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI help Route Add Edit">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Tachym&egrave;tre</h1>
 
-<H1>Tachym&#232;tre </H1>
-<p>
-Le compteur de vitesse mesure le temps d'un capteur &#224 un autre, puis calcule la vitesse en fonction
- de la distance parcourue et du temps mis pour le faire.
-<p>
-Entrez un capteur Sysname dans le champs "d&#233;marre minuteries sur". Puis entrer dans un autre capteur Sysname  dans le champs
-"arr&#224te le Chrono 1 sur". Mesurer la distance entre les deux, convertir en pieds pour votre
-&#233;chelle et entrez cela dans le champs "Distance 1".
-<p>
-La vitesse de votre train entre les deux capteurs sera affich&#233;e dans le champ "Vitesse Chrono 1".
-<p>
-Vous pouvez ajouter un troisi&#232;me capteur dans le champs "chronom&#232;tre deux s'arr&#224tera deux sur"  et qui donnera la vitesse entre
-le capteur de d&#233;part et que le capteur dans le champ "Timer 2 Vitesse . Vous avez &#233;galement besoin d'entrer la valeur
-dans le champ "Distance 2"'en pieds &#224 l'&#233;chelle entre le capteur de d&#233;part et ce capteur.
-<p>
-Vous pouvez choisir de d&#233;clencher la minuterie en entr&#233;e/sortie du capteur avec les boutons "Entr&#233;e" ou de "Sortie". Les indicateurs
-sur le c&#244t&#233; droit du volet sont l'&#233;tat des capteurs que vous avez s&#233;lectionn&#233;s.
-<p>
-   
-Ceci est la page d'aide help/en/package/jmri/jmrit/speedometer/SpeedometerFrame 
+      <p>Le compteur de vitesse mesure le temps d'un capteur
+      &agrave; un autre, puis calcule la vitesse en fonction de la
+      distance parcourue et du temps mis pour le faire.</p>
 
-<!--#include virtual="/Footer" -->
+      <p>Entrez un capteur Sysname dans le champs "d&eacute;marre
+      minuteries sur". Puis entrer dans un autre capteur Sysname
+      dans le champs "arr&agrave; le Chrono 1 sur". Mesurer la
+      distance entre les deux, convertir en pieds pour votre
+      &eacute;chelle et entrez cela dans le champs "Distance
+      1".</p>
+
+      <p>La vitesse de votre train entre les deux capteurs sera
+      affich&eacute;e dans le champ "Vitesse Chrono 1".</p>
+
+      <p>Vous pouvez ajouter un troisi&egrave;me capteur dans le
+      champs "chronom&egrave;tre deux s'arr&agrave; deux sur" et
+      qui donnera la vitesse entre le capteur de d&eacute;part et
+      que le capteur dans le champ "Timer 2 Vitesse . Vous avez
+      &eacute;galement besoin d'entrer la valeur dans le champ
+      "Distance 2"'en pieds &agrave; l'&eacute;chelle entre le
+      capteur de d&eacute;part et ce capteur.</p>
+
+      <p>Vous pouvez choisir de d&eacute;clencher la minuterie en
+      entr&eacute;e/sortie du capteur avec les boutons
+      "Entr&eacute;e" ou de "Sortie". Les indicateurs sur le
+      c&ocirc;&eacute; droit du volet sont l'&eacute;tat des
+      capteurs que vous avez s&eacute;lectionn&eacute;s.</p>
+
+      <p>Ceci est la page d'aide
+      help/en/package/jmri/jmrit/speedometer/SpeedometerFrame 
+      <!--#include virtual="/Footer" --></p>
+    </div>
+  </div>
 </body>
 </html>
-
-
- 	  	 

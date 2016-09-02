@@ -47,7 +47,7 @@ public class ProxyLightManager extends AbstractProxyManager
      *
      * @return Never null under normal circumstances
      */
-    public Light provideLight(String name) {
+    public Light provideLight(String name) throws IllegalArgumentException {
         return (Light) super.provideNamedBean(name);
     }
 

@@ -11,6 +11,7 @@ import jmri.LightManager;
 import jmri.LogixManager;
 import jmri.MemoryManager;
 import jmri.ProgrammerManager;
+import jmri.RailComManager;
 import jmri.ReporterManager;
 import jmri.RouteManager;
 import jmri.SectionManager;
@@ -95,6 +96,10 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
             return new DeferringProgrammerManager();
         }
 
+        if (type == RailComManager.class) {
+            return new DefaultRailComManager();
+        }
+
         if (type == ReporterManager.class) {
             return new jmri.managers.ProxyReporterManager();
         }
@@ -142,7 +147,7 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
 
         if (type == Timebase.class) {
             Timebase timebase = new jmri.jmrit.simpleclock.SimpleTimebase();
-            if (InstanceManager.getDefault(jmri.ConfigureManager.class) != null) {
+            if (InstanceManager.getOptionalDefault(jmri.ConfigureManager.class) != null) {
                 InstanceManager.getDefault(jmri.ConfigureManager.class).registerConfig(timebase, jmri.Manager.TIMEBASE);
             }
             return timebase;

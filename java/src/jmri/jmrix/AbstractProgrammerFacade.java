@@ -57,8 +57,9 @@ public abstract class AbstractProgrammerFacade implements Programmer {
     }
 
     @Override
-    public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        prog.confirmCV(CV, val, p);
+    @SuppressWarnings("deprecation") // parent Programmer method deprecated, will remove at same time
+    public final void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
+        confirmCV("" + CV, val, p);
     }
 
     @Override

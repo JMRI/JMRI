@@ -54,14 +54,10 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
      * @param pName Used as a system/user name to lookup the light object
      */
     public void setLight(String pName) {
-        if (InstanceManager.lightManagerInstance() != null) {
+        if (InstanceManager.getOptionalDefault(jmri.LightManager.class) != null) {
             light = InstanceManager.lightManagerInstance().
                     provideLight(pName);
-            if (light != null) {
-                setLight(light);
-            } else {
-                log.error("Light '" + pName + "' not available, icon won't see changes");
-            }
+            setLight(light);
         } else {
             log.error("No LightManager for this protocol, icon won't see changes");
         }
@@ -271,7 +267,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
                 break;
             default:
                 if (isText()) {
-                    super.setText(Bundle.getMessage("Inconsistent"));
+                    super.setText(Bundle.getMessage("BeanStateInconsistent"));
                 }
                 if (isIcon()) {
                     super.setIcon(inconsistent);

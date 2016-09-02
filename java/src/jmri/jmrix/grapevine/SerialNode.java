@@ -1,4 +1,3 @@
-// SerialNode.java
 package jmri.jmrix.grapevine;
 
 import jmri.JmriException;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision$
  */
 public class SerialNode extends AbstractNode {
 
@@ -359,7 +357,7 @@ public class SerialNode extends AbstractNode {
             log.debug("Mark bit " + sensorNum + " " + input + " in node " + getNodeAddress());
         }
         if (sensorArray[sensorNum] == null) {
-            log.info("Try to create sensor " + sensorNum + " on node " + getNodeAddress() + ", since sensor doesn't exist");
+            log.debug("Try to create sensor " + sensorNum + " on node " + getNodeAddress() + ", since sensor doesn't exist");
             // try to make the sensor, which will also register it
             jmri.InstanceManager.sensorManagerInstance()
                     .provideSensor("GS" + (getNodeAddress() * 1000 + sensorNum));
@@ -460,5 +458,3 @@ public class SerialNode extends AbstractNode {
 
     private final static Logger log = LoggerFactory.getLogger(SerialNode.class.getName());
 }
-
-/* @(#)SerialNode.java */

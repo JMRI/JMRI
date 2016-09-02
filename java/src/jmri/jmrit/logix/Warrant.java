@@ -746,7 +746,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             abortWarrant(msg);
             return msg;
         }
-        jmri.ThrottleManager tm = InstanceManager.throttleManagerInstance();
+        jmri.ThrottleManager tm = InstanceManager.getOptionalDefault(jmri.ThrottleManager.class);
         if (tm==null) {
             msg = Bundle.getMessage("noThrottle");
         } else {
@@ -1012,7 +1012,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * turnouts
      * @param orders - BlockOrder list of route. If null, use permanent warrant
      * copy.
-     * @return message of block that failed allocation to this warrant or null
+     * @return message of block that failed allocation to this warrant or null if success
      */
     public String setRoute(int delay, List<BlockOrder> orders) {
         // we assume our train is occupying the first block
@@ -1035,16 +1035,16 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             if ((block.getState() & OBlock.OCCUPIED) != 0) {
                 _message = Bundle.getMessage("BlockRougeOccupied", block.getDisplayName());
                 _routeSet = false;
-                return null;
+                return null; // this seems to be an error return, not a success
             }
             _message = bo.setPath(this);
             if (_message != null) {
                 _routeSet = false;
-                return null;
+                return null;  // this seems to be an error return, not a success
             }
         }
 //        firePropertyChange("setRoute", Boolean.valueOf(false), Boolean.valueOf(_routeSet));
-        if (_message != null) {
+        if (_message != null) {  // _message is always null here
             log.info("Paths for route of warrant \"" + getDisplayName() + "\" not set at " + _message);
         }
         return null;

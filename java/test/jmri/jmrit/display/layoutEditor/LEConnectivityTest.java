@@ -40,7 +40,7 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
         // Panel is up, continue set up for tests.
         ConnectivityUtil cu = new ConnectivityUtil(le);
         Assert.assertNotNull(cu);
-        BlockManager bm = jmri.InstanceManager.blockManagerInstance();
+        BlockManager bm = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
         Assert.assertNotNull(bm);
 
         // Test right-handed crossover connectivity turnout settings

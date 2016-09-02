@@ -46,8 +46,10 @@ public abstract class AbstractLightManager extends AbstractManager
         }
         if (name.startsWith(getSystemPrefix() + typeLetter())) {
             return newLight(name, null);
-        } else {
+        } else if (name.length() > 0) {
             return newLight(makeSystemName(name), null);
+        } else {
+            throw new IllegalArgumentException("\""+name+"\" is invalid");
         }
     }
 
@@ -110,15 +112,10 @@ public abstract class AbstractLightManager extends AbstractManager
                     + ((systemName == null) ? "null" : systemName)
                     + ";" + ((userName == null) ? "null" : userName));
         }
-        if (systemName == null) {
-            log.error("SystemName cannot be null. UserName was "
-                    + ((userName == null) ? "null" : userName));
-            return null;
-        }
         // is system name in correct format?
         if (!validSystemNameFormat(systemName)) {
             log.error("Invalid system name for newLight: " + systemName);
-            return null;
+            throw new IllegalArgumentException("\""+systemName+"\" is invalid");
         }
 
         // return existing if there is one
@@ -178,7 +175,12 @@ public abstract class AbstractLightManager extends AbstractManager
                 log.error("System name null during activation of Lights");
             } else {
                 log.debug("Activated Light system name is " + systemName);
-                getBySystemName(systemName).activateLight();
+                Light l = getBySystemName(systemName);
+                if (l == null) {
+                    log.error("light null during activation of lights");
+                } else {
+                    l.activateLight();
+                }
             }
         }
     }

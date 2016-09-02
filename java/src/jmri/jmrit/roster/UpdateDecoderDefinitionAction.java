@@ -1,4 +1,3 @@
-// UpdateDecoderDefinitionAction.java
 package jmri.jmrit.roster;
 
 import java.awt.event.ActionEvent;
@@ -16,15 +15,9 @@ import org.slf4j.LoggerFactory;
  * Update the decoder definitions in the roster
  *
  * @author	Bob Jacobsen Copyright (C) 2013
- * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  */
 public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2751913119792322837L;
 
     public UpdateDecoderDefinitionAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -75,9 +68,9 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
         }
 
         // write updated roster
-        Roster.getDefault().makeBackupFile(Roster.defaultRosterFilename());
+        Roster.getDefault().makeBackupFile(Roster.getDefault().getRosterIndexPath());
         try {
-            Roster.getDefault().writeFile(Roster.defaultRosterFilename());
+            Roster.getDefault().writeFile(Roster.getDefault().getRosterIndexPath());
         } catch (IOException ex) {
             log.error("Exception while writing the new roster file, may not be complete: " + ex);
         }

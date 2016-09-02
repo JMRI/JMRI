@@ -1,5 +1,6 @@
 package jmri.jmrit.roster.configurexml;
 
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterConfigManager;
@@ -61,7 +62,10 @@ public class RosterConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         if (shared.getAttribute("ownerDefault") != null) {
             InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(shared.getAttribute("ownerDefault").getValue());
         }
-        InstanceManager.configureManagerInstance().registerPref(new RosterConfigPane());
+        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerPref(new RosterConfigPane());
+        }
         return result;
     }
 
@@ -79,7 +83,10 @@ public class RosterConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         if (element.getAttribute("directory") != null) {
             Roster.getDefault().setRosterLocation(element.getAttribute("directory").getValue());
         }
-        InstanceManager.configureManagerInstance().registerPref(new RosterConfigPane());
+        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerPref(new RosterConfigPane());
+        }
     }
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(RosterConfigPaneXml.class.getName());

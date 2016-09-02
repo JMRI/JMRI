@@ -2,17 +2,15 @@ package apps.gui3;
 
 import apps.AppConfigBase;
 import apps.ConfigBundle;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Vector;
+import java.util.ServiceLoader;
+import java.util.Set;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -29,7 +27,6 @@ import javax.swing.event.ListSelectionEvent;
 import jmri.swing.PreferencesPanel;
 import jmri.swing.PreferencesSubPanel;
 import jmri.util.FileUtil;
-import jmri.util.ThreadingUtil;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,25 +34,20 @@ import org.slf4j.LoggerFactory;
 /**
  * Provide access to preferences via a tabbed pane.
  *
- * Preferences panels listed in the PreferencesPanel property of the
- * apps.AppsStructureBundle ResourceBundle will be automatically loaded if they
- * implement the {@link jmri.swing.PreferencesPanel} interface.
- *<p>
- * At start-up time, the order for setting the preferences matters.
- * The order in the apps.AppsStructureBundle ResourceBundle must be preserved.
- *<p>
- * Other Preferences Panels will need to be manually added to this file in a
- * manner similar to the WiThrottlePrefsPanel.
- *<p>
- * State is maintained as a bound property with name INITIALIZATION (see value below)
- *<p>
- * JMRI apps (generally) create one object of this type on the main thread
- * as part of initialization, then create a separate "initialize preferences"
- * thread to handle the init() call and adding all the tabs. 
- * Finally, the result is displayed on the Swing thread.
+ * Preferences panels provided by a {@link java.util.ServiceLoader} will be
+ * automatically loaded if they implement the
+ * {@link jmri.swing.PreferencesPanel} interface.
+ * <p>
+ * State is maintained as a bound property with name INITIALIZATION (see value
+ * below)
+ * <p>
+ * JMRI apps (generally) create one object of this type on the main thread as
+ * part of initialization, then create a separate "initialize preferences"
+ * thread to handle the init() call and adding all the tabs. Finally, the result
+ * is displayed on the Swing thread.
  *
  * @author Bob Jacobsen Copyright 2010
- * @author Randall Wood 2012
+ * @author Randall Wood 2012, 2016
  */
 public class TabbedPreferences extends AppConfigBase {
 
@@ -126,8 +118,9 @@ public class TabbedPreferences extends AppConfigBase {
     }
 
     /**
-     * Initialize, including loading classes referenced in the PreferencesPanel property of the apps.AppsStructureBundle bundle.
-     *<p>
+     * Initialize, including loading classes provided by a
+     * {@link java.util.ServiceLoader}.
+     * <p>
      * Keeps a current state to prevent doing its work twice.
      *
      * @return The current state, which should be INITIALISED if all is well.
@@ -163,32 +156,34 @@ public class TabbedPreferences extends AppConfigBase {
 
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
-        try {
-            List<String> classNames = (new ObjectMapper()).readValue(
-                    ResourceBundle.getBundle("apps.AppsStructureBundle").getString("PreferencesPanels"),
-                    new TypeReference<List<String>>() {
-                    });
-            for (String className : classNames) {
-                try {
-                    PreferencesPanel panel = (PreferencesPanel) Class.forName(className).newInstance();
-                    if (panel instanceof PreferencesSubPanel) {
-                        className = ((PreferencesSubPanel) panel).getParentClassName();
-                        if (!this.getPreferencesPanels().containsKey(className)) {
-                            this.addPreferencesPanel((PreferencesPanel) Class.forName(className).newInstance());
-                        }
-                        ((PreferencesSubPanel) panel).setParent(this.getPreferencesPanels().get(className));
-                    }
-                    this.addPreferencesPanel(panel);
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-                    log.error("Unable to add preferences class (" + className + ")", e);
+        Set<PreferencesPanel> delayed = new HashSet<>();
+        for (PreferencesPanel panel : ServiceLoader.load(PreferencesPanel.class)) {
+            if (panel instanceof PreferencesSubPanel) {
+                String parent = ((PreferencesSubPanel) panel).getParentClassName();
+                if (!this.getPreferencesPanels().containsKey(parent)) {
+                    delayed.add(panel);
+                } else {
+                    ((PreferencesSubPanel) panel).setParent(this.getPreferencesPanels().get(parent));
                 }
             }
-        } catch (IOException e) {
-            log.error("Unable to parse PreferencePanels property", e);
+            if (!delayed.contains(panel)) {
+                this.addPreferencesPanel(panel);
+            }
         }
-        for (PreferencesCatItems preferences : preferencesArray) {
+        while (!delayed.isEmpty()) {
+            Set<PreferencesPanel> iterated = new HashSet<>(delayed);
+            iterated.stream().filter((panel) -> (panel instanceof PreferencesSubPanel)).forEach((panel) -> {
+                String parent = ((PreferencesSubPanel) panel).getParentClassName();
+                if (this.getPreferencesPanels().containsKey(parent)) {
+                    ((PreferencesSubPanel) panel).setParent(this.getPreferencesPanels().get(parent));
+                    delayed.remove(panel);
+                    this.addPreferencesPanel(panel);
+                }
+            });
+        }
+        preferencesArray.stream().forEach((preferences) -> {
             detailpanel.add(preferences.getPanel(), preferences.getPrefItem());
-        }
+        });
 
         updateJList();
         add(buttonpanel);
@@ -218,6 +213,7 @@ public class TabbedPreferences extends AppConfigBase {
     // package only - for TabbedPreferencesFrame
     boolean isDirty() {
         for (PreferencesPanel panel : this.getPreferencesPanels().values()) {
+            // wrapped in isDebugEnabled test to prevent overhead of assembling message
             if (log.isDebugEnabled()) {
                 log.debug("PreferencesPanel {} ({}) is {}.",
                         panel.getClass().getName(),
@@ -235,6 +231,7 @@ public class TabbedPreferences extends AppConfigBase {
     boolean invokeSaveOptions() {
         boolean restartRequired = false;
         for (PreferencesPanel panel : this.getPreferencesPanels().values()) {
+            // wrapped in isDebugEnabled test to prevent overhead of assembling message
             if (log.isDebugEnabled()) {
                 log.debug("PreferencesPanel {} ({}) is {}.",
                         panel.getClass().getName(),
@@ -242,6 +239,7 @@ public class TabbedPreferences extends AppConfigBase {
                         (panel.isDirty()) ? "dirty" : "clean");
             }
             panel.savePreferences();
+            // wrapped in isDebugEnabled test to prevent overhead of assembling message
             if (log.isDebugEnabled()) {
                 log.debug("PreferencesPanel {} ({}) restart is {}required.",
                         panel.getClass().getName(),
@@ -358,7 +356,8 @@ public class TabbedPreferences extends AppConfigBase {
         if (list.getListSelectionListeners().length > 0) {
             list.removeListSelectionListener(list.getListSelectionListeners()[0]);
         }
-        list = new JList<>(new Vector<>(getChoices()));
+        List<String> choices = this.getChoices();
+        list = new JList<>(choices.toArray(new String[choices.size()]));
         listScroller = new JScrollPane(list);
         listScroller.setPreferredSize(new Dimension(100, 100));
 

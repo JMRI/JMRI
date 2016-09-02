@@ -113,18 +113,22 @@ public class Z21XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrT
         return suite;
     }
 
-    // The minimal setup for log4J
-    protected void setUp() {
+    @Override
+    protected void tearDown() throws Exception {
+        jmri.util.JUnitUtil.resetInstanceManager();
+        apps.tests.Log4JFixture.tearDown();
+        super.tearDown();
+    }
+
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
         apps.tests.Log4JFixture.setUp();
         // prepare an interface, register
         lnis = new XNetInterfaceScaffold(new RocoZ21CommandStation());
         // create and register the manager object
         l = new Z21XNetTurnoutManager(lnis, "X");
         jmri.InstanceManager.setTurnoutManager(l);
-    }
-
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(Z21XNetTurnoutManagerTest.class.getName());

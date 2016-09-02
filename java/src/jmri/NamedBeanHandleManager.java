@@ -2,6 +2,10 @@ package jmri;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +48,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
     }
 
     @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
-    public <T> NamedBeanHandle<T> getNamedBeanHandle(String name, T bean) {
+    public <T> @CheckForNull NamedBeanHandle<T> getNamedBeanHandle(@Nonnull String name, @Nonnull T bean) {
         if (bean == null || name == null || name.equals("")) {
             return null;
         }
@@ -65,7 +69,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
      *
      */
     @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
-    public <T> void renameBean(String oldName, String newName, T bean) {
+    public <T> void renameBean(@Nonnull String oldName, @Nonnull String newName, @Nonnull T bean) {
 
         /*Gather a list of the beans in the system with the oldName ref.
          Although when we get a new bean we always return the first one that exists
@@ -89,7 +93,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
      */
     //Checks are performed to make sure that the beans are the same type before being moved
     @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
-    public <T> void moveBean(T oldBean, T newBean, String name) {
+    public <T> void moveBean(@Nonnull T oldBean, @Nonnull T newBean, @Nonnull String name) {
         /*Gather a list of the beans in the system with the oldBean ref.
          Although when a new bean is requested, we always return the first one that exists
          when a move is performed it doesn't delete the namedbeanhandle with the oldBean
@@ -106,13 +110,17 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
         moveListener((NamedBean) oldBean, (NamedBean) newBean, name);
     }
 
-    public void updateBeanFromUserToSystem(NamedBean bean) {
+    public void updateBeanFromUserToSystem(@Nonnull NamedBean bean) {
         String systemName = bean.getSystemName();
         String userName = bean.getUserName();
+        if (userName == null) {
+            log.warn("updateBeanFromUserToSystem requires non-blank user name: \"{}\" not renamed", systemName);
+            return;
+        }
         renameBean(userName, systemName, bean);
     }
 
-    public void updateBeanFromSystemToUser(NamedBean bean) throws JmriException {
+    public void updateBeanFromSystemToUser(@Nonnull NamedBean bean) throws JmriException {
         String userName = bean.getUserName();
         String systemName = bean.getSystemName();
 
@@ -124,7 +132,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
     }
 
     @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
-    public <T> boolean inUse(String name, T bean) {
+    public <T> boolean inUse(@Nonnull String name, @Nonnull T bean) {
         NamedBeanHandle<T> temp = new NamedBeanHandle<>(name, bean);
         for (NamedBeanHandle<T> h : namedBeanHandles) {
             if (temp.equals(h)) {
@@ -134,14 +142,14 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
         return false;
     }
 
-    public <T> NamedBeanHandle<T> newNamedBeanHandle(String name, T bean, Class<T> type) {
+    public <T> @CheckForNull NamedBeanHandle<T> newNamedBeanHandle(@Nonnull String name, @Nonnull T bean, @Nonnull Class<T> type) {
         return getNamedBeanHandle(name, bean);
     }
 
     /**
      * A method to update the listener reference from oldName to a newName
      */
-    private void updateListenerRef(String oldName, String newName, NamedBean nBean) {
+    private void updateListenerRef(@Nonnull String oldName, @Nonnull String newName, @Nonnull NamedBean nBean) {
         java.beans.PropertyChangeListener[] listeners = nBean.getPropertyChangeListenersByReference(oldName);
         for (java.beans.PropertyChangeListener listener : listeners) {
             nBean.updateListenerRef(listener, newName);
@@ -152,7 +160,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
      * Moves a propertyChangeListener from one bean to another, where the
      * listerner reference matches the currentName.
      */
-    private void moveListener(NamedBean oldBean, NamedBean newBean, String currentName) {
+    private void moveListener(@Nonnull NamedBean oldBean, @Nonnull NamedBean newBean, @Nonnull String currentName) {
         java.beans.PropertyChangeListener[] listeners = oldBean.getPropertyChangeListenersByReference(currentName);
         for (java.beans.PropertyChangeListener l : listeners) {
             String listenerRef = oldBean.getListenerRef(l);

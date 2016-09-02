@@ -219,7 +219,7 @@ public class SerialSensorAdapter extends AbstractSerialPortController
             try {
                 InstanceManager.sensorManagerInstance().provideSensor(mSensor)
                         .setKnownState(value);
-            } catch (JmriException e) {
+            } catch (JmriException | IllegalArgumentException e) {
                 log.error("Exception setting state: " + e);
             }
         }

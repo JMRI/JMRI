@@ -1,4 +1,3 @@
-// AmpMeterAction.java
 package jmri.jmrit.ampmeter;
 
 import java.awt.event.ActionEvent;
@@ -33,5 +32,3 @@ public class AmpMeterAction extends AbstractAction {
     }
 
 }
-
-/* @(#)AmpMeterAction.java */

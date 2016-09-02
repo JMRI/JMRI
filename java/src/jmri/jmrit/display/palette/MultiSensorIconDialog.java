@@ -97,12 +97,12 @@ public class MultiSensorIconDialog extends IconDialog {
         }
         if (name == null || name.length() == 0) {
             JOptionPane.showMessageDialog(_parent._paletteFrame, Bundle.getMessage("NoIconName"),
-                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
         } else if (_iconMap.get(name) != null) {
             JOptionPane.showMessageDialog(_parent._paletteFrame,
                     Bundle.getMessage("DuplicateIconName", name),
-                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
         }
         String fileName = "resources/icons/misc/X-red.gif";

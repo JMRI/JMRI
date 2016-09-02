@@ -49,7 +49,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
         return ((TurnoutManager) getMgr(i)).newTurnout(systemName, userName);
     }
 
-    public Turnout provideTurnout(String name) {
+    public Turnout provideTurnout(String name) throws IllegalArgumentException {
         return (Turnout) super.provideNamedBean(name);
     }
 

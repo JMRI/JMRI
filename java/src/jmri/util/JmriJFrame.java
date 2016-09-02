@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
@@ -164,7 +165,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     }
 
     void setFrameLocation() {
-        jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
         if ((prefsMgr != null) && (prefsMgr.isWindowPositionSaved(windowFrameRef))) {
             Dimension screen = getToolkit().getScreenSize();
             if ((reuseFrameSavedPosition)
@@ -178,7 +179,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
              */
             if ((reuseFrameSavedSized)
                     && (!((prefsMgr.getWindowSize(windowFrameRef).getWidth() == 0.0) || (prefsMgr.getWindowSize(
-                            windowFrameRef).getHeight() == 0.0)))) {
+                    windowFrameRef).getHeight() == 0.0)))) {
                 log.debug("setFrameLocation 2nd clause sets \"{}\" preferredSize to {}", getTitle(), prefsMgr.getWindowSize(windowFrameRef));
                 this.setPreferredSize(prefsMgr.getWindowSize(windowFrameRef));
                 log.debug("setFrameLocation 2nd clause sets \"{}\" size to {}", getTitle(), prefsMgr.getWindowSize(windowFrameRef));
@@ -323,6 +324,9 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     /**
      * By default, Swing components should be created an installed in this
      * method, rather than in the ctor itself.
+     *
+     * @throws java.lang.Exception may throw an Exception if an overriding class
+     *                             encounters an Exception
      */
     public void initComponents() throws Exception {
     }
@@ -353,10 +357,6 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     void addWindowCloseShortCut() {
         // modelled after code in JavaDev mailing list item by Bill Tschumy <bill@otherwise.com> 08 Dec 2004
         AbstractAction act = new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -1110135969033124426L;
 
             public void actionPerformed(ActionEvent e) {
                 // log.debug("keystroke requested close window ", JmriJFrame.this.getTitle());
@@ -438,11 +438,6 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     public void setEscapeKeyClosesWindow(boolean closesWindow) {
         if (closesWindow) {
             setEscapeKeyAction(new AbstractAction() {
-
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -814207277600217890L;
 
                 public void actionPerformed(ActionEvent ae) {
                     JmriJFrame.this.processWindowEvent(new java.awt.event.WindowEvent(JmriJFrame.this,
@@ -556,11 +551,15 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * Get a List of the currently-existing JmriJFrame objects. The returned
      * list is a copy made at the time of the call, so it can be manipulated as
      * needed by the caller.
+     *
+     * @return a list of JmriJFrame instances. If there are no instances, an
+     *         empty list is returned.
      */
+    @Nonnull
     public static java.util.List<JmriJFrame> getFrameList() {
         java.util.List<JmriJFrame> returnList;
         synchronized (list) {
-            returnList = new java.util.ArrayList<JmriJFrame>(list);
+            returnList = new java.util.ArrayList<>(list);
         }
         return returnList;
     }
@@ -596,6 +595,10 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     /**
      * Get a JmriJFrame of a particular name. If more than one exists, there's
      * no guarantee as to which is returned.
+     *
+     * @param name the name of one or more JmriJFrame objects
+     * @return a JmriJFrame with the matching name or null if no matching frames
+     *         exist
      */
     public static JmriJFrame getFrame(String name) {
         java.util.List<JmriJFrame> list = getFrameList(); // needed to get synch copy
@@ -632,12 +635,14 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
 
     /**
      * Set whether the frame Position is saved or not after it has been created.
+     *
+     * @param save true if the frame position should be saved.
      */
     public void setSavePosition(boolean save) {
         reuseFrameSavedPosition = save;
-        jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        if (prefsMgr == null) {
-            prefsMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
+        if (prefsMgr == null) {  /* Why is this duplicated with above? */
+            prefsMgr = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
         }
         if (prefsMgr != null) {
             prefsMgr.setSaveWindowLocation(windowFrameRef, save);
@@ -647,13 +652,15 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     }
 
     /**
-     * Set whether the frame Size is saved or not after it has been created
+     * Set whether the frame Size is saved or not after it has been created.
+     *
+     * @param save true if the frame size should be saved.
      */
     public void setSaveSize(boolean save) {
         reuseFrameSavedSized = save;
-        jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        if (prefsMgr == null) {
-            prefsMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
+        if (prefsMgr == null) {  /* Why is this duplicated with above? */
+            prefsMgr = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
         }
         if (prefsMgr != null) {
             prefsMgr.setSaveWindowSize(windowFrameRef, save);
@@ -663,14 +670,18 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     }
 
     /**
-     * Returns if the frame Position is saved or not
+     * Returns if the frame Position is saved or not.
+     *
+     * @return true if the frame position should be saved
      */
     public boolean getSavePosition() {
         return reuseFrameSavedPosition;
     }
 
     /**
-     * Returns if the frame Size is saved or not
+     * Returns if the frame Size is saved or not.
+     *
+     * @return true if the frame size should be saved
      */
     public boolean getSaveSize() {
         return reuseFrameSavedSized;
@@ -756,14 +767,14 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     }
 
     public void componentMoved(java.awt.event.ComponentEvent e) {
-        jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        jmri.UserPreferencesManager p = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
         if ((p != null) && (reuseFrameSavedPosition) && isVisible()) {
             p.setWindowLocation(windowFrameRef, this.getLocation());
         }
     }
 
     public void componentResized(java.awt.event.ComponentEvent e) {
-        jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        jmri.UserPreferencesManager p = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
         if ((p != null) && (reuseFrameSavedSized) && isVisible()) {
             saveWindowSize(p);
         }
@@ -775,14 +786,14 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     private transient jmri.implementation.AbstractShutDownTask task = null;
 
     protected void setShutDownTask() {
-        if (jmri.InstanceManager.shutDownManagerInstance() != null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
             task = new jmri.implementation.AbstractShutDownTask(getTitle()) {
                 public boolean execute() {
                     handleModified();
                     return true;
                 }
             };
-            jmri.InstanceManager.shutDownManagerInstance().register(task);
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(task);
         }
     }
 
@@ -796,7 +807,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * with super.dispose()
      */
     public void dispose() {
-        jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        jmri.UserPreferencesManager p = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
         if (p != null) {
             if (reuseFrameSavedPosition) {
                 p.setWindowLocation(windowFrameRef, this.getLocation());
@@ -810,7 +821,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
             windowInterface.dispose();
         }
         if (task != null) {
-            jmri.InstanceManager.shutDownManagerInstance().deregister(task);
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(task);
             task = null;
         }
         synchronized (list) {
@@ -907,7 +918,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         return ((this.properties.containsKey(key) && this.properties.get(key).getClass().isArray())
                 || Beans.hasIntrospectedIndexedProperty(this, key));
     }
-    
+
     protected transient WindowInterface windowInterface = null;
 
     public void show(JmriPanel child, JmriAbstractAction action) {

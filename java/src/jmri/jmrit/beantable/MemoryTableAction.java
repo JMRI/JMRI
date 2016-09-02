@@ -36,7 +36,7 @@ public class MemoryTableAction extends AbstractTableAction {
         super(actionName);
 
         // disable ourself if there is no primary Memory manager available
-        if (jmri.InstanceManager.memoryManagerInstance() == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.MemoryManager.class) == null) {
             setEnabled(false);
         }
 
@@ -77,8 +77,6 @@ public class MemoryTableAction extends AbstractTableAction {
             public NamedBean getByUserName(String name) {
                 return InstanceManager.memoryManagerInstance().getByUserName(name);
             }
-            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"delete"); }
-             public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "delete", boo); }*/
 
             protected String getMasterClassName() {
                 return getClassName();

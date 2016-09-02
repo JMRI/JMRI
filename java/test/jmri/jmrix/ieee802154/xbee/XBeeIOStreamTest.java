@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -59,7 +58,6 @@ public class XBeeIOStreamTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         tc = new XBeeInterfaceScaffold();
-        jmri.util.JUnitAppender.assertErrorMessage("Deprecated Method setInstance called");
         byte pan[] = {(byte) 0x00, (byte) 0x42};
         byte uad[] = {(byte) 0x6D, (byte) 0x97};
         byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};

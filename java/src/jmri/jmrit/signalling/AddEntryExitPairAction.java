@@ -1,4 +1,3 @@
-// AddEntryExitPairAction.java
 package jmri.jmrit.signalling;
 
 import java.awt.event.ActionEvent;
@@ -11,14 +10,8 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register the Add Entry Exit Pair
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision: 1.4 $
  */
 public class AddEntryExitPairAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2153517492240562949L;
 
     public AddEntryExitPairAction(String s, LayoutEditor panel) {
         super(s);
@@ -38,6 +31,3 @@ public class AddEntryExitPairAction extends AbstractAction {
     }
     private final static Logger log = LoggerFactory.getLogger(AddEntryExitPairAction.class.getName());
 }
-
-
-/* @(#)AddEntryExitPairAction.java */

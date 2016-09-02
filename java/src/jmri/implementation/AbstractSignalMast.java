@@ -120,7 +120,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     SignalSystem systemDefn;
 
     void configureSignalSystemDefinition(String name) {
-        systemDefn = InstanceManager.signalSystemManagerInstance().getSystem(name);
+        systemDefn = InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem(name);
         if (systemDefn == null) {
             log.error("Did not find signal definition: " + name);
             throw new IllegalArgumentException("Signal definition not found: " + name);

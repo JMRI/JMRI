@@ -5,6 +5,7 @@ import jmri.JmriException;
 import jmri.NamedBeanHandle;
 import jmri.PushbuttonPacket;
 import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.TurnoutOperation;
 import jmri.TurnoutOperationManager;
@@ -580,8 +581,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     private NamedBeanHandle<Sensor> _secondNamedSensor;
 
     @Override
-    public void provideFirstFeedbackSensor(String pName) throws jmri.JmriException {
-        if (InstanceManager.sensorManagerInstance() != null) {
+    public void provideFirstFeedbackSensor(String pName) throws jmri.JmriException, IllegalArgumentException {
+        if (InstanceManager.getOptionalDefault(SensorManager.class) != null) {
             if (pName == null || pName.equals("")) {
                 provideFirstFeedbackNamedSensor(null);
             } else {
@@ -622,8 +623,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     @Override
-    public void provideSecondFeedbackSensor(String pName) throws jmri.JmriException {
-        if (InstanceManager.sensorManagerInstance() != null) {
+    public void provideSecondFeedbackSensor(String pName) throws jmri.JmriException, IllegalArgumentException {
+        if (InstanceManager.getOptionalDefault(SensorManager.class) != null) {
             if (pName == null || pName.equals("")) {
                 provideSecondFeedbackNamedSensor(null);
             } else {

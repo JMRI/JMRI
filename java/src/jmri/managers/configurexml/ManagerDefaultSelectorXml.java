@@ -1,6 +1,7 @@
 package jmri.managers.configurexml;
 
 import java.util.List;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.managers.ManagerDefaultSelector;
@@ -66,7 +67,10 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
         }
         // put into effect
         InstanceManager.getDefault(ManagerDefaultSelector.class).configure();
-        InstanceManager.configureManagerInstance().registerPref(InstanceManager.getDefault(ManagerDefaultSelector.class));
+        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerPref(InstanceManager.getDefault(ManagerDefaultSelector.class));
+        }
         return true;
     }
 

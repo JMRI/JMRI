@@ -19,6 +19,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import jmri.ConfigureManager;
 import jmri.jmrix.ecos.EcosPreferences;
 import jmri.swing.PreferencesPanel;
 
@@ -441,7 +442,10 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
             ep.setLocoControl(false);
         }
 
-        jmri.InstanceManager.configureManagerInstance().storePrefs();
+        ConfigureManager cm = jmri.InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.storePrefs();
+        }
         updateButtonPressed = false;
     }
 

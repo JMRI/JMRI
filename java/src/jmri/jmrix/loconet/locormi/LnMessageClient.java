@@ -110,8 +110,6 @@ public class LnMessageClient extends LnTrafficRouter {
 
         // the serial connections (LocoBuffer et al) start
         // various threads here.
-        jmri.jmrix.loconet.ActiveFlag.setActive();
-
     }
 
     LocoNetSystemConnectionMemo clientMemo;

@@ -2,20 +2,19 @@
 <!-- Translated by Blorec Herv&#233; le 2012-01-22; Egbert Broerse (markup); le 2015-10-18 -->
 <html lang="fr">
 	  <hr class="hide">
-	  <div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
 	    <div style="text-align: center">JMRI est...</div>
 <dl>
 
 <dt><h3><a href="index.shtml">Outils G&#233;n&#233;raux</a></h3></dt>
 <dd> JMRI fournit de puissants outils pour travailler avec votre
-réseau. 
+r&#233;seau. 
 <ul>
-    <li><dfn><a href="../Sensors.shtml">Capteurs</a></dfn>
-		    <li><dfn><a href="../Turnouts.shtml"Aiguillage</a></dfn>
-		    <li><dfn><a href="../throttle/ThrottleMain.shtml">R&#233;gulateurs</a></dfn>
-		    <li><dfn><a href="../consisttool/ConsistTool.shtml">couplage</a></dfn>
-		    <li><dfn><a href="../speedometer/index.shtml">Tachym&#232;tre</a></dfn>
+    <li><dfn><a href="Sensors.shtml">Capteurs</a></dfn>
+		    <li><dfn><a href="Turnouts.shtml"Aiguillage</a></dfn>
+		    <li><dfn><a href="throttle/ThrottleMain.shtml">R&#233;gulateurs</a></dfn>
+		    <li><dfn><a href="consisttool/ConsistTool.shtml">couplage</a></dfn>
+		    <li><dfn><a href="speedometer/index.shtml">Tachym&#232;tre</a></dfn>
 <li> <dfn> <a href="scripting/index.shtml">Script</a></dfn>
 <li> <dfn> <a href="Audio.shtml">audio</a></dfn>
 <li> <dfn> <a href="IdTags.shtml">ID &#233;tiquettes</a></dfn>
@@ -38,9 +37,9 @@ réseau.
 de votre r&#233;seau, du simple contr&ocirc;le d'une commande de  barri&#232;re
 &#224; faire circuler des trains en toile de fond.
 <ul>
-<li><dfn><a href="../Signals.shtml">Signaux</a></dfn>		  
-<li><dfn><a href="../Routes.shtml">Itin&#233;raires</a></dfn>		    		    
-<li><dfn><a href="../fastclock/index.shtml">Horloges Rapides</a></dfn>
+<li><dfn><a href="signaling/index.shtml">Signaux</a></dfn>		  
+<li><dfn><a href="Routes.shtml">Itin&#233;raires</a></dfn>		    		    
+<li><dfn><a href="fastclock/index.shtml">Horloges Rapides</a></dfn>
 <li><dfn><a href="scripting/index.shtml">Script</a></dfn>
 </ul>
 </dd>

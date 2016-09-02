@@ -77,9 +77,12 @@ public class SimpleSensorServer extends AbstractSensorServer {
                 // remove anything following the space.
                 sensorName = sensorName.substring(0,sensorName.indexOf(" "));
             }
-            Sensor sensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-            sendStatus(sensorName, sensor.getKnownState());
-
+            try {
+                Sensor sensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+                sendStatus(sensorName, sensor.getKnownState());
+            } catch (IllegalArgumentException ex) {
+                log.warn("Failed to provide Sensor \"{}\" in sendStatus", sensorName);
+            }
         }
     }
 

@@ -1,4 +1,3 @@
-// Message.java
 package jmri.jmrix.direct;
 
 import javax.annotation.Nonnull;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version	$Revision$
  */
 public class Message extends jmri.jmrix.AbstractMRMessage {
 
@@ -173,5 +171,3 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
     private final static Logger log = LoggerFactory.getLogger(Message.class.getName());
 
 }
-
-/* @(#)Message.java */

@@ -32,10 +32,12 @@ public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
         return t;
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public SRCPSensorManager instance() {
         return null;
     }
 
 }
-
-/* @(#)SRCPSensorManager.java */

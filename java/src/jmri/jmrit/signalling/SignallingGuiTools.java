@@ -47,7 +47,7 @@ public class SignallingGuiTools {
                 options,
                 options[0]);
         if (n == 0) {
-            InstanceManager.signalMastLogicManagerInstance().replaceSignalMast(oldMast, newMast);
+            InstanceManager.getDefault(jmri.SignalMastLogicManager.class).replaceSignalMast(oldMast, newMast);
         }
     }
 
@@ -69,7 +69,7 @@ public class SignallingGuiTools {
                 options,
                 options[0]);
         if (n == 0) {
-            InstanceManager.signalMastLogicManagerInstance().swapSignalMasts(oldMast, newMast);
+            InstanceManager.getDefault(jmri.SignalMastLogicManager.class).swapSignalMasts(oldMast, newMast);
         }
     }
 
@@ -90,7 +90,7 @@ public class SignallingGuiTools {
                 options,
                 options[0]);
         if (n == 0) {
-            InstanceManager.signalMastLogicManagerInstance().removeSignalMast(mast);
+            InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removeSignalMast(mast);
             return true;
         }
         return false;
@@ -114,7 +114,7 @@ public class SignallingGuiTools {
                 options,
                 options[0]);
         if (n == 0) {
-            InstanceManager.signalMastLogicManagerInstance().removeSignalMast(mast);
+            InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removeSignalMast(mast);
         }
     }
 }

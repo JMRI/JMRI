@@ -194,8 +194,6 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
 
         // start operation
         packets.startThreads();
-        jmri.jmrix.loconet.ActiveFlag.setActive();
-
     }
 
     // base class methods for the LnPortController interface

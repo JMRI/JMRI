@@ -1,113 +1,197 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head>
-<title>JMRI Operations - Cars menu bar</title>
-  
-<!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI Operations - Cars menu bar</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
-<a name="Top"></a>
+  <!--#include virtual="/Header" -->
 
-<h1>Using JMRI&reg; to Operate Trains</h1>
-<h2>OperationsPro: Cars Window Menu Bar</h2>
-<div align="right">
-<p><a href="Ops_Cars.shtml">Back</a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
-</div>
-<hr>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<p style="margin-left: 80px;"><img style="width: 669px; height: 118px;" alt="cars menubar" src="images/Ops_Cars_Menubar.png"></p>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<h3>Tools</h3>
-<ul>
-<li><strong>Car Roster</strong>
-  <ul>
-  <li><strong><a href="Ops_ImportCarsFile.shtml">Import from file</a><br>
-</strong>Opens the <strong>Open</strong> dialog box, to import
-a roster of Cars if you already have a list of cars in a database. The
-import function requires an ACSII text file, with one line for each
-car. The Car import requires four attributes and the order is:<br>
-car number, road name, type, and length.<br>
-An example of a correct format:
-<blockquote>
-<p><strong>336 GCR Flat 40<br>
-655579 UP Boxcar 40 </strong>
-</blockquote>
-<p>Optionally you may include additional attributes in the
-following order: weight, color, owner name, date built, and location.<br>
-Check the Cars pane Help menu file for further information.</p>
-  </li>
+      <h1>Using JMRI&reg; to Operate Trains</h1>
 
-  <li><a name="export" id="export"><strong>Export to file</a><br>
-  <img src="images/Ops_Export_carRoster.png" alt="export roster" height="122" width="712"></strong> </li>
+      <h2>OperationsPro: Cars Window Menu Bar</h2>
 
-  <li><a name="delete" id="delete"><strong>Delete all cars</a><br>
-  <img src="images/Ops_delete_cars_roster.png" alt="delete" height="122" width="403"></strong></li>
-        
-  <li><a name="reset" id="reset"><strong>Reset move count all cars</strong></a><br>
-  <img src="images/Ops_car_resetMove.png" alt="reset move" height="122" width="521"></li>
+      <div align="right">
+        <p><a href="Ops_Cars.shtml">Back</a></p>
 
-      
-<li><a name="print" id="print"><strong>Print</strong></a> - Print Window opens with Roster Printing options; Check all attributes that you want on print out.<br>
-    <table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2">
-      <tbody>
-        <tr>
-          <td style="vertical-align: top;"><img style="width: 235px; height: 627px;" alt="roster print options" src="images/Ops_carRoster_printOptions.png"></td>
-          <td style="vertical-align: top;"><img style="width: 600px; height: 655px;" alt="print roster" src="images/Ops_RosterPrint.png"><br>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-</li>
+        <p><a href="index.shtml#Operations">Back to Index</a></p>
+      </div>
+      <hr>
 
-<li><a name="preview" id="preview"><strong>Print Preview</strong></a><br>
-Print window as above opens, <input name="button" id="button" value="OK" type="button"> opens output in the Printer Preview window (shown at right).</li>
-</ul>
-</li>
-<li><strong><a href="Ops_Locations_byCar.shtml">Modify Locations by
-Car Type</a></strong></li>
-<li><strong><a href="Ops_Locations_Modify_Trains.shtml">Modify Trains
-by Car Type</a></strong></li>
-<li><strong><a href="Ops_Locations_setCars.shtml">Set Cars</a></strong></li>
-</ul>
-</li>
+      <p style="margin-left: 80px;"><img style=
+      "width: 669px; height: 118px;" alt="cars menubar" src=
+      "images/Ops_Cars_Menubar.png"></p>
 
-<li><strong>Operations</strong>
-  <ul>
-    <li><strong>Settings</strong>
-      <p>Opens <strong><a href="Ops_Settings.shtml">Operations Setting</a></strong> window.</p></li>
-    <li><strong>Locations</strong>
-      <p>Opens <strong><a href="Ops_Locations.shtml">Locations</a></strong> window.</p></li>
-    <li><strong>Cars</strong>
-      <p>Opens <strong><a href="Ops_Cars.shtml">Cars</a></strong> window.</p></li>
-    <li><strong>Locomotives</strong>
-      <p>Opens <strong><a href="Ops_Engines.shtml">Locomotives</a></strong> window.</p></li>
-    <li><strong>Routes</strong>
-      <p>Opens <strong><a href="Ops_Routes.shtml">Routes</a></strong> window.</p></li>
-    <li><strong>Trains</strong>
-        <p>Opens <strong><a href="Ops_Trains.shtml">Trains</a></strong> window.</p></li>
-  </ul>
-</li>
-<li><strong>Window</strong></li>
-<li><strong>Help</strong></li>
-</ul>
+      <h3>Tools</h3>
 
-<div align="right">
-<p><a href="Ops_Cars.shtml">Back</a><a href="Ops_Engines.shtml"></a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
-</div>
+      <ul>
+        <li>
+          <strong>Car Roster</strong>
 
-<!--#include virtual="/Footer" -->
-</div>
-</div>
+          <ul>
+            <li>
+              <strong><a href="Ops_ImportCarsFile.shtml">Import
+              from file</a><br></strong>Opens the
+              <strong>Open</strong> dialog box, to import a roster
+              of Cars if you already have a list of cars in a
+              database. The import function requires an ACSII text
+              file, with one line for each car. The Car import
+              requires four attributes and the order is:<br>
+              car number, road name, type, and length.<br>
+              An example of a correct format:
+
+              <blockquote>
+                <p><strong>336 GCR Flat 40<br>
+                655579 UP Boxcar 40</strong></p>
+              </blockquote>
+
+              <p>Optionally you may include additional attributes
+              in the following order: weight, color, owner name,
+              date built, and location.<br>
+              Check the Cars pane Help menu file for further
+              information.</p>
+            </li>
+
+            <li><a name="export" id="export"><strong>Export to
+            file</strong></a><br>
+            <img src="images/Ops_Export_carRoster.png" alt=
+            "export roster" height="122" width="712"></li>
+
+            <li><a name="delete" id="delete"><strong>Delete all
+            cars</strong></a><br>
+            <img src="images/Ops_delete_cars_roster.png" alt=
+            "delete" height="122" width="403"></li>
+
+            <li><a name="reset" id="reset"><strong>Reset move count
+            all cars</strong></a><br>
+            <img src="images/Ops_car_resetMove.png" alt=
+            "reset move" height="122" width="521"></li>
+
+            <li>
+              <a name="print" id="print"><strong>Print</strong></a>
+              - Print Window opens with Roster Printing options;
+              Check all attributes that you want on print out.<br>
+
+              <table style="text-align: left; width: 100%;" border=
+              "0" cellpadding="2" cellspacing="2">
+                <tbody>
+                  <tr>
+                    <td style="vertical-align: top;"><img style=
+                    "width: 235px; height: 627px;" alt=
+                    "roster print options" src=
+                    "images/Ops_carRoster_printOptions.png"></td>
+
+                    <td style="vertical-align: top;"><img style=
+                    "width: 600px; height: 655px;" alt=
+                    "print roster" src=
+                    "images/Ops_RosterPrint.png"><br></td>
+                  </tr>
+                </tbody>
+              </table>
+            </li>
+
+            <li><a name="preview" id="preview"><strong>Print
+            Preview</strong></a><br>
+            Print window as above opens, <input name="button" id=
+            "button" value="OK" type="button"> opens output in the
+            Printer Preview window (shown at right).</li>
+          </ul>
+        </li>
+
+        <li><strong><a href="Ops_Locations_byCar.shtml">Modify
+        Locations by Car Type</a></strong></li>
+
+        <li><strong><a href=
+        "Ops_Locations_Modify_Trains.shtml">Modify Trains by Car
+        Type</a></strong></li>
+
+        <li><strong><a href="Ops_Locations_setCars.shtml">Set
+        Cars</a></strong></li>
+      </ul>
+
+      <ul>
+        <li>
+          <strong>Operations</strong>
+
+          <ul>
+            <li>
+              <strong>Settings</strong>
+
+              <p>Opens <strong><a href=
+              "Ops_Settings.shtml">Operations Setting</a></strong>
+              window.</p>
+            </li>
+
+            <li>
+              <strong>Locations</strong>
+
+              <p>Opens <strong><a href=
+              "Ops_Locations.shtml">Locations</a></strong>
+              window.</p>
+            </li>
+
+            <li>
+              <strong>Cars</strong>
+
+              <p>Opens <strong><a href=
+              "Ops_Cars.shtml">Cars</a></strong> window.</p>
+            </li>
+
+            <li>
+              <strong>Locomotives</strong>
+
+              <p>Opens <strong><a href=
+              "Ops_Engines.shtml">Locomotives</a></strong>
+              window.</p>
+            </li>
+
+            <li>
+              <strong>Routes</strong>
+
+              <p>Opens <strong><a href=
+              "Ops_Routes.shtml">Routes</a></strong> window.</p>
+            </li>
+
+            <li>
+              <strong>Trains</strong>
+
+              <p>Opens <strong><a href=
+              "Ops_Trains.shtml">Trains</a></strong> window.</p>
+            </li>
+          </ul>
+        </li>
+
+        <li><strong>Window</strong></li>
+
+        <li><strong>Help</strong></li>
+      </ul>
+
+      <div align="right">
+        <p><a href="Ops_Cars.shtml">Back</a><a href=
+        "Ops_Engines.shtml"></a></p>
+
+        <p><a href="index.shtml#Operations">Back to Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

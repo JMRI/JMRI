@@ -40,6 +40,9 @@ import javax.swing.event.ChangeListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Creates the UI to set the properties of a range of Positionable Icons on (Control) Panels.
+ */
 public class PositionablePropertiesUtil {
 
     Frame mFrame = null;
@@ -60,13 +63,13 @@ public class PositionablePropertiesUtil {
         for (int i = 0; i < txtList.size(); i++) {
             JPanel p = new JPanel();
             p.setBorder(BorderFactory.createTitledBorder(txtList.get(i).getDescription()));
-            p.add(txtList.get(i).getLabel());
+            p.add(txtList.get(i).getLabel()); // add a visual example for each
             exampleHolder.add(p);
         }
         //exampleHolder.add(example);
         JPanel tmp = new JPanel();
 
-        JButton cancel = new JButton("Cancel");
+        JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
         cancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 undoChanges();
@@ -85,14 +88,14 @@ public class PositionablePropertiesUtil {
         JPanel _buttonArea = new JPanel();
         _buttonArea.add(cancel);
 
-        JButton applyButton = new JButton("Apply");
+        JButton applyButton = new JButton(Bundle.getMessage("ButtonApply"));
         _buttonArea.add(applyButton);
         applyButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 fontApply();
             }
         });
-        JButton okButton = new JButton("Okay");
+        JButton okButton = new JButton(Bundle.getMessage("ButtonOK"));
         _buttonArea.add(okButton);
         okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -113,29 +116,32 @@ public class PositionablePropertiesUtil {
     //JLabel example;
 
     ImageIcon[] images;
-    String[] _fontcolors = {"Black", "Dark Gray", "Gray", "Light Gray", "White", "Red", "Orange", "Yellow", "Green", "Blue", "Magenta"};
+    String[] _fontcolors = {"Black", "Dark Gray", "Gray", "Light Gray", "White", "Red", "Orange", "Yellow", "Green", "Blue", "Magenta"}; // NOI18N
     String[] _backgroundcolors;
     JComboBox<Integer> fontColor;
     JComboBox<Integer> backgroundColor;
     JTextField fontSizeField;
 
-    String[] _justification = {"Left", "Right", "Center"};
+    String[] _justification = {Bundle.getMessage("left"), Bundle.getMessage("right"), Bundle.getMessage("center")};
     JComboBox<String> _justificationCombo;
 
+    /**
+     * Create and fill in the Font (Decoration) tab of the UI.
+     */
     void textPanel() {
         _textPanel = new JPanel();
         _textPanel.setLayout(new BoxLayout(_textPanel, BoxLayout.Y_AXIS));
         JPanel fontColorPanel = new JPanel();
-        fontColorPanel.add(new JLabel("Font Color"));
+        fontColorPanel.add(new JLabel(Bundle.getMessage("FontColor") + ": "));
 
         JPanel backgroundColorPanel = new JPanel();
-        backgroundColorPanel.add(new JLabel("Background Color"));
+        backgroundColorPanel.add(new JLabel(Bundle.getMessage("FontBackgroundColor") + ": "));
         Color defaultLabelBackground = backgroundColorPanel.getBackground();
         _backgroundcolors = new String[_fontcolors.length + 1];
         for (int i = 0; i < _fontcolors.length; i++) {
             _backgroundcolors[i] = _fontcolors[i];
         }
-        _backgroundcolors[_backgroundcolors.length - 1] = "None";
+        _backgroundcolors[_backgroundcolors.length - 1] = Bundle.getMessage("ColorClear"); // colors stored as RGB int values in xml
 
         Integer[] intArray = new Integer[_backgroundcolors.length];
         images = new ImageIcon[_backgroundcolors.length];
@@ -148,13 +154,13 @@ public class PositionablePropertiesUtil {
                 Field f = Color.class.getField((_backgroundcolors[i].toUpperCase()).replaceAll(" ", "_"));
                 desiredColor = (Color) f.get(null);
             } catch (NoSuchFieldException ce) {
-                //Can be considered normal if background is set None
+                //Can be considered normal if background is set None/Clear
                 desiredColor = null;
             } catch (SecurityException ce) {
-                //Can be considered normal if background is set None
+                //Can be considered normal if background is set None/Clear
                 desiredColor = null;
             } catch (IllegalAccessException ce) {
-                //Can be considered normal if background is set None
+                //Can be considered normal if background is set None/Clear
                 desiredColor = null;
             }
             if (desiredColor != null) {
@@ -176,15 +182,15 @@ public class PositionablePropertiesUtil {
         backgroundColor.setSelectedIndex(backCurrentColor);
         backgroundColor.addActionListener(PreviewActionListener);
         backgroundColorPanel.add(backgroundColor);
+
         int fontCurrentColor = 0;
         for (int i = 0; i < _fontcolors.length; i++) {
-
             intArray[i] = Integer.valueOf(i);
             try {
                 Field f = Color.class.getField((_fontcolors[i].toUpperCase()).replaceAll(" ", "_"));
                 desiredColor = (Color) f.get(null);
             } catch (Exception ce) {
-                log.error("Unable to get font colour from field " + ce);
+                log.error("Unable to get font color from field " + ce);
             }
             if (desiredColor != null && desiredColor.equals(defaultForeground)) {
                 fontCurrentColor = i;
@@ -236,7 +242,7 @@ public class PositionablePropertiesUtil {
         } else {
             _justificationCombo.setSelectedIndex(2);
         }
-        justificationPanel.add(new JLabel("Justification"));
+        justificationPanel.add(new JLabel(Bundle.getMessage("Justification") + ": "));
         justificationPanel.add(_justificationCombo);
         _textPanel.add(justificationPanel);
 
@@ -251,7 +257,7 @@ public class PositionablePropertiesUtil {
             }
         });
 
-        for (int i = 0; i < txtList.size(); i++) {
+        for (int i = 0; i < txtList.size(); i++) { // repeat 4 times for sensor icons, or just once
             final int x = i;
 
             int fontcolor = 0;
@@ -289,7 +295,7 @@ public class PositionablePropertiesUtil {
                     txtList.get(x).setForeground(colorFromComboBox(txtColor, Color.black));
                 }
             });
-            p.add(new JLabel("Font Color"));
+            p.add(new JLabel(Bundle.getMessage("FontColor") + ": "));
             p.add(txtColor);
             txtPanel.add(p);
             final JComboBox<Integer> txtBackColor = new JComboBox<Integer>(intArray);
@@ -302,15 +308,20 @@ public class PositionablePropertiesUtil {
                 }
             });
             p = new JPanel();
-            p.add(new JLabel("Background Color"));
+            p.add(new JLabel(Bundle.getMessage("FontBackgroundColor") + ": "));
             p.add(txtBackColor);
-            txtPanel.setBorder(BorderFactory.createTitledBorder(txtList.get(i).getDescription()));
+
+            String _borderTitle = txtList.get(i).getDescription();
+            if (_borderTitle.equals(Bundle.getMessage("TextExampleLabel"))) {
+                _borderTitle = Bundle.getMessage("TextDecoLabel"); // replace default label by a appropriate one for text decoration box on Font tab
+            }
+            txtPanel.setBorder(BorderFactory.createTitledBorder(_borderTitle));
             txtPanel.add(p);
 
             _textPanel.add(txtPanel);
 
         }
-        propertiesPanel.addTab("Font", null, _textPanel, "Font");
+        propertiesPanel.addTab(Bundle.getMessage("FontTabTitle"), null, _textPanel, Bundle.getMessage("FontTabTooltip"));
     }
 
     ActionListener PreviewActionListener = new ActionListener() {
@@ -357,6 +368,9 @@ public class PositionablePropertiesUtil {
     javax.swing.JSpinner borderSizeTextSpin;
     javax.swing.JSpinner marginSizeTextSpin;
 
+    /**
+     * Create and fill in the Border tab of the UI.
+     */
     void borderPanel() {
         Color desiredColor = null;
         JPanel borderPanel = new JPanel();
@@ -375,7 +389,7 @@ public class PositionablePropertiesUtil {
                 borderCurrentColor = i;
             }
         }
-        //Last colour on the background is none.
+        //Last colour on the background is None.
         intArray[_backgroundcolors.length - 1] = Integer.valueOf(_backgroundcolors.length - 1);
         borderColorCombo = new JComboBox<Integer>(intArray);
         borderColorCombo.setRenderer(new ColorComboBoxRenderer<Integer>());
@@ -384,20 +398,20 @@ public class PositionablePropertiesUtil {
         borderColorCombo.addActionListener(PreviewActionListener);
 
         JPanel borderColorPanel = new JPanel();
-        borderColorPanel.add(new JLabel("Border Color"));
+        borderColorPanel.add(new JLabel(Bundle.getMessage("borderColor") + ": "));
         borderColorPanel.add(borderColorCombo);
 
         JPanel borderSizePanel = new JPanel();
-        borderSizeTextSpin = getSpinner(borderSize, "Border Size");
+        borderSizeTextSpin = getSpinner(borderSize, Bundle.getMessage("borderSize"));
         borderSizeTextSpin.addChangeListener(SpinnerChangeListener);
-        borderSizePanel.add(new JLabel("Border Size"));
+        borderSizePanel.add(new JLabel(Bundle.getMessage("borderSize") + ": "));
         borderSizePanel.add(borderSizeTextSpin);
 
         JPanel marginSizePanel = new JPanel();
-        marginSizeTextSpin = getSpinner(marginSize, "Margin Size");
+        marginSizeTextSpin = getSpinner(marginSize, Bundle.getMessage("marginSize"));
         marginSizeTextSpin.addChangeListener(SpinnerChangeListener);
 
-        marginSizePanel.add(new JLabel("Margin Size"));
+        marginSizePanel.add(new JLabel(Bundle.getMessage("marginSize") + ": "));
         marginSizePanel.add(marginSizeTextSpin);
 
         borderPanel.setLayout(new BoxLayout(borderPanel, BoxLayout.Y_AXIS));
@@ -405,7 +419,7 @@ public class PositionablePropertiesUtil {
         borderPanel.add(borderSizePanel);
         borderPanel.add(marginSizePanel);
 
-        propertiesPanel.addTab("Border", null, borderPanel, "Border");
+        propertiesPanel.addTab(Bundle.getMessage("Border"), null, borderPanel, Bundle.getMessage("BorderTabTooltip"));
 
     }
 
@@ -415,14 +429,23 @@ public class PositionablePropertiesUtil {
     javax.swing.JSpinner heightSizeTextSpin;
     JCheckBox autoWidth;
 
+    /**
+     * Create and fill in the Contents tab of the UI (Text Label objects).
+     */
     void editText() {
         JPanel editText = new JPanel();
         editText.setLayout(new BoxLayout(editText, BoxLayout.Y_AXIS));
         for (int i = 0; i < txtList.size(); i++) {
             final int x = i;
             JPanel p = new JPanel();
-            p.setBorder(BorderFactory.createTitledBorder(txtList.get(i).getDescription()));
-            JLabel txt = new JLabel("Text Value ");
+
+            String _borderTitle = txtList.get(i).getDescription();
+            if (_borderTitle.equals(Bundle.getMessage("TextExampleLabel"))) {
+                _borderTitle = Bundle.getMessage("TextBorderLabel"); // replace label provided by Ctor by an appropriate one for text string box on Contents tab
+            }
+            p.setBorder(BorderFactory.createTitledBorder(_borderTitle));
+
+            JLabel txt = new JLabel(Bundle.getMessage("TextValueLabel") + ": ");
             JTextField textField = new JTextField(txtList.get(i).getText(), 20);
             textField.addKeyListener(new KeyListener() {
                 public void keyTyped(KeyEvent E) {
@@ -441,9 +464,12 @@ public class PositionablePropertiesUtil {
             p.add(textField);
             editText.add(p);
         }
-        propertiesPanel.addTab("Edit Text", null, editText, "Text");
+        propertiesPanel.addTab(Bundle.getMessage("EditTextLabel"), null, editText, Bundle.getMessage("EditTabTooltip"));
     }
 
+    /**
+     * Create and fill in the Size &amp; Position tab of the UI.
+     */
     void sizePosition() {
 
         JPanel posPanel = new JPanel();
@@ -451,14 +477,14 @@ public class PositionablePropertiesUtil {
         JPanel xyPanel = new JPanel();
         xyPanel.setLayout(new BoxLayout(xyPanel, BoxLayout.Y_AXIS));
         JPanel xPanel = new JPanel();
-        JLabel txt = new JLabel("x = ");
+        JLabel txt = new JLabel(" X: ");
         xPositionTextSpin = getSpinner(xPos, "x position");
         xPositionTextSpin.addChangeListener(SpinnerChangeListener);
         xPanel.add(txt);
         xPanel.add(xPositionTextSpin);
 
         JPanel yPanel = new JPanel();
-        txt = new JLabel("y = ");
+        txt = new JLabel(" Y: ");
         yPositionTextSpin = getSpinner(yPos, "y position");
         yPositionTextSpin.addChangeListener(SpinnerChangeListener);
         yPanel.add(txt);
@@ -470,20 +496,20 @@ public class PositionablePropertiesUtil {
         JPanel sizePanel = new JPanel();
         sizePanel.setLayout(new BoxLayout(sizePanel, BoxLayout.Y_AXIS));
         JPanel widthPanel = new JPanel();
-        widthSizeTextSpin = getSpinner(fixedWidth, "width");
+        widthSizeTextSpin = getSpinner(fixedWidth, Bundle.getMessage("width"));
         widthSizeTextSpin.addChangeListener(SpinnerChangeListener);
         /*widthSizeText = new JTextField(""+fixedWidth, 10);
          widthSizeText.addKeyListener(PreviewKeyActionListener);*/
-        txt = new JLabel("Width = ");
+        txt = new JLabel(Bundle.getMessage("width") + ": ");
         widthPanel.add(txt);
         widthPanel.add(widthSizeTextSpin);
 
         JPanel heightPanel = new JPanel();
         /*heightSizeText = new JTextField(""+fixedHeight, 10);
          heightSizeText.addKeyListener(PreviewKeyActionListener);*/
-        heightSizeTextSpin = getSpinner(fixedHeight, "height");
+        heightSizeTextSpin = getSpinner(fixedHeight, Bundle.getMessage("height"));
         heightSizeTextSpin.addChangeListener(SpinnerChangeListener);
-        txt = new JLabel("Height = ");
+        txt = new JLabel(Bundle.getMessage("height") + ": ");
         heightPanel.add(txt);
         heightPanel.add(heightSizeTextSpin);
 
@@ -494,7 +520,7 @@ public class PositionablePropertiesUtil {
         posPanel.add(sizePanel);
         posPanel.setLayout(new BoxLayout(posPanel, BoxLayout.Y_AXIS));
 
-        propertiesPanel.addTab("Size & Position", null, posPanel, "Size");
+        propertiesPanel.addTab(Bundle.getMessage("SizeTabTitle"), null, posPanel, Bundle.getMessage("SizeTabTooltip"));
     }
 
     void fontApply() {
@@ -726,15 +752,18 @@ public class PositionablePropertiesUtil {
         if (_parent instanceof SensorIcon) {
             SensorIcon si = (SensorIcon) _parent;
             if (si.isIcon()) {
-                txtList.add(new TextDetails("Text", pop.getText(), pop.getForeground(), _parent.getBackground()));
+                // just 1 label Example
+                txtList.add(new TextDetails(Bundle.getMessage("TextExampleLabel"), pop.getText(), pop.getForeground(), _parent.getBackground()));
             } else {
-                txtList.add(new TextDetails("Active", si.getActiveText(), si.getTextActive(), si.getBackgroundActive()));
-                txtList.add(new TextDetails("InActive", si.getInactiveText(), si.getTextInActive(), si.getBackgroundInActive()));
-                txtList.add(new TextDetails("Unknown", si.getUnknownText(), si.getTextUnknown(), si.getBackgroundUnknown()));
-                txtList.add(new TextDetails("Inconsistent", si.getInconsistentText(), si.getTextInconsistent(), si.getBackgroundInconsistent()));
+                // 4 different labels (and bordered boxes to set decoration of) labels
+                txtList.add(new TextDetails(Bundle.getMessage("SensorStateActive"), si.getActiveText(), si.getTextActive(), si.getBackgroundActive()));
+                txtList.add(new TextDetails(Bundle.getMessage("SensorStateInactive"), si.getInactiveText(), si.getTextInActive(), si.getBackgroundInActive()));
+                txtList.add(new TextDetails(Bundle.getMessage("BeanStateUnknown"), si.getUnknownText(), si.getTextUnknown(), si.getBackgroundUnknown()));
+                txtList.add(new TextDetails(Bundle.getMessage("BeanStateInconsistent"), si.getInconsistentText(), si.getTextInconsistent(), si.getBackgroundInconsistent()));
             }
         } else {
-            txtList.add(new TextDetails("Text", pop.getText(), pop.getForeground(), _parent.getBackground()));
+            // just 1 label Example
+            txtList.add(new TextDetails(Bundle.getMessage("TextExampleLabel"), pop.getText(), pop.getForeground(), _parent.getBackground()));
         }
 
         fixedWidth = pop.getFixedWidth();
@@ -779,8 +808,8 @@ public class PositionablePropertiesUtil {
 
     private ArrayList<TextDetails> txtList = null;
 
-    private JCheckBox italic = new JCheckBox("Italic", false);
-    private JCheckBox bold = new JCheckBox("Bold", false);
+    private JCheckBox italic = new JCheckBox(Bundle.getMessage("Italic"), false);
+    private JCheckBox bold = new JCheckBox(Bundle.getMessage("Bold"), false);
 
     protected JList<String> fontSizeChoice;
 
@@ -865,6 +894,7 @@ public class PositionablePropertiesUtil {
         TextDetails(String desc, String txt, Color fore, Color back) {
             if (txt == null) {
                 text = "";
+                // contents of icon state labels <active> are entered in SensorIcon.java
             } else {
                 text = txt;
             }

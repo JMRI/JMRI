@@ -1,4 +1,3 @@
-// NodeConfigFrame.java
 package jmri.jmrix.acela.nodeconfig;
 
 import java.awt.BorderLayout;
@@ -26,14 +25,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2007, 2008
  * @author	Dave Duchamp Copyright (C) 2004, 2006
- * @version	$Revision$
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -446990477956157630L;
+    private jmri.jmrix.acela.AcelaSystemConnectionMemo _memo = null;
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.acela.nodeconfig.NodeConfigBundle");
     protected Container contentPane;
     protected NodeConfigModel d8outputConfigModel;
@@ -164,8 +159,9 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Constructor method
      */
-    public NodeConfigFrame() {
+    public NodeConfigFrame(jmri.jmrix.acela.AcelaSystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
     /**
@@ -187,10 +183,10 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         // Copy and pasted from the info button
         String nodesstring = "";
-        int tempnumnodes = AcelaTrafficController.instance().getNumNodes();
+        int tempnumnodes = _memo.getTrafficController().getNumNodes();
         for (int i = 0; i < tempnumnodes; i++) {
             AcelaNode tempnode;
-            tempnode = (AcelaNode) AcelaTrafficController.instance().getNodeFromAddress(i);
+            tempnode = (AcelaNode) _memo.getTrafficController().getNodeFromAddress(i);
             nodesstring = nodesstring + " " + tempnode.getNodeTypeString();
         }
         thenodesStaticC.setText(nodesstring);
@@ -1232,10 +1228,10 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         // lookup the nodes
         String nodesstring = "";
-        int tempnumnodes = AcelaTrafficController.instance().getNumNodes();
+        int tempnumnodes = _memo.getTrafficController().getNumNodes();
         for (int i = 0; i < tempnumnodes; i++) {
             AcelaNode tempnode;
-            tempnode = (AcelaNode) AcelaTrafficController.instance().getNodeFromAddress(i);
+            tempnode = (AcelaNode) _memo.getTrafficController().getNodeFromAddress(i);
             nodesstring = nodesstring + " " + tempnode.getNodeTypeString();
         }
         thenodesStaticC.setText(nodesstring);
@@ -1246,7 +1242,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             return;
         }
         // get the AcelaNode corresponding to this node address
-        curNode = (AcelaNode) AcelaTrafficController.instance().getNodeFromAddress(nodeAddress);
+        curNode = (AcelaNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
             statusText1.setText(rb.getString("Error4"));
             statusText1.setVisible(true);
@@ -1355,7 +1351,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             return;
         }
         // get the AcelaNode corresponding to this node address
-        curNode = (AcelaNode) AcelaTrafficController.instance().getNodeFromAddress(nodeAddress);
+        curNode = (AcelaNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
             statusText1.setText(rb.getString("Error4"));
             statusText1.setVisible(true);
@@ -1563,10 +1559,10 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         // lookup the nodes
         String nodesstring = "";
-        int tempnumnodes = AcelaTrafficController.instance().getNumNodes();
+        int tempnumnodes = _memo.getTrafficController().getNumNodes();
         for (int i = 0; i < tempnumnodes; i++) {
             AcelaNode tempnode;
-            tempnode = (AcelaNode) AcelaTrafficController.instance().getNodeFromAddress(i);
+            tempnode = (AcelaNode) _memo.getTrafficController().getNodeFromAddress(i);
             nodesstring = nodesstring + " " + tempnode.getNodeTypeString();
         }
         thenodesStaticC.setText(nodesstring);
@@ -1577,7 +1573,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             return;
         }
         // get the AcelaNode corresponding to this node address
-        curNode = (AcelaNode) AcelaTrafficController.instance().getNodeFromAddress(nodeAddress);
+        curNode = (AcelaNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
             statusText1.setText(rb.getString("Error4"));
             statusText1.setVisible(true);
@@ -1750,7 +1746,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         }
 
         // Cause reinitialization of this Node to reflect these parameters
-        AcelaTrafficController.instance().initializeAcelaNode(curNode);
+        _memo.getTrafficController().initializeAcelaNode(curNode);
     }
 
     /**
@@ -1865,7 +1861,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                     return Integer.toString(0);
                 }
                 // get the AcelaNode corresponding to this node address
-                curNode = (AcelaNode) AcelaTrafficController.instance().getNodeFromAddress(nodeAddress);
+                curNode = (AcelaNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
                 if (curNode == null) {
                     statusText1.setText(rb.getString("Error4"));
                     statusText1.setVisible(true);
@@ -1975,7 +1971,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                     return Integer.toString(0);
                 }
                 // get the AcelaNode corresponding to this node address
-                curNode = (AcelaNode) AcelaTrafficController.instance().getNodeFromAddress(nodeAddress);
+                curNode = (AcelaNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
                 if (curNode == null) {
                     statusText1.setText(rb.getString("Error4"));
                     statusText1.setVisible(true);

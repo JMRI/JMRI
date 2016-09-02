@@ -1,7 +1,6 @@
 package apps;
 
 import apps.gui3.TabbedPreferences;
-import apps.startup.StartupActionModelUtil;
 import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,10 +21,8 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Enumeration;
 import java.util.EventObject;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import javax.help.SwingHelpUtilities;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -48,7 +45,6 @@ import javax.swing.WindowConstants;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.JTextComponent;
 import jmri.ConfigureManager;
-import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.JmriPlugin;
@@ -77,7 +73,6 @@ import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
-import jmri.managers.DefaultIdTagManager;
 import jmri.managers.DefaultShutDownManager;
 import jmri.managers.JmriUserPreferencesManager;
 import jmri.plaf.macosx.Application;
@@ -142,7 +137,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         // add the default shutdown task to save blocks
         // as a special case, register a ShutDownTask to write out blocks
-        InstanceManager.shutDownManagerInstance().
+        InstanceManager.getDefault(jmri.ShutDownManager.class).
                 register(new AbstractShutDownTask("Writing Blocks") {
                     @Override
                     public boolean execute() {
@@ -224,8 +219,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // Install a user preferences manager
         InstanceManager.store(JmriUserPreferencesManager.getDefault(), UserPreferencesManager.class);
         InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
-        // Install an IdTag manager
-        InstanceManager.store(new DefaultIdTagManager(), IdTagManager.class);
 
         // install preference manager
         InstanceManager.store(new TabbedPreferences(), TabbedPreferences.class);
@@ -266,7 +259,13 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         if (file.exists()) {
             log.debug("start load config file {}", file.getPath());
             try {
-                configOK = InstanceManager.configureManagerInstance().load(file, true);
+                ConfigureManager cmOD = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+                if (cmOD != null) {
+                    configOK = cmOD.load(file, true);
+                } else {
+                    log.error("Failed to getOptionalDefault config mgr");
+                    configOK = false;
+                }
             } catch (JmriException e) {
                 log.error("Unhandled problem loading configuration", e);
                 configOK = false;
@@ -280,11 +279,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         //Install Entry Exit Pairs Manager
         //   Done after load config file so that connection-system-specific Managers are defined and usable
         InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
-
-        // Add actions to abstractActionModel
-        // Done here as initial non-GUI initialisation is completed
-        // and UI L&F has been set
-        addToActionModel();
 
         // populate GUI
         log.debug("Start UI");
@@ -366,7 +360,10 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             // migrate preferences
             InstanceManager.tabbedPreferencesInstance().init();
             InstanceManager.tabbedPreferencesInstance().saveContents();
-            InstanceManager.configureManagerInstance().storePrefs();
+            ConfigureManager cmOD = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+            if (cmOD != null) {
+                cmOD.storePrefs();
+            }
             // notify user of change
             log.info("Preferences have been migrated to new format.");
             log.info("New preferences format will be used after JMRI is restarted.");
@@ -461,7 +458,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         }, eventMask);
 
         // do final activation
-        InstanceManager.logixManagerInstance().activateAllLogixs();
+        InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
         // Loads too late - now started from ItemPalette
 //        new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
@@ -473,7 +470,13 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         boolean result;
         log.debug("start deferred load from config");
         try {
-            result = InstanceManager.configureManagerInstance().loadDeferred(file);
+            ConfigureManager cmOD = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+            if (cmOD != null) {
+                result = cmOD.loadDeferred(file);
+            } else {
+                log.error("Failed to getOptionalDefault config mgr");
+                result = false;
+            }
         } catch (JmriException e) {
             log.error("Unhandled problem loading deferred configuration", e);
             result = false;
@@ -482,18 +485,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         return result;
     }
 
+    /**
+     * @deprecated since 4.5.1
+     */
+    @Deprecated
     protected final void addToActionModel() {
-        StartupActionModelUtil util = InstanceManager.getDefault(StartupActionModelUtil.class);
-        ResourceBundle actionList = ResourceBundle.getBundle("apps.ActionListBundle");
-        Enumeration<String> e = actionList.getKeys();
-        while (e.hasMoreElements()) {
-            String key = e.nextElement();
-            try {
-                util.addAction(key, actionList.getString(key));
-            } catch (ClassNotFoundException ex) {
-                log.error("Did not find class \"{}\"", key);
-            }
-        }
+        // StartupActionModelUtil populates itself, so do nothing
     }
 
     /**
@@ -678,6 +675,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * <PRE>
      *    menuBar.add(new jmri.jmrix.SystemsMenu());
      * </PRE>
+     *
+     * @param menuBar the menu bar to add systems to
+     * @param wi      the containing WindowInterface
      */
     protected void systemsMenu(JMenuBar menuBar, WindowInterface wi) {
         ActiveSystemsMenu.addItems(menuBar);
@@ -755,6 +755,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     /**
      * Returns the ID for the main window's help, which is application specific
+     *
+     * @return help identifier for main window
      */
     protected String mainWindowHelpID() {
         return "package.apps.Apps";
@@ -870,11 +872,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         pane2.add(new JLabel(line1()));
         pane2.add(new JLabel(line2()));
         pane2.add(new JLabel(line3()));
-        
-        if (ProfileManager.getDefault()!=null && ProfileManager.getDefault().getActiveProfile() != null) {
+
+        if (ProfileManager.getDefault() != null && ProfileManager.getDefault().getActiveProfile() != null) {
             pane2.add(new JLabel(Bundle.getMessage("ActiveProfile", ProfileManager.getDefault().getActiveProfile().getName())));
         } else {
-            pane2.add(new JLabel(Bundle.getMessage("FailedProfile")));            
+            pane2.add(new JLabel(Bundle.getMessage("FailedProfile")));
         }
         // add listener for Com port updates
         ConnectionStatus.instance().addPropertyChangeListener(this);
@@ -967,7 +969,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     static JComponent _buttonSpace = null;
     static SplashWindow sp = null;
     static AWTEventListener debugListener = null;
-    
+
     // TODO: Remove the "static" nature of much of the initialization someday.
     //       It exits to allow splash() to be called first-thing in main(), see e.g.
     //       apps.DecoderPro.DecoderPro.main(...) 
@@ -987,7 +989,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * Left as a deprecated method because other code, e.g. CATS is still using
      * in in JMRI 3.7 and perhaps 3.8
      *
-     * @deprecated Since 3.7.2, use @{link jmri.util.Log4JUtil#initLogging} directly.
+     * @deprecated Since 3.7.2, use @{link jmri.util.Log4JUtil#initLogging}
+     * directly.
      */
     @Deprecated
     static protected void initLog4J() {
@@ -1009,7 +1012,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                                  and the if the debugFired hasn't been set, this allows us to ensure that we don't
                                  miss the user pressing F8, while we are checking*/
                         debugmsg = true;
-                        if (e.getID() == KeyEvent.KEY_PRESSED && e instanceof KeyEvent && ((KeyEvent)e).getKeyCode() == 119) {
+                        if (e.getID() == KeyEvent.KEY_PRESSED && e instanceof KeyEvent && ((KeyEvent) e).getKeyCode() == 119) {
                             startupDebug();
                         } else {
                             debugmsg = false;
@@ -1060,13 +1063,16 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             debugmsg = false;
             return;
         }
-        InstanceManager.logixManagerInstance().setLoadDisabled(true);
+        InstanceManager.getDefault(jmri.LogixManager.class).setLoadDisabled(true);
         log.info("Requested loading with Logixs disabled.");
         debugmsg = false;
     }
 
     /**
      * The application decided to quit, handle that.
+     *
+     * @return true if successfully ran all shutdown tasks and can quit; false
+     *         otherwise
      */
     static public boolean handleQuit() {
         return AppsBase.handleQuit();
@@ -1074,6 +1080,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     /**
      * The application decided to restart, handle that.
+     *
+     * @return true if successfully ran all shutdown tasks and can quit; false
+     *         otherwise
      */
     static public boolean handleRestart() {
         return AppsBase.handleRestart();
@@ -1100,6 +1109,10 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * @param args Argument array from the main routine
      */
     static protected void setConfigFilename(String def, String[] args) {
+        // skip if org.jmri.Apps.configFilename is set
+        if (System.getProperty("org.jmri.Apps.configFilename") != null) {
+            return;
+        }
         // save the configuration filename if present on the command line
         if (args.length >= 1 && args[0] != null && !args[0].contains("=")) {
             def = args[0];
@@ -1142,19 +1155,24 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     static protected void loadFile(String name) {
-        URL pFile = InstanceManager.configureManagerInstance().find(name);
-        if (pFile != null) {
-            try {
-                InstanceManager.configureManagerInstance().load(pFile);
-            } catch (JmriException e) {
-                log.error("Unhandled problem in loadFile", e);
+        ConfigureManager cmOD = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        if (cmOD != null) {
+            URL pFile = cmOD.find(name);
+            if (pFile != null) {
+                try {
+                    cmOD.load(pFile);
+                } catch (JmriException e) {
+                    log.error("Unhandled problem in loadFile", e);
+                }
+            } else {
+                log.warn("Could not find {} config file", name);
             }
         } else {
-            log.warn("Could not find {} config file", name);
+            log.error("Failed to getOptionalDefault config mgr");
         }
-
     }
-    static String configFilename = "jmriconfig2.xml";  // usually overridden, this is default
+    
+    static String configFilename = System.getProperty("org.jmri.Apps.configFilename", "jmriconfig2.xml");  // usually overridden, this is default
     // The following MUST be protected for 3rd party applications 
     // (such as CATS) which are derived from this class.
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT",
@@ -1184,6 +1202,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * This method needs to be refactored, but it's in use (2/2014) by CATS so
      * can't easily be changed right away.
      *
+     * @param name Program/application name as known by the user
+     * @return The output of {@link Log4JUtil#startupInfo(java.lang.String)}
      * @deprecated Since 3.7.1, use {@link #setStartupInfo(java.lang.String) }
      * plus {@link Log4JUtil#startupInfo(java.lang.String) }
      */
@@ -1227,9 +1247,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     @Override
     public void propertyChange(PropertyChangeEvent ev) {
-        if (log.isDebugEnabled()) {
-            log.debug("property change: comm port status update");
-        }
+        log.debug("property change: comm port status update");
         if (connection[0] != null) {
             updateLine(connection[0], cs4);
         }

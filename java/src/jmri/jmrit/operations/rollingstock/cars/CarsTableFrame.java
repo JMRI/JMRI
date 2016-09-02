@@ -22,8 +22,8 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumnModel;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.ModifyLocationsAction;
-import jmri.jmrit.operations.locations.ScheduleManager;
+import jmri.jmrit.operations.locations.schedules.ScheduleManager;
+import jmri.jmrit.operations.locations.tools.ModifyLocationsAction;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -42,10 +42,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CarsTableFrame extends OperationsFrame implements TableModelListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5469624100056817632L;
     CarsTableModel carsTableModel;
     JTable carsTable;
     boolean showAllCars;

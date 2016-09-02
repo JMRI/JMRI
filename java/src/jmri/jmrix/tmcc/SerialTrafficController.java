@@ -1,4 +1,3 @@
-// SerialTrafficController.java
 package jmri.jmrix.tmcc;
 
 import java.io.DataInputStream;
@@ -25,7 +24,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision$
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -94,7 +92,9 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
      *
      * @return The registered SerialTrafficController instance for general use,
      *         if need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public SerialTrafficController instance() {
         if (self == null) {
             if (log.isDebugEnabled()) {
@@ -105,10 +105,15 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         return self;
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static volatile protected SerialTrafficController self = null;
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
+    @Override
     protected void setInstance() {
         self = this;
     }
@@ -256,5 +261,3 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
 
     private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class.getName());
 }
-
-/* @(#)SerialTrafficController.java */

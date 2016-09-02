@@ -13,11 +13,6 @@ import javax.swing.AbstractAction;
  */
 public class YardmasterByTrackAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8755364574386629561L;
-
     public YardmasterByTrackAction(String s, Location location) {
         super(s);
         _location = location;

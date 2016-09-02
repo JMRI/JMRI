@@ -1,6 +1,9 @@
 package jmri.jmrit.turnoutoperations;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nullable;
@@ -104,8 +107,8 @@ public class Bundle extends jmri.Bundle {
     }
 
     @Override
-    protected String retry(String key) {
-        return super.getBundle().handleGetMessage(key);
+    protected String retry(Locale locale, String key) {
+        return super.getBundle().handleGetMessage(locale,key);
     }
 
 }

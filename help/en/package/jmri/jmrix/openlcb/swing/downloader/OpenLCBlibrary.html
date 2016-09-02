@@ -1,66 +1,183 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+
 <html>
-    <head>
-    <title>Freeze/Unfreeze in the OpenLCB protocols</title>
-    </head>
-    <body bgcolor="white">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-The OpenLCB Memory Configuration protocol specification adopted as of 
-January 2015 contained a feature that JMRI uses to provide a safe and reliable
-firmware downloader for OpenLCB nodes.  The original documentation, since 
-removed, was:
+  <title>Freeze/Unfreeze in the OpenLCB protocols</title>
+</head>
 
-<blockquote>
-4.4.7 Lock/Reserve and Freeze/Unfreeze
-<p>
-An OpenLCB node can, in general, be configured while the network and even the node itself is operating.
-<p>
-Configuration of a node can be simplified by disabling its operation while it's being updated, so that there's no concern about it trying to react to transient incomplete information. For example, inconsistent configuration memory contents while one section has been rewritten and another section not rewritten might drive output to undesired states or cause inputs to generate spurious messages. The Freeze/Unfreeze command, if supported, can be used to tell a node that it should &quote;freeze&quote; operation, ignoring inputs and outputs, while the configuration is being updated. A reset of the node releases the freeze option, if set, so the configuring node can just reset the node being configured at the end of the operation. Note that this is not a required protocol:  The node being configured is free to ignore the freeze and unfreeze operations.  In that case, it should send a negative response to them to tell the configuring node that they are not needed.  Note that it's also possible to do a similar thing using code in the node being configured and the required Update Complete command.
-<p>
-Although nodes can be configured by multiple other nodes at the same time, this can also lead to inconsistencies. The optional Lock/Release command can be used to avoid this. At the start of configuration, a configuring node sends a Lock message with its NodeID. If no node has locked this node, indicated by zero content in the lock memory, the incoming NodeID is placed in the lock memory. If a node has locked this node, the non-zero NodeID in the lock memory is not changed. In either case, the content of the lock memory is returned in the reply. This acts as an atomic test&set operation, and informs the requesting node whether it successfully reserved the node. To release the node, repeat the lock operation with a zero NodeID. The lock memory is set to zero when the node is reset. Note that this is a voluntary protocol in the configuring nodes only; the node being configured does not change its response to configuration operations when locked or unlocked.
-<p>
-4.4.7.1 Reloading node programming
-<p>
-The Memory Configuration Protocol can be used to load new programing into a node.  That can be done in many ways, depending on the desires of the node developer:
-<ul>
-<li>Writing to specific memory space(s) could directly change the node's programming. This could be the entire program, or just parts of it that are distinguished by use of different memory spaces.  OpenLCB memory address spaces are large, so one could also use upper bits to distinguish different parts of the program.  Combined with freeze/unfreeze, this can be used to create ways to update a running system, e.g. loading new options into a node during operations so you can see their effect in real time.
-<li>Low-end notes might have monolithic firmware and limited memory capacity.  Those are traditionally given firmware updates by having the processor retreat to a "firmware downloader", sometimes colloquially but incorrectly called a "bootloader".  This can be done via OpenLCB with:
-<ol type="A">
-<li>Optionally, Lock must succeed
-<li>Freeze to the memory space containing the program, which clues the node to retreat to its downloader
-<li>A sequence of memory write operations via datagram or stream until complete
-<li>Unfreeze
-<li>Update Complete
-<li>Optionally, Unlock
-<li>Reboot/reset
-</ol>
+<body bgcolor="white">
+  The OpenLCB Memory Configuration protocol specification adopted
+  as of January 2015 contained a feature that JMRI uses to provide
+  a safe and reliable firmware downloader for OpenLCB nodes. The
+  original documentation, since removed, was:
 
-<p>If the node needs time to write the downloaded code to memory, the write operations provide well-defined ways to delay the response.  The downloading node just needs to ensure that one operation is complete before moving on to the next.
-<p>
-If something goes wrong in the download and write process, the node should send a negative reply to the write operation, which the downloading node can then use as an indication that the operation has failed.  That can cause a retry from the 1st address, or a request for user intervention, depending on whether it's a permanent or temporary error. 
-<p> 
-The target node needs to maintain a small amount of state as it retreats to its downloader code:  The NodeID (and CAN alias if on CAN) so it can be found, the fact that it's in Initialized state and in Frozen (Freezed?) state, and the Lock NodeID if that's supported.
-<p>   
-A node can reset itself at any time, and the process for this is well defined.  So if a very simple download routine can't go straight back into operation after downloading, it can reset the node without waiting for the Reboot/reset command.
-<p> 
-A node manufacturer can implement a very simple (and not very strong) form of download security against download of invalid contents by compiling in some locations at known low memory locations (so they&quote;re written in the 1st write transfer) that have known values.  If they&quote;re not there, the downloader code rejects the write with a permanent error and the download will stop.
-</ul>
-</blockquote>
-<p>
-&quote;Freeze&quote; is a more general case of &quote;enter bootloader&quote;. 
-<p>
-If the only thing that a node can do is &quote;jump to the bootloader, and accept data for reprogramming&quote;, the &quote;Freeze&quote; and &quote;Enter Bootloader&quote; are the same. Just reboot/restart when done.
-<p>
-If a node can allow configuration memory to be rewritten on the fly, even while doing what it normally does, then neither &quote;Freeze&quote; nor &quote;Enter Bootloader&quote; nor anything else is needed: Just write the memory.
-<p>
-Some applications can allow updates of parts of their memory without requiring restart.  They just need to be &quote;frozen&quote;/&quote;drained&quote;/&quote;quiesced&quote; while the update happens.  Technically, you&quote;re saying &quote;keep the PC out of this part of the code for a bit, and later I&quote;ll tell you to go again; I promise that your live data will be OK&quote;.   There&quote;s even a model railroad manufacturer who uses this facility for writing sound information into their products, so that you can mess with the sounds in a semi-realtime way without causing the sound processing to crash.  
-<p>
-For something as straight-forward as a PIC or Arduino-based node, just map the &quote;Freeze&quote; command to &quote;reply to the datagram and then jump to the bootloader&quote;, and the &quote;unfreeze&quote; to &quote;reply and then do a reset&quote; (or, if need be, just reset)
-<p>
-Note that Freeze is optional; a negative reply to it doesn&quote;t stop the download process.  (All datagrams must get a reply of some sort) 
-<p>
-The JMRI bootloader will continue after a negative reply to Freeze, or a timeout at that point. That timeout is the default one, 700 msec, which is long enough to be visible to a person watching.  But compared to a 20-30 second download time, perhaps that&quote;s not an issue.
+  <blockquote>
+    4.4.7 Lock/Reserve and Freeze/Unfreeze
 
+    <p>An OpenLCB node can, in general, be configured while the
+    network and even the node itself is operating.</p>
 
-    </body>
+    <p>Configuration of a node can be simplified by disabling its
+    operation while it's being updated, so that there's no concern
+    about it trying to react to transient incomplete information.
+    For example, inconsistent configuration memory contents while
+    one section has been rewritten and another section not
+    rewritten might drive output to undesired states or cause
+    inputs to generate spurious messages. The Freeze/Unfreeze
+    command, if supported, can be used to tell a node that it
+    should &amp;quote;freeze&amp;quote; operation, ignoring inputs
+    and outputs, while the configuration is being updated. A reset
+    of the node releases the freeze option, if set, so the
+    configuring node can just reset the node being configured at
+    the end of the operation. Note that this is not a required
+    protocol: The node being configured is free to ignore the
+    freeze and unfreeze operations. In that case, it should send a
+    negative response to them to tell the configuring node that
+    they are not needed. Note that it's also possible to do a
+    similar thing using code in the node being configured and the
+    required Update Complete command.</p>
+
+    <p>Although nodes can be configured by multiple other nodes at
+    the same time, this can also lead to inconsistencies. The
+    optional Lock/Release command can be used to avoid this. At the
+    start of configuration, a configuring node sends a Lock message
+    with its NodeID. If no node has locked this node, indicated by
+    zero content in the lock memory, the incoming NodeID is placed
+    in the lock memory. If a node has locked this node, the
+    non-zero NodeID in the lock memory is not changed. In either
+    case, the content of the lock memory is returned in the reply.
+    This acts as an atomic test&amp;set operation, and informs the
+    requesting node whether it successfully reserved the node. To
+    release the node, repeat the lock operation with a zero NodeID.
+    The lock memory is set to zero when the node is reset. Note
+    that this is a voluntary protocol in the configuring nodes
+    only; the node being configured does not change its response to
+    configuration operations when locked or unlocked.</p>
+
+    <p>4.4.7.1 Reloading node programming</p>
+
+    <p>The Memory Configuration Protocol can be used to load new
+    programing into a node. That can be done in many ways,
+    depending on the desires of the node developer:</p>
+
+    <ul>
+      <li>Writing to specific memory space(s) could directly change
+      the node's programming. This could be the entire program, or
+      just parts of it that are distinguished by use of different
+      memory spaces. OpenLCB memory address spaces are large, so
+      one could also use upper bits to distinguish different parts
+      of the program. Combined with freeze/unfreeze, this can be
+      used to create ways to update a running system, e.g. loading
+      new options into a node during operations so you can see
+      their effect in real time.</li>
+
+      <li>Low-end notes might have monolithic firmware and limited
+      memory capacity. Those are traditionally given firmware
+      updates by having the processor retreat to a "firmware
+      downloader", sometimes colloquially but incorrectly called a
+      "bootloader". This can be done via OpenLCB with:
+
+        <ol type="A">
+          <li>Optionally, Lock must succeed</li>
+
+          <li>Freeze to the memory space containing the program,
+          which clues the node to retreat to its downloader</li>
+
+          <li>A sequence of memory write operations via datagram or
+          stream until complete</li>
+
+          <li>Unfreeze</li>
+
+          <li>Update Complete</li>
+
+          <li>Optionally, Unlock</li>
+
+          <li>Reboot/reset</li>
+        </ol>
+
+        <p>If the node needs time to write the downloaded code to
+        memory, the write operations provide well-defined ways to
+        delay the response. The downloading node just needs to
+        ensure that one operation is complete before moving on to
+        the next.</p>
+
+        <p>If something goes wrong in the download and write
+        process, the node should send a negative reply to the write
+        operation, which the downloading node can then use as an
+        indication that the operation has failed. That can cause a
+        retry from the 1st address, or a request for user
+        intervention, depending on whether it's a permanent or
+        temporary error.</p>
+
+        <p>The target node needs to maintain a small amount of
+        state as it retreats to its downloader code: The NodeID
+        (and CAN alias if on CAN) so it can be found, the fact that
+        it's in Initialized state and in Frozen (Freezed?) state,
+        and the Lock NodeID if that's supported.</p>
+
+        <p>A node can reset itself at any time, and the process for
+        this is well defined. So if a very simple download routine
+        can't go straight back into operation after downloading, it
+        can reset the node without waiting for the Reboot/reset
+        command.</p>
+
+        <p>A node manufacturer can implement a very simple (and not
+        very strong) form of download security against download of
+        invalid contents by compiling in some locations at known
+        low memory locations (so they&amp;quote;re written in the
+        1st write transfer) that have known values. If
+        they&amp;quote;re not there, the downloader code rejects
+        the write with a permanent error and the download will
+        stop.</p>
+      </li>
+    </ul>
+  </blockquote>
+
+  <p>&amp;quote;Freeze&amp;quote; is a more general case of
+  &amp;quote;enter bootloader&amp;quote;.</p>
+
+  <p>If the only thing that a node can do is &amp;quote;jump to the
+  bootloader, and accept data for reprogramming&amp;quote;, the
+  &amp;quote;Freeze&amp;quote; and &amp;quote;Enter
+  Bootloader&amp;quote; are the same. Just reboot/restart when
+  done.</p>
+
+  <p>If a node can allow configuration memory to be rewritten on
+  the fly, even while doing what it normally does, then neither
+  &amp;quote;Freeze&amp;quote; nor &amp;quote;Enter
+  Bootloader&amp;quote; nor anything else is needed: Just write the
+  memory.</p>
+
+  <p>Some applications can allow updates of parts of their memory
+  without requiring restart. They just need to be
+  &amp;quote;frozen&amp;quote;/&amp;quote;drained&amp;quote;/&amp;quote;quiesced&amp;quote;
+  while the update happens. Technically, you&amp;quote;re saying
+  &amp;quote;keep the PC out of this part of the code for a bit,
+  and later I&amp;quote;ll tell you to go again; I promise that
+  your live data will be OK&amp;quote;. There&amp;quote;s even a
+  model railroad manufacturer who uses this facility for writing
+  sound information into their products, so that you can mess with
+  the sounds in a semi-realtime way without causing the sound
+  processing to crash.</p>
+
+  <p>For something as straight-forward as a PIC or Arduino-based
+  node, just map the &amp;quote;Freeze&amp;quote; command to
+  &amp;quote;reply to the datagram and then jump to the
+  bootloader&amp;quote;, and the &amp;quote;unfreeze&amp;quote; to
+  &amp;quote;reply and then do a reset&amp;quote; (or, if need be,
+  just reset)</p>
+
+  <p>Note that Freeze is optional; a negative reply to it
+  doesn&amp;quote;t stop the download process. (All datagrams must
+  get a reply of some sort)</p>
+
+  <p>The JMRI bootloader will continue after a negative reply to
+  Freeze, or a timeout at that point. That timeout is the default
+  one, 700 msec, which is long enough to be visible to a person
+  watching. But compared to a 20-30 second download time, perhaps
+  that&amp;quote;s not an issue.</p>
+</body>
 </html>

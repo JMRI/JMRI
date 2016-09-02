@@ -203,31 +203,35 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                 int addr = location; // next call back might be instantaneous
                 location = location + count; 
                 log.info("Sending write to 0x{} length {}", Integer.toHexString(location).toUpperCase(), count);
-                mcs.request(new MemoryConfigurationService.McsWriteMemo(destNodeID(), space, addr, data) {
-                    public void handleWriteReply(int code) { 
-                        log.debug("Start of handleWriteReply "+code);
+                mcs.requestWrite(destNodeID(), space, addr, data, new MemoryConfigurationService.McsWriteHandler() {
+                    @Override
+                    public void handleSuccess() {
+                        log.debug("Start of handleWriteSuccess");
                         // update GUI intermittently
                         sentmsgs++;
                         if ((sentmsgs % 20) == 0) {
                             // update progress bar via the queue to ensure synchronization
                             updateGUI(100 * sentmsgs / totalmsgs);
                         }
-                
-                        if (code == 0 && !isOperationAborted()) {
+                        if (!isOperationAborted()) {
                             // normal reply - queue next
                             location = inputContent.nextContent(location);
                             if (location < 0) {
                                 log.info("   Download completed normally");
                                 sendDataDone(true);
                             } else {
-                                if (log.isDebugEnabled()) log.debug("   Continue to 0x{}", Integer.toHexString(location).toUpperCase());
+                                if (log.isDebugEnabled())
+                                    log.debug("   Continue to 0x{}", Integer.toHexString(location).toUpperCase());
                                 sendNext();
                             }
-                        } else {
-                            // non-normal reply
-                            log.info("   Done abnormal code:{}", code);
-                            sendDataDone(false);
                         }
+                    }
+
+                    @Override
+                    public void handleFailure(int errorCode) {
+                        log.warn("Download failed 0x{}", Integer.toHexString
+                                (errorCode));
+                        sendDataDone(false);
                     }
                 });
             }
@@ -280,17 +284,31 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
     void sendFreeze() {
         dcs.sendData(new DatagramService.DatagramServiceTransmitMemo(destNodeID(),new int[]{0x20, 0xA1, space}) {
-                public void handleReply(int code) { 
-                    log.info("freeze reply");
-                    sendNext();
-                }
+            @Override
+            public void handleSuccess(int flags) {
+                log.debug("freeze reply");
+                sendNext();
+            }
+
+            @Override
+            public void handleFailure(int errorCode) {
+                log.warn("freeze failed 0x{}", Integer.toHexString(errorCode));
+            }
             });
     }
+
     void sendUnfreeze() {
          dcs.sendData(new DatagramService.DatagramServiceTransmitMemo(destNodeID(),new int[]{0x20, 0xA0, space}) {
-                public void handleReply(int code) { 
-                    log.info("unfreeze reply");
-                }
+
+             @Override
+             public void handleSuccess(int flags) {
+                 log.info("unfreeze success");
+             }
+
+             @Override
+             public void handleFailure(int errorCode) {
+                 log.warn("freeze failed 0x{}", Integer.toHexString(errorCode));
+             }
             });
     }
 
