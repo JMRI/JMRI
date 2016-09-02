@@ -4931,6 +4931,18 @@
 
           <td>The train can't set out cars to this track</td>
         </tr>
+        
+        <tr>
+          <td>X (Train Local Move)</td>
+
+          <td>The train option to allow local moves for cars with custom loads or FD is disabled</td>
+        </tr>
+        
+        <tr>
+          <td>X (Local Move)</td>
+
+          <td>The train won't perform a local move for cars with a default load</td>
+        </tr>
 
         <tr>
           <td>X (Route)</td>
@@ -4991,6 +5003,12 @@
           <td>The track doesn't service the car's final
           destination</td>
         </tr>
+        
+        <tr>
+          <td>X (Track Custom Load)</td>
+
+          <td>The track can't service a car with a custom load (FD can override)</td>
+        </tr>
 
         <tr>
           <td>X (Dir Loc)</td>
@@ -5042,6 +5060,8 @@
           the car's type, load, and road.</td>
         </tr>
       </table><a name="TrainsTools" id="TrainsTools"></a>
+      
+      <p>FD = Final Destination
 
       <h3>Trains Tools</h3><img src="images/TrainsPaneMenu.png"
       alt="Operations Trains window Tools Menu">
