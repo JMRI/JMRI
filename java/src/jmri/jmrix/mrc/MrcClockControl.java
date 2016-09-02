@@ -44,7 +44,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         // Create a timebase listener for the Minute change events
         internalClock = InstanceManager.getNullableDefault(jmri.Timebase.class);
         if (internalClock == null) {
-            log.error(MrcClockBundle.getMessage("LogMrcNoInternalTimebasError")); //IN18N
+            log.error("No Internal Timebase Instance"); //IN18N
             return;
         }
         minuteChangeListener = new java.beans.PropertyChangeListener() {
@@ -141,7 +141,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         if (DEBUG_SHOW_PUBLIC_CALLS) {
             log.debug("getHardwareClockName"); //IN18N
         }
-        return (MrcClockBundle.getMessage("MrcClockName")); //IN18N
+        return (Bundle.getMessage("MrcClockName")); //IN18N
     }
 
     /**
@@ -173,7 +173,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         }
         int newRatio = (int) newRate;
         if (newRatio < 1 || newRatio > 60) {
-            log.error(MrcClockBundle.getMessage("LogMrcClockRatioRangeError")); //IN18N
+            log.error("Mrc clock ratio out of range:"); //IN18N
         } else {
             issueClockRatio(newRatio);
         }

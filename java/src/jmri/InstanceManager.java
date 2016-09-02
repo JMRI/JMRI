@@ -156,9 +156,9 @@ public class InstanceManager {
      * guaranteed to exist.
      *
      * @param <T>  The type of the class
-     * @param type The class Object for the item's type.
-     * @return The default object for type. Never null.
-     * @throws NullPointerException
+     * @param type The class Object for the item's type
+     * @return The default object for type
+     * @throws NullPointerException if no default object for type exists
      * @see #getNullableDefault(java.lang.Class)
      * @see #getOptionalDefault(java.lang.Class)
      */
