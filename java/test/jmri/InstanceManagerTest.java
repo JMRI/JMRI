@@ -129,9 +129,12 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
     }
 
     public void testAutoCreateNotOK() {
+        try {
         NoAutoCreate obj = InstanceManager.getDefault(NoAutoCreate.class);
-        Assert.assertNull(obj);
-        jmri.util.JUnitAppender.assertWarnMessage("getDefault found no default object for type \"jmri.InstanceManagerTest$NoAutoCreate\""); 
+            Assert.fail("Expected NullPointerException not thrown");
+        } catch (NullPointerException ex) {
+            // passes
+        }
     }
 
     /**
