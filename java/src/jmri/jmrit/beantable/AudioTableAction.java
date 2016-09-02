@@ -65,7 +65,7 @@ public class AudioTableAction extends AbstractTableAction {
         super(actionName);
 
         // disable ourself if there is no primary Audio manager available
-        if (jmri.InstanceManager.getOptionalDefault(AudioManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(AudioManager.class) == null) {
             setEnabled(false);
         }
 
@@ -117,7 +117,7 @@ public class AudioTableAction extends AbstractTableAction {
     @Override
     protected void createModel() {
         // ensure that the AudioFactory has been initialised
-        AudioManager cm = InstanceManager.getOptionalDefault(jmri.AudioManager.class);
+        AudioManager cm = InstanceManager.getNullableDefault(jmri.AudioManager.class);
         if (cm == null || cm.getActiveAudioFactory() == null) {
             InstanceManager.getDefault(jmri.AudioManager.class).init();
             if(InstanceManager.getDefault(jmri.AudioManager.class).getActiveAudioFactory() instanceof jmri.jmrit.audio.NullAudioFactory) {

@@ -268,7 +268,7 @@ public abstract class AppsBase {
         }
         preferenceFileExists = true;
         try {
-            ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+            ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cm != null) {
                 configOK = cm.load(file);
             } else {
@@ -304,7 +304,7 @@ public abstract class AppsBase {
             // migrate preferences
             InstanceManager.tabbedPreferencesInstance().init();
             InstanceManager.tabbedPreferencesInstance().saveContents();
-            ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+            ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cm != null) {
                 cm.storePrefs();
             }
@@ -319,7 +319,7 @@ public abstract class AppsBase {
         boolean result;
         log.debug("start deferred load from config file {}", file.getName());
         try {
-            ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+            ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cm != null) {
                 result = cm.loadDeferred(file);
             } else {

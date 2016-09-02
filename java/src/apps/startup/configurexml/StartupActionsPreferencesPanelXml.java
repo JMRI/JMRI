@@ -31,7 +31,7 @@ public class StartupActionsPreferencesPanelXml extends AbstractXmlAdapter {
      */
     @Override
     public Element store(Object o) {
-        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm == null) {
             log.error("Failed to getOptionalDefault config mgr, can not store.");
         } else {

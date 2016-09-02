@@ -123,7 +123,7 @@ public class AppConfigBase extends JmriPanel {
 
     public void saveContents() {
         // remove old prefs that are registered in ConfigManager
-        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
             cm.removePrefItems();
         }
@@ -138,7 +138,7 @@ public class AppConfigBase extends JmriPanel {
 
     private void registerWithConfigureManager(PreferencesPanel panel) {
         if (panel.isPersistant()) {
-            ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+            ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cm != null) {
                 cm.registerPref(panel);
             }

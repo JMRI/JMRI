@@ -259,7 +259,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         if (file.exists()) {
             log.debug("start load config file {}", file.getPath());
             try {
-                ConfigureManager cmOD = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+                ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
                 if (cmOD != null) {
                     configOK = cmOD.load(file, true);
                 } else {
@@ -360,7 +360,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             // migrate preferences
             InstanceManager.tabbedPreferencesInstance().init();
             InstanceManager.tabbedPreferencesInstance().saveContents();
-            ConfigureManager cmOD = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+            ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cmOD != null) {
                 cmOD.storePrefs();
             }
@@ -470,7 +470,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         boolean result;
         log.debug("start deferred load from config");
         try {
-            ConfigureManager cmOD = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+            ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cmOD != null) {
                 result = cmOD.loadDeferred(file);
             } else {
@@ -1155,7 +1155,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     static protected void loadFile(String name) {
-        ConfigureManager cmOD = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cmOD != null) {
             URL pFile = cmOD.find(name);
             if (pFile != null) {

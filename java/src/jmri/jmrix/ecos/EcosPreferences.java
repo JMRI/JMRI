@@ -29,7 +29,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
                 return true;
             }
         };
-        if (jmri.InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
             jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(ecosPreferencesShutDownTask);
         }
 

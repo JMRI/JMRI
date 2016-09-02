@@ -99,7 +99,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
     JToggleButton addDecoderIdentButton() {
         JToggleButton iddecoder = new JToggleButton(Bundle.getMessage("ButtonReadType"));
         iddecoder.setToolTipText(Bundle.getMessage("TipSelectType"));
-        if (jmri.InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) != null
+        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) != null
                 && jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer() != null
                 && !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer().getCanRead()) {
             // can't read, disable the button
@@ -175,7 +175,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         });
         idloco = new JToggleButton(Bundle.getMessage("IDENT"));
         idloco.setToolTipText(Bundle.getMessage("READ THE LOCOMOTIVE'S ADDRESS AND ATTEMPT TO SELECT THE RIGHT SETTINGS"));
-        if (jmri.InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) != null
+        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) != null
                 && jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer() != null
                 && !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer().getCanRead()) {
             // can't read, disable the button

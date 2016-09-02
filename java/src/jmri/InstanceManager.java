@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * particular type. Note that this call is intended to be used in the usual
  * case of requiring the object to function; it will log a message if there
  * isn't such an object.  If that's routine, then use the 
- * {@link InstanceManager#getOptionalDefault} method instead.
+ * {@link InstanceManager#getNullableDefault} method instead.
  * <p>
  * Multiple items can be held, and are retrieved as a list with
  * {@link    InstanceManager#getList}.
@@ -149,7 +149,7 @@ public class InstanceManager {
      * <p>
      * In most cases, system configuration assures the existence of a default
      * object, so this method will log and throw an exception if one doesn't
-     * exist.  {@link #getOptionalDefault} should be used for cases where 
+     * exist.  {@link #getNullableDefault} should be used for cases where 
      * it's normal for a default to not exist.
      * @param <T>  The type of the class
      * @param type The class Object for the item's type.
@@ -159,7 +159,7 @@ public class InstanceManager {
     @Nonnull
     static public <T> T getDefault(@Nonnull Class<T> type) {
         log.trace("getDefault of type {}", type.getName());
-        T t = getOptionalDefault(type);
+        T t = getNullableDefault(type);
         if (t == null) {
             log.warn("getDefault found no default object for type \"{}\"", type.getName());
         }
@@ -178,14 +178,14 @@ public class InstanceManager {
      * <p>
      * In most cases, system configuration assures the existence of a default
      * object, but this method also handles the case where one doesn't exist.
-     * {@link #getOptionalDefault} should be used for cases where 
+     * {@link #getNullableDefault} should be used for cases where 
      * it's routine for the object to always exist, and you don't want to code lots of checks.
      * @param <T>  The type of the class
      * @param type The class Object for the item's type.
      * @return The default object for type.
      */
     @CheckForNull
-    static public <T> T getOptionalDefault(@Nonnull Class<T> type) {
+    static public <T> T getNullableDefault(@Nonnull Class<T> type) {
         log.trace("getOptionalDefault of type {}", type.getName());
         ArrayList<T> l = (ArrayList<T>) getList(type);
         if (l.isEmpty()) {
@@ -216,7 +216,7 @@ public class InstanceManager {
         }
         return l.get(l.size() - 1);
     }
-
+    
     /**
      * Set an object of type T as the default for that type.
      * <p>
@@ -677,7 +677,7 @@ public class InstanceManager {
         // since there is a command station available, use
         // the NMRA consist manager instead of the generic consist
         // manager.
-        if (getOptionalDefault(ConsistManager.class) == null
+        if (getNullableDefault(ConsistManager.class) == null
                 || getDefault(ConsistManager.class).getClass() == DccConsistManager.class) {
             setConsistManager(new NmraConsistManager());
         }
@@ -738,7 +738,7 @@ public class InstanceManager {
         // Consist manager if Ops mode is possible, and there isn't a
         // consist manager already.
         if (programmerManagerInstance().isAddressedModePossible()
-                && getOptionalDefault(ConsistManager.class) == null) {
+                && getNullableDefault(ConsistManager.class) == null) {
             setConsistManager(new DccConsistManager());
         }
         notifyPropertyChangeListener(PROGRAMMER_MANAGER, null, null);
