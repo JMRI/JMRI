@@ -33,7 +33,7 @@ public class StartupActionsPreferencesPanelXml extends AbstractXmlAdapter {
     public Element store(Object o) {
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm == null) {
-            log.error("Failed to getOptionalDefault config mgr, can not store.");
+            log.error("Failed to get default configure manager, can not store.");
         } else {
             for (StartupModel model : InstanceManager.getDefault(StartupActionsManager.class).getActions()) {
                 cm.registerPref(model);

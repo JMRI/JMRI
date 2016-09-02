@@ -46,7 +46,7 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
             try {
                 ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
                 if (cm == null) {
-                    log.error("Failed to getOptionalDefault config mgr");
+                    log.error("Failed to get default configure manager");
                 } else {
                     results = cm.load(file);
                     if (results) {

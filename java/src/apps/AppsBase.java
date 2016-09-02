@@ -323,7 +323,7 @@ public abstract class AppsBase {
             if (cm != null) {
                 result = cm.loadDeferred(file);
             } else {
-                log.error("Failed to getOptionalDefault config mgr");
+                log.error("Failed to get default configure manager");
                 result = false;
             }
         } catch (JmriException e) {

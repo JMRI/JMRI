@@ -263,7 +263,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 if (cmOD != null) {
                     configOK = cmOD.load(file, true);
                 } else {
-                    log.error("Failed to getOptionalDefault config mgr");
+                    log.error("Failed to get default configure manager");
                     configOK = false;
                 }
             } catch (JmriException e) {
@@ -474,7 +474,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             if (cmOD != null) {
                 result = cmOD.loadDeferred(file);
             } else {
-                log.error("Failed to getOptionalDefault config mgr");
+                log.error("Failed to get default configure manager");
                 result = false;
             }
         } catch (JmriException e) {
@@ -1168,7 +1168,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 log.warn("Could not find {} config file", name);
             }
         } else {
-            log.error("Failed to getOptionalDefault config mgr");
+            log.error("Failed to get default configure manager");
         }
     }
     

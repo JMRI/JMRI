@@ -38,7 +38,7 @@ public class StoreXmlAllAction extends StoreXmlConfigAction {
         // and finally store
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm == null) {
-            log.error("Failed to getOptionalDefault config mgr");
+            log.error("Failed to get default configure manager");
         } else {
             boolean results = cm.storeAll(file);
             log.debug(results ? "store was successful" : "store failed");
