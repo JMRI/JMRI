@@ -1,14 +1,15 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import com.digi.xbee.api.packet.GenericXBeePacket;
+import com.digi.xbee.api.packet.XBeeAPIPacket;
 import com.digi.xbee.api.packet.common.ATCommandPacket;
 import com.digi.xbee.api.packet.common.RemoteATCommandPacket;
+import com.digi.xbee.api.packet.common.TransmitPacket;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
 
 
 /**
- * This is a wrapper class for a Digi GenericXBeePacket.
+ * This is a wrapper class for a Digi XBeeAPIPacket.
  * <P>
  *
  * @author Paul Bender Copyright (C) 2013
@@ -16,7 +17,7 @@ import com.digi.xbee.api.models.XBee64BitAddress;
  */
 public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
 
-    private GenericXBeePacket xbm = null;
+    private XBeeAPIPacket xbm = null;
 
     /**
      * Suppress the default ctor, as the length must always be specified
@@ -47,12 +48,12 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
     }
 
     /**
-     * This ctor interprets the parameter as an GenericXBeePacket message. This is the
+     * This ctor interprets the parameter as an XBeeAPIPacket message. This is the
      * message form that will generally be used by the implementation.
      *
-     * @param request an GenericXBeePacket of bytes to send
+     * @param request an XBeeAPIPacket of bytes to send
      */
-    public XBeeMessage(GenericXBeePacket request) {
+    public XBeeMessage(XBeeAPIPacket request) {
         _nDataChars = request.getPacketData().length;
         byte data[] = request.getPacketData();
         for(int i=0;i<_nDataChars;i++) {
@@ -61,11 +62,11 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
         xbm = request;
     }
 
-    public GenericXBeePacket getXBeeRequest() {
+    public XBeeAPIPacket getXBeeRequest() {
         return xbm;
     }
 
-    public void setXBeeRequest(GenericXBeePacket request) {
+    public void setXBeeRequest(XBeeAPIPacket request) {
         xbm = request;
     }
 
@@ -117,11 +118,11 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
 
     // a few canned messages
     public static XBeeMessage getHardwareVersionRequest() {
-        return new XBeeMessage((GenericXBeePacket) new ATCommandPacket(0,"HV",""));
+        return new XBeeMessage((XBeeAPIPacket) new ATCommandPacket(0,"HV",""));
     }
 
     public static XBeeMessage getFirmwareVersionRequest() {
-        return new XBeeMessage((GenericXBeePacket) new ATCommandPacket(0,"VR",""));
+        return new XBeeMessage((XBeeAPIPacket) new ATCommandPacket(0,"VR",""));
     }
 
     /*
@@ -137,9 +138,9 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
         int onValue[] = {0x5};
         int offValue[] = {0x4};
         if (address instanceof XBee16BitAddress) {
-            return new XBeeMessage((GenericXBeePacket) new RemoteATCommandPacket((XBee16BitAddress) address, "D" + pin, on ? onValue : offValue));
+            return new XBeeMessage((XBeeAPIPacket) new RemoteATCommandPacket((XBee16BitAddress) address, "D" + pin, on ? onValue : offValue));
         } else {
-            return new XBeeMessage((GenericXBeePacket) new RemoteATCommandPacket((XBee64BitAddress) address, "D" + pin, on ? onValue : offValue));
+            return new XBeeMessage((XBeeAPIPacket) new RemoteATCommandPacket((XBee64BitAddress) address, "D" + pin, on ? onValue : offValue));
         }
     }
 
@@ -152,9 +153,9 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
     public static XBeeMessage getRemoteDoutMessage(Object address, int pin) {
         if (address instanceof com.digi.xbee.api.models.XBee16BitAddress) {
-            return new XBeeMessage((GenericXBeePacket) new RemoteATCommandPacket((XBee16BitAddress) address, "D" + pin));
+            return new XBeeMessage((XBeeAPIPacket) new RemoteATCommandPacket((XBee16BitAddress) address, "D" + pin));
         } else {
-            return new XBeeMessage((GenericXBeePacket) new RemoteATCommandPacket((XBee64BitAddress) address, "D" + pin));
+            return new XBeeMessage((XBeeAPIPacket) new RemoteATCommandPacket((XBee64BitAddress) address, "D" + pin));
         }
     }
 
@@ -196,8 +197,8 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
      * @param payload An integer array containing the bytes to be transfered, as the low order word of the integer.
      * @return XBeeMessage with remote transmission request for the provided address containing the provided payload.
      */
-    public static XBeeMessage getRemoteTransmissionRequest(com.digi.xbee.api.models.XBee16BitAddress address, int[] payload) {
-        return new XBeeMessage(new com.rapplogic.xbee.api.wpan.TxRequest16(address, payload));
+    public static XBeeMessage getRemoteTransmissionRequest(XBee16BitAddress address, int[] payload) {
+        return new XBeeMessage(new TransmitPacket(XBeeAPIPacket.NO_FRAME_ID,XBee64BitAddress.COORDINATOR_ADDRSS,address,255,payload));
     }
  
     /*
@@ -207,8 +208,8 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
      * @param payload An integer array containing the bytes to be transfered, as the low order word of the integer.
      * @return XBeeMessage with remote transmission request for the provided address containing the provided payload.
      */
-    public static XBeeMessage getRemoteTransmissionRequest(com.digi.xbee.api.models.XBee64BitAddress address, int[] payload) {
-        return new XBeeMessage(new com.rapplogic.xbee.api.wpan.TxRequest64(address, payload));
+    public static XBeeMessage getRemoteTransmissionRequest(XBee64BitAddress address, int[] payload) {
+        return new XBeeMessage(new TransmitPacket(XBeeAPIPacket.NO_FRAME_ID,address,XBee16BitAddress.UNKNOWN_ADDRESS,255,payload));
     }
 
     /*

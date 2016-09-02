@@ -237,9 +237,41 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
     private int[] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200,
         38400, 57600, 115200};
 
-    // methods for XBeeConnection
+    // methods for IConnectionInterface
+    @Override
     public void close() {
         activeSerialPort.close();
+    }
+
+    @Override
+    public int readData(byte[] b) throws java.io.IOException {
+       return serialStream.read(b);
+    }
+
+    @Override
+    public int readData(byte[] b,int off, int len) throws java.io.IOException {
+       return serialStream.read(b,off,len);
+    }
+
+    @Override
+    public void writeData(byte[] b) throws java.io.IOException {
+       getOutputStream().write(b);
+    }
+
+    @Override
+    public void writeData(byte[] b,int off, int len) throws java.io.IOException {
+       getOutputStream().write(b,off,len);
+    }
+
+    @Override
+    public boolean isOpen(){
+       return ( (getOutputStream() != null) && (getInputStream() != null));
+    }
+
+    @Override
+    public void open(){
+       // don't do anything here.  We handle open through the 
+       // openPort call, which is called from the JMRI infrastructure.
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeAdapter.class.getName());

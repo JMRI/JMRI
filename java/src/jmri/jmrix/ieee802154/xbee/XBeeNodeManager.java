@@ -38,13 +38,20 @@ public class XBeeNodeManager implements IDiscoveryListener {
        // xtc.sendXBeeMessage(m, this);
        xbeeNetwork = xtc.getXBee().getNetwork();
 
-       // set the discovery timeout
-       xbeeNetwork.setDiscoveryTimeout(10000);
+       try {
+          // set the discovery timeout
+          xbeeNetwork.setDiscoveryTimeout(10000);
+          
+          // set options
+          // Append the device type identifier and the local device to the
+          // network information.
+          xbeeNetwork.setDiscoveryOptions(EnumSet.of(DiscoveryOptions.APPEND_DD,DiscoveryOptions.DISCOVER_MYSELF));
+       } catch (com.digi.xbee.api.exceptions.TimeoutException te ) {
+         log.debug("timeout durring discovery process setup");
+       } catch (com.digi.xbee.api.exceptions.XBeeException xbe) {
+         log.error("exception durring discovery process setup");
+       }
 
-       // set options
-       // Append the device type identifier and the local device to the
-       // network information.
-       xbeeNetwork.setDiscoveryOptions(EnumSet.of(DiscoveryOptions.APPEND_DD,DiscoveryOptions.DISCOVER_MYSELF));
 
        // add this class as a listener for node discovery.
        xbeeNetwork.addDiscoveryListener(this);

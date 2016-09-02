@@ -95,7 +95,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
             }
         }
 
-   @Override
+   //IPacketReceiveListener
    public void PacketReceived(XBeePacket receivedPacket) {
         // the only packets we care about here are the replies to
         // our request for pin direction.  We ignore anything else.

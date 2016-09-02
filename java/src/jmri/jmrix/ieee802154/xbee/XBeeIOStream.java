@@ -170,7 +170,11 @@ final public class XBeeIOStream extends AbstractPortController implements IDataR
                 if (log.isDebugEnabled()) {
                     log.debug("XBee Thread received message " + dataArray);
                 }
-                xtc.getXBee().sendDataAsync(node,dataArray);
+                try {
+                   xtc.getXBee().sendDataAsync(node,dataArray);
+                } catch(com.digi.xbee.api.exceptions.XBeeException xbe){
+                  log.error("Exception sending stream data to node {}.",node);
+                }
             }
         }
 

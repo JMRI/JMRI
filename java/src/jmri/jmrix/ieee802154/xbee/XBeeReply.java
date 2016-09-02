@@ -34,14 +34,20 @@ public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
     public XBeeReply(XBeeReply l) {
         super(l);
         xbresponse = l.xbresponse;
-        _dataChars = xbresponse.getPacketData();
+        byte data[] = xbresponse.getPacketData();
+        for(int i=0;i<data.length;i++) {
+           _dataChars[i] = (int) data[i];
+        }
         setBinary(true);
     }
 
     public XBeeReply(XBeePacket xbr) {
         super();
         xbresponse = xbr;
-        _dataChars = xbr.getPacketData();
+        byte data[] = xbr.getPacketData();
+        for(int i=0;i<data.length;i++) {
+           _dataChars[i] = (int) data[i];
+        }
         setBinary(true);
     }
 

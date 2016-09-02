@@ -54,9 +54,8 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         // Attach XBee to the port
         try {
             if( p instanceof XBeeAdapter) {
-               xbee = new XBeeDevice(p);
                XBeeAdapter xbp = (XBeeAdapter) p;
-               xbee.initProviderConnection(xbp);
+               xbee = new XBeeDevice(xbp);
                xbee.addPacketListener(this);
                // and start threads
                xmtThread = new Thread(xmtRunnable = new Runnable() {
@@ -102,7 +101,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
          in AbstractMRTrafficController here */
         // forward using XBee Specific message format
         try {
-            xbee.sendAsynchronous(((XBeeMessage) m).getXBeeRequest());
+            xbee.sendPacketAsync(((XBeeMessage) m).getXBeeRequest());
         } catch (XBeeException xbe) {
             log.error("Error Sending message to XBee: " + xbe);
         }
