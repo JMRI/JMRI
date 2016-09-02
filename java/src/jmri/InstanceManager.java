@@ -260,8 +260,10 @@ public class InstanceManager {
      * @param <T>  The type of the class
      * @param type The Class object for val
      * @param item The object to make default for type
+     * @return The default for type (normally this is the item passed in)
      */
-    static public <T> void setDefault(@Nonnull Class<T> type, @Nonnull T item) {
+    @Nonnull
+    static public <T> T setDefault(@Nonnull Class<T> type, @Nonnull T item) {
         log.trace("setDefault for type {}", type.getName());
         if (item == null) {
             NullPointerException npe = new NullPointerException();
@@ -271,6 +273,7 @@ public class InstanceManager {
         List<T> l = getList(type);
         l.remove(item);
         l.add(item);
+        return getDefault(type);
     }
 
     /**

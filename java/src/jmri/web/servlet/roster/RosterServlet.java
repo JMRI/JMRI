@@ -4,6 +4,7 @@ import static jmri.server.json.JSON.ADDRESS;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.DECODER_FAMILY;
 import static jmri.server.json.JSON.DECODER_MODEL;
+import static jmri.server.json.JSON.FORMAT;
 import static jmri.server.json.JSON.GROUP;
 import static jmri.server.json.JSON.ID;
 import static jmri.server.json.JSON.LIST;
@@ -11,7 +12,6 @@ import static jmri.server.json.JSON.MFG;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.NUMBER;
 import static jmri.server.json.JSON.ROAD;
-import static jmri.server.json.JSON.FORMAT;
 import static jmri.web.servlet.ServletUtil.IMAGE_PNG;
 import static jmri.web.servlet.ServletUtil.UTF8;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
@@ -35,9 +35,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
-import jmri.server.json.JSON;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.server.json.JSON;
 import jmri.server.json.roster.JsonRosterServiceFactory;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
@@ -318,10 +318,9 @@ public class RosterServlet extends HttpServlet {
         switch (format) {
             case JSON.JSON:
                 response.setContentType(UTF8_APPLICATION_JSON);
-                JsonRosterServiceFactory factory = InstanceManager.getNullableDefault(JsonRosterServiceFactory.class);
-                if (factory == null) {
-                    factory = new JsonRosterServiceFactory();
-                }
+                JsonRosterServiceFactory factory = InstanceManager.getOptionalDefault(JsonRosterServiceFactory.class).orElseGet(() -> {
+                    return InstanceManager.setDefault(JsonRosterServiceFactory.class, new JsonRosterServiceFactory());
+                });
                 response.getWriter().print(factory.getHttpService(mapper).getRoster(request.getLocale(), filter));
                 break;
             case JSON.XML:

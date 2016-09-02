@@ -190,7 +190,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
                 }
 
                 //
-                //  We just check to make sure that having set the location that we do not have anther frame with the same
+                // We just check to make sure that having set the location that we do not have anther frame with the same
                 // class name and title in the same location, if it is we offset
                 //
                 for (int i = 0; i < list.size(); i++) {
