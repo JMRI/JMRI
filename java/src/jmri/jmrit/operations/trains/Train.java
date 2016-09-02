@@ -2641,6 +2641,10 @@ public class Train implements java.beans.PropertyChangeListener {
         }
     }
 
+    /**
+     * Allow local moves if car has a custom load or Final Destination
+     * @return true if local move is allowed
+     */
     public boolean isAllowLocalMovesEnabled() {
         return _allowLocalMoves;
     }

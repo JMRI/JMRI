@@ -87,13 +87,12 @@
         should be written
           <pre style="font-family: monospace;">
 &lt;a name="pull"&gt;...&lt;/a&gt;
-</pre>around text content only. 
-It's OK to be empty between the open and close
-tags.
-It's not OK to combine them into a single <code>&lt;a name="pull"/&gt;</code>
-tag; don't do that, as it confuses JavaHelp.
-<p>
-For example, to put an anchor on a heading, do
+</pre>around text content only. It's OK to be empty between the
+open and close tags. It's not OK to combine them into a single
+<code>&lt;a name="pull"/&gt;</code> tag; don't do that, as it
+confuses JavaHelp.
+
+          <p>For example, to put an anchor on a heading, do</p>
           <pre style="font-family: monospace;">
 &lt;h2&gt;&lt;a name="foo"&gt;Foo!&lt;/a&gt;&lt;/h2&gt;
 </pre>
@@ -119,9 +118,9 @@ For example, to put an anchor on a heading, do
         files on the local machine, so all links to other help
         pages need to be relative.</li>
 
-        <li>Links to web pages outside the help system work.
-        In most cases they'll be automatically opened in an
-        outside web browser.</li>
+        <li>Links to web pages outside the help system work. In
+        most cases they'll be automatically opened in an outside
+        web browser.</li>
       </ul><a name="web" id="web"></a>
 
       <h2>Web access to help</h2>It's inconvenient to have to
