@@ -97,7 +97,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     private static final String versionNumber = "2.0";
 
     private Socket device;
-    private CommandStation cmdStation = jmri.InstanceManager.getOptionalDefault(CommandStation.class);
+    private CommandStation cmdStation = jmri.InstanceManager.getNullableDefault(CommandStation.class);
     String newLine = System.getProperty("line.separator");
     BufferedReader in = null;
     PrintStream out = null;

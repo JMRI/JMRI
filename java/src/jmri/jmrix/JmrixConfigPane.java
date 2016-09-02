@@ -143,7 +143,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
                 log.error("Error Occured while disposing connection {}", ex.toString());
             }
         }
-        ConfigureManager cmOD = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cmOD != null) {
             cmOD.deregister(confPane);
             cmOD.deregister(confPane.ccCurrent);
