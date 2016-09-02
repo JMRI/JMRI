@@ -2,6 +2,7 @@ package apps.startup;
 
 import apps.StartupActionsManager;
 import java.awt.Component;
+import java.util.Optional;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -70,19 +71,19 @@ abstract public class AbstractActionModelFactory implements StartupModelFactory 
                     null);
             if (result == JOptionPane.OK_OPTION) {
                 String name = actions.getSelectedValue();
-                StartupActionsManager manager = InstanceManager.getNullableDefault(StartupActionsManager.class);
+                Optional<StartupActionsManager> manager = InstanceManager.getOptionalDefault(StartupActionsManager.class);
                 if (!name.equals(model.getName())) {
                     model.setName(name);
-                    if (manager != null) {
-                        manager.setRestartRequired();
-                    }
+                    manager.ifPresent(sam -> {
+                        sam.setRestartRequired();
+                    });
                 }
                 if (((userName.isEmpty() && connections.getSelectedItem() != null))
                         || !userName.equals(connections.getSelectedItem())) {
                     ((AbstractActionModel) model).setSystemPrefix(ConnectionNameFromSystemName.getPrefixFromName((String) connections.getSelectedItem()));
-                    if (manager != null) {
-                        manager.setRestartRequired();
-                    }
+                    manager.ifPresent(sam -> {
+                        sam.setRestartRequired();
+                    });
                 }
             }
         }
