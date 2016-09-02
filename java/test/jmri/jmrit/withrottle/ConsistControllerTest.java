@@ -1,5 +1,9 @@
 package jmri.jmrit.withrottle;
 
+import jmri.ConsistManager;
+import jmri.InstanceManager;
+import jmri.jmrit.consisttool.TestConsistManager;
+import jmri.util.JUnitUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -38,11 +42,13 @@ public class ConsistControllerTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
+        InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
     }
     
     @Override
     public void tearDown() throws Exception {
         super.tearDown();
+        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 }
