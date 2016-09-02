@@ -52,16 +52,11 @@ public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
     }
 
     public String toMonitorString() {
-        return xbresponse.toString();
+        return xbresponse.toPrettyString();
     }
 
     public String toString() {
-        String s = "";
-        int packet[] = xbresponse.getProcessedPacketBytes();
-        for(int i=0;i<packet.length;i++) {
-            s=jmri.util.StringUtil.appendTwoHexFromInt(packet[i],s);
-        }
-        return s;
+        return xbresponse.toString();
     }
 
     public XBeePacket getXBeeResponse() {

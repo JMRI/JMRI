@@ -6,7 +6,7 @@ import com.digi.xbee.api.packet.common.RemoteATCommandPacket;
 import com.digi.xbee.api.packet.common.TransmitPacket;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
-
+import com.digi.xbee.api.io.IOValue;
 
 /**
  * This is a wrapper class for a Digi XBeeAPIPacket.
@@ -135,12 +135,12 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
     public static XBeeMessage getRemoteDoutMessage(Object address, int pin, boolean on) {
-        int onValue[] = {0x5};
-        int offValue[] = {0x4};
+        byte onValue[] = {0x5};
+        byte offValue[] = {0x4};
         if (address instanceof XBee16BitAddress) {
-            return new XBeeMessage((XBeeAPIPacket) new RemoteATCommandPacket((XBee16BitAddress) address, "D" + pin, on ? onValue : offValue));
+            return new XBeeMessage((XBeeAPIPacket) new RemoteATCommandPacket(XBeeAPIPacket.NO_FRAME_ID,XBee64BitAddress.COORDINATOR_ADDRESS,(XBee16BitAddress) address,0,"D" + pin, on ? onValue : offValue));
         } else {
-            return new XBeeMessage((XBeeAPIPacket) new RemoteATCommandPacket((XBee64BitAddress) address, "D" + pin, on ? onValue : offValue));
+            return new XBeeMessage((XBeeAPIPacket) new RemoteATCommandPacket(XBeeAPIPacket.NO_FRAME_ID,(XBee64BitAddress) address,XBee16BitAddress.UNKNOWN_ADDRESS,0, "D" + pin, on ? onValue : offValue));
         }
     }
 
@@ -153,9 +153,9 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
     public static XBeeMessage getRemoteDoutMessage(Object address, int pin) {
         if (address instanceof com.digi.xbee.api.models.XBee16BitAddress) {
-            return new XBeeMessage((XBeeAPIPacket) new RemoteATCommandPacket((XBee16BitAddress) address, "D" + pin));
+            return new XBeeMessage((XBeeAPIPacket) new RemoteATCommandPacket(XBeeAPIPacket.NO_FRAME_ID,XBee64BitAddress.COORDINATOR_ADDRESS,(XBee16BitAddress) address,0,"D" + pin, ""));
         } else {
-            return new XBeeMessage((XBeeAPIPacket) new RemoteATCommandPacket((XBee64BitAddress) address, "D" + pin));
+            return new XBeeMessage((XBeeAPIPacket) new RemoteATCommandPacket(XBeeAPIPacket.NO_FRAME_ID,(XBee64BitAddress) address,XBee16BitAddress.UNKNOWN_ADDRESS,0,"D" + pin, ""));
         }
     }
 
@@ -167,9 +167,9 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
     public static XBeeMessage getForceSampleMessage(Object address) {
         if (address instanceof com.digi.xbee.api.models.XBee16BitAddress) {
-            return new XBeeMessage(new com.digi.xbee.api.packet.common.RemoteATCommandPacket((com.digi.xbee.api.models.XBee16BitAddress) address, "IS"));
+            return new XBeeMessage((XBeeAPIPacket) new RemoteATCommandPacket(XBeeAPIPacket.NO_FRAME_ID,XBee64BitAddress.COORDINATOR_ADDRESS,(XBee16BitAddress) address,0,"IS",""));
         } else {
-            return new XBeeMessage(new com.digi.xbee.api.packet.common.RemoteATCommandPacket((com.digi.xbee.api.models.XBee64BitAddress) address, "IS"));
+            return new XBeeMessage((XBeeAPIPacket) new RemoteATCommandPacket(XBeeAPIPacket.NO_FRAME_ID,(XBee64BitAddress) address,XBee16BitAddress.UNKNOWN_ADDRESS,0, "IS",""));
         }
     }
 
@@ -178,11 +178,11 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
      * on a remote node.
      * @param address XBee Address of the node.  This can be either 
      16 bit or 64 bit.
-     * @param payload An integer array containing the bytes to be transfered, as the low order word of the integer.
+     * @param payload An byte array containing the bytes to be transfered, as the low order word of the integer.
      * @return XBeeMessage with remote transmission request for the provided address containing the provided payload.
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
-    public static XBeeMessage getRemoteTransmissionRequest(Object address, int[] payload) {
+    public static XBeeMessage getRemoteTransmissionRequest(Object address, byte[] payload) {
         if (address instanceof com.digi.xbee.api.models.XBee16BitAddress) {
             return getRemoteTransmissionRequest((com.digi.xbee.api.models.XBee16BitAddress) address, payload);
         } else {
@@ -194,33 +194,22 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
      * Get an XBee Message requesting data be sent to the serial port
      * on a remote node.
      * @param address XBee16BitAddress of the node.
-     * @param payload An integer array containing the bytes to be transfered, as the low order word of the integer.
+     * @param payload A byte array containing the bytes to be transfered, as the low order word of the integer.
      * @return XBeeMessage with remote transmission request for the provided address containing the provided payload.
      */
-    public static XBeeMessage getRemoteTransmissionRequest(XBee16BitAddress address, int[] payload) {
-        return new XBeeMessage(new TransmitPacket(XBeeAPIPacket.NO_FRAME_ID,XBee64BitAddress.COORDINATOR_ADDRSS,address,255,payload));
+    public static XBeeMessage getRemoteTransmissionRequest(XBee16BitAddress address, byte[] payload) {
+        return new XBeeMessage(new TransmitPacket(XBeeAPIPacket.NO_FRAME_ID,XBee64BitAddress.COORDINATOR_ADDRESS,address,255,0,payload));
     }
  
     /*
      * Get an XBee Message requesting data be sent to the serial port
      * on a remote node.
      * @param address XBee64BitAddress of the node.
-     * @param payload An integer array containing the bytes to be transfered, as the low order word of the integer.
+     * @param payload A byte array containing the bytes to be transfered, as the low order word of the integer.
      * @return XBeeMessage with remote transmission request for the provided address containing the provided payload.
      */
-    public static XBeeMessage getRemoteTransmissionRequest(XBee64BitAddress address, int[] payload) {
-        return new XBeeMessage(new TransmitPacket(XBeeAPIPacket.NO_FRAME_ID,address,XBee16BitAddress.UNKNOWN_ADDRESS,255,payload));
-    }
-
-    /*
-     * Get an XBee Message requesting data be sent to the serial port
-     * on a remote node for a series 2 XBee.
-     * @param address XBee64BitAddress of the node.
-     * @param payload An integer array containing the bytes to be transfered, as the low order word of the integer.
-     * @return XBeeMessage with ZNet remote transmission request for the provided address containing the provided payload.
-     */
-    public static XBeeMessage getZNetTransmissionRequest(com.digi.xbee.api.models.XBee64BitAddress address, int[] payload) {
-        return new XBeeMessage(new com.rapplogic.xbee.api.zigbee.ZNetTxRequest(address, payload));
+    public static XBeeMessage getRemoteTransmissionRequest(XBee64BitAddress address, byte[] payload) {
+        return new XBeeMessage(new TransmitPacket(XBeeAPIPacket.NO_FRAME_ID,address,XBee16BitAddress.UNKNOWN_ADDRESS,255,0,payload));
     }
 
 }

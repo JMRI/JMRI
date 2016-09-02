@@ -90,7 +90,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
             if (!node.getPinAssigned(i)
                 && ioSample.hasDigitalValue(IOLine.getDIO(i))) {
                 // request pin direction.
-                tc.sendXBeeMessage(XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(), i), this);
+                tc.sendXBeeMessage(XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(), i), null );
                 }
             }
         }
