@@ -73,7 +73,7 @@ public class TransitTableAction extends AbstractTableAction {
     public TransitTableAction(String actionName) {
         super(actionName);
 
-        transitManager = jmri.InstanceManager.getOptionalDefault(jmri.TransitManager.class);
+        transitManager = jmri.InstanceManager.getNullableDefault(jmri.TransitManager.class);
         // disable ourself if there is no Transit manager available
         if (sectionManager == null || transitManager == null) {
             setEnabled(false);
@@ -292,7 +292,7 @@ public class TransitTableAction extends AbstractTableAction {
     private boolean editMode = false;
     private boolean duplicateMode = false;
     private TransitManager transitManager = null;
-    private SectionManager sectionManager = InstanceManager.getOptionalDefault(jmri.SectionManager.class);
+    private SectionManager sectionManager = InstanceManager.getNullableDefault(jmri.SectionManager.class);
     private Transit curTransit = null;
     private SectionTableModel sectionTableModel = null;
     private ArrayList<Section> sectionList = new ArrayList<>();

@@ -29,7 +29,7 @@ public class ConsistController extends AbstractController implements ProgListene
             manager = new WiFiConsistManager();
             log.debug("Using WiFiConsisting");
         } else {
-            manager = jmri.InstanceManager.getOptionalDefault(jmri.ConsistManager.class);
+            manager = jmri.InstanceManager.getNullableDefault(jmri.ConsistManager.class);
             log.debug("Using JMRIConsisting");
         }
 

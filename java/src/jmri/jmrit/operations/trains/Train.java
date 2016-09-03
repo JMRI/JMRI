@@ -2641,6 +2641,10 @@ public class Train implements java.beans.PropertyChangeListener {
         }
     }
 
+    /**
+     * Allow local moves if car has a custom load or Final Destination
+     * @return true if local move is allowed
+     */
     public boolean isAllowLocalMovesEnabled() {
         return _allowLocalMoves;
     }
@@ -3380,7 +3384,7 @@ public class Train implements java.beans.PropertyChangeListener {
                     _trainIcon.setLocation(rl.getTrainIconX(), rl.getTrainIconY());
                 }
                 // add throttle if there's a throttle manager
-                if (jmri.InstanceManager.getOptionalDefault(jmri.ThrottleManager.class) != null) {
+                if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) != null) {
                     // add throttle if JMRI loco roster entry exist
                     RosterEntry entry = null;
                     if (getLeadEngine() != null) {

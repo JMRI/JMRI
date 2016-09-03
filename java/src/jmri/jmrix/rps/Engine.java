@@ -532,7 +532,7 @@ public class Engine implements ReadingListener {
             packet = jmri.NmraPacket.threeBytePacket(
                     t.getAddress(), t.isLongAddress(),
                     (byte) 0xC0, (byte) 0xA5, (byte) 0xFE);
-            if (jmri.InstanceManager.getOptionalDefault(CommandStation.class) != null) {
+            if (jmri.InstanceManager.getNullableDefault(CommandStation.class) != null) {
                 jmri.InstanceManager.getDefault(CommandStation.class).sendPacket(packet, 1);
             }
         } else {
@@ -550,7 +550,7 @@ public class Engine implements ReadingListener {
                 packet = jmri.NmraPacket.function0Through4Packet(
                         t.getAddress(), t.isLongAddress(),
                         false, false, true, false, false);
-                if (jmri.InstanceManager.getOptionalDefault(CommandStation.class) != null) {
+                if (jmri.InstanceManager.getNullableDefault(CommandStation.class) != null) {
                     jmri.InstanceManager.getDefault(CommandStation.class).sendPacket(packet, 1);
                 }
             }
@@ -574,7 +574,7 @@ public class Engine implements ReadingListener {
                 byte[] packet = jmri.NmraPacket.function0Through4Packet(
                         t.getAddress(), t.isLongAddress(),
                         false, false, false, false, false);
-                if (jmri.InstanceManager.getOptionalDefault(CommandStation.class) != null) {
+                if (jmri.InstanceManager.getNullableDefault(CommandStation.class) != null) {
                     jmri.InstanceManager.getDefault(CommandStation.class).sendPacket(packet, 1);
                 }
             }

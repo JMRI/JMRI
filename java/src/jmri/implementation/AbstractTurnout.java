@@ -582,7 +582,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     @Override
     public void provideFirstFeedbackSensor(String pName) throws jmri.JmriException, IllegalArgumentException {
-        if (InstanceManager.getOptionalDefault(SensorManager.class) != null) {
+        if (InstanceManager.getNullableDefault(SensorManager.class) != null) {
             if (pName == null || pName.equals("")) {
                 provideFirstFeedbackNamedSensor(null);
             } else {
@@ -624,7 +624,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     @Override
     public void provideSecondFeedbackSensor(String pName) throws jmri.JmriException, IllegalArgumentException {
-        if (InstanceManager.getOptionalDefault(SensorManager.class) != null) {
+        if (InstanceManager.getNullableDefault(SensorManager.class) != null) {
             if (pName == null || pName.equals("")) {
                 provideSecondFeedbackNamedSensor(null);
             } else {

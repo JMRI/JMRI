@@ -115,7 +115,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     public int turnoutSetDelay = 0;
 
     public EntryExitPairs() {
-        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerUser(this);
         }
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);

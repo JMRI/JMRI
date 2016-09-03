@@ -173,7 +173,7 @@ public abstract class AbstractMonPane extends JmriPanel {
     
     @Override
     public void initComponents() throws Exception {
-        pm = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
+        pm = jmri.InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
         
         // the following code sets the frame's initial state
         clearButton.setText(Bundle.getMessage("ButtonClearScreen")); // NOI18N

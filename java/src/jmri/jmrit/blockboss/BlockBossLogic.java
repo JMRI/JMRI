@@ -1103,7 +1103,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     private static void setup() {
         if (bblList == null) {
             bblList = new ArrayList<BlockBossLogic>();
-            ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+            ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cm != null) {
                 cm.registerConfig(new BlockBossLogic(), jmri.Manager.BLOCKBOSS);
             }
