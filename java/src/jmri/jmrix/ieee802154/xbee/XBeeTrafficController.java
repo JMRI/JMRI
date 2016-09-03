@@ -51,7 +51,6 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      */
     @Override
     public void connectPort(AbstractPortController p) {
-        new Exception().printStackTrace();
         // Attach XBee to the port
         try {
             if( p instanceof XBeeAdapter) {

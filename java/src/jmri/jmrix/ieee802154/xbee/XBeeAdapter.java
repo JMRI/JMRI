@@ -204,9 +204,8 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         // connect to the traffic controller
         this.getSystemConnectionMemo().setTrafficController(tc);
         tc.setAdapterMemo(this.getSystemConnectionMemo());
-        //tc.setXBee(xbee);
-        this.getSystemConnectionMemo().configureManagers();
         tc.connectPort(this);
+        this.getSystemConnectionMemo().configureManagers();
         // Configure the form of serial address validation for this connection
 //        adaptermemo.setSerialAddress(new jmri.jmrix.ieee802154.SerialAddress(adaptermemo));
     }
