@@ -87,7 +87,7 @@ public class TurnoutEditAction extends BeanEditAction {
     JmriBeanComboBox sensorFeedBack2Field;
     JComboBox<String> modeBox;
     JComboBox<String> automationBox;
-    String useBlockSpeed = "Use Block Speed";//IN18N
+    String useBlockSpeed = Bundle.getMessage("UseGlobal", "Block Speed");
     TurnoutOperationConfig config;
     BeanItemPanel feedback;
     JPanel turnoutOperation = new JPanel();
@@ -372,10 +372,10 @@ public class TurnoutEditAction extends BeanEditAction {
 
         speed.addItem(new BeanEditItem(null, null, Bundle.getMessage("SpeedTabToolTip")));
 
-        defaultThrownSpeedText = ("Use Global " + InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed());
-        defaultClosedSpeedText = ("Use Global " + InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed());
+        defaultThrownSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed());
+        defaultClosedSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed());
 
-        useBlockSpeed = "Use Block Speed";
+        useBlockSpeed = Bundle.getMessage("UseGlobal", "Block Speed");
 
         speedListClosed.add(defaultClosedSpeedText);
         speedListThrown.add(defaultThrownSpeedText);
@@ -435,7 +435,7 @@ public class TurnoutEditAction extends BeanEditAction {
                 String speed = t.getDivergingSpeed();
 
                 speedListThrown.remove(defaultThrownSpeedText);
-                defaultThrownSpeedText = ("Use Global " + InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed());
+                defaultThrownSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed());
                 speedListThrown.add(0, defaultThrownSpeedText);
                 if (!speedListThrown.contains(speed)) {
                     speedListThrown.add(speed);
@@ -446,7 +446,7 @@ public class TurnoutEditAction extends BeanEditAction {
                 speed = t.getStraightSpeed();
 
                 speedListClosed.remove(defaultClosedSpeedText);
-                defaultClosedSpeedText = ("Use Global " + InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed());
+                defaultClosedSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed());
                 speedListClosed.add(0, defaultClosedSpeedText);
                 if (!speedListClosed.contains(speed)) {
                     speedListClosed.add(speed);

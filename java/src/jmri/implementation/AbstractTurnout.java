@@ -822,10 +822,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     @Override
     public String getDivergingSpeed() {
         if (_divergeSpeed.equals("Global")) {
-            return ("Use Global " + InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed());
+            return (Bundle.getMessage("UseGlobal", "Global") + " " + InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed());
         }
         if (_divergeSpeed.equals("Block")) {
-            return ("Use Block Speed");
+            return (Bundle.getMessage("UseGlobal", "Block Speed"));
         }
         return _divergeSpeed;
     }
@@ -885,10 +885,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     @Override
     public String getStraightSpeed() {
         if (_straightSpeed.equals("Global")) {
-            return ("Use Global " + InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed());
+            return (Bundle.getMessage("UseGlobal", "Global") + " " + InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed());
         }
         if (_straightSpeed.equals("Block")) {
-            return ("Use Block Speed");
+            return (Bundle.getMessage("UseGlobal", "Block Speed"));
         }
         return _straightSpeed;
     }
@@ -929,7 +929,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseSensorTurnoutVeto", getDisplayName()), e); //IN18N
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) {
-            log.warn("No clean DoDelete worked for {}", getSystemName()); //IN18N
+            log.warn("No clean DoDelete worked for {}", getSystemName()); //NOI18N
         }
     }
 

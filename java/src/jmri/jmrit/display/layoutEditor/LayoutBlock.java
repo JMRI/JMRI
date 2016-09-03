@@ -1040,7 +1040,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
         BeanItemPanel layoutDetails() {
             BeanItemPanel layout = new BeanItemPanel();
-            layout.setName("Layout Editor");
+            layout.setName(Bundle.getMessage("LayoutEditor"));
 
             layout.addItem(new BeanEditItem(new JLabel("" + useCount), rb.getString("UseCount"), null));
             layout.addItem(new BeanEditItem(memoryNameField, Bundle.getMessage("BeanNameMemory"), rb.getString("MemoryVariableTip")));

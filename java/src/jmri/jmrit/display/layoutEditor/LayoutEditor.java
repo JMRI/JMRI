@@ -209,7 +209,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JCheckBox textLabelBox = new JCheckBox(Bundle.getMessage("TextLabel"));
     private JTextField textLabel = new JTextField(8);
 
-    private JCheckBox blockContentsBox = new JCheckBox("Block Contents");
+    private JCheckBox blockContentsBox = new JCheckBox(Bundle.getMessage("BlockContentsLabel"));
     private JTextField blockContents = new JTextField(8);
     private JCheckBox memoryBox = new JCheckBox(Bundle.getMessage("BeanNameMemory"));
     private JTextField textMemory = new JTextField(8);
