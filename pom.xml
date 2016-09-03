@@ -312,16 +312,14 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.19.1</version>
                 <configuration>
-                    <includes>
-                        <!-- only run tests in files with names ending in Test -->
-                        <include>**/*Test.java</include>
-                    </includes>
                     <excludes>
                         <!-- ignore to avoid duplicate test runs -->
                         <exclude>apps/tests/AllTest.java</exclude>
                         <exclude>jmri/HeadLessTest.java</exclude>
                         <!-- ignore package tests under assumption they only include other tests -->
                         <exclude>**/PackageTest.java</exclude>
+                        <!-- ignore since the test is not intended to be normally used -->
+                        <exclude>jmri/util/FailTest.java</exclude>
                     </excludes>
                 </configuration>
             </plugin>
