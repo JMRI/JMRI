@@ -5,8 +5,8 @@ addons:
     packages:
     - graphviz
 
-before_install:
-  - rm ~/.m2/settings.xml
+# prevent travis default mvn install behavior
+install: true
 
 before_script:
   - "export DISPLAY=:99.0"
