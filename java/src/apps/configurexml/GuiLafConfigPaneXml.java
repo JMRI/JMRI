@@ -103,7 +103,7 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setNonStandardMouseEvent(nonStandardMouseEvent);
         }
         GuiLafConfigPane g = new GuiLafConfigPane();
-        ConfigureManager cm = jmri.InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = jmri.InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
             cm.registerPref(g);
         }

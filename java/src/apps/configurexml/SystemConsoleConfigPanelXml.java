@@ -97,7 +97,7 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
 
         // As we've had a load request, register the system console with the
         // preference manager
-        ConfigureManager cm = jmri.InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = jmri.InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
             cm.registerPref(new SystemConsoleConfigPanel());
         }

@@ -225,7 +225,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         panel.getTargetFrame().setVisible(true);    // always show the panel
 
         // register the resulting panel for later configuration
-        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
             cm.registerUser(panel);
         }

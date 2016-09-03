@@ -269,7 +269,7 @@ public class FirstTimeStartUpWizard {
             Cursor hourglassCursor = new Cursor(Cursor.WAIT_CURSOR);
             parent.setCursor(hourglassCursor);
             ConnectionConfig connect = JmrixConfigPane.instance(0).getCurrentObject();
-            ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+            ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cm != null) {
                 cm.registerPref(connect);
             }

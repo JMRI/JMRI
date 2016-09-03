@@ -59,7 +59,7 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
         // load the file
         File file = new File(fileName);
-        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
             result = cm.load(file);
         } else {

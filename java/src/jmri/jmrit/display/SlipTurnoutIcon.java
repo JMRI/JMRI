@@ -68,7 +68,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
      *              0x01 - West 0x02 - East 0x04 - Lower West 0x06 - Upper East
      */
     public void setTurnout(String pName, int turn) {
-        if (InstanceManager.getOptionalDefault(jmri.TurnoutManager.class) != null) {
+        if (InstanceManager.getNullableDefault(jmri.TurnoutManager.class) != null) {
             try {
                 Turnout turnout = InstanceManager.turnoutManagerInstance().
                     provideTurnout(pName);

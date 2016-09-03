@@ -39,7 +39,7 @@ abstract public class AbstractManager
      */
     protected void registerSelf() {
         log.debug("registerSelf for config of type {}", getClass());
-        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
             cm.registerConfig(this, getXMLOrder());
             log.debug("registering for config of type {}", getClass());
@@ -55,7 +55,7 @@ abstract public class AbstractManager
     // abstract methods to be extended by subclasses
     // to free resources when no longer used
     public void dispose() {
-        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
             cm.deregister(this);
         }
