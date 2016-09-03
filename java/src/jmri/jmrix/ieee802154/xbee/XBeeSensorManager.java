@@ -40,7 +40,8 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
 
     // to free resources when no longer used
     public void dispose() {
-        tc.removeXBeeListener(this);
+        tc.getXBee().removeIOSampleListener(this);
+        tc.getXBee().removePacketListener(this);
         super.dispose();
     }
 
@@ -73,8 +74,9 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     // ctor has to register for XBee events
     public XBeeSensorManager(XBeeTrafficController controller, String prefix) {
         tc = controller;
-        tc.addXBeeListener(this);
         this.prefix = prefix;
+        tc.getXBee().addIOSampleListener(this);
+        tc.getXBee().addPacketListener(this);
     }
 
     // IIOSampleReceiveListener methods
@@ -83,9 +85,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
             log.debug("recieved io sample {} from {}",ioSample,remoteDevice);
         }
 
-        XBeeNode sourcenode = (XBeeNode) tc.getNodeFromXBeeDevice(remoteDevice);
-
-        XBeeNode node = (XBeeNode) tc.getNodeFromAddress(address);
+        XBeeNode node = (XBeeNode) tc.getNodeFromXBeeDevice(remoteDevice);
         for (int i = 0; i <= 8; i++) {
             if (!node.getPinAssigned(i)
                 && ioSample.hasDigitalValue(IOLine.getDIO(i))) {
@@ -96,7 +96,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
         }
 
    //IPacketReceiveListener
-   public void PacketReceived(XBeePacket receivedPacket) {
+   public void packetReceived(XBeePacket receivedPacket) {
         // the only packets we care about here are the replies to
         // our request for pin direction.  We ignore anything else.
 

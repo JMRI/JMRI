@@ -105,6 +105,10 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
                     + " ,D" + pin
                     + ")");
            }
+
+           // register to hear XBee IO Sample events.
+          tc.getXBee().addIOSampleListener(this);
+
            // Finally, request the current state from the layout.
            this.requestUpdateFromLayout();
         } 
@@ -130,7 +134,6 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
             log.debug("recieved io sample {} from {}",ioSample,remoteDevice);
         }
 
-        int address[] = remoteDevice.get16BitSourceAddress().getValue();
         XBeeNode sourcenode = (XBeeNode) tc.getNodeFromXBeeDevice(remoteDevice);
 
         if (node.equals(sourcenode)) {
@@ -153,6 +156,7 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
     }
 
     public void dispose() {
+        tc.getXBee().removeIOSampleListener(this);
         super.dispose();
     }
 

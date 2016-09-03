@@ -51,6 +51,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      */
     @Override
     public void connectPort(AbstractPortController p) {
+        new Exception().printStackTrace();
         // Attach XBee to the port
         try {
             if( p instanceof XBeeAdapter) {
@@ -72,9 +73,6 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
             } else {
                throw new java.lang.IllegalArgumentException("Wrong adapter type specified when connecting to the port.");
             }
-
-        } catch (XBeeException xe) {
-            log.error("Failed to make XBee connection " + xe);
         } catch (Exception e) {
             log.error("Failed to start up communications. Error was " + e);
         }
@@ -385,8 +383,8 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      * @param device the RemoteXBeeDevice to search for.
      * @return the node if found, or null otherwise.
      */
-    synchronized public jmri.jmrix.AbstractNode getNodeFromDevice(RemoteXBeeDevice device) {
-        log.debug("getNodeFromDevice called with {}",device);
+    synchronized public jmri.jmrix.AbstractNode getNodeFromXBeeDevice(RemoteXBeeDevice device) {
+        log.debug("getNodeFromXBeeDevice called with {}",device);
         for (int i = 0; i < numNodes; i++) {
             XBeeNode node = (XBeeNode) getNode(i);
             if (node.getXBee().equals(device)) {

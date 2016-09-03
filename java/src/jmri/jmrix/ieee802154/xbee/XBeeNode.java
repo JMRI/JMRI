@@ -37,6 +37,8 @@ public class XBeeNode extends IEEE802154Node {
     private boolean isPolled;
     private XBeeTrafficController tc = null;
     private RemoteXBeeDevice device = null;
+    private XBee16BitAddress userAddress = null;
+    private XBee64BitAddress globalAddress = null;
 
     /**
      * Creates a new instance of XBeeNode
@@ -58,8 +60,8 @@ public class XBeeNode extends IEEE802154Node {
         }
         pinObjects = new HashMap<Integer, NamedBean>();
         isPolled = false;
-        XBee16BitAddress = new XBee16BitAddress(user);
-        XBee64BitAddress = new XBee64BitAddress(global);
+        userAddress = new XBee16BitAddress(user);
+        globalAddress = new XBee64BitAddress(global);
     }
 
     /*

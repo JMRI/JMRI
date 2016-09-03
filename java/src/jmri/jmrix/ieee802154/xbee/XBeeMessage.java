@@ -56,6 +56,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
     public XBeeMessage(XBeeAPIPacket request) {
         _nDataChars = request.getPacketData().length;
         byte data[] = request.getPacketData();
+        _dataChars = new int[_nDataChars];
         for(int i=0;i<_nDataChars;i++) {
            _dataChars[i] = (int) data[i];
         }
