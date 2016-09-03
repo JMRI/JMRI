@@ -149,7 +149,7 @@ public final class ImageIndexEditor extends JmriJFrame {
 
     public static final synchronized void indexChanged(boolean changed) {
         _indexChanged = changed;
-        if (jmri.InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
             if (changed) {
                 if (_shutDownTask == null) {
                     _shutDownTask = new SwingShutDownTask("PanelPro Save default icon check",

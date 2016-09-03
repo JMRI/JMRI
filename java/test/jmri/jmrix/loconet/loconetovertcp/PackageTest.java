@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   ConnectionConfigTest.class
+   ConnectionConfigTest.class,
+   jmri.jmrix.loconet.loconetovertcp.configurexml.PackageTest.class
 })
 /**
  * Tests for the jmri.jmrix.loconet.loconetovertcp package.

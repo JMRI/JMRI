@@ -1,428 +1,529 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
-<title>JMRI: LDT Signaling for CSD/CD/ZSR Signals</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- $Id$ -->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: LDT Signaling for CSD/CD/ZSR Signals</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
-<BODY>
-<!--#include virtual="/Header" -->
+<body>
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <!-- Page Body -->
 
+      <h2>JMRI: LDT Signaling for CSD/CD/ZSR Signals</h2>
 
-<!-- Page Body -->
-<H2>
-JMRI: LDT Signaling for CSD/CD/ZSR Signals
-</H2>
+      <h2><b>Entry signal <img src="output6_html_6f691e17.png"
+      name="obr&#225;zky20" align="middle" width="6" height="30"
+      border="0"></b><b>+</b> <b>advance signal <img src=
+      "output6_html_7e3459b4.png" name="obr&#225;zky21" align=
+      "middle" width="6" height="13" border="0"></b></h2>
 
-<H2><B>Entry
-signal 
-<IMG SRC="output6_html_6f691e17.png" NAME="obr&aacute;zky20" ALIGN=MIDDLE WIDTH=6 HEIGHT=30 BORDER=0></B><B>
-+ </B><B>advance
-signal 
-<IMG SRC="output6_html_7e3459b4.png" NAME="obr&aacute;zky21" ALIGN=MIDDLE WIDTH=6 HEIGHT=13 BORDER=0></B></H2>
-<P STYLE="margin-bottom: 0in">decoder:
-DP2N, mode 0</P>
-<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=3 CELLSPACING=0>
-	<COL WIDTH=40*>
-	<COL WIDTH=29*>
-	<COL WIDTH=33*>
-	<COL WIDTH=154*>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16% BGCOLOR="#e6e6e6">
-			<P><B><SPAN STYLE="background: transparent">JMRI
-			aspect</SPAN></B></P>
-		</TD>
-		<TD WIDTH=11% BGCOLOR="#e6e6e6">
-			<P><B><SPAN STYLE="background: transparent">turnout
-			no.</SPAN></B></P>
-		</TD>
-		<TD WIDTH=13% BGCOLOR="#e6e6e6">
-			<P><B><SPAN STYLE="background: transparent">turnout
-			state</SPAN></B></P>
-		</TD>
-		<TD WIDTH=60% BGCOLOR="#e6e6e6">
-			<P><B><SPAN STYLE="background: transparent">signal
-			head aspect</SPAN></B></P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16%>
-			<P>green</P>
-		</TD>
-		<TD WIDTH=11%>
-			<P ALIGN=CENTER>1</P>
-		</TD>
-		<TD WIDTH=13%>
-			<P ALIGN=CENTER>thrown</P>
-		</TD>
-		<TD WIDTH=60%>
-			<P>proceed</P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16%>
-			<P>yellow</P>
-		</TD>
-		<TD WIDTH=11%>
-			<P ALIGN=CENTER>2</P>
-		</TD>
-		<TD WIDTH=13%>
-			<P ALIGN=CENTER>thrown</P>
-		</TD>
-		<TD WIDTH=60%>
-			<P>slow approach</P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16%>
-			<P>red</P>
-		</TD>
-		<TD WIDTH=11%>
-			<P ALIGN=CENTER>1</P>
-		</TD>
-		<TD WIDTH=13%>
-			<P ALIGN=CENTER>closed</P>
-		</TD>
-		<TD WIDTH=60%>
-			<P>train stop</P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16%>
-			<P>flash green</P>
-		</TD>
-		<TD WIDTH=11%>
-			<P ALIGN=CENTER>3</P>
-		</TD>
-		<TD WIDTH=13%>
-			<P ALIGN=CENTER>closed</P>
-		</TD>
-		<TD WIDTH=60%>
-			<P>shunting
-			permited</P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16%>
-			<P>flash yellow</P>
-		</TD>
-		<TD WIDTH=11%>
-			<P ALIGN=CENTER>3</P>
-		</TD>
-		<TD WIDTH=13%>
-			<P ALIGN=CENTER>thrown</P>
-		</TD>
-		<TD WIDTH=60%>
-			<P>slow approach
-			40 km/h</P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16%>
-			<P>flash red</P>
-		</TD>
-		<TD WIDTH=11%>
-			<P ALIGN=CENTER>4</P>
-		</TD>
-		<TD WIDTH=13%>
-			<P ALIGN=CENTER>thrown</P>
-		</TD>
-		<TD WIDTH=60%>
-			<P>call-on signal</P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16%>
-			<P>dark</P>
-		</TD>
-		<TD WIDTH=11%>
-			<P ALIGN=CENTER>1</P>
-		</TD>
-		<TD WIDTH=13%>
-			<P ALIGN=CENTER>closed</P>
-		</TD>
-		<TD WIDTH=60%>
-			<P>train stop</P>
-		</TD>
-	</TR>
-</TABLE>
-<P STYLE="margin-bottom: 0in"><BR>
-</P>
-<H2><B>Exit
-signal</B><B> 
-<IMG SRC="output6_html_m5289f733.png" NAME="obr&aacute;zky19" ALIGN=MIDDLE WIDTH=6 HEIGHT=20 BORDER=0></B></H2>
-<P STYLE="margin-bottom: 0in">decoder:
-DP2N, mode 1</P>
-<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=3 CELLSPACING=0>
-	<COL WIDTH=40*>
-	<COL WIDTH=29*>
-	<COL WIDTH=33*>
-	<COL WIDTH=154*>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16% BGCOLOR="#e6e6e6">
-			<P><B><SPAN STYLE="background: transparent">JMRI
-			aspect</SPAN></B></P>
-		</TD>
-		<TD WIDTH=11% BGCOLOR="#e6e6e6">
-			<P><B><SPAN STYLE="background: transparent">turnout
-			no.</SPAN></B></P>
-		</TD>
-		<TD WIDTH=13% BGCOLOR="#e6e6e6">
-			<P><B><SPAN STYLE="background: transparent">turnout
-			state</SPAN></B></P>
-		</TD>
-		<TD WIDTH=60% BGCOLOR="#e6e6e6">
-			<P><B><SPAN STYLE="background: transparent">signal
-			head aspect</SPAN></B></P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16%>
-			<P>green</P>
-		</TD>
-		<TD WIDTH=11%>
-			<P ALIGN=CENTER>1</P>
-		</TD>
-		<TD WIDTH=13%>
-			<P ALIGN=CENTER>thrown</P>
-		</TD>
-		<TD WIDTH=60%>
-			<P>proceed</P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16%>
-			<P>yellow</P>
-		</TD>
-		<TD WIDTH=11%>
-			<P ALIGN=CENTER>1</P>
-		</TD>
-		<TD WIDTH=13%>
-			<P ALIGN=CENTER>thrown</P>
-		</TD>
-		<TD WIDTH=60%>
-			<P>proceed</P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16%>
-			<P>red</P>
-		</TD>
-		<TD WIDTH=11%>
-			<P ALIGN=CENTER>1</P>
-		</TD>
-		<TD WIDTH=13%>
-			<P ALIGN=CENTER>closed</P>
-		</TD>
-		<TD WIDTH=60%>
-			<P>train stop</P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16%>
-			<P>flash green</P>
-		</TD>
-		<TD WIDTH=11%>
-			<P ALIGN=CENTER>2</P>
-		</TD>
-		<TD WIDTH=13%>
-			<P ALIGN=CENTER>thrown</P>
-		</TD>
-		<TD WIDTH=60%>
-			<P>shunting
-			permited</P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16%>
-			<P>flash yellow</P>
-		</TD>
-		<TD WIDTH=11%>
-			<P ALIGN=CENTER>2</P>
-		</TD>
-		<TD WIDTH=13%>
-			<P ALIGN=CENTER>closed</P>
-		</TD>
-		<TD WIDTH=60%>
-			<P>call-on signal</P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16%>
-			<P>flash red</P>
-		</TD>
-		<TD WIDTH=11%>
-			<P ALIGN=CENTER>1</P>
-		</TD>
-		<TD WIDTH=13%>
-			<P ALIGN=CENTER>closed</P>
-		</TD>
-		<TD WIDTH=60%>
-			<P>train stop</P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16%>
-			<P>dark</P>
-		</TD>
-		<TD WIDTH=11%>
-			<P ALIGN=CENTER>1</P>
-		</TD>
-		<TD WIDTH=13%>
-			<P ALIGN=CENTER>closed</P>
-		</TD>
-		<TD WIDTH=60%>
-			<P>train stop</P>
-		</TD>
-	</TR>
-</TABLE>
-<P STYLE="margin-bottom: 0in"><BR>
-</P>
-<H2><B>Repeating
-signal 
-<IMG SRC="output6_html_m2a349567.png" NAME="obr&aacute;zky22" ALIGN=MIDDLE WIDTH=6 HEIGHT=23 BORDER=0></B></H2>
-<P STYLE="margin-bottom: 0in">decoder:
-DP2N, mode 2</P>
-<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=3 CELLSPACING=0>
-	<COL WIDTH=40*>
-	<COL WIDTH=29*>
-	<COL WIDTH=33*>
-	<COL WIDTH=154*>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16% BGCOLOR="#e6e6e6">
-			<P><B><SPAN STYLE="background: transparent">JMRI
-			aspect</SPAN></B></P>
-		</TD>
-		<TD WIDTH=11% BGCOLOR="#e6e6e6">
-			<P><B><SPAN STYLE="background: transparent">turnout
-			no.</SPAN></B></P>
-		</TD>
-		<TD WIDTH=13% BGCOLOR="#e6e6e6">
-			<P><B><SPAN STYLE="background: transparent">turnout
-			state</SPAN></B></P>
-		</TD>
-		<TD WIDTH=60% BGCOLOR="#e6e6e6">
-			<P><B><SPAN STYLE="background: transparent">signal
-			head aspect</SPAN></B></P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16%>
-			<P>green</P>
-		</TD>
-		<TD WIDTH=11%>
-			<P ALIGN=CENTER>1</P>
-		</TD>
-		<TD WIDTH=13%>
-			<P ALIGN=CENTER>thrown</P>
-		</TD>
-		<TD WIDTH=60%>
-			<P>repeating slow
-			approach</P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16%>
-			<P>yellow</P>
-		</TD>
-		<TD WIDTH=11%>
-			<P ALIGN=CENTER>2</P>
-		</TD>
-		<TD WIDTH=13%>
-			<P ALIGN=CENTER>thrown</P>
-		</TD>
-		<TD WIDTH=60%>
-			<P>repeating slow
-			approach 40 km/h</P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16%>
-			<P>red</P>
-		</TD>
-		<TD WIDTH=11%>
-			<P ALIGN=CENTER>1</P>
-		</TD>
-		<TD WIDTH=13%>
-			<P ALIGN=CENTER>closed</P>
-		</TD>
-		<TD WIDTH=60%>
-			<P>train stop</P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16%>
-			<P>flash green</P>
-		</TD>
-		<TD WIDTH=11%>
-			<P ALIGN=CENTER>3</P>
-		</TD>
-		<TD WIDTH=13%>
-			<P ALIGN=CENTER>thrown</P>
-		</TD>
-		<TD WIDTH=60%>
-			<P>shunting
-			permited</P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16%>
-			<P>flash yellow</P>
-		</TD>
-		<TD WIDTH=11%>
-			<P ALIGN=CENTER>2</P>
-		</TD>
-		<TD WIDTH=13%>
-			<P ALIGN=CENTER>closed</P>
-		</TD>
-		<TD WIDTH=60%>
-			<P>call-on signal</P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16%>
-			<P>flash red</P>
-		</TD>
-		<TD WIDTH=11%>
-			<P ALIGN=CENTER>1</P>
-		</TD>
-		<TD WIDTH=13%>
-			<P ALIGN=CENTER>closed</P>
-		</TD>
-		<TD WIDTH=60%>
-			<P>train stop</P>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=16%>
-			<P>dark</P>
-		</TD>
-		<TD WIDTH=11%>
-			<P ALIGN=CENTER>1</P>
-		</TD>
-		<TD WIDTH=13%>
-			<P ALIGN=CENTER>closed</P>
-		</TD>
-		<TD WIDTH=60%>
-			<P>train stop</P>
-		</TD>
-	</TR>
-</TABLE>
-<P STYLE="margin-bottom: 0in"><BR>
-</P>
+      <p style="margin-bottom: 0in">decoder: DP2N, mode 0</p>
 
-<!--#include virtual="/Footer" -->
+      <table width="100%" border="1" bordercolor="#000000"
+      cellpadding="3" cellspacing="0">
+        <col width="40*">
+        <col width="29*">
+        <col width="33*">
+        <col width="154*">
+
+        <tr valign="top">
+          <td width="16%" bgcolor="#E6E6E6">
+            <p><b><span style="background: transparent">JMRI
+            aspect</span></b></p>
+          </td>
+
+          <td width="11%" bgcolor="#E6E6E6">
+            <p><b><span style="background: transparent">turnout
+            no.</span></b></p>
+          </td>
+
+          <td width="13%" bgcolor="#E6E6E6">
+            <p><b><span style="background: transparent">turnout
+            state</span></b></p>
+          </td>
+
+          <td width="60%" bgcolor="#E6E6E6">
+            <p><b><span style="background: transparent">signal head
+            aspect</span></b></p>
+          </td>
+        </tr>
+
+        <tr valign="top">
+          <td width="16%">
+            <p>green</p>
+          </td>
+
+          <td width="11%">
+            <p align="center">1</p>
+          </td>
+
+          <td width="13%">
+            <p align="center">thrown</p>
+          </td>
+
+          <td width="60%">
+            <p>proceed</p>
+          </td>
+        </tr>
+
+        <tr valign="top">
+          <td width="16%">
+            <p>yellow</p>
+          </td>
+
+          <td width="11%">
+            <p align="center">2</p>
+          </td>
+
+          <td width="13%">
+            <p align="center">thrown</p>
+          </td>
+
+          <td width="60%">
+            <p>slow approach</p>
+          </td>
+        </tr>
+
+        <tr valign="top">
+          <td width="16%">
+            <p>red</p>
+          </td>
+
+          <td width="11%">
+            <p align="center">1</p>
+          </td>
+
+          <td width="13%">
+            <p align="center">closed</p>
+          </td>
+
+          <td width="60%">
+            <p>train stop</p>
+          </td>
+        </tr>
+
+        <tr valign="top">
+          <td width="16%">
+            <p>flash green</p>
+          </td>
+
+          <td width="11%">
+            <p align="center">3</p>
+          </td>
+
+          <td width="13%">
+            <p align="center">closed</p>
+          </td>
+
+          <td width="60%">
+            <p>shunting permited</p>
+          </td>
+        </tr>
+
+        <tr valign="top">
+          <td width="16%">
+            <p>flash yellow</p>
+          </td>
+
+          <td width="11%">
+            <p align="center">3</p>
+          </td>
+
+          <td width="13%">
+            <p align="center">thrown</p>
+          </td>
+
+          <td width="60%">
+            <p>slow approach 40 km/h</p>
+          </td>
+        </tr>
+
+        <tr valign="top">
+          <td width="16%">
+            <p>flash red</p>
+          </td>
+
+          <td width="11%">
+            <p align="center">4</p>
+          </td>
+
+          <td width="13%">
+            <p align="center">thrown</p>
+          </td>
+
+          <td width="60%">
+            <p>call-on signal</p>
+          </td>
+        </tr>
+
+        <tr valign="top">
+          <td width="16%">
+            <p>dark</p>
+          </td>
+
+          <td width="11%">
+            <p align="center">1</p>
+          </td>
+
+          <td width="13%">
+            <p align="center">closed</p>
+          </td>
+
+          <td width="60%">
+            <p>train stop</p>
+          </td>
+        </tr>
+      </table>
+
+      <p style="margin-bottom: 0in"><br></p>
+
+      <h2><b>Exit signal</b> <b><img src=
+      "output6_html_m5289f733.png" name="obr&#225;zky19" align=
+      "middle" width="6" height="20" border="0"></b></h2>
+
+      <p style="margin-bottom: 0in">decoder: DP2N, mode 1</p>
+
+      <table width="100%" border="1" bordercolor="#000000"
+      cellpadding="3" cellspacing="0">
+        <col width="40*">
+        <col width="29*">
+        <col width="33*">
+        <col width="154*">
+
+        <tr valign="top">
+          <td width="16%" bgcolor="#E6E6E6">
+            <p><b><span style="background: transparent">JMRI
+            aspect</span></b></p>
+          </td>
+
+          <td width="11%" bgcolor="#E6E6E6">
+            <p><b><span style="background: transparent">turnout
+            no.</span></b></p>
+          </td>
+
+          <td width="13%" bgcolor="#E6E6E6">
+            <p><b><span style="background: transparent">turnout
+            state</span></b></p>
+          </td>
+
+          <td width="60%" bgcolor="#E6E6E6">
+            <p><b><span style="background: transparent">signal head
+            aspect</span></b></p>
+          </td>
+        </tr>
+
+        <tr valign="top">
+          <td width="16%">
+            <p>green</p>
+          </td>
+
+          <td width="11%">
+            <p align="center">1</p>
+          </td>
+
+          <td width="13%">
+            <p align="center">thrown</p>
+          </td>
+
+          <td width="60%">
+            <p>proceed</p>
+          </td>
+        </tr>
+
+        <tr valign="top">
+          <td width="16%">
+            <p>yellow</p>
+          </td>
+
+          <td width="11%">
+            <p align="center">1</p>
+          </td>
+
+          <td width="13%">
+            <p align="center">thrown</p>
+          </td>
+
+          <td width="60%">
+            <p>proceed</p>
+          </td>
+        </tr>
+
+        <tr valign="top">
+          <td width="16%">
+            <p>red</p>
+          </td>
+
+          <td width="11%">
+            <p align="center">1</p>
+          </td>
+
+          <td width="13%">
+            <p align="center">closed</p>
+          </td>
+
+          <td width="60%">
+            <p>train stop</p>
+          </td>
+        </tr>
+
+        <tr valign="top">
+          <td width="16%">
+            <p>flash green</p>
+          </td>
+
+          <td width="11%">
+            <p align="center">2</p>
+          </td>
+
+          <td width="13%">
+            <p align="center">thrown</p>
+          </td>
+
+          <td width="60%">
+            <p>shunting permited</p>
+          </td>
+        </tr>
+
+        <tr valign="top">
+          <td width="16%">
+            <p>flash yellow</p>
+          </td>
+
+          <td width="11%">
+            <p align="center">2</p>
+          </td>
+
+          <td width="13%">
+            <p align="center">closed</p>
+          </td>
+
+          <td width="60%">
+            <p>call-on signal</p>
+          </td>
+        </tr>
+
+        <tr valign="top">
+          <td width="16%">
+            <p>flash red</p>
+          </td>
+
+          <td width="11%">
+            <p align="center">1</p>
+          </td>
+
+          <td width="13%">
+            <p align="center">closed</p>
+          </td>
+
+          <td width="60%">
+            <p>train stop</p>
+          </td>
+        </tr>
+
+        <tr valign="top">
+          <td width="16%">
+            <p>dark</p>
+          </td>
+
+          <td width="11%">
+            <p align="center">1</p>
+          </td>
+
+          <td width="13%">
+            <p align="center">closed</p>
+          </td>
+
+          <td width="60%">
+            <p>train stop</p>
+          </td>
+        </tr>
+      </table>
+
+      <p style="margin-bottom: 0in"><br></p>
+
+      <h2><b>Repeating signal <img src="output6_html_m2a349567.png"
+      name="obr&#225;zky22" align="middle" width="6" height="23"
+      border="0"></b></h2>
+
+      <p style="margin-bottom: 0in">decoder: DP2N, mode 2</p>
+
+      <table width="100%" border="1" bordercolor="#000000"
+      cellpadding="3" cellspacing="0">
+        <col width="40*">
+        <col width="29*">
+        <col width="33*">
+        <col width="154*">
+
+        <tr valign="top">
+          <td width="16%" bgcolor="#E6E6E6">
+            <p><b><span style="background: transparent">JMRI
+            aspect</span></b></p>
+          </td>
+
+          <td width="11%" bgcolor="#E6E6E6">
+            <p><b><span style="background: transparent">turnout
+            no.</span></b></p>
+          </td>
+
+          <td width="13%" bgcolor="#E6E6E6">
+            <p><b><span style="background: transparent">turnout
+            state</span></b></p>
+          </td>
+
+          <td width="60%" bgcolor="#E6E6E6">
+            <p><b><span style="background: transparent">signal head
+            aspect</span></b></p>
+          </td>
+        </tr>
+
+        <tr valign="top">
+          <td width="16%">
+            <p>green</p>
+          </td>
+
+          <td width="11%">
+            <p align="center">1</p>
+          </td>
+
+          <td width="13%">
+            <p align="center">thrown</p>
+          </td>
+
+          <td width="60%">
+            <p>repeating slow approach</p>
+          </td>
+        </tr>
+
+        <tr valign="top">
+          <td width="16%">
+            <p>yellow</p>
+          </td>
+
+          <td width="11%">
+            <p align="center">2</p>
+          </td>
+
+          <td width="13%">
+            <p align="center">thrown</p>
+          </td>
+
+          <td width="60%">
+            <p>repeating slow approach 40 km/h</p>
+          </td>
+        </tr>
+
+        <tr valign="top">
+          <td width="16%">
+            <p>red</p>
+          </td>
+
+          <td width="11%">
+            <p align="center">1</p>
+          </td>
+
+          <td width="13%">
+            <p align="center">closed</p>
+          </td>
+
+          <td width="60%">
+            <p>train stop</p>
+          </td>
+        </tr>
+
+        <tr valign="top">
+          <td width="16%">
+            <p>flash green</p>
+          </td>
+
+          <td width="11%">
+            <p align="center">3</p>
+          </td>
+
+          <td width="13%">
+            <p align="center">thrown</p>
+          </td>
+
+          <td width="60%">
+            <p>shunting permited</p>
+          </td>
+        </tr>
+
+        <tr valign="top">
+          <td width="16%">
+            <p>flash yellow</p>
+          </td>
+
+          <td width="11%">
+            <p align="center">2</p>
+          </td>
+
+          <td width="13%">
+            <p align="center">closed</p>
+          </td>
+
+          <td width="60%">
+            <p>call-on signal</p>
+          </td>
+        </tr>
+
+        <tr valign="top">
+          <td width="16%">
+            <p>flash red</p>
+          </td>
+
+          <td width="11%">
+            <p align="center">1</p>
+          </td>
+
+          <td width="13%">
+            <p align="center">closed</p>
+          </td>
+
+          <td width="60%">
+            <p>train stop</p>
+          </td>
+        </tr>
+
+        <tr valign="top">
+          <td width="16%">
+            <p>dark</p>
+          </td>
+
+          <td width="11%">
+            <p align="center">1</p>
+          </td>
+
+          <td width="13%">
+            <p align="center">closed</p>
+          </td>
+
+          <td width="60%">
+            <p>train stop</p>
+          </td>
+        </tr>
+      </table>
+
+      <p style="margin-bottom: 0in"><br></p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>
-

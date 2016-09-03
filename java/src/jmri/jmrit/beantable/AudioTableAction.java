@@ -65,7 +65,7 @@ public class AudioTableAction extends AbstractTableAction {
         super(actionName);
 
         // disable ourself if there is no primary Audio manager available
-        if (jmri.InstanceManager.getOptionalDefault(AudioManager.class) == null) {
+        if (!InstanceManager.getOptionalDefault(AudioManager.class).isPresent()) {
             setEnabled(false);
         }
 
@@ -117,13 +117,15 @@ public class AudioTableAction extends AbstractTableAction {
     @Override
     protected void createModel() {
         // ensure that the AudioFactory has been initialised
-        if (InstanceManager.getOptionalDefault(jmri.AudioManager.class).getActiveAudioFactory() == null) {
-            InstanceManager.getDefault(jmri.AudioManager.class).init();
-            if(InstanceManager.getDefault(jmri.AudioManager.class).getActiveAudioFactory() instanceof jmri.jmrit.audio.NullAudioFactory) {
-                InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showWarningMessage("Error", "NullAudioFactory initialised - no sounds will be available", getClassName(), "nullAudio", false, true);
+        InstanceManager.getOptionalDefault(jmri.AudioManager.class).ifPresent(cm -> {
+            if (cm.getActiveAudioFactory() == null) {
+                cm.init();
+                if (cm.getActiveAudioFactory() instanceof jmri.jmrit.audio.NullAudioFactory) {
+                    InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                            showWarningMessage("Error", "NullAudioFactory initialised - no sounds will be available", getClassName(), "nullAudio", false, true);
+                }
             }
-        }
+        });
         listeners = new AudioListenerTableDataModel();
         buffers = new AudioBufferTableDataModel();
         sources = new AudioSourceTableDataModel();

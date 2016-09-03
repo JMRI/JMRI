@@ -25,6 +25,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import jmri.Application;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.jmrit.roster.RosterConfigManager;
 import jmri.jmrix.AbstractConnectionConfig;
@@ -268,7 +269,10 @@ public class FirstTimeStartUpWizard {
             Cursor hourglassCursor = new Cursor(Cursor.WAIT_CURSOR);
             parent.setCursor(hourglassCursor);
             ConnectionConfig connect = JmrixConfigPane.instance(0).getCurrentObject();
-            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(connect);
+            ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+            if (cm != null) {
+                cm.registerPref(connect);
+            }
             if (connect instanceof jmri.jmrix.AbstractConnectionConfig) {
                 ((AbstractConnectionConfig) connect).updateAdapter();
                 PortAdapter adp = connect.getAdapter();

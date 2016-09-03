@@ -8,7 +8,6 @@ import java.lang.reflect.InvocationTargetException;
 import javax.swing.SwingUtilities;
 import jmri.Application;
 import jmri.ConfigureManager;
-import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBeanHandleManager;
@@ -18,7 +17,6 @@ import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.BlockValueFile;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.jmrit.signalling.EntryExitPairs;
-import jmri.managers.DefaultIdTagManager;
 import jmri.managers.DefaultShutDownManager;
 import jmri.managers.JmriUserPreferencesManager;
 import jmri.profile.Profile;
@@ -235,9 +233,6 @@ public abstract class AppsBase {
         // install the named bean handler
         InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
 
-        // Install an IdTag manager
-        InstanceManager.store(new DefaultIdTagManager(), IdTagManager.class);
-
         //Install Entry Exit Pairs Manager
         InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
 
@@ -273,7 +268,12 @@ public abstract class AppsBase {
         }
         preferenceFileExists = true;
         try {
-            configOK = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).load(file);
+            ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+            if (cm != null) {
+                configOK = cm.load(file);
+            } else {
+                configOK = false;
+            }
             log.debug("end load config file {}, OK={}", file.getName(), configOK);
         } catch (JmriException e) {
             configOK = false;
@@ -282,9 +282,9 @@ public abstract class AppsBase {
         if (sharedConfig != null) {
             // sharedConfigs do not need deferred loads
             configDeferredLoadOK = true;
-        } else // To avoid possible locks, deferred load should be
-        // performed on the Swing thread
-        {
+        } else { 
+            // To avoid possible locks, deferred load should be
+            // performed on the Swing thread
             if (SwingUtilities.isEventDispatchThread()) {
                 configDeferredLoadOK = doDeferredLoad(file);
             } else {
@@ -304,7 +304,10 @@ public abstract class AppsBase {
             // migrate preferences
             InstanceManager.tabbedPreferencesInstance().init();
             InstanceManager.tabbedPreferencesInstance().saveContents();
-            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).storePrefs();
+            ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+            if (cm != null) {
+                cm.storePrefs();
+            }
             // notify user of change
             log.info("Preferences have been migrated to new format.");
             log.info("New preferences format will be used after JMRI is restarted.");
@@ -314,18 +317,20 @@ public abstract class AppsBase {
     //abstract protected void addToActionModel();
     private boolean doDeferredLoad(File file) {
         boolean result;
-        if (log.isDebugEnabled()) {
-            log.debug("start deferred load from config file " + file.getName());
-        }
+        log.debug("start deferred load from config file {}", file.getName());
         try {
-            result = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).loadDeferred(file);
+            ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+            if (cm != null) {
+                result = cm.loadDeferred(file);
+            } else {
+                log.error("Failed to get default configure manager");
+                result = false;
+            }
         } catch (JmriException e) {
             log.error("Unhandled problem loading deferred configuration: " + e);
             result = false;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("end deferred load from config file " + file.getName() + ", OK=" + result);
-        }
+        log.debug("end deferred load from config file {}, OK={}", file.getName(), result);
         return result;
     }
 
@@ -345,9 +350,7 @@ public abstract class AppsBase {
         // `kill -s 9 pid`
         jmri.util.RuntimeUtil.addShutdownHook(new Thread(new Runnable() {
             public void run() {
-                if (log.isDebugEnabled()) {
-                    log.debug("Shutdown hook called");
-                }
+                log.debug("Shutdown hook called");
                 handleQuit();
             }
         }));

@@ -31,7 +31,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite(PackageTest.class);
 
         suite.addTest(RevHistoryTest.suite());
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.docbook.configurexml.PackageTest.class));
         return suite;
     }
 

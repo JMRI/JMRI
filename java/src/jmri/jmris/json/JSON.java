@@ -1,12 +1,18 @@
 package jmri.jmris.json;
 
 import jmri.server.json.JsonException;
+import jmri.server.json.block.JsonBlock;
+import jmri.server.json.light.JsonLight;
+import jmri.server.json.memory.JsonMemory;
 import jmri.server.json.power.JsonPowerServiceFactory;
 import jmri.server.json.reporter.JsonReporter;
 import jmri.server.json.roster.JsonRoster;
-import jmri.server.json.sensor.JsonSensorServiceFactory;
+import jmri.server.json.sensor.JsonSensor;
+import jmri.server.json.signalHead.JsonSignalHead;
+import jmri.server.json.signalMast.JsonSignalMast;
 import jmri.server.json.throttle.JsonThrottle;
 import jmri.server.json.time.JsonTimeServiceFactory;
+import jmri.server.json.turnout.JsonTurnoutServiceFactory;
 
 /**
  * Constants used in the JMRI JSON protocol through version 3.0.
@@ -38,91 +44,91 @@ public final class JSON {
      * <p>
      * {@value #JSON_PROTOCOL_VERSION}
      */
-    public static final String JSON_PROTOCOL_VERSION = jmri.server.json.JSON.JSON_PROTOCOL_VERSION; // NOI18N
+    public static final String JSON_PROTOCOL_VERSION = jmri.server.json.JSON.JSON_PROTOCOL_VERSION;
 
     /* JSON structure */
     /**
      * {@value #TYPE}
      */
-    public static final String TYPE = "type"; // NOI18N
+    public static final String TYPE = jmri.server.json.JSON.TYPE;
     /**
      * {@value #LIST}
      */
-    public static final String LIST = "list"; // NOI18N
+    public static final String LIST = jmri.server.json.JSON.LIST;
     /**
      * {@value #DATA}
      */
-    public static final String DATA = "data"; // NOI18N
+    public static final String DATA = jmri.server.json.JSON.DATA;
     /**
      * {@value #PING}
      */
-    public static final String PING = jmri.server.json.JSON.PING; // NOI18N
+    public static final String PING = jmri.server.json.JSON.PING;
     /**
      * {@value #PONG}
      */
-    public static final String PONG = jmri.server.json.JSON.PONG; // NOI18N
+    public static final String PONG = jmri.server.json.JSON.PONG;
     /**
      * {@value #GOODBYE}
      */
-    public static final String GOODBYE = jmri.server.json.JSON.GOODBYE; // NOI18N
+    public static final String GOODBYE = jmri.server.json.JSON.GOODBYE;
     /**
      * {@value #NAME}
      */
-    public static final String NAME = "name"; // NOI18N
+    public static final String NAME = jmri.server.json.JSON.NAME;
 
     /* JSON methods */
     /**
      * {@value #METHOD}
      */
-    public static final String METHOD = "method"; // NOI18N
+    public static final String METHOD = jmri.server.json.JSON.METHOD;
     /**
      * {@value #DELETE}
      */
-    public static final String DELETE = "delete"; // NOI18N
+    public static final String DELETE = jmri.server.json.JSON.DELETE;
     /**
      * {@value #GET}
      */
-    public static final String GET = "get"; // NOI18N
+    public static final String GET = jmri.server.json.JSON.GET;
     /**
      * {@value #POST}
      */
-    public static final String POST = "post"; // NOI18N
+    public static final String POST = jmri.server.json.JSON.POST;
     /**
      * {@value #PUT}
      */
-    public static final String PUT = "put"; // NOI18N
+    public static final String PUT = jmri.server.json.JSON.PUT;
 
     /* JSON common tokens */
     /**
      * {@value #COMMENT}
      */
-    public static final String COMMENT = "comment"; // NOI18N
+    public static final String COMMENT = jmri.server.json.JSON.COMMENT;
     /**
      * {@value #USERNAME}
      */
-    public static final String USERNAME = "userName"; // NOI18N
+    public static final String USERNAME = jmri.server.json.JSON.USERNAME;
     /**
      * {@value #STATE}
      */
-    public static final String STATE = "state"; // NOI18N
+    public static final String STATE = jmri.server.json.JSON.STATE;
     /**
      * {@value #VALUE}
      */
-    public static final String VALUE = "value"; // NOI18N
+    public static final String VALUE = jmri.server.json.JSON.VALUE;
     /**
      * {@value #ID}
      */
-    public static final String ID = "id"; // NOI18N
+    public static final String ID = jmri.server.json.JSON.ID;
     /**
      * {@value #STATUS}
      */
-    public static final String STATUS = "status"; // NOI18N
+    public static final String STATUS = jmri.server.json.JSON.STATUS;
     /**
      * Numeric status value
      *
      * {@value #STATUS_CODE}
      */
-    public static final String STATUS_CODE = "statusCode"; // NOI18N
+    public static final String STATUS_CODE = jmri.server.json.JSON.STATUS_CODE;
 
     /* JSON error */
     /**
@@ -130,565 +136,585 @@ public final class JSON {
      *
      * @see jmri.server.json.JsonException#ERROR
      */
-    public static final String ERROR = JsonException.ERROR; // NOI18N
+    public static final String ERROR = JsonException.ERROR;
     /**
      * {@value #CODE}
      *
      * @see jmri.server.json.JsonException#CODE
      */
-    public static final String CODE = JsonException.CODE; // NOI18N
+    public static final String CODE = JsonException.CODE;
     /**
      * {@value #MESSAGE}
      *
      * @see jmri.server.json.JsonException#MESSAGE
      */
-    public static final String MESSAGE = JsonException.MESSAGE; // NOI18N
+    public static final String MESSAGE = JsonException.MESSAGE;
 
     /* JSON hello and metadata */
     /**
      * {@value #HELLO}
      */
-    public static final String HELLO = jmri.server.json.JSON.HELLO; // NOI18N
+    public static final String HELLO = jmri.server.json.JSON.HELLO;
     /**
      * {@value #JMRI}
      */
-    public static final String JMRI = "JMRI"; // NOI18N
+    public static final String JMRI = jmri.server.json.JSON.JMRI;
     /**
      * {@value #HEARTBEAT}
      */
-    public static final String HEARTBEAT = "heartbeat"; // NOI18N
+    public static final String HEARTBEAT = jmri.server.json.JSON.HEARTBEAT;
     /**
      * {@value #RAILROAD}
      */
-    public static final String RAILROAD = "railroad"; // NOI18N
+    public static final String RAILROAD = jmri.server.json.JSON.RAILROAD;
     /**
      * {@value #NODE}
      * <p>
      * @since 1.1
      */
-    public static final String NODE = "node"; // NOI18N
+    public static final String NODE = jmri.server.json.JSON.NODE;
     /**
      * {@value #ACTIVE_PROFILE}
      * <p>
      * @since 3.0
      */
-    public static final String ACTIVE_PROFILE = "activeProfile"; // NOI18N
+    public static final String ACTIVE_PROFILE = jmri.server.json.JSON.ACTIVE_PROFILE;
     /**
      * {@value #FORMER_NODES}
      * <p>
      * @since 1.1
      */
-    public static final String FORMER_NODES = "formerNodes"; // NOI18N
+    public static final String FORMER_NODES = jmri.server.json.JSON.FORMER_NODES;
     /**
      * {@value #LOCALE}
      * <p>
      * @since 1.1
      */
-    public static final String LOCALE = "locale"; // NOI18N
+    public static final String LOCALE = jmri.server.json.JSON.LOCALE;
 
     /* JSON list types */
     /**
      * {@value #BLOCKS}
+     *
+     * @see jmri.server.json.block.JsonBlock#BLOCKS
      */
-    public static final String BLOCKS = "blocks"; // NOI18N
+    public static final String BLOCKS = JsonBlock.BLOCKS;
     /**
      * {@value #CARS}
      */
-    public static final String CARS = "cars"; // NOI18N
+    public static final String CARS = jmri.server.json.JSON.CARS;
     /**
      * {@value #CONSISTS}
      */
-    public static final String CONSISTS = "consists"; // NOI18N
+    public static final String CONSISTS = jmri.server.json.JSON.CONSISTS;
     /**
      * {@value #ENGINES}
      */
-    public static final String ENGINES = "engines"; // NOI18N
+    public static final String ENGINES = jmri.server.json.JSON.ENGINES;
     /**
      * {@value #LIGHTS}
      */
-    public static final String LIGHTS = "lights"; // NOI18N
+    public static final String LIGHTS = JsonLight.LIGHTS;
     /**
      * {@value #LOCATIONS}
      */
-    public static final String LOCATIONS = "locations"; // NOI18N
+    public static final String LOCATIONS = jmri.server.json.JSON.LOCATIONS;
     /**
      * {@value #MEMORIES}
      */
-    public static final String MEMORIES = "memories"; // NOI18N
+    public static final String MEMORIES = JsonMemory.MEMORIES;
     /**
      * {@value #METADATA}
      */
-    public static final String METADATA = jmri.server.json.JSON.METADATA; // NOI18N
+    public static final String METADATA = jmri.server.json.JSON.METADATA;
     /**
      * {@value #PANELS}
      */
-    public static final String PANELS = "panels"; // NOI18N
+    public static final String PANELS = jmri.server.json.JSON.PANELS;
     /**
      * {@value #REPORTERS}
+     *
+     * @see jmri.server.json.reporter.JsonReporter#REPORTERS
      */
-    public static final String REPORTERS = JsonReporter.REPORTERS; // NOI18N
+    public static final String REPORTERS = JsonReporter.REPORTERS;
     /**
      * {@value #ROSTER}
      *
      * @see jmri.server.json.roster.JsonRoster#ROSTER
      *
      */
-    public static final String ROSTER = JsonRoster.ROSTER; // NOI18N
+    public static final String ROSTER = JsonRoster.ROSTER;
     /**
      * {@value #ROSTER_GROUP}
      *
      * @since 2.0
      * @see jmri.server.json.roster.JsonRoster#ROSTER_GROUP
      */
-    public static final String ROSTER_GROUP = JsonRoster.ROSTER_GROUP; // NOI18N
+    public static final String ROSTER_GROUP = JsonRoster.ROSTER_GROUP;
     /**
      * {@value #ROSTER_GROUPS}
      *
      * @see jmri.server.json.roster.JsonRoster#ROSTER_GROUPS
      */
-    public static final String ROSTER_GROUPS = JsonRoster.ROSTER_GROUPS; // NOI18N
+    public static final String ROSTER_GROUPS = JsonRoster.ROSTER_GROUPS;
     /**
      * {@value #ROUTES}
      */
-    public static final String ROUTES = "routes"; // NOI18N
+    public static final String ROUTES = jmri.server.json.JSON.ROUTES;
     /**
      * {@value #SENSORS}
      *
-     * @see jmri.server.json.sensor.JsonSensorServiceFactory#SENSORS
+     * @see jmri.server.json.sensor.JsonSensor#SENSORS
      */
-    public static final String SENSORS = JsonSensorServiceFactory.SENSORS;
+    public static final String SENSORS = JsonSensor.SENSORS;
     /**
      * {@value #SIGNAL_HEADS}
+     *
+     * @see jmri.server.json.signalHead.JsonSignalHead#SIGNAL_HEADS
      */
-    public static final String SIGNAL_HEADS = "signalHeads"; // NOI18N
+    public static final String SIGNAL_HEADS = JsonSignalHead.SIGNAL_HEADS;
     /**
      * {@value #SIGNAL_MASTS}
+     *
+     * @see jmri.server.json.signalMast.JsonSignalMast#SIGNAL_MASTS
      */
-    public static final String SIGNAL_MASTS = "signalMasts"; // NOI18N
+    public static final String SIGNAL_MASTS = JsonSignalMast.SIGNAL_MASTS;
     /**
      * {@value #TRAINS}
      */
-    public static final String TRAINS = "trains"; // NOI18N
+    public static final String TRAINS = jmri.server.json.JSON.TRAINS;
     /**
      * {@value #TURNOUTS}
      */
-    public static final String TURNOUTS = "turnouts"; // NOI18N
+    public static final String TURNOUTS = JsonTurnoutServiceFactory.TURNOUTS;
     /**
      * {@value #NETWORK_SERVICES}
      */
-    public static final String NETWORK_SERVICES = jmri.server.json.JSON.NETWORK_SERVICES; // NOI18N
+    public static final String NETWORK_SERVICES = jmri.server.json.JSON.NETWORK_SERVICES;
 
     /* JSON data types */
     /**
      * {@value #BLOCK}
+     *
+     * @see jmri.server.json.block.JsonBlock#BLOCK
      */
-    public static final String BLOCK = "block"; // NOI18N
+    public static final String BLOCK = JsonBlock.BLOCK;
     /**
      * {@value #CAR}
      */
-    public static final String CAR = "car"; // NOI18N
+    public static final String CAR = jmri.server.json.JSON.CAR;
     /**
      * {@value #CONSIST}
      */
-    public static final String CONSIST = "consist"; // NOI18N
+    public static final String CONSIST = jmri.server.json.JSON.CONSIST;
     /**
      * {@value #ENGINE}
      */
-    public static final String ENGINE = "engine"; // NOI18N
+    public static final String ENGINE = jmri.server.json.JSON.ENGINE;
     /**
      * {@value #LIGHT}
      */
-    public static final String LIGHT = "light"; // NOI18N
+    public static final String LIGHT = JsonLight.LIGHT;
     /**
      * {@value #LOCATION}
      */
-    public static final String LOCATION = "location"; // NOI18N
+    public static final String LOCATION = jmri.server.json.JSON.LOCATION;
     /**
      * {@value #LOCATION_ID}
      */
-    public static final String LOCATION_ID = "locationId"; // NOI18N
+    public static final String LOCATION_ID = jmri.server.json.JSON.LOCATION_ID;
     /**
      * {@value #MEMORY}
      */
-    public static final String MEMORY = "memory"; // NOI18N
+    public static final String MEMORY = JsonMemory.MEMORY;
     /**
      * {@value #NETWORK_SERVICE}
      *
      * @since 2.0
      */
-    public static final String NETWORK_SERVICE = jmri.server.json.JSON.NETWORK_SERVICE; // NOI18N
+    public static final String NETWORK_SERVICE = jmri.server.json.JSON.NETWORK_SERVICE;
     /**
      * {@value #PANEL}
      */
-    public static final String PANEL = "panel"; // NOI18N
+    public static final String PANEL = jmri.server.json.JSON.PANEL;
     /**
      * {@value #POWER}
      *
      * @see jmri.server.json.power.JsonPowerServiceFactory#POWER
      */
-    public static final String POWER = JsonPowerServiceFactory.POWER; // NOI18N
+    public static final String POWER = JsonPowerServiceFactory.POWER;
     /**
      * {@value #PROGRAMMER}
      */
-    public static final String PROGRAMMER = "programmer"; // NOI18N
+    public static final String PROGRAMMER = jmri.server.json.JSON.PROGRAMMER;
     /**
      * {@value #ROUTE}
      */
-    public static final String ROUTE = "route"; // NOI18N
+    public static final String ROUTE = jmri.server.json.JSON.ROUTE;
     /**
      * {@value #SENSOR}
      *
-     * @see jmri.server.json.sensor.JsonSensorServiceFactory#SENSOR
+     * @see jmri.server.json.sensor.JsonSensor#SENSOR
      */
-    public static final String SENSOR = JsonSensorServiceFactory.SENSOR;
+    public static final String SENSOR = JsonSensor.SENSOR;
     /**
      * {@value #SIGNAL_HEAD}
+     *
+     * @see jmri.server.json.signalHead.JsonSignalHead#SIGNAL_HEAD
      */
-    public static final String SIGNAL_HEAD = "signalHead"; // NOI18N
+    public static final String SIGNAL_HEAD = JsonSignalHead.SIGNAL_HEAD;
     /**
      * {@value #SIGNAL_MAST}
+     *
+     * @see jmri.server.json.signalMast.JsonSignalMast#SIGNAL_MAST
      */
-    public static final String SIGNAL_MAST = "signalMast"; // NOI18N
+    public static final String SIGNAL_MAST = JsonSignalMast.SIGNAL_MAST;
     /**
      * {@value #REPORTER}
+     *
+     * @see jmri.server.json.reporter.JsonReporter#REPORTER
      */
-    public static final String REPORTER = JsonReporter.REPORTER; // NOI18N
+    public static final String REPORTER = JsonReporter.REPORTER;
     /**
      * {@value #ROSTER_ENTRY}
      *
      * @see jmri.server.json.roster.JsonRoster#ROSTER_ENTRY
      */
-    public static final String ROSTER_ENTRY = JsonRoster.ROSTER_ENTRY; // NOI18N
+    public static final String ROSTER_ENTRY = JsonRoster.ROSTER_ENTRY;
     /**
      * {@value #THROTTLE}
      *
      * @see jmri.server.json.throttle.JsonThrottle#THROTTLE
      */
-    public static final String THROTTLE = JsonThrottle.THROTTLE; // NOI18N
+    public static final String THROTTLE = JsonThrottle.THROTTLE;
     /**
      * {@value #TIME}
      *
      * @see jmri.server.json.time.JsonTimeServiceFactory#TIME
      */
-    public static final String TIME = JsonTimeServiceFactory.TIME; // NOI18N
+    public static final String TIME = JsonTimeServiceFactory.TIME;
     /**
      * {@value #TRAIN}
      */
-    public static final String TRAIN = "train"; // NOI18N
+    public static final String TRAIN = jmri.server.json.JSON.TRAIN;
     /**
      * {@value #TURNOUT}
      */
-    public static final String TURNOUT = "turnout"; // NOI18N
+    public static final String TURNOUT = jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUT;
 
     /* JSON operations tokens */
     /**
      * {@value #ICON_NAME}
      */
-    public static final String ICON_NAME = "iconName"; // NOI18N
+    public static final String ICON_NAME = jmri.server.json.JSON.ICON_NAME;
     /**
      * {@value #LENGTH}
      */
-    public static final String LENGTH = "length"; // NOI18N
+    public static final String LENGTH = jmri.server.json.JSON.LENGTH;
     /**
      * {@value #WEIGHT}
      */
-    public static final String WEIGHT = "weight"; // NOI18N
+    public static final String WEIGHT = jmri.server.json.JSON.WEIGHT;
     /**
      * {@value #LEAD_ENGINE}
      */
-    public static final String LEAD_ENGINE = "leadEngine"; // NOI18N
+    public static final String LEAD_ENGINE = jmri.server.json.JSON.LEAD_ENGINE;
     /**
      * {@value #CABOOSE}
      */
-    public static final String CABOOSE = "caboose"; // NOI18N
+    public static final String CABOOSE = jmri.server.json.JSON.CABOOSE;
     /**
      * {@value #TERMINATE}
      */
-    public static final String TERMINATE = "terminate"; // NOI18N
+    public static final String TERMINATE = jmri.server.json.JSON.TERMINATE;
     /**
      * {@value #TRACK}
      *
      * @since 1.1
      */
-    public static final String TRACK = "track";
+    public static final String TRACK = jmri.server.json.JSON.TRACK;
     /**
      * {@value #DATE}
      *
      * @since 1.1
      */
-    public static final String DATE = "date";
+    public static final String DATE = jmri.server.json.JSON.DATE;
 
     /* JSON panel tokens */
     /**
      * {@value #CONTROL_PANEL}
      */
-    public static final String CONTROL_PANEL = "Control Panel"; // NOI18N
+    public static final String CONTROL_PANEL = jmri.server.json.JSON.CONTROL_PANEL;
     /**
      * {@value #LAYOUT_PANEL}
      */
-    public static final String LAYOUT_PANEL = "Layout"; // NOI18N
+    public static final String LAYOUT_PANEL = jmri.server.json.JSON.LAYOUT_PANEL;
     /**
      * {@value #PANEL_PANEL}
      */
-    public static final String PANEL_PANEL = "Panel"; // NOI18N
+    public static final String PANEL_PANEL = jmri.server.json.JSON.PANEL;
     /**
      * {@value #URL}
      */
-    public static final String URL = "URL"; // NOI18N
+    public static final String URL = jmri.server.json.JSON.URL;
     /**
      * {@value #FORMAT}
      */
-    public static final String FORMAT = "format"; // NOI18N
+    public static final String FORMAT = jmri.server.json.JSON.FORMAT;
     /**
      * {@value #JSON}
      */
-    public static final String JSON = "json"; // NOI18N
+    public static final String JSON = jmri.server.json.JSON.JSON;
     /**
      * {@value #XML}
      */
-    public static final String XML = "xml"; // NOI18N
+    public static final String XML = jmri.server.json.JSON.XML;
 
     /* JSON programmer tokens */
     /**
      * {@value #MODE}
      */
-    public static final String MODE = "mode"; // NOI18N
+    public static final String MODE = jmri.server.json.JSON.MODE;
     /**
      * {@value #NODE_CV}
      */
-    public static final String NODE_CV = "CV"; // NOI18N
+    public static final String NODE_CV = jmri.server.json.JSON.NODE_CV;
     /**
      * {@value #OP}
      */
-    public static final String OP = "mode"; // NOI18N
+    public static final String OP = jmri.server.json.JSON.OP;
     /**
      * {@value #READ}
      */
-    public static final String READ = "read"; // NOI18N
+    public static final String READ = jmri.server.json.JSON.READ;
     /**
      * {@value #WRITE}
      */
-    public static final String WRITE = "write"; // NOI18N
+    public static final String WRITE = jmri.server.json.JSON.WRITE;
 
     /* JSON reporter tokens */
     /**
      * {@value #REPORT}
+     *
+     * @see jmri.server.json.reporter.JsonReporter#REPORT
      */
-    public static final String REPORT = JsonReporter.REPORT; // NOI18N
+    public static final String REPORT = JsonReporter.REPORT;
     /**
      * {@value #LAST_REPORT}
+     *
+     * @see jmri.server.json.reporter.JsonReporter#LAST_REPORT
      */
-    public static final String LAST_REPORT = JsonReporter.LAST_REPORT; // NOI18N
+    public static final String LAST_REPORT = JsonReporter.LAST_REPORT;
 
     /* JSON roster and car/engine (operations) tokens */
     /**
      * {@value #COLOR}
      */
-    public static final String COLOR = "color"; // NOI18N
+    public static final String COLOR = jmri.server.json.JSON.COLOR;
     /**
      * {@value #LOAD}
      */
-    public static final String LOAD = "load"; // NOI18N
+    public static final String LOAD = jmri.server.json.JSON.LOAD;
     /**
      * {@value #MODEL}
      */
-    public static final String MODEL = "model"; // NOI18N
+    public static final String MODEL = jmri.server.json.JSON.MODEL;
     /**
      * {@value #ROAD}
      */
-    public static final String ROAD = "road"; // NOI18N
+    public static final String ROAD = jmri.server.json.JSON.ROAD;
     /**
      * {@value #NUMBER}
      */
-    public static final String NUMBER = "number"; // NOI18N
+    public static final String NUMBER = jmri.server.json.JSON.NUMBER;
     /**
      * {@value #DESTINATION}
      */
-    public static final String DESTINATION = "destination"; // NOI18N
+    public static final String DESTINATION = jmri.server.json.JSON.DESTINATION;
     /**
      * {@value #DESTINATION_TRACK}
      */
-    public static final String DESTINATION_TRACK = "dest&track"; // NOI18N
+    public static final String DESTINATION_TRACK = jmri.server.json.JSON.DESTINATION_TRACK;
     /**
      * {@value #LOCATION_TRACK}
      */
-    public static final String LOCATION_TRACK = "locationTrack"; // NOI18N
+    public static final String LOCATION_TRACK = jmri.server.json.JSON.LOCATION_TRACK;
     /**
      * {@value #IS_LONG_ADDRESS}
      */
-    public static final String IS_LONG_ADDRESS = "isLongAddress"; // NOI18N
+    public static final String IS_LONG_ADDRESS = jmri.server.json.JSON.IS_LONG_ADDRESS;
     /**
      * {@value #MFG}
      */
-    public static final String MFG = "mfg"; // NOI18N
+    public static final String MFG = jmri.server.json.JSON.MFG;
     /**
      * {@value #DECODER_MODEL}
      */
-    public static final String DECODER_MODEL = "decoderModel"; // NOI18N
+    public static final String DECODER_MODEL = jmri.server.json.JSON.DECODER_MODEL;
     /**
      * {@value #DECODER_FAMILY}
      */
-    public static final String DECODER_FAMILY = "decoderFamily"; // NOI18N
+    public static final String DECODER_FAMILY = jmri.server.json.JSON.DECODER_FAMILY;
     /**
      * {@value #MAX_SPD_PCT}
      */
-    public static final String MAX_SPD_PCT = "maxSpeedPct"; // NOI18N
+    public static final String MAX_SPD_PCT = jmri.server.json.JSON.MAX_SPD_PCT;
     /**
      * {@value #FUNCTION_KEYS}
      */
-    public static final String FUNCTION_KEYS = "functionKeys"; // NOI18N
+    public static final String FUNCTION_KEYS = jmri.server.json.JSON.FUNCTION_KEYS;
     /**
      * {@value #IMAGE}
      *
      * @since 2.0
      */
-    public static final String IMAGE = "image"; // NOI18N
+    public static final String IMAGE = jmri.server.json.JSON.IMAGE;
     /**
      * {@value #ICON}
      *
      * @since 2.0
      */
-    public static final String ICON = "icon"; // NOI18N
+    public static final String ICON = jmri.server.json.JSON.ICON;
     /**
      * {@value #SELECTED_ICON}
      *
      * @since 2.0
      */
-    public static final String SELECTED_ICON = "selectedIcon"; // NOI18N
+    public static final String SELECTED_ICON = jmri.server.json.JSON.SELECTED_ICON;
     /**
      * {@value #LABEL}
      */
-    public static final String LABEL = "label"; // NOI18N
+    public static final String LABEL = jmri.server.json.JSON.LABEL;
     /**
      * {@value #LOCKABLE}
      */
-    public static final String LOCKABLE = "lockable"; // NOI18N
+    public static final String LOCKABLE = jmri.server.json.JSON.LOCKABLE;
     /**
      * {@value #GROUP}
      */
-    public static final String GROUP = "group"; // NOI18N
+    public static final String GROUP = jmri.server.json.JSON.GROUP;
     /**
      * {@value #OWNER}
      *
      * @since 1.1
      */
-    public static final String OWNER = "owner"; // NOI18N
+    public static final String OWNER = jmri.server.json.JSON.OWNER;
     /**
      * {@value #SHUNTING_FUNCTION}
      *
      * @since 2.0
      */
-    public static final String SHUNTING_FUNCTION = "shuntingFunction"; // NOI18N
+    public static final String SHUNTING_FUNCTION = jmri.server.json.JSON.SHUNTING_FUNCTION;
 
     /* JSON route (operations) tokens */
     /**
      * {@value #DIRECTION}
      */
-    public static final String DIRECTION = "trainDirection"; // NOI18N
+    public static final String DIRECTION = jmri.server.json.JSON.DIRECTION;
     /**
      * {@value #SEQUENCE}
      */
-    public static final String SEQUENCE = "sequenceId"; // NOI18N
+    public static final String SEQUENCE = jmri.server.json.JSON.SEQUENCE;
     /**
      * {@value #ARRIVAL_TIME}
      *
      * @since 1.1
      */
-    public static final String ARRIVAL_TIME = "arrivalTime"; // NOI18N
+    public static final String ARRIVAL_TIME = jmri.server.json.JSON.ARRIVAL_TIME;
     /**
      * {@value #EXPECTED_ARRIVAL}
      */
-    public static final String EXPECTED_ARRIVAL = "expectedArrivalTime"; // NOI18N
+    public static final String EXPECTED_ARRIVAL = jmri.server.json.JSON.EXPECTED_ARRIVAL;
     /**
      * {@value #EXPECTED_DEPARTURE}
      */
-    public static final String EXPECTED_DEPARTURE = "expectedDepartureTime"; // NOI18N
+    public static final String EXPECTED_DEPARTURE = jmri.server.json.JSON.EXPECTED_DEPARTURE;
     /**
      * {@value #DEPARTURE_TIME}
      */
-    public static final String DEPARTURE_TIME = "departureTime"; // NOI18N
+    public static final String DEPARTURE_TIME = jmri.server.json.JSON.DEPARTURE_TIME;
     /**
      * {@value #DEPARTURE_LOCATION}
      */
-    public static final String DEPARTURE_LOCATION = "trainDepartsName"; // NOI18N
+    public static final String DEPARTURE_LOCATION = jmri.server.json.JSON.DEPARTURE_LOCATION;
     /**
      * {@value #TERMINATES_LOCATION}
      */
-    public static final String TERMINATES_LOCATION = "trainTerminatesName"; // NOI18N
+    public static final String TERMINATES_LOCATION = jmri.server.json.JSON.TERMINATES_LOCATION;
     /**
      * {@value #DESCRIPTION}
      */
-    public static final String DESCRIPTION = "description"; // NOI18N
+    public static final String DESCRIPTION = jmri.server.json.JSON.DESCRIPTION;
     /**
      * {@value #ROUTE_ID}
      */
-    public static final String ROUTE_ID = "routeId"; // NOI18N
+    public static final String ROUTE_ID = jmri.server.json.JSON.ROUTE_ID;
     /**
      * {@value #HAZARDOUS}
      *
      * @since 1.1
      */
-    public static final String HAZARDOUS = "hazardous"; // NOI18N
+    public static final String HAZARDOUS = jmri.server.json.JSON.HAZARDOUS;
     /**
      * {@value #KERNEL}
      *
      * @since 1.1
      */
-    public static final String KERNEL = "kernel"; // NOI18N
+    public static final String KERNEL = jmri.server.json.JSON.KERNEL;
     /**
      * {@value #FINAL_DESTINATION}
      *
      * @since 1.1
      */
-    public static final String FINAL_DESTINATION = "finalDestination"; // NOI18N
+    public static final String FINAL_DESTINATION = jmri.server.json.JSON.FINAL_DESTINATION;
     /**
      * {@value #REMOVE_COMMENT}
      *
      * @since 1.1
      */
-    public static final String REMOVE_COMMENT = "removeComment"; // NOI18N
+    public static final String REMOVE_COMMENT = jmri.server.json.JSON.REMOVE_COMMENT;
     /**
      * {@value #ADD_COMMENT}
      *
      * @since 1.1
      */
-    public static final String ADD_COMMENT = "addComment"; // NOI18N
+    public static final String ADD_COMMENT = jmri.server.json.JSON.ADD_COMMENT;
     /**
      * {@value #IS_LOCAL}
      *
      * @since 1.1
      */
-    public static final String IS_LOCAL = "isLocal";
+    public static final String IS_LOCAL = jmri.server.json.JSON.IS_LOCAL;
     /**
      * {@value #ADD_HELPERS}
      *
      * @since 1.1
      */
-    public static final String ADD_HELPERS = "addHelpers";
+    public static final String ADD_HELPERS = jmri.server.json.JSON.ADD_HELPERS;
     /**
      * {@value #CHANGE_CABOOSE}
      *
      * @since 1.1
      */
-    public static final String CHANGE_CABOOSE = "changeCaboose";
+    public static final String CHANGE_CABOOSE = jmri.server.json.JSON.CHANGE_CABOOSE;
     /**
      * {@value #CHANGE_ENGINES}
      *
      * @since 1.1
      */
-    public static final String CHANGE_ENGINES = "changeEngines";
+    public static final String CHANGE_ENGINES = jmri.server.json.JSON.CHANGE_ENGINES;
     /**
      * {@value #REMOVE_HELPERS}
      *
      * @since 1.1
      */
-    public static final String REMOVE_HELPERS = "removeHelpers";
+    public static final String REMOVE_HELPERS = jmri.server.json.JSON.REMOVE_HELPERS;
     /**
      * {@value #OPTIONS}
      *
      * @since 1.1
      */
-    public static final String OPTIONS = "options";
+    public static final String OPTIONS = jmri.server.json.JSON.OPTIONS;
     /**
      * {@value #ADD}
      *
@@ -697,7 +723,7 @@ public final class JSON {
      *
      * @since 1.1
      */
-    public static final String ADD = "add";
+    public static final String ADD = jmri.server.json.JSON.ADD;
     /**
      * {@value #REMOVE}
      *
@@ -709,77 +735,77 @@ public final class JSON {
      *
      * @since 1.1
      */
-    public static final String REMOVE = "remove";
+    public static final String REMOVE = jmri.server.json.JSON.REMOVE;
     /**
      * {@value #ADD_AND_REMOVE}
      *
      * @since 1.1
      */
-    public static final String ADD_AND_REMOVE = "addAndRemove";
+    public static final String ADD_AND_REMOVE = jmri.server.json.JSON.ADD_AND_REMOVE;
     /**
      * {@value #TOTAL}
      *
      * @since 1.1
      */
-    public static final String TOTAL = "total";
+    public static final String TOTAL = jmri.server.json.JSON.TOTAL;
     /**
      * {@value #LOADS}
      *
      * @since 1.1
      */
-    public static final String LOADS = "loads";
+    public static final String LOADS = jmri.server.json.JSON.LOADS;
     /**
      * {@value #EMPTIES}
      *
      * @since 1.1
      */
-    public static final String EMPTIES = "empties";
+    public static final String EMPTIES = jmri.server.json.JSON.EMPTIES;
     /**
      * {@value #RETURN_WHEN_EMPTY}
      *
      * @since 1.1
      */
-    public static final String RETURN_WHEN_EMPTY = "returnWhenEmpty";
+    public static final String RETURN_WHEN_EMPTY = jmri.server.json.JSON.RETURN_WHEN_EMPTY;
     /**
      * {@value #UTILITY}
      *
      * @since 1.1
      */
-    public static final String UTILITY = "utility";
+    public static final String UTILITY = jmri.server.json.JSON.UTILITY;
 
     /* JSON signalling tokens */
     /**
      * {@value #APPEARANCE}
      */
-    public static final String APPEARANCE = "appearance"; // NOI18N
+    public static final String APPEARANCE = jmri.server.json.JSON.APPEARANCE;
     /**
      * {@value #APPEARANCE_NAME}
      */
-    public static final String APPEARANCE_NAME = "appearanceName"; // NOI18N
+    public static final String APPEARANCE_NAME = jmri.server.json.JSON.APPEARANCE_NAME;
     /**
      * {@value #ASPECT}
      */
-    public static final String ASPECT = "aspect"; // NOI18N
+    public static final String ASPECT = jmri.server.json.JSON.ASPECT;
     /**
      * {@value #ASPECT_DARK}
      */
-    public static final String ASPECT_DARK = "Dark"; // NOI18N
+    public static final String ASPECT_DARK = jmri.server.json.JSON.ASPECT_DARK;
     /**
      * {@value #ASPECT_HELD}
      */
-    public static final String ASPECT_HELD = "Held"; // NOI18N
+    public static final String ASPECT_HELD = jmri.server.json.JSON.ASPECT_HELD;
     /**
      * {@value #ASPECT_UNKNOWN}
      */
-    public static final String ASPECT_UNKNOWN = "Unknown"; // NOI18N
+    public static final String ASPECT_UNKNOWN = jmri.server.json.JSON.ASPECT_UNKNOWN;
     /**
      * {@value #TOKEN_HELD}
      */
-    public static final String TOKEN_HELD = "held"; // NOI18N
+    public static final String TOKEN_HELD = jmri.server.json.JSON.TOKEN_HELD;
     /**
      * {@value #LIT}
      */
-    public static final String LIT = "lit"; // NOI18N
+    public static final String LIT = jmri.server.json.JSON.LIT;
 
     /* JSON throttle tokens */
     /**
@@ -847,39 +873,39 @@ public final class JSON {
     /**
      * {@value #INVERTED}
      */
-    public static final String INVERTED = "inverted"; // NOI18N
+    public static final String INVERTED = jmri.server.json.JSON.INVERTED;
 
     /* JSON value types */
     /**
      * {@value #NULL}
      */
-    public static final String NULL = "null"; // NOI18N
+    public static final String NULL = jmri.server.json.JSON.NULL;
     /**
      * {@value #INTEGER}
      */
-    public static final String INTEGER = "int"; // NOI18N
+    public static final String INTEGER = jmri.server.json.JSON.INTEGER;
 
     /* JSON network services tokens */
     /**
      * {@value #PORT}
      */
-    public static final String PORT = "port"; // NOI18N
+    public static final String PORT = jmri.server.json.JSON.PORT;
 
     /* JSON consist tokens */
     /**
      * {@value #POSITION}
      */
-    public static final String POSITION = "position"; // NOI18N
+    public static final String POSITION = jmri.server.json.JSON.POSITION;
     /**
      * {@value #SIZE_LIMIT}
      */
-    public static final String SIZE_LIMIT = "sizeLimit"; // NOI18N
+    public static final String SIZE_LIMIT = jmri.server.json.JSON.SIZE_LIMIT;
 
     /* Time constants */
     /**
      * {@value #RATE}
      */
-    public static final String RATE = "rate"; // NOI18N
+    public static final String RATE = jmri.server.json.JSON.RATE;
 
     /*
      * JSON State (an unsigned integer)
@@ -982,7 +1008,7 @@ public final class JSON {
      *
      * @since 1.1
      */
-    public static final String UNIT = "unit"; // NOI18N
+    public static final String UNIT = jmri.server.json.JSON.UNIT;
 
     /* JMRI JSON Client Autoconfiguration support */
     /**
@@ -990,26 +1016,26 @@ public final class JSON {
      *
      * @since 2.0
      */
-    public static final String PREFIX = "prefix"; // NOI18N
+    public static final String PREFIX = jmri.server.json.JSON.PREFIX;
     /**
      * {@value #SYSTEM_CONNECTION}
      *
      * @since 2.0
      */
-    public static final String SYSTEM_CONNECTION = jmri.server.json.JSON.SYSTEM_CONNECTION; // NOI18N
+    public static final String SYSTEM_CONNECTION = jmri.server.json.JSON.SYSTEM_CONNECTION;
     /**
      * {@value #SYSTEM_CONNECTIONS}
      *
      * @since 2.0
      */
-    public static final String SYSTEM_CONNECTIONS = jmri.server.json.JSON.SYSTEM_CONNECTIONS; // NOI18N
+    public static final String SYSTEM_CONNECTIONS = jmri.server.json.JSON.SYSTEM_CONNECTIONS;
 
     /* ZeroConf support */
     /**
      * {@value #ZEROCONF_SERVICE_TYPE} Not used within the protocol, but used to
      * support discovery of servers supporting the protocol.
      */
-    public static final String ZEROCONF_SERVICE_TYPE = "_jmri-json._tcp.local."; // NOI18N
+    public static final String ZEROCONF_SERVICE_TYPE = jmri.server.json.JSON.ZEROCONF_SERVICE_TYPE;
 
     /* prevent the constructor from being documented */
     private JSON() {

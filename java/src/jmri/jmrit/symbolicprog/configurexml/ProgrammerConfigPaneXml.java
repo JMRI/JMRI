@@ -1,5 +1,6 @@
 package jmri.jmrit.symbolicprog.configurexml;
 
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.jmrit.symbolicprog.ProgrammerConfigPane;
@@ -65,7 +66,10 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
         if (null != (a = shared.getAttribute("showCvNumbers"))) {
             InstanceManager.getDefault(ProgrammerConfigManager.class).setShowCvNumbers(a.getValue().equals("yes"));
         }
-        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(new ProgrammerConfigPane());
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerPref(new ProgrammerConfigPane());
+        }
         return result;
     }
 

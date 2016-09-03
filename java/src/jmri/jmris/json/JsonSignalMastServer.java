@@ -3,14 +3,14 @@ package jmri.jmris.json;
 import static jmri.server.json.JSON.ASPECT_DARK;
 import static jmri.server.json.JSON.ASPECT_HELD;
 import static jmri.server.json.JSON.ASPECT_UNKNOWN;
-import static jmri.server.json.JsonException.CODE;
 import static jmri.server.json.JSON.DATA;
-import static jmri.server.json.JsonException.ERROR;
-import static jmri.server.json.JsonException.MESSAGE;
 import static jmri.server.json.JSON.NAME;
-import static jmri.server.json.JSON.SIGNAL_MAST;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.TYPE;
+import static jmri.server.json.JsonException.CODE;
+import static jmri.server.json.JsonException.ERROR;
+import static jmri.server.json.JsonException.MESSAGE;
+import static jmri.server.json.signalMast.JsonSignalMast.SIGNAL_MAST;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

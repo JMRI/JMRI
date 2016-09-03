@@ -125,15 +125,15 @@ public class PositionablePopupUtil {
     public void setFixedTextMenu(JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditFixed"));
         if (getFixedWidth() == 0) {
-            edit.add("Width= Auto");
+            edit.add("Width = Auto");
         } else {
-            edit.add("Width= " + _parent.maxWidth());
+            edit.add("Width = " + _parent.maxWidth());
         }
 
         if (getFixedHeight() == 0) {
-            edit.add("Height= Auto");
+            edit.add("Height = Auto");
         } else {
-            edit.add("Height= " + _parent.maxHeight());
+            edit.add("Height = " + _parent.maxHeight());
         }
 
         edit.add(CoordinateEdit.getFixedSizeEditAction(_parent));
@@ -143,7 +143,7 @@ public class PositionablePopupUtil {
     public void setTextMarginMenu(JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditMargin"));
         if ((fixedHeight == 0) || (fixedWidth == 0)) {
-            edit.add("Margin= " + getMargin());
+            edit.add("Margin = " + getMargin());
             edit.add(CoordinateEdit.getMarginEditAction(_parent));
         }
         popup.add(edit);
@@ -158,7 +158,7 @@ public class PositionablePopupUtil {
 
     public void setTextBorderMenu(JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditBorder"));
-        edit.add("Border Size= " + borderSize);
+        edit.add("Border Size = " + borderSize);
         edit.add(CoordinateEdit.getBorderEditAction(_parent));
         JMenu colorMenu = new JMenu(Bundle.getMessage("BorderColorMenu"));
         makeColorMenu(colorMenu, BORDER_COLOR);
@@ -490,7 +490,7 @@ public class PositionablePopupUtil {
         addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Blue"), Color.blue, type);
         addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Magenta"), Color.magenta, type);
         if (type == BACKGROUND_COLOR) {
-            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Clear"), null, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("ColorClear"), null, type);
         }
         return buttonGrp;
     }
@@ -552,8 +552,8 @@ public class PositionablePopupUtil {
 
     protected void setColorButton(Color color, Color buttonColor, JRadioButtonMenuItem r) {
         if (debug) {
-            log.debug("setColorButton: color=" + color + " (RGB= " + (color == null ? "" : color.getRGB())
-                    + ") buttonColor= " + buttonColor + " (RGB= " + (buttonColor == null ? "" : buttonColor.getRGB()) + ")");
+            log.debug("setColorButton: color =" + color + " (RGB = " + (color == null ? "" : color.getRGB())
+                    + ") buttonColor = " + buttonColor + " (RGB = " + (buttonColor == null ? "" : buttonColor.getRGB()) + ")");
         }
         if (buttonColor != null) {
             if (color != null && buttonColor.getRGB() == color.getRGB()) {
@@ -584,7 +584,7 @@ public class PositionablePopupUtil {
      * ************* Justification ***********************
      */
     public void setTextJustificationMenu(JPopupMenu popup) {
-        JMenu justMenu = new JMenu("Justification");
+        JMenu justMenu = new JMenu(Bundle.getMessage("Justification"));
         addJustificationMenuEntry(justMenu, LEFT);
         addJustificationMenuEntry(justMenu, RIGHT);
         addJustificationMenuEntry(justMenu, CENTRE);
@@ -605,7 +605,7 @@ public class PositionablePopupUtil {
     }
 
     public void setJustification(String just) {
-        log.debug("setJustification: justification=" + just);
+        log.debug("setJustification: justification =" + just);
         if (just.equals("right")) {
             justification = RIGHT;
         } else if (just.equals("centre")) {
@@ -618,7 +618,7 @@ public class PositionablePopupUtil {
     }
 
     public int getJustification() {
-        log.debug("getJustification: justification=" + justification);
+        log.debug("getJustification: justification =" + justification);
         return justification;
     }
 
@@ -627,16 +627,16 @@ public class PositionablePopupUtil {
         JRadioButtonMenuItem r;
         switch (just) {
             case LEFT:
-                r = new JRadioButtonMenuItem("LEFT");
+                r = new JRadioButtonMenuItem(Bundle.getMessage("left"));
                 break;
             case RIGHT:
-                r = new JRadioButtonMenuItem("RIGHT");
+                r = new JRadioButtonMenuItem(Bundle.getMessage("right"));
                 break;
             case CENTRE:
-                r = new JRadioButtonMenuItem("CENTRE");
+                r = new JRadioButtonMenuItem(Bundle.getMessage("center"));
                 break;
             default:
-                r = new JRadioButtonMenuItem("LEFT");
+                r = new JRadioButtonMenuItem(Bundle.getMessage("left"));
         }
         r.addActionListener(new ActionListener() {
             //final int justification = just;
@@ -720,7 +720,7 @@ public class PositionablePopupUtil {
     }
 
     public void setTextOrientationMenu(JPopupMenu popup) {
-        JMenu oriMenu = new JMenu("Orientation");
+        JMenu oriMenu = new JMenu(Bundle.getMessage("Orientation"));
         addOrientationMenuEntry(oriMenu, HORIZONTAL);
         addOrientationMenuEntry(oriMenu, VERTICAL_UP);
         addOrientationMenuEntry(oriMenu, VERTICAL_DOWN);

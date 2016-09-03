@@ -46,7 +46,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         if (plist.contains(o)) {
             return;
         }
-        confirmAdapterAvailable(o);
+        if (log.isDebugEnabled()) confirmAdapterAvailable(o);
 
         // and add to list
         plist.add(o);
@@ -54,23 +54,22 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     /**
      * Common check routine to confirm an adapter is available as part of
-     * registration process. Only enabled when Log4J DEBUG level is selected, to
+     * registration process. 
+     * <p>
+     * Note: Should only be called for debugging purposes, 
+     * e.g. when Log4J DEBUG level is selected, to
      * load fewer classes at startup.
      */
     void confirmAdapterAvailable(Object o) {
-        if (log.isDebugEnabled()) {
-            String adapter = adapterName(o);
-            if (log.isDebugEnabled()) {
-                log.debug("register " + o + " adapter " + adapter);
-            }
-            if (adapter != null) {
-                try {
-                    Class.forName(adapter);
-                } catch (ClassNotFoundException ex) {
-                    locateClassFailed(ex, adapter, o);
-                } catch (NoClassDefFoundError ex) {
-                    locateClassFailed(ex, adapter, o);
-                }
+        String adapter = adapterName(o);
+        log.debug("register {} adapter {}", o, adapter);
+        if (adapter != null) {
+            try {
+                Class.forName(adapter);
+            } catch (ClassNotFoundException ex) {
+                locateClassFailed(ex, adapter, o);
+            } catch (NoClassDefFoundError ex) {
+                locateClassFailed(ex, adapter, o);
             }
         }
     }
@@ -80,9 +79,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * wants to replace the preferences with new values.
      */
     public void removePrefItems() {
-        if (log.isDebugEnabled()) {
-            log.debug("removePrefItems dropped " + plist.size());
-        }
+        log.debug("removePrefItems dropped {}", plist.size());
         plist.clear();
     }
 
@@ -128,7 +125,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             return;
         }
 
-        confirmAdapterAvailable(o);
+        if (log.isDebugEnabled()) confirmAdapterAvailable(o);
 
         // and add to list
         //clist.add(o);
@@ -141,7 +138,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             return;
         }
 
-        confirmAdapterAvailable(o);
+        if (log.isDebugEnabled()) confirmAdapterAvailable(o);
 
         // and add to list
         tlist.add(o);
@@ -159,7 +156,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             return;
         }
 
-        confirmAdapterAvailable(o);
+        if (log.isDebugEnabled()) confirmAdapterAvailable(o);
 
         // and add to list
         ulist.add(o);
@@ -171,7 +168,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             return;
         }
 
-        confirmAdapterAvailable(o);
+        if (log.isDebugEnabled()) confirmAdapterAvailable(o);
 
         // and add to list
         uplist.add(o);
@@ -202,9 +199,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      */
     public static String adapterName(Object o) {
         String className = o.getClass().getName();
-        if (log.isDebugEnabled()) {
-            log.debug("handle object of class " + className);
-        }
+        log.debug("handle object of class {}", className);
         int lastDot = className.lastIndexOf(".");
         String result = null;
 
@@ -214,9 +209,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                     + ".configurexml."
                     + className.substring(lastDot + 1, className.length())
                     + "Xml";
-            if (log.isDebugEnabled()) {
-                log.debug("adapter class name is " + result);
-            }
+            log.debug("adapter class name is {}", result);
             return result;
         } else {
             // no last dot found!
@@ -328,7 +321,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     protected void includeHistory(Element root) {
         // add history to end of document
-        if (InstanceManager.getOptionalDefault(FileHistory.class) != null) {
+        if (InstanceManager.getNullableDefault(FileHistory.class) != null) {
             root.addContent(jmri.jmrit.revhistory.configurexml.FileHistoryXml.storeDirectly(InstanceManager.getDefault(FileHistory.class)));
         }
     }
@@ -613,22 +606,18 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 Element item = items.get(i);
                 if (item.getAttribute("class") == null) {
                     // this is an element that we're not meant to read
-                    if (log.isDebugEnabled()) {
-                        log.debug("skipping " + item);
-                    }
+                    log.debug("skipping {}", item);
                     continue;
                 }
                 String adapterName = item.getAttribute("class").getValue();
                 if (log.isDebugEnabled()) {
-                    log.debug("attempt to get adapter " + adapterName + " for " + item);
+                    log.debug("attempt to get adapter {} for {}", adapterName, item);
                 }
                 XmlAdapter adapter = null;
 
                 adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
                 int order = adapter.loadOrder();
-                if (log.isDebugEnabled()) {
-                    log.debug("add " + item + " to load list with order id of " + order);
-                }
+                log.debug("add {} to load list with order id of {}", item, order);
                 loadlist.put(item, order);
             }
 
@@ -714,7 +703,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         }
 
         // loading complete, as far as it got, make history entry
-        FileHistory r = InstanceManager.getOptionalDefault(FileHistory.class);
+        FileHistory r = InstanceManager.getNullableDefault(FileHistory.class);
         if (r != null) {
             FileHistory included = null;
             if (root != null) {

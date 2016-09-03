@@ -288,12 +288,14 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         }
     
         // row 22
-        if (Setup.isRfidEnabled() && jmri.InstanceManager.getOptionalDefault(jmri.IdTagManager.class) != null) {
+        if (Setup.isRfidEnabled() && jmri.InstanceManager.getNullableDefault(jmri.IdTagManager.class) != null) {
             JPanel pRfid = new JPanel();
             pRfid.setLayout(new GridBagLayout());
             pRfid.setBorder(BorderFactory.createTitledBorder(Setup.getRfidLabel()));
             addItem(pRfid, rfidComboBox, 1, 0);
             jmri.InstanceManager.getDefault(jmri.IdTagManager.class).getNamedBeanList().forEach((tag) -> rfidComboBox.addItem((jmri.IdTag) tag));
+            rfidComboBox.insertItemAt((jmri.IdTag)null,0); // must have a blank entry, for no ID tag, and make it the default.
+            rfidComboBox.setSelectedIndex(0);
             pOptional.add(pRfid);
         }
 
@@ -814,7 +816,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         // save the IdTag for this car
         IdTag idTag = (IdTag) rfidComboBox.getSelectedItem();
         if (idTag != null) {
-            _car.setRfid(idTag.getUserName());
+            _car.setRfid(idTag.toString());
         }
         autoTrackCheckBox.setEnabled(true);
 

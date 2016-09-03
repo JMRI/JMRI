@@ -8,7 +8,9 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   ConnectionConfigTest.class
+   ConnectionConfigTest.class,
+   jmri.jmrix.tams.simulator.configurexml.PackageTest.class
+
 })
 /**
  * Tests for the jmri.jmrix.tams.simulator package.

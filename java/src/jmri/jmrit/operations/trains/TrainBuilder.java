@@ -16,8 +16,8 @@ import javax.swing.JOptionPane;
 import jmri.Version;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.ScheduleItem;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
@@ -1896,9 +1896,12 @@ public class TrainBuilder extends TrainCommon {
      * locations requesting the most moves.
      */
     private void blockByLocationMoves() throws BuildFailedException {
-        // start at the second location in the route to begin blocking
         List<RouteLocation> routeList = _train.getRoute().getLocationsBySequenceList();
         for (RouteLocation rl : routeList) {
+            // start at the second location in the route to begin blocking
+            if (rl == _train.getTrainDepartsRouteLocation()) {
+                continue;
+            }
             int possibleMoves = rl.getMaxCarMoves() - rl.getCarMoves();
             if (rl.isDropAllowed() && possibleMoves > 0) {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("blockLocationHasMoves"),
@@ -1936,20 +1939,20 @@ public class TrainBuilder extends TrainCommon {
                                 addLine(_buildReport, SEVEN, MessageFormat.format(
                                         Bundle.getMessage("blockNotAbleDest"), new Object[]{car.toString(),
                                                 car.getDestinationName()}));
-                                continue;
+                                continue; // can't block this car
                             }
                             if (car.getFinalDestination() != null) {
                                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
                                         .getMessage("blockNotAbleFinalDest"), new Object[]{car.toString(),
                                                 car.getFinalDestination().getName()}));
-                                continue;
+                                continue; // can't block this car
                             }
                             if (!car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName()) &&
                                     !car.getLoadName().equals(CarLoads.instance().getDefaultLoadName())) {
                                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
                                         .getMessage("blockNotAbleCustomLoad"), new Object[]{car.toString(),
                                                 car.getLoadName()}));
-                                continue;
+                                continue; // can't block this car
                             }
                             if (car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName()) &&
                                     (_departStageTrack.isAddCustomLoadsEnabled() ||
@@ -1959,7 +1962,7 @@ public class TrainBuilder extends TrainCommon {
                                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
                                         .getMessage("blockNotAbleCarTypeGenerate"), new Object[]{car.toString(),
                                                 car.getLoadName()}));
-                                continue;
+                                continue; // can't block this car
                             }
                             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("blockingCar"),
                                     new Object[]{car.toString(), loc.getName(), rld.getName()}));
@@ -4751,8 +4754,8 @@ public class TrainBuilder extends TrainCommon {
             throw new BuildFailedException(Bundle.getMessage("buildErrorEngHp"));
         }
     }
-    
-    private void removeRollingStockFromTrain(RollingStock rs) {  
+
+    private void removeRollingStockFromTrain(RollingStock rs) {
         // adjust train length and weight for each location that the rolling stock is in the train
         boolean inTrain = false;
         for (RouteLocation routeLocation : _routeList) {
@@ -4914,9 +4917,8 @@ public class TrainBuilder extends TrainCommon {
         _train.setBuildFailedMessage(msg);
         _train.setStatusCode(Train.CODE_BUILD_FAILED);
         _train.setBuildFailed(true);
-        if (log.isDebugEnabled()) {
-            log.debug(msg);
-        }
+        log.debug(msg);
+
         if (TrainManager.instance().isBuildMessagesEnabled()) {
             if (e.getExceptionType().equals(BuildFailedException.NORMAL)) {
                 JOptionPane.showMessageDialog(null, msg, MessageFormat.format(Bundle.getMessage("buildErrorMsg"),

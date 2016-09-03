@@ -11,7 +11,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import jmri.jmrix.loconet.LocoNetBundle;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 /**
@@ -38,7 +37,7 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
     }
 
     public String getTitle() {
-        return getTitle(LocoNetBundle.bundle().getString("MenuItemSoundEditor"));
+        return getTitle(Bundle.getMessage("MenuItemSoundEditor"));
     }
 
     public EditorPane() {

@@ -11,7 +11,9 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    PiSprogOneCSSerialDriverAdapterTest.class,
-   ConnectionConfigTest.class
+   ConnectionConfigTest.class,
+   jmri.jmrix.sprog.pi.pisprogonecs.configurexml.PackageTest.class
+
 })
 public class PackageTest {
 }

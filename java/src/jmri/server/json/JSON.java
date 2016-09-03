@@ -110,6 +110,10 @@ public final class JSON {
      * {@value #STATUS_CODE}
      */
     public static final String STATUS_CODE = "statusCode"; // NOI18N
+    /**
+     * {@value #PROPERTIES}
+     */
+    public static final String PROPERTIES = "properties"; // NOI18N
 
     /* JSON hello and metadata */
     /**
@@ -155,10 +159,6 @@ public final class JSON {
 
     /* JSON list types */
     /**
-     * {@value #BLOCKS}
-     */
-    public static final String BLOCKS = "blocks"; // NOI18N
-    /**
      * {@value #CARS}
      */
     public static final String CARS = "cars"; // NOI18N
@@ -171,17 +171,9 @@ public final class JSON {
      */
     public static final String ENGINES = "engines"; // NOI18N
     /**
-     * {@value #LIGHTS}
-     */
-    public static final String LIGHTS = "lights"; // NOI18N
-    /**
      * {@value #LOCATIONS}
      */
     public static final String LOCATIONS = "locations"; // NOI18N
-    /**
-     * {@value #MEMORIES}
-     */
-    public static final String MEMORIES = "memories"; // NOI18N
     /**
      * {@value #METADATA}
      */
@@ -195,18 +187,6 @@ public final class JSON {
      */
     public static final String ROUTES = "routes"; // NOI18N
     /**
-     * {@value #SENSORS}
-     */
-    public static final String SENSORS = "sensors"; // NOI18N
-    /**
-     * {@value #SIGNAL_HEADS}
-     */
-    public static final String SIGNAL_HEADS = "signalHeads"; // NOI18N
-    /**
-     * {@value #SIGNAL_MASTS}
-     */
-    public static final String SIGNAL_MASTS = "signalMasts"; // NOI18N
-    /**
      * {@value #TRAINS}
      */
     public static final String TRAINS = "trains"; // NOI18N
@@ -216,10 +196,6 @@ public final class JSON {
     public static final String NETWORK_SERVICES = "networkServices"; // NOI18N
 
     /* JSON data types */
-    /**
-     * {@value #BLOCK}
-     */
-    public static final String BLOCK = "block"; // NOI18N
     /**
      * {@value #CAR}
      */
@@ -233,10 +209,6 @@ public final class JSON {
      */
     public static final String ENGINE = "engine"; // NOI18N
     /**
-     * {@value #LIGHT}
-     */
-    public static final String LIGHT = "light"; // NOI18N
-    /**
      * {@value #LOCATION}
      */
     public static final String LOCATION = "location"; // NOI18N
@@ -244,10 +216,6 @@ public final class JSON {
      * {@value #LOCATION_ID}
      */
     public static final String LOCATION_ID = "locationId"; // NOI18N
-    /**
-     * {@value #MEMORY}
-     */
-    public static final String MEMORY = "memory"; // NOI18N
     /**
      * {@value #NETWORK_SERVICE}
      *
@@ -267,18 +235,6 @@ public final class JSON {
      */
     public static final String ROUTE = "route"; // NOI18N
     /**
-     * {@value #SENSOR}
-     */
-    public static final String SENSOR = "sensor"; // NOI18N
-    /**
-     * {@value #SIGNAL_HEAD}
-     */
-    public static final String SIGNAL_HEAD = "signalHead"; // NOI18N
-    /**
-     * {@value #SIGNAL_MAST}
-     */
-    public static final String SIGNAL_MAST = "signalMast"; // NOI18N
-    /**
      * {@value #THROTTLE}
      */
     public static final String THROTTLE = "throttle"; // NOI18N
@@ -286,34 +242,6 @@ public final class JSON {
      * {@value #TRAIN}
      */
     public static final String TRAIN = "train"; // NOI18N
-    /**
-     * {@value #USE_EXTRA_COLOR}
-     */
-    public static final String USE_EXTRA_COLOR = "useExtraColor"; // NOI18N
-    /**
-     * {@value #BLOCK_COLOR}
-     */
-    public static final String BLOCK_COLOR = "blockColor"; // NOI18N
-    /**
-     * {@value #TRACK_COLOR}
-     */
-    public static final String TRACK_COLOR = "trackColor"; // NOI18N
-    /**
-     * {@value #OCCUPIED_COLOR}
-     */
-    public static final String OCCUPIED_COLOR = "occupiedColor"; // NOI18N
-    /**
-     * {@value #EXTRA_COLOR}
-     */
-    public static final String EXTRA_COLOR = "extraColor"; // NOI18N
-    /**
-    * {@value #OCCUPANCY_SENSOR}
-    */
-   public static final String OCCUPANCY_SENSOR = "occupancySensor"; // NOI18N
-   /**
-   * {@value #OCCUPIED_SENSE}
-   */
-  public static final String OCCUPIED_SENSE = "occupiedSense"; // NOI18N
 
     /* JSON operations tokens */
     /**
@@ -793,7 +721,7 @@ public final class JSON {
      * JSON State (an unsigned integer)
      */
 
-    /* Common state */
+ /* Common state */
     /**
      * {@value #UNKNOWN}
      * <p>

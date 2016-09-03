@@ -1,4 +1,3 @@
-// QsiMessage.java
 package jmri.jmrix.qsi;
 
 import jmri.ProgrammingMode;
@@ -9,7 +8,6 @@ import jmri.ProgrammingMode;
  * The {@link QsiReply} class handles the response from the command station.
  *
  * @author	Bob Jacobsen Copyright (C) 2007, 2008
- * @version	$Revision$
  */
 public class QsiMessage extends jmri.jmrix.AbstractMessage {
 
@@ -177,7 +175,8 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
     // though it would be good to fix it if you're working in this area
     public String toString(QsiTrafficController controller) {
         String s = "";
-        if (controller.isSIIBootMode()) {
+        if (_dataChars == null) return "<none>";
+        if (controller == null || controller.isSIIBootMode()) {
             for (int i = 0; i < _nDataChars; i++) {
                 s += jmri.util.StringUtil.twoHexFromInt(_dataChars[i]) + " ";
             }
@@ -383,5 +382,3 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
     }
 
 }
-
-/* @(#)QsiMessage.java */
