@@ -4,9 +4,6 @@ addons:
   apt:
     packages:
     - graphviz
-
-# prevent travis default mvn install behavior
-install: true
  
 before_script:
   - "export DISPLAY=:99.0"
@@ -15,7 +12,7 @@ before_script:
 
 script:
   - export MAVEN_OPTS=-Xmx1536M
-  - travis_wait 30 mvn test -P travis --quiet --batch-mode
+  - travis_wait 30 mvn test -P travis --batch-mode
 
 jdk:
   - oraclejdk8
