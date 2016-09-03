@@ -39,7 +39,7 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
 
     public String getHelpTarget() {
         return "package.jmri.jmrix.mrc.swing.packetgen.MrcPacketGenPanel";
-    }//IN18N
+    }//NOI18N
 
     public String getTitle() {
         StringBuilder x = new StringBuilder();
@@ -49,7 +49,7 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
             x.append("MRC_");//IN18N
         }
         x.append(": ");
-        x.append(Bundle.getMessage("Title"));//IN18N
+        x.append(Bundle.getMessage("Title"));//NOI18N
         return x.toString();
     }
 
@@ -58,15 +58,15 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
         this.tc = m.getMrcTrafficController();
 
         // the following code sets the frame's initial state
-        jLabel1.setText("Command: ");//IN18N
+        jLabel1.setText(Bundle.getMessage("MrcPacketGenLabelCommand"));//NOI18N
         jLabel1.setVisible(true);
 
-        sendButton.setText("Send");//IN18N
+        sendButton.setText(Bundle.getMessage("MrcPacketGenButtonSend"));//NOI18N
         sendButton.setVisible(true);
-        sendButton.setToolTipText("Send packet");//IN18N
+        sendButton.setToolTipText(Bundle.getMessage("MrcPacketGenTipSend"));//NOI18N
 
         packetTextField.setText("");
-        packetTextField.setToolTipText("Enter command"); //IN18N
+        packetTextField.setToolTipText(Bundle.getMessage("MrcPacketGenTipText")); //NOI18N
         packetTextField.setMaximumSize(new Dimension(packetTextField
                 .getMaximumSize().width, packetTextField.getPreferredSize().height));
 
