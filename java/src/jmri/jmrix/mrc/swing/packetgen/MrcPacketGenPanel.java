@@ -16,8 +16,6 @@ import jmri.util.StringUtil;
  */
 public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
 
-    //ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.mrc.packetgen.MrcPacketGenBundle");
-
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();

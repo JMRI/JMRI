@@ -7,7 +7,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.ResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,8 +48,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class MrcPacketizer extends MrcTrafficController {
-
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.mrc.MrcPacketizerBundle");
 
     final static boolean fulldebug = false;
 
