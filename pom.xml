@@ -11,7 +11,7 @@
         <release.build_user>${user.name}</release.build_user>
         <release.build_date>${maven.build.timestamp}</release.build_date>
         <!-- it would be better to get current year from machine clock -->
-        <jmri.copyright.year>${project.inceptionYear}-2016</jmri.copyright.year>
+        <jmri.copyright.year>${project.inceptionYear}-${current.year}</jmri.copyright.year>
     </properties>
     <scm>
         <connection>scm:git:https://github.com/JMRI/JMRI.git</connection>
@@ -224,6 +224,24 @@
                     <!-- want true to generate distibutions -->
                     <doUpdate>false</doUpdate>
                 </configuration>
+            </plugin>        
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.12</version>
+                <executions>
+                    <execution>
+                        <id>timestamp-property</id>
+                        <goals>
+                            <goal>timestamp-property</goal>
+                        </goals>
+                        <phase>validate</phase>
+                        <configuration>
+                            <name>current.year</name>
+                            <pattern>yyyy</pattern>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>        
         </plugins>
     </build>
