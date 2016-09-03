@@ -7,6 +7,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Vector;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -27,10 +29,10 @@ import org.slf4j.LoggerFactory;
  * To retrieve the default object of a specific type, do
  * {@link InstanceManager#getDefault} where the argument is e.g.
  * "SensorManager.class". In other words, you ask for the default object of a
- * particular type. Note that this call is intended to be used in the usual
- * case of requiring the object to function; it will log a message if there
- * isn't such an object.  If that's routine, then use the 
- * {@link InstanceManager#getOptionalDefault} method instead.
+ * particular type. Note that this call is intended to be used in the usual case
+ * of requiring the object to function; it will log a message if there isn't
+ * such an object. If that's routine, then use the
+ * {@link InstanceManager#getNullableDefault} method instead.
  * <p>
  * Multiple items can be held, and are retrieved as a list with
  * {@link    InstanceManager#getList}.
@@ -139,53 +141,56 @@ public class InstanceManager {
 
     /**
      * Retrieve the last object of type T that was registered with
-     * {@link #store}.
+     * {@link #store(java.lang.Object, java.lang.Class) }.
      * <p>
      * Unless specifically set, the default is the last object stored, see the
-     * {@link #setDefault} method.
+     * {@link #setDefault(java.lang.Class, java.lang.Object) } method.
      * <p>
-     * In some cases, InstanceManager can create the object the first time it's requested.
-     * For more on that, see the class comment.
+     * In some cases, InstanceManager can create the object the first time it's
+     * requested. For more on that, see the class comment.
      * <p>
      * In most cases, system configuration assures the existence of a default
      * object, so this method will log and throw an exception if one doesn't
-     * exist.  {@link #getOptionalDefault} should be used for cases where 
-     * it's normal for a default to not exist.
+     * exist. Use {@link #getNullableDefault(java.lang.Class)} or
+     * {@link #getOptionalDefault(java.lang.Class)} if the default is not
+     * guaranteed to exist.
+     *
      * @param <T>  The type of the class
-     * @param type The class Object for the item's type.
-     * @return The default object for type. Never null.
+     * @param type The class Object for the item's type
+     * @return The default object for type
+     * @throws NullPointerException if no default object for type exists
+     * @see #getNullableDefault(java.lang.Class)
+     * @see #getOptionalDefault(java.lang.Class)
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "warns first, eventually should assert()")   
     @Nonnull
     static public <T> T getDefault(@Nonnull Class<T> type) {
         log.trace("getDefault of type {}", type.getName());
-        T t = getOptionalDefault(type);
-        if (t == null) {
-            log.warn("getDefault found no default object for type \"{}\"", type.getName());
-        }
-        return t;
+        return Objects.requireNonNull(InstanceManager.getNullableDefault(type),
+                "Required nonnull defualt for " + type.getName() + " does not exist.");
     }
-    
+
     /**
      * Retrieve the last object of type T that was registered with
-     * {@link #store}.
+     * {@link #store(java.lang.Object, java.lang.Class) }.
      * <p>
      * Unless specifically set, the default is the last object stored, see the
-     * {@link #setDefault} method.
+     * {@link #setDefault(java.lang.Class, java.lang.Object) } method.
      * <p>
-     * In some cases, InstanceManager can create the object the first time it's requested.
-     * For more on that, see the class comment.
+     * In some cases, InstanceManager can create the object the first time it's
+     * requested. For more on that, see the class comment.
      * <p>
      * In most cases, system configuration assures the existence of a default
      * object, but this method also handles the case where one doesn't exist.
-     * {@link #getOptionalDefault} should be used for cases where 
-     * it's routine for the object to always exist, and you don't want to code lots of checks.
+     * Use {@link #getDefault(java.lang.Class)} when the object is guaranteed to
+     * exist.
+     *
      * @param <T>  The type of the class
      * @param type The class Object for the item's type.
      * @return The default object for type.
+     * @see #getOptionalDefault(java.lang.Class)
      */
     @CheckForNull
-    static public <T> T getOptionalDefault(@Nonnull Class<T> type) {
+    static public <T> T getNullableDefault(@Nonnull Class<T> type) {
         log.trace("getOptionalDefault of type {}", type.getName());
         ArrayList<T> l = (ArrayList<T>) getList(type);
         if (l.isEmpty()) {
@@ -218,6 +223,33 @@ public class InstanceManager {
     }
 
     /**
+     * Retrieve the last object of type T that was registered with
+     * {@link #store(java.lang.Object, java.lang.Class)} wrapped in an
+     * {@link java.util.Optional}.
+     * <p>
+     * Unless specifically set, the default is the last object stored, see the
+     * {@link #setDefault(java.lang.Class, java.lang.Object)} method.
+     * <p>
+     * In some cases, InstanceManager can create the object the first time it's
+     * requested. For more on that, see the class comment.
+     * <p>
+     * In most cases, system configuration assures the existence of a default
+     * object, but this method also handles the case where one doesn't exist.
+     * Use {@link #getDefault(java.lang.Class)} when the object is guaranteed to
+     * exist.
+     *
+     * @param <T>  the type of the default class
+     * @param type the class Object for the default type
+     * @return the default wrapped in an Optional or an empty Optional if the
+     *         default is null
+     * @see #getNullableDefault(java.lang.Class)
+     */
+    @Nonnull
+    static public <T> Optional<T> getOptionalDefault(@Nonnull Class<T> type) {
+        return Optional.ofNullable(InstanceManager.getNullableDefault(type));
+    }
+
+    /**
      * Set an object of type T as the default for that type.
      * <p>
      * Also registers (stores) the object if not already present.
@@ -228,8 +260,10 @@ public class InstanceManager {
      * @param <T>  The type of the class
      * @param type The Class object for val
      * @param item The object to make default for type
+     * @return The default for type (normally this is the item passed in)
      */
-    static public <T> void setDefault(@Nonnull Class<T> type, @Nonnull T item) {
+    @Nonnull
+    static public <T> T setDefault(@Nonnull Class<T> type, @Nonnull T item) {
         log.trace("setDefault for type {}", type.getName());
         if (item == null) {
             NullPointerException npe = new NullPointerException();
@@ -239,6 +273,7 @@ public class InstanceManager {
         List<T> l = getList(type);
         l.remove(item);
         l.add(item);
+        return getDefault(type);
     }
 
     /**
@@ -308,7 +343,6 @@ public class InstanceManager {
      *          These are so extensively used that we're leaving for later
      *                      Please don't create any more of these 
      * ****************************************************************************/
-
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
      *
@@ -363,8 +397,6 @@ public class InstanceManager {
     //   1) Remove it from jmri.managers.DefaultInstanceInitializer, get tests to build & run
     //   2) Remove the setter from here, get tests to build & run
     //   3) Remove the accessor from here, get tests to build & run
-
-
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
      *
@@ -481,7 +513,7 @@ public class InstanceManager {
      *
      * @return the default signal group manager. May not be the only instance.
      * @deprecated 4.5.1
-    */
+     */
     static public SignalGroupManager signalGroupManagerInstance() {
         return getDefault(SignalGroupManager.class);
     }
@@ -553,7 +585,6 @@ public class InstanceManager {
      *             Remove these in or after JMRI 4.8.1
      *                 (Check scripts first)
      * ****************************************************************************/
-
     /**
      * Deprecated, use @{link #getDefault} directly.
      *
@@ -677,7 +708,7 @@ public class InstanceManager {
         // since there is a command station available, use
         // the NMRA consist manager instead of the generic consist
         // manager.
-        if (getOptionalDefault(ConsistManager.class) == null
+        if (getNullableDefault(ConsistManager.class) == null
                 || getDefault(ConsistManager.class).getClass() == DccConsistManager.class) {
             setConsistManager(new NmraConsistManager());
         }
@@ -738,7 +769,7 @@ public class InstanceManager {
         // Consist manager if Ops mode is possible, and there isn't a
         // consist manager already.
         if (programmerManagerInstance().isAddressedModePossible()
-                && getOptionalDefault(ConsistManager.class) == null) {
+                && getNullableDefault(ConsistManager.class) == null) {
             setConsistManager(new DccConsistManager());
         }
         notifyPropertyChangeListener(PROGRAMMER_MANAGER, null, null);

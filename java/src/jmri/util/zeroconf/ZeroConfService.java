@@ -18,6 +18,7 @@ import javax.jmdns.NetworkTopologyEvent;
 import javax.jmdns.NetworkTopologyListener;
 import javax.jmdns.ServiceInfo;
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.implementation.QuietShutDownTask;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
@@ -392,9 +393,9 @@ public class ZeroConfService {
             } catch (IOException ex) {
                 log.warn("Unable to create JmDNS with error: {}", ex.getMessage(), ex);
             }
-            if (InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
-                InstanceManager.getDefault(jmri.ShutDownManager.class).register(ZeroConfService.shutDownTask);
-            }
+            InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(manager -> {
+                manager.register(ZeroConfService.shutDownTask);
+            });
         }
         return new HashMap<>(ZeroConfService.netServices);
     }

@@ -259,11 +259,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         if (file.exists()) {
             log.debug("start load config file {}", file.getPath());
             try {
-                ConfigureManager cmOD = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+                ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
                 if (cmOD != null) {
                     configOK = cmOD.load(file, true);
                 } else {
-                    log.error("Failed to getOptionalDefault config mgr");
+                    log.error("Failed to get default configure manager");
                     configOK = false;
                 }
             } catch (JmriException e) {
@@ -360,7 +360,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             // migrate preferences
             InstanceManager.tabbedPreferencesInstance().init();
             InstanceManager.tabbedPreferencesInstance().saveContents();
-            ConfigureManager cmOD = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+            ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cmOD != null) {
                 cmOD.storePrefs();
             }
@@ -470,11 +470,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         boolean result;
         log.debug("start deferred load from config");
         try {
-            ConfigureManager cmOD = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+            ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cmOD != null) {
                 result = cmOD.loadDeferred(file);
             } else {
-                log.error("Failed to getOptionalDefault config mgr");
+                log.error("Failed to get default configure manager");
                 result = false;
             }
         } catch (JmriException e) {
@@ -1155,7 +1155,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     static protected void loadFile(String name) {
-        ConfigureManager cmOD = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cmOD != null) {
             URL pFile = cmOD.find(name);
             if (pFile != null) {
@@ -1168,7 +1168,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 log.warn("Could not find {} config file", name);
             }
         } else {
-            log.error("Failed to getOptionalDefault config mgr");
+            log.error("Failed to get default configure manager");
         }
     }
     

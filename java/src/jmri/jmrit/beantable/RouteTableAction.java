@@ -77,7 +77,7 @@ public class RouteTableAction extends AbstractTableAction {
     public RouteTableAction(String s) {
         super(s);
         // disable ourself if there is no primary Route manager available
-        if (jmri.InstanceManager.getOptionalDefault(jmri.RouteManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.RouteManager.class) == null) {
             setEnabled(false);
         }
     }

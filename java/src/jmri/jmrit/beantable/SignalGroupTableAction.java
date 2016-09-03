@@ -68,7 +68,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     public SignalGroupTableAction(String s) {
         super(s);
         // disable ourself if there is no primary SignalGroup manager available
-        if (jmri.InstanceManager.getOptionalDefault(jmri.SignalGroupManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.SignalGroupManager.class) == null) {
             setEnabled(false);
         }
 

@@ -42,7 +42,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         this.prefix = prefix;
 
         // Create a timebase listener for the Minute change events
-        internalClock = InstanceManager.getOptionalDefault(jmri.Timebase.class);
+        internalClock = InstanceManager.getNullableDefault(jmri.Timebase.class);
         if (internalClock == null) {
             log.error("No Internal Timebase Instance"); //IN18N
             return;

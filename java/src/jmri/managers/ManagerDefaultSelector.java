@@ -184,11 +184,11 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
             if (!found) {
                 log.debug("!found, so resetting");
                 String currentName = null;
-                if (c == ThrottleManager.class && InstanceManager.getOptionalDefault(ThrottleManager.class) != null) {
+                if (c == ThrottleManager.class && InstanceManager.getNullableDefault(ThrottleManager.class) != null) {
                     currentName = InstanceManager.throttleManagerInstance().getUserName();
-                } else if (c == PowerManager.class && InstanceManager.getOptionalDefault(PowerManager.class) != null) {
+                } else if (c == PowerManager.class && InstanceManager.getNullableDefault(PowerManager.class) != null) {
                     currentName = InstanceManager.getDefault(PowerManager.class).getUserName();
-                } else if (c == ProgrammerManager.class && InstanceManager.getOptionalDefault(ProgrammerManager.class) != null) {
+                } else if (c == ProgrammerManager.class && InstanceManager.getNullableDefault(ProgrammerManager.class) != null) {
                     currentName = InstanceManager.getDefault(ProgrammerManager.class).getUserName();
                 }
                 if (currentName != null) {
@@ -230,7 +230,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                 log.info("Unable to read preferences for Default Selector.");
             }
             InitializationException ex = this.configure();
-            ConfigureManager manager = InstanceManager.getOptionalDefault(ConfigureManager.class);
+            ConfigureManager manager = InstanceManager.getNullableDefault(ConfigureManager.class);
             if (manager != null) {
                 manager.registerPref(this); // allow ProfileConfig.xml to be written correctly
             }

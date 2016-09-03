@@ -117,7 +117,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
     public SpeedometerFrame() {
         super(false, false);
         //Install the named bean handle if not installed, which can happen if opened from DP3
-        if (jmri.InstanceManager.getOptionalDefault(jmri.NamedBeanHandleManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.NamedBeanHandleManager.class) == null) {
             jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         }
 
@@ -206,7 +206,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         clearButton.setVisible(false);
 
         // see if there's a sensor manager, if not disable
-        if (null == InstanceManager.getOptionalDefault(SensorManager.class)) {
+        if (null == InstanceManager.getNullableDefault(SensorManager.class)) {
             startButton.setEnabled(false);
             startButton.setToolTipText(Bundle.getMessage("TooltipSensorsNotSupported"));
         }

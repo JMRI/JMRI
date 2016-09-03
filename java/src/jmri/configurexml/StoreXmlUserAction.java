@@ -44,9 +44,9 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
         }
 
         // make a backup file
-        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm == null) {
-            log.error("Failed to make backup due to getOptionalDefault null");
+            log.error("Failed to make backup due to unable to get default configure manager");
         } else {
             cm.makeBackup(file);
             // and finally store
