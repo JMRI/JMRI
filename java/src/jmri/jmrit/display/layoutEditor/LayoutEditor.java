@@ -655,10 +655,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         top4.add(nextSensor);
         nextSensor.setToolTipText(rb.getString("SensorIconToolTip"));
         sensorIconEditor = new MultiIconEditor(4);
-        sensorIconEditor.setIcon(0, Bundle.getMessage("SensorStateActive") + ":", "resources/icons/smallschematics/tracksegments/circuit-occupied.gif");
-        sensorIconEditor.setIcon(1, Bundle.getMessage("SensorStateInactive") + ":", "resources/icons/smallschematics/tracksegments/circuit-empty.gif");
-        sensorIconEditor.setIcon(2, Bundle.getMessage("BeanStateInconsistent") + ":", "resources/icons/smallschematics/tracksegments/circuit-error.gif");
-        sensorIconEditor.setIcon(3, Bundle.getMessage("BeanStateUnknown") + ":", "resources/icons/smallschematics/tracksegments/circuit-error.gif");
+        sensorIconEditor.setIcon(0, Bundle.getMessage("MakeLabel", Bundle.getMessage("SensorStateActive")),
+                "resources/icons/smallschematics/tracksegments/circuit-occupied.gif");
+        sensorIconEditor.setIcon(1, Bundle.getMessage("MakeLabel", Bundle.getMessage("SensorStateInactive")),
+                "resources/icons/smallschematics/tracksegments/circuit-empty.gif");
+        sensorIconEditor.setIcon(2, Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanStateInconsistent")),
+                "resources/icons/smallschematics/tracksegments/circuit-error.gif");
+        sensorIconEditor.setIcon(3, Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanStateUnknown")),
+                "resources/icons/smallschematics/tracksegments/circuit-error.gif");
         sensorIconEditor.complete();
         sensorFrame = new JFrame(rb.getString("EditSensorIcons"));
         sensorFrame.getContentPane().add(new JLabel("  " + rb.getString("IconChangeInfo") + "  "), BorderLayout.NORTH);
@@ -1979,7 +1983,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             // setup reporter entry
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
-            JLabel reporterLabel = new JLabel(rb.getString("ReporterName") + ":");
+            JLabel reporterLabel = new JLabel(rb.getString("ReporterName"));
             panel2.add(reporterLabel);
             panel2.add(reporterNameField);
             reporterNameField.setToolTipText(rb.getString("ReporterNameHint"));
