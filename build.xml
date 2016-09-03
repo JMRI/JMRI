@@ -2060,7 +2060,9 @@
                 <antcall target="compile-generated-source" />
                 <parallel>
                     <antcall target="javadoc" />
+                    <!--
                     <antcall target="ci-test-travis" />
+                    -->
                 </parallel>
             </sequential>
         </parallel>
@@ -2069,7 +2071,9 @@
     <target name="appveyor" description="Parallel execution of CI tasks on Appveyor">
         <parallel threadCount="4"> <!-- allow up to four tasks at once -->
             <antcall target="checkPropertiesFiles" />
+            <!--
             <antcall target="ci-test-appveyor" />
+            -->
         </parallel>
     </target>
 </project>
