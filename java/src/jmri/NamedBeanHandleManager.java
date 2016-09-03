@@ -48,7 +48,8 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
     }
 
     @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
-    public <T> @CheckForNull NamedBeanHandle<T> getNamedBeanHandle(@Nonnull String name, @Nonnull T bean) {
+    @CheckForNull
+    public <T> NamedBeanHandle<T> getNamedBeanHandle(@Nonnull String name, @Nonnull T bean) {
         if (bean == null || name == null || name.equals("")) {
             return null;
         }
@@ -142,7 +143,8 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
         return false;
     }
 
-    public <T> @CheckForNull NamedBeanHandle<T> newNamedBeanHandle(@Nonnull String name, @Nonnull T bean, @Nonnull Class<T> type) {
+    @CheckForNull
+    public <T> NamedBeanHandle<T> newNamedBeanHandle(@Nonnull String name, @Nonnull T bean, @Nonnull Class<T> type) {
         return getNamedBeanHandle(name, bean);
     }
 

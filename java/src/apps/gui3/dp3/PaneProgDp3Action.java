@@ -430,7 +430,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
             f.repaint();
             f.pack();
         }
-        if (jmri.InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) != null
+        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) != null
                 && jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).isGlobalProgrammerAvailable()) {
             this.mProgrammer = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
         }

@@ -193,8 +193,8 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
             return;
         }
         // if old manager exists, remove it from configuration process
-        if (InstanceManager.getOptionalDefault(jmri.LogixManager.class) != null) {
-            ConfigureManager cmOD = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        if (InstanceManager.getNullableDefault(jmri.LogixManager.class) != null) {
+            ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cmOD != null) {
                 cmOD.deregister(InstanceManager.getDefault(jmri.LogixManager.class));
             }
@@ -205,7 +205,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
         DefaultLogixManager pManager = DefaultLogixManager.instance();
         InstanceManager.store(pManager, LogixManager.class);
         // register new one for configuration
-        ConfigureManager cmOD = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cmOD != null) {
             cmOD.registerConfig(pManager, jmri.Manager.LOGIXS);
         }

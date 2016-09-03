@@ -28,7 +28,7 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
     private final static Logger log = LoggerFactory.getLogger(FacelessServer.class.getName());
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
 
-    UserPreferencesManager userPreferences = InstanceManager.getOptionalDefault(UserPreferencesManager.class);
+    UserPreferencesManager userPreferences = InstanceManager.getNullableDefault(UserPreferencesManager.class);
 
 //	Server iVars
     int port;

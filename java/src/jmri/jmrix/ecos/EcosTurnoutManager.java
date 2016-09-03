@@ -612,7 +612,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
             tc.sendEcosMessage(em, this);
         }
 
-        if (jmri.InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+        if (jmri.InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             jmri.InstanceManager.getDefault(ConfigureManager.class).deregister(this);
         }
         _tecos.clear();

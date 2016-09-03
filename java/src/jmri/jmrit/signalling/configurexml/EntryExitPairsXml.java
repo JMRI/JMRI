@@ -152,7 +152,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
             //Considered normal if it doesn't exists
         }
         // get attributes
-        ConfigureManager cm = jmri.InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = jmri.InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         ArrayList<Object> loadedPanel;
         if (cm != null) {
             loadedPanel = cm.getInstanceList(LayoutEditor.class);
@@ -318,7 +318,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
     }
 
     public int loadOrder() {
-        if (jmri.InstanceManager.getOptionalDefault(jmri.jmrit.signalling.EntryExitPairs.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.signalling.EntryExitPairs.class) == null) {
             jmri.InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
         }
         return jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).getXMLOrder();
