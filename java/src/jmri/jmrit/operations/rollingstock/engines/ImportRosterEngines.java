@@ -48,7 +48,7 @@ public class ImportRosterEngines extends Thread {
         // Now get engines from the JMRI roster 
         int enginesAdded = 0;
 
-        List<RosterEntry> engines = Roster.instance().matchingList(null, null, null, null, null, null, null);
+        List<RosterEntry> engines = Roster.getDefault().matchingList(null, null, null, null, null, null, null);
 
         for (RosterEntry re : engines) {
             // add engines that have a road name and number

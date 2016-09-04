@@ -67,7 +67,7 @@ public class BlockValueFile extends XmlFile {
                                     getAttribute("value").getValue();
                             if (blockList.get(i).getAttribute("valueClass") != null) {
                                 if (blockList.get(i).getAttribute("valueClass").getValue().equals("jmri.jmrit.roster.RosterEntry")) {
-                                    jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.Roster.instance().getEntryForId(((String) v));
+                                    jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.Roster.getDefault().getEntryForId(((String) v));
                                     if (re != null) {
                                         v = re;
                                     }

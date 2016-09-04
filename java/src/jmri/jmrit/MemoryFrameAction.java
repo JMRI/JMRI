@@ -91,7 +91,7 @@ public class MemoryFrameAction extends AbstractAction {
         });
         testButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                Roster.instance();
+                Roster.getDefault();
                 DecoderIndexFile.instance();
                 updateDisplay();
             }
