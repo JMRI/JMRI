@@ -3389,14 +3389,14 @@ public class Train implements java.beans.PropertyChangeListener {
                     RosterEntry entry = null;
                     if (getLeadEngine() != null) {
                         // first try and find a match based on loco road number
-                        List<RosterEntry> entries = Roster.instance().matchingList(null, getLeadEngine().getNumber(),
+                        List<RosterEntry> entries = Roster.getDefault().matchingList(null, getLeadEngine().getNumber(),
                                 null, null, null, null, null);
                         if (entries.size() > 0) {
                             entry = entries.get(0);
                         }
                         if (entry == null) {
                             // now try finding a match based on DCC address
-                            entries = Roster.instance().matchingList(null, null, getLeadEngine().getNumber(), null,
+                            entries = Roster.getDefault().matchingList(null, null, getLeadEngine().getNumber(), null,
                                     null, null, null);
                             if (entries.size() > 0) {
                                 entry = entries.get(0);

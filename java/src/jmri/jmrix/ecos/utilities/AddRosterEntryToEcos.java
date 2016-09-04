@@ -51,7 +51,7 @@ public class AddRosterEntryToEcos extends AbstractAction {
 
     public void actionPerformed(ActionEvent event) {
 
-        roster = Roster.instance();
+        roster = Roster.getDefault();
 
         rosterEntryUpdate();
 

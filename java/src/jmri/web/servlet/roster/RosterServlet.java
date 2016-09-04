@@ -243,7 +243,7 @@ public class RosterServlet extends HttpServlet {
         if (pathInfo.length > (1 + idOffset)) {
             type = pathInfo[pathInfo.length - 1];
         }
-        RosterEntry re = Roster.instance().getEntryForId(id);
+        RosterEntry re = Roster.getDefault().getEntryForId(id);
         try {
             if (re == null) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Could not find roster entry " + id);
@@ -342,7 +342,7 @@ public class RosterServlet extends HttpServlet {
                 if (Roster.AllEntries(request.getLocale()).equals(group)) {
                     group = null;
                 }
-                List<RosterEntry> entries = Roster.instance().getEntriesMatchingCriteria(
+                List<RosterEntry> entries = Roster.getDefault().getEntriesMatchingCriteria(
                         (!filter.path(ROAD).isMissingNode()) ? filter.path(ROAD).asText() : null,
                         (!filter.path(NUMBER).isMissingNode()) ? filter.path(NUMBER).asText() : null,
                         (!filter.path(ADDRESS).isMissingNode()) ? filter.path(ADDRESS).asText() : null,

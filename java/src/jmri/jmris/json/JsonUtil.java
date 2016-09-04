@@ -728,7 +728,7 @@ public class JsonUtil {
      */
     @Deprecated
     static public JsonNode getRosterEntry(Locale locale, String id) {
-        return JsonUtil.getRosterEntry(locale, Roster.instance().getEntryForId(id));
+        return JsonUtil.getRosterEntry(locale, Roster.getDefault().getEntryForId(id));
     }
 
     /**
@@ -800,7 +800,7 @@ public class JsonUtil {
         String decoderFamily = (!data.path(DECODER_FAMILY).isMissingNode()) ? data.path(DECODER_FAMILY).asText() : null;
         String id = (!data.path(NAME).isMissingNode()) ? data.path(NAME).asText() : null;
         ArrayNode root = mapper.createArrayNode();
-        for (RosterEntry re : Roster.instance().getEntriesMatchingCriteria(roadName, roadNumber, dccAddress, mfg, decoderModel, decoderFamily, id, group)) {
+        for (RosterEntry re : Roster.getDefault().getEntriesMatchingCriteria(roadName, roadNumber, dccAddress, mfg, decoderModel, decoderFamily, id, group)) {
             root.add(getRosterEntry(locale, re.getId()));
         }
         return root;
@@ -816,7 +816,7 @@ public class JsonUtil {
     static public JsonNode getRosterGroups(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         root.add(getRosterGroup(locale, Roster.ALLENTRIES));
-        for (String name : Roster.instance().getRosterGroupList()) {
+        for (String name : Roster.getDefault().getRosterGroupList()) {
             root.add(getRosterGroup(locale, name));
         }
         return root;
@@ -835,7 +835,7 @@ public class JsonUtil {
         root.put(TYPE, ROSTER_GROUP);
         ObjectNode data = root.putObject(DATA);
         data.put(NAME, name);
-        data.put(LENGTH, Roster.instance().getEntriesInGroup(name).size());
+        data.put(LENGTH, Roster.getDefault().getEntriesInGroup(name).size());
         return root;
     }
 

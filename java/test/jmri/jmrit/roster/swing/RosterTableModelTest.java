@@ -88,7 +88,7 @@ public class RosterTableModelTest extends TestCase {
             protected void warnShortLong(String s) {
             }
         };
-        Roster.instance().addEntry(r);
+        Roster.getDefault().addEntry(r);
         r.putAttribute("key a", "value 1");
 
         e = new org.jdom2.Element("locomotive")
@@ -112,7 +112,7 @@ public class RosterTableModelTest extends TestCase {
             protected void warnShortLong(String s) {
             }
         };
-        Roster.instance().addEntry(r);
+        Roster.getDefault().addEntry(r);
         r.putAttribute("key a", "value 11");
         r.putAttribute("key b", "value 12");
         r.putAttribute("key c", "value 13");
@@ -139,7 +139,7 @@ public class RosterTableModelTest extends TestCase {
             protected void warnShortLong(String s) {
             }
         };
-        Roster.instance().addEntry(r);
+        Roster.getDefault().addEntry(r);
 
     }
 
