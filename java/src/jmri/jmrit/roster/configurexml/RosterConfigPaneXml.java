@@ -62,7 +62,7 @@ public class RosterConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         if (shared.getAttribute("ownerDefault") != null) {
             InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(shared.getAttribute("ownerDefault").getValue());
         }
-        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
             cm.registerPref(new RosterConfigPane());
         }
@@ -83,7 +83,7 @@ public class RosterConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         if (element.getAttribute("directory") != null) {
             Roster.getDefault().setRosterLocation(element.getAttribute("directory").getValue());
         }
-        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
             cm.registerPref(new RosterConfigPane());
         }

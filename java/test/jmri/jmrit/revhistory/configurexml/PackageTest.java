@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+   FileHistoryXmlTest.class
 })
 /**
  * Tests for the jmri.jmrit.revhistory.configurexml package.

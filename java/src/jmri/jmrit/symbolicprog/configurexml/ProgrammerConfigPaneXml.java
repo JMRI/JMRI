@@ -66,7 +66,7 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
         if (null != (a = shared.getAttribute("showCvNumbers"))) {
             InstanceManager.getDefault(ProgrammerConfigManager.class).setShowCvNumbers(a.getValue().equals("yes"));
         }
-        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
             cm.registerPref(new ProgrammerConfigPane());
         }
