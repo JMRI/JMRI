@@ -6,6 +6,7 @@ import com.digi.xbee.api.XBeeDevice;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.packet.XBeePacket;
+import com.digi.xbee.api.listeners.IPacketReceiveListener;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -23,7 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2013,2016
  */
-public class XBeeTrafficController extends IEEE802154TrafficController implements com.digi.xbee.api.listeners.IPacketReceiveListener, XBeeInterface {
+public class XBeeTrafficController extends IEEE802154TrafficController implements IPacketReceiveListener, XBeeInterface {
 
     private XBeeDevice xbee = null;
 
@@ -56,7 +57,9 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
             if( p instanceof XBeeAdapter) {
                XBeeAdapter xbp = (XBeeAdapter) p;
                xbee = new XBeeDevice(xbp);
+               xbee.open();
                xbee.addPacketListener(this);
+
                // and start threads
                xmtThread = new Thread(xmtRunnable = new Runnable() {
                    public void run() {
@@ -69,6 +72,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
                });
                xmtThread.setName("Transmit");
                xmtThread.start();
+
             } else {
                throw new java.lang.IllegalArgumentException("Wrong adapter type specified when connecting to the port.");
             }
@@ -178,6 +182,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"NO_NOTIFY_NOT_NOTIFYALL","UW_UNCOND_WAIT","WA_NOT_IN_LOOP"}, justification="There should only be one thread waiting on xmtRunnable. wait() on xmtRunnable is unconditional and not in a loop because it is used to wait for the hardware when switching modes.")
     public void packetReceived(XBeePacket response) {
 
+        log.debug("packetReceived called");
         XBeeReply reply = new XBeeReply(response);
 
         // message is complete, dispatch it !!
@@ -192,6 +197,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         // return a notification via the Swing event queue to ensure proper thread
         Runnable r = new RcvNotifier(reply, mLastSender, this);
         try {
+            log.debug("invoking dispatch thread");
             javax.swing.SwingUtilities.invokeAndWait(r);
         } catch (Exception e) {
             log.error("Unexpected exception in invokeAndWait:" + e);
@@ -202,7 +208,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
             log.debug("dispatch thread invoked");
         }
 
-        // from here to the end of the function was copied verbatim from 
+    /*    // from here to the end of the function was copied verbatim from 
         // handleOneIncomingReply.  We may not need it after the send code
         // is put into place.
         if (!reply.isUnsolicited()) {
@@ -295,7 +301,9 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
             }
 
             replyInDispatch = false;
-        }
+        }*/
+        replyInDispatch = false;
+        log.debug("Dispatch Complete");
     }
 
     /*

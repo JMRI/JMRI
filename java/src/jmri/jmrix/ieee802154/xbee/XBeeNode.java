@@ -64,6 +64,20 @@ public class XBeeNode extends IEEE802154Node {
         globalAddress = new XBee64BitAddress(global);
     }
 
+    public XBeeNode(RemoteXBeeDevice rxd) throws com.digi.xbee.api.exceptions.TimeoutException, com.digi.xbee.api.exceptions.XBeeException {
+        super(rxd.getPANID(), rxd.get16BitAddress().getValue(), rxd.get64BitAddress().getValue());
+        Identifier = "";
+        if (log.isDebugEnabled()) {
+            log.debug("Created new node from RemoteXBeeDevice: {}",
+                    rxd.toString() );
+        }
+        pinObjects = new HashMap<Integer, NamedBean>();
+        isPolled = false;
+        device = rxd;
+        userAddress = device.get16BitAddress();
+        globalAddress = device.get64BitAddress();
+    }
+
     /*
      * Set the traffic controller associated with this node.
      */
@@ -134,22 +148,14 @@ public class XBeeNode extends IEEE802154Node {
      *  Convert the 16 bit user address to an XBee16BitAddress object.
      */
     public XBee16BitAddress getXBeeAddress16() {
-        return new XBee16BitAddress(0xff & getUserAddress()[0],
-                0xff & getUserAddress()[1]);
+        return device.get16BitAddress();
     }
 
     /*
      *  Convert the 64 bit address to an XBee64BitAddress object.
      */
     public XBee64BitAddress getXBeeAddress64() {
-        return new XBee64BitAddress(0xff & getGlobalAddress()[0],
-                0xff & getGlobalAddress()[1],
-                0xff & getGlobalAddress()[2],
-                0xff & getGlobalAddress()[3],
-                0xff & getGlobalAddress()[4],
-                0xff & getGlobalAddress()[5],
-                0xff & getGlobalAddress()[6],
-                0xff & getGlobalAddress()[7]);
+        return device.get64BitAddress();
     }
 
     /**
@@ -161,7 +167,7 @@ public class XBeeNode extends IEEE802154Node {
     }
 
     public String getIdentifier() {
-        return Identifier;
+        return device.getNodeID();
     }
 
     /**
@@ -263,6 +269,18 @@ public class XBeeNode extends IEEE802154Node {
      */
     public RemoteXBeeDevice getXBee() {
            return device;
+    }
+
+    /*
+     * set the RemoteXBeeDevice associated with this node and
+     * configure address information.
+     *
+     * @param RemoteXBeeDevice associated with this node.
+     */
+    public void setXBee(RemoteXBeeDevice rxd) {
+           device=rxd;
+           userAddress = device.get16BitAddress();
+           globalAddress = device.get64BitAddress();
     }
 
     /*

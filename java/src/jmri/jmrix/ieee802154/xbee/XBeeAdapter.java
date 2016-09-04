@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
  */
 public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter implements jmri.jmrix.SerialPortAdapter, IConnectionInterface, SerialPortEventListener {
 
+    private boolean iConnectionOpened = false;
+
     public XBeeAdapter() {
         super(new XBeeConnectionMemo());
     }
@@ -87,7 +89,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
                         log.debug("SerialEvent: DATA_AVAILABLE is " + e.getNewValue());
                     }
                     synchronized (this) {
-                        this.notify();
+                        this.notifyAll();
                     }
                 } else {
                     log.warn("SerialEvent: DATA_AVAILABLE but no data available.");
@@ -136,11 +138,13 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         }
     }
 
+
     /**
      * Local method to do specific port configuration
      */
     @Override
     protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
+        log.debug("setSerialPort() called.");
         // find the baud rate value, configure comm options
         int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i < validSpeeds.length; i++) {
@@ -183,8 +187,14 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
             }
         }
 
+        activeSerialPort.enableReceiveTimeout(10);
+
         // The following are required for the XBee API's input thread.
-        activeSerialPort.notifyOnDataAvailable(true);
+        try {
+           activeSerialPort.notifyOnDataAvailable(true);
+        } catch (Exception e) {
+           log.debug("Could not notifyOnDataAvailable: " + e);
+        }
         // arrange to notify later
         try {
             activeSerialPort.addEventListener(this);
@@ -240,36 +250,44 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
     @Override
     public void close() {
         activeSerialPort.close();
+        iConnectionOpened = false;
     }
 
     @Override
     public int readData(byte[] b) throws java.io.IOException {
+       log.debug("read data called with {}", b);
        return serialStream.read(b);
     }
 
     @Override
     public int readData(byte[] b,int off, int len) throws java.io.IOException {
+       log.debug("read data called with {} {} {}", b, off, len);
        return serialStream.read(b,off,len);
     }
 
     @Override
     public void writeData(byte[] b) throws java.io.IOException {
+       log.debug("write data called with {}", b);
        getOutputStream().write(b);
     }
 
     @Override
     public void writeData(byte[] b,int off, int len) throws java.io.IOException {
+       log.debug("write data called with {} {} {}", b, off, len);
        getOutputStream().write(b,off,len);
     }
 
     @Override
     public boolean isOpen(){
-       return ( (getOutputStream() != null) && (getInputStream() != null));
+       log.debug("isOpen called");
+       return ( iConnectionOpened );
     }
 
     @Override
     public void open(){
-       // don't do anything here.  We handle open through the 
+       log.debug("open called");
+       iConnectionOpened = true;
+       // don't do anything here.  We handle the details of open through the 
        // openPort call, which is called from the JMRI infrastructure.
     }
 

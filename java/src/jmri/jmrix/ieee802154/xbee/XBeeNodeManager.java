@@ -1,4 +1,3 @@
-/* XBeeNodeManager.java */
 package jmri.jmrix.ieee802154.xbee;
 
 import com.digi.xbee.api.models.ATCommandResponse;
@@ -19,6 +18,8 @@ import org.slf4j.LoggerFactory;
  * The Node Manager checks incoming messages for node discovery 
  * response packets.  If a node is discovered, it is added to the traffic
  * controller's node list.
+ *
+ * @author Paul Bender Copyright(C) 2012,2016
  */
 public class XBeeNodeManager implements IDiscoveryListener {
 
@@ -34,14 +35,16 @@ public class XBeeNodeManager implements IDiscoveryListener {
      * send out a node discovery request.
      */
     public void startNodeDiscovery() {
-       // XBeeMessage m = new XBeeMessage(new com.rapplogic.xbee.api.AtCommand("ND"));
-       // xtc.sendXBeeMessage(m, this);
+       log.debug("Starting Node Discovery Process");
        xbeeNetwork = xtc.getXBee().getNetwork();
 
        try {
+          // log.debug("configuring discovery timeout");
           // set the discovery timeout
-          xbeeNetwork.setDiscoveryTimeout(10000);
+          // setting the timeout hangs the network on XBee Series 1
+          //xbeeNetwork.setDiscoveryTimeout(2000);
           
+          log.debug("setting discovery options");
           // set options
           // Append the device type identifier and the local device to the
           // network information.
@@ -52,12 +55,13 @@ public class XBeeNodeManager implements IDiscoveryListener {
          log.error("exception durring discovery process setup");
        }
 
-
        // add this class as a listener for node discovery.
+       log.debug("adding Listener for discovery results");
        xbeeNetwork.addDiscoveryListener(this);
 
        // and start the discovery process.
        xbeeNetwork.startDiscoveryProcess();
+       log.debug("Discovery Process started");
     }
 
     /*
@@ -109,8 +113,28 @@ public class XBeeNodeManager implements IDiscoveryListener {
 
          // add the previously unkonwn nodes to the network.
 
+         for(RemoteXBeeDevice device :nodeList ) {
+             XBeeNode node = (XBeeNode) xtc.getNodeFromXBeeDevice(device);
+
+             if (node == null) {
+                // the node does not exist, we're adding a new one.
+                try {
+                   node = new XBeeNode(device);
+                   // register the node with the traffic controller
+                   xtc.registerNode(node);
+                } catch(com.digi.xbee.api.exceptions.TimeoutException t){
+                  log.error("Timeout registering device {}",device);
+                } catch(com.digi.xbee.api.exceptions.XBeeException e) {
+                  log.error("Exception registering device {}",device);
+                }
+             }
+         }
+
          // and remove this class from the list of discovery listeners.
-         xbeeNetwork.removeDiscoveryListener(this);
+
+         // removing the listener here is causing a 
+         // ConcurrentModificaitonException on an ArrayList in the library.
+         //xbeeNetwork.removeDiscoveryListener(this);
        }
     }
 
