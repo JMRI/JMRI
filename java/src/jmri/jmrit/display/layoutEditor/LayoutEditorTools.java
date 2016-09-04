@@ -274,7 +274,7 @@ public class LayoutEditorTools {
                     setSignalsCancelPressed(e);
                 }
             });
-            setSignalsCancel.setToolTipText(rb.getString("CancelHint"));
+            setSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -2065,7 +2065,7 @@ public class LayoutEditorTools {
                     setSignalsAtBoundaryCancelPressed(e);
                 }
             });
-            setSignalsAtBoundaryCancel.setToolTipText(rb.getString("CancelHint"));
+            setSignalsAtBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAtBoundaryFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -2598,7 +2598,7 @@ public class LayoutEditorTools {
             theContentPane.add(panel2);
             JPanel panel21 = new JPanel();
             panel21.setLayout(new FlowLayout());
-            JLabel a1Label = new JLabel(rb.getString("AContinuing") + " : ");
+            JLabel a1Label = new JLabel(Bundle.getMessage("XContinuing", "A") + " : ");
             panel21.add(a1Label);
             panel21.add(a1Field);
             theContentPane.add(panel21);
@@ -2615,7 +2615,7 @@ public class LayoutEditorTools {
             if (!(xoverType == LayoutTurnout.LH_XOVER)) {
                 JPanel panel23 = new JPanel();
                 panel23.setLayout(new FlowLayout());
-                JLabel a2Label = new JLabel(rb.getString("ADiverging") + " : ");
+                JLabel a2Label = new JLabel(Bundle.getMessage("XDiverging", "A") + " : ");
                 panel23.add(a2Label);
                 panel23.add(a2Field);
                 theContentPane.add(panel23);
@@ -2632,7 +2632,7 @@ public class LayoutEditorTools {
             }
             JPanel panel31 = new JPanel();
             panel31.setLayout(new FlowLayout());
-            JLabel b1Label = new JLabel(rb.getString("BContinuing") + " : ");
+            JLabel b1Label = new JLabel(Bundle.getMessage("XContinuing", "B") + " : ");
             panel31.add(b1Label);
             panel31.add(b1Field);
             theContentPane.add(panel31);
@@ -2649,7 +2649,7 @@ public class LayoutEditorTools {
             if (!(xoverType == LayoutTurnout.RH_XOVER)) {
                 JPanel panel33 = new JPanel();
                 panel33.setLayout(new FlowLayout());
-                JLabel b2Label = new JLabel(rb.getString("BDiverging") + " : ");
+                JLabel b2Label = new JLabel(Bundle.getMessage("XDiverging", "B") + " : ");
                 panel33.add(b2Label);
                 panel33.add(b2Field);
                 theContentPane.add(panel33);
@@ -2666,7 +2666,7 @@ public class LayoutEditorTools {
             }
             JPanel panel41 = new JPanel();
             panel41.setLayout(new FlowLayout());
-            JLabel c1Label = new JLabel(rb.getString("CContinuing") + " : ");
+            JLabel c1Label = new JLabel(Bundle.getMessage("XContinuing", "C") + " : ");
             panel41.add(c1Label);
             panel41.add(c1Field);
             theContentPane.add(panel41);
@@ -2683,7 +2683,7 @@ public class LayoutEditorTools {
             if (!(xoverType == LayoutTurnout.LH_XOVER)) {
                 JPanel panel43 = new JPanel();
                 panel43.setLayout(new FlowLayout());
-                JLabel c2Label = new JLabel(rb.getString("CDiverging") + " : ");
+                JLabel c2Label = new JLabel(Bundle.getMessage("XDiverging", "C") + " : ");
                 panel43.add(c2Label);
                 panel43.add(c2Field);
                 theContentPane.add(panel43);
@@ -2700,7 +2700,7 @@ public class LayoutEditorTools {
             }
             JPanel panel51 = new JPanel();
             panel51.setLayout(new FlowLayout());
-            JLabel d1Label = new JLabel(rb.getString("DContinuing") + " : ");
+            JLabel d1Label = new JLabel(Bundle.getMessage("XContinuing", "D") + " : ");
             panel51.add(d1Label);
             panel51.add(d1Field);
             theContentPane.add(panel51);
@@ -2717,7 +2717,7 @@ public class LayoutEditorTools {
             if (!(xoverType == LayoutTurnout.RH_XOVER)) {
                 JPanel panel53 = new JPanel();
                 panel53.setLayout(new FlowLayout());
-                JLabel d2Label = new JLabel(rb.getString("DDiverging") + " : ");
+                JLabel d2Label = new JLabel(Bundle.getMessage("XDiverging", "D") + " : ");
                 panel53.add(d2Label);
                 panel53.add(d2Field);
                 theContentPane.add(panel53);
@@ -2756,7 +2756,7 @@ public class LayoutEditorTools {
                     setXoverSignalsCancelPressed(e);
                 }
             });
-            setXoverSignalsCancel.setToolTipText(rb.getString("CancelHint"));
+            setXoverSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAtXoverFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -3671,12 +3671,12 @@ public class LayoutEditorTools {
             JPanel panel11 = new JPanel();
             panel11.setLayout(new FlowLayout());
             if (xingFromMenu) {
-                JLabel blockANameLabel = new JLabel(rb.getString("BlockAtA") + " "
+                JLabel blockANameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
                         + Bundle.getMessage("Name") + " : " + levelXing.getBlockNameAC());
 
                 panel11.add(blockANameLabel);
             } else {
-                JLabel blockANameLabel = new JLabel(rb.getString("BlockAtA") + " "
+                JLabel blockANameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
                         + Bundle.getMessage("Name") + " : ");
                 panel11.add(blockANameLabel);
                 panel11.add(blockANameField);
@@ -3686,12 +3686,12 @@ public class LayoutEditorTools {
             JPanel panel12 = new JPanel();
             panel12.setLayout(new FlowLayout());
             if (xingFromMenu) {
-                JLabel blockCNameLabel = new JLabel(rb.getString("BlockAtC") + " "
+                JLabel blockCNameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
                         + Bundle.getMessage("Name") + " : " + levelXing.getBlockNameBD());
 
                 panel12.add(blockCNameLabel);
             } else {
-                JLabel blockCNameLabel = new JLabel(rb.getString("BlockAtC") + " "
+                JLabel blockCNameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
                         + Bundle.getMessage("Name") + " : ");
                 panel12.add(blockCNameLabel);
                 panel12.add(blockCNameField);
@@ -3714,7 +3714,7 @@ public class LayoutEditorTools {
             theContentPane.add(panel2);
             JPanel panel21 = new JPanel();
             panel21.setLayout(new FlowLayout());
-            JLabel aLabel = new JLabel(rb.getString("ATrack") + " : ");
+            JLabel aLabel = new JLabel(Bundle.getMessage("TrackXConnect", "A") + " : ");
             panel21.add(aLabel);
             panel21.add(aField);
             theContentPane.add(panel21);
@@ -3730,7 +3730,7 @@ public class LayoutEditorTools {
             theContentPane.add(panel22);
             JPanel panel31 = new JPanel();
             panel31.setLayout(new FlowLayout());
-            JLabel bLabel = new JLabel(rb.getString("BTrack") + " : ");
+            JLabel bLabel = new JLabel(Bundle.getMessage("TrackXConnect", "B") + " : ");
             panel31.add(bLabel);
             panel31.add(bField);
             theContentPane.add(panel31);
@@ -3746,7 +3746,7 @@ public class LayoutEditorTools {
             theContentPane.add(panel32);
             JPanel panel41 = new JPanel();
             panel41.setLayout(new FlowLayout());
-            JLabel cLabel = new JLabel(rb.getString("CTrack") + " : ");
+            JLabel cLabel = new JLabel(Bundle.getMessage("TrackXConnect", "C") + " : ");
             panel41.add(cLabel);
             panel41.add(cField);
             theContentPane.add(panel41);
@@ -3762,7 +3762,7 @@ public class LayoutEditorTools {
             theContentPane.add(panel42);
             JPanel panel51 = new JPanel();
             panel51.setLayout(new FlowLayout());
-            JLabel dLabel = new JLabel(rb.getString("DTrack") + " : ");
+            JLabel dLabel = new JLabel(Bundle.getMessage("TrackXConnect", "D") + " : ");
             panel51.add(dLabel);
             panel51.add(dField);
             theContentPane.add(panel51);
@@ -3800,7 +3800,7 @@ public class LayoutEditorTools {
                     setXingSignalsCancelPressed(e);
                 }
             });
-            setXingSignalsCancel.setToolTipText(rb.getString("CancelHint"));
+            setXingSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAtXingFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -4715,7 +4715,7 @@ public class LayoutEditorTools {
                     setTToTSignalsCancelPressed(e);
                 }
             });
-            setTToTSignalsCancel.setToolTipText(rb.getString("CancelHint"));
+            setTToTSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAtTToTFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -6144,7 +6144,7 @@ public class LayoutEditorTools {
             JPanel panel23 = new JPanel();
             panel23.setLayout(new FlowLayout());
             panel23.add(new JLabel("    " + rb.getString("Throat") + " - "
-                    + rb.getString("DivergingA") + " : "));
+                    + Bundle.getMessage("Diverging_", "A") + " : "));
             panel23.add(a23WayField);
             a23WayField.setToolTipText(rb.getString("SignalHeadNameHint"));
             theContentPane.add(panel23);
@@ -6160,7 +6160,7 @@ public class LayoutEditorTools {
             JPanel panel25 = new JPanel();
             panel25.setLayout(new FlowLayout());
             panel25.add(new JLabel("    " + rb.getString("Throat") + " - "
-                    + rb.getString("DivergingB") + " : "));
+                    + Bundle.getMessage("Diverging_", "B") + " : "));
             panel25.add(a33WayField);
             a33WayField.setToolTipText(rb.getString("SignalHeadNameHint"));
             theContentPane.add(panel25);
@@ -6175,7 +6175,7 @@ public class LayoutEditorTools {
             theContentPane.add(panel26);
             JPanel panel31 = new JPanel();
             panel31.setLayout(new FlowLayout());
-            panel31.add(new JLabel("        " + rb.getString("DivergingA") + " : "));
+            panel31.add(new JLabel("        " + Bundle.getMessage("Diverging_", "A") + " : "));
             panel31.add(b3WayField);
             b3WayField.setToolTipText(rb.getString("SignalHeadNameHint"));
             theContentPane.add(panel31);
@@ -6211,7 +6211,7 @@ public class LayoutEditorTools {
             theContentPane.add(panel42);
             JPanel panel43 = new JPanel();
             panel43.setLayout(new FlowLayout());
-            panel43.add(new JLabel("        " + rb.getString("DivergingB") + " : "));
+            panel43.add(new JLabel("        " + Bundle.getMessage("Diverging_", "B") + " : "));
             panel43.add(d3WayField);
             d3WayField.setToolTipText(rb.getString("SignalHeadNameHint"));
             theContentPane.add(panel43);
@@ -6249,7 +6249,7 @@ public class LayoutEditorTools {
                     set3WaySignalsCancelPressed(e);
                 }
             });
-            set3WaySignalsCancel.setToolTipText(rb.getString("CancelHint"));
+            set3WaySignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAt3WayFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -7466,7 +7466,7 @@ public class LayoutEditorTools {
                     setSensorsAtBoundaryCancelPressed(e);
                 }
             });
-            setSensorsAtBoundaryCancel.setToolTipText(rb.getString("CancelHint"));
+            setSensorsAtBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6, BorderLayout.SOUTH);
             setSensorsAtBoundaryFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -7995,7 +7995,7 @@ public class LayoutEditorTools {
                     setSignalMastsAtBoundaryCancelPressed(e);
                 }
             });
-            setSignalMastsAtBoundaryCancel.setToolTipText(rb.getString("CancelHint"));
+            setSignalMastsAtBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6, BorderLayout.SOUTH);
             setSignalMastsAtBoundaryFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -9158,7 +9158,7 @@ public class LayoutEditorTools {
                     setSignalMastsCancelPressed(e);
                 }
             });
-            setSignalMastsCancel.setToolTipText(rb.getString("CancelHint"));
+            setSignalMastsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             signalMastsJmriFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -9628,7 +9628,7 @@ public class LayoutEditorTools {
             JPanel panel11 = new JPanel();
             panel11.setLayout(new FlowLayout());
             if (slipMastFromMenu) {
-                JLabel blockANameLabel = new JLabel(rb.getString("BlockAtA") + " "
+                JLabel blockANameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
                         + Bundle.getMessage("Name") + " : " + layoutSlip.getBlockName());
 
                 panel11.add(blockANameLabel);
@@ -9637,7 +9637,7 @@ public class LayoutEditorTools {
                 slipSignalMastC.setTextField(layoutSlip.getSignalCMastName());
                 slipSignalMastD.setTextField(layoutSlip.getSignalDMastName());
             } else {
-                JLabel blockANameLabel = new JLabel(rb.getString("BlockAtA") + " "
+                JLabel blockANameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
                         + Bundle.getMessage("Name") + " : ");
                 panel11.add(blockANameLabel);
                 panel11.add(blockANameMastField);
@@ -9647,7 +9647,7 @@ public class LayoutEditorTools {
             JPanel panel12 = new JPanel();
             panel12.setLayout(new FlowLayout());
             if (slipMastFromMenu) {
-                JLabel blockCNameLabel = new JLabel(rb.getString("BlockAtC") + " "
+                JLabel blockCNameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
                         + Bundle.getMessage("Name") + " : " + layoutSlip.getBlockName());
 
                 panel12.add(blockCNameLabel);
@@ -9716,7 +9716,7 @@ public class LayoutEditorTools {
                     setSlipSignalMastsCancelPressed(e);
                 }
             });
-            setSlipSignalMastsCancel.setToolTipText(rb.getString("CancelHint"));
+            setSlipSignalMastsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             signalMastsAtSlipFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -10123,7 +10123,7 @@ public class LayoutEditorTools {
             JPanel panel11 = new JPanel();
             panel11.setLayout(new FlowLayout());
             if (xingMastFromMenu) {
-                JLabel blockANameLabel = new JLabel(rb.getString("BlockAtA") + " "
+                JLabel blockANameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
                         + Bundle.getMessage("Name") + " : " + levelXing.getBlockNameAC());
 
                 panel11.add(blockANameLabel);
@@ -10132,7 +10132,7 @@ public class LayoutEditorTools {
                 xingSignalMastC.setTextField(levelXing.getSignalCMastName());
                 xingSignalMastD.setTextField(levelXing.getSignalDMastName());
             } else {
-                JLabel blockANameLabel = new JLabel(rb.getString("BlockAtA") + " "
+                JLabel blockANameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
                         + Bundle.getMessage("Name") + " : ");
                 panel11.add(blockANameLabel);
                 panel11.add(blockANameMastField);
@@ -10142,12 +10142,12 @@ public class LayoutEditorTools {
             JPanel panel12 = new JPanel();
             panel12.setLayout(new FlowLayout());
             if (xingMastFromMenu) {
-                JLabel blockCNameLabel = new JLabel(rb.getString("BlockAtC") + " "
+                JLabel blockCNameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
                         + Bundle.getMessage("Name") + " : " + levelXing.getBlockNameBD());
 
                 panel12.add(blockCNameLabel);
             } else {
-                JLabel blockCNameLabel = new JLabel(rb.getString("BlockAtC") + " "
+                JLabel blockCNameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
                         + Bundle.getMessage("Name") + " : ");
                 panel12.add(blockCNameLabel);
                 panel12.add(blockCNameMastField);
@@ -10216,7 +10216,7 @@ public class LayoutEditorTools {
                     setXingSignalMastsCancelPressed(e);
                 }
             });
-            setXingSignalMastsCancel.setToolTipText(rb.getString("CancelHint"));
+            setXingSignalMastsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             signalMastsAtXingFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -10714,7 +10714,7 @@ public class LayoutEditorTools {
                     setSensorsCancelPressed(e);
                 }
             });
-            setSensorsCancel.setToolTipText(rb.getString("CancelHint"));
+            setSensorsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSensorsFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -11153,7 +11153,7 @@ public class LayoutEditorTools {
             xingSensorC = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
             xingSensorD = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
             if (xingSensorFromMenu) {
-                JLabel blockANameLabel = new JLabel(rb.getString("BlockAtA") + " "
+                JLabel blockANameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
                         + Bundle.getMessage("Name") + " : " + levelXing.getBlockNameAC());
 
                 panel11.add(blockANameLabel);
@@ -11162,7 +11162,7 @@ public class LayoutEditorTools {
                 xingSensorC.setTextField(levelXing.getSensorCName());
                 xingSensorD.setTextField(levelXing.getSensorDName());
             } else {
-                JLabel blockANameLabel = new JLabel(rb.getString("BlockAtA") + " "
+                JLabel blockANameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
                         + Bundle.getMessage("Name") + " : ");
                 panel11.add(blockANameLabel);
                 panel11.add(blockANameSensorField);
@@ -11172,12 +11172,12 @@ public class LayoutEditorTools {
             JPanel panel12 = new JPanel();
             panel12.setLayout(new FlowLayout());
             if (xingSensorFromMenu) {
-                JLabel blockCNameLabel = new JLabel(rb.getString("BlockAtC") + " "
+                JLabel blockCNameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
                         + Bundle.getMessage("Name") + " : " + levelXing.getBlockNameBD());
 
                 panel12.add(blockCNameLabel);
             } else {
-                JLabel blockCNameLabel = new JLabel(rb.getString("BlockAtC") + " "
+                JLabel blockCNameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 2 "
                         + Bundle.getMessage("Name") + " : ");
                 panel12.add(blockCNameLabel);
                 panel12.add(blockCNameSensorField);
@@ -11253,7 +11253,7 @@ public class LayoutEditorTools {
                     setXingSensorsCancelPressed(e);
                 }
             });
-            setXingSensorsCancel.setToolTipText(rb.getString("CancelHint"));
+            setXingSensorsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             sensorsAtXingFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -11696,7 +11696,7 @@ public class LayoutEditorTools {
             slipSensorC = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
             slipSensorD = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
             if (slipSensorFromMenu) {
-                JLabel blockANameLabel = new JLabel(rb.getString("BlockAtA") + " "
+                JLabel blockANameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
                         + Bundle.getMessage("Name") + " : " + layoutSlip.getBlockName());
 
                 panel11.add(blockANameLabel);
@@ -11705,7 +11705,7 @@ public class LayoutEditorTools {
                 slipSensorC.setTextField(layoutSlip.getSensorCName());
                 slipSensorD.setTextField(layoutSlip.getSensorDName());
             } else {
-                JLabel blockANameLabel = new JLabel(rb.getString("BlockAtA") + " "
+                JLabel blockANameLabel = new JLabel(Bundle.getMessage("BeanNameBlock") + " 1 "
                         + Bundle.getMessage("Name") + " : ");
                 panel11.add(blockANameLabel);
                 panel11.add(blockANameSensorField);
@@ -11790,7 +11790,7 @@ public class LayoutEditorTools {
                     setSlipSensorsCancelPressed(e);
                 }
             });
-            setSlipSensorsCancel.setToolTipText(rb.getString("CancelHint"));
+            setSlipSensorsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             sensorsAtSlipFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -12546,7 +12546,7 @@ public class LayoutEditorTools {
                     setSlipSignalsCancelPressed(e);
                 }
             });
-            setSlipSignalsCancel.setToolTipText(rb.getString("CancelHint"));
+            setSlipSignalsCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
             setSignalsAtSlipFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {

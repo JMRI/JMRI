@@ -100,7 +100,7 @@ public class MultiSensorIconFrame extends JmriJFrame {
                 "resources/icons/USS/plate/levers/l-inconsistent.gif");
         defaultIcons.complete();
         defaultsFrame = new JmriJFrame("", false, true);
-        defaultsFrame.getContentPane().add(new JLabel(Bundle.getMessage("ChangeIconHelp")), BorderLayout.NORTH);
+        defaultsFrame.getContentPane().add(new JLabel(Bundle.getMessage("IconChangeInfo")), BorderLayout.NORTH);
         defaultsFrame.getContentPane().add(defaultIcons);
         defaultsFrame.pack();
         defaultsFrame.addHelpMenu("package.jmri.jmrit.display.MultiSensorIconDefaultsFrame", true);
@@ -187,7 +187,7 @@ public class MultiSensorIconFrame extends JmriJFrame {
 
             ed.setIcon(0, Bundle.getMessage("MakeLabel", (Bundle.getMessage("SensorStateActive") + " "  + Bundle.getMessage("MultiSensorPosition", position))), name);
             ed.complete();
-            edf.getContentPane().add(new JLabel(Bundle.getMessage("ChangeIconHelp")), BorderLayout.NORTH);
+            edf.getContentPane().add(new JLabel(Bundle.getMessage("IconChangeInfo")), BorderLayout.NORTH);
             edf.getContentPane().add(ed);
             edf.pack();
 

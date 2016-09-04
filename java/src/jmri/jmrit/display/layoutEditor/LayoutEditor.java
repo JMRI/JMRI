@@ -643,6 +643,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     signalFrame.setVisible(true);
                 } else if (iconLabelBox.isSelected()) {
                     iconFrame.setVisible(true);
+                } else {
+                    // explain to the user why nothing happens
+                    JOptionPane.showMessageDialog(null, rb.getString("ChangeIconNotApplied"),
+                            rb.getString("ChangeIcons"), JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
@@ -665,7 +669,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 "resources/icons/smallschematics/tracksegments/circuit-error.gif");
         sensorIconEditor.complete();
         sensorFrame = new JFrame(rb.getString("EditSensorIcons"));
-        sensorFrame.getContentPane().add(new JLabel("  " + rb.getString("IconChangeInfo") + "  "), BorderLayout.NORTH);
+        sensorFrame.getContentPane().add(new JLabel(Bundle.getMessage("IconChangeInfo")), BorderLayout.NORTH);
         sensorFrame.getContentPane().add(sensorIconEditor);
         sensorFrame.pack();
         // signal icon
@@ -1149,10 +1153,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         });
 
         // Show/Hide Scroll Bars
-        scrollMenu = new JMenu(rb.getString("ScrollBarsSubMenu"));
+        scrollMenu = new JMenu(Bundle.getMessage("ComboBoxScrollable")); // used for ScrollBarsSubMenu
         optionMenu.add(scrollMenu);
         ButtonGroup scrollGroup = new ButtonGroup();
-        scrollBoth = new JRadioButtonMenuItem(rbx.getString("ScrollBoth"));
+        scrollBoth = new JRadioButtonMenuItem(Bundle.getMessage("ScrollBoth"));
         scrollGroup.add(scrollBoth);
         scrollMenu.add(scrollBoth);
         scrollBoth.setSelected(_scrollState == SCROLL_BOTH);
@@ -1163,7 +1167,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 repaint();
             }
         });
-        scrollNone = new JRadioButtonMenuItem(rbx.getString("ScrollNone"));
+        scrollNone = new JRadioButtonMenuItem(Bundle.getMessage("ScrollNone"));
         scrollGroup.add(scrollNone);
         scrollMenu.add(scrollNone);
         scrollNone.setSelected(_scrollState == SCROLL_NONE);
@@ -1174,7 +1178,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 repaint();
             }
         });
-        scrollHorizontal = new JRadioButtonMenuItem(rbx.getString("ScrollHorizontal"));
+        scrollHorizontal = new JRadioButtonMenuItem(Bundle.getMessage("ScrollHorizontal"));
         scrollGroup.add(scrollHorizontal);
         scrollMenu.add(scrollHorizontal);
         scrollHorizontal.setSelected(_scrollState == SCROLL_HORIZONTAL);
@@ -1185,7 +1189,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 repaint();
             }
         });
-        scrollVertical = new JRadioButtonMenuItem(rbx.getString("ScrollVertical"));
+        scrollVertical = new JRadioButtonMenuItem(Bundle.getMessage("ScrollVertical"));
         scrollGroup.add(scrollVertical);
         scrollMenu.add(scrollVertical);
         scrollVertical.setSelected(_scrollState == SCROLL_VERTICAL);
@@ -1359,8 +1363,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         });
         // track color item
-        JMenu trkColourMenu = new JMenu(rb.getString("DefaultTrackColor"));
+        JMenu trkColourMenu = new JMenu(rb.getString("TrackColorSubMenu"));
         optionMenu.add(trkColourMenu);
+
         JMenu trackColorMenu = new JMenu(rb.getString("DefaultTrackColor"));
         trackColorButtonGroup = new ButtonGroup();
         addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Black"), Color.black);
@@ -1866,7 +1871,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     trackWidthDonePressed(e);
                 }
             });
-            trackWidthDone.setToolTipText(rb.getString("DoneHint"));
+            trackWidthDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             // Cancel
             panel5.add(trackWidthCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             trackWidthCancel.addActionListener(new ActionListener() {
@@ -1874,7 +1879,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     trackWidthCancelPressed(e);
                 }
             });
-            trackWidthCancel.setToolTipText(rb.getString("CancelHint"));
+            trackWidthCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel5);
         }
         // Set up for Entry of Track Widths
@@ -1900,14 +1905,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             wid = Float.parseFloat(newWidth);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(enterTrackWidthFrame, rb.getString("EntryError") + ": "
-                    + e + " " + rb.getString("TryAgain"), rb.getString("Error"),
+                    + e + " " + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
         if ((wid <= 0.99) || (wid > 10.0)) {
             JOptionPane.showMessageDialog(enterTrackWidthFrame,
                     java.text.MessageFormat.format(rb.getString("Error2"),
-                            new Object[]{" " + wid + " "}), rb.getString("Error"),
+                            new Object[]{" " + wid + " "}), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -1921,14 +1926,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             wid = Float.parseFloat(newWidth);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(enterTrackWidthFrame, rb.getString("EntryError") + ": "
-                    + e + rb.getString("TryAgain"), rb.getString("Error"),
+                    + e + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
         if ((wid <= 0.99) || (wid > 10.0)) {
             JOptionPane.showMessageDialog(enterTrackWidthFrame,
                     java.text.MessageFormat.format(rb.getString("Error2"),
-                            new Object[]{" " + wid + " "}), rb.getString("Error"),
+                            new Object[]{" " + wid + " "}), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -2017,7 +2022,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     reporterCancelPressed(e);
                 }
             });
-            reporterCancel.setToolTipText(rb.getString("CancelHint"));
+            reporterCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel5);
 
         }
@@ -2045,14 +2050,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             xx = Integer.parseInt(newX);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(enterReporterFrame, rb.getString("EntryError") + ": "
-                    + e + " " + rb.getString("TryAgain"), rb.getString("Error"),
+                    + e + " " + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
         if ((xx <= 0) || (xx > dim.width)) {
             JOptionPane.showMessageDialog(enterReporterFrame,
                     java.text.MessageFormat.format(rb.getString("Error2a"),
-                            new Object[]{" " + xx + " "}), rb.getString("Error"),
+                            new Object[]{" " + xx + " "}), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -2064,14 +2069,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             yy = Integer.parseInt(newY);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(enterReporterFrame, rb.getString("EntryError") + ": "
-                    + e + " " + rb.getString("TryAgain"), rb.getString("Error"),
+                    + e + " " + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
         if ((yy <= 0) || (yy > dim.height)) {
             JOptionPane.showMessageDialog(enterReporterFrame,
                     java.text.MessageFormat.format(rb.getString("Error2a"),
-                            new Object[]{" " + yy + " "}), rb.getString("Error"),
+                            new Object[]{" " + yy + " "}), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -2085,7 +2090,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             } catch (IllegalArgumentException e) {
                 JOptionPane.showMessageDialog(enterReporterFrame,
                         java.text.MessageFormat.format(rb.getString("Error18"),
-                                new Object[]{rName}), rb.getString("Error"),
+                                new Object[]{rName}), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -2094,7 +2099,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         } else {
             JOptionPane.showMessageDialog(enterReporterFrame,
-                    rb.getString("Error17"), rb.getString("Error"),
+                    rb.getString("Error17"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -2196,7 +2201,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     scaleTrackDiagramCancelPressed(e);
                 }
             });
-            scaleTrackDiagramCancel.setToolTipText(rb.getString("CancelHint"));
+            scaleTrackDiagramCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel5);
         }
         // Set up for Entry of Scale and Translation
@@ -2228,7 +2233,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             xTranslation = Float.parseFloat(newText);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(scaleTrackDiagramFrame, rb.getString("EntryError") + ": "
-                    + e + " " + rb.getString("TryAgain"), rb.getString("Error"),
+                    + e + " " + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -2238,7 +2243,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             yTranslation = Float.parseFloat(newText);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(scaleTrackDiagramFrame, rb.getString("EntryError") + ": "
-                    + e + " " + rb.getString("TryAgain"), rb.getString("Error"),
+                    + e + " " + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -2248,7 +2253,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             xFactor = Float.parseFloat(newText);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(scaleTrackDiagramFrame, rb.getString("EntryError") + ": "
-                    + e + " " + rb.getString("TryAgain"), rb.getString("Error"),
+                    + e + " " + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -2258,7 +2263,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             yFactor = Float.parseFloat(newText);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(scaleTrackDiagramFrame, rb.getString("EntryError") + ": "
-                    + e + " " + rb.getString("TryAgain"), rb.getString("Error"),
+                    + e + " " + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -2383,7 +2388,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (!selectionActive || (selectionWidth == 0.0) || (selectionHeight == 0.0)) {
             // no selection has been made - nothing to move
             JOptionPane.showMessageDialog(this, rb.getString("Error12"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         if (moveSelectionOpen) {
@@ -2435,7 +2440,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     moveSelectionCancelPressed(e);
                 }
             });
-            moveSelectionCancel.setToolTipText(rb.getString("CancelHint"));
+            moveSelectionCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel5);
         }
         // Set up for Entry of Translation
@@ -2461,7 +2466,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             xTranslation = Float.parseFloat(newText);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(moveSelectionFrame, rb.getString("EntryError") + ": "
-                    + e + " " + rb.getString("TryAgain"), rb.getString("Error"),
+                    + e + " " + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -2471,7 +2476,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             yTranslation = Float.parseFloat(newText);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(moveSelectionFrame, rb.getString("EntryError") + ": "
-                    + e + " " + rb.getString("TryAgain"), rb.getString("Error"),
+                    + e + " " + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }

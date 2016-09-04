@@ -954,15 +954,15 @@ public class LevelXing {
             boolean blockACAssigned = false;
             boolean blockBDAssigned = false;
             if ((blockNameAC == null) || (blockNameAC.equals(""))) {
-                popup.add(rb.getString("NoBlock1"));
+                popup.add(Bundle.getMessage("NoBlockX", 1));
             } else {
-                popup.add(rb.getString("Block1ID") + ": " + getLayoutBlockAC().getID());
+                popup.add(Bundle.getMessage("Block_ID", 1) + ": " + getLayoutBlockAC().getID());
                 blockACAssigned = true;
             }
             if ((blockNameBD == null) || (blockNameBD.equals(""))) {
-                popup.add(rb.getString("NoBlock2"));
+                popup.add(Bundle.getMessage("NoBlockX", 2));
             } else {
-                popup.add(rb.getString("Block2ID") + ": " + getLayoutBlockBD().getID());
+                popup.add(Bundle.getMessage("Block_ID", 2) + ": " + getLayoutBlockBD().getID());
                 blockBDAssigned = true;
             }
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
@@ -1181,7 +1181,7 @@ public class LevelXing {
             // setup block 1 name
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
-            JLabel block1NameLabel = new JLabel(rb.getString("Block1ID"));
+            JLabel block1NameLabel = new JLabel(Bundle.getMessage("Block_ID", 1));
             panel1.add(block1NameLabel);
             panel1.add(block1Name);
             block1Name.setToolTipText(rb.getString("EditBlockNameHint"));
@@ -1189,7 +1189,7 @@ public class LevelXing {
             // setup block 2 name
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
-            JLabel block2NameLabel = new JLabel(rb.getString("Block2ID"));
+            JLabel block2NameLabel = new JLabel(Bundle.getMessage("Block_ID", 2));
             panel2.add(block2NameLabel);
             panel2.add(block2Name);
             block2Name.setToolTipText(rb.getString("EditBlockNameHint"));
@@ -1198,21 +1198,21 @@ public class LevelXing {
             JPanel panel4 = new JPanel();
             panel4.setLayout(new FlowLayout());
             // Edit 1 Block
-            panel4.add(xingEdit1Block = new JButton(rb.getString("EditBlock1")));
+            panel4.add(xingEdit1Block = new JButton(Bundle.getMessage("EditBlock", 1)));
             xingEdit1Block.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     xingEdit1BlockPressed(e);
                 }
             });
-            xingEdit1Block.setToolTipText(rb.getString("EditBlockHint"));
+            xingEdit1Block.setToolTipText(Bundle.getMessage("EditBlockHint", ""));
             // Edit 2 Block
-            panel4.add(xingEdit2Block = new JButton(rb.getString("EditBlock2")));
+            panel4.add(xingEdit2Block = new JButton(Bundle.getMessage("EditBlock", 2)));
             xingEdit2Block.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     xingEdit2BlockPressed(e);
                 }
             });
-            xingEdit2Block.setToolTipText(rb.getString("EditBlockHint"));
+            xingEdit2Block.setToolTipText(Bundle.getMessage("EditBlockHint", ""));
             contentPane.add(panel4);
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
@@ -1223,7 +1223,7 @@ public class LevelXing {
                     xingEditDonePressed(e);
                 }
             });
-            xingEditDone.setToolTipText(rb.getString("DoneHint"));
+            xingEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             // Cancel
             panel5.add(xingEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             xingEditCancel.addActionListener(new ActionListener() {
@@ -1231,7 +1231,7 @@ public class LevelXing {
                     xingEditCancelPressed(e);
                 }
             });
-            xingEditCancel.setToolTipText(rb.getString("CancelHint"));
+            xingEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
         }
         // Set up for Edit

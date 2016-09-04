@@ -623,20 +623,20 @@ public class TrackSegment {
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
             // Edit Block
-            panel5.add(segmentEditBlock = new JButton(rb.getString("EditBlock")));
+            panel5.add(segmentEditBlock = new JButton(Bundle.getMessage("EditBlock", "")));
             segmentEditBlock.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     segmentEditBlockPressed(e);
                 }
             });
-            segmentEditBlock.setToolTipText(rb.getString("EditBlockHint"));
+            segmentEditBlock.setToolTipText(Bundle.getMessage("EditBlockHint", ""));
             panel5.add(segmentEditDone = new JButton(Bundle.getMessage("ButtonDone")));
             segmentEditDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     segmentEditDonePressed(e);
                 }
             });
-            segmentEditDone.setToolTipText(rb.getString("DoneHint"));
+            segmentEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             // Cancel
             panel5.add(segmentEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             segmentEditCancel.addActionListener(new ActionListener() {
@@ -644,7 +644,7 @@ public class TrackSegment {
                     segmentEditCancelPressed(e);
                 }
             });
-            segmentEditCancel.setToolTipText(rb.getString("CancelHint"));
+            segmentEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
         }
         // Set up for Edit

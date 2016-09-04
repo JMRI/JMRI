@@ -347,7 +347,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 JOptionPane.showMessageDialog(openFrame,
                         java.text.MessageFormat.format(rb.getString("Error6"),
                                 new Object[]{sensorName, b.getID()}),
-                        rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return null;
             } else {
                 // the user is assigning a sensor which is already assigned to 
@@ -385,7 +385,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             JOptionPane.showMessageDialog(openFrame,
                     java.text.MessageFormat.format(rb.getString("Error16"),
                             new Object[]{memName}),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return null;
         }
 
