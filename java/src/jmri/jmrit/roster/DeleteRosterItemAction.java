@@ -114,7 +114,7 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
                 re.deleteAttribute(group);
                 re.updateFile();
             }
-            Roster.writeRosterFile();
+            Roster.getDefault().writeRoster();
 
             // backup the file & delete it
             if (rosterGroup == null) {

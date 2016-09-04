@@ -614,7 +614,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
         }
         // and store an updated roster file
         FileUtil.createDirectory(FileUtil.getUserFilesPath());
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
 
         // show OK status
         statusLabel.setText(java.text.MessageFormat.format(

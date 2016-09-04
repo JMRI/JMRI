@@ -447,7 +447,7 @@ public class EcosLocoToRoster implements EcosListener {
 
         re.writeFile(null, null, null);
 
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
         ecosManager.clearLocoToRoster();
     }
 

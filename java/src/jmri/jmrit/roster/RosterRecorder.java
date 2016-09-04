@@ -107,7 +107,7 @@ public class RosterRecorder extends Thread {
 
             // write final result
             log.debug("writeRosterFile start");
-            Roster.writeRosterFile();
+            Roster.getDefault().writeRoster();
             log.debug("writeRosterFile end");
         }
     }

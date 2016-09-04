@@ -83,7 +83,7 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
 
         // delete the roster grouping
         Roster.getDefault().delRosterGroupList(group);
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
     }
 
     /**

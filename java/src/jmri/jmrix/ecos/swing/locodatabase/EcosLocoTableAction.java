@@ -222,7 +222,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
                         }
 
                     }
-                    Roster.writeRosterFile();
+                    Roster.getDefault().writeRoster();
                 } else if (col == ADDTOROSTERCOL) {
                     addToRoster(row, col);
                 } else if (col == STOP) {

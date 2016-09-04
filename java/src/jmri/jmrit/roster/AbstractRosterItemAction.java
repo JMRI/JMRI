@@ -194,7 +194,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
     void addToEntryToRoster() {
         // add the new entry to the roster & write it out
         Roster.getDefault().addEntry(mToEntry);
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
     }
 
     // never invoked, because we overrode actionPerformed above

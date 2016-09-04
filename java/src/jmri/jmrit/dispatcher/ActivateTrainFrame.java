@@ -641,7 +641,7 @@ public class ActivateTrainFrame {
                     || !r.getAttribute("DispatcherTrainType").equals("" + trainTypeBox.getSelectedItem()))) {
                 r.putAttribute("DispatcherTrainType", "" + trainTypeBox.getSelectedItem());
                 r.updateFile();
-                Roster.writeRosterFile();
+                Roster.getDefault().writeRoster();
             }
         } else if (_TrainsFromTrains) {
             tSource = ActiveTrain.OPERATIONS;

@@ -74,7 +74,7 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
             }
         }
         Roster.getDefault().addRosterGroup(entry);
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
     }
 
     // never invoked, because we overrode actionPerformed above

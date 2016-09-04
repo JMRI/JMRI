@@ -98,7 +98,7 @@ public class RenameRosterGroupAction extends JmriAbstractAction {
 
         // rename the roster grouping
         Roster.getDefault().renameRosterGroupList(group, entry);
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
     }
 
     // never invoked, because we overrode actionPerformed above

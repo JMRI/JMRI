@@ -1643,7 +1643,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // and store an updated roster file
         FileUtil.createDirectory(FileUtil.getUserFilesPath());
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
 
         // save date changed, update
         _rPane.updateGUI(_rosterEntry);

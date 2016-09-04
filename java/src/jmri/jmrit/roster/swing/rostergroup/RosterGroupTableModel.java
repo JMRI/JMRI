@@ -164,7 +164,7 @@ public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel 
                 re.deleteAttribute(group);
             }
             re.updateFile();
-            Roster.writeRosterFile();
+            Roster.getDefault().writeRoster();
 
         }
         //re.updateFile();

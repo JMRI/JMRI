@@ -77,7 +77,7 @@ public class RosterEntryToGroupAction extends AbstractAction {
         RosterEntry re = roster.entryFromTitle(selEntry);
         String selGroup = Roster.getRosterGroupProperty((String) selections.getSelectedItem());
         re.putAttribute(selGroup, "yes");
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
         re.updateFile();
         actionPerformed(event);
     }

@@ -103,7 +103,7 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
 
         // rename the roster grouping
         Roster.getDefault().copyRosterGroupList(group, entry);
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
     }
 
     // never invoked, because we overrode actionPerformed above

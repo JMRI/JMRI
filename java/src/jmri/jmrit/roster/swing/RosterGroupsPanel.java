@@ -529,7 +529,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
                             re.putAttribute(Roster.getRosterGroupProperty(p.getLastPathComponent().toString()), "yes");
                             re.updateFile();
                         }
-                        Roster.writeRosterFile();
+                        Roster.getDefault().writeRoster();
                         setSelectedRosterGroup(p.getLastPathComponent().toString());
                     } catch (Exception e) {
                         log.warn("Exception dragging RosterEntries onto RosterGroups: " + e);
