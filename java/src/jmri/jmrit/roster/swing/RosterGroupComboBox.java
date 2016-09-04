@@ -35,7 +35,7 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
      *
      */
     public RosterGroupComboBox(String selection) {
-        this(Roster.instance(), selection);
+        this(Roster.getDefault(), selection);
     }
 
     /**
@@ -69,7 +69,7 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
      * default roster group.
      */
     public RosterGroupComboBox() {
-        this(Roster.instance(), Roster.instance().getDefaultRosterGroup());
+        this(Roster.getDefault(), Roster.getDefault().getDefaultRosterGroup());
     }
 
     /**
