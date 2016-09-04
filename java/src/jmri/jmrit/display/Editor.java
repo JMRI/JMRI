@@ -1474,7 +1474,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if ("".equals(rosterEntryTitle)) {
             return null;
         }
-        return selectLoco(Roster.instance().entryFromTitle(rosterEntryTitle));
+        return selectLoco(Roster.getDefault().entryFromTitle(rosterEntryTitle));
     }
 
     protected LocoIcon selectLoco(RosterEntry entry) {

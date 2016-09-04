@@ -305,7 +305,7 @@ public class Engine implements ReadingListener {
     void loadInitialTransmitters() {
         transmitters = new java.util.ArrayList<Transmitter>();
         // load transmitters from the JMRI roster
-        java.util.List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, null);
+        java.util.List<RosterEntry> l = Roster.getDefault().matchingList(null, null, null, null, null, null, null);
         log.debug("Got " + l.size() + " roster entries");
         for (int i = 0; i < l.size(); i++) {
             RosterEntry r = null;
