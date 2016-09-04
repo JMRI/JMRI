@@ -102,7 +102,7 @@ public class LocoIconXml extends PositionableLabelXml {
         String rosterId = null;
         try {
             rosterId = element.getAttribute("rosterentry").getValue();
-            RosterEntry entry = Roster.instance().entryFromTitle(rosterId);
+            RosterEntry entry = Roster.getDefault().entryFromTitle(rosterId);
             l.setRosterEntry(entry);
         } catch (Exception e) {
             log.debug("no roster entry for " + rosterId + ", ex= " + e);

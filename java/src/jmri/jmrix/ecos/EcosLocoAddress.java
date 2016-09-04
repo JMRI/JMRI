@@ -34,7 +34,7 @@ public class EcosLocoAddress implements jmri.LocoAddress {
         _ecosObject = ecosObject;
         //We see if there is a matching roster entry with out object against it
         //if so we add the rosterId to the ecoclocoaddress entry.
-        List<RosterEntry> l = Roster.instance().getEntriesWithAttributeKeyValue(rosterAtt, ecosObject);
+        List<RosterEntry> l = Roster.getDefault().getEntriesWithAttributeKeyValue(rosterAtt, ecosObject);
         //It should be unique
         if (l.size() > 0) {
             _rosterId = l.get(0).getId();

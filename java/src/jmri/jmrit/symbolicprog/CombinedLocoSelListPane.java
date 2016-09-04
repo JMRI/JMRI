@@ -251,7 +251,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
      */
     void setDecoderSelectionFromLoco(String loco) {
         // if there's a valid loco entry...
-        RosterEntry locoEntry = Roster.instance().entryFromTitle(loco);
+        RosterEntry locoEntry = Roster.getDefault().entryFromTitle(loco);
         if (locoEntry == null) {
             return;
         }
