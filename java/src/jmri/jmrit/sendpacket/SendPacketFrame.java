@@ -105,7 +105,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
         });
 
         // get the CommandStation reference
-        cs = InstanceManager.getOptionalDefault(CommandStation.class);
+        cs = InstanceManager.getNullableDefault(CommandStation.class);
         if (cs == null) {
             log.error("No CommandStation object available");
         }

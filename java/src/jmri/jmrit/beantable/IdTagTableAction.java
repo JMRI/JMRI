@@ -41,7 +41,7 @@ public class IdTagTableAction extends AbstractTableAction {
         super(actionName);
 
         // disable ourself if there is no primary IdTag manager available
-        if (InstanceManager.getOptionalDefault(IdTagManager.class) == null) {
+        if (InstanceManager.getNullableDefault(IdTagManager.class) == null) {
             setEnabled(false);
         }
 

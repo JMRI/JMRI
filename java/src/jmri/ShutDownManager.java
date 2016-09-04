@@ -1,5 +1,7 @@
 package jmri;
 
+import javax.annotation.Nonnull;
+
 /**
  * Manage tasks to be completed when the program shuts down normally.
  * Specifically, allows other object to register and deregister
@@ -32,19 +34,22 @@ package jmri;
 public interface ShutDownManager {
 
     /**
-     * Register a task object for later execution
+     * Register a task object for later execution. If called with an already
+     * registered task, the task is not registered twice.
      *
      * @param task the task to execute
+     * @throws NullPointerException if the task is null
      */
-    public void register(ShutDownTask task);
+    public void register(@Nonnull ShutDownTask task);
 
     /**
-     * Deregister a task object.
+     * Deregister a task object. Attempts to deregister a task that is not
+     * registered are silently ignored.
      *
      * @param task the task not to execute
-     * @throws IllegalArgumentException if task object not currently registered
+     * @throws NullPointerException if the task is null
      */
-    public void deregister(ShutDownTask task);
+    public void deregister(@Nonnull ShutDownTask task);
 
     /**
      * Run the shutdown tasks, and then terminate the program with status 100 if

@@ -85,7 +85,7 @@ public class JmriServer {
             this.listenThread.start();
             this.advertise();
         }
-        if (this.shutDownTask != null && InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+        if (this.shutDownTask != null && InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
             InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
         }
     }
@@ -112,7 +112,7 @@ public class JmriServer {
         }
         this.listenThread = null;
         this.service.stop();
-        if (this.shutDownTask != null && InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+        if (this.shutDownTask != null && InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
             InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
         }
     }
