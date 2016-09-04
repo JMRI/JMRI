@@ -89,7 +89,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
             }
         } else if (!data.path(ID).isMissingNode()) {
             try {
-                address = Roster.instance().getEntryForId(data.path(ID).asText()).getDccLocoAddress();
+                address = Roster.getDefault().getEntryForId(data.path(ID).asText()).getDccLocoAddress();
             } catch (NullPointerException ex) {
                 server.sendErrorMessage(-100, Bundle.getMessage(server.connection.getLocale(), "ErrorThrottleRosterEntry", data.path(ID).asText()));
                 throw new JmriException("Roster entry " + data.path(ID).asText() + " does not exist."); // NOI18N

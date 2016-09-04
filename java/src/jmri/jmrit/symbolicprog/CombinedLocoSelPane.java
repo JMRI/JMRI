@@ -155,7 +155,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         pane2a.setLayout(new BoxLayout(pane2a, BoxLayout.X_AXIS));
         pane2a.add(new JLabel(Bundle.getMessage("USE LOCOMOTIVE SETTINGS FOR: ")));
         locoBox.setNonSelectedItem(Bundle.getMessage("<NONE - NEW LOCO>"));
-        Roster.instance().addPropertyChangeListener(this);
+        Roster.getDefault().addPropertyChangeListener(this);
         pane2a.add(locoBox);
         locoBox.addPropertyChangeListener(RosterEntrySelector.SELECTED_ROSTER_ENTRIES, new PropertyChangeListener() {
 
@@ -346,7 +346,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         // raise the button again
         idloco.setSelected(false);
         // locate that loco
-        List<RosterEntry> l = Roster.instance().matchingList(null, null, Integer.toString(dccAddress),
+        List<RosterEntry> l = Roster.getDefault().matchingList(null, null, Integer.toString(dccAddress),
                 null, null, null, null);
         if (log.isDebugEnabled()) {
             log.debug("selectLoco found " + l.size() + " matches");
@@ -568,7 +568,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         re.setId(Bundle.getMessage("LabelNewDecoder"));
         // note that we're leaving the filename null
         // add the new roster entry to the in-memory roster
-        Roster.instance().addEntry(re);
+        Roster.getDefault().addEntry(re);
 
         startProgrammer(decoderFile, re, (String) programmerBox.getSelectedItem());
     }
