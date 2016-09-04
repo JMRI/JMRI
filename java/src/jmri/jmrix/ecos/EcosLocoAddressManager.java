@@ -203,7 +203,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
     private void loadData() {
         tc.addEcosListener(this);
 
-        Roster.instance().addPropertyChangeListener(this);
+        Roster.getDefault().addPropertyChangeListener(this);
 
         EcosMessage m = new EcosMessage("request(10, view)");
         tc.sendWaitMessage(m, this);
@@ -707,14 +707,14 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                 log.debug("Loco not found so need to remove from register");
                 if (getByEcosObject(jmrilist[i]).getRosterId() != null) {
                     final String rosterid = getByEcosObject(jmrilist[i]).getRosterId();
-                    final Roster _roster = Roster.instance();
+                    final Roster _roster = Roster.getDefault();
                     final RosterEntry re = _roster.entryFromTitle(rosterid);
                     re.deleteAttribute(p.getRosterAttribute());
                     re.writeFile(null, null, null);
-                    Roster.writeRosterFile();
+                    Roster.getDefault().writeRoster();
                     if (p.getRemoveLocoFromJMRI() == EcosPreferences.YES) {
                         _roster.removeEntry(re);
-                        Roster.writeRosterFile();
+                        Roster.getDefault().writeRoster();
                     } else if (p.getRemoveLocoFromJMRI() == EcosPreferences.ASK) {
                         try {
                             final JDialog dialog = new JDialog();
@@ -758,7 +758,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                                     }
                                     setLocoToRoster();
                                     _roster.removeEntry(re);
-                                    Roster.writeRosterFile();
+                                    Roster.getDefault().writeRoster();
                                     dialog.dispose();
                                 }
                             });

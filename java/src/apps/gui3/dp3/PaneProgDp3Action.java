@@ -171,7 +171,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                         //re.writeFile(cvModel, iCvModel, variableModel );
                         // note that we're leaving the filename null
                         // add the new roster entry to the in-memory roster
-                        Roster.instance().addEntry(re);
+                        Roster.getDefault().addEntry(re);
                     } else {
                         try {
                             saveRosterEntry();
@@ -562,7 +562,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
      */
     boolean checkDuplicate() {
         // check its not a duplicate
-        List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, rosterIdField.getText());
+        List<RosterEntry> l = Roster.getDefault().matchingList(null, null, null, null, null, null, rosterIdField.getText());
         boolean oops = false;
         for (int i = 0; i < l.size(); i++) {
             if (re != l.get(i)) {
@@ -593,7 +593,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
             re.setDecoderFamily(decoderFile.getFamily());
             re.setDecoderModel(decoderFile.getModel());
             re.setId(rosterIdField.getText());
-            Roster.instance().addEntry(re);
+            Roster.getDefault().addEntry(re);
         }
 
         updateDccAddress();
@@ -614,7 +614,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
         }
         // and store an updated roster file
         FileUtil.createDirectory(FileUtil.getUserFilesPath());
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
 
         // show OK status
         statusLabel.setText(java.text.MessageFormat.format(

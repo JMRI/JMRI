@@ -239,7 +239,7 @@ public class ActiveTrain {
     public jmri.jmrit.roster.RosterEntry getRosterEntry() {
         if (mRoster == null && getTrainSource() == ROSTER) {
             //Try to resolve the roster based upon the train name
-            mRoster = jmri.jmrit.roster.Roster.instance().getEntryForId(getTrainName());
+            mRoster = jmri.jmrit.roster.Roster.getDefault().getEntryForId(getTrainName());
         } else if (getTrainSource() != ROSTER) {
             mRoster = null;
         }
