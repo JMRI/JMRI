@@ -205,7 +205,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
                         String oldRoster = getByEcosObject(ecosObjectNo).getRosterId();
                         RosterEntry oldre;
                         if (oldRoster != null) {
-                            oldre = Roster.instance().getEntryForId(oldRoster);
+                            oldre = Roster.getDefault().getEntryForId(oldRoster);
                             if (oldre != null) {
                                 oldre.deleteAttribute(getRosterAttribute());
                             }
@@ -214,7 +214,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
                         getByEcosObject(ecosObjectNo).setRosterId(re.getId());
                         re.updateFile();
                     } else if (value instanceof String) {
-                        List<RosterEntry> r = Roster.instance().getEntriesWithAttributeKeyValue(getRosterAttribute(), ecosObjectNo);
+                        List<RosterEntry> r = Roster.getDefault().getEntriesWithAttributeKeyValue(getRosterAttribute(), ecosObjectNo);
                         if (r.isEmpty()) {
                             r.get(0).deleteAttribute(getRosterAttribute());
                             getByEcosObject(ecosObjectNo).setRosterId(null);
@@ -285,7 +285,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
                             jmri.jmrix.ecos.EcosLocoAddress b = getByEcosObject(ecosObjectIdList.get(row));
                             RosterEntry re = null;
                             if (b != null) {
-                                re = Roster.instance().getEntryForId(b.getRosterId());
+                                re = Roster.getDefault().getEntryForId(b.getRosterId());
                             }
                             retval = new RosterBoxRenderer(re);
                             rendererMap.put(ecosObjectIdList.get(row), retval);
@@ -300,7 +300,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
                             jmri.jmrix.ecos.EcosLocoAddress b = getByEcosObject(ecosObjectIdList.get(row));
                             RosterEntry re = null;
                             if (b != null) {
-                                re = Roster.instance().getEntryForId(b.getRosterId());
+                                re = Roster.getDefault().getEntryForId(b.getRosterId());
                             }
                             GlobalRosterEntryComboBox cb = new GlobalRosterEntryComboBox();
                             cb.setNonSelectedItem(" ");
@@ -546,7 +546,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
                         b = getByEcosObject(ecosObjectIdList.get(row));
                         RosterEntry re = null;
                         if (b != null) {
-                            re = Roster.instance().getEntryForId(b.getRosterId());
+                            re = Roster.getDefault().getEntryForId(b.getRosterId());
                         }
                         GlobalRosterEntryComboBox cb = (GlobalRosterEntryComboBox) table.getCellRenderer(row, col);
                         if (re == null) {

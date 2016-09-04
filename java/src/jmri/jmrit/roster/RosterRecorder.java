@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 public class RosterRecorder extends Thread {
 
     public RosterRecorder() {
-        Roster roster = Roster.instance();  // forces roster to be loaded
+        Roster roster = Roster.getDefault();  // forces roster to be loaded
 
         // listen for any new entries
         roster.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
@@ -75,7 +75,7 @@ public class RosterRecorder extends Thread {
      * Trigger the next roster write
      */
     void forceWrite() {
-        if (queue.offer(Roster.instance())) {
+        if (queue.offer(Roster.getDefault())) {
             log.debug("forceWrite queued OK");
         } else {
             log.error("forceWrite failed to queue roster write");

@@ -138,7 +138,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
             }
 
             // check for duplicate
-            if (0 == Roster.instance().matchingList(null, null, null, null, null, null, mToID).size()) {
+            if (0 == Roster.getDefault().matchingList(null, null, null, null, null, null, mToID).size()) {
                 break;
             }
 
@@ -193,7 +193,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
 
     void addToEntryToRoster() {
         // add the new entry to the roster & write it out
-        Roster.instance().addEntry(mToEntry);
+        Roster.getDefault().addEntry(mToEntry);
         Roster.writeRosterFile();
     }
 

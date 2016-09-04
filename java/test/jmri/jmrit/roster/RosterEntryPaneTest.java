@@ -162,7 +162,7 @@ public class RosterEntryPaneTest extends TestCase {
         // reset Roster
         InstanceManager.reset(Roster.class);
         InstanceManager.setDefault(Roster.class, new Roster(null));
-        Roster.instance().addEntry(rNew);
+        Roster.getDefault().addEntry(rNew);
 
         Assert.assertTrue(!p.checkDuplicate());
     }
@@ -172,7 +172,7 @@ public class RosterEntryPaneTest extends TestCase {
         // reset Roster
         InstanceManager.reset(Roster.class);
         InstanceManager.setDefault(Roster.class, new Roster(null));
-        Roster.instance().addEntry(rNew);
+        Roster.getDefault().addEntry(rNew);
 
         // reset entry
         p.id.setText("new id");

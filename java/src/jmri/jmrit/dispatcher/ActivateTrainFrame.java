@@ -796,7 +796,7 @@ public class ActivateTrainFrame {
         trainBoxList.clear();
         if (_TrainsFromRoster) {
             // initialize free trains from roster
-            List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, null);
+            List<RosterEntry> l = Roster.getDefault().matchingList(null, null, null, null, null, null, null);
             if (l.size() > 0) {
                 for (int i = 0; i < l.size(); i++) {
                     RosterEntry r = l.get(i);

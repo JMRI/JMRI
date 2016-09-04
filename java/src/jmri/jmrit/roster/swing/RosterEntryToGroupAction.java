@@ -48,7 +48,7 @@ public class RosterEntryToGroupAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent event) {
 
-        roster = Roster.instance();
+        roster = Roster.getDefault();
 
         selections = new RosterGroupComboBox();
         selections.setAllEntriesEnabled(false);

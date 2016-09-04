@@ -69,7 +69,7 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
                     "Delete Roster Group",
                     JOptionPane.INFORMATION_MESSAGE,
                     null,
-                    Roster.instance().getRosterGroupList().toArray(),
+                    Roster.getDefault().getRosterGroupList().toArray(),
                     null);
         }
         // can't delete the roster itself (ALLENTRIES and null represent the roster)
@@ -82,7 +82,7 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
         }
 
         // delete the roster grouping
-        Roster.instance().delRosterGroupList(group);
+        Roster.getDefault().delRosterGroupList(group);
         Roster.writeRosterFile();
     }
 
