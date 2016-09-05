@@ -238,6 +238,8 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
+        // clear any sorts by column
+        clearTableSort(trainsScheduleTable);
         if (ae.getSource() == sortByName) {
             trainsScheduleModel.setSort(trainsScheduleModel.SORTBYNAME);
         } else if (ae.getSource() == sortByTime) {

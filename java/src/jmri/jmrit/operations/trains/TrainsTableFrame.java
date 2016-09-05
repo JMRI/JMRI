@@ -315,6 +315,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
+        // clear any sorts by column
+        clearTableSort(trainsTable);
         if (ae.getSource() == showId) {
             trainsModel.setSort(trainsModel.SORTBYID);
         }

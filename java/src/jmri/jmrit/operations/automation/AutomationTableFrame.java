@@ -198,6 +198,9 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
 
         // set frame size and automation for display
         initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight400));
+        
+        // clear any sorts by column
+        clearTableSort(_automationTable);
     }
 
     // Save, Delete, Add

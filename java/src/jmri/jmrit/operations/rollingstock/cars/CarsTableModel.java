@@ -509,6 +509,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case SET_COLUMN:
             case EDIT_COLUMN:
                 return JButton.class;
+            case LENGTH_COLUMN:
             case MOVES_COLUMN:
             case WAIT_COLUMN:
                 return Integer.class;

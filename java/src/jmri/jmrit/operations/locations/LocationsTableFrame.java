@@ -115,6 +115,8 @@ public class LocationsTableFrame extends OperationsFrame {
     @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
+        // clear any sorts by column
+        clearTableSort(locationsTable);
         if (ae.getSource() == sortByName) {
             sortByName.setSelected(true);
             sortById.setSelected(false);

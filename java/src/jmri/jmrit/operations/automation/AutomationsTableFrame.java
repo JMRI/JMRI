@@ -94,6 +94,8 @@ public class AutomationsTableFrame extends OperationsFrame {
     @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
+        // clear any sorts by column
+        clearTableSort(automationsTable);
         if (ae.getSource() == sortByNameRadioButton) {
             sortByNameRadioButton.setSelected(true);
             sortByIdRadioButton.setSelected(false);
