@@ -15,7 +15,7 @@ public class GlobalRosterEntryComboBox extends RosterEntryComboBox {
      * Create a combo box with all roster entries in the default Roster.
      */
     public GlobalRosterEntryComboBox() {
-        super(Roster.instance(), Roster.ALLENTRIES, null, null, null, null, null, null, null);
+        super(Roster.getDefault(), Roster.ALLENTRIES, null, null, null, null, null, null, null);
     }
 
     /**
@@ -38,7 +38,7 @@ public class GlobalRosterEntryComboBox extends RosterEntryComboBox {
             String decoderMfgID,
             String decoderVersionID,
             String id) {
-        super(Roster.instance(),
+        super(Roster.getDefault(),
                 Roster.ALLENTRIES,
                 roadName,
                 roadNumber,

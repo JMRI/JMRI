@@ -11,6 +11,7 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBeanHandleManager;
+import jmri.ShutDownManager;
 import jmri.UserPreferencesManager;
 import jmri.implementation.AbstractShutDownTask;
 import jmri.implementation.JmriConfigurationManager;
@@ -44,8 +45,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AppsBase {
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT",
-            justification = "not a library pattern")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT", justification = "not a library pattern")
     private final static String configFilename = System.getProperty("org.jmri.Apps.configFilename", "/JmriConfig3.xml");
     protected boolean configOK;
     protected boolean configDeferredLoadOK;
@@ -64,9 +64,7 @@ public abstract class AppsBase {
 
         try {
             Application.setApplicationName(applicationName);
-        } catch (IllegalAccessException ex) {
-            log.error("Unable to set application name");
-        } catch (IllegalArgumentException ex) {
+        } catch (IllegalAccessException | IllegalArgumentException ex) {
             log.error("Unable to set application name");
         }
 
@@ -119,7 +117,9 @@ public abstract class AppsBase {
 
                 public void run() {
                     try {
-                        InstanceManager.tabbedPreferencesInstance().init();
+                        InstanceManager.getOptionalDefault(TabbedPreferences.class).ifPresent(tp -> {
+                            tp.init();
+                        });
                     } catch (Exception ex) {
                         log.error(ex.toString(), ex);
                     }
@@ -282,35 +282,34 @@ public abstract class AppsBase {
         if (sharedConfig != null) {
             // sharedConfigs do not need deferred loads
             configDeferredLoadOK = true;
-        } else { 
+        } else if (SwingUtilities.isEventDispatchThread()) {
             // To avoid possible locks, deferred load should be
             // performed on the Swing thread
-            if (SwingUtilities.isEventDispatchThread()) {
-                configDeferredLoadOK = doDeferredLoad(file);
-            } else {
-                try {
-                    // Use invokeAndWait method as we don't want to
-                    // return until deferred load is completed
-                    SwingUtilities.invokeAndWait(() -> {
-                        configDeferredLoadOK = doDeferredLoad(file);
-                    });
-                } catch (InterruptedException | InvocationTargetException ex) {
-                    log.error("Exception creating system console frame: " + ex);
-                }
+            configDeferredLoadOK = doDeferredLoad(file);
+        } else {
+            try {
+                // Use invokeAndWait method as we don't want to
+                // return until deferred load is completed
+                SwingUtilities.invokeAndWait(() -> {
+                    configDeferredLoadOK = doDeferredLoad(file);
+                });
+            } catch (InterruptedException | InvocationTargetException ex) {
+                log.error("Exception creating system console frame: " + ex);
             }
         }
         if (sharedConfig == null && configOK == true && configDeferredLoadOK == true) {
             log.info("Migrating preferences to new format...");
             // migrate preferences
-            InstanceManager.tabbedPreferencesInstance().init();
-            InstanceManager.tabbedPreferencesInstance().saveContents();
-            ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-            if (cm != null) {
-                cm.storePrefs();
-            }
-            // notify user of change
-            log.info("Preferences have been migrated to new format.");
-            log.info("New preferences format will be used after JMRI is restarted.");
+            InstanceManager.getOptionalDefault(TabbedPreferences.class).ifPresent(tp -> {
+                tp.init();
+                tp.saveContents();
+                InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent(cm -> {
+                    cm.storePrefs();
+                });
+                // notify user of change
+                log.info("Preferences have been migrated to new format.");
+                log.info("New preferences format will be used after JMRI is restarted.");
+            });
         }
     }
 
@@ -335,25 +334,7 @@ public abstract class AppsBase {
     }
 
     protected void installShutDownManager() {
-        InstanceManager.setShutDownManager(
-                new DefaultShutDownManager());
-
-        // configure the shutdown manager as a shutdown hook
-        // when it is installed.  This allows a clean shutdown
-        // when the shutdown hook is triggered via the POSIX signals
-        // HUP (Signal 1), INT (Signal 2), or TERM (Signal 15).  Note 
-        // SIGHUP, SIGINT, and SIGTERM cause the program to go through
-        // the shutdown actions, but the Java process still remains until
-        // it receives a KILL (Signal 9).  A completely orderly shutdown
-        // can be forced by the two step process:
-        // `kill -s 15 pid`
-        // `kill -s 9 pid`
-        jmri.util.RuntimeUtil.addShutdownHook(new Thread(new Runnable() {
-            public void run() {
-                log.debug("Shutdown hook called");
-                handleQuit();
-            }
-        }));
+        InstanceManager.setDefault(ShutDownManager.class, new DefaultShutDownManager());
     }
 
     protected void addDefaultShutDownTasks() {

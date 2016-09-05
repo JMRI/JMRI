@@ -313,7 +313,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 rosterEntry.setFunctionSelectedImage(functionNumber, imageSelectedPath);
             }
         }
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
     }
 
     /**

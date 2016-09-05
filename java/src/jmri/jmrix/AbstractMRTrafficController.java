@@ -38,7 +38,9 @@ abstract public class AbstractMRTrafficController {
         mCurrentState = IDLESTATE;
         allowUnexpectedReply = false;
         setInstance();
-        jmri.util.RuntimeUtil.addShutdownHook(new Thread(new CleanupHook(this)));
+        // should this be a ShutDownTask instead, or are we worried at this point
+        // that a ShutDownManager does not yet exist?
+        Runtime.getRuntime().addShutdownHook(new Thread(new CleanupHook(this)));
     }
 
     private boolean synchronizeRx = true;

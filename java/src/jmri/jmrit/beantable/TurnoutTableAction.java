@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
@@ -22,6 +24,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowSorter;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -38,6 +41,7 @@ import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
+import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
@@ -608,12 +612,34 @@ public class TurnoutTableAction extends AbstractTableAction {
                 return Bundle.getMessage("BeanNameTurnout");
             }
 
-            public JTable makeJTable(TableModel srtr) {
-                JTable table = new JTable(srtr) {
+            public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @Nullable RowSorter<? extends TableModel> sorter) {
+                JTable table = this.makeJTable(model);
+                table.setName(name);
+                table.setRowSorter(sorter);
+                table.getTableHeader().setReorderingAllowed(true);
+                table.setColumnModel(new XTableColumnModel());
+                table.createDefaultColumnsFromModel();
+
+                addMouseListenerToHeader(table);
+                return table;
+            }
+
+            public JTable makeJTable(TableSorter sorter) {
+                JTable table = this.makeJTable((TableModel) sorter);
+                table.getTableHeader().setReorderingAllowed(true);
+                table.setColumnModel(new XTableColumnModel());
+                table.createDefaultColumnsFromModel();
+
+                addMouseListenerToHeader(table);
+                return table;
+            }
+
+            private JTable makeJTable(TableModel model) {
+                return new JTable(model) {
 
                     public TableCellRenderer getCellRenderer(int row, int column) {
                         //Convert the displayed index to the model index, rather than the displayed index
-                        int modelColumn = getColumnModel().getColumn(column).getModelIndex();
+                        int modelColumn = this.convertColumnIndexToModel(column);
                         if (modelColumn == SENSOR1COL || modelColumn == SENSOR2COL) {
                             return getRenderer(row, modelColumn);
                         } else {
@@ -623,7 +649,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 
                     public TableCellEditor getCellEditor(int row, int column) {
                         //Convert the displayed index to the model index, rather than the displayed index
-                        int modelColumn = getColumnModel().getColumn(column).getModelIndex();
+                        int modelColumn = this.convertColumnIndexToModel(column);
                         if (modelColumn == SENSOR1COL || modelColumn == SENSOR2COL) {
                             return getEditor(row, modelColumn);
                         } else {
@@ -687,12 +713,6 @@ public class TurnoutTableAction extends AbstractTableAction {
                     Hashtable<Object, TableCellEditor> editorMapSensor1 = new Hashtable<Object, TableCellEditor>();
                     Hashtable<Object, TableCellEditor> editorMapSensor2 = new Hashtable<Object, TableCellEditor>();
                 };
-                table.getTableHeader().setReorderingAllowed(true);
-                table.setColumnModel(new XTableColumnModel());
-                table.createDefaultColumnsFromModel();
-
-                addMouseListenerToHeader(table);
-                return table;
             }
 
         };  // end of custom data model
@@ -746,7 +766,9 @@ public class TurnoutTableAction extends AbstractTableAction {
                 }
             };
             ActionListener cancelListener = new ActionListener() {
-                public void actionPerformed(ActionEvent e) { cancelPressed(e); }
+                public void actionPerformed(ActionEvent e) {
+                    cancelPressed(e);
+                }
             };
             ActionListener rangeListener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -1184,15 +1206,15 @@ public class TurnoutTableAction extends AbstractTableAction {
         // check for menu
         // check for menu
         boolean menuAbsent = true;
-        for(int m = 0; m < menuBar.getMenuCount(); ++m) {
+        for (int m = 0; m < menuBar.getMenuCount(); ++m) {
             String name = menuBar.getMenu(m).getAccessibleContext().getAccessibleName();
-            if(name.equals(Bundle.getMessage("TurnoutAutomationMenu"))) {
+            if (name.equals(Bundle.getMessage("TurnoutAutomationMenu"))) {
                 // using first menu for check, should be identical to next JMenu Bundle
                 menuAbsent = false;
                 break;
             }
         }
-        if(menuAbsent) { // create it
+        if (menuAbsent) { // create it
             JMenu opsMenu = new JMenu(Bundle.getMessage("TurnoutAutomationMenu"));
             JMenuItem item = new JMenuItem(Bundle.getMessage("TurnoutAutomationMenuItemEdit"));
             opsMenu.add(item);
@@ -1374,7 +1396,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
 
     void handleCreateException(Exception ex, String sysName) {
-        if (ex.getMessage() != null) { 
+        if (ex.getMessage() != null) {
             javax.swing.JOptionPane.showMessageDialog(addFrame,
                     ex.getMessage(),
                     Bundle.getMessage("ErrorTitle"),
