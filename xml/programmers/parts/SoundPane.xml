@@ -4,6 +4,7 @@
   <name xml:lang="it">Suoni</name>
   <name xml:lang="de">Sound</name>
   <name xml:lang="da">Lyd</name>
+  <name xml:lang="ca">So</name>
   <column>
     <display item="Sound Option 1"/>
     <display item="Sound Option 2"/>
