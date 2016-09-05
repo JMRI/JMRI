@@ -138,17 +138,13 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case ID_COLUMN:
-                return String.class;
             case NAME_COLUMN:
-                return String.class;
             case COMMENT_COLUMN:
-                return String.class;
-            case MIN_LENGTH_COLUMN:
-                return String.class;
-            case MAX_LENGTH_COLUMN:
-                return String.class;
             case STATUS_COLUMN:
                 return String.class;
+            case MIN_LENGTH_COLUMN:
+            case MAX_LENGTH_COLUMN:
+                return Integer.class;
             case EDIT_COLUMN:
                 return JButton.class;
             default:

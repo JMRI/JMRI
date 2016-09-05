@@ -309,6 +309,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             case SET_COLUMN:
             case EDIT_COLUMN:
                 return JButton.class;
+            case MOVES_COLUMN:
+                return Integer.class;
             default:
                 return String.class;
         }

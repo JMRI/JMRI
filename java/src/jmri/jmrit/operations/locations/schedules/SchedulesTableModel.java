@@ -160,21 +160,16 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case ID_COLUMN:
-                return String.class;
             case NAME_COLUMN:
-                return String.class;
             case SCHEDULE_STATUS_COLUMN:
-                return String.class;
-            case SPUR_NUMBER_COLUMN:
-                return String.class;
-            case SPUR_COLUMN:
-                return JComboBox.class;
             case STATUS_COLUMN:
-                return String.class;
             case MODE_COLUMN:
-                return String.class;
+            	return String.class;
+            case SPUR_COLUMN:
+            	return JComboBox.class;
+            case SPUR_NUMBER_COLUMN:
+                return Integer.class;  
             case EDIT_COLUMN:
-                return JButton.class;
             case DELETE_COLUMN:
                 return JButton.class;
             default:
