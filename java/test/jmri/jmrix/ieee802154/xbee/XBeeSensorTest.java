@@ -1,22 +1,25 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * XBeeSensorTest.java
  *
  * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeSensor class
  *
- * @author	Paul Bender
+ * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class XBeeSensorTest extends TestCase {
+public class XBeeSensorTest {
 
     XBeeTrafficController tc;
     XBeeConnectionMemo memo;
 
+    @Test
+    @Ignore("needs XBee Object from scaffold")
     public void testCtor() {
         memo.setSystemPrefix("ABC");
         memo.setSensorManager(new XBeeSensorManager(tc, "ABC"));
@@ -29,6 +32,8 @@ public class XBeeSensorTest extends TestCase {
         Assert.assertNotNull("exists", s);
     }
 
+    @Test
+    @Ignore("needs XBee Object from scaffold")
     public void testCtorAddressPinName() {
         memo.setSystemPrefix("ABC");
         memo.setSensorManager(new XBeeSensorManager(tc, "ABC"));
@@ -41,6 +46,8 @@ public class XBeeSensorTest extends TestCase {
         Assert.assertNotNull("exists", s);
     }
 
+    @Test
+    @Ignore("needs XBee Object from scaffold")
     public void testCtor16BitHexNodeAddress() {
         memo.setSystemPrefix("ABC");
         memo.setSensorManager(new XBeeSensorManager(tc, "ABC"));
@@ -53,6 +60,8 @@ public class XBeeSensorTest extends TestCase {
         Assert.assertNotNull("exists", s);
     }
 
+    @Test
+    @Ignore("needs XBee Object from scaffold")
     public void testCtor16BitHexStringNodeAddress() {
         memo.setSystemPrefix("ABC");
         memo.setSensorManager(new XBeeSensorManager(tc, "ABC"));
@@ -65,6 +74,8 @@ public class XBeeSensorTest extends TestCase {
         Assert.assertNotNull("exists", s);
     }
 
+    @Test
+    @Ignore("needs XBee Object from scaffold")
     public void testCtor64BitHexStringNodeAddress() {
         memo.setSystemPrefix("ABC");
         memo.setSensorManager(new XBeeSensorManager(tc, "ABC"));
@@ -77,25 +88,9 @@ public class XBeeSensorTest extends TestCase {
         Assert.assertNotNull("exists", s);
     }
 
-    // from here down is testing infrastructure
-    public XBeeSensorTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XBeeSensorTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XBeeSensorTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
         tc = new XBeeTrafficController() {
             public void setInstance() {
@@ -104,7 +99,8 @@ public class XBeeSensorTest extends TestCase {
         memo = new XBeeConnectionMemo();
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 
