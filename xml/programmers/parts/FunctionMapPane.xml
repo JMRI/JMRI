@@ -12,6 +12,7 @@
           <text>Use this sheet to determine which functions will control which outputs</text>
           <text xml:lang="de">Hier einstellen, welche Funktion welchen Ausgang steuert</text>
           <text xml:lang="it">Usa questo foglio per programmare quale Funzione contolla quale uscita</text>
+		  <text xml:lang="ca">Usa aquesta pestanya per establir quina funció controla cada sortida</text>
         </label>
         <label>
           <text> </text>
