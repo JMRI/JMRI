@@ -750,7 +750,7 @@ public class PositionablePoint {
                 break;
         }
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
-        popup.add(new AbstractAction(rb.getString("Remove")) {
+        popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
             /**
              *
              */

@@ -4119,7 +4119,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (p.isEditable()) {
             if (showAlignPopup()) {
                 setShowAlignmentMenu(popup);
-                popup.add(new AbstractAction(rb.getString("Remove")) {
+                popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                     public void actionPerformed(ActionEvent e) {
                         deleteSelectedItems();
                     }

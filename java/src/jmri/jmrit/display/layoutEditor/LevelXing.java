@@ -976,7 +976,7 @@ public class LevelXing {
                     editLevelXing(instance);
                 }
             });
-            popup.add(new AbstractAction(rb.getString("Remove")) {
+            popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 /**
                  *
                  */
