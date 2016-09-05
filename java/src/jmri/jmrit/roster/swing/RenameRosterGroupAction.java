@@ -72,7 +72,7 @@ public class RenameRosterGroupAction extends JmriAbstractAction {
                     "Rename Roster Group",
                     JOptionPane.INFORMATION_MESSAGE,
                     null,
-                    Roster.instance().getRosterGroupList().toArray(),
+                    Roster.getDefault().getRosterGroupList().toArray(),
                     null);
         }
         // can't rename the groups that represent the entire roster 
@@ -89,7 +89,7 @@ public class RenameRosterGroupAction extends JmriAbstractAction {
                 null);
         if (entry == null || entry.equals(Roster.ALLENTRIES)) {
             return;
-        } else if (Roster.instance().getRosterGroupList().contains(entry)) {
+        } else if (Roster.getDefault().getRosterGroupList().contains(entry)) {
             JOptionPane.showMessageDialog(_who,
                     "<html><b>Unable to rename roster group</b><br>The roster group named \"" + entry + "\" already exists.",
                     "Rename Roster Group " + group,
@@ -97,8 +97,8 @@ public class RenameRosterGroupAction extends JmriAbstractAction {
         }
 
         // rename the roster grouping
-        Roster.instance().renameRosterGroupList(group, entry);
-        Roster.writeRosterFile();
+        Roster.getDefault().renameRosterGroupList(group, entry);
+        Roster.getDefault().writeRoster();
     }
 
     // never invoked, because we overrode actionPerformed above

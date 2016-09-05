@@ -15,12 +15,12 @@ public class ProfileTableModel extends AbstractTableModel implements PropertyCha
 
     @SuppressWarnings("LeakingThisInConstructor")
     public ProfileTableModel() {
-        ProfileManager.defaultManager().addPropertyChangeListener(this);
+        ProfileManager.getDefault().addPropertyChangeListener(this);
     }
 
     @Override
     public int getRowCount() {
-        return ProfileManager.defaultManager().getAllProfiles().size();
+        return ProfileManager.getDefault().getAllProfiles().size();
     }
 
     @Override
@@ -30,7 +30,7 @@ public class ProfileTableModel extends AbstractTableModel implements PropertyCha
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Profile p = ProfileManager.defaultManager().getAllProfiles().get(rowIndex);
+        Profile p = ProfileManager.getDefault().getAllProfiles().get(rowIndex);
         switch (columnIndex) {
             case -1: // tooltip
                 return Bundle.getMessage("ProfileTableModel.toolTip", p.getName(), p.getPath(), p.getId(), this.getValueAt(rowIndex, 2));
@@ -39,9 +39,9 @@ public class ProfileTableModel extends AbstractTableModel implements PropertyCha
             case 1:
                 return p.getPath();
             case 2:
-                if (p.equals(ProfileManager.defaultManager().getActiveProfile())) {
+                if (p.equals(ProfileManager.getDefault().getActiveProfile())) {
                     return Bundle.getMessage("ProfileTableModel.isActive"); // NOI18N
-                } else if (p.equals(ProfileManager.defaultManager().getNextActiveProfile())) {
+                } else if (p.equals(ProfileManager.getDefault().getNextActiveProfile())) {
                     return Bundle.getMessage("ProfileTableModel.nextActive"); // NOI18N
                 } else {
                     return ""; // NOI18N
@@ -93,7 +93,7 @@ public class ProfileTableModel extends AbstractTableModel implements PropertyCha
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         switch (columnIndex) {
             case 0:
-                ProfileManager.defaultManager().getAllProfiles().get(rowIndex).setName(aValue.toString());
+                ProfileManager.getDefault().getAllProfiles().get(rowIndex).setName(aValue.toString());
                 break;
             default:
         }

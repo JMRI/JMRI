@@ -321,7 +321,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     protected void includeHistory(Element root) {
         // add history to end of document
-        if (InstanceManager.getOptionalDefault(FileHistory.class) != null) {
+        if (InstanceManager.getNullableDefault(FileHistory.class) != null) {
             root.addContent(jmri.jmrit.revhistory.configurexml.FileHistoryXml.storeDirectly(InstanceManager.getDefault(FileHistory.class)));
         }
     }
@@ -703,7 +703,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         }
 
         // loading complete, as far as it got, make history entry
-        FileHistory r = InstanceManager.getOptionalDefault(FileHistory.class);
+        FileHistory r = InstanceManager.getNullableDefault(FileHistory.class);
         if (r != null) {
             FileHistory included = null;
             if (root != null) {

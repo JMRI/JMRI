@@ -32,7 +32,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
 
     public SRCPTrafficController() {
         super();
-        if (jmri.InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
             jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(this);
         } else {
             if (log.isDebugEnabled()) {

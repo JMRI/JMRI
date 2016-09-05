@@ -244,7 +244,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
      * @param table Table to be saved.
      */
     protected void saveTableDetails(JTable table) {
-        UserPreferencesManager p = InstanceManager.getOptionalDefault(UserPreferencesManager.class);
+        UserPreferencesManager p = InstanceManager.getNullableDefault(UserPreferencesManager.class);
         if (p == null) {
             return;
         }
@@ -301,7 +301,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
      * @return true if table has been adjusted by saved xml file.
      */
     public boolean loadTableDetails(JTable table) {
-        UserPreferencesManager p = InstanceManager.getOptionalDefault(UserPreferencesManager.class);
+        UserPreferencesManager p = InstanceManager.getNullableDefault(UserPreferencesManager.class);
         TableSorter sorter = null;
         String tableref = getWindowFrameRef() + ":table"; // NOI18N
         if (p == null || p.getTablesColumnList(tableref).isEmpty()) {
