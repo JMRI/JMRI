@@ -292,8 +292,8 @@ public class FirstTimeStartUpWizard {
             }
             InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(owner.getText());
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setLocale(Locale.getDefault());
-            InstanceManager.tabbedPreferencesInstance().init();
-            InstanceManager.tabbedPreferencesInstance().saveContents();
+            InstanceManager.getDefault(TabbedPreferences.class).init();
+            InstanceManager.getDefault(TabbedPreferences.class).saveContents();
             dispose();
         }
     }
