@@ -126,9 +126,6 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
 
     private synchronized void setPreferredWidths(JTable table) {
-        if (_frame.loadTableDetails(table)) {
-            return; // done
-        }
         log.debug("Setting preferred widths");
         // set column preferred widths
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(35);
@@ -147,6 +144,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         table.getColumnModel().getColumn(UP_COLUMN).setPreferredWidth(60);
         table.getColumnModel().getColumn(DOWN_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(70);
+        _frame.loadTableDetails(table);
     }
 
     @Override
@@ -206,35 +204,23 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case ID_COLUMN:
-                return String.class;
             case CURRENT_COLUMN:
-                return String.class;
             case TYPE_COLUMN:
                 return String.class;
             case RANDOM_COLUMN:
-                return JComboBox.class;
             case SETOUT_DAY_COLUMN:
-                return JComboBox.class;
             case ROAD_COLUMN:
-                return JComboBox.class;
             case LOAD_COLUMN:
-                return JComboBox.class;
             case SHIP_COLUMN:
-                return JComboBox.class;
             case DEST_COLUMN:
-                return JComboBox.class;
             case TRACK_COLUMN:
-                return JComboBox.class;
             case PICKUP_DAY_COLUMN:
                 return JComboBox.class;
             case COUNT_COLUMN:
-                return String.class;
             case WAIT_COLUMN:
-                return String.class;
+                return Integer.class;
             case UP_COLUMN:
-                return JButton.class;
             case DOWN_COLUMN:
-                return JButton.class;
             case DELETE_COLUMN:
                 return JButton.class;
             default:

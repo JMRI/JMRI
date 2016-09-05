@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -28,6 +29,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.swing.JTablePersistenceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -329,7 +331,6 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
             }
         }
 
-        saveTableDetails(scheduleTable);
         // save schedule file
         OperationsXml.save();
     }
@@ -388,6 +389,9 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         _location.removePropertyChangeListener(this);
         _track.removePropertyChangeListener(this);
         scheduleModel.dispose();
+        InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {
+            tpm.stopPersisting(scheduleTable);
+        });
         super.dispose();
     }
 

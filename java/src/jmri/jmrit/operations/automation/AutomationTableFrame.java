@@ -17,11 +17,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.automation.actions.Action;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.swing.JTablePersistenceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -196,6 +198,9 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
 
         // set frame size and automation for display
         initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight400));
+        
+        // clear any sorts by column
+        clearTableSort(_automationTable);
     }
 
     // Save, Delete, Add
@@ -303,7 +308,6 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
         _automation.setName(automationNameTextField.getText());
         _automation.setComment(commentTextField.getText());
 
-        saveTableDetails(_automationTable);
         // save automation file
         OperationsXml.save();
     }
@@ -368,6 +372,9 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
         if (_automation != null) {
             _automation.removePropertyChangeListener(this);
         }
+        InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {
+            tpm.stopPersisting(_automationTable);
+        });
         _automationTableModel.dispose();
         super.dispose();
     }

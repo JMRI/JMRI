@@ -106,9 +106,6 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
     }
 
     private void setPreferredWidths(AutomationsTableFrame frame, JTable table) {
-        if (frame.loadTableDetails(table)) {
-            return; // done
-        }
         log.debug("Setting preferred widths");
         // set column preferred widths
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(40);
@@ -119,6 +116,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         table.getColumnModel().getColumn(RUN_COLUMN).setPreferredWidth(90);
         table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(90);
+        frame.loadTableDetails(table);
     }
 
     @Override
