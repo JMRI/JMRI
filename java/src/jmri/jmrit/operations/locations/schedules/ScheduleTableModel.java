@@ -126,9 +126,6 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
 
     private synchronized void setPreferredWidths(JTable table) {
-        if (_frame.loadTableDetails(table)) {
-            return; // done
-        }
         log.debug("Setting preferred widths");
         // set column preferred widths
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(35);
@@ -147,6 +144,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         table.getColumnModel().getColumn(UP_COLUMN).setPreferredWidth(60);
         table.getColumnModel().getColumn(DOWN_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(70);
+        _frame.loadTableDetails(table);
     }
 
     @Override

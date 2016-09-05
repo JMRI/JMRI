@@ -10,8 +10,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
+import jmri.swing.JTablePersistenceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -115,7 +117,9 @@ public class AutomationsTableFrame extends OperationsFrame {
     
     @Override
     public void dispose() {
-        saveTableDetails(automationsTable);
+        InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {
+            tpm.stopPersisting(automationsTable);
+        });
         automationsModel.dispose();
         super.dispose();
     }

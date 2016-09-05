@@ -403,12 +403,11 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         tcm.getColumn(EDIT_COLUMN).setCellEditor(buttonEditor);
 
         // set column preferred widths
-        if (!_frame.loadTableDetails(_table)) {
-            // load defaults, xml file data not found
-            for (int i = 0; i < tcm.getColumnCount(); i++) {
-                tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);
-            }
+        // load defaults, xml file data not found
+        for (int i = 0; i < tcm.getColumnCount(); i++) {
+            tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);
         }
+        _frame.loadTableDetails(_table);
         _table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);

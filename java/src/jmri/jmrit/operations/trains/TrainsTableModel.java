@@ -21,7 +21,6 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.RouteEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.util.com.sun.TableSorter;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -135,13 +134,12 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         _table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
 
         // set column preferred widths
-        if (!_frame.loadTableDetails(_table)) {
-            // load defaults, xml file data not found
-            int[] tableColumnWidths = trainManager.getTrainsFrameTableColumnWidths();
-            for (int i = 0; i < tcm.getColumnCount(); i++) {
-                tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);
-            }
+        // load defaults, xml file data not found
+        int[] tableColumnWidths = trainManager.getTrainsFrameTableColumnWidths();
+        for (int i = 0; i < tcm.getColumnCount(); i++) {
+            tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);
         }
+        _frame.loadTableDetails(_table);
         _table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -317,8 +315,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 if (train.getBuildFailed()) {
                     return Bundle.getMessage("Report");
                 }
-                if (train.getCurrentLocation() == train.getTrainTerminatesRouteLocation() &&
-                        trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
+                if (train.getCurrentLocation() == train.getTrainTerminatesRouteLocation()
+                        && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
                     return Bundle.getMessage("Terminate");
                 }
                 return trainManager.getTrainsFrameTrainAction();
@@ -479,16 +477,16 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
      * train. return true if track has been allocated to another train.
      */
     private boolean checkDepartureTrack(Train train) {
-        return (Setup.isStagingTrackImmediatelyAvail() &&
-                !train.isTrainEnRoute() &&
-                train.getDepartureTrack() != null &&
-                train.getDepartureTrack().getTrackType().equals(Track.STAGING) &&
-                train.getDepartureTrack() != train.getTerminationTrack() &&
-                train.getDepartureTrack().getDropRS() > 0);
+        return (Setup.isStagingTrackImmediatelyAvail()
+                && !train.isTrainEnRoute()
+                && train.getDepartureTrack() != null
+                && train.getDepartureTrack().getTrackType().equals(Track.STAGING)
+                && train.getDepartureTrack() != train.getTerminationTrack()
+                && train.getDepartureTrack().getDropRS() > 0);
     }
 
-    private static Hashtable<String, TrainConductorFrame> _trainConductorHashTable =
-            new Hashtable<String, TrainConductorFrame>();
+    private static Hashtable<String, TrainConductorFrame> _trainConductorHashTable
+            = new Hashtable<String, TrainConductorFrame>();
 
     private void launchConductor(Train train) {
         // use invokeLater so new window appears on top
@@ -514,14 +512,14 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             log.debug("Property change {} old: {} new: {}",
                     e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
         }
-        if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY) ||
-                e.getPropertyName().equals(TrainManager.PRINTPREVIEW_CHANGED_PROPERTY) ||
-                e.getPropertyName().equals(TrainManager.OPEN_FILE_CHANGED_PROPERTY) ||
-                e.getPropertyName().equals(TrainManager.RUN_FILE_CHANGED_PROPERTY) ||
-                e.getPropertyName().equals(Setup.MANIFEST_CSV_PROPERTY_CHANGE) ||
-                e.getPropertyName().equals(TrainManager.TRAIN_ACTION_CHANGED_PROPERTY) ||
-                e.getPropertyName().equals(Train.DEPARTURETIME_CHANGED_PROPERTY) ||
-                (e.getPropertyName().equals(Train.BUILD_CHANGED_PROPERTY) && !isShowAll())) {
+        if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)
+                || e.getPropertyName().equals(TrainManager.PRINTPREVIEW_CHANGED_PROPERTY)
+                || e.getPropertyName().equals(TrainManager.OPEN_FILE_CHANGED_PROPERTY)
+                || e.getPropertyName().equals(TrainManager.RUN_FILE_CHANGED_PROPERTY)
+                || e.getPropertyName().equals(Setup.MANIFEST_CSV_PROPERTY_CHANGE)
+                || e.getPropertyName().equals(TrainManager.TRAIN_ACTION_CHANGED_PROPERTY)
+                || e.getPropertyName().equals(Train.DEPARTURETIME_CHANGED_PROPERTY)
+                || (e.getPropertyName().equals(Train.BUILD_CHANGED_PROPERTY) && !isShowAll())) {
             updateList();
             fireTableDataChanged();
         } else if (e.getSource().getClass().equals(Train.class)) {
@@ -531,21 +529,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 log.debug("Update train table row: {} name: {}", row, train.getName());
             }
             if (row >= 0) {
-                // The line "_table.scrollRectToVisible(_table.getCellRect(row, 0, true));"
-                // can cause a thread lock if the table sorter is active. That's the reason
-                // the code is wrapped in the invokeLater.
-                // However scrolling only works correctly if table sort isn't active since "row"
-                // isn't correctly mapped to the proper row showing.  This also allows user to
-                // stop the scrolling to the active train if desired.
-                TableSorter sorter = (TableSorter) _table.getModel();
-                if (!sorter.isSorting()) {
-                    SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
-                        }
-                    });
-                }
+                // if there are issues with thread locking here, this needs to
+                // be refactored so the panel holding the table is listening for
+                // this changes so it can instruct the table to scroll
+                _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
                 fireTableRowsUpdated(row, row);
             }
         }
@@ -579,8 +566,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 boolean hasFocus, int row, int column) {
             Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             if (!isSelected) {
-                TableSorter sorter = (TableSorter) table.getModel();
-                int modelRow = sorter.modelIndex(row);
+                int modelRow = table.convertRowIndexToModel(row);
                 //				log.debug("View row: {} Column: {} Model row: {}", row, column, modelRow);
                 Color background = getRowColor(modelRow);
                 component.setBackground(background);

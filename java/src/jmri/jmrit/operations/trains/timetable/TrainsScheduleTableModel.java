@@ -100,17 +100,16 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
         TableColumnModel tcm = _table.getColumnModel();
         _table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
 
-        if (!_frame.loadTableDetails(_table)) {
-            // set column preferred widths, note that columns can be deleted
-            int[] widths = trainManager.getTrainScheduleFrameTableColumnWidths();
-            int numCol = widths.length;
-            if (widths.length > getColumnCount()) {
-                numCol = getColumnCount();
-            }
-            for (int i = 0; i < numCol; i++) {
-                tcm.getColumn(i).setPreferredWidth(widths[i]);
-            }
+        // set column preferred widths, note that columns can be deleted
+        int[] widths = trainManager.getTrainScheduleFrameTableColumnWidths();
+        int numCol = widths.length;
+        if (widths.length > getColumnCount()) {
+            numCol = getColumnCount();
         }
+        for (int i = 0; i < numCol; i++) {
+            tcm.getColumn(i).setPreferredWidth(widths[i]);
+        }
+        _frame.loadTableDetails(_table);
         _table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);

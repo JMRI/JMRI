@@ -13,9 +13,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
-import jmri.util.com.sun.TableSorter;
+import jmri.swing.JTablePersistenceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,9 +50,7 @@ public class RoutesTableFrame extends OperationsFrame {
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // Set up the jtable in a Scroll Pane..
-        TableSorter sorter = new TableSorter(routesModel);
-        routesTable = new JTable(sorter);
-        sorter.setTableHeader(routesTable.getTableHeader());
+        routesTable = new JTable(routesModel);
         JScrollPane routesPane = new JScrollPane(routesTable);
         routesPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         routesModel.initTable(this, routesTable);
@@ -131,7 +130,9 @@ public class RoutesTableFrame extends OperationsFrame {
 
     @Override
     public void dispose() {
-        saveTableDetails(routesTable);
+        InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {
+            tpm.stopPersisting(routesTable);
+        });
         routesModel.dispose();
         super.dispose();
     }

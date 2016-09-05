@@ -24,6 +24,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -33,6 +34,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
+import jmri.swing.JTablePersistenceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -477,7 +479,6 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
             ts.setComment(commentTextArea.getText());
         }
 //        updateControlPanel();
-        saveTableDetails(trainsScheduleTable);
         OperationsXml.save();
     }
 
@@ -489,6 +490,9 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         removePropertyChangeTrainSchedules();
         removePropertyChangeLocations();
         trainsScheduleModel.dispose();
+        InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {
+            tpm.stopPersisting(trainsScheduleTable);
+        });
         super.dispose();
     }
 
