@@ -20,7 +20,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -81,9 +80,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 
         // Set up the jtable in a Scroll Pane..
         enginesModel = new EnginesTableModel();
-        TableRowSorter<EnginesTableModel> sorter = new TableRowSorter<>(enginesModel);
         enginesTable = new JTable(enginesModel);
-        enginesTable.setRowSorter(sorter);
         enginesPane = new JScrollPane(enginesTable);
         enginesPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         enginesModel.initTable(enginesTable, this);
