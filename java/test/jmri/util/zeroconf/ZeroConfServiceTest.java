@@ -1,6 +1,5 @@
 package jmri.util.zeroconf;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import javax.jmdns.ServiceInfo;
@@ -38,9 +37,6 @@ public class ZeroConfServiceTest {
 
     @After
     public void tearDown() throws Exception {
-        new ArrayList<>(ZeroConfService.allServices()).forEach((service) -> {
-            service.stop();
-        });
         ZeroConfService.stopAll();
         JUnitUtil.waitFor(() -> {
             return (ZeroConfService.allServices().isEmpty());
