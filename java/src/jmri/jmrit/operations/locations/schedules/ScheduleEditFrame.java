@@ -244,7 +244,8 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
             if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
                     Bundle.getMessage("DoYouWantToDeleteSchedule"),
                     new Object[]{scheduleNameTextField.getText()}), Bundle
-                    .getMessage("DeleteSchedule?"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                            .getMessage("DeleteSchedule?"),
+                    JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
                 return;
             }
             Schedule schedule = manager.getScheduleByName(scheduleNameTextField.getText());
@@ -289,8 +290,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         } else {
             _schedule.addItem((String) typeBox.getSelectedItem());
         }
-        if (_track.getScheduleMode() == Track.MATCH
-                && typeBox.getSelectedIndex() < typeBox.getItemCount() - 1) {
+        if (_track.getScheduleMode() == Track.MATCH && typeBox.getSelectedIndex() < typeBox.getItemCount() - 1) {
             typeBox.setSelectedIndex(typeBox.getSelectedIndex() + 1);
         }
     }
@@ -401,9 +401,9 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
-        if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)) {
             loadTypeComboBox();
         }
     }
