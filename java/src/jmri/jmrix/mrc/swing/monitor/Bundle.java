@@ -19,6 +19,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * the local resource bundle name.
  *
  * @author Bob Jacobsen Copyright (C) 2012
+ * Copied for MRC Monitor
+ * @author Ken Cameron Copyright (C) 2016
  * @since 3.3.1
  */
 public class Bundle extends jmri.jmrix.mrc.Bundle {
