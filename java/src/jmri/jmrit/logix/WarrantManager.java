@@ -135,7 +135,7 @@ public class WarrantManager extends AbstractManager
 
     static public WarrantPreferences warrantPreferencesInstance() {
         if (warrantPreferences == null) {
-            if (jmri.InstanceManager.getOptionalDefault(jmri.jmrit.logix.WarrantPreferences.class) == null) {
+            if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.logix.WarrantPreferences.class) == null) {
                 jmri.InstanceManager.store(new jmri.jmrit.logix.WarrantPreferences(FileUtil.getUserFilesPath()
                         + "signal" + File.separator + "WarrantPreferences.xml"), jmri.jmrit.logix.WarrantPreferences.class);
             }

@@ -597,7 +597,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
             rosterSpeedProfile.setSpeed(i, speeds.get(i).getForwardSpeed(), speeds.get(i).getReverseSpeed());
         }
         re.updateFile();
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
         save = false;
     }
     

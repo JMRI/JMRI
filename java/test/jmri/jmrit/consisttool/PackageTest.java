@@ -26,11 +26,11 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.consisttool.PackageTest");   // no tests in this class itself
 
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (!Boolean.getBoolean("jmri.headlesstest")) {
             suite.addTest(ConsistToolFrameTest.suite());
             suite.addTest(ConsistDataModelTest.suite());
         }
-        suite.addTest(ConsistFileTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConsistFileTest.class));
 
         return suite;
     }

@@ -14,7 +14,7 @@ public class SensorGroupAction extends AbstractAction {
         super(s);
 
         // disable ourself if there is no route manager object available
-        if (jmri.InstanceManager.getOptionalDefault(jmri.RouteManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.RouteManager.class) == null) {
             setEnabled(false);
         }
     }

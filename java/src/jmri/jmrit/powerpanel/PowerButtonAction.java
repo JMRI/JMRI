@@ -23,7 +23,7 @@ public class PowerButtonAction extends javax.swing.AbstractAction implements jav
 
     void checkManager() {
         // disable ourself if there is no power Manager
-        if (jmri.InstanceManager.getOptionalDefault(jmri.PowerManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.PowerManager.class) == null) {
             setEnabled(false);
         } else {
             jmri.InstanceManager.getDefault(jmri.PowerManager.class).addPropertyChangeListener(this);
@@ -51,7 +51,7 @@ public class PowerButtonAction extends javax.swing.AbstractAction implements jav
     public void actionPerformed(java.awt.event.ActionEvent e) {
         try {
             // alternate power state, updating name
-            PowerManager p = jmri.InstanceManager.getOptionalDefault(jmri.PowerManager.class);
+            PowerManager p = jmri.InstanceManager.getNullableDefault(jmri.PowerManager.class);
             if (p == null) {
                 return;
             }
