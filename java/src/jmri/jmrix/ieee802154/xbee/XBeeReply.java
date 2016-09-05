@@ -3,6 +3,7 @@ package jmri.jmrix.ieee802154.xbee;
 
 import com.digi.xbee.api.packet.XBeePacket;
 import com.digi.xbee.api.packet.GenericXBeePacket;
+import com.digi.xbee.api.packet.UnknownXBeePacket;
 
 /**
  * Contains the data payload of a serial reply packet. Note that its _only_ the
@@ -32,7 +33,7 @@ public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
            _dataChars[i] = (int) ba[i];
         }
         _nDataChars=ba.length;
-        xbresponse = new GenericXBeePacket(ba);
+        xbresponse = UnknownXBeePacket.createPacket(ba);
     }
 
     public XBeeReply(XBeeReply l) {
