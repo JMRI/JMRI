@@ -90,9 +90,6 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     }
     
     private void setPreferredWidths(RoutesTableFrame frame, JTable table) {
-        if (frame.loadTableDetails(table)) {
-            return; // done
-        }
         log.debug("Setting preferred widths");
         // set column preferred widths
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(30);
@@ -102,6 +99,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         table.getColumnModel().getColumn(MIN_LENGTH_COLUMN).setPreferredWidth(75);
         table.getColumnModel().getColumn(MAX_LENGTH_COLUMN).setPreferredWidth(75);
         table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(80);
+        frame.loadTableDetails(table);
     }
 
     @Override
@@ -140,17 +138,13 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case ID_COLUMN:
-                return String.class;
             case NAME_COLUMN:
-                return String.class;
             case COMMENT_COLUMN:
-                return String.class;
-            case MIN_LENGTH_COLUMN:
-                return String.class;
-            case MAX_LENGTH_COLUMN:
-                return String.class;
             case STATUS_COLUMN:
                 return String.class;
+            case MIN_LENGTH_COLUMN:
+            case MAX_LENGTH_COLUMN:
+                return Integer.class;
             case EDIT_COLUMN:
                 return JButton.class;
             default:
