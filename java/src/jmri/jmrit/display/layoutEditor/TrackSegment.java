@@ -629,7 +629,7 @@ public class TrackSegment {
                     segmentEditBlockPressed(e);
                 }
             });
-            segmentEditBlock.setToolTipText(Bundle.getMessage("EditBlockHint", ""));
+            segmentEditBlock.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
             panel5.add(segmentEditDone = new JButton(Bundle.getMessage("ButtonDone")));
             segmentEditDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {

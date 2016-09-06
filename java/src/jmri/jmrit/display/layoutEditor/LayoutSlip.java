@@ -790,7 +790,7 @@ public class LayoutSlip extends LayoutTurnout {
                     turnoutEditBlockPressed(e);
                 }
             });
-            turnoutEditBlock.setToolTipText(Bundle.getMessage("EditBlockHint", ""));
+            turnoutEditBlock.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
 
             contentPane.add(panel4);
             // set up Done and Cancel buttons

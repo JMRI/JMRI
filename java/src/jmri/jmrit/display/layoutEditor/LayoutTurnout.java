@@ -2573,7 +2573,7 @@ public class LayoutTurnout {
             panel5.setLayout(new FlowLayout());
             // Edit Block
 
-            turnoutEditBlock.setToolTipText(Bundle.getMessage("EditBlockHint", ""));
+            turnoutEditBlock.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
             // Done
             panel5.add(turnoutEditDone = new JButton(Bundle.getMessage("ButtonDone")));
             turnoutEditDone.addActionListener(new ActionListener() {

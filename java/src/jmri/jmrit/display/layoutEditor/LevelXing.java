@@ -1204,7 +1204,7 @@ public class LevelXing {
                     xingEdit1BlockPressed(e);
                 }
             });
-            xingEdit1Block.setToolTipText(Bundle.getMessage("EditBlockHint", ""));
+            xingEdit1Block.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
             // Edit 2 Block
             panel4.add(xingEdit2Block = new JButton(Bundle.getMessage("EditBlock", 2)));
             xingEdit2Block.addActionListener(new ActionListener() {
@@ -1212,7 +1212,7 @@ public class LevelXing {
                     xingEdit2BlockPressed(e);
                 }
             });
-            xingEdit2Block.setToolTipText(Bundle.getMessage("EditBlockHint", ""));
+            xingEdit2Block.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
             contentPane.add(panel4);
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
