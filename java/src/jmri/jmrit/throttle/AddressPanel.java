@@ -138,7 +138,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         if ((backgroundPanel != null) && (!(rosterBox.getSelectedRosterEntries().length != 0))) {
             backgroundPanel.setImagePath(null);
             String rosterEntryTitle = getRosterEntrySelector().getSelectedRosterEntries()[0].titleString();
-            RosterEntry re = Roster.instance().entryFromTitle(rosterEntryTitle);
+            RosterEntry re = Roster.getDefault().entryFromTitle(rosterEntryTitle);
             if (re != null) {
                 backgroundPanel.setImagePath(re.getImagePath());
             }
@@ -194,7 +194,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
                 && (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle())
                 && (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isEnablingRosterSearch())
                 && addrSelector.getAddress() != null) {
-            List<RosterEntry> l = Roster.instance().matchingList(null, null, "" + addrSelector.getAddress().getNumber(), null, null, null, null);
+            List<RosterEntry> l = Roster.getDefault().matchingList(null, null, "" + addrSelector.getAddress().getNumber(), null, null, null, null);
             if (l.size() > 0) {
                 rosterEntry = l.get(0);
             }

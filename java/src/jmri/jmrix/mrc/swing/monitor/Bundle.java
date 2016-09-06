@@ -1,5 +1,4 @@
-// MrcBundle.java
-package jmri.jmrix.mrc;
+package jmri.jmrix.mrc.swing.monitor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
@@ -20,11 +19,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * the local resource bundle name.
  *
  * @author Bob Jacobsen Copyright (C) 2012
+ * Copied for MRC Monitor
+ * @author Ken Cameron Copyright (C) 2016
  * @since 3.3.1
  */
-public class MrcPacketizerBundle extends Bundle {
+public class Bundle extends jmri.jmrix.mrc.Bundle {
 
-    private final static String name = "jmri.jmrix.mrc.MrcPacketizerBundle"; // NOI18N
+    private final static String name = "jmri.jmrix.mrc.swing.MrcSwingBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
@@ -77,7 +78,8 @@ public class MrcPacketizerBundle extends Bundle {
         return b.handleGetMessage(locale, key, subs);
     }
 
-    private final static Bundle b = new MrcPacketizerBundle();
+
+    private final static Bundle b = new Bundle();
 
     @Override
     @Nullable
@@ -91,7 +93,7 @@ public class MrcPacketizerBundle extends Bundle {
     }
 
     @Override
-    protected String retry(Locale locale,String key) {
+    protected String retry(Locale locale, String key) {
         return super.getBundle().handleGetMessage(locale,key);
     }
 

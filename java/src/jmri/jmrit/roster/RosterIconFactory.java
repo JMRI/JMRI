@@ -37,7 +37,7 @@ public class RosterIconFactory {
         if (id == null) {
             return null;
         }
-        RosterEntry re = Roster.instance().entryFromTitle(id);
+        RosterEntry re = Roster.getDefault().entryFromTitle(id);
         if (re == null) {
             return null;
         }

@@ -169,7 +169,7 @@ public class Calibrater extends jmri.util.JmriJFrame {
             if (log.isDebugEnabled()) log.debug("Made speed profile setting for "+ _warrant.getTrainId()+
                     ": "+(_isForward ? "Forward":"Reverse")+" step= "+Math.round(_maxSpeed*1000)+", speed= "+_rawSpeed*1000);
             _warrant.getRosterEntry().updateFile();
-            Roster.writeRosterFile();
+            Roster.getDefault().writeRoster();
          }
         dispose();
     }

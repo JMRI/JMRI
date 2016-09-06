@@ -13,9 +13,11 @@ import jmri.util.JmriJFrame;
  */
 public class TabbedPreferencesFrame extends JmriJFrame {
 
+    final TabbedPreferences preferences;
+    
     @Override
     public String getTitle() {
-        return InstanceManager.tabbedPreferencesInstance().getTitle();
+        return this.preferences.getTitle();
 
     }
 
@@ -27,26 +29,27 @@ public class TabbedPreferencesFrame extends JmriJFrame {
     static int lastdivider;
 
     public TabbedPreferencesFrame() {
-        add(InstanceManager.tabbedPreferencesInstance());
+        this.preferences = InstanceManager.getDefault(TabbedPreferences.class);
+        add(preferences);
         addHelpMenu("package.apps.TabbedPreferences", true);
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     }
 
     public void gotoPreferenceItem(String item, String sub) {
-        InstanceManager.tabbedPreferencesInstance().gotoPreferenceItem(item, sub);
+        this.preferences.gotoPreferenceItem(item, sub);
     }
 
     @Override
     public void windowClosing(WindowEvent e) {
-        if (InstanceManager.tabbedPreferencesInstance().isDirty()) {
+        if (this.preferences.isDirty()) {
             switch (JOptionPane.showConfirmDialog(this,
-                    Bundle.getMessage("UnsavedChangesMessage", InstanceManager.tabbedPreferencesInstance().getTitle()), // NOI18N
+                    Bundle.getMessage("UnsavedChangesMessage", this.preferences.getTitle()), // NOI18N
                     Bundle.getMessage("UnsavedChangesTitle"), // NOI18N
                     JOptionPane.YES_NO_CANCEL_OPTION,
                     JOptionPane.QUESTION_MESSAGE)) {
                 case JOptionPane.YES_OPTION:
                     // save preferences
-                    InstanceManager.tabbedPreferencesInstance().savePressed(InstanceManager.tabbedPreferencesInstance().invokeSaveOptions());
+                    this.preferences.savePressed(this.preferences.invokeSaveOptions());
                     break;
                 case JOptionPane.NO_OPTION:
                     // do nothing

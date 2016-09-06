@@ -849,14 +849,14 @@ abstract public class PaneProgFrame extends JmriJFrame
             }
         }
         // Check for a "<new loco>" roster entry; if found, remove it
-        List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, SymbolicProgBundle.getMessage("LabelNewDecoder"));
+        List<RosterEntry> l = Roster.getDefault().matchingList(null, null, null, null, null, null, SymbolicProgBundle.getMessage("LabelNewDecoder"));
         if (l.size() > 0 && log.isDebugEnabled()) {
             log.debug("Removing " + l.size() + " <new loco> entries");
         }
         int x = l.size() + 1;
         while (l.size() > 0) {
-            Roster.instance().removeEntry(l.get(0));
-            l = Roster.instance().matchingList(null, null, null, null, null, null, SymbolicProgBundle.getMessage("LabelNewDecoder"));
+            Roster.getDefault().removeEntry(l.get(0));
+            l = Roster.getDefault().matchingList(null, null, null, null, null, null, SymbolicProgBundle.getMessage("LabelNewDecoder"));
             x--;
             if (x == 0) {
                 log.error("We have tried to remove all the entries, however an error has occured which has result in the entries not being deleted correctly");
@@ -1643,7 +1643,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // and store an updated roster file
         FileUtil.createDirectory(FileUtil.getUserFilesPath());
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
 
         // save date changed, update
         _rPane.updateGUI(_rosterEntry);
