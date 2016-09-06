@@ -1,6 +1,8 @@
 // NodeConfigFrame.java
 package jmri.jmrix.ieee802154.xbee.swing.nodeconfig;
 
+import com.digi.xbee.api.listeners.IDiscoveryListener;
+import com.digi.xbee.api.RemoteXBeeDevice;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -32,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * @author	Paul Bender Copyright (C) 2013
  * @version	$Revision$
  */
-public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.NodeConfigFrame {
+public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.NodeConfigFrame implements IDiscoveryListener {
 
     /**
      *
@@ -168,6 +170,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
                 discoverButtonActionPerformed();
             }
         });
+        discoverButton.setEnabled(!(xtc.getXBee().getNetwork().isDiscoveryRunning()));
         panel4.add(discoverButton);
         editButton.setText(rb.getString("ButtonEdit"));
         editButton.setVisible(true);
@@ -223,6 +226,11 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         contentPane.add(panel4);
         // pack for display
         pack();
+
+        // after the components are configured, set ourselves up as a 
+        // discovery listener.
+        xtc.getXBee().getNetwork().addDiscoveryListener(this);
+
     }
 
     /**
@@ -276,10 +284,23 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
      * Method to handle discover button
      */
     public void discoverButtonActionPerformed() {
+
+        if(xtc.getXBee().getNetwork().isDiscoveryRunning()){
+           log.debug("Discovery process already running");
+           discoverButton.setEnabled(false);
+           statusText1.setText(rb.getString("FeedBackDiscover"));
+           return;
+        }
+
         jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo memo = xtc.getAdapterMemo();
         if( memo instanceof XBeeConnectionMemo) {
+
+           XBeeConnectionMemo m = (XBeeConnectionMemo) memo;
+
            // call the node discovery code in the node manager.
-           ((XBeeConnectionMemo) memo).getXBeeNodeManager().startNodeDiscovery();
+           m.getXBeeNodeManager().startNodeDiscovery();
+
+           discoverButton.setEnabled(false);
         }
         // provide user feedback
         statusText1.setText(rb.getString("FeedBackDiscover"));
@@ -504,6 +525,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
     protected void nodeSelected() {
         try {
            String nodeAddress = readNodeAddress();
+           nodeAddrField.setSelectedIndex(nodeAddrField.getSelectedIndex());
            nodeAddr64Field.setSelectedIndex(nodeAddrField.getSelectedIndex());
            nodeIdentifierField.setSelectedIndex(nodeAddrField.getSelectedIndex());
            if (!(nodeAddress.equals(""))) {
@@ -618,6 +640,45 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
             // nothing is stored here
         }
     }
+
+    // IDiscoveryListener interface methods
+   
+    /*
+     * Device discovered callback.
+     */
+    @Override
+    public void deviceDiscovered(RemoteXBeeDevice discoveredDevice){
+        log.debug("New Device discovered {}", discoveredDevice.toString());
+    }
+
+    /*
+     * Discovery error callback.
+     */
+    public void discoveryError(String error){
+        log.error("Error durring node discovery process: {}",error);
+    }
+
+    /*
+     * Discovery finished callback.
+     */
+    public void discoveryFinished(String error){
+       if(error != null){
+         log.error("Node discovery processed finished with error: {}", error);
+         statusText1.setText(rb.getString("FeedBackDiscoverFail"));
+       } else {
+         log.debug("Node discovery process completed successfully.");
+         statusText1.setText(rb.getString("FeedBackDiscoverSuccess"));
+         // reload the node list.
+         initAddressBoxes();
+       }
+       // removing the listener here is causing a
+       // ConcurrentModificaitonException on an ArrayList in the library.
+       // xtc.getXBee().getNetwork().removeDiscoveryListener(this);
+       discoverButton.setEnabled(true);
+    }
+
+
+
 
     private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class.getName());
 

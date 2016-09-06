@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -18,36 +19,42 @@ public class XBeeIOStreamTest {
    private XBeeNode node = null; // set in setUp.
 
    @Test
+   @Ignore("needs XBee Object from scaffold")
    public void ConstructorTest(){
        XBeeIOStream a = new XBeeIOStream(node,tc);
        Assert.assertNotNull(a);
    }
 
    @Test
+   @Ignore("needs XBee Object from scaffold")
    public void checkInputStream(){
        XBeeIOStream a = new XBeeIOStream(node,tc);
        Assert.assertNotNull(a.getInputStream());
    }
 
    @Test
+   @Ignore("needs XBee Object from scaffold")
    public void checkOutputStream(){
        XBeeIOStream a = new XBeeIOStream(node,tc);
        Assert.assertNotNull(a.getInputStream());
    }
 
    @Test
+   @Ignore("needs XBee Object from scaffold")
    public void checkStatus(){
        XBeeIOStream a = new XBeeIOStream(node,tc);
        Assert.assertTrue(a.status());
    }
 
    @Test
+   @Ignore("needs XBee Object from scaffold")
    public void checkPortName(){
        XBeeIOStream a = new XBeeIOStream(node,tc);
        Assert.assertEquals("NONE",a.getCurrentPortName());
    }
 
    @Test
+   @Ignore("needs XBee Object from scaffold")
    public void checkDisabled(){
        XBeeIOStream a = new XBeeIOStream(node,tc);
        Assert.assertFalse(a.getDisabled());

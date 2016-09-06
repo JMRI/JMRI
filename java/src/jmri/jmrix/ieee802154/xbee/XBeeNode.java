@@ -1,8 +1,11 @@
 // XBeeNode.java
 package jmri.jmrix.ieee802154.xbee;
 
-import com.rapplogic.xbee.api.XBeeAddress16;
-import com.rapplogic.xbee.api.XBeeAddress64;
+import com.digi.xbee.api.models.XBee16BitAddress;
+import com.digi.xbee.api.models.XBee64BitAddress;
+import com.digi.xbee.api.RemoteXBeeDevice;
+import com.digi.xbee.api.exceptions.TimeoutException;
+import com.digi.xbee.api.exceptions.XBeeException;
 import java.util.HashMap;
 import jmri.NamedBean;
 import jmri.jmrix.AbstractMRListener;
@@ -35,6 +38,11 @@ public class XBeeNode extends IEEE802154Node {
     private HashMap<Integer, NamedBean> pinObjects = null;
     private boolean isPolled;
     private XBeeTrafficController tc = null;
+    private RemoteXBeeDevice device = null;
+    private XBee16BitAddress userAddress = null;
+    private XBee64BitAddress globalAddress = null;
+
+    private final static byte DefaultPanID[] = {0x00,0x00};
 
     /**
      * Creates a new instance of XBeeNode
@@ -56,6 +64,29 @@ public class XBeeNode extends IEEE802154Node {
         }
         pinObjects = new HashMap<Integer, NamedBean>();
         isPolled = false;
+        userAddress = new XBee16BitAddress(user);
+        globalAddress = new XBee64BitAddress(global);
+    }
+
+    public XBeeNode(RemoteXBeeDevice rxd) throws TimeoutException, XBeeException {
+        super(DefaultPanID, rxd.get16BitAddress().getValue(), rxd.get64BitAddress().getValue());
+        Identifier = rxd.getNodeID();
+       
+        try{
+           setPANAddress(rxd.getPANID());
+        } catch (TimeoutException t) {
+          // we dont need the PAN ID for communicaiton,so just continue.
+        }
+ 
+        if (log.isDebugEnabled()) {
+            log.debug("Created new node from RemoteXBeeDevice: {}",
+                    rxd.toString() );
+        }
+        pinObjects = new HashMap<Integer, NamedBean>();
+        isPolled = false;
+        device = rxd;
+        userAddress = device.get16BitAddress();
+        globalAddress = device.get64BitAddress();
     }
 
     /*
@@ -125,25 +156,17 @@ public class XBeeNode extends IEEE802154Node {
     }
 
     /*
-     *  Convert the 16 bit user address to an XBeeAddress16 object.
+     *  Convert the 16 bit user address to an XBee16BitAddress object.
      */
-    public XBeeAddress16 getXBeeAddress16() {
-        return new XBeeAddress16(0xff & getUserAddress()[0],
-                0xff & getUserAddress()[1]);
+    public XBee16BitAddress getXBeeAddress16() {
+        return device.get16BitAddress();
     }
 
     /*
-     *  Convert the 64 bit address to an XBeeAddress64 object.
+     *  Convert the 64 bit address to an XBee64BitAddress object.
      */
-    public XBeeAddress64 getXBeeAddress64() {
-        return new XBeeAddress64(0xff & getGlobalAddress()[0],
-                0xff & getGlobalAddress()[1],
-                0xff & getGlobalAddress()[2],
-                0xff & getGlobalAddress()[3],
-                0xff & getGlobalAddress()[4],
-                0xff & getGlobalAddress()[5],
-                0xff & getGlobalAddress()[6],
-                0xff & getGlobalAddress()[7]);
+    public XBee64BitAddress getXBeeAddress64() {
+        return device.get64BitAddress();
     }
 
     /**
@@ -151,11 +174,15 @@ public class XBeeNode extends IEEE802154Node {
      * this information.
      */
     public void setIdentifier(String id) {
-        Identifier = id;
+        try {
+           device.setNodeID(id);
+        } catch(XBeeException xbe) { // includes TimeoutException
+          // ignore the error, failed to set.
+        }
     }
 
     public String getIdentifier() {
-        return Identifier;
+        return device.getNodeID();
     }
 
     /**
@@ -226,8 +253,8 @@ public class XBeeNode extends IEEE802154Node {
     public String getPreferedName() {
         if (!Identifier.equals("")) {
             return Identifier;
-        } else if (!(getXBeeAddress16().equals(XBeeAddress16.BROADCAST))
-                && !(getXBeeAddress16().equals(XBeeAddress16.ZNET_BROADCAST))) {
+        } else if (!(getXBeeAddress16().equals(XBee16BitAddress.BROADCAST_ADDRESS))
+                && !(getXBeeAddress16().equals(XBee16BitAddress.UNKNOWN_ADDRESS))) {
             return jmri.util.StringUtil.hexStringFromBytes(useraddress);
         } else {
             return jmri.util.StringUtil.hexStringFromBytes(globaladdress);
@@ -242,13 +269,33 @@ public class XBeeNode extends IEEE802154Node {
      *         return the 64 bit GUID.
      *
      */
-    public com.rapplogic.xbee.api.XBeeAddress getPreferedTransmitAddress() {
-        if (!(getXBeeAddress16().equals(XBeeAddress16.BROADCAST))
-                && !(getXBeeAddress16().equals(XBeeAddress16.ZNET_BROADCAST))) {
+    @Deprecated
+    public Object getPreferedTransmitAddress() {
+        if (!(getXBeeAddress16().equals(XBee16BitAddress.BROADCAST_ADDRESS))
+                && !(getXBeeAddress16().equals(XBee16BitAddress.UNKNOWN_ADDRESS))) {
             return getXBeeAddress16();
         } else {
             return getXBeeAddress64();
         }
+    }
+
+    /*
+     * @return RemoteXBeeDevice associated with this node.
+     */
+    public RemoteXBeeDevice getXBee() {
+           return device;
+    }
+
+    /*
+     * set the RemoteXBeeDevice associated with this node and
+     * configure address information.
+     *
+     * @param RemoteXBeeDevice associated with this node.
+     */
+    public void setXBee(RemoteXBeeDevice rxd) {
+           device=rxd;
+           userAddress = device.get16BitAddress();
+           globalAddress = device.get64BitAddress();
     }
 
     /*

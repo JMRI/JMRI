@@ -27,12 +27,12 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.ieee802154.xbee.XBeeTest");  // no tests in this class itself
         suite.addTest(new TestSuite(XBeeMessageTest.class));
-        suite.addTest(new TestSuite(XBeeReplyTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XBeeReplyTest.class));
         suite.addTest(new TestSuite(XBeeConnectionMemoTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XBeeTrafficControllerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XBeeNodeTest.class));
-        suite.addTest(new TestSuite(XBeeSensorManagerTest.class));
-        suite.addTest(new TestSuite(XBeeSensorTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XBeeSensorManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XBeeSensorTest.class));
         suite.addTest(new TestSuite(XBeeLightManagerTest.class));
         suite.addTest(new TestSuite(XBeeLightTest.class));
         suite.addTest(new TestSuite(XBeeTurnoutManagerTest.class));

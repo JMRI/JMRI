@@ -3,6 +3,7 @@ package jmri.jmrix.ieee802154.xbee;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -16,6 +17,7 @@ public class XBeeNodeManagerTest {
    XBeeInterfaceScaffold tc = null; // set in setUp.
 
    @Test
+   @Ignore("needs XBee Object from scaffold")
    public void ConstructorTest(){
        XBeeNodeManager a = new XBeeNodeManager(tc);
        Assert.assertNotNull(a);
