@@ -53,7 +53,7 @@ public class MultiSensorIconFrame extends JmriJFrame {
 
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-        p.add(new JLabel(Bundle.getMessage("IconChecksClickLabel", ":")));
+        p.add(new JLabel(Bundle.getMessage("IconChecksClickLabel")));
         group.add(updown);
         group.add(rightleft);
         rightleft.setSelected(true);
