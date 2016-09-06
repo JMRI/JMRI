@@ -210,6 +210,8 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
+        // clear any sorts by column
+        clearTableSort(enginesTable);
         if (ae.getSource() == sortByNumber) {
             enginesModel.setSort(enginesModel.SORTBY_NUMBER);
         }
@@ -249,8 +251,6 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         if (ae.getSource() == sortByLast) {
             enginesModel.setSort(enginesModel.SORTBY_LAST);
         }
-        // clear any sorts by column
-        clearTableSort(enginesTable);
     }
 
     public List<RollingStock> getSortByList() {

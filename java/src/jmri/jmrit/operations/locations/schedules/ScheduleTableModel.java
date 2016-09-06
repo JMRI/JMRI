@@ -144,7 +144,10 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         table.getColumnModel().getColumn(UP_COLUMN).setPreferredWidth(60);
         table.getColumnModel().getColumn(DOWN_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(70);
+        
         _frame.loadTableDetails(table);
+        // does not use a table sorter
+        table.setRowSorter(null);
     }
 
     @Override
