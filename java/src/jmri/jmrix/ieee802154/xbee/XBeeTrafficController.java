@@ -1,4 +1,3 @@
-// XBeeTrafficController
 package jmri.jmrix.ieee802154.xbee;
 
 import com.digi.xbee.api.models.ATCommandResponse;
@@ -58,6 +57,13 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
                XBeeAdapter xbp = (XBeeAdapter) p;
                xbee = new XBeeDevice(xbp);
                xbee.open();
+               xbee.reset(); 
+               try {
+                  synchronized(this){
+                     wait(2000);
+                  }
+               } catch (java.lang.InterruptedException e) {
+               }
                xbee.addPacketListener(this);
 
                // and start threads
@@ -77,7 +83,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
                throw new java.lang.IllegalArgumentException("Wrong adapter type specified when connecting to the port.");
             }
         } catch (Exception e) {
-            log.error("Failed to start up communications. Error was " + e);
+            log.error("Failed to start up communications. Error was {} cause {} ",e,e.getCause());
         }
     }
 
@@ -179,7 +185,6 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     // NOTE: Many of the details of this function are derived
     // from the the handleOneIncomingReply() in 
     // AbstractMRTrafficController.
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"NO_NOTIFY_NOT_NOTIFYALL","UW_UNCOND_WAIT","WA_NOT_IN_LOOP"}, justification="There should only be one thread waiting on xmtRunnable. wait() on xmtRunnable is unconditional and not in a loop because it is used to wait for the hardware when switching modes.")
     public void packetReceived(XBeePacket response) {
 
         log.debug("packetReceived called");
@@ -208,100 +213,6 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
             log.debug("dispatch thread invoked");
         }
 
-    /*    // from here to the end of the function was copied verbatim from 
-        // handleOneIncomingReply.  We may not need it after the send code
-        // is put into place.
-        if (!reply.isUnsolicited()) {
-            // effect on transmit:
-            switch (mCurrentState) {
-                case WAITMSGREPLYSTATE: {
-                    // check to see if the response was an error message we want
-                    // to automatically handle by re-queueing the last sent
-                    // message, otherwise go on to the next message
-                    if (reply.isRetransmittableErrorMsg()) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("Automatic Recovery from Error Message: +reply.toString()");
-                        }
-                        synchronized (xmtRunnable) {
-                            mCurrentState = AUTORETRYSTATE;
-                            replyInDispatch = false;
-                            xmtRunnable.notify();
-                        }
-                    } else {
-                        // update state, and notify to continue
-                        synchronized (xmtRunnable) {
-                            mCurrentState = NOTIFIEDSTATE;
-                            replyInDispatch = false;
-                            xmtRunnable.notify();
-                        }
-                    }
-                    break;
-                }
-                case WAITREPLYINPROGMODESTATE: {
-                    // entering programming mode
-                    mCurrentMode = PROGRAMINGMODE;
-                    replyInDispatch = false;
-
-                    // check to see if we need to delay to allow decoders to become
-                    // responsive
-                    int warmUpDelay = enterProgModeDelayTime();
-                    if (warmUpDelay != 0) {
-                        try {
-                            synchronized (xmtRunnable) {
-                                xmtRunnable.wait(warmUpDelay);
-                            }
-                        } catch (InterruptedException e) {
-                            Thread.currentThread().interrupt(); // retain if needed later
-                        }
-                    }
-                    // update state, and notify to continue
-                    synchronized (xmtRunnable) {
-                        mCurrentState = OKSENDMSGSTATE;
-                        xmtRunnable.notify();
-                    }
-                    break;
-                }
-                case WAITREPLYINNORMMODESTATE: {
-                    // entering normal mode
-                    mCurrentMode = NORMALMODE;
-                    replyInDispatch = false;
-                    // update state, and notify to continue
-                    synchronized (xmtRunnable) {
-                        mCurrentState = OKSENDMSGSTATE;
-                        xmtRunnable.notify();
-                    }
-                    break;
-                }
-                default: {
-                    replyInDispatch = false;
-                    if (allowUnexpectedReply == true) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("Allowed unexpected reply received in state: "
-                                    + mCurrentState + " was " + reply.toString());
-                        }
-                        //synchronized (xmtRunnable) {
-                        // The transmit thread sometimes gets stuck
-                        // when unexpected replies are received.  Notify
-                        // it to clear the block without a timeout.
-                        // (do not change the current state)
-                        //if(mCurrentState!=IDLESTATE)
-                        //        xmtRunnable.notify();
-                        // }
-                    } else {
-                        log.error("reply complete in unexpected state: "
-                                + mCurrentState + " was " + reply.toString());
-                    }
-                }
-            }
-            // Unsolicited message
-        } else {
-            if (log.isDebugEnabled()) {
-                log.debug("Unsolicited Message Received "
-                        + reply.toString());
-            }
-
-            replyInDispatch = false;
-        }*/
         replyInDispatch = false;
         log.debug("Dispatch Complete");
     }

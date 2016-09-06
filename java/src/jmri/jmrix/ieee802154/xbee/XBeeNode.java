@@ -4,6 +4,8 @@ package jmri.jmrix.ieee802154.xbee;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
 import com.digi.xbee.api.RemoteXBeeDevice;
+import com.digi.xbee.api.exceptions.TimeoutException;
+import com.digi.xbee.api.exceptions.XBeeException;
 import java.util.HashMap;
 import jmri.NamedBean;
 import jmri.jmrix.AbstractMRListener;
@@ -40,6 +42,8 @@ public class XBeeNode extends IEEE802154Node {
     private XBee16BitAddress userAddress = null;
     private XBee64BitAddress globalAddress = null;
 
+    private final static byte DefaultPanID[] = {0x00,0x00};
+
     /**
      * Creates a new instance of XBeeNode
      */
@@ -64,9 +68,16 @@ public class XBeeNode extends IEEE802154Node {
         globalAddress = new XBee64BitAddress(global);
     }
 
-    public XBeeNode(RemoteXBeeDevice rxd) throws com.digi.xbee.api.exceptions.TimeoutException, com.digi.xbee.api.exceptions.XBeeException {
-        super(rxd.getPANID(), rxd.get16BitAddress().getValue(), rxd.get64BitAddress().getValue());
-        Identifier = "";
+    public XBeeNode(RemoteXBeeDevice rxd) throws TimeoutException, XBeeException {
+        super(DefaultPanID, rxd.get16BitAddress().getValue(), rxd.get64BitAddress().getValue());
+        Identifier = rxd.getNodeID();
+       
+        try{
+           setPANAddress(rxd.getPANID());
+        } catch (TimeoutException t) {
+          // we dont need the PAN ID for communicaiton,so just continue.
+        }
+ 
         if (log.isDebugEnabled()) {
             log.debug("Created new node from RemoteXBeeDevice: {}",
                     rxd.toString() );
@@ -163,7 +174,11 @@ public class XBeeNode extends IEEE802154Node {
      * this information.
      */
     public void setIdentifier(String id) {
-        Identifier = id;
+        try {
+           device.setNodeID(id);
+        } catch(XBeeException xbe) { // includes TimeoutException
+          // ignore the error, failed to set.
+        }
     }
 
     public String getIdentifier() {
