@@ -120,9 +120,6 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
     private synchronized void setPreferredWidths(JTable table) {
         // set column preferred widths
-        if (_frame.loadTableDetails(table)) {
-            return; // done
-        }
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(40);
         table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(150);
         table.getColumnModel().getColumn(TRAIN_DIRECTION_COLUMN).setPreferredWidth(95);
@@ -139,6 +136,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         table.getColumnModel().getColumn(UP_COLUMN).setPreferredWidth(60);
         table.getColumnModel().getColumn(DOWN_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(70);
+        _frame.loadTableDetails(table);
     }
 
     @Override

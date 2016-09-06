@@ -88,16 +88,13 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         tcm.getColumn(EDITCOLUMN).setCellEditor(buttonEditor);
         
         setPreferredWidths(frame, table);
-        
+
         table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
     
     private void setPreferredWidths(LocationsTableFrame frame, JTable table) {
-        if (frame.loadTableDetails(table)) {
-            return; // done
-        }
         log.debug("Setting preferred widths");
         // set column preferred widths
         table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
@@ -117,6 +114,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         table.getColumnModel().getColumn(ACTIONCOLUMN).setPreferredWidth(
                 Math.max(80, new JLabel(Bundle.getMessage("Yardmaster")).getPreferredSize().width + 40));
         table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(80);
+        frame.loadTableDetails(table);
     }
 
     @Override
