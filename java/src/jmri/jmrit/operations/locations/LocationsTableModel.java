@@ -159,23 +159,16 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case IDCOLUMN:
-                return String.class;
             case NAMECOLUMN:
-                return String.class;
             case TRACKCOLUMN:
                 return String.class;
             case LENGTHCOLUMN:
-                return String.class;
             case USEDLENGTHCOLUMN:
-                return String.class;
             case ROLLINGSTOCK:
-                return String.class;
             case PICKUPS:
-                return String.class;
             case DROPS:
-                return String.class;
+                return Integer.class;
             case ACTIONCOLUMN:
-                return JButton.class;
             case EDITCOLUMN:
                 return JButton.class;
             default:
@@ -211,15 +204,15 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
             case TRACKCOLUMN:
                 return getTrackTypes(location);
             case LENGTHCOLUMN:
-                return Integer.toString(location.getLength());
+                return location.getLength();
             case USEDLENGTHCOLUMN:
-                return Integer.toString(location.getUsedLength());
+                return location.getUsedLength();
             case ROLLINGSTOCK:
-                return Integer.toString(location.getNumberRS());
+                return location.getNumberRS();
             case PICKUPS:
-                return Integer.toString(location.getPickupRS());
+                return location.getPickupRS();
             case DROPS:
-                return Integer.toString(location.getDropRS());
+                return location.getDropRS();
             case ACTIONCOLUMN:
                 return Bundle.getMessage("Yardmaster");
             case EDITCOLUMN:
