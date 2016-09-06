@@ -134,6 +134,8 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         table.getColumnModel().getColumn(DOWN_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(70);
         _frame.loadTableDetails(table);
+        // does not use a table sorter
+        table.setRowSorter(null);
     }
 
     @Override
