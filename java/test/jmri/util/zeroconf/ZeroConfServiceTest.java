@@ -194,7 +194,8 @@ public class ZeroConfServiceTest {
     public void testAllServices() {
         Collection<ZeroConfService> result = ZeroConfService.allServices();
         Assert.assertEquals(0, result.size());
-        ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
+        ZeroConfService instance = ZeroConfService.create(HTTP, WebServerPreferences.getDefault().getDefaultRailroadName(), 9999, 0, 0, new HashMap<>());
+        Assert.assertEquals(WebServerPreferences.getDefault().getDefaultRailroadName(), instance.name());
         result = ZeroConfService.allServices();
         Assert.assertEquals(0, result.size());
         instance.publish();

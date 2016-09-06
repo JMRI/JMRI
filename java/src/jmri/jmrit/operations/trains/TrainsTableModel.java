@@ -15,13 +15,12 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumnModel;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.RouteEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.util.com.sun.TableSorter;
+import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -38,7 +37,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     // Defines the columns
     private static final int IDCOLUMN = 0;
-    private static final int BUILDBOXCOLUMN = IDCOLUMN + 1;
+    private static final int TIME_COLUMN = IDCOLUMN + 1;
+    private static final int BUILDBOXCOLUMN = TIME_COLUMN + 1;
     private static final int BUILDCOLUMN = BUILDBOXCOLUMN + 1;
     private static final int NAMECOLUMN = BUILDCOLUMN + 1;
     private static final int DESCRIPTIONCOLUMN = NAMECOLUMN + 1;
@@ -65,12 +65,11 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     private int _sort = SORTBYTIME;
 
     public void setSort(int sort) {
-        synchronized (this) {
-            _sort = sort;
-        }
+        _sort = sort;
         updateList();
-        fireTableStructureChanged();
-        initTable();
+        XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(IDCOLUMN), sort == SORTBYID);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(TIME_COLUMN), sort == SORTBYTIME);
     }
 
     private boolean _showAll = true;
@@ -122,8 +121,12 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     void initTable() {
+        // Use XTableColumnModel so we can control which columns are visible
+        XTableColumnModel tcm = new XTableColumnModel();
+        _table.setColumnModel(tcm);
+        _table.createDefaultColumnsFromModel();
+        
         // Install the button handlers
-        TableColumnModel tcm = _table.getColumnModel();
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
         tcm.getColumn(EDITCOLUMN).setCellRenderer(buttonRenderer);
@@ -135,16 +138,18 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         _table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
 
         // set column preferred widths
-        if (!_frame.loadTableDetails(_table)) {
-            // load defaults, xml file data not found
-            int[] tableColumnWidths = trainManager.getTrainsFrameTableColumnWidths();
-            for (int i = 0; i < tcm.getColumnCount(); i++) {
-                tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);
-            }
+        // load defaults, xml file data not found
+        int[] tableColumnWidths = trainManager.getTrainsFrameTableColumnWidths();
+        for (int i = 0; i < tcm.getColumnCount(); i++) {
+            tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);
         }
+        _frame.loadTableDetails(_table);
         _table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+        // turn off column
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(IDCOLUMN), _sort == SORTBYID);
     }
 
     @Override
@@ -175,12 +180,9 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     public String getColumnName(int col) {
         switch (col) {
             case IDCOLUMN:
-                synchronized (this) {
-                    if (_sort == SORTBYID) {
-                        return IDCOLUMNNAME;
-                    }
-                    return TIMECOLUMNNAME;
-                }
+                return IDCOLUMNNAME;
+            case TIME_COLUMN:
+                return TIMECOLUMNNAME;
             case BUILDBOXCOLUMN:
                 return BUILDBOXCOLUMNNAME;
             case BUILDCOLUMN:
@@ -211,28 +213,20 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
-            case IDCOLUMN:
-                return String.class;
             case BUILDBOXCOLUMN:
                 return Boolean.class;
-            case BUILDCOLUMN:
-                return JButton.class;
+            case IDCOLUMN:
+            case TIME_COLUMN:
             case NAMECOLUMN:
-                return String.class;
             case DESCRIPTIONCOLUMN:
-                return String.class;
             case ROUTECOLUMN:
-                return String.class;
             case DEPARTSCOLUMN:
-                return String.class;
             case CURRENTCOLUMN:
-                return String.class;
             case TERMINATESCOLUMN:
-                return String.class;
             case STATUSCOLUMN:
                 return String.class;
+            case BUILDCOLUMN:
             case ACTIONCOLUMN:
-                return JButton.class;
             case EDITCOLUMN:
                 return JButton.class;
             default:
@@ -264,12 +258,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             return "ERROR train unknown " + row; // NOI18N
         }
         switch (col) {
-            case IDCOLUMN: {
-                if (_sort == SORTBYID) {
-                    return train.getId();
-                }
+            case IDCOLUMN:
+                return train.getId();
+            case TIME_COLUMN:
                 return train.getDepartureTime();
-            }
             case NAMECOLUMN:
                 return train.getIconName();
             case DESCRIPTIONCOLUMN:
@@ -531,21 +523,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 log.debug("Update train table row: {} name: {}", row, train.getName());
             }
             if (row >= 0) {
-                // The line "_table.scrollRectToVisible(_table.getCellRect(row, 0, true));"
-                // can cause a thread lock if the table sorter is active. That's the reason
-                // the code is wrapped in the invokeLater.
-                // However scrolling only works correctly if table sort isn't active since "row"
-                // isn't correctly mapped to the proper row showing.  This also allows user to
-                // stop the scrolling to the active train if desired.
-                TableSorter sorter = (TableSorter) _table.getModel();
-                if (!sorter.isSorting()) {
-                    SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
-                        }
-                    });
-                }
+                // if there are issues with thread locking here, this needs to
+                // be refactored so the panel holding the table is listening for
+                // this changes so it can instruct the table to scroll
+                _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
                 fireTableRowsUpdated(row, row);
             }
         }
@@ -579,8 +560,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 boolean hasFocus, int row, int column) {
             Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             if (!isSelected) {
-                TableSorter sorter = (TableSorter) table.getModel();
-                int modelRow = sorter.modelIndex(row);
+                int modelRow = table.convertRowIndexToModel(row);
                 //				log.debug("View row: {} Column: {} Model row: {}", row, column, modelRow);
                 Color background = getRowColor(modelRow);
                 component.setBackground(background);
