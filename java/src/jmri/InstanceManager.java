@@ -6,10 +6,10 @@ import java.beans.PropertyChangeListener;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Vector;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.implementation.DccConsistManager;
@@ -69,10 +69,22 @@ public class InstanceManager {
     protected static final HashMap<Class<?>, ArrayList<Object>> managerLists = new HashMap<>();
     private static final InstanceInitializer initializer = new jmri.managers.DefaultInstanceInitializer();
     // data members to hold contact with the property listeners
-    private static final Vector<PropertyChangeListener> listeners = new Vector<>();
+    private static final HashSet<PropertyChangeListener> listeners = new HashSet<>();
 
     /* properties */
+    /**
+     *
+     * @deprecated since 4.5.4 use {@code jmri.ConsistManager.class.getName()}
+     * instead.
+     */
+    @Deprecated
     public static final String CONSIST_MANAGER = "consistmanager"; // NOI18N
+    /**
+     *
+     * @deprecated since 4.5.4 use
+     * {@code jmri.ProgrammerManager.class.getName()} instead.
+     */
+    @Deprecated
     public static final String PROGRAMMER_MANAGER = "programmermanager"; // NOI18N
 
     /**
@@ -270,9 +282,13 @@ public class InstanceManager {
             log.error("Should not set default of type {} to null value", type.getName());
             throw npe;
         }
+        Object oldDefault = getNullableDefault(type);
         List<T> l = getList(type);
         l.remove(item);
         l.add(item);
+        if (oldDefault == null || !oldDefault.equals(item)) {
+            notifyPropertyChangeListener(getDefaultsPropertyName(type), oldDefault, item);
+        }
         return getDefault(type);
     }
 
@@ -307,7 +323,7 @@ public class InstanceManager {
      */
     public static synchronized void removePropertyChangeListener(PropertyChangeListener l) {
         if (listeners.contains(l)) {
-            listeners.removeElement(l);
+            listeners.remove(l);
         }
     }
 
@@ -319,22 +335,32 @@ public class InstanceManager {
     public static synchronized void addPropertyChangeListener(PropertyChangeListener l) {
         // add only if not already registered
         if (!listeners.contains(l)) {
-            listeners.addElement(l);
+            listeners.add(l);
         }
     }
 
     protected static void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
         // make a copy of the listener vector to synchronized not needed for transmit
-        Vector<PropertyChangeListener> v;
+        HashSet<PropertyChangeListener> set;
         synchronized (InstanceManager.class) {
-            v = new Vector<>(listeners);
+            set = new HashSet<>(listeners);
         }
         // forward to all listeners
-        int cnt = v.size();
-        for (int i = 0; i < cnt; i++) {
-            PropertyChangeListener client = v.elementAt(i);
-            client.propertyChange(new PropertyChangeEvent(InstanceManager.class, property, oldValue, newValue));
-        }
+        set.stream().forEach((listener) -> {
+            listener.propertyChange(new PropertyChangeEvent(InstanceManager.class, property, oldValue, newValue));
+        });
+    }
+
+    /**
+     * Get the property name included in the
+     * {@link java.beans.PropertyChangeEvent} thrown when the default for a
+     * specific class is changed.
+     *
+     * @param clazz the class being listened for
+     * @return the property name
+     */
+    public static String getDefaultsPropertyName(Class<?> clazz) {
+        return "default-" + clazz.getName();
     }
 
     /* ****************************************************************************
