@@ -5,9 +5,12 @@ import com.digi.xbee.api.models.XBee64BitAddress;
 import com.digi.xbee.api.packet.XBeePacket;
 import com.digi.xbee.api.packet.common.IODataSampleRxIndicatorPacket;
 import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
-import com.digi.xbee.api.listeners.IPacketReceiveListener;
+import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
+import com.digi.xbee.api.exceptions.TimeoutException;
+import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.io.IOLine;
+import com.digi.xbee.api.io.IOMode;
 import com.digi.xbee.api.io.IOSample;
 import jmri.JmriException;
 import jmri.Sensor;
@@ -22,7 +25,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Paul Bender Copyright (C) 2003-2016
  */
-public class XBeeSensorManager extends jmri.managers.AbstractSensorManager implements IIOSampleReceiveListener,IPacketReceiveListener {
+public class XBeeSensorManager extends jmri.managers.AbstractSensorManager implements IIOSampleReceiveListener{
 
     public String getSystemPrefix() {
         return prefix;
@@ -41,7 +44,6 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     // to free resources when no longer used
     public void dispose() {
         tc.getXBee().removeIOSampleListener(this);
-        tc.getXBee().removePacketListener(this);
         super.dispose();
     }
 
@@ -76,7 +78,6 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
         tc = controller;
         this.prefix = prefix;
         tc.getXBee().addIOSampleListener(this);
-        tc.getXBee().addPacketListener(this);
     }
 
     // IIOSampleReceiveListener methods
@@ -89,31 +90,21 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
         for (int i = 0; i <= 8; i++) {
             if (!node.getPinAssigned(i)
                 && ioSample.hasDigitalValue(IOLine.getDIO(i))) {
-                // request pin direction.
-                tc.sendXBeeMessage(XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(), i), null );
-                }
-            }
-        }
-
-   //IPacketReceiveListener
-   public void packetReceived(XBeePacket receivedPacket) {
-        // the only packets we care about here are the replies to
-        // our request for pin direction.  We ignore anything else.
-
-        /*} else if (response instanceof RemoteATCommandResponsePacket) {
-            RemoteATCommandResponsePacket atResp = (RemoteATCommandResponsePacket) response;
-            // check to see if this is a Dx responsponse.
-            for (int i = 0; i < 7; i++) {
-                String cmd = "D" + i;
-                if (atResp.getCommand().equals(cmd)) {
-                    // check the data to see if it is 3 (digital input).
-                    if (atResp.getValue().length > 0
-                            && atResp.getValue()[0] == 0x03) {
-                        // create the sensor.
-                        XBeeNode node = null;
-                        if ((node = (XBeeNode) tc.getNodeFromAddress(atResp.getRemoteAddress64().getAddress())) == null) {
-                            node = (XBeeNode) tc.getNodeFromAddress(atResp.getRemoteAddress16().getAddress());
-                        }
+                   // get pin direction
+                   IOMode mode = IOMode.DISABLED;  // assume disabled as default.
+                   try  {
+                       mode = remoteDevice.getIOConfiguration(IOLine.getDIO(i));
+                   } catch (TimeoutException toe) {
+                      log.error("Timeout retrieving IO line mode for {} on {}",IOLine.getDIO(i),remoteDevice);
+                   } catch (InterfaceNotOpenException ino) {
+                      log.error("Interface Not Open retrieving IO line mode for {} on {}",IOLine.getDIO(i),remoteDevice);
+                   } catch (XBeeException xbe) {
+                      log.error("Error retrieving IO line mode for {} on {}",IOLine.getDIO(i),remoteDevice);
+                   }
+               
+                   if(mode == IOMode.DIGITAL_IN ) {
+                        // thisis an input, check to see if it exists as a sensor.
+                        node = (XBeeNode) tc.getNodeFromXBeeDevice(remoteDevice);
 
                         // Sensor name is prefix followed by NI/address
                         // followed by the bit number.
@@ -125,22 +116,20 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
                             try {
                                provideSensor(sName);
                                if (log.isDebugEnabled()) {
-                                   log.debug("DIO " + sName + " enabled as sensor");
+                                   log.debug("DIO {} enabled as sensor",sName);
                                }
                             } catch(java.lang.IllegalArgumentException iae){
                                // if provideSensor fails, it will throw an IllegalArgumentException, so catch that,log it if debugging is enabled, and then re-throw it.
                                if (log.isDebugEnabled()) {
-                                   log.debug("Attempt to enable DIO " + sName + " as sensor failed");
+                                   log.debug("Attempt to enable DIO {} as sensor failed",sName);
                                }
                                throw iae;
                             }
                         }
                     }
-                }
+               }
             }
-       */
-
-    }
+        }
 
     // for now, set this to false. multiple additions currently works
     // partially, but not for all possible cases.
