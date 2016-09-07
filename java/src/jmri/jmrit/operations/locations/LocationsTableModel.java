@@ -88,16 +88,13 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         tcm.getColumn(EDITCOLUMN).setCellEditor(buttonEditor);
         
         setPreferredWidths(frame, table);
-        
+
         table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
     
     private void setPreferredWidths(LocationsTableFrame frame, JTable table) {
-        if (frame.loadTableDetails(table)) {
-            return; // done
-        }
         log.debug("Setting preferred widths");
         // set column preferred widths
         table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
@@ -117,6 +114,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         table.getColumnModel().getColumn(ACTIONCOLUMN).setPreferredWidth(
                 Math.max(80, new JLabel(Bundle.getMessage("Yardmaster")).getPreferredSize().width + 40));
         table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(80);
+        frame.loadTableDetails(table);
     }
 
     @Override
@@ -161,23 +159,16 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case IDCOLUMN:
-                return String.class;
             case NAMECOLUMN:
-                return String.class;
             case TRACKCOLUMN:
                 return String.class;
             case LENGTHCOLUMN:
-                return String.class;
             case USEDLENGTHCOLUMN:
-                return String.class;
             case ROLLINGSTOCK:
-                return String.class;
             case PICKUPS:
-                return String.class;
             case DROPS:
-                return String.class;
+                return Integer.class;
             case ACTIONCOLUMN:
-                return JButton.class;
             case EDITCOLUMN:
                 return JButton.class;
             default:
@@ -213,15 +204,15 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
             case TRACKCOLUMN:
                 return getTrackTypes(location);
             case LENGTHCOLUMN:
-                return Integer.toString(location.getLength());
+                return location.getLength();
             case USEDLENGTHCOLUMN:
-                return Integer.toString(location.getUsedLength());
+                return location.getUsedLength();
             case ROLLINGSTOCK:
-                return Integer.toString(location.getNumberRS());
+                return location.getNumberRS();
             case PICKUPS:
-                return Integer.toString(location.getPickupRS());
+                return location.getPickupRS();
             case DROPS:
-                return Integer.toString(location.getDropRS());
+                return location.getDropRS();
             case ACTIONCOLUMN:
                 return Bundle.getMessage("Yardmaster");
             case EDITCOLUMN:

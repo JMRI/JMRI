@@ -28,7 +28,10 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.roco.z21.swing");  // no tests in this class itself
         suite.addTest(jmri.jmrix.roco.z21.swing.configtool.PackageTest.suite());
         suite.addTest(BundleTest.suite());
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Z21MenuTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Z21ComponentFactoryTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.roco.z21.swing.mon.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.roco.z21.swing.packetgen.PackageTest.class));
         return suite;
     }
 

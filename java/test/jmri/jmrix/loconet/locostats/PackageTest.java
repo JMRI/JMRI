@@ -25,8 +25,10 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.loconet.locostats.LocoStatsTest");  // no tests in this class itself
-        suite.addTest(LocoStatsFrameTest.suite());
         suite.addTest(BundleTest.suite());
+        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+           suite.addTest(LocoStatsFrameTest.suite());
+        }
         return suite;
     }
 

@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
+import java.util.Optional;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -19,15 +20,15 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
-import jmri.UserPreferencesManager;
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.swing.JTablePersistenceManager;
 import jmri.util.JmriJFrame;
-import jmri.util.com.sun.TableSorter;
-import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -220,6 +221,8 @@ public class OperationsPanel extends JPanel implements AncestorListener {
      * Will modify the character column width of a TextArea box to 90% of a
      * panels width. ScrollPane is set to 95% of panel width.
      *
+     * @param scrollPane the pane containing the textArea
+     * @param textArea   the textArea to adjust
      */
     protected void adjustTextAreaColumnWidth(JScrollPane scrollPane, JTextArea textArea) {
         this.adjustTextAreaColumnWidth(scrollPane, textArea, this.getPreferredSize());
@@ -238,165 +241,78 @@ public class OperationsPanel extends JPanel implements AncestorListener {
     }
 
     /**
-     * Saves the table's width, position, and sorting status in the user
-     * preferences file
+     * Does nothing. Used to save the table width, position, and sorting status
+     * in the user preferences file.
      *
      * @param table Table to be saved.
+     * @deprecated since 4.5.4 without direct replacement
      */
+    @Deprecated
     protected void saveTableDetails(JTable table) {
-        UserPreferencesManager p = InstanceManager.getOptionalDefault(UserPreferencesManager.class);
-        if (p == null) {
-            return;
-        }
-        TableSorter sorter = null;
-        String tableref = getWindowFrameRef() + ":table"; // NOI18N
-        try {
-            sorter = (TableSorter) table.getModel();
-        } catch (Exception e) {
-            log.debug("table " + tableref + " doesn't use sorter");
-        }
-
-        // is the table using XTableColumnModel?
-        if (sorter != null && sorter.getColumnCount() != table.getColumnCount()) {
-            log.debug("Sort column count: {} table column count: {} XTableColumnModel in use", sorter.getColumnCount(),
-                    table.getColumnCount());
-            XTableColumnModel tcm = (XTableColumnModel) table.getColumnModel();
-            // need to have all columns visible so we can get the proper column order
-            boolean[] columnVisible = new boolean[sorter.getColumnCount()];
-            for (int i = 0; i < sorter.getColumnCount(); i++) {
-                columnVisible[i] = tcm.isColumnVisible(tcm.getColumnByModelIndex(i));
-                tcm.setColumnVisible(tcm.getColumnByModelIndex(i), true);
-            }
-            // now save with the correct column order
-            for (int i = 0; i < sorter.getColumnCount(); i++) {
-                int sortStatus = sorter.getSortingStatus(i);
-                int width = tcm.getColumnByModelIndex(i).getPreferredWidth();
-                int order = table.convertColumnIndexToView(i);
-                // must save with column not hidden
-                p.setTableColumnPreferences(tableref, sorter.getColumnName(i), order, width, TableSorter.getSortOrder(sortStatus), false);
-            }
-            // now restore
-            for (int i = 0; i < sorter.getColumnCount(); i++) {
-                tcm.setColumnVisible(tcm.getColumnByModelIndex(i), columnVisible[i]);
-            }
-
-        } // standard table
-        else {
-            for (int i = 0; i < table.getColumnCount(); i++) {
-                int sortStatus = 0;
-                if (sorter != null) {
-                    sortStatus = sorter.getSortingStatus(i);
-                }
-                p.setTableColumnPreferences(tableref, table.getColumnName(i), i, table.getColumnModel().getColumn(i)
-                        .getPreferredWidth(), TableSorter.getSortOrder(sortStatus), false);
-            }
-        }
+        // do nothing
     }
 
     /**
-     * Loads the table's width, position, and sorting status from the user
+     * Load the table width, position, and sorting status from the user
      * preferences file.
      *
      * @param table The table to be adjusted.
-     * @return true if table has been adjusted by saved xml file.
+     * @return true if a default instance of the
+     *         {@link jmri.swing.JTablePersistenceManager} is available; false
+     *         otherwise
      */
     public boolean loadTableDetails(JTable table) {
-        UserPreferencesManager p = InstanceManager.getOptionalDefault(UserPreferencesManager.class);
-        TableSorter sorter = null;
-        String tableref = getWindowFrameRef() + ":table"; // NOI18N
-        if (p == null || p.getTablesColumnList(tableref).isEmpty()) {
-            return false;
-        }
-        try {
-            sorter = (TableSorter) table.getModel();
-        } catch (Exception e) {
-            log.debug("table " + tableref + " doesn't use sorter");
-        }
-        // bubble sort
-        int count = 0;
-        while (!sortTable(table, p, tableref) && count < 10) {
-            count++;
-            log.debug("bubble sort pass {}:", count);
-        }
-        // Some tables have more than one name, so use the current one for size
-        for (int i = 0; i < table.getColumnCount(); i++) {
-            String columnName = table.getColumnName(i);
-            int sort = TableSorter.getSortStatus(p.getTableColumnSort(tableref, columnName));
-            if (sorter != null) {
-                sorter.setSortingStatus(i, sort);
-            }
-            int width = p.getTableColumnWidth(tableref, columnName);
-            if (width != -1) {
-                table.getColumnModel().getColumn(i).setPreferredWidth(width);
-            } else {
-                // name not found so use one that exists
-                String name = p.getTableColumnAtNum(tableref, i);
-                if (name != null) {
-                    width = p.getTableColumnWidth(tableref, name);
-                    table.getColumnModel().getColumn(i).setPreferredWidth(width);
+        if (table.getRowSorter() == null) {
+            TableRowSorter<? extends TableModel> sorter = new TableRowSorter<>(table.getModel());
+            table.setRowSorter(sorter);
+            // only sort on columns that are String or Integer
+            for (int i =0; i < table.getColumnCount(); i++) {
+                if (table.getColumnClass(i) == String.class || table.getColumnClass(i) == Integer.class) {
+                    continue; // allow sorting
                 }
+                sorter.setSortable(i, false);
             }
         }
-        return true;
-    }
-
-    private boolean sortTable(JTable table, UserPreferencesManager p, String tableref) {
-        boolean sortDone = true;
-        for (int i = 0; i < table.getColumnCount(); i++) {
-            String columnName = table.getColumnName(i);
-            int order = p.getTableColumnOrder(tableref, columnName);
-            if (order == -1) {
-                log.debug("Column name {} not found in user preference file", columnName);
-                break; // table structure has changed quit sort
-            }
-            if (i != order && order < table.getColumnCount()) {
-                table.moveColumn(i, order);
-                log.debug("Move column number: {} name: {} to: {}", i, columnName, order);
-                sortDone = false;
-            }
+        table.setName(getWindowFrameRef() + ":table"); // NOI18N
+        Optional<JTablePersistenceManager> manager = InstanceManager.getOptionalDefault(JTablePersistenceManager.class);
+        if (manager.isPresent()) {
+            manager.get().resetState(table);
+            manager.get().persist(table);
+            return true;
         }
-        return sortDone;
+        return false;
     }
 
     protected void clearTableSort(JTable table) {
-        TableSorter sorter = null;
-        try {
-            sorter = (TableSorter) table.getModel();
-        } catch (Exception e) {
-            log.debug("table doesn't use sorter");
-        }
-        if (sorter == null) {
-            return;
-        }
-        for (int i = 0; i < table.getColumnCount(); i++) {
-            sorter.setSortingStatus(i, TableSorter.NOT_SORTED);
+        if (table.getRowSorter() != null) {
+            table.getRowSorter().setSortKeys(null);
         }
     }
 
     protected synchronized void createShutDownTask() {
         OperationsManager.getInstance().setShutDownTask(new SwingShutDownTask("Operations Train Window Check", // NOI18N
                 Bundle.getMessage("PromptQuitWindowNotWritten"), Bundle.getMessage("PromptSaveQuit"), this) {
-                    @Override
-                    public boolean checkPromptNeeded() {
-                        if (Setup.isAutoSaveEnabled()) {
-                            storeValues();
-                            return true;
-                        }
-                        return !OperationsXml.areFilesDirty();
-                    }
+            @Override
+            public boolean checkPromptNeeded() {
+                if (Setup.isAutoSaveEnabled()) {
+                    storeValues();
+                    return true;
+                }
+                return !OperationsXml.areFilesDirty();
+            }
 
-                    @Override
-                    public boolean doPrompt() {
-                        storeValues();
-                        return true;
-                    }
+            @Override
+            public boolean doPrompt() {
+                storeValues();
+                return true;
+            }
 
-                    @Override
-                    public boolean doClose() {
-                        storeValues();
-                        return true;
-                    }
-                });
+            @Override
+            public boolean doClose() {
+                storeValues();
+                return true;
+            }
+        });
     }
 
     protected void storeValues() {
