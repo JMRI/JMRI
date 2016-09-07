@@ -3698,7 +3698,7 @@
    <p>
     There are two other options available when requesting locomotives, "Auto" and "Auto HPT". "Auto"
     determines the maximum number of cars that could be assigned to a train, and does a simple
-    locomotive consist assignment based on the number of cars and the route grades. The assignment
+    locomotive consist assignment based on the number of requested car moves and the route grades. The assignment
     is done before building the train, so the number of locomotives assigned has nothing to due with
     engine HP or the train's tonnage. A better choice is the <a href="#BuildlocoConsist">Build
      loco consist from single locos</a>, that option determines the number of locomotives to assign to a
@@ -3713,7 +3713,7 @@
     the build, determine if the assigned locomotive has the appropriate HP for the train's tonnage
     and grades. If a single locomotive can't be found that meets the requirements, the build will
     fail unless you've also selected the option to <a href="#BuildlocoConsist">Build loco
-     consist from single locos</a>.
+     consist from single locos</a>. "Auto HPT" isn't available for a train departing staging.
    </p>
 
    <p>
