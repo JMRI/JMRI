@@ -133,6 +133,8 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
            }
         } catch (TimeoutException toe) {
            log.error("Timeout retrieving IO line value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+           // hidden terminal? Make sure the state appears as unknown.
+           setOwnState(Sensor.UNKNOWN);
         } catch (InterfaceNotOpenException ino) {
            log.error("Interface Not Open retrieving IO line value for {} on {}",IOLine.getDIO(pin),node.getXBee());
         } catch (XBeeException xbe) {
