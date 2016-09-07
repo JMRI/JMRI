@@ -74,7 +74,8 @@ public class InstanceManager {
     /* properties */
     /**
      *
-     * @deprecated since 4.5.4 use {@code jmri.ConsistManager.class.getName()}
+     * @deprecated since 4.5.4 use
+     * {@code InstanceManager.getDefaultsPropertyName(ConsistManager.class)}
      * instead.
      */
     @Deprecated
@@ -82,7 +83,8 @@ public class InstanceManager {
     /**
      *
      * @deprecated since 4.5.4 use
-     * {@code jmri.ProgrammerManager.class.getName()} instead.
+     * {@code InstanceManager.getDefaultsPropertyName(ProgrammerManager.class)}
+     * instead.
      */
     @Deprecated
     public static final String PROGRAMMER_MANAGER = "programmermanager"; // NOI18N
