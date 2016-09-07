@@ -9,7 +9,6 @@ import java.text.MessageFormat;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
@@ -119,6 +118,9 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         table.setDefaultRenderer(Object.class, new MyTableCellRenderer());
         initTable();
     }
+    
+    // Train frame table column widths (13), starts with id column and ends with edit
+    private int[] _tableColumnWidths = {50, 50, 50, 72, 100, 140, 120, 120, 120, 120, 120, 90, 70};
 
     void initTable() {
         // Use XTableColumnModel so we can control which columns are visible
@@ -138,15 +140,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         _table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
 
         // set column preferred widths
-        // load defaults, xml file data not found
-        int[] tableColumnWidths = trainManager.getTrainsFrameTableColumnWidths();
         for (int i = 0; i < tcm.getColumnCount(); i++) {
-            tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);
+            tcm.getColumn(i).setPreferredWidth(_tableColumnWidths[i]);
         }
         _frame.loadTableDetails(_table);
-        _table.setRowHeight(new JComboBox<>().getPreferredSize().height);
-        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         // turn off column
         tcm.setColumnVisible(tcm.getColumnByModelIndex(IDCOLUMN), _sort == SORTBYID);

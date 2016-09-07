@@ -241,18 +241,6 @@ public class OperationsPanel extends JPanel implements AncestorListener {
     }
 
     /**
-     * Does nothing. Used to save the table width, position, and sorting status
-     * in the user preferences file.
-     *
-     * @param table Table to be saved.
-     * @deprecated since 4.5.4 without direct replacement
-     */
-    @Deprecated
-    protected void saveTableDetails(JTable table) {
-        // do nothing
-    }
-
-    /**
      * Load the table width, position, and sorting status from the user
      * preferences file.
      *
@@ -266,13 +254,20 @@ public class OperationsPanel extends JPanel implements AncestorListener {
             TableRowSorter<? extends TableModel> sorter = new TableRowSorter<>(table.getModel());
             table.setRowSorter(sorter);
             // only sort on columns that are String or Integer
-            for (int i =0; i < table.getColumnCount(); i++) {
+            for (int i =0; i < table.getColumnCount(); i++) {                
                 if (table.getColumnClass(i) == String.class || table.getColumnClass(i) == Integer.class) {
                     continue; // allow sorting
                 }
                 sorter.setSortable(i, false);
             }
         }
+        // set row height
+        table.setRowHeight(new JComboBox<>().getPreferredSize().height);
+        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        // give each cell a bit of space between the vertical lines and text
+        table.setIntercellSpacing(new Dimension(3,1));
+        // table must have a name
         table.setName(getWindowFrameRef() + ":table"); // NOI18N
         Optional<JTablePersistenceManager> manager = InstanceManager.getOptionalDefault(JTablePersistenceManager.class);
         if (manager.isPresent()) {
