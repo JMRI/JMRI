@@ -51,8 +51,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     private String _rowColorTrainEnRoute = NONE; // row color when train is en route
     private String _rowColorTerminated = NONE; // row color when train is terminated
 
-    // Train frame table column widths (12), starts with Time column and ends with Edit
-    private int[] _tableColumnWidths = {50, 50, 72, 100, 140, 120, 120, 120, 120, 120, 90, 70};
+    // Train frame table column widths (13), starts with id column and ends with edit
+    private int[] _tableColumnWidths = {50, 50, 50, 72, 100, 140, 120, 120, 120, 120, 120, 90, 70};
 
     private int[] _tableScheduleColumnWidths = {50, 70, 120};
     private String _trainScheduleActiveId = NONE;
