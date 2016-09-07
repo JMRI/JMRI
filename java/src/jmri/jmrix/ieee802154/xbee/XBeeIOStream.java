@@ -124,7 +124,7 @@ final public class XBeeIOStream extends AbstractPortController implements IDataR
                  outpipe.write(data[i]);
               }
            } catch (java.io.IOException ioe) {
-            log.error("IOException writing serial data from XBee to pipe");
+            log.error("IOException writing serial data from XBee to pipe: {}",ioe);
            }
         }
     }
