@@ -48,6 +48,7 @@
         </label>
       </column>
       <name xml:lang="it">Basic</name>
+	  <name xml:lang="ca">Bàsic</name>
     </pane>
     <pane>
       <name>Motor</name>
@@ -84,6 +85,7 @@
         <display item="I Adjustment"/>
       </column>
       <name xml:lang="it">Motore</name>
+	  <name xml:lang="ca">Motor</name>
     </pane>
     <pane>
       <name>Speed Control</name>
@@ -109,6 +111,7 @@
         <display item="Speed Table" layout="above" label="CV 67-94"/>
       </column>
       <name xml:lang="it">Controllo Velocità</name>
+	  <name xml:lang="ca">Control de Velocitat</name>
     </pane>
     <pane>
       <name>Function/Output Map</name>
@@ -116,6 +119,7 @@
         <fnmapping/>
       </column>
       <name xml:lang="it">Mappa Funzioni/uscite</name>
+	  <name xml:lang="ca">Mapa de funcions/sortides</name>
     </pane>
     <pane>
       <name>Output Handling</name>
@@ -139,6 +143,7 @@
         <label>
           <text>F-10(r) Key Output Control</text>
           <text xml:lang="it">F-10(r) Controllo Uscita</text>
+		  <text xml:lang="ca">F-10(r) Control Sortides</text>
         </label>
         <separator/>
         <display item="F10(r) controls output 6" format="checkbox" label="Soundslot 1"/>
@@ -151,6 +156,7 @@
         <display item="F10(r) controls output 13" format="checkbox" label="Soundslot 8"/>
       </column>
       <name xml:lang="it">Gestione Uscite</name>
+	  <name xml:lang="ca">Gestió de les sortides</name>
     </pane>
     <pane>
       <name>Lights</name>
@@ -168,6 +174,7 @@
         <display item="Output Configuration AUX"/>
       </column>
       <name xml:lang="it">Luci</name>
+	  <name xml:lang="ca">Llums</name>
     </pane>
     <pane>
       <name>Consist</name>
@@ -177,6 +184,7 @@
         <label>
           <text>Will decoder respond to function requests at consist address?</text>
           <text xml:lang="it">Il decoder risponde alle Funzioni anche all'indirizzo del Consist ?</text>
+		  <text xml:lang="ca">Les funcions del descodificador seran controlades per l'adreça de multi-tracció ?</text>
         </label>
         <separator/>
         <display item="Consist Acceleration Adjustment"/>
@@ -185,6 +193,7 @@
         <display item="Consist Deceleration Adjustment Sign"/>
       </column>
       <name xml:lang="it">Consist</name>
+	  <name xml:lang="ca">Multi-Tracció</name>
     </pane>
     <pane>
       <name>Advanced</name>
@@ -198,6 +207,7 @@
         <label>
           <text>Analog Mode Functions F1-F8</text>
           <text xml:lang="it">Funzioni in Analogico F1-F8</text>
+		  <text xml:lang="ca">Funcions en analògic F1-F8</text>
         </label>
         <separator/>
         <display item="Analog Mode Function Status - F1" format="checkbox" label="F-1"/>
@@ -214,6 +224,7 @@
         <label>
           <text>Analog Mode Functions F0, F9-F12</text>
           <text xml:lang="it">Funzioni in Analogico F0, F9-F12</text>
+		  <text xml:lang="ca">Funcions en analògic F0, F9-F12</text>
         </label>
         <separator/>
         <display item="Analog Mode Function Status - F0(f)" format="checkbox" label="F-0(f)"/>
@@ -234,6 +245,7 @@
         <display item="ZIMO Signal Dependence Active"/>
       </column>
       <name xml:lang="it">Avanzato</name>
+	  <name xml:lang="ca">Avançat</name>
     </pane>
     <pane>
       <name>Sound</name>
@@ -256,6 +268,7 @@
         <display item="Braking Noise Start"/>
       </column>
       <name xml:lang="it">Suono</name>
+	  <name xml:lang="ca">So</name>
     </pane>
     <pane>
       <name>Sound Levels</name>
@@ -263,6 +276,7 @@
         <display item="Sound Level"/>
       </column>
       <name xml:lang="it">Livelli Suono</name>
+	  <name xml:lang="ca">Volum de So</name>
     </pane>
     <pane>
       <name>CVs</name>
@@ -270,6 +284,7 @@
         <cvtable/>
       </column>
       <name xml:lang="it">CV</name>
+	  <name xml:lang="ca">CV</name>
     </pane>
   </programmer>
 </programmer-config>
