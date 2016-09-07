@@ -276,8 +276,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
     @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
-        // clear any sorts by column
-        clearTableSort(routeTable);
         routeModel.setWait(showWait.isSelected());
     }
 
@@ -286,8 +284,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
             log.debug("route table edit true");
             routeTable.getCellEditor().stopCellEditing();
         }
-        // clear any sorts by column
-        clearTableSort(routeTable);
         // add location to this route
         Location l = (Location) locationBox.getSelectedItem();
         RouteLocation rl;

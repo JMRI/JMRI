@@ -66,7 +66,7 @@ class Jdk9Application extends Application {
                 log.error("Unable to execute script AboutHandler.js", ex);
             }
         } else {
-            this.setHandler("setAboutHandler", "java.awt.desktop.AboutHandler", this.getContext(handler)); // NOI18N
+            this.setHandler("setAboutHandler", "java.awt.desktop.AboutHandler", null); // NOI18N
         }
     }
 
@@ -81,7 +81,7 @@ class Jdk9Application extends Application {
                 log.error("Unable to execute script PreferencesHandler.js", ex);
             }
         } else {
-            this.setHandler("setPreferencesHandler", "java.awt.desktop.PreferencesHandler", handler); // NOI18N
+            this.setHandler("setPreferencesHandler", "java.awt.desktop.PreferencesHandler", null); // NOI18N
         }
     }
 
@@ -96,7 +96,7 @@ class Jdk9Application extends Application {
                 log.error("Unable to execute script QuitHandler.js", ex);
             }
         } else {
-            this.setHandler("setQuitHandler", "java.awt.desktop.QuitHandler", handler); // NOI18N
+            this.setHandler("setQuitHandler", "java.awt.desktop.QuitHandler", null); // NOI18N
         }
     }
 

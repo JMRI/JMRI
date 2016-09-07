@@ -5031,8 +5031,9 @@
 
    <a name="OperationWindows" id="OperationWindows"></a>
    <h2>Operations Windows</h2>
-   All of the Operations windows can be resized and placed to your liking. When you close the
-   window, the size and window location on your screen is saved.
+   <p>All of the Operations windows can be resized and placed to your liking. You can also
+    adjust the table columns widths and the order the columns are displayed. When you close
+    the window, the size and window location on your screen is saved.</p>
 
    <a name="OperationsWebAccess" id="OperationsWebAccess"></a>
    <h2>Operations Web Access</h2>

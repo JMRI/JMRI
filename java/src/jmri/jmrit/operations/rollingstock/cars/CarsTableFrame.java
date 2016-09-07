@@ -270,6 +270,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
+        // clear any sorts by column
+        clearTableSort(carsTable);
         if (ae.getSource() == sortByNumber) {
             carsTableModel.setSort(carsTableModel.SORTBY_NUMBER);
         }
@@ -327,8 +329,6 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         if (ae.getSource() == sortByLast) {
             carsTableModel.setSort(carsTableModel.SORTBY_LAST);
         }
-        // clear any sorts by column
-        clearTableSort(carsTable);
     }
 
     public List<RollingStock> getSortByList() {
