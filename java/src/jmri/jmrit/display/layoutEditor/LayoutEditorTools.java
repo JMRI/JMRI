@@ -2003,7 +2003,7 @@ public class LayoutEditorTools {
             if (showEast) {
                 JPanel panel21 = new JPanel();
                 panel21.setLayout(new FlowLayout());
-                JLabel eastBoundLabel = new JLabel(rb.getString("East/SouthBound") + " : ");
+                JLabel eastBoundLabel = new JLabel(rb.getString("East/SouthBound") + ": ");
                 panel21.add(eastBoundLabel);
                 panel21.add(eastBoundField);
                 theContentPane.add(panel21);
@@ -2023,7 +2023,7 @@ public class LayoutEditorTools {
             if (showWest) {
                 JPanel panel31 = new JPanel();
                 panel31.setLayout(new FlowLayout());
-                JLabel westBoundLabel = new JLabel(rb.getString("West/NorthBound") + " : ");
+                JLabel westBoundLabel = new JLabel(rb.getString("West/NorthBound") + ": ");
                 panel31.add(westBoundLabel);
                 panel31.add(westBoundField);
                 theContentPane.add(panel31);

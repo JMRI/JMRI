@@ -1978,7 +1978,7 @@ public class LayoutTurnout {
                     popup.add(rb.getString("WYETurnout"));
                     break;
                 case DOUBLE_XOVER:
-                    popup.add(rb.getString("XOverTurnout"));
+                    popup.add(rb.getString("DoubleCrossOver"));
                     break;
                 case RH_XOVER:
                     popup.add(Bundle.getMessage("RightCrossOver"));
