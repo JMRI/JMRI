@@ -157,12 +157,13 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
         // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);          // not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);          // pin 1 in DIN8; on main connector, this is DTR
+        //activeSerialPort.setRTS(true);          // not connected in some serial ports and adapters
+        //activeSerialPort.setDTR(true);          // pin 1 in DIN8; on main connector, this is DTR
 
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_NONE; // default
         activeSerialPort.setFlowControlMode(flow);
+        
 
         if (log.isDebugEnabled()) {
             try {

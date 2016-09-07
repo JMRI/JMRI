@@ -6,6 +6,9 @@ import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.packet.XBeePacket;
 import com.digi.xbee.api.listeners.IPacketReceiveListener;
+import com.digi.xbee.api.listeners.IModemStatusReceiveListener;
+import com.digi.xbee.api.listeners.IDataReceiveListener;
+import com.digi.xbee.api.models.ModemStatusEvent;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -23,7 +26,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2013,2016
  */
-public class XBeeTrafficController extends IEEE802154TrafficController implements IPacketReceiveListener, XBeeInterface {
+public class XBeeTrafficController extends IEEE802154TrafficController implements IPacketReceiveListener, IModemStatusReceiveListener, IDataReceiveListener, XBeeInterface {
 
     private XBeeDevice xbee = null;
 
@@ -65,6 +68,8 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
                } catch (java.lang.InterruptedException e) {
                }
                xbee.addPacketListener(this);
+               xbee.addModemStatusListener(this);
+               xbee.addDataListener(this);
 
                // and start threads
                xmtThread = new Thread(xmtRunnable = new Runnable() {
@@ -181,13 +186,25 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         }
     }
 
-    // XBee Packet Listener interface methods
-    // NOTE: Many of the details of this function are derived
-    // from the the handleOneIncomingReply() in 
-    // AbstractMRTrafficController.
+    // XBee IPacketReceiveListener interface methods
     public void packetReceived(XBeePacket response) {
 
-        log.debug("packetReceived called");
+        log.debug("packetReceived called with {}",response);
+        dispatchResponse(response);
+    }
+
+    // XBee IModemStatusReceiveListener interface methods
+    public void modemStatusEventReceived(ModemStatusEvent modemStatusEvent){
+       log.debug("modemStatusEventReceived called with event {} ", modemStatusEvent);
+    }
+
+    // XBee IDataReceiveListener interface methods
+    public void dataReceived(com.digi.xbee.api.models.XBeeMessage xbm){
+       log.debug("dataReceived called with message {} ", xbm);
+    }
+
+
+    private void dispatchResponse(XBeePacket response){
         XBeeReply reply = new XBeeReply(response);
 
         // message is complete, dispatch it !!
@@ -200,15 +217,16 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         // forward the message to the registered recipients,
         // which includes the communications monitor
         // return a notification via the Swing event queue to ensure proper thread
-        Runnable r = new RcvNotifier(reply, mLastSender, this);
+        /*Runnable r = new RcvNotifier(reply, mLastSender, this);
         try {
             log.debug("invoking dispatch thread");
             javax.swing.SwingUtilities.invokeAndWait(r);
+            log.debug("dispatch thread complete");
         } catch (Exception e) {
             log.error("Unexpected exception in invokeAndWait:" + e);
             log.error("cause:" + e.getCause());
             e.printStackTrace();
-        }
+        }*/
         if (log.isDebugEnabled()) {
             log.debug("dispatch thread invoked");
         }

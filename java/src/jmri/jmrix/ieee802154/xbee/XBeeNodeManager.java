@@ -39,10 +39,10 @@ public class XBeeNodeManager implements IDiscoveryListener {
        xbeeNetwork = xtc.getXBee().getNetwork();
 
        try {
-          // log.debug("configuring discovery timeout");
+          log.debug("configuring discovery timeout");
           // set the discovery timeout
           // setting the timeout hangs the network on XBee Series 1
-          //xbeeNetwork.setDiscoveryTimeout(2000);
+          xbeeNetwork.setDiscoveryTimeout(2000);
           
           log.debug("setting discovery options");
           // set options
@@ -134,7 +134,7 @@ public class XBeeNodeManager implements IDiscoveryListener {
 
          // removing the listener here is causing a 
          // ConcurrentModificaitonException on an ArrayList in the library.
-         //xbeeNetwork.removeDiscoveryListener(this);
+         // xbeeNetwork.removeDiscoveryListener(this);
        }
     }
 
