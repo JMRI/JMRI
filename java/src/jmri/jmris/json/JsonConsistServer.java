@@ -42,7 +42,7 @@ public class JsonConsistServer {
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            if (evt.getPropertyName().equals(InstanceManager.CONSIST_MANAGER)) {
+            if (evt.getPropertyName().equals(InstanceManager.getDefaultsPropertyName(ConsistManager.class))) {
                 if (evt.getNewValue() != null) {
                     InstanceManager.getDefault(jmri.ConsistManager.class).requestUpdateFromLayout();
                     try {

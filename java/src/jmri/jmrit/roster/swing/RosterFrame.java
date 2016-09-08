@@ -367,7 +367,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             }
         });
         InstanceManager.addPropertyChangeListener((PropertyChangeEvent e) -> {
-            if (e.getPropertyName().equals("programmermanager")) {
+            if (e.getPropertyName().equals(InstanceManager.getDefaultsPropertyName(ProgrammerManager.class))) {
                 updateProgrammerStatus();
             }
         });

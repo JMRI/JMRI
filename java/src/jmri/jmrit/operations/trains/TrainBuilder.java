@@ -2200,6 +2200,7 @@ public class TrainBuilder extends TrainCommon {
             return;
         }
         boolean messageFlag = true;
+        boolean foundCar = false;
         _success = false;
         for (_carIndex = 0; _carIndex < _carList.size(); _carIndex++) {
             Car car = _carList.get(_carIndex);
@@ -2212,6 +2213,7 @@ public class TrainBuilder extends TrainCommon {
             if (!car.getLocationName().equals(rl.getName())) {
                 continue;
             }
+            foundCar = true;
             // add message that we're on the second pass for this location
             if (isSecondPass && messageFlag) {
                 messageFlag = false;
@@ -2397,6 +2399,11 @@ public class TrainBuilder extends TrainCommon {
                 }
                 addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
             }
+        }
+        if (!foundCar) {
+            addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildNoCarsAtLocation"),
+                    new Object[]{rl.getName()}));
+            addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
         }
     }
 

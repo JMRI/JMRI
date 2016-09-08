@@ -1098,7 +1098,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                     return null;
                 }
             }
-            //todo Need to set the same for signal masts
+            //TODO: Need to check signalMasts as well
             // this train is OK, activate the AutoTrains window, if needed
             if (_autoTrainsFrame == null) {
                 _autoTrainsFrame = new AutoTrainsFrame(_instance);
