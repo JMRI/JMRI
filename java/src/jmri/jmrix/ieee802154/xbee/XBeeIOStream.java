@@ -1,9 +1,11 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import com.digi.xbee.api.RemoteXBeeDevice;
+import com.digi.xbee.api.exceptions.XBeeException;
+import com.digi.xbee.api.exceptions.TimeoutException;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
-import com.digi.xbee.api.listeners.IDataReceiveListener;
-import com.digi.xbee.api.RemoteXBeeDevice;
+import com.digi.xbee.api.utils.HexUtils;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
@@ -22,7 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @Author Paul Bender Copyright (C) 2014
  */
-final public class XBeeIOStream extends AbstractPortController implements IDataReceiveListener{
+final public class XBeeIOStream extends AbstractPortController {
 
     private DataOutputStream pout = null; // for output to other classes
     private DataInputStream pin = null; // for input from other classes
@@ -31,7 +33,8 @@ final public class XBeeIOStream extends AbstractPortController implements IDataR
     // ends up in pin.
     private DataInputStream inpipe = null; // data read from this pipe is
     // sent to the XBee.
-    private Thread sourceThread;
+    private Thread sourceThread;  // thread writing to the remote xbee
+    private Thread sinkThread;  // thread reading from the remote xbee
 
     private RemoteXBeeDevice remoteXBee;
     private XBeeTrafficController xtc;
@@ -53,13 +56,14 @@ final public class XBeeIOStream extends AbstractPortController implements IDataR
 
 
         xtc = tc;
-        // register to receive xbee messages from the associated RemoteXBeeDevice.
-        xtc.getXBee().addDataListener(this);
-
 
         // start the transmit thread
         sourceThread = new Thread(new TransmitThread(remoteXBee, tc, inpipe));
         sourceThread.start();
+
+        // start the receive thread
+        sinkThread = new Thread(new ReceiveThread(remoteXBee, tc, outpipe));
+        sinkThread.start();
 
     }
 
@@ -108,27 +112,6 @@ final public class XBeeIOStream extends AbstractPortController implements IDataR
     public void recover() {
     }
 
-
-    /*
-     * IDataReceiveListener callback
-     */
-    @Override
-    public void dataReceived(com.digi.xbee.api.models.XBeeMessage xbeeMessage){
-        // take received replies and put them in the data output stream
-        // if they match the address.
-        if(xbeeMessage.getDevice().equals(remoteXBee)){
-           try{
-              byte data[] = xbeeMessage.getData();
-              log.debug("Received {}", data);
-              for (int i = 0; i < data.length; i++) {
-                 outpipe.write(data[i]);
-              }
-           } catch (java.io.IOException ioe) {
-            log.error("IOException writing serial data from XBee to pipe: {}",ioe);
-           }
-        }
-    }
-
     static private class TransmitThread implements Runnable {
 
         private RemoteXBeeDevice node = null;
@@ -171,10 +154,48 @@ final public class XBeeIOStream extends AbstractPortController implements IDataR
                     log.debug("XBee Thread received message " + dataArray);
                 }
                 try {
-                   xtc.getXBee().sendDataAsync(node,dataArray);
-                } catch(com.digi.xbee.api.exceptions.XBeeException xbe){
+                   xtc.getXBee().sendData(node,dataArray);
+                } catch(TimeoutException te){
+                  log.error("Timeout sending stream data to node {}.",node);
+                } catch(XBeeException xbe){
                   log.error("Exception sending stream data to node {}.",node);
                 }
+            }
+        }
+
+    }
+
+    static private class ReceiveThread implements Runnable {
+
+        private RemoteXBeeDevice node = null;
+        private XBeeTrafficController xtc = null;
+        private DataOutputStream pipe = null;
+
+        public ReceiveThread(RemoteXBeeDevice n, XBeeTrafficController tc, DataOutputStream output) {
+            node = n;
+            xtc = tc;
+            pipe = output;
+        }
+
+        public void run() { // start a new thread
+            // this thread has one task.  It repeatedly reads from the XBee 
+            // and writes data to the output pipe
+            if (log.isDebugEnabled()) {
+                log.debug("XBee Receive Thread Started");
+            }
+            for (;;) {
+               try{
+                  com.digi.xbee.api.models.XBeeMessage message = xtc.getXBee().readDataFrom(node,100);
+                  if(message!=null) {
+                     byte data[] = message.getData();
+                     log.debug("Received {}", data);
+                     for (int i = 0; i < data.length; i++) {
+                        pipe.write(data[i]);
+                     }
+                  }
+               } catch (java.io.IOException ioe) {
+                log.error("IOException writing serial data from XBee to pipe");
+               }
             }
         }
 
