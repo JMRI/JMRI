@@ -4,7 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
@@ -122,6 +121,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), sort == SORTBY_DESTINATION);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(FINAL_DESTINATION_COLUMN), sort == SORTBY_FINALDESTINATION);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_COLUMN), sort == SORTBY_RWE);
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_LOAD_COLUMN), sort == SORTBY_RWE);
             // show load column if color column isn't visible.
             tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN),
                     sort != SORTBY_RWE && !tcm.isColumnVisible(tcm.getColumnByModelIndex(COLOR_COLUMN)));
@@ -403,14 +403,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         tcm.getColumn(EDIT_COLUMN).setCellEditor(buttonEditor);
 
         // set column preferred widths
-        // load defaults, xml file data not found
         for (int i = 0; i < tcm.getColumnCount(); i++) {
             tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);
         }
         _frame.loadTableDetails(_table);
-        _table.setRowHeight(new JComboBox<>().getPreferredSize().height);
-        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         // turn off columns
         tcm.setColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN), isSelectVisible);

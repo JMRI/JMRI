@@ -4,7 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
@@ -82,15 +81,6 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         tcm.getColumn(EDIT_COLUMN).setCellRenderer(buttonRenderer);
         tcm.getColumn(EDIT_COLUMN).setCellEditor(buttonEditor);
         
-        setPreferredWidths(frame, table);
-
-        table.setRowHeight(new JComboBox<>().getPreferredSize().height);
-        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-    }
-    
-    private void setPreferredWidths(RoutesTableFrame frame, JTable table) {
-        log.debug("Setting preferred widths");
         // set column preferred widths
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(30);
         table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(220);
@@ -99,6 +89,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         table.getColumnModel().getColumn(MIN_LENGTH_COLUMN).setPreferredWidth(75);
         table.getColumnModel().getColumn(MAX_LENGTH_COLUMN).setPreferredWidth(75);
         table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(80);
+        
         frame.loadTableDetails(table);
     }
 
