@@ -12,17 +12,24 @@ import org.junit.Test;
 import java.awt.GraphicsEnvironment;
 
 /**
- * Test simple functioning of ConsistToolFrame
+ * Test simple functioning of ConsistToolAction
  *
- * @author	Paul Bender Copyright (C) 2015,2016
+ * @author	Paul Bender Copyright (C) 2016
  */
-public class ConsistToolFrameTest {
+public class ConsistToolActionTest {
+
+    @Test
+    public void testStringCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ConsistToolAction action = new ConsistToolAction("Test Consist Tool Action");
+        Assert.assertNotNull("exists", action);
+    }
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ConsistToolFrame frame = new ConsistToolFrame();
-        Assert.assertNotNull("exists", frame );
+        ConsistToolAction action = new ConsistToolAction();
+        Assert.assertNotNull("exists", action);
     }
 
     @Before
@@ -37,6 +44,4 @@ public class ConsistToolFrameTest {
         JUnitUtil.resetInstanceManager();
         Log4JFixture.tearDown();
     }
-
-
 }
