@@ -1,15 +1,18 @@
 // XBeeSensor.java
 package jmri.jmrix.ieee802154.xbee;
 
-import com.digi.xbee.api.packet.common.RemoteATCommandResponsePacket;
+import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
+import com.digi.xbee.api.exceptions.TimeoutException;
+import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.io.IOSample;
-import com.digi.xbee.api.packet.common.IODataSampleRxIndicatorPacket;
-import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.io.IOLine;
 import com.digi.xbee.api.io.IOValue;
 import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
+import com.digi.xbee.api.packet.common.RemoteATCommandResponsePacket;
+import com.digi.xbee.api.packet.common.IODataSampleRxIndicatorPacket;
+import com.digi.xbee.api.RemoteXBeeDevice;
 
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
@@ -119,12 +122,24 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
      */
     public void requestUpdateFromLayout() {
         // Request the sensor status from the XBee Node this sensor is
-        // attached to.  NOTE: This requests status for all sensor inputs
-        // on the device.
-        XBeeMessage msg = XBeeMessage.getForceSampleMessage(node.getPreferedTransmitAddress());
-        // send the message
-        tc.sendXBeeMessage(msg, null);
-
+        // attached to.  
+        IOValue value = IOValue.LOW; 
+        try  {
+           value = node.getXBee().getDIOValue(IOLine.getDIO(pin));
+           if ((value==IOValue.HIGH) ^ _inverted) {
+               setOwnState(Sensor.ACTIVE);
+           } else {
+               setOwnState(Sensor.INACTIVE);
+           }
+        } catch (TimeoutException toe) {
+           log.error("Timeout retrieving IO line value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+           // hidden terminal? Make sure the state appears as unknown.
+           setOwnState(Sensor.UNKNOWN);
+        } catch (InterfaceNotOpenException ino) {
+           log.error("Interface Not Open retrieving IO line value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+        } catch (XBeeException xbe) {
+           log.error("Error retrieving IO line value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+        }
     }
 
 
