@@ -6,18 +6,17 @@ import jmri.util.ConnectionNameFromSystemName;
 
 /**
  * Provide services for invoking actions during configuration and startup.
- * <P>
- * The action classes and corresponding human-readable names are kept in the
- * apps.ActionListBundle properties file (which can be translated). They are
- * displayed in lexical order by human-readable name.
- * <P>
- * @author	Bob Jacobsen Copyright 2003, 2007, 2014
+ * <p>
+ * The action classes and corresponding human-readable names provided by
+ * {@link apps.startup.StartupActionFactory} instances.
+ *
+ * @author Bob Jacobsen Copyright 2003, 2007, 2014
  * @see apps.startup.AbstractActionModelFactory
  */
 public abstract class AbstractActionModel implements StartupModel {
 
-    private String systemPrefix = "";
-    private String className = "";
+    private String systemPrefix = ""; // NOI18N
+    private String className = ""; // NOI18N
 
     public String getClassName() {
         return className;
@@ -44,7 +43,7 @@ public abstract class AbstractActionModel implements StartupModel {
 
     public void setSystemPrefix(@Nullable String name) {
         if (name == null) {
-            this.systemPrefix = "";
+            this.systemPrefix = ""; // NOI18N
         } else {
             this.systemPrefix = name;
         }

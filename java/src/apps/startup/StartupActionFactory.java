@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  *
  * @author Randall Wood (C) 2016;
  */
-interface StartupActionFactory {
+public interface StartupActionFactory {
 
     /**
      * Get the title for the given class using the default locale.
