@@ -163,10 +163,6 @@ public final class JSON {
      */
     public static final String CARS = "cars"; // NOI18N
     /**
-     * {@value #CONSISTS}
-     */
-    public static final String CONSISTS = "consists"; // NOI18N
-    /**
      * {@value #ENGINES}
      */
     public static final String ENGINES = "engines"; // NOI18N
@@ -200,10 +196,6 @@ public final class JSON {
      * {@value #CAR}
      */
     public static final String CAR = "car"; // NOI18N
-    /**
-     * {@value #CONSIST}
-     */
-    public static final String CONSIST = "consist"; // NOI18N
     /**
      * {@value #ENGINE}
      */

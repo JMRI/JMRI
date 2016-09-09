@@ -1,8 +1,6 @@
 package jmri.server.json;
 
 import static jmri.server.json.JSON.CARS;
-import static jmri.server.json.JSON.CONSIST;
-import static jmri.server.json.JSON.CONSISTS;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.ENGINES;
 import static jmri.server.json.JSON.GOODBYE;
@@ -26,10 +24,8 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.ServiceLoader;
 import jmri.JmriException;
-import jmri.jmris.json.JsonConsistServer;
 import jmri.jmris.json.JsonOperationsServer;
 import jmri.jmris.json.JsonProgrammerServer;
-import jmri.jmris.json.JsonReporterServer;
 import jmri.jmris.json.JsonUtil;
 import jmri.spi.JsonServiceFactory;
 import org.slf4j.Logger;
@@ -43,20 +39,16 @@ public class JsonClientHandler {
      * {@value jmri.server.json.JSON#HELLO} message to be sent to the client.
      */
     public static final String HELLO_MSG = "{\"" + JSON.TYPE + "\":\"" + JSON.HELLO + "\"}";
-    private final JsonConsistServer consistServer;
     private final JsonOperationsServer operationsServer;
     private final JsonProgrammerServer programmerServer;
-    private final JsonReporterServer reporterServer;
     private final JsonConnection connection;
     private final HashMap<String, HashSet<JsonSocketService>> services = new HashMap<>();
     private static final Logger log = LoggerFactory.getLogger(JsonClientHandler.class);
 
     public JsonClientHandler(JsonConnection connection) {
         this.connection = connection;
-        this.consistServer = new JsonConsistServer(this.connection);
         this.operationsServer = new JsonOperationsServer(this.connection);
         this.programmerServer = new JsonProgrammerServer(this.connection);
-        this.reporterServer = new JsonReporterServer(this.connection);
         for (JsonServiceFactory factory : ServiceLoader.load(JsonServiceFactory.class)) {
             for (String type : factory.getTypes()) {
                 JsonSocketService service = factory.getSocketService(connection);
@@ -73,10 +65,8 @@ public class JsonClientHandler {
     }
 
     public void dispose() {
-        this.consistServer.dispose();
         this.operationsServer.dispose();
         this.programmerServer.dispose();
-        this.reporterServer.dispose();
         services.values().stream().forEach((set) -> {
             set.stream().forEach((service) -> {
                 service.onClose();
@@ -157,9 +147,6 @@ public class JsonClientHandler {
                     case CARS:
                         reply = JsonUtil.getCars(this.connection.getLocale());
                         break;
-                    case CONSISTS:
-                        reply = JsonUtil.getConsists(this.connection.getLocale());
-                        break;
                     case ENGINES:
                         reply = JsonUtil.getEngines(this.connection.getLocale());
                         break;
@@ -184,9 +171,6 @@ public class JsonClientHandler {
                 this.connection.sendMessage(this.connection.getObjectMapper().writeValueAsString(reply));
             } else if (!data.isMissingNode()) {
                 switch (type) {
-                    case CONSIST:
-                        this.consistServer.parseRequest(this.connection.getLocale(), data);
-                        break;
                     case PROGRAMMER:
                         this.programmerServer.parseRequest(this.connection.getLocale(), data);
                         break;

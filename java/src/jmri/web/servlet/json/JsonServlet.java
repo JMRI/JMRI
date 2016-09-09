@@ -3,8 +3,6 @@ package jmri.web.servlet.json;
 
 import static jmri.server.json.JSON.CAR;
 import static jmri.server.json.JSON.CARS;
-import static jmri.server.json.JSON.CONSIST;
-import static jmri.server.json.JSON.CONSISTS;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.ENGINE;
 import static jmri.server.json.JSON.ENGINES;
@@ -38,7 +36,6 @@ import jmri.jmris.json.JsonUtil;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonWebSocket;
-import jmri.server.json.util.JsonUtilHttpService;
 import jmri.spi.JsonServiceFactory;
 import jmri.util.FileUtil;
 import jmri.web.servlet.ServletUtil;
@@ -157,9 +154,6 @@ public class JsonServlet extends WebSocketServlet {
                         case CARS:
                             reply = JsonUtil.getCars(request.getLocale());
                             break;
-                        case CONSISTS:
-                            reply = JsonUtil.getConsists(request.getLocale());
-                            break;
                         case ENGINES:
                             reply = JsonUtil.getEngines(request.getLocale());
                             break;
@@ -205,9 +199,6 @@ public class JsonServlet extends WebSocketServlet {
                     switch (type) {
                         case CAR:
                             reply = JsonUtil.getCar(request.getLocale(), name);
-                            break;
-                        case CONSIST:
-                            reply = JsonUtil.getConsist(request.getLocale(), JsonUtilHttpService.addressForString(name));
                             break;
                         case ENGINE:
                             reply = JsonUtil.getEngine(request.getLocale(), name);
@@ -316,10 +307,6 @@ public class JsonServlet extends WebSocketServlet {
                 log.debug("POST operation for {}/{} with {}", type, name, data);
                 if (name != null) {
                     switch (type) {
-                        case CONSIST:
-                            JsonUtil.setConsist(request.getLocale(), JsonUtilHttpService.addressForString(name), data);
-                            reply = JsonUtil.getConsist(request.getLocale(), JsonUtilHttpService.addressForString(name));
-                            break;
                         case TRAIN:
                             JsonUtil.setTrain(request.getLocale(), name, data);
                             reply = JsonUtil.getTrain(request.getLocale(), name);
@@ -405,42 +392,34 @@ public class JsonServlet extends WebSocketServlet {
                     name = data.path(NAME).asText();
                 }
                 if (name != null) {
-                    switch (type) {
-                        case CONSIST:
-                            JsonUtil.putConsist(request.getLocale(), JsonUtilHttpService.addressForString(name), data);
-                            reply = JsonUtil.getConsist(request.getLocale(), JsonUtilHttpService.addressForString(name));
-                            break;
-                        default:
-                            if (this.services.get(type) != null) {
-                                ArrayNode array = this.mapper.createArrayNode();
-                                JsonException exception = null;
-                                try {
-                                    for (JsonHttpService service : this.services.get(type)) {
-                                        array.add(service.doPut(type, name, data, request.getLocale()));
-                                    }
-                                } catch (JsonException ex) {
-                                    exception = ex;
-                                }
-                                switch (array.size()) {
-                                    case 0:
-                                        if (exception != null) {
-                                            throw exception;
-                                        }
-                                        reply = array;
-                                        break;
-                                    case 1:
-                                        reply = array.get(0);
-                                        break;
-                                    default:
-                                        reply = array;
-                                        break;
-                                }
+                    if (this.services.get(type) != null) {
+                        ArrayNode array = this.mapper.createArrayNode();
+                        JsonException exception = null;
+                        try {
+                            for (JsonHttpService service : this.services.get(type)) {
+                                array.add(service.doPut(type, name, data, request.getLocale()));
                             }
-                            if (reply == null) {
-                                // not a creatable item
-                                throw new JsonException(400, type + " is not a creatable type"); // need to I18N
-                            }
-                            break;
+                        } catch (JsonException ex) {
+                            exception = ex;
+                        }
+                        switch (array.size()) {
+                            case 0:
+                                if (exception != null) {
+                                    throw exception;
+                                }
+                                reply = array;
+                                break;
+                            case 1:
+                                reply = array.get(0);
+                                break;
+                            default:
+                                reply = array;
+                                break;
+                        }
+                    }
+                    if (reply == null) {
+                        // not a creatable item
+                        throw new JsonException(400, type + " is not a creatable type"); // need to I18N
                     }
                 } else {
                     log.warn("Type {} unknown.", type);
@@ -477,15 +456,8 @@ public class JsonServlet extends WebSocketServlet {
                 if (name == null) {
                     throw new JsonException(400, "name must be specified"); // need to I18N
                 }
-                if (type.equals(CONSIST)) {
-                    JsonUtil.delConsist(request.getLocale(), JsonUtilHttpService.addressForString(name));
-                } else if (this.services.get(type) != null) {
-                    for (JsonHttpService service : this.services.get(type)) {
-                        service.doDelete(type, name, request.getLocale());
-                    }
-                } else {
-                    // not a deletable item
-                    throw new JsonException(400, type + " is not a deletable type"); // need to I18N
+                for (JsonHttpService service : this.services.get(type)) {
+                    service.doDelete(type, name, request.getLocale());
                 }
             } else {
                 log.warn("Type not specified.");

@@ -2,6 +2,7 @@ package jmri.jmris.json;
 
 import jmri.server.json.JsonException;
 import jmri.server.json.block.JsonBlock;
+import jmri.server.json.consist.JsonConsist;
 import jmri.server.json.light.JsonLight;
 import jmri.server.json.memory.JsonMemory;
 import jmri.server.json.power.JsonPowerServiceFactory;
@@ -206,7 +207,7 @@ public final class JSON {
     /**
      * {@value #CONSISTS}
      */
-    public static final String CONSISTS = jmri.server.json.JSON.CONSISTS;
+    public static final String CONSISTS = JsonConsist.CONSISTS;
     /**
      * {@value #ENGINES}
      */
@@ -306,7 +307,7 @@ public final class JSON {
     /**
      * {@value #CONSIST}
      */
-    public static final String CONSIST = jmri.server.json.JSON.CONSIST;
+    public static final String CONSIST = JsonConsist.CONSIST;
     /**
      * {@value #ENGINE}
      */
