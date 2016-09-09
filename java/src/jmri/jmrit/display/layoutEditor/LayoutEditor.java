@@ -1313,7 +1313,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Cyan"), Color.cyan);
         optionMenu.add(backgroundColorMenu);
         // add fast clock
-        JMenuItem clockItem = new JMenuItem(Bundle.getMessage("AddThing", Bundle.getMessage("FastClock")));
+        JMenuItem clockItem = new JMenuItem(Bundle.getMessage("AddItem", Bundle.getMessage("FastClock")));
         optionMenu.add(clockItem);
         clockItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
