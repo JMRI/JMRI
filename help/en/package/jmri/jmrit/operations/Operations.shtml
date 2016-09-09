@@ -5040,7 +5040,9 @@
    You can also access some of the OperationPro&trade; windows from a browser. For more information
    see <a href="http://jmri.org/help/en/html/web/">JMRI Web Access</a>.
    
-   <img src="images/webConductor.png" alt="Operations Web Page Conductor">
+   <p>
+   <img src="images/webConductor.png">
+   </p>
 
    <p>End of OperationsPro&trade; help.</p>
   </div>
