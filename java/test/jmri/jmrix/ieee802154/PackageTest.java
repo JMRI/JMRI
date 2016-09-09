@@ -32,6 +32,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(IEEE802154TrafficControllerTest.class));
         suite.addTest(jmri.jmrix.ieee802154.xbee.PackageTest.suite());
         suite.addTest(jmri.jmrix.ieee802154.serialdriver.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IEEE802154NodeTest.class));
         return suite;
     }
 
