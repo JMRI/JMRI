@@ -45,7 +45,8 @@ public class StartupActionModelUtil extends Bean {
     @CheckForNull
     public String getActionName(@Nonnull Class<?> clazz) {
         this.prepareActionsHashMap();
-        return this.actions.get(clazz).name;
+        ActionAttributes attrs = this.actions.get(clazz);
+        return attrs != null ? attrs.name : null;
     }
 
     @CheckForNull
