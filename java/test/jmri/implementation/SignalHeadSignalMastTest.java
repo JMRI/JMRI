@@ -4,6 +4,7 @@ import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.SignalSystem;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -197,7 +198,7 @@ public class SignalHeadSignalMastTest {
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetInstanceManager();
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH1") {
                     protected void updateOutput() {
@@ -221,6 +222,7 @@ public class SignalHeadSignalMastTest {
     @After
     public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.resetInstanceManager();
     }
 
     static protected Logger log = LoggerFactory.getLogger(SignalHeadSignalMastTest.class.getName());
