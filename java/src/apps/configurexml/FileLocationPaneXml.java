@@ -2,6 +2,7 @@ package apps.configurexml;
 
 import apps.FileLocationPane;
 import java.util.List;
+import jmri.ConfigureManager;
 import jmri.util.FileUtil;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -65,7 +66,10 @@ public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         if (value != null) {
             FileUtil.setScriptsPath(value);
         }
-        jmri.InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(new FileLocationPane());
+        ConfigureManager cm = jmri.InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerPref(new FileLocationPane());
+        }
         return result;
     }
 

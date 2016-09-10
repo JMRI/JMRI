@@ -78,7 +78,7 @@ function parse_args() {
             --cp:p) pre_classpath="${pre_classpath}:${2}" ; shift ;;
             --cp:p=*) pre_classpath="${pre_classpath}:${1#*=}" ;;
             # use named configuration
-            -c|--config) CONFIGNAME="$2" ; shift ;;
+            -c|--config) CONFIGNAME="${2}" ; shift ;;
             --config=*) CONFIGNAME="${1#*=}" ;;
             # Java system properties
             -D*) jmri_options="${jmri_options} ${1}" ;;
@@ -92,14 +92,14 @@ function parse_args() {
             # JVM arguments other than max memory
             -J*) jmri_options="${jmri_options} ${1#-J}" ;;
             # main class
-            -m|--main) CLASSNAME="$2" ; shift ;;
+            -m|--main) CLASSNAME="${2}" ; shift ;;
             --main=*) CLASSNAME="${1#*=}" ;;
             # JMRI configuration profile
-            -p|--profile) jmri_options="${jmri_options} -Dorg.jmri.profile=$2" ; shift ;;
+            -p|--profile) jmri_options="${jmri_options} -Dorg.jmri.profile=${2}" ; shift ;;
             --profile=*) jmri_options="${jmri_options} -Dorg.jmri.profile=${1#*=}" ;;
             # serial ports
-            --serial-ports) JMRI_SERIAL_PORTS="${2}" ;;
-            --serial-ports=*) JMRI_SERIAL_PORTS="${1#*=}" ; shift ;;
+            --serial-ports) JMRI_SERIAL_PORTS="${2}" ; shift ;;
+            --serial-ports=*) JMRI_SERIAL_PORTS="${1#*=}" ;;
             # ignore and do not pass the settingsdir argument
             --settingsdir) shift ;;
             --settingsdir=*) ;;
@@ -163,8 +163,6 @@ SCRIPTDIR=$(cd "$( dirname "${0}" )" && pwd)
 DEFAULT_APP_NAME="@NAME@"
 CLASSNAME="@CLASS@"
 
-# define empty default_options, if not in the configuration file
-default_options=""
 # define empty jmri_options
 jmri_options=""
 
@@ -234,14 +232,17 @@ for opt in "$@"; do
     fi
 done
 
-# set default_options from the launcher configuration file
+# process arguments, stored arguments first, so CLI arguments can override
+
+# process default_options from the launcher configuration file
 if [ -f "${settingsdir}/jmri.conf" ] ; then
+    default_options=""
     source "${settingsdir}/jmri.conf"
+    parse_args ${default_options}
 fi
 
-# process arguments, stored arguments first, so CLI arguments can override
-parse_args "$default_options"
-parse_args $JMRI_OPTIONS # support JMRI_OPTIONS if someone is using it
+# process environment and command line arguments
+parse_args ${JMRI_OPTIONS}
 parse_args $@
 
 # define JAVA_HOME if needed
@@ -277,6 +278,9 @@ if [ -z "${JAVA_HOME}" ] ; then
             if [[ ! "$( "${JAVACMD}" -version 2>&1 )" =~ 1.[89] ]] ; then
                 JAVA_HOME=""
             fi
+        else
+            # Reset JAVA_HOME since there is no java executable in it
+            JAVA_HOME=""
         fi
         if [[ -z "${JAVA_HOME}" && -x /usr/libexec/java_home ]] ; then
             # Test for any JDKs of version 1.8 or newer

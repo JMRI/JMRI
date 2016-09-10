@@ -219,16 +219,18 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
      *
      */
     protected void registerSelf() {
-        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
-            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerConfig(this, jmri.Manager.SIGNALMASTLOGICS);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerConfig(this, jmri.Manager.SIGNALMASTLOGICS);
         }
     }
 
     // abstract methods to be extended by subclasses
     // to free resources when no longer used
     public void dispose() {
-        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
-            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).deregister(this);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.deregister(this);
         }
         signalMastLogic.clear();
     }

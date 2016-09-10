@@ -103,7 +103,7 @@ public class WarrantPreferences  {
     }
     
     private void loadSpeedMapFromOldXml() {
-        SignalSpeedMap map = jmri.InstanceManager.getOptionalDefault(SignalSpeedMap.class);
+        SignalSpeedMap map = jmri.InstanceManager.getNullableDefault(SignalSpeedMap.class);
         if (map==null) {
             log.error("Cannot find signalSpeeds.xml file.");
             return;

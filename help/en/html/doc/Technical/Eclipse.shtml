@@ -356,7 +356,8 @@ library path to:
       <p><a href="images/ErrorsWarningsAnnotations.png"><img src=
       "images/ErrorsWarningsAnnotations.png" width="423" height=
       "500" alt="Eclipse Error pane"></a></p>
-      <!-- not used images/EclipseCvsModules 2015/12, delete omg ? --><!--#include virtual="/Footer" -->
+      <!-- not used images/EclipseCvsModules 2015/12, delete omg ? -->
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

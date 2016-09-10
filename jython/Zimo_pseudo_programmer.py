@@ -44,7 +44,7 @@ class LocoZimoPseudoProg(jmri.jmrit.automat.AbstractAutomaton) :
         else :
             long = False
         # setup a programmer for ops-mode
-        self.programmer = programmers.getAddressedProgrammer(long, number)
+        self.programmer = addressedProgrammers.getAddressedProgrammer(long, number)
         self.throttle = self.getThrottle(number, long)
         self.waitMsec(self.delay*1000)
         if (self.throttle == None) :

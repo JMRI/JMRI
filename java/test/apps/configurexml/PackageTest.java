@@ -8,6 +8,14 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+   CreateButtonModelXmlTest.class,
+   FileLocationPaneXmlTest.class,
+   GuiLafConfigPaneXmlTest.class,
+   ManagerDefaultsConfigPaneXmlTest.class,
+   PerformActionModelXmlTest.class,
+   PerformFileModelXmlTest.class,
+   PerformScriptModelXmlTest.class,
+   SystemConsoleConfigPanelXmlTest.class
 })
 /**
  * Tests for the apps.configurexml package.

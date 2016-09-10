@@ -246,7 +246,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         newTrainActive = boo;
     }
     private AutoTrainsFrame _autoTrainsFrame = null;
-    private Timebase fastClock = InstanceManager.getOptionalDefault(jmri.Timebase.class);
+    private Timebase fastClock = InstanceManager.getNullableDefault(jmri.Timebase.class);
     private Sensor fastClockSensor = InstanceManager.sensorManagerInstance().provideSensor("ISCLOCKRUNNING");
     private transient java.beans.PropertyChangeListener minuteChangeListener = null;
 
@@ -1098,7 +1098,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                     return null;
                 }
             }
-            //todo Need to set the same for signal masts
+            //TODO: Need to check signalMasts as well
             // this train is OK, activate the AutoTrains window, if needed
             if (_autoTrainsFrame == null) {
                 _autoTrainsFrame = new AutoTrainsFrame(_instance);
