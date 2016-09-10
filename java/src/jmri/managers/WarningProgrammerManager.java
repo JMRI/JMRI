@@ -98,7 +98,7 @@ public class WarningProgrammerManager implements ProgrammerManager {
         if (this.manager != null) {
             return this.manager.getUserName();
         }
-        return null;
+        return ""; // NOI18N returning empty string by contract
     }
 
     @Override
