@@ -50,7 +50,6 @@ import jmri.NamedBean;
 import jmri.NamedBeanHandleManager;
 import jmri.UserPreferencesManager;
 import jmri.swing.JTablePersistenceManager;
-import jmri.swing.JmriTable;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.swing.XTableColumnModel;
@@ -472,7 +471,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                 Object value = this.getValueAt(i, j);
                 if (value == null) {
                     columnStrings[j] = spaces.toString();
-                } else if (value instanceof JComboBox) {
+                } else if (value instanceof JComboBox<?>) {
                     columnStrings[j] = (String) ((JComboBox<String>) value).getSelectedItem();
                 } else {
                     // Boolean or String
@@ -555,7 +554,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
     public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @Nullable RowSorter<? extends TableModel> sorter) {
         Objects.requireNonNull(name, "the table name must be nonnull");
         Objects.requireNonNull(model, "the table model must be nonnull");
-        JTable table = new JmriTable(model);
+        JTable table = new JTable(model);
         table.setName(name);
         table.setRowSorter(sorter);
         table.getTableHeader().setReorderingAllowed(true);
@@ -571,11 +570,13 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
      *
      * @param sorter the sorter and model for the table
      * @return a new table
-     * @deprecated since 4.5.4
+     * @deprecated since 4.5.4; use
+     * {@link #makeJTable(java.lang.String, javax.swing.table.TableModel, javax.swing.RowSorter)}
+     * instead.
      */
     @Deprecated
     public JTable makeJTable(TableSorter sorter) {
-        JTable table = new JmriTable(sorter);
+        JTable table = new JTable(sorter);
         table.getTableHeader().setReorderingAllowed(true);
         table.setColumnModel(new XTableColumnModel());
         table.createDefaultColumnsFromModel();
@@ -821,7 +822,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
      * @throws NullPointerException if the name of the table is null
      */
     public void persistTable(@Nonnull JTable table) throws NullPointerException {
-        JTablePersistenceManager manager = InstanceManager.getOptionalDefault(JTablePersistenceManager.class);
+        JTablePersistenceManager manager = InstanceManager.getNullableDefault(JTablePersistenceManager.class);
         if (manager != null) {
             manager.resetState(table); // throws NPE if table name is null
             manager.persist(table);
@@ -835,7 +836,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
      * @throws NullPointerException if the name of the table is null
      */
     public void stopPersistingTable(@Nonnull JTable table) throws NullPointerException {
-        JTablePersistenceManager manager = InstanceManager.getOptionalDefault(JTablePersistenceManager.class);
+        JTablePersistenceManager manager = InstanceManager.getNullableDefault(JTablePersistenceManager.class);
         if (manager != null) {
             manager.stopPersisting(table); // throws NPE if table name is null
         }
@@ -845,8 +846,8 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
      * Load table column settings from persistent storage.
      *
      * @param table the table
-     * @deprecated since 4.5.4; use
-     * {@link #persistTable(javax.swing.JTable)} instead.
+     * @deprecated since 4.5.4; use {@link #persistTable(javax.swing.JTable)}
+     * instead.
      */
     @Deprecated
     public void loadTableColumnDetails(JTable table) {
@@ -858,8 +859,8 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
      *
      * @param table        the table
      * @param beantableref name of the table
-     * @deprecated since 4.5.4; use
-     * {@link #persistTable(javax.swing.JTable)} instead.
+     * @deprecated since 4.5.4; use {@link #persistTable(javax.swing.JTable)}
+     * instead.
      */
     @Deprecated
     public void loadTableColumnDetails(JTable table, String beantableref) {

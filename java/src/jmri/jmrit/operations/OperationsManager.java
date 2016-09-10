@@ -109,7 +109,7 @@ public final class OperationsManager {
      * @param shutDownTask The new ShutDownTask or null
      */
     public void setShutDownTask(ShutDownTask shutDownTask) {
-        if (InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+        if (InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
             if (this.shutDownTask != null) {
                 InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
             }

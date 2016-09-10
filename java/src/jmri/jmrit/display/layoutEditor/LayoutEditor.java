@@ -753,7 +753,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         helpBar.setVisible(false);
 
         // register the resulting panel for later configuration
-        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
             cm.registerUser(this);
         }
@@ -2074,7 +2074,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // get reporter name
         Reporter reporter = null;
         String rName = reporterNameField.getText().trim();
-        if (InstanceManager.getOptionalDefault(jmri.ReporterManager.class) != null) {
+        if (InstanceManager.getNullableDefault(jmri.ReporterManager.class) != null) {
             try {
                 reporter = InstanceManager.getDefault(jmri.ReporterManager.class).
                             provideReporter(rName);
@@ -9252,14 +9252,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (t.showConstructionLinesLE()) {
                     g2.draw(new Line2D.Double(getCoords(t.getConnect1(), t.getType1()), new Point2D.Double(t.getCentreX(), t.getCentreY())));
                     g2.draw(new Line2D.Double(getCoords(t.getConnect2(), t.getType2()), new Point2D.Double(t.getCentreX(), t.getCentreY())));
+                    g2.draw(new Ellipse2D.Double(t.getCentreSegX() - SIZE2, t.getCentreSegY() - SIZE2, SIZE2 + SIZE2, SIZE2 + SIZE2));
                 }
-                g2.draw(new Ellipse2D.Double(t.getCentreSegX() - SIZE2, t.getCentreSegY() - SIZE2, SIZE2 + SIZE2, SIZE2 + SIZE2));
             } else {
                 Point2D pt1 = getCoords(t.getConnect1(), t.getType1());
                 Point2D pt2 = getCoords(t.getConnect2(), t.getType2());
                 double cX = (pt1.getX() + pt2.getX()) / 2.0D;
                 double cY = (pt1.getY() + pt2.getY()) / 2.0D;
-                g2.draw(new Ellipse2D.Double(cX - SIZE2, cY - SIZE2, SIZE2 + SIZE2, SIZE2 + SIZE2));
+                if (t.showConstructionLinesLE()) { //draw track circles
+                    g2.draw(new Ellipse2D.Double(cX - SIZE2, cY - SIZE2, SIZE2 + SIZE2, SIZE2 + SIZE2));
+                }
                 if (t.getArc()) {
                     g2.draw(new Line2D.Double(getCoords(t.getConnect1(), t.getType1()), getCoords(t.getConnect2(), t.getType2())));
                 }

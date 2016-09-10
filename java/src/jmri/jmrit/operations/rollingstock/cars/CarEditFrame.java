@@ -288,7 +288,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         }
     
         // row 22
-        if (Setup.isRfidEnabled() && jmri.InstanceManager.getOptionalDefault(jmri.IdTagManager.class) != null) {
+        if (Setup.isRfidEnabled() && jmri.InstanceManager.getNullableDefault(jmri.IdTagManager.class) != null) {
             JPanel pRfid = new JPanel();
             pRfid.setLayout(new GridBagLayout());
             pRfid.setBorder(BorderFactory.createTitledBorder(Setup.getRfidLabel()));

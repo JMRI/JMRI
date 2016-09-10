@@ -77,7 +77,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * @return the default UserPreferencesManager
      */
     public static UserPreferencesManager getDefault() {
-        if (InstanceManager.getOptionalDefault(UserPreferencesManager.class) == null) {
+        if (InstanceManager.getNullableDefault(UserPreferencesManager.class) == null) {
             JmriUserPreferencesManager manager = new JmriUserPreferencesManager();
             InstanceManager.setDefault(UserPreferencesManager.class, manager);
             manager.readUserPreferences();
@@ -879,7 +879,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     @Override
     public void setTableColumnPreferences(String table, String column, int order, int width, SortOrder sort, boolean hidden) {
-        JmriJTablePersistenceManager manager = InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class);
+        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
         if (manager != null) {
             manager.setTableColumnPreferences(table, column, order, width, sort, hidden);
         }
@@ -887,7 +887,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     @Override
     public int getTableColumnOrder(String table, String column) {
-        JmriJTablePersistenceManager manager = InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class);
+        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
         if (manager != null) {
             TableColumnPreferences preferences = manager.getTableColumnPreferences(table, column);
             if (preferences != null) {
@@ -899,7 +899,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     @Override
     public int getTableColumnWidth(String table, String column) {
-        JmriJTablePersistenceManager manager = InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class);
+        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
         if (manager != null) {
             TableColumnPreferences preferences = manager.getTableColumnPreferences(table, column);
             if (preferences != null) {
@@ -911,7 +911,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     @Override
     public SortOrder getTableColumnSort(String table, String column) {
-        JmriJTablePersistenceManager manager = InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class);
+        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
         if (manager != null) {
             TableColumnPreferences preferences = manager.getTableColumnPreferences(table, column);
             if (preferences != null) {
@@ -923,7 +923,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     @Override
     public boolean getTableColumnHidden(String table, String column) {
-        JmriJTablePersistenceManager manager = InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class);
+        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
         if (manager != null) {
             TableColumnPreferences preferences = manager.getTableColumnPreferences(table, column);
             if (preferences != null) {
@@ -935,7 +935,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     @Override
     public String getTableColumnAtNum(String table, int i) {
-        JmriJTablePersistenceManager manager = InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class);
+        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
         if (manager != null) {
             Map<String, TableColumnPreferences> map = manager.getTableColumnPreferences(table);
             for (Map.Entry<String, TableColumnPreferences> entry : map.entrySet()) {
@@ -959,7 +959,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     @Override
     public List<String> getTablesColumnList(String table) {
-        JmriJTablePersistenceManager manager = InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class);
+        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
         if (manager != null) {
             Map<String, TableColumnPreferences> map = manager.getTableColumnPreferences(table);
             return new ArrayList<>(map.keySet());
@@ -1264,6 +1264,10 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         this.saveSimplePreferenceState();
         this.saveWindowDetails();
         this.resetChangeMade();
+        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
+        if (manager != null) {
+            manager.savePreferences(ProfileManager.getDefault().getActiveProfile());
+        }
     }
 
     protected final static class ComboBoxLastSelection {

@@ -33,7 +33,7 @@ class OpsProgExample(jmri.jmrit.automat.AbstractAutomaton) :
         
         # get references to sample layout objects
         self.sensor = sensors.provideSensor(self.sensorName)
-        self.programmer = programmers.getAddressedProgrammer(self.longAddress, self.locoNumber)
+        self.programmer = addressedProgrammers.getAddressedProgrammer(self.longAddress, self.locoNumber)
 
         # get initial state and set the CV as needed
         self.now = self.sensor.getKnownState()

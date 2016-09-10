@@ -151,7 +151,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         showAll.setSelected(true);
         showMatched = new JRadioButton(Bundle.getMessage("LabelMatched"));
 
-        if (jmri.InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) != null
+        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) != null
                 && jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).isGlobalProgrammerAvailable()) {
             ButtonGroup group = new ButtonGroup();
             group.add(showAll);
@@ -474,7 +474,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
      */
     void setDecoderSelectionFromLoco(String loco) {
         // if there's a valid loco entry...
-        RosterEntry locoEntry = Roster.instance().entryFromTitle(loco);
+        RosterEntry locoEntry = Roster.getDefault().entryFromTitle(loco);
         if (locoEntry == null) {
             return;
         }

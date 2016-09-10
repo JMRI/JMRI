@@ -147,7 +147,7 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
 
         if (type == Timebase.class) {
             Timebase timebase = new jmri.jmrit.simpleclock.SimpleTimebase();
-            if (InstanceManager.getOptionalDefault(jmri.ConfigureManager.class) != null) {
+            if (InstanceManager.getNullableDefault(jmri.ConfigureManager.class) != null) {
                 InstanceManager.getDefault(jmri.ConfigureManager.class).registerConfig(timebase, jmri.Manager.TIMEBASE);
             }
             return timebase;
