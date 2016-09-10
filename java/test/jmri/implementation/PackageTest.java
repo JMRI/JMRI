@@ -36,7 +36,6 @@ public class PackageTest extends TestCase {
         suite.addTest(AccessoryOpsModeProgrammerFacadeTest.suite());
         suite.addTest(AddressedHighCvProgrammerFacadeTest.suite());
         suite.addTest(DccSignalHeadTest.suite());
-        suite.addTest(DccSignalMastTest.suite());
         suite.addTest(DefaultConditionalTest.suite());
         suite.addTest(DefaultConditionalActionTest.suite());
         suite.addTest(DefaultIdTagTest.suite());
@@ -55,6 +54,7 @@ public class PackageTest extends TestCase {
         suite.addTest(BundleTest.suite());
         // Converted to JUnit4:
         suite.addTest(new junit.framework.JUnit4TestAdapter(DccConsistTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DccSignalMastTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NmraConsistTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SE8cSignalHeadTest.class));
 
