@@ -13,6 +13,7 @@ import org.junit.Test;
  * Tests for the DccSignalMast implementation
  *
  * @author	Bob Jacobsen Copyright (C) 2013
+ * updated to JUnit4 2016
  */
 public class DccSignalMastTest {
 

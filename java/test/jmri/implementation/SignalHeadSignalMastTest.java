@@ -4,10 +4,11 @@ import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.SignalSystem;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,18 +16,22 @@ import org.slf4j.LoggerFactory;
  * Tests for the SignalHeadSignalMast implementation
  *
  * @author	Bob Jacobsen Copyright (C) 2009
+ * updated to JUnit4 2016
  */
-public class SignalHeadSignalMastTest extends TestCase {
+public class SignalHeadSignalMastTest {
 
+    @Test
     public void testSetup() {
         Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalHeadManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH1"));
     }
 
+    @Test
     public void testTwoNameOneHeadCtorOK() {
         new SignalHeadSignalMast("IF$shsm:basic:one-searchlight(IH1)", "user");
     }
 
+    @Test
     public void testHeld() {
         SignalMast m = new SignalHeadSignalMast("IF$shsm:basic:one-searchlight(IH1)", "user");
 
@@ -42,6 +47,7 @@ public class SignalHeadSignalMastTest extends TestCase {
 
     }
 
+    @Test
     public void testLit() {
         SignalMast m = new SignalHeadSignalMast("IF$shsm:basic:one-searchlight(IH1)", "user");
 
@@ -57,22 +63,27 @@ public class SignalHeadSignalMastTest extends TestCase {
 
     }
 
+    @Test
     public void testTwoNameSe8cHeadCtorOK() {
         new SignalHeadSignalMast("IF$shsm:AAR-1946:PL-2-high(IH:SE8C:\"255\";\"256\")(IH:SE8C:\"257\";\"258\")", "user");
     }
 
+    @Test
     public void testOneNameOneHeadCtorOK() {
         new SignalHeadSignalMast("IF$shsm:basic:one-searchlight(IH1)");
     }
 
+    @Test
     public void testOldTwoNameCtorOK() {
         new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");
     }
 
+    @Test
     public void testOldOneNameCtorOK() {
         new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1");
     }
 
+    @Test
     public void testOldOneNameCtorFailNoSystem() {
         try {
             new SignalHeadSignalMast("IF$shsm:notanaspect:one-searchlight:IH1");
@@ -84,6 +95,7 @@ public class SignalHeadSignalMastTest extends TestCase {
         }
     }
 
+    @Test
     public void testAspects() {
         SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");
 
@@ -101,12 +113,14 @@ public class SignalHeadSignalMastTest extends TestCase {
                 s.getAppearanceMap().getProperty("Clear", "imagelink"));
     }
 
+    @Test
     public void testAspectNotSet() {
         SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");
 
         Assert.assertNull("check null", s.getAspect());
     }
 
+    @Test
     public void testAspectFail() {
         SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");
 
@@ -124,6 +138,7 @@ public class SignalHeadSignalMastTest extends TestCase {
         Assert.assertEquals("check clear", "Clear", s.getAspect()); // unchanged after failed request
     }
 
+    @Test
     public void testConfigureOneSearchLight() {
         SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");
 
@@ -136,6 +151,7 @@ public class SignalHeadSignalMastTest extends TestCase {
                 InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH1").getAppearance());
     }
 
+    @Test
     public void testConfigureTwoSearchLight() {
         SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:two-searchlight:IH1:IH2", "user");
 
@@ -152,6 +168,7 @@ public class SignalHeadSignalMastTest extends TestCase {
                 InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH2").getAppearance());
     }
 
+    @Test
     public void testOneSearchLightViaManager() {
         SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast("IF$shsm:basic:one-searchlight:IH2");
 
@@ -164,6 +181,7 @@ public class SignalHeadSignalMastTest extends TestCase {
                 InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH2").getAppearance());
     }
 
+    @Test
     public void testSignalSystemLink() {
         SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast("IF$shsm:basic:one-searchlight:IH2");
 
@@ -174,24 +192,10 @@ public class SignalHeadSignalMastTest extends TestCase {
     }
 
     // from here down is testing infrastructure
-    public SignalHeadSignalMastTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SignalHeadSignalMastTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SignalHeadSignalMastTest.class);
-        return suite;
-    }
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
@@ -214,8 +218,10 @@ public class SignalHeadSignalMastTest extends TestCase {
         );
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
+
     static protected Logger log = LoggerFactory.getLogger(SignalHeadSignalMastTest.class.getName());
 }

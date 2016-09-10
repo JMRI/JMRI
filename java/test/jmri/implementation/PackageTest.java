@@ -45,7 +45,6 @@ public class PackageTest extends TestCase {
         suite.addTest(OffsetHighCvProgrammerFacadeTest.suite());
         suite.addTest(ResettingOffsetHighCvProgrammerFacadeTest.suite());
         suite.addTest(RouteTest.suite());
-        suite.addTest(SignalHeadSignalMastTest.suite());
         suite.addTest(SignalSpeedMapTest.suite());
         suite.addTest(SignalSystemFileCheckTest.suite());
         suite.addTest(SingleTurnoutSignalHeadTest.suite());
@@ -57,6 +56,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(DccSignalMastTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NmraConsistTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SE8cSignalHeadTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SignalHeadSignalMastTest.class));
 
         // sub-packages
         suite.addTest(jmri.implementation.swing.PackageTest.suite());
