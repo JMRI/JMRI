@@ -828,6 +828,13 @@ public class RollingStock implements java.beans.PropertyChangeListener {
                                 if( newTrack != getTrack()) {
                                    // set the car's location based on the track.
                                    setLocation(newTrack.getLocation(),newTrack);
+                                   // also notify listeners that the last seen
+                                   // location has changed.
+                                   setDirtyAndFirePropertyChange(
+                                            "rolling stock whereLastSeen",
+                                            _whereLastSeen,
+                                            _whereLastSeen=newTrack.getLocation());
+                                  
                                 }
                             } else {
                                 // the reader isn't associated with a track,
