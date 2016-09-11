@@ -311,7 +311,7 @@ public class PrintCarRosterAction extends AbstractAction {
     JCheckBox printSpace = new JCheckBox(Bundle.getMessage("PrintSpace"));
     JCheckBox printPage = new JCheckBox(Bundle.getMessage("PrintPage"));
 
-    JButton okayButton = new JButton(Bundle.getMessage("ButtonOkay"));
+    JButton okayButton = new JButton(Bundle.getMessage("ButtonOK"));
 
     static final String NEW_LINE = "\n"; // NOI18N
 
