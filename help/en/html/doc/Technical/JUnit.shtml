@@ -142,7 +142,8 @@
 subdirectory of the "java" directory in our usual code
 distributions, and then run the tests under a GUI. (To make sure
 you've recompiled everything, you may want to do <code>ant
-clean</code> first) If you know the name of your test class, or the
+clean</code> first)<br>
+If you know the name of your test class, or the
 test class for your package, you can run that directly with the
 "runtest" script:
       <pre>
@@ -150,7 +151,8 @@ test class for your package, you can run that directly with the
    ant tests<br>   ./runtest.csh jmri.jmrit.powerpanel.PowerPanelTest
 </code>
 </pre>The first line compiles all the test code, and the second
-runs a specific test or test suite.
+runs a specific test or test suite.<br>
+(Hint: How to set this up <a href="IntelliJ.shtml#test">using IntelliJ</a>)
 
       <h2><a name="Continuous" id="Continuous">Continuous
       Integration Test Execution</a></h2>The <a href=
