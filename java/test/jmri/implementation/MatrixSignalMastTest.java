@@ -42,13 +42,14 @@ public class MatrixSignalMastTest {
 
         MatrixSignalMast m = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
         m.setBitNum(3);
-        m.setOutput("output1", "11");
-        m.setOutput("output2", "12");
-        m.setOutput("output3", "13");
+        m.setOutput("output1", "IT11");
+        m.setOutput("output2", "IT12");
+        m.setOutput("output3", "IT13");
 
         Assert.assertEquals("system name", "IF$xsm:basic:one-low($0001)-3t", m.getSystemName());
         Assert.assertEquals("user name", "user", m.getUserName());
-        //Assert.assertEquals("output2", "12", m.outputsToBeans.get("output2").getName());
+        //System.out.println(it11.getFullyFormattedDisplayName()); //temporary
+        Assert.assertEquals("output2", "IT12", m.outputsToBeans.get("output2").getName());
     }
 
     @Test
@@ -73,9 +74,9 @@ public class MatrixSignalMastTest {
 
         MatrixSignalMast m = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
         m.setBitNum(3);
-        m.setOutput("output1", "11");
-        m.setOutput("output2", "12");
-        m.setOutput("output3", "13");
+        m.setOutput("output1", "IT11"); // Note: "IT" added to name by system
+        m.setOutput("output2", "IT12");
+        m.setOutput("output3", "IT13");
 
         m.setBitstring("Clear", "111");
         m.setBitstring("Approach", "100");
@@ -84,11 +85,17 @@ public class MatrixSignalMastTest {
 
         m.setAllowUnLit(true);
         m.setUnLitBits("000");
+        m.setAspectEnabled("Clear");
+        m.setAspectEnabled("Approach");
+        m.setAspectEnabled("Stop");
+        m.setAspectEnabled("Unlit");
+
+        m.aspect = "Clear"; // define some initial aspect before setting any aspect
 
         Assert.assertTrue(m.getLit());
         // wait for outputs and outputbits to be set
 
-        //m.setLit(false);
+        m.setLit(false);
         //Assert.assertTrue(!m.getLit());
 
         m.setLit(true);
@@ -105,19 +112,31 @@ public class MatrixSignalMastTest {
 
         MatrixSignalMast m = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
         m.setBitNum(3);
-        m.setOutput("output1", "11");
-        m.setOutput("output2", "12");
-        m.setOutput("output3", "13");
+        m.setOutput("output1", "IT11");
+        m.setOutput("output2", "IT12");
+        m.setOutput("output3", "IT13");
 
         m.setBitstring("Clear", "111");
         m.setBitstring("Approach", "100");
-        m.setBitstring("Stop", "001");
+        m.setBitstring("Stop", "001"); // used for test below
         m.setBitstring("Unlit", "000");
 
-//        m.setAspect("Clear");
-//        Assert.assertEquals("check clear", "Clear", m.getAspect());
-//        m.setAspect("Stop");
-//        Assert.assertEquals("check stop", "Stop", m.getAspect());
+        m.setAllowUnLit(true);
+        m.setUnLitBits("000");
+        m.setAspectEnabled("Clear");
+        m.setAspectEnabled("Approach");
+        m.setAspectEnabled("Stop");
+        m.setAspectEnabled("Unlit");
+
+        m.aspect = "Clear"; // define some initial aspect before setting any aspect
+
+        //System.out.println(java.util.Arrays.toString(m.getBitsForAspect("Clear"))); //temporary
+        Assert.assertEquals("check bitarray for stop", "[0, 0, 1]", java.util.Arrays.toString(m.getBitsForAspect("Stop")));
+
+        m.setAspect("Clear");
+        Assert.assertEquals("check clear", "Clear", m.getAspect());
+        m.setAspect("Stop");
+        Assert.assertEquals("check stop", "Stop", m.getAspect());
     }
 
     public void testAspectAttributes() {
