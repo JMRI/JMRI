@@ -1,9 +1,6 @@
 package jmri.implementation;
 
 import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.SignalMast;
-import jmri.SignalSystem;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 import org.junit.After;
