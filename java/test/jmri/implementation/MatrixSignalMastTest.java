@@ -48,7 +48,7 @@ public class MatrixSignalMastTest {
 
         Assert.assertEquals("system name", "IF$xsm:basic:one-low($0001)-3t", m.getSystemName());
         Assert.assertEquals("user name", "user", m.getUserName());
-        //System.out.println(it11.getFullyFormattedDisplayName()); //temporary
+        //System.out.println(it11.getFullyFormattedDisplayName()); //debug
         Assert.assertEquals("output2", "IT12", m.outputsToBeans.get("output2").getName());
     }
 
@@ -85,18 +85,14 @@ public class MatrixSignalMastTest {
 
         m.setAllowUnLit(true);
         m.setUnLitBits("000");
-        m.setAspectEnabled("Clear");
-        m.setAspectEnabled("Approach");
-        m.setAspectEnabled("Stop");
-        m.setAspectEnabled("Unlit");
 
         m.aspect = "Clear"; // define some initial aspect before setting any aspect
-
-        Assert.assertTrue(m.getLit());
         // wait for outputs and outputbits to be set
 
+        Assert.assertTrue(m.getLit());
+
         m.setLit(false);
-        //Assert.assertTrue(!m.getLit());
+        Assert.assertTrue(!m.getLit());
 
         m.setLit(true);
         Assert.assertTrue(m.getLit());
@@ -116,7 +112,7 @@ public class MatrixSignalMastTest {
         m.setOutput("output2", "IT12");
         m.setOutput("output3", "IT13");
 
-        m.setBitstring("Clear", "111");
+        m.setBitstring("Clear", "111"); // used for test below
         m.setBitstring("Approach", "100");
         m.setBitstring("Stop", "001"); // used for test below
         m.setBitstring("Unlit", "000");
@@ -128,15 +124,18 @@ public class MatrixSignalMastTest {
         m.setAspectEnabled("Stop");
         m.setAspectEnabled("Unlit");
 
-        m.aspect = "Clear"; // define some initial aspect before setting any aspect
+        m.aspect = "Stop"; // define some initial aspect before setting any aspect
+        // wait for outputs and outputbits to be set
 
-        //System.out.println(java.util.Arrays.toString(m.getBitsForAspect("Clear"))); //temporary
+        //System.out.println(java.util.Arrays.toString(m.getBitsForAspect("Clear"))); //debug
         Assert.assertEquals("check bitarray for stop", "[0, 0, 1]", java.util.Arrays.toString(m.getBitsForAspect("Stop")));
 
         m.setAspect("Clear");
         Assert.assertEquals("check clear", "Clear", m.getAspect());
+        Assert.assertEquals("it12 for Clear", Turnout.CLOSED, it12.getCommandedState());
         m.setAspect("Stop");
         Assert.assertEquals("check stop", "Stop", m.getAspect());
+        Assert.assertEquals("it12 for Stop", Turnout.THROWN, it12.getCommandedState());
     }
 
     public void testAspectAttributes() {
