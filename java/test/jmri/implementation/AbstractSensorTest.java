@@ -28,7 +28,8 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
     /*abstract*/ public void checkOffMsgSent() {}
 
     // load t with actual object; create scaffolds as needed
-    /*abstract*/ protected void setUp() {
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
         t = new AbstractSensor("Foo", "Bar"){
                 public void requestUpdateFromLayout(){}
         };
@@ -142,10 +143,6 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-    }
-
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
