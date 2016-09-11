@@ -38,8 +38,12 @@ public class ConditionalVariableTest extends TestCase {
     }
 
     protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 }
