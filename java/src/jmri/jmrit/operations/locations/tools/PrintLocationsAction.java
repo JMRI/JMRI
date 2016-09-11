@@ -901,7 +901,7 @@ public class PrintLocationsAction extends AbstractAction {
     JCheckBox printDetails = new JCheckBox(Bundle.getMessage("PrintDetails"));
     JCheckBox printAnalysis = new JCheckBox(Bundle.getMessage("PrintAnalysis"));
 
-    JButton okayButton = new JButton(Bundle.getMessage("ButtonOkay"));
+    JButton okayButton = new JButton(Bundle.getMessage("ButtonOK"));
 
     public class LocationPrintOptionFrame extends OperationsFrame {
 
