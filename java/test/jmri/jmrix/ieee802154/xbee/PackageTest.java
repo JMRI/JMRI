@@ -42,7 +42,19 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(XBeeIOStreamTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ieee802154.xbee.configurexml.PackageTest.class));
+        suite.addTest(new TestSuite(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ieee802154.xbee.swing.PackageTest.class));
         return suite;
     }
+
+    // The minimal setup for log4J
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
+
 
 }

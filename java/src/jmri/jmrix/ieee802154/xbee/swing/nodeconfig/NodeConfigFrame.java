@@ -1,4 +1,3 @@
-// NodeConfigFrame.java
 package jmri.jmrix.ieee802154.xbee.swing.nodeconfig;
 
 import com.digi.xbee.api.listeners.IDiscoveryListener;
@@ -32,14 +31,8 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2004
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Paul Bender Copyright (C) 2013
- * @version	$Revision$
  */
 public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.NodeConfigFrame implements IDiscoveryListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5991183543628378378L;
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ieee802154.xbee.swing.nodeconfig.NodeConfigBundle");
 
