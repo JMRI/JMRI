@@ -5,7 +5,6 @@ import com.digi.xbee.api.RemoteXBeeDevice;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
-import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -34,10 +33,8 @@ import org.slf4j.LoggerFactory;
  */
 public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.NodeConfigFrame implements IDiscoveryListener {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ieee802154.xbee.swing.nodeconfig.NodeConfigBundle");
-
     private XBeeTrafficController xtc = null;
-    protected javax.swing.JButton discoverButton = new javax.swing.JButton(rb.getString("ButtonDiscover"));
+    protected javax.swing.JButton discoverButton = new javax.swing.JButton(Bundle.getMessage("ButtonDiscover"));
     private JComboBox<String> nodeIdentifierField = new javax.swing.JComboBox<String>();
     protected JTable assignmentTable = null;
     protected TableModel assignmentListModel = null;
@@ -56,7 +53,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
      * Initialize the config window
      */
     public void initComponents() {
-        setTitle(rb.getString("WindowTitle"));
+        setTitle(Bundle.getMessage("WindowTitle"));
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
@@ -65,9 +62,9 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
         JPanel panel11 = new JPanel();
         panel11.setLayout(new FlowLayout());
-        panel11.add(new JLabel(rb.getString("LabelNodeAddress") + " "));
+        panel11.add(new JLabel(Bundle.getMessage("LabelNodeAddress") + " "));
         panel11.add(nodeAddrField);
-        nodeAddrField.setToolTipText(rb.getString("TipNodeAddress"));
+        nodeAddrField.setToolTipText(Bundle.getMessage("TipNodeAddress"));
         nodeAddrField.addActionListener(new java.awt.event.ActionListener() {
 
             @Override
@@ -75,18 +72,18 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
                 nodeSelected();
             }
         });
-        panel11.add(new JLabel(rb.getString("LabelNodeAddress64") + " "));
+        panel11.add(new JLabel(Bundle.getMessage("LabelNodeAddress64") + " "));
         panel11.add(nodeAddr64Field);
-        nodeAddr64Field.setToolTipText(rb.getString("TipNodeAddress64"));
+        nodeAddr64Field.setToolTipText(Bundle.getMessage("TipNodeAddress64"));
         nodeAddr64Field.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 nodeAddrField.setSelectedIndex(nodeAddr64Field.getSelectedIndex());
             }
         });
-        panel11.add(new JLabel(rb.getString("LabelNodeIdentifier") + " "));
+        panel11.add(new JLabel(Bundle.getMessage("LabelNodeIdentifier") + " "));
         panel11.add(nodeIdentifierField);
-        nodeIdentifierField.setToolTipText(rb.getString("TipNodeIdentifier"));
+        nodeIdentifierField.setToolTipText(Bundle.getMessage("TipNodeIdentifier"));
 
         nodeIdentifierField.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -139,25 +136,25 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         panel3.add(panel33);
         Border panel3Border = BorderFactory.createEtchedBorder();
         Border panel3Titled = BorderFactory.createTitledBorder(panel3Border,
-                rb.getString("BoxLabelNotes"));
+                Bundle.getMessage("BoxLabelNotes"));
         panel3.setBorder(panel3Titled);
         contentPane.add(panel3);
 
         // Set up buttons
         JPanel panel4 = new JPanel();
         panel4.setLayout(new FlowLayout());
-        addButton.setText(rb.getString("ButtonAdd"));
+        addButton.setText(Bundle.getMessage("ButtonAdd"));
         addButton.setVisible(true);
-        addButton.setToolTipText(rb.getString("TipAddButton"));
+        addButton.setToolTipText(Bundle.getMessage("TipAddButton"));
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 addButtonActionPerformed();
             }
         });
         panel4.add(addButton);
-        discoverButton.setText(rb.getString("ButtonDiscover"));
+        discoverButton.setText(Bundle.getMessage("ButtonDiscover"));
         discoverButton.setVisible(true);
-        discoverButton.setToolTipText(rb.getString("TipAddButton"));
+        discoverButton.setToolTipText(Bundle.getMessage("TipAddButton"));
         discoverButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 discoverButtonActionPerformed();
@@ -165,9 +162,9 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         });
         discoverButton.setEnabled(!(xtc.getXBee().getNetwork().isDiscoveryRunning()));
         panel4.add(discoverButton);
-        editButton.setText(rb.getString("ButtonEdit"));
+        editButton.setText(Bundle.getMessage("ButtonEdit"));
         editButton.setVisible(true);
-        editButton.setToolTipText(rb.getString("TipEditButton"));
+        editButton.setToolTipText(Bundle.getMessage("TipEditButton"));
         panel4.add(editButton);
         editButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -175,9 +172,9 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
             }
         });
         panel4.add(deleteButton);
-        deleteButton.setText(rb.getString("ButtonDelete"));
+        deleteButton.setText(Bundle.getMessage("ButtonDelete"));
         deleteButton.setVisible(true);
-        deleteButton.setToolTipText(rb.getString("TipDeleteButton"));
+        deleteButton.setToolTipText(Bundle.getMessage("TipDeleteButton"));
         panel4.add(deleteButton);
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -185,9 +182,9 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
             }
         });
         panel4.add(doneButton);
-        doneButton.setText(rb.getString("ButtonDone"));
+        doneButton.setText(Bundle.getMessage("ButtonDone"));
         doneButton.setVisible(true);
-        doneButton.setToolTipText(rb.getString("TipDoneButton"));
+        doneButton.setToolTipText(Bundle.getMessage("TipDoneButton"));
         panel4.add(doneButton);
         doneButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -195,9 +192,9 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
             }
         });
         panel4.add(updateButton);
-        updateButton.setText(rb.getString("ButtonUpdate"));
+        updateButton.setText(Bundle.getMessage("ButtonUpdate"));
         updateButton.setVisible(true);
-        updateButton.setToolTipText(rb.getString("TipUpdateButton"));
+        updateButton.setToolTipText(Bundle.getMessage("TipUpdateButton"));
         panel4.add(updateButton);
         updateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -206,9 +203,9 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         });
         updateButton.setVisible(false);
         panel4.add(cancelButton);
-        cancelButton.setText(rb.getString("ButtonCancel"));
+        cancelButton.setText(Bundle.getMessage("ButtonCancel"));
         cancelButton.setVisible(true);
-        cancelButton.setToolTipText(rb.getString("TipCancelButton"));
+        cancelButton.setToolTipText(Bundle.getMessage("TipCancelButton"));
         panel4.add(cancelButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -239,8 +236,8 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
            // get a XBeeNode corresponding to this node address if one exists
            curNode = (XBeeNode) xtc.getNodeFromAddress(nodeAddress);
            if (curNode != null) {
-               statusText1.setText(rb.getString("Error1") + nodeAddress
-                       + rb.getString("Error2"));
+               statusText1.setText(Bundle.getMessage("Error1") + nodeAddress
+                       + Bundle.getMessage("Error2"));
                statusText1.setVisible(true);
                errorInStatus1 = true;
                resetNotes2();
@@ -261,7 +258,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
            resetNotes();
            changedNode = true;
            // provide user feedback
-           statusText1.setText(rb.getString("FeedBackAdd") + " " + nodeAddress);
+           statusText1.setText(Bundle.getMessage("FeedBackAdd") + " " + nodeAddress);
            errorInStatus1 = true;
            initAddressBoxes();
        } catch(IllegalArgumentException iae){
@@ -281,7 +278,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         if(xtc.getXBee().getNetwork().isDiscoveryRunning()){
            log.debug("Discovery process already running");
            discoverButton.setEnabled(false);
-           statusText1.setText(rb.getString("FeedBackDiscover"));
+           statusText1.setText(Bundle.getMessage("FeedBackDiscover"));
            return;
         }
 
@@ -296,7 +293,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
            discoverButton.setEnabled(false);
         }
         // provide user feedback
-        statusText1.setText(rb.getString("FeedBackDiscover"));
+        statusText1.setText(Bundle.getMessage("FeedBackDiscover"));
         errorInStatus1 = true;
         resetNotes2();
     }
@@ -314,7 +311,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
           // get the XBeeNode corresponding to this node address
           curNode = (XBeeNode) xtc.getNodeFromAddress(nodeAddress);
           if (curNode == null) {
-              statusText1.setText(rb.getString("Error4"));
+              statusText1.setText(Bundle.getMessage("Error4"));
               statusText1.setVisible(true);
               errorInStatus1 = true;
               resetNotes2();
@@ -361,8 +358,8 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         if (changedNode) {
             // Remind user to Save new configuration
             javax.swing.JOptionPane.showMessageDialog(this,
-                    rb.getString("Reminder1") + "\n" + rb.getString("Reminder2"),
-                    rb.getString("ReminderTitle"),
+                    Bundle.getMessage("Reminder1") + "\n" + Bundle.getMessage("Reminder2"),
+                    Bundle.getMessage("ReminderTitle"),
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
         }
         setVisible(false);
@@ -397,7 +394,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         statusText3.setText(stdStatus3);
         // provide user feedback
         try {
-           statusText1.setText(rb.getString("FeedBackUpdate") + " " + readNodeAddress());
+           statusText1.setText(Bundle.getMessage("FeedBackUpdate") + " " + readNodeAddress());
            } catch(IllegalArgumentException iae){
                // we really need to set an error status here.
                // illegal argument exception is generated by 
@@ -551,11 +548,11 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         public static final int SYSNAME_COLUMN = 1;
         public static final int USERNAME_COLUMN = 2;
 
-        private String[] assignmentTableColumnNames = {rb.getString("HeadingBit"),
-            rb.getString("HeadingSystemName"),
-            rb.getString("HeadingUserName")};
+        private String[] assignmentTableColumnNames = {Bundle.getMessage("HeadingBit"),
+            Bundle.getMessage("HeadingSystemName"),
+            Bundle.getMessage("HeadingUserName")};
 
-        private String free = rb.getString("AssignmentFree");
+        private String free = Bundle.getMessage("AssignmentFree");
 
         public void setNode(XBeeNode node) {
             curNode = node;
@@ -657,10 +654,10 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
     public void discoveryFinished(String error){
        if(error != null){
          log.error("Node discovery processed finished with error: {}", error);
-         statusText1.setText(rb.getString("FeedBackDiscoverFail"));
+         statusText1.setText(Bundle.getMessage("FeedBackDiscoverFail"));
        } else {
          log.debug("Node discovery process completed successfully.");
-         statusText1.setText(rb.getString("FeedBackDiscoverSuccess"));
+         statusText1.setText(Bundle.getMessage("FeedBackDiscoverSuccess"));
          // reload the node list.
          initAddressBoxes();
        }
