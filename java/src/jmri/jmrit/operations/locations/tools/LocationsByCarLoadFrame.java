@@ -53,7 +53,7 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
     JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
     // check boxes
-    // JCheckBox copyCheckBox = new JCheckBox(Bundle.getMessage("Copy"));
+    // JCheckBox copyCheckBox = new JCheckBox(Bundle.getMessage("ButtonCopy"));
     JCheckBox loadAndTypeCheckBox = new JCheckBox(Bundle.getMessage("TypeAndLoad"));
 
     // radio buttons

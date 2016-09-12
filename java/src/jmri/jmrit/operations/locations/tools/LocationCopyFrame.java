@@ -41,7 +41,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
     JTextField loctionNameTextField = new javax.swing.JTextField(Control.max_len_string_location_name);
 
     // major buttons
-    JButton copyButton = new javax.swing.JButton(Bundle.getMessage("Copy"));
+    JButton copyButton = new javax.swing.JButton(Bundle.getMessage("ButtonCopy"));
     JButton saveButton = new javax.swing.JButton(Bundle.getMessage("Save"));
 
     // combo boxes
@@ -126,7 +126,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
 
             if (locationBox.getSelectedItem() == null) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationToCopy"), MessageFormat.format(Bundle
-                        .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("Copy")}), JOptionPane.ERROR_MESSAGE);
+                        .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -196,19 +196,19 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
     protected boolean checkName() {
         if (loctionNameTextField.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
-                    .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("Copy")}), JOptionPane.ERROR_MESSAGE);
+                    .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (TrainCommon.splitString(loctionNameTextField.getText()).length() > Control.max_len_string_location_name) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LocationNameLengthMax"),
                     new Object[]{Integer.toString(Control.max_len_string_location_name + 1)}), MessageFormat.format(Bundle
-                            .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("Copy")}), JOptionPane.ERROR_MESSAGE);
+                            .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         Location check = locationManager.getLocationByName(loctionNameTextField.getText());
         if (check != null) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("LocationAlreadyExists"), MessageFormat.format(Bundle
-                    .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("Copy")}), JOptionPane.ERROR_MESSAGE);
+                    .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;

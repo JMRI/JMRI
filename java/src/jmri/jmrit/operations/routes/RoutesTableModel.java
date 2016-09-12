@@ -119,7 +119,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
             case STATUS_COLUMN:
                 return Bundle.getMessage("Status");
             case EDIT_COLUMN:
-                return Bundle.getMessage("Edit");
+                return ""; // no title above Edit column (compare Turnout Table)
             default:
                 return "unknown"; // NOI18N
         }
@@ -176,7 +176,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
             case STATUS_COLUMN:
                 return route.getStatus();
             case EDIT_COLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit");
             default:
                 return "unknown " + col; // NOI18N
         }

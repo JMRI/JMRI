@@ -33,7 +33,7 @@ public class TrainCopyFrame extends OperationsFrame {
     javax.swing.JTextField trainNameTextField = new javax.swing.JTextField(Control.max_len_string_train_name);
 
     // major buttons
-    javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("Copy"));
+    javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("ButtonCopy"));
 
     // combo boxes
     JComboBox<Train> trainBox = TrainManager.instance().getTrainComboBox();

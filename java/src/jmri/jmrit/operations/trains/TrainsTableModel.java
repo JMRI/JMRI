@@ -171,7 +171,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     public static final String TERMINATESCOLUMNNAME = Bundle.getMessage("Terminates");
     public static final String STATUSCOLUMNNAME = Bundle.getMessage("Status");
     public static final String ACTIONCOLUMNNAME = Bundle.getMessage("Action");
-    public static final String EDITCOLUMNNAME = Bundle.getMessage("Edit");
+    public static final String EDITCOLUMNNAME = Bundle.getMessage("ButtonEdit");
 
     @Override
     public String getColumnName(int col) {
@@ -313,7 +313,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 return trainManager.getTrainsFrameTrainAction();
             }
             case EDITCOLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit");
             default:
                 return "unknown " + col; // NOI18N
         }

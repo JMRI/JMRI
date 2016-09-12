@@ -87,9 +87,9 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     JButton deleteTrackButton = new JButton(Bundle.getMessage("DeleteTrack"));
     JButton addTrackButton = new JButton(Bundle.getMessage("AddTrack"));
 
-    JButton deleteDropButton = new JButton(Bundle.getMessage("Delete"));
+    JButton deleteDropButton = new JButton(Bundle.getMessage("ButtonDelete"));
     JButton addDropButton = new JButton(Bundle.getMessage("Add"));
-    JButton deletePickupButton = new JButton(Bundle.getMessage("Delete"));
+    JButton deletePickupButton = new JButton(Bundle.getMessage("ButtonDelete"));
     JButton addPickupButton = new JButton(Bundle.getMessage("Add"));
 
     // check boxes

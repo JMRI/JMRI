@@ -28,7 +28,7 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
 
     // major buttons
     JButton addButton = new JButton(Bundle.getMessage("Add"));
-    JButton deleteButton = new JButton(Bundle.getMessage("Delete"));
+    JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
     JButton replaceButton = new JButton(Bundle.getMessage("Replace"));
 
     JButton restoreButton = new JButton(Bundle.getMessage("Restore"));
