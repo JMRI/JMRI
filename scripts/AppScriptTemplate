@@ -278,6 +278,9 @@ if [ -z "${JAVA_HOME}" ] ; then
             if [[ ! "$( "${JAVACMD}" -version 2>&1 )" =~ 1.[89] ]] ; then
                 JAVA_HOME=""
             fi
+        else
+            # Reset JAVA_HOME since there is no java executable in it
+            JAVA_HOME=""
         fi
         if [[ -z "${JAVA_HOME}" && -x /usr/libexec/java_home ]] ; then
             # Test for any JDKs of version 1.8 or newer

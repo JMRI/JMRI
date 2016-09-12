@@ -180,7 +180,7 @@ public class InstanceManager {
     static public <T> T getDefault(@Nonnull Class<T> type) {
         log.trace("getDefault of type {}", type.getName());
         return Objects.requireNonNull(InstanceManager.getNullableDefault(type),
-                "Required nonnull defualt for " + type.getName() + " does not exist.");
+                "Required nonnull default for " + type.getName() + " does not exist.");
     }
 
     /**
