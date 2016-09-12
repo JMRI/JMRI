@@ -13,10 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.Border;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
 import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
 import jmri.jmrix.ieee802154.xbee.XBeeNode;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
@@ -37,7 +33,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
     protected javax.swing.JButton discoverButton = new javax.swing.JButton(Bundle.getMessage("ButtonDiscover"));
     private JComboBox<String> nodeIdentifierField = new javax.swing.JComboBox<String>();
     protected JTable assignmentTable = null;
-    protected TableModel assignmentListModel = null;
+    protected javax.swing.table.TableModel assignmentListModel = null;
 
     protected JPanel assignmentPanel = null;
 
@@ -530,105 +526,6 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
                // addresses is selected.
                return;
        }
-    }
-
-    /**
-     * Set up table for displaying bit assignments
-     */
-    public class AssignmentTableModel extends AbstractTableModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2449916200516563370L;
-
-        private XBeeNode curNode = null;
-
-        public static final int BIT_COLUMN = 0;
-        public static final int SYSNAME_COLUMN = 1;
-        public static final int USERNAME_COLUMN = 2;
-
-        private String[] assignmentTableColumnNames = {Bundle.getMessage("HeadingBit"),
-            Bundle.getMessage("HeadingSystemName"),
-            Bundle.getMessage("HeadingUserName")};
-
-        private String free = Bundle.getMessage("AssignmentFree");
-
-        public void setNode(XBeeNode node) {
-            curNode = node;
-            fireTableDataChanged();
-        }
-
-        public void initTable(JTable assignmentTable) {
-            TableColumnModel assignmentColumnModel = assignmentTable.getColumnModel();
-            TableColumn bitColumn = assignmentColumnModel.getColumn(BIT_COLUMN);
-            bitColumn.setMinWidth(20);
-            bitColumn.setMaxWidth(40);
-            bitColumn.setResizable(true);
-            TableColumn sysColumn = assignmentColumnModel.getColumn(SYSNAME_COLUMN);
-            sysColumn.setMinWidth(75);
-            sysColumn.setMaxWidth(100);
-            sysColumn.setResizable(true);
-            TableColumn userColumn = assignmentColumnModel.getColumn(USERNAME_COLUMN);
-            userColumn.setMinWidth(90);
-            userColumn.setMaxWidth(450);
-            userColumn.setResizable(true);
-        }
-
-        public String getColumnName(int c) {
-            return assignmentTableColumnNames[c];
-        }
-
-        public Class<?> getColumnClass(int c) {
-            if (c == BIT_COLUMN) {
-                return Integer.class;
-            } else {
-                return String.class;
-            }
-        }
-
-        public boolean isCellEditable(int r, int c) {
-            return false;
-        }
-
-        public int getColumnCount() {
-            return 3;
-        }
-
-        public int getRowCount() {
-            return 8;
-        }
-
-        public Object getValueAt(int r, int c) {
-            Integer pin = Integer.valueOf(r);
-            try {
-                switch (c) {
-                    case BIT_COLUMN:
-                        return pin;
-                    case SYSNAME_COLUMN:
-                        if (curNode.getPinAssigned(pin)) {
-                            return curNode.getPinBean(pin).getSystemName();
-                        } else {
-                            return free;
-                        }
-                    case USERNAME_COLUMN:
-                        if (curNode.getPinAssigned(pin)) {
-                            return curNode.getPinBean(pin).getUserName();
-                        } else {
-                            return "";
-                        }
-                    default:
-                        return "";
-                }
-            } catch (java.lang.NullPointerException npe) {
-                log.debug("Caught NPE getting pin assignment for pin {}", pin);
-                return "";
-            }
-        }
-
-        public void setValueAt(Object type, int r, int c) {
-            // nothing is stored here
-        }
     }
 
     // IDiscoveryListener interface methods
