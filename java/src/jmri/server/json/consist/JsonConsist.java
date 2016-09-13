@@ -10,7 +10,7 @@ public class JsonConsist {
     /**
      * {@value #CONSIST}
      */
-    public static final String CONSIST = "block"; // NOI18N
+    public static final String CONSIST = "consist"; // NOI18N
     /**
      * {@value #CONSISTS}
      */
