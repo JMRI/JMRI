@@ -7,7 +7,9 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    BundleTest.class
+    BundleTest.class,
+    IEEE802154MonActionTest.class,
+    IEEE802154MonFrameTest.class
 })
 
 /**
