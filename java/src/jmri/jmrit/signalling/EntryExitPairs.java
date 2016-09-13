@@ -850,7 +850,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
             runWhenStablised = true;
             toUseWhenStable = editor;
             interlockTypeToUseWhenStable = interlockType;
-            log.debug("Layout block routing has not yet stabilsed, discovery will happen once it has");
+            log.debug("Layout block routing has not yet stabilised, discovery will happen once it has");
             return;
         }
         Hashtable<NamedBean, ArrayList<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(editor, Sensor.class, LayoutBlockConnectivityTools.SENSORTOSENSOR);

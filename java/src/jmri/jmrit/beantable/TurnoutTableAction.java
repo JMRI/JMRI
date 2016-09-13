@@ -71,10 +71,10 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
 
         //This following must contain the word Global for a correct match in the abstract turnout
-        defaultThrownSpeedText = ("Use Global " + turnManager.getDefaultThrownSpeed());
-        defaultClosedSpeedText = ("Use Global " + turnManager.getDefaultClosedSpeed());
+        defaultThrownSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + turnManager.getDefaultThrownSpeed());
+        defaultClosedSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + turnManager.getDefaultClosedSpeed());
         //This following must contain the word Block for a correct match in the abstract turnout
-        useBlockSpeed = "Use Block Speed";
+        useBlockSpeed = Bundle.getMessage("UseGlobal", "Block Speed");
 
         speedListClosed.add(defaultClosedSpeedText);
         speedListThrown.add(defaultThrownSpeedText);
@@ -100,7 +100,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     String defaultThrownSpeedText;
     String defaultClosedSpeedText;
     // I18N TODO
-    String useBlockSpeed = "Use Block Speed";
+    String useBlockSpeed = Bundle.getMessage("UseGlobal", "Block Speed");
     String bothText = "Both";
     String cabOnlyText = "Cab only";
     String pushbutText = "Pushbutton only";
@@ -720,14 +720,14 @@ public class TurnoutTableAction extends AbstractTableAction {
 
     private void updateClosedList() {
         speedListClosed.remove(defaultClosedSpeedText);
-        defaultClosedSpeedText = ("Use Global " + turnManager.getDefaultClosedSpeed());
+        defaultClosedSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + turnManager.getDefaultClosedSpeed());
         speedListClosed.add(0, defaultClosedSpeedText);
         m.fireTableDataChanged();
     }
 
     private void updateThrownList() {
         speedListThrown.remove(defaultThrownSpeedText);
-        defaultThrownSpeedText = ("Use Global " + turnManager.getDefaultThrownSpeed());
+        defaultThrownSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + turnManager.getDefaultThrownSpeed());
         speedListThrown.add(0, defaultThrownSpeedText);
         m.fireTableDataChanged();
     }
@@ -1319,7 +1319,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 iNum = InstanceManager.turnoutManagerInstance().askNumControlBits(sName);
                 if ((InstanceManager.turnoutManagerInstance().isNumControlBitsSupported(sName)) && (range.isSelected())) {
                     if (JOptionPane.showConfirmDialog(addFrame,
-                            "Do you want to use the last setting for all turnouts in this range? ", "Use Setting",
+                            Bundle.getMessage("UseForAllTurnouts"), Bundle.getMessage("UseSetting"),
                             JOptionPane.YES_NO_OPTION) == 0) {
                         useLastBit = true;
                     }
