@@ -147,7 +147,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        toolMenu.add(new CarLoadAttributeAction(Bundle.getMessage("CarQuanity"), this));
+        toolMenu.add(new CarLoadAttributeAction(Bundle.getMessage("CarQuantity"), this));
         toolMenu.add(new PrintCarLoadsAction(Bundle.getMessage("MenuItemPreview"), true, this));
         toolMenu.add(new PrintCarLoadsAction(Bundle.getMessage("MenuItemPrint"), false, this));
         menuBar.add(toolMenu);
