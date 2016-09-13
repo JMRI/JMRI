@@ -182,7 +182,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             case DOWN_COLUMN:
                 return Bundle.getMessage("Down");
             case DELETE_COLUMN:
-                return Bundle.getMessage("Delete");
+                return Bundle.getMessage("ButtonDelete");
             default:
                 return "unknown"; // NOI18N
         }
@@ -313,7 +313,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
                 if (rl.getComment().equals(RouteLocation.NONE)) {
                     return Bundle.getMessage("Add");
                 } else {
-                    return Bundle.getMessage("Edit");
+                    return Bundle.getMessage("ButtonEdit");
                 }
             }
             case UP_COLUMN:
@@ -321,7 +321,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             case DOWN_COLUMN:
                 return Bundle.getMessage("Down");
             case DELETE_COLUMN:
-                return Bundle.getMessage("Delete");
+                return Bundle.getMessage("ButtonDelete");
             default:
                 return "unknown " + col; // NOI18N
         }
@@ -564,7 +564,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
         dialog.add(buttonPane, BorderLayout.SOUTH);
 
-        JButton okayButton = new JButton(Bundle.getMessage("Okay"));
+        JButton okayButton = new JButton(Bundle.getMessage("ButtonOK"));
         okayButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -575,7 +575,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         });
         buttonPane.add(okayButton);
 
-        JButton cancelButton = new JButton(Bundle.getMessage("Cancel"));
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {

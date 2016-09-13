@@ -49,8 +49,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
     JComboBox<String> kernelComboBox = carManager.getKernelComboBox();
 
     // buttons
-    JButton editLoadButton = new JButton(Bundle.getMessage("Edit"));
-    JButton editKernelButton = new JButton(Bundle.getMessage("Edit"));
+    JButton editLoadButton = new JButton(Bundle.getMessage("ButtonEdit"));
+    JButton editKernelButton = new JButton(Bundle.getMessage("ButtonEdit"));
 
     // check boxes
     protected JCheckBox ignoreRWECheckBox = new JCheckBox(Bundle.getMessage("Ignore"));

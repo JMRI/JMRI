@@ -405,7 +405,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
             JButton button = new JButton(Bundle.getMessage("Add"));
             if (!location.getSwitchListComment().equals(Location.NONE)) {
-                button.setText(Bundle.getMessage("Edit"));
+                button.setText(Bundle.getMessage("ButtonEdit"));
             }
             button.setName(location.getName());
             addCommentButtonAction(button);

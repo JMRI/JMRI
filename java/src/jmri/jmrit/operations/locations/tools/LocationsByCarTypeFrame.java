@@ -53,7 +53,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
     JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
     // check boxes
-    JCheckBox copyCheckBox = new JCheckBox(Bundle.getMessage("Copy"));
+    JCheckBox copyCheckBox = new JCheckBox(Bundle.getMessage("ButtonCopy"));
 
     // text field
     JLabel textCarType = new JLabel(Empty);
