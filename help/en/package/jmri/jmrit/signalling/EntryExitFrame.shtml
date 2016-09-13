@@ -6,7 +6,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright ($Author$) 2009 -->
-  <!-- $Id$ -->
 
   <title>JMRI: Signaling Entry/Exit Interlocking</title>
   <!-- Style -->
@@ -33,8 +32,8 @@
     <h2>Overview</h2>The Entry/Exit system uses Sensors assigned to
     Block boundaries in the JMRI Layout Editor to set a route up
     between two locations in the Layout Editor when these Sensors
-    are activated in the correct order. These two sensors are
-    refered to as the NX Pair.
+    are activated in the correct order. These two Sensors are
+    refered to as the "NX Pair".
 
     <p><b>Block Boundaries</b> Sensors, like Signals (either Heads
     or Masts), should be added at block boundaries. To do this,
@@ -72,7 +71,7 @@
     boundary points as the sensors working in the same direction.
     The SignalMast logic will remain for the duration of the
     operating session, however it is not saved and will be
-    re-created the next time the panel is open.<br>
+    re-created the next time the panel is opened.<br>
     When there is no route set then the SignalMast will be placed
     in a held state.<br></p>
 
@@ -99,7 +98,7 @@
 
     <p>You first need to assign sensors at Block boundaries on the
     layout editor, by using the pop up window on block boundaries,
-    turnouts or Level Crossings. These sensors act the NX selection
+    turnouts or Level Crossings. These sensors act as the NX selection
     buttons.</p>
 
     <p>From the Entry Exit window, select the layout panel that you
@@ -131,7 +130,7 @@
     there are block boundaries present. On a turnout you can only
     assign items that will protect the block the turnout is in, you
     can not protect/assign an item on the way out of a turnout so
-    to speak. The same with level-crossings.</p>
+    to speak. The same applies to level-crossings.</p>
 
     <h3>Options</h3><b>Route reselection</b> Determines what should
     occur when the NX route is reselected by the user, the options
@@ -210,14 +209,14 @@
 
     <p>If a route cannot be set due to a Block already being
     allocated or occupied, you will be presented with the option to
-    "stack" the route. When the route is stacked a new window will
+    "Stack" the route. When the route is stacked, a new window will
     pop up on the screen which shows the routes that have been
     stacked. Once a route has been stacked, the system will check
     every 10 seconds to see if it is possible to set-up that NX
     route, multiple NX routes can be stacked, and they are checked
     in the order which they were stacked in, a NX route cannot be
     stacked more than once. To cancel a NX route, selected it in
-    the table and click on the cancel button at the bottom.</p>
+    the table and click on the "Cancel" button at the bottom.</p>
 
     <p><b>Manual Route Clear Down</b></p>
 
