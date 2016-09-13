@@ -52,7 +52,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         super();
         sml = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sourceMast);
         this.sourceMast = sourceMast;
-        fixedSourceMastLabel = new JLabel(rb.getString("SourceMast") + " " + sourceMast.getDisplayName());
+        fixedSourceMastLabel = new JLabel(Bundle.getMessage("SourceMast") + " " + sourceMast.getDisplayName());
         if (sml != null) {
             _signalMastList = sml.getDestinationList();
         }
@@ -261,13 +261,13 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                 return Bundle.getMessage("ColumnUserName");
             }
             if (col == SYSNAME_COLUMN) {
-                return rb.getString("DestMast");
+                return Bundle.getMessage("DestMast");
             }
             if (col == ACTIVE_COLUMN) {
-                return rb.getString("ColumnActive");
+                return Bundle.getMessage("SensorStateActive"); // "Active"
             }
             if (col == ENABLE_COLUMN) {
-                return rb.getString("ColumnEnabled");
+                return Bundle.getMessage("ColumnHeadEnabled");
             }
             if (col == EDIT_COLUMN) {
                 return ""; //no title above Edit buttons

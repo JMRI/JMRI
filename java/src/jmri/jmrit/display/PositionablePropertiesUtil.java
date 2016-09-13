@@ -117,6 +117,9 @@ public class PositionablePropertiesUtil {
 
     ImageIcon[] images;
     String[] _fontcolors = {"Black", "Dark Gray", "Gray", "Light Gray", "White", "Red", "Orange", "Yellow", "Green", "Blue", "Magenta"}; // NOI18N
+    // Strings in _fontcolors are used to:
+    // a. look up a system color (triplet of RGB int values) by uppercase key like "DARK_GRAY"
+    // b. to look up the translation of a color name (after stripping out spaces) by key like "DarkGrey"
     String[] _backgroundcolors;
     JComboBox<Integer> fontColor;
     JComboBox<Integer> backgroundColor;
@@ -139,9 +142,10 @@ public class PositionablePropertiesUtil {
         Color defaultLabelBackground = backgroundColorPanel.getBackground();
         _backgroundcolors = new String[_fontcolors.length + 1];
         for (int i = 0; i < _fontcolors.length; i++) {
-            _backgroundcolors[i] = _fontcolors[i];
+            _backgroundcolors[i] = _fontcolors[i]; // copy _fontcolors[] to _backgroundcolors[]
         }
-        _backgroundcolors[_backgroundcolors.length - 1] = Bundle.getMessage("ColorClear"); // colors stored as RGB int values in xml
+        _backgroundcolors[_backgroundcolors.length - 1] = "ColorClear"; // NOI18N
+        // add extra line for transparent bg color; colors stored as RGB int values in xml
 
         Integer[] intArray = new Integer[_backgroundcolors.length];
         images = new ImageIcon[_backgroundcolors.length];
@@ -151,7 +155,7 @@ public class PositionablePropertiesUtil {
             intArray[i] = Integer.valueOf(i);
             try {
                 // try to get a color by name using reflection
-                Field f = Color.class.getField((_backgroundcolors[i].toUpperCase()).replaceAll(" ", "_"));
+                Field f = Color.class.getField((_backgroundcolors[i].toUpperCase()).replaceAll(" ", "_")); // like "DARK_GRAY"
                 desiredColor = (Color) f.get(null);
             } catch (NoSuchFieldException ce) {
                 //Can be considered normal if background is set None/Clear
@@ -170,10 +174,12 @@ public class PositionablePropertiesUtil {
                 }
             } else {
                 images[i] = getColourIcon(defaultLabelBackground);
-                images[i].setDescription(_backgroundcolors[i]);
+                images[i].setDescription(_backgroundcolors[i]); // NOI18N
+                // look up translation of color name in ColorComboBoxRenderer (ca. line 882)
             }
             if (images[i] != null) {
                 images[i].setDescription(_backgroundcolors[i]);
+                // look up translation of color name in ColorComboBoxRenderer (ca. line 882)
             }
         }
         backgroundColor = new JComboBox<Integer>(intArray);
@@ -313,7 +319,7 @@ public class PositionablePropertiesUtil {
 
             String _borderTitle = txtList.get(i).getDescription();
             if (_borderTitle.equals(Bundle.getMessage("TextExampleLabel"))) {
-                _borderTitle = Bundle.getMessage("TextDecoLabel"); // replace default label by a appropriate one for text decoration box on Font tab
+                _borderTitle = Bundle.getMessage("TextDecoLabel"); // replace default label by an appropriate one for text decoration box on Font tab
             }
             txtPanel.setBorder(BorderFactory.createTitledBorder(_borderTitle));
             txtPanel.add(p);
@@ -881,8 +887,10 @@ public class PositionablePropertiesUtil {
             }
             int selectedIndex = ((Integer) value).intValue();
             ImageIcon icon = images[selectedIndex];
-            String colorString = _backgroundcolors[selectedIndex];
-
+            // String colorString = _backgroundcolors[selectedIndex];
+            // called every time the user opens color drop down and while hovering over/selecting a color from list
+            String colorString = Bundle.getMessage(_backgroundcolors[selectedIndex].replaceAll(" ", ""));
+            // I18N looks up translated name of color in Bundle
             setIcon(icon);
             setText(colorString);
             return this;

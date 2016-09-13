@@ -2390,7 +2390,7 @@ public class TrainBuilder extends TrainCommon {
                     (car.getDestination() == null || car.getDestinationTrack() == null || car.getTrain() == null)) {
                 addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildWarningCarStageDest"),
                         new Object[]{car.toString()}));
-                // does the car has a final destination track going into staging? If so we need to reset this car
+                // does the car have a final destination to staging? If so we need to reset this car
                 if (car.getFinalDestinationTrack() != null && car.getFinalDestinationTrack() == _terminateStageTrack) {
                     addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingCarHasFinal"),
                             new Object[]{car.toString(), car.getFinalDestinationName(),
