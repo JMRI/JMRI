@@ -36,7 +36,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(XNetPacketizerTest.class));
         suite.addTest(new TestSuite(XNetTurnoutManagerTest.class));
         suite.addTest(new TestSuite(XNetSensorManagerTest.class));
-        suite.addTest(new TestSuite(XNetLightManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XNetLightManagerTest.class));
         suite.addTest(new TestSuite(XNetTrafficControllerTest.class));
         suite.addTest(new TestSuite(XNetTrafficRouterTest.class));
         suite.addTest(new TestSuite(XNetSystemConnectionMemoTest.class));
