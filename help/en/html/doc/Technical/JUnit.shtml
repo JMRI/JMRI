@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -143,7 +142,8 @@
 subdirectory of the "java" directory in our usual code
 distributions, and then run the tests under a GUI. (To make sure
 you've recompiled everything, you may want to do <code>ant
-clean</code> first) If you know the name of your test class, or the
+clean</code> first)<br>
+If you know the name of your test class, or the
 test class for your package, you can run that directly with the
 "runtest" script:
       <pre>
@@ -151,7 +151,8 @@ test class for your package, you can run that directly with the
    ant tests<br>   ./runtest.csh jmri.jmrit.powerpanel.PowerPanelTest
 </code>
 </pre>The first line compiles all the test code, and the second
-runs a specific test or test suite.
+runs a specific test or test suite.<br>
+(Hint: How to set this up <a href="IntelliJ.shtml#test">using IntelliJ</a>)
 
       <h2><a name="Continuous" id="Continuous">Continuous
       Integration Test Execution</a></h2>The <a href=
@@ -788,6 +789,9 @@ import org.junit.Test;
           apps.tests.Log4JFixture.tearDown();
     }
 </pre>
+        Make sure no more references to the <code>super.</code>
+            method remain in either setUp() or tearDown().
+            Just remove those lines.
         </li>
 
         <li>Finally, replace the test suite definition. JUnit3 was
@@ -800,8 +804,8 @@ import org.junit.Test;
         return suite;
     }
 </pre><br>
-          If that's what you've got, just remove it and you're
-          done. If you've got more logic in the suite() routine,
+          If that's what you've got, just remove the whole block.<br>
+          If you've got more logic in the suite() routine,
           ask for help on the jmri-developers list. An example of
           the result of migrating a more complex case:
           <pre style="font-family: monospace;">
@@ -812,10 +816,21 @@ import org.junit.Test;
 </pre>
         </li>
 
+      <li>
+      In the <code>PackageTest.java</code> for this test package,
+          under <em>// Implementation</em>, replace the line<br>
+          <code>suite.addTest(MyClassTest.suite());</code> by<br>
+          <code>suite.addTest(new junit.framework.JUnit4TestAdapter(MyClassTest.class));</code>
+      </li>
+
         <li>Run the tests and check that all your tests were
         successfully included and run.</li>
-      </ol>That's it! You've successfully migrated to native
-      JUnit4. <!--#include virtual="/Footer" -->
+      </ol>
+
+      <p>That's it! You've successfully migrated to native
+      JUnit4.</p>
+
+        <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
