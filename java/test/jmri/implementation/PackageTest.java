@@ -57,6 +57,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(NmraConsistTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SE8cSignalHeadTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SignalHeadSignalMastTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(MatrixSignalMastTest.java));
 
         // sub-packages
         suite.addTest(jmri.implementation.swing.PackageTest.suite());
