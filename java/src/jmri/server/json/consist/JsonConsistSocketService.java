@@ -1,20 +1,14 @@
 package jmri.server.json.consist;
 
-import static jmri.server.json.JSON.METHOD;
-import static jmri.server.json.JSON.NAME;
-import static jmri.server.json.JSON.PUT;
-import static jmri.server.json.block.JsonBlock.BLOCK;
-
 import com.fasterxml.jackson.databind.JsonNode;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
-import jmri.Block;
-import jmri.BlockManager;
-import jmri.InstanceManager;
+import jmri.ConsistListListener;
+import jmri.ConsistListener;
+import jmri.DccLocoAddress;
 import jmri.JmriException;
+import jmri.server.json.JSON;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
@@ -26,30 +20,30 @@ import jmri.server.json.JsonSocketService;
 public class JsonConsistSocketService extends JsonSocketService {
 
     private final JsonConsistHttpService service;
-    private final HashMap<String, BlockListener> blocks = new HashMap<>();
+    private final HashSet<DccLocoAddress> consists = new HashSet<>();
     private Locale locale;
+    private final JsonConsistListener consistListener = new JsonConsistListener();
+    private final JsonConsistListListener consistListListener = new JsonConsistListListener();
 
     public JsonConsistSocketService(JsonConnection connection) {
         super(connection);
         this.service = new JsonConsistHttpService(connection.getObjectMapper());
+        this.service.manager.addConsistListListener(this.consistListListener);
     }
 
     @Override
     public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
         this.locale = locale;
-        String name = data.path(NAME).asText();
-        if (data.path(METHOD).asText().equals(PUT)) {
+        DccLocoAddress address = new DccLocoAddress(data.path(JSON.ADDRESS).asInt(), data.path(JSON.IS_LONG_ADDRESS).asBoolean());
+        String name = address.getNumber() + (address.isLongAddress() ? "L" : "");
+        if (data.path(JSON.METHOD).asText().equals(JSON.PUT)) {
             this.connection.sendMessage(this.service.doPut(type, name, data, locale));
         } else {
             this.connection.sendMessage(this.service.doPost(type, name, data, locale));
         }
-        if (!this.blocks.containsKey(name)) {
-            Block block = InstanceManager.getDefault(BlockManager.class).getBlock(name);
-            if (block != null) {
-                BlockListener listener = new BlockListener(block);
-                block.addPropertyChangeListener(listener);
-                this.blocks.put(name, listener);
-            }
+        if (!this.consists.contains(address)) {
+            this.service.manager.getConsist(address).addConsistListener(this.consistListener);
+            this.consists.add(address);
         }
     }
 
@@ -61,36 +55,43 @@ public class JsonConsistSocketService extends JsonSocketService {
 
     @Override
     public void onClose() {
-        blocks.values().stream().forEach((block) -> {
-            block.block.removePropertyChangeListener(block);
+        this.consists.stream().forEach((address) -> {
+            this.service.manager.getConsist(address).removeConsistListener(this.consistListener);
         });
-        blocks.clear();
+        this.consists.clear();
+        this.service.manager.removeConsistListListener(this.consistListListener);
     }
 
-    private class BlockListener implements PropertyChangeListener {
-
-        protected final Block block;
-
-        public BlockListener(Block block) {
-            this.block = block;
-        }
+    private class JsonConsistListener implements ConsistListener {
 
         @Override
-        public void propertyChange(PropertyChangeEvent e) {
-            if (e.getPropertyName().equals("value")) {
+        public void consistReply(DccLocoAddress locoaddress, int status) {
+            try {
                 try {
-                    try {
-                        connection.sendMessage(service.doGet(BLOCK, this.block.getSystemName(), locale));
-                    } catch (JsonException ex) {
-                        connection.sendMessage(ex.getJsonMessage());
-                    }
-                } catch (IOException ex) {
-                    // if we get an error, de-register
-                    block.removePropertyChangeListener(this);
-                    blocks.remove(this.block.getSystemName());
+                    connection.sendMessage(service.getConsist(locale, locoaddress));
+                } catch (JsonException ex) {
+                    connection.sendMessage(ex.getJsonMessage());
                 }
+            } catch (IOException ex) {
+                service.manager.getConsist(locoaddress).removeConsistListener(this);
+                consists.remove(locoaddress);
             }
         }
     }
 
+    private class JsonConsistListListener implements ConsistListListener {
+
+        @Override
+        public void notifyConsistListChanged() {
+            try {
+                try {
+                    connection.sendMessage(service.doGetList(JsonConsist.CONSISTS, locale));
+                } catch (JsonException ex) {
+                    connection.sendMessage(ex.getJsonMessage());
+                }
+            } catch (IOException ex) {
+                service.manager.removeConsistListListener(this);
+            }
+        }
+    }
 }
