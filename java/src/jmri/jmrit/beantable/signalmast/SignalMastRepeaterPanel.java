@@ -236,10 +236,10 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
                 return Bundle.getMessage("ColumnSlave");
             }
             if (col == ENABLE_COLUMN) {
-                return Bundle.getMessage("ColumnEnabled");
+                return Bundle.getMessage("ColumnHeadEnabled");
             }
             if (col == DEL_COLUMN) {
-                return Bundle.getMessage("ColumnDelete");
+                return "";
             }
             return "";
         }

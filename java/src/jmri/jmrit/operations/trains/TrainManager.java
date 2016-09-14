@@ -51,10 +51,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     private String _rowColorTrainEnRoute = NONE; // row color when train is en route
     private String _rowColorTerminated = NONE; // row color when train is terminated
 
-    // Train frame table column widths (12), starts with Time column and ends with Edit
-    private int[] _tableColumnWidths = {50, 50, 72, 100, 140, 120, 120, 120, 120, 120, 90, 70};
-
-    private int[] _tableScheduleColumnWidths = {50, 70, 120};
     private String _trainScheduleActiveId = NONE;
 
     // Scripts
@@ -186,18 +182,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         if (!old.equals(action)) {
             setDirtyAndFirePropertyChange(TRAIN_ACTION_CHANGED_PROPERTY, old, action);
         }
-    }
-
-    /**
-     *
-     * @return get an array of table column widths for the trains frame
-     */
-    public int[] getTrainsFrameTableColumnWidths() {
-        return _tableColumnWidths.clone();
-    }
-
-    public int[] getTrainScheduleFrameTableColumnWidths() {
-        return _tableScheduleColumnWidths.clone();
     }
 
     /**
@@ -995,18 +979,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
                                         TrainsTableFrame.CONDUCTOR))) {
                     _trainAction = a.getValue();
                 }
-
-                // TODO This here is for backwards compatibility, remove after next major release
-                if ((a = e.getAttribute(Xml.COLUMN_WIDTHS)) != null) {
-                    String[] widths = a.getValue().split(" ");
-                    for (int i = 0; i < widths.length; i++) {
-                        try {
-                            _tableColumnWidths[i] = Integer.parseInt(widths[i]);
-                        } catch (NumberFormatException ee) {
-                            log.error("Number format exception when reading trains column widths");
-                        }
-                    }
-                }
             }
 
             // Row color options
@@ -1033,18 +1005,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
             if (e != null) {
                 if ((a = e.getAttribute(Xml.ACTIVE_ID)) != null) {
                     _trainScheduleActiveId = a.getValue();
-                }
-                // TODO This here is for backwards compatibility, remove after next major release
-                if ((a = e.getAttribute(Xml.COLUMN_WIDTHS)) != null) {
-                    String[] widths = a.getValue().split(" ");
-                    _tableScheduleColumnWidths = new int[widths.length];
-                    for (int i = 0; i < widths.length; i++) {
-                        try {
-                            _tableScheduleColumnWidths[i] = Integer.parseInt(widths[i]);
-                        } catch (NumberFormatException ee) {
-                            log.error("Number format exception when reading trains column widths");
-                        }
-                    }
                 }
             }
             // check for scripts

@@ -70,7 +70,7 @@ public class PackageTest extends TestCase {
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrit.ussctc.UssCtcTest.suite());
         }
-        suite.addTest(jmri.jmrit.consisttool.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.consisttool.PackageTest.class));
         suite.addTest(jmri.jmrit.withrottle.PackageTest.suite());
         suite.addTest(jmri.jmrit.ampmeter.PackageTest.suite());
         suite.addTest(jmri.jmrit.lcdclock.PackageTest.suite());

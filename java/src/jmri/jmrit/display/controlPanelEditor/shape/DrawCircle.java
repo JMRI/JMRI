@@ -33,7 +33,7 @@ public class DrawCircle extends DrawFrame {
 
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-        p.add(new JLabel(Bundle.getMessage("circle")));
+        p.add(new JLabel(Bundle.getMessage("Circle")));
         JPanel pp = new JPanel();
         _radiusText = new JTextField(6);
         _radiusText.setText(Integer.toString(_radius));
