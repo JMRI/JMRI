@@ -102,15 +102,14 @@
           </ul>
         </li>
       </ul>
-    
+
       <ul>
         <li><a href="#issues">Issues</a></li>
       </ul>
+
       <ul>
         <li><a href="#junit4">Migrating to JUnit4</a></li>
-      </ul>
-      
-      <a name="Introduction"></a> JUnit is a
+      </ul><a name="Introduction" id="Introduction"></a> JUnit is a
       system for building "unit tests" of software. Unit tests are
       small tests that make sure that individual parts of the
       software do what they're supposed to do. In a distributed
@@ -134,7 +133,7 @@
       when you track down a bug (make sure it doesn't come
       back).</p>
 
-      <h2><a name="run">Running the Tests</a></h2>To run
+      <h2><a name="run" id="run">Running the Tests</a></h2>To run
       the existing tests, say
       <pre>
 <code>
@@ -154,7 +153,7 @@ test class for your package, you can run that directly with the
 </pre>The first line compiles all the test code, and the second
 runs a specific test or test suite.
 
-      <h2><a name="Continuous">Continuous
+      <h2><a name="Continuous" id="Continuous">Continuous
       Integration Test Execution</a></h2>The <a href=
       "ContinuousIntegration.shtml">continuous integration
       environment</a> senses changes in the code repository,
@@ -163,7 +162,7 @@ runs a specific test or test suite.
       the "alltest" ant target against the build to run the tests
       against the successful build of the code base.
 
-      <h3><a name="Reporting">Error
+      <h3><a name="Reporting" id="Reporting">Error
       Reporting</a></h3>If a test fails during the continuous
       integration execution of "alltest", an e-mail is sent to the
       jmri-build e-mail list as well as to the developers who have
@@ -182,7 +181,7 @@ runs a specific test or test suite.
       <p>(When the build succeeds, nothing is mailed, to cut down
       on traffic)</p>
 
-      <h3><a name="Coverage">Code Coverage
+      <h3><a name="Coverage" id="Coverage">Code Coverage
       Reports</a></h3>As part of running the tests, Jenkins
       accumulates information on how much of the code was executed,
       called the "code coverage". We use the <a href=
@@ -215,7 +214,7 @@ runs a specific test or test suite.
         scrolling down).</li>
       </ul>
 
-      <h2><a name="write">Writing Tests</a></h2>By
+      <h2><a name="write" id="write">Writing Tests</a></h2>By
       convention, we have a "test" class shadowing (almost) every
       real class. The "test" directory contains a tree of package
       directories parallel to the "src" tree. Each test class has
@@ -246,17 +245,17 @@ runs a specific test or test suite.
       piece of the classes operation. That's why they're called
       "unit" tests.</p>
 
-      <h3><a name="write4NewClass">Writing
+      <h3><a name="write4NewClass" id="write4NewClass">Writing
       Tests for a New Class</a></h3>(Needs info here: basically,
       copy some other package, and don't forget to put an entry in
       the enclosing package's test suite)
 
-      <h3><a name="Write4NewPackage">Writing
+      <h3><a name="Write4NewPackage" id="Write4NewPackage">Writing
       Tests for a New Package</a></h3>(Needs info here: basically,
       copy some other package, and don't forget to put an entry in
       the enclosing package's test suite)
 
-      <h2><a name="keyMetaphors">Key Test
+      <h2><a name="keyMetaphors" id="keyMetaphors">Key Test
       Metaphors</a></h2>
 
       <h3><a name="HandlingLogOutput" id=
@@ -344,7 +343,7 @@ runs a specific test or test suite.
       won't be able to merge your code into the common repository
       until those are handled.</p>
 
-      <h3><a name="ResetInstMgr">Resetting the
+      <h3><a name="ResetInstMgr" id="ResetInstMgr">Resetting the
       InstanceManager</a></h3>If you are testing code that is going
       to reference the InstanceManager, you should clear and reset
       it to ensure you get reproducible results.
@@ -353,12 +352,7 @@ runs a specific test or test suite.
       <code>setUp()</code> implementation should start with:</p>
       <pre>
 <code>
-    super.setUp();<br>
-    apps.tests.Log4JFixture.setUp(); <br>
-    jmri.util.JUnitUtil.resetInstanceManager();<br>
-    jmri.util.JUnitUtil.initInternalTurnoutManager();<br>
-    jmri.util.JUnitUtil.initInternalLightManager();<br>
-    jmri.util.JUnitUtil.initInternalSensorManager();<br></code>
+    super.setUp();<br>    apps.tests.Log4JFixture.setUp(); <br>    jmri.util.JUnitUtil.resetInstanceManager();<br>    jmri.util.JUnitUtil.initInternalTurnoutManager();<br>    jmri.util.JUnitUtil.initInternalLightManager();<br>    jmri.util.JUnitUtil.initInternalSensorManager();<br></code>
 </pre>(You can omit the initialization managers you don't need) See
 the jmri.util.JUnitUtil class for the full list of available ones,
 and please add more if you need one that's not there yet.
@@ -366,12 +360,10 @@ and please add more if you need one that's not there yet.
       <p>Your <code>tearDown()</code> should end with:</p>
       <pre>
 <code>
-    jmri.util.JUnitUtil.resetInstanceManager();<br>
-    apps.tests.Log4JFixture.tearDown(); <br>
-    super.tearDown();<br></code>
+    jmri.util.JUnitUtil.resetInstanceManager();<br>    apps.tests.Log4JFixture.tearDown(); <br>    super.tearDown();<br></code>
 </pre>
 
-      <h3><a name="RunningListeners">Working
+      <h3><a name="RunningListeners" id="RunningListeners">Working
       with Listeners</a></h3>JMRI is a multi-threaded application.
       Listeners for JMRI objects are notified on various threads.
       Sometimes you have to wait for that to take place.
@@ -405,7 +397,7 @@ the condition doesn't come true in a reasonable length of time.
       or yield() in your code. Use the JUnitUtil and JFCUtil
       support for those instead.</p>
 
-      <h3><a name="threads">Working with
+      <h3><a name="threads" id="threads">Working with
       Threads</a></h3>(See a <a href="#testSwingCode">following
       section</a> for how to work with <a href=
       "#testSwingCode">Swing (GUI) objects</a> and the <a href=
@@ -441,15 +433,12 @@ the condition doesn't come true in a reasonable length of time.
       AbstractAutomat</a>, you can check the start with:</p>
       <pre>
 <code>
-    AbsractAutomat p = new MyThreadClass();<br>
-    p.start();<br>
-    JUnitUtil.waitFor(()-&gt;{return p.isRunning();}, "logic running");
+    AbsractAutomat p = new MyThreadClass();<br>    p.start();<br>    JUnitUtil.waitFor(()-&gt;{return p.isRunning();}, "logic running");
 </code>
 </pre>and ensure termination with
       <pre>
 <code>
-    p.stop();<br>
-    JUnitUtil.waitFor(()-&gt;{return !p.isRunning();}, "logic stopped");
+    p.stop();<br>    JUnitUtil.waitFor(()-&gt;{return !p.isRunning();}, "logic stopped");
 </code>
 </pre>
 
@@ -486,11 +475,7 @@ the condition doesn't come true in a reasonable length of time.
         the directory if necessary. An example is shown here:
           <pre>
 <code>
-    String tempDirectoryName = "temp";<br>
-    if ( <strong>! (new File(tempDirectoryName).isDirectory())</strong>) {<br>
-        // create the temp directory if it does not exist<br>
-        <strong>FileUtil.createDirectory(tempDirectoryName);</strong><br>
-    }<br></code>
+    String tempDirectoryName = "temp";<br>    if ( <strong>! (new File(tempDirectoryName).isDirectory())</strong>) {<br>        // create the temp directory if it does not exist<br>        <strong>FileUtil.createDirectory(tempDirectoryName);</strong><br>    }<br></code>
 </pre>
         </li>
 
@@ -511,20 +496,7 @@ the condition doesn't come true in a reasonable length of time.
         delete the previous file if it exists:
           <pre>
 <code>
-    String filename = tempDirectoryName + File.separator + "testcaseFile.txt";<br>
-    File file = new File(filename);<br>
-    <strong>if (file.exists())</strong> {<br>
-        <strong> try {<br>
-            file.delete();<br>
-        } catch (java.lang.Exception e) {<br>
-            Assert.fail("Exception while trying to delete the existing file " + <br>
-                    filename + <br>
-                    ".\n Exception reported: " + <br>
-                    e.toString());<br>
-            // perform some appropriate action in this case<br>
-        }</strong><br>
-    }<br>
-</code>
+    String filename = tempDirectoryName + File.separator + "testcaseFile.txt";<br>    File file = new File(filename);<br>    <strong>if (file.exists())</strong> {<br>        <strong> try {<br>            file.delete();<br>        } catch (java.lang.Exception e) {<br>            Assert.fail("Exception while trying to delete the existing file " + <br>                    filename + <br>                    ".\n Exception reported: " + <br>                    e.toString());<br>            // perform some appropriate action in this case<br>        }</strong><br>    }<br></code>
 </pre>
         </li>
 
@@ -539,13 +511,7 @@ the condition doesn't come true in a reasonable length of time.
         only when debug logging is not enabled, such as:
           <pre>
 <code>
-    <strong>if (log.isDebugEnabled()) {</strong><br>
-        log.debug("Path to written hex file is: "+filename);<br>
-    <strong>}<br>
-    else {<br>
-        file.delete();<br>
-    }</strong><br>
-</code>
+    <strong>if (log.isDebugEnabled()) {</strong><br>        log.debug("Path to written hex file is: "+filename);<br>    <strong>}<br>    else {<br>        file.delete();<br>    }</strong><br></code>
 </pre>
         </li>
 
@@ -593,10 +559,7 @@ environment.
       tests be enclosed within a mode check:</p>
       <pre>
 <code>
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {<br>
-            suite.addTest(myTest.suite());<br>
-        }<br>
-</code>
+        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {<br>            suite.addTest(myTest.suite());<br>        }<br></code>
 </pre>
 
       <p>This will run the myTest suite of tests only when a
@@ -609,9 +572,7 @@ environment.
       parameter to control that:</p>
       <pre>
 <code>
-        if (!System.getProperty("jmri.demo", "false").equals("false")) {<br>
-            myFrame.setVisible(false);<br>
-            myFrame.dispose();<br>        }
+        if (!System.getProperty("jmri.demo", "false").equals("false")) {<br>            myFrame.setVisible(false);<br>            myFrame.dispose();<br>        }
 </code>
 </pre>
 
@@ -667,7 +628,7 @@ environment.
       <p>In the future, this could be extended to pick up files
       automatically, to support xUnit testing, etc.</p>
 
-      <h2><a name="issues">Issues</a></h2>JUnit uses a
+      <h2><a name="issues" id="issues">Issues</a></h2>JUnit uses a
       custom classloader, which can cause problems finding
       singletons and starting Swing. If you get the error about not
       being able to find or load a class, suspect that adding the
@@ -679,11 +640,7 @@ environment.
       test class you're having trouble with:</p>
       <pre>
 <code>
-    static public void main(String[] args) {<br>
-        String[] testCaseName = {"-noloading", LogixTableActionTest.class.getName()};<br>
-        junit.swingui.TestRunner.main(testCaseName);<br>
-    }<br>
-</code>
+    static public void main(String[] args) {<br>        String[] testCaseName = {"-noloading", LogixTableActionTest.class.getName()};<br>        junit.swingui.TestRunner.main(testCaseName);<br>    }<br></code>
 </pre>
 
       <p>Please don't leave "-noloading" in place, as it prevents
@@ -692,91 +649,121 @@ environment.
       issues included in the
       <code>test/junit/runner/excluded.properties</code> file.
       JUnit uses those properties to decide how to handle loading
-      and reloading of classes. 
-      </p>
-      
-      <h2><a name="junit4">Migrating to JUnit4</a></h2>
-      
-      JUnit4 is a significant upgrade of the JUnit tool.
-      It brings new capabilities, but also changes to the how tests are structured.
-      As of this writing (Summer 2016), we're still supporting the existing
-      test structures described above, while also using new capabilities
-      in some new and migrated tests.  
-      <p>
-      How, when and even if to migrate previously-existing test cases is a question
-      that's still to be discussed and resolved.</p>
-      <p>The rest of this section discusses some aspects of moving to 
-      and using JUnit4.</p>
-      
-      <p>We may want to consider:
-        <ul>
-            <li>using <a href="https://jemmy.java.net/">Jemmy</a>
-                    for UI tests instead of JFCUnit, since Jemmy can be used by Junit 4 tests, 
-                    while JFCUnit requires extending Junit 3 TestCase class.
-            <li><a href="https://github.com/junit-team/junit4/wiki/Ignoring-tests">Ignoring Tests</a>
-                    - marking a test as not to be run because the test itself is broken
-            <li><a href="https://github.com/junit-team/junit4/wiki/Timeout-for-tests">Timeouts for Tests</a> 
-                    - failing a test because it takes too long
-            <li><a href="https://github.com/junit-team/junit4/wiki/Categories">Categories</a>
-                    - useful ones in our case could be headless/not headless, 
-                    hardware specific (loco buffer attached, NCE PowerPro attached, etc)
-            <li><a href="http://junit.sourceforge.net/javadoc/org/junit/Assume.html">Assumptions</a>
-                    - to conditionally ignore a test. For example, a test that would fail in a headless environment 
-                    can be ignored in headless mode if the first line of the test method is:<br>
-                    <code>Assume.assumeFalse(GraphicsEnvironment.isHeadless());</code>
-        </ul>
+      and reloading of classes.</p>
 
-        <p><a href="https://github.com/rhwood/JMRI/blob/12a4b433fb704c3454480fdc576def16f0271b2c/java/test/jmri/server/json/roster/JsonRosterHttpServiceTest.java">Example of JUnit4 test</a>
-        and 
-        <a href="https://github.com/rhwood/JMRI/blob/12a4b433fb704c3454480fdc576def16f0271b2c/java/test/jmri/server/json/roster/PackageTest.java">corresponding PackageTest.java file</a>; 
-        note lack of main() procedure and other traditional boilerplate code. These files are the result of this
-        <a href="https://github.com/JMRI/JMRI/pull/1725/files#diff-3">commit that migrated a test package to JUnit4</a></p>
-        
-        <p><a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/jmrix/cmri/PackageTest.java">Example of JUnit4 tests with a <code>main()</code> procedure</a></p>
-        
-        <p>A possible set of steps for conversion:
-        <ol>
-        <li>Change the imports.  Typically, these can be removed:<br>
-        <pre style="font-family: monospace;">
+      <h2><a name="junit4" id="junit4">Migrating to
+      JUnit4</a></h2>JUnit4 is a significant upgrade of the JUnit
+      tool. It brings new capabilities, but also changes to the how
+      tests are structured. As of this writing (Summer 2016), we're
+      still supporting the existing test structures described
+      above, while also using new capabilities in some new and
+      migrated tests.
+
+      <p>How, when and even if to migrate previously-existing test
+      cases is a question that's still to be discussed and
+      resolved.</p>
+
+      <p>The rest of this section discusses some aspects of moving
+      to and using JUnit4.</p>
+
+      <p>We may want to consider:</p>
+
+      <ul>
+        <li>using <a href="https://jemmy.java.net/">Jemmy</a> for
+        UI tests instead of JFCUnit, since Jemmy can be used by
+        Junit 4 tests, while JFCUnit requires extending Junit 3
+        TestCase class.</li>
+
+        <li><a href=
+        "https://github.com/junit-team/junit4/wiki/Ignoring-tests">Ignoring
+        Tests</a> - marking a test as not to be run because the
+        test itself is broken</li>
+
+        <li><a href=
+        "https://github.com/junit-team/junit4/wiki/Timeout-for-tests">
+        Timeouts for Tests</a> - failing a test because it takes
+        too long</li>
+
+        <li><a href=
+        "https://github.com/junit-team/junit4/wiki/Categories">Categories</a>
+        - useful ones in our case could be headless/not headless,
+        hardware specific (loco buffer attached, NCE PowerPro
+        attached, etc)</li>
+
+        <li><a href=
+        "http://junit.sourceforge.net/javadoc/org/junit/Assume.html">
+        Assumptions</a> - to conditionally ignore a test. For
+        example, a test that would fail in a headless environment
+        can be ignored in headless mode if the first line of the
+        test method is:<br>
+        <code>Assume.assumeFalse(GraphicsEnvironment.isHeadless());</code></li>
+      </ul>
+
+      <p><a href=
+      "https://github.com/rhwood/JMRI/blob/12a4b433fb704c3454480fdc576def16f0271b2c/java/test/jmri/server/json/roster/JsonRosterHttpServiceTest.java">
+      Example of JUnit4 test</a> and <a href=
+      "https://github.com/rhwood/JMRI/blob/12a4b433fb704c3454480fdc576def16f0271b2c/java/test/jmri/server/json/roster/PackageTest.java">
+      corresponding PackageTest.java file</a>; note lack of main()
+      procedure and other traditional boilerplate code. These files
+      are the result of this <a href=
+      "https://github.com/JMRI/JMRI/pull/1725/files#diff-3">commit
+      that migrated a test package to JUnit4</a></p>
+
+      <p><a href=
+      "https://github.com/JMRI/JMRI/blob/master/java/test/jmri/jmrix/cmri/PackageTest.java">
+      Example of JUnit4 tests with a <code>main()</code>
+      procedure</a></p>
+
+      <p>A possible set of steps for conversion:</p>
+
+      <ol>
+        <li>Change the imports. Typically, these can be
+        removed:<br>
+          <pre style="font-family: monospace;">
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 </pre><br>
-and you'll typically need
-<br>
-<pre style="font-family: monospace;">
+          and you'll typically need<br>
+          <pre style="font-family: monospace;">
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 </pre><br>
+        </li>
 
-        <li>The test class no longer inherits from TestCase, so replace 
-        <code>public class MyClassTest extends TestCase</code>
-        with 
-        <code>public class MyClassTest</code>.
+        <li>The test class no longer inherits from TestCase, so
+        replace <code>public class MyClassTest extends
+        TestCase</code> with <code>public class
+        MyClassTest</code>.</li>
 
-        <li>Mark test methods with the &quot;<code>@Test</code>&quot; annotation:
-        <pre style="font-family: monospace;">
+        <li>Mark test methods with the "<code>@Test</code>"
+        annotation:
+          <pre style="font-family: monospace;">
     @Test
     public void testSomething() {
         ...
     }
-        </pre>
+        
+</pre>
+        </li>
 
-        <li>More of our Test classes have a 
-        "from here down is testing infrastructure" comment, followed by
-        setup code.  Some of that can be removed.
-        First, remove the class constructor, e.g. 
-<pre style="font-family: monospace;">
+        <li>More of our Test classes have a "from here down is
+        testing infrastructure" comment, followed by setup code.
+        Some of that can be removed. First, remove the class
+        constructor, e.g.
+          <pre style="font-family: monospace;">
     public MyClassTest(String s) {
            super(s);
     }      
 </pre>
+        </li>
+
         <li>Next, remove the main method if there is one, e.g.:
-<pre style="font-family: monospace;">
+          <pre style="font-family: monospace;">
     // Main entry point
     static public void main(String[] args) {
         apps.tests.Log4JFixture.initLogging();
@@ -784,13 +771,13 @@ import org.junit.Test;
         junit.textui.TestRunner.main(testCaseName);
     }
 </pre>
+        </li>
 
-        <li>Finally, annotate the <code>setUp()</code> and <code>tearDown()</code>
-        methods.  Note: They have to be &quot;public&quot; methods, not
-        &quot;protected&quot; or &quot;private&quot;. They should end up looking
-        like (plus your own content, of course):
- 
-<pre style="font-family: monospace;">
+        <li>Finally, annotate the <code>setUp()</code> and
+        <code>tearDown()</code> methods. Note: They have to be
+        "public" methods, not "protected" or "private". They should
+        end up looking like (plus your own content, of course):
+          <pre style="font-family: monospace;">
     @Before
     public void setUp() {
           apps.tests.Log4JFixture.setUp();
@@ -801,35 +788,34 @@ import org.junit.Test;
           apps.tests.Log4JFixture.tearDown();
     }
 </pre>
+        </li>
 
-        <li>Finally, replace the test suite definition.  JUnit3 was normally
-        used with "run everything in this class automatically" by having a method
-        that looked like this:
-<pre style="font-family: monospace;">
+        <li>Finally, replace the test suite definition. JUnit3 was
+        normally used with "run everything in this class
+        automatically" by having a method that looked like this:
+          <pre style="font-family: monospace;">
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(Z21MessageTest.class);
         return suite;
     }
-</pre>
-<br>
-If that's what you've got, just remove it and you're done.  If you've got more
-logic in the suite() routine, ask for help on the jmri-developers list. An example 
-of the result of migrating a more complex case:
-<pre style="font-family: monospace;">
+</pre><br>
+          If that's what you've got, just remove it and you're
+          done. If you've got more logic in the suite() routine,
+          ask for help on the jmri-developers list. An example of
+          the result of migrating a more complex case:
+          <pre style="font-family: monospace;">
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    CMRISystemConnectionMemoTest.class,
    jmri.jmrix.cmri.serial.PackageTest.class})
 </pre>
-        <li>Run the tests and check
-        that all your tests were successfully included and run.
-</ol>
-That's it! You've successfully migrated to native JUnit4.  
+        </li>
 
-
-      <!--#include virtual="/Footer" -->
-      
+        <li>Run the tests and check that all your tests were
+        successfully included and run.</li>
+      </ol>That's it! You've successfully migrated to native
+      JUnit4. <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

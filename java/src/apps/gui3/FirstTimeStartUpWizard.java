@@ -269,7 +269,7 @@ public class FirstTimeStartUpWizard {
             Cursor hourglassCursor = new Cursor(Cursor.WAIT_CURSOR);
             parent.setCursor(hourglassCursor);
             ConnectionConfig connect = JmrixConfigPane.instance(0).getCurrentObject();
-            ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+            ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cm != null) {
                 cm.registerPref(connect);
             }
@@ -292,8 +292,8 @@ public class FirstTimeStartUpWizard {
             }
             InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(owner.getText());
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setLocale(Locale.getDefault());
-            InstanceManager.tabbedPreferencesInstance().init();
-            InstanceManager.tabbedPreferencesInstance().saveContents();
+            InstanceManager.getDefault(TabbedPreferences.class).init();
+            InstanceManager.getDefault(TabbedPreferences.class).saveContents();
             dispose();
         }
     }

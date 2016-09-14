@@ -411,7 +411,7 @@ public class TrackSegment {
                 editTrackSegment();
             }
         });
-        popup.add(new AbstractAction(rb.getString("Remove")) {
+        popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
             /**
              *
              */
@@ -424,7 +424,7 @@ public class TrackSegment {
             }
         });
         JMenu lineType = new JMenu(rb.getString("ChangeTo"));
-        lineType.add(new AbstractAction(rb.getString("Line")) {
+        lineType.add(new AbstractAction(Bundle.getMessage("Line")) {
             /**
              *
              */
@@ -434,7 +434,7 @@ public class TrackSegment {
                 changeType(0);
             }
         });
-        lineType.add(new AbstractAction(rb.getString("Circle")) {
+        lineType.add(new AbstractAction(Bundle.getMessage("Circle")) {
             /**
              *
              */
@@ -444,7 +444,7 @@ public class TrackSegment {
                 changeType(1);
             }
         });
-        lineType.add(new AbstractAction(rb.getString("Elipse")) {
+        lineType.add(new AbstractAction(Bundle.getMessage("Ellipse")) {
             /**
              *
              */
@@ -623,20 +623,20 @@ public class TrackSegment {
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
             // Edit Block
-            panel5.add(segmentEditBlock = new JButton(rb.getString("EditBlock")));
+            panel5.add(segmentEditBlock = new JButton(Bundle.getMessage("EditBlock", "")));
             segmentEditBlock.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     segmentEditBlockPressed(e);
                 }
             });
-            segmentEditBlock.setToolTipText(rb.getString("EditBlockHint"));
+            segmentEditBlock.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
             panel5.add(segmentEditDone = new JButton(Bundle.getMessage("ButtonDone")));
             segmentEditDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     segmentEditDonePressed(e);
                 }
             });
-            segmentEditDone.setToolTipText(rb.getString("DoneHint"));
+            segmentEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             // Cancel
             panel5.add(segmentEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             segmentEditCancel.addActionListener(new ActionListener() {
@@ -644,7 +644,7 @@ public class TrackSegment {
                     segmentEditCancelPressed(e);
                 }
             });
-            segmentEditCancel.setToolTipText(rb.getString("CancelHint"));
+            segmentEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
         }
         // Set up for Edit
@@ -1080,12 +1080,12 @@ public class TrackSegment {
                     setCentreSegY(getCentreY() - java.lang.Math.sin(startRad + halfAngle) * radius);
 
                 } else {
-                    // Elipse - Round start angle to the closest multiple of 90
+                    // Ellipse - Round start angle to the closest multiple of 90
                     setStartadj(java.lang.Math.round(getStartadj() / 90.0D) * 90.0D);
-                    // Elipse - Compute rectangle required by Arc2D.Double
+                    // Ellipse - Compute rectangle required by Arc2D.Double
                     setCW(java.lang.Math.abs(a) * 2.0D);
                     setCH(java.lang.Math.abs(o) * 2.0D);
-                    // Elipse - Adjust rectangle corner, depending on quadrant
+                    // Ellipse - Adjust rectangle corner, depending on quadrant
                     if (o * a < 0.0D) {
                         a = -a;
                     } else {

@@ -29,7 +29,7 @@ public abstract class PowerManagerButton extends JButton implements PropertyChan
         this.listener = (PropertyChangeEvent evt) -> {
             this.setPowerIcons();
         };
-        PowerManager powerMgr = InstanceManager.getOptionalDefault(PowerManager.class);
+        PowerManager powerMgr = InstanceManager.getNullableDefault(PowerManager.class);
         if (powerMgr == null) {
             log.info("No power manager instance found, panel not active");
         } else {
@@ -42,7 +42,7 @@ public abstract class PowerManagerButton extends JButton implements PropertyChan
     }
 
     public void dispose() {
-        PowerManager powerMgr = InstanceManager.getOptionalDefault(PowerManager.class);
+        PowerManager powerMgr = InstanceManager.getNullableDefault(PowerManager.class);
         if (powerMgr != null) {
             powerMgr.removePropertyChangeListener(this.listener);
         }
@@ -73,7 +73,7 @@ public abstract class PowerManagerButton extends JButton implements PropertyChan
     }
 
     protected void setPowerIcons() {
-        PowerManager powerMgr = InstanceManager.getOptionalDefault(PowerManager.class);
+        PowerManager powerMgr = InstanceManager.getNullableDefault(PowerManager.class);
         if (powerMgr == null) {
             return;
         }
@@ -119,7 +119,7 @@ public abstract class PowerManagerButton extends JButton implements PropertyChan
     }
 
     private void setPower() {
-        PowerManager powerMgr = InstanceManager.getOptionalDefault(PowerManager.class);
+        PowerManager powerMgr = InstanceManager.getNullableDefault(PowerManager.class);
         if (powerMgr != null) {
             try {
                 switch (powerMgr.getPower()) {

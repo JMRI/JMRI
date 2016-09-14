@@ -6,6 +6,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Objects;
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
 import org.slf4j.Logger;
@@ -55,30 +56,21 @@ public class DefaultShutDownManager implements ShutDownManager {
         });
     }
 
-    /**
-     * Register a task object for later execution.
-     *
-     */
     @Override
     public void register(ShutDownTask s) {
+        Objects.requireNonNull(s, "Shutdown task cannot be null.");
         if (!tasks.contains(s)) {
             tasks.add(s);
         } else {
-            log.error("already contains " + s);
+            log.debug("already contains " + s);
         }
     }
 
-    /**
-     * Deregister a task object.
-     *
-     * @throws IllegalArgumentException if task object not currently registered
-     */
     @Override
     public void deregister(ShutDownTask s) {
+        Objects.requireNonNull(s, "Shutdown task cannot be null.");
         if (tasks.contains(s)) {
             tasks.remove(s);
-        } else {
-            throw new IllegalArgumentException("task not registered");
         }
     }
 

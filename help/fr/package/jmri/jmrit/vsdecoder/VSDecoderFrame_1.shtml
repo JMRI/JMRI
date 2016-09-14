@@ -58,10 +58,9 @@
       <hr>
 
       <h3>Volet Configuration</h3>Le volet Config vous permet de
-      choisir le profil sonore &Atilde;  utiliser (vapeur vs
-      Diesel, EMD vs GE, Leslie vs Nathan, etc ), et attribuer une
-      adresse de d&Atilde;&copy;codeur &Atilde; 
-      &Atilde;&copy;couter.
+      choisir le profil sonore &Atilde; utiliser (vapeur vs Diesel,
+      EMD vs GE, Leslie vs Nathan, etc ), et attribuer une adresse
+      de d&Atilde;&copy;codeur &Atilde; &Atilde;&copy;couter.
 
       <h4>S&Atilde;&copy;lectionnez et Enregistrer la
       Liste</h4>Vous pouvez s&Atilde;&copy;lectionner une
@@ -73,8 +72,8 @@
       vous choisirez cette Entr&Atilde;&copy;e Liste, il va charger
       automatiquement le fichier VSD (Virtual Sound Decoder)
       stock&Atilde;&copy; et Profil.<br>
-      Vous n'avez pas &Atilde;  utiliser la Liste du tout si vous
-      ne voulez pas . REMARQUE : Voir la note ci-dessous &Atilde; 
+      Vous n'avez pas &Atilde; utiliser la Liste du tout si vous ne
+      voulez pas . REMARQUE : Voir la note ci-dessous &Atilde;
       propos de l'enregistrement des informations
       d'Entr&Atilde;&copy;e de Liste. Il y a un bug sur lequel les
       concepteur travaillent.
@@ -82,11 +81,11 @@
       <h4>S&Atilde;&copy;lection de Profil</h4>Pour
       s&Atilde;&copy;lectionner un profil, vous devez d'abord
       charger un "fichier VSD". Un exemple de fichier VSD est
-      inclus dans le paquet, et vous pouvez faire (et &Atilde; 
+      inclus dans le paquet, et vous pouvez faire (et &Atilde;
       partager!) le votre. Choisissez "Fichier -&gt; Charger VSD"
       et chargez un fichier VSD . Vous ne pouvez rien faire d'autre
-      (&Atilde;  l'exception de choisir une entr&Atilde;&copy;e de
-      la liste) jusqu'&Atilde;  ce qu'un fichier VSD soit
+      (&Atilde; l'exception de choisir une entr&Atilde;&copy;e de
+      la liste) jusqu'&Atilde; ce qu'un fichier VSD soit
       charg&Atilde;&copy;.<br>
       Maintenant, vous pouvez choisir l'un des profils dans la
       liste d&Atilde;&copy;roulante de profil. Notez que vous ne
@@ -98,7 +97,7 @@
       d&Atilde;&copy;fini un profil, vous pouvez entrer une adresse
       de d&Atilde;&copy;codeur directement-et appuyez sur
       "D&Atilde;&copy;finir" - ou vous pouvez choisir une
-      locomotive &Atilde;  partir de votre liste. Le VSD
+      locomotive &Atilde; partir de votre liste. Le VSD
       r&Atilde;&copy;pondra ensuite aux r&Atilde;&copy;gulateurs.
       Il va &Atilde;&copy;couter <i>toutes</i>les informations
       d'&Atilde;&copy;tat envoy&Atilde;&copy;es par les

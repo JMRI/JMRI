@@ -117,7 +117,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {LnTurnoutManager.class.getName()};
+        String[] testCaseName = {LnTurnoutManagerTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 

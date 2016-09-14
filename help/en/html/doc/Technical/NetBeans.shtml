@@ -32,7 +32,6 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-
       <h1>JMRI: Building with NetBeans</h1>
 
       <ul>

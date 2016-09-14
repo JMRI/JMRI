@@ -28,7 +28,7 @@ public class RosterTreeNode extends DefaultMutableTreeNode {
         setUserObject("Roster");
 
         // add every roster entry
-        List<RosterEntry> list = Roster.instance().matchingList(null, null, null, null, null, null, null);
+        List<RosterEntry> list = Roster.getDefault().matchingList(null, null, null, null, null, null, null);
 
         for (RosterEntry r : list) {
             add(new DefaultMutableTreeNode(r.getId()));

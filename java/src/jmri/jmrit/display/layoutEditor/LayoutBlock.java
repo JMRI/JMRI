@@ -347,7 +347,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 JOptionPane.showMessageDialog(openFrame,
                         java.text.MessageFormat.format(rb.getString("Error6"),
                                 new Object[]{sensorName, b.getID()}),
-                        rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return null;
             } else {
                 // the user is assigning a sensor which is already assigned to 
@@ -385,7 +385,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             JOptionPane.showMessageDialog(openFrame,
                     java.text.MessageFormat.format(rb.getString("Error16"),
                             new Object[]{memName}),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return null;
         }
 
@@ -853,7 +853,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     JTextField sensorNameField = new JTextField(16);
     JTextField sensorDebounceInactiveField = new JTextField(5);
     JTextField sensorDebounceActiveField = new JTextField(5);
-    JCheckBox sensorDebounceGlobalCheck = new JCheckBox(rb.getString("OccupancySensorUseGlobal"));
+    JCheckBox sensorDebounceGlobalCheck = new JCheckBox(Bundle.getMessage("SensorUseGlobalDebounce"));
     JTextField memoryNameField = new JTextField(16);
     JTextField metricField = new JTextField(10);
     JComboBox<String> senseBox = new JComboBox<String>();
@@ -1040,7 +1040,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
         BeanItemPanel layoutDetails() {
             BeanItemPanel layout = new BeanItemPanel();
-            layout.setName("Layout Editor");
+            layout.setName(Bundle.getMessage("LayoutEditor"));
 
             layout.addItem(new BeanEditItem(new JLabel("" + useCount), rb.getString("UseCount"), null));
             layout.addItem(new BeanEditItem(memoryNameField, Bundle.getMessage("BeanNameMemory"), rb.getString("MemoryVariableTip")));

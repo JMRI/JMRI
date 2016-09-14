@@ -108,21 +108,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
-        setPreferredWidths(table);
-
-        // set row height
-        table.setRowHeight(new JComboBox<>().getPreferredSize().height);
-        updateList();
-        table.setRowHeight(new JComboBox<>().getPreferredSize().height);
-        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-    }
-
-    private synchronized void setPreferredWidths(JTable table) {
         // set column preferred widths
-        if (_frame.loadTableDetails(table)) {
-            return; // done
-        }
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(40);
         table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(150);
         table.getColumnModel().getColumn(TRAIN_DIRECTION_COLUMN).setPreferredWidth(95);
@@ -139,6 +125,12 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         table.getColumnModel().getColumn(UP_COLUMN).setPreferredWidth(60);
         table.getColumnModel().getColumn(DOWN_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(70);
+        
+        _frame.loadTableDetails(table);
+        // does not use a table sorter
+        table.setRowSorter(null);
+
+        updateList();
     }
 
     @Override

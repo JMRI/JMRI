@@ -8,6 +8,16 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+   BlockContentsIconXmlTest.class,
+   LayoutBlockManagerXmlTest.class,
+   LayoutEditorXmlTest.class,
+   LayoutSlipXmlTest.class,
+   LayoutTurnoutXmlTest.class,
+   LayoutTurntableXmlTest.class,
+   LevelXingXmlTest.class,
+   MemoryIconXmlTest.class,
+   PositionablePointXmlTest.class,
+   TrackSegmentXmlTest.class
 })
 /**
  * Tests for the jmri.jmrit.display.layoutEditor.configurexml package.

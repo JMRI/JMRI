@@ -6,7 +6,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableRowSorter;
-import jmri.swing.JmriTable;
 
 /**
  * Frame providing a table of Automat instances
@@ -26,7 +25,7 @@ public class AutomatTableFrame extends jmri.util.JmriJFrame {
         super();
         dataModel = model;
 
-        dataTable = new JmriTable(dataModel);
+        dataTable = new JTable(dataModel);
         dataTable.setRowSorter(new TableRowSorter<>(dataModel));
         dataScroll = new JScrollPane(dataTable);
 

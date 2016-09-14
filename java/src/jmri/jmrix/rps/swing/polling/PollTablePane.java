@@ -22,7 +22,6 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableRowSorter;
 import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.PollingFile;
-import jmri.swing.JmriTable;
 import jmri.swing.RowSorterUtil;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -51,7 +50,7 @@ public class PollTablePane extends javax.swing.JPanel {
 
         pollModel = new PollDataModel(modifiedFlag);
 
-        JTable pollTable = new JmriTable(pollModel);
+        JTable pollTable = new JTable(pollModel);
 
         // install a button renderer & editor
         ButtonRenderer buttonRenderer = new ButtonRenderer();

@@ -13,7 +13,6 @@ import org.junit.runners.Suite;
    SprogNanoSerialDriverAdapterTest.class,
    ConnectionConfigTest.class,
    jmri.jmrix.sprog.sprognano.configurexml.PackageTest.class
-
 })
 public class PackageTest {
 }

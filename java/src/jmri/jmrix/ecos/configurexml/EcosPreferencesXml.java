@@ -32,13 +32,13 @@ public class EcosPreferencesXml extends jmri.configurexml.AbstractXmlAdapter /*e
     protected void register() {
         /*log.error("unexpected call to register()");
          new Exception().printStackTrace();*/
-        ConfigureManager cm = jmri.InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = jmri.InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
             cm.registerPref(this);
         }
     }
     /*protected void register(String host, String port, String mode) {
-     InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(new ConnectionConfig(host, port, mode));
+     InstanceManager.getNullableDefault(jmri.ConfigureManager.class).registerPref(new ConnectionConfig(host, port, mode));
      }*/
 
     public boolean load(Element shared, Element perNode) {

@@ -41,8 +41,8 @@ public class JsonRosterServer {
 
     public void listen() {
         if (!this.listening) {
-            Roster.instance().addPropertyChangeListener(this.rosterListener);
-            for (RosterEntry re : Roster.instance().getEntriesInGroup(Roster.ALLENTRIES)) {
+            Roster.getDefault().addPropertyChangeListener(this.rosterListener);
+            for (RosterEntry re : Roster.getDefault().getEntriesInGroup(Roster.ALLENTRIES)) {
                 re.addPropertyChangeListener(this.rosterEntryListener);
             }
             this.listening = true;
@@ -60,8 +60,8 @@ public class JsonRosterServer {
     }
 
     public void dispose() {
-        Roster.instance().removePropertyChangeListener(this.rosterListener);
-        for (RosterEntry re : Roster.instance().getEntriesInGroup(Roster.ALLENTRIES)) {
+        Roster.getDefault().removePropertyChangeListener(this.rosterListener);
+        for (RosterEntry re : Roster.getDefault().getEntriesInGroup(Roster.ALLENTRIES)) {
             re.removePropertyChangeListener(this.rosterEntryListener);
         }
         this.listening = false;

@@ -97,19 +97,6 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
-        setPreferredWidths(frame, table);
-
-        // set row height
-        table.setRowHeight(new JComboBox<>().getPreferredSize().height);
-        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-    }
-
-    private void setPreferredWidths(AutomationsTableFrame frame, JTable table) {
-        if (frame.loadTableDetails(table)) {
-            return; // done
-        }
-        log.debug("Setting preferred widths");
         // set column preferred widths
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(40);
         table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(200);
@@ -119,6 +106,8 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         table.getColumnModel().getColumn(RUN_COLUMN).setPreferredWidth(90);
         table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(90);
+        
+        frame.loadTableDetails(table);
     }
 
     @Override
