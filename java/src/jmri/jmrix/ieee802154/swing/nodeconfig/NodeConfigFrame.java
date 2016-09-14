@@ -14,8 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame for user configuration of XBee nodes Derived from node configuration
- * for c/mri nodes.
+ * Frame for user configuration of IEEE 802.15.4 nodes. 
+ * Derived from node configuration for c/mri nodes.
  *
  * @author	Bob Jacobsen Copyright (C) 2004
  * @author	Dave Duchamp Copyright (C) 2004
@@ -60,7 +60,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */
     public NodeConfigFrame(IEEE802154TrafficController tc) {
         super();
-        addHelpMenu("package.jmri.jmrix.cmri.serial.nodeconfig.NodeConfigFrame", true);
+        addHelpMenu("package.jmri.jmrix.ieee802154.swing.nodeconfig.NodeConfigFrame", true);
         itc = tc;
     }
 
@@ -72,6 +72,20 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
+        contentPane.add(initAddressPanel());
+        contentPane.add(initNotesPanel());
+        contentPane.add(initButtonPanel());
+
+
+        // pack for display
+        pack();
+    }
+
+
+    /*
+     * Initilaize the address panel.
+     */
+    protected JPanel initAddressPanel(){
         // Set up node address and node type
         JPanel panel1 = new JPanel();
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
@@ -99,15 +113,15 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         });
 
         initAddressBoxes();
-
-        JPanel panel12 = new JPanel();
-        panel12.setLayout(new FlowLayout());
-
         panel1.add(panel11);
-        panel1.add(panel12);
+        return panel1;
+    }
 
-        contentPane.add(panel1);
-
+    
+    /*
+     * Initilaize the notes panel.
+     */
+    protected JPanel initNotesPanel(){
         // Set up the notes panel
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
@@ -133,8 +147,13 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         Border panel3Titled = BorderFactory.createTitledBorder(panel3Border,
                 Bundle.getMessage("BoxLabelNotes"));
         panel3.setBorder(panel3Titled);
-        contentPane.add(panel3);
+        return panel3;
+    }
 
+    /*
+     * Initilaize the Button panel.
+     */
+    protected JPanel initButtonPanel(){
         // Set up buttons
         JPanel panel4 = new JPanel();
         panel4.setLayout(new FlowLayout());
@@ -198,57 +217,22 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             }
         });
         cancelButton.setVisible(false);
-        contentPane.add(panel4);
-
-        // pack for display
-        pack();
+        return panel4;
     }
 
     /**
      * Method to handle add button
      */
     public void addButtonActionPerformed() {
-        // Check that a node with this address does not exist
-        String nodeAddress = readNodeAddress();
-        if (nodeAddress.equals("")) {
-            return;
+        // create a new Add Frame and display it.
+        jmri.util.JmriJFrame addFrame = new AddNodeFrame(itc);
+        try {
+           addFrame.initComponents();
+        } catch(Exception ex) {
+           log.error("Exception initializing Frame: {}",ex.toString());
+           return;
         }
-        // get a IEEE802154 Node corresponding to this node address if one exists
-        curNode = (IEEE802154Node) itc.getNodeFromAddress(nodeAddress);
-        if (curNode != null) {
-            statusText1.setText(Bundle.getMessage("Error1") + nodeAddress
-                    + Bundle.getMessage("Error2"));
-            statusText1.setVisible(true);
-            errorInStatus1 = true;
-            resetNotes2();
-            return;
-        }
-        // get node information from window
-
-        // check consistency of node information
-        if (!checkConsistency()) {
-            return;
-        }
-        // all ready, create the new node
-        curNode = itc.newNode();
-        if (curNode == null) {
-            statusText1.setText(Bundle.getMessage("Error3"));
-            statusText1.setVisible(true);
-            log.error("Error creating IEEE802154 Node, constructor returned null");
-            errorInStatus1 = true;
-            resetNotes2();
-            return;
-        }
-        // configure the new node
-        setNodeParameters();
-
-        // reset after succefully adding node
-        resetNotes();
-        changedNode = true;
-        // provide user feedback
-        statusText1.setText(Bundle.getMessage("FeedBackAdd") + " " + nodeAddress);
-        errorInStatus1 = true;
-        initAddressBoxes();
+        addFrame.setVisible(true);
     }
 
     /**

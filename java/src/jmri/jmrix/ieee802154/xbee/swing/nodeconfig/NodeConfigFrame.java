@@ -53,6 +53,37 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
+        contentPane.add(initAddressPanel());
+
+        // Set up the pin assignment table
+        assignmentPanel = new JPanel();
+        assignmentPanel.setLayout(new BoxLayout(assignmentPanel, BoxLayout.Y_AXIS));
+        assignmentListModel = new AssignmentTableModel();
+        assignmentTable = new JTable(assignmentListModel);
+        assignmentTable.setRowSelectionAllowed(false);
+        assignmentTable.setPreferredScrollableViewportSize(new java.awt.Dimension(300, 350));
+        JScrollPane assignmentScrollPane = new JScrollPane(assignmentTable);
+        assignmentPanel.add(assignmentScrollPane, BorderLayout.CENTER);
+
+        contentPane.add(assignmentPanel);
+
+        contentPane.add(initNotesPanel());
+        contentPane.add(initButtonPanel());
+
+        // pack for display
+        pack();
+
+        // after the components are configured, set ourselves up as a 
+        // discovery listener.
+        xtc.getXBee().getNetwork().addDiscoveryListener(this);
+
+    }
+
+    /*
+     * Initilaize the address panel.
+     */
+    @Override
+    protected JPanel initAddressPanel(){
         // Set up node address and node type
         JPanel panel1 = new JPanel();
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
@@ -87,54 +118,17 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
                 nodeAddrField.setSelectedIndex(nodeIdentifierField.getSelectedIndex());
             }
         });
-        JPanel panel12 = new JPanel();
-        panel12.setLayout(new FlowLayout());
-
         initAddressBoxes();
 
         panel1.add(panel11);
-        panel1.add(panel12);
+        return panel1;
+    }
 
-        contentPane.add(panel1);
-
-        // Set up the pin assignment table
-        assignmentPanel = new JPanel();
-        assignmentPanel.setLayout(new BoxLayout(assignmentPanel, BoxLayout.Y_AXIS));
-        assignmentListModel = new AssignmentTableModel();
-        assignmentTable = new JTable(assignmentListModel);
-        assignmentTable.setRowSelectionAllowed(false);
-        assignmentTable.setPreferredScrollableViewportSize(new java.awt.Dimension(300, 350));
-        JScrollPane assignmentScrollPane = new JScrollPane(assignmentTable);
-        assignmentPanel.add(assignmentScrollPane, BorderLayout.CENTER);
-
-        contentPane.add(assignmentPanel);
-
-        // Set up the notes panel
-        JPanel panel3 = new JPanel();
-        panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
-        JPanel panel31 = new JPanel();
-        panel31.setLayout(new FlowLayout());
-        statusText1.setText(stdStatus1);
-        statusText1.setVisible(true);
-        panel31.add(statusText1);
-        JPanel panel32 = new JPanel();
-        panel32.setLayout(new FlowLayout());
-        statusText2.setText(stdStatus2);
-        statusText2.setVisible(true);
-        panel32.add(statusText2);
-        JPanel panel33 = new JPanel();
-        panel33.setLayout(new FlowLayout());
-        statusText3.setText(stdStatus3);
-        statusText3.setVisible(true);
-        panel33.add(statusText3);
-        panel3.add(panel31);
-        panel3.add(panel32);
-        panel3.add(panel33);
-        Border panel3Border = BorderFactory.createEtchedBorder();
-        Border panel3Titled = BorderFactory.createTitledBorder(panel3Border,
-                Bundle.getMessage("BoxLabelNotes"));
-        panel3.setBorder(panel3Titled);
-        contentPane.add(panel3);
+    /*
+     * Initilaize the Button panel.
+     */
+    @Override
+    protected JPanel initButtonPanel(){
 
         // Set up buttons
         JPanel panel4 = new JPanel();
@@ -209,61 +203,23 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
             }
         });
         cancelButton.setVisible(false);
-        contentPane.add(panel4);
-        // pack for display
-        pack();
-
-        // after the components are configured, set ourselves up as a 
-        // discovery listener.
-        xtc.getXBee().getNetwork().addDiscoveryListener(this);
-
+        return panel4;
     }
 
     /**
      * Method to handle add button
      */
+    @Override
     public void addButtonActionPerformed() {
+        // create a new Add Frame and display it.
+        jmri.util.JmriJFrame addFrame = new AddNodeFrame(xtc);
         try {
-           // Check that a node with this address does not exist
-           String nodeAddress = readNodeAddress();
-           if (nodeAddress.equals("")) {
-               return;
-           }
-           // get a XBeeNode corresponding to this node address if one exists
-           curNode = (XBeeNode) xtc.getNodeFromAddress(nodeAddress);
-           if (curNode != null) {
-               statusText1.setText(Bundle.getMessage("Error1") + nodeAddress
-                       + Bundle.getMessage("Error2"));
-               statusText1.setVisible(true);
-               errorInStatus1 = true;
-               resetNotes2();
-               return;
-           }
-           // get node information from window
-
-           // check consistency of node information
-           if (!checkConsistency()) {
-               return;
-           }
-           // all ready, create the new node
-           curNode = new XBeeNode();
-           // configure the new node
-           setNodeParameters();
-
-           // reset after succefully adding node
-           resetNotes();
-           changedNode = true;
-           // provide user feedback
-           statusText1.setText(Bundle.getMessage("FeedBackAdd") + " " + nodeAddress);
-           errorInStatus1 = true;
-           initAddressBoxes();
-       } catch(IllegalArgumentException iae){
-               // we really need to set an error status here.
-               // illegal argument exception is generated by 
-               // readNodeAddress when neither a 16 or 64 bit 
-               // addresses is selected.
-               return;
-       }
+           addFrame.initComponents();
+        } catch(Exception ex) {
+           log.error("Exception initializing Frame: {}",ex.toString());
+           return;
+        }
+        addFrame.setVisible(true);
     }
 
     /**
