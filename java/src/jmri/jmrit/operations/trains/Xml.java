@@ -116,8 +116,6 @@ public class Xml {
     static final String RUN_FILE = "runFile"; // NOI18N
     static final String TRAIN_ACTION = "trainAction"; // NOI18N
 
-    static final String COLUMN_WIDTHS = "columnWidths"; // TODO This here is for backwards compatibility, remove after next major release // NOI18N
-
     static final String TRAIN_SCHEDULE_OPTIONS = "trainScheduleOptions"; // NOI18N
     static final String ACTIVE_ID = "activeId"; // NOI18N
     static final String START_UP = "startUp"; // NOI18N

@@ -61,7 +61,7 @@ class LocoZimoProg(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.throttle == None) :
             print "Couldn't assign throttle!"
         # setup a programmer for ops-mode
-        self.programmer = programmers.getAddressedProgrammer(long, number)
+        self.programmer = addressedProgrammers.getAddressedProgrammer(long, number)
         return
         
     # handle() will only execute once here, to run a single test

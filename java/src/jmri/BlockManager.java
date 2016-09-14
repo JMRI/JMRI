@@ -113,7 +113,7 @@ public class BlockManager extends AbstractManager
             }
         }
         try {
-            r.setBlockSpeed("Global");
+            r.setBlockSpeed("Global"); // NOI18N
         } catch (jmri.JmriException ex) {
             log.error(ex.toString());
         }

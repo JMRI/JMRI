@@ -81,7 +81,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
             JLabel l = new JLabel(Bundle.getMessage("drawInstructions1"));
             l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
             p.add(l);
-            if (title.equals("polygon")) {
+            if (title.equals("Polygon")) {
                 l = new JLabel(Bundle.getMessage("drawInstructions2a"));
                 l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
                 p.add(l);

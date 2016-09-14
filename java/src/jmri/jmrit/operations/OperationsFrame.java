@@ -155,27 +155,19 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
      * Will modify the character column width of a TextArea box to 90% of a
      * panels width. ScrollPane is set to 95% of panel width.
      *
+     * @param scrollPane the pane containing the textArea
+     * @param textArea   the textArea to adjust
      */
     protected void adjustTextAreaColumnWidth(JScrollPane scrollPane, JTextArea textArea) {
         ((OperationsPanel) this.getContentPane()).adjustTextAreaColumnWidth(scrollPane, textArea, this.getPreferredSize());
     }
 
     /**
-     * Saves the table's width, position, and sorting status in the user
-     * preferences file
-     *
-     * @param table Table to be saved.
-     */
-    protected void saveTableDetails(JTable table) {
-        ((OperationsPanel) this.getContentPane()).saveTableDetails(table);
-    }
-
-    /**
-     * Loads the table's width, position, and sorting status from the user
+     * Load the table width, position, and sorting status from the user
      * preferences file.
      *
      * @param table The table to be adjusted.
-     * @return true if table has been adjusted by saved xml file.
+     * @return true
      */
     public boolean loadTableDetails(JTable table) {
         return ((OperationsPanel) this.getContentPane()).loadTableDetails(table);

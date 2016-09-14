@@ -707,8 +707,8 @@ public class PositionablePoint {
                     popup.add(Bundle.getMessage("BeanNameBlock") + ": " + block1.getID());
                 } else if ((block1 != null) && (block2 != null) && (block1 != block2)) {
                     popup.add(rb.getString("BlockDivider"));
-                    popup.add(" " + rb.getString("Block1ID") + ": " + block1.getID());
-                    popup.add(" " + rb.getString("Block2ID") + ": " + block2.getID());
+                    popup.add(" " + Bundle.getMessage("Block_ID", 1) + ": " + block1.getID());
+                    popup.add(" " + Bundle.getMessage("Block_ID", 2) + ": " + block2.getID());
                     blockBoundary = true;
                 }
                 break;
@@ -740,8 +740,8 @@ public class PositionablePoint {
                 }
                 if ((block1 != null) && (block2 != null) && (block1 != block2)) {
                     popup.add(rb.getString("BlockDivider"));
-                    popup.add(" " + rb.getString("Block1ID") + ": " + block1.getID());
-                    popup.add(" " + rb.getString("Block2ID") + ": " + block2.getID());
+                    popup.add(" " + Bundle.getMessage("Block_ID", 1) + ": " + block1.getID());
+                    popup.add(" " + Bundle.getMessage("Block_ID", 2) + ": " + block2.getID());
 
                 }
                 blockBoundary = true;
@@ -750,7 +750,7 @@ public class PositionablePoint {
                 break;
         }
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
-        popup.add(new AbstractAction(rb.getString("Remove")) {
+        popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
             /**
              *
              */

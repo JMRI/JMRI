@@ -538,7 +538,7 @@ public class LayoutSlip extends LayoutTurnout {
                     editLayoutSlip(instance);
                 }
             });
-            popup.add(new AbstractAction(rb.getString("Remove")) {
+            popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 /**
                  *
                  */
@@ -784,13 +784,13 @@ public class LayoutSlip extends LayoutTurnout {
             JPanel panel4 = new JPanel();
             panel4.setLayout(new FlowLayout());
             // Edit Block
-            panel4.add(turnoutEditBlock = new JButton(rb.getString("EditBlock")));
+            panel4.add(turnoutEditBlock = new JButton(Bundle.getMessage("EditBlock", "")));
             turnoutEditBlock.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     turnoutEditBlockPressed(e);
                 }
             });
-            turnoutEditBlock.setToolTipText(rb.getString("EditBlockHint"));
+            turnoutEditBlock.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
 
             contentPane.add(panel4);
             // set up Done and Cancel buttons
@@ -802,7 +802,7 @@ public class LayoutSlip extends LayoutTurnout {
                     slipEditDonePressed(e);
                 }
             });
-            slipEditDone.setToolTipText(rb.getString("DoneHint"));
+            slipEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             // Cancel
             panel5.add(slipEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             slipEditCancel.addActionListener(new ActionListener() {
@@ -810,7 +810,7 @@ public class LayoutSlip extends LayoutTurnout {
                     slipEditCancelPressed(e);
                 }
             });
-            slipEditCancel.setToolTipText(rb.getString("CancelHint"));
+            slipEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
         }
         // Set up for Edit

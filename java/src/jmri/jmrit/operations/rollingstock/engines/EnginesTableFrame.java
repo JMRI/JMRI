@@ -20,12 +20,13 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.TableColumnModel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.util.com.sun.TableSorter;
+import jmri.swing.JTablePersistenceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +40,6 @@ import org.slf4j.LoggerFactory;
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener {
 
     EnginesTableModel enginesModel;
-    TableSorter sorter;
     javax.swing.JTable enginesTable;
     JScrollPane enginesPane;
     EngineManager engineManager = EngineManager.instance();
@@ -80,9 +80,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 
         // Set up the jtable in a Scroll Pane..
         enginesModel = new EnginesTableModel();
-        sorter = new TableSorter(enginesModel);
-        enginesTable = new JTable(sorter);
-        sorter.setTableHeader(enginesTable.getTableHeader());
+        enginesTable = new JTable(enginesModel);
         enginesPane = new JScrollPane(enginesTable);
         enginesPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         enginesModel.initTable(enginesTable, this);
@@ -212,6 +210,8 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
+        // clear any sorts by column
+        clearTableSort(enginesTable);
         if (ae.getSource() == sortByNumber) {
             enginesModel.setSort(enginesModel.SORTBY_NUMBER);
         }
@@ -251,8 +251,6 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         if (ae.getSource() == sortByLast) {
             enginesModel.setSort(enginesModel.SORTBY_LAST);
         }
-        // clear any sorts by column
-        clearTableSort(enginesTable);
     }
 
     public List<RollingStock> getSortByList() {
@@ -292,7 +290,6 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
                 enginesTable.getCellEditor().stopCellEditing();
             }
             OperationsXml.save();
-            saveTableDetails(enginesTable);
             if (Setup.isCloseWindowOnSaveEnabled()) {
                 dispose();
             }
@@ -315,6 +312,9 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         if (engineEditFrame != null) {
             engineEditFrame.dispose();
         }
+        InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {
+            tpm.stopPersisting(enginesTable);
+        });
         super.dispose();
     }
 
