@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableRowSorter;
-import jmri.swing.JmriTable;
 
 /**
  * Frame providing survey of DCC contents
@@ -30,7 +29,7 @@ public class PacketTableFrame extends jmri.util.JmriJFrame implements DataListen
 
     public void initComponents() {
 
-        table = new JmriTable(model);
+        table = new JTable(model);
         table.setRowSorter(new TableRowSorter<>(model));
         scroll = new JScrollPane(table);
 

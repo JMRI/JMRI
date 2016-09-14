@@ -120,7 +120,7 @@ public class MemoryComboIcon extends PositionableJPanel
         if (debug) {
             log.debug("setMemory for memory= " + pName);
         }
-        if (InstanceManager.getOptionalDefault(jmri.MemoryManager.class) != null) {
+        if (InstanceManager.getNullableDefault(jmri.MemoryManager.class) != null) {
             try {
                 Memory memory = InstanceManager.memoryManagerInstance().provideMemory(pName);
                 setMemory(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, memory));

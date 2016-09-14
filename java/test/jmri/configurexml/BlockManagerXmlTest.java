@@ -332,6 +332,14 @@ public class BlockManagerXmlTest extends TestCase {
      * output for correctness.
      */
     public void testStore() throws jmri.JmriException {
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initMemoryManager();
+        JUnitUtil.initLayoutBlockManager();
+
         Block b1 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("SystemNameb1", "");
 
         Block b2 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("SystemNameb2", "");
@@ -432,5 +440,14 @@ public class BlockManagerXmlTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite(BlockManagerXmlTest.class);
         return suite;
+    }
+
+    // The minimal setup for log4J
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
     }
 }

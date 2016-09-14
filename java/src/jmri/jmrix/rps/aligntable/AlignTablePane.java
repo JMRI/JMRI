@@ -22,7 +22,6 @@ import javax.vecmath.Point3d;
 import jmri.jmrix.rps.Algorithms;
 import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Receiver;
-import jmri.swing.JmriTable;
 import jmri.swing.RowSorterUtil;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -58,7 +57,7 @@ public class AlignTablePane extends javax.swing.JPanel {
 
         alignModel = new AlignModel();
 
-        JTable alignTable = new JmriTable(alignModel);
+        JTable alignTable = new JTable(alignModel);
 
         // install a button renderer & editor
         ButtonRenderer buttonRenderer = new ButtonRenderer();

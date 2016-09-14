@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    BlockBossLogicXmlTest.class
 })
 /**
  * Tests for the jmri.jmrit.blockboss.configurexml package.

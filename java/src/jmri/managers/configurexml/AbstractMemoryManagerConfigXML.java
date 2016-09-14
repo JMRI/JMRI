@@ -154,7 +154,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
         if (memory.getAttribute("valueClass") != null) {
             String adapter = memory.getAttribute("valueClass").getValue();
             if (adapter.equals("jmri.jmrit.roster.RosterEntry")) {
-                RosterEntry re = jmri.jmrit.roster.Roster.instance().getEntryForId(value);
+                RosterEntry re = jmri.jmrit.roster.Roster.getDefault().getEntryForId(value);
                 m.setValue(re);
                 return;
             }

@@ -997,7 +997,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                         java.text.MessageFormat.format(message,
                                 new Object[]{name}), Bundle.getMessage("ReminderTitle"),
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
-                        null, new Object[]{Bundle.getMessage("ButtonHide"), Bundle.getMessage("ButtonDelete"),
+                        null, new Object[]{Bundle.getMessage("ButtonHide"), Bundle.getMessage("ButtonDeletePanel"),
                             Bundle.getMessage("ButtonDontShow")}, Bundle.getMessage("ButtonHide"));
                 switch (selectedValue) {
                     case 0:
@@ -1474,7 +1474,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if ("".equals(rosterEntryTitle)) {
             return null;
         }
-        return selectLoco(Roster.instance().entryFromTitle(rosterEntryTitle));
+        return selectLoco(Roster.getDefault().entryFromTitle(rosterEntryTitle));
     }
 
     protected LocoIcon selectLoco(RosterEntry entry) {
@@ -2580,7 +2580,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             frame.dispose();
         }
         // delete panel - deregister the panel for saving
-        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
             cm.deregister(this);
         }

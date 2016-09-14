@@ -29,7 +29,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import jmri.swing.JmriTable;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -118,7 +117,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     public void initComponents() throws Exception {
 
         //Casts at getTableCellEditorComponent() now fails with 3.0 ??            
-        JTable table = new JmriTable(_model);
+        JTable table = new JTable(_model);
         ComboBoxCellEditor comboEd;
         TableRowSorter<WarrantTableModel> sorter = new TableRowSorter<>(_model);
         comboEd = new ComboBoxCellEditor(new JComboBox<>());

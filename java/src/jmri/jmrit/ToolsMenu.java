@@ -34,7 +34,7 @@ public class ToolsMenu extends JMenu {
         add(programmerMenu);
 
         // disable programmer menu if there's no programmer manager
-        if (jmri.InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) == null) {
             programmerMenu.setEnabled(false);
         }
 
@@ -82,7 +82,7 @@ public class ToolsMenu extends JMenu {
         add(throttleMenu);
 
         // disable the throttle menu if there is no throttle Manager
-        if (jmri.InstanceManager.getOptionalDefault(jmri.ThrottleManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
             throttleMenu.setEnabled(false);
         }
 
@@ -91,7 +91,7 @@ public class ToolsMenu extends JMenu {
         add(consistAction);
 
         // disable the consist tool if there is no consist Manager
-        if (jmri.InstanceManager.getOptionalDefault(jmri.ConsistManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ConsistManager.class) == null) {
             consistAction.setEnabled(false);
         }
 

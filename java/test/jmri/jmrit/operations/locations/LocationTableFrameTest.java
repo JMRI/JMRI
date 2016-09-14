@@ -4,9 +4,9 @@ package jmri.jmrit.operations.locations;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations Locations GUI class
@@ -31,11 +31,11 @@ public class LocationTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th loc", "Test Loc E", f.locationsModel.getValueAt(4, LocationsTableModel.NAMECOLUMN));
 
         // check location lengths
-        Assert.assertEquals("1st loc length", "1005", f.locationsModel.getValueAt(0, LocationsTableModel.LENGTHCOLUMN));
-        Assert.assertEquals("2nd loc length", "1004", f.locationsModel.getValueAt(1, LocationsTableModel.LENGTHCOLUMN));
-        Assert.assertEquals("3rd loc length", "1003", f.locationsModel.getValueAt(2, LocationsTableModel.LENGTHCOLUMN));
-        Assert.assertEquals("4th loc length", "1002", f.locationsModel.getValueAt(3, LocationsTableModel.LENGTHCOLUMN));
-        Assert.assertEquals("5th loc length", "1001", f.locationsModel.getValueAt(4, LocationsTableModel.LENGTHCOLUMN));
+        Assert.assertEquals("1st loc length", 1005, f.locationsModel.getValueAt(0, LocationsTableModel.LENGTHCOLUMN));
+        Assert.assertEquals("2nd loc length", 1004, f.locationsModel.getValueAt(1, LocationsTableModel.LENGTHCOLUMN));
+        Assert.assertEquals("3rd loc length", 1003, f.locationsModel.getValueAt(2, LocationsTableModel.LENGTHCOLUMN));
+        Assert.assertEquals("4th loc length", 1002, f.locationsModel.getValueAt(3, LocationsTableModel.LENGTHCOLUMN));
+        Assert.assertEquals("5th loc length", 1001, f.locationsModel.getValueAt(4, LocationsTableModel.LENGTHCOLUMN));
 
         // create edit location frame
         f.locationsModel.setValueAt(null, 2, LocationsTableModel.EDITCOLUMN);

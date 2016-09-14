@@ -1,11 +1,13 @@
 package apps;
 
 import apps.gui.GuiLafPreferencesManager;
+import apps.startup.StartupActionModelUtil;
 import apps.startup.StartupModel;
 import apps.startup.StartupModelFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.ServiceLoader;
 import java.util.Set;
 import jmri.configurexml.ConfigXmlManager;
@@ -53,6 +55,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     @Override
     public void initialize(Profile profile) throws InitializationException {
         if (!this.isInitialized(profile)) {
+            InitializationException exception = null;
             try {
                 Element startup;
                 try {
@@ -61,9 +64,17 @@ public class StartupActionsManager extends AbstractPreferencesManager {
                     log.debug("Reading element from version 2.9.6 namespace...");
                     startup = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(STARTUP, NAMESPACE_OLD, true));
                 }
-                startup.getChildren().stream().forEach((perform) -> {
+                for (Element perform : startup.getChildren()) {
                     String adapter = perform.getAttributeValue("class"); // NOI18N
                     String name = perform.getAttributeValue("name"); // NOI18N
+                    String override = StartupActionModelUtil.getDefault().getOverride(name);
+                    if (override != null) {
+                        perform.setAttribute("name", override);
+                        log.info("Overridding statup action class {} with {}", name, override);
+                        exception = new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsOverriddenClasses", name, override),
+                                Bundle.getMessage(Locale.ENGLISH, "StartupActionsOverriddenClasses", name, override));
+                        name = override; // after logging difference and creating error message
+                    }
                     String type = perform.getAttributeValue("type"); // NOI18N
                     log.debug("Read {} {} adapter {}", type, name, adapter);
                     try {
@@ -71,16 +82,33 @@ public class StartupActionsManager extends AbstractPreferencesManager {
                         ((XmlAdapter) Class.forName(adapter).newInstance()).load(perform, null); // no perNode preferences
                     } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
                         log.error("Unable to create {} for {}", adapter, perform, ex);
+                        if (exception != null) {
+                            exception = new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsMultipleErrors"),
+                                    Bundle.getMessage("StartupActionsMultipleErrors")); // NOI18N
+                        } else {
+                            exception = new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsCreationError", adapter, name),
+                                    Bundle.getMessage("StartupActionsCreationError", adapter, name)); // NOI18N
+                        }
                     } catch (Exception ex) {
                         log.error("Unable to load {} into {}", perform, adapter, ex);
+                        if (exception != null) {
+                            exception = new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsMultipleErrors"),
+                                    Bundle.getMessage("StartupActionsMultipleErrors")); // NOI18N
+                        } else {
+                            exception = new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsLoadError", adapter, name),
+                                    Bundle.getMessage("StartupActionsLoadError", adapter, name)); // NOI18N
+                        }
                     }
-                });
+                }
             } catch (NullPointerException ex) {
                 // ignore - this indicates migration has not occured
                 log.debug("No element to read");
             }
             this.isDirty = false;
             this.setInitialized(profile, true);
+            if (exception != null) {
+                throw exception;
+            }
         }
     }
 
