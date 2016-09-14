@@ -34,16 +34,20 @@ public class JsonConsistSocketService extends JsonSocketService {
     @Override
     public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
         this.locale = locale;
-        DccLocoAddress address = new DccLocoAddress(data.path(JSON.ADDRESS).asInt(), data.path(JSON.IS_LONG_ADDRESS).asBoolean());
-        String name = address.getNumber() + (address.isLongAddress() ? "L" : "");
-        if (data.path(JSON.METHOD).asText().equals(JSON.PUT)) {
-            this.connection.sendMessage(this.service.doPut(type, name, data, locale));
+        if (JsonConsist.CONSISTS.equals(type)) {
+            this.connection.sendMessage(this.service.doGetList(type, locale));
         } else {
-            this.connection.sendMessage(this.service.doPost(type, name, data, locale));
-        }
-        if (!this.consists.contains(address)) {
-            this.service.manager.getConsist(address).addConsistListener(this.consistListener);
-            this.consists.add(address);
+            DccLocoAddress address = new DccLocoAddress(data.path(JSON.ADDRESS).asInt(), data.path(JSON.IS_LONG_ADDRESS).asBoolean());
+            String name = address.getNumber() + (address.isLongAddress() ? "L" : "");
+            if (data.path(JSON.METHOD).asText().equals(JSON.PUT)) {
+                this.connection.sendMessage(this.service.doPut(type, name, data, locale));
+            } else {
+                this.connection.sendMessage(this.service.doPost(type, name, data, locale));
+            }
+            if (!this.consists.contains(address)) {
+                this.service.manager.getConsist(address).addConsistListener(this.consistListener);
+                this.consists.add(address);
+            }
         }
     }
 
