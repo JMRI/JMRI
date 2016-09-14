@@ -295,7 +295,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
                         JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                 .getMessage("NeedToBuildBeforeRunFile"), new Object[]{
                                         train.getName()}),
-                                Bundle.getMessage("Error"),
+                                Bundle.getMessage("ErrorTitle"),
                                 JOptionPane.ERROR_MESSAGE);
                     } else {
                         // Make sure our csv manifest file exists for this Train.

@@ -43,7 +43,7 @@ public class Route implements java.beans.PropertyChangeListener {
 
     public static final String OKAY = Bundle.getMessage("ButtonOK");
     public static final String ORPHAN = Bundle.getMessage("Orphan");
-    public static final String ERROR = Bundle.getMessage("Error");
+    public static final String ERROR = Bundle.getMessage("ErrorTitle");
 
     public static final int START = 1; // add location at start of route
 

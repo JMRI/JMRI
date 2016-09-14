@@ -297,7 +297,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
             LocationTrackPair ltp = (LocationTrackPair) box.getItemAt(i);
             String status = ltp.getTrack().checkScheduleValid();
             if (!status.equals(Track.SCHEDULE_OKAY)) {
-                return Bundle.getMessage("Error");
+                return Bundle.getMessage("ErrorTitle");
             }
         }
         return Bundle.getMessage("ButtonOK");

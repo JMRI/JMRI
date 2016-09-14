@@ -334,14 +334,14 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
                                 JOptionPane.showMessageDialog(this,
                                         MessageFormat.format(Bundle.getMessage("WarningExcludeTrackLoad"),
                                                 new Object[]{track.getName(), load}),
-                                        Bundle.getMessage("Error"),
+                                        Bundle.getMessage("ErrorTitle"),
                                         JOptionPane.WARNING_MESSAGE);
                                 needLoadTrackEditFrame = true;
                             } else if (!track.acceptsLoad(load, type)) {
                                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                         .getMessage("WarningExcludeTrackTypeAndLoad"), new Object[]{track.getName(),
                                                 type, load}),
-                                        Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
+                                        Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                                 needLoadTrackEditFrame = true;
                             }
                         }
@@ -352,13 +352,13 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
                             if (track.acceptsLoadName(load)) {
                                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                         .getMessage("WarningAcceptTrackLoad"), new Object[]{track.getName(), load}),
-                                        Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
+                                        Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                                 needLoadTrackEditFrame = true;
                             } else if (track.acceptsLoad(load, type)) {
                                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                         .getMessage("WarningAcceptTrackTypeAndLoad"), new Object[]{track.getName(),
                                                 type, load}),
-                                        Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
+                                        Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                                 needLoadTrackEditFrame = true;
                             }
                         } else if (track.getLoadOption().equals(Track.EXCLUDE_LOADS)) {
@@ -383,13 +383,13 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
                                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                         .getMessage("WarningExcludeTrackShipLoad"), new Object[]{track.getName(),
                                                 load}),
-                                        Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
+                                        Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                                 needLoadTrackEditFrame = true;
                             } else if (!track.shipsLoad(load, type)) {
                                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                         .getMessage("WarningExcludeTrackShipTypeAndLoad"), new Object[]{
                                                 track.getName(), type, load}),
-                                        Bundle.getMessage("Error"),
+                                        Bundle.getMessage("ErrorTitle"),
                                         JOptionPane.WARNING_MESSAGE);
                                 needLoadTrackEditFrame = true;
                             }
@@ -401,13 +401,13 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
                             if (track.shipsLoadName(load)) {
                                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                         .getMessage("WarningShipTrackLoad"), new Object[]{track.getName(), load}),
-                                        Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
+                                        Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                                 needLoadTrackEditFrame = true;
                             } else if (track.shipsLoad(load, type)) {
                                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                         .getMessage("WarningShipTrackTypeAndLoad"), new Object[]{track.getName(),
                                                 type, load}),
-                                        Bundle.getMessage("Error"), JOptionPane.WARNING_MESSAGE);
+                                        Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                                 needLoadTrackEditFrame = true;
                             }
                         } else if (track.getShipLoadOption().equals(Track.EXCLUDE_LOADS)) {
