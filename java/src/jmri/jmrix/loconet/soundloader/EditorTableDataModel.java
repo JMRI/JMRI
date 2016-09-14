@@ -77,9 +77,9 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
             case LENGTHCOL:
                 return res.getString("HeaderLENGTHCOL");
             case PLAYBUTTONCOL:
-                return res.getString("HeaderPLAYBUTTONCOL");
+                return ""; // no title
             case REPLACEBUTTONCOL:
-                return res.getString("HeaderREPLACEBUTTONCOL");
+                return ""; // no title
 
             default:
                 return "unknown";

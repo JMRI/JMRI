@@ -42,7 +42,7 @@ public class ClockItemPanel extends IconItemPanel {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(Bundle.getMessage("AddClockToPanel")));
+        blurb.add(new JLabel(Bundle.getMessage("AddClockToPanel", Bundle.getMessage("FastClock"))));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);

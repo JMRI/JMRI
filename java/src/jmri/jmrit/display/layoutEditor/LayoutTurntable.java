@@ -406,7 +406,7 @@ public class LayoutTurntable {
                 editTurntable(instance);
             }
         });
-        popup.add(new AbstractAction(rb.getString("Remove")) {
+        popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
             /**
              *
              */
@@ -560,7 +560,7 @@ public class LayoutTurntable {
                     turntableEditDonePressed(e);
                 }
             });
-            turntableEditDone.setToolTipText(rb.getString("DoneHint"));
+            turntableEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             // Cancel
             panel5.add(turntableEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             turntableEditCancel.addActionListener(new ActionListener() {
@@ -568,7 +568,7 @@ public class LayoutTurntable {
                     turntableEditCancelPressed(e);
                 }
             });
-            turntableEditCancel.setToolTipText(rb.getString("CancelHint"));
+            turntableEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             footerPane.add(panel5);
 
             rayPanel = new JPanel();
@@ -938,7 +938,7 @@ public class LayoutTurntable {
                 panel.add(turnoutPanel);
 
                 JButton deleteRayButton;
-                top.add(deleteRayButton = new JButton(rb.getString("Remove")));
+                top.add(deleteRayButton = new JButton(Bundle.getMessage("ButtonDelete")));
                 deleteRayButton.setToolTipText(rb.getString("DeleteRayTrack"));
                 deleteRayButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -953,7 +953,7 @@ public class LayoutTurntable {
             showTurnoutDetails();
 
             angle.setText(twoDForm.format(getAngle()));
-            border.setTitle("Ray : " + connectionIndex);
+            border.setTitle(rb.getString("Ray") + " : " + connectionIndex);
             if (connect == null) {
                 border.setTitle(rb.getString("Unconnected") + " : " + connectionIndex);
             } else if (connect.getLayoutBlock() != null) {
