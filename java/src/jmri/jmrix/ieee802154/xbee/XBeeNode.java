@@ -355,5 +355,15 @@ public class XBeeNode extends IEEE802154Node {
 
     private jmri.jmrix.AbstractStreamPortController connectedController = null;
 
+    /*
+     * provide a string representation of this XBee Node
+     */
+    @Override
+    public String toString(){
+       return "(" + jmri.util.StringUtil.hexStringFromBytes(getUserAddress()) +
+              "," + jmri.util.StringUtil.hexStringFromBytes(getGlobalAddress()) +
+              "," + getIdentifier() + ")";
+    }
+
     private static Logger log = LoggerFactory.getLogger(XBeeNode.class.getName());
 }

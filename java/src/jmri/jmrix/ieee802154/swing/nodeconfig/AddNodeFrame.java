@@ -156,7 +156,7 @@ public class AddNodeFrame extends jmri.util.JmriJFrame {
     private String readNodeAddress() {
         String addr = "";
         addr = nodeAddrField.getText();
-        if (addr.equals("FF FF ") || addr.equals("FF FE ")) {
+        if (addr.equals("FF FF ") || addr.equals("FF FE ") || addr.equals("")) {
             addr = nodeAddr64Field.getText();
         }
         return (addr);
@@ -164,11 +164,10 @@ public class AddNodeFrame extends jmri.util.JmriJFrame {
 
     // Initilize the text boxes for the addresses.
     protected void initAddressBoxes() {
-        IEEE802154Node current = null;
         nodeAddrField.setText("");
         nodeAddr64Field.setText("");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AddNodeFrame.class.getName());
 
 }
