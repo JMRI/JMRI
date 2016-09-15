@@ -11,14 +11,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Tests for the jmri.jmrix.acela.AcelaTurnoutManager class.
+ * Tests for the jmri.jmrix.acela.AcelaLightManager class.
  *
  * @author	Bob Coleman Copyright 2008
  */
-public class AcelaLightManagerTest  {
+public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTest {
 
     private AcelaSystemConnectionMemo _memo = null;
-    private AcelaLightManager l = null;
     private AcelaTrafficControlScaffold tcis = null;
 
     public String getSystemName(int i) {
@@ -32,12 +31,8 @@ public class AcelaLightManagerTest  {
     }
 
     @Test
-    @Ignore("not working")
     public void testAsAbstractFactory() {
-        // ask for a Light, and check type
-        LightManager lm = jmri.InstanceManager.lightManagerInstance();
-
-        Light tl = lm.newLight("AL21", "my name");
+        Light tl = l.newLight("AL21", "my name");
 
         if (log.isDebugEnabled()) {
             log.debug("received light value " + tl);
@@ -46,14 +41,14 @@ public class AcelaLightManagerTest  {
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + lm.getBySystemName("AL21"));
+            log.debug("by system name: " + l.getBySystemName("AL21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + lm.getByUserName("my name"));
+            log.debug("by user name:   " + l.getByUserName("my name"));
         }
 
-        Assert.assertTrue(null != lm.getBySystemName("AL21"));
-        Assert.assertTrue(null != lm.getByUserName("my name"));
+        Assert.assertTrue(null != l.getBySystemName("AL21"));
+        Assert.assertTrue(null != l.getByUserName("my name"));
 
     }
 
@@ -67,6 +62,16 @@ public class AcelaLightManagerTest  {
         // create and register the manager object
         l = new AcelaLightManager(_memo);
         jmri.InstanceManager.setLightManager(l);
+        AcelaNode a0 = new AcelaNode(0, AcelaNode.AC,tcis);
+        a0.initNode();
+        AcelaNode a1 = new AcelaNode(1, AcelaNode.TB,tcis);
+        a1.initNode();
+        AcelaNode a2 = new AcelaNode(2, AcelaNode.D8,tcis);
+        a2.initNode();
+        AcelaNode a3 = new AcelaNode(3, AcelaNode.D8,tcis);
+        a3.initNode();
+        AcelaNode a4 = new AcelaNode(4, AcelaNode.D8,tcis);
+        a4.initNode();
     }
 
     @After
