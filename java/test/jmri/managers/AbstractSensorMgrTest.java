@@ -71,17 +71,9 @@ public abstract class AbstractSensorMgrTest {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
-    @Test
+    @Test(expected=IllegalArgumentException.class)
     public void testProvideFailure() {
-        boolean correct = false;
-        try {
-            Sensor t = l.provideSensor("");
-            Assert.fail("didn't throw");
-        } catch (IllegalArgumentException ex) {
-            correct = true;
-        }
-        Assert.assertTrue("Exception thrown properly", correct);  
-        jmri.util.JUnitAppender.assertWarnMessage("Invalid system name for sensor: IS needed IS");      
+        Sensor t = l.provideSensor("");
     }
 
     @Test
