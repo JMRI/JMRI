@@ -254,18 +254,16 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             return;
         }
 
-        // Switch buttons
-        editMode = true;
-        addButton.setVisible(false);
-        editButton.setVisible(false);
-        deleteButton.setVisible(false);
-        doneButton.setVisible(false);
-        updateButton.setVisible(true);
-        cancelButton.setVisible(true);
-        // Switch to edit notes
-        statusText1.setText(editStatus1);
-        statusText2.setText(editStatus2);
-        statusText3.setText(editStatus3);
+        // create a new Edit Frame and display it.
+        jmri.util.JmriJFrame editFrame = new EditNodeFrame(itc,curNode);
+        try {
+           editFrame.initComponents();
+        } catch(Exception ex) {
+           log.error("Exception initializing Frame: {}",ex.toString());
+           return;
+        }
+        editFrame.setVisible(true);
+
     }
 
     /**

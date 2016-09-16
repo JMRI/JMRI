@@ -296,6 +296,10 @@ public class XBeeNode extends IEEE802154Node {
            device=rxd;
            userAddress = device.get16BitAddress();
            globalAddress = device.get64BitAddress();
+           setUserAddress(rxd.get16BitAddress().getValue());
+           setGlobalAddress(rxd.get64BitAddress().getValue());
+           Identifier = rxd.getNodeID();
+
     }
 
     /*
