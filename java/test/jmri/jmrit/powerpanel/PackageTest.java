@@ -10,24 +10,24 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen
  */
-public class PowerPanelTest extends TestCase {
+public class PackageTest extends TestCase {
 
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle");
 
     // from here down is testing infrastructure
-    public PowerPanelTest(String s) {
+    public PackageTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", PowerPanelTest.class.getName()};
+        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrit.powerpanel.PowerPanelTest"); // no tests in class itself
+        TestSuite suite = new TestSuite("jmri.jmrit.powerpanel.PackageTest"); // no tests in class itself
         suite.addTest(jmri.jmrit.powerpanel.PowerPaneTest.suite());
         return suite;
     }
