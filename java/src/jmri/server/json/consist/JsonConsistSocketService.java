@@ -8,10 +8,13 @@ import jmri.ConsistListListener;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
 import jmri.JmriException;
+import jmri.jmrit.consisttool.ConsistFile;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -24,6 +27,7 @@ public class JsonConsistSocketService extends JsonSocketService {
     private Locale locale;
     private final JsonConsistListener consistListener = new JsonConsistListener();
     private final JsonConsistListListener consistListListener = new JsonConsistListListener();
+    private final static Logger log = LoggerFactory.getLogger(JsonConsistSocketService.class);
 
     public JsonConsistSocketService(JsonConnection connection) {
         super(connection);
@@ -77,8 +81,15 @@ public class JsonConsistSocketService extends JsonSocketService {
                     connection.sendMessage(ex.getJsonMessage());
                 }
             } catch (IOException ex) {
+                // this IO execption caused by broken comms with client
                 service.manager.getConsist(locoaddress).removeConsistListener(this);
                 consists.remove(locoaddress);
+            }
+            try {
+                (new ConsistFile()).writeFile(service.manager.getConsistList());
+            } catch (IOException ex) {
+                // this IO execption caused by unable to write file
+                log.error("Unable to write consist file \"{}\": {}", ConsistFile.defaultConsistFilename(), ex);
             }
         }
     }
@@ -94,7 +105,14 @@ public class JsonConsistSocketService extends JsonSocketService {
                     connection.sendMessage(ex.getJsonMessage());
                 }
             } catch (IOException ex) {
+                // this IO execption caused by broken comms with client
                 service.manager.removeConsistListListener(this);
+            }
+            try {
+                (new ConsistFile()).writeFile(service.manager.getConsistList());
+            } catch (IOException ex) {
+                // this IO execption caused by unable to write file
+                log.error("Unable to write consist file \"{}\": {}", ConsistFile.defaultConsistFilename(), ex);
             }
         }
     }

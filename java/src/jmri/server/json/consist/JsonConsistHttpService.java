@@ -32,7 +32,7 @@ import jmri.server.json.util.JsonUtilHttpService;
  */
 public class JsonConsistHttpService extends JsonHttpService {
 
-    final JsonConsistManager manager;
+    final JsonConsistManager manager; // default package visibility
 
     public JsonConsistHttpService(ObjectMapper mapper) {
         super(mapper);

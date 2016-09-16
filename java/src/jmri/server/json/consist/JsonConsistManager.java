@@ -35,9 +35,9 @@ public class JsonConsistManager extends Bean implements ConsistManager {
                 this.manager.addConsistListListener(() -> {
                     this.notifyConsistListChanged();
                 });
-                ConsistFile cf = new ConsistFile();
+                this.manager.requestUpdateFromLayout();
                 try {
-                    cf.readFile();
+                    (new ConsistFile()).readFile();
                 } catch (JDOMException | IOException ex) {
                     log.warn("Error reading consist file {} due to {}", ConsistFile.defaultConsistFilename(), ex.getMessage());
                 }
@@ -48,6 +48,12 @@ public class JsonConsistManager extends Bean implements ConsistManager {
             this.manager.addConsistListListener(() -> {
                 this.notifyConsistListChanged();
             });
+            this.manager.requestUpdateFromLayout();
+            try {
+                (new ConsistFile()).readFile();
+            } catch (JDOMException | IOException ex) {
+                log.warn("Error reading consist file {} due to {}", ConsistFile.defaultConsistFilename(), ex.getMessage());
+            }
         }
     }
 
