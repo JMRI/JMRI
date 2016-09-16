@@ -70,7 +70,8 @@ public class JsonConsistHttpService extends JsonHttpService {
      * @param type   the JSON message type
      * @param locale the locale to throw exceptions in
      * @param name   the consist address, ignored if data contains an
-     *               {@value #ADDRESS} and {@value #IS_LONG_ADDRESS} nodes
+     *               {@value jmri.server.json.JSON#ADDRESS} and
+     *               {@value jmri.server.json.JSON#IS_LONG_ADDRESS} nodes
      * @param data   the consist as a JsonObject
      * @return the JSON representation of the Consist
      * @throws jmri.server.json.JsonException if there is no consist manager
