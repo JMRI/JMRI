@@ -94,7 +94,11 @@ public class XBeeLightManager extends AbstractLightManager {
             int seperator = systemName.indexOf(":");
             encoderAddress = systemName.substring(getSystemPrefix().length() + 1, seperator);
         } else {
-            encoderAddress = systemName.substring(getSystemPrefix().length() + 1, systemName.length() - 1);
+            if(systemName.length()>(getSystemPrefix().length()+1)) {
+               encoderAddress = systemName.substring(getSystemPrefix().length() + 1, systemName.length() - 1);
+            } else {
+               encoderAddress = systemName.substring(getSystemPrefix().length() + 1);
+            }
         }
         log.debug("Converted {} to hardware address {}", systemName, encoderAddress);
         return encoderAddress;
