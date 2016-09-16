@@ -15,7 +15,7 @@ import javax.swing.SwingUtilities;
 import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.finder.JLabelFinder;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

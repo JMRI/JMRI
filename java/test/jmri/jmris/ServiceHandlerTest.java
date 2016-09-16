@@ -2,7 +2,7 @@ package jmri.jmris;
 
 import java.io.IOException;
 import jmri.JmriException;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
