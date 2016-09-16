@@ -1,7 +1,7 @@
 package jmri.jmrix.ieee802154.serialdriver;
 
 import jmri.jmrix.ieee802154.IEEE802154Node;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

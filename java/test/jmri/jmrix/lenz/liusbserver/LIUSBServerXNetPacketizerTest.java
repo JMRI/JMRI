@@ -1,6 +1,6 @@
 package jmri.jmrix.lenz.liusbserver;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.TestCase;
 
 /**

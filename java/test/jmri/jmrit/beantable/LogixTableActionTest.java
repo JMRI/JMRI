@@ -12,7 +12,7 @@ import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 
 import junit.extensions.jfcunit.TestHelper;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

@@ -9,22 +9,22 @@ import junit.framework.TestSuite;
  *
  * @author	Dave Duchamp
  */
-public class DispatcherTest extends TestCase {
+public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-    public DispatcherTest(String s) {
+    public PackageTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {DispatcherTest.class.getName()};
+        String[] testCaseName = {PackageTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrit.dispatcher.DispatcherTest"); // no tests in class itself
+        TestSuite suite = new TestSuite("jmri.jmrit.dispatcher.PackageTest"); // no tests in class itself
         suite.addTest(jmri.jmrit.dispatcher.DispatcherTrainInfoTest.suite());
         suite.addTest(jmri.jmrit.dispatcher.DispatcherTrainInfoFileTest.suite());
         suite.addTest(BundleTest.suite());
