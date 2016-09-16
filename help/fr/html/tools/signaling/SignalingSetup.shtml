@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id$ -->
+<!-- UpDated  by Blorec Herv&#233; le 2016-09-15--> 
+<title>JMRI: How to set up Signaling in JMRI</title>
+<META name="Author" content="Bob Jacobsen">
+<META name="Author" content="Egbert Broerse">
+	<META name="Date.Modified" content="20151002"/>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+<!-- Page Body -->
+
+<h1>JMRI: Signalisation D&#233;marrage Rapide</h1>
+		<pclass=subtitle> Les instructions pas &#224; pas d&#233;crivent en d&#233;tails comment configurer la Signalisation dans JMRI</p>	
+<ul>
+		<li><a href="#7steps">Signalisation JMRI 7 &#233;tapes</a></li>
+		<li><a href="#magic">Configuration du Magic SignalMan</a></li>
+</ul>
+
+<a name="7steps"><h2>Commencer &#224; utiliser la Signalisation JMRI 7 &#233;tapes</h2></a>
+		<p>Merci &#224; Suzie Tall.</p>
+<!-- Listing from JMRI Group, March 4, 2014 -->
+<h3>&#201;tapes</h3>
+<ol>
+		<li>Lancez Panel Pro et du menu Outils --> Tableaux--> Aiguillages ajouter les aiguillages sur votre r&#233;seau par le <a href="../Turnouts.shtml">Tableau Aiguillage</a>.</li> 
+
+		<li> Ensuite ajoutez les signaux physiques que vous avez install&#233;s sur le r&#233;seau dans le <a href="SignalMasts.shtml">Tableau M&#226;t de Signalisation</a>:
+<ol>
+		<li>La fa&#231;on la plus facile: si vous utilisez un d&#233;codeur accessoire qui peut piloter nativement Les M&#226;ts de Signalisation et supporte le (<a href="http://www.nmra.org/sites/default/files/s-9.2.1_2012_07.pdf">PDF</a>) Protocole Accessoire &#201;tendue NMRA 9.2.1, ajoutez juste le M&#226;t de Signalisation utilisant le "driver D&#233;codeur M&#226;t de Signalisation DCC" et quand vous &#234;tes invit&#233;s, entrez les num&#233;ros d'Aspects configur&#233;s dans votre d&#233;codeur en face de chaque Aspect. Les d&#233;codeurs comme le <a href="http://signalist.co.uk">Signalist SC1</a> ont diff&#233;rents types de M&#226;t de Signalisation pr&#233;-configur&#233; et vous avez juste &#224; s&#233;lectionner le tableau correct avec un CV et obtenir les num&#233;ros d'Aspects dans le manuel. 
+ 		Les autres d&#233;codeurs n&#233;cessiterons quelques r&#233;glages pour d&#233;finir les Aspects &#224; afficher pour un num&#233;ro d'Aspect. Voyez votre manuel du d&#233;codeur pour savoir que faire.</li>
+    	<li>Si vous avez des d&#233;codeurs de signaux plus basiques ( DigitraxSE8c par exemple ) ou une centrale de commande qui n'accepte pas le Protocole Accessoires &#201;tendu ( Lenz par exemple ) vous devrez en premier configurer individuellement les Feux de Signalisation qui composent le M&#226;t de Signalisation dans le Tableau de Feu de Signalisation et ensuite aller au Tableau M&#226;t de Signalisation, ajoutez le Type de M&#226;t de Signalisation ( exzemple: AAR-2 Triple Feux Searchlight*) ) et le configurer en utilisant le pilote Feu de Signalisation Command&#233; par M&#226;t de Signalisation, en ajoutant les Feux de Signalisation que vous avez d&#233;finis pr&#233;c&#233;demment.</li>  
+				</ol>
+Choisissez l'un des 
+<a href="../../../../../xml/signals/">Syst&#232;mes de Signalisation</a> disponibles, tel que 
+<a href="../../../../../xml/signals/AAR-1946/aspects.xml">AAR-2</a> dans notre exemple, et de s'y tenir. 
+Il est un peu g&#233;nant mais pas trop de travail. ( Pour plus d'information sur les 
+syst&#232;mes de signalisation distribu&#233;s avec JMRI, voir 
+<a href="../../../../../xml/signals/">cette pagee</a>; Pour plus d'information sur comment ceci travaille, voir la page sur 
+<a href="AspectSignaling.shtml">Aspect de la signalisation</a> ).</li>
+
+</li>
+<li>Retour &#224; l'&#233;cran avant de PanelPro et depuis le meu Panneaux --> New... cr&#233;er un nouveau panneau avec l' <a href="#editor">&#201;diteur de R&#233;seau</a> et dessinez votre plan de voie.</li>
+
+		<li>Clic-Droit sur les Aiguillages et les points d'ancrage o&#249; vous voulez vos signaux et choisissez "D&#233;finir M&#226;t de Signalisation". Vous pouvez choisir dans la liste des M&#226;ts de Signalisation que vous avez entr&#233;e dans le Tableau M&#226;t de Signalisation pour chaque emplacement possible. Tous les points d'ancrage ou les aiguillages n'auront pas une gamme compl&#232;te de signaux.<br/>
+Vous avez probablement quelques emplacements ( dans une section cach&#233;e ) o&#249; vous n'avez pas de signal physique mais dans le prototype r&#233;el il y aurait un - dans ce cas ajoutez un signal Virtuel du type appropri&#233; en utilisant une connexion type Virtuelle dans le  <a href="SignalMasts.shtml">Tableau M&#226;t de Signalisation</a>.</li> 
+
+ <li>Clic-droit sur chaque signal et cliquez "Logique M&#226; de Signalisation --> D&#233;couvrir". JMRI va alors cr&#233;er par magie toute la logique n&#233;cessaire pour configurer l'aspect de ce signal, bas&#233; sur les aiguillages et les aspects des signaux suivants sur tous les itin&#233;raires possibles.</li> 
+     
+<li>Ajoutez vos capteurs d	ans le Tableau Capteur pour tous les Cantons qui ont des d&#233;tecteurs de cantons physique avec r&#233;tro-signalisation sur le r&#233;seau et affectez chaque Capteur &#224; son Canton r&#233;seau. Sautez cette partie si vous n'utilisez pas de d&#233;tection de canton et juste configurer manuellement les signaux pour attendre derri&#232;re le train.</li> 
+
+ <li>Faites circuler les trains et regardez les signaux changer suivants vos r&#232;gles choisies. Notez qu'il n'y a pas besoin de se r&#233;f&#233;rer au livre de r&#232;glement et pas besoin de cr&#233;er Logix ou quelque chose comme &#231;a. C'est juste un cas de saisie de votre configuration de r&#233;seau, du Syst&#232;me de Signalisation (AAR-2 dans notre exemple) et du mat&#233;riel. </li> 
+</ol>
+
+<h3>Notes</h3>
+<ul>
+		<li>Les choses s&#233;rieuses concernant l'utilisation de l'<a name="editor" href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">&#201;diteur de R&#233;seau</a> ne sont pas expliqu&#233;es ici, mais vous allez bient&#244;t obtenir la pr&#233;sentation de celles-ci et ce qui est le plus dur. Il faut moins de temps pour cr&#233;er un panneau de r&#233;seau de travail pour un r&#233;seau moyen qu'il n'a fallu de temps pour taper cette m&#233;thode, ce qui montre combien il est facile de commencer la signalisation avec JMRI. </li>
+   	<li>vous pourriez commencer avec les  signaux logiciels sur un panneau seulement, et graduellement ajouter les d&#233;codeurs et les signaux mod&#232;les sur le r&#233;seau. Quand vous avez d&#233;cid&#233; la solution mat&#233;rielle et le Syst&#232;me de signal &#224; adopter, vous pouvez construire les d&#233;finitions compl&#232;tes d&#232;s le d&#233;but. Autrement utilisez le signal Virtuel type et remplacez les par un nouveau M&#226;t de Signalisation plus tard.</li>
+ 		<li>Attention lors de la d&#233;sactivation Aspects. Tous les syst&#232;mes de signalisation ne sont pas en mesure de traiter les aspects cl&#233;s en &#233;tant d&#233;sactiv&#233;s parce qu'il n'est pas toujours possible d'inclure une alternative dans la pr&#233;sentation aspect pour quelque m&#226;ts ( ex: quand l'aspect alternatif a les m&#232;mes r&#233;glages de vitesse et de d&#233;viation ). Ne soyez pas surpris lors de la d&#233;sactivation d'un aspect alternatif qui est affich&#233; est "Stop". Donc la d&#233;sactivation doit &#234;tre faite avec soin. Si vous voulez d&#233;sactiver des aspects il est g&#233;n&#233;ralement pr&#233;f&#233;rable de configurer l'&#201;diteur de R&#233;seau afin que les aspects incrimin&#233;s n'apparaissent pas parce que les conditions de voie ne permettent pas l'utilisation des vitesses dans les cantons et ainsi de suite.</li>
+ 		<li>Si vous pr&#233;f&#233;rez la flexibilit&#233; de l'&#201;diteur de Panneaux de Commande pour dupliquer des panneaux r&#233;alistes sp&#233;cifique, vous pouvez encore utiliser Aspect Signalisation et ses Logique M&#226;t de Signalisation. Vous devez juste avoir besoin d'ajouter quelques &#233;l&#233;ments manuellement</li>
+							</ul>
+<!-- Listing from JMRI Group, March 4, 2014 -->  
+<a name="magic"><h2>Configuration  du Magic SignalMan</h2></a>
+		<p>Merci &#224; Jim Duncan</p>
+
+		<p>Avec un nouveau <a href="http://www.rr-cirkits.com">mat&#233;riel SignalMan</a> de Dick Bronson, tout ce qui vous est n&#233;cessaire est:</p>
+<ol>
+		<li>Choisir le syst&#232;me de signal ( searchlight*, lumi&#232;res de couleur, PRR, B&amp;O,etc. ).</li>		
+		
+		<li>Cr&#233;er un nouveau M&#226;t de Signalisation en cliquant le bouton "Ajouter..." en bas du Tableau M&#226;t de Signalisation.</li>
+				N'essayez PAS de d&#233;finir individuellement les Feux de Signalisation. Vous faites ceci quand vous affectez les ports qui sont allum&#233;s quand vous configurez la programmation des cartes dans le champ!</li>   
+
+<li>D&#233;finir quels aspects le m&#226;t est autoris&#233; &#224; afficher.</li>
+<li>Configurez les connexions du signal:
+<ul>
+		<li>Choisissez le Canton que le signal prot&#232;ge</li>
+		<li>S&#233;lectionnez le signal suivant sur le r&#233;seau:
+			<ul>
+					<li>Si il y a seulement un seul itin&#233;raire:
+			<ul>
+						<li>S&#233;lectionnez le Signal suivant sur le r&#233;seau que signal prot&#232;ge</li>
+			</ul></li>
+					<li>Il y a plus d'un itin&#233;raire pass&#233; ce signal:
+			<ul>
+						<li>S&#233;lectionnez l'Aiguillage et son &#233;tat D&#233;vie/Direct</li>
+						<li>S&#233;lectionnez le canton prot&#233;g&#233; pour un itin&#233;raire donn&#233;</li>
+						<li>S&#233;lectionnez le signal prot&#233;g&#233; sur cet itin&#233;raire</li>
+						<li>R&#233;p&#233;tez pour tous les itin&#233;raires apr&#232;s ce signal</li> 					
+			</ul></li>
+			</ul></li>
+			</ul>
+			<li>Programmez votre carte pour r&#233;pondre au num&#233;ro du signal envoy&#233; sur la ligne de commande:
+<ul>
+						<li>d&#233;finissez les ports allum&#233;s pour chaque Aspect du Signal:
+<ul>
+<li>S&#233;lectionnez l'Aspect du Signal &#224; afficher depuis la liste d&#233;roulante dans le fichier d&#233;codeur</li>
+<li>S&#233;lectionnez le Port ( feu et lampe, ex H1R, H2G, etc. )</li>
+<li>R&#233;p&#233;tez pour tous les aspects que le Signal est autoris&#233; &#224; afficher</li>
+			</ul></li></ul>
+<li>Chargez la programmation dans la carte SignalMan.</li>
+<li>Connectez vos signaux mat&#233;riels.</li>
+<li>Ouvrez le menu <b>Outils -->Tableaux -->M&#226;t de Signalisation</b>, passer par chaque Aspect du Signal et observez le comportement du signal pour v&#233;rifier votre programmation et vos connexions.<br/>
+Astuce: Il est plus facile de reprogrammer la carte que de modifier les connexions de c&#226;blage </li>
+		</ol>
+
+<h3>Notes</h3>
+<ul>
+		<li>C'est &#224; peu pr&#232;s aussi basique que ce qu''il obtient! Ceci travaillera avec tous les types d'&#201;diteur de Panneaux.</li>
+		<li>Ne PAS essayer d'utiliser la fonction canton-auto avec un panneau cr&#233;&#233; dans l'&#201;diteur de Panneaux. Il va rester l&#224; et vous faire attendre pour toujours et ne fera rien donc il est effectivement plus facile de faire toute la logique de l'itin&#233;raire vous-m&#234;me!</li>  
+		</ul>
+<p>
+<p>
+*searchlight = feu &#224; une lampe avec secteur tournant comportant des verres color&#233;s 
+</p>
+</p>
+		<p>Retour &#224; la <a href="index.shtml">page d'aide principale Signalisation</a>.</p>				
+
+<!--#include virtual="/Footer" -->
+
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+</html>
