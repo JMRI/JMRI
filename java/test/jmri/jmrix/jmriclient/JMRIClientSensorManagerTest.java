@@ -47,6 +47,7 @@ public class JMRIClientSensorManagerTest extends jmri.managers.AbstractSensorMgr
 
     @After
     public void tearDown() {
+        l.dispose();
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }

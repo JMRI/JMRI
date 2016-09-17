@@ -86,6 +86,8 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     // The minimal setup for log4J
     @After
     public void tearDown() {
+        l.dispose();
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 
