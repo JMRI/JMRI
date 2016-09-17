@@ -1,6 +1,6 @@
 package jmri.jmrix.acela;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.slf4j.Logger;

@@ -48,7 +48,7 @@ public class PositionableEllipse extends PositionableRectangle {
     }
 
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = Bundle.getMessage("editShape", Bundle.getMessage("ellipse"));
+        String txt = Bundle.getMessage("editShape", Bundle.getMessage("Ellipse"));
         popup.add(new javax.swing.AbstractAction(txt) {
             /**
              *
@@ -57,7 +57,7 @@ public class PositionableEllipse extends PositionableRectangle {
 
             public void actionPerformed(ActionEvent e) {
                 if (_editFrame == null) {
-                    _editFrame = new DrawEllipse("editShape", "ellipse", null);
+                    _editFrame = new DrawEllipse("editShape", "Ellipse", null);
                     setEditParams();
                 }
             }

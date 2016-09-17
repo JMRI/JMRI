@@ -1,9 +1,9 @@
 package jmri.jmrit.dispatcher;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Swing jfcUnit tests for dispatcher train info
@@ -35,13 +35,13 @@ public class DispatcherTrainInfoFileTest extends TestCase {
         Assert.assertEquals("Departure Time Minutes", ti.getDepartureTimeMin(), 10);
         Assert.assertEquals("Train Type", ti.getTrainType(), "THROUGH_FREIGHT");
 
-        Assert.assertEquals("Speed Factor", ti.getSpeedFactor(), 0.8f);
-        Assert.assertEquals("Maximum Speed", ti.getMaxSpeed(), 0.6f);
+        Assert.assertEquals("Speed Factor", ti.getSpeedFactor(), 0.8f, 0.0);
+        Assert.assertEquals("Maximum Speed", ti.getMaxSpeed(), 0.6f, 0.0);
         Assert.assertEquals("Ramp Rate", ti.getRampRate(), "RAMP_FAST");
         Assert.assertTrue("Resistance Wheels", ti.getResistanceWheels());
         Assert.assertFalse("Run In Reverse", ti.getRunInReverse());
         Assert.assertFalse("Sound Decoder", ti.getSoundDecoder());
-        Assert.assertEquals("Maximum Train Length", ti.getMaxTrainLength(), 222.0f);
+        Assert.assertEquals("Maximum Train Length", ti.getMaxTrainLength(), 222.0f, 0.0);
 
     }
 

@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URL;
 import jmri.util.FileUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

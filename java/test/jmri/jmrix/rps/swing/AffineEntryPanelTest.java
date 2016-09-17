@@ -3,7 +3,7 @@ package jmri.jmrix.rps.swing;
 import java.awt.geom.AffineTransform;
 import javax.swing.JFrame;
 import jmri.util.JmriJFrame;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

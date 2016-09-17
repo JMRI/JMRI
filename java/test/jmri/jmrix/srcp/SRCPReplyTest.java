@@ -3,7 +3,7 @@ package jmri.jmrix.srcp;
 import java.io.StringReader;
 import jmri.jmrix.srcp.parser.ParseException;
 import jmri.jmrix.srcp.parser.SRCPClientParser;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

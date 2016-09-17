@@ -1969,22 +1969,22 @@ public class LayoutTurnout {
         if (editable) {
             switch (getTurnoutType()) {
                 case RH_TURNOUT:
-                    popup.add(rb.getString("RHTurnout"));
+                    popup.add(Bundle.getMessage("RightTurnout"));
                     break;
                 case LH_TURNOUT:
-                    popup.add(rb.getString("LHTurnout"));
+                    popup.add(Bundle.getMessage("LeftTurnout"));
                     break;
                 case WYE_TURNOUT:
                     popup.add(rb.getString("WYETurnout"));
                     break;
                 case DOUBLE_XOVER:
-                    popup.add(rb.getString("XOverTurnout"));
+                    popup.add(rb.getString("DoubleCrossOver"));
                     break;
                 case RH_XOVER:
-                    popup.add(rb.getString("RHXOverTurnout"));
+                    popup.add(Bundle.getMessage("RightCrossOver"));
                     break;
                 case LH_XOVER:
-                    popup.add(rb.getString("LHXOverTurnout"));
+                    popup.add(Bundle.getMessage("LeftCrossOver"));
                     break;
                 default:
                     break;
@@ -2034,7 +2034,7 @@ public class LayoutTurnout {
                 });
             }
             if (disableItem == null) {
-                disableItem = new JCheckBoxMenuItem(rb.getString("Disabled"));
+                disableItem = new JCheckBoxMenuItem(Bundle.getMessage("Disabled"));
             }
             disableItem.setSelected(disabled);
             popup.add(disableItem);
@@ -2061,13 +2061,13 @@ public class LayoutTurnout {
             if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
                 // check if extra blocks have been entered
                 if (blockB != null) {
-                    popup.add(rb.getString("Block2ID") + ": " + blockBName);
+                    popup.add(Bundle.getMessage("Block_ID", 2) + ": " + blockBName);
                 }
                 if (blockC != null) {
-                    popup.add(rb.getString("Block3ID") + ": " + blockCName);
+                    popup.add(Bundle.getMessage("Block_ID", 3) + ": " + blockCName);
                 }
                 if (blockD != null) {
-                    popup.add(rb.getString("Block4ID") + ": " + blockDName);
+                    popup.add(Bundle.getMessage("Block_ID", 4) + ": " + blockDName);
                 }
             }
             if (hidden) {
@@ -2096,7 +2096,7 @@ public class LayoutTurnout {
                     editLayoutTurnout();
                 }
             });
-            popup.add(new AbstractAction(rb.getString("Remove")) {
+            popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 /**
                  *
                  */
@@ -2449,7 +2449,7 @@ public class LayoutTurnout {
             // setup turnout name
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
-            JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " " + Bundle.getMessage("Name"));
+            JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout")));
             panel1.add(turnoutNameLabel);
             panel1.add(turnoutNameField);
             turnoutNameField.setToolTipText(rb.getString("EditTurnoutNameHint"));
@@ -2474,7 +2474,7 @@ public class LayoutTurnout {
             }
             panel1a.add(additionalTurnout);
             contentPane.add(panel1a);
-            secondTurnoutLabel = new JLabel(rb.getString("Supporting") + Bundle.getMessage("BeanNameTurnout") + " " + Bundle.getMessage("Name"));
+            secondTurnoutLabel = new JLabel(Bundle.getMessage("Supporting", Bundle.getMessage("BeanNameTurnout")));
             secondTurnoutLabel.setEnabled(false);
             secondTurnoutComboBox.setEnabled(false);
             JPanel panel1b = new JPanel();
@@ -2533,7 +2533,7 @@ public class LayoutTurnout {
                         turnoutEditBlockBPressed(e);
                     }
                 });
-                turnoutEditBlockB.setToolTipText(rb.getString("EditBlockBHint"));
+                turnoutEditBlockB.setToolTipText(Bundle.getMessage("EditBlockHint", "2"));
                 contentPane.add(panel21);
 
                 JPanel panel22 = new JPanel();
@@ -2549,7 +2549,7 @@ public class LayoutTurnout {
                         turnoutEditBlockCPressed(e);
                     }
                 });
-                turnoutEditBlockC.setToolTipText(rb.getString("EditBlockCHint"));
+                turnoutEditBlockC.setToolTipText(Bundle.getMessage("EditBlockHint", "3"));
                 contentPane.add(panel22);
 
                 JPanel panel23 = new JPanel();
@@ -2565,7 +2565,7 @@ public class LayoutTurnout {
                         turnoutEditBlockDPressed(e);
                     }
                 });
-                turnoutEditBlockD.setToolTipText(rb.getString("EditBlockDHint"));
+                turnoutEditBlockD.setToolTipText(Bundle.getMessage("EditBlockHint", "4"));
                 contentPane.add(panel23);
             }
             // set up Edit Block, Done and Cancel buttons
@@ -2573,7 +2573,7 @@ public class LayoutTurnout {
             panel5.setLayout(new FlowLayout());
             // Edit Block
 
-            turnoutEditBlock.setToolTipText(rb.getString("EditBlockHint"));
+            turnoutEditBlock.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
             // Done
             panel5.add(turnoutEditDone = new JButton(Bundle.getMessage("ButtonDone")));
             turnoutEditDone.addActionListener(new ActionListener() {
@@ -2581,7 +2581,7 @@ public class LayoutTurnout {
                     turnoutEditDonePressed(e);
                 }
             });
-            turnoutEditDone.setToolTipText(rb.getString("DoneHint"));
+            turnoutEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             // Cancel
             panel5.add(turnoutEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             turnoutEditCancel.addActionListener(new ActionListener() {
@@ -2589,7 +2589,7 @@ public class LayoutTurnout {
                     turnoutEditCancelPressed(e);
                 }
             });
-            turnoutEditCancel.setToolTipText(rb.getString("CancelHint"));
+            turnoutEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
         }
 
