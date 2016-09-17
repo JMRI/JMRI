@@ -14,7 +14,7 @@ import jmri.jmrix.rps.Receiver;
 import jmri.jmrix.rps.Region;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

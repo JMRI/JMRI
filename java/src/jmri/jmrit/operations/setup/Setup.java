@@ -2018,7 +2018,7 @@ public class Setup {
     private static void storeXmlMessageFormat(Element values, String prefix, String[] messageFormat) {
         values.setAttribute(Xml.PREFIX, prefix);
         StringBuffer buf = new StringBuffer();
-        stringToKeyConversion(messageFormat);
+        stringToTagConversion(messageFormat);
         for (String attibute : messageFormat) {
             buf.append(attibute + ",");
         }
@@ -2235,6 +2235,7 @@ public class Setup {
                 log.debug("pickupCarFormat: {}", setting);
                 String[] keys = setting.split(",");
                 replaceOldFormat(keys);
+                xmlAttributeToKeyConversion(keys);
                 keyToStringConversion(keys);
                 setPickupManifestMessageFormat(keys);
             }
@@ -2248,6 +2249,7 @@ public class Setup {
                 log.debug("dropCarFormat: {}", setting);
                 String[] keys = setting.split(",");
                 replaceOldFormat(keys);
+                xmlAttributeToKeyConversion(keys);
                 keyToStringConversion(keys);
                 setDropManifestMessageFormat(keys);
             }
@@ -2261,6 +2263,7 @@ public class Setup {
                 log.debug("localFormat: {}", setting);
                 String[] keys = setting.split(",");
                 replaceOldFormat(keys);
+                xmlAttributeToKeyConversion(keys);
                 keyToStringConversion(keys);
                 setLocalManifestMessageFormat(keys);
             }
@@ -2332,6 +2335,7 @@ public class Setup {
                 log.debug("switchListpickupCarFormat: {}", setting);
                 String[] keys = setting.split(",");
                 replaceOldFormat(keys);
+                xmlAttributeToKeyConversion(keys);
                 keyToStringConversion(keys);
                 setPickupSwitchListMessageFormat(keys);
             }
@@ -2345,6 +2349,7 @@ public class Setup {
                 log.debug("switchListDropCarFormat: {}", setting);
                 String[] keys = setting.split(",");
                 replaceOldFormat(keys);
+                xmlAttributeToKeyConversion(keys);
                 keyToStringConversion(keys);
                 setDropSwitchListMessageFormat(keys);
             }
@@ -2358,6 +2363,7 @@ public class Setup {
                 log.debug("switchListLocalFormat: {}", setting);
                 String[] keys = setting.split(",");
                 replaceOldFormat(keys);
+                xmlAttributeToKeyConversion(keys);
                 keyToStringConversion(keys);
                 setLocalSwitchListMessageFormat(keys);
             }
@@ -2846,7 +2852,6 @@ public class Setup {
     // replace old pickup and drop message keys
     // Change happened from 2.11.3 to 2.11.4
     // 4/16/2014
-    // replace three keys that have spaces in the text
     private static void replaceOldFormat(String[] format) {
         for (int i = 0; i < format.length; i++) {
             if (format[i].equals("Pickup Msg")) // NOI18N
@@ -2856,21 +2861,10 @@ public class Setup {
             {
                 format[i] = DROP_COMMENT;
             }
-            // three keys with spaces that need conversion
-            if (format[i].equals("PickUp Msg")) // NOI18N
-            {
-                format[i] = "PickUp_Msg"; // NOI18N
-            } else if (format[i].equals("SetOut Msg")) // NOI18N
-            {
-                format[i] = "SetOut_Msg"; // NOI18N
-            } else if (format[i].equals("Final Dest")) // NOI18N
-            {
-                format[i] = "Final_Dest"; // NOI18N
-            }
         }
     }
 
-    /**
+   /**
      * Converts the xml key to the proper locale text
      *
      */
@@ -2887,29 +2881,41 @@ public class Setup {
         }
     }
 
-    private static final String[] attributtes = {"Road", "Number", "Type", "Model", "Length", "Load", "Color",
+    private static final String[] keys = {"Road", "Number", "Type", "Model", "Length", "Load", "Color",
             "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist", "Kernel",
-            "Kernel_Size", "Owner",
-            "RWE", "Comment", "SetOut_Msg", "PickUp_Msg", "Hazardous", "Tab"};
+            "Kernel_Size", "Owner", "RWE", "Comment", "SetOut_Msg", "PickUp_Msg", "Hazardous", "Tab", "Tab2", "Tab3"};
 
-    /**
+    /*
      * Converts the strings into English tags for xml storage
      *
      */
-    private static void stringToKeyConversion(String[] strings) {
-        Locale locale = Locale.ROOT;
+    private static void stringToTagConversion(String[] strings) {
         for (int i = 0; i < strings.length; i++) {
             String old = strings[i];
             if (old.equals(BLANK)) {
                 continue;
             }
-            for (String attribute : attributtes) {
-                if (strings[i].equals(Bundle.getMessage(attribute))) {
-                    strings[i] = Bundle.getMessage(locale, attribute);
+            for (String key : keys) {
+                if (strings[i].equals(Bundle.getMessage(key))) {
+                    strings[i] = Bundle.getMessage(Locale.ROOT, key);
                     break;
                 }
             }
             // log.debug("Converted {} to {}", old, strings[i]);
+        }
+    }
+    
+    /*
+     * The xml attributes stored using the English translation. This converts
+     * the attribute to the appropriate key for language conversion.
+     */
+    private static void xmlAttributeToKeyConversion(String[] format) {
+        for (int i = 0; i < format.length; i++) {
+            for (String key : keys) {
+                if (format[i].equals(Bundle.getMessage(Locale.ROOT, key))) {
+                    format[i] = key;
+                }
+            }
         }
     }
 
