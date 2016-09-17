@@ -34,7 +34,7 @@ class ChangeTrackFrame extends OperationsFrame {
     ButtonGroup group = new ButtonGroup();
 
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     private TrackEditFrame _tef;
     String _trackType = "";

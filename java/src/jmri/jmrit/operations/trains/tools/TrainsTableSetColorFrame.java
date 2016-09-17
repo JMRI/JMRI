@@ -38,7 +38,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
     JRadioButton autoRadioButton = new JRadioButton(Bundle.getMessage("Auto"));
 
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // combo boxes
     JComboBox<Train> trainBox = TrainManager.instance().getTrainComboBox();

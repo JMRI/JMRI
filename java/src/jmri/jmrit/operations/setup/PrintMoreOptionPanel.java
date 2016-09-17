@@ -24,7 +24,7 @@ public class PrintMoreOptionPanel extends OperationsPreferencesPanel {
 
     // labels
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // radio buttons
     // check boxes

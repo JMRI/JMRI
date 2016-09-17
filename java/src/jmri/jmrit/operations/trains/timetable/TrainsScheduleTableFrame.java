@@ -84,7 +84,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     JButton terminateButton = new JButton(Bundle.getMessage("Terminate"));
 
     JButton activateButton = new JButton(Bundle.getMessage("Activate"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // check boxes
     // panel

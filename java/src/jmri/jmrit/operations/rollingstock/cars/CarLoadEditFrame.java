@@ -45,7 +45,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
     JButton addButton = new JButton(Bundle.getMessage("Add"));
     JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
     JButton replaceButton = new JButton(Bundle.getMessage("Replace"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // combo boxes
     JComboBox<String> loadComboBox;

@@ -58,9 +58,9 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
     JButton editKernelButton = new JButton(Bundle.getMessage("ButtonEdit"));
     JButton editOwnerButton = new JButton(Bundle.getMessage("ButtonEdit"));
 
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
-    JButton addButton = new JButton(Bundle.getMessage("Add"));
+    JButton addButton = new JButton(Bundle.getMessage("TitleCarAdd")); // have button state item to add
 
     // check boxes
     JCheckBox autoCheckBox = new JCheckBox(Bundle.getMessage("Auto"));

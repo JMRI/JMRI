@@ -63,7 +63,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     JButton csvChangeButton = new JButton(Bundle.getMessage("CsvChanges"));
     JButton updateButton = new JButton(Bundle.getMessage("Update"));
     JButton resetButton = new JButton(Bundle.getMessage("ResetSwitchLists"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     JComboBox<String> switchListPageComboBox = Setup.getSwitchListPageFormatComboBox();
 
@@ -594,7 +594,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         Dimension minScrollerDim = new Dimension(1200, 500);
-        JButton saveButton = new JButton(Bundle.getMessage("Save"));
+        JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
         Location _location;
 

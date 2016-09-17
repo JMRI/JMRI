@@ -34,7 +34,7 @@ public class SetupExcelProgramFrame extends OperationsFrame {
     // major buttons
     JButton addButton = new JButton(Bundle.getMessage("Add"));
     JButton testButton = new JButton(Bundle.getMessage("Test"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // directory
     JPanel pDirectoryName = new JPanel();

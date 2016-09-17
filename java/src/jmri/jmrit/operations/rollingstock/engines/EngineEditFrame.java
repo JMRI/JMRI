@@ -52,9 +52,9 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
     JButton editConsistButton = new JButton(Bundle.getMessage("ButtonEdit"));
     JButton editOwnerButton = new JButton(Bundle.getMessage("ButtonEdit"));
 
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
-    JButton addButton = new JButton(Bundle.getMessage("Add"));
+    JButton addButton = new JButton(Bundle.getMessage("TitleEngineAdd")); // have button state item to add
 
     // check boxes
     JCheckBox bUnitCheckBox = new JCheckBox(Bundle.getMessage("BUnit"));

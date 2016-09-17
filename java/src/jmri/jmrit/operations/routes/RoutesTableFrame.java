@@ -41,7 +41,7 @@ public class RoutesTableFrame extends OperationsFrame {
     JRadioButton sortById = new JRadioButton(Bundle.getMessage("Id"));
 
     // major buttons
-    JButton addButton = new JButton(Bundle.getMessage("Add"));
+    JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
 
     public RoutesTableFrame() {
         super(Bundle.getMessage("TitleRoutesTable"));

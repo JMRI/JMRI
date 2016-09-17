@@ -26,7 +26,7 @@ public class EditManifestTextPanel extends OperationsPreferencesPanel {
             .getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     JButton resetButton = new JButton(Bundle.getMessage("Reset"));
 
     // text field

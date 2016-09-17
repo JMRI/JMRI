@@ -42,7 +42,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 
     // major buttons
     JButton copyButton = new javax.swing.JButton(Bundle.getMessage("ButtonCopy"));
-    JButton saveButton = new javax.swing.JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new javax.swing.JButton(Bundle.getMessage("ButtonSave"));
 
     // combo boxes
     JComboBox<Location> locationBox = LocationManager.instance().getComboBox();

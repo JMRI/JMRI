@@ -54,7 +54,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
     // major buttons
     JButton backupButton = new JButton(Bundle.getMessage("Backup"));
     JButton restoreButton = new JButton(Bundle.getMessage("Restore"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // radio buttons
     JRadioButton scaleZ = new JRadioButton("Z"); // NOI18N

@@ -40,7 +40,7 @@ public class LocationTrackBlockingOrderFrame extends OperationsFrame implements 
     JLabel locationName = new JLabel();
 
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     JButton resetButton = new JButton(Bundle.getMessage("Reset"));
     JButton reorderButton = new JButton(Bundle.getMessage("Reorder"));
 

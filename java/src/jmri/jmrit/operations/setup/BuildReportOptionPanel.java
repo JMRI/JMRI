@@ -25,7 +25,7 @@ public class BuildReportOptionPanel extends OperationsPreferencesPanel {
 //    private static final Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);
 
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // radio buttons
     JRadioButton buildReportMin = new JRadioButton(Bundle.getMessage("Minimal"));

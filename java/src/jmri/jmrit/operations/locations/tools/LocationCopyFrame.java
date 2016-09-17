@@ -42,7 +42,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
 
     // major buttons
     JButton copyButton = new javax.swing.JButton(Bundle.getMessage("ButtonCopy"));
-    JButton saveButton = new javax.swing.JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new javax.swing.JButton(Bundle.getMessage("ButtonSave"));
 
     // combo boxes
     JComboBox<Location> locationBox = locationManager.getComboBox();

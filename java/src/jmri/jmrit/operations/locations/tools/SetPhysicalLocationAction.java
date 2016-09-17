@@ -61,7 +61,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
         // text field
         // check boxes
         // major buttons
-        JButton saveButton = new JButton(Bundle.getMessage("Save"));
+        JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
         JButton closeButton = new JButton(Bundle.getMessage("Close"));
 
         // combo boxes

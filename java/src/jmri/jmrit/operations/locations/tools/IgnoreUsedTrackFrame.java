@@ -32,7 +32,7 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
     JRadioButton hundredPercent = new JRadioButton("100%");		// NOI18N
 
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     private TrackEditFrame _tef;
     protected Track _track;

@@ -38,7 +38,7 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
     // text field
     // check boxes
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // combo boxes
     JComboBox<Location> locationBox = LocationManager.instance().getComboBox();

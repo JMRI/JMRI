@@ -47,7 +47,7 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
     // major buttons
     JButton clearButton = new JButton(Bundle.getMessage("Clear"));
     JButton setButton = new JButton(Bundle.getMessage("Select"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // check boxes
     JCheckBox copyCheckBox = new JCheckBox(Bundle.getMessage("ButtonCopy"));
