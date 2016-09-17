@@ -296,6 +296,10 @@ public class XBeeNode extends IEEE802154Node {
            device=rxd;
            userAddress = device.get16BitAddress();
            globalAddress = device.get64BitAddress();
+           setUserAddress(rxd.get16BitAddress().getValue());
+           setGlobalAddress(rxd.get64BitAddress().getValue());
+           Identifier = rxd.getNodeID();
+
     }
 
     /*
@@ -354,6 +358,16 @@ public class XBeeNode extends IEEE802154Node {
     }
 
     private jmri.jmrix.AbstractStreamPortController connectedController = null;
+
+    /*
+     * provide a string representation of this XBee Node
+     */
+    @Override
+    public String toString(){
+       return "(" + jmri.util.StringUtil.hexStringFromBytes(getUserAddress()) +
+              "," + jmri.util.StringUtil.hexStringFromBytes(getGlobalAddress()) +
+              "," + getIdentifier() + ")";
+    }
 
     private static Logger log = LoggerFactory.getLogger(XBeeNode.class.getName());
 }

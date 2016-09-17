@@ -31,7 +31,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
 
     private XBeeTrafficController xtc = null;
     protected javax.swing.JButton discoverButton = new javax.swing.JButton(Bundle.getMessage("ButtonDiscover"));
-    private JComboBox<String> nodeIdentifierField = new javax.swing.JComboBox<String>();
+    private JComboBox<XBeeNode> nodeField = new javax.swing.JComboBox<XBeeNode>();
     protected JTable assignmentTable = null;
     protected javax.swing.table.TableModel assignmentListModel = null;
 
@@ -53,49 +53,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
-        // Set up node address and node type
-        JPanel panel1 = new JPanel();
-        panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
-        JPanel panel11 = new JPanel();
-        panel11.setLayout(new FlowLayout());
-        panel11.add(new JLabel(Bundle.getMessage("LabelNodeAddress") + " "));
-        panel11.add(nodeAddrField);
-        nodeAddrField.setToolTipText(Bundle.getMessage("TipNodeAddress"));
-        nodeAddrField.addActionListener(new java.awt.event.ActionListener() {
-
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                nodeSelected();
-            }
-        });
-        panel11.add(new JLabel(Bundle.getMessage("LabelNodeAddress64") + " "));
-        panel11.add(nodeAddr64Field);
-        nodeAddr64Field.setToolTipText(Bundle.getMessage("TipNodeAddress64"));
-        nodeAddr64Field.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                nodeAddrField.setSelectedIndex(nodeAddr64Field.getSelectedIndex());
-            }
-        });
-        panel11.add(new JLabel(Bundle.getMessage("LabelNodeIdentifier") + " "));
-        panel11.add(nodeIdentifierField);
-        nodeIdentifierField.setToolTipText(Bundle.getMessage("TipNodeIdentifier"));
-
-        nodeIdentifierField.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                nodeAddrField.setSelectedIndex(nodeIdentifierField.getSelectedIndex());
-            }
-        });
-        JPanel panel12 = new JPanel();
-        panel12.setLayout(new FlowLayout());
-
-        initAddressBoxes();
-
-        panel1.add(panel11);
-        panel1.add(panel12);
-
-        contentPane.add(panel1);
+        contentPane.add(initAddressPanel());
 
         // Set up the pin assignment table
         assignmentPanel = new JPanel();
@@ -109,32 +67,49 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
 
         contentPane.add(assignmentPanel);
 
-        // Set up the notes panel
-        JPanel panel3 = new JPanel();
-        panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
-        JPanel panel31 = new JPanel();
-        panel31.setLayout(new FlowLayout());
-        statusText1.setText(stdStatus1);
-        statusText1.setVisible(true);
-        panel31.add(statusText1);
-        JPanel panel32 = new JPanel();
-        panel32.setLayout(new FlowLayout());
-        statusText2.setText(stdStatus2);
-        statusText2.setVisible(true);
-        panel32.add(statusText2);
-        JPanel panel33 = new JPanel();
-        panel33.setLayout(new FlowLayout());
-        statusText3.setText(stdStatus3);
-        statusText3.setVisible(true);
-        panel33.add(statusText3);
-        panel3.add(panel31);
-        panel3.add(panel32);
-        panel3.add(panel33);
-        Border panel3Border = BorderFactory.createEtchedBorder();
-        Border panel3Titled = BorderFactory.createTitledBorder(panel3Border,
-                Bundle.getMessage("BoxLabelNotes"));
-        panel3.setBorder(panel3Titled);
-        contentPane.add(panel3);
+        contentPane.add(initNotesPanel());
+        contentPane.add(initButtonPanel());
+
+        // pack for display
+        pack();
+
+        // after the components are configured, set ourselves up as a 
+        // discovery listener.
+        xtc.getXBee().getNetwork().addDiscoveryListener(this);
+
+    }
+
+    /*
+     * Initilaize the address panel.
+     */
+    @Override
+    protected JPanel initAddressPanel(){
+        // Set up node address and node type
+        JPanel panel1 = new JPanel();
+        panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
+        JPanel panel11 = new JPanel();
+        panel11.setLayout(new FlowLayout());
+        panel11.add(new JLabel(Bundle.getMessage("LabelNodeSelection") + " "));
+        panel11.add(nodeField);
+        nodeField.setToolTipText(Bundle.getMessage("TipNodeSelection"));
+        nodeField.addItemListener(new java.awt.event.ItemListener() {
+            @Override
+            public void itemStateChanged(java.awt.event.ItemEvent e) {
+                   nodeSelected();
+            }
+        });
+
+        initAddressBoxes();
+
+        panel1.add(panel11);
+        return panel1;
+    }
+
+    /*
+     * Initilaize the Button panel.
+     */
+    @Override
+    protected JPanel initButtonPanel(){
 
         // Set up buttons
         JPanel panel4 = new JPanel();
@@ -209,61 +184,23 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
             }
         });
         cancelButton.setVisible(false);
-        contentPane.add(panel4);
-        // pack for display
-        pack();
-
-        // after the components are configured, set ourselves up as a 
-        // discovery listener.
-        xtc.getXBee().getNetwork().addDiscoveryListener(this);
-
+        return panel4;
     }
 
     /**
      * Method to handle add button
      */
+    @Override
     public void addButtonActionPerformed() {
+        // create a new Add Frame and display it.
+        jmri.util.JmriJFrame addFrame = new AddNodeFrame(xtc,this);
         try {
-           // Check that a node with this address does not exist
-           String nodeAddress = readNodeAddress();
-           if (nodeAddress.equals("")) {
-               return;
-           }
-           // get a XBeeNode corresponding to this node address if one exists
-           curNode = (XBeeNode) xtc.getNodeFromAddress(nodeAddress);
-           if (curNode != null) {
-               statusText1.setText(Bundle.getMessage("Error1") + nodeAddress
-                       + Bundle.getMessage("Error2"));
-               statusText1.setVisible(true);
-               errorInStatus1 = true;
-               resetNotes2();
-               return;
-           }
-           // get node information from window
-
-           // check consistency of node information
-           if (!checkConsistency()) {
-               return;
-           }
-           // all ready, create the new node
-           curNode = new XBeeNode();
-           // configure the new node
-           setNodeParameters();
-
-           // reset after succefully adding node
-           resetNotes();
-           changedNode = true;
-           // provide user feedback
-           statusText1.setText(Bundle.getMessage("FeedBackAdd") + " " + nodeAddress);
-           errorInStatus1 = true;
-           initAddressBoxes();
-       } catch(IllegalArgumentException iae){
-               // we really need to set an error status here.
-               // illegal argument exception is generated by 
-               // readNodeAddress when neither a 16 or 64 bit 
-               // addresses is selected.
-               return;
-       }
+           addFrame.initComponents();
+        } catch(Exception ex) {
+           log.error("Exception initializing Frame: {}",ex.toString());
+           return;
+        }
+        addFrame.setVisible(true);
     }
 
     /**
@@ -298,41 +235,60 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
      * Method to handle edit button
      */
     public void editButtonActionPerformed() {
-       try {
-          // Find XBee Node address
-          String nodeAddress = readNodeAddress();
-          if (nodeAddress.equals("")) {
-              return;
-          }
-          // get the XBeeNode corresponding to this node address
-          curNode = (XBeeNode) xtc.getNodeFromAddress(nodeAddress);
-          if (curNode == null) {
-              statusText1.setText(Bundle.getMessage("Error4"));
-              statusText1.setVisible(true);
-              errorInStatus1 = true;
-              resetNotes2();
-              return;
-          }
-
-          // Switch buttons
-          editMode = true;
-          addButton.setVisible(false);
-          editButton.setVisible(false);
-          deleteButton.setVisible(false);
-          doneButton.setVisible(false);
-          updateButton.setVisible(true);
-          cancelButton.setVisible(true);
-          // Switch to edit notes
-          statusText1.setText(editStatus1);
-          statusText2.setText(editStatus2);
-          statusText3.setText(editStatus3);
-       } catch(IllegalArgumentException iae){
-               // we really need to set an error status here.
-               // illegal argument exception is generated by 
-               // readNodeAddress when neither a 16 or 64 bit 
-               // addresses is selected.
-               return;
+       // get the XBeeNode corresponding to this node address
+       curNode = (XBeeNode) nodeField.getSelectedItem();
+       if (curNode == null) {
+          statusText1.setText(Bundle.getMessage("Error4"));
+          statusText1.setVisible(true);
+          errorInStatus1 = true;
+          resetNotes2();
+          return;
        }
+
+        // create a new Edit Frame and display it.
+        jmri.util.JmriJFrame editFrame = new EditNodeFrame(xtc,(XBeeNode)curNode,this);
+        try {
+           editFrame.initComponents();
+        } catch(Exception ex) {
+           log.error("Exception initializing Frame: {}",ex.toString());
+           return;
+        }
+        editFrame.setVisible(true);
+
+    }
+
+
+/**
+     * Method to handle delete button
+     */
+    public void deleteButtonActionPerformed() {
+        // get the XBeeNode corresponding to this node address
+        curNode = (XBeeNode) nodeField.getSelectedItem();
+        if (curNode == null) {
+            statusText1.setText(Bundle.getMessage("Error4"));
+            statusText1.setVisible(true);
+            errorInStatus1 = true;
+            resetNotes2();
+            return;
+        }
+        // confirm deletion with the user
+        if (javax.swing.JOptionPane.OK_OPTION == javax.swing.JOptionPane.showConfirmDialog(
+                this, Bundle.getMessage("ConfirmDelete1") + "\n"
+                + Bundle.getMessage("ConfirmDelete2"), Bundle.getMessage("ConfirmDeleteTitle"),
+                javax.swing.JOptionPane.OK_CANCEL_OPTION,
+                javax.swing.JOptionPane.WARNING_MESSAGE)) {
+            // delete this node
+            xtc.deleteNode((XBeeNode) curNode);
+            // provide user feedback
+            resetNotes();
+            statusText1.setText(Bundle.getMessage("FeedBackDelete") + " " + curNode.toString());
+            errorInStatus1 = true;
+            changedNode = true;
+        } else {
+            // reset as needed
+            resetNotes();
+        }
+        initAddressBoxes();
     }
 
     /**
@@ -496,36 +452,27 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
     // Initilize the drop down box for the address lists.
     @Override
     protected void initAddressBoxes() {
-        super.initAddressBoxes();
-        XBeeNode current = null;
-        nodeIdentifierField.removeAllItems();
+        nodeField.removeAllItems();
         for (int i = 0; i < xtc.getNumNodes(); i++) {
-            current = (XBeeNode) xtc.getNode(i);
-            nodeIdentifierField.insertItemAt(current.getIdentifier(), i);
+            nodeField.insertItemAt((XBeeNode) xtc.getNode(i),i);
         }
-        nodeIdentifierField.insertItemAt("", 0);
+        nodeField.insertItemAt(null,0);
     }
+
+   /*
+    * package protected method to allow child windows to notify
+    * that the list of nodes changed due to an addition/deletion/edit.
+    */
+   void nodeListChanged(){
+       // call initAddressBoxes to update.
+       initAddressBoxes();
+   }
 
     // Update the display when the selected node changes.
     @Override
     protected void nodeSelected() {
-        try {
-           String nodeAddress = readNodeAddress();
-           nodeAddrField.setSelectedIndex(nodeAddrField.getSelectedIndex());
-           nodeAddr64Field.setSelectedIndex(nodeAddrField.getSelectedIndex());
-           nodeIdentifierField.setSelectedIndex(nodeAddrField.getSelectedIndex());
-           if (!(nodeAddress.equals(""))) {
-              ((AssignmentTableModel) assignmentListModel).setNode((XBeeNode) xtc.getNodeFromAddress(nodeAddress));
-           } else {
-              log.error("No Node Selected");
-           }
-       } catch(IllegalArgumentException iae){
-               // we really need to set an error status here.
-               // illegal argument exception is generated by 
-               // readNodeAddress when neither a 16 or 64 bit 
-               // addresses is selected.
-               return;
-       }
+       log.debug("node {} selected",nodeField.getSelectedItem());
+       ((AssignmentTableModel) assignmentListModel).setNode((XBeeNode)nodeField.getSelectedItem());
     }
 
     // IDiscoveryListener interface methods

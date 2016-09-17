@@ -1,9 +1,9 @@
 package jmri.jmrix.loconet;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 public class LocoNetThrottleTest extends TestCase {
 
@@ -32,10 +32,10 @@ public class LocoNetThrottleTest extends TestCase {
             }
         };
         LocoNetThrottle t1 = new LocoNetThrottle(new LocoNetSystemConnectionMemo(lnis, slotmanager), s1);
-        Assert.assertEquals(0.0f, t1.getSpeedSetting());
+        Assert.assertEquals(0.0f, t1.getSpeedSetting(), 0.0);
         t1.setSpeedSetting(0.5f);
         // the speed change SHOULD be changed.
-        Assert.assertEquals(0.5f, t1.getSpeedSetting());
+        Assert.assertEquals(0.5f, t1.getSpeedSetting(), 0.0);
 
         // Case 2: The locomotive is a consist top.
         LocoNetSlot s2 = new LocoNetSlot(1) {
@@ -50,10 +50,10 @@ public class LocoNetThrottleTest extends TestCase {
             }
         };
         LocoNetThrottle t2 = new LocoNetThrottle(new LocoNetSystemConnectionMemo(lnis, slotmanager), s2);
-        Assert.assertEquals(0.0f, t2.getSpeedSetting());
+        Assert.assertEquals(0.0f, t2.getSpeedSetting(), 0.0);
         t2.setSpeedSetting(0.5f);
         // the speed change SHOULD be changed.
-        Assert.assertEquals(0.5f, t2.getSpeedSetting());
+        Assert.assertEquals(0.5f, t2.getSpeedSetting(), 0.0);
 
         // Case 3: The locomotive is a consist mid.
         LocoNetSlot s3 = new LocoNetSlot(2) {
@@ -68,10 +68,10 @@ public class LocoNetThrottleTest extends TestCase {
             }
         };
         LocoNetThrottle t3 = new LocoNetThrottle(new LocoNetSystemConnectionMemo(lnis, slotmanager), s3);
-        Assert.assertEquals(0.0f, t3.getSpeedSetting());
+        Assert.assertEquals(0.0f, t3.getSpeedSetting(), 0.0);
         t3.setSpeedSetting(0.5f);
         // the speed change SHOULD NOT be changed.
-        Assert.assertEquals(0.0f, t3.getSpeedSetting());
+        Assert.assertEquals(0.0f, t3.getSpeedSetting(), 0.0);
 
         // Case 3: The locomotive is a consist mid.
         // make sure the speed does NOT change for a consist sub
@@ -87,10 +87,10 @@ public class LocoNetThrottleTest extends TestCase {
             }
         };
         LocoNetThrottle t4 = new LocoNetThrottle(new LocoNetSystemConnectionMemo(lnis, slotmanager), s4);
-        Assert.assertEquals(0.0f, t4.getSpeedSetting());
+        Assert.assertEquals(0.0f, t4.getSpeedSetting(), 0.0);
         t4.setSpeedSetting(0.5f);
         // the speed change SHOULD be ignored.
-        Assert.assertEquals(0.0f, t4.getSpeedSetting());
+        Assert.assertEquals(0.0f, t4.getSpeedSetting(), 0.0);
     }
 
     LocoNetInterfaceScaffold lnis;

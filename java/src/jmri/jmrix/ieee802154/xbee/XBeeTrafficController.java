@@ -4,6 +4,7 @@ import com.digi.xbee.api.models.ATCommandResponse;
 import com.digi.xbee.api.XBeeDevice;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.exceptions.XBeeException;
+import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.packet.XBeePacket;
 import com.digi.xbee.api.listeners.IPacketReceiveListener;
 import com.digi.xbee.api.listeners.IModemStatusReceiveListener;
@@ -186,6 +187,32 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         }
     }
 
+    public synchronized void deleteNode(XBeeNode node) {
+        // find the serial node
+        int index = 0;
+        for (int i = 0; i < numNodes; i++) {
+            if (nodeArray[i] == node) {
+                index = i;
+            }
+        }
+        if (index == curSerialNodeIndex) {
+            log.warn("Deleting the serial node active in the polling loop");
+        }
+        // Delete the node from the node list
+        numNodes--;
+        if (index < numNodes) {
+            // did not delete the last node, shift
+            for (int j = index; j < numNodes; j++) {
+                nodeArray[j] = nodeArray[j + 1];
+            }
+        }
+        nodeArray[numNodes] = null;
+        // remove this node from the network too.
+        getXBee().getNetwork().addRemoteDevice(node.getXBee());
+ 
+    }
+
+
     // XBee IPacketReceiveListener interface methods
     public void packetReceived(XBeePacket response) {
 
@@ -323,7 +350,11 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         log.debug("getNodeFromXBeeDevice called with {}",device);
         for (int i = 0; i < numNodes; i++) {
             XBeeNode node = (XBeeNode) getNode(i);
-            if (node.getXBee().equals(device)) {
+            // examine the addresses of the two XBee Devices to see
+            // if they are the same.
+            RemoteXBeeDevice nodeXBee = node.getXBee();
+            if(nodeXBee.get16BitAddress().equals(device.get16BitAddress())
+               && nodeXBee.get64BitAddress().equals(device.get64BitAddress())) {
                 return node;
             }
         }

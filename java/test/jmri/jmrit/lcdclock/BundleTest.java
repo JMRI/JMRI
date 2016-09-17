@@ -1,6 +1,6 @@
 package jmri.jmrit.lcdclock;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.framework.TestCase;

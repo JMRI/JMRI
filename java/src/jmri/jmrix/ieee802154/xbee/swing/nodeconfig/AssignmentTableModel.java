@@ -79,12 +79,18 @@ public class AssignmentTableModel extends AbstractTableModel {
             case BIT_COLUMN:
                return pin;
             case SYSNAME_COLUMN:
+               if(curNode==null) {
+                 return free;
+               } 
                if (curNode.getPinAssigned(pin)) {
                   return curNode.getPinBean(pin).getSystemName();
                } else {
                   return free;
                }
             case USERNAME_COLUMN:
+               if(curNode==null) {
+                 return "";
+               } 
                if (curNode.getPinAssigned(pin)) {
                   return curNode.getPinBean(pin).getUserName();
                } else {

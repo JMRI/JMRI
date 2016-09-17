@@ -117,9 +117,18 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             byte addr[] = jmri.util.StringUtil.bytesFromHexString(findParmValue(n, "address"));
             XBee16BitAddress address = new XBee16BitAddress(addr);
             String Identifier = findParmValue(n, "name");
-               // create the RemoteXBeeDevice for the node.
-               RemoteXBeeDevice remoteDevice = remoteDevice = new RemoteXBeeDevice(xtc.getXBee(),
-                         guid,address,Identifier);              
+            // create the RemoteXBeeDevice for the node.
+            RemoteXBeeDevice remoteDevice = remoteDevice = new RemoteXBeeDevice(xtc.getXBee(),
+                         guid,address,Identifier);
+            // Check to see if the node is a duplicate, if it is, move 
+            // to the next one.
+            // get a XBeeNode corresponding to this node address if one exists
+           XBeeNode curNode = (XBeeNode) xtc.getNodeFromXBeeDevice(remoteDevice);
+           if (curNode != null) {
+               log.info("Read duplicate node {} from file",remoteDevice);
+               continue; 
+           }
+    
             try {
                // and then add it to the network
                xtc.getXBee().getNetwork().addRemoteDevice(remoteDevice);

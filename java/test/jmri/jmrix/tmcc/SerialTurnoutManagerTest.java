@@ -62,7 +62,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {SerialTurnoutManager.class.getName()};
+        String[] testCaseName = {SerialTurnoutManagerTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
