@@ -148,9 +148,9 @@ public class Automation implements java.beans.PropertyChangeListener {
     public void step() {
         log.debug("step automation ({})", getName());
         if (getCurrentAutomationItem() != null && getCurrentAutomationItem().getAction() != null) {
-            if (getCurrentAutomationItem().getAction().getClass().equals(HaltAction.class)
-                    && getCurrentAutomationItem().isActionRan() 
-                    && getCurrentAutomationItem() != getItemsBySequenceList().get(0)) {
+            if (getCurrentAutomationItem().getAction().getClass().equals(HaltAction.class) &&
+                    getCurrentAutomationItem().isActionRan() &&
+                    getCurrentAutomationItem() != getItemsBySequenceList().get(0)) {
                 setNextAutomationItem();
             }
             if (getCurrentAutomationItem() == getItemsBySequenceList().get(0)) {
@@ -327,7 +327,6 @@ public class Automation implements java.beans.PropertyChangeListener {
      * Allowable sequence numbers are 0 to max size of automation. 0 = start of
      * list.
      *
-     * @param sequence
      * @return automation item
      */
     public AutomationItem addItem(int sequence) {
@@ -361,7 +360,6 @@ public class Automation implements java.beans.PropertyChangeListener {
     /**
      * Delete a AutomationItem
      *
-     * @param item
      */
     public void deleteItem(AutomationItem item) {
         if (item != null) {
@@ -396,7 +394,6 @@ public class Automation implements java.beans.PropertyChangeListener {
     /**
      * Get a AutomationItem by id
      *
-     * @param id
      * @return automation item
      */
     public AutomationItem getItemById(String id) {
@@ -455,7 +452,6 @@ public class Automation implements java.beans.PropertyChangeListener {
     /**
      * Places a AutomationItem earlier in the automation
      *
-     * @param item
      */
     public void moveItemUp(AutomationItem item) {
         int sequenceId = item.getSequenceId();
@@ -478,7 +474,6 @@ public class Automation implements java.beans.PropertyChangeListener {
     /**
      * Places a AutomationItem later in the automation
      *
-     * @param item
      */
     public void moveItemDown(AutomationItem item) {
         int sequenceId = item.getSequenceId();
@@ -509,6 +504,7 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     /**
      * Copies automation.
+     * 
      * @param automation the automation to copy
      */
     public void copyAutomation(Automation automation) {
@@ -548,9 +544,7 @@ public class Automation implements java.beans.PropertyChangeListener {
         if (e.getChildren(Xml.ITEM) != null) {
             @SuppressWarnings("unchecked")
             List<Element> eAutomationItems = e.getChildren(Xml.ITEM);
-            if (log.isDebugEnabled()) {
-                log.debug("automation: {} has {} items", getName(), eAutomationItems.size());
-            }
+            log.debug("automation: {} has {} items", getName(), eAutomationItems.size());
             for (Element eAutomationItem : eAutomationItems) {
                 register(new AutomationItem(eAutomationItem));
             }
@@ -582,7 +576,8 @@ public class Automation implements java.beans.PropertyChangeListener {
         return e;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "WA_NOT_IN_LOOP"}, justification = "Need to plause for user action")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "WA_NOT_IN_LOOP"},
+            justification = "Need to plause for user action")
     private void CheckForActionPropertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals(Action.ACTION_COMPLETE_CHANGED_PROPERTY) ||
                 evt.getPropertyName().equals(Action.ACTION_HALT_CHANGED_PROPERTY)) {
@@ -615,6 +610,10 @@ public class Automation implements java.beans.PropertyChangeListener {
                         step(); // continue running by doing the next action
                     }
                 } else if (evt.getPropertyName().equals(Action.ACTION_HALT_CHANGED_PROPERTY)) {
+                    if ((boolean) evt.getNewValue() == true) {
+                        log.debug("User halted successful action");
+                        setNextAutomationItem();
+                    }
                     stop();
                 }
             }

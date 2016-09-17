@@ -2,17 +2,14 @@ package jmri.util;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.util.DateUtil class.
- *
- *
  * @author Paul Bender Copyright 2014
- * @version $Revision: 22710 $
  */
 public class DateUtilTest extends TestCase {
 
@@ -58,7 +55,7 @@ public class DateUtilTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", DateUtilTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

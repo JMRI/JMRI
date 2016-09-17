@@ -15,11 +15,6 @@ import javax.swing.AbstractAction;
  */
 public class EditManifestHeaderTextAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1916894570578033881L;
-
     public EditManifestHeaderTextAction() {
         this(Bundle.getMessage("TitleManifestHeaderText"));
     }

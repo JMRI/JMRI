@@ -137,7 +137,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     }
     
     private void getRoster() {
-        List<RosterEntry> list = Roster.instance().matchingList(null, null, null, null, null, null, null);
+        List<RosterEntry> list = Roster.getDefault().matchingList(null, null, null, null, null, null, null);
         _rosterBox.setRenderer(new jmri.jmrit.roster.swing.RosterEntryListCellRenderer());
         _rosterBox.addItem(" ");
         _rosterBox.addItem(Bundle.getMessage("noSuchAddress"));
@@ -145,7 +145,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             RosterEntry r = list.get(i);
             _rosterBox.addItem(r.titleString());
         }
-        //_rosterBox = Roster.instance().fullRosterComboBox();
+        //_rosterBox = Roster.getDefault().fullRosterComboBox();
         _rosterBox.setMaximumSize(_rosterBox.getPreferredSize());
         _rosterBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -163,13 +163,12 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
      * Set the roster entry, if it exists, or train id string if not.
      * i.e. set enough info to get a dccLocoAddress
      * @param name may be roster Id or address
-     * @return
      */
     protected String setTrainInfo(String name) {
         if (log.isDebugEnabled()) {
             log.debug("setTrainInfo for: " + name);
         }
-        _train = Roster.instance().entryFromTitle(name);
+        _train = Roster.getDefault().entryFromTitle(name);
         if (_train == null) {
             if (name==null || name.trim().length()==0) {
                 _trainId = null;
@@ -195,7 +194,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                     numId = name;                    
                 }
             }
-            List<RosterEntry> l = Roster.instance().matchingList(null, null, numId, null, null, null, null);
+            List<RosterEntry> l = Roster.getDefault().matchingList(null, null, numId, null, null, null, null);
             if (l.size() > 0) {
                 _train = l.get(0);
             } else {
@@ -1140,9 +1139,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     /**
     *
     * @param vertical  Label orientation true = above, false = left
-    * @param textField
     * @param label String label message
-    * @return
     */
    static protected JPanel makeTextBoxPanel(boolean vertical, JComponent textField, String label, String tooltip) {
        JPanel panel = new JPanel();

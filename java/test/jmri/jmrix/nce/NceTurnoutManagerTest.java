@@ -17,7 +17,16 @@ public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest 
 
     private NceInterfaceScaffold nis = null;
 
-    public void setUp() {
+    @Override
+    protected void tearDown() throws Exception {
+        apps.tests.Log4JFixture.tearDown();
+        super.tearDown();
+    }
+
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+        apps.tests.Log4JFixture.setUp();
         // prepare an interface, register
         nis = new NceInterfaceScaffold();
         // create and register the manager object
@@ -58,8 +67,8 @@ public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest 
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {NceTurnoutManager.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        String[] testCaseName = {NceTurnoutManagerTest.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

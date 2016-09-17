@@ -1,4 +1,3 @@
-// DecoderIndexCreateAction.java
 package jmri.jmrit.decoderdefn;
 
 /**
@@ -6,7 +5,6 @@ package jmri.jmrit.decoderdefn;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2011, 2014
  * @author Randall Wood Copyright (C) 2013
- * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  */
 public class DecoderIndexBuilder {

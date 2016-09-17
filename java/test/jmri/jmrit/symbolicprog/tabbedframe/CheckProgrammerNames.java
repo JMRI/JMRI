@@ -1,7 +1,7 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.io.File;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -83,7 +83,7 @@ public class CheckProgrammerNames extends jmri.util.swing.GuiUtilBaseTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", CheckProgrammerNames.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

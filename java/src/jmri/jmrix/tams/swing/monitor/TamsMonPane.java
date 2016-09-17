@@ -1,13 +1,3 @@
-/**
- * TamsMonPane.java
- *
- * Description:	Swing action to create and register a MonFrame object
- *
- * Based on work by Bob Jacobsen
- *
- * @author	Kevin Dickerson Copyright (C) 2012
- * @version
- */
 package jmri.jmrix.tams.swing.monitor;
 
 import java.util.ResourceBundle;
@@ -19,12 +9,18 @@ import jmri.jmrix.tams.TamsReply;
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
 import jmri.jmrix.tams.swing.TamsPanelInterface;
 
+/**
+ * Swing action to create and register a MonFrame object
+ *
+ * Based on work by Bob Jacobsen
+ *
+ * @author	Kevin Dickerson Copyright (C) 2012
+ */
 public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListener, TamsPanelInterface {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4164141037445448914L;
+    private static final long serialVersionUID = -504993705019695728L;
+
+    private TamsMessage tm; //Keeping a local copy of the latest TamsMessage for helping with decoding
 
     public TamsMonPane() {
         super();
@@ -84,10 +80,11 @@ public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListe
     }
 
     public synchronized void message(TamsMessage l) {  // receive a message and log it
-        if (l.isBinary()) {
-            nextLine("binary cmd: " + l.toString() + "\n", null);
+        tm = l;
+        if (tm.isBinary()) {
+            nextLine("Binary cmd: " + tm.toString() + "\n", null);
         } else {
-            nextLine("cmd: \"" + l.toString() + "\"\n", null);
+            nextLine("ASCII cmd: " + tm.toString() + "\n", null);
         }
     }
 
@@ -99,11 +96,14 @@ public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListe
             }
             raw = jmri.util.StringUtil.appendTwoHexFromInt(l.getElement(i) & 0xFF, raw);
         }
-
         if (l.isUnsolicited()) {
             nextLine("msg: \"" + l.toString() + "\"\n", raw);
         } else {
-            nextLine("rep: \"" + l.toString() + "\"\n", raw);
+            if (tm.isBinary()){
+                nextLine("Binary rep: \"" + l.toString() + "\"\n", raw);
+            } else {
+                nextLine("ASCII rep: \"" + l.toString() + "\"\n", raw);
+            }
         }
     }
 
@@ -126,6 +126,3 @@ public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListe
     }
 
 }
-
-
-/* @(#)MonAction.java */

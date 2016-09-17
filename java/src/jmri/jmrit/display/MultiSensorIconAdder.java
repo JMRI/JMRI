@@ -111,7 +111,6 @@ public class MultiSensorIconAdder extends IconAdder {
     /**
      * Only called from MultiSensorIcon popup
      *
-     * @param icons
      */
     void setMultiIcon(List<MultiSensorIcon.Entry> icons) {
         for (int i = 0; i < icons.size(); i++) {
@@ -180,7 +179,7 @@ public class MultiSensorIconAdder extends IconAdder {
             k.setVisible(false);
             p3.add(k);
             JPanel p4 = new JPanel();
-            p4.add(new JLabel(Bundle.getMessage("Sensor")));
+            p4.add(new JLabel(Bundle.getMessage("BeanNameSensor")));
             p3.add(p4);
             p4 = new JPanel();
             NamedBeanHandle<Sensor> sensor = _sensorMap.get(key);

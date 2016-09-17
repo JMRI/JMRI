@@ -25,8 +25,16 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
-        adapter = PiSprogNanoSerialDriverAdapter.instance();
+        if (adapter == null) {
+            adapter = new PiSprogNanoSerialDriverAdapter();
+        }
+    }
+
+    @Override
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig) object).getAdapter();
     }
 
     @Override

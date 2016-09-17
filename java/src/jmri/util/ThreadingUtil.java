@@ -24,7 +24,7 @@ public class ThreadingUtil {
      * Run some layout-specific code before returning
      * <p>
      * Typical uses:
-     * <p><code>ThreadingUtil.runOnLayout( ()->{ sensor.setState(value); } );</code>
+     * <p>{@code ThreadingUtil.runOnLayout( ()->{ sensor.setState(value); } );}
      * 
      * @param ta What to run, usually as a lambda expression
      */
@@ -39,7 +39,7 @@ public class ThreadingUtil {
      * No long-term guarantees.
      * <p>
      * Typical uses:
-     * <p><code>ThreadingUtil.runOnLayoutEventually( ()->{ sensor.setState(value); } );</code>
+     * <p>{@code ThreadingUtil.runOnLayoutEventually( ()->{ sensor.setState(value); } );}
      * 
      * @param ta What to run, usually as a lambda expression
      */
@@ -58,7 +58,7 @@ public class ThreadingUtil {
      * Run some GUI-specific code before returning
      * <p>
      * Typical uses:
-     * <p><code>ThreadingUtil.runOnGUI( ()->{ mine.setVisible(); } );</code>
+     * <p>{@code ThreadingUtil.runOnGUI( ()->{ mine.setVisible(); } );}
      * 
      * @param ta What to run, usually as a lambda expression
      */
@@ -87,7 +87,7 @@ public class ThreadingUtil {
      * after the current routine has returned.
      * <p>
      * Typical uses:
-     * <p><code>ThreadingUtil.runOnGUIEventually( ()->{ mine.setVisible(); } );</code>
+     * <p>{@code ThreadingUtil.runOnGUIEventually( ()->{ mine.setVisible(); } );}
      * 
      * @param ta What to run, usually as a lambda expression
      */

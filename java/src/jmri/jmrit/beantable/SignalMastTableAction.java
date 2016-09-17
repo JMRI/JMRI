@@ -12,7 +12,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
-import jmri.util.com.sun.TableSorter;
+import javax.swing.table.TableRowSorter;
 
 /**
  * Swing action to create and register a SignalMastTable GUI.
@@ -27,7 +27,7 @@ public class SignalMastTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param actionName
+     * @param actionName title of the action
      */
     public SignalMastTableAction(String actionName) {
         super(actionName);
@@ -62,9 +62,8 @@ public class SignalMastTableAction extends AbstractTableAction {
     public void actionPerformed(ActionEvent e) {
         // create the JTable model, with changes for specific NamedBean
         createModel();
-        TableSorter sorter = new TableSorter(m);
-        JTable dataTable = m.makeJTable(sorter);
-        sorter.setTableHeader(dataTable.getTableHeader());
+        TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter<>(m);
+        JTable dataTable = m.makeJTable(m.getMasterClassName(), m, sorter);
         // create the frame
         f = new BeanTableFrame(m, helpTarget(), dataTable) {
 
@@ -99,7 +98,7 @@ public class SignalMastTableAction extends AbstractTableAction {
 
     public void setMenuBar(BeanTableFrame f) {
         JMenuBar menuBar = f.getJMenuBar();
-        JMenu pathMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu pathMenu = new JMenu(Bundle.getMessage("MenuTools"));
         menuBar.add(pathMenu);
         JMenuItem item = new JMenuItem(Bundle.getMessage("MenuItemRepeaters"));
         pathMenu.add(item);

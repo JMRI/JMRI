@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * Operations settings.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2010, 2012, 2014
- * @version $Revision$
  */
 public class Setup {
 
@@ -176,11 +175,12 @@ public class Setup {
     public static final String FEET = Bundle.getMessage("Feet");
     public static final String METER = Bundle.getMessage("Meter");
 
-    private static final String[] carAttributes = {ROAD, NUMBER, TYPE, LENGTH, LOAD, HAZARDOUS, COLOR, KERNEL, KERNEL_SIZE, OWNER,
-        TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK, COMMENT, DROP_COMMENT,
-        PICKUP_COMMENT, RWE};
+    private static final String[] carAttributes =
+            {ROAD, NUMBER, TYPE, LENGTH, LOAD, HAZARDOUS, COLOR, KERNEL, KERNEL_SIZE, OWNER,
+                    TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK, COMMENT, DROP_COMMENT,
+                    PICKUP_COMMENT, RWE};
     private static final String[] engineAttributes = {ROAD, NUMBER, TYPE, MODEL, LENGTH, CONSIST, OWNER, TRACK,
-        LOCATION, DESTINATION, COMMENT};
+            LOCATION, DESTINATION, COMMENT};
 
     private static int scale = HO_SCALE; // Default scale
     private static int ratio = HO_RATIO;
@@ -206,17 +206,18 @@ public class Setup {
     private static String[] pickupEngineMessageFormat = {ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, LOCATION, COMMENT};
     private static String[] dropEngineMessageFormat = {ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, DESTINATION, COMMENT};
     private static String[] pickupManifestMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
-        COMMENT, PICKUP_COMMENT};
-    private static String[] dropManifestMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION,
-        COMMENT, DROP_COMMENT};
+            COMMENT, PICKUP_COMMENT};
+    private static String[] dropManifestMessageFormat =
+            {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION,
+                    COMMENT, DROP_COMMENT};
     private static String[] localManifestMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
-        DESTINATION, COMMENT};
+            DESTINATION, COMMENT};
     private static String[] pickupSwitchListMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS,
-        LOCATION, COMMENT, PICKUP_COMMENT};
+            LOCATION, COMMENT, PICKUP_COMMENT};
     private static String[] dropSwitchListMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS,
-        DESTINATION, COMMENT, DROP_COMMENT};
+            DESTINATION, COMMENT, DROP_COMMENT};
     private static String[] localSwitchListMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS,
-        LOCATION, DESTINATION, COMMENT};
+            LOCATION, DESTINATION, COMMENT};
     private static String[] missingCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, COMMENT};
     private static String pickupEnginePrefix = BOX + Bundle.getMessage("PickUpPrefix");
     private static String dropEnginePrefix = BOX + Bundle.getMessage("SetOutPrefix");
@@ -316,11 +317,14 @@ public class Setup {
 
     private static boolean printCabooseLoad = false; // when true print caboose load
     private static boolean printPassengerLoad = false; // when true print passenger car load
+    private static boolean showTrackMoves = false; // when true show track moves in table
 
     // property changes
     public static final String SWITCH_LIST_CSV_PROPERTY_CHANGE = "setupSwitchListCSVChange"; //  NOI18N
     public static final String MANIFEST_CSV_PROPERTY_CHANGE = "setupManifestCSVChange"; //  NOI18N
     public static final String REAL_TIME_PROPERTY_CHANGE = "setupSwitchListRealTime"; //  NOI18N
+    public static final String SHOW_TRACK_MOVES_PROPERTY_CHANGE = "setupShowTrackMoves"; //  NOI18N
+    public static final String SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE = "saveTrainManifestChange"; //  NOI18N
 
     public static boolean isMainMenuEnabled() {
         OperationsSetupXml.instance(); // load file
@@ -893,6 +897,16 @@ public class Setup {
         return printPassengerLoad;
     }
 
+    public static void setShowTrackMovesEnabled(boolean enable) {
+        boolean old = showTrackMoves;
+        showTrackMoves = enable;
+        setDirtyAndFirePropertyChange(SHOW_TRACK_MOVES_PROPERTY_CHANGE, old, enable);
+    }
+
+    public static boolean isShowTrackMovesEnabled() {
+        return showTrackMoves;
+    }
+
     public static void setSwitchTime(int minutes) {
         carSwitchTime = minutes;
     }
@@ -1073,7 +1087,9 @@ public class Setup {
     }
 
     public static void setSaveTrainManifestsEnabled(boolean enable) {
+        boolean old = saveTrainManifests;
         saveTrainManifests = enable;
+        setDirtyAndFirePropertyChange(SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE, old, enable);
     }
 
     public static String getPickupEnginePrefix() {
@@ -1804,19 +1820,19 @@ public class Setup {
         values.setAttribute(Xml.LENGTH_UNIT, getLengthUnit());
         values.setAttribute(Xml.YEAR_MODELED, getYearModeled());
         // next 7 manifest attributes for backward compatibility TODO remove in future release 2014
-//        values.setAttribute(Xml.PRINT_LOC_COMMENTS, isPrintLocationCommentsEnabled() ? Xml.TRUE : Xml.FALSE);
-//        values.setAttribute(Xml.PRINT_ROUTE_COMMENTS, isPrintRouteCommentsEnabled() ? Xml.TRUE : Xml.FALSE);
-//        values.setAttribute(Xml.PRINT_LOADS_EMPTIES, isPrintLoadsAndEmptiesEnabled() ? Xml.TRUE : Xml.FALSE);
-//        values.setAttribute(Xml.PRINT_TIMETABLE, isPrintTimetableNameEnabled() ? Xml.TRUE : Xml.FALSE);
-//        values.setAttribute(Xml.USE12HR_FORMAT, is12hrFormatEnabled() ? Xml.TRUE : Xml.FALSE);
-//        values.setAttribute(Xml.PRINT_VALID, isPrintValidEnabled() ? Xml.TRUE : Xml.FALSE);
-//        values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackEnabled() ? Xml.TRUE : Xml.FALSE);
+        //        values.setAttribute(Xml.PRINT_LOC_COMMENTS, isPrintLocationCommentsEnabled() ? Xml.TRUE : Xml.FALSE);
+        //        values.setAttribute(Xml.PRINT_ROUTE_COMMENTS, isPrintRouteCommentsEnabled() ? Xml.TRUE : Xml.FALSE);
+        //        values.setAttribute(Xml.PRINT_LOADS_EMPTIES, isPrintLoadsAndEmptiesEnabled() ? Xml.TRUE : Xml.FALSE);
+        //        values.setAttribute(Xml.PRINT_TIMETABLE, isPrintTimetableNameEnabled() ? Xml.TRUE : Xml.FALSE);
+        //        values.setAttribute(Xml.USE12HR_FORMAT, is12hrFormatEnabled() ? Xml.TRUE : Xml.FALSE);
+        //        values.setAttribute(Xml.PRINT_VALID, isPrintValidEnabled() ? Xml.TRUE : Xml.FALSE);
+        //        values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackEnabled() ? Xml.TRUE : Xml.FALSE);
         // This one was left out, wait until 2016
         values.setAttribute(Xml.PRINT_HEADERS, isPrintHeadersEnabled() ? Xml.TRUE : Xml.FALSE);
         // next three logger attributes for backward compatibility TODO remove in future release 2014
-//        values.setAttribute(Xml.CAR_LOGGER, isCarLoggerEnabled() ? Xml.TRUE : Xml.FALSE);
-//        values.setAttribute(Xml.ENGINE_LOGGER, isEngineLoggerEnabled() ? Xml.TRUE : Xml.FALSE);
-//        values.setAttribute(Xml.TRAIN_LOGGER, isTrainLoggerEnabled() ? Xml.TRUE : Xml.FALSE);
+        //        values.setAttribute(Xml.CAR_LOGGER, isCarLoggerEnabled() ? Xml.TRUE : Xml.FALSE);
+        //        values.setAttribute(Xml.ENGINE_LOGGER, isEngineLoggerEnabled() ? Xml.TRUE : Xml.FALSE);
+        //        values.setAttribute(Xml.TRAIN_LOGGER, isTrainLoggerEnabled() ? Xml.TRUE : Xml.FALSE);
 
         e.addContent(values = new Element(Xml.PICKUP_ENG_FORMAT));
         storeXmlMessageFormat(values, getPickupEnginePrefix(), getPickupEngineMessageFormat());
@@ -1906,8 +1922,8 @@ public class Setup {
         values.setAttribute(Xml.HAZARDOUS_MSG, getHazardousMsg());
 
         // backward compatible, remove in 2015
-//        e.addContent(values = new Element(Xml.COLUMN_FORMAT));
-//        values.setAttribute(Xml.TWO_COLUMNS, getManifestFormat() == TWO_COLUMN_FORMAT ? Xml.TRUE : Xml.FALSE);
+        //        e.addContent(values = new Element(Xml.COLUMN_FORMAT));
+        //        values.setAttribute(Xml.TWO_COLUMNS, getManifestFormat() == TWO_COLUMN_FORMAT ? Xml.TRUE : Xml.FALSE);
         // new format June 2014
         e.addContent(values = new Element(Xml.MANIFEST_FORMAT));
 
@@ -1984,6 +2000,9 @@ public class Setup {
         e.addContent(values = new Element(Xml.COMMENTS));
         values.setAttribute(Xml.MISPLACED_CARS, getMiaComment());
 
+        e.addContent(values = new Element(Xml.DISPLAY));
+        values.setAttribute(Xml.SHOW_TRACK_MOVES, isShowTrackMovesEnabled() ? Xml.TRUE : Xml.FALSE);
+
         if (isVsdPhysicalLocationEnabled()) {
             e.addContent(values = new Element(Xml.VSD));
             values.setAttribute(Xml.ENABLE_PHYSICAL_LOCATIONS, isVsdPhysicalLocationEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -1999,7 +2018,7 @@ public class Setup {
     private static void storeXmlMessageFormat(Element values, String prefix, String[] messageFormat) {
         values.setAttribute(Xml.PREFIX, prefix);
         StringBuffer buf = new StringBuffer();
-        stringToKeyConversion(messageFormat);
+        stringToTagConversion(messageFormat);
         for (String attibute : messageFormat) {
             buf.append(attibute + ",");
         }
@@ -2014,12 +2033,10 @@ public class Setup {
         Element operations = e.getChild(Xml.OPERATIONS);
         org.jdom2.Attribute a;
 
-        if ((operations.getChild(Xml.RAIL_ROAD) != null)
-                && (a = operations.getChild(Xml.RAIL_ROAD).getAttribute(Xml.NAME)) != null) {
+        if ((operations.getChild(Xml.RAIL_ROAD) != null) &&
+                (a = operations.getChild(Xml.RAIL_ROAD).getAttribute(Xml.NAME)) != null) {
             String name = a.getValue();
-            if (log.isDebugEnabled()) {
-                log.debug("railroadName: {}", name);
-            }
+            log.debug("railroadName: {}", name);
             if (name.equals(Xml.USE_JMRI_RAILROAD_NAME)) {
                 railroadName = null;
             } else {
@@ -2027,35 +2044,27 @@ public class Setup {
             }
         }
 
-        if ((operations.getChild(Xml.SETUP) != null)
-                && (a = operations.getChild(Xml.SETUP).getAttribute(Xml.COMMENT)) != null) {
+        if ((operations.getChild(Xml.SETUP) != null) &&
+                (a = operations.getChild(Xml.SETUP).getAttribute(Xml.COMMENT)) != null) {
             String comment = a.getValue();
-            if (log.isDebugEnabled()) {
-                log.debug("setup comment: {}", comment);
-            }
+            log.debug("setup comment: {}", comment);
             setupComment = comment;
         }
 
         if (operations.getChild(Xml.SETTINGS) != null) {
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.MAIN_MENU)) != null) {
                 String enabled = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("mainMenu: {}", enabled);
-                }
+                log.debug("mainMenu: {}", enabled);
                 setMainMenuEnabled(enabled.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.CLOSE_ON_SAVE)) != null) {
                 String enabled = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("closeOnSave: {}", enabled);
-                }
+                log.debug("closeOnSave: {}", enabled);
                 setCloseWindowOnSaveEnabled(enabled.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.TRAIN_DIRECTION)) != null) {
                 String dir = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("direction: {}", dir);
-                }
+                log.debug("direction: {}", dir);
                 try {
                     setTrainDirection(Integer.parseInt(dir));
                 } catch (NumberFormatException ee) {
@@ -2064,9 +2073,7 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.TRAIN_LENGTH)) != null) {
                 String length = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("Max train length: {}", length);
-                }
+                log.debug("Max train length: {}", length);
                 try {
                     setMaxTrainLength(Integer.parseInt(length));
                 } catch (NumberFormatException ee) {
@@ -2075,9 +2082,7 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.MAX_ENGINES)) != null) {
                 String size = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("Max number of engines: {}", size);
-                }
+                log.debug("Max number of engines: {}", size);
                 try {
                     setMaxNumberEngines(Integer.parseInt(size));
                 } catch (NumberFormatException ee) {
@@ -2086,9 +2091,7 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.HPT)) != null) {
                 String value = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("HPT: {}", value);
-                }
+                log.debug("HPT: {}", value);
                 try {
                     setHorsePowerPerTon(Integer.parseInt(value));
                 } catch (NumberFormatException ee) {
@@ -2097,9 +2100,7 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.SCALE)) != null) {
                 String scale = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("scale: " + scale);
-                }
+                log.debug("scale: " + scale);
                 try {
                     setScale(Integer.parseInt(scale));
                 } catch (NumberFormatException ee) {
@@ -2108,16 +2109,12 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.CAR_TYPES)) != null) {
                 String types = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("CarTypes: " + types);
-                }
+                log.debug("CarTypes: " + types);
                 setCarTypes(types);
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.SWITCH_TIME)) != null) {
                 String minutes = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("switchTime: {}", minutes);
-                }
+                log.debug("switchTime: {}", minutes);
                 try {
                     setSwitchTime(Integer.parseInt(minutes));
                 } catch (NumberFormatException ee) {
@@ -2126,9 +2123,7 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.TRAVEL_TIME)) != null) {
                 String minutes = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("travelTime: {}", minutes);
-                }
+                log.debug("travelTime: {}", minutes);
                 try {
                     setTravelTime(Integer.parseInt(minutes));
                 } catch (NumberFormatException ee) {
@@ -2137,101 +2132,73 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.SHOW_VALUE)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("showValue: {}", enable);
-                }
+                log.debug("showValue: {}", enable);
                 setValueEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.VALUE_LABEL)) != null) {
                 String label = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("valueLabel: {}", label);
-                }
+                log.debug("valueLabel: {}", label);
                 setValueLabel(label);
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.SHOW_RFID)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("showRfid: {}", enable);
-                }
+                log.debug("showRfid: {}", enable);
                 setRfidEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.RFID_LABEL)) != null) {
                 String label = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("rfidLabel: {}", label);
-                }
+                log.debug("rfidLabel: {}", label);
                 setRfidLabel(label);
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.LENGTH_UNIT)) != null) {
                 String unit = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("lengthUnit: {}", unit);
-                }
+                log.debug("lengthUnit: {}", unit);
                 setLengthUnit(unit);
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.YEAR_MODELED)) != null) {
                 String year = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("yearModeled: {}", year);
-                }
+                log.debug("yearModeled: {}", year);
                 setYearModeled(year);
             }
             // next seven attributes are for backward compatibility
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.PRINT_LOC_COMMENTS)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("printLocComments: {}", enable);
-                }
+                log.debug("printLocComments: {}", enable);
                 setPrintLocationCommentsEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.PRINT_ROUTE_COMMENTS)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("printRouteComments: {}", enable);
-                }
+                log.debug("printRouteComments: {}", enable);
                 setPrintRouteCommentsEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.PRINT_LOADS_EMPTIES)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("printLoadsEmpties: {}", enable);
-                }
+                log.debug("printLoadsEmpties: {}", enable);
                 setPrintLoadsAndEmptiesEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.PRINT_TIMETABLE)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("printTimetable: {}", enable);
-                }
+                log.debug("printTimetable: {}", enable);
                 setPrintTimetableNameEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.USE12HR_FORMAT)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("use12hrFormat: {}", enable);
-                }
+                log.debug("use12hrFormat: {}", enable);
                 set12hrFormatEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.PRINT_VALID)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("printValid: {}", enable);
-                }
+                log.debug("printValid: {}", enable);
                 setPrintValidEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.SORT_BY_TRACK)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("sortByTrack: {}", enable);
-                }
+                log.debug("sortByTrack: {}", enable);
                 setSortByTrackEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.PRINT_HEADERS)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("printHeaders: {}", enable);
-                }
+                log.debug("printHeaders: {}", enable);
                 setPrintHeadersEnabled(enable.equals(Xml.TRUE));
             }
         }
@@ -2241,9 +2208,7 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.PICKUP_ENG_FORMAT).getAttribute(Xml.SETTING)) != null) {
                 String setting = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("pickupEngFormat: {}", setting);
-                }
+                log.debug("pickupEngFormat: {}", setting);
                 String[] keys = setting.split(",");
                 keyToStringConversion(keys);
                 setPickupEngineMessageFormat(keys);
@@ -2255,9 +2220,7 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.DROP_ENG_FORMAT).getAttribute(Xml.SETTING)) != null) {
                 String setting = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("dropEngFormat: {}", setting);
-                }
+                log.debug("dropEngFormat: {}", setting);
                 String[] keys = setting.split(",");
                 keyToStringConversion(keys);
                 setDropEngineMessageFormat(keys);
@@ -2269,11 +2232,10 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.PICKUP_CAR_FORMAT).getAttribute(Xml.SETTING)) != null) {
                 String setting = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("pickupCarFormat: {}", setting);
-                }
+                log.debug("pickupCarFormat: {}", setting);
                 String[] keys = setting.split(",");
                 replaceOldFormat(keys);
+                xmlAttributeToKeyConversion(keys);
                 keyToStringConversion(keys);
                 setPickupManifestMessageFormat(keys);
             }
@@ -2284,11 +2246,10 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.DROP_CAR_FORMAT).getAttribute(Xml.SETTING)) != null) {
                 String setting = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("dropCarFormat: {}", setting);
-                }
+                log.debug("dropCarFormat: {}", setting);
                 String[] keys = setting.split(",");
                 replaceOldFormat(keys);
+                xmlAttributeToKeyConversion(keys);
                 keyToStringConversion(keys);
                 setDropManifestMessageFormat(keys);
             }
@@ -2299,11 +2260,10 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.LOCAL_FORMAT).getAttribute(Xml.SETTING)) != null) {
                 String setting = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("localFormat: {}", setting);
-                }
+                log.debug("localFormat: {}", setting);
                 String[] keys = setting.split(",");
                 replaceOldFormat(keys);
+                xmlAttributeToKeyConversion(keys);
                 keyToStringConversion(keys);
                 setLocalManifestMessageFormat(keys);
             }
@@ -2311,9 +2271,7 @@ public class Setup {
         if (operations.getChild(Xml.MISSING_CAR_FORMAT) != null) {
             if ((a = operations.getChild(Xml.MISSING_CAR_FORMAT).getAttribute(Xml.SETTING)) != null) {
                 String setting = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("missingCarFormat: {}", setting);
-                }
+                log.debug("missingCarFormat: {}", setting);
                 String[] keys = setting.split(",");
                 keyToStringConversion(keys);
                 setMissingCarMessageFormat(keys);
@@ -2322,23 +2280,17 @@ public class Setup {
         if (operations.getChild(Xml.SWITCH_LIST) != null) {
             if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.SAME_AS_MANIFEST)) != null) {
                 String b = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("sameAsManifest: {}", b);
-                }
+                log.debug("sameAsManifest: {}", b);
                 setSwitchListFormatSameAsManifest(b.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.REAL_TIME)) != null) {
                 String b = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("realTime: {}", b);
-                }
+                log.debug("realTime: {}", b);
                 switchListRealTime = b.equals(Xml.TRUE);
             }
             if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.ALL_TRAINS)) != null) {
                 String b = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("allTrains: {}", b);
-                }
+                log.debug("allTrains: {}", b);
                 switchListAllTrains = b.equals(Xml.TRUE);
             }
             if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.PAGE_FORMAT)) != null) {
@@ -2358,25 +2310,19 @@ public class Setup {
             } // old way to save switch list page format pre 3.11
             else if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.PAGE_MODE)) != null) {
                 String b = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("old style pageMode: {}", b);
-                }
+                log.debug("old style pageMode: {}", b);
                 if (b.equals(Xml.TRUE)) {
                     switchListPageFormat = PAGE_PER_TRAIN;
                 }
             }
             if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.PRINT_ROUTE_LOCATION)) != null) {
                 String b = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("print route location comment: {}", b);
-                }
+                log.debug("print route location comment: {}", b);
                 setSwitchListRouteLocationCommentEnabled(b.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.TRACK_SUMMARY)) != null) {
                 String b = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("track summary: {}", b);
-                }
+                log.debug("track summary: {}", b);
                 setTrackSummaryEnabled(b.equals(Xml.TRUE));
             }
         }
@@ -2386,11 +2332,10 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.SWITCH_LIST_PICKUP_CAR_FORMAT).getAttribute(Xml.SETTING)) != null) {
                 String setting = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("switchListpickupCarFormat: " + setting);
-                }
+                log.debug("switchListpickupCarFormat: {}", setting);
                 String[] keys = setting.split(",");
                 replaceOldFormat(keys);
+                xmlAttributeToKeyConversion(keys);
                 keyToStringConversion(keys);
                 setPickupSwitchListMessageFormat(keys);
             }
@@ -2401,11 +2346,10 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.SWITCH_LIST_DROP_CAR_FORMAT).getAttribute(Xml.SETTING)) != null) {
                 String setting = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("switchListDropCarFormat: {}", setting);
-                }
+                log.debug("switchListDropCarFormat: {}", setting);
                 String[] keys = setting.split(",");
                 replaceOldFormat(keys);
+                xmlAttributeToKeyConversion(keys);
                 keyToStringConversion(keys);
                 setDropSwitchListMessageFormat(keys);
             }
@@ -2416,11 +2360,10 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.SWITCH_LIST_LOCAL_FORMAT).getAttribute(Xml.SETTING)) != null) {
                 String setting = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("switchListLocalFormat: {}", setting);
-                }
+                log.debug("switchListLocalFormat: {}", setting);
                 String[] keys = setting.split(",");
                 replaceOldFormat(keys);
+                xmlAttributeToKeyConversion(keys);
                 keyToStringConversion(keys);
                 setLocalSwitchListMessageFormat(keys);
             }
@@ -2428,40 +2371,30 @@ public class Setup {
         if (operations.getChild(Xml.PANEL) != null) {
             if ((a = operations.getChild(Xml.PANEL).getAttribute(Xml.NAME)) != null) {
                 String panel = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("panel: {}", panel);
-                }
+                log.debug("panel: {}", panel);
                 setPanelName(panel);
             }
             if ((a = operations.getChild(Xml.PANEL).getAttribute(Xml.TRAIN_ICONXY)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("TrainIconXY: " + enable);
-                }
+                log.debug("TrainIconXY: {}", enable);
                 setTrainIconCordEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.PANEL).getAttribute(Xml.TRAIN_ICON_APPEND)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("TrainIconAppend: " + enable);
-                }
+                log.debug("TrainIconAppend: {}", enable);
                 setTrainIconAppendEnabled(enable.equals(Xml.TRUE));
             }
         }
-        if ((operations.getChild(Xml.FONT_NAME) != null)
-                && (a = operations.getChild(Xml.FONT_NAME).getAttribute(Xml.NAME)) != null) {
+        if ((operations.getChild(Xml.FONT_NAME) != null) &&
+                (a = operations.getChild(Xml.FONT_NAME).getAttribute(Xml.NAME)) != null) {
             String font = a.getValue();
-            if (log.isDebugEnabled()) {
-                log.debug("fontName: " + font);
-            }
+            log.debug("fontName: {}", font);
             setFontName(font);
         }
-        if ((operations.getChild(Xml.FONT_SIZE) != null)
-                && (a = operations.getChild(Xml.FONT_SIZE).getAttribute(Xml.SIZE)) != null) {
+        if ((operations.getChild(Xml.FONT_SIZE) != null) &&
+                (a = operations.getChild(Xml.FONT_SIZE).getAttribute(Xml.SIZE)) != null) {
             String size = a.getValue();
-            if (log.isDebugEnabled()) {
-                log.debug("fontsize: " + size);
-            }
+            log.debug("fontsize: {}", size);
             try {
                 setManifestFontSize(Integer.parseInt(size));
             } catch (NumberFormatException ee) {
@@ -2471,55 +2404,41 @@ public class Setup {
         if ((operations.getChild(Xml.PAGE_ORIENTATION) != null)) {
             if ((a = operations.getChild(Xml.PAGE_ORIENTATION).getAttribute(Xml.MANIFEST)) != null) {
                 String orientation = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("manifestOrientation: " + orientation);
-                }
+                log.debug("manifestOrientation: {}", orientation);
                 setManifestOrientation(orientation);
             }
             if ((a = operations.getChild(Xml.PAGE_ORIENTATION).getAttribute(Xml.SWITCH_LIST)) != null) {
                 String orientation = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("switchListOrientation: " + orientation);
-                }
+                log.debug("switchListOrientation: {}", orientation);
                 setSwitchListOrientation(orientation);
             }
         }
         if ((operations.getChild(Xml.MANIFEST_COLORS) != null)) {
             if ((a = operations.getChild(Xml.MANIFEST_COLORS).getAttribute(Xml.DROP_COLOR)) != null) {
                 String dropColor = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("dropColor: " + dropColor);
-                }
+                log.debug("dropColor: {}", dropColor);
                 setDropTextColor(dropColor);
             }
             if ((a = operations.getChild(Xml.MANIFEST_COLORS).getAttribute(Xml.PICKUP_COLOR)) != null) {
                 String pickupColor = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("pickupColor: " + pickupColor);
-                }
+                log.debug("pickupColor: {}", pickupColor);
                 setPickupTextColor(pickupColor);
             }
             if ((a = operations.getChild(Xml.MANIFEST_COLORS).getAttribute(Xml.LOCAL_COLOR)) != null) {
                 String localColor = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("localColor: " + localColor);
-                }
+                log.debug("localColor: {}", localColor);
                 setLocalTextColor(localColor);
             }
         }
         if ((operations.getChild(Xml.TAB) != null)) {
             if ((a = operations.getChild(Xml.TAB).getAttribute(Xml.ENABLED)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("tab: " + enable);
-                }
+                log.debug("tab: {}", enable);
                 setTabEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.TAB).getAttribute(Xml.LENGTH)) != null) {
                 String length = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("tab 1 length: " + length);
-                }
+                log.debug("tab 1 length: {}", length);
                 try {
                     setTab1length(Integer.parseInt(length));
                 } catch (NumberFormatException ee) {
@@ -2528,9 +2447,7 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.TAB).getAttribute(Xml.TAB2_LENGTH)) != null) {
                 String length = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("tab 2 length: " + length);
-                }
+                log.debug("tab 2 length: {}", length);
                 try {
                     setTab2length(Integer.parseInt(length));
                 } catch (NumberFormatException ee) {
@@ -2539,9 +2456,7 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.TAB).getAttribute(Xml.TAB3_LENGTH)) != null) {
                 String length = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("tab 3 length: " + length);
-                }
+                log.debug("tab 3 length: {}", length);
                 try {
                     setTab3length(Integer.parseInt(length));
                 } catch (NumberFormatException ee) {
@@ -2552,100 +2467,72 @@ public class Setup {
         if ((operations.getChild(Xml.MANIFEST) != null)) {
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_LOC_COMMENTS)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("manifest printLocComments: " + enable);
-                }
+                log.debug("manifest printLocComments: {}", enable);
                 setPrintLocationCommentsEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_ROUTE_COMMENTS)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("manifest printRouteComments: " + enable);
-                }
+                log.debug("manifest printRouteComments: {}", enable);
                 setPrintRouteCommentsEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_LOADS_EMPTIES)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("manifest printLoadsEmpties: " + enable);
-                }
+                log.debug("manifest printLoadsEmpties: {}", enable);
                 setPrintLoadsAndEmptiesEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_TIMETABLE)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("manifest printTimetable: " + enable);
-                }
+                log.debug("manifest printTimetable: {}", enable);
                 setPrintTimetableNameEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.USE12HR_FORMAT)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("manifest use12hrFormat: " + enable);
-                }
+                log.debug("manifest use12hrFormat: {}", enable);
                 set12hrFormatEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_VALID)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("manifest printValid: " + enable);
-                }
+                log.debug("manifest printValid: {}", enable);
                 setPrintValidEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.SORT_BY_TRACK)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("manifest sortByTrack: " + enable);
-                }
+                log.debug("manifest sortByTrack: {}", enable);
                 setSortByTrackEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_HEADERS)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("manifest print headers: " + enable);
-                }
+                log.debug("manifest print headers: {}", enable);
                 setPrintHeadersEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.TRUNCATE)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("manifest truncate: " + enable);
-                }
+                log.debug("manifest truncate: {}", enable);
                 setTruncateManifestEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.USE_DEPARTURE_TIME)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("manifest use departure time: " + enable);
-                }
+                log.debug("manifest use departure time: {}", enable);
                 setUseDepartureTimeEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.USE_EDITOR)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("manifest useEditor: " + enable);
-                }
+                log.debug("manifest useEditor: {}", enable);
                 setManifestEditorEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_CABOOSE_LOAD)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("manifest print caboose load: " + enable);
-                }
+                log.debug("manifest print caboose load: {}", enable);
                 setPrintCabooseLoadEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_PASSENGER_LOAD)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("manifest print passenger load: " + enable);
-                }
+                log.debug("manifest print passenger load: {}", enable);
                 setPrintPassengerLoadEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.HAZARDOUS_MSG)) != null) {
                 String message = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("manifest hazardousMsg: " + message);
-                }
+                log.debug("manifest hazardousMsg: {}", message);
                 setHazardousMsg(message);
             }
         }
@@ -2668,9 +2555,7 @@ public class Setup {
         } else if ((operations.getChild(Xml.COLUMN_FORMAT) != null)) {
             if ((a = operations.getChild(Xml.COLUMN_FORMAT).getAttribute(Xml.TWO_COLUMNS)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("two columns: " + enable);
-                }
+                log.debug("two columns: {}", enable);
                 if (enable.equals(Xml.TRUE)) {
                     setManifestFormat(TWO_COLUMN_FORMAT);
                 }
@@ -2686,25 +2571,19 @@ public class Setup {
         if ((operations.getChild(Xml.MANIFEST_FILE_OPTIONS) != null)) {
             if ((a = operations.getChild(Xml.MANIFEST_FILE_OPTIONS).getAttribute(Xml.MANIFEST_SAVE)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("manifest file save option: " + enable);
-                }
-                setSaveTrainManifestsEnabled(enable.equals(Xml.TRUE));
+                log.debug("manifest file save option: {}", enable);
+                saveTrainManifests = enable.equals(Xml.TRUE);
             }
         }
         if ((operations.getChild(Xml.BUILD_OPTIONS) != null)) {
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.AGGRESSIVE)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("aggressive: " + enable);
-                }
+                log.debug("aggressive: {}", enable);
                 setBuildAggressive(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.NUMBER_PASSES)) != null) {
                 String number = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("number of passes: {}", number);
-                }
+                log.debug("number of passes: {}", number);
                 try {
                     setNumberPasses(Integer.parseInt(number));
                 } catch (NumberFormatException ne) {
@@ -2713,109 +2592,79 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_LOCAL_INTERCHANGE)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("noLocalInterchange: " + enable);
-                }
+                log.debug("noLocalInterchange: {}", enable);
                 setLocalInterchangeMovesEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_LOCAL_SPUR)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("noLocalSpur: " + enable);
-                }
+                log.debug("noLocalSpur: {}", enable);
                 setLocalSpurMovesEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_LOCAL_YARD)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("noLocalYard: " + enable);
-                }
+                log.debug("noLocalYard: {}", enable);
                 setLocalYardMovesEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.STAGING_RESTRICTION_ENABLED)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("stagingRestrictionEnabled: " + enable);
-                }
+                log.debug("stagingRestrictionEnabled: {}", enable);
                 setTrainIntoStagingCheckEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.STAGING_TRACK_AVAIL)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("stagingTrackAvail: " + enable);
-                }
+                log.debug("stagingTrackAvail: {}", enable);
                 setStagingTrackImmediatelyAvail(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_RETURN_STAGING)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("allowReturnStaging: " + enable);
-                }
+                log.debug("allowReturnStaging: {}", enable);
                 setAllowReturnToStagingEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.PROMPT_STAGING_ENABLED)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("promptStagingEnabled: " + enable);
-                }
+                log.debug("promptStagingEnabled: {}", enable);
                 setPromptFromStagingEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.PROMPT_TO_STAGING_ENABLED)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("promptToStagingEnabled: " + enable);
-                }
+                log.debug("promptToStagingEnabled: {}", enable);
                 setPromptToStagingEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.GENERATE_CSV_MANIFEST)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("generateCvsManifest: " + enable);
-                }
+                log.debug("generateCvsManifest: {}", enable);
                 generateCsvManifest = enable.equals(Xml.TRUE);
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.GENERATE_CSV_SWITCH_LIST)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("generateCvsSwitchList: " + enable);
-                }
+                log.debug("generateCvsSwitchList: {}", enable);
                 generateCsvSwitchList = enable.equals(Xml.TRUE);
             }
         }
         if (operations.getChild(Xml.BUILD_REPORT) != null) {
             if ((a = operations.getChild(Xml.BUILD_REPORT).getAttribute(Xml.LEVEL)) != null) {
                 String level = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("buildReportLevel: " + level);
-                }
+                log.debug("buildReportLevel: {}", level);
                 setBuildReportLevel(level);
             }
             if ((a = operations.getChild(Xml.BUILD_REPORT).getAttribute(Xml.ROUTER_LEVEL)) != null) {
                 String level = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("routerBuildReportLevel: " + level);
-                }
+                log.debug("routerBuildReportLevel: {}", level);
                 setRouterBuildReportLevel(level);
             }
             if ((a = operations.getChild(Xml.BUILD_REPORT).getAttribute(Xml.USE_EDITOR)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("build report useEditor: " + enable);
-                }
+                log.debug("build report useEditor: {}", enable);
                 setBuildReportEditorEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_REPORT).getAttribute(Xml.INDENT)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("build report indent: " + enable);
-                }
+                log.debug("build report indent: {}", enable);
                 setBuildReportIndentEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_REPORT).getAttribute(Xml.FONT_SIZE)) != null) {
                 String size = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("build font size: " + size);
-                }
+                log.debug("build font size: {}", size);
                 try {
                     setBuildReportFontSize(Integer.parseInt(size));
                 } catch (NumberFormatException ee) {
@@ -2824,9 +2673,7 @@ public class Setup {
             }
             if ((a = operations.getChild(Xml.BUILD_REPORT).getAttribute(Xml.ALWAYS_PREVIEW)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("build report always preview: " + enable);
-                }
+                log.debug("build report always preview: {}", enable);
                 setBuildReportAlwaysPreviewEnabled(enable.equals(Xml.TRUE));
             }
         }
@@ -2834,137 +2681,109 @@ public class Setup {
         if (operations.getChild(Xml.ROUTER) != null) {
             if ((a = operations.getChild(Xml.ROUTER).getAttribute(Xml.CAR_ROUTING_ENABLED)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("carRoutingEnabled: " + enable);
-                }
+                log.debug("carRoutingEnabled: {}", enable);
                 setCarRoutingEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.ROUTER).getAttribute(Xml.CAR_ROUTING_VIA_YARDS)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("carRoutingViaYards: " + enable);
-                }
+                log.debug("carRoutingViaYards: {}", enable);
                 setCarRoutingViaYardsEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.ROUTER).getAttribute(Xml.CAR_ROUTING_VIA_STAGING)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("carRoutingViaStaging: " + enable);
-                }
+                log.debug("carRoutingViaStaging: {}", enable);
                 setCarRoutingViaStagingEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.ROUTER).getAttribute(Xml.FORWARD_TO_YARD)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("forwardToYard: " + enable);
-                }
+                log.debug("forwardToYard: {}", enable);
                 setForwardToYardEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.ROUTER).getAttribute(Xml.ONLY_ACTIVE_TRAINS)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("onlyActiveTrains: " + enable);
-                }
+                log.debug("onlyActiveTrains: {}", enable);
                 setOnlyActiveTrainsEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.ROUTER).getAttribute(Xml.CHECK_CAR_DESTINATION)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("checkCarDestination: " + enable);
-                }
+                log.debug("checkCarDestination: {}", enable);
                 setCheckCarDestinationEnabled(enable.equals(Xml.TRUE));
             }
         } else if (operations.getChild(Xml.SETTINGS) != null) {
             // the next four items are for backwards compatibility
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.CAR_ROUTING_ENABLED)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("carRoutingEnabled: " + enable);
-                }
+                log.debug("carRoutingEnabled: {}", enable);
                 setCarRoutingEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.CAR_ROUTING_VIA_YARDS)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("carRoutingViaYards: " + enable);
-                }
+                log.debug("carRoutingViaYards: {}", enable);
                 setCarRoutingViaYardsEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.CAR_ROUTING_VIA_STAGING)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("carRoutingViaStaging: " + enable);
-                }
+                log.debug("carRoutingViaStaging: {}", enable);
                 setCarRoutingViaStagingEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.FORWARD_TO_YARD)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("forwardToYard: " + enable);
-                }
+                log.debug("forwardToYard: {}", enable);
                 setForwardToYardEnabled(enable.equals(Xml.TRUE));
             }
         }
 
-        if ((operations.getChild(Xml.OWNER) != null)
-                && (a = operations.getChild(Xml.OWNER).getAttribute(Xml.NAME)) != null) {
+        if ((operations.getChild(Xml.OWNER) != null) &&
+                (a = operations.getChild(Xml.OWNER).getAttribute(Xml.NAME)) != null) {
             String owner = a.getValue();
-            if (log.isDebugEnabled()) {
-                log.debug("owner: " + owner);
-            }
+            log.debug("owner: {}", owner);
             setOwnerName(owner);
         }
         if (operations.getChild(Xml.ICON_COLOR) != null) {
             if ((a = operations.getChild(Xml.ICON_COLOR).getAttribute(Xml.NORTH)) != null) {
                 String color = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("north color: " + color);
-                }
+                log.debug("north color: {}", color);
                 setTrainIconColorNorth(color);
             }
             if ((a = operations.getChild(Xml.ICON_COLOR).getAttribute(Xml.SOUTH)) != null) {
                 String color = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("south color: " + color);
-                }
+                log.debug("south color: {}", color);
                 setTrainIconColorSouth(color);
             }
             if ((a = operations.getChild(Xml.ICON_COLOR).getAttribute(Xml.EAST)) != null) {
                 String color = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("east color: " + color);
-                }
+                log.debug("east color: {}", color);
                 setTrainIconColorEast(color);
             }
             if ((a = operations.getChild(Xml.ICON_COLOR).getAttribute(Xml.WEST)) != null) {
                 String color = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("west color: " + color);
-                }
+                log.debug("west color: {}", color);
                 setTrainIconColorWest(color);
             }
             if ((a = operations.getChild(Xml.ICON_COLOR).getAttribute(Xml.LOCAL)) != null) {
                 String color = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("local color: " + color);
-                }
+                log.debug("local color: {}", color);
                 setTrainIconColorLocal(color);
             }
             if ((a = operations.getChild(Xml.ICON_COLOR).getAttribute(Xml.TERMINATE)) != null) {
                 String color = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("terminate color: " + color);
-                }
+                log.debug("terminate color: {}", color);
                 setTrainIconColorTerminate(color);
             }
         }
         if (operations.getChild(Xml.COMMENTS) != null) {
             if ((a = operations.getChild(Xml.COMMENTS).getAttribute(Xml.MISPLACED_CARS)) != null) {
                 String comment = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("Misplaced comment: " + comment);
-                }
+                log.debug("Misplaced comment: {}", comment);
                 setMiaComment(comment);
+            }
+        }
+
+        if (operations.getChild(Xml.DISPLAY) != null) {
+            if ((a = operations.getChild(Xml.DISPLAY).getAttribute(Xml.SHOW_TRACK_MOVES)) != null) {
+                String enable = a.getValue();
+                log.debug("show track moves: {}", enable);
+                showTrackMoves = enable.equals(Xml.TRUE);
             }
         }
 
@@ -2984,16 +2803,12 @@ public class Setup {
         if (operations.getChild(Xml.SETTINGS) != null) {
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.AUTO_SAVE)) != null) {
                 String enabled = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("autoSave: " + enabled);
-                }
+                log.debug("autoSave: {}", enabled);
                 setAutoSaveEnabled(enabled.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.AUTO_BACKUP)) != null) {
                 String enabled = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("autoBackup: " + enabled);
-                }
+                log.debug("autoBackup: {}", enabled);
                 setAutoBackupEnabled(enabled.equals(Xml.TRUE));
             }
         }
@@ -3001,46 +2816,34 @@ public class Setup {
         if (operations.getChild(Xml.LOGGER) != null) {
             if ((a = operations.getChild(Xml.LOGGER).getAttribute(Xml.CAR_LOGGER)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("carLogger: " + enable);
-                }
+                log.debug("carLogger: {}", enable);
                 carLogger = enable.equals(Xml.TRUE);
             }
             if ((a = operations.getChild(Xml.LOGGER).getAttribute(Xml.ENGINE_LOGGER)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("engineLogger: " + enable);
-                }
+                log.debug("engineLogger: {}", enable);
                 engineLogger = enable.equals(Xml.TRUE);
             }
             if ((a = operations.getChild(Xml.LOGGER).getAttribute(Xml.TRAIN_LOGGER)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("trainLogger: " + enable);
-                }
+                log.debug("trainLogger: {}", enable);
                 trainLogger = enable.equals(Xml.TRUE);
             }
         } else if (operations.getChild(Xml.SETTINGS) != null) {
             // for backward compatibility
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.CAR_LOGGER)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("carLogger: " + enable);
-                }
+                log.debug("carLogger: {}", enable);
                 carLogger = enable.equals(Xml.TRUE);
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.ENGINE_LOGGER)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("engineLogger: " + enable);
-                }
+                log.debug("engineLogger: {}", enable);
                 engineLogger = enable.equals(Xml.TRUE);
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.TRAIN_LOGGER)) != null) {
                 String enable = a.getValue();
-                if (log.isDebugEnabled()) {
-                    log.debug("trainLogger: " + enable);
-                }
+                log.debug("trainLogger: {}", enable);
                 trainLogger = enable.equals(Xml.TRUE);
             }
         }
@@ -3049,7 +2852,6 @@ public class Setup {
     // replace old pickup and drop message keys
     // Change happened from 2.11.3 to 2.11.4
     // 4/16/2014
-    // replace three keys that have spaces in the text
     private static void replaceOldFormat(String[] format) {
         for (int i = 0; i < format.length; i++) {
             if (format[i].equals("Pickup Msg")) // NOI18N
@@ -3059,24 +2861,12 @@ public class Setup {
             {
                 format[i] = DROP_COMMENT;
             }
-            // three keys with spaces that need conversion
-            if (format[i].equals("PickUp Msg")) // NOI18N
-            {
-                format[i] = "PickUp_Msg"; // NOI18N
-            } else if (format[i].equals("SetOut Msg")) // NOI18N
-            {
-                format[i] = "SetOut_Msg"; // NOI18N
-            } else if (format[i].equals("Final Dest")) // NOI18N
-            {
-                format[i] = "Final_Dest"; // NOI18N
-            }
         }
     }
 
-    /**
+   /**
      * Converts the xml key to the proper locale text
      *
-     * @param keys
      */
     private static void keyToStringConversion(String[] keys) {
         for (int i = 0; i < keys.length; i++) {
@@ -3091,29 +2881,41 @@ public class Setup {
         }
     }
 
-    private static final String[] attributtes = {"Road", "Number", "Type", "Model", "Length", "Load", "Color",
-        "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist", "Kernel", "Kernel_Size", "Owner",
-        "RWE", "Comment", "SetOut_Msg", "PickUp_Msg", "Hazardous", "Tab"};
+    private static final String[] keys = {"Road", "Number", "Type", "Model", "Length", "Load", "Color",
+            "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist", "Kernel",
+            "Kernel_Size", "Owner", "RWE", "Comment", "SetOut_Msg", "PickUp_Msg", "Hazardous", "Tab", "Tab2", "Tab3"};
 
-    /**
+    /*
      * Converts the strings into English tags for xml storage
      *
-     * @param strings
      */
-    private static void stringToKeyConversion(String[] strings) {
-        Locale locale = Locale.ROOT;
+    private static void stringToTagConversion(String[] strings) {
         for (int i = 0; i < strings.length; i++) {
             String old = strings[i];
             if (old.equals(BLANK)) {
                 continue;
             }
-            for (String attribute : attributtes) {
-                if (strings[i].equals(Bundle.getMessage(attribute))) {
-                    strings[i] = Bundle.getMessage(locale, attribute);
+            for (String key : keys) {
+                if (strings[i].equals(Bundle.getMessage(key))) {
+                    strings[i] = Bundle.getMessage(Locale.ROOT, key);
                     break;
                 }
             }
             // log.debug("Converted {} to {}", old, strings[i]);
+        }
+    }
+    
+    /*
+     * The xml attributes stored using the English translation. This converts
+     * the attribute to the appropriate key for language conversion.
+     */
+    private static void xmlAttributeToKeyConversion(String[] format) {
+        for (int i = 0; i < format.length; i++) {
+            for (String key : keys) {
+                if (format[i].equals(Bundle.getMessage(Locale.ROOT, key))) {
+                    format[i] = key;
+                }
+            }
         }
     }
 

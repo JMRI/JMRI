@@ -1,4 +1,3 @@
-// OakTreeMenu.java
 package jmri.jmrix.oaktree;
 
 import java.util.ResourceBundle;
@@ -8,14 +7,8 @@ import javax.swing.JMenu;
  * Create a "Systems" menu containing the Jmri Oak Tree-specific tools
  *
  * @author	Bob Jacobsen Copyright 2003, 2006
- * @version $Revision$
  */
 public class OakTreeMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3502858569724894577L;
 
     public OakTreeMenu(String name) {
         this();

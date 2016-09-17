@@ -36,12 +36,14 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        return new TestSuite(PackageTest.class);
+        TestSuite suite = new TestSuite(PackageTest.class);
+        suite.addTest(BundleTest.suite());
+        return suite;
     }
 
     // The minimal setup for log4J

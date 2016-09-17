@@ -2,7 +2,7 @@ package jmri.jmrix.secsi;
 
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRMessage;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008
  * @author	Dave Duchamp multi-node extensions 2003
- * @version	$Revision$
  */
 public class SerialNodeTest extends TestCase {
 
@@ -99,7 +98,7 @@ public class SerialNodeTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SerialNodeTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

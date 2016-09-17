@@ -1,4 +1,3 @@
-// EditorFilePane.java
 package jmri.jmrix.loconet.soundloader;
 
 import java.io.File;
@@ -11,9 +10,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SortOrder;
+import javax.swing.table.TableRowSorter;
 import jmri.jmrix.loconet.spjfile.SpjFile;
-import jmri.util.JTableUtil;
-import jmri.util.com.sun.TableSorter;
+import jmri.swing.RowSorterUtil;
+import jmri.util.SystemNameComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,14 +22,8 @@ import org.slf4j.LoggerFactory;
  * Pane for editing Digitrax SPJ files
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2010
- * @version	$Revision$
  */
 public class EditorFilePane extends javax.swing.JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4194558549451699808L;
 
     // GUI member declarations
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Editor");
@@ -53,16 +48,13 @@ public class EditorFilePane extends javax.swing.JPanel {
         // create and include table
         dataModel = new EditorTableDataModel(file);
 
-        JTable dataTable = JTableUtil.sortableDataModel(dataModel);
+        JTable dataTable = new JTable(dataModel);
         JScrollPane dataScroll = new JScrollPane(dataTable);
 
         // give system name column a smarter sorter and use it initially
-        try {
-            TableSorter tmodel = ((TableSorter) dataTable.getModel());
-            tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            tmodel.setSortingStatus(EditorTableDataModel.HEADERCOL, TableSorter.ASCENDING);
-        } catch (java.lang.ClassCastException e) {
-        }  // happens if not sortable table
+        TableRowSorter<EditorTableDataModel> sorter = new TableRowSorter<>(dataModel);
+        sorter.setComparator(EditorTableDataModel.HEADERCOL, new SystemNameComparator());
+        RowSorterUtil.setSortOrder(sorter, EditorTableDataModel.HEADERCOL, SortOrder.ASCENDING);
 
         // configure items for GUI
         dataModel.configureTable(dataTable);

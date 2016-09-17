@@ -1,4 +1,3 @@
-// LayoutBlockNeighbourTableModel.java
 package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 
 import java.beans.PropertyChangeListener;
@@ -14,16 +13,10 @@ import org.slf4j.LoggerFactory;
  * Any desired ordering, etc, is handled outside this class.
  *
  * @author Kevin Dickerson Copyright (C) 2011
- * @version $Revision$
  */
 public class LayoutBlockThroughPathsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4544331372118349150L;
-
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
+    //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     public static final int SOURCECOL = 0;
     static final int DESTINATIONCOL = 1;
@@ -51,11 +44,11 @@ public class LayoutBlockThroughPathsTableModel extends javax.swing.table.Abstrac
     public String getColumnName(int col) {
         switch (col) {
             case SOURCECOL:
-                return rb.getString("Source");
+                return Bundle.getMessage("Source");
             case DESTINATIONCOL:
-                return rb.getString("Destination");
+                return Bundle.getMessage("Destination");
             case ACTIVECOL:
-                return rb.getString("Active");
+                return Bundle.getMessage("SensorStateActive");
 
             default:
                 return "<UNKNOWN>";
@@ -111,9 +104,9 @@ public class LayoutBlockThroughPathsTableModel extends javax.swing.table.Abstrac
             case ACTIVECOL:
                 Boolean mutual = lBlock.isThroughPathActive(row);
                 if (mutual) {
-                    return rb.getString("Yes");
+                    return Bundle.getMessage("ButtonYes");
                 }
-                return rb.getString("No");
+                return Bundle.getMessage("ButtonNo");
             case DESTINATIONCOL:
                 return lBlock.getThroughPathDestination(row).getDisplayName();
             default:

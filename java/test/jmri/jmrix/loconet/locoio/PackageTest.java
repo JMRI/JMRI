@@ -19,14 +19,19 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.loconet.locoio.LocoIOTest");  // no tests in this class itself
-        suite.addTest(LocoIOPanelTest.suite());
-        suite.addTest(LocoIOTableModelTest.suite());
+
+        suite.addTest(BundleTest.suite());
+ 
+        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+           suite.addTest(LocoIOPanelTest.suite());
+           suite.addTest(LocoIOTableModelTest.suite());
+        }
         return suite;
     }
 

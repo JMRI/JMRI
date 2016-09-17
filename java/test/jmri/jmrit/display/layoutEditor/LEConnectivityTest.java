@@ -12,7 +12,7 @@ import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.AbstractButtonFinder;
 import junit.extensions.jfcunit.finder.DialogFinder;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -40,7 +40,7 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
         // Panel is up, continue set up for tests.
         ConnectivityUtil cu = new ConnectivityUtil(le);
         Assert.assertNotNull(cu);
-        BlockManager bm = jmri.InstanceManager.blockManagerInstance();
+        BlockManager bm = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
         Assert.assertNotNull(bm);
 
         // Test right-handed crossover connectivity turnout settings
@@ -330,7 +330,7 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {LEConnectivityTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -348,13 +348,13 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initShutDownManager();
         // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.instance().dispose();
+        jmri.jmrit.display.PanelMenu.dispose();
 
     }
 
     protected void tearDown() throws Exception {
         // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.instance().dispose();
+        jmri.jmrit.display.PanelMenu.dispose();
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
         super.tearDown();

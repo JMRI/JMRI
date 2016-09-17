@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * that access the {@link #name} and {@link #id} fields to remove protections
  * and restrictions on those fields.
  *
- * @author rhwood Copyright (C) 2014
+ * @author Randall Wood Copyright (C) 2014
  * @see jmri.profile.ProfileManager#setActiveProfile(jmri.profile.Profile)
  */
 public class NullProfile extends Profile {
@@ -30,9 +30,9 @@ public class NullProfile extends Profile {
      * exist in storage on the computer.
      *
      * @param path The Profile's directory
-     * @throws IOException
+     * @throws java.io.IOException If path is not readable
      */
-    public NullProfile(File path) throws IOException {
+    public NullProfile(@Nonnull File path) throws IOException {
         super(path, false);
     }
 
@@ -45,14 +45,13 @@ public class NullProfile extends Profile {
      * read-only property of the Profile. The {@link ProfileManager} will only
      * load a single profile with a given id.
      *
-     * @param name
+     * @param name The name of the profile.
      * @param id   If null, {@link jmri.profile.ProfileManager#createUniqueId()}
      *             will be used to generate the id.
-     * @param path
-     * @throws IOException
-     * @throws IllegalArgumentException
+     * @param path The path where the profile is stored.
+     * @throws java.io.IOException If path is not readable.
      */
-    public NullProfile(String name, String id, File path) throws IOException, IllegalArgumentException {
+    public NullProfile(String name, String id, @Nonnull File path) throws IOException, IllegalArgumentException {
         this(path);
         this.name = name;
         if (null != id) {

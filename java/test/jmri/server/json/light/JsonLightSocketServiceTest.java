@@ -14,11 +14,11 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import junit.swingui.TestRunner;
+import junit.textui.TestRunner;
 
 /**
  *
@@ -39,7 +39,7 @@ public class JsonLightSocketServiceTest extends TestCase {
             JsonLightSocketService service = new JsonLightSocketService(connection);
             LightManager manager = InstanceManager.getDefault(LightManager.class);
             Light light1 = manager.provideLight("IL1");
-            service.onMessage(JsonLightServiceFactory.LIGHT, message, Locale.ENGLISH);
+            service.onMessage(JsonLight.LIGHT, message, Locale.ENGLISH);
             // TODO: test that service is listener in LightManager
             Assert.assertEquals(JSON.OFF, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
             light1.setState(Light.ON);
@@ -69,21 +69,21 @@ public class JsonLightSocketServiceTest extends TestCase {
             Light light1 = manager.provideLight("IL1");
             // Light OFF
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, JSON.OFF);
-            service.onMessage(JsonLightServiceFactory.LIGHT, message, Locale.ENGLISH);
+            service.onMessage(JsonLight.LIGHT, message, Locale.ENGLISH);
             Assert.assertEquals(Light.OFF, light1.getState());
             // Light ON
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, JSON.ON);
-            service.onMessage(JsonLightServiceFactory.LIGHT, message, Locale.ENGLISH);
+            service.onMessage(JsonLight.LIGHT, message, Locale.ENGLISH);
             Assert.assertEquals(Light.ON, light1.getState());
             // Light UNKNOWN - remains ON
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, JSON.UNKNOWN);
-            service.onMessage(JsonLightServiceFactory.LIGHT, message, Locale.ENGLISH);
+            service.onMessage(JsonLight.LIGHT, message, Locale.ENGLISH);
             Assert.assertEquals(Light.ON, light1.getState());
             // Light Invalid State
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, 42); // invalid state
             JsonException exception = null;
             try {
-                service.onMessage(JsonLightServiceFactory.LIGHT, message, Locale.ENGLISH);
+                service.onMessage(JsonLight.LIGHT, message, Locale.ENGLISH);
             } catch (JsonException ex) {
                 exception = ex;
             }

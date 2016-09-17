@@ -24,7 +24,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -34,7 +34,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.qsi.QsiTrafficControllerTest.suite());
         suite.addTest(jmri.jmrix.qsi.QsiMessageTest.suite());
         suite.addTest(jmri.jmrix.qsi.QsiReplyTest.suite());
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.qsi.serialdriver.PackageTest.class));
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.qsi.qsimon.QsiMonFrameTest.suite());
             suite.addTest(jmri.jmrix.qsi.packetgen.PacketGenFrameTest.suite());

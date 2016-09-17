@@ -6,7 +6,7 @@ import jmri.jmrix.SystemConnectionMemo;
 /**
  * Provide the minimal required SystemConnectionMemo.
  *
- * @author Randall Wood <randall.h.wood@alexandriasoftware.com>
+ * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
 public class TMCCSystemConnectionMemo extends SystemConnectionMemo {
 

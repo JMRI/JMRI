@@ -1,4 +1,3 @@
-// LnTurnoutManager.java
 package jmri.jmrix.loconet;
 
 import jmri.Turnout;
@@ -38,7 +37,6 @@ import org.slf4j.LoggerFactory;
  * Description:	Implement turnout manager for loconet
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision$
  */
 public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager implements LocoNetListener {
 
@@ -177,5 +175,3 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
 
     private final static Logger log = LoggerFactory.getLogger(LnTurnoutManager.class.getName());
 }
-
-/* @(#)LnTurnoutManager.java */

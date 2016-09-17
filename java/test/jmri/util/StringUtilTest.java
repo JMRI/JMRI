@@ -1,6 +1,6 @@
 package jmri.util;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.util.StringUtil class.
  *
  * @author	Bob Jacobsen Copyright 2003
- * @version	$Revision$
  */
 public class StringUtilTest extends TestCase {
 
@@ -291,6 +290,12 @@ public class StringUtilTest extends TestCase {
     public void testparenQuote() {
         String sample;
 
+        sample = null;
+        Assert.assertEquals(sample, sample, StringUtil.parenQuote(sample));
+        
+        sample = "";
+        Assert.assertEquals(sample, sample, StringUtil.parenQuote(sample));
+        
         sample = "abc";
         Assert.assertEquals(sample, sample, StringUtil.parenQuote(sample));
 
@@ -318,6 +323,12 @@ public class StringUtilTest extends TestCase {
 
     public void testparenUnQuote() {
         String sample;
+
+        sample = null;
+        Assert.assertEquals(sample, sample, StringUtil.parenUnQuote(sample));
+
+        sample = "";
+        Assert.assertEquals(sample, sample, StringUtil.parenUnQuote(sample));
 
         sample = "abc";
         Assert.assertEquals(sample, sample, StringUtil.parenUnQuote(sample));
@@ -383,7 +394,7 @@ public class StringUtilTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", StringUtilTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

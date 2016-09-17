@@ -186,7 +186,6 @@ public class NceBinaryCommand {
     /**
      * Read one byte from NCE command station memory
      *
-     * @param address
      * @return binary command to read one byte
      */
     public static byte[] accMemoryRead1(int address) {
@@ -423,9 +422,6 @@ public class NceBinaryCommand {
     /**
      * create an NCE USB compatible ops mode loco message
      *
-     * @param locoAddr
-     * @param cvAddr
-     * @param cvData
      * @return byte[] containing message
      */
     public static byte[] usbOpsModeLoco(NceTrafficController tc, int locoAddr, int cvAddr, int cvData) {
@@ -449,9 +445,6 @@ public class NceBinaryCommand {
     /**
      * create an NCE USB compatible ops mode accy message
      *
-     * @param accyAddr
-     * @param cvAddr
-     * @param cvData
      * @return byte[] containing message
      */
     public static byte[] usbOpsModeAccy(int accyAddr, int cvAddr, int cvData) {

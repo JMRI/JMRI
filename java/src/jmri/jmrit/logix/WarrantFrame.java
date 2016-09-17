@@ -37,20 +37,18 @@ import org.slf4j.LoggerFactory;
 
 /**
  * WarrantFame creates and edits Warrants
- * <P>
+ * <BR>
  * <hr>
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
- * This class is a window for creating and editing Warrants.
- * <p>
+ * </P>
  * @author  Pete Cressman Copyright (C) 2009, 2010
  */
 public class WarrantFrame extends WarrantRoute {
@@ -774,7 +772,6 @@ public class WarrantFrame extends WarrantRoute {
     /**
      * all non-null returns are fatal
      *
-     * @return
      */
     private String checkTrainId() {
         String msg = null;
@@ -978,7 +975,6 @@ public class WarrantFrame extends WarrantRoute {
                 case Warrant.MODE_NONE:
                     _warrant.removePropertyChangeListener(this);
                     int oldMode = ((Integer) e.getOldValue()).intValue();
-                    int newMode = ((Integer) e.getNewValue()).intValue();
                     if (oldMode != Warrant.MODE_NONE) {
                         OBlock block = _warrant.getCurrentBlockOrder().getBlock();
                         int state = block.getState();
@@ -1064,7 +1060,7 @@ public class WarrantFrame extends WarrantRoute {
                                         .getBlock().getDisplayName(), e.getNewValue()), Color.black);
                     } else if (e.getPropertyName().equals("runMode")) {
                         oldMode = ((Integer) e.getOldValue()).intValue();
-                        newMode = ((Integer) e.getNewValue()).intValue();
+                        int newMode = ((Integer) e.getNewValue()).intValue();
                         if (oldMode == Warrant.MODE_NONE) {
                             if (newMode != Warrant.MODE_NONE) {
                                 setStatusText(Bundle.getMessage("warrantStart",

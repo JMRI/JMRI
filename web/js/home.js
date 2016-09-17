@@ -8,9 +8,14 @@
  * By removing "&panels=true" from the url, shows panel editors and displays
  * panels as screen scrapes.
  */
-function listFrames() {
+function listFrames(path) {
+    var framePath = "/frame/list?format=json&panels=true";
+    var panelPath = "/panel?format=json";
+    if (typeof path === "undefined") {
+        path = framePath;
+    }
     $.ajax({
-        url: "/frame/list?format=json&panels=true",
+        url: path,
         data: {},
         success: function (data, textStatus, jqXHR) {
             if (data.length !== 0) {
@@ -27,6 +32,13 @@ function listFrames() {
             } else {
                 $("#no-open-frames").addClass("show").removeClass("hidden");
                 $("#frame-list").addClass("hidden").removeClass("show");
+            }
+        },
+        statusCode: {
+            403: function() {
+                if (path !== panelPath) {
+                    listFrames(panelPath);
+                }
             }
         }
     });

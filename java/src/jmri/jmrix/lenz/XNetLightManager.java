@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Based in part on SerialLightManager.java
  * @author	Paul Bender Copyright (C) 2008
- * @navassoc - - 1..* jmri.jmrix.lenz.XNetLight
+ * @navassoc 1 - * jmri.jmrix.lenz.XNetLight
  */
 public class XNetLightManager extends AbstractLightManager {
 
@@ -122,5 +122,3 @@ public class XNetLightManager extends AbstractLightManager {
     private final static Logger log = LoggerFactory.getLogger(XNetLightManager.class.getName());
 
 }
-
-/* @(#)XNetLightManager.java */

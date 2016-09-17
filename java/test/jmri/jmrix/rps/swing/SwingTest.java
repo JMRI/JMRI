@@ -19,7 +19,7 @@ public class SwingTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SwingTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -27,8 +27,10 @@ public class SwingTest extends TestCase {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.rps.SwingTest");
         suite.addTest(jmri.jmrix.rps.swing.AffineEntryPanelTest.suite());
-        suite.addTest(jmri.jmrix.rps.swing.polling.PollTableActionTest.suite());
+        suite.addTest(jmri.jmrix.rps.swing.polling.PackageTest.suite());
         suite.addTest(jmri.jmrix.rps.swing.debugger.DebuggerTest.suite()); // do last to display in front
+
+        suite.addTest(BundleTest.suite());
         return suite;
     }
 

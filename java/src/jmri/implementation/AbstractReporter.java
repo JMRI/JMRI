@@ -1,4 +1,3 @@
-// AbstractReporter.java
 package jmri.implementation;
 
 import jmri.Reporter;
@@ -16,7 +15,6 @@ import jmri.Reporter;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Matthew Harris Copyright (C) 2011
- * @version	$Revision$
  */
 public abstract class AbstractReporter extends AbstractNamedBean implements Reporter, java.io.Serializable {
 
@@ -30,6 +28,12 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
 
     public String getBeanType() {
         return Bundle.getMessage("BeanNameReporter");
+    }
+    
+    // for combo boxes
+    @Override
+    public String toString() {
+        return getDisplayName();
     }
 
     public Object getCurrentReport() {
@@ -64,5 +68,3 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
     private Object _currentReport = null;
 
 }
-
-/* @(#)AbstractReporter.java */

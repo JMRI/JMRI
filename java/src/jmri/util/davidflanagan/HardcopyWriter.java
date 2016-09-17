@@ -346,7 +346,6 @@ public class HardcopyWriter extends Writer {
      *
      * @param c the color desired for this String
      * @param s the String
-     * @throws IOException
      */
     public void write(Color c, String s) throws IOException {
         if (page != null) {
@@ -721,11 +720,6 @@ public class HardcopyWriter extends Writer {
     }
 
     public static class PrintCanceledException extends Exception {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -281738262906826412L;
 
         public PrintCanceledException(String msg) {
             super(msg);

@@ -1,6 +1,3 @@
-/**
- * XNetPacketizer.java
- */
 package jmri.jmrix.lenz;
 
 import org.slf4j.Logger;
@@ -16,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <P>
  * <UL>
  * <LI> RcvHandler - at highest available priority
  * <LI> XmtHandler - down one, which is assumed to be above the GUI
@@ -24,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * </UL>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  *
  */
 public class XNetPacketizer extends XNetTrafficController {
@@ -96,5 +91,3 @@ public class XNetPacketizer extends XNetTrafficController {
 
     private final static Logger log = LoggerFactory.getLogger(XNetPacketizer.class.getName());
 }
-
-/* @(#)XNetPacketizer.java */

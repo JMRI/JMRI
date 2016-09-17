@@ -441,13 +441,13 @@ public class EcosLocoToRoster implements EcosListener {
     }
 
     void storeloco() {
-        Roster.instance().addEntry(re);
+        Roster.getDefault().addEntry(re);
         ecosLoco.setRosterId(re.getId());
         re.ensureFilenameExists();
 
         re.writeFile(null, null, null);
 
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
         ecosManager.clearLocoToRoster();
     }
 
@@ -589,7 +589,7 @@ public class EcosLocoToRoster implements EcosListener {
      */
     public boolean checkDuplicate(String id) {
         // check its not a duplicate
-        List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, id);
+        List<RosterEntry> l = Roster.getDefault().matchingList(null, null, null, null, null, null, id);
         boolean oops = false;
         for (int i = 0; i < l.size(); i++) {
             if (re != l.get(i)) {
@@ -923,10 +923,10 @@ public class EcosLocoToRoster implements EcosListener {
         df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
 
         // load reset from decoder tree
-        if (variableModel.piCv() != "") {
+        if (!variableModel.piCv().equals("")) {
             resetModel.setPiCv(variableModel.piCv());
         }
-        if (variableModel.siCv() != "") {
+        if (!variableModel.siCv().equals("")) {
             resetModel.setSiCv(variableModel.siCv());
         }
         df.loadResetModel(decoderRoot.getChild("decoder"), resetModel);

@@ -3,8 +3,6 @@ package jmri.server.json;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.DataOutputStream;
 import org.eclipse.jetty.websocket.api.Session;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * JsonConnection that retains sent messages for unit testing.
@@ -13,8 +11,8 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonMockConnection extends JsonConnection {
 
-    private final static Logger log = LoggerFactory.getLogger(JsonMockConnection.class);
-    private JsonNode message;
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonMockConnection.class);
+    private JsonNode message = null;
 
     public JsonMockConnection(Session connection) {
         super(connection);

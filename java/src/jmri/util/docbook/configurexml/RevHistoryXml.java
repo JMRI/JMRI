@@ -14,7 +14,6 @@ import org.jdom2.Namespace;
  * them. The "load()" method is therefore a null-op here.
  *
  * @author Bob Jacobsen Copyright (c) 2010
- * @version $Revision$
  */
 public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
 

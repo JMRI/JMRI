@@ -5,7 +5,7 @@ import javax.swing.ButtonGroup;
 import jmri.InstanceManager;
 import jmri.ProgrammerScaffold;
 import jmri.managers.DefaultProgrammerManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -31,7 +31,7 @@ public class ProgServiceModePaneTest extends TestCase {
         // add dummy DCC
         InstanceManager.setProgrammerManager(new DefaultProgrammerManager(
                 (new ProgrammerScaffold(DefaultProgrammerManager.DIRECTBYTEMODE))));
-        Assert.assertTrue("programer manager available", InstanceManager.programmerManagerInstance() != null);
+        Assert.assertTrue("programer manager available", InstanceManager.getDefault(jmri.ProgrammerManager.class) != null);
         // create and show
         jmri.util.JmriJFrame f = new jmri.util.JmriJFrame("Horizontal DIRECTBYTEMODE");
         f.getContentPane().add(
@@ -60,7 +60,7 @@ public class ProgServiceModePaneTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {ProgServiceModePaneTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

@@ -30,7 +30,6 @@ import jmri.jmrit.roster.RosterEntry;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Randall Wood Copyright (C) 2011
- * @version	$Revision: $
  */
 public class RosterEntrySelection implements Transferable, ClipboardOwner {
 
@@ -94,8 +93,6 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
      *
      * @param t - a Transferable object. This should be a RosterEntrySelection,
      *          but for simplicity, will accept any Transferable object.
-     * @throws UnsupportedFlavorException
-     * @throws IOException
      */
     public static ArrayList<RosterEntry> getRosterEntries(Transferable t) throws UnsupportedFlavorException, IOException {
         if (t.isDataFlavorSupported(rosterEntryFlavor)) {
@@ -103,7 +100,7 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
             ArrayList<String> Ids = (ArrayList<String>) t.getTransferData(rosterEntryFlavor);
             ArrayList<RosterEntry> REs = new ArrayList<RosterEntry>(Ids.size());
             for (String Id : Ids) {
-                RosterEntry re = Roster.instance().entryFromTitle(Id);
+                RosterEntry re = Roster.getDefault().entryFromTitle(Id);
                 if (re != null) {
                     REs.add(re);
                 }

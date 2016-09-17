@@ -1,7 +1,6 @@
 /**
  * Common classes to provide JMRI access as master and slave nodes on Modbus
  * networks.
- * <p>
  *
  * <h2>Related Documentation</h2>
  *

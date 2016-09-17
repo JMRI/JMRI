@@ -35,7 +35,7 @@ public class Gui3AppsTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", Gui3AppsTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite
@@ -44,7 +44,8 @@ public class Gui3AppsTest extends TestCase {
         TestSuite suite = new TestSuite("Gui3AppsTest");  // no tests in this class itself
         // all tests from other classes
         //suite.addTest(jmri.JmriTest.suite());
-
+        suite.addTest(BundleTest.suite());
+        suite.addTest(apps.gui3.dp3.PackageTest.suite());
         return suite;
     }
 

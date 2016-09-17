@@ -126,7 +126,6 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
      * _once_ if anything has changed state (or set the commanded state
      * directly)
      *
-     * @param l
      */
     public synchronized void reply(XBeeReply l) {
         if (log.isDebugEnabled()) {

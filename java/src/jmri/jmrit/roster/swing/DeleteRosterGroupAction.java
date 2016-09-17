@@ -54,7 +54,6 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
      * name of the group to be copied is already known and is not the
      * selectedRosterGroup property of the WindowInterface.
      *
-     * @param event
      */
     @Override
     public void actionPerformed(ActionEvent event) {
@@ -70,7 +69,7 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
                     "Delete Roster Group",
                     JOptionPane.INFORMATION_MESSAGE,
                     null,
-                    Roster.instance().getRosterGroupList().toArray(),
+                    Roster.getDefault().getRosterGroupList().toArray(),
                     null);
         }
         // can't delete the roster itself (ALLENTRIES and null represent the roster)
@@ -83,8 +82,8 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
         }
 
         // delete the roster grouping
-        Roster.instance().delRosterGroupList(group);
-        Roster.writeRosterFile();
+        Roster.getDefault().delRosterGroupList(group);
+        Roster.getDefault().writeRoster();
     }
 
     /**

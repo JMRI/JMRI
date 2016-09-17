@@ -1,49 +1,61 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- UpDated by Herv&#233; Blorec 2013-10-13-->
-<HTML LANG="fr">
-<HEAD>
-<TITLE>JMRI: Adding/Editing Turnouts</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Bob Jacobsen" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Turnout Add Edit">
 
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1"
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<BODY>
-<!--#include virtual="/Header" -->
+  <title>JMRI: Ajout/&Eacute;dition Aiguillages</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI help Turnout Add Edit">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Ajout/&Eacute;dition Aiguillages</h1>
 
-<H1> Ajout/&#201;dition Aiguillages</H1>
+      <p>Lorsque vous ajoutez un Aiguillage, vous
+      s&eacute;lectionnez dans la liste d&eacute;roulante le
+      syst&egrave;me auquel l' aiguillage est
+      rattach&eacute;.</p><img src="AddTurnout.png">
 
-<p> Lorsque vous ajoutez un Aiguillage, vous s&#233;lectionnez dans la liste d&#233;roulante le syst&#232;me auquel l'
-aiguillage est rattach&#233;.</p>
-<img src="AddTurnout.png" >
-<p> Entrez  une adresse valide pour l'Aiguillage et, si d&#233;sir&#233; entrer un nom utilisateur.</p>
+      <p>Entrez une adresse valide pour l'Aiguillage et, si
+      d&eacute;sir&eacute; entrer un nom utilisateur.</p>
 
-<H2> Cr&#233;ation d'un  Nombre d'Aiguillage</H2>
+      <h2>Cr&eacute;ation d'un Nombre d'Aiguillage</h2>
 
-<p> Il est &#233;galement possible de cr&#233;er un certain nombre d'Aiguillage . <br>
-La case "Ajouter une plage" sera activ&#233;e.</P>
-<img src="AddTurnoutNumber.png">
-<p> Apr&#232;s l'activation de la boite "Ajouter  Plage", il faudra ensuite activer le champ "nombre &#224; ajouter".
-Ici entrez Le nombre d'Aiguillages que vous souhaitez ajouter, ce qui cr&#233;era ensuite
- un nombre d'aiguillages s&#233;quentiel.</p>
-Si un nom utilisateur a &#233;t&#233; entr&#233; un num&#233;ro sera ajout&#233; &#224; la fin du nom pour garder
-chaque nom utilisateur unique. <br>
-Voir aide g&#233;n&#233;rale pour plus d'informations"sur les <A HREF="../../../../html/doc/Technical/Names.shtml"> Noms</A>".
+      <p>Il est &eacute;galement possible de cr&eacute;er un
+      certain nombre d'Aiguillage.<br>
+      La case "Ajouter une plage" sera activ&eacute;e.</p><img src=
+      "AddTurnoutNumber.png">
 
-<!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
-
+      <p>Apr&egrave;s l'activation de la boite "Ajouter Plage", il
+      faudra ensuite activer le champ "nombre &agrave; ajouter".
+      Ici entrez Le nombre d'Aiguillages que vous souhaitez
+      ajouter, ce qui cr&eacute;era ensuite un nombre d'aiguillages
+      s&eacute;quentiel.</p>Si un nom utilisateur a
+      &eacute;t&eacute; entr&eacute; un num&eacute;ro sera
+      ajout&eacute; &agrave; la fin du nom pour garder chaque nom
+      utilisateur unique.<br>
+      Voir aide g&eacute;n&eacute;rale pour plus d'informations"sur
+      les <a href=
+      "../../../../html/doc/Technical/Names.shtml">Noms</a>". 
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

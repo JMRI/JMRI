@@ -21,8 +21,9 @@ import org.slf4j.LoggerFactory;
  * The standard insets command fails on Linux - this class attempts to rectify
  * that.
  *
+ * <a href="http://forums.sun.com/thread.jspa?threadID=5169228&start=29">
  * Borrows heavily from the Linsets class created by: A. Tres Finocchiaro
- * http://forums.sun.com/thread.jspa?threadID=5169228&start=29
+ * </a>
  *
  *
  * @author Matt Harris
@@ -87,7 +88,7 @@ public class JmriInsets {
                     String line = r.readLine();
                     while (line != null) {
                         for (int i = 0; i < desktopList.size(); i++) {
-                            String s = desktopList.get(i).toString();
+                            String s = desktopList.get(i);
                             if (line.contains(s) && !line.contains("grep")) //NOI18N
                             {
                                 return desktopList.indexOf(s);

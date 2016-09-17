@@ -1,4 +1,3 @@
-// TrainCommon.java
 package jmri.jmrit.operations.trains;
 
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
@@ -39,7 +38,6 @@ import org.slf4j.LoggerFactory;
  * Common routines for trains
  *
  * @author Daniel Boudreau (C) Copyright 2008, 2009, 2010, 2011, 2012, 2013
- * @version $Revision: 1 $
  */
 public class TrainCommon {
 
@@ -72,11 +70,7 @@ public class TrainCommon {
 
     /**
      * Used to generate "Two Column" format for engines.
-     * 
-     * @param file
-     * @param engineList
-     * @param rl
-     * @param isManifest
+     *
      */
     protected void blockLocosTwoColumn(PrintWriter file, List<Engine> engineList, RouteLocation rl,
             boolean isManifest) {
@@ -103,10 +97,6 @@ public class TrainCommon {
      * Adds a list of locomotive pick ups for the route location to the output
      * file. Used to generate "Standard" format.
      *
-     * @param file
-     * @param engineList
-     * @param rl
-     * @param isManifest
      */
     protected void pickupEngines(PrintWriter file, List<Engine> engineList, RouteLocation rl, boolean isManifest) {
         boolean printHeader = Setup.isPrintHeadersEnabled();
@@ -140,10 +130,6 @@ public class TrainCommon {
      * Adds a list of locomotive drops for the route location to the output
      * file. Used to generate "Standard" format.
      *
-     * @param file
-     * @param engineList
-     * @param rl
-     * @param isManifest
      */
     protected void dropEngines(PrintWriter file, List<Engine> engineList, RouteLocation rl, boolean isManifest) {
         boolean printHeader = Setup.isPrintHeadersEnabled();
@@ -177,7 +163,6 @@ public class TrainCommon {
      * Returns the pick up string for a loco. Useful for frames like the train
      * conductor and yardmaster.
      *
-     * @param engine
      * @return engine pick up string
      */
     public String pickupEngine(Engine engine) {
@@ -192,7 +177,6 @@ public class TrainCommon {
      * Returns the drop string for a loco. Useful for frames like the train
      * conductor and yardmaster.
      *
-     * @param engine
      * @return engine drop string
      */
     public String dropEngine(Engine engine) {
@@ -630,8 +614,6 @@ public class TrainCommon {
      * Adds the car's pick up string to the output file using the truncated
      * manifest format
      *
-     * @param file
-     * @param car
      */
     protected void pickUpCarTruncated(PrintWriter file, Car car, boolean isManifest) {
         pickUpCar(file, car,
@@ -643,8 +625,6 @@ public class TrainCommon {
      * Adds the car's pick up string to the output file using the manifest or
      * switch list format
      *
-     * @param file
-     * @param car
      */
     protected void pickUpCar(PrintWriter file, Car car, boolean isManifest) {
         if (isManifest) {
@@ -682,7 +662,6 @@ public class TrainCommon {
      *
      * @param isManifest when true use manifest format, when false use switch
      *            list format
-     * @param car
      * @return pick up car string
      */
     public String pickupCar(Car car, boolean isManifest, boolean isTwoColumnTrack) {
@@ -709,8 +688,6 @@ public class TrainCommon {
      * manifest format. Does not print out local moves. Local moves are only
      * shown on the switch list for that location.
      *
-     * @param file
-     * @param car
      */
     protected void truncatedDropCar(PrintWriter file, Car car, boolean isManifest) {
         // local move?
@@ -725,9 +702,6 @@ public class TrainCommon {
      * Adds the car's set out string to the output file using the manifest or
      * switch list format
      *
-     * @param file
-     * @param car
-     * @param isManifest
      */
     protected void dropCar(PrintWriter file, Car car, boolean isManifest) {
         if (isManifest) {
@@ -774,7 +748,6 @@ public class TrainCommon {
      * Returns the drop car string. Useful for frames like train conductor and
      * yardmaster.
      *
-     * @param car
      * @param isManifest when true use manifest format, when false use switch
      *            list format
      * @return drop car string
@@ -812,7 +785,6 @@ public class TrainCommon {
      *
      * @param isManifest when true use manifest format, when false use switch
      *            list format
-     * @param car
      * @return move car string
      */
     public String localMoveCar(Car car, boolean isManifest) {
@@ -837,10 +809,6 @@ public class TrainCommon {
      * Add a list of utility cars scheduled for pick up from the route location
      * to the output file. The cars are blocked by destination.
      *
-     * @param file
-     * @param carList
-     * @param car
-     * @param isManifest
      */
     protected void pickupUtilityCars(PrintWriter file, List<Car> carList, Car car, boolean isManifest) {
         // list utility cars by type, track, length, and load
@@ -864,10 +832,6 @@ public class TrainCommon {
      * Add a list of utility cars scheduled for drop at the route location to
      * the output file.
      *
-     * @param file
-     * @param carList
-     * @param car
-     * @param isManifest
      */
     protected void setoutUtilityCars(PrintWriter file, List<Car> carList, Car car, boolean isManifest) {
         boolean isLocal = isLocalMove(car);
@@ -993,10 +957,6 @@ public class TrainCommon {
      * car provided. Returns 0 if this car type has already been processed,
      * otherwise the number of cars with the same attribute.
      *
-     * @param format
-     * @param carList
-     * @param car
-     * @param isPickup
      * @return 0 if the car type has already been processed
      */
     protected int countUtilityCars(String[] format, List<Car> carList, Car car, boolean isPickup) {
@@ -1113,9 +1073,7 @@ public class TrainCommon {
      * @param string string to write
      */
     protected static void addLine(PrintWriter file, String level, String string) {
-        if (log.isDebugEnabled()) {
-            log.debug(string);
-        }
+        log.debug(string);
         if (file != null) {
             String[] lines = string.split(NEW_LINE);
             for (String line : lines) {
@@ -1126,7 +1084,7 @@ public class TrainCommon {
 
     // only used by build report
     private static void printLine(PrintWriter file, String level, String string) {
-        int lineLengthMax = getLineLength(Setup.PORTRAIT, Setup.getBuildReportFontSize(), Setup.MONOSPACED);
+        int lineLengthMax = getLineLength(Setup.PORTRAIT, Setup.MONOSPACED, Font.PLAIN, Setup.getBuildReportFontSize());
         if (string.length() > lineLengthMax) {
             String[] words = string.split(SPACE);
             StringBuffer sb = new StringBuffer();
@@ -1146,7 +1104,6 @@ public class TrainCommon {
     /**
      * Used to determine if car is a local move
      *
-     * @param car
      * @return true if the move is at the same location
      */
     protected boolean isLocalMove(Car car) {
@@ -1192,13 +1149,9 @@ public class TrainCommon {
     /**
      * Writes string to file. No line length wrap or protection.
      *
-     * @param file
-     * @param string
      */
     protected void addLine(PrintWriter file, String string) {
-        if (log.isDebugEnabled()) {
-            log.debug(string);
-        }
+        log.debug(string);
         if (file != null) {
             file.println(string);
         }
@@ -1208,8 +1161,6 @@ public class TrainCommon {
      * Writes a string to a file. Checks for string length, and will
      * automatically wrap lines.
      *
-     * @param file
-     * @param string
      * @param isManifest set true for manifest page orientation, false for
      *            switch list orientation
      */
@@ -1237,7 +1188,6 @@ public class TrainCommon {
     /**
      * Adds a blank line to the file.
      *
-     * @param file
      */
     protected void newLine(PrintWriter file) {
         file.println(BLANK_LINE);
@@ -1248,7 +1198,6 @@ public class TrainCommon {
      * is an integer or if the first character after the hyphen is a left
      * parenthesis "(".
      *
-     * @param name
      * @return First half of the string.
      */
     public static String splitString(String name) {
@@ -1267,8 +1216,7 @@ public class TrainCommon {
 
     /**
      * Splits a string if there's a hyphen followed by a left parenthesis "-(".
-     * 
-     * @param name
+     *
      * @return First half of the string.
      */
     private static String splitStringLeftParenthesis(String name) {
@@ -1301,8 +1249,6 @@ public class TrainCommon {
     /**
      * returns true if the train has work at the location
      *
-     * @param train
-     * @param location
      * @return true if the train has work at the location
      */
     public static boolean isThereWorkAtLocation(Train train, Location location) {
@@ -1569,8 +1515,6 @@ public class TrainCommon {
     /**
      * Two column header format. Left side pick ups, right side set outs
      *
-     * @param file
-     * @param isManifest
      */
     public void printEngineHeader(PrintWriter file, boolean isManifest) {
         int lineLength = getLineLength(isManifest);
@@ -1606,8 +1550,6 @@ public class TrainCommon {
      * Prints the two column header for cars. Left side pick ups, right side set
      * outs.
      *
-     * @param file
-     * @param isManifest
      */
     public void printCarHeader(PrintWriter file, boolean isManifest, boolean isTwoColumnTrack) {
         int lineLength = getLineLength(isManifest);
@@ -1827,7 +1769,6 @@ public class TrainCommon {
     /**
      * Prints a line across the entire page.
      *
-     * @param file
      */
     public void printHorizontalLine(PrintWriter file, boolean isManifest) {
         printHorizontalLine(file, 0, getLineLength(isManifest));
@@ -1846,8 +1787,8 @@ public class TrainCommon {
 
     public static String getISO8601Date(boolean isModelYear) {
         Calendar calendar = Calendar.getInstance();
-        // use the JMRI timebase (which may be a fast clock).
-        calendar.setTime(jmri.InstanceManager.timebaseInstance().getTime());
+        // use the JMRI Timebase (which may be a fast clock).
+        calendar.setTime(jmri.InstanceManager.getDefault(jmri.Timebase.class).getTime());
         if (isModelYear && !Setup.getYearModeled().isEmpty()) {
             try {
                 calendar.set(Calendar.YEAR, Integer.parseInt(Setup.getYearModeled().trim()));
@@ -1859,17 +1800,17 @@ public class TrainCommon {
     }
 
     public static String getDate(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("M/dd/yyyy HH:mm");
+        SimpleDateFormat format = new SimpleDateFormat("M/dd/yyyy HH:mm"); // NOI18N
         if (Setup.is12hrFormatEnabled()) {
-            format = new SimpleDateFormat("M/dd/yyyy hh:mm a");
+            format = new SimpleDateFormat("M/dd/yyyy hh:mm a"); // NOI18N
         }
         return format.format(date);
     }
 
     public static String getDate(boolean isModelYear) {
         Calendar calendar = Calendar.getInstance();
-        // use the JMRI timebase (which may be a fast clock).
-        calendar.setTime(jmri.InstanceManager.timebaseInstance().getTime());
+        // use the JMRI Timebase (which may be a fast clock).
+        calendar.setTime(jmri.InstanceManager.getDefault(jmri.Timebase.class).getTime());
         if (isModelYear && !Setup.getYearModeled().equals(Setup.NONE)) {
             try {
                 calendar.set(Calendar.YEAR, Integer.parseInt(Setup.getYearModeled().trim()));
@@ -1881,52 +1822,10 @@ public class TrainCommon {
     }
 
     /**
-     * Returns a double in minutes representing the string date. Date string has
-     * to be in the order: Month / day / year hour:minute AM_PM
-     *
-     * @param date
-     * @return double in minutes @deprecated. Use date object comparisons
-     *         instead.
-     */
-    @Deprecated
-    public double convertStringDateToDouble(String date) {
-        double dateToDouble = 0;
-        try {
-            // log.debug("Convert date: " + date);
-            String[] breakdownDate = date.split("/");
-            // log.debug("Month: " + breakdownDate[0]);
-            // convert month to minutes
-            dateToDouble += 60 * 24 * 31 * Integer.parseInt(breakdownDate[0]);
-            // log.debug("Day: " + breakdownDate[1]);
-            dateToDouble += 60 * 24 * Integer.parseInt(breakdownDate[1]);
-            String[] breakDownYear = breakdownDate[2].split(" ");
-            // log.debug("Year: " + breakDownYear[0]);
-            dateToDouble += 60 * 24 * 365 * Integer.parseInt(breakDownYear[0]);
-            String[] breakDownTime = breakDownYear[1].split(":");
-            // log.debug("Hour: " + breakDownTime[0]);
-            dateToDouble += 60 * Integer.parseInt(breakDownTime[0]);
-            // log.debug("Minute: " + breakDownTime[1]);
-            dateToDouble += Integer.parseInt(breakDownTime[1]);
-            if (breakDownYear.length > 2) {
-                log.debug("AM_PM: " + breakDownYear[2]);
-                if (breakDownYear[2].equals(Bundle.getMessage("PM"))) {
-                    dateToDouble += 60 * 12;
-                }
-            }
-        } catch (NumberFormatException e) {
-            log.error("Not able to convert date: " + date + " to double");
-        }
-        // log.debug("Double: "+dateToDouble);
-        return dateToDouble;
-    }
-
-    /**
-     * Will pad out a string by adding spaces to the end of the string, and will
+     * Pads out a string by adding spaces to the end of the string, and will
      * remove characters from the end of the string if the string exceeds the
      * field size.
      *
-     * @param s
-     * @param fieldSize
      * @return A String the specified length
      */
     public static String padAndTruncateString(String s, int fieldSize) {
@@ -1948,8 +1847,6 @@ public class TrainCommon {
      * Adjusts string to be a certain number of characters by adding spaces to
      * the end of the string.
      *
-     * @param s
-     * @param fieldSize
      * @return A String the specified length
      */
     public static String padString(String s, int fieldSize) {
@@ -1963,8 +1860,6 @@ public class TrainCommon {
     /**
      * Adds the requested number of spaces to the start of the string.
      *
-     * @param s
-     * @param tabSize
      * @return A String the specified length
      */
     public static String tabString(String s, int tabSize) {
@@ -1983,15 +1878,19 @@ public class TrainCommon {
         return buf.toString();
     }
 
-    protected int getLineLength(boolean isManifest) {
+    public static int getLineLength(boolean isManifest) {
         return getLineLength(isManifest ? Setup.getManifestOrientation() : Setup.getSwitchListOrientation(),
-                Setup.getManifestFontSize(), Setup.getFontName());
+                Setup.getFontName(), Font.PLAIN, Setup.getManifestFontSize());
     }
 
-    private static int getLineLength(String orientation, int fontSize, String fontName) {
+    public static int getManifestHeaderLineLength() {
+        return getLineLength(Setup.getManifestOrientation(), "SansSerif", Font.ITALIC, Setup.getManifestFontSize());
+    }
+
+    private static int getLineLength(String orientation, String fontName, int fontStyle, int fontSize) {
         // Metrics don't always work for the various font names, so use
         // Monospaced
-        Font font = new Font(fontName, Font.PLAIN, fontSize); // NOI18N
+        Font font = new Font(fontName, fontStyle, fontSize); // NOI18N
         JLabel label = new JLabel();
         FontMetrics metrics = label.getFontMetrics(font);
         int charwidth = metrics.charWidth('m');
@@ -2011,10 +1910,6 @@ public class TrainCommon {
     /**
      * Checks to see if the the string fits on the page.
      *
-     * @param string
-     * @param orientation
-     * @param fontName
-     * @param fontSize
      * @return false if string length is longer than page width.
      */
     private boolean checkStringLength(String string, String orientation, String fontName, int fontSize) {
@@ -2024,20 +1919,21 @@ public class TrainCommon {
         int stringWidth = metrics.stringWidth(string);
         return stringWidth <= getPageSize(orientation).width;
     }
+    
+    protected static final Dimension PAPER_MARGINS = new Dimension(84, 72);
 
-    private static Dimension getPageSize(String orientation) {
-        // page size has been adjusted to account for margins of .5
+    protected static Dimension getPageSize(String orientation) {
+        // page size has been adjusted to account for margins of .5 Dimension(84, 72)
         Dimension pagesize = new Dimension(523, 720); // Portrait 8.5 x 11
-        // landscape has a .65 margins
+        // landscape has .65 margins
         if (orientation.equals(Setup.LANDSCAPE)) {
-            pagesize = new Dimension(702, 523);
+            pagesize = new Dimension(702, 523); // 11 x 8.5
         }
-        if (orientation.equals(Setup.HALFPAGE)) // 4.5 x 11
-        {
-            pagesize = new Dimension(261, 720);
+        if (orientation.equals(Setup.HALFPAGE)) {
+            pagesize = new Dimension(261, 720); // 4.25 x 11
         }
         if (orientation.equals(Setup.HANDHELD)) {
-            pagesize = new Dimension(206, 720);
+            pagesize = new Dimension(206, 720); // 3.25 x 11
         }
         return pagesize;
     }
@@ -2046,7 +1942,6 @@ public class TrainCommon {
      * Produces a string using commas and spaces between the strings provided in
      * the array. Does not check for embedded commas in the string array.
      *
-     * @param array
      * @return formated string using commas and spaces
      */
     public static String formatStringToCommaSeparated(String[] array) {

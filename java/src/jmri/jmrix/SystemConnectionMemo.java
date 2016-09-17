@@ -55,7 +55,7 @@ abstract public class SystemConnectionMemo {
         this.userNameAsLoaded = null;
     }
 
-    private static boolean initialised = false;
+    // private static boolean initialised = false;
 
     /**
      * Provides a method to reserve System Names and prefixes at creation
@@ -77,7 +77,7 @@ abstract public class SystemConnectionMemo {
         sysPrefixes = new ArrayList<>();
         listeners = new HashSet<>();
         
-        initialised = false;
+        //initialised = false;
     }
     
     protected static ArrayList<String> userNames = new ArrayList<>();
@@ -128,7 +128,7 @@ abstract public class SystemConnectionMemo {
         
         // check for special case
         java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
-        if (list != null && (list.size() > 0) && (list.get(list.size()-1) instanceof jmri.jmrix.internal.InternalSystemConnectionMemo)) {
+        if ((list.size() > 0) && (list.get(list.size()-1) instanceof jmri.jmrix.internal.InternalSystemConnectionMemo)) {
             // last is internal, so insert before that one
             log.debug("   putting one before end");
             SystemConnectionMemo old = list.get(list.size()-1);
@@ -155,7 +155,6 @@ abstract public class SystemConnectionMemo {
     /**
      * Set the system prefix.
      *
-     * @param systemPrefix
      * @throws java.lang.NullPointerException if systemPrefix is null
      * @return true if the system prefix could be set
      */
@@ -196,7 +195,6 @@ abstract public class SystemConnectionMemo {
     /**
      * Set the user name for the system connection.
      *
-     * @param name
      * @throws java.lang.NullPointerException if name is null
      * @return true if the user name could be set.
      */
@@ -304,7 +302,7 @@ abstract public class SystemConnectionMemo {
     abstract protected ResourceBundle getActionModelResourceBundle();
 
     protected void addToActionList() {
-        StartupActionModelUtil util = jmri.InstanceManager.getDefault(StartupActionModelUtil.class);
+        StartupActionModelUtil util = jmri.InstanceManager.getNullableDefault(StartupActionModelUtil.class);
         ResourceBundle rb = getActionModelResourceBundle();
         if (rb == null || util == null) {
             return;
@@ -321,7 +319,7 @@ abstract public class SystemConnectionMemo {
     }
 
     protected void removeFromActionList() {
-        StartupActionModelUtil util = jmri.InstanceManager.getDefault(StartupActionModelUtil.class);
+        StartupActionModelUtil util = jmri.InstanceManager.getNullableDefault(StartupActionModelUtil.class);
         ResourceBundle rb = getActionModelResourceBundle();
         if (rb == null || util == null) {
             return;

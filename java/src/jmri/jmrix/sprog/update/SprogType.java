@@ -69,7 +69,7 @@ public class SprogType {
     }
 
 /**
- * @brief Return the multiplier for scaling the current limit from hardware units
+ * Return the multiplier for scaling the current limit from hardware units
  * to physical units (mA).
  * 
  * @return the multiplier for the current limit

@@ -2,9 +2,9 @@ package apps.startup.configurexml;
 
 import apps.Apps;
 import apps.StartupActionsManager;
-import apps.StartupModel;
 import apps.gui3.Apps3;
 import apps.startup.ScriptButtonModel;
+import apps.startup.StartupModel;
 import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -86,11 +86,9 @@ public class ScriptButtonModelXml extends AbstractXmlAdapter {
             }
         }
         if (Apps.buttonSpace() != null) {
-            log.error("Adding button to Apps");
             JButton b = new JButton(new ScriptButtonAction(model));
             Apps.buttonSpace().add(b);
         } else if (Apps3.buttonSpace() != null) {
-            log.error("Adding button to Apps3");
             JButton b = new JButton(new ScriptButtonAction(model));
             Apps3.buttonSpace().add(b);
         }

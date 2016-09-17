@@ -1,4 +1,3 @@
-// SerialTurnout.java
 package jmri.jmrix.tmcc;
 
 import jmri.Turnout;
@@ -19,11 +18,6 @@ import org.slf4j.LoggerFactory;
  * @version	$Revision$
  */
 public class SerialTurnout extends AbstractTurnout {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5339532021030123183L;
 
     public SerialTurnout(int number) {
         super("TT" + number);
@@ -75,5 +69,3 @@ public class SerialTurnout extends AbstractTurnout {
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
 }
-
-/* @(#)SerialTurnout.java */

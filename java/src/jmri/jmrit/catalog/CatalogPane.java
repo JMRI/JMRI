@@ -1,4 +1,3 @@
-// CatalogPane.java
 package jmri.jmrit.catalog;
 
 import java.io.File;
@@ -37,14 +36,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Bob Jacobsen Copyright 2002
- * @version	$Revision$
  */
 public class CatalogPane extends JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1101700212671088828L;
 
     JLabel preview = new JLabel();
 
@@ -92,7 +85,7 @@ public class CatalogPane extends JPanel {
         }
         JPanel previewPanel = new JPanel();
         previewPanel.setLayout(new BoxLayout(previewPanel, BoxLayout.X_AXIS));
-        previewPanel.add(new JLabel("File Preview:   "));
+        previewPanel.add(new JLabel(Bundle.getMessage("FilePreviewLabel")));
         JScrollPane js = new JScrollPane(preview);
         previewPanel.add(js);
         add(previewPanel);

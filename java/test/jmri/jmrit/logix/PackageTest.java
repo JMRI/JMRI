@@ -20,7 +20,7 @@ public class PackageTest extends TestCase {
     static public void main(String[] args) {
         apps.tests.Log4JFixture.initLogging();
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -30,9 +30,13 @@ public class PackageTest extends TestCase {
 //		Something wrong in the xsd files?  maybe using -2-9-6 version?
         suite.addTest(SchemaTest.suite());
         suite.addTest(OBlockTest.suite());
+        suite.addTest(OBlockManagerTest.suite());
         suite.addTest(OPathTest.suite());
         suite.addTest(WarrantTest.suite());
         suite.addTest(LogixActionTest.suite());
+        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.logix.configurexml.PackageTest.class));
+
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(NXFrameTest.suite()); //formerly NXWarrantTest        
             suite.addTest(LearnWarrantTest.suite());            

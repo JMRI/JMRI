@@ -1,7 +1,7 @@
 package jmri.jmrix.grapevine;
 
 import jmri.implementation.AbstractTurnoutTest;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -46,7 +46,7 @@ public class SerialTurnoutTest3 extends AbstractTurnoutTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SerialTurnoutTest3.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

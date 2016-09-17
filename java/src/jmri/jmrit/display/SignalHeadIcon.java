@@ -93,7 +93,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
      * @param pName Used as a system/user name to lookup the SignalHead object
      */
     public void setSignalHead(String pName) {
-        SignalHead mHead = (SignalHead) InstanceManager.signalHeadManagerInstance().getNamedBean(pName);
+        SignalHead mHead = (SignalHead) InstanceManager.getDefault(jmri.SignalHeadManager.class).getNamedBean(pName);
         if (mHead == null) {
             log.warn("did not find a SignalHead named " + pName);
         } else {
@@ -380,7 +380,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     SignalHeadItemPanel _itemPanel;
 
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("SignalHead"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSignalHead"));
         popup.add(new AbstractAction(txt) {
             /**
              *
@@ -395,9 +395,9 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     protected void editItem() {
-        makePalettteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("SignalHead")));
+        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSignalHead")));
         _itemPanel = new SignalHeadItemPanel(_paletteFrame, "SignalHead", getFamily(),
-                PickListModel.signalHeadPickModelInstance(), _editor);
+                PickListModel.signalHeadPickModelInstance(), _editor); //NOI18N
         ActionListener updateAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateItem();
@@ -435,6 +435,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             Iterator<Entry<String, NamedIcon>> it = map1.entrySet().iterator();
             while (it.hasNext()) {
                 Entry<String, NamedIcon> entry = it.next();
+                // TODO I18N use existing NamedBeanBundle keys before calling convertText(entry.getKey())?
                 map2.put(jmri.jmrit.display.palette.ItemPalette.convertText(entry.getKey()), entry.getValue());
             }
             setIcons(map2);
@@ -449,7 +450,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     public boolean setEditIconMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("SignalHead"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSignalHead"));
         popup.add(new AbstractAction(txt) {
             /**
              *
@@ -557,7 +558,6 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
      * change may not be permanent if there is logic controlling the signal
      * head.
      *
-     * @param e
      */
     public void doMouseClicked(java.awt.event.MouseEvent e) {
         if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {

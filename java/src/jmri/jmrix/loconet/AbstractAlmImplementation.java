@@ -29,8 +29,9 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision$
+ * @deprecated as of JMRI 2.13.5 - keep for a bit until DCS240 situation is resolved (note added June 2016)
  */
+@Deprecated
 public abstract class AbstractAlmImplementation implements LocoNetListener {
 
     // constants for the ATASK value
@@ -83,7 +84,6 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
      * If we're waiting for this, it indicates successful end of a write ALM
      * sequence.
      *
-     * @param msg
      */
     void lackMsg(LocoNetMessage msg) {
         if (handleNextLACK) {
@@ -99,7 +99,6 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
      * <P>
      * If we're not an image, reply to all commands
      *
-     * @param msg
      */
     void writeMsg(LocoNetMessage msg) {
         // sort out the ATASK
@@ -234,7 +233,6 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
      * <P>
      * If we're not an image, we just sent this, so we'll ignore it.
      *
-     * @param msg
      */
     void readMsg(LocoNetMessage msg) {
         // sort out the ATASK

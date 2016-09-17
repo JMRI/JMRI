@@ -1,6 +1,6 @@
 package jmri.util.jdom;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -11,7 +11,6 @@ import org.jdom2.Namespace;
  * Tests for the jmri.util.LocaleSelector class.
  *
  * @author	Bob Jacobsen Copyright 2010
- * @version	$Revision$
  */
 public class LocaleSelectorTest extends TestCase {
 
@@ -185,7 +184,7 @@ public class LocaleSelectorTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {LocaleSelectorTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

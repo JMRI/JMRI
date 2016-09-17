@@ -56,9 +56,11 @@
   <version author="Dave Heap" version="17" lastUpdated="20140205"/>
   <!-- ver18 renamed where necessary to match ESU practice and added decoder-matchable Product IDs -->
   <version author="Dave Heap" version="18" lastUpdated="20150427"/>
+  <!-- ver19 added new Product IDs -->
+  <version author="Dave Heap" version="19" lastUpdated="20160519"/>
   <decoder>
     <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
-      <model model="LokSound Select" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554492,33554511,33554527">
+      <model model="LokSound Select" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554492,33554511,33554527,33554569">
         <size length="1.41" width=".51" height=".25" units="inches"/>
         <functionlabels>
           <functionlabel num="0" lockable="true"></functionlabel>
@@ -121,7 +123,7 @@
           <soundlabel num="27">Gear shift sound</soundlabel>
         </soundlabels>
       </model>
-      <model model="LokSound Select OEM" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554533">
+      <model model="LokSound Select OEM" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554533,33554570">
         <size length="1.41" width=".51" height=".25" units="inches"/>
         <functionlabels>
           <functionlabel num="0" lockable="true"></functionlabel>

@@ -39,7 +39,6 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
     /**
      * Locate via user name, then system name if needed.
      *
-     * @param name
      * @return Null if nothing by that name exists
      */
     public Turnout getTurnout(String name) {
@@ -50,7 +49,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
         return ((TurnoutManager) getMgr(i)).newTurnout(systemName, userName);
     }
 
-    public Turnout provideTurnout(String name) {
+    public Turnout provideTurnout(String name) throws IllegalArgumentException {
         return (Turnout) super.provideNamedBean(name);
     }
 

@@ -570,7 +570,7 @@ public class LnSv2MessageContents {
     /**
      * Get the data from a SVs Single Read Reply message.  May also be used to
      * return the effective SV value reported in a SV2 Single Write Reply message.
-     * @return the <D1> value from the SV2 message
+     * @return the {@code <D1>} value from the SV2 message
      */
     public int getSingleReadReportData() {
         return d1;

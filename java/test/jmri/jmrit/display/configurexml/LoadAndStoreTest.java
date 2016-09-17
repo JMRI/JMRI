@@ -29,7 +29,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", LoadAndStoreTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     public static Test suite() {

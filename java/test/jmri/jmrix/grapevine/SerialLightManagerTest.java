@@ -3,10 +3,13 @@ package jmri.jmrix.grapevine;
 import jmri.Light;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 
 /**
  * SerialTurnoutManagerTest.java
@@ -17,6 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTest {
 
+    @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
 
@@ -40,6 +44,7 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTest {
         return "GL" + n;
     }
 
+    @Test
     public void testAsAbstractFactory() {
         // ask for a Light, and check type
         Light o = l.newLight("GL1105", "my name");
@@ -47,7 +52,7 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTest {
         if (log.isDebugEnabled()) {
             log.debug("received light value " + o);
         }
-        assertTrue(null != (SerialLight) o);
+        Assert.assertTrue(null != (SerialLight) o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
@@ -57,8 +62,8 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTest {
             log.debug("by user name:   " + l.getByUserName("my name"));
         }
 
-        assertTrue(null != l.getBySystemName("GL1105"));
-        assertTrue(null != l.getByUserName("my name"));
+        Assert.assertTrue(null != l.getBySystemName("GL1105"));
+        Assert.assertTrue(null != l.getByUserName("my name"));
 
     }
 
@@ -73,26 +78,10 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTest {
         return 1107;
     }
 
-    // from here down is testing infrastructure
-    public SerialLightManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SerialLightManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite(SerialLightManagerTest.class);
-        return suite;
-    }
 
     // The minimal setup for log4J
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 

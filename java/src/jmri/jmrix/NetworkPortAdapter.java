@@ -29,7 +29,6 @@ public interface NetworkPortAdapter extends PortAdapter {
     /**
      * Remember the associated port name
      *
-     * @param s
      */
     public void setPort(String s);
 

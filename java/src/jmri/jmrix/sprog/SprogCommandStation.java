@@ -1,4 +1,3 @@
-/* SprogCommandStation.java */
 package jmri.jmrix.sprog;
 
 import java.util.LinkedList;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * service mode and ops mode, or two ops mode) at the same time, but this code
  * definitely can't.
  * <P>
- * <P>
  * Updated by Andrew Berridge, January 2010 - state management code now safer,
  * uses enum, etc. Amalgamated with Sprog Slot Manager into a single class -
  * reduces code duplication </P>
@@ -40,7 +38,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003 
  * @author      Andrew Crosland (C) 2006 ported to SPROG, 2012, 2016
- * @version $Revision$
  */
 public class SprogCommandStation implements CommandStation, SprogListener, Runnable {
 
@@ -49,28 +46,24 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     protected int currentSlot = 0;
     protected int currentSprogAddress = -1;
 
-    protected static LinkedList<SprogSlot> slots;
+    protected LinkedList<SprogSlot> slots;
     protected Queue<SprogSlot> sendNow;
 
-    static javax.swing.Timer timer = null;
+    javax.swing.Timer timer = null;
 
-    public SprogCommandStation() {
-        // error if more than one constructed?
-        if (self != null) {
-            log.debug("Creating too many SprogCommandStation objects");
-        }
+    private SprogTrafficController tc = null;
+
+    public SprogCommandStation(SprogTrafficController controller) {
         sendNow = new LinkedList<>();
-        SprogTrafficController.instance().addSprogListener(this);
-    }
-
-    /**
-     * Create a default length queue
-     */
-    static {
+        /**
+         * Create a default length queue
+         */
         slots = new LinkedList<>();
         for (int i = 0; i < SprogConstants.MAX_SLOTS; i++) {
             slots.add(new SprogSlot(i));
         }
+        tc = controller;
+        tc.addSprogListener(this);
     }
 
     /**
@@ -94,10 +87,10 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         }
         final SprogMessage m = new SprogMessage(packet);
         if (log.isDebugEnabled()) {
-            log.debug("Sending packet " + m.toString());
+            log.debug("Sending packet " + m.toString(tc.isSIIBootMode()));
         }
         for (int i = 0; i < repeats; i++) {
-            final SprogTrafficController thisTC = SprogTrafficController.instance();
+            final SprogTrafficController thisTC = tc;
 
             Runnable r;
             r = new Runnable() {
@@ -182,7 +175,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             log.info("Changing currentSprogAddress (for pseudo-idle packets) to "+currentSprogAddress+"(L)");
 //            lastSprogAddress = currentSprogAddress;
         }   
-        SprogTrafficController.instance().sendSprogMessage(new SprogMessage("A " + currentSprogAddress + " 0"));
+        tc.sendSprogMessage(new SprogMessage("A " + currentSprogAddress + " 0"));
         for (SprogSlot s : slots) {
             if (s.isActiveAddressMatch(address) && s.isSpeedPacket()) {
                 return s;
@@ -283,10 +276,6 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      * than possibly waiting for a complete traversal of all slots before the
      * new speed is actually sent to the hardware.
      *
-     * @param mode
-     * @param address
-     * @param spd
-     * @param isForward
      */
     public void setSpeed(int mode, DccLocoAddress address, int spd, boolean isForward) {
         SprogSlot s = this.findAddressSpeedPacket(address);
@@ -346,15 +335,12 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      * method to find the existing SlotManager object, if need be creating one
      *
      * @return the SlotManager object
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
-    static public final SprogCommandStation instance() {
-        if (self == null) {
-            log.debug("creating a new SprogSlotManager object");
-            self = new SprogCommandStation();
-        }
-        return self;
+    @Deprecated
+    public final SprogCommandStation instance() {
+        return null;
     }
-    static volatile private SprogCommandStation self = null;
 
     // data members to hold contact with the slot listeners
     final private Vector<SprogSlotListener> slotListeners = new Vector<>();
@@ -397,7 +383,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         log.debug("Slot thread starts");
         running = true;
         // Send a CR to prompt a reply and start things running
-        SprogTrafficController.instance().sendSprogMessage(new SprogMessage(""));
+        tc.sendSprogMessage(new SprogMessage(""));
     }
 
     /**
@@ -443,7 +429,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      */
     @Override
     public void notifyMessage(SprogMessage m) {
-//        log.error("message received unexpectedly: "+m.toString());
+//        log.error("message received unexpectedly: "+m.toString(tc.isSIIBootMode()));
     }
 
     private SprogReply replyForMe;
@@ -468,10 +454,10 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             }
             
             // Is it time to send a status request?
-            if ((statusDue == 40) && SprogSlotMonFrame.instance() != null) {
+            if ((statusDue == 40) && monFrame != null) {
                 // Only ask for status if it's actually being displayed
                 log.debug("Sending status request");
-                SprogTrafficController.instance().sendSprogMessage(SprogMessage.getStatus(), this);
+                tc.sendSprogMessage(SprogMessage.getStatus(), this);
                 statusDue++;
             } else {
                 // Are we waiting for a status reply
@@ -484,11 +470,11 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                     //by checking that "h" was found in the reply
                     if (i > -1) {
                         int milliAmps = (int) ((Integer.decode("0x" + s.substring(i + 7, i + 11))) * 
-                                    SerialDriverAdapter.instance().getSystemConnectionMemo().getSprogType().getCurrentMultiplier());
+                                    tc.getAdapterMemo().getSprogType().getCurrentMultiplier());
                         statusA[0] = milliAmps;
                         String ampString;
                         ampString = Float.toString((float) statusA[0] / 1000);
-                        SprogSlotMonFrame.instance().updateStatus(ampString);
+                        monFrame.updateStatus(ampString);
                         statusDue = 0;
                     }
                 } else {
@@ -510,7 +496,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                         // Send the packet
                         sendPacket(p, SprogConstants.S_REPEATS);
                         log.debug("Packet sent");
-                        if (SprogSlotMonFrame.instance() != null) {
+                        if (monFrame != null) {
                             statusDue++;
                         }
                     } else {
@@ -554,7 +540,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     SprogSystemConnectionMemo adaptermemo;
 
     /**
-     * @brief get user name
+     * Get user name
      * 
      * @return the user name
      */
@@ -567,7 +553,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
 
     /**
-     * @brief get system prefix
+     * Get system prefix
      * 
      * @return the system prefix
      */
@@ -582,21 +568,21 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     /**
      * Internal routine to handle a timeout
      */
-    synchronized static protected void timeout() {
+    synchronized protected void timeout() {
         Runnable r = () -> {
             log.debug("Send CR due to timeout");
             // Send a CR to prompt a reply from hardware and keep things running
-            SprogTrafficController.instance().sendSprogMessage(new SprogMessage(""));
+            tc.sendSprogMessage(new SprogMessage(""));
         };
         javax.swing.SwingUtilities.invokeLater(r);
     }
 
     /**
-     * Internal routine to handle timer starts & restarts
-    * 
+     * Internal routine to handle timer starts {@literal &} restarts
+     * 
      * @param delay timer delay
      */
-    static protected void restartTimer(int delay) {
+    protected void restartTimer(int delay) {
         log.debug("Restart timer");
         if (timer == null) {
             timer = new javax.swing.Timer(delay, (java.awt.event.ActionEvent e) -> {
@@ -609,7 +595,25 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         timer.start();
     }
 
+
+    /**
+     * Set the slot SprogSlotMonFrame associated with this Command Station
+     * There can currently be only one SprogSlotMonFrame.
+     */
+    public void setSprogSlotMonFrame(SprogSlotMonFrame s) {
+       monFrame = s;
+    }
+
+    /**
+     * Get the slot SprogSlotMonFrame associated with this Command Station
+     * There can currently be only one SprogSlotMonFrame.
+     */
+    public SprogSlotMonFrame getSprogSlotMonFrame() {
+       return monFrame;
+    }
+
+    private SprogSlotMonFrame monFrame = null;
+
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(SprogCommandStation.class.getName());
 }
-/* @(#)SprogCommandStation.java */

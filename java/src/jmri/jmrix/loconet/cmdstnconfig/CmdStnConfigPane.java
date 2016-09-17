@@ -14,7 +14,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LocoNetBundle;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -44,7 +43,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Alex Shepherd Copyright (C) 2004
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version	$Revision$
  */
 public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
 
@@ -94,7 +92,7 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
                 uName = "";
             }
         }
-        return uName + LocoNetBundle.bundle().getString("MenuItemCmdStnConfig");
+        return uName + Bundle.getMessage("MenuItemCmdStnConfig");
     }
 
     public void initComponents(LocoNetSystemConnectionMemo memo) {

@@ -1,4 +1,3 @@
-// VirtualSignalMast.javaa
 package jmri.implementation;
 
 import org.slf4j.Logger;
@@ -15,12 +14,11 @@ import org.slf4j.LoggerFactory;
  * <li>IF$vsm - defines signal masts of this type
  * <li>basic - name of the signaling system
  * <li>one-searchlight - name of the particular aspect map
- * <li>($0001) - small ordinal number for telling various virtual signal heads
+ * <li>($0001) - small ordinal number for telling various virtual signal masts
  * apart
  * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 19027 $
  */
 public class VirtualSignalMast extends AbstractSignalMast {
 
@@ -84,5 +82,3 @@ public class VirtualSignalMast extends AbstractSignalMast {
 
     private final static Logger log = LoggerFactory.getLogger(VirtualSignalMast.class.getName());
 }
-
-/* @(#)VirtualSignalMast.java */

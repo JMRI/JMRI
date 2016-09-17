@@ -1,4 +1,3 @@
-// SerialSensor.java
 package jmri.jmrix.secsi;
 
 import jmri.implementation.AbstractSensor;

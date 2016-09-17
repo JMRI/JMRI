@@ -1,4 +1,3 @@
-// SE8cSignalHead.java
 package jmri.implementation;
 
 import jmri.InstanceManager;
@@ -32,7 +31,6 @@ import org.slf4j.LoggerFactory;
  * Bob Jacobsen.
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2010, 2014
- * @version	$Revision$
  */
 public class SE8cSignalHead extends DefaultSignalHead {
 
@@ -131,7 +129,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
      * Create a handle from a raw number. Static, so can be referenced before
      * ctor complete.
      */
-    static NamedBeanHandle<Turnout> makeHandle(int i) {
+    static NamedBeanHandle<Turnout> makeHandle(int i) throws IllegalArgumentException {
         String number = "" + i;
         return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(
                 number,
@@ -260,5 +258,3 @@ public class SE8cSignalHead extends DefaultSignalHead {
 
     private final static Logger log = LoggerFactory.getLogger(SE8cSignalHead.class.getName());
 }
-
-/* @(#)SE8cSignalHead.java */

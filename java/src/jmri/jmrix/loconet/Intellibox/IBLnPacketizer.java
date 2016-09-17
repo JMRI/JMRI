@@ -1,4 +1,3 @@
-// IBLnPacketizer.java
 package jmri.jmrix.loconet.Intellibox;
 
 import java.util.NoSuchElementException;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <P>
  * <UL>
  * <LI> RcvHandler - at highest available priority
  * <LI> XmtHandler - down one, which is assumed to be above the GUI
@@ -32,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2010
- * @version $Revision$
  *
  */
 public class IBLnPacketizer extends LnPacketizer {
@@ -303,5 +300,3 @@ public class IBLnPacketizer extends LnPacketizer {
 
     private final static Logger log = LoggerFactory.getLogger(IBLnPacketizer.class.getName());
 }
-
-/* @(#)LnPacketizer.java */

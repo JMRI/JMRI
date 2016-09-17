@@ -1,4 +1,3 @@
-// SimDriverAdapter.java
 package jmri.jmrix.cmri.serial.sim;
 
 import java.io.DataInputStream;
@@ -6,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.InputStream;
 import jmri.jmrix.cmri.serial.SerialSensorManager;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * connection.
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2008, 2011
- * @version	$Revision$
  */
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
         justification = "Access to 'self' OK until multiple instance pattern installed")
@@ -46,7 +45,7 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
 
     public void configure() {
         // install a traffic controller that doesn't time out
-        new SerialTrafficController() {
+        SerialTrafficController tc = new SerialTrafficController() {
             // timeout doesn't do anything
             @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
                     justification = "only until multi-connect update done")
@@ -60,15 +59,10 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
         };
 
         // connect to the traffic controller
-        SerialTrafficController.instance().connectPort(this);
+        tc.connectPort(this);
+        ((CMRISystemConnectionMemo)getSystemConnectionMemo()).setTrafficController(tc);
+        ((CMRISystemConnectionMemo)getSystemConnectionMemo()).configureManagers();
 
-        jmri.InstanceManager.setTurnoutManager(jmri.jmrix.cmri.serial.SerialTurnoutManager.instance());
-        jmri.InstanceManager.setLightManager(jmri.jmrix.cmri.serial.SerialLightManager.instance());
-
-        SerialSensorManager s;
-        jmri.InstanceManager.setSensorManager(s = jmri.jmrix.cmri.serial.SerialSensorManager.instance());
-        SerialTrafficController.instance().setSensorManager(s);
-        jmri.jmrix.cmri.serial.ActiveFlag.setActive();
     }
 
     // base class methods for the SerialPortController interface
@@ -119,6 +113,10 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     private boolean opened = false;
     InputStream serialStream = null;
 
+    /**
+     * @deprecated JMRI Since 4.5.1 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter instance() {
         if (mInstance == null) {
             mInstance = new SimDriverAdapter();

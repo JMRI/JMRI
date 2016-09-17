@@ -14,17 +14,18 @@ import org.slf4j.LoggerFactory;
  * Implementation of the Hardware Fast Clock for Mrc
  * <P>
  * This module is based on the NCE version.
- * <P>
+ * <BR>
  * <hr>
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * </P>
  *
  * @author Ken Cameron Copyright (C) 2014
  * @author Dave Duchamp Copyright (C) 2007
@@ -40,10 +41,10 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         this.tc = tc;
         this.prefix = prefix;
 
-        // Create a Timebase listener for the Minute change events
-        internalClock = InstanceManager.timebaseInstance();
+        // Create a timebase listener for the Minute change events
+        internalClock = InstanceManager.getNullableDefault(jmri.Timebase.class);
         if (internalClock == null) {
-            log.error(MrcClockBundle.getMessage("LogMrcNoInternalTimebaseInstanceError")); //IN18N
+            log.error("No Internal Timebase Instance"); //IN18N
             return;
         }
         minuteChangeListener = new java.beans.PropertyChangeListener() {
@@ -140,7 +141,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         if (DEBUG_SHOW_PUBLIC_CALLS) {
             log.debug("getHardwareClockName"); //IN18N
         }
-        return (MrcClockBundle.getMessage("MrcClockName")); //IN18N
+        return (Bundle.getMessage("MrcClockName")); //IN18N
     }
 
     /**
@@ -172,7 +173,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         }
         int newRatio = (int) newRate;
         if (newRatio < 1 || newRatio > 60) {
-            log.error(MrcClockBundle.getMessage("LogMrcClockRatioRangeError")); //IN18N
+            log.error("Mrc clock ratio out of range:"); //IN18N
         } else {
             issueClockRatio(newRatio);
         }
@@ -271,7 +272,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
      */
     public void dispose() {
 
-        // Remove ourselves from the Timebase minute rollover event
+        // Remove ourselves from the timebase minute rollover event
         if (minuteChangeListener != null) {
             internalClock.removeMinuteChangeListener(minuteChangeListener);
             minuteChangeListener = null;

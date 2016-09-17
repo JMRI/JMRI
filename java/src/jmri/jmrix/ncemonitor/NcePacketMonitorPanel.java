@@ -38,11 +38,6 @@ import org.slf4j.LoggerFactory;
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "serialStream is access from separate thread, and this class isn't used much")
 public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements NcePanelInterface {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8995209813681779828L;
-
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ncemonitor.NcePacketMonitorBundle");
 
     Vector<String> portNameVector = null;

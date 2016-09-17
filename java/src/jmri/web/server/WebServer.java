@@ -5,9 +5,10 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Properties;
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
-import jmri.jmris.json.JSON;
+import jmri.server.json.JSON;
 import jmri.util.FileUtil;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.web.servlet.directory.DirectoryHandler;
@@ -31,7 +32,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2005, 2006
  * @author Randall Wood Copyright 2012, 2016
- * @version $Revision$
  */
 public final class WebServer implements LifeCycle.Listener {
 
@@ -41,7 +41,7 @@ public final class WebServer implements LifeCycle.Listener {
     private ShutDownTask shutDownTask = null;
     private final static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
 
-    protected WebServer() {
+    public WebServer() {
         this(WebServerPreferences.getDefault());
     }
 
@@ -50,10 +50,9 @@ public final class WebServer implements LifeCycle.Listener {
     }
 
     public static WebServer getDefault() {
-        if (InstanceManager.getDefault(WebServer.class) == null) {
-            InstanceManager.setDefault(WebServer.class, new WebServer());
-        }
-        return InstanceManager.getDefault(WebServer.class);
+        return InstanceManager.getOptionalDefault(WebServer.class).orElseGet(() -> {
+            return InstanceManager.setDefault(WebServer.class, new WebServer());
+        });
     }
 
     public void start() {
@@ -149,7 +148,7 @@ public final class WebServer implements LifeCycle.Listener {
      * is actually sane. Note that this refuses to return portable paths that
      * are outside of program: and preference:
      *
-     * @param path
+     * @param path the JMRI portable path
      * @return The servable URI or null
      * @see jmri.util.FileUtil#getPortableFilename(java.io.File)
      */
@@ -170,9 +169,9 @@ public final class WebServer implements LifeCycle.Listener {
     @Override
     public void lifeCycleStarting(LifeCycle lc) {
         shutDownTask = new ServerShutDownTask(this);
-        if (InstanceManager.shutDownManagerInstance() != null) {
-            InstanceManager.shutDownManagerInstance().register(shutDownTask);
-        }
+        InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(manager -> {
+            manager.register(shutDownTask);
+        });
         log.info("Starting Web Server on port " + preferences.getPort());
     }
 
@@ -202,9 +201,9 @@ public final class WebServer implements LifeCycle.Listener {
 
     @Override
     public void lifeCycleStopped(LifeCycle lc) {
-        if (InstanceManager.shutDownManagerInstance() != null) {
-            InstanceManager.shutDownManagerInstance().deregister(shutDownTask);
-        }
+        InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(manager -> {
+            manager.deregister(shutDownTask);
+        });
         log.debug("Web Server stopped");
     }
 
@@ -243,21 +242,21 @@ public final class WebServer implements LifeCycle.Listener {
                 try {
                     server.stop();
                 } catch (Exception ex) {
-                    log.warn("Error shutting down WebServer: " + ex);
-                    if (log.isDebugEnabled()) {
-                        log.debug("Details follow: ", ex);
-                    }
+                    // Error without stack trace
+                    log.warn("Error shutting down WebServer: {}", ex);
+                    // Full stack trace
+                    log.debug("Details follow: ", ex);
                 }
                 this.isComplete = true;
             }).start();
             return true;
         }
-        
+
         @Override
         public boolean isParallel() {
             return true;
         }
-        
+
         @Override
         public boolean isComplete() {
             return this.isComplete;

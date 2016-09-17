@@ -7,11 +7,12 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * {@Link java.util.Properties} implementation that enumerates properties sorted
+ * {@link java.util.Properties} implementation that enumerates properties sorted
  * by key.
- * 
- * See http://stackoverflow.com/a/3253071/176160
- * 
+ *
+ * See
+ * <a href="http://stackoverflow.com/a/3253071/176160">http://stackoverflow.com/a/3253071/176160</a>
+ *
  * @author Randall Wood
  */
 public class OrderedProperties extends Properties {

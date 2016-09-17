@@ -1,11 +1,11 @@
 package jmri.jmrit.vsdecoder;
 
 import java.beans.PropertyChangeEvent;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.jdom2.Element;
+import org.junit.Assert;
 
 /**
  * Tests for the FloatTrigger class
@@ -28,7 +28,7 @@ public class FloatTriggerTest extends TestCase {
                 uut.getTargetAction());
         Assert.assertEquals("trigger type", Trigger.TriggerType.FLOAT,
                 uut.getTriggerType());
-        Assert.assertEquals("match value", 1.5f, uut.getMatchValue());
+        Assert.assertEquals("match value", 1.5f, uut.getMatchValue(), 0.0);
     }
 
     public void TestSetGet() {
@@ -62,7 +62,7 @@ public class FloatTriggerTest extends TestCase {
         uut.setCallback(tl);
         Assert.assertSame("set callback", tl, uut.getCallback());
         uut.setMatchValue(2.0f);
-        Assert.assertEquals("match value", 2.0f, uut.getMatchValue());
+        Assert.assertEquals("match value", 2.0f, uut.getMatchValue(), 0.0);
     }
 
     public void testPropertyChange() {
@@ -134,7 +134,7 @@ public class FloatTriggerTest extends TestCase {
         Assert.assertEquals("xml event name", "test_event", uut.getEventName());
         Assert.assertEquals("xml target name", "test_target", uut.getTargetName());
         Assert.assertEquals("xml compare type", Trigger.CompareType.GT, uut.getCompareType());
-        Assert.assertEquals("xml match value", 0.5f, uut.getMatchValue());
+        Assert.assertEquals("xml match value", 0.5f, uut.getMatchValue(), 0.0);
         Assert.assertEquals("xml action", Trigger.TargetAction.PLAY, uut.getTargetAction());
 
     }
@@ -147,7 +147,7 @@ public class FloatTriggerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {FloatTriggerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

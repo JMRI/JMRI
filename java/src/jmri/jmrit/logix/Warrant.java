@@ -347,7 +347,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if (id == null || id.trim().length() == 0) {
             return false;
         }
-        _train = Roster.instance().entryFromTitle(id);
+        _train = Roster.getDefault().entryFromTitle(id);
         if (_train != null) {
             _dccAddress = _train.getDccLocoAddress();
         } else {
@@ -367,10 +367,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     /**
      * Sets dccAddress and fetches RosterEntry
      * @param id address as a String
-     * @return
      */
     public boolean setDccAddress(String id) {
-        _train = Roster.instance().entryFromTitle(id);
+        _train = Roster.getDefault().entryFromTitle(id);
         if (_train == null) {
             int index = id.indexOf('(');
             String numId;
@@ -380,7 +379,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 numId = id;
             }
             try {
-                List<RosterEntry> l = Roster.instance().matchingList(null, null, numId, null, null, null, null);
+                List<RosterEntry> l = Roster.getDefault().matchingList(null, null, numId, null, null, null, null);
                 if (l.size() > 0) {
                     _train = l.get(0);
                     if (_trainId == null) {
@@ -747,7 +746,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             abortWarrant(msg);
             return msg;
         }
-        jmri.ThrottleManager tm = InstanceManager.throttleManagerInstance();
+        jmri.ThrottleManager tm = InstanceManager.getNullableDefault(jmri.ThrottleManager.class);
         if (tm==null) {
             msg = Bundle.getMessage("noThrottle");
         } else {
@@ -1013,7 +1012,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * turnouts
      * @param orders - BlockOrder list of route. If null, use permanent warrant
      * copy.
-     * @return message of block that failed allocation to this warrant or null
+     * @return message of block that failed allocation to this warrant or null if success
      */
     public String setRoute(int delay, List<BlockOrder> orders) {
         // we assume our train is occupying the first block
@@ -1036,16 +1035,16 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             if ((block.getState() & OBlock.OCCUPIED) != 0) {
                 _message = Bundle.getMessage("BlockRougeOccupied", block.getDisplayName());
                 _routeSet = false;
-                return null;
+                return null; // this seems to be an error return, not a success
             }
             _message = bo.setPath(this);
             if (_message != null) {
                 _routeSet = false;
-                return null;
+                return null;  // this seems to be an error return, not a success
             }
         }
 //        firePropertyChange("setRoute", Boolean.valueOf(false), Boolean.valueOf(_routeSet));
-        if (_message != null) {
+        if (_message != null) {  // _message is always null here
             log.info("Paths for route of warrant \"" + getDisplayName() + "\" not set at " + _message);
         }
         return null;
@@ -1141,7 +1140,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                             }
                             tempSave.setValue(_trainName);
                             tempSave.setState(tempSave.getState() | OBlock.RUNNING);
-                            tempSave = null;
                         }
                     } else {
                         // starting block allocated to another warrant for the SAME engine
@@ -1180,7 +1178,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * Called from propertyChange()
      * For the start block a return of true will allow warrant to acquire a throttle and
      * launch an engineer.  return ignored for all other blocks
-     * @return
      */
     private boolean checkStoppingBlock() {
         boolean ret = false;
@@ -1263,7 +1260,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * Stopping block only used in MODE_RUN _stoppingBlock is an occupied OBlock
      * preventing the train from continuing the route
      *
-     * @param block
      */
     protected void setStoppingBlock(OBlock block) {
         if (_runMode != MODE_RUN) {

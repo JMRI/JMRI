@@ -1,6 +1,6 @@
 package jmri.jmrix.lenz;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.TestCase;
 
 /**
@@ -130,7 +130,7 @@ public class XNetTrafficRouterTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", XNetTrafficRouterTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // The minimal setup for log4J

@@ -1,18 +1,20 @@
-//JmriSRCPPowerServerTest.java
 package jmri.jmris.srcp;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+
 
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPPowerServer class
  *
- * @author Paul Bender
+ * @author Paul Bender Copyright (C) 2012,2016
  */
-public class JmriSRCPPowerServerTest extends TestCase {
+public class JmriSRCPPowerServerTest{
 
+    @Test
     public void testCtor() {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -28,32 +30,14 @@ public class JmriSRCPPowerServerTest extends TestCase {
         Assert.assertNotNull(a);
     }
 
-    // from here down is testing infrastructure
-    public JmriSRCPPowerServerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SRCPTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(jmri.jmris.srcp.JmriSRCPPowerServerTest.class);
-
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
-        super.setUp();
     }
 
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         apps.tests.Log4JFixture.tearDown();
     }
 

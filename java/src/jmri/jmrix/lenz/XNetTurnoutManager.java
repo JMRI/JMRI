@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author	Paul Bender Copyright (C) 2003-2010
- * @navassoc - - 1..1 jmri.jmrix.lenz.XNetProgrammer
+ * @navassoc 1 - 1 jmri.jmrix.lenz.XNetProgrammer
  */
 public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager implements XNetListener {
 
@@ -134,5 +134,3 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     private final static Logger log = LoggerFactory.getLogger(XNetTurnoutManager.class.getName());
 
 }
-
-/* @(#)XNetTurnoutManager.java */

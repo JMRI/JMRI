@@ -4,9 +4,9 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.util.List;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations Cars GUI class
@@ -147,6 +147,10 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         CarManager cManager = CarManager.instance();
         // remove previous cars
         cManager.dispose();
+        // add Owner1 and Owner2
+        CarOwners co = CarOwners.instance();
+        co.addName("Owner1");
+        co.addName("Owner2");
         // add 5 cars to table
         Car c1 = cManager.newCar("NH", "1");
         c1.setBuilt("2009");
@@ -232,7 +236,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", CarEditFrameTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

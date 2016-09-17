@@ -18,10 +18,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PrintRoutesAction extends PrintRouteAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6083754676592916495L;
     private static final char FORM_FEED = '\f';
     private final static Logger log = LoggerFactory.getLogger(PrintRoutesAction.class);
 

@@ -2,11 +2,13 @@ package jmri.jmrix.dccpp;
 
 import jmri.Light;
 import jmri.LightManager;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 
 /**
  * Tests for the jmri.jmrix.dccpp.DCCppLightManager class.
@@ -22,6 +24,7 @@ public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTest {
         return "DCCPPL" + i;
     }
 
+    @Test
     public void testAsAbstractFactory() {
         // create and register the manager object
         DCCppLightManager xlm = new DCCppLightManager(xnis, "DCCPP");
@@ -50,24 +53,9 @@ public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTest {
     }
 
     // from here down is testing infrastructure
-    public DCCppLightManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", DCCppLightManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DCCppLightManagerTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
         // prepare an interface, register
         xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
@@ -77,8 +65,8 @@ public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTest {
 
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 

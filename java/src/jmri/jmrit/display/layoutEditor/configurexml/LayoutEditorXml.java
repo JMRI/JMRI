@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
@@ -23,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision$
  */
 public class LayoutEditorXml extends AbstractXmlAdapter {
 
@@ -42,7 +42,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         LayoutEditor p = (LayoutEditor) o;
         Element panel = new Element("LayoutEditor");
 
-        panel.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml");
+        panel.setAttribute("class", getClass().getName());
         panel.setAttribute("name", p.getLayoutName());
         panel.setAttribute("x", "" + p.getUpperLeftX());
         panel.setAttribute("y", "" + p.getUpperLeftY());
@@ -239,8 +239,6 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
      * JFrame
      *
      * @param shared Top level Element to unpack.
-     * @param perNode
-     * @return 
      */
     @Override
     public boolean load(Element shared, Element perNode) {
@@ -595,12 +593,17 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.resetDirty();
 
         // register the resulting panel for later configuration
-        InstanceManager.configureManagerInstance().registerUser(panel);
-        if (jmri.InstanceManager.transitManagerInstance().getSystemNameList().size() > 0) {
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerUser(panel);
+        }
+        //open Dispatcher frame if any Transits are defined, and open Dispatcher flag set on
+        if (jmri.InstanceManager.getDefault(jmri.TransitManager.class).getSystemNameList().size() > 0) {
             if (shared.getAttribute("openDispatcher") != null) {
                 if (shared.getAttribute("openDispatcher").getValue().equals("yes")) {
                     panel.setOpenDispatcherOnLoad(true);
-                    jmri.jmrit.dispatcher.DispatcherFrame.instance();
+                    jmri.jmrit.dispatcher.DispatcherFrame df = jmri.jmrit.dispatcher.DispatcherFrame.instance();
+                    df.loadAtStartup();
                 } else {
                     panel.setOpenDispatcherOnLoad(false);
                 }

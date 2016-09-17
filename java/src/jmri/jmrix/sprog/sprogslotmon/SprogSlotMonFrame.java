@@ -1,4 +1,3 @@
-// SprogSlotMonFrame.java
 package jmri.jmrix.sprog.sprogslotmon;
 
 import java.awt.Dimension;
@@ -14,9 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import jmri.jmrix.sprog.SprogCommandStation;
+import javax.swing.table.TableRowSorter;
 import jmri.jmrix.sprog.SprogConstants;
-import jmri.util.JTableUtil;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,16 +23,10 @@ import org.slf4j.LoggerFactory;
  * Frame providing a command station slot manager.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2001 Andrew Crosland (C) 2006 ported to
- * SPROG 2008 Use JmriJframe
- * @version	$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001 
+ * @author  Andrew Crosland (C) 2006 ported to SPROG 2008 Use JmriJframe
  */
 public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6600658860279143115L;
 
     /**
      * Controls whether not-in-use slots are shown
@@ -41,18 +34,22 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
     javax.swing.JCheckBox showAllCheckBox = new javax.swing.JCheckBox();
 
     JButton estopAllButton = new JButton("estop all");
-    SprogSlotMonDataModel slotModel = new SprogSlotMonDataModel(SprogConstants.MAX_SLOTS, 8);
+    SprogSlotMonDataModel slotModel = null;
+
     JTable slotTable;
     JScrollPane slotScroll;
 
     JTextArea status = new JTextArea("Track Current: ---A");
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
-    // Ignore FindBugs warnings as there can only be one instance at present
-    public SprogSlotMonFrame() {
-        super();
+    SprogSystemConnectionMemo _memo = null;
 
-        slotTable = JTableUtil.sortableDataModel(slotModel);
+    public SprogSlotMonFrame(SprogSystemConnectionMemo memo) {
+        super();
+        _memo = memo;
+        slotModel = new SprogSlotMonDataModel(SprogConstants.MAX_SLOTS, 8,_memo);
+
+        slotTable = new JTable(slotModel);
+        slotTable.setRowSorter(new TableRowSorter<>(slotModel));
         slotScroll = new JScrollPane(slotTable);
 
         // configure items for GUI
@@ -75,13 +72,13 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
         estopAllButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 log.debug("Estop all button pressed");
-                SprogCommandStation.instance().estopAll();
+                _memo.getCommandStation().estopAll();
             }
         });
 
         estopAllButton.addMouseListener(new MouseListener() {
             public void mousePressed(MouseEvent e) {
-                SprogCommandStation.instance().estopAll();
+                _memo.getCommandStation().estopAll();
             }
 
             public void mouseExited(MouseEvent e) {
@@ -119,7 +116,9 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
         pane1.setMaximumSize(pane1.getSize());
         pack();
 
-        self = this;
+        // register with the command station.
+        _memo.getCommandStation().setSprogSlotMonFrame(this);
+
     }
 
     public void initComponents() {
@@ -129,11 +128,12 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
 
     /**
      * method to find the existing SprogSlotMonFrame object
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public final SprogSlotMonFrame instance() {
-        return self;
+        return null;
     }
-    static private SprogSlotMonFrame self = null;
 
     public void update() {
         slotModel.fireTableDataChanged();
@@ -164,6 +164,8 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
     }
 
     public void dispose() {
+        // deregister with the command station.
+        _memo.getCommandStation().setSprogSlotMonFrame(null);
         slotModel.dispose();
         slotModel = null;
         slotTable = null;

@@ -1,4 +1,3 @@
-// CarEditFrame.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.Dimension;
@@ -33,7 +32,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of car
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2014
- * @version $Revision: 29493 $
  */
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
     
@@ -110,6 +108,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         super(Bundle.getMessage("TitleCarAdd"));
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Checks for null")
     @Override
     public void initComponents() {
         // the following code sets the frame's initial state
@@ -287,14 +286,16 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
             addItem(pValue, valueTextField, 1, 0);
             pOptional.add(pValue);
         }
-
+    
         // row 22
-        if (Setup.isRfidEnabled()) {
+        if (Setup.isRfidEnabled() && jmri.InstanceManager.getNullableDefault(jmri.IdTagManager.class) != null) {
             JPanel pRfid = new JPanel();
             pRfid.setLayout(new GridBagLayout());
             pRfid.setBorder(BorderFactory.createTitledBorder(Setup.getRfidLabel()));
             addItem(pRfid, rfidComboBox, 1, 0);
             jmri.InstanceManager.getDefault(jmri.IdTagManager.class).getNamedBeanList().forEach((tag) -> rfidComboBox.addItem((jmri.IdTag) tag));
+            rfidComboBox.insertItemAt((jmri.IdTag)null,0); // must have a blank entry, for no ID tag, and make it the default.
+            rfidComboBox.setSelectedIndex(0);
             pOptional.add(pRfid);
         }
 
@@ -347,7 +348,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 
         // build menu
         // JMenuBar menuBar = new JMenuBar();
-        // JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        // JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         // menuBar.add(toolMenu);
         // setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_CarsEdit", true); // NOI18N
@@ -496,7 +497,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
             updateTrackLocationBox();
         }
         if (ae.getSource() == passengerCheckBox) {
-            pBlocking.setVisible(passengerCheckBox.isSelected());
+            pBlocking.setVisible(passengerCheckBox.isSelected() || (_car != null &&_car.getKernel() != null));
         }
     }
 
@@ -789,7 +790,6 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
                 }
                 _car.setBlocking(_car.getKernel().getSize());
             }
-            pBlocking.setVisible(!kernelComboBox.getSelectedItem().equals(CarManager.NONE));
         }
         if (loadComboBox.getSelectedItem() != null && !_car.getLoadName().equals(loadComboBox.getSelectedItem())) {
             _car.setLoadName((String) loadComboBox.getSelectedItem());
@@ -812,10 +812,15 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         }
         _car.setComment(commentTextField.getText());
         _car.setValue(valueTextField.getText());
-        _car.setIdTag((IdTag) rfidComboBox.getSelectedItem());
+        // save the IdTag for this car
+        IdTag idTag = (IdTag) rfidComboBox.getSelectedItem();
+        if (idTag != null) {
+            _car.setRfid(idTag.toString());
+        }
         autoTrackCheckBox.setEnabled(true);
 
         // update blocking
+        pBlocking.setVisible(passengerCheckBox.isSelected() || _car.getKernel() != null);
         blockingTextField.setText(Integer.toString(_car.getBlocking()));
 
         if (locationBox.getSelectedItem() != null && trackLocationBox.getSelectedItem() == null) {

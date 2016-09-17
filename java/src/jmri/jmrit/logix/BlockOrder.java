@@ -25,7 +25,6 @@ public class BlockOrder {
     /**
      * Create BlockOrder.
      *
-     * @param block
      * @param path  MUST be a path in the blocK
      * @param entry MUST be a name of a Portal to the path
      * @param exit  MUST be a name of a Portal to the path

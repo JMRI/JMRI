@@ -180,8 +180,6 @@ public class SpecificMessage extends SerialMessage {
     /**
      * create an Insteon message with the X10 address
      *
-     * @param housecode
-     * @param devicecode
      * @return message
      */
     static public SpecificMessage getX10Address(int housecode, int devicecode) {
@@ -197,9 +195,6 @@ public class SpecificMessage extends SerialMessage {
     /**
      * create an Insteon message with the X10 address and dim steps
      *
-     * @param housecode
-     * @param devicecode
-     * @param dimcode
      * @return message
      */
     static public SpecificMessage getX10AddressDim(int housecode, int devicecode, int dimcode) {

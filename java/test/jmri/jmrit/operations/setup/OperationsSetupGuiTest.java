@@ -1,12 +1,12 @@
-//OperationsSetupGuiTest.java
+// OperationsSetupGuiTest.java
 package jmri.jmrit.operations.setup;
 
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Operations Setup GUI class
@@ -21,9 +21,10 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();
         OperationsSetupPanel p = (OperationsSetupPanel) f.getContentPane();
-        
+
         // first confirm that setup has all directions selected
-        Assert.assertEquals("All directions selected", Setup.EAST + Setup.WEST + Setup.NORTH + Setup.SOUTH, Setup.getTrainDirection());
+        Assert.assertEquals("All directions selected", Setup.EAST + Setup.WEST + Setup.NORTH + Setup.SOUTH,
+                Setup.getTrainDirection());
 
         // both east/west and north/south checkboxes should be set
         Assert.assertTrue("North selected", p.northCheckBox.isSelected());
@@ -151,7 +152,7 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
         getHelper().enterClickAndLeave(new MouseEventData(this, p.localYardCheckBox));
         Assert.assertTrue("yard", p.localYardCheckBox.isSelected());
 
-//        getHelper().enterClickAndLeave(new MouseEventData(this, p.rfidCheckBox));
+        //        getHelper().enterClickAndLeave(new MouseEventData(this, p.rfidCheckBox));
         // use doClick() in case the checkbox isn't visible due to scrollbars.
         p.rfidCheckBox.doClick();
         Assert.assertTrue("rfid", p.rfidCheckBox.isSelected());
@@ -188,11 +189,37 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
         f.dispose();
     }
 
+    public void testPrintOptionFrame() {
+        PrintOptionFrame f = new PrintOptionFrame();
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
+        f.initComponents();
+        PrintOptionPanel p = (PrintOptionPanel) f.getContentPane();
+
+        // confirm defaults
+        Assert.assertFalse(p.tabFormatCheckBox.isSelected());
+        Assert.assertTrue(p.formatSwitchListCheckBox.isSelected());
+        Assert.assertFalse(p.editManifestCheckBox.isSelected());
+        Assert.assertFalse(p.printLocCommentsCheckBox.isSelected());
+        Assert.assertFalse(p.printRouteCommentsCheckBox.isSelected());
+        Assert.assertFalse(p.printLoadsEmptiesCheckBox.isSelected());
+        Assert.assertFalse(p.printTimetableNameCheckBox.isSelected());
+        Assert.assertTrue(p.printValidCheckBox.isSelected());
+        Assert.assertFalse(p.sortByTrackCheckBox.isSelected());
+        Assert.assertFalse(p.printHeadersCheckBox.isSelected());
+        Assert.assertFalse(p.truncateCheckBox.isSelected());
+        Assert.assertFalse(p.departureTimeCheckBox.isSelected());
+        Assert.assertTrue(p.trackSummaryCheckBox.isSelected());
+        Assert.assertTrue(p.routeLocationCheckBox.isSelected());
+
+        // done
+        f.dispose();
+    }
+
     // Ensure minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        
+
         new Setup();
     }
 
@@ -203,13 +230,12 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", OperationsSetupGuiTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(OperationsSetupGuiTest.class);
-        suite.addTestSuite(OperationsBackupGuiTest.class);
         return suite;
     }
 

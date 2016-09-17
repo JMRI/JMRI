@@ -189,9 +189,6 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
 
         // start operation
         packets.startThreads();
-
-        jmri.jmrix.zimo.ActiveFlag.setActive();
-
     }
 
 // base class methods for the ZimoPortController interface
@@ -265,6 +262,10 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
     private boolean opened = false;
     InputStream serialStream = null;
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public Mx1Adapter instance() {
         if (mInstance == null) {
             mInstance = new Mx1Adapter();

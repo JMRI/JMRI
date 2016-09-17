@@ -101,8 +101,10 @@ public abstract class AbstractProgrammer implements Programmer {
         readCV(Integer.parseInt(CV), p);
     }
 
-    public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        confirmCV(Integer.parseInt(CV), val, p);
+    @Override
+    @SuppressWarnings("deprecation") // parent Programmer method deprecated, will remove at same time
+    public final void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
+        confirmCV(""+CV, val, p);
     }
 
     /**
@@ -211,7 +213,7 @@ public abstract class AbstractProgrammer implements Programmer {
     }
 
     /**
-     * Internal routine to handle timer starts & restarts
+     * Internal routine to handle timer starts {@literal &} restarts
      */
     protected synchronized void restartTimer(int delay) {
         if (log.isDebugEnabled()) {

@@ -1,12 +1,3 @@
-/**
- * SerialPacketGenAction.java
- *
- * Description:	Swing action to create and register a SerialPacketGenFrame
- * object
- *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @version
- */
 package jmri.jmrix.tmcc.packetgen;
 
 import java.awt.event.ActionEvent;
@@ -14,12 +5,13 @@ import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Swing action to create and register a SerialPacketGenFrame
+ * object
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001
+ */
 public class SerialPacketGenAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3962355656524638749L;
 
     public SerialPacketGenAction(String s) {
         super(s);
@@ -40,6 +32,3 @@ public class SerialPacketGenAction extends AbstractAction {
     }
     private final static Logger log = LoggerFactory.getLogger(SerialPacketGenAction.class.getName());
 }
-
-
-/* @(#)SerialPacketGenAction.java */

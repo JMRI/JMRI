@@ -19,7 +19,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -28,7 +28,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.roster.BundleTest.suite());
         suite.addTest(jmri.jmrit.roster.RosterEntryTest.suite());
         suite.addTest(jmri.jmrit.roster.RosterTest.suite());
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.roster.configurexml.PackageTest.class));
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrit.roster.CopyRosterItemActionTest.suite());
             suite.addTest(jmri.jmrit.roster.RosterEntryPaneTest.suite());

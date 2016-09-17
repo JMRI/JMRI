@@ -149,7 +149,7 @@ public interface ConfigureManager {
      * @param file             Input file
      * @param registerDeferred true to register actions for deferred load
      * @return true if succeeded
-     * @throws JmriException
+     * @throws JmriException if problem during load
      * @since 2.11.2
      */
     public boolean load(File file, boolean registerDeferred) throws JmriException;
@@ -160,7 +160,7 @@ public interface ConfigureManager {
      * @param file             Input URL
      * @param registerDeferred true to register actions for deferred load
      * @return true if succeeded
-     * @throws JmriException
+     * @throws JmriException if problem during load
      * @since 2.11.2
      */
     public boolean load(URL file, boolean registerDeferred) throws JmriException;
@@ -171,7 +171,7 @@ public interface ConfigureManager {
      *
      * @param file Input file
      * @return true if succeeded
-     * @throws JmriException
+     * @throws JmriException if problem during load
      * @see jmri.configurexml.XmlAdapter#loadDeferred()
      * @since 2.11.2
      */
@@ -183,7 +183,7 @@ public interface ConfigureManager {
      *
      * @param file Input URL
      * @return true if succeeded
-     * @throws JmriException
+     * @throws JmriException if problem during load
      * @see jmri.configurexml.XmlAdapter#loadDeferred()
      * @since 2.11.2
      */

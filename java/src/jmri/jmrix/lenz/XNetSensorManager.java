@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * System names are "XSnnn", where nnn is the sensor number without padding.
  * <P>
  * @author	Paul Bender Copyright (C) 2003-2010
- * @navassoc - - 1..* jmri.jmrix.lenz.XNetSensor
+ * @navassoc 1 - * jmri.jmrix.lenz.XNetSensor
  */
 public class XNetSensorManager extends jmri.managers.AbstractSensorManager implements XNetListener {
 
@@ -74,7 +74,12 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
                         } else {
                             // The sensor exists.  We need to forward this 
                             // message to it.
-                            ((XNetSensor) getBySystemName(s)).message(l);
+                            Sensor xns = getBySystemName(s);
+                            if (xns == null) {
+                                log.error("Failed to get sensor for {}", s);
+                            } else {
+                                ((XNetSensor) xns).message(l);
+                            }
                         }
                     }
                 }

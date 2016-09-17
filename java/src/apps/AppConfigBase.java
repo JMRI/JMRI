@@ -7,10 +7,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import jmri.Application;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
 import jmri.UserPreferencesManager;
@@ -48,56 +48,6 @@ public class AppConfigBase extends JmriPanel {
      * configuration dialog with default number of connections.
      */
     public AppConfigBase() {
-    }
-
-    /**
-     * @deprecated as of 2.13.3, directly access the connection configuration
-     * from the instance list
-     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
-     */
-    @Deprecated
-    public static String getManufacturerName(int index) {
-        return JmrixConfigPane.instance(index).getCurrentManufacturerName();
-    }
-
-    /**
-     * @deprecated as of 2.13.3, directly access the connection configuration
-     * from the instance list
-     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
-     */
-    @Deprecated
-    public static String getConnection(int index) {
-        return JmrixConfigPane.instance(index).getCurrentProtocolName();
-    }
-
-    /**
-     * @deprecated as of 2.13.3, directly access the connection configuration
-     * from the instance list
-     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
-     */
-    @Deprecated
-    public static String getPort(int index) {
-        return JmrixConfigPane.instance(index).getCurrentProtocolInfo();
-    }
-
-    /**
-     * @deprecated as of 2.13.3, directly access the connection configuration
-     * from the instance list
-     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
-     */
-    @Deprecated
-    public static String getConnectionName(int index) {
-        return JmrixConfigPane.instance(index).getConnectionName();
-    }
-
-    /**
-     * @deprecated as of 2.13.3, directly access the connection configuration
-     * from the instance list
-     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
-     */
-    @Deprecated
-    public static boolean getDisabled(int index) {
-        return JmrixConfigPane.instance(index).getDisabled();
     }
 
     /**
@@ -173,17 +123,25 @@ public class AppConfigBase extends JmriPanel {
 
     public void saveContents() {
         // remove old prefs that are registered in ConfigManager
-        InstanceManager.configureManagerInstance().removePrefItems();
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.removePrefItems();
+        }
         // put the new GUI managedPreferences on the persistance list
         this.getPreferencesPanels().values().stream().forEach((panel) -> {
             this.registerWithConfigureManager(panel);
         });
-        InstanceManager.configureManagerInstance().storePrefs();
+        if (cm != null) {
+            cm.storePrefs();
+        }
     }
 
     private void registerWithConfigureManager(PreferencesPanel panel) {
         if (panel.isPersistant()) {
-            InstanceManager.configureManagerInstance().registerPref(panel);
+            ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+            if (cm != null) {
+                cm.registerPref(panel);
+            }
         }
         if (panel instanceof ManagingPreferencesPanel) {
             log.debug("Iterating over managed panels within {}/{}", panel.getPreferencesItemText(), panel.getTabbedPreferencesTitle());

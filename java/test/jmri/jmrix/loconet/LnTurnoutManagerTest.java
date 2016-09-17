@@ -3,9 +3,8 @@ package jmri.jmrix.loconet;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.Turnout;
-import jmri.TurnoutAddress;
 import jmri.TurnoutManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.slf4j.Logger;
@@ -25,7 +24,16 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
     LocoNetInterfaceScaffold lnis;
 
-    public void setUp() {
+    @Override
+    protected void tearDown() throws Exception {
+        apps.tests.Log4JFixture.tearDown();
+        super.tearDown();
+    }
+
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+        apps.tests.Log4JFixture.setUp();
         // prepare an interface, register
         lnis = new LocoNetInterfaceScaffold();
         // create and register the manager object
@@ -40,10 +48,6 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
     }
 
     public void testMisses() {
-        // sample address object
-        TurnoutAddress a = new TurnoutAddress("LT22", "user");
-        Assert.assertNotNull("exists", a);
-
         // try to get nonexistant turnouts
         Assert.assertTrue(null == l.getByUserName("foo"));
         Assert.assertTrue(null == l.getBySystemName("bar"));
@@ -113,8 +117,8 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {LnTurnoutManager.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        String[] testCaseName = {LnTurnoutManagerTest.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

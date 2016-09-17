@@ -1,4 +1,3 @@
-// ProgServiceModeComboBox.java
 package jmri.jmrit.progsupport;
 
 import java.awt.event.ActionEvent;
@@ -46,7 +45,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ProgServiceModeComboBox extends ProgModeSelector implements PropertyChangeListener, ActionListener {
 
-    private static final long serialVersionUID = -337689867042266871L;
     // GUI member declarations
     JComboBox<GlobalProgrammerManager> progBox;
     JComboBox<ProgrammingMode> modeBox;
@@ -84,11 +82,7 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
      * @return empty list if none
      */
     protected List<GlobalProgrammerManager> getMgrList() {
-        List<GlobalProgrammerManager> retval;
-        
-        retval = InstanceManager.getList(jmri.GlobalProgrammerManager.class);
-        if (retval!=null) return retval;
-        return new ArrayList<>();
+        return InstanceManager.getList(jmri.GlobalProgrammerManager.class);
     }
 
     public ProgServiceModeComboBox(int direction) {

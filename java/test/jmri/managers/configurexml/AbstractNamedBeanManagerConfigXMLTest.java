@@ -2,7 +2,7 @@ package jmri.managers.configurexml;
 
 import jmri.NamedBean;
 import jmri.implementation.AbstractNamedBean;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -166,7 +166,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", AbstractNamedBeanManagerConfigXMLTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

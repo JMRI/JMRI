@@ -10,6 +10,14 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Provide XML persistence for the
+ * {@link jmri.managers.DefaultUserMessagePreferences}.
+ *
+ * @deprecated since 4.5.4 because the
+ * {@link jmri.managers.DefaultUserMessagePreferences} is deprecated.
+ */
+@Deprecated
 public class DefaultUserMessagePreferencesXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public DefaultUserMessagePreferencesXml() {

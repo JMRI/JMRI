@@ -1,49 +1,42 @@
 package jmri.jmrit.consisttool;
 
+import apps.tests.Log4JFixture;
+import jmri.ConsistManager;
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+import java.awt.GraphicsEnvironment;
 
 /**
  * Test simple functioning of ConsistToolFrame
  *
- * @author	Paul Bender Copyright (C) 2015
- * @version	$Revision$
+ * @author	Paul Bender Copyright (C) 2015,2016
  */
-public class ConsistToolFrameTest extends TestCase {
+public class ConsistToolFrameTest {
 
+    @Test
     public void testCtor() {
-        jmri.InstanceManager.setDefault(jmri.ConsistManager.class,new TestConsistManager());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ConsistToolFrame frame = new ConsistToolFrame();
         Assert.assertNotNull("exists", frame );
     }
 
-    // from here down is testing infrastructure
-    public ConsistToolFrameTest(String s) {
-        super(s);
+    @Before
+    public void setUp() {
+        Log4JFixture.setUp();
+        JUnitUtil.resetInstanceManager();
+        InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", ConsistToolFrameTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+    @After
+    public void tearDown() {
+        JUnitUtil.resetInstanceManager();
+        Log4JFixture.tearDown();
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(ConsistToolFrameTest.class);
-        return suite;
-    }
 
-    @Override
-    public void setUp() throws Exception {
-        super.setUp();
-    }
-    
-    @Override
-    public void tearDown() throws Exception {
-        super.tearDown();
-    }
 }

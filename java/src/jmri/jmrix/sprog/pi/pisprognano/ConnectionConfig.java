@@ -48,7 +48,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     protected void setInstance() {
-        adapter = PiSprogNanoSerialDriverAdapter.instance();
+        if(adapter == null) {
+           adapter = new PiSprogNanoSerialDriverAdapter();
+        }
     }
 }
 

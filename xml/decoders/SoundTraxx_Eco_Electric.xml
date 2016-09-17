@@ -24,6 +24,12 @@
         <surname>Mosher</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
@@ -62,6 +68,18 @@
       <authorinitials>MJM</authorinitials>
       <revremark>Add ECO-200 and ECO-PNP</revremark>
     </revision>
+    <revision>
+    <revnumber>2</revnumber>
+      <date>2016-05-29</date>
+      <authorinitials>MJM</authorinitials>
+      <revremark>Adjusted after creation of Tsunami2 definitions</revremark>
+    </revision>
+    <revision>
+    <revnumber>2.1</revnumber>
+      <date>2016-06-04</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Minor adjustments after creation of Tsunami2 Electric + separate ECO CVs for Light Effects</revremark>
+    </revision>
   </revhistory>
   <version author="Michael Mosher" version="1" lastUpdated="20150725"/>
   <version author="Alain Le Marchand" version="1.1" lastUpdated="20150726"/>
@@ -69,6 +87,8 @@
   <version author="Dave Heap" version="1.3" lastUpdated="20150813"/>
   <version author="Michael Mosher" version="1.4" lastUpdated="20160104"/>
   <version author="Michael Mosher" version="1.5" lastUpdated="20160202"/>
+  <version author="Michael Mosher" version="2" lastUpdated="20160529"/>
+  <version author="Alain Le Marchand" version="2.1" lastUpdated="20160604"/>
 <!-- Decoder Model information follows -->
   <decoder>
     <family name="Econami Electric" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Econami Electric decoders">
@@ -107,7 +127,7 @@
         </output>
         <size length="27" width="10.5" height="5" units="mm"/>
       </model>
-      <model model="ECO-200 Electric" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="883002" comment="Model 883002">
+      <model model="ECO-200 Electric" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="883002" comment="Model 883002">
         <versionCV lowVersionID="70"/>
         <output name="3" label="  FX3  "/>
         <output name="4" label="  FX4  "/>
@@ -142,7 +162,7 @@
         </output>
         <size length="35" width="18" height="6" units="mm"/>
       </model>
-      <model model="ECO-21P Electric" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="21pin" productID="883003" comment="Model 883003">
+      <model model="ECO-21P Electric" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21pin" productID="883003" comment="Model 883003">
         <versionCV lowVersionID="70"/>
         <output name="3" label="  FX3  "/>
         <output name="4" label="  FX4  "/>
@@ -177,7 +197,7 @@
         </output>
         <size length="30.5" width="15.5" height="6.5" units="mm"/>
       </model>
-      <model model="ECO-400 Electric" numOuts="4" numFns="30" maxMotorCurrent="4A" connector="other" productID="883005" comment="Model 883005">
+      <model model="ECO-400 Electric" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="883005" comment="Model 883005">
         <versionCV lowVersionID="70"/>
         <output name="3" label="  FX3  "/>
         <output name="4" label="  FX4  "/>
@@ -212,7 +232,7 @@
         </output>
         <size length="69" width="30.5" height="14" units="mm"/>
       </model>
-      <model model="ECO-PNP Electric" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="883004" comment="Model 883004">
+      <model model="ECO-PNP Electric" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="883004" comment="Model 883004">
         <versionCV lowVersionID="70"/>
         <output name="3" label="  FX3  "/>
         <output name="4" label="  FX4  "/>
@@ -279,6 +299,7 @@
     <!-- Configuration Variable (CV) information follows -->
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOCV.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOCVLightEffect.xml"/>
       <!-- Function Mapping follows -->
       <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -863,43 +884,43 @@
       </variable>
       <!-- End Sound Selection -->
       <!-- Volume Controls follow -->
-      <variable CV="129" mask="VVVVVVVV" item="Sound Setting 13" default="225" tooltip="Sets the volume of the airhorn">
+      <variable CV="129" mask="VVVVVVVV" item="Sound Setting 2" default="225" tooltip="Sets the volume of the airhorn">
         <decVal/>
         <label>Airhorn Volume</label>
       </variable>
-      <variable CV="131" mask="VVVVVVVV" item="Sound Setting 15" default="200" tooltip="Sets the volume of the contractor camshaft">
+      <variable CV="131" mask="VVVVVVVV" item="Sound Setting 4" default="200" tooltip="Sets the volume of the contactor camshaft">
         <decVal/>
-        <label>Contractor Camshaft Volume</label>
+        <label>Contactor Camshaft Volume</label>
       </variable>
-      <variable CV="132" mask="VVVVVVVV" item="Sound Setting 23" default="175" tooltip="Sets the volume of the air compressor">
+      <variable CV="132" mask="VVVVVVVV" item="Sound Setting 5" default="175" tooltip="Sets the volume of the air compressor">
         <decVal/>
         <label>Air Compressor Volume</label>
       </variable>
-      <variable CV="133" mask="VVVVVVVV" item="Sound Setting 16" default="125" tooltip="Sets the volume of the pantograph">
+      <variable CV="133" mask="VVVVVVVV" item="Sound Setting 6" default="125" tooltip="Sets the volume of the pantograph">
         <decVal/>
         <label>Pantograph Volume</label>
       </variable>
-      <variable CV="134" mask="VVVVVVVV" item="Sound Setting 17" default="60" tooltip="Sets the volume of the blower fans">
+      <variable CV="134" mask="VVVVVVVV" item="Sound Setting 7" default="60" tooltip="Sets the volume of the blower fans">
         <decVal/>
         <label>Blower Fans Volume</label>
       </variable>
-      <variable CV="135" mask="VVVVVVVV" item="Sound Setting 18" default="75" tooltip="Sets the volume of the generator">
+      <variable CV="135" mask="VVVVVVVV" item="Sound Setting 8" default="75" tooltip="Sets the volume of the generator">
         <decVal/>
         <label>Generator Volume</label>
       </variable>
-      <variable CV="141" mask="VVVVVVVV" item="Sound Setting 19" default="255" tooltip="Sets the volume of the trolley bell">
+      <variable CV="141" mask="VVVVVVVV" item="Sound Setting 14" default="255" tooltip="Sets the volume of the trolley bell">
         <decVal/>
         <label>Trolley Bell Volume</label>
       </variable>
-      <variable CV="142" mask="VVVVVVVV" item="Sound Setting 20" default="128" tooltip="Sets the volume of the stop request bell">
+      <variable CV="142" mask="VVVVVVVV" item="Sound Setting 15" default="128" tooltip="Sets the volume of the stop request bell">
         <decVal/>
         <label>Stop Request Bell Volume</label>
       </variable>
-      <variable CV="143" mask="VVVVVVVV" item="Sound Setting 24" default="60" tooltip="Sets the volume of the air reservoir poppet valve releasing">
+      <variable CV="143" mask="VVVVVVVV" item="Sound Setting 16" default="60" tooltip="Sets the volume of the air reservoir poppet valve releasing">
         <decVal/>
         <label>Air Tank Poppet Valve Volume</label>
       </variable>
-      <variable CV="146" mask="VVVVVVVV" item="Sound Setting 21" default="200" tooltip="Sets the volume of the pneumatic doors">
+      <variable CV="146" mask="VVVVVVVV" item="Sound Setting 19" default="200" tooltip="Sets the volume of the pneumatic doors">
         <decVal/>
         <label>Pneumatic Doors Volume</label>
       </variable>
@@ -907,37 +928,61 @@
         <decVal/>
         <label>Poppet Valve Release Rate</label>
       </variable>
+	  <variable CV="1.275" item="Extended Function Map Brake" default="11">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+		<tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+	  </variable>
 	  <variable CV="1.285" item="Extended Function Map Forward Trolley Bell" default="255">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
 	  </variable>
 	  <variable CV="1.286" item="Extended Function Map Reverse Trolley Bell" default="255">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
 	  </variable>
 	  <variable CV="1.297" item="Extended Function Map Airhorn" default="2">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
 	  </variable>
 	  <variable CV="1.299" item="Extended Function Map Pneumatic Doors" default="6">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
 	  </variable>
 	  <variable CV="1.300" item="Extended Function Map Short Airhorn" default="3">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
 	  </variable>
 	  <variable CV="1.301" item="Extended Function Map Pantograph" default="4">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
 	  </variable>
 	  <variable CV="1.303" item="Extended Function Map Stop Request Bell" default="5">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
 	  </variable>
 	  <variable CV="1.315" item="Extended Function Map Trolley Bell" default="10">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+	  </variable>
+	  <variable CV="1.403" mask="XXXXXXXV" item="Brake Automatic Effects - FWDD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+		<tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
+	  </variable>
+	  <variable CV="1.403" mask="XXXXXXVX" item="Brake Automatic Effects - REVD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+		<tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
+	  </variable>
+	  <variable CV="1.403" mask="XXXXXVXX" item="Brake Automatic Effects - FWDS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+		<tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
+	  </variable>
+	  <variable CV="1.403" mask="XXXXVXXX" item="Brake Automatic Effects - REVS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+		<tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
+	  </variable>
+	  <variable CV="1.403" mask="XXXVXXXX" item="Brake Automatic Effects - ESTP" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+		<tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
 	  </variable>
 	  <variable CV="1.413" mask="XXXXXXXV" item="Forward Trolley Bell Automatic Effects - FWDD" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>

@@ -22,9 +22,9 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
-     * @param category
-     * @param subCategory
+     * @param s           action title
+     * @param category    action category
+     * @param subCategory action sub-category
      */
     public TabbedPreferencesAction(String s, String category, String subCategory) {
         super(s);
@@ -83,7 +83,7 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
                 public void run() {
                     try {
                         setWait(true);
-                        while (jmri.InstanceManager.tabbedPreferencesInstance().init() != 0x02) {
+                        while (jmri.InstanceManager.getDefault(TabbedPreferences.class).init() != TabbedPreferences.INITIALISED) {
                             Thread.sleep(50);
                         }
                         SwingUtilities.updateComponentTreeUI(f);

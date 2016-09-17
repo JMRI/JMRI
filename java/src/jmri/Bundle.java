@@ -124,7 +124,7 @@ public class Bundle {
      *
      * @param key Bundle key to be translated
      * @return Internationalized text
-     * @throws MissingResourceException
+     * @throws MissingResourceException if message cannot be found
      */
     public String handleGetMessage(String key) {
         return this.handleGetMessage(Locale.getDefault(), key);
@@ -139,7 +139,7 @@ public class Bundle {
      * @param locale The locale to be used
      * @param key    Bundle key to be translated
      * @return Internationalized text
-     * @throws MissingResourceException
+     * @throws MissingResourceException if message cannot be found
      */
     public String handleGetMessage(Locale locale, String key) {
         if (bundleName() != null) {
@@ -147,10 +147,10 @@ public class Bundle {
             if (rb.containsKey(key)) {
                 return rb.getString(key);
             } else {
-                return retry(key);
+                return retry(locale,key);
             }
         } else {  // case of no local bundle
-            return retry(key);
+            return retry(locale,key);
         }
     }
 
@@ -187,7 +187,7 @@ public class Bundle {
 
     // the following is different from the method in subclasses because
     // this is the root of the search tree
-    protected String retry(String key) throws MissingResourceException {
+    protected String retry(Locale locale,String key) throws MissingResourceException {
         throw new MissingResourceException("Resource not found", this.getClass().toString(), key); // NOI18N
     }
 

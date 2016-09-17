@@ -1,8 +1,6 @@
 package jmri.jmrit.withrottle;
 
 /**
- * DeviceServer.java
- *
  * WiThrottle
  *
  * @author Brett Hoffman Copyright (C) 2009, 2010
@@ -99,7 +97,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     private static final String versionNumber = "2.0";
 
     private Socket device;
-    private CommandStation cmdStation = jmri.InstanceManager.commandStationInstance();
+    private CommandStation cmdStation = jmri.InstanceManager.getNullableDefault(CommandStation.class);
     String newLine = System.getProperty("line.separator");
     BufferedReader in = null;
     PrintStream out = null;
@@ -589,7 +587,6 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     /**
      * Add a DeviceListener
      *
-     * @param l
      */
     public void addDeviceListener(DeviceListener l) {
         if (listeners == null) {
@@ -603,7 +600,6 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     /**
      * Remove a DeviceListener
      *
-     * @param l
      */
     public void removeDeviceListener(DeviceListener l) {
         if (listeners == null) {
@@ -646,7 +642,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
      */
     public String sendRoster() {
         List<RosterEntry> rosterList;
-        rosterList = Roster.instance().getEntriesInGroup(manager.getSelectedRosterGroup());
+        rosterList = Roster.getDefault().getEntriesInGroup(manager.getSelectedRosterGroup());
         StringBuilder rosterString = new StringBuilder(rosterList.size() * 25);
         for (RosterEntry entry : rosterList) {
             StringBuilder entryInfo = new StringBuilder(entry.getId()); //  Start with name

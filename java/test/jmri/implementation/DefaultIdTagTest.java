@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import jmri.IdTag;
 import jmri.Reporter;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -110,7 +110,7 @@ public class DefaultIdTagTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {DefaultIdTagTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

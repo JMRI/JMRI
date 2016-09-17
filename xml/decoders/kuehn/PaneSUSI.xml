@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - 2015-03-05 - PB - Created  -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>SUSI</name>
+  <column>
+    <label>
+      <text> </text>
+    </label>
+    <grid gridy="NEXT" weightx="1" ipadx="10">
+		<griditem gridx="0" gridy="0" gridwidth="1">
+			<display item="SUSI mode"/>
+		</griditem>
+	</grid>
+	<label>
+      <text> </text>
+    </label>
+	<grid gridy="NEXT" weightx="1" ipadx="10">
+		<group>
+			<qualifier>
+			  <variableref>SUSI mode</variableref>
+			  <relation>eq</relation>
+			  <value>1</value>
+			</qualifier>
+			<griditem gridx="0" gridy="0" gridwidth="1">
+			  <display item="SUSI ouptuts mapping"/>
+			</griditem>
+		</group>
+		<group>
+			<qualifier>
+			  <variableref>SUSI mode</variableref>
+			  <relation>eq</relation>
+			  <value>0</value>
+			</qualifier>
+		  <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
+			  <display item="Revert SUSI direction" format="checkbox"/>
+		  </griditem>
+		  <griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
+			  <display item="Deactivate SUSI startup delay" format="checkbox"/>
+		  </griditem>
+		  <griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
+			  <display item="Forward random sounds to SUSI" format="checkbox"/>
+		  </griditem>
+		</group>
+	</grid>
+	<label>
+      <text> </text>
+    </label>
+  </column>
+</pane>

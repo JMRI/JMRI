@@ -4,7 +4,7 @@ import jmri.JmriException;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -185,7 +185,7 @@ public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
     static public void main(String[] args) {
         apps.tests.Log4JFixture.initLogging();
         String[] testCaseName = {"-noloading", Z21XNetProgrammerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

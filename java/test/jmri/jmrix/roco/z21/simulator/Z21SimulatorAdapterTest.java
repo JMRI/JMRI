@@ -1,13 +1,15 @@
 package jmri.jmrix.roco.z21.simulator;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import java.net.DatagramSocket;
 import java.net.DatagramPacket;
 
+import jmri.jmrix.roco.z21.Z21Reply;
 
 /**
  * Z21SimulatorAdapterTest.java
@@ -17,11 +19,12 @@ import java.net.DatagramPacket;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class Z21SimulatorAdapterTest extends TestCase {
+public class Z21SimulatorAdapterTest {
         
     private java.net.InetAddress host;
     private static int port = 21105; // default port for Z21 connections.
 
+    @Test
     public void testCtor() {
         Z21SimulatorAdapter a = new Z21SimulatorAdapter();
         Assert.assertNotNull(a);
@@ -30,6 +33,7 @@ public class Z21SimulatorAdapterTest extends TestCase {
     /* 
      * Test that the Z21 simulator correctly sets up the network connection.
      */ 
+    @Test
     public void testConnection() {
         // create a new simulator.
         Z21SimulatorAdapter a = new Z21SimulatorAdapter();
@@ -78,25 +82,39 @@ public class Z21SimulatorAdapterTest extends TestCase {
         }
     }
 
-    // from here down is testing infrastructure
-    public Z21SimulatorAdapterTest(String s) {
-        super(s);
+    @Test
+    public void RailComDataChangedReply(){
+        // create a new simulator.
+        Z21SimulatorAdapter a = new Z21SimulatorAdapter();
+        // NOTE: this test uses reflection to test a private method.
+        java.lang.reflect.Method getZ21RailComDataChangedReplyMethod = null;
+        try {
+            getZ21RailComDataChangedReplyMethod = a.getClass().getDeclaredMethod("getZ21RailComDataChangedReply");
+        } catch (java.lang.NoSuchMethodException nsm) {
+            Assert.fail("Could not find method getZ21RailComDataChagnedReply in Z21SimulatorAdapter class: ");
+        }
+
+        // override the default permissions.
+        Assert.assertNotNull(getZ21RailComDataChangedReplyMethod);
+        getZ21RailComDataChangedReplyMethod.setAccessible(true);
+
+        try {
+            Z21Reply z = (Z21Reply) getZ21RailComDataChangedReplyMethod.invoke(a);
+            Assert.assertEquals("Empty Railcom Report", "04 00 88 00",z.toString());
+        } catch (java.lang.IllegalAccessException iae) {
+            Assert.fail("Could not access method getZ21RailComDataChangedReply in Z21SimulatorAdapter class");
+        } catch (java.lang.reflect.InvocationTargetException ite) {
+            Throwable cause = ite.getCause();
+            Assert.fail("getZ21RailComDataChangedReply  executon failed reason: " + cause.getMessage());
+        }
+
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading" , Z21SimulatorAdapterTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
-    }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(Z21SimulatorAdapterTest.class);
-        return suite;
-    }
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initConfigureManager();
@@ -107,7 +125,8 @@ public class Z21SimulatorAdapterTest extends TestCase {
         } 
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }

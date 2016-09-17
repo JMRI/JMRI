@@ -92,7 +92,7 @@ public class RfidReporter extends AbstractReporter
         // IdTag.getTagID() is a system-name-ized version of the loco address. I think.
         // Matcher.group(1) : loco address (I think)
         IdTag cr = (IdTag) this.getCurrentReport();
-        ReporterManager rm = InstanceManager.reporterManagerInstance();
+        ReporterManager rm = InstanceManager.getDefault(jmri.ReporterManager.class);
         Pattern p = Pattern.compile("" + rm.getSystemPrefix() + rm.typeLetter() + "(\\d+)");
         Matcher m = p.matcher(cr.getTagID());
         if (m.find()) {

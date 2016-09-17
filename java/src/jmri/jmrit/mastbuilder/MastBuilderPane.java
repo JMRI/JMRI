@@ -1,4 +1,3 @@
-//MastBuilderPane.java
 package jmri.jmrit.mastbuilder;
 
 import java.awt.FlowLayout;
@@ -16,14 +15,8 @@ import jmri.util.FileUtil;
  * Pane for building mast definitions
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
  */
 public class MastBuilderPane extends javax.swing.JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2887050413450503483L;
 
     public MastBuilderPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

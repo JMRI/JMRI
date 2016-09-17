@@ -23,7 +23,7 @@ public class PackageTest extends TestCase {
     static public void main(String[] args) {
         apps.tests.AllTest.initLogging();
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -33,17 +33,18 @@ public class PackageTest extends TestCase {
         suite.addTest(CanConverterTest.suite());
         suite.addTest(OlcbAddressTest.suite());
         suite.addTest(OpenLcbLocoAddressTest.suite());
-        suite.addTest(OlcbSensorManagerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OlcbSensorManagerTest.class));
         suite.addTest(OlcbProgrammerTest.suite());
         suite.addTest(OlcbProgrammerManagerTest.suite());
         suite.addTest(OlcbSensorTest.suite());
-        suite.addTest(OlcbSystemConnectionMemoTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OlcbSystemConnectionMemoTest.class));
         suite.addTest(OlcbTurnoutManagerTest.suite());
         suite.addTest(OlcbTurnoutTest.suite());
         suite.addTest(OlcbThrottleTest.suite());
         suite.addTest(OlcbThrottleManagerTest.suite());
-
+        suite.addTest(BundleTest.suite());
         suite.addTest(jmri.jmrix.openlcb.swing.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.openlcb.configurexml.PackageTest.class));
 
         return suite;
     }

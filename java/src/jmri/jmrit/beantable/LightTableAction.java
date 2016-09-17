@@ -53,7 +53,7 @@ public class LightTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
+     * @param s title of the action
      */
     public LightTableAction(String s) {
         super(s);
@@ -67,7 +67,7 @@ public class LightTableAction extends AbstractTableAction {
         this(Bundle.getMessage("TitleLightTable"));
     }
 
-    protected LightManager lightManager = InstanceManager.lightManagerInstance();
+    protected LightManager lightManager = InstanceManager.getNullableDefault(jmri.LightManager.class);
 
     public void setManager(Manager man) {
         lightManager = (LightManager) man;
@@ -150,7 +150,11 @@ public class LightTableAction extends AbstractTableAction {
             }
 
             public String getValue(String name) {
-                int val = lightManager.getBySystemName(name).getState();
+                Light l = lightManager.getBySystemName(name);
+                if (l == null) {
+                    return("Failed to find " + name);
+                }
+                int val = l.getState();
                 switch (val) {
                     case Light.ON:
                         return Bundle.getMessage("LightStateOn");
@@ -254,9 +258,6 @@ public class LightTableAction extends AbstractTableAction {
             public NamedBean getByUserName(String name) {
                 return lightManager.getByUserName(name);
             }
-
-            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnLightInUse(); }
-             public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnLightInUse(boo); }*/
 
             protected String getMasterClassName() {
                 return getClassName();
@@ -659,7 +660,7 @@ public class LightTableAction extends AbstractTableAction {
         }
         // check if Light exists under an alternate name if an alternate name exists
         String altName = InstanceManager.lightManagerInstance().convertSystemNameToAlternate(suName);
-        if (altName != "") {
+        if (!altName.equals("")) {
             g = InstanceManager.lightManagerInstance().getBySystemName(altName);
             if (g != null) {
                 // Light already exists
@@ -861,7 +862,7 @@ public class LightTableAction extends AbstractTableAction {
         if (g == null) {
             // check if Light exists under an alternate name if an alternate name exists
             String altName = InstanceManager.lightManagerInstance().convertSystemNameToAlternate(sName);
-            if (altName != "") {
+            if (!altName.equals("")) {
                 g = InstanceManager.lightManagerInstance().getBySystemName(altName);
                 if (g != null) {
                     sName = altName;
@@ -1409,7 +1410,7 @@ public class LightTableAction extends AbstractTableAction {
                         status1.setText(Bundle.getMessage("LightError13"));
                         error = true;
                     }
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                     status1.setText(Bundle.getMessage("LightError14"));
                     error = true;
                 }

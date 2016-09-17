@@ -24,7 +24,6 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
      * Create a RosterGroupComboBox with an arbitrary Roster instead of the
      * default Roster instance.
      *
-     * @param roster
      */
     // needed for unit tests
     public RosterGroupComboBox(Roster roster) {
@@ -34,17 +33,14 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
     /**
      * Create a RosterGroupComboBox with an arbitrary selection.
      *
-     * @param selection
      */
     public RosterGroupComboBox(String selection) {
-        this(Roster.instance(), selection);
+        this(Roster.getDefault(), selection);
     }
 
     /**
      * Create a RosterGroupComboBox with arbitrary selection and Roster.
      *
-     * @param roster
-     * @param selection
      */
     public RosterGroupComboBox(Roster roster, String selection) {
         super();
@@ -73,7 +69,7 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
      * default roster group.
      */
     public RosterGroupComboBox() {
-        this(Roster.instance(), Roster.instance().getDefaultRosterGroup());
+        this(Roster.getDefault(), Roster.getDefault().getDefaultRosterGroup());
     }
 
     /**
@@ -86,7 +82,6 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
     /**
      * Update the combo box and select given String.
      *
-     * @param selection
      */
     public final void update(String selection) {
         removeAllItems();

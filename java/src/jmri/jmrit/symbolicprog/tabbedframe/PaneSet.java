@@ -1,4 +1,3 @@
-// PaneSet.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Interface for the container of a set of PaneProgPanes. The panes use services
  * provided here to work with buttons and the busy cursor.
- *
+ * <p>
  * TODO: Several methods are copied from PaneProgFrame and should be refactored
  * No programmer support yet No glass pane support Need better support for
  * visible/non-visible panes Special panes (Roster entry, attributes, graphics)
@@ -29,11 +28,10 @@ import org.slf4j.LoggerFactory;
  * @see apps.gui3.dp3.DecoderPro3Window
  *
  * @author Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
  */
 public class PaneSet {
 
-    List<PaneProgPane> paneList = new ArrayList<PaneProgPane>();
+    List<PaneProgPane> paneList = new ArrayList<>();
     PaneContainer container;
     Programmer mProgrammer;
     CvTableModel cvModel = null;
@@ -67,9 +65,9 @@ public class PaneSet {
         // load from decoder file
         loadDecoderFromLoco(re);
 
-        // fill the CV values from the specific loco file
+        // finally fill the Variable and CV values from the specific loco file
         if (re.getFileName() != null) {
-            re.loadCvModel(cvModel, iCvModel);
+            re.loadCvModel(variableModel, cvModel, iCvModel);
         }
     }
 
@@ -126,10 +124,10 @@ public class PaneSet {
         df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
 
         // load reset from decoder tree
-        if (variableModel.piCv() != "") {
+        if (!variableModel.piCv().equals("")) {
             resetModel.setPiCv(variableModel.piCv());
         }
-        if (variableModel.siCv() != "") {
+        if (!variableModel.siCv().equals("")) {
             resetModel.setSiCv(variableModel.siCv());
         }
         df.loadResetModel(decoderRoot.getChild("decoder"), resetModel);

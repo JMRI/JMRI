@@ -1,9 +1,7 @@
 package jmri.jmrit.display;
 
-import java.beans.PropertyChangeEvent;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -59,7 +57,7 @@ public class IndicatorTurnoutIconTest extends jmri.util.SwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", IndicatorTurnoutIconTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

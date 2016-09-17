@@ -63,8 +63,8 @@ abstract public class AbstractThrottle implements DccThrottle {
     protected SystemConnectionMemo adapterMemo;
 
     /**
-     * speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
-     * This is an bound parameter.
+     * speed - expressed as a value {@literal 0.0 -> 1.0.} Negative means
+     * emergency stop. This is an bound parameter.
      *
      * @return speed
      */
@@ -78,7 +78,6 @@ abstract public class AbstractThrottle implements DccThrottle {
      * but should either make a call to super.setSpeedSetting() to notify the
      * listeners at the end of their work, or should notify the listeners themselves.
      *
-     * @param speed
      */
     @Override
     public void setSpeedSetting(float speed) {
@@ -103,7 +102,6 @@ abstract public class AbstractThrottle implements DccThrottle {
      * should either make a call to super.setIsForward() to notify the
      * listeners, or should notify the listeners themselves.
      *
-     * @param forward
      */
     @Override
     public void setIsForward(boolean forward) {
@@ -442,9 +440,6 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Trigger the notification of all PropertyChangeListeners
      *
-     * @param property
-     * @param oldValue
-     * @param newValue
      */
     @SuppressWarnings("unchecked")
     protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
@@ -892,7 +887,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         if ((adapterMemo != null) && (adapterMemo.get(jmri.CommandStation.class) != null)) {
             c = adapterMemo.get(jmri.CommandStation.class);
         } else {
-            c = InstanceManager.commandStationInstance();
+            c = InstanceManager.getNullableDefault(CommandStation.class);
         }
 
         // send it 3 times
@@ -924,7 +919,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         if ((adapterMemo != null) && (adapterMemo.get(jmri.CommandStation.class) != null)) {
             c = adapterMemo.get(jmri.CommandStation.class);
         } else {
-            c = InstanceManager.commandStationInstance();
+            c = InstanceManager.getNullableDefault(CommandStation.class);
         }
 
         // send it 3 times
@@ -1392,7 +1387,6 @@ abstract public class AbstractThrottle implements DccThrottle {
      * Get an integer speed for the given raw speed value. This is a convenience
      * method that calls {@link #intSpeed(float, int) } with a maxStep of 127.
      *
-     * @param speed
      * @return an integer in the range 0-127
      */
     protected int intSpeed(float speed) {

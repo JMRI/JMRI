@@ -62,7 +62,7 @@ public interface Logix extends NamedBean {
 
     /**
      * Move 'row' to 'nextInOrder' and shift all between 'nextInOrder' and 'row'
-     * up one position. ( row > nextInOrder )
+     * up one position. Requires {@code row > nextInOrder}.
      */
     public void swapConditional(int nextInOrder, int row);
 

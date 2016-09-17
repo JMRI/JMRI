@@ -55,7 +55,6 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
      * used image path top folder when dnd enabled, also enable contextual menu
      * with remove entry
      *
-     * @param dnd
      */
     public void setDnd(boolean dnd) {
         if (dnd) {

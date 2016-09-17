@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/xml/XSLT/panelfile-2-9-6.xsl"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
-    <major>3</major>
-    <minor>9</minor>
-    <test>2</test>
-    <modifier>.2</modifier>
+    <major>4</major>
+    <minor>5</minor>
+    <test>1</test>
+    <modifier>.1ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
@@ -56,6 +56,9 @@
     <sensor systemName="ISBO9" inverted="false" userName="blocksouthsidingoccupied">
       <systemName>ISBO9</systemName>
       <userName>blocksouthsidingoccupied</userName>
+    </sensor>
+    <sensor systemName="ISCLOCKRUNNING" inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
     </sensor>
     <sensor systemName="ISSDIRF1" inverted="false">
       <systemName>ISSDIRF1</systemName>
@@ -283,6 +286,12 @@
     <memory systemName="IM:AUTO:0012" userName="blockwestsidingmemory">
       <systemName>IM:AUTO:0012</systemName>
       <userName>blockwestsidingmemory</userName>
+    </memory>
+    <memory systemName="IMCURRENTTIME" value="10:26 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory systemName="IMRATEFACTOR" value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
     </memory>
   </memories>
   <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
@@ -571,7 +580,6 @@
     </block>
   </blocks>
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
-  <layoutblocks class="jmri.jmrit.display.configurexml.LayoutBlockManagerXml" />
   <sections class="jmri.configurexml.SectionManagerXml">
     <section systemName="IY:AUTO:0001" userName="NorthWest" creationtype="userdefined" fstopsensorname="ISSSTOPF1" rstopsensorname="ISSSTOPR1" fsensorname="ISSDIRF1" rsensorname="ISSDIRR1">
       <userName>NorthWest</userName>
@@ -658,6 +666,6 @@
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <!--Written by JMRI version 20140803-2009-jake on Sun Aug 03 16:09:55 EDT 2014 $Id: XmlFile.java 26366 2014-06-20 03:34:25Z ken_c $-->
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Jun 17 22:26:06 PDT 2016" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+  <!--Written by JMRI version 4.5.1ish-201606180528-jake-R99dac65 on Fri Jun 17 22:30:14 PDT 2016 $Id$-->
 </layout-config>
-

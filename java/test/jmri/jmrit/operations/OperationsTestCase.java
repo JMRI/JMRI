@@ -2,9 +2,10 @@ package jmri.jmrit.operations;
 
 import java.io.File;
 import java.util.Locale;
+import jmri.jmrit.operations.automation.AutomationManager;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
-import jmri.jmrit.operations.locations.ScheduleManager;
+import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.rollingstock.cars.CarColors;
 import jmri.jmrit.operations.rollingstock.cars.CarLengths;
@@ -98,6 +99,7 @@ public class OperationsTestCase extends TestCase {
         CarLoads.instance().dispose();
         CarRoads.instance().dispose();
         CarManager.instance().dispose();
+        AutomationManager.instance().dispose();
 
         // delete file and log directory before testing
         file = new File(RollingStockLogger.instance().getFullLoggerFileName());

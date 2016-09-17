@@ -1,8 +1,8 @@
-// jmri.jmrit.display.configurexml.LayoutBlockManagerXML.java
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.Color;
 import java.util.List;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
@@ -15,10 +15,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides the functionality for configuring a LayoutBlockManager
- * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision$
  */
 public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -90,8 +88,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
      * @param layoutblocks The top-level element being created
      */
     public void setStoreElementClass(Element layoutblocks) {
-        layoutblocks.setAttribute("class",
-                "jmri.jmrit.display.configurexml.LayoutBlockManagerXml");
+        layoutblocks.setAttribute("class", getClass().getName());
     }
 
     public void load(Element element, Object o) {
@@ -205,8 +202,8 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
             return;
         }
         // if old manager exists, remove it from configuration process
-        if (InstanceManager.getDefault(LayoutBlockManager.class) != null) {
-            InstanceManager.configureManagerInstance().deregister(
+        if (InstanceManager.getNullableDefault(LayoutBlockManager.class) != null) {
+            InstanceManager.getDefault(jmri.ConfigureManager.class).deregister(
                     InstanceManager.getDefault(LayoutBlockManager.class));
         }
 
@@ -214,7 +211,10 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
         LayoutBlockManager pManager = LayoutBlockManager.instance();
         InstanceManager.store(pManager, jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
         // register new one for configuration
-        InstanceManager.configureManagerInstance().registerConfig(pManager, jmri.Manager.LAYOUTBLOCKS);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerConfig(pManager, jmri.Manager.LAYOUTBLOCKS);
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutBlockManagerXml.class.getName());

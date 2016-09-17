@@ -14,14 +14,8 @@ import jmri.util.swing.WindowInterface;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision$
  */
 public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6077873425282362402L;
 
     public RosterGroupTableAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -37,7 +31,6 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
      */
     public RosterGroupTableAction(String s) {
         super(s);
@@ -62,11 +55,6 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
 
         // create the frame
         f = new RosterGroupTableFrame(m, helpTarget()) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 3167164123972770969L;
-
             /**
              * Include an "add" button
              */
@@ -97,7 +85,7 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
         actionPerformed();
         // create the JTable model, with changes for specific NamedBean
         //createModel();
-        //final Roster roster = Roster.instance();
+        //final Roster roster = Roster.getDefault();
         // create the frame
         //f = new RosterGroupTableFrame(m, helpTarget()){
         /**
@@ -138,7 +126,7 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
     }
 
     void comboSelected(ActionEvent e, String group) {
-        jmri.jmrit.roster.Roster roster = jmri.jmrit.roster.Roster.instance();
+        jmri.jmrit.roster.Roster roster = jmri.jmrit.roster.Roster.getDefault();
         m.setGroup(roster.getRosterGroupPrefix() + group);
         m.fireTableDataChanged();
 

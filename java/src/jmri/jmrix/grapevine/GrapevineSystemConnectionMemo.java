@@ -6,7 +6,7 @@ import jmri.jmrix.SystemConnectionMemo;
 /**
  * Minimum required SystemConnectionMemo.
  *
- * @author Randall Wood <randall.h.wood@alexandriasoftware.com>
+ * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
 public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
 

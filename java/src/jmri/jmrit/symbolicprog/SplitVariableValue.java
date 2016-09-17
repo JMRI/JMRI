@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * The original use is for addresses of stationary (accessory)
  * <P>
  * Factor and Offset are applied when going <i>to</i> value of the variable
- * <i>to</> the CV values:
+ * <i>to</i> the CV values:
  * <PRE>
  * Value to put in CVs = ((value in text field) - Offset)/Factor
  * Value to put in text field = ((value in CVs) * Factor) + Offset
@@ -322,7 +322,6 @@ public class SplitVariableValue extends VariableValue
     /**
      * Notify the connected CVs of a state change from above
      *
-     * @param state
      */
     public void setCvState(int state) {
         (_cvMap.get(getCvNum())).setState(state);
@@ -508,11 +507,6 @@ public class SplitVariableValue extends VariableValue
      * @version     $Revision$
      */
     public class VarTextField extends JTextField {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -4853000377889737952L;
 
         VarTextField(Document doc, String text, int col, SplitVariableValue var) {
             super(doc, text, col);

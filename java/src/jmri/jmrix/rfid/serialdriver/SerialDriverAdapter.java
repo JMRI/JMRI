@@ -303,9 +303,6 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         control.setAdapterMemo(this.getSystemConnectionMemo());
         control.connectPort(this);
         control.sendInitString();
-
-        // declare up
-        jmri.jmrix.rfid.ActiveFlag.setActive();
     }
 
     // base class methods for the RfidPortController interface
@@ -339,7 +336,6 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
     /**
      * Local method to do specific port configuration
      *
-     * @throws gnu.io.UnsupportedCommOperationException
      */
     protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
@@ -377,7 +373,6 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
     /**
      * Set the baud rate.
      *
-     * @param rate
      */
     @Override
     public void configureBaudRate(String rate) {

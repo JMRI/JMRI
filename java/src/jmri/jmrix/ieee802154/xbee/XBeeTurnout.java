@@ -1,4 +1,3 @@
-// XBeeTurnout.java
 package jmri.jmrix.ieee802154.xbee;
 
 import jmri.Turnout;
@@ -7,17 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Turnout impelementation for XBee systems.
+ * Turnout implementation for XBee systems.
  * <p>
  * @author Paul Bender Copyright (C) 2014
- * @version $Revision$
  */
 public class XBeeTurnout extends AbstractTurnout {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3933452737189092378L;
     private String NodeIdentifier; /* This is a string representation of
      the XBee address in the system name
      It may be an address or it may be
@@ -38,7 +32,6 @@ public class XBeeTurnout extends AbstractTurnout {
     /**
      * Create a Turnout object, with system and user names and a reference to
      * the traffic controller.
-     * <P>
      */
     public XBeeTurnout(String systemName, String userName, XBeeTrafficController controller) {
         super(systemName, userName);
@@ -120,16 +113,23 @@ public class XBeeTurnout extends AbstractTurnout {
      */
     protected void forwardCommandChangeToLayout(int s) {
         // get message 
-        XBeeMessage message = XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(), pin, s == Turnout.THROWN);
+        XBeeMessage message = XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(), pin, (s == Turnout.THROWN) ^ getInverted());
         // send the message
         tc.sendXBeeMessage(message, null);
         if (pin2 >= 0) {
-            XBeeMessage message2 = XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(), pin2, s == Turnout.CLOSED);
+            XBeeMessage message2 = XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(), pin2, (s == Turnout.CLOSED) ^ getInverted());
             // send the message
             tc.sendXBeeMessage(message2, null);
         }
     }
 
+    /**
+     * XBee turnouts do support inversion
+     */
+    public boolean canInvert() {
+        return true;
+    }
+    
     protected void turnoutPushbuttonLockout(boolean locked) {
     }
 

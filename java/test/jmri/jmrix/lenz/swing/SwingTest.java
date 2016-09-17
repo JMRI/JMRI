@@ -20,7 +20,7 @@ public class SwingTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SwingTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -36,6 +36,8 @@ public class SwingTest extends TestCase {
             suite.addTest(jmri.jmrix.lenz.swing.lz100.LZ100Test.suite());
             suite.addTest(jmri.jmrix.lenz.swing.lzv100.LZV100Test.suite());
         }
+
+        suite.addTest(BundleTest.suite());
 
         return suite;
     }

@@ -1,7 +1,8 @@
 package apps.startup.configurexml;
 
 import apps.StartupActionsManager;
-import apps.StartupModel;
+import apps.startup.StartupModel;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import org.jdom2.Element;
@@ -30,8 +31,13 @@ public class StartupActionsPreferencesPanelXml extends AbstractXmlAdapter {
      */
     @Override
     public Element store(Object o) {
-        for (StartupModel model : InstanceManager.getDefault(StartupActionsManager.class).getActions()) {
-            InstanceManager.configureManagerInstance().registerPref(model);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm == null) {
+            log.error("Failed to get default configure manager, can not store.");
+        } else {
+            for (StartupModel model : InstanceManager.getDefault(StartupActionsManager.class).getActions()) {
+                cm.registerPref(model);
+            }
         }
         return null;
     }

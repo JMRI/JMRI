@@ -1,4 +1,3 @@
-// SerialLightManager.java
 package jmri.jmrix.secsi;
 
 import jmri.Light;
@@ -108,5 +107,3 @@ public class SerialLightManager extends AbstractLightManager {
     private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class.getName());
 
 }
-
-/* @(#)SerialLighttManager.java */

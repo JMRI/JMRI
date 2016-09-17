@@ -32,10 +32,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ValueEditor extends JComboBox<Object> implements TableCellEditor, FocusListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8132350187940404655L;
     protected transient Vector<CellEditorListener> listeners;
     protected transient String originalValue = null;
     protected Object mValue;

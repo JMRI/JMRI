@@ -9,7 +9,7 @@ package jmri.jmrit.symbolicprog;
 public interface Qualifier {
 
     /**
-     * Process the current value & do whatever is needed.
+     * Process the current value {@literal &} do whatever is needed.
      */
     public void update();
 

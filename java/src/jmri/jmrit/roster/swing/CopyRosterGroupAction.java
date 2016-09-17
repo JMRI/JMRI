@@ -60,7 +60,6 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
      * name of the group to be copied is already known and is not the
      * selectedRosterGroup property of the WindowInterface.
      *
-     * @param event
      */
     @Override
     public void actionPerformed(ActionEvent event) {
@@ -78,7 +77,7 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
                     "Duplicate Roster Group",
                     JOptionPane.INFORMATION_MESSAGE,
                     null,
-                    Roster.instance().getRosterGroupList().toArray(),
+                    Roster.getDefault().getRosterGroupList().toArray(),
                     null);
         }
         // don't duplicate the null and ALLENTRIES groups (they are the entire roster)
@@ -95,7 +94,7 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
                 null);
         if (entry == null || entry.equals(Roster.ALLENTRIES)) {
             return;
-        } else if (Roster.instance().getRosterGroupList().contains(entry)) {
+        } else if (Roster.getDefault().getRosterGroupList().contains(entry)) {
             JOptionPane.showMessageDialog(_who,
                     "<html><b>Unable to duplicate roster group</b><br>The roster group named \"" + entry + "\" already exists.",
                     "Duplicate Roster Group " + group,
@@ -103,8 +102,8 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
         }
 
         // rename the roster grouping
-        Roster.instance().copyRosterGroupList(group, entry);
-        Roster.writeRosterFile();
+        Roster.getDefault().copyRosterGroupList(group, entry);
+        Roster.getDefault().writeRoster();
     }
 
     // never invoked, because we overrode actionPerformed above

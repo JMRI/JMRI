@@ -1,4 +1,3 @@
-// SerialPacketGenFrame.java
 package jmri.jmrix.secsi.packetgen;
 
 import java.awt.Dimension;

@@ -26,11 +26,6 @@ import javax.swing.border.EmptyBorder;
  */
 public class ExceptionDisplayFrame extends JDialog {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6188978764804662351L;
-
     private ExceptionContext context;
 
     // This needs MAJOR clean-up to better organize the controls and their
@@ -90,7 +85,6 @@ public class ExceptionDisplayFrame extends JDialog {
     /**
      * Constructor that takes just an Exception and defaults everything else.
      *
-     * @param ex
      */
     public ExceptionDisplayFrame(Exception ex) {
         this.context = new ExceptionContext(ex, "Operation unavailable", // NOI18N

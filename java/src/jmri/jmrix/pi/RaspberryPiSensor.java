@@ -28,22 +28,30 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
     private GpioPinDigitalInput pin = null;
 
     public RaspberryPiSensor(String systemName, String userName) {
-        super(systemName, userName);
-        init(systemName);
+        this(systemName,userName,GpioFactory.getInstance());
     }
 
     public RaspberryPiSensor(String systemName) {
+        this(systemName,GpioFactory.getInstance());
+    }
+
+    public RaspberryPiSensor(String systemName, String userName,GpioController _gpio) {
+        super(systemName, userName);
+        init(systemName,_gpio);
+    }
+
+    public RaspberryPiSensor(String systemName,GpioController _gpio) {
         super(systemName);
-        init(systemName);
+        init(systemName,_gpio);
     }
 
     /**
-     * Common initialization for both constructors
+     * Common initialization for all constructors
      */
-    private void init(String id) {
+    private void init(String id,GpioController _gpio){
         log.debug("Provisioning sensor {}", id);
         if(gpio==null)
-           gpio = GpioFactory.getInstance();
+           gpio=_gpio;
         address=Integer.parseInt(id.substring(id.lastIndexOf("S")+1));
         try {
            pin = gpio.provisionDigitalInputPin(RaspiPin.getPinByName("GPIO "+address),getSystemName(),PinPullResistance.PULL_DOWN);

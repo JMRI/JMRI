@@ -19,13 +19,15 @@ public class XNetSimulatorTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {XNetSimulatorTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.lenz.xnetsimulator.XNetSimulatorTest");  // no tests in this class itself
         suite.addTest(new TestSuite(XNetSimulatorAdapterTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.lenz.xnetsimulator.configurexml.PackageTest.class));
         return suite;
     }
 

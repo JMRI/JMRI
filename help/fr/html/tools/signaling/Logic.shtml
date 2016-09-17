@@ -1,54 +1,64 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- UpDated by Blorec Herv&#233; le 2013-09-30-->
+
 <html lang="fr">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
-<title>JMRI: Simple Signal Logic</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- $Id$ -->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: Simple Signal Logic</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
+    <div id="mainContent">
+      <h1>JMRI: Logique Simple Signal</h1>
 
-<H1>JMRI: Logique Simple Signal</H1>
-<p class=subtitle>
-Informations g&#233;n&#233;rales sur la logique utilis&#233;e pour la commande de signaux simples
-</P>
+      <p class="subtitle">Informations g&#233;n&#233;rales sur la
+      logique utilis&#233;e pour la commande de signaux simples</p>
 
-<div class=para>
-<p> Cette page d&#233;crit la logique utilis&#233;e par le panneau JMRI
- Simple Signal pour commandes les signaux .</P>
- <p> Nous affichons le code r&#233;el, il n'y a donc aucune ambiguït&#233; sur
-ce qu'il fait. C'est &#224; partir des test de lib&#233;ration de JMRI  2.9.1.</P>
-</Div>
+      <div class="para">
+        <p>Cette page d&#233;crit la logique utilis&#233;e par le
+        panneau JMRI Simple Signal pour commandes les signaux .</p>
 
-<div name="single"><a class=section>
-<h2> Sur le Canton Simple</h2>
+        <p>Nous affichons le code r&#233;el, il n'y a donc aucune
+        ambigu&#195;&#175;t&#233; sur ce qu'il fait. C'est &#224;
+        partir des test de lib&#233;ration de JMRI 2.9.1.</p>
+      </div>
 
-<div class=para>
-<p> Ce signal prot&#232;ge l'extr&#233;mit&#233; d'une droite passant par le canton,
-sans aiguillage signal&#233;.</p>
-</Div>
+      <div name="single">
+        <h2><a class="section">Sur le Canton Simple</a></h2>
 
-<div class=para>
-<pre class=code>
+        <div class="para">
+          <a class="section"></a>
+
+          <p>Ce signal prot&#232;ge l'extr&#233;mit&#233; d'une
+          droite passant par le canton, sans aiguillage
+          signal&#233;.</p>
+        </div>
+
+        <div class="para">
+          <pre class="code">
 ulle doSingleBlock () {
 int = apparence SignalHead.GREEN;
 int oldAppearance = ((SignalHead)outputs [0]) getAppearance ().;
 // Cochez pour le jaune, jaune clignotant &#233;crase le vert
-if (protectWithFlashing & & fastestColor1 () == SignalHead.YELLOW)
+if (protectWithFlashing &amp; &amp; fastestColor1 () == SignalHead.YELLOW)
 aspect = SignalHead.FLASHYELLOW;
 if (fastestColor1 () == SignalHead.RED | | fastestColor1 () == SignalHead.FLASHRED)
 aspect = SignalHead.YELLOW;
@@ -62,14 +72,14 @@ if (limitSpeed1)
 aspect = slowerOf (apparence, SignalHead.YELLOW);
 
 // Cochez rouge primordiale sur jaune ou vert
-if (watchSensor1! = null & & watchSensor1.getBean (). getKnownState ()! Sensor.INACTIVE =)
+if (watchSensor1! = null &amp; &amp; watchSensor1.getBean (). getKnownState ()! Sensor.INACTIVE =)
 aspect = SignalHead.RED;
-if (watchSensor2! = null & & watchSensor2.getBean (). getKnownState ()! Sensor.INACTIVE =)
+if (watchSensor2! = null &amp; &amp; watchSensor2.getBean (). getKnownState ()! Sensor.INACTIVE =)
 aspect = SignalHead.RED;
-if (watchSensor3! = null & & watchSensor3.getBean (). getKnownState ()! Sensor.INACTIVE =)
+if (watchSensor3! = null &amp; &amp; watchSensor3.getBean (). getKnownState ()! Sensor.INACTIVE =)
 aspect = SignalHead.RED,
-if (watchSensor4! = null & & watchSensor4.getBean (). getKnownState ()! Sensor.INACTIVE =)
- aspect = SignalHead.RED;
+if (watchSensor4! = null &amp; &amp; watchSensor4.getBean (). getKnownState ()! Sensor.INACTIVE =)
+&#194; aspect = SignalHead.RED;
 
 // Cochez si le signal est maintenu, en for&#231;ant un aspect rouge par ce calcul
 if (((SignalHead) sorties [0]). getHeld ())
@@ -83,27 +93,33 @@ if (apparence! oldAppearance =) {
 if (log.isDebugEnabled ()) Log.DEBUG ("Change appearance of "+name+" to "+appearance";
 }
 }
-</Pre></div>
+</pre>
+        </div>
+      </div>
 
-</Div>
+      <div name="trailmain">
+        <h2><a class="section">Sur la Branche Droite d'un
+        Aiguillage prit en Talon</a></h2>
 
-<div name="trailmain"><a class=section>
-<h2> Sur la Branche Droite d'un Aiguillage prit en Talon</h2>
+        <div class="para">
+          <a class="section"></a>
 
-<div class=para>
-<p> Ce signal est le long de l'itin&#233;raire principale &#224; travers un aiguillage, qui est
-d&#233;finie comme la direction prise par les trains lorsque l'aiguillage  est droit.
-C'est la protection de la partie mobile de l'aiguillage de sorte que les trains s'arr&#234;tent avant de
-circuler &#224; travers une s&#233;rie d'aiguillages.</p>
-</Div>
+          <p>Ce signal est le long de l'itin&#233;raire principale
+          &#224; travers un aiguillage, qui est d&#233;finie comme
+          la direction prise par les trains lorsque l'aiguillage
+          est droit. C'est la protection de la partie mobile de
+          l'aiguillage de sorte que les trains s'arr&#234;tent
+          avant de circuler &#224; travers une s&#233;rie
+          d'aiguillages.</p>
+        </div>
 
-<div class=para>
-<pre class=code>
+        <div class="para">
+          <pre class="code">
 doTrailingMain void () {
 int = apparence SignalHead.GREEN;
 int oldAppearance = ((SignalHead) sorties [0]) getAppearance ().;
 // Cochez pour le jaune, jaune clignotant sup&#233;rieur au vert
-if (protectWithFlashing & & fastestColor1 () == SignalHead.YELLOW)
+if (protectWithFlashing &amp; &amp; fastestColor1 () == SignalHead.YELLOW)
 aspect = SignalHead.FLASHYELLOW;
 if (fastestColor1 () == SignalHead.RED | | fastestColor1 () == SignalHead.FLASHRED)
 aspect = SignalHead.YELLOW;
@@ -117,56 +133,60 @@ if (limitSpeed1)
 aspect = slowerOf (apparence, SignalHead.YELLOW);
 
 // cochez rouge primordiale sur jaune ou vert
-if (watchSensor1! = null & & watchSensor1.getBean (). getKnownState ()! Sensor.INACTIVE =)
+if (watchSensor1! = null &amp; &amp; watchSensor1.getBean (). getKnownState ()! Sensor.INACTIVE =)
 aspect = SignalHead.RED;
-if (watchSensor2! = null & & watchSensor2.getBean (). getKnownState ()! Sensor.INACTIVE =)
+if (watchSensor2! = null &amp; &amp; watchSensor2.getBean (). getKnownState ()! Sensor.INACTIVE =)
 aspect = SignalHead.RED;
-if (watchSensor3! = null & & watchSensor3.getBean (). getKnownState ()! Sensor.INACTIVE =)
+if (watchSensor3! = null &amp; &amp; watchSensor3.getBean (). getKnownState ()! Sensor.INACTIVE =)
 aspect = SignalHead.RED;
-if (watchSensor4! = null & & watchSensor4.getBean (). getKnownState ()! Sensor.INACTIVE =)
+if (watchSensor4! = null &amp; &amp; watchSensor4.getBean (). getKnownState ()! Sensor.INACTIVE =)
 aspect = SignalHead.RED;
 
-if (watchTurnout! = null & & watchTurnout.getBean (). getKnownState ()! = Turnout.CLOSED)
-            aspect = SignalHead.RED;
-        if (watchTurnout! = null & & watchTurnout.getBean (). getCommandedState ()! = Turnout.CLOSED)
-            aspect = SignalHead.RED;
+if (watchTurnout! = null &amp; &amp; watchTurnout.getBean (). getKnownState ()! = Turnout.CLOSED)
+&#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; aspect = SignalHead.RED;
+&#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; if (watchTurnout! = null &amp; &amp; watchTurnout.getBean (). getCommandedState ()! = Turnout.CLOSED)
+&#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; aspect = SignalHead.RED;
 
-        // cochezr si le signal est maintenu, en for&#231;ant un aspect rouge par ce calcul
-        if (((SignalHead) sorties [0]). getHeld ())
-            aspect = SignalHead.RED;
-            
-        // Gestion des feux d'approche
-        doApproach ();
-        
-        // montrer  R&#233;sultat si chang&#233;
-        if (apparence! oldAppearance =) {
-            ((SignalHead) sorties [0]) setAppearance (apparence).;
-            if (log.isDebugEnabled ()) Log.DEBUG ("Change appearance of "+name+" to "+appearance);
-        }
-    }
-</Pre></div>
+&#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; // cochezr si le signal est maintenu, en for&#231;ant un aspect rouge par ce calcul
+&#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; if (((SignalHead) sorties [0]). getHeld ())
+&#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; aspect = SignalHead.RED;
+&#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; 
+&#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; // Gestion des feux d'approche
+&#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; doApproach ();
+&#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; 
+&#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; // montrer  R&#233;sultat si chang&#233;
+&#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; if (apparence! oldAppearance =) {
+&#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; ((SignalHead) sorties [0]) setAppearance (apparence).;
+&#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; if (log.isDebugEnabled ()) Log.DEBUG ("Change appearance of "+name+" to "+appearance);
+&#194; &#194; &#194; &#194; &#194; &#194; &#194; &#194; }
+&#194; &#194; &#194; &#194; }
+</pre>
+        </div>
+      </div>
 
-</Div>
+      <div name="traildiv">
+        <h2><a class="section">Sur Branche D&#233;vi&#233;e d'un
+        Aiguillage en Talon</a></h2>
 
+        <div class="para">
+          <a class="section"></a>
 
-<div name="traildiv"><a class=section>
-<h2> Sur Branche D&#233;vi&#233;e d'un Aiguillage en Talon</h2>
+          <p>Ce signal est le long de la voie d&#233;vi&#233;e d'
+          un aiguillage, qui est d&#233;finie comme la direction
+          prise par les trains lorsque l'aiguillage est d&#233;fini
+          &#224; "d&#233;vi&#233;&#194;&#187;. C'est la protection
+          de la partie mobile de l'aiguillage afin que les trains
+          s'arr&#234;tent avant de traverser une s&#233;rie
+          d'aiguillages .</p>
+        </div>
 
-<div class=para>
-<p> Ce signal est le long de la voie d&#233;vi&#233;e d' un 
-aiguillage, qui est d&#233;finie comme la direction
-prise par les trains lorsque l'aiguillage est d&#233;fini &#224; "d&#233;vi&#233;».
-C'est la protection de la partie mobile de l'aiguillage afin que les trains
-s'arr&#234;tent avant de  traverser  une s&#233;rie d'aiguillages .</p>
-</Div>
-
-<div class=para>
-<pre class=code>
+        <div class="para">
+          <pre class="code">
 nulle doTrailingDiverging () {
 int = apparence SignalHead.GREEN;
 int oldAppearance = ((SignalHead) sorties [0]) getAppearance ().;
  // Cochez pour le jaune, jaune clignotant primordiale sur le vert
-if (protectWithFlashing & & fastestColor1 () == SignalHead.YELLOW)
+if (protectWithFlashing &amp; &amp; fastestColor1 () == SignalHead.YELLOW)
 aspect = SignalHead.FLASHYELLOW;
 if (fastestColor1 () == SignalHead.RED | | fastestColor1 () == SignalHead.FLASHRED)
 aspect = SignalHead.YELLOW;
@@ -180,18 +200,18 @@ if (limitSpeed2)
 aspect = slowerOf (apparence, SignalHead.YELLOW);
 
 // cochez rouge primordiale sur jaune ou vert
-if (watchSensor1! = null & & watchSensor1.getBean (). getKnownState ()! Sensor.INACTIVE =)
+if (watchSensor1! = null &amp; &amp; watchSensor1.getBean (). getKnownState ()! Sensor.INACTIVE =)
 aspect = SignalHead.RED;
-if (watchSensor2! = null & & watchSensor2.getBean (). getKnownState ()! Sensor.INACTIVE =)
+if (watchSensor2! = null &amp; &amp; watchSensor2.getBean (). getKnownState ()! Sensor.INACTIVE =)
 aspect = SignalHead.RED;
-if (watchSensor3! = null & & watchSensor3.getBean (). getKnownState ()! Sensor.INACTIVE =)
+if (watchSensor3! = null &amp; &amp; watchSensor3.getBean (). getKnownState ()! Sensor.INACTIVE =)
 aspect = SignalHead.RED;
-if (watchSensor4! = null & & watchSensor4.getBean (). getKnownState ()! Sensor.INACTIVE =)
+if (watchSensor4! = null &amp; &amp; watchSensor4.getBean (). getKnownState ()! Sensor.INACTIVE =)
 aspect = SignalHead.RED;
 
-if (watchTurnout! = null & & watchTurnout.getBean (). getKnownState ()! = Turnout.THROWN)
+if (watchTurnout! = null &amp; &amp; watchTurnout.getBean (). getKnownState ()! = Turnout.THROWN)
 aspect = SignalHead.RED;
-if (watchTurnout! = null & & watchTurnout.getBean (). getCommandedState ()! = Turnout.THROWN)
+if (watchTurnout! = null &amp; &amp; watchTurnout.getBean (). getCommandedState ()! = Turnout.THROWN)
 aspect = SignalHead.RED;
 
 // cochez si le signal est maintenu, en for&#231;ant un aspect rouge par ce calcul
@@ -206,34 +226,37 @@ if (apparence! oldAppearance =) {
 ((SignalHead) sorties [0]) setAppearance (apparence).;
 if (log.isDebugEnabled ()) Log.DEBUG ("Change appearance of "+name+" to "+appearance");
 }
-</pre></div>
+</pre>
+        </div>
+      </div>
 
-		   </div}
-}
+      <h2><a class="section">Aiguillage en Pointe</a></h2>
 
-<div name="face"><a class=section>
-<h2> Aiguillage en Pointe</h2>
+      <div class="para">
+        <a class="section"></a>
 
-<div class=para>
-<p> Ce signal est pour prot&#233;ger les sorties du talon d'un aiguillage.
-Selon que l'aiguillage est d&#233;vi&#233; ou direct, le
-train prend deux voies diff&#233;rentes, et le
-signal doit prot&#233;ger les diff&#233;rents cantons  suivants. </div>
-		    <div class=para>
-<pre class=code>
+        <p>Ce signal est pour prot&#233;ger les sorties du talon
+        d'un aiguillage. Selon que l'aiguillage est d&#233;vi&#233;
+        ou direct, le train prend deux voies diff&#233;rentes, et
+        le signal doit prot&#233;ger les diff&#233;rents cantons
+        suivants.</p>
+      </div>
+
+      <div class="para">
+        <pre class="code">
     void doFacing() {
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
         
         // trouver l'apparence en aval, &#233;tant pessimiste, si nous ne sommes changepas s&#251;rs de l'&#233;tat
         int s = SignalHead.GREEN;
-        if (watchTurnout!=null && watchTurnout.getBean().getKnownState() != Turnout.THROWN)
+        if (watchTurnout!=null &amp;&amp; watchTurnout.getBean().getKnownState() != Turnout.THROWN)
             s = slowerOf(s, fastestColor1());
-        if (watchTurnout!=null && watchTurnout.getBean().getKnownState() != Turnout.CLOSED)
+        if (watchTurnout!=null &amp;&amp; watchTurnout.getBean().getKnownState() != Turnout.CLOSED)
             s = slowerOf(s, fastestColor2());
 
         // cochez pour jaune, jaune clignotant primordiale sur le vert
-        if (protectWithFlashing && s==SignalHead.YELLOW)
+        if (protectWithFlashing &amp;&amp; s==SignalHead.YELLOW)
             appearance = SignalHead.FLASHYELLOW;
         if (s==SignalHead.RED  || s==SignalHead.FLASHRED)
             appearance = SignalHead.YELLOW;change
@@ -242,38 +265,38 @@ signal doit prot&#233;ger les diff&#233;rents cantons  suivants. </div>
             appearance = s;
 
         // si vitesse limit&#233;e et vert ou jaune clignotant, r&#233;duire &#224; jaune, 
-        if (watchTurnout!=null && limitSpeed1 && watchTurnout.getBean().getKnownState()!=Turnout.THROWN)
+        if (watchTurnout!=null &amp;&amp; limitSpeed1 &amp;&amp; watchTurnout.getBean().getKnownState()!=Turnout.THROWN)
             appearance = slowerOf(appearance, SignalHead.YELLOW);
 
-        if (watchTurnout!=null && limitSpeed2 && watchTurnout.getBean().getKnownState()!=Turnout.CLOSED)
+        if (watchTurnout!=null &amp;&amp; limitSpeed2 &amp;&amp; watchTurnout.getBean().getKnownState()!=Turnout.CLOSED)
             appearance = slowerOf(appearance, SignalHead.YELLOW);
            change
 
         // Cochez pour rouge primordiale sur jaune et vert
-        if (watchSensor1!=null && watchSensor1.getBean().getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor1!=null &amp;&amp; watchSensor1.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
-        if (watchSensor2!=null && watchSensor2.getBean().getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor2!=null &amp;&amp; watchSensor2.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
-        if (watchSensor3!=null && watchSensor3.getBean().getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor3!=null &amp;&amp; watchSensor3.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
-        if (watchSensor4!=null && watchSensor4.getBean().getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor4!=null &amp;&amp; watchSensor4.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
 
-        if ((watchTurnout!=null && watchTurnout.getBean().getKnownState() == Turnout.CLOSED) 
-                && ((watchedSensor1!=null && watchedSensor1.getBean().getKnownState() != Sensor.INACTIVE)))
+        if ((watchTurnout!=null &amp;&amp; watchTurnout.getBean().getKnownState() == Turnout.CLOSED) 
+                &amp;&amp; ((watchedSensor1!=null &amp;&amp; watchedSensor1.getBean().getKnownState() != Sensor.INACTIVE)))
             appearance = SignalHead.RED;
-        if ((watchTurnout!=null && watchTurnout.getBean().getKnownState() == Turnout.CLOSED) && ((watchedSensor1Alt!=null && watchedSensor1Alt.getBean().getKnownState() != Sensor.INACTIVE)))
+        if ((watchTurnout!=null &amp;&amp; watchTurnout.getBean().getKnownState() == Turnout.CLOSED) &amp;&amp; ((watchedSensor1Alt!=null &amp;&amp; watchedSensor1Alt.getBean().getKnownState() != Sensor.INACTIVE)))
             appearance = SignalHead.RED;
-        if ((watchTurnout!=null && watchTurnout.getBean().getKnownState() == Turnout.THROWN) && ((watchedSensor2!=null && watchedSensor2.getBean().getKnownState() != Sensor.INACTIVE)))
+        if ((watchTurnout!=null &amp;&amp; watchTurnout.getBean().getKnownState() == Turnout.THROWN) &amp;&amp; ((watchedSensor2!=null &amp;&amp; watchedSensor2.getBean().getKnownState() != Sensor.INACTIVE)))
             appearance = SignalHead.RED;
-        if ((watchTurnout!=null && watchTurnout.getBean().getKnownState() == Turnout.THROWN) && ((watchedSensor2Alt!=null && watchedSensor2Alt.getBean().getKnownState() != Sensor.INACTIVE)))
+        if ((watchTurnout!=null &amp;&amp; watchTurnout.getBean().getKnownState() == Turnout.THROWN) &amp;&amp; ((watchedSensor2Alt!=null &amp;&amp; watchedSensor2Alt.getBean().getKnownState() != Sensor.INACTIVE)))
             appearance = SignalHead.RED;
         
         // v&#233;rifier si l'aiguillage est en mouvement, le cas &#233;ch&#233;ant forcer au rouge
 
-        if (watchTurnout!=null && (watchTurnout.getBean().getKnownState() != watchTurnout.getBean().getCommandedState()) )
+        if (watchTurnout!=null &amp;&amp; (watchTurnout.getBean().getKnownState() != watchTurnout.getBean().getCommandedState()) )
             appearance = SignalHead.RED;
-        if (watchTurnout!=null && (watchTurnout.getBean().getKnownState() != Turnout.THROWN) && (watchTurnout.getBean().getKnownState() != Turnout.CLOSED) )  // checking for other states
+        if (watchTurnout!=null &amp;&amp; (watchTurnout.getBean().getKnownState() != Turnout.THROWN) &amp;&amp; (watchTurnout.getBean().getKnownState() != Turnout.CLOSED) )  // checking for other states
             appearance = SignalHead.RED;
 
         // v&#233;rifiez si le signal est maintenu, forcer &#224; l'aspect rouge par ce calcul
@@ -286,12 +309,9 @@ signal doit prot&#233;ger les diff&#233;rents cantons  suivants. </div>
         // show result if changed
         if (appearance != oldAppearance)
             ((SignalHead)outputs[0]).setAppearance(appearance);
-</pre></div>
-
-</div>
-
-
-<!--#include virtual="/Footer" -->
+</pre>
+      </div>
+    </div><!--#include virtual="/Footer" -->
+  </div>
 </body>
 </html>
-

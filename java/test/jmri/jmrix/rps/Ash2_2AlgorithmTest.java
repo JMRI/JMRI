@@ -23,7 +23,7 @@ public class Ash2_2AlgorithmTest extends AbstractAlgorithmTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {Ash2_2AlgorithmTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

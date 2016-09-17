@@ -28,7 +28,6 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
      * This ctor interprets the String as the exact sequence to send,
      * byte-for-byte.
      *
-     * @param m
      */
     public XBeeMessage(String m, int l) {
         super(m, l);

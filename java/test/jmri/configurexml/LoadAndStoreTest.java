@@ -26,11 +26,19 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", LoadAndStoreTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     public static Test suite() {
         return LoadAndStoreTestBase.makeSuite("java/test/jmri/configurexml/");
     }
 
+    // The minimal setup for log4J
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 }

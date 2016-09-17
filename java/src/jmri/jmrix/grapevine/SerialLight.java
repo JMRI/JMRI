@@ -1,4 +1,3 @@
-// SerialLight.java
 package jmri.jmrix.grapevine;
 
 import jmri.implementation.AbstractLight;
@@ -13,14 +12,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version $Revision$
  */
 public class SerialLight extends AbstractLight {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1633282673542762421L;
 
     /**
      * Create a Light object, with only system name.
@@ -119,5 +112,3 @@ public class SerialLight extends AbstractLight {
 
     private final static Logger log = LoggerFactory.getLogger(SerialLight.class.getName());
 }
-
-/* @(#)SerialLight.java */

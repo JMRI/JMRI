@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Represents a set of standard names and aliases in memory.
  * <P>
- * This class doesn't provide tools for defining the names & aliases; that's
- * done manually, or at least not done here, to create the file.
+ * This class doesn't provide tools for defining the names {@literal &} aliases;
+ * that's done manually, or at least not done here, to create the file.
  * <P>
  * Initially, we only need one of these, so we use an "instance" method to
  * locate the one associated with the "xml/names.xml" file.

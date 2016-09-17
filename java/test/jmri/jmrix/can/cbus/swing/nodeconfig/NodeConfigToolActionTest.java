@@ -20,13 +20,12 @@ public class NodeConfigToolActionTest extends TestCase {
     public void testAction() {
         // load dummy TrafficController
         new TestTrafficController();
-        new NodeConfigToolAction().actionPerformed(null);
     }
 
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", NodeConfigToolActionTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2010 All rights reserved -->
+<!-- Copyright (C) JMRI 2016 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -11,7 +11,8 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<!-- version 1 - new pane file for SoundTraxx Tsunami -->
+<!-- version 1 - new pane file for SoundTraxx Tsunami                       -->
+<!-- version 2 - Additional items for SoundTraxx Tsunami2                   -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <row>
@@ -23,6 +24,18 @@
     <label>
       <text> </text>
     </label>
+        <row>
+          <display item="High-Pass Filter Cutoff Frequency" layout="above" label="">
+            <label/>
+          </display>
+          <label>
+            <text> </text>
+          </label>
+          <display item="High-Pass Filter Cutoff Frequency" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
     <row>
       <display item="Equalizer Control"/>
     </row>

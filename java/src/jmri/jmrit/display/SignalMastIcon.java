@@ -90,7 +90,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
      * @param pName Used as a system/user name to lookup the SignalMast object
      */
     public void setSignalMast(String pName) {
-        SignalMast mMast = (SignalMast) InstanceManager.signalMastManagerInstance().getNamedBean(pName);
+        SignalMast mMast = (SignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(pName);
         if (mMast == null) {
             log.warn("did not find a SignalMast named " + pName);
         } else {
@@ -336,7 +336,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     }
 
     private void addTransitPopup(JPopupMenu popup) {
-        if ((InstanceManager.sectionManagerInstance().getSystemNameList().size()) > 0
+        if ((InstanceManager.getDefault(jmri.SectionManager.class).getSystemNameList().size()) > 0
                 && jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
 
             if (tct == null) {
@@ -422,7 +422,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     SignalMastItemPanel _itemPanel;
 
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("SignalMast"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSignalMast"));
         popup.add(new AbstractAction(txt) {
             /**
              *
@@ -437,7 +437,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     }
 
     protected void editItem() {
-        makePalettteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("SignalMast")));
+        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSignalMast")));
         _itemPanel = new SignalMastItemPanel(_paletteFrame, "SignalMast", getFamily(),
                 PickListModel.signalMastPickModelInstance(), _editor);
         ActionListener updateAction = new ActionListener() {
@@ -466,7 +466,6 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     /**
      * Change the SignalMast aspect when the icon is clicked.
      *
-     * @param e
      */
     public void doMouseClicked(java.awt.event.MouseEvent e) {
         if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {

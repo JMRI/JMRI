@@ -8,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.srcp package
  *
  * @author	Paul Bender
- * @version	$Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -20,7 +19,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -33,7 +32,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(SRCPBusConnectionMemoTest.class));
         suite.addTest(new TestSuite(SRCPTurnoutManagerTest.class));
         suite.addTest(new TestSuite(SRCPTurnoutTest.class));
-        suite.addTest(new TestSuite(SRCPSensorManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPSensorManagerTest.class));
         suite.addTest(new TestSuite(SRCPSensorTest.class));
         suite.addTest(new TestSuite(SRCPThrottleManagerTest.class));
         suite.addTest(new TestSuite(SRCPThrottleTest.class));
@@ -42,6 +41,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(SRCPProgrammerManagerTest.class));
         suite.addTest(new TestSuite(SRCPClockControlTest.class));
         suite.addTest(jmri.jmrix.srcp.parser.SRCPClientParserTests.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.srcp.networkdriver.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.srcp.configurexml.PackageTest.class));
 
         return suite;
     }

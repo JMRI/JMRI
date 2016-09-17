@@ -78,12 +78,13 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Create default menubar.
+     * Add menus to a menu bar.
      * <P>
      * This does not include the development menu.
      *
-     * @param menuBar
-     * @param wi
+     * @param menuBar the existing menu bar
+     * @param wi      the WindowInterface to associate actions in menus with
+     * @param pane    the JPanel to associate actions in menus with
      */
     protected void createMenus(JMenuBar menuBar, WindowInterface wi, AppsLaunchPane pane) {
         // the debugging statements in the following are
@@ -120,6 +121,9 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
      * Set the location of the window-specific help for the preferences pane.
      * Made a separate method so if can be overridden for application specific
      * preferences help
+     *
+     * @param f the frame to associate with the java help reference
+     * @param l Java Help reference
      */
     protected void setPrefsFrameHelp(JmriJFrame f, String l) {
         f.addHelpMenu(l, true);
@@ -181,14 +185,13 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
 
     /**
      * Show only active systems in the menu bar.
-     * <P>
-     * Alternately, you might want to do
-     * <PRE>
-     *    menuBar.add(new jmri.jmrix.SystemsMenu());
-     * </PRE>
+     * <p>
+     * Alternately, you might want to use
+     * <code>menuBar.add(new jmri.jmrix.SystemsMenu());</code>
      *
-     * @param menuBar
-     * @param wi
+     * @param menuBar the menu to attach systems menus to
+     * @param wi      ignored, but available for overriding methods to use if
+     *                needed
      */
     protected void systemsMenu(JMenuBar menuBar, WindowInterface wi) {
         ActiveSystemsMenu.addItems(menuBar);

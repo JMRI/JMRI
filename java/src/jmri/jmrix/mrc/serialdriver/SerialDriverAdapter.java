@@ -112,7 +112,6 @@ public class SerialDriverAdapter extends MrcPortController implements jmri.jmrix
         this.getSystemConnectionMemo().configureManagers();
 
         packets.startThreads();
-        jmri.jmrix.mrc.ActiveFlag.setActive();
     }
 
     // base class methods for the MrcPortController interface

@@ -525,7 +525,6 @@ public class RollingStockManager {
     /**
      * Get a list of rolling stocks assigned to a train ordered by location
      *
-     * @param train
      * @return List of RollingStock assigned to the train ordered by location
      */
     public List<RollingStock> getByTrainList(Train train) {

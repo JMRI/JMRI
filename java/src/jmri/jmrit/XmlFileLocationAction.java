@@ -38,7 +38,7 @@ public class XmlFileLocationAction extends AbstractAction {
     public void actionPerformed(ActionEvent ev) {
 
         final String user = FileUtil.getUserFilesPath();
-        final String roster = Roster.getFileLocation();
+        final String roster = Roster.getDefault().getRosterLocation();
         final String profile = FileUtil.getProfilePath();
         final String settings = FileUtil.getPreferencesPath();
         final String scripts = FileUtil.getScriptsPath();

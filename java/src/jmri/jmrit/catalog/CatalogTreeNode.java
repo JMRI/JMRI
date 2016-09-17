@@ -99,7 +99,7 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
     }
 
     public Enumeration<CatalogTreeNode> children() {
-        return (Enumeration<CatalogTreeNode>) super.children();
+        return super.children();
     }
     
     public ArrayList<CatalogTreeLeaf> getLeaves() {

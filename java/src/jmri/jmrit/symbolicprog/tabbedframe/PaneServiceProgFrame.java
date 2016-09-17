@@ -1,4 +1,3 @@
-// PaneServiceProgFrame.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import javax.swing.JPanel;
@@ -15,15 +14,10 @@ import org.slf4j.LoggerFactory;
  * If no programmer is provided, the programmer parts of the GUI are suppressed.
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2008
- * @version	$Revision$
  */
 public class PaneServiceProgFrame extends PaneProgFrame
         implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1177241004682137802L;
     jmri.jmrit.progsupport.ProgModeSelector modePane;
 
     /**
@@ -54,8 +48,6 @@ public class PaneServiceProgFrame extends PaneProgFrame
      *
      * @param decoderFile XML file defining the decoder contents
      * @param r           RosterEntry for information on this locomotive
-     * @param name
-     * @param file
      */
     public PaneServiceProgFrame(DecoderFile decoderFile, RosterEntry r,
             String name, String file, Programmer pProg) {

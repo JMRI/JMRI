@@ -2,6 +2,9 @@
 #
 # Default objects for interaction with JMRI from a python script.
 # This file may be needed only if jython.exec=true in python.properties
+#
+# These should be kept consistent with those in jmri.script.JmriScriptEngineManager
+# 
 
 # Default imports
 import java
@@ -19,7 +22,9 @@ memories     = jmri.InstanceManager.memoryManagerInstance()
 routes       = jmri.InstanceManager.routeManagerInstance()
 blocks       = jmri.InstanceManager.blockManagerInstance()
 powermanager = jmri.InstanceManager.powerManagerInstance()
-programmers  = jmri.InstanceManager.programmerManagerInstance()
+programmers  = jmri.managers.WarningProgrammerManager(jmri.InstanceManager.programmerManagerInstance())
+addressedProgrammers = jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager)
+globalProgrammers = jmri.InstanceManager.getDefault(jmri.globalProgrammerManager)
 shutdown     = jmri.InstanceManager.shutDownManagerInstance()
 audio        = jmri.InstanceManager.audioManagerInstance()
 layoutblocks = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
@@ -35,6 +40,9 @@ import jmri.Turnout.LOCKED         as LOCKED
 
 import jmri.Sensor.ACTIVE          as ACTIVE
 import jmri.Sensor.INACTIVE        as INACTIVE
+
+import jmri.Light.ON               as ON
+import jmri.Light.OFF              as OFF
 
 import jmri.NamedBean.UNKNOWN      as UNKNOWN
 import jmri.NamedBean.INCONSISTENT as INCONSISTENT

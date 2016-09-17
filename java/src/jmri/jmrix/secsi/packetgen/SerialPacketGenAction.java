@@ -1,4 +1,3 @@
-// SerialPacketGenAction.java
 package jmri.jmrix.secsi.packetgen;
 
 import java.awt.event.ActionEvent;
@@ -38,6 +37,3 @@ public class SerialPacketGenAction extends AbstractAction {
     }
     private final static Logger log = LoggerFactory.getLogger(SerialPacketGenAction.class.getName());
 }
-
-
-/* @(#)SerialPacketGenAction.java */

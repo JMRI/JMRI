@@ -2,7 +2,7 @@
 package jmri.jmrix.loconet.locomon;
 
 import jmri.jmrix.loconet.LocoNetMessage;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -72,7 +72,7 @@ public class LocoMonPaneTest extends jmri.util.SwingTestCase {
     static public void main(String[] args) {
         apps.tests.Log4JFixture.initLogging();
         String[] testCaseName = {"-noloading", LocoMonPaneTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

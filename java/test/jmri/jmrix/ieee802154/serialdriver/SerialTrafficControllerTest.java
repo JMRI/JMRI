@@ -1,7 +1,7 @@
 package jmri.jmrix.ieee802154.serialdriver;
 
 import jmri.jmrix.ieee802154.IEEE802154Node;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -143,7 +143,7 @@ public class SerialTrafficControllerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SerialTrafficControllerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -157,7 +157,6 @@ public class SerialTrafficControllerTest extends TestCase {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
         m = new SerialTrafficController();
-        jmri.util.JUnitAppender.assertErrorMessage("Deprecated Method setInstance called");
     }
 
     protected void tearDown() throws Exception {

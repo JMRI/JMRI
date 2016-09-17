@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.MemorySpinnerIcon objects.
  *
  * @author Pete Cressman Copyright (c) 2012
- * @version $Revision: 1 $
  */
 public class MemoryComboIconXml extends PositionableLabelXml {
 
@@ -38,7 +37,7 @@ public class MemoryComboIconXml extends PositionableLabelXml {
         for (int i = 0; i < model.getSize(); i++) {
             Element e = new Element("item");
             e.setAttribute("index", "" + i);
-            e.addContent((String) model.getElementAt(i));
+            e.addContent(model.getElementAt(i));
             elem.addContent(e);
         }
         element.addContent(elem);

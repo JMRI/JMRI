@@ -1,4 +1,3 @@
-// RollingStockLogger.java
 package jmri.jmrit.operations.rollingstock;
 
 import java.beans.PropertyChangeEvent;
@@ -28,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * Logs rolling stock movements by writing their locations to a file.
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2016
- * @version $Revision$
  */
 public class RollingStockLogger extends XmlFile implements java.beans.PropertyChangeListener {
 
@@ -47,9 +45,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 
     public static synchronized RollingStockLogger instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("RollingStockLogger creating instance");
-            }
+            log.debug("RollingStockLogger creating instance");
             // create and load
             _instance = new RollingStockLogger();
         }
@@ -122,9 +118,27 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
             }
         }
 
-        String line = rs.getNumber() + DEL + rsRoad + DEL + rsType + DEL + carLoad + DEL + rsLocationName + DEL
-                + rsTrackName + DEL + carFinalDest + DEL + carFinalDestTrack + DEL + rsTrainName + DEL + rs.getMoves()
-                + DEL + getTime();
+        String line = rs.getNumber() +
+                DEL +
+                rsRoad +
+                DEL +
+                rsType +
+                DEL +
+                carLoad +
+                DEL +
+                rsLocationName +
+                DEL +
+                rsTrackName +
+                DEL +
+                carFinalDest +
+                DEL +
+                carFinalDestTrack +
+                DEL +
+                rsTrainName +
+                DEL +
+                rs.getMoves() +
+                DEL +
+                getTime();
 
         fileOut(line); // append line to common file
         fileOut(line, rs); // append line to individual file  
@@ -194,11 +208,27 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
     }
 
     private String getHeader() {
-        String header = Bundle.getMessage("Number") + DEL + Bundle.getMessage("Road") + DEL + Bundle.getMessage("Type")
-                + DEL + Bundle.getMessage("Load") + DEL + Bundle.getMessage("Location") + DEL
-                + Bundle.getMessage("Track") + DEL + Bundle.getMessage("FinalDestination") + DEL
-                + Bundle.getMessage("Track") + DEL + Bundle.getMessage("Train") + DEL + Bundle.getMessage("Moves")
-                + DEL + Bundle.getMessage("DateAndTime");
+        String header = Bundle.getMessage("Number") +
+                DEL +
+                Bundle.getMessage("Road") +
+                DEL +
+                Bundle.getMessage("Type") +
+                DEL +
+                Bundle.getMessage("Load") +
+                DEL +
+                Bundle.getMessage("Location") +
+                DEL +
+                Bundle.getMessage("Track") +
+                DEL +
+                Bundle.getMessage("FinalDestination") +
+                DEL +
+                Bundle.getMessage("Track") +
+                DEL +
+                Bundle.getMessage("Train") +
+                DEL +
+                Bundle.getMessage("Moves") +
+                DEL +
+                Bundle.getMessage("DateAndTime");
         return header;
     }
 
@@ -238,8 +268,8 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
         return loggingDirectory + File.separator + getFileName();
     }
 
-    private String operationsDirectory = OperationsSetupXml.getFileLocation()
-            + OperationsSetupXml.getOperationsDirectoryName();
+    private String operationsDirectory =
+            OperationsSetupXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName();
 
     private String loggingDirectory = operationsDirectory + File.separator + "logger"; // NOI18N
 
@@ -264,9 +294,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
     /**
      * Individual files for each rolling stock stored in a directory called
      * "rollingStock" inside the "logger" directory.
-     * 
-     * @param rs
-     * @return
+     *
      */
     public String getFullLoggerFileName(RollingStock rs) {
         if (!OperationsXml.checkFileName(rs.toString())) { // NOI18N
@@ -278,20 +306,19 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 
     private String getDate() {
         Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd"); // NOI18N
         return simpleDateFormat.format(date);
     }
 
     /**
      * Return the date and time in an MS Excel friendly format yyyy/MM/dd
      * HH:mm:ss
-     * 
-     * @return
+     *
      */
     private String getTime() {
         String time = Calendar.getInstance().getTime().toString();
-        SimpleDateFormat dt = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
-        SimpleDateFormat dtout = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        SimpleDateFormat dt = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy"); // NOI18N
+        SimpleDateFormat dtout = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); // NOI18N
         try {
             return dtout.format(dt.parse(time));
         } catch (ParseException e) {

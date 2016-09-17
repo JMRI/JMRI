@@ -43,9 +43,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PhysicalLocation extends Vector3f {
 
-    float[] f = new float[3];  // used for extracting a single dimension
-    // from the underlying vector.
-
     private boolean _isTunnel;
 
     // Class methods
@@ -95,7 +92,7 @@ public class PhysicalLocation extends Vector3f {
      */
     public static PhysicalLocation getBeanPhysicalLocation(NamedBean b) {
         String s = (String) b.getProperty(PhysicalLocation.NBPropertyKey);
-        if ((s == null) || (s.equals(""))) {
+        if ((s == null) || (s.isEmpty())) {
             return (PhysicalLocation.Origin);
         } else {
             return (PhysicalLocation.parse(s));
@@ -133,8 +130,9 @@ public class PhysicalLocation extends Vector3f {
         // Optional flags come immediately after the (x,y,z) in the form of "(flag)".
         // Flags are boolean. If they are present, they are true.
         // Regex [-+]?[0-9]*\.?[0-9]+
-        //String syntax = "\\((\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+)\\)";
-        String syntax = "\\((\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+)\\)(\\([tunnel]\\))*";
+        // String syntax = "\\((\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+)\\)";
+        // String syntax = "\\((\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+),(\\s*[-+]?[0-9]*\\.?[0-9]+)\\)(\\([tunnel]\\))*";
+        String syntax = "\\((\\s*[-+]?[0-9]*\\.?[0-9]+), (\\s*[-+]?[0-9]*\\.?[0-9]+), (\\s*[-+]?[0-9]*\\.?[0-9]+)\\)\\(?([tunnel]*)\\)?";
         try {
             Pattern p = Pattern.compile(syntax);
             Matcher m = p.matcher(pos);
@@ -151,14 +149,14 @@ public class PhysicalLocation extends Vector3f {
             boolean is_tunnel = false;
             // Handle optional flags
             for (int i = 4; i < m.groupCount() + 1; i++) {
-                if ((m.group(i) != null) && (m.group(i) == "(tunnel)")) {
+                if ((m.group(i) != null) && ("tunnel".equals(m.group(i)))) {
                     is_tunnel = true;
                 }
             }
 
-            return (new PhysicalLocation(Float.parseFloat(m.group(1)),
-                    Float.parseFloat(m.group(2)),
-                    Float.parseFloat(m.group(3)),
+            return (new PhysicalLocation(Float.parseFloat(xs),
+                    Float.parseFloat(ys),
+                    Float.parseFloat(zs),
                     is_tunnel));
         } catch (PatternSyntaxException e) {
             log.error("Malformed listener position syntax! " + syntax);
@@ -179,6 +177,7 @@ public class PhysicalLocation extends Vector3f {
      *
      * @return String "(X, Y, Z)"
      */
+    @Override
     public String toString() {
         String s = "(" + this.getX() + ", " + this.getY() + ", " + this.getZ() + ")";
         if (_isTunnel) {
@@ -216,9 +215,9 @@ public class PhysicalLocation extends Vector3f {
     /**
      * Constructor from X, Y, Z (float) + is_tunnel (boolean)
      */
-    public PhysicalLocation(float x, float y, float z, boolean is_tunnel) {
+    public PhysicalLocation(float x, float y, float z, boolean isTunnel) {
         super(x, y, z);
-        _isTunnel = is_tunnel;
+        _isTunnel = isTunnel;
 
     }
 
@@ -244,9 +243,9 @@ public class PhysicalLocation extends Vector3f {
     /**
      * Constructor from X, Y, Z (double)
      */
-    public PhysicalLocation(double x, double y, double z, boolean is_tunnel) {
+    public PhysicalLocation(double x, double y, double z, boolean isTunnel) {
         super((float) x, (float) y, (float) z);
-        _isTunnel = is_tunnel;
+        _isTunnel = isTunnel;
     }
 
     /**
@@ -255,57 +254,6 @@ public class PhysicalLocation extends Vector3f {
     public PhysicalLocation(PhysicalLocation p) {
         super(p.getX(), p.getY(), p.getZ());
         _isTunnel = p.isTunnel();
-    }
-
-    /**
-     * Get X dimension
-     */
-    public float getX() {
-        this.get(f);
-        return (f[0]);
-    }
-
-    /**
-     * Set X dimension
-     */
-    public void setX(float x) {
-        this.get(f);
-        f[0] = x;
-        this.set(f);
-    }
-
-    /**
-     * Get Y dimension
-     */
-    public float getY() {
-        this.get(f);
-        return (f[1]);
-    }
-
-    /**
-     * Set Y dimension
-     */
-    public void setY(float y) {
-        this.get(f);
-        f[1] = y;
-        this.set(f);
-    }
-
-    /**
-     * Get Z dimension
-     */
-    public float getZ() {
-        this.get(f);
-        return (f[2]);
-    }
-
-    /**
-     * Set Z dimension
-     */
-    public void setZ(float z) {
-        this.get(f);
-        f[2] = z;
-        this.set(f);
     }
 
     public boolean isTunnel() {
@@ -319,7 +267,7 @@ public class PhysicalLocation extends Vector3f {
     /**
      * equals()
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="equals really does test for floating equality")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "equals really does test for floating equality")
     public Boolean equals(PhysicalLocation l) {
         if ((this.getX() == l.getX())
                 && (this.getY() == l.getY())

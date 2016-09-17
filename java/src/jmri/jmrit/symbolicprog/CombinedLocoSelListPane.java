@@ -30,9 +30,9 @@ import org.slf4j.LoggerFactory;
  * parts are unchanged.
  * <P>
  * The JComboBox implementation always had to have selected entries, so we added
- * dummy "select from .." items at the top & used those to indicate that there
- * was no selection in that box. Here, the lack of a selection indicates there's
- * no selection.
+ * dummy "select from .." items at the top {@literal &} used those to indicate
+ * that there was no selection in that box. Here, the lack of a selection
+ * indicates there's no selection.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
  */
@@ -45,6 +45,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
     /**
      * Create the panel used to select the decoder
      */
+    @Override
     protected JPanel layoutDecoderSelection() {
         JPanel pane1a = new JPanel();
         pane1a.setLayout(new BoxLayout(pane1a, BoxLayout.X_AXIS));
@@ -99,9 +100,9 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
         pane1a.add(new JScrollPane(mDecoderList));
         iddecoder = new JToggleButton("Ident");
         iddecoder.setToolTipText("Read the decoders mfg and version, then attempt to select its type");
-        if (jmri.InstanceManager.programmerManagerInstance() != null
-                && jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null
-                && !jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().getCanRead()) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) != null
+                && jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer() != null
+                && !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer().getCanRead()) {
             // can't read, disable the button
             iddecoder.setEnabled(false);
             iddecoder.setToolTipText("Button disabled because configured command station can't read CVs");
@@ -190,6 +191,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
     /**
      * Decoder identify has matched one or more specific types
      */
+    @Override
     void updateForDecoderTypeID(List<DecoderFile> pModelList) {
         // use a DefaultComboBoxModel to get the efficient ctor
         mDecoderList.setModel(DecoderIndexFile.jComboBoxModelFromList(pModelList));
@@ -205,6 +207,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
      * @param pMfgID   Manufacturer ID number (CV8)
      * @param pModelID Model ID number (CV7)
      */
+    @Override
     void updateForDecoderMfgID(String pMfg, int pMfgID, int pModelID) {
         String msg = "Found mfg " + pMfgID + " (" + pMfg + ") version " + pModelID + "; no such decoder defined";
         log.warn(msg);
@@ -231,6 +234,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
     /**
      * Decoder identify did not match anything, warn and show all
      */
+    @Override
     void updateForDecoderNotID(int pMfgID, int pModelID) {
         String msg = "Found mfg " + pMfgID + " version " + pModelID + "; no such manufacterer defined";
         log.warn(msg);
@@ -247,7 +251,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
      */
     void setDecoderSelectionFromLoco(String loco) {
         // if there's a valid loco entry...
-        RosterEntry locoEntry = Roster.instance().entryFromTitle(loco);
+        RosterEntry locoEntry = Roster.getDefault().entryFromTitle(loco);
         if (locoEntry == null) {
             return;
         }
@@ -277,6 +281,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
      *
      * @return true if a decoder type is selected
      */
+    @Override
     boolean isDecoderSelected() {
         return !mDecoderList.isSelectionEmpty();
     }
@@ -286,6 +291,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
      *
      * @return The selected decoder type name, or null if none selected.
      */
+    @Override
     protected String selectedDecoderType() {
         if (!isDecoderSelected()) {
             return null;

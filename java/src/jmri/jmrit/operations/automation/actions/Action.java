@@ -42,9 +42,8 @@ public abstract class Action {
 
     /**
      * Mask off menu bits.
-     * 
-     * @param code
-     * @return code & ActionCodes.CODE_MASK
+     *
+     * @return code {@literal &} ActionCodes.CODE_MASK
      */
     protected int getCode(int code) {
         return code & ActionCodes.CODE_MASK;
@@ -96,11 +95,11 @@ public abstract class Action {
     }
 
     public String getActionString() {
-        return getFormatedMessage("{0}{1}{2}{3}{4}{5}");
+        return getFormatedMessage("{0}{1}{2}{3}{4}{5}"); // NOI18N
     }
 
     public String getActionSuccessfulString() {
-        return Bundle.getMessage("OK");
+        return Bundle.getMessage("ButtonOK");
     }
 
     public String getActionFailedString() {
@@ -165,7 +164,10 @@ public abstract class Action {
     /**
      * Displays message if there's one.
      * 
-     * @param buttons the buttons to display
+     * @param buttons the buttons to display, if success and two or more
+     *            buttons, the second button becomes the default
+     * @param success true if action succeeded
+     * @param message the text to be displayed
      * @return which button was pressed, NO_MESSAGE_SENT, CLOSED
      */
     public int sendMessage(String message, Object[] buttons, boolean success) {
@@ -173,13 +175,25 @@ public abstract class Action {
         if (getAutomationItem() != null && !message.equals(AutomationItem.NONE)) {
             String title = getAutomationItem().getId() + " " +
                     (success ? "" : Bundle.getMessage("Failed")) + " " + getActionString();
+            Object intialValue = buttons[0]; // normally HALT
+            if (buttons.length > 1 && success) {
+                intialValue = buttons[1]; // normally OK
+            }
             response = JOptionPane.showOptionDialog(null, getFormatedMessage(message), title,
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, buttons
-                    , null);
+                    , intialValue);
         }
         return response;
     }
 
+    /**
+     * Formats a message using fixed arguments in the following order:
+     * <p>
+     * action name, train name, route location name, automation name, goto item id,
+     * train schedule day.
+     *
+     * @return formated message
+     */
     public String getFormatedMessage(String message) {
         String trainName = "";
         Train train = getAutomationItem().getTrain();

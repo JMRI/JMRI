@@ -19,7 +19,7 @@ public class Insteon2412sTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {Insteon2412sTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -29,6 +29,8 @@ public class Insteon2412sTest extends TestCase {
         suite.addTest(SpecificMessageTest.suite());
         suite.addTest(SpecificReplyTest.suite());
         suite.addTest(SpecificTrafficControllerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.powerline.insteon2412s.configurexml.PackageTest.class));
         return suite;
     }
 

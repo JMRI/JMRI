@@ -115,7 +115,7 @@ public class KnownLocoSelPane extends LocoSelPane {
         if (selector != null && selector.isSelected()) p = selector.getProgrammer();
         if (p == null) {
             log.warn("Selector did not provide a programmer, use default");
-            p = jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+            p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
         }
         IdentifyLoco id = new IdentifyLoco(p) {
             private KnownLocoSelPane who = me;
@@ -139,7 +139,7 @@ public class KnownLocoSelPane extends LocoSelPane {
 
     protected void selectLoco(int dccAddress) {
         // locate that loco
-        List<RosterEntry> l = Roster.instance().matchingList(null, null, Integer.toString(dccAddress),
+        List<RosterEntry> l = Roster.getDefault().matchingList(null, null, Integer.toString(dccAddress),
                 null, null, null, null);
         if (log.isDebugEnabled()) {
             log.debug("selectLoco found " + l.size() + " matches");
@@ -152,7 +152,7 @@ public class KnownLocoSelPane extends LocoSelPane {
             }
             String group = locoBox.getSelectedRosterGroup();
             if (group != null && !group.equals(Roster.ALLENTRIES)) {
-                List<RosterEntry> entries = Roster.instance().getEntriesWithAttributeKeyValue(Roster.getRosterGroupProperty(group), "yes");
+                List<RosterEntry> entries = Roster.getDefault().getEntriesWithAttributeKeyValue(Roster.getRosterGroupProperty(group), "yes");
                 if (entries.contains(r)) {
                     locoBox.setSelectedRosterEntry(r);
                 } else {

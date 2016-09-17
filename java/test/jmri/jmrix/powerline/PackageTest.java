@@ -1,6 +1,6 @@
 package jmri.jmrix.powerline;
 
-//import junit.framework.Assert;
+//import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -24,7 +24,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -38,6 +38,11 @@ public class PackageTest extends TestCase {
         //suite.addTest(SerialAddressTest.suite());
         suite.addTest(jmri.jmrix.powerline.cm11.CM11Test.suite());
         suite.addTest(jmri.jmrix.powerline.insteon2412s.Insteon2412sTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.powerline.simulator.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.powerline.cp290.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.powerline.serialdriver.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.powerline.configurexml.PackageTest.class));
+
         return suite;
     }
 

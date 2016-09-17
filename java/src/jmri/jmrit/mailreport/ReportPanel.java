@@ -1,4 +1,3 @@
-// ReportPanel.java
 package jmri.jmrit.mailreport;
 
 import apps.PerformFileModel;
@@ -39,14 +38,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2009
  * @author Matthew Harris Copyright (c) 2014
- * @version $Revision$
  */
 public class ReportPanel extends JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8455989563494151294L;
 
     static java.util.ResourceBundle rb = null;
 
@@ -215,7 +208,7 @@ public class ReportPanel extends JPanel {
             if (checkProfile.isSelected()) {
                 log.debug("prepare profile attachment");
                 // Check that a profile has been loaded
-                Profile profile = ProfileManager.defaultManager().getActiveProfile();
+                Profile profile = ProfileManager.getDefault().getActiveProfile();
                 File file = profile.getPath();
                 if (file != null) {
                     log.debug("add profile: {}", file.getPath());

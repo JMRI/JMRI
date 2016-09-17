@@ -1,4 +1,3 @@
-// LocationManager.java
 package jmri.jmrit.operations.locations;
 
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2013, 2014
- * @version $Revision$
  */
 public class LocationManager implements java.beans.PropertyChangeListener {
 
@@ -37,9 +35,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 
     public static synchronized LocationManager instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("LocationManager creating instance");
-            }
+            log.debug("LocationManager creating instance");
             // create and load
             _instance = new LocationManager();
             OperationsSetupXml.instance(); // load setup
@@ -88,27 +84,44 @@ public class LocationManager implements java.beans.PropertyChangeListener {
      * Request a location associated with a given reporter.
      *
      * @param r Reporter object associated with desired location.
-     * @return requested Location object or null if none exists 
+     * @return requested Location object or null if none exists
      */
     public Location getLocationByReporter(Reporter r) {
-       for(Location location: _locationHashTable.values()) {
-          try {
-             if (location.getReporter().equals(r))
-                 return location;
-	  } catch(java.lang.NullPointerException npe) {
-             // it's valid for a reporter to be null (no reporter
-             // at a given location.
-          }
+        for (Location location : _locationHashTable.values()) {
+            try {
+                if (location.getReporter().equals(r))
+                    return location;
+            } catch (java.lang.NullPointerException npe) {
+                // it's valid for a reporter to be null (no reporter
+                // at a given location.
+            }
         }
         return null;
     }
 
+    /**
+     * Request a track associated with a given reporter.
+     *
+     * @param r Reporter object associated with desired location.
+     * @return requested Location object or null if none exists
+     */
+    public Track getTrackByReporter(Reporter r) {
+        for (Track track : getTracks(null)) {
+            try {
+                if (track.getReporter().equals(r))
+                    return track;
+            } catch (java.lang.NullPointerException npe) {
+                // it's valid for a reporter to be null (no reporter
+                // at a given location.
+            }
+        }
+        return null;
+    }
 
     /**
      * Finds an existing location or creates a new location if needed requires
      * location's name creates a unique id for this location
      *
-     * @param name
      *
      * @return new location or existing location
      */
@@ -119,7 +132,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
             location = new Location(Integer.toString(_id), name);
             Integer oldSize = Integer.valueOf(_locationHashTable.size());
             _locationHashTable.put(location.getId(), location);
-            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_locationHashTable.size()));
+            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
+                    Integer.valueOf(_locationHashTable.size()));
         }
         return location;
     }
@@ -221,8 +235,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
      * Returns all tracks of type
      *
      * @param type Spur (Track.SPUR), Yard (Track.YARD), Interchange
-     *             (Track.INTERCHANGE), Staging (Track.STAGING), or null
-     *             (returns all track types)
+     *            (Track.INTERCHANGE), Staging (Track.STAGING), or null (returns
+     *            all track types)
      * @return List of tracks
      */
     public List<Track> getTracks(String type) {
@@ -241,8 +255,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
      * Returns all tracks of type sorted by use
      *
      * @param type Spur (Track.SPUR), Yard (Track.YARD), Interchange
-     *             (Track.INTERCHANGE), Staging (Track.STAGING), or null
-     *             (returns all track types)
+     *            (Track.INTERCHANGE), Staging (Track.STAGING), or null (returns
+     *            all track types)
      * @return List of tracks ordered by use
      */
     public List<Track> getTracksByMoves(String type) {
@@ -375,11 +389,11 @@ public class LocationManager implements java.beans.PropertyChangeListener {
                 maxLocationName = track.getLocation().getName();
                 _maxLocationNameLength = TrainCommon.splitString(track.getLocation().getName()).length();
             }
-            if (TrainCommon.splitString(track.getLocation().getName()).length()
-                    + TrainCommon.splitString(track.getName()).length() > _maxLocationAndTrackNameLength) {
+            if (TrainCommon.splitString(track.getLocation().getName()).length() +
+                    TrainCommon.splitString(track.getName()).length() > _maxLocationAndTrackNameLength) {
                 maxLocationAndTrackName = track.getLocation().getName() + ", " + track.getName();
-                _maxLocationAndTrackNameLength = TrainCommon.splitString(track.getLocation().getName()).length()
-                        + TrainCommon.splitString(track.getName()).length();
+                _maxLocationAndTrackNameLength = TrainCommon.splitString(track.getLocation().getName()).length() +
+                        TrainCommon.splitString(track.getName()).length();
             }
         }
         log.info("Max track name ({}) at ({}) length {}", maxTrackName, maxLocNameForTrack, _maxTrackNameLength);
@@ -391,9 +405,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
         if (root.getChild(Xml.LOCATIONS) != null) {
             @SuppressWarnings("unchecked")
             List<Element> locs = root.getChild(Xml.LOCATIONS).getChildren(Xml.LOCATION);
-            if (log.isDebugEnabled()) {
-                log.debug("readFile sees {} locations", locs.size());
-            }
+            log.debug("readFile sees {} locations", locs.size());
             for (Element loc : locs) {
                 register(new Location(loc));
             }

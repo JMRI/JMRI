@@ -1,7 +1,5 @@
-// AbstractCanTrafficController.java
 package jmri.jmrix.can;
 
-import java.io.IOException;
 import java.util.Arrays;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
@@ -19,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * layout.
  *
  * @author	Andrew Crosland Copyright (C) 2008
- * @version	$Revision$
  */
 abstract public class AbstractCanTrafficController
         extends AbstractMRTrafficController
@@ -30,6 +27,8 @@ abstract public class AbstractCanTrafficController
         allowUnexpectedReply = true;
     }
 
+    @Override
+    @Deprecated
     protected void setInstance() {
 
     }
@@ -177,7 +176,6 @@ abstract public class AbstractCanTrafficController
      * <P>
      * Overridden to include translation form the CAN hardware format
      *
-     * @throws IOException
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE")
     // Ignore false positive that msg is never used
@@ -305,5 +303,3 @@ abstract public class AbstractCanTrafficController
     private final static Logger log = LoggerFactory.getLogger(AbstractCanTrafficController.class.getName());
 
 }
-
-/* @(#)AbstractCanTrafficController.java */

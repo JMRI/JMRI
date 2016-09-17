@@ -20,7 +20,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -29,8 +29,10 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(IEEE802154MessageTest.class));
         suite.addTest(new TestSuite(IEEE802154ReplyTest.class));
         suite.addTest(new TestSuite(IEEE802154SystemConnectionMemoTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IEEE802154TrafficControllerTest.class));
         suite.addTest(jmri.jmrix.ieee802154.xbee.PackageTest.suite());
         suite.addTest(jmri.jmrix.ieee802154.serialdriver.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IEEE802154NodeTest.class));
         return suite;
     }
 

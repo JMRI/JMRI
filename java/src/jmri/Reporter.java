@@ -22,19 +22,18 @@ package jmri;
  * A Reporter might also not be able to report all the time. The previous value
  * remains available, but it's also possible to distinquish this case by using
  * the getCurrentReport member function.
- * <P>
- *
+ * <BR>
  * <hr>
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * </P>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Matthew Harris Copyright (C) 2011
@@ -49,6 +48,8 @@ public interface Reporter extends NamedBean {
      * current report available. If there is a current report, both this and the
      * current report will be equal. If nothing has ever been reported, this
      * will return a null object.
+     *
+     * @return the last report or null
      */
     public Object getLastReport();
 
@@ -56,6 +57,8 @@ public interface Reporter extends NamedBean {
      * Query the current report. If there is no current report available (e.g.
      * the reporting hardware says no information is currently available) this
      * will return a null object.
+     *
+     * @return the current report or null
      */
     public Object getCurrentReport();
 
@@ -67,13 +70,16 @@ public interface Reporter extends NamedBean {
      * classes. But there are occasionally reasons to set it from inside the
      * program, e.g. debugging via entering values in the Reporter Table. Hence
      * provision of this method.
+     *
+     * @param r the report
      */
     public void setReport(Object r);
 
     /**
-     * Provide an int form of the last report.
+     * Provide an integer form of the last report.
      *
      */
+    @Override
     public int getState();
 
 }

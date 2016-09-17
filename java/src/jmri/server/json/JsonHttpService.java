@@ -36,7 +36,6 @@ public abstract class JsonHttpService {
      * @param name   the name of the requested object.
      * @param locale the requesting client's Locale.
      * @return a JSON description of the requested object.
-     * @throws JsonException
      */
     public abstract JsonNode doGet(String type, String name, Locale locale) throws JsonException;
 
@@ -53,7 +52,6 @@ public abstract class JsonHttpService {
      * @param locale the requesting client's Locale.
      * @return a JSON description of the requested object after updates have
      *         been applied.
-     * @throws JsonException
      */
     public abstract JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException;
 
@@ -69,7 +67,6 @@ public abstract class JsonHttpService {
      *               created or updated.
      * @param locale the requesting client's Locale.
      * @return a JSON description of the requested object.
-     * @throws JsonException
      */
     public JsonNode doPut(String type, String name, JsonNode data, Locale locale) throws JsonException {
         throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "PutNotAllowed", type));
@@ -86,7 +83,6 @@ public abstract class JsonHttpService {
      * @param type   the type of the deleted object.
      * @param name   the name of the deleted object.
      * @param locale the requesting client's Locale.
-     * @throws JsonException
      */
     public void doDelete(String type, String name, Locale locale) throws JsonException {
         throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "DeleteNotAllowed", type));
@@ -104,7 +100,6 @@ public abstract class JsonHttpService {
      * @param type   the type of the requested list.
      * @param locale the requesting client's Locale.
      * @return a JSON list.
-     * @throws JsonException
      */
     public abstract JsonNode doGetList(String type, Locale locale) throws JsonException;
 }

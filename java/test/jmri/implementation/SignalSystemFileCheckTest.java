@@ -22,7 +22,7 @@ public class SignalSystemFileCheckTest extends jmri.configurexml.SchemaTestBase 
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SignalSystemFileCheckTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -41,5 +41,6 @@ public class SignalSystemFileCheckTest extends jmri.configurexml.SchemaTestBase 
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
+
     static protected Logger log = LoggerFactory.getLogger(SignalSystemFileCheckTest.class.getName());
 }

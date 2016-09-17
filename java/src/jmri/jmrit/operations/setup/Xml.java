@@ -192,6 +192,9 @@ public class Xml {
 
     static final String COMMENTS = "comments"; // NOI18N
     static final String MISPLACED_CARS = "misplacedCars"; // NOI18N
+    
+    static final String DISPLAY = "display"; // NOI18N
+    static final String SHOW_TRACK_MOVES = "showTrackMoves"; // NOI18N
 
     static final String VSD = "vsd"; // NOI18N
     static final String ENABLE_PHYSICAL_LOCATIONS = "enablePhysicalLocations"; // NOI18N

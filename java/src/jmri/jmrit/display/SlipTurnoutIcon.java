@@ -68,12 +68,12 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
      *              0x01 - West 0x02 - East 0x04 - Lower West 0x06 - Upper East
      */
     public void setTurnout(String pName, int turn) {
-        if (InstanceManager.turnoutManagerInstance() != null) {
-            Turnout turnout = InstanceManager.turnoutManagerInstance().
+        if (InstanceManager.getNullableDefault(jmri.TurnoutManager.class) != null) {
+            try {
+                Turnout turnout = InstanceManager.turnoutManagerInstance().
                     provideTurnout(pName);
-            if (turnout != null) {
                 setTurnout(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, turnout), turn);
-            } else {
+            } catch (IllegalArgumentException e) {
                 log.error("Turnout '" + pName + "' not available, icon won't see changes");
             }
         } else {
@@ -626,7 +626,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         switch (state) {
             case Turnout.UNKNOWN:
                 if (isText()) {
-                    super.setText(Bundle.getMessage("UnKnown"));
+                    super.setText(Bundle.getMessage("BeanStateUnknown"));
                 }
                 if (isIcon()) {
                     super.setIcon(unknown);
@@ -666,7 +666,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                 break;
             default:
                 if (isText()) {
-                    super.setText(Bundle.getMessage("Inconsistent"));
+                    super.setText(Bundle.getMessage("BeanStateInconsistent"));
                 }
                 if (isIcon()) {
                     super.setIcon(inconsistent);
@@ -837,7 +837,6 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     /**
      * Throw the turnout when the icon is clicked
      *
-     * @param e
      */
     public void doMouseClicked(java.awt.event.MouseEvent e) {
         if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {
@@ -1084,7 +1083,6 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
      * Displays a popup menu to select a given state, rather than cycling
      * through each state
      *
-     * @param popup
      */
     public boolean showPopUp(JPopupMenu popup) {
         if (isEditable()) {

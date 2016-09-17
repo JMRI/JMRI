@@ -1,4 +1,3 @@
-// DefaultSignalHead.java
 package jmri.implementation;
 
 /**
@@ -9,7 +8,6 @@ package jmri.implementation;
  * DefaultLunarSignalHead.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2009
- * @version $Revision$
  */
 public abstract class DefaultSignalHead extends AbstractSignalHead {
 
@@ -181,5 +179,3 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
     }
 
 }
-
-/* @(#)DefaultSignalHead.java */

@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An icon to display a status of a light.<P>
+ * An icon to display a status of a light.
  * <P>
  * A click on the icon will command a state change. Specifically, it will set
  * the state to the opposite (THROWN vs CLOSED) of the current state.
@@ -20,11 +20,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (c) 2002
  */
 public class LightIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7831042733869845309L;
 
     public LightIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
@@ -59,14 +54,10 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
      * @param pName Used as a system/user name to lookup the light object
      */
     public void setLight(String pName) {
-        if (InstanceManager.lightManagerInstance() != null) {
+        if (InstanceManager.getNullableDefault(jmri.LightManager.class) != null) {
             light = InstanceManager.lightManagerInstance().
                     provideLight(pName);
-            if (light != null) {
-                setLight(light);
-            } else {
-                log.error("Light '" + pName + "' not available, icon won't see changes");
-            }
+            setLight(light);
         } else {
             log.error("No LightManager for this protocol, icon won't see changes");
         }
@@ -276,7 +267,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
                 break;
             default:
                 if (isText()) {
-                    super.setText(Bundle.getMessage("Inconsistent"));
+                    super.setText(Bundle.getMessage("BeanStateInconsistent"));
                 }
                 if (isIcon()) {
                     super.setIcon(inconsistent);
@@ -290,7 +281,6 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
     /**
      * Change the light when the icon is clicked
      *
-     * @param e
      */
     // Was mouseClicked, changed to mouseRelease to workaround touch screen driver limitation
     public void doMouseClicked(java.awt.event.MouseEvent e) {

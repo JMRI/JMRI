@@ -23,8 +23,6 @@ public class NmraConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     jmri.jmrix.swing.ComponentFactory cf = null;
 
     public void configureManagers() {
-
-        ActiveFlag.setActive();
     }
 
     /**

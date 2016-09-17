@@ -1,4 +1,3 @@
-// NceTrafficController.java
 package jmri.jmrix.nce;
 
 import jmri.CommandStation;
@@ -198,7 +197,8 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     static public final int USB_SYSTEM_POWERHOUSE = 3;
 
     /**
-     * Create commands compatible with a NCE USB with >=7.* connected to a Twin
+     * Create commands compatible with a NCE USB with {@literal >=7.*} connected
+     * to a Twin
      */
     static public final int USB_SYSTEM_TWIN = 4;
 
@@ -221,7 +221,6 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #USB_SYSTEM_SB5}
      * </UL>
      *
-     * @param val
      */
     public void setUsbSystem(int val) {
         usbSystem = val;
@@ -264,27 +263,27 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     static public final long CMDS_PROGTRACK = 0x0002;
 
     /**
-     * Supports read AIU status commands 0x9B
+     * Supports read AIU status commands {@code 0x9B}
      */
     static public final long CMDS_AUI_READ = 0x004;
 
     /**
-     * Supports USB read/write memory commands 0xB3 -> 0xB5
+     * Supports USB read/write memory commands {@code 0xB3 -> 0xB5}
      */
     static public final long CMDS_MEM = 0x0008;
 
     /**
-     * Support Ops Mode Pgm commands 0xAE -> 0xAF
+     * Support Ops Mode Pgm commands {@code 0xAE -> 0xAF}
      */
     static public final long CMDS_OPS_PGM = 0x0010;
 
     /**
-     * Support Clock commands 0x82 -> 0x87
+     * Support Clock commands {@code 0x82 -> 0x87}
      */
     static public final long CMDS_CLOCK = 0x0020;
 
     /**
-     * Support USB Interface commands 0xB1
+     * Support USB Interface commands {@code 0xB1}
      */
     static public final long CMDS_USB = 0x0040;
 
@@ -316,7 +315,6 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #CMDS_ALL_SYS}
      * </UL>
      *
-     * @param val
      */
     public void setCmdGroups(long val) {
         cmdGroups = val;
@@ -493,6 +491,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * instance use of the traffic controller is no longer used for multiple
      * connections
      */
+    @Override
     @Deprecated
     public void setInstance() {
     }
@@ -611,6 +610,3 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
     private final static Logger log = LoggerFactory.getLogger(NceTrafficController.class.getName());
 }
-
-
-/* @(#)NceTrafficController.java */

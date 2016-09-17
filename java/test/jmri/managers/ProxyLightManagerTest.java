@@ -4,7 +4,7 @@ import java.beans.PropertyChangeListener;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -51,6 +51,18 @@ public class ProxyLightManagerTest extends TestCase {
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+
+    public void testProvideFailure() {
+        boolean correct = false;
+        try {
+            Light t = l.provideLight("");
+            Assert.fail("didn't throw");
+        } catch (IllegalArgumentException ex) {
+            correct = true;
+        }
+        Assert.assertTrue("Exception thrown properly", correct);
+        
     }
 
     public void testSingleObject() {
@@ -164,7 +176,7 @@ public class ProxyLightManagerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", ProxyLightManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

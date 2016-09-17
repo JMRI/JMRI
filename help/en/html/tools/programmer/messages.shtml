@@ -1,108 +1,200 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-<title>JMRI:  Error Messages</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: Error Messages</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h1> 
-JMRI: Error Messages
-</h1>
-<!-- Copy any new content below from page http://jmri.org/help/en/manual/DecoderPro3/Error.shtml -->
-<hr>
-<p>Various things can go wrong when JMRI tries to work with your DCC command station to program a DCC decoder. 
-This page lists the error message that can result, and describes what they mean.</p>
-<h2><a href="../html/setup/Errors.shtml">JMRI Error Codes</a></h2>
+    <div id="mainContent">
+      <h1>JMRI: Error Messages</h1>
+      <!-- Copy any new content below from page http://jmri.org/help/en/manual/DecoderPro3/Error.shtml -->
+      <hr>
 
-<dl>
- 
- <dt><strong>301 &#8212; no locomotive detected</strong></dt>
- <dd>  The command station has reported that it doesn't see a locomotive on the programming track.  </dd>
- <dd>
-  <p> This can happen if the locomotive isn't making  good electrical contact or if there's a wiring fault in the locomotive. </p>
- </dd>
- 
- <dt><strong>302 &#8212; programmer busy</strong></dt>
- <dd>
-  <p> The command station has reported that it's busy doing something else, and can't do any programming right now. This usually means that some other part of the DCC system is doing a programming operation, e.g. a hand-held throttle.  </p>
- </dd>
- <dd>
-  <p> Some DCC systems can't do ops-mode programming (programming on the main) while also using the service mode programming track, in which case they'll return this error message. </p>
- </dd>
- <dt><strong>303 &#8212; requested not implemented in command station</strong></dt>
- <dd>
-  <p> This means that JMRI has requested the command station do something that it doesn't support. </p>
- </dd>
- <dd>
-  <p> This is not supposed to happen, as JMRI should disable programming modes that the command station can't provide. If you do see this message, please report the circumstances on the <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users Yahoo Group</a>. </p>
- </dd>
- <dt><strong>304 &#8212; aborted by user</strong></dt>
- <dd>
-  <p> The user has requested that the read or write operation stop early.</p>
- </dd>
- <dd>
-  <p> This is considered an error, because the program doesn't know whether the decoder actually saw the  operation complete or not. </p>
- </dd>
- <dt><strong>305 &#8212; confirm failed</strong></dt>
- <dd>
-  <p> Some command stations allow you to "confirm" the content of a CV, rather that read the value from it. In general, this is faster than doing a complete read. If the value in the CV doesn't match the expected value, this message is issued. It's considered an error because if the values don't match, we know that we don't know the correct value for the CV contents.</p>
- </dd>
-  <dt><strong>306 &#8212; timeout talking to command station</strong></dt>
- <dd>
-  <p> The program did not hear back from the command station when it expected to.</p>
- </dd>
- <dd>
-  <p> This is by far the most common error message when people first start using JMRI. In that case, it usually means that the connection to the command station isn't correct. This could be a  problem with the cable(s) making the connection, or a problem with how the preferences are set. Picking the wrong serial port is particularly common. </p>
-  <p> Once JMRI is working properly, this error may occasionally happen due to a transient error. DecoderPro generally will retry it successfully in that case. </p>
- </dd>
- <dt><strong>307 &#8212; Unknown error</strong></dt>
- <dd>
-  <p> An error has happened, but JMRI doesn't know enough about it to be able to report more detail.</p>
- </dd>
- <dd>
-  <p> In general, JMRI is pretty good at deciphering what went wrong, and this message isn't very common. If you do see this message, please report the circumstances on the <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users Yahoo Group</a>. </p>
- </dd>
-  <dt><strong>308 &#8212; No acknowledge from locomotive</strong></dt>
- <dd>
-  <p> At the end of a CV read or write operation, the locomotive replies ("acknowledges") to the command station using a pulse  of current. </p>
- </dd>
- <dd>
-  <p> If that pulse isn't seen, some command stations provide this error message. It could be due to poor electrical connections to the programming  track or within the locomotive. It could also be that the decoder doesn't support readback. </p>
-  <p> Some decoders, particularly certain sound decoders, draw so much current that the reply pulse isn't detected by the command station. In that case, one of the various "programming boosters" may solve the problem. </p>
- </dd>
- <dt><strong>309 &#8212; Short Circuit on Programming Track</strong></dt>
- <dd>
-  <p> The command station has reported seeing a short circuit on the programming track. That prevents programming operations.  </p>
- 
-  <p> Check the electrical connections to the programming track, and also within the locomotive. </p>
- </dd>
- <dt><strong>310 &#8212; Sequence Error</strong></dt>
- <dd>
-  <p> For some reason, the programming operation ended early and the command station returned to normal mode (left service mode)
-        before it should have.</p>
- 
-  <p> This is an unusual error, which might indicate that you've selected the wrong command station type in the preferences. Check that.
-        If that's correct and it's still happening, ask for help on the JMRI users list. </p>
- </dd>
+      <p>Various things can go wrong when JMRI tries to work with
+      your DCC command station to program a DCC decoder. This page
+      lists the error message that can result, and describes what
+      they mean.</p>
 
-</dl>
-<hr>
-  
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
+      <h2><a href="../html/setup/Errors.shtml">JMRI Error
+      Codes</a></h2>
+
+      <dl>
+        <dt><strong>301 - no locomotive detected</strong></dt>
+
+        <dd>The command station has reported that it doesn't see a
+        locomotive on the programming track.</dd>
+
+        <dd>
+          <p>This can happen if the locomotive isn't making good
+          electrical contact or if there's a wiring fault in the
+          locomotive.</p>
+        </dd>
+
+        <dt><strong>302 - programmer busy</strong></dt>
+
+        <dd>
+          <p>The command station has reported that it's busy doing
+          something else, and can't do any programming right now.
+          This usually means that some other part of the DCC system
+          is doing a programming operation, e.g. a hand-held
+          throttle.</p>
+        </dd>
+
+        <dd>
+          <p>Some DCC systems can't do ops-mode programming
+          (programming on the main) while also using the service
+          mode programming track, in which case they'll return this
+          error message.</p>
+        </dd>
+
+        <dt><strong>303 - requested not implemented in command
+        station</strong></dt>
+
+        <dd>
+          <p>This means that JMRI has requested the command station
+          do something that it doesn't support.</p>
+        </dd>
+
+        <dd>
+          <p>This is not supposed to happen, as JMRI should disable
+          programming modes that the command station can't provide.
+          If you do see this message, please report the
+          circumstances on the <a href=
+          "https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI
+          users Yahoo Group</a>.</p>
+        </dd>
+
+        <dt><strong>304 - aborted by user</strong></dt>
+
+        <dd>
+          <p>The user has requested that the read or write
+          operation stop early.</p>
+        </dd>
+
+        <dd>
+          <p>This is considered an error, because the program
+          doesn't know whether the decoder actually saw the
+          operation complete or not.</p>
+        </dd>
+
+        <dt><strong>305 - confirm failed</strong></dt>
+
+        <dd>
+          <p>Some command stations allow you to "confirm" the
+          content of a CV, rather that read the value from it. In
+          general, this is faster than doing a complete read. If
+          the value in the CV doesn't match the expected value,
+          this message is issued. It's considered an error because
+          if the values don't match, we know that we don't know the
+          correct value for the CV contents.</p>
+        </dd>
+
+        <dt><strong>306 - timeout talking to command
+        station</strong></dt>
+
+        <dd>
+          <p>The program did not hear back from the command station
+          when it expected to.</p>
+        </dd>
+
+        <dd>
+          <p>This is by far the most common error message when
+          people first start using JMRI. In that case, it usually
+          means that the connection to the command station isn't
+          correct. This could be a problem with the cable(s) making
+          the connection, or a problem with how the preferences are
+          set. Picking the wrong serial port is particularly
+          common.</p>
+
+          <p>Once JMRI is working properly, this error may
+          occasionally happen due to a transient error. DecoderPro
+          generally will retry it successfully in that case.</p>
+        </dd>
+
+        <dt><strong>307 - Unknown error</strong></dt>
+
+        <dd>
+          <p>An error has happened, but JMRI doesn't know enough
+          about it to be able to report more detail.</p>
+        </dd>
+
+        <dd>
+          <p>In general, JMRI is pretty good at deciphering what
+          went wrong, and this message isn't very common. If you do
+          see this message, please report the circumstances on the
+          <a href=
+          "https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI
+          users Yahoo Group</a>.</p>
+        </dd>
+
+        <dt><strong>308 - No acknowledge from
+        locomotive</strong></dt>
+
+        <dd>
+          <p>At the end of a CV read or write operation, the
+          locomotive replies ("acknowledges") to the command
+          station using a pulse of current.</p>
+        </dd>
+
+        <dd>
+          <p>If that pulse isn't seen, some command stations
+          provide this error message. It could be due to poor
+          electrical connections to the programming track or within
+          the locomotive. It could also be that the decoder doesn't
+          support readback.</p>
+
+          <p>Some decoders, particularly certain sound decoders,
+          draw so much current that the reply pulse isn't detected
+          by the command station. In that case, one of the various
+          "programming boosters" may solve the problem.</p>
+        </dd>
+
+        <dt><strong>309 - Short Circuit on Programming
+        Track</strong></dt>
+
+        <dd>
+          <p>The command station has reported seeing a short
+          circuit on the programming track. That prevents
+          programming operations.</p>
+
+          <p>Check the electrical connections to the programming
+          track, and also within the locomotive.</p>
+        </dd>
+
+        <dt><strong>310 - Sequence Error</strong></dt>
+
+        <dd>
+          <p>For some reason, the programming operation ended early
+          and the command station returned to normal mode (left
+          service mode) before it should have.</p>
+
+          <p>This is an unusual error, which might indicate that
+          you've selected the wrong command station type in the
+          preferences. Check that. If that's correct and it's still
+          happening, ask for help on the JMRI users list.</p>
+        </dd>
+      </dl>
+      <hr>
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

@@ -1,10 +1,10 @@
-// OptionsMenu.java
 package jmri.jmrit.dispatcher;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -20,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
+import javax.swing.text.NumberFormatter;
 import jmri.Scale;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JmriJFrame;
@@ -41,21 +43,15 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Dave Duchamp Copyright (C) 2008
- * @version	$Revision$
  */
 public class OptionsMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2060918292476729120L;
 
     static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.dispatcher.DispatcherBundle");
 
     public OptionsMenu(DispatcherFrame f) {
         dispatcher = f;
-        this.setText(rb.getString("OptionsMenuTitle"));
+        this.setText(Bundle.getMessage("MenuOptions"));
         autoDispatchItem = new JCheckBoxMenuItem(rb.getString("AutoDispatchItem"));
         this.add(autoDispatchItem);
         autoDispatchItem.addActionListener(new ActionListener() {
@@ -132,12 +128,15 @@ public class OptionsMenu extends JMenu {
     JRadioButton scaleFeet = new JRadioButton(rb.getString("ScaleFeet"));
     JRadioButton scaleMeters = new JRadioButton(rb.getString("ScaleMeters"));
     JCheckBox openDispatcherWithPanel = new JCheckBox(Bundle.getMessage("OpenDispatcherWithPanelBox"));
+    JFormattedTextField minThrottleIntervalTextField = new JFormattedTextField();
+    JFormattedTextField fullRampTimeTextField = new JFormattedTextField();
+    JCheckBox trustKnownTurnoutsCheckBox = new JCheckBox(rb.getString("trustKnownTurnouts"));
 
     String[] signalTypes = {"SignalHeads/SSL", "SignalMasts"};
 
     private void optionWindowRequested(ActionEvent e) {
         if (optionsFrame == null) {
-            optionsFrame = new JmriJFrame(rb.getString("OptionsMenuTitle"), false, true);
+            optionsFrame = new JmriJFrame(Bundle.getMessage("MenuOptions"), false, true);
             optionsFrame.addHelpMenu("package.jmri.jmrit.dispatcher.Options", true);
             optionsPane = optionsFrame.getContentPane();
             optionsPane.setLayout(new BoxLayout(optionsFrame.getContentPane(), BoxLayout.Y_AXIS));
@@ -199,6 +198,11 @@ public class OptionsMenu extends JMenu {
             p5.add(autoTurnoutsCheckBox);
             autoTurnoutsCheckBox.setToolTipText(rb.getString("AutoTurnoutsBoxHint"));
             optionsPane.add(p5);
+            JPanel p16 = new JPanel();
+            p16.setLayout(new FlowLayout());
+            p16.add(trustKnownTurnoutsCheckBox);
+            trustKnownTurnoutsCheckBox.setToolTipText(Bundle.getMessage("trustKnownTurnoutsHint"));
+            optionsPane.add(p16);
             JPanel p6 = new JPanel();
             p6.setLayout(new FlowLayout());
             p6.add(shortNameCheckBox);
@@ -250,7 +254,37 @@ public class OptionsMenu extends JMenu {
             scaleMeters.setToolTipText(rb.getString("ScaleMetersHint"));
             scaleGroup.add(scaleMeters);
             optionsPane.add(p12);
+            
+            JPanel p15 = new JPanel();
+            p15.setLayout(new FlowLayout());
+            p15.add(new JLabel(Bundle.getMessage("minThrottleInterval") + " :"));
+            NumberFormatter numberFormatter = new NumberFormatter(NumberFormat.getIntegerInstance());
+            numberFormatter.setValueClass(Integer.class);
+            numberFormatter.setMinimum(20);
+            numberFormatter.setMaximum(1000);
+            minThrottleIntervalTextField = new JFormattedTextField(numberFormatter);
+            minThrottleIntervalTextField.setColumns(4);
+            minThrottleIntervalTextField.setValue(250);
+            minThrottleIntervalTextField.setToolTipText(Bundle.getMessage("minThrottleIntervalHint"));
+            p15.add(minThrottleIntervalTextField);
+            p15.add(new JLabel(Bundle.getMessage("ms")));
+            optionsPane.add(p15);
 
+            JPanel p17 = new JPanel();
+            p17.setLayout(new FlowLayout());
+            p17.add(new JLabel(Bundle.getMessage("fullRampTime") + " :"));
+            numberFormatter = new NumberFormatter(NumberFormat.getIntegerInstance());
+            numberFormatter.setValueClass(Integer.class);
+            numberFormatter.setMinimum(1000);
+            numberFormatter.setMaximum(20000);
+            fullRampTimeTextField = new JFormattedTextField(numberFormatter);
+            fullRampTimeTextField.setColumns(4);
+            fullRampTimeTextField.setValue(5000);
+            fullRampTimeTextField.setToolTipText(Bundle.getMessage("fullRampTimeHint"));
+            p17.add(fullRampTimeTextField);
+            p17.add(new JLabel(Bundle.getMessage("ms")));
+            optionsPane.add(p17);
+            
             JPanel p14 = new JPanel();
             p14.setLayout(new FlowLayout());
             p14.add(openDispatcherWithPanel);
@@ -294,6 +328,7 @@ public class OptionsMenu extends JMenu {
         detectionCheckBox.setSelected(dispatcher.getHasOccupancyDetection());
         autoAllocateCheckBox.setSelected(dispatcher.getAutoAllocate());
         autoTurnoutsCheckBox.setSelected(dispatcher.getAutoTurnouts());
+        trustKnownTurnoutsCheckBox.setSelected(dispatcher.getTrustKnownTurnouts());
         shortNameCheckBox.setSelected(dispatcher.getShortActiveTrainNames());
         nameInBlockCheckBox.setSelected(dispatcher.getShortNameInBlock());
         rosterInBlockCheckBox.setSelected(dispatcher.getRosterEntryInBlock());
@@ -302,6 +337,9 @@ public class OptionsMenu extends JMenu {
         supportVSDecoderCheckBox.setSelected(dispatcher.getSupportVSDecoder());
         scaleMeters.setSelected(dispatcher.getUseScaleMeters());
         scaleFeet.setSelected(!dispatcher.getUseScaleMeters());
+        minThrottleIntervalTextField.setValue(dispatcher.getMinThrottleInterval());
+        fullRampTimeTextField.setValue(dispatcher.getFullRampTime());
+
         if (dispatcher.getLayoutEditor() != null) {
             openDispatcherWithPanel.setSelected(dispatcher.getLayoutEditor().getOpenDispatcherOnLoad());
         }
@@ -322,12 +360,13 @@ public class OptionsMenu extends JMenu {
         dispatcher.setAutoAllocate(autoAllocateCheckBox.isSelected());
         autoDispatchItem.setSelected(autoAllocateCheckBox.isSelected());
         dispatcher.setAutoTurnouts(autoTurnoutsCheckBox.isSelected());
-        dispatcher.setSignalType(signalTypeBox.getSelectedIndex());
         autoTurnoutsItem.setSelected(autoTurnoutsCheckBox.isSelected());
+        dispatcher.setTrustKnownTurnouts(trustKnownTurnoutsCheckBox.isSelected());
+        dispatcher.setSignalType(signalTypeBox.getSelectedIndex());
         if (autoTurnoutsCheckBox.isSelected() && ((layoutEditorList.size() == 0)
                 || (!useConnectivityCheckBox.isSelected()))) {
             JOptionPane.showMessageDialog(optionsFrame, rb.getString(
-                    "AutoTurnoutsWarn"), rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                    "AutoTurnoutsWarn"), Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
         }
         dispatcher.setShortActiveTrainNames(shortNameCheckBox.isSelected());
         dispatcher.setShortNameInBlock(nameInBlockCheckBox.isSelected());
@@ -337,6 +376,8 @@ public class OptionsMenu extends JMenu {
         dispatcher.setSupportVSDecoder(supportVSDecoderCheckBox.isSelected());
         dispatcher.setScale(layoutScaleBox.getSelectedIndex() + 1);
         dispatcher.setUseScaleMeters(scaleMeters.isSelected());
+        dispatcher.setMinThrottleInterval((int) minThrottleIntervalTextField.getValue());
+        dispatcher.setFullRampTime((int) fullRampTimeTextField.getValue());
         dispatcher.getLayoutEditor().setOpenDispatcherOnLoad(openDispatcherWithPanel.isSelected());
         optionsFrame.setVisible(false);
         optionsFrame.dispose();  // prevent this window from being listed in the Window menu.
@@ -394,5 +435,3 @@ public class OptionsMenu extends JMenu {
 
     private final static Logger log = LoggerFactory.getLogger(OptionsMenu.class.getName());
 }
-
-/* @(#)OptionsMenu.java */

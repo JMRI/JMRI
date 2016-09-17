@@ -1,12 +1,9 @@
-// QsiReply.java
 package jmri.jmrix.qsi;
-
 
 /**
  * Carries the reply to an QsiMessage
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version	$Revision$
  */
 public class QsiReply extends jmri.jmrix.AbstractMessage {
 
@@ -104,8 +101,14 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
 
     // display format
     public String toString() {
+       QsiSystemConnectionMemo memo = jmri.InstanceManager.getDefault(jmri.jmrix.qsi.QsiSystemConnectionMemo.class);
+       return toString(memo.getQsiTrafficController());
+    }
+
+    public String toString(QsiTrafficController controller) {
         StringBuilder s = new StringBuilder();
-        if (!QsiTrafficController.instance().isSIIBootMode()) {
+        if (_dataChars == null) return "<none>";
+        if (controller == null || controller.isSIIBootMode()) {
             for (int i = 0; i < _nDataChars; i++) {
                 s.append(jmri.util.StringUtil.twoHexFromInt(_dataChars[i]));
                 s.append(" ");
@@ -165,5 +168,3 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
     // contents (private)
     private boolean _isBoot = false;
 }
-
-/* @(#)QsiReply.java */

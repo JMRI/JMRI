@@ -27,8 +27,6 @@ public class DnDList<E>
         java.awt.dnd.DragSourceListener,
         java.awt.dnd.DragGestureListener {
 
-    private static final long serialVersionUID = -2989490853738310931L;
-
     @SuppressWarnings("unused") // FIXME: Is this really unused? I don't see it used anywhere here, but perhaps it should be.
     private java.awt.dnd.DropTarget dropTarget = null;
     private java.awt.dnd.DragSource dragSource = null;

@@ -12,11 +12,11 @@ import jmri.TurnoutManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import junit.swingui.TestRunner;
+import junit.textui.TestRunner;
 
 /**
  *
@@ -39,6 +39,7 @@ public class JsonTurnoutHttpServiceTest extends TestCase {
             turnout1.setState(Turnout.UNKNOWN);
             result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1", Locale.ENGLISH);
             Assert.assertNotNull(result);
+            Assert.assertEquals(JsonTurnoutServiceFactory.TURNOUT, result.path(JSON.TYPE).asText());
             Assert.assertEquals("IT1", result.path(JSON.DATA).path(JSON.NAME).asText());
             Assert.assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
             turnout1.setState(Turnout.CLOSED);
@@ -100,13 +101,12 @@ public class JsonTurnoutHttpServiceTest extends TestCase {
         ObjectMapper mapper = new ObjectMapper();
         JsonTurnoutHttpService service = new JsonTurnoutHttpService(mapper);
         TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
-        JsonNode result;
         JsonNode message;
         try {
             // add a turnout
             Assert.assertNull(manager.getTurnout("IT1"));
             message = mapper.createObjectNode().put(JSON.NAME, "IT1").put(JSON.STATE, Turnout.CLOSED);
-            result = service.doPut(JsonTurnoutServiceFactory.TURNOUT, "IT1", message, Locale.ENGLISH);
+            service.doPut(JsonTurnoutServiceFactory.TURNOUT, "IT1", message, Locale.ENGLISH);
             Assert.assertNotNull(manager.getTurnout("IT1"));
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
@@ -122,8 +122,8 @@ public class JsonTurnoutHttpServiceTest extends TestCase {
             result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
-            Turnout turnout1 = manager.provideTurnout("IT1");
-            Turnout turnout2 = manager.provideTurnout("IT2");
+            manager.provideTurnout("IT1");
+            manager.provideTurnout("IT2");
             result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());

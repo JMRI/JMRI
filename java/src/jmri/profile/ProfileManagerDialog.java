@@ -57,7 +57,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ProfileManagerDialog extends JDialog {
 
-    private static final long serialVersionUID = 8335767552519729376L;
     private Timer timer;
     private int countDown;
 
@@ -276,7 +275,6 @@ public class ProfileManagerDialog extends JDialog {
      *
      * @param f - The {@link java.awt.Frame} to display the dialog over.
      * @return the active or selected {@link Profile}
-     * @throws IOException
      * @see ProfileManager#getStartingProfile()
      */
     public static Profile getStartingProfile(Frame f) throws IOException {

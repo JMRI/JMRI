@@ -3,7 +3,7 @@ package jmri.jmrit.roster.swing.attributetable;
 import jmri.InstanceManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -88,7 +88,7 @@ public class AttributeTableModelTest extends TestCase {
             protected void warnShortLong(String s) {
             }
         };
-        Roster.instance().addEntry(r);
+        Roster.getDefault().addEntry(r);
         r.putAttribute("key a", "value 1");
 
         e = new org.jdom2.Element("locomotive")
@@ -112,7 +112,7 @@ public class AttributeTableModelTest extends TestCase {
             protected void warnShortLong(String s) {
             }
         };
-        Roster.instance().addEntry(r);
+        Roster.getDefault().addEntry(r);
         r.putAttribute("key a", "value 11");
         r.putAttribute("key b", "value 12");
         r.putAttribute("key c", "value 13");
@@ -139,7 +139,7 @@ public class AttributeTableModelTest extends TestCase {
             protected void warnShortLong(String s) {
             }
         };
-        Roster.instance().addEntry(r);
+        Roster.getDefault().addEntry(r);
 
     }
 
@@ -151,7 +151,7 @@ public class AttributeTableModelTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", AttributeTableModelTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

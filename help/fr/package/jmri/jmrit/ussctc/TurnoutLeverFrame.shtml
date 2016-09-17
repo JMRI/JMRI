@@ -1,65 +1,85 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!--  $Id$ -->
-<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12--> 
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
+
 <html lang="fr">
 <head>
- <TITLE>
-      JMRI: Turnout Lever Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help OS Indicator">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Turnout Lever Help</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI help OS Indicator">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Le levier d'aiguillage</h1><b>Ce n'est pas encore
+      compl&egrave;tement mis en oeuvre</b>
 
-<H1>Le levier d'aiguillage  </H1>
+      <p>Un levier d'aiguillage sur un panneau USS CCT
+      poss&egrave;de deux entr&eacute;es (capteurs) pour le levier
+      lui-m&ecirc;me, un certain nombre d'autres entr&eacute;es et
+      sorties pour le faire fonctionner. Cet outil vous permet de
+      d&eacute;finir ceux-ci, et cr&eacute;e alors la logique
+      sous-jacente pour les faire agir prototypiquement.</p>
 
-<b> Ce n'est pas encore compl&#232;tement mis en oeuvre </b> <p>
+      <dl>
+        <dt>Entr&eacute;es d'aiguillage</dt>
 
-Un levier d'aiguillage sur un panneau USS CCT
-poss&#232;de deux entr&#233;es (capteurs) pour le levier lui-m&#234;me,
-un certain nombre d'autres entr&#233;es et sorties
-pour le faire fonctionner. Cet outil vous permet de d&#233;finir ceux-ci, et
-cr&#233;e alors la logique sous-jacente pour les faire agir
-prototypiquement.
+        <dd>Aux fins d'une entr&eacute;e multi-capteurs, vous
+        pouvez vouloir un capteur interne nul pour la position
+        m&eacute;diane.</dd>
 
-<dl>
-<dt>Entr&#233;es d'aiguillage <dd>
-Aux fins d'une entr&#233;e multi-capteurs, vous pouvez vouloir un capteur interne nul
-pour la position m&#233;diane.
+        <dt>Sortie d'aiguillage</dt>
 
-<dt>Sortie d'aiguillage  <dd> L'aiguillage du r&#233;seau qui a &#233;t&#233; command&#233;.
+        <dd>L'aiguillage du r&eacute;seau qui a &eacute;t&eacute;
+        command&eacute;.</dd>
 
-<dt>lampes Normal et invers&#233; <dd>  Deux sorties (Aiguillages) qui sont
-actives ensemble (D&#233;vi&#233;e) lorsque l'aiguillage est pass&#233; &#224 DROIT et D&#201;VI&#201;
-respectivement.
+        <dt>lampes Normal et invers&eacute;</dt>
 
-<dt> Entr&#233;e Cod&#233;e<dd>  Le <a href="CodeButtonFrame.shtml">bouton cod&#233; </a>d&#233;fini qui force ce levier &#224 agir.
+        <dd>Deux sorties (Aiguillages) qui sont actives ensemble
+        (D&eacute;vi&eacute;e) lorsque l'aiguillage est
+        pass&eacute; &agrave; DROIT et D&Eacute;VI&Eacute;
+        respectivement.</dd>
 
-<dt>Entr&#233;e Inhibition <dd>  Un capteur qui est utilis&#233; et ACTIF indique
-que l'aiguillage ne peut pas changer de position.
+        <dt>Entr&eacute;e Cod&eacute;e</dt>
 
-<dt>Sortie verrouill&#233;e <dd>  Un capteur qui est fix&#233; ACTIF lorsque l'aiguillage
-a &#233;t&#233; verrouill&#233; en position.
+        <dd>Le <a href="CodeButtonFrame.shtml">bouton
+        cod&eacute;</a> d&eacute;fini qui force ce levier &agrave;
+        agir.</dd>
 
-</dl>
+        <dt>Entr&eacute;e Inhibition</dt>
 
-<p>
-Ceci  est la page d'aide help/en/package/jmri/jmrit/ussctc/TurnoutLeverFrame help page
+        <dd>Un capteur qui est utilis&eacute; et ACTIF indique que
+        l'aiguillage ne peut pas changer de position.</dd>
 
-<!--#include virtual="/Footer" -->
+        <dt>Sortie verrouill&eacute;e</dt>
+
+        <dd>Un capteur qui est fix&eacute; ACTIF lorsque
+        l'aiguillage a &eacute;t&eacute; verrouill&eacute; en
+        position.</dd>
+      </dl>
+
+      <p>Ceci est la page d'aide
+      help/en/package/jmri/jmrit/ussctc/TurnoutLeverFrame help page
+      <!--#include virtual="/Footer" --></p>
+    </div>
+  </div>
 </body>
 </html>
-

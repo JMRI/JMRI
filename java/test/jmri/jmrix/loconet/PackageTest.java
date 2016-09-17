@@ -19,7 +19,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -28,16 +28,12 @@ public class PackageTest extends TestCase {
 
         suite.addTest(jmri.jmrix.loconet.LocoNetThrottledTransmitterTest.suite());
 
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(jmri.jmrix.loconet.locostats.PackageTest.suite());
-        }
+        suite.addTest(jmri.jmrix.loconet.locostats.PackageTest.suite());
 
         suite.addTest(jmri.jmrix.loconet.sdf.PackageTest.suite());
         suite.addTest(jmri.jmrix.loconet.locomon.PackageTest.suite());
         suite.addTest(jmri.jmrix.loconet.soundloader.PackageTest.suite());
         suite.addTest(jmri.jmrix.loconet.spjfile.PackageTest.suite());
-        suite.addTest(new TestSuite(Se8AlmImplementationTest.class));
-        suite.addTest(new TestSuite(SecurityElementTest.class));
         suite.addTest(new TestSuite(SlotManagerTest.class));
         suite.addTest(new TestSuite(LocoNetSlotTest.class));
         suite.addTest(new TestSuite(LnOpsModeProgrammerTest.class));
@@ -46,18 +42,46 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(LnTrafficRouterTest.class));
         suite.addTest(new TestSuite(LnPacketizerTest.class));
         suite.addTest(new TestSuite(LocoNetThrottleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocoNetConsistTest.class));
         suite.addTest(LnPowerManagerTest.suite());
         suite.addTest(LnTurnoutTest.suite());
         suite.addTest(LnTurnoutManagerTest.suite());
         suite.addTest(LnReporterTest.suite());
         suite.addTest(LnSensorTest.suite());
         suite.addTest(LnSensorAddressTest.suite());
-        suite.addTest(LnSensorManagerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LnSensorManagerTest.class));
         suite.addTest(LnCommandStationTypeTest.suite());
+        suite.addTest(BundleTest.suite());
+        suite.addTest(jmri.jmrix.loconet.pr3.PackageTest.suite());
+        suite.addTest(jmri.jmrix.loconet.hexfile.PackageTest.suite());
+        suite.addTest(jmri.jmrix.loconet.lnsvf2.PackageTest.suite());
+        suite.addTest(jmri.jmrix.loconet.downloader.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.clockmon.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.cmdstnconfig.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.duplexgroup.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.locoid.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.slotmon.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.swing.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.bdl16.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.ds64.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.se8.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.pm4.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.Intellibox.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.bluetooth.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.locobuffer.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.locobufferii.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.locobufferusb.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.loconetovertcp.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.ms100.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.pr2.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.uhlenbrock.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.locormi.PackageTest.class));
+            
+        suite.addTest(jmri.jmrix.loconet.locoio.PackageTest.suite());
+        suite.addTest(jmri.jmrix.loconet.locogen.PackageTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(jmri.jmrix.loconet.locoio.PackageTest.suite());
-            suite.addTest(jmri.jmrix.loconet.locogen.PackageTest.suite());
         }
 
         return suite;

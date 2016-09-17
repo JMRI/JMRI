@@ -1,94 +1,153 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
 <!--UpDated by Herv&#233; Blorec  2013-10-11-->
+
 <html lang="fr">
 <head>
- <TITLE>
-      JMRI: Adding/Editing Logix
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Logix Add Edit">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Adding/Editing Logix</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI help Logix Add Edit">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Ajout/Modification de Logix</h1>
 
-<H1> Ajout/Modification de Logix</H1>
-<p> Dans la fen&#234;tre Ajouter Logix, entrer un nom syst&#232;me et un nom utilisateur, puis cliquer sur
-Cr&#233;er <b>Logix</b>, va cr&#233;er une nouveau Logix, et faire appara&#238;tre la fen&#234;tre Modifier Logix
-. Un nom utilisateur peut &#234;tre n'importe quel texte utile, &#224; condition que le nouveau nom utilisateur n'ait pas &#233;t&#233; d&#233;j&#224; c&#233;d&#233; &#224; un autre Logix. Une fois que Logix est cr&#233;&#233;, son nom syst&#232;me
-ne peut pas &#234;tre chang&#233;. Son nom utilisateur ne peut &#234;tre chang&#233; ni dans le
-Tableau Logix ni dans la fen&#234;tre Modifier Logix. Le nom utilisateur est g&#233;n&#233;ralement utilis&#233; pour identifier
-le Logix en particulier, par exemple, «Commande Signal 5".</p>
-<p> Le nom syst&#232;me pour un Logix doit toujours commencer par les deux lettres IX,
-g&#233;n&#233;ralement suivi par un nombre choisi par l'utilisateur. Par exemple,
-les noms de syst&#232;me Logix valides incluent: IX1, IX34, et IX100. Toutes les lettres dans un nom syst&#232;me doivent
-&#234;tre en majuscules. Si l'utilisateur saisit les lettres minuscules, JMRI automatiquement
-les convertira en majuscules. Aussi, comme  commodit&#233; pour l'utilisateur, si le
- nom syst&#232;me entr&#233; ne commence pas par IX, le programme ajoutera IX
-devant ce qui est entr&#233;. Par exemple, pour entrer un nom de syst&#232;me de IX32, tout simplement
-entrez 32 dans le champ Nom syst&#232;me, et le programme fera le reste.</p>
-<p>La fen&#234;tre Modifier Logix permet aux Conditions d'&#234;tre cr&#233;&#233;es et &#233;dit&#233;es. Le
-nom  syst&#232;me et nom utilisateur du Logix sont affich&#233;s en haut. Le nom utilisateur
-peut &#234;tre modifi&#233; par entrer/modifier le texte dans le champ Nom utilisateur. Suivant est un
-Tableau des conditions appartenant &#224; Logix. Pour ajouter une nouvelle condition, cliquez sur
-le bouton <b>Nouvelle Conditions</b> sous le tableau Conditions.
-(Voir aussi le
-<a href="ConditionalAddEdit.shtml">page d'aide distinct sur l'ajout/modification des Conditions</a>)
-Ceci cr&#233;era une nouvelle condition (une nouvelle ligne dans la table condition),
-et ouvrira la fen&#234;tre Modifier le condition permettant &#224; l'expression logique et aux
-actions de la nouvelle condition d'&#234;tre d&#233;finies. Une Condition existante peut &#234;tre
-modifi&#233;e en cliquant sur le menu <b>Modification</b> de cette condition dans le
-tableau. Le nom utilisateur de la condition peut &#234;tre chang&#233; dans le tableau. Le nom utilisateur d'une Condition
-peut &#234;tre n'importe quel texte utile, &#224; condition que le nouveau nom utilisateur ne soit pas utilis&#233; par
-un autre appartenant &#224; cette condition Logix. Il peut &#234;tre le m&#234;me que le nom utilisateur
-d'un autre Logix condition <b>Lorsque vous modifiez le nom utilisateur (ou tout autre &#233;l&#233;ment d'une table JMRI) s'il vous pla&#238;t n'oubliez pas de passer &#224; une autre cellule dans le tableau afin que
-le programme soit averti que vous avez termin&#233; votre saisie, sinon l'entr&#233;e
-ne peut pas &#234;tre prise en compte.</b></p>
-<P> Cliquer <b>Calculer</b> sous le tableau condition provoque le recalcul de toutes les
-Conditions de Logix. Les &#233;tats r&#233;sultant sont affich&#233;s dans
-la colonne &#233;tat du tableau. Puisque le Logix est «inactif» tout en &#233;tant &#233;dit&#233;,
-aucune action condition ne sera d&#233;clench&#233;e lorsque le bouton <b>Calculer</b> est press&#233;.
-</P>
-<p> L'ordre des conditions dans le tableau conditions peut &#234;tre modifi&#233;
-en cliquant sur <b>R&#233;organiser</b> (en dessous du tableau Conditions). Cliquer
-<b>R&#233;organiser</b> change tous les boutons de la derni&#232;re colonne du tableau &#224; la
-<b>Premi&#232;re</b>. S&#233;lectionnez la Condition qui doit d'&#234;tre le premier, et il
-est imm&#233;diatement d&#233;plac&#233; vers le haut de la table. Tous les autres boutons changent &#224; la 
-<b>Suivante</b>. S&#233;lectionnez la Condition restant dans l'ordre d&#233;sir&#233;, jusqu'&#224; ce que
-tous les boutons reviennent &#224; <b>Modifier</b>. Notez que l'ordre dans lequel les
-Conditions sont r&#233;pertori&#233;es dans le Logix ne d&#233;termine pas l'ordre
-dans laquelle elles sont &#233;valu&#233;es, pas plus qu'il ne force l'&#233;valuation
-d'une condition lorsque t&#244;t ou tard, une est &#233;valu&#233;.
-Pour en savoir plus, voir la discussion sur la
-<A Href="../../../../html/tools/Logix.shtml"> page principale Logix</a>.
-	<p>Lorsque <b>Termin&#233;</b> est cliqu&#233; au bas de la fen&#234;tre Modifier Logix, tout
-changement dans le nom utilisateur Logix est v&#233;rifi&#233; et fait. Une v&#233;rification est faite pour les
-incoh&#233;rences en pr&#233;cisant qu'une entit&#233; (capteur, aiguillage, etc) r&#233;f&#233;renc&#233;e
-dans les variables d'&#233;tat multiples n'est pas surveill&#233;e comme un d&#233;clencheur pour le calcul de
-Logix, et un message  d'avertissement appara&#238;t si aucune des incoh&#233;rences ne sont constat&#233;es. Puis le Logix est activ&#233;,
-la fen&#234;tre Modifier Logix est referm&#233;e, et l'utilisateur est renvoy&#233; au Tableau Logix
-. Imm&#233;diatement avant que le Logix soit activ&#233;, l'&#233;tat de tous ses
-Conditions sont mis &#224; INCONNU. Imm&#233;diatement apr&#232;s l'activation, toutes les
-Conditions sont calcul&#233;s.</P>
-<p>La fen&#234;tre Modifier Logix fournit aussi un moyen pour supprimer un Logix si il n'est 
-plus n&#233;cessaire. Cliquez sur <b>Supprimer Logix</b> pour supprimer le Logix en cours d'&#233;dition
-et tous ses Conditions.</p>
-<p> Pour plus d'informations, consultez la documentation Logix sur la page web JMRI
-http://jmri.org/.</p>
+      <p>Dans la fen&ecirc;tre Ajouter Logix, entrer un nom
+      syst&egrave;me et un nom utilisateur, puis cliquer sur
+      Cr&eacute;er <b>Logix</b>, va cr&eacute;er une nouveau Logix,
+      et faire appara&icirc;tre la fen&ecirc;tre Modifier Logix .
+      Un nom utilisateur peut &ecirc;tre n'importe quel texte
+      utile, &agrave; condition que le nouveau nom utilisateur
+      n'ait pas &eacute;t&eacute; d&eacute;j&agrave;
+      c&eacute;d&eacute; &agrave; un autre Logix. Une fois que
+      Logix est cr&eacute;&eacute;, son nom syst&egrave;me ne peut
+      pas &ecirc;tre chang&eacute;. Son nom utilisateur ne peut
+      &ecirc;tre chang&eacute; ni dans le Tableau Logix ni dans la
+      fen&ecirc;tre Modifier Logix. Le nom utilisateur est
+      g&eacute;n&eacute;ralement utilis&eacute; pour identifier le
+      Logix en particulier, par exemple, &Acirc;&laquo;Commande
+      Signal 5".</p>
 
-<!--#include virtual="/Footer" -->
+      <p>Le nom syst&egrave;me pour un Logix doit toujours
+      commencer par les deux lettres IX, g&eacute;n&eacute;ralement
+      suivi par un nombre choisi par l'utilisateur. Par exemple,
+      les noms de syst&egrave;me Logix valides incluent: IX1, IX34,
+      et IX100. Toutes les lettres dans un nom syst&egrave;me
+      doivent &ecirc;tre en majuscules. Si l'utilisateur saisit les
+      lettres minuscules, JMRI automatiquement les convertira en
+      majuscules. Aussi, comme commodit&eacute; pour l'utilisateur,
+      si le nom syst&egrave;me entr&eacute; ne commence pas par IX,
+      le programme ajoutera IX devant ce qui est entr&eacute;. Par
+      exemple, pour entrer un nom de syst&egrave;me de IX32, tout
+      simplement entrez 32 dans le champ Nom syst&egrave;me, et le
+      programme fera le reste.</p>
+
+      <p>La fen&ecirc;tre Modifier Logix permet aux Conditions
+      d'&ecirc;tre cr&eacute;&eacute;es et &eacute;dit&eacute;es.
+      Le nom syst&egrave;me et nom utilisateur du Logix sont
+      affich&eacute;s en haut. Le nom utilisateur peut &ecirc;tre
+      modifi&eacute; par entrer/modifier le texte dans le champ Nom
+      utilisateur. Suivant est un Tableau des conditions
+      appartenant &agrave; Logix. Pour ajouter une nouvelle
+      condition, cliquez sur le bouton <b>Nouvelle Conditions</b>
+      sous le tableau Conditions. (Voir aussi le <a href=
+      "ConditionalAddEdit.shtml">page d'aide distinct sur
+      l'ajout/modification des Conditions</a>) Ceci cr&eacute;era
+      une nouvelle condition (une nouvelle ligne dans la table
+      condition), et ouvrira la fen&ecirc;tre Modifier le condition
+      permettant &agrave; l'expression logique et aux actions de la
+      nouvelle condition d'&ecirc;tre d&eacute;finies. Une
+      Condition existante peut &ecirc;tre modifi&eacute;e en
+      cliquant sur le menu <b>Modification</b> de cette condition
+      dans le tableau. Le nom utilisateur de la condition peut
+      &ecirc;tre chang&eacute; dans le tableau. Le nom utilisateur
+      d'une Condition peut &ecirc;tre n'importe quel texte utile,
+      &agrave; condition que le nouveau nom utilisateur ne soit pas
+      utilis&eacute; par un autre appartenant &agrave; cette
+      condition Logix. Il peut &ecirc;tre le m&ecirc;me que le nom
+      utilisateur d'un autre Logix condition <b>Lorsque vous
+      modifiez le nom utilisateur (ou tout autre
+      &eacute;l&eacute;ment d'une table JMRI) s'il vous pla&icirc;t
+      n'oubliez pas de passer &agrave; une autre cellule dans le
+      tableau afin que le programme soit averti que vous avez
+      termin&eacute; votre saisie, sinon l'entr&eacute;e ne peut
+      pas &ecirc;tre prise en compte.</b></p>
+
+      <p>Cliquer <b>Calculer</b> sous le tableau condition provoque
+      le recalcul de toutes les Conditions de Logix. Les
+      &eacute;tats r&eacute;sultant sont affich&eacute;s dans la
+      colonne &eacute;tat du tableau. Puisque le Logix est
+      &Acirc;&laquo;inactif&Acirc;&raquo; tout en &eacute;tant
+      &eacute;dit&eacute;, aucune action condition ne sera
+      d&eacute;clench&eacute;e lorsque le bouton <b>Calculer</b>
+      est press&eacute;.</p>
+
+      <p>L'ordre des conditions dans le tableau conditions peut
+      &ecirc;tre modifi&eacute; en cliquant sur
+      <b>R&eacute;organiser</b> (en dessous du tableau Conditions).
+      Cliquer <b>R&eacute;organiser</b> change tous les boutons de
+      la derni&egrave;re colonne du tableau &agrave; la
+      <b>Premi&egrave;re</b>. S&eacute;lectionnez la Condition qui
+      doit d'&ecirc;tre le premier, et il est imm&eacute;diatement
+      d&eacute;plac&eacute; vers le haut de la table. Tous les
+      autres boutons changent &agrave; la <b>Suivante</b>.
+      S&eacute;lectionnez la Condition restant dans l'ordre
+      d&eacute;sir&eacute;, jusqu'&agrave; ce que tous les boutons
+      reviennent &agrave; <b>Modifier</b>. Notez que l'ordre dans
+      lequel les Conditions sont r&eacute;pertori&eacute;es dans le
+      Logix ne d&eacute;termine pas l'ordre dans laquelle elles
+      sont &eacute;valu&eacute;es, pas plus qu'il ne force
+      l'&eacute;valuation d'une condition lorsque t&ocirc;t ou
+      tard, une est &eacute;valu&eacute;. Pour en savoir plus, voir
+      la discussion sur la <a href=
+      "../../../../html/tools/Logix.shtml">page principale
+      Logix</a>.</p>
+
+      <p>Lorsque <b>Termin&eacute;</b> est cliqu&eacute; au bas de
+      la fen&ecirc;tre Modifier Logix, tout changement dans le nom
+      utilisateur Logix est v&eacute;rifi&eacute; et fait. Une
+      v&eacute;rification est faite pour les incoh&eacute;rences en
+      pr&eacute;cisant qu'une entit&eacute; (capteur, aiguillage,
+      etc) r&eacute;f&eacute;renc&eacute;e dans les variables
+      d'&eacute;tat multiples n'est pas surveill&eacute;e comme un
+      d&eacute;clencheur pour le calcul de Logix, et un message
+      d'avertissement appara&icirc;t si aucune des
+      incoh&eacute;rences ne sont constat&eacute;es. Puis le Logix
+      est activ&eacute;, la fen&ecirc;tre Modifier Logix est
+      referm&eacute;e, et l'utilisateur est renvoy&eacute; au
+      Tableau Logix . Imm&eacute;diatement avant que le Logix soit
+      activ&eacute;, l'&eacute;tat de tous ses Conditions sont mis
+      &agrave; INCONNU. Imm&eacute;diatement apr&egrave;s
+      l'activation, toutes les Conditions sont calcul&eacute;s.</p>
+
+      <p>La fen&ecirc;tre Modifier Logix fournit aussi un moyen
+      pour supprimer un Logix si il n'est plus n&eacute;cessaire.
+      Cliquez sur <b>Supprimer Logix</b> pour supprimer le Logix en
+      cours d'&eacute;dition et tous ses Conditions.</p>
+
+      <p>Pour plus d'informations, consultez la documentation Logix
+      sur la page web JMRI http://jmri.org/.</p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>
-

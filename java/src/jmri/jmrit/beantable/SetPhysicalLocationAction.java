@@ -41,8 +41,8 @@ public class SetPhysicalLocationAction extends AbstractAction {
     /**
      * Constructor
      *
-     * @param s
-     * @param reporter
+     * @param s title of the action
+     * @param reporter {@link Reporter} to use
      */
     public SetPhysicalLocationAction(String s, Reporter reporter) {
         super(s);
@@ -54,7 +54,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
     /**
      * Action method
      *
-     * @param e
+     * @param e the associated {@link ActionEvent} that triggered this action
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -161,7 +161,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
          * Construct the combo box with the list of available Reporters
          */
         protected JComboBox<String> getReporterComboBox() {
-            ReporterManager mgr = InstanceManager.reporterManagerInstance();
+            ReporterManager mgr = InstanceManager.getDefault(jmri.ReporterManager.class);
             String[] nameArray = mgr.getSystemNameArray();
             List<String> displayList = new ArrayList<>();
             for (String name : nameArray) {
@@ -223,7 +223,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
         private Reporter getReporterFromList() {
             String s = (String) reporterBox.getSelectedItem();
             // Since we don't have "getByDisplayName()" we need to do this in two steps
-            Reporter r = InstanceManager.reporterManagerInstance().getByDisplayName(s);
+            Reporter r = InstanceManager.getDefault(jmri.ReporterManager.class).getByDisplayName(s);
             return (r);
         }
 

@@ -22,7 +22,7 @@ public class SwingTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SwingTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -30,6 +30,7 @@ public class SwingTest extends TestCase {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.can.cbus.swing.SwingTest");
         suite.addTest(jmri.jmrix.can.cbus.swing.configtool.ConfigToolActionTest.suite());
+        suite.addTest(jmri.jmrix.can.cbus.swing.eventtable.PackageTest.suite());
         return suite;
     }
 

@@ -110,7 +110,7 @@ public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBe
             }
         }
 
-        InstanceManager.signalHeadManagerInstance().register(h);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         return true;
     }
 

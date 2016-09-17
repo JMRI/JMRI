@@ -14,7 +14,7 @@ public abstract class AbstractShutDownTask implements ShutDownTask {
     /**
      * Constructor specifies the name
      *
-     * @param name
+     * @param name Name to give this task
      */
     public AbstractShutDownTask(String name) {
         this.mName = name;

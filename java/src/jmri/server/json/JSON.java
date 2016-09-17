@@ -1,8 +1,8 @@
 package jmri.server.json;
 
 /**
- * Common constants used in the JMRI JSON protocol starting with protocol
- * version 4.0.
+ * Common and utility constants used in the JMRI JSON protocol starting with
+ * protocol version 4.0.
  *
  * @author Randall Wood (C) 2013, 2014, 2016
  * @see jmri.jmris.json.JSON
@@ -110,6 +110,10 @@ public final class JSON {
      * {@value #STATUS_CODE}
      */
     public static final String STATUS_CODE = "statusCode"; // NOI18N
+    /**
+     * {@value #PROPERTIES}
+     */
+    public static final String PROPERTIES = "properties"; // NOI18N
 
     /* JSON hello and metadata */
     /**
@@ -167,17 +171,9 @@ public final class JSON {
      */
     public static final String ENGINES = "engines"; // NOI18N
     /**
-     * {@value #LIGHTS}
-     */
-    public static final String LIGHTS = "lights"; // NOI18N
-    /**
      * {@value #LOCATIONS}
      */
     public static final String LOCATIONS = "locations"; // NOI18N
-    /**
-     * {@value #MEMORIES}
-     */
-    public static final String MEMORIES = "memories"; // NOI18N
     /**
      * {@value #METADATA}
      */
@@ -187,25 +183,9 @@ public final class JSON {
      */
     public static final String PANELS = "panels"; // NOI18N
     /**
-     * {@value #REPORTERS}
-     */
-    public static final String REPORTERS = "reporters"; // NOI18N
-    /**
      * {@value #ROUTES}
      */
     public static final String ROUTES = "routes"; // NOI18N
-    /**
-     * {@value #SENSORS}
-     */
-    public static final String SENSORS = "sensors"; // NOI18N
-    /**
-     * {@value #SIGNAL_HEADS}
-     */
-    public static final String SIGNAL_HEADS = "signalHeads"; // NOI18N
-    /**
-     * {@value #SIGNAL_MASTS}
-     */
-    public static final String SIGNAL_MASTS = "signalMasts"; // NOI18N
     /**
      * {@value #TRAINS}
      */
@@ -229,10 +209,6 @@ public final class JSON {
      */
     public static final String ENGINE = "engine"; // NOI18N
     /**
-     * {@value #LIGHT}
-     */
-    public static final String LIGHT = "light"; // NOI18N
-    /**
      * {@value #LOCATION}
      */
     public static final String LOCATION = "location"; // NOI18N
@@ -240,10 +216,6 @@ public final class JSON {
      * {@value #LOCATION_ID}
      */
     public static final String LOCATION_ID = "locationId"; // NOI18N
-    /**
-     * {@value #MEMORY}
-     */
-    public static final String MEMORY = "memory"; // NOI18N
     /**
      * {@value #NETWORK_SERVICE}
      *
@@ -262,22 +234,6 @@ public final class JSON {
      * {@value #ROUTE}
      */
     public static final String ROUTE = "route"; // NOI18N
-    /**
-     * {@value #SENSOR}
-     */
-    public static final String SENSOR = "sensor"; // NOI18N
-    /**
-     * {@value #SIGNAL_HEAD}
-     */
-    public static final String SIGNAL_HEAD = "signalHead"; // NOI18N
-    /**
-     * {@value #SIGNAL_MAST}
-     */
-    public static final String SIGNAL_MAST = "signalMast"; // NOI18N
-    /**
-     * {@value #REPORTER}
-     */
-    public static final String REPORTER = "reporter"; // NOI18N
     /**
      * {@value #THROTTLE}
      */
@@ -376,16 +332,6 @@ public final class JSON {
      * {@value #WRITE}
      */
     public static final String WRITE = "write"; // NOI18N
-
-    /* JSON reporter tokens */
-    /**
-     * {@value #REPORT}
-     */
-    public static final String REPORT = "report"; // NOI18N
-    /**
-     * {@value #LAST_REPORT}
-     */
-    public static final String LAST_REPORT = "lastReport"; // NOI18N
 
     /* JSON roster and car/engine (operations) tokens */
     /**
@@ -599,8 +545,8 @@ public final class JSON {
     /**
      * {@value #ADD}
      *
-     * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER}, this is an entry that has been
-     * added to the roster.
+     * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER},
+     * this is an entry that has been added to the roster.
      *
      * @since 1.1
      */
@@ -611,8 +557,8 @@ public final class JSON {
      * In operations, this indicates the dropping or setting out of a car or
      * engine.
      *
-     * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER}, this is an entry that has been
-     * removed from the roster.
+     * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER},
+     * this is an entry that has been removed from the roster.
      *
      * @since 1.1
      */

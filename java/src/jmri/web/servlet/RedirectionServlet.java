@@ -24,7 +24,7 @@ public class RedirectionServlet extends HttpServlet {
 
         try {
             InputStream in;
-            in = this.getClass().getResourceAsStream("/jmri/web/server/FilePaths.properties"); // NOI18N
+            in = RedirectionServlet.class.getResourceAsStream("/jmri/web/server/FilePaths.properties"); // NOI18N
             try {
                 redirections.load(in);
             } catch (IOException e) {
@@ -39,18 +39,7 @@ public class RedirectionServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        boolean firstParameter = true;
-        String target = redirections.getProperty(request.getContextPath());
-        // TODO: add any additional path outside context to target
-        for (String key : request.getParameterMap().keySet()) {
-            if (firstParameter) {
-                firstParameter = false;
-                target = target + "?" + key + "=" + request.getParameter(key);
-            } else {
-                target = target + "&" + key + "=" + request.getParameter(key);
-            }
-        }
-        response.sendRedirect(target);
+        response.sendRedirect(redirections.getProperty(request.getContextPath()));
     }
 
     @Override

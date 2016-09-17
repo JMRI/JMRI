@@ -102,7 +102,7 @@ public class SimpleServlet extends WebSocketServlet {
                 log.warn(e.getMessage(), e);
                 this.connection.getSession().close();
             }
-            InstanceManager.shutDownManagerInstance().register(this.shutDownTask);
+            InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
         }
 
         @OnWebSocketError
@@ -112,13 +112,11 @@ public class SimpleServlet extends WebSocketServlet {
 
         @OnWebSocketMessage
         public void onMessage(String string) {
-            if (log.isDebugEnabled()) {
-                log.debug("Received from client: {}", string);
-            }
+            log.debug("Received from client: {}", string);
             try {
                 if (string.startsWith("POWER")) {
                     this.powerServer.parseStatus(string);
-                    this.powerServer.sendStatus(InstanceManager.powerManagerInstance().getPower());
+                    this.powerServer.sendStatus(InstanceManager.getDefault(jmri.PowerManager.class).getPower());
                 } else if (string.startsWith("TURNOUT")) {
                     this.turnoutServer.parseStatus(string);
                 } else if (string.startsWith("LIGHT")) {
@@ -140,12 +138,12 @@ public class SimpleServlet extends WebSocketServlet {
                 } catch (IOException ie) {
                     log.warn(ie.getMessage(), ie);
                     this.connection.getSession().close();
-                    InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
+                    InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
                 }
             } catch (IOException ie) {
                 log.warn(ie.getMessage(), ie);
                 this.connection.getSession().close();
-                InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
+                InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
             }
         }
     }

@@ -141,9 +141,6 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         startBCastThread();
 
         new XNetInitializationManager(this.getSystemConnectionMemo());
-
-        jmri.jmrix.lenz.ActiveFlag.setActive();
-
     }
 
     /**

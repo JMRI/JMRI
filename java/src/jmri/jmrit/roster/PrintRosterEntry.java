@@ -1,4 +1,3 @@
-// PaneProgFrame.java
 package jmri.jmrit.roster;
 
 import java.awt.Font;
@@ -121,10 +120,10 @@ public class PrintRosterEntry implements PaneContainer {
         }
 
         d.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
-        if (variableModel.piCv() != "") {
+        if (!variableModel.piCv().equals("")) {
             resetModel.setPiCv(variableModel.piCv());
         }
-        if (variableModel.siCv() != "") {
+        if (!variableModel.siCv().equals("")) {
             resetModel.setSiCv(variableModel.siCv());
         }
         d.loadResetModel(decoderRoot.getChild("decoder"), resetModel);

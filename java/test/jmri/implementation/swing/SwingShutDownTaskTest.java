@@ -74,7 +74,7 @@ public class SwingShutDownTaskTest extends TestCase {
         modalDialogStopsTest = true;
         // -noloading needed so we can set the same class-loaded static variable
         String[] testCaseName = {"-noloading", SwingShutDownTaskTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

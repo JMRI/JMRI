@@ -109,7 +109,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
         if (selector != null && selector.isSelected()) p = selector.getProgrammer();
         if (p == null) {
             log.warn("Selector did not provide a programmer, use default");
-            p = jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+            p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
         }
         IdentifyDecoder id = new IdentifyDecoder(p) {
             private NewLocoSelPane who = me;
@@ -167,7 +167,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
         if (((String) locoBox.getSelectedItem()).equals("<none>")) {
             return;
         }
-        RosterEntry r = Roster.instance().entryFromTitle((String) locoBox.getSelectedItem());
+        RosterEntry r = Roster.getDefault().entryFromTitle((String) locoBox.getSelectedItem());
         String decoderModel = r.getDecoderModel();
         String decoderFamily = r.getDecoderFamily();
         if (log.isDebugEnabled()) {
@@ -216,7 +216,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
         re.setId(Bundle.getMessage("LabelNewDecoder"));
         // note we're leaving the filename information as null
         // add the new roster entry to the in-memory roster
-        Roster.instance().addEntry(re);
+        Roster.getDefault().addEntry(re);
 
         startProgrammer(decoderFile, re);
     }

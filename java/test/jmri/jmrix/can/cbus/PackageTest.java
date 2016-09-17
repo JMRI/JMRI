@@ -22,7 +22,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -32,9 +32,9 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.can.cbus.CbusAddressTest.suite());
         suite.addTest(jmri.jmrix.can.cbus.CbusProgrammerTest.suite());
         suite.addTest(jmri.jmrix.can.cbus.CbusProgrammerManagerTest.suite());
-        suite.addTest(jmri.jmrix.can.cbus.CbusSensorManagerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusSensorManagerTest.class));
         suite.addTest(jmri.jmrix.can.cbus.CbusSensorTest.suite());
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.can.cbus.configurexml.PackageTest.class));
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.can.cbus.swing.SwingTest.suite());
         }

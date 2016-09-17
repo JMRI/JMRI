@@ -2,6 +2,9 @@
 package jmri.jmrit.operations.locations;
 
 import javax.swing.BorderFactory;
+import jmri.jmrit.operations.locations.tools.ChangeTrackTypeAction;
+import jmri.jmrit.operations.locations.tools.ShowCarsByLocationAction;
+import jmri.jmrit.operations.locations.tools.ShowTrainsServingLocationAction;
 
 /**
  * Frame for user edit of a yard
@@ -10,11 +13,6 @@ import javax.swing.BorderFactory;
  * @version $Revision$
  */
 public class YardEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3353058611424628644L;
 
     public YardEditFrame() {
         super();

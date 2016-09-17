@@ -1,9 +1,8 @@
-// LZ100Action.java
 package jmri.jmrix.lenz.swing.lz100;
 
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
-import javax.swing.AbstractAction;
+import jmri.jmrix.lenz.swing.AbstractXPressNetAction;
 
 /**
  * Swing action to create and register an LZ100Frame object.
@@ -11,19 +10,11 @@ import javax.swing.AbstractAction;
  * The {@link LZ100Frame} is a configuration tool for the LZ100 command Station.
  *
  * @author	Paul Bender Copyright (C) 2005
- * @version	$Revision$
  */
-public class LZ100Action extends AbstractAction {
+public class LZ100Action extends AbstractXPressNetAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5554346432287622638L;
-    jmri.jmrix.lenz.XNetSystemConnectionMemo _memo = null;
-
-    public LZ100Action(String s, jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        super(s);
-        _memo = memo;
+    public LZ100Action(String s, jmri.jmrix.lenz.XNetSystemConnectionMemo memo){
+        super(s,memo);
     }
 
     public LZ100Action(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
@@ -38,4 +29,3 @@ public class LZ100Action extends AbstractAction {
     }
 }
 
-/* @(#)LZ100Action.java */

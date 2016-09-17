@@ -1,4 +1,3 @@
-// SerialSensorManager.java
 package jmri.jmrix.grapevine;
 
 import jmri.Sensor;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author Dave Duchamp, multi node extensions, 2004
- * @version	$Revision$
  */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         implements SerialListener {
@@ -55,14 +53,15 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      *
      * @return null if sensor already exists by that name or an alternate
      */
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Override
+    protected Sensor createNewSensor(String systemName, String userName) {
         if (log.isDebugEnabled()) {
             log.debug("createNewSensor " + systemName + " " + userName);
         }
         Sensor s;
         // validate the system name, and normalize it
         String sName = SerialAddress.normalizeSystemName(systemName);
-        if (sName == "") {
+        if (sName.equals("")) {
             // system name is not valid
             log.error("Invalid Sensor system name - " + systemName);
             return null;
@@ -170,5 +169,3 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
     private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class.getName());
 }
-
-/* @(#)SerialSensorManager.java */

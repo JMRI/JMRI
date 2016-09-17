@@ -116,8 +116,6 @@ public class Xml {
     static final String RUN_FILE = "runFile"; // NOI18N
     static final String TRAIN_ACTION = "trainAction"; // NOI18N
 
-    static final String COLUMN_WIDTHS = "columnWidths"; // TODO This here is for backwards compatibility, remove after next major release // NOI18N
-
     static final String TRAIN_SCHEDULE_OPTIONS = "trainScheduleOptions"; // NOI18N
     static final String ACTIVE_ID = "activeId"; // NOI18N
     static final String START_UP = "startUp"; // NOI18N
@@ -179,8 +177,8 @@ public class Xml {
     static final String NO_CAR_SET_OUTS = "noCarSetOuts"; // NOI18N
     static final String TRAIN_DONE = "trainDone"; // NOI18N
     
-    static final String SWITCH_LIST_TRACK = "switchListTrack";
-    static final String HOLD_CAR = "holdCar";
+    static final String SWITCH_LIST_TRACK = "switchListTrack"; // NOI18N
+    static final String HOLD_CAR = "holdCar"; // NOI18N
 
     // TrainManifestHeaderText.jafa
     static final String MANIFEST_HEADER_TEXT_STRINGS = "manifestHeaderTextStrings"; // NOI18N

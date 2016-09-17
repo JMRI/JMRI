@@ -21,13 +21,17 @@ public class RaspberryPiAdapter extends jmri.jmrix.AbstractPortController
     // be one, but the library handles the details that make it a 
     // singleton.
     private GpioController gpio = null;
+
+    public RaspberryPiAdapter(){
+        this(GpioFactory.getInstance());
+    }
     
-    public RaspberryPiAdapter (){
+    public RaspberryPiAdapter(GpioController _gpio){
         super(new RaspberryPiSystemConnectionMemo());
         log.debug("RaspberryPi GPIO Adapter Constructor called");
         opened = true;
         this.manufacturerName = RaspberryPiConnectionTypeList.PI;
-        gpio = GpioFactory.getInstance();
+        gpio = _gpio;
     }
 
     @Override

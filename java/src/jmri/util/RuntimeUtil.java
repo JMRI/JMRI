@@ -7,8 +7,11 @@ package jmri.util;
  * system, or at least try to fake it.
  *
  * @author Paul Bender Copyright 2004
- * @version $Revision$
+ * @deprecated since 4.5.4; add {@link jmri.ShutDownTask}s to the default
+ * {@link jmri.ShutDownManager}, or if a ShutDownTask cannot be used, use
+ * {@link java.lang.Runtime#addShutdownHook(java.lang.Thread)} directly
  */
+@Deprecated
 public class RuntimeUtil {
 
     static public void addShutdownHook(Thread Hook) {

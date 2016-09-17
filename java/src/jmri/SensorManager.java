@@ -1,8 +1,10 @@
 package jmri;
 
 import java.util.List;
+
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckReturnValue;
 
 /**
  * Interface for controlling sensors.
@@ -42,10 +44,11 @@ public interface SensorManager extends Manager {
      * Locate via user name, then system name if needed. Does not create a new
      * one if nothing found
      *
-     * @param name
+     * @param name User name or system name to match
      * @return null if no match found
      */
-    public @Nullable Sensor getSensor(@Nonnull String name);
+    @CheckReturnValue
+    public@CheckForNull Sensor getSensor(@Nonnull String name);
 
     // to free resources when no longer used
     public void dispose();
@@ -77,12 +80,15 @@ public interface SensorManager extends Manager {
      *                                  an illegal name or name that can't be
      *                                  parsed.
      */
-    public @Nonnull Sensor newSensor(@Nonnull String systemName, @Nullable String userName) throws IllegalArgumentException;
+    public @Nonnull Sensor newSensor(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
-    public @Nullable Sensor getByUserName(@Nonnull String s);
+    @CheckReturnValue
+    public @CheckForNull Sensor getByUserName(@Nonnull String s);
 
-    public @Nullable Sensor getBySystemName(@Nonnull String s);
+    @CheckReturnValue
+    public @CheckForNull Sensor getBySystemName(@Nonnull String s);
 
+    @CheckReturnValue
     public @Nonnull List<String> getSystemNameList();
 
     /**
@@ -102,6 +108,7 @@ public interface SensorManager extends Manager {
      * format is 1b23 this will return false.
      *
      */
+    @CheckReturnValue
     public boolean allowMultipleAdditions(@Nonnull String systemName);
 
     /**
@@ -112,14 +119,18 @@ public interface SensorManager extends Manager {
      * @param curAddress - The hardware address of the turnout we which to
      * @param prefix     - The System Prefix used to make up the systemName
      *                   check.
-     * @returns           - null if the system name made from prefix and curAddress is in use
+     * @return           - null if the system name made from prefix and curAddress is in use
+     * @throws jmri.JmriException if problem calculating next address
      */
-    public @Nullable String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
+    @CheckReturnValue
+    public @CheckForNull String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
     public @Nonnull String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
+    @CheckReturnValue
     public long getDefaultSensorDebounceGoingActive();
 
+    @CheckReturnValue
     public long getDefaultSensorDebounceGoingInActive();
 
     public void setDefaultSensorDebounceGoingActive(long timer);

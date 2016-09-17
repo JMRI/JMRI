@@ -37,11 +37,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SetTrainIconPositionFrame extends OperationsFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6408476815508585050L;
-
     RouteManager routeManager = RouteManager.instance();
 
     // labels
@@ -87,7 +82,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // set tool tips
-        placeButton.setToolTipText(Bundle.getMessage("TipPlaceButton") + " \"" + Setup.getPanelName()  + "\"");
+        placeButton.setToolTipText(Bundle.getMessage("TipPlaceButton") + " \"" + Setup.getPanelName()  + "\"");  // NOI18N
         applyButton.setToolTipText(Bundle.getMessage("TipApplyAllButton"));
         saveButton.setToolTipText(Bundle.getMessage("TipSaveButton"));
 

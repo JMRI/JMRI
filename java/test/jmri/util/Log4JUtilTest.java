@@ -1,6 +1,6 @@
 package jmri.util;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the jmri.util.Log4JUtil class.
  *
  * @author	Bob Jacobsen Copyright 2003, 2009, 2010, 2015
- * @version	$Revision$
  */
 public class Log4JUtilTest extends TestCase {
 
@@ -44,7 +43,7 @@ public class Log4JUtilTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", Log4JUtilTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

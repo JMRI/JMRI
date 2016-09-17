@@ -16,11 +16,11 @@ import jmri.TurnoutManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import junit.swingui.TestRunner;
+import junit.textui.TestRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,6 +48,7 @@ public class JsonRouteHttpServiceTest extends TestCase {
         try {
             result = service.doGet(JsonRouteServiceFactory.ROUTE, "IR1", Locale.ENGLISH);
             Assert.assertNotNull(result);
+            Assert.assertEquals(JsonRouteServiceFactory.ROUTE, result.path(JSON.TYPE).asText());
             Assert.assertEquals("IR1", result.path(JSON.DATA).path(JSON.NAME).asText());
             Assert.assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
             sensor1.setKnownState(Sensor.ACTIVE);
@@ -214,14 +215,13 @@ public class JsonRouteHttpServiceTest extends TestCase {
         ObjectMapper mapper = new ObjectMapper();
         JsonRouteHttpService service = new JsonRouteHttpService(mapper);
         RouteManager manager = InstanceManager.getDefault(RouteManager.class);
-        JsonNode result;
         JsonNode message;
         JsonException exception = null;
         try {
             // add a route
             Assert.assertNull(manager.getRoute("IR1"));
             message = mapper.createObjectNode().put(JSON.NAME, "IR1").put(JSON.STATE, Sensor.INACTIVE);
-            result = service.doPut(JsonRouteServiceFactory.ROUTE, "IR1", message, Locale.ENGLISH);
+            service.doPut(JsonRouteServiceFactory.ROUTE, "IR1", message, Locale.ENGLISH);
             Assert.assertNull(manager.getRoute("IR1"));
         } catch (JsonException ex) {
             exception = ex;
@@ -239,8 +239,8 @@ public class JsonRouteHttpServiceTest extends TestCase {
             result = service.doGetList(JsonRouteServiceFactory.ROUTE, Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
-            Route route1 = manager.provideRoute("IR1", "Route1");
-            Route route2 = manager.provideRoute("IR2", "Route2");
+            manager.provideRoute("IR1", "Route1");
+            manager.provideRoute("IR2", "Route2");
             result = service.doGetList(JsonRouteServiceFactory.ROUTE, Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());

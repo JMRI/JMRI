@@ -52,10 +52,10 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
     public void setThrottleSpeedAndDirection(LocoAddress l, float speed, boolean isForward){
        // get the throttle for the address.
        throttleList.forEach( t -> {
-          if(((Throttle)t).getLocoAddress()==l) {
+          if(t.getLocoAddress()==l) {
              // set the speed and direction.
-             ((Throttle)t).setSpeedSetting(speed);
-             ((Throttle)t).setIsForward(isForward);
+             t.setSpeedSetting(speed);
+             t.setIsForward(isForward);
           }
        });
    }
@@ -70,12 +70,12 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
     public void setThrottleFunctions(LocoAddress l, ArrayList<Boolean> fList){
        // get the throttle for the address.
        throttleList.forEach( t -> {
-          if(((Throttle)t).getLocoAddress()==l) {
+          if(t.getLocoAddress()==l) {
              for(int i=0;i< fList.size();i++){
                  try {
                    java.lang.reflect.Method setter = t.getClass()
                        .getMethod("setF"+i,boolean.class);
-                   setter.invoke(t,(Boolean) fList.get(i));
+                   setter.invoke(t, fList.get(i));
                  } catch (java.lang.NoSuchMethodException|
                           java.lang.IllegalAccessException|
                           java.lang.reflect.InvocationTargetException ex1) {
@@ -127,7 +127,7 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
         t.cancelThrottleRequest(l.getNumber(),this);
         if(l instanceof DccLocoAddress) {
           throttleList.forEach( throttle -> {
-              if(((Throttle)throttle).getLocoAddress()==l) {
+              if(throttle.getLocoAddress()==l) {
                  t.releaseThrottle((DccThrottle)throttle,this);
                  throttleList.remove(throttle);
                  try {

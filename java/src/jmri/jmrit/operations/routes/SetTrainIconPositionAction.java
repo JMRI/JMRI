@@ -14,11 +14,6 @@ import javax.swing.AbstractAction;
  */
 public class SetTrainIconPositionAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1305604823720347502L;
-
     public SetTrainIconPositionAction(String s) {
         super(s);
     }

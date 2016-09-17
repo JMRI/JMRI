@@ -143,7 +143,6 @@ public class ConstantValue extends VariableValue {
     /**
      * No connected CV, so this notify does nothing
      *
-     * @param state
      */
     public void setCvState(int state) {
     }

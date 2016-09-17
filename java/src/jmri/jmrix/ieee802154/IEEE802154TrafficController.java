@@ -21,8 +21,7 @@ import org.slf4j.LoggerFactory;
  * configuring nodes, etc, during the initial configuration. A subclass must be
  * instantiated to actually communicate with an adapter.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005, 2006, 2008 Converted to
- * multiple connection
+ * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005, 2006, 2008 Converted to multiple connection
  * @author kcameron Copyright (C) 2011
  * @author Paul Bender Copyright (C) 2013
  */
@@ -45,9 +44,10 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
      * instance use of the traffic controller is no longer used for multiple
      * connections
      */
+    @Override
     @Deprecated
     public void setInstance() {
-        log.error("Deprecated Method setInstance called");
+        log.debug("Deprecated Method setInstance called");
     }
 
     /**
@@ -185,12 +185,14 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
     //    m.setElement(0)=0x7E;
     //    return 1;
     //}
+
     /**
      * <p>
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
      */
     //protected AbstractMRReply newReply() {return new IEEE802154Reply();}
+
     /*
      * Build a new IEEE802154 Node.
      * Must be implemented by derived classes

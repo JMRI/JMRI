@@ -1,6 +1,6 @@
 package jmri.jmrix.lenz.liusbserver;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.TestCase;
 
 /**
@@ -29,7 +29,7 @@ public class LIUSBServerXNetPacketizerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", LIUSBServerXNetPacketizerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // The minimal setup for log4J

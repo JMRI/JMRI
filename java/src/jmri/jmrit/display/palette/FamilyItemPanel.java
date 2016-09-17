@@ -39,8 +39,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
     protected JPanel _iconPanel;     // panel contained in _iconFamilyPanel - all icons in family
     protected JPanel _dragIconPanel; // contained in _iconFamilyPanel - to drag to control panel
     protected boolean _supressDragging;
-    protected int _buttonPostion = 0;
-    JPanel _bottom1Panel;  // Typically _showIconsButton and editIconsButton 
+    protected int _buttonPosition = 0;
+    JPanel _bottom1Panel;  // Typically _showIconsButton and _editIconsButton
     JPanel _bottom2Panel;  // createIconFamilyButton - when all families have been deleted 
     JButton _showIconsButton;
     JButton _editIconsButton;
@@ -108,7 +108,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
      * _bottom1Panel and _bottom2Panel alternate visibility in bottomPanel
      * depending on whether icon families exist. They are made first because
      * they are referenced in initIconFamiliesPanel(). _bottom2Panel is for the
-     * exceptional case where there are no families at all subclasses will
+     * exceptional case where there are no families at all. Subclasses will
      * insert other panels
      */
     private void makeBottomPanel(ActionListener doneAction) {
@@ -122,16 +122,16 @@ public abstract class FamilyItemPanel extends ItemPanel {
         JPanel bottomPanel = new JPanel(new FlowLayout());
         bottomPanel.add(_bottom1Panel);
         bottomPanel.add(_bottom2Panel);
+        //_bottom2Panel.setVisible(false); // to prevent showing it on Reporter tab?
         add(bottomPanel);
         if (log.isDebugEnabled()) {
             log.debug("init done for family " + _family);
         }
     }
 
-    // add update button to  bottom1Panel
+    // add update button to _bottom1Panel
     private void addUpdateButtonToBottom(ActionListener doneAction) {
-
-        _updateButton = new JButton(Bundle.getMessage("updateButton"));
+        _updateButton = new JButton(Bundle.getMessage("updateButton")); // custom update label
         _updateButton.addActionListener(doneAction);
         _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
         _bottom1Panel.add(_updateButton);
@@ -204,7 +204,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             if (ItemPalette.getIconMap(_itemType, _family) != null) {
 //                JOptionPane.showMessageDialog(_paletteFrame, 
 //                        Bundle.getMessage("DuplicateFamilyName", _family, _itemType), 
-//                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+//                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 // make sure name does not duplicate a known name
                 _family = null;
             }
@@ -299,20 +299,41 @@ public abstract class FamilyItemPanel extends ItemPanel {
             removeIconFamiliesPanel();
         }
         initIconFamiliesPanel();
-        add(_iconFamilyPanel, _buttonPostion);
+        add(_iconFamilyPanel, _buttonPosition);
         hideIcons();
         _iconFamilyPanel.invalidate();
         invalidate();
         reset();
     }
 
+        String thisType = null;
     /*
      * Set actions of radioButtons to change family
      */
     protected JPanel makeFamilyButtons(Iterator<String> it, boolean setDefault) {
         JPanel familyPanel = new JPanel();
         familyPanel.setLayout(new BoxLayout(familyPanel, BoxLayout.Y_AXIS));
-        String txt = Bundle.getMessage("IconFamiliesLabel", Bundle.getMessage(_itemType));
+        // I18N use NamedBeanBundle property for basic beans like "Turnout" I18N
+        if ("Sensor".equals(_itemType)) {
+            thisType = "BeanNameSensor";
+        } else if ("Turnout".equals(_itemType)) {
+            thisType = "BeanNameTurnout";
+        } else if ("SignalHead".equals(_itemType)) {
+            thisType = "BeanNameSignalHead";
+        } else if ("SignalMast".equals(_itemType)) {
+            thisType = "BeanNameSignalMast";
+        } else if ("Memory".equals(_itemType)) {
+            thisType = "BeanNameMemory";
+        } else if ("Reporter".equals(_itemType)) {
+            thisType = "BeanNameReporter";
+        } else if ("Light".equals(_itemType)) {
+            thisType = "BeanNameLight";
+        } else if ("Portal".equals(_itemType)) {
+            thisType = "BeanNamePortal";
+        } else {
+            thisType = _itemType;
+        }
+        String txt = Bundle.getMessage("IconFamiliesLabel", Bundle.getMessage(thisType));
         JPanel p = new JPanel(new FlowLayout());
         p.add(new JLabel(txt));
         familyPanel.add(p);
@@ -320,6 +341,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         JPanel buttonPanel = new JPanel(new FlowLayout());
         String family = null;
         JRadioButton button = null;
+        String BundleFamily = null;
         int count = 0;
         while (it.hasNext()) {
             family = it.next();
@@ -343,7 +365,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             if (family.equals(_family)) {
                 button.setSelected(true);
             }
-            if (count > 4) {
+            if (count > 4) { // put remaining radio buttons on a new line
                 count = 0;
                 familyPanel.add(buttonPanel);
                 buttonPanel = new JPanel(new FlowLayout());
@@ -353,7 +375,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _familyButtonGroup.add(button);
         }
         familyPanel.add(buttonPanel);
-        if (_family != family && setDefault) {
+        if (setDefault && !family.equals(_family)) {
             _family = family;       // let last family be the selected one
             if (button != null) {
                 button.setSelected(true);
@@ -425,6 +447,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             NamedIcon icon = new NamedIcon(entry.getValue());    // make copy for possible reduction
             icon.reduceTo(100, 100, 0.2);
             JPanel panel = new JPanel(new FlowLayout());
+            // I18N use existing NamedBeanBundle keys
             String borderName = getIconBorderName(entry.getKey());
             panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                     borderName));
@@ -558,7 +581,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         newFamilyButton.setToolTipText(Bundle.getMessage("ToolTipAddFamily"));
         panel.add(newFamilyButton);
 
-        JButton cancelButton = new JButton(Bundle.getMessage("cancelButton"));
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateFamiliesPanel();
@@ -581,7 +604,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             if (family.equals(iter.next())) {
                 JOptionPane.showMessageDialog(_paletteFrame,
                         Bundle.getMessage("DuplicateFamilyName", family, _itemType),
-                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return false;
             }
         }
@@ -616,8 +639,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
     }
 
     /**
-     * Action of family radio button MultisensorItemPanel & IndicatorTOItem must
-     * overides
+     * Action of family radio button MultisensorItemPanel {@literal &}
+     * IndicatorTOItem must overrides
      */
     protected void setFamily(String family) {
         _family = family;

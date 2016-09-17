@@ -1,4 +1,3 @@
-// NceClockControl.java
 package jmri.jmrix.nce;
 
 import java.text.DecimalFormat;
@@ -21,22 +20,22 @@ import org.slf4j.LoggerFactory;
  * internal in sync to the Nce clock. The following of the Nce clock is better
  * than the other way around due to the fine tuning available on the internal
  * clock while the Nce clock doesn't.
- * <P>
+ * <BR>
  * <hr>
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * </P>
  *
  * @author Ken Cameron Copyright (C) 2007
  * @author Dave Duchamp Copyright (C) 2007
  * @author	Bob Jacobsen, Alex Shepherd
- * @version $Revision$
  */
 public class NceClockControl extends DefaultClockControl implements NceListener {
 
@@ -50,8 +49,8 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         this.tc = tc;
         this.prefix = prefix;
 
-        // Create a Timebase listener for the Minute change events
-        internalClock = InstanceManager.timebaseInstance();
+        // Create a timebase listener for the Minute change events
+        internalClock = InstanceManager.getNullableDefault(jmri.Timebase.class);
         if (internalClock == null) {
             log.error("No Timebase Instance");
             return;
@@ -61,10 +60,6 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
                 newInternalMinute();
             }
         };
-        if (minuteChangeListener == null) {
-            log.error("No minuteChangeListener");
-            return;
-        }
         internalClock.addMinuteChangeListener(minuteChangeListener);
     }
     @SuppressWarnings("unused")
@@ -392,7 +387,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
      */
     public void dispose() {
 
-        // Remove ourselves from the Timebase minute rollover event
+        // Remove ourselves from the timebase minute rollover event
         if (minuteChangeListener != null) {
             internalClock.removeMinuteChangeListener(minuteChangeListener);
             minuteChangeListener = null;

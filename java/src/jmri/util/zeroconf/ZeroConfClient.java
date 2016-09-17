@@ -55,10 +55,12 @@ public class ZeroConfClient {
     /**
      * Get all servers providing the specified service.
      *
-     * @param service
+     * @param service the name of service as generated using
+     *                {@link ZeroConfService#key(java.lang.String, java.lang.String)}
      * @return A list of servers or an empty list.
      */
-    @Nonnull public List<ServiceInfo> getServices(@Nonnull String service) {
+    @Nonnull
+    public List<ServiceInfo> getServices(@Nonnull String service) {
         ArrayList<ServiceInfo> services = new ArrayList<ServiceInfo>();
         for (JmDNS server : ZeroConfService.netServices().values()) {
             if (server.list(service) != null) {
@@ -110,7 +112,8 @@ public class ZeroConfClient {
         return null;
     }
 
-    @Nonnull public String[] getHostList(@Nonnull String service) {
+    @Nonnull
+    public String[] getHostList(@Nonnull String service) {
         ArrayList<String> hostlist = new ArrayList<String>();
         for (JmDNS server : ZeroConfService.netServices().values()) {
             ServiceInfo[] infos = server.list(service);

@@ -1,4 +1,3 @@
-// CbusAddress.java
 package jmri.jmrix.can.cbus;
 
 import java.util.regex.Matcher;
@@ -24,7 +23,6 @@ import jmri.jmrix.can.CanReply;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008
  * @author	Andrew Crosland Copyright (C) 2011
- * @version $Revision$
  */
 public class CbusAddress {
 
@@ -270,6 +268,3 @@ public class CbusAddress {
     }
 
 }
-
-
-/* @(#)CbusAddress.java */

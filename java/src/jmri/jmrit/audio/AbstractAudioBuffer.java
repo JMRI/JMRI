@@ -11,19 +11,18 @@ import org.slf4j.LoggerFactory;
  * Base implementation of the AudioBuffer class.
  * <p>
  * Specific implementations will extend this base class.
- * <p>
- *
+ * <BR>
  * <hr>
  * This file is part of JMRI.
- * <p>
+ * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <p>
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <p>
+ * </P>
  *
  * @author Matthew Harris copyright (c) 2009, 2011
  */

@@ -1,356 +1,462 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-  <title>
- 	JMRI: Route Documentation
-  </title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
+  <title>JMRI: Route Documentation</title>
   <meta name="Author" content="Bob Jacobsen">
-  <meta name="keywords"
-        content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <meta name="keywords" content=
+  "hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<h1>JMRI: Routes Documentation</h1>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h2>What are Routes?</h2>
+    <div id="mainContent">
+      <h1>JMRI: Routes Documentation</h1>
 
-<p>Routes are collections of Turnouts and/or Sensors whose states may be 
-set all at once. Also when a Route is triggered, a sound may be played, 
-or a script may be run. For example, a Route may be set up to clear all 
-turnouts on a mainline with one computer or fascia panel button. 
-Routes may also be set up to control the setting of ladders of 
-turnouts in staging areas or yards.  Another use is to set layout 
-turnouts to default positions when beginning an operating session. 
-JMRI Routes are similar to the routes implemented in the Digitrax 
-Chief system, except the JMRI Routes can mix turnouts controlled by 
-different hardware systems, and also can set sensors, play a sound, or 
-run a script.</p>
-<p>Optionally a Route may be controlled by up to three sensors and/or by
-a control turnout. When a Route is created, or when it is read from a 
-configuration file, the Route is 'activated'; it is set up
-to monitor automatically any changes in state of its control sensors 
-and/or control turnout. When the controlling sensors or turnout change
-in the user-specified way, the Route is 'set' ('triggered'); included 
-turnouts and included sensors are set as specified, and if 
-specified, a sound is played or a script is run.</p>
-<p>The Route Table contains an 'Enabled' column. For a Route to be 
-triggered by its control sensors or its control turnout,
-it must be "enabled", that is its check box in the 'Enabled' column
-must be checked.  You can uncheck this box to temporarily disable a 
-Route from being triggered, i.e. prevent it from setting its turnouts, 
-sensors, etc. when a control sensor or control turnout changes.</p>
+      <h2>What are Routes?</h2>
 
-<h3>The Route Table</h3>
-Routes can be viewed and configured using the <a href="../../package/jmri/jmrit/beantable/RouteTable.shtml">Route Table</a>.
-It contains the following columns:</p>
-	<ul>
-	<li>System Name</li>
-	<li>User Name (optional)</li>
-	<li>Comment (optional, double click to edit)</li>
-	<li>Enabled (checkbox)</li>
-	<li>Locked (checkbox)</li>
-	</ul>
-	
-<h3>Route Table Controls</h3>
-<p>Below the table is the <a href="../../package/jmri/jmrit/beantable/RouteAddEdit.shtml"><b>Add...</b></a> button.
-	
-<h2>How to setup Routes</h2>
+      <p>Routes are collections of Turnouts and/or Sensors whose
+      states may be set all at once. Also when a Route is
+      triggered, a sound may be played, or a script may be run. For
+      example, a Route may be set up to clear all turnouts on a
+      mainline with one computer or fascia panel button. Routes may
+      also be set up to control the setting of ladders of turnouts
+      in staging areas or yards. Another use is to set layout
+      turnouts to default positions when beginning an operating
+      session. JMRI Routes are similar to the routes implemented in
+      the Digitrax Chief system, except the JMRI Routes can mix
+      turnouts controlled by different hardware systems, and also
+      can set sensors, play a sound, or run a script.</p>
 
-<p>First make sure the
-<a href="../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnout Table</a>
-contains all Turnouts 
-involved in the Routes to be defined, and that the 
-<a href="../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a> 
-contains all Sensors needed.<br>
-Then select <b>Tools</b> -&gt; <b>Tables</b> -&gt; <b>Routes</b>, 
-and click the <b>Add...</b> button at the bottom of the pane to 
-bring up the Add/Edit Route pane.</p>
+      <p>Optionally a Route may be controlled by up to three
+      sensors and/or by a control turnout. When a Route is created,
+      or when it is read from a configuration file, the Route is
+      'activated'; it is set up to monitor automatically any
+      changes in state of its control sensors and/or control
+      turnout. When the controlling sensors or turnout change in
+      the user-specified way, the Route is 'set' ('triggered');
+      included turnouts and included sensors are set as specified,
+      and if specified, a sound is played or a script is run.</p>
 
-<a name="addroute"><h3>Adding a new Route</h3></a>
+      <p>The Route Table contains an 'Enabled' column. For a Route
+      to be triggered by its control sensors or its control
+      turnout, it must be "enabled", that is its check box in the
+      'Enabled' column must be checked. You can uncheck this box to
+      temporarily disable a Route from being triggered, i.e.
+      prevent it from setting its turnouts, sensors, etc. when a
+      control sensor or control turnout changes.</p>
 
-<ol>
-	<li><p>Enter a System Name, such as 'IR100' - any 
-short name can be used provided it is different from the System 
-Name of other Routes.</p>
-	<p>By convention, System Names usually start with "IR" for Internal 
-Route.</p>
-	</li>
-	<li><p>Enter a User Name. Any string of characters that is different 
-from the User Name of other Routes will be accepted, but it's 
-wise to use a string that describes the intended use of the Route.</p>
-	<p>Note that before JMRI version 1.5.6, there was a bug that 
-prevented you from having more than one blank (empty) User Name. In more 
-recent versions, you can have as many Routes with blank User Names 
-as you'd like; these have to be referenced via their System Names, 
-of course.</p>
-	</li>
-	<li><p>Select Turnouts to be included in the new 
-Route in the list of all defined Turnouts, by clicking on the 
-checkbox in the <b>Include</b> column. For each included Turnout, 
-use the combo box in the <b>Set State</b> column to select whether 
-that included Turnout is to be 'Set Closed', 'Set Thrown' or 
-'Toggle'd when the Route is 'Set'. Don't worry if everything isn't 
-perfect. It's easy to edit this information later.</p>
-	<p>Note that the Add/Edit Route pane allows you to display 
-'All' Turnouts and Sensors or only the already 'Included' Turnouts and Sensors. This 
-is only for your convenience in checking that all desired Turnouts 
-and/or Sensors have been included; it does not affect entered 
-information.</p>
-	</li>
-	<li><p>Similarly, select Sensors to be included in the new 
-Route in the list of all defined Sensors, by clicking on the 
-checkbox in the <b>Include</b> column. For each included Sensor, 
-use the combo box in the <b>Set State</b> column to select whether 
-that Sensor is to be 'Set Active', 'Set Inactive' or 'Toggle'd 
-when the Route is 'Set'.</p> 
-	</li>
-	<li><p>If you want the Route to play a sound when it triggers,
-enter the file name of a sound file in the text box following 'Play
-sound file'. Clicking <b>Set</b> will bring up a file selection 
-dialog to help locate the file. Once the file is located, clicking 
-on its name in the dialog will copy it, complete with path, into
-the text box.</p>
-	</li>
-	<li>
-	<p>Similarly if you want a script to be run when the Route
-triggers, enter its file name into the text box on the right. The 
-<b>Set</b> button can be used as above to assist in entering 
-script file information.</p>
-	</li>
-	<li><p>If you want the setting of the Route to be controlled 
-by one or more input Sensors, enter their names (System Name or User Name) 
-and select what kind of logic they'll obey. Logic choices are described in 
-detail <a href="#sensorlogic">below</a>.</p>
-<p>When you save and restore your Routes using a configuration file,
-the Sensor name you enter here is used to recreate the Route.
-A System Name will always be associated with the same input Sensor.
-A User Name can be moved to another input by changing the entries 
-in the Sensor Table. For example, "East OS Occupancy" could be
-changed from LocoNet Sensor input LS12 to LS24 by just associating
-that User Name with a different System Name; this makes layout rewiring
-easy. User Names entered here must exist however; if you change the
-Sensor's User Name from "East OS Occupancy" to "East Occupancy", the Route
-won't load properly until you edit it to use the new name.
-</p>
-	</li> 
-	<li><p>Also optional, if you want to enable setting of 
-the Route when a particular Turnout changes state, enter a 
-Turnout name (System Name or User Name) and select the logic that it 
-will obey. Logic choices are explained in detail 
-<a href="#turnoutlogic">below</a>. </p>
-<p>When you save and restore your Routes using a configuration file,
-the Turnout name you enter here is used to recreate the Route.
-A System Name will always be associated with the same Turnout.
-A User Name can be moved to another Turnout by changing the entries 
-in the Turnout Table. For example, "Set Track 5" could be
-changed from LocoNet Control Turnout 105 to Turnout 5 by just associating
-that User Name with a different System Name; this makes layout rewiring
-easy. User Names entered here must exist however; if you change the
-Turnout's User Name from "Set Track 5" to "Set Trk 5", the Route
-won't load properly until you edit it to use the new name.
-</p>
- 	</li>
- 	<li>
- 	<p>The "Added delay" entry is normally left at "0". When a
- Route sets its Turnouts, it waits 250 milliseconds between 
- Turnout control commands. If this is not enough time between 
- commands for your type of Turnout control, you can increase the 
- time between commands by entering an added delay (in milliseconds).
- </p>
-	<li><p>Click the <b>Add Route</b> button at 
-the bottom of the pane.  If everything is fine, a message 
-stating "New Route added ... " will be displayed in the notes box 
-near the bottom of the pane.  If there is trouble with anything, 
-an error message will be displayed in the notes box; you should then
-correct the error and click <b>Add Route</b> again.</p></li>
-</ol>
+      <h3>The Route Table</h3>Routes can be viewed and configured
+      using the <a href=
+      "../../package/jmri/jmrit/beantable/RouteTable.shtml">Route
+      Table</a>. It contains the following columns:
 
-<h3>Editing an existing Route</h3>
+      <ul>
+        <li>System Name</li>
 
-<ol>
-	<li>Edit of an existing Route may be started in either of two ways:
-		<ul>
-		<li> Click on a Route's <b>Edit</b> button in the Route Table.</li>
-		<li> Enter the System Name of the Route to be edited in the 
-		Add/Edit Route pane and click the <b>Edit Route</b> button at 
-		the bottom of the pane. This must be the same 
-		as one of the System Names shown in the Route Table.</li>
-		</ul>
-	The <b>Add Route</b> and <b>Edit Route</b> buttons in the 
-	Add/Edit Route pane will change to 
-	<b>Update Route</b> and <b>Cancel</b>.</li>
-	<li>Make whatever changes or additions you need to the information in
-	the dialog. Note that the System Name of the edited Route may not be 
-	changed, but the User Name may be changed. Other items are as described 
-	<a href="#addroute">above</a>.</li>
-	<li>After making changes to the Route information, click <b>Update 
-	Route</b> to change the selected Route. If everything is fine, a 
-	message stating "Route updated... " will be displayed in the notes 
-	box near the bottom of the window. If there is any trouble, an error
-	message will be displayed in the notes box, and the update is stopped
-	for you to correct the error and click <b>Update Route</b> again.</li>
-	<li>Click <b>Cancel</b> to exit edit mode without changing the 
-	selected Route. If the Add/Edit Route window is dismissed (closed) 
-	while in edit mode, <b>Cancel</b> is automatically selected, and no 
-	changes are made to the selected Route.</li>
-</ol>
+        <li>User Name (optional)</li>
 
-<h3>Setting (trigger) a Route</h3>
+        <li>Comment (optional, double click to edit)</li>
 
-<p>Routes may be 'set' by clicking the <b>Set</b> button in the State 
-column of the Route Table. A Route may also be set by fascia panel buttons 
-if Sensors for these buttons are defined as control Sensors in the Route 
-information. If a control Turnout is defined in the Route information, throwing 
-or closing that Turnout from your physical throttle will also trigger the Route.  
-Note that 
-control Turnouts may be real turnouts, phantom turnouts, or internal turnouts 
-as described <a href="#turnoutlogic">below</a>. A Route may also be triggered 
-from a Logix, as the action of one of its conditionals. If you need more
-powerful logic to control your Route than provided by the Route itself, 
-consider using a 
-<a href="Logix.shtml">Logix</a>.</p>
+        <li>Enabled (checkbox)</li>
 
-<p>Note that enabled/disabled and 'veto' logic discussed below for control 
-<a href="#sensorlogic">Sensors</a> and for the control 
-<a href="#turnoutlogic">Turnout</a> apply only to a Route's automated
-control mechanism.  Neither 'disabled' nor 'veto' logic will prevent a Route
-from being set (triggered) using the <b>Set</b> button or from a Logix.</p>
+        <li>Locked (checkbox)</li>
+      </ul>
 
-<p>It's also useful to note that when a Route has been triggered and is actively 
-sending commands to Turnouts, the Route is marked as busy until this operation is
-complete. A Route cannot be triggered again while it is busy, i.e. until its
-current operation is complete.
+      <h3>Route Table Controls</h3>
 
-<h3>Saving Routes to disk</h3>
+      <p>Below the table is the <a href=
+      "../../package/jmri/jmrit/beantable/RouteAddEdit.shtml"><b>Add...</b></a>
+      button.</p>
 
-<p>Routes are saved in your 
-layout configuration file, along with Turnouts, Sensors, Signal 
-Heads, Lights, etc. To store this information on disk, use <b>Store 
-Configuration...</b> in the <b>File</b> menu at the top of the Routes 
-Table (or other tables from the Tools menu), or select <b>Store Panel...</b>
-in the <b>Panel</b> menu. Note that the enabled/disabled state of each Route
-is not saved in the configuration file.  When Routes are loaded from a
-configuration file, they are all enabled.
+      <h2>How to setup Routes</h2>
 
-<a name="sensorlogic"><h3>Controlling Routes from Sensors</h3></a>
+      <p>First make sure the <a href=
+      "../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnout
+      Table</a> contains all Turnouts involved in the Routes to be
+      defined, and that the <a href=
+      "../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor
+      Table</a> contains all Sensors needed.<br>
+      Then select <b>Tools</b> -&gt; <b>Tables</b> -&gt;
+      <b>Routes</b>, and click the <b>Add...</b> button at the
+      bottom of the pane to bring up the Add/Edit Route
+      pane.</p><a name="addroute" id="addroute"></a>
 
-The operation of a Route can be controlled by up to three
-Sensors. These can be connected to occupancy detectors or 
-switches on the layout, or even just used to operate the Route 
-from a control Panel on the computer. These Sensors can be real 
-sensors or internal sensors.
-<p>
-By default, when any one of the 
-defined Sensors goes to the Active state, the Route will be set. 
-This could be used to e.g. set a Route when a Block became occupied, 
-or when a button was pushed.
-<p>
-More powerful logic can also do things like "define 
-Routes to have the position of a Turnout follow the position of a 
-panel switch". For this, each of the three Sensors has a "mode" 
-associated with it, which can be:
-<dl>
-<dt>"On Active"</dt><dd>The default method, the Route is triggered when 
-the Sensor goes Active, e.g. "Throw Turnout 12 when Sensor 12 goes 
-Active"</dd>
+      <h3>Adding a new Route</h3>
 
-<dt>"On Inactive"</dt><dd>The Route is triggered when the Sensor goes 
-Inactive. For example, using the Route above, plus a second Route 
-"Close Turnout 12 when Sensor 12 goes Inactive" will have Turnout 12 
-follow a panel switch connected to Sensor 12 as it is flipped back and 
-forth.</dd>
+      <ol>
+        <li>
+          <p>Enter a System Name, such as 'IR100' - any short name
+          can be used provided it is different from the System Name
+          of other Routes.</p>
 
-<dt>"On Change"</dt><dd>The Route is triggered when the Sensor state
-changes, either from Active to Inactive or from Inactive to Active.</dd>
+          <p>By convention, System Names usually start with "IR"
+          for Internal Route.</p>
+        </li>
 
-<dt>"Veto Active"</dt><dd>If this Sensor is Active, other Sensors set 
-to "On Active", "On Inactive" "On Change" will be ignored, and a
-control Turnout set to "On Closed", "On Thrown", or "On Change" will 
-also be ignored. This has several uses, e.g. to prevent throwing a 
-Turnout under a train when the Block shows occupied.</dd>
+        <li>
+          <p>Enter a User Name. Any string of characters that is
+          different from the User Name of other Routes will be
+          accepted, but it's wise to use a string that describes
+          the intended use of the Route.</p>
 
-<dt>"Veto Inactive"</dt><dd>Like Veto Active, but the other polarity 
-logic.</dd>
+          <p>Note that before JMRI version 1.5.6, there was a bug
+          that prevented you from having more than one blank
+          (empty) User Name. In more recent versions, you can have
+          as many Routes with blank User Names as you'd like; these
+          have to be referenced via their System Names, of
+          course.</p>
+        </li>
 
-</dl>
-<p>Note that there is an implied "and/or" here. All of the 'veto' 
-Sensors and the 'veto' Turnout, if there is one, must be in their 
-non-veto state _and_ at least one of the triggering Sensors or a 
-triggering Turnout must see the appropriate change for the 
-Route to be set.</p>
+        <li>
+          <p>Select Turnouts to be included in the new Route in the
+          list of all defined Turnouts, by clicking on the checkbox
+          in the <b>Include</b> column. For each included Turnout,
+          use the combo box in the <b>Set State</b> column to
+          select whether that included Turnout is to be 'Set
+          Closed', 'Set Thrown' or 'Toggle'd when the Route is
+          'Set'. Don't worry if everything isn't perfect. It's easy
+          to edit this information later.</p>
 
-<a name="turnoutlogic"><h3>Controlling Routes from a Turnout</h3></a>
-<p>The setting (triggering) of a Route can be controlled from a Turnout. 
-This Turnout can be a real physical turnout, a 'phantom' turnout (a DCC 
-Turnout number with no corresponding physical turnout), or 
-an 'internal' turnout.</p>  
-	    <ul>
-	    <li>If a real turnout is used, the real turnout will 
-	    receive the original activation command, and then the
-	    Route will set whatever Turnout positions and/or Sensor
-	    states were specified. This can be used to set multiple 
-	    Turnouts to match the original real turnout, or to set 
-	    the turnout back to its original position (if you don't 
-	    want anybody changing it), etc. The Route will fire when 
-	    the Turnout is set from JMRI, and/or with some DCC 
-	    systems (Digitrax LocoNet and Lenz XPressNet systems), it 
- 		will fire when a layout operator commands the Turnout to 
- 		change state on a handheld throttle.
-	    <li>A 'Phantom Turnout' is a DCC Turnout that doesn't 
-	    actually exist. To use one, just create a Turnout entry 
-	    for an address number that doesn't exist on your layout.
-	    The layout operators can select that phantom Turnout number
- 		on their throttles and send commands to it to cause the Route 
- 		to be set. With the addition of Sensors as vetos in the 
-		Route, you can do things like only allowing Operators to 
-		change Turnouts (via the Route) when the Dispatcher has set a
- 		button to allow local access.
-	    <li>An 'Internal Turnout' is one that only exists within the
-	    JMRI software; it doesn't correspond to any particular address 
-	    on the layout, and it particularly doesn't correspond to any 
-	    hardware on the layout. The system name for Internal Turnouts 
-	    start with "IT", e.g. "IT201". JMRI knows that these are 
-	    separate from the layout, so it doesn't send any commands to the 
-	    attached hardware when one changes. Internal Turnouts can be used with 
-	    Routes to build complicated logic underlying control Panels.  
-	    For example, an icon on a Panel can set an Internal Turnout, 
-	    which in turn can set the Turnouts of an entire yard ladder.
- 		</ul>
-<p> Similar to the Control Sensors discussed above, the Control Turnout 
-has a "mode" associated with it, which can be:
-<dl>
-<dt>"On Closed"</dt><dd>The default method, the Route is triggered when 
-the Turnout changes to the Closed state.</dd>
-<dt>"On Thrown"</dt><dd>The Route is triggered when the Turnout
-changes to the Thrown state.</dd>
-<dt>"On Change"</dt><dd>The Route is triggered when the Turnout state
-changes, either from Closed to Thrown or from Thrown to Closed.</dd>
-<dt>"Veto Closed"</dt><dd>If this Turnout is Closed, Sensors set 
-to "On Active", "On Inactive" "On Change" will be ignored.</dd>
-<dt>"Veto Thrown"</dt><dd>If this Turnout is Thrown, Sensors set 
-to "On Active", "On Inactive" "On Change" will be ignored.</dd>
-</dl>
-<p>A single 'veto' Turnout or 'veto' Sensor can prevent the Route from being 
-triggered. All of the 'veto' Sensors and the 'veto' Turnout, if there 
-is one, must be in their non-veto state _and_ at least one of the 
-triggering Sensors or a triggering Turnout must see the appropriate 
-change for the Route to be set.</p>  
+          <p>Note that the Add/Edit Route pane allows you to
+          display 'All' Turnouts and Sensors or only the already
+          'Included' Turnouts and Sensors. This is only for your
+          convenience in checking that all desired Turnouts and/or
+          Sensors have been included; it does not affect entered
+          information.</p>
+        </li>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+        <li>
+          <p>Similarly, select Sensors to be included in the new
+          Route in the list of all defined Sensors, by clicking on
+          the checkbox in the <b>Include</b> column. For each
+          included Sensor, use the combo box in the <b>Set
+          State</b> column to select whether that Sensor is to be
+          'Set Active', 'Set Inactive' or 'Toggle'd when the Route
+          is 'Set'.</p>
+        </li>
+
+        <li>
+          <p>If you want the Route to play a sound when it
+          triggers, enter the file name of a sound file in the text
+          box following 'Play sound file'. Clicking <b>Set</b> will
+          bring up a file selection dialog to help locate the file.
+          Once the file is located, clicking on its name in the
+          dialog will copy it, complete with path, into the text
+          box.</p>
+        </li>
+
+        <li>
+          <p>Similarly if you want a script to be run when the
+          Route triggers, enter its file name into the text box on
+          the right. The <b>Set</b> button can be used as above to
+          assist in entering script file information.</p>
+        </li>
+
+        <li>
+          <p>If you want the setting of the Route to be controlled
+          by one or more input Sensors, enter their names (System
+          Name or User Name) and select what kind of logic they'll
+          obey. Logic choices are described in detail <a href=
+          "#sensorlogic">below</a>.</p>
+
+          <p>When you save and restore your Routes using a
+          configuration file, the Sensor name you enter here is
+          used to recreate the Route. A System Name will always be
+          associated with the same input Sensor. A User Name can be
+          moved to another input by changing the entries in the
+          Sensor Table. For example, "East OS Occupancy" could be
+          changed from LocoNet Sensor input LS12 to LS24 by just
+          associating that User Name with a different System Name;
+          this makes layout rewiring easy. User Names entered here
+          must exist however; if you change the Sensor's User Name
+          from "East OS Occupancy" to "East Occupancy", the Route
+          won't load properly until you edit it to use the new
+          name.</p>
+        </li>
+
+        <li>
+          <p>Also optional, if you want to enable setting of the
+          Route when a particular Turnout changes state, enter a
+          Turnout name (System Name or User Name) and select the
+          logic that it will obey. Logic choices are explained in
+          detail <a href="#turnoutlogic">below</a>.</p>
+
+          <p>When you save and restore your Routes using a
+          configuration file, the Turnout name you enter here is
+          used to recreate the Route. A System Name will always be
+          associated with the same Turnout. A User Name can be
+          moved to another Turnout by changing the entries in the
+          Turnout Table. For example, "Set Track 5" could be
+          changed from LocoNet Control Turnout 105 to Turnout 5 by
+          just associating that User Name with a different System
+          Name; this makes layout rewiring easy. User Names entered
+          here must exist however; if you change the Turnout's User
+          Name from "Set Track 5" to "Set Trk 5", the Route won't
+          load properly until you edit it to use the new name.</p>
+        </li>
+
+        <li>
+          <p>The "Added delay" entry is normally left at "0". When
+          a Route sets its Turnouts, it waits 250 milliseconds
+          between Turnout control commands. If this is not enough
+          time between commands for your type of Turnout control,
+          you can increase the time between commands by entering an
+          added delay (in milliseconds).</p>
+        </li>
+
+        <li>
+          <p>Click the <b>Add Route</b> button at the bottom of the
+          pane. If everything is fine, a message stating "New Route
+          added ... " will be displayed in the notes box near the
+          bottom of the pane. If there is trouble with anything, an
+          error message will be displayed in the notes box; you
+          should then correct the error and click <b>Add Route</b>
+          again.</p>
+        </li>
+      </ol>
+
+      <h3>Editing an existing Route</h3>
+
+      <ol>
+        <li>Edit of an existing Route may be started in either of
+        two ways:
+
+          <ul>
+            <li>Click on a Route's <b>Edit</b> button in the Route
+            Table.</li>
+
+            <li>Enter the System Name of the Route to be edited in
+            the Add/Edit Route pane and click the <b>Edit Route</b>
+            button at the bottom of the pane. This must be the same
+            as one of the System Names shown in the Route
+            Table.</li>
+          </ul>The <b>Add Route</b> and <b>Edit Route</b> buttons
+          in the Add/Edit Route pane will change to <b>Update
+          Route</b> and <b>Cancel</b>.
+        </li>
+
+        <li>Make whatever changes or additions you need to the
+        information in the dialog. Note that the System Name of the
+        edited Route may not be changed, but the User Name may be
+        changed. Other items are as described <a href=
+        "#addroute">above</a>.</li>
+
+        <li>After making changes to the Route information, click
+        <b>Update Route</b> to change the selected Route. If
+        everything is fine, a message stating "Route updated... "
+        will be displayed in the notes box near the bottom of the
+        window. If there is any trouble, an error message will be
+        displayed in the notes box, and the update is stopped for
+        you to correct the error and click <b>Update Route</b>
+        again.</li>
+
+        <li>Click <b>Cancel</b> to exit edit mode without changing
+        the selected Route. If the Add/Edit Route window is
+        dismissed (closed) while in edit mode, <b>Cancel</b> is
+        automatically selected, and no changes are made to the
+        selected Route.</li>
+      </ol>
+
+      <h3>Setting (trigger) a Route</h3>
+
+      <p>Routes may be 'set' by clicking the <b>Set</b> button in
+      the State column of the Route Table. A Route may also be set
+      by fascia panel buttons if Sensors for these buttons are
+      defined as control Sensors in the Route information. If a
+      control Turnout is defined in the Route information, throwing
+      or closing that Turnout from your physical throttle will also
+      trigger the Route. Note that control Turnouts may be real
+      turnouts, phantom turnouts, or internal turnouts as described
+      <a href="#turnoutlogic">below</a>. A Route may also be
+      triggered from a Logix, as the action of one of its
+      conditionals. If you need more powerful logic to control your
+      Route than provided by the Route itself, consider using a
+      <a href="Logix.shtml">Logix</a>.</p>
+
+      <p>Note that enabled/disabled and 'veto' logic discussed
+      below for control <a href="#sensorlogic">Sensors</a> and for
+      the control <a href="#turnoutlogic">Turnout</a> apply only to
+      a Route's automated control mechanism. Neither 'disabled' nor
+      'veto' logic will prevent a Route from being set (triggered)
+      using the <b>Set</b> button or from a Logix.</p>
+
+      <p>It's also useful to note that when a Route has been
+      triggered and is actively sending commands to Turnouts, the
+      Route is marked as busy until this operation is complete. A
+      Route cannot be triggered again while it is busy, i.e. until
+      its current operation is complete.</p>
+
+      <h3>Saving Routes to disk</h3>
+
+      <p>Routes are saved in your layout configuration file, along
+      with Turnouts, Sensors, Signal Heads, Lights, etc. To store
+      this information on disk, use <b>Store Configuration...</b>
+      in the <b>File</b> menu at the top of the Routes Table (or
+      other tables from the Tools menu), or select <b>Store
+      Panel...</b> in the <b>Panel</b> menu. Note that the
+      enabled/disabled state of each Route is not saved in the
+      configuration file. When Routes are loaded from a
+      configuration file, they are all enabled. <a name=
+      "sensorlogic" id="sensorlogic"></a></p>
+
+      <h3>Controlling Routes from Sensors</h3>The operation of a
+      Route can be controlled by up to three Sensors. These can be
+      connected to occupancy detectors or switches on the layout,
+      or even just used to operate the Route from a control Panel
+      on the computer. These Sensors can be real sensors or
+      internal sensors.
+
+      <p>By default, when any one of the defined Sensors goes to
+      the Active state, the Route will be set. This could be used
+      to e.g. set a Route when a Block became occupied, or when a
+      button was pushed.</p>
+
+      <p>More powerful logic can also do things like "define Routes
+      to have the position of a Turnout follow the position of a
+      panel switch". For this, each of the three Sensors has a
+      "mode" associated with it, which can be:</p>
+
+      <dl>
+        <dt>"On Active"</dt>
+
+        <dd>The default method, the Route is triggered when the
+        Sensor goes Active, e.g. "Throw Turnout 12 when Sensor 12
+        goes Active"</dd>
+
+        <dt>"On Inactive"</dt>
+
+        <dd>The Route is triggered when the Sensor goes Inactive.
+        For example, using the Route above, plus a second Route
+        "Close Turnout 12 when Sensor 12 goes Inactive" will have
+        Turnout 12 follow a panel switch connected to Sensor 12 as
+        it is flipped back and forth.</dd>
+
+        <dt>"On Change"</dt>
+
+        <dd>The Route is triggered when the Sensor state changes,
+        either from Active to Inactive or from Inactive to
+        Active.</dd>
+
+        <dt>"Veto Active"</dt>
+
+        <dd>If this Sensor is Active, other Sensors set to "On
+        Active", "On Inactive" "On Change" will be ignored, and a
+        control Turnout set to "On Closed", "On Thrown", or "On
+        Change" will also be ignored. This has several uses, e.g.
+        to prevent throwing a Turnout under a train when the Block
+        shows occupied.</dd>
+
+        <dt>"Veto Inactive"</dt>
+
+        <dd>Like Veto Active, but the other polarity logic.</dd>
+      </dl>
+
+      <p>Note that there is an implied "and/or" here. All of the
+      'veto' Sensors and the 'veto' Turnout, if there is one, must
+      be in their non-veto state _and_ at least one of the
+      triggering Sensors or a triggering Turnout must see the
+      appropriate change for the Route to be set.</p><a name=
+      "turnoutlogic" id="turnoutlogic"></a>
+
+      <h3>Controlling Routes from a Turnout</h3>
+
+      <p>The setting (triggering) of a Route can be controlled from
+      a Turnout. This Turnout can be a real physical turnout, a
+      'phantom' turnout (a DCC Turnout number with no corresponding
+      physical turnout), or an 'internal' turnout.</p>
+
+      <ul>
+        <li>If a real turnout is used, the real turnout will
+        receive the original activation command, and then the Route
+        will set whatever Turnout positions and/or Sensor states
+        were specified. This can be used to set multiple Turnouts
+        to match the original real turnout, or to set the turnout
+        back to its original position (if you don't want anybody
+        changing it), etc. The Route will fire when the Turnout is
+        set from JMRI, and/or with some DCC systems (Digitrax
+        LocoNet and Lenz XPressNet systems), it will fire when a
+        layout operator commands the Turnout to change state on a
+        handheld throttle.</li>
+
+        <li>A 'Phantom Turnout' is a DCC Turnout that doesn't
+        actually exist. To use one, just create a Turnout entry for
+        an address number that doesn't exist on your layout. The
+        layout operators can select that phantom Turnout number on
+        their throttles and send commands to it to cause the Route
+        to be set. With the addition of Sensors as vetos in the
+        Route, you can do things like only allowing Operators to
+        change Turnouts (via the Route) when the Dispatcher has set
+        a button to allow local access.</li>
+
+        <li>An 'Internal Turnout' is one that only exists within
+        the JMRI software; it doesn't correspond to any particular
+        address on the layout, and it particularly doesn't
+        correspond to any hardware on the layout. The system name
+        for Internal Turnouts start with "IT", e.g. "IT201". JMRI
+        knows that these are separate from the layout, so it
+        doesn't send any commands to the attached hardware when one
+        changes. Internal Turnouts can be used with Routes to build
+        complicated logic underlying control Panels. For example,
+        an icon on a Panel can set an Internal Turnout, which in
+        turn can set the Turnouts of an entire yard ladder.</li>
+      </ul>
+
+      <p>Similar to the Control Sensors discussed above, the
+      Control Turnout has a "mode" associated with it, which can
+      be:</p>
+
+      <dl>
+        <dt>"On Closed"</dt>
+
+        <dd>The default method, the Route is triggered when the
+        Turnout changes to the Closed state.</dd>
+
+        <dt>"On Thrown"</dt>
+
+        <dd>The Route is triggered when the Turnout changes to the
+        Thrown state.</dd>
+
+        <dt>"On Change"</dt>
+
+        <dd>The Route is triggered when the Turnout state changes,
+        either from Closed to Thrown or from Thrown to Closed.</dd>
+
+        <dt>"Veto Closed"</dt>
+
+        <dd>If this Turnout is Closed, Sensors set to "On Active",
+        "On Inactive" "On Change" will be ignored.</dd>
+
+        <dt>"Veto Thrown"</dt>
+
+        <dd>If this Turnout is Thrown, Sensors set to "On Active",
+        "On Inactive" "On Change" will be ignored.</dd>
+      </dl>
+
+      <p>A single 'veto' Turnout or 'veto' Sensor can prevent the
+      Route from being triggered. All of the 'veto' Sensors and the
+      'veto' Turnout, if there is one, must be in their non-veto
+      state _and_ at least one of the triggering Sensors or a
+      triggering Turnout must see the appropriate change for the
+      Route to be set.</p><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

@@ -19,7 +19,7 @@ public class LIUSBEthernetTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {LIUSBEthernetTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -27,6 +27,8 @@ public class LIUSBEthernetTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.lenz.liusbethernet.LIUSBEthernetTest");  // no tests in this class itself
         suite.addTest(new TestSuite(LIUSBEthernetAdapterTest.class));
         suite.addTest(new TestSuite(LIUSBEthernetXNetPacketizerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.lenz.liusbethernet.configurexml.PackageTest.class));
         return suite;
     }
 

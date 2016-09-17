@@ -80,7 +80,7 @@ public class Throttle extends AbstractThrottle {
     }
 
     /**
-     * Set the speed & direction.
+     * Set the speed {@literal &} direction.
      * <P>
      * This intentionally skips the emergency stop value of 1.
      *

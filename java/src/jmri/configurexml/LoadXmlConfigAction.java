@@ -2,6 +2,7 @@ package jmri.configurexml;
 
 import java.awt.event.ActionEvent;
 import javax.swing.JFileChooser;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import org.slf4j.Logger;
@@ -30,12 +31,12 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        loadFile(this.getConfigFileChooser());
+        loadFile(getConfigFileChooser());
     }
 
     /**
      *
-     * @param fileChooser
+     * @param fileChooser {@link JFileChooser} to use for file selection
      * @return true if successful
      */
     protected boolean loadFile(JFileChooser fileChooser) {
@@ -43,12 +44,17 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
         java.io.File file = getFile(fileChooser);
         if (file != null) {
             try {
-                results = InstanceManager.configureManagerInstance().load(file);
-                if (results) {
-                    // insure logix etc fire up
-                    InstanceManager.logixManagerInstance().activateAllLogixs();
-                    InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
-                    new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
+                ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+                if (cm == null) {
+                    log.error("Failed to get default configure manager");
+                } else {
+                    results = cm.load(file);
+                    if (results) {
+                        // insure logix etc fire up
+                        InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
+                        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+                        new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
+                    }
                 }
             } catch (JmriException e) {
                 log.error("Unhandled problem in loadFile: " + e);

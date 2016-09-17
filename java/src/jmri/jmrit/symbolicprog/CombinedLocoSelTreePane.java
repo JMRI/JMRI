@@ -39,9 +39,9 @@ import org.slf4j.LoggerFactory;
  * manipulation) parts are unchanged.
  * <P>
  * The JComboBox implementation always had to have selected entries, so we added
- * dummy "select from .." items at the top & used those to indicate that there
- * was no selection in that box. Here, the lack of a selection indicates there's
- * no selection.
+ * dummy "select from .." items at the top {@literal &} used those to indicate
+ * that there was no selection in that box. Here, the lack of a selection
+ * indicates there's no selection.
  *
  * Internally, the "filter" is used to only show identified models (leaf nodes).
  * This is implemented in internal InvisibleTreeModel and DecoderTreeNode
@@ -151,8 +151,8 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         showAll.setSelected(true);
         showMatched = new JRadioButton(Bundle.getMessage("LabelMatched"));
 
-        if (jmri.InstanceManager.programmerManagerInstance() != null
-                && jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) != null
+                && jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).isGlobalProgrammerAvailable()) {
             ButtonGroup group = new ButtonGroup();
             group.add(showAll);
             group.add(showMatched);
@@ -474,7 +474,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
      */
     void setDecoderSelectionFromLoco(String loco) {
         // if there's a valid loco entry...
-        RosterEntry locoEntry = Roster.instance().entryFromTitle(loco);
+        RosterEntry locoEntry = Roster.getDefault().entryFromTitle(loco);
         if (locoEntry == null) {
             return;
         }

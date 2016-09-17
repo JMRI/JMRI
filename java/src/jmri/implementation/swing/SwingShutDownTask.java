@@ -1,4 +1,3 @@
-// SwingShutDownTask.java
 package jmri.implementation.swing;
 
 import java.awt.Component;
@@ -16,14 +15,13 @@ import org.slf4j.LoggerFactory;
  * <li>checkPromptNeeded determines if ready to shutdown. If so, return ready.
  * <li>Issue a prompt, asking if the user wants to continue or do something else
  * <li>Recheck until something decided.
- * </ul>
+ * </ol>
  *
  * <p>
  * If no "action" name is provided, only the continue and cancel options are
  * shown.
  *
  * @author Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public class SwingShutDownTask extends AbstractShutDownTask {
 
@@ -122,5 +120,3 @@ public class SwingShutDownTask extends AbstractShutDownTask {
     private final static Logger log = LoggerFactory.getLogger(SwingShutDownTask.class.getName());
 
 }
-
-/* @(#)SwingShutDownTask.java */

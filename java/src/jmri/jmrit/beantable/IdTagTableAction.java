@@ -34,14 +34,14 @@ public class IdTagTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param actionName
+     * @param actionName title of the action
      */
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public IdTagTableAction(String actionName) {
         super(actionName);
 
         // disable ourself if there is no primary IdTag manager available
-        if (InstanceManager.getDefault(IdTagManager.class) == null) {
+        if (InstanceManager.getNullableDefault(IdTagManager.class) == null) {
             setEnabled(false);
         }
 
@@ -277,12 +277,9 @@ public class IdTagTableAction extends AbstractTableAction {
         if (user.equals("")) {
             user = null;
         }
-//        String tag = tagID.getText();
-//        if (tag.equals("")) tag=null;
         String sName = sysName.getText();
         try {
             InstanceManager.getDefault(IdTagManager.class).newIdTag(sName, user);
-//            InstanceManager.idTagManagerInstance().newIdTag(sName, user, tag);
         } catch (IllegalArgumentException ex) {
             // user input no good
             handleCreateException(sName);

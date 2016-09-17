@@ -4,7 +4,7 @@ import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetThrottleManagerTest;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -32,7 +32,7 @@ public class Z21XNetThrottleManagerTest extends XNetThrottleManagerTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", Z21XNetThrottleManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

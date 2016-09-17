@@ -153,7 +153,7 @@ public class SCWarrant extends Warrant {
             BlockOrder bo = getBlockOrderAt(i);
             if (bo == null) {
                 log.debug(_trainName+" getAndGetNotifiedFromNextSignal could not find a BlockOrder for index "+i);
-            } else if (bo.getEntryName() == "") {
+            } else if (bo.getEntryName().equals("")) {
                 log.debug(_trainName+" getAndGetNotifiedFromNextSignal could not find an entry to Block for index "+i);
             } else {
                 log.debug(_trainName+" getAndGetNotifiedFromNextSignal examines block "+bo.getBlock().getDisplayName()+" with entryname = "+bo.getEntryName());
@@ -386,6 +386,8 @@ public class SCWarrant extends Warrant {
      *     - it is _nextSignal
      * Do not worry about sensors and blocks. They are handled by goingActive and goingInactive.
      */
+ @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification = "Unconditional wait is give the warrant that now has _stoppingBlock allocated a little time to deallocate it.  This occurs after this method sets _stoppingBlock to null.")
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (!(evt.getSource() instanceof NamedBean)) {
             if (_debug) log.debug(_trainName+" propertyChange \""+evt.getPropertyName()+

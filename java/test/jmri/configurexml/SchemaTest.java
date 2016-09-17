@@ -20,7 +20,7 @@ public class SchemaTest extends jmri.configurexml.SchemaTestBase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SchemaTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -36,4 +36,14 @@ public class SchemaTest extends jmri.configurexml.SchemaTestBase {
 
         return suite;
     }
+
+    // The minimal setup for log4J
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
+
 }

@@ -1,4 +1,3 @@
-// RpsTrackingControlPane.java
 package jmri.jmrix.rps.trackingpanel;
 
 import java.awt.FlowLayout;
@@ -15,14 +14,9 @@ import javax.swing.JTextField;
  * Panel to control the scaling of a RpsTrackingPane
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public class RpsTrackingControlPane extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1526969572941516857L;
     RpsTrackingPanel panel;
 
     public RpsTrackingControlPane(RpsTrackingPanel panel) {

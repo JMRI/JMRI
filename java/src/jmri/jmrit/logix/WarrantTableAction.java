@@ -36,20 +36,18 @@ import org.slf4j.LoggerFactory;
  * a train to proceed from an Origin to a Destination.
  * WarrantTableAction provides the menu for panels to List, Edit and Create
  * Warrants.  It launches the appropriate frame for each action.
- * <P>
+ * <BR>
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
- * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * </P><P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * </P>
  *
  * @author  Pete Cressman  Copyright (C) 2009, 2010
  */
@@ -132,15 +130,20 @@ public class WarrantTableAction extends AbstractAction {
         };
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
         String[] sysNames = manager.getSystemNameArray();
-         
-        for (int i = 0; i < sysNames.length; i++) {
-            Warrant warrant = manager.getBySystemName(sysNames[i]);
-            JMenuItem mi = new JMenuItem(warrant.getDisplayName());
-            mi.setActionCommand(warrant.getDisplayName());
-            mi.addActionListener(editWarrantAction);
-            editWarrantMenu.add(mi);                                                  
+        if (sysNames.length == 0) { // when there are no Warrants, enter the word "None" to the submenu
+            JMenuItem _noWarrants = new JMenuItem(Bundle.getMessage("None"));
+            editWarrantMenu.add(_noWarrants);
+            // disable it
+            _noWarrants.setEnabled(false);
+        } else { // when there are Warrents, add them to the submenu
+            for (int i = 0; i < sysNames.length; i++) {
+                Warrant warrant = manager.getBySystemName(sysNames[i]);
+                JMenuItem mi = new JMenuItem(warrant.getDisplayName());
+                mi.setActionCommand(warrant.getDisplayName());
+                mi.addActionListener(editWarrantAction);
+                editWarrantMenu.add(mi);
+            }
         }
-
         _warrantMenu.add(new jmri.jmrit.logix.WarrantTableAction("CreateWarrant"));
         _warrantMenu.add(_trackerTable);
         _warrantMenu.add(new AbstractAction(Bundle.getMessage("CreateNXWarrant")) {
@@ -176,7 +179,7 @@ public class WarrantTableAction extends AbstractAction {
                                     return true;
                                 }
                             };
-                            jmri.InstanceManager.shutDownManagerInstance().register(_shutDownTask);
+                            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(_shutDownTask);
                         }
                         updateWarrantMenu();
                     }
@@ -187,7 +190,7 @@ public class WarrantTableAction extends AbstractAction {
                 {
                     public void actionPerformed(ActionEvent e) {
                         _log.close();
-                        jmri.InstanceManager.shutDownManagerInstance().deregister(_shutDownTask);
+                        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(_shutDownTask);
                         _shutDownTask = null;
                         _log = null;
                         updateWarrantMenu();

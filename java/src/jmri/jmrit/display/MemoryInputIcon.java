@@ -27,10 +27,6 @@ import org.slf4j.LoggerFactory;
  */
 public class MemoryInputIcon extends PositionableJPanel implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5344837175494290110L;
     JTextField _textBox = new JTextField();
     int _nCols;
 
@@ -87,12 +83,12 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         if (debug) {
             log.debug("setMemory for memory= " + pName);
         }
-        if (InstanceManager.memoryManagerInstance() != null) {
-            Memory memory = InstanceManager.memoryManagerInstance().
+        if (InstanceManager.getNullableDefault(jmri.MemoryManager.class) != null) {
+            try {
+                Memory memory = InstanceManager.memoryManagerInstance().
                     provideMemory(pName);
-            if (memory != null) {
                 setMemory(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, memory));
-            } else {
+            } catch (IllegalArgumentException e) {
                 log.error("Memory '" + pName + "' not available, icon won't see changes");
             }
         } else {
@@ -166,7 +162,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     }
 
     public boolean setEditIconMenu(javax.swing.JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Memory"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameMemory"));
         popup.add(new javax.swing.AbstractAction(txt) {
             /**
              *
@@ -181,7 +177,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     }
 
     /**
-     * Poppup menu iconEditor's ActionListener
+     * Popup menu iconEditor's ActionListener
      */
     SpinnerNumberModel _spinModel = new SpinnerNumberModel(3, 1, 100, 1);
 

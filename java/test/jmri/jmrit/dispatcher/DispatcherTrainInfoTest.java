@@ -1,9 +1,9 @@
 package jmri.jmrit.dispatcher;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Swing jfcUnit tests for dispatcher train info
@@ -25,21 +25,21 @@ public class DispatcherTrainInfoTest extends TestCase {
         ti.setTrainFromRoster(true);
         ti.setTrainFromTrains(false);
         ti.setTrainFromUser(false);
-        ti.setPriority("8");
-        ti.setRunAuto(true);
+        ti.setPriority(8);
+        ti.setAutoRun(true);
         ti.setResetWhenDone(false);
         ti.setDelayedStart(0x01);
-        ti.setDepartureTimeHr("10");
-        ti.setDepartureTimeMin("30");
+        ti.setDepartureTimeHr(10);
+        ti.setDepartureTimeMin(30);
         ti.setTrainType("2");
 
-        ti.setSpeedFactor("0.8");
-        ti.setMaxSpeed("0.6");
+        ti.setSpeedFactor(0.8f);
+        ti.setMaxSpeed(0.6f);
         ti.setRampRate("2");
         ti.setResistanceWheels(true);
         ti.setRunInReverse(false);
         ti.setSoundDecoder(true);
-        ti.setMaxTrainLength("225");
+        ti.setMaxTrainLength(225);
         // test it
         Assert.assertEquals("Transit Name", ti.getTransitName(), "Transit");
         Assert.assertEquals("Train Name", ti.getTrainName(), "Train");
@@ -50,21 +50,21 @@ public class DispatcherTrainInfoTest extends TestCase {
         Assert.assertTrue("Train From Roster", ti.getTrainFromRoster());
         Assert.assertFalse("Train From Trains", ti.getTrainFromTrains());
         Assert.assertFalse("Train From User", ti.getTrainFromUser());
-        Assert.assertEquals("Priority", ti.getPriority(), "8");
-        Assert.assertTrue("Run Auto", ti.getRunAuto());
+        Assert.assertEquals("Priority", ti.getPriority(), 8);
+        Assert.assertTrue("Run Auto", ti.getAutoRun());
         Assert.assertFalse("Reset When Done", ti.getResetWhenDone());
         Assert.assertEquals("Delayed Start", ti.getDelayedStart(), 1);
-        Assert.assertEquals("Departure Time Hours", ti.getDepartureTimeHr(), "10");
-        Assert.assertEquals("Departure Time Minutes", ti.getDepartureTimeMin(), "30");
+        Assert.assertEquals("Departure Time Hours", ti.getDepartureTimeHr(), 10);
+        Assert.assertEquals("Departure Time Minutes", ti.getDepartureTimeMin(), 30);
         Assert.assertEquals("Train Type", ti.getTrainType(), "2");
 
-        Assert.assertEquals("Speed Factor", ti.getSpeedFactor(), "0.8");
-        Assert.assertEquals("Maximum Speed", ti.getMaxSpeed(), "0.6");
+        Assert.assertEquals("Speed Factor", ti.getSpeedFactor(), 0.8f, 0.0);
+        Assert.assertEquals("Maximum Speed", ti.getMaxSpeed(), 0.6f, 0.0);
         Assert.assertEquals("Ramp Rate", ti.getRampRate(), "2");
         Assert.assertTrue("Resistance Wheels", ti.getResistanceWheels());
         Assert.assertFalse("Run In Reverse", ti.getRunInReverse());
         Assert.assertTrue("Sound Decoder", ti.getSoundDecoder());
-        Assert.assertEquals("Maximum Train Length", ti.getMaxTrainLength(), "225");
+        Assert.assertEquals("Maximum Train Length", ti.getMaxTrainLength(), 225f, 0.0);
 
     }
 
@@ -76,7 +76,7 @@ public class DispatcherTrainInfoTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", DispatcherTrainInfoTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

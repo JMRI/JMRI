@@ -4,7 +4,7 @@ import java.awt.Component;
 import java.util.HashMap;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.slf4j.Logger;
@@ -165,7 +165,7 @@ public class EnumVariableValueTest extends VariableValueTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", EnumVariableValueTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

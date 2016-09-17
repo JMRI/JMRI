@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
-import jmri.jmrix.loconet.LocoNetBundle;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -59,7 +58,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     public String getTitle() {
-        return getTitle(LocoNetBundle.bundle().getString("MenuItemSendPacket"));
+        return getTitle(Bundle.getMessage("MenuItemSendPacket"));
     }
 
     public void initComponents() throws Exception {
@@ -140,7 +139,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     javax.swing.Timer timer = null;
 
     /**
-     * Internal routine to handle timer starts & restarts
+     * Internal routine to handle timer starts {@literal &} restarts
      */
     protected void restartTimer(int delay) {
         if (timer == null) {
@@ -159,7 +158,6 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     /**
      * Run button pressed down, start the sequence operation
      *
-     * @param e
      */
     public void runButtonActionPerformed(java.awt.event.ActionEvent e) {
         if (!mRunButton.isSelected()) {
@@ -184,7 +182,6 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     /**
      * Process the incoming message to look for the needed echo
      *
-     * @param m
      */
     public void message(LocoNetMessage m) {
         log.debug("message");
@@ -246,7 +243,6 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     /**
      * Create a well-formed LocoNet packet from a String
      *
-     * @param s
      * @return The packet, with contents filled-in
      */
     LocoNetMessage createPacket(String s) {

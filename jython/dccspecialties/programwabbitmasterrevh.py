@@ -56,11 +56,11 @@ class setStartup(jmri.jmrit.automat.AbstractAutomaton) :
 
   def handle(self):
     # Next Two Lines - Reset Wabbit to Factory Defaults
-    programmers.getAddressedProgrammer(True, 9983).writeCV(63, 42, None)	
+    addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(63, 42, None)	
     self.waitMsec(750)         # time is in milliseconds
 
     # Next Two Lines - Point Wabbit to Receive Primary Address, Not Necessary, However, good practice.
-    programmers.getAddressedProgrammer(True, 9983).writeCV(63, 0, None)	
+    addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(63, 0, None)	
     self.waitMsec(750)
 
     # Next Two Lines - Set Primary Address - Change 1234 to Address Desired
@@ -68,55 +68,55 @@ class setStartup(jmri.jmrit.automat.AbstractAutomaton) :
     self.waitMsec(750)
 
     # Next Two Lines - CV49 - Controls What the Wabbit Sees as Clear or Thrown (Values 0,1)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(49, 1, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(49, 1, None)	
     # self.waitMsec(750)
 
     # Next Two Lines - CV64 - Power Up Position (Smart Default) (Values 0,2,3)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(64, 0, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(64, 0, None)	
     # self.waitMsec(750)
 
     # Next Two Lines - CV65 - Programmable Point Speed (Values 0-15)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(65, 0, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(65, 0, None)	
     # self.waitMsec(750)
 
     # Next Two Lines - CV66 - Dispatcher Over-Ride(Auto-Throw Lock-Out)
     #                         (Values 0,1)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(66, 0, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(66, 0, None)	
     # self.waitMsec(750)
 
     # Next Two Lines - CV67 - Auto Throw Timer(Auto Throw Inhibit Time)(Values 0-255)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(67, 0, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(67, 0, None)	
     # self.waitMsec(750)
 
     # Next Two Lines - CV68 - Semaphore OPS Mode (Values 0,1)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(68, 0, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(68, 0, None)	
     # self.waitMsec(750)
 
     # Next Two Lines - CV69 - Auto Return Enable (Values 0,1,2,4,8) IF VERSION SUPPORTED
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(69, 0, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(69, 0, None)	
     # self.waitMsec(750)
 
     # Next Two Lines - CV70 - Auto Return Delay (Values 0-255) IF VERSION SUPPORTED
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(70, 0, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(70, 0, None)	
     # self.waitMsec(750)
 
     # Next Two Lines - CV71 - Manual Switch Ops: Toggle or Push Button (Values 0,1) IF VERSION SUPPORTED
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(71, 0, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(71, 0, None)	
     # self.waitMsec(750)
 
     # Next Two Lines - CV72 - Pushbutton Lockout (Values 0,1, 618)
     #                         0=No Lockout, 1=Lockout Enabled, 618 Program Lockout Address
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(72, 0, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(72, 0, None)	
     # self.waitMsec(750)
 
     # Next Two Lines - CV73 - Pushbutton Lockout Accessory Status(Values 0,1)
     #                         0=No Lockout, 1=Lockout Enabled
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(73, 0, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(73, 0, None)	
     # self.waitMsec(750)
 
     # Next Two Lines - CV74 - Sets the Number of Routes Available for Programming & Use.
     #                         (Values 0-13) SOME DOCUMENTION STATES 28, THIS CURRENTLY IS INCORRECT.
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(74, 0, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(74, 0, None)	
     # self.waitMsec(750)
 
 
@@ -124,79 +124,79 @@ class setStartup(jmri.jmrit.automat.AbstractAutomaton) :
     #                  CV50 - Indicates Clear or Thrown Switch Position for Route 1 (Values 0,1,2,3)
     # turnouts.provideTurnout("1234").setState(CLOSED)				
     # self.waitMsec(750)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(50, 1, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(50, 1, None)	
     # self.waitMsec(750)
 
     # Next Four Lines - Setup Route 2 - Address & Switch Position
     # turnouts.provideTurnout("1234").setState(CLOSED)				
     # self.waitMsec(750)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(51, 1, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(51, 1, None)	
     # self.waitMsec(750)
 
     # Next Four Lines - Setup Route 3 - Address & Switch Position
     # turnouts.provideTurnout("1234").setState(CLOSED)				
     # self.waitMsec(750)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(52, 1, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(52, 1, None)	
     # self.waitMsec(750)
 
     # Next Four Lines - Setup Route 4 - Address & Switch Position
     # turnouts.provideTurnout("1234").setState(CLOSED)				
     # self.waitMsec(750)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(53, 1, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(53, 1, None)	
     # self.waitMsec(750)
 
     # Next Four Lines - Setup Route 5 - Address & Switch Position
     # turnouts.provideTurnout("1234").setState(CLOSED)				
     # self.waitMsec(750)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(54, 1, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(54, 1, None)	
     # self.waitMsec(750)
 
     # Next Four Lines - Setup Route 6 - Address & Switch Position
     # turnouts.provideTurnout("1234").setState(CLOSED)				
     # self.waitMsec(750)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(55, 1, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(55, 1, None)	
     # self.waitMsec(750)
 
     # Next Four Lines - Setup Route 7 - Address & Switch Position
     # turnouts.provideTurnout("1234").setState(CLOSED)				
     # self.waitMsec(750)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(56, 1, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(56, 1, None)	
     # self.waitMsec(750)
 
     # Next Four Lines - Setup Route 8 - Address & Switch Position
     # turnouts.provideTurnout("1234").setState(CLOSED)				
     # self.waitMsec(750)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(57, 1, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(57, 1, None)	
     # self.waitMsec(750)
 
     # Next Four Lines - Setup Route 9 - Address & Switch Position
     # turnouts.provideTurnout("1234").setState(CLOSED)				
     # self.waitMsec(750)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(58, 1, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(58, 1, None)	
     # self.waitMsec(750)
 
     # Next Four Lines - Setup Route 10 - Address & Switch Position
     # turnouts.provideTurnout("1234").setState(CLOSED)				
     # self.waitMsec(750)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(59, 1, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(59, 1, None)	
     # self.waitMsec(750)
 
     # Next Four Lines - Setup Route 11 - Address & Switch Position
     # turnouts.provideTurnout("1234").setState(CLOSED)				
     # self.waitMsec(750)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(60, 1, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(60, 1, None)	
     # self.waitMsec(750)
 
     # Next Four Lines - Setup Route 12 - Address & Switch Position
     # turnouts.provideTurnout("1234").setState(CLOSED)				
     # self.waitMsec(750)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(61, 1, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(61, 1, None)	
     # self.waitMsec(750)
 
     # Next Four Lines - Setup Route 13 - Address & Switch Position
     # turnouts.provideTurnout("1234").setState(CLOSED)				
     # self.waitMsec(750)
-    # programmers.getAddressedProgrammer(True, 9983).writeCV(62, 1, None)	
+    # addressedProgrammers.getAddressedProgrammer(True, 9983).writeCV(62, 1, None)	
     # self.waitMsec(750)
 
     javax.swing.JFrame("Programming Complete!").show()

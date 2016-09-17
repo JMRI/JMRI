@@ -18,19 +18,19 @@ import org.slf4j.LoggerFactory;
  * string, usually, but not always, a number. All alphabetic characters in a
  * Section system name must be upper case. This is enforced when a Section is
  * created.
- * <P>
- *
+ * <BR>
  * <hr>
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * </P>
+ *
  * @author Dave Duchamp Copyright (C) 2008
  */
 public class SectionManager extends AbstractManager
@@ -39,7 +39,7 @@ public class SectionManager extends AbstractManager
     public SectionManager() {
         super();
         InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
-        InstanceManager.blockManagerInstance().addVetoableChangeListener(this);
+        InstanceManager.getDefault(jmri.BlockManager.class).addVetoableChangeListener(this);
     }
 
     public int getXMLOrder() {
@@ -166,10 +166,7 @@ public class SectionManager extends AbstractManager
             }
             numSections++;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Validated " + numSections + " Sections - "
-                    + numErrors + " errors or warnings.");
-        }
+        log.debug("Validated {} Sections - {} errors or warnings.", numSections, numErrors);
         return numErrors;
     }
 
@@ -194,10 +191,7 @@ public class SectionManager extends AbstractManager
             numErrors = numErrors + errors;
             numSections++;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Checked direction sensors for " + numSections
-                    + " Sections - " + numErrors + " errors or warnings.");
-        }
+        log.debug("Checked direction sensors for {} Sections - {} errors or warnings.", numSections, numErrors);
         return numErrors;
     }
 
@@ -229,7 +223,7 @@ public class SectionManager extends AbstractManager
                 sensorList.add(name);
             }
         }
-        jmri.SignalHeadManager shManager = InstanceManager.signalHeadManagerInstance();
+        jmri.SignalHeadManager shManager = InstanceManager.getDefault(jmri.SignalHeadManager.class);
         List<String> signalList = shManager.getSystemNameList();
         for (int j = 0; j < signalList.size(); j++) {
             SignalHead sh = shManager.getBySystemName(signalList.get(j));

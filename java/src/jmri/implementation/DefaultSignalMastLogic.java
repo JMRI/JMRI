@@ -149,7 +149,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
         }
         int oldSize = destList.size();
         destList.put(dest, new DestinationMast(dest));
-        //InstanceManager.signalMastLogicManagerInstance().addDestinationMastToLogic(this, dest);
+        //InstanceManager.getDefault(jmri.SignalMastLogicManager.class).addDestinationMastToLogic(this, dest);
         firePropertyChange("length", oldSize, Integer.valueOf(destList.size()));
     }
 
@@ -187,7 +187,9 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
      * Use this to determine if the signalmast logic is stored in the panel file
      * and if all the information is stored.
      *
-     * @param store
+     * @param store what to store. One of
+     *              {@link #STOREALL}, {@link #STOREMASTSONLY} or
+     *              {@link #STORENONE}
      */
     public void setStore(int store, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -264,7 +266,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
     public boolean removeDestination(SignalMast dest) {
         int oldSize = destList.size();
         if (destList.containsKey(dest)) {
-            //InstanceManager.signalMastLogicManagerInstance().removeDestinationMastToLogic(this, dest);
+            //InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removeDestinationMastToLogic(this, dest);
             destList.get(dest).dispose();
             destList.remove(dest);
             firePropertyChange("length", oldSize, Integer.valueOf(destList.size()));
@@ -464,7 +466,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
      * Sets the states that each turnout must be in for signal not to be set at
      * a stop aspect
      *
-     * @param turnouts
+     * @param turnouts {@link Turnout}s to use
      */
     public void setTurnouts(Hashtable<NamedBeanHandle<Turnout>, Integer> turnouts, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -488,7 +490,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
      * Sets which blocks must be inactive for the signal not to be set at a stop
      * aspect
      *
-     * @param blocks
+     * @param blocks {@link Block}s to use
      */
     public void setBlocks(Hashtable<Block, Integer> blocks, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -501,7 +503,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
      * Sets which blocks must be inactive for the signal not to be set at a stop
      * aspect These blocks are not stored in the panel file.
      *
-     * @param blocks
+     * @param blocks {@link Block}s to use
      */
     //public void setLayoutBlocks
     public void setAutoBlocks(LinkedHashMap<Block, Integer> blocks, SignalMast destination) {
@@ -514,7 +516,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
     /**
      * Sets which masts must be in a given state before our mast can be set.
      *
-     * @param masts
+     * @param masts {@link SignalMast}s to use
      */
     public void setMasts(Hashtable<SignalMast, String> masts, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -527,7 +529,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
      * Sets which masts must be in a given state before our mast can be set.
      * These masts are not stored in the panel file.
      *
-     * @param masts
+     * @param masts {@link SignalMast}s to use
      */
     public void setAutoMasts(Hashtable<SignalMast, String> masts, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -539,7 +541,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
     /**
      * Sets which sensors must be in a given state before our mast can be set.
      *
-     * @param sensors
+     * @param sensors {@link Sensor}s to use
      */
     public void setSensors(Hashtable<NamedBeanHandle<Sensor>, Integer> sensors, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -863,7 +865,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
         Runnable r = new Runnable() {
             public void run() {
                 try {
-                    Thread.sleep((InstanceManager.signalMastLogicManagerInstance().getSignalLogicDelay() / 2));
+                    Thread.sleep((InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalLogicDelay() / 2));
                     inWait = false;
                     setMastAppearance();
                 } catch (InterruptedException ex) {
@@ -1226,7 +1228,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
          * Use this to determine if the signalmast logic is stored in the panel
          * file and if all the information is stored.
          *
-         * @param store
          */
         void setStore(int store) {
             this.store = store;
@@ -1377,7 +1378,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
          * Sets which blocks must be inactive for the signal not to be set at a
          * stop aspect
          *
-         * @param blocks
          */
         void setBlocks(Hashtable<Block, Integer> blocks) {
             log.debug(destination.getDisplayName() + " Set blocks called");
@@ -1406,7 +1406,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
          * Sets which blocks must be inactive for the signal not to be set at a
          * stop aspect
          *
-         * @param blocks
          */
         //public void setLayoutBlocks
         public void setAutoBlocks(LinkedHashMap<Block, Integer> blocks) {
@@ -1440,7 +1439,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
         /**
          * Sets which masts must be in a given state before our mast can be set.
          *
-         * @param masts
          */
         void setMasts(Hashtable<SignalMast, String> masts) {
             if (this.userSetMasts != null) {
@@ -1512,7 +1510,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
          * Sets which sensors must be in a given state before our mast can be
          * set.
          *
-         * @param sensors
          */
         void setSensors(Hashtable<NamedBeanHandle<Sensor>, Integer> sensors) {
             if (this.userSetSensors != null) {
@@ -1837,7 +1834,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
                 public void run() {
                     try {
 //                    log.debug("Wait started");
-                        Thread.sleep(InstanceManager.signalMastLogicManagerInstance().getSignalLogicDelay());
+                        Thread.sleep(InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalLogicDelay());
 //                    log.debug("wait is over");
                         inWait = false;
                         checkStateDetails();
@@ -1995,8 +1992,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
             /*This check is purely for use with the dispatcher, it will check to see if any of the blocks are set to "useExtraColor" 
              which is a means to determine if the block is in a section that is occupied and it not ours thus we can set the signal to danger.*/
             if (state && getAssociatedSection() != null
-                    && jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame.class) != null
-                    && jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class) != null
+                    && jmri.InstanceManager.getNullableDefault(jmri.jmrit.dispatcher.DispatcherFrame.class) != null
+                    && jmri.InstanceManager.getNullableDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class) != null
                     && getAssociatedSection().getState() != Section.FORWARD) {
 
                 LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
@@ -2436,7 +2433,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
             if (!allowAutoSignalMastGeneration) {
                 return;
             }
-            ArrayList<jmri.SignalMastLogic> smlList = InstanceManager.signalMastLogicManagerInstance().getLogicsByDestination(destination);
+            ArrayList<jmri.SignalMastLogic> smlList = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getLogicsByDestination(destination);
             ArrayList<Block> allBlock = new ArrayList<Block>();
 
             for (NamedBeanSetting nbh : userSetBlocks) {

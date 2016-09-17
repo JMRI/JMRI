@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 /**
  * Provide access to clock capabilities in hardware or software.
  * <P>
- * The Rate parameter determines how much faster than real time this timebase
+ * The Rate parameter determines how much faster than real time this InstanceManager.getDefault(jmri.Timebase.class)
  * runs. E.g. a value of 2.0 means that the value returned by getTime will
  * advance an hour for every half-hour of wall-clock time elapsed.
  * <P>
@@ -80,7 +80,7 @@ public interface Timebase extends NamedBean {
      * This method is used by Setup Fast Clock when an external change in fast
      * clock rate occurs because of the peculiar way some hardware clocks
      * attempt to synchronize with the JMRI fast clock. This call will return
-     * the "true" rate even if the master Timebase rate has been fiddled by a
+     * the "true" rate even if the master timebase rate has been fiddled by a
      * hardware clock.
      */
     public double userGetRate();
@@ -156,12 +156,12 @@ public interface Timebase extends NamedBean {
     /**
      * Request a call-back when the bound Rate or Run property changes.
      */
-    public void addPropertyChangeListener(@Nonnull PropertyChangeListener l);
+    public void addPropertyChangeListener(PropertyChangeListener l);
 
     /**
      * Remove a request for a call-back when a bound property changes.
      */
-    public void removePropertyChangeListener(@Nonnull PropertyChangeListener l);
+    public void removePropertyChangeListener(PropertyChangeListener l);
 
     /**
      * Request a call-back when the minutes place of the time changes.

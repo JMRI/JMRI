@@ -2,7 +2,6 @@ package jmri.util.node;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -123,7 +122,6 @@ public class NodeIdentity {
     /**
      * Verify that the current identity is a valid identity for this hardware.
      *
-     * @param identity
      * @return true if the identity is based on this hardware.
      */
     synchronized private boolean validateIdentity(String identity) {
@@ -147,7 +145,6 @@ public class NodeIdentity {
     /**
      * Get a node identity from the current hardware.
      *
-     * @param save
      */
     synchronized private void getIdentity(boolean save) {
         try {
@@ -202,7 +199,6 @@ public class NodeIdentity {
      * Save the current node identity and all former identities to file.
      */
     private void saveIdentity() {
-        FileWriter fw = null;
         Document doc = new Document();
         doc.setRootElement(new Element(ROOT_ELEMENT));
         Element identityElement = new Element(NODE_IDENTITY);

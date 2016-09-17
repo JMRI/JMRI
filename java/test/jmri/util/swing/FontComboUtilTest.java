@@ -1,7 +1,7 @@
 package jmri.util.swing;
 
 import java.util.List;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.util.swing.FontComboUtil class.
  *
  * @author	Matthew Harris Copyright 2011
- * @version	$Revision$
  */
 public class FontComboUtilTest extends TestCase {
 
@@ -83,7 +82,7 @@ public class FontComboUtilTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {FontComboUtilTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

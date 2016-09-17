@@ -19,7 +19,7 @@ public class EliteTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {EliteTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -34,6 +34,8 @@ public class EliteTest extends TestCase {
         suite.addTest(new TestSuite(EliteXNetTurnoutTest.class));
         suite.addTest(new TestSuite(EliteXNetTurnoutManagerTest.class));
         suite.addTest(new TestSuite(EliteXNetProgrammerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.lenz.hornbyelite.configurexml.PackageTest.class));
         return suite;
     }
 

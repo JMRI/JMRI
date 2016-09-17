@@ -214,7 +214,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
 
     /**
      * Sets the first turnout used on the driver Relates to the section directly
-     * infront of the Signal (2, 3 & 4 aspect Signals)
+     * infront of the Signal {@literal (2, 3 & 4 aspect Signals)}
      */
     public void setInput1(NamedBeanHandle<Turnout> t) {
         mInput1 = t;

@@ -1,44 +1,53 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
 <!-- UpDated Herv&#233; Blorec le 2013-10-11-->
+
 <html lang="fr">
 <head>
- <title>
-      JMRI: Id Tag Table Help
- </title>
-    <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <meta content="Matthew Harris" name=Author>
-    <meta name="keywords" content="JMRI help Id Tag Table">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Id Tag Table Help</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta content="Matthew Harris" name="Author">
+  <meta name="keywords" content="JMRI help Id Tag Table">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Le Tableau &eacute;tiquette ID</h1>Vous pouvez utiliser
+      le Tableau &eacute;tiquette ID pour regarder le contenu des
+      objets IdTag JMRI.
 
-<h1>Le Tableau &#233;tiquette ID</h1>
-Vous pouvez utiliser le Tableau  &#233;tiquette ID pour regarder le contenu des objets IdTag JMRI.
-<p>
-Notez que vous pouvez trier le tableau par chacune des colonnes, cliquez simplement sur la
-t&#234;te de colonne.
-<p>
-Pour cr&#233;er une nouvelle &#233;tiquette d'identification, cliquez sur le bouton
-"<a href="IdTagAddEdit.shtml"> Ajouter ...</a>"  au bas de la fen&#234;tre.
+      <p>Notez que vous pouvez trier le tableau par chacune des
+      colonnes, cliquez simplement sur la t&ecirc;te de
+      colonne.</p>
 
-<p>
-Pour plus d'informations sur les &#233;tiquettes d'identification, consultez les
-<a Id Tag href="../../../../html/tools/IdTags.shtml"> page d'aide </a>.
-<br>
+      <p>Pour cr&eacute;er une nouvelle &eacute;tiquette
+      d'identification, cliquez sur le bouton " <a href=
+      "IdTagAddEdit.shtml">Ajouter ...</a>" au bas de la
+      fen&ecirc;tre.</p>
 
-<!--#include virtual="/Footer" -->
+      <p>Pour plus d'informations sur les &eacute;tiquettes
+      d'identification, consultez les <a id="" tag="" href=
+      "../../../../html/tools/IdTags.shtml" name="">page d'aide</a>
+      .<br>
+      <!--#include virtual="/Footer" --></p>
+    </div>
+  </div>
 </body>
 </html>
-

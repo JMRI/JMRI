@@ -1,4 +1,3 @@
-// SpeedoReply.java
 package jmri.jmrix.bachrus;
 
 import org.slf4j.Logger;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author	Andrew Crosland Copyright (C) 2010
- * @version	$Revision$
  */
 public class SpeedoReply {
 	// This should be an extension af AbstractMRReply and needs re-factoring
@@ -135,5 +133,3 @@ public class SpeedoReply {
     private boolean unsolicited;
     private final static Logger log = LoggerFactory.getLogger(SpeedoReply.class.getName());
 }
-
-/* @(#)SpeedoReply.java */

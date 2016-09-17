@@ -3,7 +3,7 @@ package jmri.util;
 import java.util.Enumeration;
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.util.OrderedHashtable class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision$
  */
 public class OrderedHashtableTest extends TestCase {
 
@@ -159,7 +158,7 @@ public class OrderedHashtableTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", OrderedHashtableTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
