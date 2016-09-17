@@ -34,8 +34,8 @@ public class ConsistToolActionTest {
 
     @Before
     public void setUp() {
-        JUnitUtil.resetInstanceManager();
         Log4JFixture.setUp();
+        JUnitUtil.resetInstanceManager();
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
     }
 

@@ -2,7 +2,7 @@ package jmri.web.servlet.directory;
 
 import java.util.Locale;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.framework.TestCase;

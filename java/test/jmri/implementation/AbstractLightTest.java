@@ -2,7 +2,7 @@ package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
 import jmri.Light;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.TestCase;
 
 /**
