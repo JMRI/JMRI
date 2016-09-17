@@ -74,6 +74,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
 
     @After
     public void tearDown() {
+        l.dispose();
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
