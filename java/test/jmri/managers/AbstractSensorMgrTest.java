@@ -8,8 +8,10 @@ package jmri.managers;
 import java.beans.PropertyChangeListener;
 import jmri.Sensor;
 import jmri.SensorManager;
-import junit.framework.Assert;
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Abstract Base Class for SensorManager tests in specific jmrix packages. This
@@ -17,19 +19,16 @@ import junit.framework.TestCase;
  * this forms the base for test classes, including providing some common tests
  *
  * @author	Bob Jacobsen 2003, 2006, 2008, 2016
- * @version	$Revision$
+ * @author      Paul Bender Copyright(C) 2016
  */
-public abstract class AbstractSensorMgrTest extends TestCase {
+public abstract class AbstractSensorMgrTest {
 
     // implementing classes must provide these abstract members:
     //
-    abstract protected void setUp();    	// load t with actual object; create scaffolds as needed
+    @Before
+    abstract public void setUp();    	// load t with actual object; create scaffolds as needed
 
     abstract public String getSystemName(int i);
-
-    public AbstractSensorMgrTest(String s) {
-        super(s);
-    }
 
     protected SensorManager l = null;	// holds objects under test
 
@@ -44,13 +43,16 @@ public abstract class AbstractSensorMgrTest extends TestCase {
 
     // start of common tests
     // test creation - real work is in the setup() routine
+    @Test
     public void testCreate() {
     }
 
+    @Test
     public void testDispose() {
         l.dispose();  // all we're really doing here is making sure the method exists
     }
 
+    @Test
     public void testSensorPutGet() {
         // create
         Sensor t = l.newSensor(getSystemName(getNumToTest1()), "mine");
@@ -60,6 +62,7 @@ public abstract class AbstractSensorMgrTest extends TestCase {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
+    @Test
     public void testDefaultSystemName() {
         // create
         Sensor t = l.provideSensor("" + getNumToTest1());
@@ -68,18 +71,12 @@ public abstract class AbstractSensorMgrTest extends TestCase {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
+    @Test(expected=IllegalArgumentException.class)
     public void testProvideFailure() {
-        boolean correct = false;
-        try {
-            Sensor t = l.provideSensor("");
-            Assert.fail("didn't throw");
-        } catch (IllegalArgumentException ex) {
-            correct = true;
-        }
-        Assert.assertTrue("Exception thrown properly", correct);  
-        jmri.util.JUnitAppender.assertWarnMessage("Invalid system name for sensor: IS needed IS");      
+        Sensor t = l.provideSensor("");
     }
 
+    @Test
     public void testSingleObject() {
         // test that you always get the same representation
         Sensor t1 = l.newSensor(getSystemName(getNumToTest1()), "mine");
@@ -93,18 +90,21 @@ public abstract class AbstractSensorMgrTest extends TestCase {
         Assert.assertTrue("same new ", t1 == t2);
     }
 
+    @Test
     public void testMisses() {
         // try to get nonexistant lights
         Assert.assertTrue(null == l.getByUserName("foo"));
         Assert.assertTrue(null == l.getBySystemName("bar"));
     }
 
+    @Test
     public void testUpperLower() {
         Sensor t = l.provideSensor("" + getNumToTest2());
         String name = t.getSystemName();
         Assert.assertNull(l.getSensor(name.toLowerCase()));
     }
 
+    @Test
     public void testRename() {
         // get light
         Sensor t1 = l.newSensor(getSystemName(getNumToTest1()), "before");

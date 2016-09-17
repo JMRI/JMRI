@@ -448,7 +448,8 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
 
     public String getBlockSpeed() {
         if (_blockSpeed.equals("Global")) {
-            return ("Use Global " + InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed());
+            return (Bundle.getMessage("UseGlobal", "Global") + " " + InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed());
+            // Ensure the word "Global" is always in the speed name for later comparison
         }
         return _blockSpeed;
     }
@@ -582,7 +583,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             if (CandidateBlock == b) {
                 setValue(CandidateBlock.getValue());
                 setDirection(pListOfPossibleEntrancePaths[i].getFromBlockDirection());
-                log.info("Block {} gets LATE new value from {}, direction={}", getSystemName(), CandidateBlock.getSystemName(), Path.decodeDirection(getDirection()));
+                log.info("Block {} gets LATE new value from {}, direction= {}", getSystemName(), CandidateBlock.getSystemName(), Path.decodeDirection(getDirection()));
                 ResetCandidateEntrancePaths();
                 return true;
             }
@@ -821,7 +822,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
                 // found one block with proper direction, assume that
             } else {
                 // no unique path with correct direction - this happens frequently from noise in block detectors!!
-                log.warn("count of " + count + " ACTIVE neightbors with proper direction can't be handled for block " + getSystemName());
+                log.warn("count of " + count + " ACTIVE neighbors with proper direction can't be handled for block " + getSystemName());
             }
         }
         // in any case, go OCCUPIED

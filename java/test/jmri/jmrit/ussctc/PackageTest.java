@@ -10,22 +10,22 @@ import junit.framework.TestSuite;
  * @author	Bob Jacobsen Copyright 2007
  * @version	$Revision$
  */
-public class UssCtcTest extends TestCase {
+public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-    public UssCtcTest(String s) {
+    public PackageTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", UssCtcTest.class.getName()};
+        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrit.ussctc.UssCtcTest");   // no tests in this class itself
+        TestSuite suite = new TestSuite("jmri.jmrit.ussctc.PackageTest");   // no tests in this class itself
         suite.addTest(jmri.jmrit.ussctc.FollowerTest.suite());
         suite.addTest(jmri.jmrit.ussctc.FollowerActionTest.suite());
         suite.addTest(jmri.jmrit.ussctc.OsIndicatorTest.suite());

@@ -3,7 +3,7 @@ package jmri.configurexml;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
