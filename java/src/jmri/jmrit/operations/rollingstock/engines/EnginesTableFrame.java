@@ -20,12 +20,13 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.TableColumnModel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.util.com.sun.TableSorter;
+import jmri.swing.JTablePersistenceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +40,6 @@ import org.slf4j.LoggerFactory;
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener {
 
     EnginesTableModel enginesModel;
-    TableSorter sorter;
     javax.swing.JTable enginesTable;
     JScrollPane enginesPane;
     EngineManager engineManager = EngineManager.instance();
@@ -80,9 +80,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 
         // Set up the jtable in a Scroll Pane..
         enginesModel = new EnginesTableModel();
-        sorter = new TableSorter(enginesModel);
-        enginesTable = new JTable(sorter);
-        sorter.setTableHeader(enginesTable.getTableHeader());
+        enginesTable = new JTable(enginesModel);
         enginesPane = new JScrollPane(enginesTable);
         enginesPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         enginesModel.initTable(enginesTable, this);
@@ -212,47 +210,47 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
-        if (ae.getSource() == sortByNumber) {
-            enginesModel.setSort(enginesModel.SORTBYNUMBER);
-        }
-        if (ae.getSource() == sortByRoad) {
-            enginesModel.setSort(enginesModel.SORTBYROAD);
-        }
-        if (ae.getSource() == sortByModel) {
-            enginesModel.setSort(enginesModel.SORTBYMODEL);
-        }
-        if (ae.getSource() == sortByConsist) {
-            enginesModel.setSort(enginesModel.SORTBYCONSIST);
-        }
-        if (ae.getSource() == sortByLocation) {
-            enginesModel.setSort(enginesModel.SORTBYLOCATION);
-        }
-        if (ae.getSource() == sortByDestination) {
-            enginesModel.setSort(enginesModel.SORTBYDESTINATION);
-        }
-        if (ae.getSource() == sortByTrain) {
-            enginesModel.setSort(enginesModel.SORTBYTRAIN);
-        }
-        if (ae.getSource() == sortByMoves) {
-            enginesModel.setSort(enginesModel.SORTBYMOVES);
-        }
-        if (ae.getSource() == sortByBuilt) {
-            enginesModel.setSort(enginesModel.SORTBYBUILT);
-        }
-        if (ae.getSource() == sortByOwner) {
-            enginesModel.setSort(enginesModel.SORTBYOWNER);
-        }
-        if (ae.getSource() == sortByValue) {
-            enginesModel.setSort(enginesModel.SORTBYVALUE);
-        }
-        if (ae.getSource() == sortByRfid) {
-            enginesModel.setSort(enginesModel.SORTBYRFID);
-        }
-        if (ae.getSource() == sortByLast) {
-            enginesModel.setSort(enginesModel.SORTBYLAST);
-        }
         // clear any sorts by column
         clearTableSort(enginesTable);
+        if (ae.getSource() == sortByNumber) {
+            enginesModel.setSort(enginesModel.SORTBY_NUMBER);
+        }
+        if (ae.getSource() == sortByRoad) {
+            enginesModel.setSort(enginesModel.SORTBY_ROAD);
+        }
+        if (ae.getSource() == sortByModel) {
+            enginesModel.setSort(enginesModel.SORTBY_MODEL);
+        }
+        if (ae.getSource() == sortByConsist) {
+            enginesModel.setSort(enginesModel.SORTBY_CONSIST);
+        }
+        if (ae.getSource() == sortByLocation) {
+            enginesModel.setSort(enginesModel.SORTBY_LOCATION);
+        }
+        if (ae.getSource() == sortByDestination) {
+            enginesModel.setSort(enginesModel.SORTBY_DESTINATION);
+        }
+        if (ae.getSource() == sortByTrain) {
+            enginesModel.setSort(enginesModel.SORTBY_TRAIN);
+        }
+        if (ae.getSource() == sortByMoves) {
+            enginesModel.setSort(enginesModel.SORTBY_MOVES);
+        }
+        if (ae.getSource() == sortByBuilt) {
+            enginesModel.setSort(enginesModel.SORTBY_BUILT);
+        }
+        if (ae.getSource() == sortByOwner) {
+            enginesModel.setSort(enginesModel.SORTBY_OWNER);
+        }
+        if (ae.getSource() == sortByValue) {
+            enginesModel.setSort(enginesModel.SORTBY_VALUE);
+        }
+        if (ae.getSource() == sortByRfid) {
+            enginesModel.setSort(enginesModel.SORTBY_RFID);
+        }
+        if (ae.getSource() == sortByLast) {
+            enginesModel.setSort(enginesModel.SORTBY_LAST);
+        }
     }
 
     public List<RollingStock> getSortByList() {
@@ -292,7 +290,6 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
                 enginesTable.getCellEditor().stopCellEditing();
             }
             OperationsXml.save();
-            saveTableDetails(enginesTable);
             if (Setup.isCloseWindowOnSaveEnabled()) {
                 dispose();
             }
@@ -315,6 +312,9 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         if (engineEditFrame != null) {
             engineEditFrame.dispose();
         }
+        InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {
+            tpm.stopPersisting(enginesTable);
+        });
         super.dispose();
     }
 

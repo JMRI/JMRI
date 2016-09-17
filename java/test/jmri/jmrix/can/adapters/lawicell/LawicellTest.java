@@ -31,6 +31,8 @@ public class LawicellTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.can.adapters.lawicell.LawicellTest");
         suite.addTest(MessageTest.suite());
         suite.addTest(ReplyTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.can.adapters.lawicell.canusb.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialDriverAdapterTest.class));
         return suite;
     }
 

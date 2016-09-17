@@ -2,6 +2,11 @@
 package jmri.jmrit.operations.locations;
 
 import javax.swing.BorderFactory;
+import jmri.jmrit.operations.locations.tools.ChangeTrackTypeAction;
+import jmri.jmrit.operations.locations.tools.IgnoreUsedTrackAction;
+import jmri.jmrit.operations.locations.tools.ShowCarsByLocationAction;
+import jmri.jmrit.operations.locations.tools.ShowTrainsServingLocationAction;
+import jmri.jmrit.operations.locations.tools.TrackDestinationEditAction;
 
 /**
  * Frame for user edit of a classification/interchange track. Adds two panels to

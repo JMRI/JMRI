@@ -85,7 +85,7 @@ public class CatalogPane extends JPanel {
         }
         JPanel previewPanel = new JPanel();
         previewPanel.setLayout(new BoxLayout(previewPanel, BoxLayout.X_AXIS));
-        previewPanel.add(new JLabel("File Preview:   "));
+        previewPanel.add(new JLabel(Bundle.getMessage("FilePreviewLabel")));
         JScrollPane js = new JScrollPane(preview);
         previewPanel.add(js);
         add(previewPanel);

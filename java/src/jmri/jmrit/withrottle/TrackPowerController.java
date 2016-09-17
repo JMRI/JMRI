@@ -18,7 +18,7 @@ public class TrackPowerController extends AbstractController implements Property
     private PowerManager pwrMgr = null;
 
     public TrackPowerController() {
-        pwrMgr = InstanceManager.getOptionalDefault(jmri.PowerManager.class);
+        pwrMgr = InstanceManager.getNullableDefault(jmri.PowerManager.class);
         if (pwrMgr == null) {
             log.info("No power manager instance.");
             isValid = false;

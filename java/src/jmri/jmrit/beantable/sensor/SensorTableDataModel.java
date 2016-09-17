@@ -53,7 +53,11 @@ public class SensorTableDataModel extends BeanTableDataModel {
     }
 
     public String getValue(String name) {
-        int val = senManager.getBySystemName(name).getKnownState();
+        Sensor sen = senManager.getBySystemName(name);
+        if (sen == null) {
+            return "Failed to get sensor " + name;
+        }
+        int val = sen.getKnownState();
         switch (val) {
             case Sensor.ACTIVE:
                 return Bundle.getMessage("SensorStateActive");
@@ -184,10 +188,15 @@ public class SensorTableDataModel extends BeanTableDataModel {
         //Need to do something here to make it disable 
         if (col == ACTIVEDELAY || col == INACTIVEDELAY) {
             String name = sysNameList.get(row);
-            if (senManager.getBySystemName(name).useDefaultTimerSettings()) {
+            Sensor sen = senManager.getBySystemName(name);
+            if (sen == null) {
                 return false;
             } else {
-                return true;
+                if (sen.useDefaultTimerSettings()) {
+                    return false;
+                } else {
+                    return true;
+                }
             }
         } else {
             return super.isCellEditable(row, col);

@@ -30,6 +30,8 @@ public class PackageTest extends TestCase {
         suite.addTest(CatalogTreeFSTest.suite());
         suite.addTest(CatalogTreeIndexTest.suite());
         suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.catalog.configurexml.PackageTest.class));
+
         return suite;
     }
 

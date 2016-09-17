@@ -126,7 +126,8 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 int oldValue = ((Integer) e.getOldValue()).intValue();
                 if (newValue == ActiveTrain.DISPATCHED) {
                     removeThrottleListener((AutoActiveTrain) e.getSource());
-                } else if (oldValue == ActiveTrain.DISPATCHED && newValue != ActiveTrain.DISPATCHED) {
+//                } else if (oldValue == ActiveTrain.DISPATCHED && newValue != ActiveTrain.DISPATCHED) {
+                } else if (oldValue == ActiveTrain.DISPATCHED) {
                     setupThrottle(aat);
                 }
             }
@@ -144,8 +145,12 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
     }
 
     private void handleThrottleChange(java.beans.PropertyChangeEvent e) {
+        if (!e.getPropertyName().equals("SpeedSetting") && !e.getPropertyName().equals("IsForward")) {
+            return; //ignore if not speed or direction
+        }
         int index = _throttles.indexOf(e.getSource());
         if (index == -1) {
+            log.warn("handleThrottleChange - cannot find throttle index");
             return;
         }
         JLabel status = _throttleStatus.get(index);

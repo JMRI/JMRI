@@ -59,6 +59,8 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     /**
      * Constructor for all table types. When item is a bean, the itemType is the
      * name key for the item in jmri.NamedBeanBundle.properties
+     * This is actually not true at present, i.e. key = BeanNameTurnout but _itemType = Turnout
+     * (this prohibits using the JMRI-wide translation) TODO split type and Bundle-key
      */
     public TableItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
         super(parentFrame, type, family, editor);
@@ -72,7 +74,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         if (!_initialized) {
             super.init();
             add(initTablePanel(_model, _editor), 0);      // top of Panel    		
-            _buttonPostion = 1;
+            _buttonPosition = 1;
         }
     }
 
@@ -83,7 +85,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
         super.init(doneAction, iconMap);
         add(initTablePanel(_model, _editor), 0);
-        _buttonPostion = 1;
+        _buttonPosition = 1;
     }
 
     /**
@@ -175,7 +177,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
                 _addTableDialog.dispose();
             } catch (IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(_paletteFrame, ex.getMessage(),
-                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             }
         }
         _sysNametext.setText("");
@@ -284,7 +286,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             NamedBean bean = getNamedBean();
             if (bean == null) {
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("noRowSelected"),
-                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }
 

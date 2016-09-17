@@ -108,7 +108,7 @@ public class BlockEditAction extends BeanEditAction {
             }
         });
         bei.add(reporter);
-        if (jmri.InstanceManager.getOptionalDefault(jmri.ReporterManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ReporterManager.class) == null) {
             setEnabled(false);
         }
         return reporter;
@@ -126,7 +126,7 @@ public class BlockEditAction extends BeanEditAction {
 
     BeanItemPanel physcialDetails() {
 
-        defaultBlockSpeedText = (Bundle.getMessage("UseGlobal") + " " + jmri.InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed());
+        defaultBlockSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + jmri.InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed());
         speedList.add(defaultBlockSpeedText);
         java.util.Vector<String> _speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames();
         for (int i = 0; i < _speedMap.size(); i++) {
@@ -211,7 +211,7 @@ public class BlockEditAction extends BeanEditAction {
                     JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
                     return;
                 }
-                if (!speedList.contains(speed) && !speed.contains(Bundle.getMessage("UseGlobal"))) {
+                if (!speedList.contains(speed) && !speed.contains("Global")) {
                     speedList.add(speed);
                 }
                 float len = 0.0f;

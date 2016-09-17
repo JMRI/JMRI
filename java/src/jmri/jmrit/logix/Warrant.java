@@ -347,7 +347,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if (id == null || id.trim().length() == 0) {
             return false;
         }
-        _train = Roster.instance().entryFromTitle(id);
+        _train = Roster.getDefault().entryFromTitle(id);
         if (_train != null) {
             _dccAddress = _train.getDccLocoAddress();
         } else {
@@ -369,7 +369,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * @param id address as a String
      */
     public boolean setDccAddress(String id) {
-        _train = Roster.instance().entryFromTitle(id);
+        _train = Roster.getDefault().entryFromTitle(id);
         if (_train == null) {
             int index = id.indexOf('(');
             String numId;
@@ -379,7 +379,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 numId = id;
             }
             try {
-                List<RosterEntry> l = Roster.instance().matchingList(null, null, numId, null, null, null, null);
+                List<RosterEntry> l = Roster.getDefault().matchingList(null, null, numId, null, null, null, null);
                 if (l.size() > 0) {
                     _train = l.get(0);
                     if (_trainId == null) {
@@ -746,7 +746,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             abortWarrant(msg);
             return msg;
         }
-        jmri.ThrottleManager tm = InstanceManager.getOptionalDefault(jmri.ThrottleManager.class);
+        jmri.ThrottleManager tm = InstanceManager.getNullableDefault(jmri.ThrottleManager.class);
         if (tm==null) {
             msg = Bundle.getMessage("noThrottle");
         } else {

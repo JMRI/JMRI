@@ -209,7 +209,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     public String getTitle() {
-        return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemLocoIOProgrammer"));
+        return getTitle(Bundle.getMessage("MenuItemLocoIOProgrammer"));
     }
 
     /**

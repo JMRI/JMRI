@@ -3,6 +3,7 @@ package jmri;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
@@ -15,9 +16,6 @@ import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import jmri.jmrit.display.layoutEditor.TrackNode;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
 import jmri.util.JmriJFrame;
-
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -2286,8 +2284,9 @@ public class Section extends AbstractNamedBean
         // set up missing signal head message, if any
         if ((missingSignalsBB + missingSignalsTurnouts + missingSignalsLevelXings) > 0) {
             String s = "Section - " + getSystemName();
-            if ((getUserName() != null) && (!getUserName().equals(""))) {
-                s = s + "(" + getUserName() + ")";
+            String uname = getUserName();
+            if ((uname != null) && (!uname.equals(""))) {
+                s = s + "(" + uname + ")";
             }
             if (missingSignalsBB > 0) {
                 s = s + ", " + (missingSignalsBB) + " anchor point signal heads missing";

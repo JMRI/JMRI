@@ -36,7 +36,7 @@ public class JsonServer extends JmriServer {
     private ObjectMapper mapper;
 
     public static JsonServer getDefault() {
-        if (InstanceManager.getOptionalDefault(JsonServer.class) == null) {
+        if (InstanceManager.getNullableDefault(JsonServer.class) == null) {
             InstanceManager.store(new JsonServer(), JsonServer.class);
         }
         return InstanceManager.getDefault(JsonServer.class);
@@ -90,7 +90,7 @@ public class JsonServer extends JmriServer {
         JsonClientHandler handler = new JsonClientHandler(new JsonConnection(outStream));
 
         // Start by sending a welcome message
-        handler.sendHello(this.timeout);
+        handler.onMessage(JsonClientHandler.HELLO_MSG);
 
         while (true) {
             try {

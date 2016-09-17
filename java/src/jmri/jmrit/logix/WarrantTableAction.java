@@ -130,15 +130,20 @@ public class WarrantTableAction extends AbstractAction {
         };
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
         String[] sysNames = manager.getSystemNameArray();
-         
-        for (int i = 0; i < sysNames.length; i++) {
-            Warrant warrant = manager.getBySystemName(sysNames[i]);
-            JMenuItem mi = new JMenuItem(warrant.getDisplayName());
-            mi.setActionCommand(warrant.getDisplayName());
-            mi.addActionListener(editWarrantAction);
-            editWarrantMenu.add(mi);                                                  
+        if (sysNames.length == 0) { // when there are no Warrants, enter the word "None" to the submenu
+            JMenuItem _noWarrants = new JMenuItem(Bundle.getMessage("None"));
+            editWarrantMenu.add(_noWarrants);
+            // disable it
+            _noWarrants.setEnabled(false);
+        } else { // when there are Warrents, add them to the submenu
+            for (int i = 0; i < sysNames.length; i++) {
+                Warrant warrant = manager.getBySystemName(sysNames[i]);
+                JMenuItem mi = new JMenuItem(warrant.getDisplayName());
+                mi.setActionCommand(warrant.getDisplayName());
+                mi.addActionListener(editWarrantAction);
+                editWarrantMenu.add(mi);
+            }
         }
-
         _warrantMenu.add(new jmri.jmrit.logix.WarrantTableAction("CreateWarrant"));
         _warrantMenu.add(_trackerTable);
         _warrantMenu.add(new AbstractAction(Bundle.getMessage("CreateNXWarrant")) {

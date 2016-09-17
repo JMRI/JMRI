@@ -1,6 +1,8 @@
 package jmri.jmrit.roster.swing;
 
-import junit.framework.Assert;
+import java.util.Locale;
+
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -9,7 +11,6 @@ import junit.framework.TestSuite;
  * Tests for the Bundle class
  *
  * @author Bob Jacobsen Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 public class BundleTest extends TestCase {
 

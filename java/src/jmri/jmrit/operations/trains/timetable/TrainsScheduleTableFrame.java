@@ -24,6 +24,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -33,6 +34,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
+import jmri.swing.JTablePersistenceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -236,6 +238,8 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
+        // clear any sorts by column
+        clearTableSort(trainsScheduleTable);
         if (ae.getSource() == sortByName) {
             trainsScheduleModel.setSort(trainsScheduleModel.SORTBYNAME);
         } else if (ae.getSource() == sortByTime) {
@@ -275,12 +279,12 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         }
         if (ae.getSource() == runFileButton) {
             // Processes the CSV Manifest files using an external custom program.
-            if (!TrainCustomManifest.manifestCreatorFileExists()) {
-                log.warn("Manifest creator file not found!, directory name: " + TrainCustomManifest.getDirectoryName()
-                        + ", file name: " + TrainCustomManifest.getFileName()); // NOI18N
+            if (!TrainCustomManifest.instance().excelFileExists()) {
+                log.warn("Manifest creator file not found!, directory name: " + TrainCustomManifest.instance().getDirectoryName()
+                        + ", file name: " + TrainCustomManifest.instance().getFileName()); // NOI18N
                 JOptionPane.showMessageDialog(this, MessageFormat.format(
                         Bundle.getMessage("LoadDirectoryNameFileName"), new Object[]{
-                            TrainCustomManifest.getDirectoryName(), TrainCustomManifest.getFileName()}), Bundle
+                            TrainCustomManifest.instance().getDirectoryName(), TrainCustomManifest.instance().getFileName()}), Bundle
                         .getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -297,13 +301,13 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
                         // Make sure our csv manifest file exists for this Train.
                         File csvFile = train.createCSVManifestFile();
                         // Add it to our collection to be processed.
-                        TrainCustomManifest.addCVSFile(csvFile);
+                        TrainCustomManifest.instance().addCVSFile(csvFile);
                     }
                 }
             }
 
             // Now run the user specified custom Manifest processor program
-            TrainCustomManifest.process();
+            TrainCustomManifest.instance().process();
         }
         if (ae.getSource() == switchListsButton) {
             trainScheduleManager.buildSwitchLists();
@@ -477,7 +481,6 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
             ts.setComment(commentTextArea.getText());
         }
 //        updateControlPanel();
-        saveTableDetails(trainsScheduleTable);
         OperationsXml.save();
     }
 
@@ -489,6 +492,9 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         removePropertyChangeTrainSchedules();
         removePropertyChangeLocations();
         trainsScheduleModel.dispose();
+        InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {
+            tpm.stopPersisting(trainsScheduleTable);
+        });
         super.dispose();
     }
 

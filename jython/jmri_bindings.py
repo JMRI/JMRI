@@ -4,7 +4,7 @@
 # This file may be needed only if jython.exec=true in python.properties
 #
 # These should be kept consistent with those in jmri.script.JmriScriptEngineManager
-#
+# 
 
 # Default imports
 import java
@@ -22,7 +22,9 @@ memories     = jmri.InstanceManager.memoryManagerInstance()
 routes       = jmri.InstanceManager.routeManagerInstance()
 blocks       = jmri.InstanceManager.blockManagerInstance()
 powermanager = jmri.InstanceManager.powerManagerInstance()
-programmers  = jmri.InstanceManager.programmerManagerInstance()
+programmers  = jmri.managers.WarningProgrammerManager(jmri.InstanceManager.programmerManagerInstance())
+addressedProgrammers = jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager)
+globalProgrammers = jmri.InstanceManager.getDefault(jmri.globalProgrammerManager)
 shutdown     = jmri.InstanceManager.shutDownManagerInstance()
 audio        = jmri.InstanceManager.audioManagerInstance()
 layoutblocks = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)

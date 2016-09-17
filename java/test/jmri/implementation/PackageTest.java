@@ -60,6 +60,7 @@ public class PackageTest extends TestCase {
         // sub-packages
         suite.addTest(jmri.implementation.swing.PackageTest.suite());
         suite.addTest(ReporterTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.implementation.configurexml.PackageTest.class));
 
         return suite;
     }

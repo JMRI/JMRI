@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * </P>
+ *
  * @author Dave Duchamp Copyright (C) 2008
  */
 public class SectionManager extends AbstractManager
@@ -165,10 +166,7 @@ public class SectionManager extends AbstractManager
             }
             numSections++;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Validated " + numSections + " Sections - "
-                    + numErrors + " errors or warnings.");
-        }
+        log.debug("Validated {} Sections - {} errors or warnings.", numSections, numErrors);
         return numErrors;
     }
 
@@ -193,10 +191,7 @@ public class SectionManager extends AbstractManager
             numErrors = numErrors + errors;
             numSections++;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Checked direction sensors for " + numSections
-                    + " Sections - " + numErrors + " errors or warnings.");
-        }
+        log.debug("Checked direction sensors for {} Sections - {} errors or warnings.", numSections, numErrors);
         return numErrors;
     }
 

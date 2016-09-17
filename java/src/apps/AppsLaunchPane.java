@@ -322,9 +322,7 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
 
     @Override
     public void propertyChange(PropertyChangeEvent ev) {
-        if (log.isDebugEnabled()) {
-            log.debug("property change: comm port status update");
-        }
+        log.debug("property change: comm port status update");
         if (connection[0] != null) {
             updateLine(connection[0], cs4);
         }
@@ -345,6 +343,8 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
 
     /**
      * Returns the ID for the window's help, which is application specific
+     *
+     * @return the Java Help reference or null if no help is available
      */
     protected abstract String windowHelpID();
 
