@@ -96,8 +96,9 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        l.dispose();
         jmri.util.JUnitUtil.resetInstanceManager();
+        apps.tests.Log4JFixture.tearDown();
         stcs = null;
         memo = null;
     }
