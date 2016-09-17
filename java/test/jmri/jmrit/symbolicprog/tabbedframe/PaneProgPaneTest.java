@@ -11,7 +11,7 @@ import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

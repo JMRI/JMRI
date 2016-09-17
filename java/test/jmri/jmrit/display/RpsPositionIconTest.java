@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.Reading;
 import jmri.util.JmriJFrame;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

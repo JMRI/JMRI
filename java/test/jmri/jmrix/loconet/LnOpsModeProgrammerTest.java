@@ -5,7 +5,7 @@ import jmri.managers.DefaultProgrammerManager;
 import jmri.ProgListenerScaffold;
 import jmri.ProgrammerException;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.TestCase;
 
 public class LnOpsModeProgrammerTest extends TestCase {
