@@ -380,15 +380,24 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             if (log.isDebugEnabled()) {
                 log.debug("DragJLabel.getTransferData url= " + url);
             }
-            String link = _linkName.getText().trim();
-            PositionableLabel l;
-            if (link.length() == 0) {
-                l = new PositionableLabel(NamedIcon.getIconByName(url), _editor);
-            } else {
-                l = new LinkingLabel(NamedIcon.getIconByName(url), _editor, link);
+            if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
+                String link = _linkName.getText().trim();
+                PositionableLabel l;
+                if (link.length() == 0) {
+                    l = new PositionableLabel(NamedIcon.getIconByName(url), _editor);
+                } else {
+                    l = new LinkingLabel(NamedIcon.getIconByName(url), _editor, link);
+                }
+                l.setLevel(level);
+                return l;                
+            } else if (DataFlavor.stringFlavor.equals(flavor)) {
+                StringBuilder sb = new StringBuilder(_itemType);
+                sb.append(" for \"");
+                sb.append(url);
+                sb.append("\"");
+                return  sb.toString();
             }
-            l.setLevel(level);
-            return l;
+            return null;
         }
 
         public void dragExit(DropTargetEvent dte) {

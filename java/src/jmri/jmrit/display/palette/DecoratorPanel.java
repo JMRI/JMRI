@@ -540,7 +540,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         return _util;
     }
 
-    public void getText(Positionable pos) {
+    public void setAttributes(Positionable pos) {
         if (pos instanceof SensorIcon  && !((SensorIcon)pos).isIcon()) {
             SensorIcon icon = (SensorIcon) pos;
             PositionableLabel sample = _sample.get("Active");
