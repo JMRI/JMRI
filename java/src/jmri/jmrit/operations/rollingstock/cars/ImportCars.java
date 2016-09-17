@@ -75,7 +75,7 @@ public class ImportCars extends ImportRollingStock {
     //    private static final int CAR_MISCELLANEOUS = 16;
     private static final int CAR_EXTENSIONS = 17;
 
-    private static final int MAXIMUM_NUMBER_FIELDS = CAR_EXTENSIONS - 1;
+    private static final int MAXIMUM_NUMBER_FIELDS = CAR_EXTENSIONS + 1;
 
     // we use a thread so the status frame will work!
     @Override

@@ -140,7 +140,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
             case ACTIONCOLUMN:
                 return Bundle.getMessage("Action");
             case EDITCOLUMN:
-                return Bundle.getMessage("ButtonEdit"); // edit column
+                return ""; // no title above Edit column
             default:
                 return "unknown"; // NOI18N
         }

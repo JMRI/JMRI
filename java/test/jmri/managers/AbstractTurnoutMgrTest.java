@@ -3,7 +3,7 @@ package jmri.managers;
 import java.beans.PropertyChangeListener;
 import jmri.Turnout;
 import jmri.TurnoutManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.TestCase;
 
 /**

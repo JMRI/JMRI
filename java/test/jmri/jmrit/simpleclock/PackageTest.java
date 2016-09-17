@@ -9,22 +9,22 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen
  */
-public class SimpleClockTest extends TestCase {
+public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-    public SimpleClockTest(String s) {
+    public PackageTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {SimpleClockTest.class.getName()};
+        String[] testCaseName = {PackageTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrit.simpleclock.SimpleClockTest"); // no tests in class itself
+        TestSuite suite = new TestSuite("jmri.jmrit.simpleclock.PackageTest"); // no tests in class itself
         suite.addTest(jmri.jmrit.simpleclock.SimpleTimebaseTest.suite());
         suite.addTest(BundleTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.simpleclock.configurexml.PackageTest.class));

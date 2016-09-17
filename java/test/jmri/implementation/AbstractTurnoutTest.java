@@ -15,7 +15,7 @@ package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
 import jmri.Turnout;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.TestCase;
 
 public abstract class AbstractTurnoutTest extends TestCase {

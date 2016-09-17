@@ -4,20 +4,18 @@ import jmri.CommandStation;
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Tests for the DccSignalHead implementation
  *
  * @author	Bob Jacobsen Copyright (C) 2013
  */
-public class DccSignalHeadTest {
+public class DccSignalHeadTest extends TestCase {
 
-    @Test
     public void testCtor1() {
         DccSignalHead s = new DccSignalHead("IH$1");
 
@@ -25,7 +23,6 @@ public class DccSignalHeadTest {
         Assert.assertEquals("Send count", 0, sentPacketCount);
     }
 
-    @Test
     public void testRedAppearance() {
         DccSignalHead s = new DccSignalHead("IH$1");
 
@@ -39,7 +36,6 @@ public class DccSignalHeadTest {
 
     }
 
-    @Test
     public void testDarkAppearance() {
         DccSignalHead s = new DccSignalHead("IH$1");
 
@@ -67,7 +63,6 @@ public class DccSignalHeadTest {
 
     }
 
-    @Test
     public void testYellowAppearance() {
         DccSignalHead s = new DccSignalHead("IH$1");
 
@@ -81,7 +76,6 @@ public class DccSignalHeadTest {
 
     }
 
-    @Test
     public void testGreenAppearance() {
         DccSignalHead s = new DccSignalHead("IH$1");
 
@@ -108,7 +102,6 @@ public class DccSignalHeadTest {
 
     }
 
-    @Test
     public void testFlashLunarAppearance() {
         DccSignalHead s = new DccSignalHead("IH$1");
 
@@ -122,7 +115,6 @@ public class DccSignalHeadTest {
 
     }
 
-    @Test
     public void testFlashYellowAppearance() {
         DccSignalHead s = new DccSignalHead("IH$1");
 
@@ -136,7 +128,6 @@ public class DccSignalHeadTest {
 
     }
 
-    @Test
     public void testFlashGreenAppearance() {
         DccSignalHead s = new DccSignalHead("IH$1");
 
@@ -151,10 +142,25 @@ public class DccSignalHeadTest {
     }
 
     // from here down is testing infrastructure
+    public DccSignalHeadTest(String s) {
+        super(s);
+    }
+
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {DccSignalHeadTest.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
+    }
+
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite(DccSignalHeadTest.class);
+        return suite;
+    }
 
     // The minimal setup for log4J
-    @Before
-    public void setUp() throws Exception {
+    protected void setUp() throws Exception {
+        super.setUp();
         apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -180,9 +186,9 @@ public class DccSignalHeadTest {
     byte[] lastSentPacket;
     int sentPacketCount;
 
-    @After
-    public void tearDown() throws Exception {
+    protected void tearDown() throws Exception {
         JUnitUtil.resetInstanceManager();
+        super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
 }

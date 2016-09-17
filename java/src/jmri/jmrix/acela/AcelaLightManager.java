@@ -27,6 +27,7 @@ public class AcelaLightManager extends AbstractLightManager {
     /**
      * Returns the system letter for Acela
      */
+    @Override
     public String getSystemPrefix() {
         return _memo.getSystemPrefix();
     }
@@ -36,7 +37,8 @@ public class AcelaLightManager extends AbstractLightManager {
      * system name is not in a valid format Assumes calling method has checked
      * that a Light with this system name does not already exist
      */
-    public Light createNewLight(String systemName, String userName) {
+    @Override
+    protected Light createNewLight(String systemName, String userName) {
         Light lgt = null;
         // check if the output bit is available
         int nAddress = -1;
@@ -53,13 +55,12 @@ public class AcelaLightManager extends AbstractLightManager {
 /*
          conflict = AcelaAddress.isOutputBitFree(nAddress,bitNum,_memo);
          if ( conflict != "" ) {
-         log.error("Assignment conflict with "+conflict+".  Light not created.");
-         notifyLightCreationError(conflict,bitNum);
-         return (null);
+            log.error("Assignment conflict with "+conflict+".  Light not created.");
+            throw new IllegalArgumentException("Assignment conflict with "+conflict+".  Light not created.");
          }
          */
         // Validate the systemName
-        if (AcelaAddress.validSystemNameFormat(systemName, 'L')) {
+        if (AcelaAddress.validSystemNameFormat(systemName, 'L',getSystemPrefix())) {
             lgt = new AcelaLight(systemName, userName,_memo);
             if (!AcelaAddress.validSystemNameConfig(systemName, 'L',_memo)) {
                 log.warn("Light system Name does not refer to configured hardware: "
@@ -67,18 +68,9 @@ public class AcelaLightManager extends AbstractLightManager {
             }
         } else {
             log.error("Invalid Light system Name format: " + systemName);
+            throw new IllegalArgumentException("Invalid Light system Name format: " + systemName);
         }
         return lgt;
-    }
-
-    /**
-     * Public method to notify user of Light creation error.
-     */
-    public void notifyLightCreationError(String conflict, int bitNum) {
-        javax.swing.JOptionPane.showMessageDialog(null, "The output bit, " + bitNum
-                + ", is currently assigned to " + conflict + ". Light cannot be created as "
-                + "you specified.", "Acela Assignment Conflict",
-                javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
     }
 
     /**
@@ -86,7 +78,7 @@ public class AcelaLightManager extends AbstractLightManager {
      * name has a valid format, else returns 'false'
      */
     public boolean validSystemNameFormat(String systemName) {
-        return (AcelaAddress.validSystemNameFormat(systemName, 'L'));
+        return (AcelaAddress.validSystemNameFormat(systemName, 'L',getSystemPrefix()));
     }
 
     /**

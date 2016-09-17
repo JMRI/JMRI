@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.Turnout;
 import jmri.TurnoutManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.slf4j.Logger;

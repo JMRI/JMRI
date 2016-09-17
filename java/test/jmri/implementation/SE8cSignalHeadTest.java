@@ -5,21 +5,18 @@ import jmri.NamedBeanHandle;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Tests for the SE8cSignalHead implmentation
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * updated to JUnit4 2016
  */
-public class SE8cSignalHeadTest {
+public class SE8cSignalHeadTest extends TestCase {
 
-    @Test
     public void testCtor1() {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
         Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
@@ -37,8 +34,6 @@ public class SE8cSignalHeadTest {
         Assert.assertEquals("to high", Turnout.CLOSED, it12.getCommandedState());  // dark
     }
 
-
-    @Test
     public void testCtor2() {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
         Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
@@ -55,7 +50,6 @@ public class SE8cSignalHeadTest {
         Assert.assertEquals("to high", Turnout.CLOSED, it12.getCommandedState());  // dark
     }
 
-    @Test
     public void testCtor3() {
         // original ctor from number and user name
         SE8cSignalHead s = new SE8cSignalHead(11, "user name");
@@ -64,7 +58,6 @@ public class SE8cSignalHeadTest {
         Assert.assertEquals("user name", "user name", s.getUserName());
     }
 
-    @Test
     public void testCtor4() {
         // original ctor from number and user name
         SE8cSignalHead s = new SE8cSignalHead(11);
@@ -72,7 +65,6 @@ public class SE8cSignalHeadTest {
         Assert.assertEquals("system name", "LH11", s.getSystemName());
     }
 
-    @Test
     public void testRedState() {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
         Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
@@ -89,7 +81,6 @@ public class SE8cSignalHeadTest {
 
     }
 
-    @Test
     public void testYellowState() {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
         Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
@@ -106,7 +97,6 @@ public class SE8cSignalHeadTest {
 
     }
 
-    @Test
     public void testGreenState() {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
         Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
@@ -123,7 +113,6 @@ public class SE8cSignalHeadTest {
 
     }
 
-    @Test
     public void testDarkState() {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
         Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
@@ -140,7 +129,6 @@ public class SE8cSignalHeadTest {
 
     }
 
-    @Test
     public void testStateFollowing() {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
         Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
@@ -174,18 +162,33 @@ public class SE8cSignalHeadTest {
     }
 
     // from here down is testing infrastructure
+    public SE8cSignalHeadTest(String s) {
+        super(s);
+    }
 
-    // The minimal setup for log4J/JUnit4
-    @Before
-    public void setUp() throws Exception {
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {SE8cSignalHeadTest.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
+    }
+
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite(SE8cSignalHeadTest.class);
+        return suite;
+    }
+
+    // The minimal setup for log4J
+    protected void setUp() throws Exception {
+        super.setUp();
         apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
     }
 
-    @After
-    public void tearDown() throws Exception {
+    protected void tearDown() throws Exception {
         JUnitUtil.resetInstanceManager();
+        super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
 }

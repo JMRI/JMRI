@@ -2,7 +2,11 @@
 <project version="4">
   <component name="AntConfiguration">
     <buildFile url="file://$PROJECT_DIR$/help/en/build.xml">
+      <antCommandLine value="-Juser.country=NL -Juser.language=nl" />
       <customJdkName value="1.8" />
+      <properties>
+        <property name="" value="" />
+      </properties>
     </buildFile>
     <buildFile url="file://$PROJECT_DIR$/help/fr/build.xml">
       <customJdkName value="1.8" />

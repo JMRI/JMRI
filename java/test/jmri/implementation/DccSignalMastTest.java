@@ -3,21 +3,18 @@ package jmri.implementation;
 import jmri.CommandStation;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Tests for the DccSignalMast implementation
  *
  * @author	Bob Jacobsen Copyright (C) 2013
- * updated to JUnit4 2016
  */
-public class DccSignalMastTest {
+public class DccSignalMastTest extends TestCase {
 
-    @Test
     public void testCtor1() {
         DccSignalMast s = new DccSignalMast("IF$dsm:AAR-1946:PL-1-high-abs(1)");
 
@@ -25,7 +22,6 @@ public class DccSignalMastTest {
         Assert.assertEquals("Send count", 0, sentPacketCount);
     }
 
-    @Test
     public void testStopAspect() {
         DccSignalMast s = new DccSignalMast("IF$dsm:AAR-1946:PL-1-high-abs(1)");
         s.setOutputForAppearance("Stop", 31);
@@ -42,10 +38,25 @@ public class DccSignalMastTest {
     }
 
     // from here down is testing infrastructure
+    public DccSignalMastTest(String s) {
+        super(s);
+    }
+
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {DccSignalMastTest.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
+    }
+
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite(DccSignalMastTest.class);
+        return suite;
+    }
 
     // The minimal setup for log4J
-    @Before
-    public void setUp() throws Exception {
+    protected void setUp() throws Exception {
+        super.setUp();
         apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -71,9 +82,9 @@ public class DccSignalMastTest {
     byte[] lastSentPacket;
     int sentPacketCount;
 
-    @After
-    public void tearDown() throws Exception {
+    protected void tearDown() throws Exception {
         JUnitUtil.resetInstanceManager();
+        super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
 }

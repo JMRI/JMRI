@@ -182,7 +182,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             case DOWN_COLUMN:
                 return Bundle.getMessage("Down");
             case DELETE_COLUMN:
-                return Bundle.getMessage("ButtonDelete");
+                return ""; // no title above Delete colomn
             default:
                 return "unknown"; // NOI18N
         }
