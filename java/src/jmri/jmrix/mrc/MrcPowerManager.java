@@ -27,7 +27,7 @@ public class MrcPowerManager
         super(memo);
         // standard Mrc - connect
         if (memo.getMrcTrafficController() == null) {
-            log.error(Bundle.getMessage("LogMrcPowerManagerMissingTCError")); //IN18N
+            log.error("Power Manager Created, yet there is no Traffic Controller");
             return;
         }
         this.tc = memo.getMrcTrafficController();

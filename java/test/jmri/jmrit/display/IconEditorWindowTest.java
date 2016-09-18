@@ -13,7 +13,7 @@ import jmri.util.JUnitUtil;
 import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.EventDataConstants;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

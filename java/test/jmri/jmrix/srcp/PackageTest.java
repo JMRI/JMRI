@@ -32,7 +32,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(SRCPBusConnectionMemoTest.class));
         suite.addTest(new TestSuite(SRCPTurnoutManagerTest.class));
         suite.addTest(new TestSuite(SRCPTurnoutTest.class));
-        suite.addTest(new TestSuite(SRCPSensorManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPSensorManagerTest.class));
         suite.addTest(new TestSuite(SRCPSensorTest.class));
         suite.addTest(new TestSuite(SRCPThrottleManagerTest.class));
         suite.addTest(new TestSuite(SRCPThrottleTest.class));

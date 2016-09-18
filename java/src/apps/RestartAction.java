@@ -1,7 +1,6 @@
 package apps;
 
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
 import javax.swing.Icon;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.JmriPanel;
@@ -36,7 +35,7 @@ public class RestartAction extends JmriAbstractAction {
     }
 
     public RestartAction() {
-        super(ResourceBundle.getBundle("apps.ActionListBundle").getString("apps.RestartAction"));
+        super(Bundle.getMessage("RestartAction")); // NOI18N
     }
 
     @Override

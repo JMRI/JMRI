@@ -997,7 +997,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                         java.text.MessageFormat.format(message,
                                 new Object[]{name}), Bundle.getMessage("ReminderTitle"),
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
-                        null, new Object[]{Bundle.getMessage("ButtonHide"), Bundle.getMessage("ButtonDelete"),
+                        null, new Object[]{Bundle.getMessage("ButtonHide"), Bundle.getMessage("ButtonDeletePanel"),
                             Bundle.getMessage("ButtonDontShow")}, Bundle.getMessage("ButtonHide"));
                 switch (selectedValue) {
                     case 0:
@@ -1120,12 +1120,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         JMenu edit = new JMenu(Bundle.getMessage("EditLocation"));
         if ((p instanceof MemoryIcon) && (p.getPopupUtility().getFixedWidth() == 0)) {
             MemoryIcon pm = (MemoryIcon) p;
-            edit.add("x= " + pm.getOriginalX());
-            edit.add("y= " + pm.getOriginalY());
+            edit.add("x = " + pm.getOriginalX());
+            edit.add("y = " + pm.getOriginalY());
             edit.add(MemoryIconCoordinateEdit.getCoordinateEditAction(pm));
         } else {
-            edit.add("x= " + p.getX());
-            edit.add("y= " + p.getY());
+            edit.add("x = " + p.getX());
+            edit.add("y = " + p.getY());
             edit.add(CoordinateEdit.getCoordinateEditAction(p));
         }
         popup.add(edit);
@@ -1321,7 +1321,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     public void setDisplayLevelMenu(Positionable p, JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditLevel"));
-        edit.add("level= " + p.getDisplayLevel());
+        edit.add(Bundle.getMessage("Level") + " = " + p.getDisplayLevel());
         edit.add(CoordinateEdit.getLevelEditAction(p));
         popup.add(edit);
     }
@@ -1474,7 +1474,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if ("".equals(rosterEntryTitle)) {
             return null;
         }
-        return selectLoco(Roster.instance().entryFromTitle(rosterEntryTitle));
+        return selectLoco(Roster.getDefault().entryFromTitle(rosterEntryTitle));
     }
 
     protected LocoIcon selectLoco(RosterEntry entry) {
@@ -2414,29 +2414,49 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     protected JFrameItem makeAddIconFrame(String name, boolean add, boolean table, IconAdder editor) {
         log.debug("makeAddIconFrame for {}, add= {}, table= ", name, add, table);
         String txt;
+        String BundleName;
         JFrameItem frame = new JFrameItem(name, editor);
+        // use NamedBeanBundle property for basic beans like "Turnout" I18N
+        if ("Sensor".equals(name)) {
+            BundleName = "BeanNameSensor";
+        } else if ("SignalHead".equals(name)) {
+            BundleName = "BeanNameSignalHead";
+        } else if ("SignalMast".equals(name)) {
+            BundleName = "BeanNameSignalMast";
+        } else if ("Memory".equals(name)) {
+            BundleName = "BeanNameMemory";
+        } else if ("Reporter".equals(name)) {
+            BundleName = "BeanNameReporter";
+        } else if ("Light".equals(name)) {
+            BundleName = "BeanNameLight";
+        } else if ("Turnout".equals(name)) {
+            BundleName = "BeanNameTurnout"; // called by RightTurnout and LeftTurnout objects in TurnoutIcon.java edit() method
+        } else {
+            BundleName = name;
+        }
         if (editor != null) {
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             if (add) {
-                txt = java.text.MessageFormat.format(Bundle.getMessage("addItenToPanel"), Bundle.getMessage(name));
+                txt = java.text.MessageFormat.format(Bundle.getMessage("addItemToPanel"), Bundle.getMessage(BundleName));
             } else {
-                txt = java.text.MessageFormat.format(Bundle.getMessage("editItenInPanel"), Bundle.getMessage(name));
+                txt = java.text.MessageFormat.format(Bundle.getMessage("editItemInPanel"), Bundle.getMessage(BundleName));
             }
             p.add(new JLabel(txt));
             if (table) {
-                txt = java.text.MessageFormat.format(Bundle.getMessage("TableSelect"), Bundle.getMessage(name),
+                txt = java.text.MessageFormat.format(Bundle.getMessage("TableSelect"), Bundle.getMessage(BundleName),
                         (add ? Bundle.getMessage("ButtonAddIcon") : Bundle.getMessage("ButtonUpdateIcon")));
             } else {
                 if ("MultiSensor".equals(name)) {
-                    txt = java.text.MessageFormat.format(Bundle.getMessage("SelectMultiSensor"),
+                    txt = java.text.MessageFormat.format(Bundle.getMessage("SelectMultiSensor", Bundle.getMessage("ButtonAddIcon")),
                             (add ? Bundle.getMessage("ButtonAddIcon") : Bundle.getMessage("ButtonUpdateIcon")));
                 } else {
-                    txt = java.text.MessageFormat.format(Bundle.getMessage("IconSelect"), Bundle.getMessage(name),
+                    txt = java.text.MessageFormat.format(Bundle.getMessage("IconSelect"), Bundle.getMessage(BundleName),
                             (add ? Bundle.getMessage("ButtonAddIcon") : Bundle.getMessage("ButtonUpdateIcon")));
                 }
             }
             p.add(new JLabel(txt));
+            p.add(new JLabel("    ")); // add a bit of space on pane above icons
             frame.getContentPane().add(p, BorderLayout.NORTH);
             frame.getContentPane().add(editor);
 
@@ -2498,13 +2518,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 });
             }
         } else {
-            log.error("No icon editor specified for {}", name);
+            log.error("No icon editor specified for {}", name); //NOI18N
         }
         if (add) {
-            txt = java.text.MessageFormat.format(Bundle.getMessage("AddItem"), Bundle.getMessage(name));
+            txt = java.text.MessageFormat.format(Bundle.getMessage("AddItem"), Bundle.getMessage(BundleName));
             _iconEditorFrame.put(name, frame);
         } else {
-            txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage(name));
+            txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage(BundleName));
         }
         frame.setTitle(txt + " (" + getTitle() + ")");
         frame.pack();
@@ -2560,7 +2580,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             frame.dispose();
         }
         // delete panel - deregister the panel for saving
-        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
             cm.deregister(this);
         }

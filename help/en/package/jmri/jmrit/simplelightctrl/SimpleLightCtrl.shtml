@@ -1,136 +1,163 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<HTML LANG="en">
-<HEAD>
-<TITLE>JMRI: Light Control</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Ken Cameron" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Light Control">
 
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<BODY>
-<!--#include virtual="/Header" -->
+  <title>JMRI: Light Control</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta content="Ken Cameron" name="Author">
+  <meta name="keywords" content="JMRI help Light Control">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Light Control</h1>Enter the light system name for the
+      light you wish to control in the box to right of "light:".
+      For example, entering 678 and by pressing either the On or
+      Off button, you should be able to change the state of light
+      number 678 on the layout. Another example, a valid light
+      system name for PowerLine devices could be PL9. Then by
+      pressing either the On or Off button, you should be able to
+      change the state of light on the layout. Another example, a
+      valid light system name could be IL123 which is internal
+      light number 123. Pressing On or Off will only change the
+      state of the internal light and will not change a light on
+      the layout. See " <a href=
+      "../../../../html/doc/Technical/Names.shtml">Names</a> "
+      under general help for more information.
 
-<H1>Light Control</H1>
+      <h2>Light Control Buttons and Status</h2>
 
-Enter the light system name for the
-light you wish to control in the box to right of "light:". For
-example, entering 678 and by pressing either the On or Off
-button, you should be able to change the state of light number 678
-on the layout. Another example, a valid light system name for PowerLine devices
-could be PL9. Then by pressing either the On or Off button, you
-should be able to change the state of light on
-the layout. Another example, a valid light system name could be IL123
-which is internal light number 123. Pressing On or Off will
-only change the state of the internal light and will not change a
-light on the layout. See "
-<A HREF="../../../../html/doc/Technical/Names.shtml">Names</A>
-" under general help for more information.
+      <dl>
+        <dt>Current State:</dt>
 
-<H2>Light Control Buttons and Status</H2>
+        <dd>Shows the current known state of the light.</dd>
 
-<DL>
-	<DT>Current State:</DT>
-	
-	<DD>Shows the current known state of the light.</DD>
-		<DL>
-			<DT>&lt;Unknown&gt;</DT>
-			<DD>Either no light selected or invalid light name.</DD>
-			<DT>Off</DT>
-			<DD>Light is at minimum intensity if variable intensity supported, or off.</DD>
-			<DT>On</DT>
-			<DD>Light is at maximum intensity if variable intensity supported, or full on.</DD>
-			<DT>Intermediate</DT>
-			<DD>
-				Light intensity is between 0 and 100% and the current intensity is equal to
-				the target intensity.
-			</DD>
-			<DT>Transitioning Higher</DT>
-			<DD>
-				Target intensity is higher than the current intensity and light is adjusting
-				every fast minute according to Transition Time value.
-			</DD>
-			<DT>Transitioning Lower</DT>
-			<DD>
-				Target intensity is lower than the current intensity and light is adjusting
-				every fast minute according to Transition Time value.
-			</DD>
-			<DT>Transitioning to Full On</DT>
-			<DD>
-				Target intensity is higher than the current intensity,
-				and equal or higher than maximum intensity and light is adjusting
-				every fast minute according to Transition Time value.
-			</DD>
-			<DT>Transitioning to Full Off</DT>
-			<DD>
-				Target intensity is lower than the current intensity,
-				and equal or lower than minimum intensity and light is adjusting
-				every fast minute according to Transition Time value.
-			</DD>
-		</DL>
-	</DD>
-	
-	<DT>Configuration Options of Lights:</DT>
-	<DD>
-		<DL>
-		<DT>Enabled:</DT>
-			<DD>The light will respond to its automatic control type.</DD>
-		<DT>Variable:</DT>
-			<DD>Light may be commanded to values between 0% and 100%.</DD>
-		<DT>Transitional:</DT>
-			<DD>Changes of intensity will use the transition time to step
-				between current and target intensity.
-			</DD>
-		</DL>
-	</DD>
+        <dd>
+          <dl>
+            <dt>&lt;Unknown&gt;</dt>
 
-	<DT>On</DT>
-	<DD>Push this button to turn on the light.</DD>
+            <dd>Either no light selected or invalid light
+            name.</dd>
 
-	<DT>Off</DT>
-	<DD>Push this button to turn off the light.</DD>
+            <dt>Off</dt>
 
-	<DT>Change Intensity</DT>
-	<DD>Enter a new value for the light (0% to 100%) and pressing
-		this button will set the new target intensity.
-		If transitional is supported if will use the transition
-		time for computing how fast to move from current intensity
-		to the new target intensity.
-	</DD>
-	
-	<DT>Minimum Intensity:</DT>
-	<DD>A value 0 to 100 (percent) that sets the lowest amount of light that
-	will be output by a dim command.
-	An explicit off command will ignore this value.
-	</DD>
-	
-	<DT>Maximum Intensity:</DT>
-	<DD>A value 0 to 100 (percent) that sets the highest amount of light that
-	will be output by a dim command.
-	An explicit on command will ignore this value.
-	</DD>
-	
-	<DT>Transition Time:</DT>
-	<DD>
-	   Number of fast minutes to go from 0% to 100% intensity.
-	   A value of zero will cause the device to change from one intensity
-	   to new intensity as fast as the device is able to do so.
-	</DD>
-</DL>
+            <dd>Light is at minimum intensity if variable intensity
+            supported, or off.</dd>
 
-<!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
+            <dt>On</dt>
 
+            <dd>Light is at maximum intensity if variable intensity
+            supported, or full on.</dd>
+
+            <dt>Intermediate</dt>
+
+            <dd>Light intensity is between 0 and 100% and the
+            current intensity is equal to the target
+            intensity.</dd>
+
+            <dt>Transitioning Higher</dt>
+
+            <dd>Target intensity is higher than the current
+            intensity and light is adjusting every fast minute
+            according to Transition Time value.</dd>
+
+            <dt>Transitioning Lower</dt>
+
+            <dd>Target intensity is lower than the current
+            intensity and light is adjusting every fast minute
+            according to Transition Time value.</dd>
+
+            <dt>Transitioning to Full On</dt>
+
+            <dd>Target intensity is higher than the current
+            intensity, and equal or higher than maximum intensity
+            and light is adjusting every fast minute according to
+            Transition Time value.</dd>
+
+            <dt>Transitioning to Full Off</dt>
+
+            <dd>Target intensity is lower than the current
+            intensity, and equal or lower than minimum intensity
+            and light is adjusting every fast minute according to
+            Transition Time value.</dd>
+          </dl>
+        </dd>
+
+        <dt>Configuration Options of Lights:</dt>
+
+        <dd>
+          <dl>
+            <dt>Enabled:</dt>
+
+            <dd>The light will respond to its automatic control
+            type.</dd>
+
+            <dt>Variable:</dt>
+
+            <dd>Light may be commanded to values between 0% and
+            100%.</dd>
+
+            <dt>Transitional:</dt>
+
+            <dd>Changes of intensity will use the transition time
+            to step between current and target intensity.</dd>
+          </dl>
+        </dd>
+
+        <dt>On</dt>
+
+        <dd>Push this button to turn on the light.</dd>
+
+        <dt>Off</dt>
+
+        <dd>Push this button to turn off the light.</dd>
+
+        <dt>Change Intensity</dt>
+
+        <dd>Enter a new value for the light (0% to 100%) and
+        pressing this button will set the new target intensity. If
+        transitional is supported if will use the transition time
+        for computing how fast to move from current intensity to
+        the new target intensity.</dd>
+
+        <dt>Minimum Intensity:</dt>
+
+        <dd>A value 0 to 100 (percent) that sets the lowest amount
+        of light that will be output by a dim command. An explicit
+        off command will ignore this value.</dd>
+
+        <dt>Maximum Intensity:</dt>
+
+        <dd>A value 0 to 100 (percent) that sets the highest amount
+        of light that will be output by a dim command. An explicit
+        on command will ignore this value.</dd>
+
+        <dt>Transition Time:</dt>
+
+        <dd>Number of fast minutes to go from 0% to 100% intensity.
+        A value of zero will cause the device to change from one
+        intensity to new intensity as fast as the device is able to
+        do so.</dd>
+      </dl><!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

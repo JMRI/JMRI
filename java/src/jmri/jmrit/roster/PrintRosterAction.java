@@ -55,7 +55,7 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         // obtain a HardcopyWriter to do this
-        Roster r = Roster.instance();
+        Roster r = Roster.getDefault();
         String title = "DecoderPro Roster";
         String rosterGroup = r.getDefaultRosterGroup();
         // rosterGroup may legitimately be null

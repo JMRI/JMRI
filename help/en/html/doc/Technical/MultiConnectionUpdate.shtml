@@ -52,7 +52,7 @@
       reference to a SerialPortAdapter object, and to return it
       from the getAdapter() method. Also, remove the instance()
       method and its implementation.</p>
-<pre style="font-family: monospace">
+      <pre style="font-family: monospace">
     protected void setInstance() { 
         if (adapter == null) {
             adapter = new PR3Adapter();
@@ -65,24 +65,22 @@
 
       <p>The configurexml/ConnectionConfigXml class needs to have a
       method added:</p>
-<pre style="font-family: monospace">
+      <pre style="font-family: monospace">
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig)object).getAdapter();
     }
-</pre>
-We should probably refactor this later, but this is the
+</pre>We should probably refactor this later, but this is the
 current form to make sure the correct ConnectionConfig class is
 used. We're leaving it unchanged for now to avoid competition with
 the serial/network refactoring.
 
       <p>Also, change this</p>
-<pre style="font-family: monospace">
+      <pre style="font-family: monospace">
     protected void getInstance() {
         adapter = LnHexFilePort.instance();
     }
-</pre>
-to this
-<pre>
+</pre>to this
+      <pre>
     protected void getInstance() {
         adapter = new LnHexFilePort();
     }
@@ -128,15 +126,13 @@ to this
 
       <p>This does require people to reset their preferences for
       startup actions, buttons, etc. We're not going to migrate
-      those for them. 
-      
-      <p>See 
-      <a href="https://github.com/JMRI/JMRI/issues/1383#issuecomment-226808327">this GitHub discussion</a>
-      and associated PR for information on making startup actions 
-      work with more than one connection of the same type.
-      
+      those for them.</p>
 
-      <!--#include virtual="/Footer" --></p>
+      <p>See <a href=
+      "https://github.com/JMRI/JMRI/issues/1383#issuecomment-226808327">
+      this GitHub discussion</a> and associated PR for information
+      on making startup actions work with more than one connection
+      of the same type. <!--#include virtual="/Footer" --></p>
     </div>
   </div>
 </body>

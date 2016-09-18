@@ -31,7 +31,7 @@ public class WiThrottleCreationAction extends JmriAbstractAction {
      */
     public WiThrottleCreationAction(String name) {
         super(name);
-        if (jmri.InstanceManager.getOptionalDefault(jmri.ThrottleManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
             setEnabled(false);
         }
     }

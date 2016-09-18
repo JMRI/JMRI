@@ -4,7 +4,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.managers.TurnoutManagerScaffold;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -129,9 +129,12 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
     }
 
     public void testAutoCreateNotOK() {
+        try {
         NoAutoCreate obj = InstanceManager.getDefault(NoAutoCreate.class);
-        Assert.assertNull(obj);
-        jmri.util.JUnitAppender.assertWarnMessage("getDefault found no default object for type \"jmri.InstanceManagerTest$NoAutoCreate\""); 
+            Assert.fail("Expected NullPointerException not thrown");
+        } catch (NullPointerException ex) {
+            // passes
+        }
     }
 
     /**

@@ -27,13 +27,13 @@ public class AddEntryExitPairFrame extends jmri.util.JmriJFrame {
 
         nxPanel = new AddEntryExitPairPanel(panel);
 
-        setTitle("Add Entry Exit Points");
+        setTitle(Bundle.getMessage("AddEntryExitPoints"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         getContentPane().add(nxPanel);
 
         JMenuBar menuBar = new JMenuBar();//getJMenuBar();
-        JMenuItem options = new JMenuItem(Bundle.getMessage("MenuItemOptions"));
+        JMenuItem options = new JMenuItem(Bundle.getMessage("MenuOptions")); // reuse existing key in jmrit.Bundle
         menuBar.add(options);
         options.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {

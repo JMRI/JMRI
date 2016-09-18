@@ -8,6 +8,13 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    LocoLabelXmlTest.class,
+    PositionableCircleXmlTest.class,
+    PositionableEllipseXmlTest.class,
+    PositionablePolygonXmlTest.class,
+    PositionableRectangleXmlTest.class,
+    PositionableRoundRectXmlTest.class,
+    PositionableShapeXmlTest.class
 })
 /**
  * Tests for the jmri.jmrit.display.controlPanelEditor.shape.configurexml package.

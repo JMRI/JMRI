@@ -24,7 +24,7 @@ public class SpeedometerAction extends JmriAbstractAction {
         super(s);
 
         // disable ourself if there is no primary sensor manager available
-        if (jmri.InstanceManager.getOptionalDefault(jmri.SensorManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.SensorManager.class) == null) {
             setEnabled(false);
         }
     }

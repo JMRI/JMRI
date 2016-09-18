@@ -1,6 +1,6 @@
 package jmri.jmrix.grapevine;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -38,8 +38,8 @@ public class PackageTest extends TestCase {
         suite.addTest(SerialTurnoutTest3.suite());
         suite.addTest(SerialTurnoutManagerTest.suite());
         suite.addTest(SerialLightTest.suite());
-        suite.addTest(SerialLightManagerTest.suite());
-        suite.addTest(SerialSensorManagerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialLightManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialSensorManagerTest.class));
         suite.addTest(SerialNodeTest.suite());
         suite.addTest(SerialMessageTest.suite());
         suite.addTest(SerialReplyTest.suite());

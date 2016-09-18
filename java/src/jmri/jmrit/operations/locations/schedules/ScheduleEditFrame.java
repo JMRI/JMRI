@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -28,6 +29,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.swing.JTablePersistenceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -242,7 +244,8 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
             if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
                     Bundle.getMessage("DoYouWantToDeleteSchedule"),
                     new Object[]{scheduleNameTextField.getText()}), Bundle
-                    .getMessage("DeleteSchedule?"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                            .getMessage("DeleteSchedule?"),
+                    JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
                 return;
             }
             Schedule schedule = manager.getScheduleByName(scheduleNameTextField.getText());
@@ -287,8 +290,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         } else {
             _schedule.addItem((String) typeBox.getSelectedItem());
         }
-        if (_track.getScheduleMode() == Track.MATCH
-                && typeBox.getSelectedIndex() < typeBox.getItemCount() - 1) {
+        if (_track.getScheduleMode() == Track.MATCH && typeBox.getSelectedIndex() < typeBox.getItemCount() - 1) {
             typeBox.setSelectedIndex(typeBox.getSelectedIndex() + 1);
         }
     }
@@ -329,7 +331,6 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
             }
         }
 
-        saveTableDetails(scheduleTable);
         // save schedule file
         OperationsXml.save();
     }
@@ -388,6 +389,9 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         _location.removePropertyChangeListener(this);
         _track.removePropertyChangeListener(this);
         scheduleModel.dispose();
+        InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {
+            tpm.stopPersisting(scheduleTable);
+        });
         super.dispose();
     }
 
@@ -397,9 +401,9 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
-        if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)) {
             loadTypeComboBox();
         }
     }
