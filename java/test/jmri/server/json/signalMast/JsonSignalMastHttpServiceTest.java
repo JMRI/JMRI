@@ -11,11 +11,10 @@ import jmri.SignalMastManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
@@ -23,15 +22,17 @@ import junit.textui.TestRunner;
  * @author Randall Wood
  * @author Steve Todd
  */
-public class JsonSignalMastHttpServiceTest extends TestCase {
+public class JsonSignalMastHttpServiceTest {
 
+    @Test
     public void testCtorSuccess() {
         JsonSignalMastHttpService service = new JsonSignalMastHttpService(new ObjectMapper());
         Assert.assertNotNull(service);
     }
 
+    @Test
     public void testDoGet() throws JmriException {
-        
+
         //create a signalmast for testing
         String sysName = "IF$shsm:basic:one-searchlight:SM2";
         String userName = "SM2";        
@@ -51,7 +52,7 @@ public class JsonSignalMastHttpServiceTest extends TestCase {
             result = service.doGet(JsonSignalMast.SIGNAL_MAST, userName, Locale.ENGLISH);
             Assert.assertNotNull(result); 
             Assert.assertEquals(sysName, result.path(JSON.DATA).path(JSON.NAME).asText());
-            
+
             //verify initial aspect/state is "Unknown"
             Assert.assertEquals(JSON.ASPECT_UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asText());
             //change to Clear, then verify change
@@ -63,6 +64,7 @@ public class JsonSignalMastHttpServiceTest extends TestCase {
         }
     }
 
+    @Test
     public void testDoPost() throws JmriException {
         //create a signalmast for testing
         String sysName = "IF$shsm:basic:one-searchlight:SM2";
@@ -74,7 +76,7 @@ public class JsonSignalMastHttpServiceTest extends TestCase {
         JsonNode message;
         ObjectMapper mapper = new ObjectMapper();
         JsonSignalMastHttpService service = new JsonSignalMastHttpService(new ObjectMapper());
-       
+
         try {
             //set signalmast to Clear and verify change
             message = mapper.createObjectNode().put(JSON.NAME, userName).put(JSON.STATE, "Clear");
@@ -99,7 +101,8 @@ public class JsonSignalMastHttpServiceTest extends TestCase {
         }
         Assert.assertNotNull(exception);
     }
-   
+
+    @Test
     public void testDoGetList() {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -118,40 +121,19 @@ public class JsonSignalMastHttpServiceTest extends TestCase {
             Assert.fail(ex.getMessage());
         }
     }
-    
-    // from here down is testing infrastructure
-    public JsonSignalMastHttpServiceTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {JsonSignalMastHttpServiceTest.class.getName()};
-        TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JsonSignalMastHttpServiceTest.class);
-
-        return suite;
-    }
 
     // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         Log4JFixture.setUp();
-        super.setUp();
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.initInternalSignalHeadManager();
-        JUnitUtil.initDebugThrottleManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         JUnitUtil.resetInstanceManager();
-        super.tearDown();
         Log4JFixture.tearDown();
     }
+
 
 }

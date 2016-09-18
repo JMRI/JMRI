@@ -77,7 +77,8 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                                     .setAttribute("systemName", sname);
                             elem.addContent(new Element("systemName").addContent(sname));
                             // the following null check is to catch a null pointer exception that sometimes was found to happen
-                            if ((b.getUserName() != null) && (!b.getUserName().equals(""))) {
+                            String uname = b.getUserName();
+                            if ((uname != null) && (!uname.equals(""))) {
                                 elem.addContent(new Element("userName").addContent(b.getUserName()));
                             }
                             if (log.isDebugEnabled()) {

@@ -775,7 +775,7 @@ import org.junit.Test;
            super(s);
     }      
 </pre>
-        <li>Next, update the main method if there is one, e.g. from:
+        <li>Next, remove the main method if there is one, e.g.:
 <pre style="font-family: monospace;">
     // Main entry point
     static public void main(String[] args) {
@@ -787,7 +787,7 @@ import org.junit.Test;
 
         <li>Finally, annotate the <code>setUp()</code> and <code>tearDown()</code>
         methods.  Note: They have to be &quot;public&quot; methods, not
-        &quot;protected&qout; or &quot;private&quot;. They should end up looking
+        &quot;protected&quot; or &quot;private&quot;. They should end up looking
         like (plus your own content, of course):
  
 <pre style="font-family: monospace;">

@@ -76,8 +76,8 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
     }
 
     @Override
-    protected String retry(String key) {
-        return super.getBundle().handleGetMessage(key);
+    protected String retry(Locale locale, String key) {
+        return super.getBundle().handleGetMessage(locale,key);
     }
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(LnSv2MessageContents.class.getName());

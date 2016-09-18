@@ -6,7 +6,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import jmri.jmrix.loconet.LocoNetBundle;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.duplexgroup.LnDplxGrpInfoImplConstants;
 
@@ -639,7 +638,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         private static final long serialVersionUID = -7467617476118982830L;
 
         public Default() {
-            super(LocoNetBundle.bundle().getString("MenuItemDuplexInfo"),
+            super(Bundle.getMessage("MenuItemDuplexInfo"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     DuplexGroupInfoPanel.class.getName(),
                     jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));

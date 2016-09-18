@@ -65,7 +65,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     public String getTitle() {
-        return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemBDL16Programmer"));
+        return getTitle(Bundle.getMessage("MenuItemBDL16Programmer"));
     }
 
     /**

@@ -176,6 +176,12 @@ We roll some general code maintenance items into the release process.  They can 
 
 - Pull back to make sure your repository is fully up to date
 
+- Check that the correct milestone is on all merged pulls. This is needed for the release note. Start with the list of PRs merged since the last test release was started:
+````
+https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr%20is%3Aclosed%20merged%3A%3E2016-08-13
+````
+where the date at the end should be the date (and optionally time) of the last release. For each, if it doesn't have the right milestone set, and is a change to the release code (e.g. isn't just a change to the CI settings or similar), add the current milestone.  
+
 - Start the release by creating a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)
 
 ```
@@ -198,13 +204,13 @@ We roll some general code maintenance items into the release process.  They can 
 - Put a comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note
 
 ```
-The release-4.5.2 branch has been created. 
+The release-4.5.3 branch has been created. 
 
-From now on, please document your changes in the [jmri4.5.2.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.5.2.shtml) release note file.
+From now on, please document your changes in the [jmri4.5.4.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.5.4.shtml) release note file.
 
-Maintainers, please set the 4.5.2 milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
+Maintainers, please set the 4.5.4 milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
 
-Jenkins will be creating files shortly at the [new server](http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.2/)
+Jenkins will be creating files shortly at the [new server](http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.3/)
 ````
 
 ================================================================================

@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableRowSorter;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.jmrit.beantable.AbstractTableAction;
@@ -71,17 +72,10 @@ public class EcosLocoTableAction extends AbstractTableAction {
     public void actionPerformed(ActionEvent e) {
         // create the JTable model, with changes for specific NamedBean
         createModel();
-        TableSorter sorter = new TableSorter(m);
-        JTable dataTable = m.makeJTable(sorter);
-        sorter.setTableHeader(dataTable.getTableHeader());
+        TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter<>(m);
+        JTable dataTable = m.makeJTable(getClassName(), m, sorter);
         // create the frame
         f = new jmri.jmrit.beantable.BeanTableFrame(m, helpTarget(), dataTable) {
-
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1165304149219668666L;
-
         };
         setMenuBar(f);
         setTitle();

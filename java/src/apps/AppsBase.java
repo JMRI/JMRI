@@ -8,7 +8,6 @@ import java.lang.reflect.InvocationTargetException;
 import javax.swing.SwingUtilities;
 import jmri.Application;
 import jmri.ConfigureManager;
-import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBeanHandleManager;
@@ -18,7 +17,6 @@ import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.BlockValueFile;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.jmrit.signalling.EntryExitPairs;
-import jmri.managers.DefaultIdTagManager;
 import jmri.managers.DefaultShutDownManager;
 import jmri.managers.JmriUserPreferencesManager;
 import jmri.profile.Profile;
@@ -235,9 +233,6 @@ public abstract class AppsBase {
         // install the named bean handler
         InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
 
-        // Install an IdTag manager
-        InstanceManager.store(new DefaultIdTagManager(), IdTagManager.class);
-
         //Install Entry Exit Pairs Manager
         InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
 
@@ -287,9 +282,10 @@ public abstract class AppsBase {
         if (sharedConfig != null) {
             // sharedConfigs do not need deferred loads
             configDeferredLoadOK = true;
-        } else // To avoid possible locks, deferred load should be
-        // performed on the Swing thread
-         if (SwingUtilities.isEventDispatchThread()) {
+        } else { 
+            // To avoid possible locks, deferred load should be
+            // performed on the Swing thread
+            if (SwingUtilities.isEventDispatchThread()) {
                 configDeferredLoadOK = doDeferredLoad(file);
             } else {
                 try {
@@ -302,6 +298,7 @@ public abstract class AppsBase {
                     log.error("Exception creating system console frame: " + ex);
                 }
             }
+        }
         if (sharedConfig == null && configOK == true && configDeferredLoadOK == true) {
             log.info("Migrating preferences to new format...");
             // migrate preferences
