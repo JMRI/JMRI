@@ -100,7 +100,7 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
             ArrayList<String> Ids = (ArrayList<String>) t.getTransferData(rosterEntryFlavor);
             ArrayList<RosterEntry> REs = new ArrayList<RosterEntry>(Ids.size());
             for (String Id : Ids) {
-                RosterEntry re = Roster.instance().entryFromTitle(Id);
+                RosterEntry re = Roster.getDefault().entryFromTitle(Id);
                 if (re != null) {
                     REs.add(re);
                 }

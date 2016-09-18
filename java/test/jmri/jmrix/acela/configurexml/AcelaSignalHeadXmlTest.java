@@ -1,9 +1,10 @@
 package jmri.jmrix.acela.configurexml;
 
+import jmri.InstanceManager;
+import jmri.jmrix.acela.AcelaSystemConnectionMemo;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -24,6 +25,7 @@ public class AcelaSignalHeadXmlTest {
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        InstanceManager.setDefault(AcelaSystemConnectionMemo.class, new AcelaSystemConnectionMemo());
     }
 
     @After

@@ -22,7 +22,6 @@ import jmri.SignalMast;
 import jmri.SignalMastLogic;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.swing.JmriTable;
 import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemNameComparator;
@@ -53,7 +52,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         super();
         sml = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sourceMast);
         this.sourceMast = sourceMast;
-        fixedSourceMastLabel = new JLabel(rb.getString("SourceMast") + " " + sourceMast.getDisplayName());
+        fixedSourceMastLabel = new JLabel(Bundle.getMessage("SourceMast") + " " + sourceMast.getDisplayName());
         if (sml != null) {
             _signalMastList = sml.getDestinationList();
         }
@@ -71,7 +70,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         add(header, BorderLayout.NORTH);
 
         _AppearanceModel = new SignalMastAppearanceModel();
-        JTable table = new JmriTable(_AppearanceModel);
+        JTable table = new JTable(_AppearanceModel);
         TableRowSorter<SignalMastAppearanceModel> sorter = new TableRowSorter<>(_AppearanceModel);
         sorter.setComparator(SignalMastAppearanceModel.SYSNAME_COLUMN, new SystemNameComparator());
         RowSorterUtil.setSortOrder(sorter, SignalMastAppearanceModel.SYSNAME_COLUMN, SortOrder.ASCENDING);
@@ -262,13 +261,13 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                 return Bundle.getMessage("ColumnUserName");
             }
             if (col == SYSNAME_COLUMN) {
-                return rb.getString("DestMast");
+                return Bundle.getMessage("DestMast");
             }
             if (col == ACTIVE_COLUMN) {
-                return rb.getString("ColumnActive");
+                return Bundle.getMessage("SensorStateActive"); // "Active"
             }
             if (col == ENABLE_COLUMN) {
-                return rb.getString("ColumnEnabled");
+                return Bundle.getMessage("ColumnHeadEnabled");
             }
             if (col == EDIT_COLUMN) {
                 return ""; //no title above Edit buttons

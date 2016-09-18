@@ -7,7 +7,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SortOrder;
 import javax.swing.table.TableRowSorter;
-import jmri.swing.JmriTable;
 import jmri.swing.RowSorterUtil;
 import jmri.util.SystemNameComparator;
 import jmri.util.com.sun.TableSorter;
@@ -94,7 +93,7 @@ public class BeanTablePane extends jmri.util.swing.JmriPanel {
      */
     @Deprecated
     protected JTable makeJTable(TableSorter sorter) {
-        return new JmriTable(sorter);
+        return new JTable(sorter);
     }
 
     protected Box getBottomBox() {

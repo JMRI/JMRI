@@ -114,6 +114,7 @@ public class BeanSettingTest extends TestCase {
 
     protected void setUp() throws Exception {
         super.setUp();
+        apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.setUp();
     }

@@ -313,7 +313,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             src.getPoint().getPanel().redrawPanel();
         }
         ActiveTrain tmpat = null;
-        if (manager.getDispatcherIntegration() && jmri.InstanceManager.getOptionalDefault(jmri.jmrit.dispatcher.DispatcherFrame.class) != null) {
+        if (manager.getDispatcherIntegration() && jmri.InstanceManager.getNullableDefault(jmri.jmrit.dispatcher.DispatcherFrame.class) != null) {
             jmri.jmrit.dispatcher.DispatcherFrame df = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
             for (ActiveTrain atl : df.getActiveTrainsList()) {
                 if (atl.getEndBlock() == src.getStart().getBlock()) {
@@ -679,7 +679,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         }
 
         if (cancelClear == EntryExitPairs.CANCELROUTE) {
-            if (manager.getDispatcherIntegration() && jmri.InstanceManager.getOptionalDefault(jmri.jmrit.dispatcher.DispatcherFrame.class) != null) {
+            if (manager.getDispatcherIntegration() && jmri.InstanceManager.getNullableDefault(jmri.jmrit.dispatcher.DispatcherFrame.class) != null) {
                 jmri.jmrit.dispatcher.DispatcherFrame df = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
                 ActiveTrain at = null;
                 for (ActiveTrain atl : df.getActiveTrainsList()) {
@@ -1091,10 +1091,10 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
     }
 
     void handleNoCurrentRoute(boolean reverse, String message) {
-        Object[] options = {"Yes Stack",
-            "No"};
+        Object[] options = {Bundle.getMessage("ButtonYes"),
+                Bundle.getMessage("ButtonNo")};
         int n = JOptionPane.showOptionDialog(null,
-                message + "\n Would you like to Stack the Route", "Route Not Clear",
+                message + "\n" + Bundle.getMessage("StackRouteAsk"), Bundle.getMessage("RouteNotClear"),
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,

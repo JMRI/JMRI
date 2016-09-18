@@ -29,7 +29,6 @@ import jmri.TurnoutManager;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.signalling.EntryExitPairs;
-import jmri.swing.JmriTable;
 import jmri.util.NamedBeanComparator;
 import jmri.util.SystemNameComparator;
 import jmri.util.swing.XTableColumnModel;
@@ -278,7 +277,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     public JTable makePickTable() {
         this.init();
         _sorter = new TableRowSorter<>(this);
-        _table = new JmriTable(this);
+        _table = new JTable(this);
         _sorter.setComparator(SNAME_COLUMN, new SystemNameComparator());
         _table.setRowSorter(_sorter);
 

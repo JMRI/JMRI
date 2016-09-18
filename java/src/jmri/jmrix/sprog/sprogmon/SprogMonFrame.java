@@ -13,7 +13,7 @@ import jmri.jmrix.sprog.SprogSystemConnectionMemo;
  */
 public class SprogMonFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener {
 
-    private SprogSystemConnectionMemo _memo = null;;
+    private SprogSystemConnectionMemo _memo = null;
 
     public SprogMonFrame(SprogSystemConnectionMemo memo) {
         super();

@@ -89,6 +89,8 @@
 
         <li>Press the "Next" button if the local destination is
         acceptable to you.</li>
+        
+        <li>The download will now happen. It might take a while.</li>
       </ol>
 
       <p>After the download is complete the Eclipse Package
@@ -97,12 +99,13 @@
       "images/EclipsePackageExplorer.png" width="350" height="312"
       alt="Eclipse Package Explorer pane"></a>
 
-      <p>After the download is complete, Eclipse will be reporting
+      <p>After the download is complete, Eclipse may be reporting
       an error: Project 'jmri' is missing required source folder:
       'java/tmp'. This will be fixed by running the ant build as
       described below.</p>
 
-      <h2>Building and running JMRI using Ant</h2>We recommend that
+      <h2>Building and running JMRI using Ant</h2>
+      We recommend that
       before you try and build and run one of the applications
       within Eclipse that you run the ant build.xml within Eclipse.
       This will create the necessary directories, load some
@@ -195,10 +198,14 @@
 </pre>If you're using a 32 bit windows system add the library path:
           <pre>
 -Djava.library.path=.;lib;lib/windows/x86 
-</pre>Note if you're using a 64 bit windows system change the
-library path to:
+</pre>
+If you're using a 64 bit windows system add the library path:
           <pre>
 -Djava.library.path=.;lib;lib/windows/x64
+</pre>
+If you're using a Mac OS X (macOS) system add the library path:
+          <pre>
+-Djava.library.path=.:lib:lib/macosx
 </pre>
         </li>
 
@@ -356,7 +363,8 @@ library path to:
       <p><a href="images/ErrorsWarningsAnnotations.png"><img src=
       "images/ErrorsWarningsAnnotations.png" width="423" height=
       "500" alt="Eclipse Error pane"></a></p>
-      <!-- not used images/EclipseCvsModules 2015/12, delete omg ? --><!--#include virtual="/Footer" -->
+      <!-- not used images/EclipseCvsModules 2015/12, delete omg ? -->
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

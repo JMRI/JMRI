@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -26,6 +27,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
+import jmri.swing.JTablePersistenceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -193,6 +195,8 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         addButtonAction(saveRouteButton);
 
         // setup radio buttons
+        addRadioButtonAction(addLocAtTop); // to clear table row sorting
+        addRadioButtonAction(addLocAtBottom); // to clear table row sorting
         addRadioButtonAction(showWait);
         addRadioButtonAction(showDepartTime);
         setTimeWaitRadioButtons();
@@ -327,8 +331,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
             routeTable.getCellEditor().stopCellEditing();
         }
 
-        saveTableDetails(routeTable);
-
         // save route file
         OperationsXml.save();
     }
@@ -375,6 +377,9 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
     @Override
     public void dispose() {
+        InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {
+            tpm.stopPersisting(routeTable);
+        });
         routeModel.dispose();
         super.dispose();
     }

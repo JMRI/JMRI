@@ -16,7 +16,7 @@ public class SendPacketAction extends AbstractAction {
         super(s);
 
         // disable ourself if there is no command Station object available
-        if (jmri.InstanceManager.getOptionalDefault(jmri.CommandStation.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.CommandStation.class) == null) {
             setEnabled(false);
         }
     }
