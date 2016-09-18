@@ -24,6 +24,7 @@ import org.junit.runners.Suite;
    jmri.jmrix.sprog.serialdriver.PackageTest.class,
    jmri.jmrix.sprog.sprog.PackageTest.class,
    jmri.jmrix.sprog.sprogCS.PackageTest.class,
+   jmri.jmrix.sprog.sprognano.PackageTest.class,
    jmri.jmrix.sprog.configurexml.PackageTest.class
 })
 public class PackageTest {

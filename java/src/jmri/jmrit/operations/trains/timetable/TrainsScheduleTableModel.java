@@ -3,7 +3,6 @@ package jmri.jmrit.operations.trains.timetable;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
-import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
@@ -91,6 +90,9 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
         _frame = frame;
         initTable();
     }
+    
+    // only the first three columns of the table have defaults
+    private int[] tableScheduleColumnWidths = {50, 70, 120};
 
     void initTable() {
         if (_table == null) {
@@ -100,20 +102,11 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
         TableColumnModel tcm = _table.getColumnModel();
         _table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
 
-        if (!_frame.loadTableDetails(_table)) {
-            // set column preferred widths, note that columns can be deleted
-            int[] widths = trainManager.getTrainScheduleFrameTableColumnWidths();
-            int numCol = widths.length;
-            if (widths.length > getColumnCount()) {
-                numCol = getColumnCount();
-            }
-            for (int i = 0; i < numCol; i++) {
-                tcm.getColumn(i).setPreferredWidth(widths[i]);
-            }
+        // set column preferred widths
+        for (int i = 0; i < tableScheduleColumnWidths.length; i++) {
+            tcm.getColumn(i).setPreferredWidth(tableScheduleColumnWidths[i]);
         }
-        _table.setRowHeight(new JComboBox<>().getPreferredSize().height);
-        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        _frame.loadTableDetails(_table);
     }
 
     @Override

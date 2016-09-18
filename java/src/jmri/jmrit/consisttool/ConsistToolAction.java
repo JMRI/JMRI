@@ -15,7 +15,7 @@ public class ConsistToolAction extends JmriAbstractAction {
     public ConsistToolAction(String s, WindowInterface wi) {
         super(s, wi);
         // disable ourself if there is no consist manager available
-        if (jmri.InstanceManager.getOptionalDefault(jmri.ConsistManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ConsistManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -23,7 +23,7 @@ public class ConsistToolAction extends JmriAbstractAction {
     public ConsistToolAction(String s, Icon i, WindowInterface wi) {
         super(s, i, wi);
         // disable ourself if there is no consist manager available
-        if (jmri.InstanceManager.getOptionalDefault(jmri.ConsistManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ConsistManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -32,7 +32,7 @@ public class ConsistToolAction extends JmriAbstractAction {
         super(s);
 
         // disable ourself if there is no consist manager available
-        if (jmri.InstanceManager.getOptionalDefault(jmri.ConsistManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ConsistManager.class) == null) {
             setEnabled(false);
         }
 

@@ -67,7 +67,7 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
         }
         // put into effect
         InstanceManager.getDefault(ManagerDefaultSelector.class).configure();
-        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
             cm.registerPref(InstanceManager.getDefault(ManagerDefaultSelector.class));
         }

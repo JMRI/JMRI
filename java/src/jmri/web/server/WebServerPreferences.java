@@ -101,7 +101,7 @@ public class WebServerPreferences extends Bean {
     }
 
     public static WebServerPreferences getDefault() {
-        if (InstanceManager.getOptionalDefault(WebServerPreferences.class) == null) {
+        if (InstanceManager.getNullableDefault(WebServerPreferences.class) == null) {
             InstanceManager.setDefault(WebServerPreferences.class, new WebServerPreferences());
         }
         return InstanceManager.getDefault(WebServerPreferences.class);

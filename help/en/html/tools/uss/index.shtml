@@ -1,66 +1,74 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-<title>JMRI: USS CTC Tools</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: USS CTC Tools</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h2>JMRI: USS CTC Tools</h2>
 
-<h2> 
-JMRI: USS CTC Tools
-</h2>
+      <p>JMRI contains tools to help in the automation of USS CTC
+      Panels. These can be used for either screen-based Panels, or
+      to drive a physical panel with real levers and lights.</p>
 
-<p>JMRI contains tools to help in the automation of USS CTC
-Panels. These can be used for either screen-based Panels, or to
-drive a physical panel with real levers and lights.
+      <dl>
+        <dt><a href=
+        "../../../package/jmri/jmrit/ussctc/FollowerFrame.shtml">Follower</a></dt>
 
-<dl>
+        <dd>Slaves an output Turnout device to follow the state of
+        an input Sensor device. This could, for example, make a
+        layout turnout follow a fascia switch connected to a
+        Sensor.</dd>
 
-<dt>
-<a href="../../../package/jmri/jmrit/ussctc/FollowerFrame.shtml">Follower</a>
-<dd>
-Slaves an output Turnout device to follow the state of an input Sensor device.
-This could, for example, make a layout turnout follow a fascia switch connected to a Sensor.
+        <dt><a href=
+        "../../../package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml">
+        OS Indicator</a></dt>
 
-<dt>
-<a href="../../../package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml">OS Indicator</a>
-<dd>
-Drives the occupancy indicator lamps on the Panel. This takes input from a Sensor
-to show the track section is occupied, and also optionally can light the indicator
-if the section has been unlocked.
+        <dd>Drives the occupancy indicator lamps on the Panel. This
+        takes input from a Sensor to show the track section is
+        occupied, and also optionally can light the indicator if
+        the section has been unlocked.</dd>
 
-<dt>
-<a href="../../../package/jmri/jmrit/ussctc/TurnoutLeverFrame.shtml">Turnout Lever</a>
-<dd>
-Controls a Turnout from a lever on the Panel, along with the two
-indicator lights (not yet released)
+        <dt><a href=
+        "../../../package/jmri/jmrit/ussctc/TurnoutLeverFrame.shtml">
+        Turnout Lever</a></dt>
 
-<dt>
-<a href="../../../package/jmri/jmrit/ussctc/SignalLeverFrame.shtml">Signal Lever</a>
-<dd>
-Controls a set of Signals from a lever on the Panel, along with the three
-indicator lights (not yet released)
+        <dd>Controls a Turnout from a lever on the Panel, along
+        with the two indicator lights (not yet released)</dd>
 
-<dt>
-<a href="../../../package/jmri/jmrit/ussctc/CodeButtonFrame.shtml">Code Button</a>
-<dd>
-Implements the Code button and Code lamp (not yet released)
+        <dt><a href=
+        "../../../package/jmri/jmrit/ussctc/SignalLeverFrame.shtml">
+        Signal Lever</a></dt>
 
-</dl>
-    
-<!--#include virtual="/Footer" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+        <dd>Controls a set of Signals from a lever on the Panel,
+        along with the three indicator lights (not yet
+        released)</dd>
+
+        <dt><a href=
+        "../../../package/jmri/jmrit/ussctc/CodeButtonFrame.shtml">Code
+        Button</a></dt>
+
+        <dd>Implements the Code button and Code lamp (not yet
+        released)</dd>
+      </dl><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

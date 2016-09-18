@@ -49,7 +49,7 @@ public class BlockTableAction extends AbstractTableAction {
         super(actionName);
 
         // disable ourself if there is no primary Block manager available
-        if (jmri.InstanceManager.getOptionalDefault(jmri.BlockManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.BlockManager.class) == null) {
             setEnabled(false);
         }
         inchBox.setSelected(true);
@@ -60,7 +60,7 @@ public class BlockTableAction extends AbstractTableAction {
             centimeterBox.setSelected(true);
         }
 
-        defaultBlockSpeedText = ("Use Global " + jmri.InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed()); // first entry in drop down list
+        defaultBlockSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + jmri.InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed()); // first entry in drop down list
         speedList.add(defaultBlockSpeedText);
         java.util.Vector<String> _speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames();
         for (int i = 0; i < _speedMap.size(); i++) {
@@ -268,7 +268,7 @@ public class BlockTableAction extends AbstractTableAction {
                         JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
                         return;
                     }
-                    if (!speedList.contains(speed) && !speed.contains("Global")) { // I18N TODO
+                    if (!speedList.contains(speed) && !speed.contains("Global")) { // NOI18N
                         speedList.add(speed);
                     }
                     fireTableRowsUpdated(row, row);
@@ -516,7 +516,7 @@ public class BlockTableAction extends AbstractTableAction {
 
     private void updateSpeedList() {
         speedList.remove(defaultBlockSpeedText);
-        defaultBlockSpeedText = ("Use Global " + jmri.InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed());
+        defaultBlockSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + jmri.InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed());
         speedList.add(0, defaultBlockSpeedText);
         m.fireTableDataChanged();
     }
@@ -582,7 +582,7 @@ public class BlockTableAction extends AbstractTableAction {
         blockSpeedCombo.setEditable(true);
 
         JPanel block = new JPanel();
-        block.add(new JLabel(Bundle.getMessage("BlockSpeedLabel")));
+        block.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BlockSpeedLabel"))));
         block.add(blockSpeedCombo);
 
         blockSpeedCombo.removeItem(defaultBlockSpeedText);

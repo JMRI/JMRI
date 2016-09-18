@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
+import java.util.ServiceLoader;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import jmri.InstanceManager;
 import jmri.beans.Bean;
 import jmri.jmrix.swing.SystemConnectionAction;
@@ -14,36 +16,37 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Maintain a list of actions that can be used by
- * {@link apps.startup.AbstractActionModel} and it's descendants.
+ * {@link apps.startup.AbstractActionModel} and it's descendants. This list is
+ * populated by {@link apps.startup.StartupActionFactory} instances registered
+ * with a {@link java.util.ServiceLoader}.
  *
  * @author Randall Wood (c) 2016
  */
 public class StartupActionModelUtil extends Bean {
 
     private HashMap<Class<?>, ActionAttributes> actions = null;
+    private HashMap<String, Class<?>> overrides = null;
     private ArrayList<String> actionNames = null; // built on demand, invalidated in changes to actions
     private final static Logger log = LoggerFactory.getLogger(StartupActionModelUtil.class);
 
     /**
      * Get the default StartupActionModelUtil instance, creating it if
-     * nessessary.
+     * necessary.
      *
      * @return the default instance
      */
     @Nonnull
     static public StartupActionModelUtil getDefault() {
-        StartupActionModelUtil instance = InstanceManager.getOptionalDefault(StartupActionModelUtil.class);
-        if (instance == null) {
-            instance = new StartupActionModelUtil();
-            InstanceManager.setDefault(StartupActionModelUtil.class, instance);
-        }
-        return instance;
+        return InstanceManager.getOptionalDefault(StartupActionModelUtil.class).orElseGet(() -> {
+            return InstanceManager.setDefault(StartupActionModelUtil.class, new StartupActionModelUtil());
+        });
     }
 
     @CheckForNull
     public String getActionName(@Nonnull Class<?> clazz) {
         this.prepareActionsHashMap();
-        return this.actions.get(clazz).name;
+        ActionAttributes attrs = this.actions.get(clazz);
+        return attrs != null ? attrs.name : null;
     }
 
     @CheckForNull
@@ -119,7 +122,7 @@ public class StartupActionModelUtil extends Bean {
             log.error("Did not find class \"{}\"", strClass);
             throw ex;
         }
-        ActionAttributes attrs = new ActionAttributes(name, SystemConnectionAction.class.isAssignableFrom(clazz));
+        ActionAttributes attrs = new ActionAttributes(name, clazz);
         actions.put(clazz, attrs);
         this.firePropertyChange("length", null, null);
     }
@@ -141,17 +144,38 @@ public class StartupActionModelUtil extends Bean {
     private void prepareActionsHashMap() {
         if (this.actions == null) {
             this.actions = new HashMap<>();
+            this.overrides = new HashMap<>();
             ResourceBundle rb = ResourceBundle.getBundle("apps.ActionListBundle");
             rb.keySet().stream().filter((key) -> (!key.isEmpty())).forEach((key) -> {
                 try {
                     Class<?> clazz = Class.forName(key);
-                    ActionAttributes attrs = new ActionAttributes(rb.getString(key), SystemConnectionAction.class.isAssignableFrom(clazz));
+                    ActionAttributes attrs = new ActionAttributes(rb.getString(key), clazz);
                     this.actions.put(clazz, attrs);
                 } catch (ClassNotFoundException ex) {
                     log.error("Did not find class \"{}\"", key);
                 }
             });
+            ServiceLoader<StartupActionFactory> loader = ServiceLoader.load(StartupActionFactory.class);
+            loader.forEach(factory -> {
+                for (Class<?> clazz : factory.getActionClasses()) {
+                    ActionAttributes attrs = new ActionAttributes(factory.getTitle(clazz), clazz);
+                    this.actions.put(clazz, attrs);
+                    for (String overridden : factory.getOverriddenClasses(clazz)) {
+                        this.overrides.put(overridden, clazz);
+                    }
+                }
+            });
+            loader.reload(); // allow factories to be garbage collected
         }
+    }
+
+    @CheckForNull
+    public String getOverride(@Nullable String name) {
+        this.prepareActionsHashMap();
+        if (name != null && this.overrides.containsKey(name)) {
+            return this.overrides.get(name).getName();
+        }
+        return null;
     }
 
     private static class ActionAttributes {
@@ -159,9 +183,9 @@ public class StartupActionModelUtil extends Bean {
         final String name;
         final boolean isSystemConnectionAction;
 
-        ActionAttributes(String name, boolean isSystemConnectionAction) {
+        ActionAttributes(String name, Class<?> clazz) {
             this.name = name;
-            this.isSystemConnectionAction = isSystemConnectionAction;
+            this.isSystemConnectionAction = SystemConnectionAction.class.isAssignableFrom(clazz);
         }
     }
 }

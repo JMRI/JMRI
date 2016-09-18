@@ -133,7 +133,7 @@ public class ConsistDataModel extends AbstractTableModel {
         switch (col) {
             case ADDRCOLUMN:
                 return (_consist.getConsistList().get(row).toString());
-            /*case ROSTERCOLUMN: JComboBox RosterBox = Roster.instance().matchingComboBox(null,null,null,null,null,null,null);
+            /*case ROSTERCOLUMN: JComboBox RosterBox = Roster.getDefault().matchingComboBox(null,null,null,null,null,null,null);
              RosterBox.insertItemAt("",0);
              RosterBox.setSelectedItem(getValueAt(ADDRCOLUMN,row));
              return RosterBox;*/

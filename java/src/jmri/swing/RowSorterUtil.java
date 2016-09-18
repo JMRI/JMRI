@@ -33,7 +33,7 @@ public final class RowSorterUtil {
      */
     @Nonnull
     public static SortOrder getSortOrder(@Nonnull RowSorter<? extends TableModel> rowSorter, int column) {
-        for (RowSorter.SortKey key : rowSorter.getSortKeys()) {
+        for (SortKey key : rowSorter.getSortKeys()) {
             if (key.getColumn() == column) {
                 return key.getSortOrder();
             }
@@ -53,7 +53,7 @@ public final class RowSorterUtil {
      * @param sortOrder the sort order
      */
     public static void setSortOrder(@Nonnull RowSorter<? extends TableModel> rowSorter, int column, @Nonnull SortOrder sortOrder) {
-        List<RowSorter.SortKey> keys = new ArrayList<>();
+        List<SortKey> keys = new ArrayList<>();
         if (!sortOrder.equals(SortOrder.UNSORTED)) {
             keys.add(new RowSorter.SortKey(column, sortOrder));
         }
@@ -71,12 +71,12 @@ public final class RowSorterUtil {
     public static RowSorterListener addSingleSortableColumnListener(@Nonnull RowSorter<? extends TableModel> rowSorter) {
         Objects.requireNonNull(rowSorter, "rowSorter must be nonnull.");
         RowSorterListener listener = new RowSorterListener() {
-            List<SortKey> priorSortKeys = new ArrayList<>();
+            List<? extends SortKey> priorSortKeys = new ArrayList<>();
 
             @Override
             public void sorterChanged(RowSorterEvent e) {
                 if (e.getType().equals(RowSorterEvent.Type.SORT_ORDER_CHANGED)) {
-                    List<RowSorter.SortKey> newSortKeys = new ArrayList<>(e.getSource().getSortKeys());
+                    List<? extends SortKey> newSortKeys = new ArrayList<>(e.getSource().getSortKeys());
                     newSortKeys.removeAll(priorSortKeys);
                     if (!newSortKeys.isEmpty()) {
                         priorSortKeys = newSortKeys;

@@ -27,9 +27,13 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
     }
 
     public Sensor createNewSensor(String systemName, String userName) {
-        RpsSensor r = new RpsSensor(systemName, userName);
-        Distributor.instance().addMeasurementListener(r);
-        return r;
+        try {
+           RpsSensor r = new RpsSensor(systemName, userName);
+           Distributor.instance().addMeasurementListener(r);
+           return r;
+       } catch(java.lang.StringIndexOutOfBoundsException sioe){
+         throw new IllegalArgumentException("Invaid System Name: " + systemName);
+       }
     }
 
     static public RpsSensorManager instance() {

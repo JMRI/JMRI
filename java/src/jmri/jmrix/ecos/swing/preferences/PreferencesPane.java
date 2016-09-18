@@ -442,7 +442,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
             ep.setLocoControl(false);
         }
 
-        ConfigureManager cm = jmri.InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = jmri.InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
             cm.storePrefs();
         }

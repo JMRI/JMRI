@@ -1084,7 +1084,7 @@ public class TrainCommon {
 
     // only used by build report
     private static void printLine(PrintWriter file, String level, String string) {
-        int lineLengthMax = getLineLength(Setup.PORTRAIT, Setup.getBuildReportFontSize(), Setup.MONOSPACED);
+        int lineLengthMax = getLineLength(Setup.PORTRAIT, Setup.MONOSPACED, Font.PLAIN, Setup.getBuildReportFontSize());
         if (string.length() > lineLengthMax) {
             String[] words = string.split(SPACE);
             StringBuffer sb = new StringBuffer();
@@ -1878,15 +1878,19 @@ public class TrainCommon {
         return buf.toString();
     }
 
-    protected int getLineLength(boolean isManifest) {
+    public static int getLineLength(boolean isManifest) {
         return getLineLength(isManifest ? Setup.getManifestOrientation() : Setup.getSwitchListOrientation(),
-                Setup.getManifestFontSize(), Setup.getFontName());
+                Setup.getFontName(), Font.PLAIN, Setup.getManifestFontSize());
     }
 
-    private static int getLineLength(String orientation, int fontSize, String fontName) {
+    public static int getManifestHeaderLineLength() {
+        return getLineLength(Setup.getManifestOrientation(), "SansSerif", Font.ITALIC, Setup.getManifestFontSize());
+    }
+
+    private static int getLineLength(String orientation, String fontName, int fontStyle, int fontSize) {
         // Metrics don't always work for the various font names, so use
         // Monospaced
-        Font font = new Font(fontName, Font.PLAIN, fontSize); // NOI18N
+        Font font = new Font(fontName, fontStyle, fontSize); // NOI18N
         JLabel label = new JLabel();
         FontMetrics metrics = label.getFontMetrics(font);
         int charwidth = metrics.charWidth('m');
@@ -1915,20 +1919,21 @@ public class TrainCommon {
         int stringWidth = metrics.stringWidth(string);
         return stringWidth <= getPageSize(orientation).width;
     }
+    
+    protected static final Dimension PAPER_MARGINS = new Dimension(84, 72);
 
-    private static Dimension getPageSize(String orientation) {
-        // page size has been adjusted to account for margins of .5
+    protected static Dimension getPageSize(String orientation) {
+        // page size has been adjusted to account for margins of .5 Dimension(84, 72)
         Dimension pagesize = new Dimension(523, 720); // Portrait 8.5 x 11
-        // landscape has a .65 margins
+        // landscape has .65 margins
         if (orientation.equals(Setup.LANDSCAPE)) {
-            pagesize = new Dimension(702, 523);
+            pagesize = new Dimension(702, 523); // 11 x 8.5
         }
-        if (orientation.equals(Setup.HALFPAGE)) // 4.5 x 11
-        {
-            pagesize = new Dimension(261, 720);
+        if (orientation.equals(Setup.HALFPAGE)) {
+            pagesize = new Dimension(261, 720); // 4.25 x 11
         }
         if (orientation.equals(Setup.HANDHELD)) {
-            pagesize = new Dimension(206, 720);
+            pagesize = new Dimension(206, 720); // 3.25 x 11
         }
         return pagesize;
     }
