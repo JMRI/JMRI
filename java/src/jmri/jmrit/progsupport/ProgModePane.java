@@ -63,14 +63,14 @@ public class ProgModePane extends ProgModeSelector {
         // create the ops mode 1st, so the service is 2nd,
         // so it's the one that's selected
         mOpsPane = null;
-        if (InstanceManager.getOptionalDefault(AddressedProgrammerManager.class) != null
+        if (InstanceManager.getNullableDefault(AddressedProgrammerManager.class) != null
                 && InstanceManager.getDefault(AddressedProgrammerManager.class).isAddressedModePossible()) {
 
             mOpsPane = new ProgOpsModePane(direction, group);
         }
 
         // service mode support, if present
-        if (InstanceManager.getOptionalDefault(GlobalProgrammerManager.class) != null) {
+        if (InstanceManager.getNullableDefault(GlobalProgrammerManager.class) != null) {
 
             mServicePane = new ProgServiceModePane(direction, group);
             add(mServicePane);

@@ -58,10 +58,10 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     
     void init() {
         // register this object to be stored as part of preferences
-        if (jmri.InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+        if (jmri.InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             jmri.InstanceManager.getDefault(ConfigureManager.class).registerUserPrefs(this);
         }
-        if (jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class) == null) {
             //We add this to the instanceManager so that other components can access the preferences
             //We need to make sure that this is registered before we do the read
             jmri.InstanceManager.store(this, jmri.UserPreferencesManager.class);
@@ -83,7 +83,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
                 }
             };
             // need a shut down manager to be present
-            if (jmri.InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+            if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
                 jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(userPreferencesShutDownTask);
             } else {
                 log.warn("Won't protect preferences at shutdown without registered ShutDownManager");

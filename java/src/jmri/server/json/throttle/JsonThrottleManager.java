@@ -28,7 +28,7 @@ public class JsonThrottleManager {
     }
 
     public static JsonThrottleManager getDefault() {
-        if (InstanceManager.getOptionalDefault(JsonThrottleManager.class) == null) {
+        if (InstanceManager.getNullableDefault(JsonThrottleManager.class) == null) {
             InstanceManager.setDefault(JsonThrottleManager.class, new JsonThrottleManager());
         }
         return InstanceManager.getDefault(JsonThrottleManager.class);

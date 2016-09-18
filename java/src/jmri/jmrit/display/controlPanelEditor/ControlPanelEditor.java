@@ -175,7 +175,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         super.setDefaultToolTip(new ToolTip(null, 0, 0, new Font("Serif", Font.PLAIN, 12),
                 Color.black, new Color(255, 250, 210), Color.black));
         // register the resulting panel for later configuration
-        ConfigureManager cm = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
             cm.registerUser(this);
         }
@@ -197,7 +197,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     protected void makeIconMenu() {
         _iconMenu = new JMenu(Bundle.getMessage("MenuIcon"));
         _menuBar.add(_iconMenu, 0);
-        JMenuItem mi = new JMenuItem(Bundle.getMessage("MenuItemItemPallette"));
+        JMenuItem mi = new JMenuItem(Bundle.getMessage("MenuItemItemPalette"));
         mi.addActionListener(new ActionListener() {
             Editor editor;
             ActionListener init(Editor ed) {
@@ -207,7 +207,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (_itemPalette==null) {
-                    _itemPalette = new ItemPalette(Bundle.getMessage("MenuItemItemPallette"), editor);
+                    _itemPalette = new ItemPalette(Bundle.getMessage("MenuItemItemPalette"), editor);
                 }
                 _itemPalette.setVisible(true);
             }
@@ -282,7 +282,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
         });
 
-        addItem = new JMenuItem(Bundle.getMessage("Zoom"));
+        addItem = new JMenuItem(Bundle.getMessage("Zoom", "..."));
         _zoomMenu.add(addItem);
         PositionableJComponent z = new PositionableJComponent(this);
         z.setScale(getPaintScale());
@@ -346,7 +346,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     protected void makeOptionMenu() {
-        _optionMenu = new JMenu(Bundle.getMessage("MenuOption"));
+        _optionMenu = new JMenu(Bundle.getMessage("MenuOptions"));
         _menuBar.add(_optionMenu, 0);
         // use globals item
         _optionMenu.add(useGlobalFlagBox);
@@ -447,7 +447,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
         });
 
-        JMenuItem editItem = new JMenuItem(Bundle.getMessage("renamePanelMenu"));
+        JMenuItem editItem = new JMenuItem(Bundle.getMessage("renamePanelMenu", "..."));
         PositionableJComponent z = new PositionableJComponent(this);
         z.setScale(getPaintScale());
         editItem.addActionListener(CoordinateEdit.getNameEditAction(z));
@@ -525,7 +525,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
      * getClipGroup() {} below.
      */
     protected void makeEditMenu() {
-        _editMenu = new JMenu("Edit");
+        _editMenu = new JMenu(Bundle.getMessage("ButtonEdit"));
         _menuBar.add(_editMenu, 0);
         _editMenu.setMnemonic(KeyEvent.VK_E);
         /*
@@ -632,28 +632,29 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private JMenu makeSelectTypeMenu() {
         JMenu menu = new JMenu(Bundle.getMessage("SelectType"));
         ButtonGroup typeGroup = new ButtonGroup();
+        // I18N use existing jmri.NamedBeanBundle keys
         JRadioButtonMenuItem button = makeSelectTypeButton("IndicatorTrack", "jmri.jmrit.display.IndicatorTrackIcon");
         typeGroup.add(button);
         menu.add(button);
         button = makeSelectTypeButton("IndicatorTO", "jmri.jmrit.display.IndicatorTurnoutIcon");
         typeGroup.add(button);
         menu.add(button);
-        button = makeSelectTypeButton("Turnout", "jmri.jmrit.display.TurnoutIcon");
+        button = makeSelectTypeButton("BeanNameTurnout", "jmri.jmrit.display.TurnoutIcon");
         typeGroup.add(button);
         menu.add(button);
-        button = makeSelectTypeButton("Sensor", "jmri.jmrit.display.SensorIcon");
+        button = makeSelectTypeButton("BeanNameSensor", "jmri.jmrit.display.SensorIcon");
         typeGroup.add(button);
         menu.add(button);
         button = makeSelectTypeButton("Shape", "jmri.jmrit.display.controlPanelEditor.shape.PositionableShape");
         typeGroup.add(button);
         menu.add(button);
-        button = makeSelectTypeButton("SignalMast", "jmri.jmrit.display.SignalMastIcon");
+        button = makeSelectTypeButton("BeanNameSignalMast", "jmri.jmrit.display.SignalMastIcon");
         typeGroup.add(button);
         menu.add(button);
-        button = makeSelectTypeButton("SignalHead", "jmri.jmrit.display.SignalHeadIcon");
+        button = makeSelectTypeButton("BeanNameSignalHead", "jmri.jmrit.display.SignalHeadIcon");
         typeGroup.add(button);
         menu.add(button);
-        button = makeSelectTypeButton("Memory", "jmri.jmrit.display.MemoryIcon");
+        button = makeSelectTypeButton("BeanNameMemory", "jmri.jmrit.display.MemoryIcon");
         typeGroup.add(button);
         menu.add(button);
         button = makeSelectTypeButton("MemoryInput", "jmri.jmrit.display.PositionableJPanel");
@@ -665,7 +666,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         button = makeSelectTypeButton("LocoID", "jmri.jmrit.display.LocoIcon");
         typeGroup.add(button);
         menu.add(button);
-        button = makeSelectTypeButton("Light", "jmri.jmrit.display.LightIcon");
+        button = makeSelectTypeButton("BeanNameLight", "jmri.jmrit.display.LightIcon");
         typeGroup.add(button);
         menu.add(button);
         return menu;

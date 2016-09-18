@@ -288,7 +288,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         }
     
         // row 22
-        if (Setup.isRfidEnabled() && jmri.InstanceManager.getOptionalDefault(jmri.IdTagManager.class) != null) {
+        if (Setup.isRfidEnabled() && jmri.InstanceManager.getNullableDefault(jmri.IdTagManager.class) != null) {
             JPanel pRfid = new JPanel();
             pRfid.setLayout(new GridBagLayout());
             pRfid.setBorder(BorderFactory.createTitledBorder(Setup.getRfidLabel()));
@@ -497,7 +497,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
             updateTrackLocationBox();
         }
         if (ae.getSource() == passengerCheckBox) {
-            pBlocking.setVisible(passengerCheckBox.isSelected());
+            pBlocking.setVisible(passengerCheckBox.isSelected() || (_car != null &&_car.getKernel() != null));
         }
     }
 
@@ -790,7 +790,6 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
                 }
                 _car.setBlocking(_car.getKernel().getSize());
             }
-            pBlocking.setVisible(!kernelComboBox.getSelectedItem().equals(CarManager.NONE));
         }
         if (loadComboBox.getSelectedItem() != null && !_car.getLoadName().equals(loadComboBox.getSelectedItem())) {
             _car.setLoadName((String) loadComboBox.getSelectedItem());
@@ -821,6 +820,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         autoTrackCheckBox.setEnabled(true);
 
         // update blocking
+        pBlocking.setVisible(passengerCheckBox.isSelected() || _car.getKernel() != null);
         blockingTextField.setText(Integer.toString(_car.getBlocking()));
 
         if (locationBox.getSelectedItem() != null && trackLocationBox.getSelectedItem() == null) {

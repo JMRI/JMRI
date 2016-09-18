@@ -43,7 +43,8 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
      * Create a new sensor if all checks are passed System name is normalized to
      * ensure uniqueness.
      */
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Override
+    protected Sensor createNewSensor(String systemName, String userName) {
         Sensor s;
         // validate the system name, and normalize it
         String sName = tc.getAdapterMemo().getSerialAddress().normalizeSystemName(systemName);

@@ -2,6 +2,8 @@ package jmri.util.swing;
 
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
@@ -13,9 +15,6 @@ import jmri.util.jdom.LocaleSelector;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
 
 /**
  * Common utility methods for working with JMenus.
@@ -42,7 +41,7 @@ public class JMenuUtil extends GuiUtilBase {
             if (((Element) child).getChild("mnemonic") != null) {
                 int mnemonic = convertStringToKeyEvent(((Element) child).getChild("mnemonic").getText());
                 if (mnemonicList.contains(mnemonic)) {
-                    log.error("Menu item '" + menuItem.getLabel() + "' Mnemonic '" + ((Element) child).getChild("mnemonic").getText() + "' has already been assigned");
+                    log.error("Menu item '" + menuItem.getText() + "' Mnemonic '" + ((Element) child).getChild("mnemonic").getText() + "' has already been assigned");
                 } else {
                     menuItem.setMnemonic(mnemonic);
                     mnemonicList.add(mnemonic);
@@ -107,7 +106,7 @@ public class JMenuUtil extends GuiUtilBase {
             if (menuItem != null && child.getChild("mnemonic") != null) {
                 int mnemonic = convertStringToKeyEvent(child.getChild("mnemonic").getText());
                 if (mnemonicList.contains(mnemonic)) {
-                    log.error("Menu Item '" + menuItem.getLabel() + "' Mnemonic '" + child.getChild("mnemonic").getText() + "' has already been assigned");
+                    log.error("Menu Item '" + menuItem.getText() + "' Mnemonic '" + child.getChild("mnemonic").getText() + "' has already been assigned");
                 } else {
                     menuItem.setMnemonic(mnemonic);
                     mnemonicList.add(mnemonic);

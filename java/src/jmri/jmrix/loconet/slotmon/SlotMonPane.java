@@ -10,8 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.TableRowSorter;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import jmri.util.JTableUtil;
 
 /**
  * Frame provinging a command station slot manager.
@@ -53,7 +53,8 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         super.initComponents(memo);
 
         slotModel = new SlotMonDataModel(128, 16, memo);
-        slotTable = JTableUtil.sortableDataModel(slotModel);
+        slotTable = new JTable(slotModel);
+        slotTable.setRowSorter(new TableRowSorter<>(slotModel));
         slotScroll = new JScrollPane(slotTable);
 
         // configure items for GUI

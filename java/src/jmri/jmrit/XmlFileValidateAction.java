@@ -9,7 +9,6 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.util.ResourceBundle;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import org.jdom2.*;
@@ -43,7 +42,7 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
     }
 
     public XmlFileValidateAction() {
-        super(ResourceBundle.getBundle("apps.ActionListBundle").getString("jmri.jmrit.XmlFileValidateAction"));
+        super(Bundle.getMessage("XmlFileValidateAction")); // NOI18N
     }
 
     JFileChooser fci;
