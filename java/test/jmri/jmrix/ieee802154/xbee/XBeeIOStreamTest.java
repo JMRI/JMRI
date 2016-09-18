@@ -6,6 +6,9 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.modules.junit4.PowerMockRunner;
+
 
 /**
  * <P>
@@ -13,6 +16,7 @@ import org.junit.Test;
  * </P>
  * @author Paul Bender Copyright (C) 2016
  */
+@RunWith(PowerMockRunner.class)
 public class XBeeIOStreamTest {
 
    private XBeeInterfaceScaffold tc = null; // set in setUp.

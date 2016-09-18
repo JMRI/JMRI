@@ -4,6 +4,22 @@ import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+
+import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+
+import com.digi.xbee.api.connection.IConnectionInterface;
+import com.digi.xbee.api.exceptions.OperationNotSupportedException;
+import com.digi.xbee.api.models.XBee16BitAddress;
+import com.digi.xbee.api.models.XBee64BitAddress;
+import com.digi.xbee.api.models.XBeeProtocol;
+import com.digi.xbee.api.XBeeDevice;
+import com.digi.xbee.api.RemoteXBeeDevice;
+
+
 /**
  * XBeeInterfaceScaffold.java
  *
@@ -16,8 +32,32 @@ import org.slf4j.LoggerFactory;
  */
 public class XBeeInterfaceScaffold extends XBeeTrafficController {
 
+    private XBeeDevice localDevice;
+    private RemoteXBeeDevice remoteDevice1;
+
     public XBeeInterfaceScaffold() {
         super();
+
+        // setup the mock XBee Connection.
+        // Mock the local device.
+        localDevice = PowerMockito.mock(XBeeDevice.class);
+        Mockito.when(localDevice.getConnectionInterface()).thenReturn(Mockito.mock(IConnectionInterface.class));
+        Mockito.when(localDevice.getXBeeProtocol()).thenReturn(XBeeProtocol.ZIGBEE);
+
+        // Mock the remote device 1.
+        remoteDevice1 = Mockito.mock(RemoteXBeeDevice.class);
+        Mockito.when(remoteDevice1.getXBeeProtocol()).thenReturn(XBeeProtocol.UNKNOWN);
+        Mockito.when(remoteDevice1.getNodeID()).thenReturn("Node 1");
+        Mockito.when(remoteDevice1.get64BitAddress()).thenReturn(new XBee64BitAddress("0013A20040A04D2D"));
+        Mockito.when(remoteDevice1.get16BitAddress()).thenReturn(new XBee16BitAddress("0002"));
+
+        byte pan[] = {(byte) 0x00, (byte) 0x42};
+        byte uad[] = {(byte) 0x00, (byte) 0x02};
+        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        XBeeNode node = new XBeeNode(pan,uad,gad);
+        node.setXBee(remoteDevice1);
+        registerNode(node);
+ 
     }
 
     // override some XBeeTrafficController methods for test purposes
@@ -25,6 +65,11 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
     public boolean status() {
         return true;
     }
+
+   @Override
+   public XBeeDevice getXBee() {
+        return localDevice;
+   }
 
     /**
      * record XBee messages sent, provide access for making sure they are OK

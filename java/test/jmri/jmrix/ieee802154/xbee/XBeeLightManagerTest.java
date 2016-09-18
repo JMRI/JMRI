@@ -4,7 +4,10 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.modules.junit4.PowerMockRunner;
 
+import jmri.Light;
 
 /**
  * XBeeLightManagerTest.java
@@ -13,11 +16,12 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
+@RunWith(PowerMockRunner.class)
 public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTest {
 
     @Override
     public String getSystemName(int i) {
-        return "ABCL" + i;
+        return "ABCL2:" + i;
     }
 
 
@@ -26,30 +30,40 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTest {
         Assert.assertNotNull("exists", l);
     }
 
+    @Override
+    @Test
+    public void testDefaultSystemName() {
+        // create
+        Light t = l.provideLight("ABCL2:" + getNumToTest1());
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+
+    @Override
+    @Test
+    public void testUpperLower() {
+        Light t = l.provideLight("ABCL2:" + getNumToTest2());
+        String name = t.getSystemName();
+        Assert.assertNull(l.getLight(name.toLowerCase()));
+    }
+
     // from here down is testing infrastructure
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        XBeeTrafficController tc = new XBeeTrafficController() {
-            public void setInstance() {
-            }
-        };
+        //apps.tests.Log4JFixture.setUp();
+        XBeeTrafficController tc = new XBeeInterfaceScaffold();
         XBeeConnectionMemo m = new XBeeConnectionMemo();
         m.setSystemPrefix("ABC");
         tc.setAdapterMemo(m);
         l = new XBeeLightManager(tc, "ABC");
         m.setLightManager(l);
-        byte pan[] = {(byte) 0x00, (byte) 0x42};
-        byte uad[] = {(byte) 0x00, (byte) 0x02};
-        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
-        XBeeNode node = new XBeeNode(pan,uad,gad);
-        tc.registerNode(node);
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        //apps.tests.Log4JFixture.tearDown();
     }
 
     /**

@@ -19,9 +19,7 @@ public class XBeeSensorTest {
     XBeeConnectionMemo memo;
 
     @Test
-    @Ignore("needs XBee Object from scaffold")
     public void testCtor() {
-        memo.setSystemPrefix("ABC");
         memo.setSensorManager(new XBeeSensorManager(tc, "ABC"));
         tc.setAdapterMemo(memo);
         XBeeSensor s = new XBeeSensor("ABCS1234", "XBee Sensor Test", tc) {
@@ -33,9 +31,7 @@ public class XBeeSensorTest {
     }
 
     @Test
-    @Ignore("needs XBee Object from scaffold")
     public void testCtorAddressPinName() {
-        memo.setSystemPrefix("ABC");
         memo.setSensorManager(new XBeeSensorManager(tc, "ABC"));
         tc.setAdapterMemo(memo);
         XBeeSensor s = new XBeeSensor("ABCS123:4", "XBee Sensor Test", tc) {
@@ -47,9 +43,7 @@ public class XBeeSensorTest {
     }
 
     @Test
-    @Ignore("needs XBee Object from scaffold")
     public void testCtor16BitHexNodeAddress() {
-        memo.setSystemPrefix("ABC");
         memo.setSensorManager(new XBeeSensorManager(tc, "ABC"));
         tc.setAdapterMemo(memo);
         XBeeSensor s = new XBeeSensor("ABCSABCD:4", "XBee Sensor Test", tc) {
@@ -61,9 +55,7 @@ public class XBeeSensorTest {
     }
 
     @Test
-    @Ignore("needs XBee Object from scaffold")
     public void testCtor16BitHexStringNodeAddress() {
-        memo.setSystemPrefix("ABC");
         memo.setSensorManager(new XBeeSensorManager(tc, "ABC"));
         tc.setAdapterMemo(memo);
         XBeeSensor s = new XBeeSensor("ABCSAB CD:4", "XBee Sensor Test", tc) {
@@ -75,9 +67,7 @@ public class XBeeSensorTest {
     }
 
     @Test
-    @Ignore("needs XBee Object from scaffold")
     public void testCtor64BitHexStringNodeAddress() {
-        memo.setSystemPrefix("ABC");
         memo.setSensorManager(new XBeeSensorManager(tc, "ABC"));
         tc.setAdapterMemo(memo);
         XBeeSensor s = new XBeeSensor("ABCS00 13 A2 00 40 A0 4D 2D:4", "XBee Sensor Test", tc) {
@@ -91,17 +81,16 @@ public class XBeeSensorTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        tc = new XBeeTrafficController() {
-            public void setInstance() {
-            }
-        };
+        //apps.tests.Log4JFixture.setUp();
+        tc = new XBeeInterfaceScaffold();
         memo = new XBeeConnectionMemo();
+        memo.setSystemPrefix("ABC");
+        tc.setAdapterMemo(memo);
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        //apps.tests.Log4JFixture.tearDown();
     }
 
 }
