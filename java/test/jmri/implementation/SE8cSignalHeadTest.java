@@ -5,10 +5,11 @@ import jmri.NamedBeanHandle;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Tests for the SE8cSignalHead implmentation
