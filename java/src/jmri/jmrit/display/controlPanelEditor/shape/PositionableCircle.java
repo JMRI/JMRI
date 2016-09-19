@@ -63,7 +63,7 @@ public class PositionableCircle extends PositionableShape {
     }
 
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = Bundle.getMessage("editShape", Bundle.getMessage("circle"));
+        String txt = Bundle.getMessage("editShape", Bundle.getMessage("Circle"));
         popup.add(new javax.swing.AbstractAction(txt) {
             /**
              *
@@ -72,7 +72,7 @@ public class PositionableCircle extends PositionableShape {
 
             public void actionPerformed(ActionEvent e) {
                 if (_editFrame == null) {
-                    _editFrame = new DrawCircle("editShape", "circle", null);
+                    _editFrame = new DrawCircle("editShape", "Circle", null);
                     setEditParams();
                 }
             }

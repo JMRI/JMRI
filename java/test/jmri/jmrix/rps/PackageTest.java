@@ -30,7 +30,7 @@ public class PackageTest extends TestCase {
         suite.addTest(PositionFileTest.suite());
         suite.addTest(ReadingTest.suite());
         suite.addTest(EngineTest.suite());
-        suite.addTest(jmri.jmrix.rps.RpsSensorManagerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RpsSensorManagerTest.class));
         suite.addTest(jmri.jmrix.rps.RpsSensorTest.suite());
         suite.addTest(jmri.jmrix.rps.RegionTest.suite());
         suite.addTest(jmri.jmrix.rps.TransformTest.suite());

@@ -11,7 +11,7 @@ import javax.swing.SwingUtilities;
 
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

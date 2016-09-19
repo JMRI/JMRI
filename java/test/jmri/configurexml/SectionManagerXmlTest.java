@@ -12,7 +12,7 @@ import jmri.Section;
 import jmri.Sensor;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -548,11 +548,14 @@ public class SectionManagerXmlTest extends TestCase {
         TestSuite suite = new TestSuite(SectionManagerXmlTest.class);
         return suite;
     }
-    /*
-    private final static Logger log = LoggerFactory.getLogger(SectionManagerXmlTest.class.getName());
 
-     // The minimal setup for log4J
-     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
-     */
+    // The minimal setup for log4J
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
+
 }

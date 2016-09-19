@@ -393,8 +393,8 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         panel.add(p);
 
         p = new JPanel();
-        p.add(makeButton(new AJRadioButton(Bundle.getMessage("fontColor"), state)));
-        p.add(makeButton(new AJRadioButton(Bundle.getMessage("backColor"), state + 10)));
+        p.add(makeButton(new AJRadioButton(Bundle.getMessage("FontColor"), state)));
+        p.add(makeButton(new AJRadioButton(Bundle.getMessage("FontBackgroundColor"), state + 10)));
         AJRadioButton button = new AJRadioButton(Bundle.getMessage("transparentBack"), state + 20);
         _buttonGroup.add(button);
         p.add(button);

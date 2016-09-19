@@ -49,7 +49,7 @@ public class PackageTest extends TestCase {
         suite.addTest(LnReporterTest.suite());
         suite.addTest(LnSensorTest.suite());
         suite.addTest(LnSensorAddressTest.suite());
-        suite.addTest(LnSensorManagerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LnSensorManagerTest.class));
         suite.addTest(LnCommandStationTypeTest.suite());
         suite.addTest(BundleTest.suite());
         suite.addTest(jmri.jmrix.loconet.pr3.PackageTest.suite());

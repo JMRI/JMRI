@@ -61,7 +61,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         blurb.add(new JLabel(Bundle.getMessage("emptyMemoryFix")));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         blurb.add(new JLabel(Bundle.getMessage("comboMemory1")));
-        blurb.add(new JLabel(Bundle.getMessage("comboMemory2")));
+        blurb.add(new JLabel(Bundle.getMessage("comboMemory2", Bundle.getMessage("EditItem", Bundle.getMessage("BeanNameMemory")))));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);
