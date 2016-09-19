@@ -818,9 +818,11 @@ import org.junit.Test;
 
       <li>
       In the <code>PackageTest.java</code> for this test package,
-          under <em>// Implementation</em>, replace the line<br>
+          under <em>Test suite()</em>, replace the line<br>
           <code>suite.addTest(MyClassTest.suite());</code> by<br>
-          <code>suite.addTest(new junit.framework.JUnit4TestAdapter(MyClassTest.class));</code>
+          <code>suite.addTest(new junit.framework.JUnit4TestAdapter(MyClassTest.class));
+          </code><br>
+          leaving the order of tests unchanged to prevent possible side effects.
       </li>
 
         <li>Run the tests and check that all your tests were

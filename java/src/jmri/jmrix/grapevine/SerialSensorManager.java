@@ -53,7 +53,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      *
      * @return null if sensor already exists by that name or an alternate
      */
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Override
+    protected Sensor createNewSensor(String systemName, String userName) {
         if (log.isDebugEnabled()) {
             log.debug("createNewSensor " + systemName + " " + userName);
         }
