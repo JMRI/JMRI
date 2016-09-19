@@ -23,7 +23,7 @@ public class XBeeMenu extends jmri.jmrix.ieee802154.swing.IEEE802154Menu {
 
     public XBeeMenu(jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo memo) {
 
-        super(memo);
+        //super(memo);
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ieee802154.IEEE802154ActionListBundle");
 
@@ -33,6 +33,7 @@ public class XBeeMenu extends jmri.jmrix.ieee802154.swing.IEEE802154Menu {
             setText(rb.getString("MenuXBee"));
         }
 
+        add(new jmri.jmrix.ieee802154.xbee.swing.packetgen.PacketGenAction(rb.getString("jmri.jmrix.ieee802154.xbee.swing.nodeconfig.PacketGenAction"), memo));
         add(new jmri.jmrix.ieee802154.xbee.swing.nodeconfig.NodeConfigAction(rb.getString("jmri.jmrix.ieee802154.xbee.swing.nodeconfig.NodeConfigAction"), memo));
 
     }

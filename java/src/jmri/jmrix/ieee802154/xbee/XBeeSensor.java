@@ -163,13 +163,6 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
         return;
     }
 
-    // Handle a timeout notification
-    public void notifyTimeout(XBeeMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
-        }
-    }
-
     public void dispose() {
         tc.getXBee().removeIOSampleListener(this);
         super.dispose();
