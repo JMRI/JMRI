@@ -39,7 +39,7 @@ public class TamsTurnout extends AbstractTurnout
         this.prefix = prefix;
         tc = etc;
         //Request status of turnout
-        TamsMessage m = new TamsMessage("xT " + _number + ",,1");
+        TamsMessage m = new TamsMessage("xT " + _number + ",,0");
         m.setBinary(false);
         m.setReplyType('T');
         tc.sendTamsMessage(m, this);
@@ -122,6 +122,7 @@ public class TamsTurnout extends AbstractTurnout
         }
         log.debug(this + ", setting to state " + state);
         newCommandedState(state);
+        //setKnownStateFromCS(state);
     }
 
     /**
@@ -163,7 +164,7 @@ public class TamsTurnout extends AbstractTurnout
             closed = !closed;
         }
         // get control
-        TamsMessage m = new TamsMessage("xT " + _number + "," + (closed ? "r" : "g"));
+        TamsMessage m = new TamsMessage("xT " + _number + "," + (closed ? "r" : "g") + ",1");
         tc.sendTamsMessage(m, this);
 
     }
@@ -181,12 +182,13 @@ public class TamsTurnout extends AbstractTurnout
             if (lines[1].equals("" + _number)) {
                 updateReceived = true;
                 if (lines[2].equals("g") || lines[2].equals("1")) {
+                    log.debug("Turnout = CLOSED");
                     setCommandedStateFromCS(Turnout.CLOSED);
-                    setKnownStateFromCS(Turnout.CLOSED);
                 } else {
+                    log.debug("Turnout = THROWN");
                     setCommandedStateFromCS(Turnout.THROWN);
-                    setKnownStateFromCS(Turnout.CLOSED);
                 }
+                //pollForStatus();
             }
         }
     }
@@ -211,8 +213,9 @@ public class TamsTurnout extends AbstractTurnout
     @Override
     public void setFeedbackMode(int mode) throws IllegalArgumentException {
         log.debug("*** setFeedbackMode ***");
-        //TamsMessage m = new TamsMessage("xT " + _number + ",,1");
+        TamsMessage m = new TamsMessage("xT " + _number + ",,1");
         if (mode == MONITORING) {
+            tc.sendTamsMessage(m, this);//Only send a message once
             //tc.addPollMessage(m, this);//The actual polling is done from TamsTurnoutManager
         } else {
             //tc.removePollMessage(m, this);//Since we don't poll from here there is no need to remove the message either
