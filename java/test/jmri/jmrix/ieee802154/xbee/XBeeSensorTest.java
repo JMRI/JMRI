@@ -5,6 +5,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
+import org.powermock.core.classloader.annotations.MockPolicy;
 
 /**
  * XBeeSensorTest.java
@@ -13,6 +17,8 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
+@RunWith(PowerMockRunner.class)
+@MockPolicy(Slf4jMockPolicy.class)
 public class XBeeSensorTest {
 
     XBeeTrafficController tc;

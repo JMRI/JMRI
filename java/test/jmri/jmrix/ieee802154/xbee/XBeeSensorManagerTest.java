@@ -14,6 +14,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
+import org.powermock.core.classloader.annotations.MockPolicy;
 
 import com.digi.xbee.api.connection.IConnectionInterface;
 import com.digi.xbee.api.exceptions.OperationNotSupportedException;
@@ -24,6 +26,7 @@ import com.digi.xbee.api.XBeeDevice;
 import com.digi.xbee.api.RemoteXBeeDevice;
 
 @RunWith(PowerMockRunner.class)
+@MockPolicy(Slf4jMockPolicy.class)
 /**
  * XBeeSensorManagerTest.java
  *

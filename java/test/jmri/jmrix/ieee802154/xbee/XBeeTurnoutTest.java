@@ -7,6 +7,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
+import org.powermock.core.classloader.annotations.MockPolicy;
 
 /**
  * XBeeTurnoutTest.java
@@ -16,69 +18,61 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author	Paul Bender
  */
 @RunWith(PowerMockRunner.class)
+@MockPolicy(Slf4jMockPolicy.class)
 public class XBeeTurnoutTest {
 
     XBeeTrafficController tc;
     XBeeConnectionMemo memo;
 
     @Test
-    @Ignore("needs further setup")
     public void testCtor() {
         XBeeTurnout s = new XBeeTurnout("ABCT1234", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
     }
 
     @Test
-    @Ignore("needs further setup")
     public void testCtorAddressPinName() {
         XBeeTurnout s = new XBeeTurnout("ABCT123:4", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
     }
 
     @Test
-    @Ignore("needs further setup")
     public void testCtorAddress2PinName() {
         XBeeTurnout s = new XBeeTurnout("ABCT123:4:5", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
     }
 
     @Test
-    @Ignore("needs further setup")
     public void testCtor16BitHexNodeAddress() {
         XBeeTurnout s = new XBeeTurnout("ABCTABCD:4", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
     }
 
     @Test
-    @Ignore("needs further setup")
     public void testCtor16BitHexNodeAddress2pin() {
         XBeeTurnout s = new XBeeTurnout("ABCTABCD:4:5", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
     }
 
     @Test
-    @Ignore("needs further setup")
     public void testCtor16BitHexStringNodeAddress() {
         XBeeTurnout s = new XBeeTurnout("ABCTAB CD:4", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
     }
 
     @Test
-    @Ignore("needs further setup")
     public void testCtor16BitHexStringNodeAddress2pin() {
         XBeeTurnout s = new XBeeTurnout("ABCTAB CD:4:5", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
     }
 
     @Test
-    @Ignore("needs further setup")
     public void testCtor64BitHexStringNodeAddress() {
         XBeeTurnout s = new XBeeTurnout("ABCT00 13 A2 00 40 A0 4D 2D:4", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
     }
 
     @Test
-    @Ignore("needs further setup")
     public void testCtor64BitHexStringNodeAddress2pin() {
         XBeeTurnout s = new XBeeTurnout("ABCT00 13 A2 00 40 A0 4D 2D:4:5", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
@@ -88,7 +82,7 @@ public class XBeeTurnoutTest {
     @Before
     public void setUp() {
         //apps.tests.Log4JFixture.setUp();
-        XBeeTrafficController tc = new XBeeInterfaceScaffold();
+        tc = new XBeeInterfaceScaffold();
         memo = new XBeeConnectionMemo();
         memo.setSystemPrefix("ABC");
         memo.setTurnoutManager(new XBeeTurnoutManager(tc, "ABC"));

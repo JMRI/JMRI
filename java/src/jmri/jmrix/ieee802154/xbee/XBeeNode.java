@@ -159,14 +159,14 @@ public class XBeeNode extends IEEE802154Node {
      *  Convert the 16 bit user address to an XBee16BitAddress object.
      */
     public XBee16BitAddress getXBeeAddress16() {
-        return getXBee().get16BitAddress();
+        return device.get16BitAddress();
     }
 
     /*
      *  Convert the 64 bit address to an XBee64BitAddress object.
      */
     public XBee64BitAddress getXBeeAddress64() {
-        return getXBee().get64BitAddress();
+        return device.get64BitAddress();
     }
 
     /**

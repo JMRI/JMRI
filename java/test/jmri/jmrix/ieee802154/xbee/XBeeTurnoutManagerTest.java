@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
+import org.powermock.core.classloader.annotations.MockPolicy;
 
 /**
  * XBeeTurnoutManagerTest.java
@@ -16,6 +18,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author	Paul Bender Copyright (C) 2012,2016
  */
 @RunWith(PowerMockRunner.class)
+@MockPolicy(Slf4jMockPolicy.class)
 public class XBeeTurnoutManagerTest {
 
     XBeeTrafficController tc = null;

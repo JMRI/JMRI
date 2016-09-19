@@ -6,10 +6,6 @@ import org.slf4j.LoggerFactory;
 
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-
-import org.mockito.Mockito;
-import org.powermock.api.mockito.PowerMockito;
 
 import com.digi.xbee.api.connection.IConnectionInterface;
 import com.digi.xbee.api.exceptions.OperationNotSupportedException;
@@ -34,6 +30,8 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
 
     private XBeeDevice localDevice;
     private RemoteXBeeDevice remoteDevice1;
+    private RemoteXBeeDevice remoteDevice2;
+    private RemoteXBeeDevice remoteDevice3;
 
     public XBeeInterfaceScaffold() {
         super();
@@ -57,7 +55,7 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
         XBeeNode node = new XBeeNode(pan,uad,gad);
         node.setXBee(remoteDevice1);
         registerNode(node);
- 
+
     }
 
     // override some XBeeTrafficController methods for test purposes
