@@ -159,14 +159,14 @@ public class XBeeNode extends IEEE802154Node {
      *  Convert the 16 bit user address to an XBee16BitAddress object.
      */
     public XBee16BitAddress getXBeeAddress16() {
-        return device.get16BitAddress();
+        return getXBee().get16BitAddress();
     }
 
     /*
      *  Convert the 64 bit address to an XBee64BitAddress object.
      */
     public XBee64BitAddress getXBeeAddress64() {
-        return device.get64BitAddress();
+        return getXBee().get64BitAddress();
     }
 
     /**
@@ -283,6 +283,10 @@ public class XBeeNode extends IEEE802154Node {
      * @return RemoteXBeeDevice associated with this node.
      */
     public RemoteXBeeDevice getXBee() {
+           if( device == null && tc !=null) {
+               new RemoteXBeeDevice(tc.getXBee(),getXBeeAddress64(),
+                                    getXBeeAddress16(),Identifier);
+           }
            return device;
     }
 

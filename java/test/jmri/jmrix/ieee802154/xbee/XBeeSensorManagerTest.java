@@ -44,7 +44,6 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
     }
 
     @Test
-    @Ignore("needs XBee Object from scaffold")
     public void testCtor() {
         Assert.assertNotNull("exists", l);
     }

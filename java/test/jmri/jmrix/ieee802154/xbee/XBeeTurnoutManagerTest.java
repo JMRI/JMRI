@@ -1,9 +1,11 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * XBeeTurnoutManagerTest.java
@@ -11,44 +13,32 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeTurnoutManager
  * class
  *
- * @author	Paul Bender
+ * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class XBeeTurnoutManagerTest extends TestCase {
+@RunWith(PowerMockRunner.class)
+public class XBeeTurnoutManagerTest {
 
-    XBeeTrafficController tc = new XBeeTrafficController() {
-        public void setInstance() {
-        }
-    };
+    XBeeTrafficController tc = null;
 
+    @Test
     public void testCtor() {
         XBeeTurnoutManager m = new XBeeTurnoutManager(tc, "ABC");
         Assert.assertNotNull("exists", m);
     }
 
-    // from here down is testing infrastructure
-    public XBeeTurnoutManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XBeeTurnoutManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XBeeTurnoutManagerTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    public void setUp() {
+        //apps.tests.Log4JFixture.setUp();
+        XBeeTrafficController tc = new XBeeInterfaceScaffold();
+        XBeeConnectionMemo m = new XBeeConnectionMemo();
+        m.setSystemPrefix("ABC");
+        tc.setAdapterMemo(m);
     }
 
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        //apps.tests.Log4JFixture.tearDown();
     }
 
 }

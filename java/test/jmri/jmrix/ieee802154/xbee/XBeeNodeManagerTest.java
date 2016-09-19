@@ -20,9 +20,13 @@ public class XBeeNodeManagerTest {
    XBeeInterfaceScaffold tc = null; // set in setUp.
 
    @Test
-   @Ignore("needs XBee Object from scaffold")
    public void ConstructorTest(){
-       XBeeNodeManager a = new XBeeNodeManager(tc);
+       XBeeNodeManager a = new XBeeNodeManager(tc){
+          @Override
+          public void startNodeDiscovery(){
+             // no mock network, so don't try to discover.
+          }
+       };
        Assert.assertNotNull(a);
    }
 

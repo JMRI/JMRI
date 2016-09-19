@@ -5,6 +5,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.modules.junit4.PowerMockRunner;
+
 
 /**
  * XBeeNodeTest.java
@@ -13,22 +16,24 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
+@RunWith(PowerMockRunner.class)
 public class XBeeNodeTest{
 
+    private XBeeTrafficController tc = null;
+
     @Test
-    @Ignore("needs XBee Object from scaffold")
     public void testCtor() {
         XBeeNode m = new XBeeNode();
         Assert.assertNotNull("exists", m);
     }
 
     @Test
-    @Ignore("needs XBee Object from scaffold")
     public void testCtorWithParamters() {
         byte pan[] = {(byte) 0x00, (byte) 0x42};
         byte uad[] = {(byte) 0x6D, (byte) 0x97};
         byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
         XBeeNode node = new XBeeNode(pan,uad,gad);
+        node.setTrafficController(tc);
         Assert.assertNotNull("exists", node);
         Assert.assertEquals("Node PAN address high byte", pan[0], node.getPANAddress()[0]);
         Assert.assertEquals("Node PAN address low byte", pan[1], node.getPANAddress()[1]);
@@ -40,7 +45,6 @@ public class XBeeNodeTest{
     }
 
     @Test
-    @Ignore("needs XBee Object from scaffold")
     public void testSetPANAddress() {
         // test the code to set the User address
         XBeeNode node = new XBeeNode();
@@ -51,7 +55,6 @@ public class XBeeNodeTest{
     }
 
     @Test
-    @Ignore("needs XBee Object from scaffold")
     public void testSetUserAddress() {
         // test the code to set the User address
         XBeeNode node = new XBeeNode();
@@ -62,7 +65,6 @@ public class XBeeNodeTest{
     }
 
     @Test
-    @Ignore("needs XBee Object from scaffold")
     public void testSetGlobalAddress() {
         // test the code to set the User address
         XBeeNode node = new XBeeNode();
@@ -74,7 +76,7 @@ public class XBeeNodeTest{
     }
 
     @Test
-    @Ignore("needs XBee Object from scaffold")
+    @Ignore("needs further setup")
     public void testGetPreferedNameAsUserAddress() {
         byte pan[] = {(byte) 0x00, (byte) 0x42};
         byte uad[] = {(byte) 0x6D, (byte) 0x97};
@@ -84,7 +86,7 @@ public class XBeeNodeTest{
     }
 
     @Test
-    @Ignore("needs XBee Object from scaffold")
+    @Ignore("needs further setup")
     public void testGetPreferedNameAsGlobalAddress() {
         byte pan[] = {(byte) 0x00, (byte) 0x42};
         byte uad[] = {(byte) 0xFF, (byte) 0xFF};
@@ -94,7 +96,7 @@ public class XBeeNodeTest{
     }
 
     @Test
-    @Ignore("needs XBee Object from scaffold")
+    @Ignore("needs further setup")
     public void testGetPreferedNameAsNodeIdentifier() {
         byte pan[] = {(byte) 0x00, (byte) 0x42};
         byte uad[] = {(byte) 0xFF, (byte) 0xFF};
@@ -105,7 +107,7 @@ public class XBeeNodeTest{
     }
 
     @Test
-    @Ignore("needs XBee Object from scaffold")
+    @Ignore("needs further setup")
     public void testGetPreferedTransmitUserAddress() {
         byte pan[] = {(byte) 0x00, (byte) 0x42};
         byte uad[] = {(byte) 0x6D, (byte) 0x97};
@@ -115,7 +117,7 @@ public class XBeeNodeTest{
     }
 
     @Test
-    @Ignore("needs XBee Object from scaffold")
+    @Ignore("needs further setup")
     public void testGetPreferedTransmitGlobalAddress() {
         byte pan[] = {(byte) 0x00, (byte) 0x42};
         byte uad[] = {(byte) 0xFF, (byte) 0xFF};
@@ -125,7 +127,7 @@ public class XBeeNodeTest{
     }
 
     @Test
-    @Ignore("needs XBee Object from scaffold")
+    @Ignore("needs further setup")
     public void testGetPreferedTransmitGlobalAddressWithMaskRequired() {
         byte pan[] = {(byte) 0x00, (byte) 0x42};
         byte uad[] = {(byte) 0x0fffffff, (byte) 0x0ffffffe};
@@ -137,12 +139,14 @@ public class XBeeNodeTest{
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        //apps.tests.Log4JFixture.setUp();
+        tc = new XBeeInterfaceScaffold();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        //apps.tests.Log4JFixture.tearDown();
+        tc=null;
     }
 
 }
