@@ -33,11 +33,11 @@ public class PackageTest extends TestCase {
         suite.addTest(CanConverterTest.suite());
         suite.addTest(OlcbAddressTest.suite());
         suite.addTest(OpenLcbLocoAddressTest.suite());
-        suite.addTest(OlcbSensorManagerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OlcbSensorManagerTest.class));
         suite.addTest(OlcbProgrammerTest.suite());
         suite.addTest(OlcbProgrammerManagerTest.suite());
         suite.addTest(OlcbSensorTest.suite());
-        suite.addTest(OlcbSystemConnectionMemoTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OlcbSystemConnectionMemoTest.class));
         suite.addTest(OlcbTurnoutManagerTest.suite());
         suite.addTest(OlcbTurnoutTest.suite());
         suite.addTest(OlcbThrottleTest.suite());

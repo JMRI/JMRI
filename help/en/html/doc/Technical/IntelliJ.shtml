@@ -551,6 +551,25 @@
       the <a href="gitdeveloper.shtml#pull">Pull Request
       button</a>. For more info, see the <a href=
       "gitdeveloper.shtml#pull">Git Developer Help</a> page.</p>
+
+      <a name="test" id="test"></a><h3>Testing with IntelliJ</h3>
+      <p>When you create or edit a <a href="JUnit.shtml">test</a>
+        (located in your Project at JMRI.java.test etc.) you can
+        test it either as part of the <code>alltest</code> Ant Build
+        (double click its name in the IntelliJ Ant Build right hand
+        column to run) or run it on its own using <code>test-single</code>.<br>
+        In the latter case, enter the name of your test in the Ant Build
+        Properties by either clicking the Properties button at the top or
+        right-clicking on any line in the Ant Build column,
+        choosing "Properties". Open the "Properties" tab, click the
+        + (Add) sign at lower left and enter "test.includes"
+        in the Name column and the path to your test under Value,
+        starting with <code>jmri.</code> as shown:<br>
+        <a href="images/IntelliJ/IjAntProps.png"><img src =
+        "images/IntelliJ/IjAntProps.png" width="318" height="174"
+        alt="IntelliJ Ant Property"></a>
+      </p>
+
       <!-- to do suppress errors
         <a name="errors"></a>
         <h2>Compiler Errors and Warnings</h2>
