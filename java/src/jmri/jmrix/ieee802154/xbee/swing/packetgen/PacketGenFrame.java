@@ -22,7 +22,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
         super.initComponents();
 
         // all we need to do is set the title 
-        setTitle(rb.getString("jmri.jmrix.ieee802154.swing.packetgen.PacketGenActio"));
+        setTitle(rb.getString("jmri.jmrix.ieee802154.xbee.swing.packetgen.PacketGenAction"));
 
         // pack to cause display
         pack();

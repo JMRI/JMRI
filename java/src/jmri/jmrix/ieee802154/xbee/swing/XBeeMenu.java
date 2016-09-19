@@ -28,7 +28,7 @@ public class XBeeMenu extends JMenu {
             setText(rb.getString("MenuXBee"));
         }
 
-        add(new jmri.jmrix.ieee802154.xbee.swing.packetgen.PacketGenAction(rb.getString("jmri.jmrix.ieee802154.xbee.swing.nodeconfig.PacketGenAction"), memo));
+        add(new jmri.jmrix.ieee802154.xbee.swing.packetgen.PacketGenAction(rb.getString("jmri.jmrix.ieee802154.xbee.swing.packetgen.PacketGenAction"), memo));
         add(new jmri.jmrix.ieee802154.xbee.swing.nodeconfig.NodeConfigAction(rb.getString("jmri.jmrix.ieee802154.xbee.swing.nodeconfig.NodeConfigAction"), memo));
 
     }
