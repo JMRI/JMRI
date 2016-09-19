@@ -104,17 +104,33 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
      */
     protected void forwardReply(AbstractMRListener client, AbstractMRReply tr) {
         //log.debug("*** forwardReply ***");
-        //log.debug("Client = " + client);
+        log.debug("Client = " + client);
         //log.debug("TamsMessage = " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(0) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(1) & 0xFF, "") + " and replyType = " + tm.getReplyType());
-        //Only forward messages to the correct listener
-        if ((client instanceof TamsPowerManager && tm.getReplyType() == 'P') ||
+        //Only forward binary messages to the correct listener
+        if (tm.isBinary() && 
+                (client instanceof TamsPowerManager && tm.getReplyType() == 'P') ||
                 (client instanceof TamsThrottle && tm.getReplyType() == 'L') ||
-                (client instanceof TamsTurnout && tm.getReplyType() == 'T' && !tm.isBinary()) ||
-                (client instanceof TamsTurnoutManager && tm.getReplyType() == 'T' && tm.isBinary()) ||
-                (client instanceof TamsSensorManager && tm.getReplyType() == 'S') || 
-                client instanceof TamsMonPane) {
+                (client instanceof TamsTurnoutManager && tm.getReplyType() == 'T') ||
+                (client instanceof TamsSensorManager && tm.getReplyType() == 'S')) {
+            log.debug("Forward binary message");
             ((TamsListener)client).reply((TamsReply) tr);
         }
+        //Forward ASCII messages to the TamsTurnout
+        if (tm.isBinary() && (client instanceof TamsTurnout && tm.getReplyType() == 'T')){
+            ((TamsListener)client).reply((TamsReply) tr);
+            log.debug("Forward ASCII Turnout message");
+        }
+      //Forward ASCII messages to all listeners except those define above
+        if (!tm.isBinary() && !((tm.getReplyType() == 'P') || (tm.getReplyType() == 'L') || (tm.getReplyType() == 'S') || (tm.getReplyType() == 'T'))){
+            log.debug("Forward ACSII message to other listeners");
+            ((TamsListener)client).reply((TamsReply) tr);
+        }
+        //Forward all messages to Monitor Panel
+        if (client instanceof TamsMonPane) {
+            log.debug("Forward any message to Monitor Panel");
+            ((TamsListener)client).reply((TamsReply) tr);
+        }
+        
     }
 
     /**

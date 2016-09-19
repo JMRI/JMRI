@@ -171,18 +171,21 @@ public class TamsTurnout extends AbstractTurnout
     // to listen for status changes from Tams system
     public void reply(TamsReply m) {
         log.debug("*** TamsReply ***");
-        log.debug(Integer.toString(m.match("T")));
-        log.debug(Integer.toString(m.match("ERROR")));
+        log.debug("m.match(\"T\") = " + Integer.toString(m.match("T")));
         String msg = m.toString();
+        log.debug("Turnout Reply = " + msg);
         if (m.match("T") == 0) {
             String[] lines = msg.split(" ");
+            log.debug("lines = " + lines[0] + " " + lines[1] + " " + lines[2] + " " + lines[3]);
+            log.debug("Turnout = " + _number);
             if (lines[1].equals("" + _number)) {
                 updateReceived = true;
                 if (lines[2].equals("g") || lines[2].equals("1")) {
                     setCommandedStateFromCS(Turnout.CLOSED);
+                    setKnownStateFromCS(Turnout.CLOSED);
                 } else {
                     setCommandedStateFromCS(Turnout.THROWN);
-
+                    setKnownStateFromCS(Turnout.CLOSED);
                 }
             }
         }
