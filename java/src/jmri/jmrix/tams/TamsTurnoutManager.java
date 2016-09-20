@@ -122,7 +122,7 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         //Next line provided via JMRI dev's
         TamsTurnout ttu = (TamsTurnout)provideTurnout(turnoutName);
         ttu.setCommandedStateFromCS(turnoutState);
-        //ttu.setKnownStateFromCS(turnoutState);
+        ttu.setKnownStateFromCS(turnoutState);
     }
 
     private final static Logger log = LoggerFactory.getLogger(TamsTurnoutManager.class.getName());

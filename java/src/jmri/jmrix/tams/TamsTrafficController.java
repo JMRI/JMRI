@@ -120,8 +120,8 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
             ((TamsListener)client).reply((TamsReply) tr);
             log.debug("Forward ASCII Turnout message");
         }
-      //Forward ASCII messages to all listeners except those define above
-        if (!tm.isBinary() && !((tm.getReplyType() == 'P') || (tm.getReplyType() == 'L') || (tm.getReplyType() == 'S') || (tm.getReplyType() == 'T'))){
+      //Forward ASCII messages to all listeners except those define above nor the TamsMonPane
+        if (!(client instanceof TamsMonPane) && !tm.isBinary() && !((tm.getReplyType() == 'P') || (tm.getReplyType() == 'L') || (tm.getReplyType() == 'S') || (tm.getReplyType() == 'T'))){
             log.debug("Forward ACSII message to other listeners");
             ((TamsListener)client).reply((TamsReply) tr);
         }

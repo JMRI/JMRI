@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * Based on work by Bob Jacobsen and Kevin Dickerson Copyright
  *
  * @author	Jan Boen
- * @version	$Revision: 20160627 $
+ * @version	$Revision: 20160920 $
  */
 public class TamsTurnout extends AbstractTurnout
         implements TamsListener {
@@ -43,7 +43,6 @@ public class TamsTurnout extends AbstractTurnout
         m.setBinary(false);
         m.setReplyType('T');
         tc.sendTamsMessage(m, this);
-        //tc.addPollMessage(m, this);//Not adding a poll message as status updates will come via TamsTurnoutManager
 
         _validFeedbackTypes |= MONITORING;
         _activeFeedbackType = MONITORING;
@@ -181,9 +180,11 @@ public class TamsTurnout extends AbstractTurnout
                 updateReceived = true;
                 if (lines[2].equals("r") || lines[2].equals("0")) {
                     log.debug("Turnout " + _number + " = CLOSED");
+                    setCommandedStateFromCS(Turnout.CLOSED);
                     setKnownStateFromCS(Turnout.CLOSED);
                 } else {
                     log.debug("Turnout " + _number + " = THROWN");
+                    setCommandedStateFromCS(Turnout.THROWN);
                     setKnownStateFromCS(Turnout.THROWN);
                 }
             }
@@ -213,9 +214,7 @@ public class TamsTurnout extends AbstractTurnout
         TamsMessage m = new TamsMessage("xT " + _number + ",,1");
         if (mode == MONITORING) {
             tc.sendTamsMessage(m, this);//Only send a message once
-            //tc.addPollMessage(m, this);//The actual polling is done from TamsTurnoutManager
-        } else {
-            //tc.removePollMessage(m, this);//Since we don't poll from here there is no need to remove the message either
+            //The rest gets done via polling from TamsTurnoutManager
         }
         super.setFeedbackMode(mode);
     }
