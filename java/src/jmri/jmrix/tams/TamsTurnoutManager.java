@@ -81,7 +81,7 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
                         tr.setBinary(r.isBinary());
                         tr.setElement(0, r.getElement(i));
                         tr.setElement(1, r.getElement(i + 1));
-                        log.debug("Going to pass this to the decoder = " + tr.toString());
+                        //log.debug("Going to pass this to the decoder = " + tr.toString());
                         //The decodeTurnoutState will do the actual decoding of each individual turnout
                         decodeTurnoutState(tr, prefix, tc);
                     }
@@ -107,8 +107,8 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         int lowerByte = r.getElement(0) & 0xff;
         int upperByte = r.getElement(1) & 0xff;
         log.debug("Decoding turnout");
-        log.debug("Lower Byte: " + lowerByte);
-        log.debug("Upper Byte: " + upperByte);
+        //log.debug("Lower Byte: " + lowerByte);
+        //log.debug("Upper Byte: " + upperByte);
         //Core logic to be added here
         int turnoutAddress = (upperByte & 0x07) * 256 + lowerByte;
         String turnoutName = prefix + "T" + Integer.toString(turnoutAddress);

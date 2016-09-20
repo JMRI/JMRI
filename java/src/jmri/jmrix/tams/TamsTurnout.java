@@ -118,11 +118,11 @@ public class TamsTurnout extends AbstractTurnout
     synchronized void setCommandedStateFromCS(int state) {
         log.debug("*** setCommandedStateFromCS ***");
         if ((getFeedbackMode() != MONITORING)) {
+            log.debug("Returning");
             return;
         }
-        log.debug(this + ", setting to state " + state);
+        log.debug("Setting to state " + state);
         newCommandedState(state);
-        //setKnownStateFromCS(state);
     }
 
     /**
@@ -177,25 +177,22 @@ public class TamsTurnout extends AbstractTurnout
         log.debug("Turnout Reply = " + msg);
         if (m.match("T") == 0) {
             String[] lines = msg.split(" ");
-            log.debug("lines = " + lines[0] + " " + lines[1] + " " + lines[2] + " " + lines[3]);
-            log.debug("Turnout = " + _number);
             if (lines[1].equals("" + _number)) {
                 updateReceived = true;
-                if (lines[2].equals("g") || lines[2].equals("1")) {
-                    log.debug("Turnout = CLOSED");
-                    setCommandedStateFromCS(Turnout.CLOSED);
+                if (lines[2].equals("r") || lines[2].equals("0")) {
+                    log.debug("Turnout " + _number + " = CLOSED");
+                    setKnownStateFromCS(Turnout.CLOSED);
                 } else {
-                    log.debug("Turnout = THROWN");
-                    setCommandedStateFromCS(Turnout.THROWN);
+                    log.debug("Turnout " + _number + " = THROWN");
+                    setKnownStateFromCS(Turnout.THROWN);
                 }
-                //pollForStatus();
             }
         }
     }
 
     boolean updateReceived = false;
 
-    protected void pollForStatus() {
+    /*protected void pollForStatus() {
         if (_activeFeedbackType == MONITORING) {
             log.debug("*** pollForStatus ***");
             //if we received an update last time we send a request again, but if we did not we shall skip it once and try again next time.
@@ -208,7 +205,7 @@ public class TamsTurnout extends AbstractTurnout
                 updateReceived = true;
             }
         }
-    }
+    }*/
 
     @Override
     public void setFeedbackMode(int mode) throws IllegalArgumentException {
