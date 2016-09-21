@@ -31,7 +31,6 @@ import javax.swing.KeyStroke;
 import javax.swing.TransferHandler;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
-import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.Path;
 import jmri.implementation.SignalSpeedMap;
@@ -40,6 +39,7 @@ import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.WarrantTableAction;
 import jmri.util.SystemType;
+import jmri.util.com.sun.TableSorter;
 import jmri.util.com.sun.TransferActionListener;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
@@ -434,9 +434,19 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             OBlockTableModel.DELETE_COL, OBlockTableModel.REPORT_CURRENTCOL,
             OBlockTableModel.PERMISSIONCOL, OBlockTableModel.UNITSCOL});
 
-        TableRowSorter<OBlockTableModel> sorter = new TableRowSorter<OBlockTableModel>(_oBlockModel);
+/*        TableRowSorter<OBlockTableModel> sorter = new TableRowSorter<OBlockTableModel>(_oBlockModel);
         sorter.setComparator(OBlockTableModel.SYSNAMECOL, new jmri.util.SystemNameComparator());
         _oBlockTable.setRowSorter(sorter);
+*/
+        try {   // following might fail due to a missing method on Mac Classic
+            TableSorter sorter = new TableSorter(_oBlockTable.getModel());
+            sorter.setTableHeader(_oBlockTable.getTableHeader());
+            sorter.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
+            _oBlockTable.setModel(sorter);
+        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
+            log.error("makeBlockFrame: Unexpected error: " + e);
+        }
+        
         // Use XTableColumnModel so we can control which columns are visible
         XTableColumnModel tcm = new XTableColumnModel();
         _oBlockTable.setColumnModel(tcm);
@@ -527,10 +537,16 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 //        _portalModel.init();
         _portalTable = new DnDJTable(_portalModel, new int[]{PortalTableModel.DELETE_COL});
 //        _portalModel.makeSorter(portalTable);
-        TableRowSorter<PortalTableModel> sorter = new TableRowSorter<PortalTableModel>(_portalModel);
-        sorter.setComparator(PortalTableModel.FROM_BLOCK_COLUMN, new jmri.util.SystemNameComparator());
-        sorter.setComparator(PortalTableModel.TO_BLOCK_COLUMN, new jmri.util.SystemNameComparator());
+/*        TableRowSorter<PortalTableModel> sorter = new TableRowSorter<PortalTableModel>(_portalModel);
         _oBlockTable.setRowSorter(sorter);
+*/
+        try {   // following might fail due to a missing method on Mac Classic
+            TableSorter sorter = new TableSorter(_portalTable.getModel());
+            sorter.setTableHeader(_portalTable.getTableHeader());
+            _portalTable.setModel(sorter);
+        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
+            log.error("makePortalFrame: Unexpected error: " + e);
+        }
 
         _portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         _portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
@@ -599,10 +615,17 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _signalModel = new SignalTableModel(this);
         _signalModel.init();
         _signalTable = new DnDJTable(_signalModel, new int[]{SignalTableModel.UNITSCOL, SignalTableModel.DELETE_COL});
-        TableRowSorter<SignalTableModel> sorter = new TableRowSorter<SignalTableModel>(_signalModel);
-        sorter.setComparator(SignalTableModel.FROM_BLOCK_COLUMN, new jmri.util.SystemNameComparator());
-        sorter.setComparator(SignalTableModel.TO_BLOCK_COLUMN, new jmri.util.SystemNameComparator());
+/*        TableRowSorter<SignalTableModel> sorter = new TableRowSorter<SignalTableModel>(_signalModel);
         _oBlockTable.setRowSorter(sorter);
+*/
+        try {   // following might fail due to a missing method on Mac Classic
+            TableSorter sorter = new TableSorter(_signalTable.getModel());
+            sorter.setTableHeader(_signalTable.getTableHeader());
+            _signalTable.setModel(sorter);
+        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
+            log.error("makeSignalFrame: Unexpected error: " + e);
+        }
+
         _signalTable.getColumnModel().getColumn(SignalTableModel.UNITSCOL).setCellRenderer(
                 new MyBooleanRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
         _signalTable.getColumnModel().getColumn(SignalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
