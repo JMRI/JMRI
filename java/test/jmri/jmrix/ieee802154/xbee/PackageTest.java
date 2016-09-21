@@ -31,7 +31,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(XBeeConnectionMemoTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XBeeTrafficControllerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XBeeNodeTest.class));
-        suite.addTest(new TestSuite(XBeeSensorManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XBeeSensorManagerTest.class));
         suite.addTest(new TestSuite(XBeeSensorTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XBeeLightManagerTest.class));
         suite.addTest(new TestSuite(XBeeLightTest.class));
