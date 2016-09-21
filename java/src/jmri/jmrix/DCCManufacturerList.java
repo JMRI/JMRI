@@ -6,7 +6,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Maintains lists equipment manufacturers that JMRI Supports.
- * <P>
+ * <p>
+ * Since JMRI 3.4.5, {@link jmri.jmrix.ConnectionTypeList} subclasses loadable
+ * by a {@link java.util.ServiceLoader} are used for this purpose.</p>
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
  * @deprecated Since 3.4.5 ensure the {@link jmri.jmrix.ConnectionTypeList} is
@@ -32,6 +35,7 @@ public class DCCManufacturerList {
     /**
      * Get a list of class names that handle the given system.
      *
+     * @param System the manufacturer name
      * @return The list of class names
      * @deprecated use
      * {@link jmri.jmrix.ConnectionConfigManager#getConnectionTypes(java.lang.String)}.
@@ -116,6 +120,8 @@ public class DCCManufacturerList {
      *
      * Note: No system should not be using a SystemConnectionMemo at this point.
      *
+     * @param a the system manufacturer
+     * @return a default system prefix
      * @deprecated Without replacement. Use
      * {@link jmri.util.ConnectionNameFromSystemName#getPrefixFromName(java.lang.String)}
      * for equivalent functionality.

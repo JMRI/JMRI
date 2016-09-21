@@ -13,10 +13,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ZeroConfServiceEvent extends EventObject {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8611294427862982023L;
     private final ZeroConfService service;
     private final JmDNS dns;
     private static final Logger log = LoggerFactory.getLogger(ZeroConfServiceEvent.class);
@@ -46,7 +42,7 @@ public class ZeroConfServiceEvent extends EventObject {
      */
     public InetAddress getAddress() {
         try {
-            return this.dns.getInterface();
+            return this.dns.getInetAddress();
         } catch (IOException ex) {
             log.error("Unable to get interface address.", ex);
             return null;

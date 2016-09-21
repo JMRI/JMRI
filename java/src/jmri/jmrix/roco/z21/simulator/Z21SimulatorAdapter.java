@@ -46,9 +46,8 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
      */
     @Override
     public void configure() {
-        if (log.isDebugEnabled()) {
-            log.debug("configure called");
-        }
+        log.debug("configure called");
+
         // connect to a packetizing traffic controller
         Z21TrafficController packets = new Z21TrafficController();
         packets.connectPort(this);
@@ -65,9 +64,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
 
     @Override
     public void connect() throws Exception {
-        if (log.isDebugEnabled()) {
-            log.debug("connect called");
-        }
+        log.debug("connect called");
 
        setHostAddress("localhost"); // always localhost for the simulation.
        super.connect();
@@ -151,7 +148,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
              case 0x0040:
                 // XPressNet tunnel message.
                 XNetMessage xnm = getXNetMessage(m);
-                log.debug("Received XNet Message: " + m);
+                log.debug("Received XNet Message: {}",  m);
                 XNetReply xnr=xnetadapter.generateReply(xnm);
                 reply = getZ21ReplyFromXNet(xnr);
                 break;
@@ -173,6 +170,10 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                 // get broadcast flags
                 reply = getZ21BroadCastFlagsReply();
                 break;
+             case 0x0089:
+                // Get Railcom Data
+                reply = getZ21RailComDataChangedReply();
+                break;
              case 0x0060:
                 // get loco mode
              case 0x0061:
@@ -187,8 +188,6 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                 // program RMBus module
              case 0x0085:
                 // get system state
-             case 0x0089:
-                  // Get Railcom Data
              case 0x00A2:
                   // loconet data from lan
              case 0x00A3:
@@ -246,6 +245,31 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
         reply.setElement(5,flags[1]);
         reply.setElement(6,flags[2]);
         reply.setElement(7,flags[3]);
+        return reply;
+    }
+
+    private Z21Reply getZ21RailComDataChangedReply(){
+        Z21Reply reply = new Z21Reply();
+        reply.setOpCode(0x0088);
+        reply.setLength(0x0004);
+        int offset=4;
+        for(int i = 0;i<xnetadapter.locoCount;i++) {
+            reply.setElement(offset++,xnetadapter.locoData[i].getAddressMsb());// byte 5, LocoAddress msb.
+            reply.setElement(offset++,xnetadapter.locoData[i].getAddressLsb());// byte 6, LocoAddress lsb.
+            reply.setElement(offset++,0x00);// bytes 7-10,32 bit reception counter.
+            reply.setElement(offset++,0x00);
+            reply.setElement(offset++,0x00); 
+            reply.setElement(offset++,0x01);
+            reply.setElement(offset++,0x00);// bytes 11-14,32 bit error counter.
+            reply.setElement(offset++,0x00);
+            reply.setElement(offset++,0x00); 
+            reply.setElement(offset++,0x00);
+            reply.setElement(offset++,xnetadapter.locoData[i].getSpeed());//currently reserved.Speed in firmware<=1.12
+            reply.setElement(offset++,0x00);//currently reserved.Options in firmware<=1.12
+            reply.setElement(offset++,0x00);//currently reserved.Temp in firmware<=1.12
+            reply.setLength(0xffff & offset);
+        }
+        log.debug("output {} offset: {}", reply.toString(),offset);
         return reply;
     }
 

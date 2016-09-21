@@ -326,7 +326,7 @@ public class OBlockManagerXml // extends XmlFile
             // sensor
             String name = reporter.getAttribute("systemName").getValue();
             try {
-                Reporter rep = InstanceManager.reporterManagerInstance().getReporter(name);
+                Reporter rep = InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(name);
                 if (rep != null) {
                     block.setReporter(rep);
                 }

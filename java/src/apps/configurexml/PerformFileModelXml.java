@@ -3,6 +3,7 @@ package apps.configurexml;
 import apps.PerformFileModel;
 import apps.StartupActionsManager;
 import java.io.File;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.util.FileUtil;
@@ -58,7 +59,12 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
         // load the file
         File file = new File(fileName);
-        result = InstanceManager.configureManagerInstance().load(file);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            result = cm.load(file);
+        } else {
+            result = false;
+        }
 
         // leave an updated object around
         PerformFileModel m = new PerformFileModel();

@@ -147,10 +147,10 @@ public class Bundle {
             if (rb.containsKey(key)) {
                 return rb.getString(key);
             } else {
-                return retry(key);
+                return retry(locale,key);
             }
         } else {  // case of no local bundle
-            return retry(key);
+            return retry(locale,key);
         }
     }
 
@@ -187,7 +187,7 @@ public class Bundle {
 
     // the following is different from the method in subclasses because
     // this is the root of the search tree
-    protected String retry(String key) throws MissingResourceException {
+    protected String retry(Locale locale,String key) throws MissingResourceException {
         throw new MissingResourceException("Resource not found", this.getClass().toString(), key); // NOI18N
     }
 

@@ -20,7 +20,7 @@ public class PackageTest extends TestCase {
         // initialize the system
         Programmer p = new ProgDebugger();
         InstanceManager.setProgrammerManager(new DefaultProgrammerManager(p));
-        assertTrue(InstanceManager.programmerManagerInstance().getGlobalProgrammer() == p);
+        assertTrue(InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer() == p);
     }
 
     // from here down is testing infrastructure
@@ -56,6 +56,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.symbolicprog.CombinedLocoSelListPaneTest.suite());
 
         suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.symbolicprog.configurexml.PackageTest.class));
         return suite;
     }
 

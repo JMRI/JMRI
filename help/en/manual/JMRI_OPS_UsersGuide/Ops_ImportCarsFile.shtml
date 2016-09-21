@@ -1,104 +1,131 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>JMRI OperationsPro - Importing Cars from a File</title>
-  
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
+  <title>JMRI OperationsPro - Importing Cars from a File</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header" -->
 
-<div id="mainContent"><a name="Top"></a>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h1>Using JMRI&reg; to Operate Trains</h1>
-<h2>OperationsPro: Importing Cars from a File</h2>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<div align="right">
-<p><a href="Ops_Cars_Menu.shtml">Back </a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
-</div>
-<hr>
+      <h1>Using JMRI&reg; to Operate Trains</h1>
 
-<h3>Import cars from file</h3>
-<p>Selecting <strong>Import cars from file</strong> from the Cars -&gt; Tools menu opens a system <strong>Open</strong> dialog box to allow you to
-select the file of your choice that meets the criteria
-defined below.<br>
-Note that OperationsPro will only add Cars that don't yet
-exist in the program's Car Roster. If a Car already exists, the
-import of that item will be skipped. You must also create the
-Locations and their Tracks before importing Cars into the
-OperationsPro program that use these place names.</p>
-<p>To improve the speed of the Car import, you may close the <strong>Cars</strong>
-window. It takes significantly more processor cycles to update the Cars
-panel during Import than to actually import the Car records.</p>
-<p>After importing your Car data, you must save the newly added entries if you want to keep
-them as part of your Roster. Select any Car in the Cars window list by pressing the <strong>Edit</strong> button
-and then press the <input name="button" id="button" value="Save" type="submit">
-that can be found at the bottom right of the <a href="Ops_AddCars.shtml"><strong>Edit Car</strong></a>
-window.</p>
-<p>If you already have a list of Cars records in a database, you can import these into the program. The Import function requires an ASCII text file,
-with one line for each Car.<br>
-The import order is:
-<ol>
-<li>Car Number</li>
-<li>Car Road Name</li>
-<li>Car Type</li>
-<li>Car Length</li>
-<li>Car Weight</li>
-<li>Car Color</li>
-</ol>
-<p>The following shows two example records in the correct format:</p>
+      <h2>OperationsPro: Importing Cars from a File</h2>
 
-<code>336 GCR Flat 40 3.8 Black<br>
-655578 UP Boxcar 40 3.8 Yellow</code>
+      <div align="right">
+        <p><a href="Ops_Cars_Menu.shtml">Back</a></p>
 
-<p>Each line can start with a space and multiple spaces between fields
-is okay. Optionally, you can include additional information in the
-following order:
-<ol>
-<li>Car Owner's Name</li>
-<li>Date Built</li>
-<li>Location</li>
-</ol>
-The Location can have two fields: the Location Name, followed by the Location's Track Name, separated by a hyphen "-".</p>
-<p>The following shows two example records in
-the correct format:</p>
-<code>
-336 GCR Flat 40 3.8 Black AT 1930 Home Town USA - George's Oil Terminal
-<br>
-655578 UP Boxcar 40 3.8 Yellow DB 1934 York - York Freight</code>
+        <p><a href="index.shtml#Operations">Back to Index</a></p>
+      </div>
+      <hr>
 
-<p>If you prefer to use comma delimiters instead of spaces, place the
-word "comma" at the start of your import file and use commas instead of
-spaces. The following are two examples of importing cars with comma
-delimiters:</p>
-<code>comma<br>
-336,GCR,Flat Car,40,3.8,Black,AT,1930,Home Town USA,-,George's Oil
-Terminal<br>
-655578,UP,Tank Car,40,3.8,Yellow,DB,1934,York,-,York Freight</code>
+      <h3>Import cars from file</h3>
 
-<p>You need to be very careful with spaces when importing a comma
-delimitated file. The program will include leading and trailing spaces
-if they exist between the commas.</p>
+      <p>Selecting <strong>Import cars from file</strong> from the
+      Cars -&gt; Tools menu opens a system <strong>Open</strong>
+      dialog box to allow you to select the file of your choice
+      that meets the criteria defined below.<br>
+      Note that OperationsPro will only add Cars that don't yet
+      exist in the program's Car Roster. If a Car already exists,
+      the import of that item will be skipped. You must also create
+      the Locations and their Tracks before importing Cars into the
+      OperationsPro program that use these place names.</p>
 
-<hr>
-<div align="right">
-<p><a href="Ops_Cars_Menu.shtml">Back </a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
-</div>
+      <p>To improve the speed of the Car import, you may close the
+      <strong>Cars</strong> window. It takes significantly more
+      processor cycles to update the Cars panel during Import than
+      to actually import the Car records.</p>
 
-<!--#include virtual="/Footer" -->
-</div>
-</div>
+      <p>After importing your Car data, you must save the newly
+      added entries if you want to keep them as part of your
+      Roster. Select any Car in the Cars window list by pressing
+      the <strong>Edit</strong> button and then press the
+      <input name="button" id="button" value="Save" type="submit">
+      that can be found at the bottom right of the <a href=
+      "Ops_AddCars.shtml"><strong>Edit Car</strong></a> window.</p>
+
+      <p>If you already have a list of Cars records in a database,
+      you can import these into the program. The Import function
+      requires an ASCII text file, with one line for each Car.<br>
+      The import order is:</p>
+
+      <ol>
+        <li>Car Number</li>
+
+        <li>Car Road Name</li>
+
+        <li>Car Type</li>
+
+        <li>Car Length</li>
+
+        <li>Car Weight</li>
+
+        <li>Car Color</li>
+      </ol>
+
+      <p>The following shows two example records in the correct
+      format:</p><code>336 GCR Flat 40 3.8 Black<br>
+      655578 UP Boxcar 40 3.8 Yellow</code>
+
+      <p>Each line can start with a space and multiple spaces
+      between fields is okay. Optionally, you can include
+      additional information in the following order:</p>
+
+      <ol>
+        <li>Car Owner's Name</li>
+
+        <li>Date Built</li>
+
+        <li>Location</li>
+      </ol>The Location can have two fields: the Location Name,
+      followed by the Location's Track Name, separated by a hyphen
+      "-".
+
+      <p>The following shows two example records in the correct
+      format:</p><code>336 GCR Flat 40 3.8 Black AT 1930 Home Town
+      USA - George's Oil Terminal<br>
+      655578 UP Boxcar 40 3.8 Yellow DB 1934 York - York
+      Freight</code>
+
+      <p>If you prefer to use comma delimiters instead of spaces,
+      place the word "comma" at the start of your import file and
+      use commas instead of spaces. The following are two examples
+      of importing cars with comma delimiters:</p><code>comma<br>
+      336,GCR,Flat Car,40,3.8,Black,AT,1930,Home Town
+      USA,-,George's Oil Terminal<br>
+      655578,UP,Tank Car,40,3.8,Yellow,DB,1934,York,-,York
+      Freight</code>
+
+      <p>You need to be very careful with spaces when importing a
+      comma delimitated file. The program will include leading and
+      trailing spaces if they exist between the commas.</p>
+      <hr>
+
+      <div align="right">
+        <p><a href="Ops_Cars_Menu.shtml">Back</a></p>
+
+        <p><a href="index.shtml#Operations">Back to Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

@@ -77,7 +77,8 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                                     .setAttribute("systemName", sname);
                             elem.addContent(new Element("systemName").addContent(sname));
                             // the following null check is to catch a null pointer exception that sometimes was found to happen
-                            if ((b.getUserName() != null) && (!b.getUserName().equals(""))) {
+                            String uname = b.getUserName();
+                            if ((uname != null) && (!uname.equals(""))) {
                                 elem.addContent(new Element("userName").addContent(b.getUserName()));
                             }
                             if (log.isDebugEnabled()) {
@@ -215,7 +216,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             if (sharedBlocks.getChild("defaultspeed") != null) {
                 String speed = sharedBlocks.getChild("defaultspeed").getText();
                 if (speed != null && !speed.equals("")) {
-                    InstanceManager.blockManagerInstance().setDefaultSpeed(speed);
+                    InstanceManager.getDefault(jmri.BlockManager.class).setDefaultSpeed(speed);
                 }
             }
         } catch (IllegalArgumentException ex) {
@@ -226,7 +227,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         if (log.isDebugEnabled()) {
             log.debug("Found " + list.size() + " objects");
         }
-        //BlockManager tm = InstanceManager.blockManagerInstance();
+        //BlockManager tm = InstanceManager.getDefault(jmri.BlockManager.class);
 
         for (int i = 0; i < list.size(); i++) {
             Element block = list.get(i);
@@ -251,10 +252,10 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             log.debug("defined Block: (" + sysName + ")(" + (userName == null ? "<null>" : userName) + ")");
         }
 
-        Block block = InstanceManager.blockManagerInstance().getBlock(sysName);
+        Block block = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(sysName);
         if (block == null) { // create it if doesn't exist
-            InstanceManager.blockManagerInstance().createNewBlock(sysName, userName);
-            block = InstanceManager.blockManagerInstance().getBlock(sysName);
+            InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(sysName, userName);
+            block = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(sysName);
         }
         if (block == null) {
             log.error("Unable to load block with system name " + sysName + " and username of " + (userName == null ? "<null>" : userName));
@@ -329,7 +330,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             // Reporter
             String name = reporters.get(0).getAttribute("systemName").getValue();
             try {
-                Reporter reporter = InstanceManager.reporterManagerInstance().provideReporter(name);
+                Reporter reporter = InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter(name);
                 block.setReporter(reporter);
                 block.setReportingCurrent(reporters.get(0).getAttribute("useCurrent").getValue().equals("yes"));
             } catch (IllegalArgumentException ex) {
@@ -381,7 +382,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         Block toBlock = null;
         if (element.getAttribute("block") != null) {
             String name = element.getAttribute("block").getValue();
-            toBlock = InstanceManager.blockManagerInstance().getBlock(name);
+            toBlock = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(name);
         }
         Path path = new Path(toBlock, toDir, fromDir);
 
@@ -430,7 +431,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
     }
 
     public int loadOrder() {
-        return InstanceManager.blockManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(jmri.BlockManager.class).getXMLOrder();
     }
 
     private final static Logger log = LoggerFactory.getLogger(BlockManagerXml.class.getName());

@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.IndicatorTurnoutIconXml objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2010
- * @version $Revision$
  */
 public class IndicatorTurnoutIconXml extends PositionableLabelXml {
 

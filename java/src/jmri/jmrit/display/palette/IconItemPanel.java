@@ -88,11 +88,11 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         blurb.add(new JLabel(Bundle.getMessage("AddToPanel")));
         blurb.add(new JLabel(Bundle.getMessage("DragIconPanel")));
-        blurb.add(new JLabel(Bundle.getMessage("DragIconCatalog", "ButtonShowCatalog")));
+        blurb.add(new JLabel(Bundle.getMessage("DragIconCatalog", Bundle.getMessage("ButtonShowCatalog"))));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         blurb.add(new JLabel(Bundle.getMessage("ToAddDeleteModify")));
         blurb.add(new JLabel(Bundle.getMessage("ToChangeName")));
-        blurb.add(new JLabel(Bundle.getMessage("ToDeleteIcon", "deleteIcon")));
+        blurb.add(new JLabel(Bundle.getMessage("ToDeleteIcon", Bundle.getMessage("deleteIcon"))));
         if (!isBackGround) {
             blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
             blurb.add(new JLabel(Bundle.getMessage("ToLinkToURL", "Icon")));
@@ -249,7 +249,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         if (_iconMap.get(name) != null) {
             JOptionPane.showMessageDialog(this,
                     Bundle.getMessage("DuplicateIconName", name),
-                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             name = setIconName(name);
             if (name == null || _iconMap.get(name) != null) {
                 return;
@@ -291,7 +291,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         while (_iconMap.get(name) != null) {
             JOptionPane.showMessageDialog(this,
                     Bundle.getMessage("DuplicateIconName", name),
-                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             name = JOptionPane.showInputDialog(this,
                     Bundle.getMessage("NoIconName"), name);
             if (name == null || name.trim().length() == 0) {

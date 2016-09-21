@@ -1,4 +1,3 @@
-// SdfMacro.java
 package jmri.jmrix.loconet.sdf;
 
 import java.util.ArrayList;
@@ -32,7 +31,6 @@ import org.slf4j.LoggerFactory;
  * editing (to avoid another dependency), but that's a project for another day)
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
  */
 public abstract class SdfMacro implements SdfConstants {
 
@@ -226,4 +224,3 @@ public abstract class SdfMacro implements SdfConstants {
     private static Logger log = LoggerFactory.getLogger(SdfMacro.class.getName());
 
 }
-/* @(#)SdfMacro.java */

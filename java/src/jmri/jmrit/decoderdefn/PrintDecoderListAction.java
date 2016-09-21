@@ -1,4 +1,3 @@
-// PrintDecoderListAction.java
 package jmri.jmrit.decoderdefn;
 
 import java.awt.Frame;
@@ -21,14 +20,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2005
- * @version $Revision$
  */
 public class PrintDecoderListAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4693793673785831632L;
 
     public PrintDecoderListAction(String actionName, Frame frame, boolean preview) {
         super(actionName);

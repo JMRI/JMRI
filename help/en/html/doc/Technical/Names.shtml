@@ -1,304 +1,395 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 <!-- $Id$ -->
+
 <html lang="en">
 <head>
-    <TITLE>
- 	JMRI: Names and Naming
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code names user name system name">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Names and Naming</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content=
+  "JMRI technical code names user name system name">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head><!--#include virtual="/Header" -->
 
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+    <div id="mainContent">
+      <h1>JMRI: Names and Naming</h1>This page discusses how JMRI
+      objects are named, how those names are used to reference the
+      objects (hardware and software), and how user-readable names
+      are used.
 
-<H1>JMRI: Names and Naming</H1>
+      <h2>What's in a name?</h2>Why do we need names at all, rather
+      than just references within the code? There are several
+      important uses:
 
-This page discusses how JMRI objects are named, how those names are
-used to reference the objects (hardware and software), and 
-how user-readable names are used.
+      <ol>
+        <li>When working with user input, e.g. typing a number in a
+        field, the code will need to know how to map the
+        user-provided info onto objects. Sometimes the user will
+        want to name objects with arbitrary user names, e.g. "East
+        Lockport Turnout". These can't be known until their mapping
+        to hardware has been made. But other times these will be
+        de-novo identifications that the code must understand, e.g.
+        something that means "LocoNet Turnout 23".</li>
 
-<h2>What's in a name?</h2>
+        <li>We imagine that configurations will be stored in XML
+        files, in a symbolic form. Names are a convenient way to
+        connect objects and object references in that kind of
+        configuration.</li>
+      </ol><a name="type" id="type"></a>
 
-Why do we need names at all, rather than just references within the code?
-There are several important uses:
-<OL>
-<LI>When working with user input, e.g. typing a number in a field, 
-the code will need to know how to map the user-provided info
-onto objects. Sometimes the user will want to name objects
-with arbitrary user names, e.g. "East Lockport Turnout". 
-These can't be known until their mapping to hardware has been made. 
-But other times these will be de-novo identifications that the 
-code must understand, e.g. something that means "LocoNet Turnout 23".
+      <h2>Items with names</h2>There are lots of things that might
+      need names:
 
-<LI>We imagine that configurations will be stored in XML files,
-in a symbolic form. Names are a convenient way to connect objects
-and object references in that kind of configuration.
-</OL>
+      <ul>
+        <li>Aspects for signals</li>
 
-<a name="type" id="type"></a>
-<H2>Items with names</h2>
-There are lots of things that might need names:
-<UL>
-<LI>Aspects for signals
-<LI>Blocks (track segments)
-<LI>signal Heads
-<LI>Lights (a type of output)
-<LI>Memories
-<LI>Outputs
-<LI>Power districts and subdistricts
-<LI>Routes
-<LI>input Sensors
-<LI>Turnouts
-<LI>logiX
-</UL>
+        <li>Blocks (track segments)</li>
 
-Some of these are associated with a specific hardware device, e.g. a particular
-turnout.  Others are more virtual, e.g. a route, which is a collection on control
-information within the program.
+        <li>signal Heads</li>
 
-<h2>System and User Names</h2>
+        <li>Lights (a type of output)</li>
 
-JMRI users both "system names" and "user names" to reference things.
+        <li>Memories</li>
 
-<P>
-We want users to be able to call things what they want.
-Names like "p(24,23)*" are not useful.  Every named item will therefore
-have a "user name", which is an entirely free-form string. You can put
-whatever you want in there, so long as it's not a duplicate of the name
-given to something else.  For example, you might call a Turnout "West Yard Lead"
-or "Turnout 32" or "Green Wire from Controller" or whatever.
+        <li>Outputs</li>
 
-<P>
-At the same time, we need a shorthand name, really a unique identifier, 
-to talk about specific objects.  This doesn't have to be convenient, but
-does have to have a clear mapping from name to object and back.  For example,
-we need a very specific way to identify "LocoNet Turnout 23".  We call these
-"system names".  JMRI code will map these to and from whatever information
-the hardware may need.
+        <li>Power districts and subdistricts</li>
 
-<H2>System Name Format</h2>
+        <li>Routes</li>
 
-A system name is formed from a short prefix representing the hardware system, 
-followed by a single upper case letter indicating the type, 
-followed by system- and type-specific string identifying a specific object. 
-The string is meant to be related to the hardware addressing, but
-is otherwise unconstrained.
-<P>
-Examples:
-<UL>
-<LI>LT23 - <u>L</u>ocoNet <u>T</u>urnout <u>23</u>.  
-<LI>CS12 - The <u>12</u>th <u>C</u>/MRI <u>S</u>ensor (input line).
-</ul>
+        <li>input Sensors</li>
 
-Note that there is no assumption of pattern to the names; they don't have
-to be assigned monotonically, nor are they restricted to a single system.
+        <li>Turnouts</li>
 
-<a name="hardware" id="hardware"></a>
-<H3>Hardware Prefix</h3>
-Originally, the "hardware prefix" was a single uppercase letter
-identifying a single system connection: L for LocoNet, N for NCE, etc.
-The default letters for those are listed below.
-This is still by far the most common use:  Most model railroads have a single
-connection, and just use the default letter.
+        <li>logiX</li>
+      </ul>Some of these are associated with a specific hardware
+      device, e.g. a particular turnout. Others are more virtual,
+      e.g. a route, which is a collection on control information
+      within the program.
 
-<p>
-The JMRI code is much more flexible than that, however.  This allows it to
-deal with multiple system connections and overlaps of letters (such as the
-multiple possibilities defined for "M" below). You change the letter
-associated with a system connection in the preferences to any other
-uppercase letter.  You can call your NCE connection &quot;P&quot; if you
-want to.  If you have two of them, you can call one &quot;X&quot; and 
-the other &quot;Y&quot;.  You can also use an upper case letter followed
-by digits, e.g. &quot;N1&quot; and &quot;N2&quot;.
+      <h2>System and User Names</h2>JMRI users both "system names"
+      and "user names" to reference things.
 
-<h4>Default System Letters</h4>
-Note that some of these are placeholders, and have no underlying implementation. 
-(Links are to JMRI pages with more information)
-<ul>
-<LI>A CTI <a href="../../hardware/acela/index.shtml">Acela</a>
-<LI>B Direct DCC control
-<LI>C <a href="../../hardware/cmri/CMRI.shtml">C/MRI serial</a>
-<LI>D <a href="../../hardware/SRCP/index.shtml">SRCP</a>
-<LI>E <a href="../../hardware/easydcc/EasyDCC.shtml">EasyDCC</a>
-<LI>F <a href="../../hardware/rfid/index.shtml">RFID tag readers</a>
-<LI>G ProTrak <a href="../../hardware/grapevine/index.shtml">Grapevine</a>
-<LI>H
-<LI>I Internal, e.g. objects with no associated hardware
-<LI>J
-<LI>K <a href="../../hardware/maple/index.shtml">Maple Systems</a>
-<LI>L <a href="../../hardware/loconet/Digitrax.shtml">LocoNet</a>
-<LI>M Model railroad layout control buses, including 
-      <a href="../../hardware/openlcb/index.shtml">OpenLCB</a> and 
-      <a href="../../hardware/can/cbus/index.shtml">MERG CBUS</a>.
-      Also used for the <a href="../../hardware/modbus/index.shtml">Modbus</a> master and slave implementation.
-<LI>N <a href="../../hardware/nce/NCE.shtml">NCE</a> (also <a href="../../hardware/nce/Wangrow.shtml">Wangrow</a> currently)
-<LI>O <a href="../../hardware/oaktree/OakTree.shtml">Oak Tree Systems</a>
-<LI>P <a href="../../hardware/powerline/index.shtml">Powerline transmission</a>, e.g. X10 and Insteon
-<LI>Q <a href="../../hardware/qsi/index.shtml">QSI programmer interface</a>
-<LI>R <a href="../../hardware/rps/index.shtml">RPS system</a>
-<LI>S <a href="../../hardware/sprog/SPROG.shtml">SPROG</a>
-<LI>T <a href="../../hardware/tmcc/index.shtml">Lionel TMCC</a>
-<li>U <a href="../../hardware/ecos/index.shtml">ESU ECoS</a>
-<LI>V TracTronics <a href="../../hardware/secsi/index.shtml">SECSI</a>
-<LI>W (reserved for Wangrow, but that's currently still combined with NCE)
-<LI>X <a href="../../hardware/XPressNet/index.shtml">XpressNet</a>
-<LI>Z <a href="../../hardware/zimo/Zimo.shtml">Zimo MX-1</a>
-</ul>
+      <p>We want users to be able to call things what they want.
+      Names like "p(24,23)*" are not useful. Every named item will
+      therefore have a "user name", which is an entirely free-form
+      string. You can put whatever you want in there, so long as
+      it's not a duplicate of the name given to something else. For
+      example, you might call a Turnout "West Yard Lead" or
+      "Turnout 32" or "Green Wire from Controller" or whatever.</p>
 
-<a name="types" id="types"></a>
-<H3>Device type letters</h3>
-Note that some of these are placeholders, and have no underlying implementation. Also, 
-there is no guarantee that any given hardware system will ever implement all of them.
+      <p>At the same time, we need a shorthand name, really a
+      unique identifier, to talk about specific objects. This
+      doesn't have to be convenient, but does have to have a clear
+      mapping from name to object and back. For example, we need a
+      very specific way to identify "LocoNet Turnout 23". We call
+      these "system names". JMRI code will map these to and from
+      whatever information the hardware may need.</p>
 
-<ul>
+      <h2>System Name Format</h2>A system name is formed from a
+      short prefix representing the hardware system, followed by a
+      single upper case letter indicating the type, followed by
+      system- and type-specific string identifying a specific
+      object. The string is meant to be related to the hardware
+      addressing, but is otherwise unconstrained.
 
-<li>A Audio - an internal software object that holds information about a sound
-sample to be placed at a specific position in 3d space
+      <p>Examples:</p>
 
-<li>B Block - A software object that keeps track of the contents of a specific block 
-of track
+      <ul>
+        <li>LT23 - <u>L</u>ocoNet <u>T</u>urnout <u>23</u>.</li>
 
-<li>D iDentity - A software object that holds information about an identity tag
-that is, typically, attached to a piece of rolling stock.  These objects are not
-system-specific but are Internal objects, hence have system names commencing with
-ID.  The underlying hardware will use Reporter objects to communicate back to
-JMRI when a specific iDentity object has been seen.
+        <li>CS12 - The <u>12</u>th <u>C</u>/MRI <u>S</u>ensor
+        (input line).</li>
+      </ul>Note that there is no assumption of pattern to the
+      names; they don't have to be assigned monotonically, nor are
+      they restricted to a single system. <a name="hardware" id=
+      "hardware"></a>
 
-<LI>F signal mast (F is not particularly mnemonic; maybe a mast with two heads
-looks like an F from the side?  All the good letters were taken)
+      <h3>Hardware Prefix</h3>Originally, the "hardware prefix" was
+      a single uppercase letter identifying a single system
+      connection: L for LocoNet, N for NCE, etc. The default
+      letters for those are listed below. This is still by far the
+      most common use: Most model railroads have a single
+      connection, and just use the default letter.
 
-<LI>H signal Head - One part of a signal (which may have multiple heads).  
-Also interpreted to include indicators on control panels that
-are acting to display signal aspects
+      <p>The JMRI code is much more flexible than that, however.
+      This allows it to deal with multiple system connections and
+      overlaps of letters (such as the multiple possibilities
+      defined for "M" below). You change the letter associated with
+      a system connection in the preferences to any other uppercase
+      letter. You can call your NCE connection "P" if you want to.
+      If you have two of them, you can call one "X" and the other
+      "Y". You can also use an upper case letter followed by
+      digits, e.g. "N1" and "N2".</p>
 
-<LI>M Memory - As yet, this has no real equivalent in the layout hardware,
-but is used as a place to store information temporarily and display it on panels, etc.
+      <h4>Default System Letters</h4>Note that some of these are
+      placeholders, and have no underlying implementation. (Links
+      are to JMRI pages with more information)
 
-<LI>L Light - another form of output, used to e.g. control lights on a layout
+      <ul>
+        <li>A CTI <a href=
+        "../../hardware/acela/index.shtml">Acela</a></li>
 
-<LI>P Power manager i.e. layout, district, subdistrict; not all systems 
-distinguish between these,
-so the device type letter doesn't either.  The system-specific part of the name
-can. For example, the system specific part might be B for main layout power, e.g. 
-LPB or S42 for subdistrict channel 2 on card 4, e.g. LPS42.
+        <li>B Direct DCC control</li>
 
-<LI>R Reporters - a general purpose mechanism for reporting complicated information
-from the layout, e.g. locomotive identification from some transponding hardware,
-RFID tag numbers, etc.
+        <li>C <a href="../../hardware/cmri/CMRI.shtml">C/MRI
+        serial</a></li>
 
-<LI>S Sensors - general purpose input sensors that can generally
-be either ACTIVE or INACTIVE. This is most commonly used for block occupancy
-detectors.
+        <li>D <a href=
+        "../../hardware/SRCP/index.shtml">SRCP</a></li>
 
-<LI>T Turnout - actually a general purpose output on the layout
+        <li>E <a href=
+        "../../hardware/easydcc/EasyDCC.shtml">EasyDCC</a></li>
 
-<LI>X logiX - a set of logic equations used to control the layout
-</ul>
+        <li>F <a href="../../hardware/rfid/index.shtml">RFID tag
+        readers</a></li>
 
-<a name="systeminfo" id="systeminfo"></a>
-<h3>System-specific info</H3>
-Each different hardware system can specify the "string" that follows the system and type 
-letters.  Generally, these are small numbers, but their exact meaning is very system-specific.
-For more information, please see the specific pages for
-<UL>
-<LI><A HREF="../../hardware/cmri/CMRI.shtml#numbers">C/MRI</a>
-<LI><A HREF="../../hardware/loconet/Addressing.shtml">Digitrax LocoNet</a>
-<LI><A HREF="../../hardware/grapevine/Names.shtml">Grapevine</a>
-<LI><A HREF="../../hardware/XPressNet/XNetAddressing.shtml ">Lenz XPressNet</a>
-<LI><A HREF="../../hardware/nce/NCE.shtml#names">NCE</a>
-<LI><A HREF="../../hardware/powerline/Names.shtml">Powerline adapters, e.g, X10, Insteon</a>
-</UL>
-(If you find any missing, please 
-<a href="getgitcode.shtml#propose">add a reference</a>)
-</UL>
+        <li>G ProTrak <a href=
+        "../../hardware/grapevine/index.shtml">Grapevine</a></li>
 
-<P>
-"Internal" objects can also be addressed and manipulated, but they don't have a strict
-correspondence with some hardware on the layout.  For example, if a signal head
-is implemented as three different outputs, LT1, LT2 and LT3, the signal head object
-might be called IH3.
+        <li>H</li>
 
+        <li>I Internal, e.g. objects with no associated
+        hardware</li>
 
-<a name="special" id="special"></a>
-<H2>Naming Conventions For Automated Use</h2>
+        <li>J</li>
 
-Some higher-level constructs create their own items.  For example, a
-"Sensor Group"
-is really just a collection of
-Routes
-that implements the sensor group logic; there is no specific object in the
-program that implements the sensor group. Instead, when the user
-creates sensor group "my group", a series of routes with system names like:
-<pre><code>
+        <li>K <a href="../../hardware/maple/index.shtml">Maple
+        Systems</a></li>
+
+        <li>L <a href=
+        "../../hardware/loconet/Digitrax.shtml">LocoNet</a></li>
+
+        <li>M Model railroad layout control buses, including
+        <a href="../../hardware/openlcb/index.shtml">OpenLCB</a>
+        and <a href="../../hardware/can/cbus/index.shtml">MERG
+        CBUS</a>. Also used for the <a href=
+        "../../hardware/modbus/index.shtml">Modbus</a> master and
+        slave implementation.</li>
+
+        <li>N <a href="../../hardware/nce/NCE.shtml">NCE</a> (also
+        <a href="../../hardware/nce/Wangrow.shtml">Wangrow</a>
+        currently)</li>
+
+        <li>O <a href="../../hardware/oaktree/OakTree.shtml">Oak
+        Tree Systems</a></li>
+
+        <li>P <a href=
+        "../../hardware/powerline/index.shtml">Powerline
+        transmission</a>, e.g. X10 and Insteon</li>
+
+        <li>Q <a href="../../hardware/qsi/index.shtml">QSI
+        programmer interface</a></li>
+
+        <li>R <a href="../../hardware/rps/index.shtml">RPS
+        system</a></li>
+
+        <li>S <a href=
+        "../../hardware/sprog/SPROG.shtml">SPROG</a></li>
+
+        <li>T <a href="../../hardware/tmcc/index.shtml">Lionel
+        TMCC</a></li>
+
+        <li>U <a href="../../hardware/ecos/index.shtml">ESU
+        ECoS</a></li>
+
+        <li>V TracTronics <a href=
+        "../../hardware/secsi/index.shtml">SECSI</a></li>
+
+        <li>W (reserved for Wangrow, but that's currently still
+        combined with NCE)</li>
+
+        <li>X <a href=
+        "../../hardware/XPressNet/index.shtml">XpressNet</a></li>
+
+        <li>Z <a href="../../hardware/zimo/Zimo.shtml">Zimo
+        MX-1</a></li>
+      </ul><a name="types" id="types"></a>
+
+      <h3>Device type letters</h3>Note that some of these are
+      placeholders, and have no underlying implementation. Also,
+      there is no guarantee that any given hardware system will
+      ever implement all of them.
+
+      <ul>
+        <li>A Audio - an internal software object that holds
+        information about a sound sample to be placed at a specific
+        position in 3d space</li>
+
+        <li>B Block - A software object that keeps track of the
+        contents of a specific block of track</li>
+
+        <li>D iDentity - A software object that holds information
+        about an identity tag that is, typically, attached to a
+        piece of rolling stock. These objects are not
+        system-specific but are Internal objects, hence have system
+        names commencing with ID. The underlying hardware will use
+        Reporter objects to communicate back to JMRI when a
+        specific iDentity object has been seen.</li>
+
+        <li>F signal mast (F is not particularly mnemonic; maybe a
+        mast with two heads looks like an F from the side? All the
+        good letters were taken)</li>
+
+        <li>H signal Head - One part of a signal (which may have
+        multiple heads). Also interpreted to include indicators on
+        control panels that are acting to display signal
+        aspects</li>
+
+        <li>M Memory - As yet, this has no real equivalent in the
+        layout hardware, but is used as a place to store
+        information temporarily and display it on panels, etc.</li>
+
+        <li>L Light - another form of output, used to e.g. control
+        lights on a layout</li>
+
+        <li>P Power manager i.e. layout, district, subdistrict; not
+        all systems distinguish between these, so the device type
+        letter doesn't either. The system-specific part of the name
+        can. For example, the system specific part might be B for
+        main layout power, e.g. LPB or S42 for subdistrict channel
+        2 on card 4, e.g. LPS42.</li>
+
+        <li>R Reporters - a general purpose mechanism for reporting
+        complicated information from the layout, e.g. locomotive
+        identification from some transponding hardware, RFID tag
+        numbers, etc.</li>
+
+        <li>S Sensors - general purpose input sensors that can
+        generally be either ACTIVE or INACTIVE. This is most
+        commonly used for block occupancy detectors.</li>
+
+        <li>T Turnout - actually a general purpose output on the
+        layout</li>
+
+        <li>X logiX - a set of logic equations used to control the
+        layout</li>
+      </ul><a name="systeminfo" id="systeminfo"></a>
+
+      <h3>System-specific info</h3>Each different hardware system
+      can specify the "string" that follows the system and type
+      letters. Generally, these are small numbers, but their exact
+      meaning is very system-specific. For more information, please
+      see the specific pages for
+
+      <ul>
+        <li><a href=
+        "../../hardware/cmri/CMRI.shtml#numbers">C/MRI</a></li>
+
+        <li><a href=
+        "../../hardware/loconet/Addressing.shtml">Digitrax
+        LocoNet</a></li>
+
+        <li><a href=
+        "../../hardware/grapevine/Names.shtml">Grapevine</a></li>
+
+        <li><a href=
+        "../../hardware/XPressNet/XNetAddressing.shtml">Lenz
+        XPressNet</a></li>
+
+        <li><a href=
+        "../../hardware/nce/NCE.shtml#names">NCE</a></li>
+
+        <li><a href=
+        "../../hardware/powerline/Names.shtml">Powerline adapters,
+        e.g, X10, Insteon</a></li>
+      </ul>(If you find any missing, please <a href=
+      "getgitcode.shtml#propose">add a reference</a>)
+
+      <p>"Internal" objects can also be addressed and manipulated,
+      but they don't have a strict correspondence with some
+      hardware on the layout. For example, if a signal head is
+      implemented as three different outputs, LT1, LT2 and LT3, the
+      signal head object might be called IH3. <a name="special" id=
+      "special"></a></p>
+
+      <h2>Naming Conventions For Automated Use</h2>Some
+      higher-level constructs create their own items. For example,
+      a "Sensor Group" is really just a collection of Routes that
+      implements the sensor group logic; there is no specific
+      object in the program that implements the sensor group.
+      Instead, when the user creates sensor group "my group", a
+      series of routes with system names like:
+      <pre>
+<code>
 SENSOR GROUP:my group:LS1
 SENSOR GROUP:my group:LS2
-</code></pre>
-are created which implements the group. The sensor group tool knows to look
-for routes of this name.
-<P>
-To make this possible, two informal rules are used:
-<UL>
-<LI>Users should not use the : (colon, ASCII 0x3A),
-&quot; (double quote, ASCII 0x22),
-nor 
-$ (dollar sign, ASCII 0x24 ) 
-characters in their system or user names.
-Automatic tools should use at least one of these to make sure they don't collide
-with user-selected names. Quotes should always be used in pairs to allow nesting.
+</code>
+</pre>are created which implements the group. The sensor group tool
+knows to look for routes of this name.
 
-<LI>Tools that use this method have their tool name in any system names
-they create, as "SENSOR GROUP" was used above.
-</UL>
-<P>
-The list of tools currently working this way is:
-<UL>
-<LI>SENSOR GROUPS - <a href="http://www.jmri.org/JavaDoc/doc/jmri/jmrit/sensorgroup/package-summary.html">jmri.jmrit.sensorgroup</a>
-<LI>USS CTC - <a href="http://www.jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/package-summary.html">jmri.jmrit.ussctc</a>
-<LI>SignalHeads - particularly the <a href="http://www.jmri.org/JavaDoc/doc/jmri/implementation/SE8cSignalHead.html">SE8C signal head</a>
-</UL>
+      <p>To make this possible, two informal rules are used:</p>
 
-<H2>Notes</h2>
-<UL>
+      <ul>
+        <li>Users should not use the : (colon, ASCII 0x3A), "
+        (double quote, ASCII 0x22), nor $ (dollar sign, ASCII 0x24
+        ) characters in their system or user names. Automatic tools
+        should use at least one of these to make sure they don't
+        collide with user-selected names. Quotes should always be
+        used in pairs to allow nesting.</li>
 
-<LI>Some devices are not really named, as there's no idea of more than one yet.
-The DCC programmer is the first example, but there may be others.
+        <li>Tools that use this method have their tool name in any
+        system names they create, as "SENSOR GROUP" was used
+        above.</li>
+      </ul>
 
-<LI>The system name convention doesn't provide a specific way to identify more
-than one adapter of a given type.  E.g. if you're connected to more than
-one LocoNet, or more than one command station of any single type, 
-you can either give the second one a separate letter (L, then M) or 
-you can identify the 2nd one with a modifier (L, then L2).
-That's a bit ambiguous, but there are proponents of both approaches so we make them
-both available.
+      <p>The list of tools currently working this way is:</p>
 
-<LI>There's no provision for a single program to deal with more
-than one layout.  If that's needed, we'll have to understand what 
-the program is trying to do.
-</UL>
+      <ul>
+        <li>SENSOR GROUPS - <a href=
+        "http://www.jmri.org/JavaDoc/doc/jmri/jmrit/sensorgroup/package-summary.html">
+        jmri.jmrit.sensorgroup</a></li>
 
-<!--#include virtual="/Footer" -->
+        <li>USS CTC - <a href=
+        "http://www.jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/package-summary.html">
+        jmri.jmrit.ussctc</a></li>
 
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+        <li>SignalHeads - particularly the <a href=
+        "http://www.jmri.org/JavaDoc/doc/jmri/implementation/SE8cSignalHead.html">
+        SE8C signal head</a></li>
+      </ul>
+
+      <h2>Notes</h2>
+
+      <ul>
+        <li>Some devices are not really named, as there's no idea
+        of more than one yet. The DCC programmer is the first
+        example, but there may be others.</li>
+
+        <li>The system name convention doesn't provide a specific
+        way to identify more than one adapter of a given type. E.g.
+        if you're connected to more than one LocoNet, or more than
+        one command station of any single type, you can either give
+        the second one a separate letter (L, then M) or you can
+        identify the 2nd one with a modifier (L, then L2). That's a
+        bit ambiguous, but there are proponents of both approaches
+        so we make them both available.</li>
+
+        <li>There's no provision for a single program to deal with
+        more than one layout. If that's needed, we'll have to
+        understand what the program is trying to do.</li>
+      </ul><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-

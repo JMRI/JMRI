@@ -1,214 +1,408 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
 <!-- Translated by Herv&#233; Blorec bzh56420@yahoo.fr 2013-11-03 -->
-<HTML LANG="fr">
-<HEAD>
-<TITLE>JMRI: Panel Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Bob Jacobsen" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Panel">
 
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<BODY>
-<!--#include virtual="/Header" -->
+  <title>JMRI: Panel Help</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI help Panel"><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Mandat</h1>Un Mandat est une collection d'informations
+      suffisantes pour ex&eacute;cuter un train automatis&eacute;.
+      Il fixera les aiguillages pour un itin&eacute;raire
+      sp&eacute;cifi&eacute;e et conduire le train sur
+      l'itin&eacute;raire. Lors de l'ex&eacute;cution, en utilisant
+      la d&eacute;tection d'occupation du canton et de la
+      configuration de signal, il faire un meilleur effort pour
+      commande la vitesse en fonction de l'aspect des signaux et
+      maintenir le mouvement jusqu'&agrave; ce que les conditions
+      d'occupation soient claires en avant. Un Mandat JMRI est
+      &eacute;vocateur de ce qu'un Mandat fait sur un chemin de fer
+      mod&egrave;le, mais il n'y a aucune intention de reproduire
+      un mode particulier d'op&eacute;ration de chemin de fer .
+      Elle est tout simplement l'id&eacute;e de donner &agrave; un
+      syst&egrave;me automatis&eacute; le droits de circulation des
+      trains pour se d&eacute;placer du point A au point B.
 
-<H1>Mandat</h1>
+      <p><b>Mandat</b>est d&eacute;pendant de la description
+      pr&eacute;cise du r&eacute;seau en termes de <b>Ocantons</b>,
+      <b>Portails</b>et <b>OChemins</b> . Ces
+      &eacute;l&eacute;memts sont cr&eacute;&eacute;s en utilisant
+      les <b>Tableaux Canton d'Occupation</b>que vous trouverez
+      sous les menus <b>Outils</b>dans la fen&ecirc;tre PanelPro ou
+      le menu de Commande du Panneau &Eacute;diteur <b>Ajouter les
+      &Eacute;l&eacute;ments</b>. En outre, ils peuvent &ecirc;tre
+      cr&eacute;&eacute;s en utilisant les options de menu sous le
+      Menu <b>Constructeur de Circuit</b>de l'&Eacute;diteur du
+      Panneau de configuration. Leurs d&eacute;finitions et comment
+      les utiliser sont d&eacute;crits dans <a href=
+      "OBlockTable.shtml">les Tableaux Canton d'Occupation</a>.</p>
 
-Un Mandat est une collection d'informations suffisantes pour ex&#233;cuter un train automatis&#233;.
-Il fixera les aiguillages pour un itin&#233;raire sp&#233;cifi&#233;e et conduire le train sur l'itin&#233;raire.
-Lors de l'ex&#233;cution, en utilisant la d&#233;tection d'occupation du canton et de la configuration de signal, il
-faire un meilleur effort pour commande la vitesse en fonction de l'aspect des signaux et maintenir le mouvement jusqu'&#224; ce que les
-conditions d'occupation soient claires en avant.
-Un Mandat JMRI est &#233;vocateur de ce qu'un Mandat fait sur un chemin de fer mod&#232;le, mais
-il n'y a aucune intention de reproduire un mode particulier d'op&#233;ration de chemin de fer
-. Elle est tout simplement l'id&#233;e de donner &#224; un syst&#232;me automatis&#233; le droits de circulation des trains pour
-se d&#233;placer du point A au point B.
-<p>
-<b>Mandat</b>est d&#233;pendant de la description pr&#233;cise du r&#233;seau en termes de
-<b>Ocantons</b>, <b>Portails</b>et <b>OChemins </b>. Ces &#233;l&#233;memts sont
-cr&#233;&#233;s en utilisant les <b>Tableaux Canton d'Occupation</b>que vous trouverez sous
-les menus <b>Outils</b>dans la fen&#234;tre PanelPro ou le menu de Commande du Panneau &#201;diteur <b>Ajouter les &#201;l&#233;ments</b>. En outre, ils peuvent &#234;tre cr&#233;&#233;s en utilisant les options de menu sous le Menu <b>Constructeur de Circuit</b>de l'&#201;diteur du Panneau de configuration</b>. Leurs d&#233;finitions
-et comment les utiliser sont d&#233;crits dans
-<a href="OBlockTable.shtml">les Tableaux Canton d'Occupation</a>.
-<p>
-Il peut &#234;tre plus facile de d&#233;finir <b>Ocantons</b>, <b>Portails</b>et <b>OChelins</b>&#224; l'aide de l'outil
-<b>Constructeur de Circuit</b>trouv&#233; dans l'&#201;diteur de Panneau de Commande. Le Constructeur de Circuit
-est un outil interactif qui cr&#233;e graphiquement Ocantons , Portails et chemins. le Constructeur de Circuit va aussi convertir les segments de voie et les ic&#244;nes d'aiguillages de votre r&#233;seau en ic&#244;nes
-Indicatrices de voie et Indicatrices d'Aiguillage. Ces ic&#244;nes s'affichent en couleur l'
-&#233;tat du Ocanton qu'ils repr&#233;sentent-si le circuit de voie du Ocanton est
-occup&#233; ou non, si un Mandat l'a allou&#233; ou si un train
-sous Mandat actuellement se d&#233;place sur le circuit. Le <b>Constructeur de Circuit</b>
-est accessible sous le Menu <b>Constructeur de Circuit</b>de l'&#201;diteur du Panneau de Commande.
-Des Instructions pour l'utilisation figurent dans
- <a href="..\display\CircuitBuilder.shtml">Le Constructeur de Circuit </a>.
-</p>
-</p>
+      <p>Il peut &ecirc;tre plus facile de d&eacute;finir
+      <b>Ocantons</b>, <b>Portails</b>et <b>OChelins</b>&agrave;
+      l'aide de l'outil <b>Constructeur de Circuit</b>trouv&eacute;
+      dans l'&Eacute;diteur de Panneau de Commande. Le Constructeur
+      de Circuit est un outil interactif qui cr&eacute;e
+      graphiquement Ocantons , Portails et chemins. le Constructeur
+      de Circuit va aussi convertir les segments de voie et les
+      ic&ocirc;nes d'aiguillages de votre r&eacute;seau en
+      ic&ocirc;nes Indicatrices de voie et Indicatrices
+      d'Aiguillage. Ces ic&ocirc;nes s'affichent en couleur l'
+      &eacute;tat du Ocanton qu'ils repr&eacute;sentent-si le
+      circuit de voie du Ocanton est occup&eacute; ou non, si un
+      Mandat l'a allou&eacute; ou si un train sous Mandat
+      actuellement se d&eacute;place sur le circuit. Le
+      <b>Constructeur de Circuit</b> est accessible sous le Menu
+      <b>Constructeur de Circuit</b>de l'&Eacute;diteur du Panneau
+      de Commande. Des Instructions pour l'utilisation figurent
+      dans <a href="../display/CircuitBuilder.shtml">Le
+      Constructeur de Circuit</a> .</p>
 
-<H2>Cr&#233;ation d'un Mandat</h2>
-Afin de cr&#233;er un <b>Mandat</b>, vous devez d'abord avoir cr&#233;&#233; deux ou plusieurs Ocantons.
-Ces cantons n'ont pas &#224; &#234;tre enti&#232;rement d&#233;finis, mais leur existence indique que vous &#234;tes
-int&#233;ress&#233;s par l'utilisation d'unMandat.
-Lorsque deux ou plusieurs Ocantons existent
-l'&#233;diteur de panneau affichera un menu <b>Mandat</b> avec quatre
-&#233;l&#233;ments de menu. Sinon, ce menu ne s'affiche pas. Les &#233;l&#233;ments du menu d'option sont:
-<ul>
-        <li><b>Liste Mandat</b>:-Ouvre un tableau de Mandat &#224; partir duquel vous
-        pouvez contr&#244;ler les itin&#233;raires des Mandats et les trains exp&#233;di&#233;s.</li>
-        <li><b>Modifier Mandat...</b>:-Affiche la liste des Mandats existants.
-        La S&#233;lection d'une va ouvrir une fen&#234;tre d'&#233;dition des Mandats. L'utilisation de cette fen&#234;tre est expliqu&#233;e dans<A HREF="WarrantTable.shtml"> Cr&#233;er et &#233;diter des bons de souscription</A>.</Li>
-        <li><b>Cr&#233;er un nouveau Mandat </b>:-Apr&#232;s avoir fourni les noms syst&#232;me et utilisateur de celle*ci
-ouvre une fen&#234;tre d'&#233;dition d' un Mandat en blanc pour cr&#233;er un nouveau Mandat. Les
-        op&#233;rations de ce cadre sont discut&#233;s dans<a HREF="WarrantTable.shtml"> Cr&#233;er et &#233;diter des bons de souscription</A>.</Li>
-<li><b>Suivi des trains</b>:-Ouvre la fen&#234;tre o&#249; l'identit&#233; des trains peut &#234;tre
-affich&#233;e quand ils se d&#233;placent d'un canton d'occupation &#224; l'autre.</li>
-</ul>
+      <h2>Cr&eacute;ation d'un Mandat</h2>Afin de cr&eacute;er un
+      <b>Mandat</b>, vous devez d'abord avoir cr&eacute;&eacute;
+      deux ou plusieurs Ocantons. Ces cantons n'ont pas &agrave;
+      &ecirc;tre enti&egrave;rement d&eacute;finis, mais leur
+      existence indique que vous &ecirc;tes
+      int&eacute;ress&eacute;s par l'utilisation d'unMandat.
+      Lorsque deux ou plusieurs Ocantons existent l'&eacute;diteur
+      de panneau affichera un menu <b>Mandat</b> avec quatre
+      &eacute;l&eacute;ments de menu. Sinon, ce menu ne s'affiche
+      pas. Les &eacute;l&eacute;ments du menu d'option sont:
 
-<H2>Fonctions d'un Mandat</h2>
+      <ul>
+        <li><b>Liste Mandat</b>:-Ouvre un tableau de Mandat
+        &agrave; partir duquel vous pouvez contr&ocirc;ler les
+        itin&eacute;raires des Mandats et les trains
+        exp&eacute;di&eacute;s.</li>
 
-<H3>Cr&#233;ation d'itin&#233;raires</h3>
-Un itin&#233;raire de Mandat est une s&#233;rie de chemins de canton reli&#233;s entre eux de mani&#232;re &#224; ce qu'un train
-puisse se d&#233;placer &#224; travers. Un itin&#233;raire de Mandat est cr&#233;&#233; en choisissant d'abord un <b>
-canton d'origine</b>, un chemin de d&#233;part et un portail pour quitter le canton originaire. Ensuite un
-<b>canton destination</b> est choisi et un chemin sur lequel finir l'itin&#233;raire. Les cantons
-sont choisis soit en tapant le nom du canton ou en le faisant glisser &#224; partir d'un affichage d'un Tableau
-Ocanton. Un algorithme d'ordinateur d&#233;termine tous les cantons interm&#233;diaires et les chemins pour faire le trajet. Vous avez des options pour inclure ou &#233;viter des cantons sp&#233;cifi&#233;s dans l'itin&#233;raire.
-<a HREF="WarrantTable.shtml"> Cr&#233;ation et &#233;dition de bons de souscription</A> a plus
-d'informations sur la cr&#233;ation d'itin&#233;raires.</p>
+        <li><b>Modifier Mandat...</b>:-Affiche la liste des Mandats
+        existants. La S&eacute;lection d'une va ouvrir une
+        fen&ecirc;tre d'&eacute;dition des Mandats. L'utilisation
+        de cette fen&ecirc;tre est expliqu&eacute;e dans <a href=
+        "WarrantTable.shtml">Cr&eacute;er et &eacute;diter des bons
+        de souscription</a>.</li>
 
-<H3>Script pour l'Action du Train</h3>
-La deuxi&#232;me partie d'un Mandat sont les commandes du r&#233;gulateur pour commander le train qui traverse l'itin&#233;raire. Ceci est fait en mettant un r&#233;gulateur &#224; l'&#233;cran en mode <i>apprentissage</i> qui enregistre toutes les commandes de r&#233;gulateur que vous faites lorsque vous conduisez le train sur l'itin&#233;raire. Ce script peut alors
-&#234;tre rejou&#233; pour conduire le train automatiquement. Toutes les fonctions possibles du r&#233;gulateur peuvent &#234;tre enregistr&#233;es
-et lues.
+        <li><b>Cr&eacute;er un nouveau Mandat</b> :-Apr&egrave;s
+        avoir fourni les noms syst&egrave;me et utilisateur de
+        celle*ci ouvre une fen&ecirc;tre d'&eacute;dition d' un
+        Mandat en blanc pour cr&eacute;er un nouveau Mandat. Les
+        op&eacute;rations de ce cadre sont discut&eacute;s dans
+        <a href="WarrantTable.shtml">Cr&eacute;er et &eacute;diter
+        des bons de souscription</a>.</li>
 
-<H3>Personnalisation du Script</h3>
-Le script peut &#234;tre modifi&#233; pour modifier les commandes enregistr&#233;es.Des &#233;v&#233;nements non r&#233;gulateur suppl&#233;mentaires
-peuvent &#234;tre ajouter au script tel que le d&#233;clenchement ou la r&#233;ponse &#224; des capteurs externes.
-<a HREF="WarrantTable.shtml"> Cr&#233;ation et &#201;dition de Mandat</A> contient plus
-informations sur la cr&#233;ation et la personnalisation des scripts.</p>
+        <li><b>Suivi des trains</b>:-Ouvre la fen&ecirc;tre
+        o&ugrave; l'identit&eacute; des trains peut &ecirc;tre
+        affich&eacute;e quand ils se d&eacute;placent d'un canton
+        d'occupation &agrave; l'autre.</li>
+      </ul>
 
+      <h2>Fonctions d'un Mandat</h2>
 
-<H2>Utilisation de la Liste des Mandats </h2>
-L'&#233;l&#233;ment <b>Liste Mandat </b> du menu ouvre le <b>Tableau Mandat</b>. Chaque ligne est un
-Mandat qui a &#233;t&#233; cr&#233;&#233; et enregistr&#233;. Les itin&#233;raires des Mandats  peuvent &#234;tre attribu&#233;s, &#224; savoir r&#233;serv&#233;s
-pour ce Mandat, les aiguillages pour l'itin&#233;raire peuvent &#234;tre d&#233;finis et lorsque le Mandat est ex&#233;cut&#233;, son statut est repr&#233;sent&#233; et command&#233; en utilisant les colonnes de la table.
+      <h3>Cr&eacute;ation d'itin&eacute;raires</h3>Un
+      itin&eacute;raire de Mandat est une s&eacute;rie de chemins
+      de canton reli&eacute;s entre eux de mani&egrave;re &agrave;
+      ce qu'un train puisse se d&eacute;placer &agrave; travers. Un
+      itin&eacute;raire de Mandat est cr&eacute;&eacute; en
+      choisissant d'abord un <b>canton d'origine</b>, un chemin de
+      d&eacute;part et un portail pour quitter le canton
+      originaire. Ensuite un <b>canton destination</b> est choisi
+      et un chemin sur lequel finir l'itin&eacute;raire. Les
+      cantons sont choisis soit en tapant le nom du canton ou en le
+      faisant glisser &agrave; partir d'un affichage d'un Tableau
+      Ocanton. Un algorithme d'ordinateur d&eacute;termine tous les
+      cantons interm&eacute;diaires et les chemins pour faire le
+      trajet. Vous avez des options pour inclure ou &eacute;viter
+      des cantons sp&eacute;cifi&eacute;s dans l'itin&eacute;raire.
+      <a href="WarrantTable.shtml">Cr&eacute;ation et
+      &eacute;dition de bons de souscription</a> a plus
+      d'informations sur la cr&eacute;ation d'itin&eacute;raires.
 
-<H3>Colonnes dans le Tableau Mandat</h3>
-<ul>
+      <h3>Script pour l'Action du Train</h3>La deuxi&egrave;me
+      partie d'un Mandat sont les commandes du r&eacute;gulateur
+      pour commander le train qui traverse l'itin&eacute;raire.
+      Ceci est fait en mettant un r&eacute;gulateur &agrave;
+      l'&eacute;cran en mode <i>apprentissage</i> qui enregistre
+      toutes les commandes de r&eacute;gulateur que vous faites
+      lorsque vous conduisez le train sur l'itin&eacute;raire. Ce
+      script peut alors &ecirc;tre rejou&eacute; pour conduire le
+      train automatiquement. Toutes les fonctions possibles du
+      r&eacute;gulateur peuvent &ecirc;tre enregistr&eacute;es et
+      lues.
+
+      <h3>Personnalisation du Script</h3>Le script peut &ecirc;tre
+      modifi&eacute; pour modifier les commandes
+      enregistr&eacute;es.Des &eacute;v&eacute;nements non
+      r&eacute;gulateur suppl&eacute;mentaires peuvent &ecirc;tre
+      ajouter au script tel que le d&eacute;clenchement ou la
+      r&eacute;ponse &agrave; des capteurs externes. <a href=
+      "WarrantTable.shtml">Cr&eacute;ation et &Eacute;dition de
+      Mandat</a> contient plus informations sur la cr&eacute;ation
+      et la personnalisation des scripts.
+
+      <h2>Utilisation de la Liste des
+      Mandats</h2>L'&eacute;l&eacute;ment <b>Liste Mandat</b> du
+      menu ouvre le <b>Tableau Mandat</b>. Chaque ligne est un
+      Mandat qui a &eacute;t&eacute; cr&eacute;&eacute; et
+      enregistr&eacute;. Les itin&eacute;raires des Mandats peuvent
+      &ecirc;tre attribu&eacute;s, &agrave; savoir
+      r&eacute;serv&eacute;s pour ce Mandat, les aiguillages pour
+      l'itin&eacute;raire peuvent &ecirc;tre d&eacute;finis et
+      lorsque le Mandat est ex&eacute;cut&eacute;, son statut est
+      repr&eacute;sent&eacute; et command&eacute; en utilisant les
+      colonnes de la table.
+
+      <h3>Colonnes dans le Tableau Mandat</h3>
+
+      <ul>
         <li><b>Mandat</b>:-Le nom du Mandat</li>
-        <li><b>Itin&#233;raire</b>:-Le parcours du Mandat est r&#233;pertori&#233; dans une liste d&#233;roulante
-en cliquant sur la cellule du tableau</li>
-        <li><b>Nom de train</b>:-L'identification du train , comme indiqu&#233; dans la Liste. Cette cellule peut &#234;tre
-&#233;dit&#233;e et son contenu est affich&#233; par lic&#244;ne indicatrice de voie lorsque le train
-occupe le Ocanton. (Les Menu contextuel d'&#233;dition d'Ic&#244;nes Indicatrice de Voie ont une case &#224; cocher
-pour activer cette fonction)</li>
-        <li><b>Adresse DCC</b>:-L'adresse DCC de la locomotive ou du couplager. Cette cellule peut
-&#234;tre modifi&#233;e pour correspondre &#224; la puissance actuelle de la motrice du train.</li>
-        <li><b>Allouer</b>:-Un bouton qui se r&#233;serve l'itin&#233;raire pour le Mandat. Les Ic&#244;nes Indicatrices de Voie s'affichent en vert pour indiquer l'itin&#233;raire.</Li>
-        <li><b>Lib&#233;rer</b>:-Un bouton qui supprime la r&#233;servation pour le Mandat</li>
-        <li><b>D&#233;finir</b>:-Un bouton qui alloue et d&#233;finit les aiguillages pour l'itin&#233;raire du Mandat</li>
-        <li><b>Ex&#233;cuter</b>:-Un bouton qui ex&#233;cute le train sur la route en fonction des commandes du r&#233;gulateur automatis&#233;. La vitesse consign&#233;e du train sera modifi&#233; en
-fonction de l'occupation et des aspects des signaux rencontr&#233;s sur l'itin&#233;raire. Les Ic&#244;nes Indicatrices de voie affichent la position actuelle du train avec une couleur bleue.</li>
-        <li><b>Commande/Statut</b>:-L'&#233;tat du Mandat est montr&#233;. Il a &#233;galement une zone de liste d&#233;roulante qui permet d'envoyer les commandes suivantes pour un train.
-<b><i>Remarque</b>: Cette colonne a deux fonctions-Les messages d'&#233;tat et boutons de commande.</I>
-        <ul>
-        <li><b>Halte</b>- suspend momentan&#233;ment le train et suspend l'ex&#233;cution du
-script de commande du r&#233;gulateur</li>
-<li><b>CV</b>-Rampes jusqu'&#224; la vitesse du train &#224; son ancien niveau et
-red&#233;marre le script de commande du r&#233;gulateur
-<li><b>Re-Essai</b>-R&#233;p&#232;te le test pour savoir si un aspect du signal a chang&#233; ou
-un canton occup&#233; l'avant a &#233;t&#233; lib&#233;r&#233;. ( Occasionnellement un changement de capteur peut &#234;tre
-manqu&#233; en raison d'un court-circuit ou d'un dysfonctionnement du mat&#233;riel. Ce nouveau test peut permettre &#224; un train arr&#234;t&#233; de continuer.)
-<li><b>Abandonner</b>-. Abandonner le script et lib&#233;rer le Mandat</li>
-</ul>
-        <li><b>Modifier</b>:-Un bouton qui ouvre une fen&#234;tre d'&#233;dition pour le Mandat,</li>
-        <li><b>Supprimer </b>: -. Un bouton qui supprime le Mandat</li>
-</ul></p>
 
-<H3>Cr&#233;ation NX bons de souscription</h3>
-Le Mandat d'un canton d'entr&#233;e &#224; un canton de sortie peut &#234;tre cr&#233;&#233; "&#224; la vol&#233;e " en utilisant la touche
-<b>G&#233;n&#233;rer un Mandat NX </b>au plus bas
-&#224; gauche de la table de liste deMandat. Cette fonctionnalit&#233; est particuli&#232;rement utile pour prendre des trains en circulation ou &#224; l'arr&#234;t sur le r&#233;seau visible pour et de la coulisse
-<p>
-Ce bouton ouvre une fen&#234;tre o&#249; les cantons d'occupation peuvent &#234;tre sp&#233;cifi&#233;s pour les cantons d'<b>origine</b>, de <b>destination</b>, <b>Via</b> et <b>&#201;vitez</b>. En cliquant sur l'Ic&#244;ne 
-Indicatrice de voie d'un canton va ins&#233;rer le nom du canton dans les champs de texte du canton. Le
-<i>premier clic</i>d&#233;finit le canton d'origine canton, le <i>second clic</i>le canton de destination,
-le <i>troisi&#232;me</i> de Via le canton et le <i>quatri&#232;me</i> &#201;vitez le canton. Cette s&#233;quence est
-r&#233;p&#233;t&#233; par module de 4. <a HREF="WarrantTable.shtml"> Cr&#233;ation et &#201;dition du Mandat</A>. contient plus
-d'informations sur la cr&#233;ation d'itin&#233;raire.</p>
-<p>
-L' <b>adresse</b>, <b>vitesse</b> et <b>direction</b> de la machine sont &#233;galement situ&#233;s dans cette fen&#234;tre.
-En appuyant sur le bouton 
-<b>Ex&#233;cuter Mandat NX</b>calcule l'itin&#233;raire et dirige le train adress&#233;e &#224; la vitesse et la direction sp&#233;cifi&#233;es.</p>
+        <li><b>Itin&eacute;raire</b>:-Le parcours du Mandat est
+        r&eacute;pertori&eacute; dans une liste d&eacute;roulante
+        en cliquant sur la cellule du tableau</li>
 
-<H2>Suivi des Trains</h2>
-Le quatri&#232;me &#233;l&#233;ment du menu du Mandat sp&#233;cifi&#233;e ouvre le <b>Tableau Suivi</b>. En appuyant sur le bouton <b>Nouveau Suivi</b>  dans la fen&#234;tre suivante s'ouvre une bo&#238;te de dialogue pour entrer le nom du train et le Ocanton qu'il occupe. Presser le bouton cr&#233;e une ligne dans le tableau de suivi. La ligne indique le nom du train et le canton
-qu'il occupe actuellement et le temps qu'il a occup&#233; le canton. Comme le train se d&#233;place d'
-canton &#224; l'autre, ce statut est mis &#224; jour. L'Ic&#244;nes Indicatrice de voie peut afficher le nom du train.
-<ul>
-<b>Remarque :</b>Le menu contextuel <b>Modifier Ic&#244;ne</b> ouvre une bo&#238;te de dialogue pour que l'Ic&#244;ne Indicatrice de voie
-a une boite a cocher<b>Affichage du nom du train lorsqu'il est occup&#233;</b> pour s&#233;lectionner d'afficher du texte pour le
-Suivi du train ou d'une Mandat en cours d'ex&#233;cution.
-</ul>
-La fen&#234;tre dispose &#233;galement d'un bouton pour <b>Actualiser lees Infos du Suivi</b> pour interroger les suivis cot&#233;s dans le Tableau Suivi et un bouton <b>Choix Ocanton </b>pour afficher une liste de choix.</P>
-<p>
-L'emplacement du train peut &#234;tre r&#233;gl&#233; en tapant, en faisant glisser le nom du canton depuis la liste d&#233;roulante, ou en
-cliquant sur une Ic&#244;ne Indicatrice de voie sur le panneau.</p>
+        <li><b>Nom de train</b>:-L'identification du train , comme
+        indiqu&eacute; dans la Liste. Cette cellule peut &ecirc;tre
+        &eacute;dit&eacute;e et son contenu est affich&eacute; par
+        lic&ocirc;ne indicatrice de voie lorsque le train occupe le
+        Ocanton. (Les Menu contextuel d'&eacute;dition
+        d'Ic&ocirc;nes Indicatrice de Voie ont une case &agrave;
+        cocher pour activer cette fonction)</li>
 
-<H2>Utilisation des Mandats dans Logix</h2>
-Plusieurs des op&#233;rations qui peuvent &#234;tre faites &#224; partir de la liste des mandats et du cadre d'&#233;dition des bons de souscription
-peut &#234;tre fait avec Conditionals Logix. Vous pouvez concevoir et mettre en &#339;uvre le panneau d'un r&#233;partiteur
-en utilisant les variables d'&#233;tat des Mandats et les actions trouv&#233;es dans Logix.
+        <li><b>Adresse DCC</b>:-L'adresse DCC de la locomotive ou
+        du couplager. Cette cellule peut &ecirc;tre modifi&eacute;e
+        pour correspondre &agrave; la puissance actuelle de la
+        motrice du train.</li>
 
-<H3>Variables d'&#233;tat Mandat</h3>
-Lorsqu'un mandat a &#233;t&#233; attribu&#233; ou est en cours, les variables d'&#233;tat suivantes peuvent &#234;tre test&#233;es
-dans une condition Logix.
-<ul>
-        <li><b>Itin&#233;raire libre</b>:-Vrai lorsque tous les cantons dans l'itin&#233;raire du mandat ne sont pas affect&#233;s
-        &#224; d'autres et ne sont pas occup&#233;s. Faux sinon.</Li>
-        <li><b>Itin&#233;raire D&#233;fini</b>:-Vrai lorsque tous cantons dans l'itin&#233;raire du mandat sont attribu&#233;s et les
-        aiguillages fix&#233;s pour ce mandat. Faux sinon.</Li>
-        <li><b>Acheminement Attribu&#233;</b>:-Vrai lorsque tous cantons dans l'itin&#233;raire du mandat sont attribu&#233;s
-        &#224; ce mandat. Faux sinon.</Li>
-        <li><b>Itin&#233;raire occup&#233;</b>:-Vrai si aucun des cantons dans la voie du mandat, autre
-        que l'origine canton , sont occup&#233;s. (En supposant le train de ce mandat occupe
-        le canton d'origine). Faux sinon.</li>
-        <li><b>Circulation du Train</b>:-Vrai lorsque le train pr&#233;cis&#233; dans le mandat est ex&#233;cut&#233;
-        soit en mode d'apprentissage ou en mode d'ex&#233;cution automatique. Faux sinon.</Li>
-</ul>
+        <li><b>Allouer</b>:-Un bouton qui se r&eacute;serve
+        l'itin&eacute;raire pour le Mandat. Les Ic&ocirc;nes
+        Indicatrices de Voie s'affichent en vert pour indiquer
+        l'itin&eacute;raire.</li>
 
-<H3>Actions Mandat</h3>
-<ul>
-        <li><b>Allouer mandat Itin&#233;raire</b>:-Alloue l'itin&#233;raire &#224; ce mandat</li>
-        <li><b>D&#233;sallouer Mandat</b>:-lib&#232;re l'itin&#233;raire de ce mandat (seulement). Ce ne sera pas
-         la lib&#233;ration de l'itin&#233;raire d'un mandat diff&#233;rent.</li>
-        <li><b>D&#233;finir Aiguillages d'Itin&#233;raire</b>:-D&#233;finit les signaux et les aiguillages de l'itin&#233;raire aussi loin dans l'
-         itin&#233;raire qu'il peut jusqu'&#224; ce qu'il atteigne une canton occup&#233; ou un canton allou&#233; &#224; un autre
-         mandat.</li>
-        <li><b>Train Auto Run</b>:-Ex&#233;cutez les commandes de r&#233;gulateur du train dans le mandat. Ceci
-         devrait &#234;tre effectu&#233; uniquement lorsque le train occupe le canton d'origine.</li>
-        <li><b>D&#233;finir ID Train</b>:-D&#233;finir le couplage de machine devant &#234;tre utilis&#233; depuis une ID Train depuis la Liste de Locomotives. Sinon, l'adresse DCC peut &#234;tre utilis&#233; pour identifier la machine.</Li>
-        <li><b>D&#233;finir le Nom du Train</b>:-D&#233;finissez le nom du train &#224; afficher dans le marqueur loco
-         indiquant la position actuelle du train lors de l'ex&#233;cution.</li>
-        <li><b>Commandes Train</b>:-Envoyer une commande de contr&#244;le ( <b>Halt</b>, <b>CV</b>ou
-        <b>Abort )</b>pour un train fonctionnant sous mandat.</li>
-        <li><b>D&#233;finir Facteur R&#233;giulateur</b>:-D&#233;finir un multiplicateur pour le r&#233;glage du r&#233;gulateur enregistr&#233;e.
-         Lorsque la machine ou le couplage de train est modifi&#233;e, plus ou moins de puissance peut &#234;tre n&#233;cessaire.</Li>
-</ul>
-<br>
+        <li><b>Lib&eacute;rer</b>:-Un bouton qui supprime la
+        r&eacute;servation pour le Mandat</li>
 
-<!-# include virtual = " / Pied de page " ->
-</BODY>
-</HTML>
+        <li><b>D&eacute;finir</b>:-Un bouton qui alloue et
+        d&eacute;finit les aiguillages pour l'itin&eacute;raire du
+        Mandat</li>
 
+        <li><b>Ex&eacute;cuter</b>:-Un bouton qui ex&eacute;cute le
+        train sur la route en fonction des commandes du
+        r&eacute;gulateur automatis&eacute;. La vitesse
+        consign&eacute;e du train sera modifi&eacute; en fonction
+        de l'occupation et des aspects des signaux
+        rencontr&eacute;s sur l'itin&eacute;raire. Les Ic&ocirc;nes
+        Indicatrices de voie affichent la position actuelle du
+        train avec une couleur bleue.</li>
+
+        <li>
+          <b>Commande/Statut</b>:-L'&eacute;tat du Mandat est
+          montr&eacute;. Il a &eacute;galement une zone de liste
+          d&eacute;roulante qui permet d'envoyer les commandes
+          suivantes pour un train. <b><i>Remarque</i>: Cette
+          colonne a deux fonctions-Les messages d'&eacute;tat et
+          boutons de commande.</b>
+
+          <ul>
+            <li><b>Halte</b>- suspend momentan&eacute;ment le train
+            et suspend l'ex&eacute;cution du script de commande du
+            r&eacute;gulateur</li>
+
+            <li><b>CV</b>-Rampes jusqu'&agrave; la vitesse du train
+            &agrave; son ancien niveau et red&eacute;marre le
+            script de commande du r&eacute;gulateur</li>
+
+            <li><b>Re-Essai</b>-R&eacute;p&egrave;te le test pour
+            savoir si un aspect du signal a chang&eacute; ou un
+            canton occup&eacute; l'avant a &eacute;t&eacute;
+            lib&eacute;r&eacute;. ( Occasionnellement un changement
+            de capteur peut &ecirc;tre manqu&eacute; en raison d'un
+            court-circuit ou d'un dysfonctionnement du
+            mat&eacute;riel. Ce nouveau test peut permettre
+            &agrave; un train arr&ecirc;t&eacute; de
+            continuer.)</li>
+
+            <li><b>Abandonner</b>-. Abandonner le script et
+            lib&eacute;rer le Mandat</li>
+          </ul>
+        </li>
+
+        <li><b>Modifier</b>:-Un bouton qui ouvre une fen&ecirc;tre
+        d'&eacute;dition pour le Mandat,</li>
+
+        <li><b>Supprimer</b> : -. Un bouton qui supprime le
+        Mandat</li>
+      </ul>
+
+      <h3>Cr&eacute;ation NX bons de souscription</h3>Le Mandat
+      d'un canton d'entr&eacute;e &agrave; un canton de sortie peut
+      &ecirc;tre cr&eacute;&eacute; "&agrave; la vol&eacute;e " en
+      utilisant la touche <b>G&eacute;n&eacute;rer un Mandat NX</b>
+      au plus bas &agrave; gauche de la table de liste deMandat.
+      Cette fonctionnalit&eacute; est particuli&egrave;rement utile
+      pour prendre des trains en circulation ou &agrave;
+      l'arr&ecirc;t sur le r&eacute;seau visible pour et de la
+      coulisse
+
+      <p>Ce bouton ouvre une fen&ecirc;tre o&ugrave; les cantons
+      d'occupation peuvent &ecirc;tre sp&eacute;cifi&eacute;s pour
+      les cantons d'<b>origine</b>, de <b>destination</b>,
+      <b>Via</b> et <b>&Eacute;vitez</b>. En cliquant sur
+      l'Ic&ocirc;ne Indicatrice de voie d'un canton va
+      ins&eacute;rer le nom du canton dans les champs de texte du
+      canton. Le <i>premier clic</i>d&eacute;finit le canton
+      d'origine canton, le <i>second clic</i>le canton de
+      destination, le <i>troisi&egrave;me</i> de Via le canton et
+      le <i>quatri&egrave;me</i> &Eacute;vitez le canton. Cette
+      s&eacute;quence est r&eacute;p&eacute;t&eacute; par module de
+      4. <a href="WarrantTable.shtml">Cr&eacute;ation et
+      &Eacute;dition du Mandat</a>. contient plus d'informations
+      sur la cr&eacute;ation d'itin&eacute;raire.</p>
+
+      <p>L' <b>adresse</b>, <b>vitesse</b> et <b>direction</b> de
+      la machine sont &eacute;galement situ&eacute;s dans cette
+      fen&ecirc;tre. En appuyant sur le bouton <b>Ex&eacute;cuter
+      Mandat NX</b>calcule l'itin&eacute;raire et dirige le train
+      adress&eacute;e &agrave; la vitesse et la direction
+      sp&eacute;cifi&eacute;es.</p>
+
+      <h2>Suivi des Trains</h2>Le quatri&egrave;me
+      &eacute;l&eacute;ment du menu du Mandat
+      sp&eacute;cifi&eacute;e ouvre le <b>Tableau Suivi</b>. En
+      appuyant sur le bouton <b>Nouveau Suivi</b> dans la
+      fen&ecirc;tre suivante s'ouvre une bo&icirc;te de dialogue
+      pour entrer le nom du train et le Ocanton qu'il occupe.
+      Presser le bouton cr&eacute;e une ligne dans le tableau de
+      suivi. La ligne indique le nom du train et le canton qu'il
+      occupe actuellement et le temps qu'il a occup&eacute; le
+      canton. Comme le train se d&eacute;place d' canton &agrave;
+      l'autre, ce statut est mis &agrave; jour. L'Ic&ocirc;nes
+      Indicatrice de voie peut afficher le nom du train.
+
+      <div style="margin-left: 2em">
+        <b>Remarque :</b>Le menu contextuel <b>Modifier
+        Ic&ocirc;ne</b> ouvre une bo&icirc;te de dialogue pour que
+        l'Ic&ocirc;ne Indicatrice de voie a une boite a
+        cocher<b>Affichage du nom du train lorsqu'il est
+        occup&eacute;</b> pour s&eacute;lectionner d'afficher du
+        texte pour le Suivi du train ou d'une Mandat en cours
+        d'ex&eacute;cution.
+      </div>La fen&ecirc;tre dispose &eacute;galement d'un bouton
+      pour <b>Actualiser lees Infos du Suivi</b> pour interroger
+      les suivis cot&eacute;s dans le Tableau Suivi et un bouton
+      <b>Choix Ocanton</b> pour afficher une liste de choix.
+
+      <p>L'emplacement du train peut &ecirc;tre r&eacute;gl&eacute;
+      en tapant, en faisant glisser le nom du canton depuis la
+      liste d&eacute;roulante, ou en cliquant sur une Ic&ocirc;ne
+      Indicatrice de voie sur le panneau.</p>
+
+      <h2>Utilisation des Mandats dans Logix</h2>Plusieurs des
+      op&eacute;rations qui peuvent &ecirc;tre faites &agrave;
+      partir de la liste des mandats et du cadre d'&eacute;dition
+      des bons de souscription peut &ecirc;tre fait avec
+      Conditionals Logix. Vous pouvez concevoir et mettre en
+      &oelig;uvre le panneau d'un r&eacute;partiteur en utilisant
+      les variables d'&eacute;tat des Mandats et les actions
+      trouv&eacute;es dans Logix.
+
+      <h3>Variables d'&eacute;tat Mandat</h3>Lorsqu'un mandat a
+      &eacute;t&eacute; attribu&eacute; ou est en cours, les
+      variables d'&eacute;tat suivantes peuvent &ecirc;tre
+      test&eacute;es dans une condition Logix.
+
+      <ul>
+        <li><b>Itin&eacute;raire libre</b>:-Vrai lorsque tous les
+        cantons dans l'itin&eacute;raire du mandat ne sont pas
+        affect&eacute;s &agrave; d'autres et ne sont pas
+        occup&eacute;s. Faux sinon.</li>
+
+        <li><b>Itin&eacute;raire D&eacute;fini</b>:-Vrai lorsque
+        tous cantons dans l'itin&eacute;raire du mandat sont
+        attribu&eacute;s et les aiguillages fix&eacute;s pour ce
+        mandat. Faux sinon.</li>
+
+        <li><b>Acheminement Attribu&eacute;</b>:-Vrai lorsque tous
+        cantons dans l'itin&eacute;raire du mandat sont
+        attribu&eacute;s &agrave; ce mandat. Faux sinon.</li>
+
+        <li><b>Itin&eacute;raire occup&eacute;</b>:-Vrai si aucun
+        des cantons dans la voie du mandat, autre que l'origine
+        canton , sont occup&eacute;s. (En supposant le train de ce
+        mandat occupe le canton d'origine). Faux sinon.</li>
+
+        <li><b>Circulation du Train</b>:-Vrai lorsque le train
+        pr&eacute;cis&eacute; dans le mandat est
+        ex&eacute;cut&eacute; soit en mode d'apprentissage ou en
+        mode d'ex&eacute;cution automatique. Faux sinon.</li>
+      </ul>
+
+      <h3>Actions Mandat</h3>
+
+      <ul>
+        <li><b>Allouer mandat Itin&eacute;raire</b>:-Alloue
+        l'itin&eacute;raire &agrave; ce mandat</li>
+
+        <li><b>D&eacute;sallouer Mandat</b>:-lib&egrave;re
+        l'itin&eacute;raire de ce mandat (seulement). Ce ne sera
+        pas la lib&eacute;ration de l'itin&eacute;raire d'un mandat
+        diff&eacute;rent.</li>
+
+        <li><b>D&eacute;finir Aiguillages
+        d'Itin&eacute;raire</b>:-D&eacute;finit les signaux et les
+        aiguillages de l'itin&eacute;raire aussi loin dans l'
+        itin&eacute;raire qu'il peut jusqu'&agrave; ce qu'il
+        atteigne une canton occup&eacute; ou un canton
+        allou&eacute; &agrave; un autre mandat.</li>
+
+        <li><b>Train Auto Run</b>:-Ex&eacute;cutez les commandes de
+        r&eacute;gulateur du train dans le mandat. Ceci devrait
+        &ecirc;tre effectu&eacute; uniquement lorsque le train
+        occupe le canton d'origine.</li>
+
+        <li><b>D&eacute;finir ID Train</b>:-D&eacute;finir le
+        couplage de machine devant &ecirc;tre utilis&eacute; depuis
+        une ID Train depuis la Liste de Locomotives. Sinon,
+        l'adresse DCC peut &ecirc;tre utilis&eacute; pour
+        identifier la machine.</li>
+
+        <li><b>D&eacute;finir le Nom du
+        Train</b>:-D&eacute;finissez le nom du train &agrave;
+        afficher dans le marqueur loco indiquant la position
+        actuelle du train lors de l'ex&eacute;cution.</li>
+
+        <li><b>Commandes Train</b>:-Envoyer une commande de
+        contr&ocirc;le ( <b>Halt</b>, <b>CV</b>ou <b>Abort
+        )</b>pour un train fonctionnant sous mandat.</li>
+
+        <li><b>D&eacute;finir Facteur
+        R&eacute;giulateur</b>:-D&eacute;finir un multiplicateur
+        pour le r&eacute;glage du r&eacute;gulateur
+        enregistr&eacute;e. Lorsque la machine ou le couplage de
+        train est modifi&eacute;e, plus ou moins de puissance peut
+        &ecirc;tre n&eacute;cessaire.</li>
+      </ul><br>
+    </div>
+  </div>
+</body>
+</html>

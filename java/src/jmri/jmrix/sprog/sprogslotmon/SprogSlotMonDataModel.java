@@ -1,4 +1,3 @@
-// SprogSlotMonDataModel.java
 package jmri.jmrix.sprog.sprogslotmon;
 
 import javax.swing.JLabel;
@@ -8,36 +7,32 @@ import jmri.jmrix.sprog.SprogCommandStation;
 import jmri.jmrix.sprog.SprogConstants;
 import jmri.jmrix.sprog.SprogSlot;
 import jmri.jmrix.sprog.SprogSlotListener;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Table data model for display of slot manager contents
  *
- * @author	Bob Jacobsen Copyright (C) 2001 Andrew Crosland (C) 2006 ported to
- * SPROG
- * @version	$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001 
+ * @author      Andrew Crosland (C) 2006 ported to SPROG
  */
 public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel implements SprogSlotListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4486077436638200664L;
     static public final int SLOTCOLUMN = 0;
-//    static public final int ESTOPCOLUMN = 1;
     static public final int ADDRCOLUMN = 1;
     static public final int SPDCOLUMN = 2;
     static public final int STATCOLUMN = 3;  // status: free, common, etc
-//    static public final int DISPCOLUMN = 5;  // originally "dispatch" button, now "free"
-//    static public final int CONSCOLUMN = 4;  // consist state
     static public final int DIRCOLUMN = 4;
 
     static public final int NUMCOLUMN = 5;
 
-    SprogSlotMonDataModel(int row, int column) {
+    private SprogSystemConnectionMemo _memo = null;
+
+    SprogSlotMonDataModel(int row, int column,SprogSystemConnectionMemo memo) {
+        _memo = memo;
         // connect to SprogSlotManager for updates
-        SprogCommandStation.instance().addSlotListener(this);
+        _memo.getCommandStation().addSlotListener(this);
     }
 
     /**
@@ -56,7 +51,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         int n = 0;
         int nMin = 0;
         for (int i = nMin; i < nMax; i++) {
-            SprogSlot s = SprogCommandStation.instance().slot(i);
+            SprogSlot s = _memo.getCommandStation().slot(i);
             if (s.isFree() != true) {
                 n++;
             }
@@ -120,7 +115,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
 
     @SuppressWarnings("null")
     public Object getValueAt(int row, int col) {
-        SprogSlot s = SprogCommandStation.instance().slot(slotNum(row));
+        SprogSlot s = _memo.getCommandStation().slot(slotNum(row));
         if (s == null) {
             log.error("slot pointer was null for slot row: " + row + " col: " + col);
         }
@@ -224,14 +219,14 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
 
     public void setValueAt(Object value, int row, int col) {
         // check for in use
-        SprogSlot s = SprogCommandStation.instance().slot(slotNum(row));
+        SprogSlot s = _memo.getCommandStation().slot(slotNum(row));
         if (s == null) {
             log.error("slot pointer was null for slot row: " + row + " col: " + col);
             return;
         }
 //        if (col == ESTOPCOLUMN) {
 //            log.debug("Start estop in slot "+row);
-//            SprogSlotManager.instance().estopSlot(row);
+//            _memo.getSlotManager().estopSlot(row);
 //        }
 //        else if (col == DISPCOLUMN) {
 //            log.debug("Start freeing slot "+row);
@@ -351,7 +346,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         int nMin = 0;
         int nMax = SprogConstants.MAX_SLOTS;
         for (slotNum = nMin; slotNum < nMax; slotNum++) {
-            SprogSlot s = SprogCommandStation.instance().slot(slotNum);
+            SprogSlot s = _memo.getCommandStation().slot(slotNum);
             if (_allSlots || s.slotStatus() != SprogConstants.SLOT_FREE) {
                 n++;
             }
@@ -363,7 +358,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
     }
 
     public void dispose() {
-        SprogCommandStation.instance().removeSlotListener(this);
+        _memo.getCommandStation().removeSlotListener(this);
         // table.removeAllElements();
         // table = null;
     }

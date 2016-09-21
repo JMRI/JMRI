@@ -1,17 +1,17 @@
 package jmri.web.servlet.roster;
 
-import static jmri.jmris.json.JSON.ADDRESS;
-import static jmri.jmris.json.JSON.DATA;
-import static jmri.jmris.json.JSON.DECODER_FAMILY;
-import static jmri.jmris.json.JSON.DECODER_MODEL;
-import static jmri.jmris.json.JSON.GROUP;
-import static jmri.jmris.json.JSON.ID;
-import static jmri.jmris.json.JSON.LIST;
-import static jmri.jmris.json.JSON.MFG;
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.NUMBER;
-import static jmri.jmris.json.JSON.ROAD;
+import static jmri.server.json.JSON.ADDRESS;
+import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JSON.DECODER_FAMILY;
+import static jmri.server.json.JSON.DECODER_MODEL;
 import static jmri.server.json.JSON.FORMAT;
+import static jmri.server.json.JSON.GROUP;
+import static jmri.server.json.JSON.ID;
+import static jmri.server.json.JSON.LIST;
+import static jmri.server.json.JSON.MFG;
+import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.NUMBER;
+import static jmri.server.json.JSON.ROAD;
 import static jmri.web.servlet.ServletUtil.IMAGE_PNG;
 import static jmri.web.servlet.ServletUtil.UTF8;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
@@ -35,9 +35,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
-import jmri.jmris.json.JSON;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.server.json.JSON;
 import jmri.server.json.roster.JsonRosterServiceFactory;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
@@ -243,7 +243,7 @@ public class RosterServlet extends HttpServlet {
         if (pathInfo.length > (1 + idOffset)) {
             type = pathInfo[pathInfo.length - 1];
         }
-        RosterEntry re = Roster.instance().getEntryForId(id);
+        RosterEntry re = Roster.getDefault().getEntryForId(id);
         try {
             if (re == null) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Could not find roster entry " + id);
@@ -310,6 +310,7 @@ public class RosterServlet extends HttpServlet {
         log.debug("Getting roster with filter {}", filter);
         String group = (!filter.path(GROUP).isMissingNode()) ? filter.path(GROUP).asText() : null;
         log.debug("Group {} was in filter", group);
+
         String format = request.getParameter(FORMAT);
         if (format == null) {
             format = "";
@@ -317,10 +318,9 @@ public class RosterServlet extends HttpServlet {
         switch (format) {
             case JSON.JSON:
                 response.setContentType(UTF8_APPLICATION_JSON);
-                JsonRosterServiceFactory factory = InstanceManager.getDefault(JsonRosterServiceFactory.class);
-                if (factory == null) {
-                    factory = new JsonRosterServiceFactory();
-                }
+                JsonRosterServiceFactory factory = InstanceManager.getOptionalDefault(JsonRosterServiceFactory.class).orElseGet(() -> {
+                    return InstanceManager.setDefault(JsonRosterServiceFactory.class, new JsonRosterServiceFactory());
+                });
                 response.getWriter().print(factory.getHttpService(mapper).getRoster(request.getLocale(), filter));
                 break;
             case JSON.XML:
@@ -342,7 +342,7 @@ public class RosterServlet extends HttpServlet {
                 if (Roster.AllEntries(request.getLocale()).equals(group)) {
                     group = null;
                 }
-                List<RosterEntry> entries = Roster.instance().getEntriesMatchingCriteria(
+                List<RosterEntry> entries = Roster.getDefault().getEntriesMatchingCriteria(
                         (!filter.path(ROAD).isMissingNode()) ? filter.path(ROAD).asText() : null,
                         (!filter.path(NUMBER).isMissingNode()) ? filter.path(NUMBER).asText() : null,
                         (!filter.path(ADDRESS).isMissingNode()) ? filter.path(ADDRESS).asText() : null,

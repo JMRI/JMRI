@@ -67,7 +67,7 @@ public class ReportContext {
         addString("Available Communication Ports:");
         addCommunicationPortInfo();
 
-        Profile profile = ProfileManager.defaultManager().getActiveProfile();
+        Profile profile = ProfileManager.getDefault().getActiveProfile();
         addString("Active profile: " + profile.getName() + "   ");
         addString("Profile location: " + profile.getPath().getPath() + "   ");
         addString("Profile ID: " + profile.getId() + "   ");
@@ -86,7 +86,7 @@ public class ReportContext {
 
         //String operations = jmri.jmrit.operations.setup.OperationsSetupXml.getFileLocation();
         //addString("Operations files location: "+operations+"  ");
-        jmri.jmrit.audio.AudioFactory af = jmri.InstanceManager.audioManagerInstance().getActiveAudioFactory();
+        jmri.jmrit.audio.AudioFactory af = jmri.InstanceManager.getDefault(jmri.AudioManager.class).getActiveAudioFactory();
         String audio = af != null ? af.toString() : "[not initialised]";
         addString("Audio factory type: " + audio + "   ");
 

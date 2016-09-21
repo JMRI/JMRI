@@ -4,6 +4,7 @@
 
 var jmri = null;
 var view = "";
+var CODE_TERMINATED = 0x80;
 
 /*
  * request and show a list of available trains from JMRI server
@@ -117,16 +118,17 @@ function getConductor(id, location) {
                     $(".rs-check").prop("checked", false);
                     $("#move-train").prop("disabled", true);
                 });
+                //disable move button if no location
+                if (!$("#move-train").data("location")) {
+                    $("#move-train").prop("disabled", true);
+                }
                 // disable/enable controls if no work
                 if ($(".rs-check").length === 0) {
                     $("#move-train").prop("disabled", false);
                     $("#check-all").prop("disabled", true);
                     $("#clear-all").prop("disabled", true);
                 }
-                if (!$("#move-train").data("location")) {
-                    $("#move-train").prop("disabled", true);
-                }
-                // enable move button only if all checkboxs are checked
+                // enable move button if all checkboxs are checked
                 $(".rs-check").click(function () {
                     var disabled = true;
                     if (this.checked) {
@@ -140,6 +142,11 @@ function getConductor(id, location) {
                     }
                     $("#move-train").prop("disabled", disabled);
                 });
+                //disable move button if train is terminated
+                if ($("#move-train").data("statuscode") == CODE_TERMINATED) {
+                    $("#move-train").prop("disabled", true);
+                }
+                
                 // add function to move button
                 $("#move-train").click(function () {
                     getConductor(id, $("#move-train").data("location"));

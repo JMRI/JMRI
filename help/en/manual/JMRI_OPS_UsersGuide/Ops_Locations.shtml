@@ -1,52 +1,89 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>JMRI OperationsPro - Locations</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI OperationsPro - Locations</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<a name="Top"></a>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h1>Using JMRI&reg; to Operate Trains</h1>
-<h2>OperationsPro: Locations window</h2>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<div align="right">
-<p><a href="Ops_Settings.shtml">Previous </a> | <a href="Ops_Cars.shtml">Next</a></p>
-<p><a href="index.shtml#Main">Back to Index</a></p>
-</div>
+      <h1>Using JMRI&reg; to Operate Trains</h1>
 
-<hr>
-<p>The (Tools &gt;) Operations &gt; Locations menu opens the Locations window as shown.
-Locations are places on your railroad that Trains visit to pickup or
-drop off Cars and Engines. Locations can be cities, towns, or just
-places where trains need to work cars.</p>
-<p style="text-align: center;"><img src="images/Ops_locations01.png" alt="ops locations" height="251" width="808"></p><ol><li>Title Bar: &nbsp;Window title Locations.</li><li><a href="Ops_Locations_Menu.shtml">MenuBar</a>: &nbsp;Windows menus</li><li><a href="Ops_Locations_List.shtml"><span style="text-decoration: underline;">Locations List</span></a></li><li>Bottom of Window: </li></ol><div style="margin-left: 40px;">At the bottom of the window you may select the sort  order of the Locations in the list.</div>
-<p style="margin-left: 40px;"><strong>Sort by 
-  <input name="radio" id="radio" value="radio" checked="checked" type="radio"> 
-  Name  
-  <input name="radio2" id="radio2" value="radio2" type="radio"> 
-Id &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>Sets the sort order for the locations</p>
-<p style="margin-left: 40px;">Press 
-  <input name="button" id="button" value="Add" type="submit"> 
- to <a href="Ops_AddLocations.shtml"><span style="font-weight: bold;">add a new Location</span></a>.</p>
- 
- <div align="right">
-<p><a href="Ops_Settings.shtml">Previous </a> | <a href="Ops_Cars.shtml">Next</a></p>
-<p><a href="index.shtml#Main">Back to Index</a></p>
-</div>
+      <h2>OperationsPro: Locations window</h2>
 
-<!--#include virtual="/Footer" -->
-</div></body></html>
+      <div align="right">
+        <p><a href="Ops_Settings.shtml">Previous</a> | <a href=
+        "Ops_Cars.shtml">Next</a></p>
+
+        <p><a href="index.shtml#Main">Back to Index</a></p>
+      </div>
+      <hr>
+
+      <p>The (Tools &gt;) Operations &gt; Locations menu opens the
+      Locations window as shown. Locations are places on your
+      railroad that Trains visit to pickup or drop off Cars and
+      Engines. Locations can be cities, towns, or just places where
+      trains need to work cars.</p>
+
+      <p style="text-align: center;"><img src=
+      "images/Ops_locations01.png" alt="ops locations" height="251"
+      width="808"></p>
+
+      <ol>
+        <li>Title Bar: Window title Locations.</li>
+
+        <li><a href="Ops_Locations_Menu.shtml">MenuBar</a>: Windows
+        menus</li>
+
+        <li><a href="Ops_Locations_List.shtml"><span style=
+        "text-decoration: underline;">Locations
+        List</span></a></li>
+
+        <li>Bottom of Window:</li>
+      </ol>
+
+      <div style="margin-left: 40px;">
+        At the bottom of the window you may select the sort order
+        of the Locations in the list.
+      </div>
+
+      <p style="margin-left: 40px;"><strong>Sort by <input name=
+      "radio" id="radio" value="radio" checked="checked" type=
+      "radio"> Name <input name="radio2" id="radio2" value="radio2"
+      type="radio"> Id</strong> Sets the sort order for the
+      locations</p>
+
+      <p style="margin-left: 40px;">Press <input name="button" id=
+      "button" value="Add" type="submit"> to <a href=
+      "Ops_AddLocations.shtml"><span style="font-weight: bold;">add
+      a new Location</span></a>.</p>
+
+      <div align="right">
+        <p><a href="Ops_Settings.shtml">Previous</a> | <a href=
+        "Ops_Cars.shtml">Next</a></p>
+
+        <p><a href="index.shtml#Main">Back to Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

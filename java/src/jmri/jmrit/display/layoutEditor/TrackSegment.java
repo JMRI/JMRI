@@ -238,7 +238,7 @@ public class TrackSegment {
     }
 
     public LayoutBlock getLayoutBlock() {
-        if ((block == null) && (blockName != null) && (blockName != "")) {
+        if ((block == null) && (blockName != null) && (!blockName.equals(""))) {
             block = layoutEditor.provideLayoutBlock(blockName);
         }
         return block;
@@ -393,7 +393,7 @@ public class TrackSegment {
         if (blockName.equals("")) {
             popup.add(rb.getString("NoBlock"));
         } else {
-            popup.add(rb.getString("Block") + ": " + getLayoutBlock().getID());
+            popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getID());
         }
         if (hidden) {
             popup.add(rb.getString("Hidden"));
@@ -401,7 +401,7 @@ public class TrackSegment {
             popup.add(rb.getString("NotHidden"));
         }
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
-        popup.add(new AbstractAction(rb.getString("Edit")) {
+        popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
             /**
              *
              */
@@ -411,7 +411,7 @@ public class TrackSegment {
                 editTrackSegment();
             }
         });
-        popup.add(new AbstractAction(rb.getString("Remove")) {
+        popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
             /**
              *
              */
@@ -424,7 +424,7 @@ public class TrackSegment {
             }
         });
         JMenu lineType = new JMenu(rb.getString("ChangeTo"));
-        lineType.add(new AbstractAction(rb.getString("Line")) {
+        lineType.add(new AbstractAction(Bundle.getMessage("Line")) {
             /**
              *
              */
@@ -434,7 +434,7 @@ public class TrackSegment {
                 changeType(0);
             }
         });
-        lineType.add(new AbstractAction(rb.getString("Circle")) {
+        lineType.add(new AbstractAction(Bundle.getMessage("Circle")) {
             /**
              *
              */
@@ -444,7 +444,7 @@ public class TrackSegment {
                 changeType(1);
             }
         });
-        lineType.add(new AbstractAction(rb.getString("Elipse")) {
+        lineType.add(new AbstractAction(Bundle.getMessage("Ellipse")) {
             /**
              *
              */
@@ -567,7 +567,7 @@ public class TrackSegment {
         }
         // Initialize if needed
         if (editTrackSegmentFrame == null) {
-            editTrackSegmentFrame = new JmriJFrame(rb.getString("EditTrackSegment"), false, true);
+            editTrackSegmentFrame = new JmriJFrame(Bundle.getMessage("EditTrackSegment"), false, true); // key moved to DisplayBundle to be found by CircuitBuilder.java
             editTrackSegmentFrame.addHelpMenu("package.jmri.jmrit.display.EditTrackSegment", true);
             editTrackSegmentFrame.setLocation(50, 30);
             Container contentPane = editTrackSegmentFrame.getContentPane();
@@ -623,28 +623,28 @@ public class TrackSegment {
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
             // Edit Block
-            panel5.add(segmentEditBlock = new JButton(rb.getString("EditBlock")));
+            panel5.add(segmentEditBlock = new JButton(Bundle.getMessage("EditBlock", "")));
             segmentEditBlock.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     segmentEditBlockPressed(e);
                 }
             });
-            segmentEditBlock.setToolTipText(rb.getString("EditBlockHint"));
-            panel5.add(segmentEditDone = new JButton(rb.getString("Done")));
+            segmentEditBlock.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
+            panel5.add(segmentEditDone = new JButton(Bundle.getMessage("ButtonDone")));
             segmentEditDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     segmentEditDonePressed(e);
                 }
             });
-            segmentEditDone.setToolTipText(rb.getString("DoneHint"));
+            segmentEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             // Cancel
-            panel5.add(segmentEditCancel = new JButton(rb.getString("Cancel")));
+            panel5.add(segmentEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             segmentEditCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     segmentEditCancelPressed(e);
                 }
             });
-            segmentEditCancel.setToolTipText(rb.getString("CancelHint"));
+            segmentEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
         }
         // Set up for Edit
@@ -692,7 +692,7 @@ public class TrackSegment {
         if (block == null) {
             JOptionPane.showMessageDialog(editTrackSegmentFrame,
                     rb.getString("Error1"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         block.editLayoutBlock(editTrackSegmentFrame);
@@ -1080,12 +1080,12 @@ public class TrackSegment {
                     setCentreSegY(getCentreY() - java.lang.Math.sin(startRad + halfAngle) * radius);
 
                 } else {
-                    // Elipse - Round start angle to the closest multiple of 90
+                    // Ellipse - Round start angle to the closest multiple of 90
                     setStartadj(java.lang.Math.round(getStartadj() / 90.0D) * 90.0D);
-                    // Elipse - Compute rectangle required by Arc2D.Double
+                    // Ellipse - Compute rectangle required by Arc2D.Double
                     setCW(java.lang.Math.abs(a) * 2.0D);
                     setCH(java.lang.Math.abs(o) * 2.0D);
-                    // Elipse - Adjust rectangle corner, depending on quadrant
+                    // Ellipse - Adjust rectangle corner, depending on quadrant
                     if (o * a < 0.0D) {
                         a = -a;
                     } else {

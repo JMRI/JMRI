@@ -1,4 +1,3 @@
-// EditableList.java
 package jmri.swing;
 
 import java.applet.Applet;
@@ -30,17 +29,13 @@ import javax.swing.event.ChangeEvent;
  */
 public class EditableList<E> extends JList<E> implements CellEditorListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2724300657041009593L;
     protected Component editorComp = null;
     protected int editingIndex = -1;
     protected transient ListCellEditor<E> cellEditor = null;
     private PropertyChangeListener editorRemover = null;
 
     public EditableList() {
-        super(new DefaultEditableListModel<E>());
+        super(new DefaultEditableListModel<>());
         init();
     }
 
@@ -67,7 +62,7 @@ public class EditableList<E> extends JList<E> implements CellEditorListener {
     }
 
     public boolean isEditing() {
-        return (editorComp == null) ? false : true;
+        return (editorComp != null);
     }
 
     public Component getEditorComponent() {

@@ -434,7 +434,6 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
      * @param e Consist XML element
      */
     public AutomationItem(Element e) {
-        // if (log.isDebugEnabled()) log.debug("ctor from element "+e);
         org.jdom2.Attribute a;
         if ((a = e.getAttribute(Xml.ID)) != null) {
             _id = a.getValue();

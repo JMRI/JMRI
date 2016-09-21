@@ -1,4 +1,3 @@
-// LocoIdPanel.java
 package jmri.jmrix.loconet.locoid;
 
 import java.util.ResourceBundle;
@@ -6,7 +5,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrix.loconet.LnTrafficController;
-import jmri.jmrix.loconet.LocoNetBundle;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -15,15 +13,10 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  * User interface for setting the LocoNet ID
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2010
- * @version $Revision$
  */
 public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         LocoNetListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4377983464521092360L;
     // member declarations
     javax.swing.JButton readButton;
     javax.swing.JButton setButton;
@@ -80,7 +73,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
     }
 
     public String getTitle() {
-        return getTitle(LocoNetBundle.bundle().getString("MenuItemSetID"));
+        return getTitle(Bundle.getMessage("MenuItemSetID"));
     }
 
     public void initComponents(LocoNetSystemConnectionMemo memo) {
@@ -99,7 +92,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
     public void setButtonActionPerformed() {
         String value = (String) idBox.getSelectedItem();
 
-        if (value != "-") {
+        if (!value.equals("-")) {
             memo.getLnTrafficController().sendLocoNetMessage(
                     createSetPacket(value));
         }

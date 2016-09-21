@@ -40,7 +40,7 @@ public class MarklinMenu extends JMenu {
             }
         }
 
-        if (jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
             try {
                 new jmri.jmrit.beantable.ListedTableFrame();
             } catch (java.lang.NullPointerException ex) {

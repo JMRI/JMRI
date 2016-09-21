@@ -1,7 +1,7 @@
 package jmri.jmris.json;
 
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.ROUTE;
+import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.ROUTE;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

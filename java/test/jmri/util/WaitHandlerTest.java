@@ -1,7 +1,7 @@
 package jmri.util;
 
 import java.util.Calendar;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * testing.
  *
  * @author	Bob Jacobsen Copyright 2003, 2009, 2010
- * @version	$Revision$
  */
 public class WaitHandlerTest extends TestCase {
 

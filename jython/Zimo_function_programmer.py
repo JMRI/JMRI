@@ -61,7 +61,7 @@ class LocoZimoProg(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.throttle == None) :
             print "Couldn't assign throttle!"
         # setup a programmer for ops-mode
-        self.programmer = programmers.getAddressedProgrammer(long, number)
+        self.programmer = addressedProgrammers.getAddressedProgrammer(long, number)
         return
         
     # handle() will only execute once here, to run a single test
@@ -330,7 +330,7 @@ class LocoZimoProg(jmri.jmrit.automat.AbstractAutomaton) :
         self.startButton = javax.swing.JButton("Start")
         self.startButton.actionPerformed = self.whenMyButtonClicked		
 
-        self.roster = jmri.jmrit.roster.Roster.instance()
+        self.roster = jmri.jmrit.roster.Roster.getDefault()
         self.box = jmri.jmrit.roster.swing.GlobalRosterEntryComboBox()
         self.box.itemStateChanged = self.rosterBoxChange
         temppanel1.add(self.box)

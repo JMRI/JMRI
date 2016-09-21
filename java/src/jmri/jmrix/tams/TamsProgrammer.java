@@ -1,4 +1,3 @@
-// TamsProgrammer.java
 package jmri.jmrix.tams;
 
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * work by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
 
@@ -75,7 +73,8 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
         }
     }
 
-    public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    @Override
+    public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
@@ -256,6 +255,3 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
     private final static Logger log = LoggerFactory.getLogger(TamsProgrammer.class.getName());
 
 }
-
-
-/* @(#)TamsProgrammer.java */

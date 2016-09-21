@@ -31,6 +31,10 @@ public class DecoderPro3Action extends JmriAbstractAction {
 
     /**
      * Method for opening a new window via the classic JMRI interface
+     *
+     * @param pName     the action name
+     * @param allowQuit true if closing the {@link DecoderPro3Window} should
+     *                  quit the application; false otherwise
      */
     public DecoderPro3Action(String pName, boolean allowQuit) {
         super(pName);

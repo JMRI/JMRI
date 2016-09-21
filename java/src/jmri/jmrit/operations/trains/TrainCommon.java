@@ -1,4 +1,3 @@
-// TrainCommon.java
 package jmri.jmrit.operations.trains;
 
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
@@ -39,7 +38,6 @@ import org.slf4j.LoggerFactory;
  * Common routines for trains
  *
  * @author Daniel Boudreau (C) Copyright 2008, 2009, 2010, 2011, 2012, 2013
- * @version $Revision: 1 $
  */
 public class TrainCommon {
 
@@ -1075,9 +1073,7 @@ public class TrainCommon {
      * @param string string to write
      */
     protected static void addLine(PrintWriter file, String level, String string) {
-        if (log.isDebugEnabled()) {
-            log.debug(string);
-        }
+        log.debug(string);
         if (file != null) {
             String[] lines = string.split(NEW_LINE);
             for (String line : lines) {
@@ -1088,7 +1084,7 @@ public class TrainCommon {
 
     // only used by build report
     private static void printLine(PrintWriter file, String level, String string) {
-        int lineLengthMax = getLineLength(Setup.PORTRAIT, Setup.getBuildReportFontSize(), Setup.MONOSPACED);
+        int lineLengthMax = getLineLength(Setup.PORTRAIT, Setup.MONOSPACED, Font.PLAIN, Setup.getBuildReportFontSize());
         if (string.length() > lineLengthMax) {
             String[] words = string.split(SPACE);
             StringBuffer sb = new StringBuffer();
@@ -1155,9 +1151,7 @@ public class TrainCommon {
      *
      */
     protected void addLine(PrintWriter file, String string) {
-        if (log.isDebugEnabled()) {
-            log.debug(string);
-        }
+        log.debug(string);
         if (file != null) {
             file.println(string);
         }
@@ -1793,8 +1787,8 @@ public class TrainCommon {
 
     public static String getISO8601Date(boolean isModelYear) {
         Calendar calendar = Calendar.getInstance();
-        // use the JMRI timebase (which may be a fast clock).
-        calendar.setTime(jmri.InstanceManager.timebaseInstance().getTime());
+        // use the JMRI Timebase (which may be a fast clock).
+        calendar.setTime(jmri.InstanceManager.getDefault(jmri.Timebase.class).getTime());
         if (isModelYear && !Setup.getYearModeled().isEmpty()) {
             try {
                 calendar.set(Calendar.YEAR, Integer.parseInt(Setup.getYearModeled().trim()));
@@ -1815,8 +1809,8 @@ public class TrainCommon {
 
     public static String getDate(boolean isModelYear) {
         Calendar calendar = Calendar.getInstance();
-        // use the JMRI timebase (which may be a fast clock).
-        calendar.setTime(jmri.InstanceManager.timebaseInstance().getTime());
+        // use the JMRI Timebase (which may be a fast clock).
+        calendar.setTime(jmri.InstanceManager.getDefault(jmri.Timebase.class).getTime());
         if (isModelYear && !Setup.getYearModeled().equals(Setup.NONE)) {
             try {
                 calendar.set(Calendar.YEAR, Integer.parseInt(Setup.getYearModeled().trim()));
@@ -1828,46 +1822,7 @@ public class TrainCommon {
     }
 
     /**
-     * Returns a double in minutes representing the string date. Date string has
-     * to be in the order: Month / day / year hour:minute AM_PM
-     *
-     * @return double in minutes @deprecated. Use date object comparisons
-     *         instead.
-     */
-    @Deprecated
-    public double convertStringDateToDouble(String date) {
-        double dateToDouble = 0;
-        try {
-            // log.debug("Convert date: " + date);
-            String[] breakdownDate = date.split("/");
-            // log.debug("Month: " + breakdownDate[0]);
-            // convert month to minutes
-            dateToDouble += 60 * 24 * 31 * Integer.parseInt(breakdownDate[0]);
-            // log.debug("Day: " + breakdownDate[1]);
-            dateToDouble += 60 * 24 * Integer.parseInt(breakdownDate[1]);
-            String[] breakDownYear = breakdownDate[2].split(" ");
-            // log.debug("Year: " + breakDownYear[0]);
-            dateToDouble += 60 * 24 * 365 * Integer.parseInt(breakDownYear[0]);
-            String[] breakDownTime = breakDownYear[1].split(":");
-            // log.debug("Hour: " + breakDownTime[0]);
-            dateToDouble += 60 * Integer.parseInt(breakDownTime[0]);
-            // log.debug("Minute: " + breakDownTime[1]);
-            dateToDouble += Integer.parseInt(breakDownTime[1]);
-            if (breakDownYear.length > 2) {
-                log.debug("AM_PM: " + breakDownYear[2]);
-                if (breakDownYear[2].equals(Bundle.getMessage("PM"))) {
-                    dateToDouble += 60 * 12;
-                }
-            }
-        } catch (NumberFormatException e) {
-            log.error("Not able to convert date: " + date + " to double");
-        }
-        // log.debug("Double: "+dateToDouble);
-        return dateToDouble;
-    }
-
-    /**
-     * Will pad out a string by adding spaces to the end of the string, and will
+     * Pads out a string by adding spaces to the end of the string, and will
      * remove characters from the end of the string if the string exceeds the
      * field size.
      *
@@ -1923,15 +1878,19 @@ public class TrainCommon {
         return buf.toString();
     }
 
-    protected int getLineLength(boolean isManifest) {
+    public static int getLineLength(boolean isManifest) {
         return getLineLength(isManifest ? Setup.getManifestOrientation() : Setup.getSwitchListOrientation(),
-                Setup.getManifestFontSize(), Setup.getFontName());
+                Setup.getFontName(), Font.PLAIN, Setup.getManifestFontSize());
     }
 
-    private static int getLineLength(String orientation, int fontSize, String fontName) {
+    public static int getManifestHeaderLineLength() {
+        return getLineLength(Setup.getManifestOrientation(), "SansSerif", Font.ITALIC, Setup.getManifestFontSize());
+    }
+
+    private static int getLineLength(String orientation, String fontName, int fontStyle, int fontSize) {
         // Metrics don't always work for the various font names, so use
         // Monospaced
-        Font font = new Font(fontName, Font.PLAIN, fontSize); // NOI18N
+        Font font = new Font(fontName, fontStyle, fontSize); // NOI18N
         JLabel label = new JLabel();
         FontMetrics metrics = label.getFontMetrics(font);
         int charwidth = metrics.charWidth('m');
@@ -1960,20 +1919,21 @@ public class TrainCommon {
         int stringWidth = metrics.stringWidth(string);
         return stringWidth <= getPageSize(orientation).width;
     }
+    
+    protected static final Dimension PAPER_MARGINS = new Dimension(84, 72);
 
-    private static Dimension getPageSize(String orientation) {
-        // page size has been adjusted to account for margins of .5
+    protected static Dimension getPageSize(String orientation) {
+        // page size has been adjusted to account for margins of .5 Dimension(84, 72)
         Dimension pagesize = new Dimension(523, 720); // Portrait 8.5 x 11
-        // landscape has a .65 margins
+        // landscape has .65 margins
         if (orientation.equals(Setup.LANDSCAPE)) {
-            pagesize = new Dimension(702, 523);
+            pagesize = new Dimension(702, 523); // 11 x 8.5
         }
-        if (orientation.equals(Setup.HALFPAGE)) // 4.5 x 11
-        {
-            pagesize = new Dimension(261, 720);
+        if (orientation.equals(Setup.HALFPAGE)) {
+            pagesize = new Dimension(261, 720); // 4.25 x 11
         }
         if (orientation.equals(Setup.HANDHELD)) {
-            pagesize = new Dimension(206, 720);
+            pagesize = new Dimension(206, 720); // 3.25 x 11
         }
         return pagesize;
     }

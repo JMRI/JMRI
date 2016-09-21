@@ -1,4 +1,3 @@
-// SprogCSTurnout.java
 package jmri.jmrix.sprog;
 
 import jmri.Turnout;
@@ -15,25 +14,20 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005
  * @author J.M. (Mark) Knox Copyright (C) 2005
- *
- * @version	$Revision$
  */
 public class SprogCSTurnout extends AbstractTurnout {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4189742441156229537L;
+    private SprogSystemConnectionMemo _memo = null;
 
     /**
      * Sprog turnouts use the NMRA number (0-511) as their numerical
      * identification.
      */
-    public SprogCSTurnout(int number) {
-        super("ST" + number);
+    public SprogCSTurnout(int number,SprogSystemConnectionMemo memo) {
+        super(memo.getSystemPrefix() + "T" + number);
         _number = number;
-
-        commandStation = SprogCommandStation.instance();
+        _memo = memo;
+        commandStation = _memo.getCommandStation();
     }
 
     public int getNumber() {

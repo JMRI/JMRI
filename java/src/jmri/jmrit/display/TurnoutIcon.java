@@ -77,7 +77,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
      * @param pName Used as a system/user name to lookup the turnout object
      */
     public void setTurnout(String pName) {
-        if (InstanceManager.turnoutManagerInstance() != null) {
+        if (InstanceManager.getNullableDefault(jmri.TurnoutManager.class) != null) {
             try {
                 Turnout turnout = InstanceManager.turnoutManagerInstance().provideTurnout(pName);
                 setTurnout(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, turnout));
@@ -357,7 +357,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     TableItemPanel _itemPanel;
 
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Turnout"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameTurnout"));
         popup.add(new javax.swing.AbstractAction(txt) {
             /**
              *
@@ -372,9 +372,9 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     }
 
     protected void editItem() {
-        makePalettteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Turnout")));
+        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameTurnout")));
         _itemPanel = new TableItemPanel(_paletteFrame, "Turnout", _iconFamily,
-                PickListModel.turnoutPickModelInstance(), _editor);
+                PickListModel.turnoutPickModelInstance(), _editor); // NOI18N
         ActionListener updateAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateItem();
@@ -427,7 +427,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     }
 
     public boolean setEditIconMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Turnout"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameTurnout"));
         popup.add(new javax.swing.AbstractAction(txt) {
             /**
              *
@@ -442,7 +442,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     }
 
     protected void edit() {
-        makeIconEditorFrame(this, "Turnout", true, null);
+        makeIconEditorFrame(this, "Turnout", true, null); // NOI18N
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.turnoutPickModelInstance());
         Iterator<Integer> e = _iconStateMap.keySet().iterator();
         int i = 0;

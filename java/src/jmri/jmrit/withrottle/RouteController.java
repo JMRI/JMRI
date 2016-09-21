@@ -25,7 +25,7 @@ public class RouteController extends AbstractController implements PropertyChang
     private Hashtable<NamedBeanHandle<Sensor>, Route> indication;    //  Monitor turnouts for aligned status
 
     public RouteController() {
-        manager = InstanceManager.routeManagerInstance();
+        manager = InstanceManager.getNullableDefault(jmri.RouteManager.class);
         if (manager == null) {
             log.info("No route manager instance.");
             isValid = false;
@@ -57,7 +57,12 @@ public class RouteController extends AbstractController implements PropertyChang
         try {
             if (message.charAt(0) == 'A') {
                 if (message.charAt(1) == '2') {
-                    manager.getBySystemName(message.substring(2)).setRoute();
+                    Route r = manager.getBySystemName(message.substring(2));
+                    if (r != null) {
+                        r.setRoute();
+                    } else {
+                        log.warn("Message \"{}\" contained invalid system name.", message);
+                    }
                 } else {
                     log.warn("Message \"" + message + "\" does not match a route.");
                 }

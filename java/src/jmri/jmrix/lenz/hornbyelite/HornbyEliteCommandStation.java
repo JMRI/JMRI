@@ -1,6 +1,3 @@
-/*
- * HornbyEliteCommandStation.java
- */
 package jmri.jmrix.lenz.hornbyelite;
 
 
@@ -9,9 +6,8 @@ package jmri.jmrix.lenz.hornbyelite;
  * Lenz command station.
  *
  * @author	Paul Bender Copyright (C) 2008
- * @version	$Revision$
  */
-public class HornbyEliteCommandStation extends jmri.jmrix.lenz.LenzCommandStation implements jmri.jmrix.DccCommandStation, jmri.CommandStation {
+public class HornbyEliteCommandStation extends jmri.jmrix.lenz.LenzCommandStation implements jmri.CommandStation {
 
     /**
      * The Hornby Elite does NOT use a service mode
@@ -28,6 +24,3 @@ public class HornbyEliteCommandStation extends jmri.jmrix.lenz.LenzCommandStatio
     }
 
 }
-
-
-/* @(#)HornbyEliteCommandStation.java */

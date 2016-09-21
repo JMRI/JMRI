@@ -1,48 +1,53 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
 <!-- UpDated by Herv&#233; Blorec  2013-10-11-->
+
 <html lang="fr">
 <head>
- <TITLE>
-      JMRI: Adding/Editing Memories
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Memory Add Edit">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Adding/Editing Memories</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI help Memory Add Edit">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Ajout/Modification de M&eacute;moires</h1>&Acirc; &Acirc;
+      &Acirc; &Acirc; Pour cr&eacute;er une variable
+      m&eacute;moire, cliquez sur le bouton "Ajouter ..." sur le
+      <a href="MemoryTable.shtml">Tableau m&eacute;moire</a>. Cela
+      ouvrira une petite fen&ecirc;tre avec un espace pour y entrer
+      un nom syst&egrave;me et un nom 'utilisateur pour la nouvelle
+      m&eacute;moire, plus et bouton "Ajouter".
 
-<h1>Ajout/Modification de M&#233;moires </H1>
-    
-Pour cr&#233;er une variable  m&#233;moire, cliquez sur le bouton 
-"Ajouter ..." sur le
-<a href="MemoryTable.shtml"> Tableau m&#233;moire</a>.
-Cela ouvrira une petite fen&#234;tre avec un espace pour y entrer 
-un nom syst&#232;me et un nom 'utilisateur pour la nouvelle m&#233;moire, plus
-et bouton "Ajouter".
-<p>
-Vous devez entrer un nom syst&#232;me unique. Les noms syst&#232;me de m&#233;moires n'ont
-pas de mod&#232;le. Vous pouvez tous mettre tout ce que vous voulez. Il y a une faible
-convention pour les commencer  par "IM" pour "m&#233;moire interne", mais ce n'est pas
-n&#233;cessaire.
+      <p>Vous devez entrer un nom syst&egrave;me unique. Les noms
+      syst&egrave;me de m&eacute;moires n'ont pas de mod&egrave;le.
+      Vous pouvez tous mettre tout ce que vous voulez. Il y a une
+      faible convention pour les commencer par "IM" pour
+      "m&eacute;moire interne", mais ce n'est pas
+      n&eacute;cessaire.</p>
 
-<p>
-Le nom utilisateur est facultatif, mais si on le donne, il doit &#234;tre unique.
-
-
-<!--#include virtual="/Footer" -->
+      <p>Le nom utilisateur est facultatif, mais si on le donne, il
+      doit &ecirc;tre unique. 
+      <!--#include virtual="/Footer" --></p>
+    </div>
+  </div>
 </body>
 </html>
-

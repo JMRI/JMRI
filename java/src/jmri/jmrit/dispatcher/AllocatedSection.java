@@ -1,4 +1,3 @@
-// AllocatedSection.java
 package jmri.jmrit.dispatcher;
 
 import java.beans.PropertyChangeEvent;
@@ -36,7 +35,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Dave Duchamp Copyright (C) 2008-2011
- * @version	$Revision$
  */
 public class AllocatedSection {
 
@@ -282,17 +280,16 @@ public class AllocatedSection {
             if (mBlockList == null) {
                 mBlockList = mSection.getBlockList();
             }
-            if (mBlockList != null) {
-                jmri.Block b = mBlockList.get(index);
-                if (!isInActiveBlockList(b)) {
-                    int occ = b.getState();
-                    Runnable handleBlockChange = new RespondToBlockStateChange(b, occ, this);
-                    Thread tBlockChange = new Thread(handleBlockChange, "Allocated Section Block Change on " + b.getDisplayName());
-                    tBlockChange.start();
-                    addToActiveBlockList(b);
-                    if (DispatcherFrame.instance().getSupportVSDecoder()) {
-                        firePropertyChangeEvent("BlockStateChange", null, b.getSystemName()); // NOI18N
-                    }
+
+            jmri.Block b = mBlockList.get(index);
+            if (!isInActiveBlockList(b)) {
+                int occ = b.getState();
+                Runnable handleBlockChange = new RespondToBlockStateChange(b, occ, this);
+                Thread tBlockChange = new Thread(handleBlockChange, "Allocated Section Block Change on " + b.getDisplayName());
+                tBlockChange.start();
+                addToActiveBlockList(b);
+                if (DispatcherFrame.instance().getSupportVSDecoder()) {
+                    firePropertyChangeEvent("BlockStateChange", null, b.getSystemName()); // NOI18N
                 }
             }
         }
@@ -426,5 +423,3 @@ public class AllocatedSection {
 
     private final static Logger log = LoggerFactory.getLogger(AllocatedSection.class.getName());
 }
-
-/* @(#)AllocatedSection.java */

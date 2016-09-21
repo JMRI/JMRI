@@ -110,7 +110,7 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
 
         loadCommon(h, shared);
 
-        InstanceManager.signalHeadManagerInstance().register(h);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         return true;
     }
 

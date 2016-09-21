@@ -46,7 +46,7 @@ public class PositionableRectangle extends PositionableShape {
     }
 
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = Bundle.getMessage("editShape", Bundle.getMessage("rectangle"));
+        String txt = Bundle.getMessage("editShape", Bundle.getMessage("Rectangle"));
         popup.add(new javax.swing.AbstractAction(txt) {
             /**
              *
@@ -55,7 +55,7 @@ public class PositionableRectangle extends PositionableShape {
 
             public void actionPerformed(ActionEvent e) {
                 if (_editFrame == null) {
-                    _editFrame = new DrawRectangle("editShape", "rectangle", null);
+                    _editFrame = new DrawRectangle("editShape", "Rectangle", null);
                     setEditParams();
                 }
             }

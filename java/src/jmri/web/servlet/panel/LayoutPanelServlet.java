@@ -6,11 +6,11 @@ import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.configurexml.ConfigXmlManager;
-import jmri.jmris.json.JSON;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.server.json.JSON;
 import jmri.util.ColorUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -127,8 +127,9 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                 if (b.getUseCount() > 0) {
                     // save only those LayoutBlocks that are in use--skip abandoned ones
                     Element elem = new Element("layoutblock").setAttribute("systemname", sname);
-                    if (!b.getUserName().isEmpty()) {
-                        elem.setAttribute("username", b.getUserName());
+                    String uname = b.getUserName();
+                    if (uname != null && !uname.isEmpty()) {
+                        elem.setAttribute("username", uname);
                     }
                     // get occupancy sensor from layoutblock if it is valid
                     if (!b.getOccupancySensorName().isEmpty()) {

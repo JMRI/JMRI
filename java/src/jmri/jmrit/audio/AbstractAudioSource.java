@@ -60,7 +60,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 //    private AudioSourceDelayThread asdt = null;
     private LinkedList<AudioBuffer> pendingBufferQueue = new LinkedList<>();
 
-    private static final AudioFactory activeAudioFactory = InstanceManager.audioManagerInstance().getActiveAudioFactory();
+    private static final AudioFactory activeAudioFactory = InstanceManager.getDefault(jmri.AudioManager.class).getActiveAudioFactory();
 
     private static float metersPerUnit = activeAudioFactory.getActiveAudioListener().getMetersPerUnit();
 
@@ -163,7 +163,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     @Override
     public void setAssignedBuffer(String bufferSystemName) {
         if (!queued) {
-            AudioManager am = InstanceManager.audioManagerInstance();
+            AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
             Audio a = am.getBySystemName(bufferSystemName);
             if (a.getSubType() == Audio.BUFFER) {
                 setAssignedBuffer((AudioBuffer) a);

@@ -1,4 +1,3 @@
-//AbstractTimeServer.java
 package jmri.jmris;
 
 import java.beans.PropertyChangeEvent;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2013
  * @author Randall Wood Copyright (C) 2014
- * @version $Revision: 23184 $
  */
 abstract public class AbstractTimeServer {
 
@@ -24,7 +22,7 @@ abstract public class AbstractTimeServer {
     protected Timebase timebase = null;
 
     public AbstractTimeServer() {
-        this.timebase = InstanceManager.timebaseInstance();
+        this.timebase = InstanceManager.getDefault(jmri.Timebase.class);
     }
 
     /*

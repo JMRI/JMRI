@@ -166,7 +166,7 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
         if (log.isDebugEnabled()) {
             log.debug("Found " + sectionList.size() + " sections");
         }
-        SectionManager tm = InstanceManager.sectionManagerInstance();
+        SectionManager tm = InstanceManager.getDefault(jmri.SectionManager.class);
 
         for (int i = 0; i < sectionList.size(); i++) {
             if (sectionList.get(i).getAttribute("systemName") == null) {
@@ -252,7 +252,7 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
     }
 
     public int loadOrder() {
-        return InstanceManager.sectionManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(jmri.SectionManager.class).getXMLOrder();
     }
 
     private final static Logger log = LoggerFactory.getLogger(SectionManagerXml.class.getName());

@@ -13,7 +13,7 @@ import jmri.util.JUnitUtil;
 import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.EventDataConstants;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -217,7 +217,7 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull(iconEditor);
 
         SignalHead signalHead = new jmri.implementation.VirtualSignalHead("IH0");
-        InstanceManager.signalHeadManagerInstance().register(signalHead);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(signalHead);
 
         iconEditor.setSelection(signalHead);
 

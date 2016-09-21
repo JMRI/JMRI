@@ -15,9 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Converts Stream-based I/O to/from LocoNet messages. The "LocoNetInterface"
- * side sends/receives LocoNetMessage objects. The connection to a
- * LnPortnetworkController is via a pair of *Streams, which then carry sequences
+ * Converts Stream-based I/O to/from DCC++ messages. The "DCCppInterface"
+ * side sends/receives DCCppMessage objects. The connection to a
+ * DCCppPortnetworkController is via a pair of *Streams, which then carry sequences
  * of characters for transmission.
  * <P>
  * Messages come to this via the main GUI thread, and are forwarded back to
@@ -30,11 +30,6 @@ import org.slf4j.LoggerFactory;
  * <LI> (everything else)
  * </UL>
  * <P>
- * Some of the message formats used in this class are Copyright Digitrax, Inc.
- * and used with permission as part of the JMRI project. That permission does
- * not extend to uses in other software products. If you wish to use this code,
- * algorithm or these message formats outside of JMRI, please contact Digitrax
- * Inc for separate permission.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Alex Shepherd Copyright (C) 2003, 2006
@@ -133,7 +128,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
     }
 
     /**
-     * Forward a preformatted LocoNetMessage to the actual interface.
+     * Forward a preformatted DCCppMessage to the actual interface.
      *
      * Checksum is computed and overwritten here, then the message is converted
      * to a byte array and queue for transmission
@@ -317,7 +312,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     try {
                         if (ostream != null) {
                             //Commented out as the origianl LnPortnetworkController always returned true.
-                            //if (!networkController.okToSend()) log.warn("LocoNet port not ready to receive"); // TCP, not RS232, so message is a real warning
+                            //if (!networkController.okToSend()) log.warn(DCCpp port not ready to receive"); // TCP, not RS232, so message is a real warning
                             if (debug) {
                                 log.debug("start write to network stream");
                             }
@@ -335,10 +330,10 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                             }
                         } else {
                             // no stream connected
-                            log.warn("sendLocoNetMessage: no connection established");
+                            log.warn("sendDCCppMessage: no connection established");
                         }
                     } catch (java.io.IOException e) {
-                        log.warn("sendLocoNetMessage: IOException: " + e.toString());
+                        log.warn("sendDCCppMessage: IOException: " + e.toString());
                     }
                 } catch (NoSuchElementException e) {
                     // message queue was empty, wait for input

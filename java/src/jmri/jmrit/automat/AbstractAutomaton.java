@@ -954,7 +954,7 @@ public class AbstractAutomaton implements Runnable {
      */
     public boolean writeServiceModeCV(int CV, int value) {
         // get service mode programmer
-        Programmer programmer = InstanceManager.programmerManagerInstance()
+        Programmer programmer = InstanceManager.getDefault(jmri.ProgrammerManager.class)
                 .getGlobalProgrammer();
 
         if (programmer == null) {
@@ -991,7 +991,7 @@ public class AbstractAutomaton implements Runnable {
      */
     public int readServiceModeCV(int CV) {
         // get service mode programmer
-        Programmer programmer = InstanceManager.programmerManagerInstance()
+        Programmer programmer = InstanceManager.getDefault(jmri.ProgrammerManager.class)
                 .getGlobalProgrammer();
 
         if (programmer == null) {
@@ -1030,7 +1030,7 @@ public class AbstractAutomaton implements Runnable {
      */
     public boolean writeOpsModeCV(int CV, int value, boolean longAddress, int loco) {
         // get service mode programmer
-        Programmer programmer = InstanceManager.programmerManagerInstance()
+        Programmer programmer = InstanceManager.getDefault(jmri.ProgrammerManager.class)
                 .getAddressedProgrammer(longAddress, loco);
 
         if (programmer == null) {

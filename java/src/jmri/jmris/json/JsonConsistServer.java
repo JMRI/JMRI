@@ -1,12 +1,12 @@
 package jmri.jmris.json;
 
-import static jmri.jmris.json.JSON.ADDRESS;
-import static jmri.jmris.json.JSON.DATA;
-import static jmri.jmris.json.JSON.DELETE;
-import static jmri.jmris.json.JSON.IS_LONG_ADDRESS;
-import static jmri.jmris.json.JSON.METHOD;
-import static jmri.jmris.json.JSON.PUT;
-import static jmri.jmris.json.JSON.STATUS;
+import static jmri.server.json.JSON.ADDRESS;
+import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JSON.DELETE;
+import static jmri.server.json.JSON.IS_LONG_ADDRESS;
+import static jmri.server.json.JSON.METHOD;
+import static jmri.server.json.JSON.PUT;
+import static jmri.server.json.JSON.STATUS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,7 +42,7 @@ public class JsonConsistServer {
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            if (evt.getPropertyName().equals(InstanceManager.CONSIST_MANAGER)) {
+            if (evt.getPropertyName().equals(InstanceManager.getDefaultsPropertyName(ConsistManager.class))) {
                 if (evt.getNewValue() != null) {
                     InstanceManager.getDefault(jmri.ConsistManager.class).requestUpdateFromLayout();
                     try {
@@ -69,8 +69,9 @@ public class JsonConsistServer {
     public JsonConsistServer(JmriConnection connection) {
         this.connection = connection;
         this.mapper = new ObjectMapper();
-        if (InstanceManager.getDefault(jmri.ConsistManager.class) != null) {
-            InstanceManager.getDefault(jmri.ConsistManager.class).requestUpdateFromLayout();
+        ConsistManager cm = InstanceManager.getNullableDefault(jmri.ConsistManager.class);
+        if (cm != null) {
+            cm.requestUpdateFromLayout();
             try {
                 (new ConsistFile()).readFile();
             } catch (IOException e) {
@@ -84,7 +85,7 @@ public class JsonConsistServer {
 
     public void dispose() {
         InstanceManager.removePropertyChangeListener(this.instanceManagerListener);
-        if (InstanceManager.getDefault(jmri.ConsistManager.class) != null) {
+        if (InstanceManager.getNullableDefault(jmri.ConsistManager.class) != null) {
             InstanceManager.getDefault(jmri.ConsistManager.class).removeConsistListListener(this.consistListListener);
             for (JsonConsistListener l : new ArrayList<JsonConsistListener>(this.consistListeners)) {
                 this.consistListeners.remove(l);
@@ -162,7 +163,7 @@ public class JsonConsistServer {
         }
 
         public void dispose() {
-            if (InstanceManager.getDefault(jmri.ConsistManager.class) != null) {
+            if (InstanceManager.getNullableDefault(jmri.ConsistManager.class) != null) {
                 InstanceManager.getDefault(jmri.ConsistManager.class).getConsist(this.consistAddress).removeConsistListener(this);
             }
         }

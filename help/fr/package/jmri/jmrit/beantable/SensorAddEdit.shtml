@@ -1,157 +1,305 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
 <!-- UpDated by Herv&#233; Blorec 2013-10-11-->
-<HTML LANG="fr">
-<HEAD>
-<TITLE>JMRI: Adding/Editing Sensors</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Bob Jacobsen" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Sensor Add Edit">
 
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<BODY>
-<!--#include virtual="/Header" -->
+  <title>JMRI: Adding/Editing Sensors</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI help Sensor Add Edit">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Ajout/Modification de capteurs</h1>
 
-<H1> Ajout/Modification de capteurs</H1>
-<p> Lorsque vous ajoutez un capteur, vous s&#233;lectionnez dans la liste d&#233;roulante le systeme auquel le
-capteur est fix&#233; &#224;.</p>
-<img src="AddSensor.png" >
-<p> Entrez une adresse valide pour ce capteur et si vous le souhaitez saisissez un nom utilisateur qui peut &#234;tre tout ce que vous voulez pour d&#233;crire le capteur.</p>
+      <p>Lorsque vous ajoutez un capteur, vous s&eacute;lectionnez
+      dans la liste d&eacute;roulante le systeme auquel le capteur
+      est fix&eacute; &agrave;.</p><img src="AddSensor.png">
 
-<H2> Cr&#233;er un nombre de capteurs</H2>
-<p> Il est &#233;galement possible de cr&#233;er un certain nombre de capteurs. <br>
-O&#249; est affich&#233; "Ajouter une plage" cochez la case pour l'activ&#233;e.</P>
-<img src="AddTurnoutNumber.png">
-<p> Lors de la validation de la case "Ajouter Plage", sera ensuite activer le champ "nombre &#224; ajouter".
-Ici entrez le nombre de capteurs que vous souhaitez ajouter, ce qui cr&#233;era ensuite un num&#233;ro
- de capteurs s&#233;quentiels.</p>
-Si un nom utilisateur n'a pas &#233;t&#233; entr&#233;, un num&#233;ro sera ajout&#233; &#224; la fin du nom pour garder
-chaque nom utilisateur unique. <p>
+      <p>Entrez une adresse valide pour ce capteur et si vous le
+      souhaitez saisissez un nom utilisateur qui peut &ecirc;tre
+      tout ce que vous voulez pour d&eacute;crire le capteur.</p>
 
-<H2>Informations mat&#233;rielles sp&#233;cifiques</H2>
+      <h2>Cr&eacute;er un nombre de capteurs</h2>
 
-<H3> Num&#233;ro NCE AIU pour la cartographie capteur JMRI</H3>
-L'Unit&#233; Auxilliaire d'Entr&#233;e ou  l'AIU de NCE permet &#224; lacentrale NCE de v&#233;rifier l'&#233;tat des
-entr&#233;es depuis le r&#233;seau. Ils sont r&#233;f&#233;renc&#233;s dans JMRI comme capteurs avec
-des noms comme "NS785". "NS" signifie "capteur NCE", et 785 est le num&#233;ro d'une
-Entr&#233;e capteur sp&#233;cifique.
-<p> L'adresse mat&#233;rielle peut &#234;tre saisi de deux fa&#231;ons diff&#233;rentes</p>
-<dl><dd><p> Entrez l'Adresse AIU de la cabine suivie par le num&#233;ro Pin s&#233;par&#233;s par un ":" <br>
-Donc, pour un capteur sur Adresse Pupitre AIU 50, la broche 2, vous voulez entrer dans le champ Adresse mat&#233;rielle: <br>
-50:2</p>
-<P> Le num&#233;ro de capteurs peut aussi &#234;tre trouv&#233; et saisi dans le champ adresse mat&#233;rielle en utilisant la formule suivante:</P>
-<P>ID = Capteur  (Adresse Cabine AIU - 1) * 16 + (NIP sur AIU) -1</P>
-<P> Par exemple: L'adresse de la cabine AIU est fix&#233; &#224; 50 et l'un des
-BD20s est reli&#233; &#224; la broche 2. Par cons&#233;quent, l'ID du capteur serait:</P>
-<P>ID = Capteur (50 - 1) * 16 + (2) -1</P>
-<P></dd>Capteur ID = 785</dl>
+      <p>Il est &eacute;galement possible de cr&eacute;er un
+      certain nombre de capteurs.<br>
+      O&ugrave; est affich&eacute; "Ajouter une plage" cochez la
+      case pour l'activ&eacute;e.</p><img src=
+      "AddTurnoutNumber.png">
 
-<H3>Capteur LocoNet pour Cartographie Capteur de JMRI</H3>
-ur
-<p>Les adresses des capteurs LocoNet sont constitu&#233;s de deux parties diff&#233;rentes du num&#233;ro de carte et le num&#233;ro de canal. <br>
-Les capteurs peuvent &#233;galement &#234;tre configur&#233;s &#224; partir des adresses Aiguillages pour l'entr&#233;e Aux et interrupteur.</P>
-<p> L'adresse mat&#233;rielle peut &#234;tre entr&#233;e suivant un certain nombre de fa&#231;ons diff&#233;rentes</p>
-<dl><dd> Entrez le num&#233;ro de la carte, suivi par le num&#233;ro de canal s&#233;par&#233; par un ":" <br>
-Donc, pour un capteur de la carte 11, le canal 1 vous pouvez entrer dans le champ Adresse mat&#233;rielle: <br>
-11:01</p>
-<p>Pour les capteurs fix&#233;s sur les aiguillages, vous entrez dans le champ adresse mat&#233;rielle "T:" suivie du num&#233;ro de l'aiguillage.
-Cela va ajouter l'entr&#233;e auxiliaire associ&#233;e &#224; l'aiguillage, ajouter les entr&#233;es auxiliaires et du commutateur, cliquez sur  ajouter la gamme et  d&#233;finir le nombre &#224; ajouter &#224; 2. <br>
-Donc pour le capteur fix&#233; &#224; l'aiguillage 81 vous saisissez les informations suivantes: <br>
-T: 81</p>
-<p> L'autre m&#233;thode consiste &#224; calculer l'adresse du Capteur et l'ajouter manuellement dans le champ adresse mat&#233;rielle en utilisant la m&#233;thode suivante</p>
-<p> Si vous voulez calculer l'adresse d'une entr&#233;e BDL168, vous pouvez utiliser <br>
-= nombre 16 * (num&#233;ro de la carte) + (num&#233;ro de canal) - 16</p>
+      <p>Lors de la validation de la case "Ajouter Plage", sera
+      ensuite activer le champ "nombre &agrave; ajouter". Ici
+      entrez le nombre de capteurs que vous souhaitez ajouter, ce
+      qui cr&eacute;era ensuite un num&eacute;ro de capteurs
+      s&eacute;quentiels.</p>Si un nom utilisateur n'a pas
+      &eacute;t&eacute; entr&eacute;, un num&eacute;ro sera
+      ajout&eacute; &agrave; la fin du nom pour garder chaque nom
+      utilisateur unique.
 
-<p> o&#249; "le num&#233;ro de canal" va de 1 &#224; 16. Par exemple, le premier circuit (num&#233;ro 1) de la carte 11 a le num&#233;ro: <br>
-num&#233;ro = 16 * (11) + (1) - 16 = 161</p>
+      <h2>Informations mat&eacute;rielles sp&eacute;cifiques</h2>
 
-comme nous l'avons vu dans l'exemple ci-dessus.
+      <h3>Num&eacute;ro NCE AIU pour la cartographie capteur
+      JMRI</h3>L'Unit&eacute; Auxilliaire d'Entr&eacute;e ou l'AIU
+      de NCE permet &agrave; lacentrale NCE de v&eacute;rifier
+      l'&eacute;tat des entr&eacute;es depuis le r&eacute;seau. Ils
+      sont r&eacute;f&eacute;renc&eacute;s dans JMRI comme capteurs
+      avec des noms comme "NS785". "NS" signifie "capteur NCE", et
+      785 est le num&eacute;ro d'une Entr&eacute;e capteur
+      sp&eacute;cifique.
 
+      <p>L'adresse mat&eacute;rielle peut &ecirc;tre saisi de deux
+      fa&ccedil;ons diff&eacute;rentes</p>
 
+      <dl>
+        <dd>
+          <p>Entrez l'Adresse AIU de la cabine suivie par le
+          num&eacute;ro Pin s&eacute;par&eacute;s par un ":"<br>
+          Donc, pour un capteur sur Adresse Pupitre AIU 50, la
+          broche 2, vous voulez entrer dans le champ Adresse
+          mat&eacute;rielle:<br>
+          50:2</p>
 
-<p> Si vous voulez calculer l'adresse d'une entr&#233;e auxiliaire DS54, utilisez: <br>
-num&#233;ro = 2 * (num&#233;ro d'aiguillage - 1) + 1</p>
+          <p>Le num&eacute;ro de capteurs peut aussi &ecirc;tre
+          trouv&eacute; et saisi dans le champ adresse
+          mat&eacute;rielle en utilisant la formule suivante:</p>
 
-<p> Par exemple, l'entr&#233;e auxiliaire associ&#233;e &#224; l'aiguillage81 a le num&#233;ro: <br>
-nombre = 2 * (81 - 1) + 1 = 161</p>
+          <p>ID = Capteur (Adresse Cabine AIU - 1) * 16 + (NIP sur
+          AIU) -1</p>
 
-<p> Si c'est l'entr&#233;e du commutateur, vous ajouter un plus &#224; ce que: <br>
-num&#233;ro= 2 * (num&#233;ro d'aiguillage - 1) + 2</p>
+          <p>Par exemple: L'adresse de la cabine AIU est
+          fix&eacute; &agrave; 50 et l'un des BD20s est
+          reli&eacute; &agrave; la broche 2. Par cons&eacute;quent,
+          l'ID du capteur serait:</p>
 
-<p> Par exemple, l'entr&#233;e du commutateur associ&#233;s &#224; l'aiguillage 12 a : <br>
-  num&#233;ro = 2 * (12 - 1) + 2 = 24</p>
-</dl>
+          <p>ID = Capteur (50 - 1) * 16 + (2) -1</p>
+        </dd>
 
-<H3>Les Capteur Lenz XpressNet pour la Cartographie Capteur JMRI</H3>
-<p> Les adresses capteurs XpressNet sont constitu&#233;es de deux parties diff&#233;rentes l'adresse de l'encodeur de r&#233;trosignalisation et l'adresse du contact.</p>
-<p> L'adresse mat&#233;rielle peut &#234;tre entr&#233;e dans un certain nombre de fa&#231;ons diff&#233;rentes</p>
-<dl> <dd> Entrez l'adresse de l'encodeur, suivie par le contact s&#233;par&#233;s par un ":" <br>
-Donc, pour un capteur sur l'adresse retour codeur 99, contact 3 que vous saisissez dans le champ Adresse mat&#233;rielle: <br>
-99:3</p>
-<p> Si vous souhaitez calculer l'adresse du capteur, il faut soustraire 1 de l'adresse du retour codeur, multipliez ce r&#233;sultat par 8, puis ajouter le num&#233;ro de l'entr&#233;e que vous utilisez. <br>
-Par exemple, si vous utilisez le contact 3 sur un encodeur avec l'adresse 99, 99 - 1 = 98. 98 * 8 = 784. 784 3 = 787. <br>
-L'adresse des r&#233;trosignalisations que vous allez utiliser est 787.</P>
-</Dl></dd>
+        <dt>Capteur ID = 785</dt>
+      </dl>
 
-<H3> Capteur Maple et C/MRI pour Cartographie Capteur JMRI</H3>
-<p> Les  adresses capteur Maple et C/MRI sont constitu&#233;es de deux parties diff&#233;rentes un ID de n&#399;ud et une ID broche/Capteur.</p>
-<p> L'adresse mat&#233;rielle peut &#234;tre entr&#233;e dans un certain nombre de fa&#231;ons diff&#233;rentes</p>
-<dl> <dd> Entrez l'ID de n&#399;ud, suivi par l'ID du capteur, s&#233;par&#233;s par un ":". Cette m&#233;thode peut &#233;galement &#234;tre utilis&#233; pour l'adressage alternatif/&#233;tendu. <br>
-Donc, pour un capteur sur le n&#399;ud 2, broche 3 vous pouvez entrer la ligne suivante dans le champ adresse mat&#233;rielle: <br>
-02:03</p>
+      <h3>Capteur LocoNet pour Cartographie Capteur de JMRI</h3>ur
 
-<p> Une autre m&#233;thode d'ajout de l'adresse du capteur, est d'utiliser la formule suivante</p>
-Node Id x 1000 + broche. <br>
-Donc, pour un capteur sur le n&#399;ud 2, broche 3<br>
-(2x1000) 3 = 2003</p>
-<p> Pour utiliser le sch&#233;ma adressage alternatif/&#233;tendu, se r&#233;f&#233;rer au guide de connexion du mat&#233;riel.</p>
-</Dd></dl>
-<H3> Capteur Grapevine pour la Cartographie Capteur JMRI</H3>
+      <p>Les adresses des capteurs LocoNet sont constitu&eacute;s
+      de deux parties diff&eacute;rentes du num&eacute;ro de carte
+      et le num&eacute;ro de canal.<br>
+      Les capteurs peuvent &eacute;galement &ecirc;tre
+      configur&eacute;s &agrave; partir des adresses Aiguillages
+      pour l'entr&eacute;e Aux et interrupteur.</p>
 
-Il ya trois types distincts de capteurs Grapevine:
-<dl>
-<dt>  D&#233;tecteurs S&#233;rie Avanc&#233;s</dt>
-<dd>
-Jusqu'&#224; trois cartes D&#233;tecteur S&#233;rie Avanc&#233;e peuvent &#234;tre attach&#233;es  &#224;
-un n&#399;ud Grapevine. Chaqu'une offre huit d&#233;tecteurs d'occupation, et
-associe un d&#233;tecteur de mouvement avec chacun de ceux-ci.
-<table>
-<tr> Carte l <th></th> <th> Occupation</th> <th> Mouvement</th></tr>
-<td> Maitre</td> <td> 1-8</td> <td> 9-16</td></tr>
-<td> Esclave 1</td> <td> 17-24</td> <td> 25-32</td></tr>
-<td> Esclave 2</td> <td> 33-40</td> <td> 41-48</td></tr>
-</Table>
-</Dd>
-<dt> Capteurs de S&#233;rie Originaux </dt>
-<dd>
-Les capteurs d'Occupation sur les cartes originales de s&#233;rie remplacent les
-capteurs fix&#233;s par les Cartes avanc&#233;es aux adresses 1 &#224; 8.
-Il n'y a pas de d&#233;tecteurs de mouvement dans ce cas.
+      <p>L'adresse mat&eacute;rielle peut &ecirc;tre entr&eacute;e
+      suivant un certain nombre de fa&ccedil;ons
+      diff&eacute;rentes</p>
 
-<dt>Capteurs Parall&#232;les</dt>
-<dd>Pour les capteurs  parall&#232;les, les connecteurs sur le n&#399;ud de Grapevine
-lui-m&#234;me, apparaissent comme des capteurs JMRI 101 &#224; 108 sur le n&#399;ud.
-Si la seconde banque optionnelle de capteurs de s&#233;rie est pr&#233;sente,
-ils apparaissent comme des capteurs de 109 &#224; 116 sur le n&#399;ud.</dd>
+      <dl>
+        <dd>
+          Entrez le num&eacute;ro de la carte, suivi par le
+          num&eacute;ro de canal s&eacute;par&eacute; par un
+          ":"<br>
+          Donc, pour un capteur de la carte 11, le canal 1 vous
+          pouvez entrer dans le champ Adresse
+          mat&eacute;rielle:<br>
+          11:01
 
-</dd>
-</dl>
-<!--#include virtual="/Footer" -->
+          <p>Pour les capteurs fix&eacute;s sur les aiguillages,
+          vous entrez dans le champ adresse mat&eacute;rielle "T:"
+          suivie du num&eacute;ro de l'aiguillage. Cela va ajouter
+          l'entr&eacute;e auxiliaire associ&eacute;e &agrave;
+          l'aiguillage, ajouter les entr&eacute;es auxiliaires et
+          du commutateur, cliquez sur ajouter la gamme et
+          d&eacute;finir le nombre &agrave; ajouter &agrave; 2.<br>
+          Donc pour le capteur fix&eacute; &agrave; l'aiguillage 81
+          vous saisissez les informations suivantes:<br>
+          T: 81</p>
 
+          <p>L'autre m&eacute;thode consiste &agrave; calculer
+          l'adresse du Capteur et l'ajouter manuellement dans le
+          champ adresse mat&eacute;rielle en utilisant la
+          m&eacute;thode suivante</p>
 
+          <p>Si vous voulez calculer l'adresse d'une entr&eacute;e
+          BDL168, vous pouvez utiliser<br>
+          = nombre 16 * (num&eacute;ro de la carte) +
+          (num&eacute;ro de canal) - 16</p>
 
-</BODY>
-</HTML>
+          <p>o&ugrave; "le num&eacute;ro de canal" va de 1 &agrave;
+          16. Par exemple, le premier circuit (num&eacute;ro 1) de
+          la carte 11 a le num&eacute;ro:<br>
+          num&eacute;ro = 16 * (11) + (1) - 16 = 161</p>comme nous
+          l'avons vu dans l'exemple ci-dessus.
 
+          <p>Si vous voulez calculer l'adresse d'une entr&eacute;e
+          auxiliaire DS54, utilisez:<br>
+          num&eacute;ro = 2 * (num&eacute;ro d'aiguillage - 1) +
+          1</p>
+
+          <p>Par exemple, l'entr&eacute;e auxiliaire
+          associ&eacute;e &agrave; l'aiguillage81 a le
+          num&eacute;ro:<br>
+          nombre = 2 * (81 - 1) + 1 = 161</p>
+
+          <p>Si c'est l'entr&eacute;e du commutateur, vous ajouter
+          un plus &agrave; ce que:<br>
+          num&eacute;ro= 2 * (num&eacute;ro d'aiguillage - 1) +
+          2</p>
+
+          <p>Par exemple, l'entr&eacute;e du commutateur
+          associ&eacute;s &agrave; l'aiguillage 12 a :<br>
+          num&eacute;ro = 2 * (12 - 1) + 2 = 24</p>
+        </dd>
+      </dl>
+
+      <h3>Les Capteur Lenz XpressNet pour la Cartographie Capteur
+      JMRI</h3>
+
+      <p>Les adresses capteurs XpressNet sont constitu&eacute;es de
+      deux parties diff&eacute;rentes l'adresse de l'encodeur de
+      r&eacute;trosignalisation et l'adresse du contact.</p>
+
+      <p>L'adresse mat&eacute;rielle peut &ecirc;tre entr&eacute;e
+      dans un certain nombre de fa&ccedil;ons
+      diff&eacute;rentes</p>
+
+      <dl>
+        <dd>
+          Entrez l'adresse de l'encodeur, suivie par le contact
+          s&eacute;par&eacute;s par un ":"<br>
+          Donc, pour un capteur sur l'adresse retour codeur 99,
+          contact 3 que vous saisissez dans le champ Adresse
+          mat&eacute;rielle:<br>
+          99:3
+
+          <p>Si vous souhaitez calculer l'adresse du capteur, il
+          faut soustraire 1 de l'adresse du retour codeur,
+          multipliez ce r&eacute;sultat par 8, puis ajouter le
+          num&eacute;ro de l'entr&eacute;e que vous utilisez.<br>
+          Par exemple, si vous utilisez le contact 3 sur un
+          encodeur avec l'adresse 99, 99 - 1 = 98. 98 * 8 = 784.
+          784 3 = 787.<br>
+          L'adresse des r&eacute;trosignalisations que vous allez
+          utiliser est 787.</p>
+        </dd>
+      </dl>
+
+      <h3>Capteur Maple et C/MRI pour Cartographie Capteur
+      JMRI</h3>
+
+      <p>Les adresses capteur Maple et C/MRI sont
+      constitu&eacute;es de deux parties diff&eacute;rentes un ID
+      de n&#399;ud et une ID broche/Capteur.</p>
+
+      <p>L'adresse mat&eacute;rielle peut &ecirc;tre entr&eacute;e
+      dans un certain nombre de fa&ccedil;ons
+      diff&eacute;rentes</p>
+
+      <dl>
+        <dd>
+          Entrez l'ID de n&#399;ud, suivi par l'ID du capteur,
+          s&eacute;par&eacute;s par un ":". Cette m&eacute;thode
+          peut &eacute;galement &ecirc;tre utilis&eacute; pour
+          l'adressage alternatif/&eacute;tendu.<br>
+          Donc, pour un capteur sur le n&#399;ud 2, broche 3 vous
+          pouvez entrer la ligne suivante dans le champ adresse
+          mat&eacute;rielle:<br>
+          02:03
+
+          <p>Une autre m&eacute;thode d'ajout de l'adresse du
+          capteur, est d'utiliser la formule suivante</p>Node Id x
+          1000 + broche.<br>
+          Donc, pour un capteur sur le n&#399;ud 2, broche 3<br>
+          (2x1000) 3 = 2003
+
+          <p>Pour utiliser le sch&eacute;ma adressage
+          alternatif/&eacute;tendu, se r&eacute;f&eacute;rer au
+          guide de connexion du mat&eacute;riel.</p>
+        </dd>
+      </dl>
+
+      <h3>Capteur Grapevine pour la Cartographie Capteur
+      JMRI</h3>Il ya trois types distincts de capteurs Grapevine:
+
+      <dl>
+        <dt>D&eacute;tecteurs S&eacute;rie Avanc&eacute;s</dt>
+
+        <dd>
+          Jusqu'&agrave; trois cartes D&eacute;tecteur S&eacute;rie
+          Avanc&eacute;e peuvent &ecirc;tre attach&eacute;es
+          &agrave; un n&#399;ud Grapevine. Chaqu'une offre huit
+          d&eacute;tecteurs d'occupation, et associe un
+          d&eacute;tecteur de mouvement avec chacun de ceux-ci.
+          Carte l
+
+          <table>
+            <tr>
+              <th></th>
+
+              <th>Occupation</th>
+
+              <th>Mouvement</th>
+            </tr>
+
+            <tr>
+              <td>Maitre</td>
+
+              <td>1-8</td>
+
+              <td>9-16</td>
+            </tr>
+
+            <tr>
+              <td>Esclave 1</td>
+
+              <td>17-24</td>
+
+              <td>25-32</td>
+            </tr>
+
+            <tr>
+              <td>Esclave 2</td>
+
+              <td>33-40</td>
+
+              <td>41-48</td>
+            </tr>
+          </table>
+        </dd>
+
+        <dt>Capteurs de S&eacute;rie Originaux</dt>
+
+        <dd>Les capteurs d'Occupation sur les cartes originales de
+        s&eacute;rie remplacent les capteurs fix&eacute;s par les
+        Cartes avanc&eacute;es aux adresses 1 &agrave; 8. Il n'y a
+        pas de d&eacute;tecteurs de mouvement dans ce cas.</dd>
+
+        <dt>Capteurs Parall&egrave;les</dt>
+
+        <dd>Pour les capteurs parall&egrave;les, les connecteurs
+        sur le n&#399;ud de Grapevine lui-m&ecirc;me, apparaissent
+        comme des capteurs JMRI 101 &agrave; 108 sur le n&#399;ud.
+        Si la seconde banque optionnelle de capteurs de
+        s&eacute;rie est pr&eacute;sente, ils apparaissent comme
+        des capteurs de 109 &agrave; 116 sur le n&#399;ud.</dd>
+      </dl><!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

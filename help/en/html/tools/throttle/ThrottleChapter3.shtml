@@ -1,302 +1,395 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-  <title>Throttle: Advanced Configuration </title>
-  <meta name="keywords" content="JMRI decoderpro dcc nmra throttlepro">
-  <meta name="Description" content="Throttle documentation for JMRI project">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>Throttle: Advanced Configuration</title>
+  <meta name="keywords" content=
+  "JMRI decoderpro dcc nmra throttlepro">
+  <meta name="Description" content=
+  "Throttle documentation for JMRI project">
   <meta name="Author" content="Paul Fraker (paul@frakers.com)">
-  <meta name="Language" content="EN">
-  
-  <!-- Style -->
-  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <meta name="Language" content="EN"><!-- Style -->
+  <meta http-equiv="content-type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header" -->
 
-<div id="mainContent">
-<h1>Current Throttle documentation</h1>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<p>Please note that the Throttles Help was updated. Current version:</p>
-<ul>
-  <li>The <a href="ToolsMenuThrottleEntry.shtml">Throttle menu in JMRI</a></li>
-  <li>The <a href="BasicThrottleWindow.shtml">Throttle Window itself</a></li>
-  <li>The <a href="ThrottleWindowMenus.shtml">Throttle Window menus</a></li>
-  <li>The <a href="ThrottleToolBar.shtml">Throttle Window toolbar</a></li>
-  <li>The <a href="AdvancedThrottleControl.shtml">Throttle Window
-  controls</a></li>
-  <li>The <a href="ThrottlesListWindow.shtml">Throttles List Window</a></li>
-  <li>The <a href="ThrottlesPreferencesPane.shtml">Throttles preferences
-    pane</a></li>
-</ul>
+    <div id="mainContent">
+      <h1>Current Throttle documentation</h1>
 
-<hr>
-<h1>Throttles in JMRI v2.x</h2>
-<h2>Advanced Configuration of the Function Panel</h2>
+      <p>Please note that the Throttles Help was updated. Current
+      version:</p>
 
-<table border="0" width="100%" cellpadding="0" cellspacing="0">
-  <tbody>
-    <tr>
-      <td align="left" valign="top"><p>When a new throttle window is
-        initialized, all function button labels are set up with a set of
-        defaults (F1...F2...F3...etc.). These are closely related to hand-held
-        throttles. But one of the cool features that the JMRI Throttles have to
-        offer over hand-held throttles, is the ability to customize the button
-        labels. In addition, each button can be hidden from view or switched to
-        an "unlocked" button.</p>
+      <ul>
+        <li>The <a href="ToolsMenuThrottleEntry.shtml">Throttle
+        menu in JMRI</a></li>
 
-        <p>The example image on the right shows the default Function Panel
-        window. When the mouse pointer hovers over the top of the button, a
-        <strong>right click</strong> of the mouse will display a menu with
-        the only option on this menu at this time being "<b>Properties</b>".</p>
-      </td>
-      <td><img width="20" height="20" src="images/spacer.gif"> </td>
-      <td align="center" valign="top">
+        <li>The <a href="BasicThrottleWindow.shtml">Throttle Window
+        itself</a></li>
 
-        <p style="text-align: center; font-size: xx-small"><img width="206"
-        height="250" src="images/jmri022.jpg"
-        title="Function Button Properties"><br>
-        Figure 3-1: Function Button Properties </p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<br>
+        <li>The <a href="ThrottleWindowMenus.shtml">Throttle Window
+        menus</a></li>
 
+        <li>The <a href="ThrottleToolBar.shtml">Throttle Window
+        toolbar</a></li>
 
-<table border="0" width="100%" cellpadding="0" cellspacing="0">
-  <tbody>
-    <tr>
-      <td align="left" valign="top"><br>
-        <p style="text-align: center; font-size: xx-small"><img width="180"
-        height="181" src="images/jmri023.jpg" title="Edit Function Button"><br>
-        Figure 3-2: Edit Function Button </p>
-      </td>
-      <td><img width="20" height="20" src="images/spacer.gif"> </td>
-      <td align="left" valign="top"><p>When the "<b>Properties</b>" option is
-        clicked on, the "<b>Edit Function Button</b>" window opens (see the
-        example image on the left).</p>
-        <ul>
-          <li><strong>Function Number</strong> associates the button with a
-            function number </li>
-          <li><strong>Text</strong> customizable button label text </li>
-          <li><strong>Font Size</strong> set the size of text displayed on button
-          </li>
-          <li><strong>Lockable</strong> identifies whether the button acts as
-            an "on/off" toggle switch; or as a momentary switch </li>
-          <li><strong>Visible</strong> identifies whether the button is
-            visible in the Function Panel window </li>
-        </ul>
-      </td>
-    </tr>
-  </tbody>
-</table>
+        <li>The <a href="AdvancedThrottleControl.shtml">Throttle
+        Window controls</a></li>
 
-<p>By default, the <strong>Function Number</strong> is associated with the
-button number that you initially right-clicked on. For example, in the figures
-shown above, function number "1" (F1) is being edited. It is recommended that
-you leave this number as is, however, you <u>can</u> change this to a different
-function number if you really wish. An example of why you might want to do this
-is if you really want the "lights" button, which is usually F0 (located as the
-last/bottom button by default), to be located as the first button in the
-Function Panel.</p>
+        <li>The <a href="ThrottlesListWindow.shtml">Throttles List
+        Window</a></li>
 
-<p class="important"><b>Warning! If any modifications are done to the
-"Function Number" field, verify to make sure that no two buttons are assigned
-the same function number as some unwanted consequences may occur.</b> </p>
+        <li>The <a href="ThrottlesPreferencesPane.shtml">Throttles
+        preferences pane</a></li>
+      </ul>
+      <hr>
 
-<p>The <strong>Text</strong> field will be the most welcome and modified field.
-By default, it is set similar to hand-held throttles: F1...F2...F3...etc. The
-content of the field is pretty much open to the imagination, however, there is
-going to be a point where the length of the text is <u>not</u> going to fit on
-the button. The <strong>Font Size</strong> field is available to also assist in
-getting the wanted text to fit on the button. A little experimentation will be
-required here to determine what looks good for you and what will fit.</p>
+      <h1>Throttles in JMRI v2.x</h1>
 
-<p>The <strong>Lockable</strong> check box may be a little confusing at first.
-When enabled, as it is by default, it simply means that when the button is
-clicked on, it will "lock" itself in either an "on" state or an "off" state. In
-other words, the button will act as a toggle switch: click once to turn the
-function "on"; click again to turn the function "off". The opposite of this
-action is what happens when the check box is <b>disabled</b>. Then the button
-acts like a momentary switch: supplying a momentary "on" command for as long
-as the mouse button is clicked <i>and held</i> over the button. When the mouse
-button is released, an "off" command is sent to the function. A good example of
-where one might want to use this is when customizing a throttle setup for a
-sound decoder. The horn/whistle is closer to functional when this option is
-disabled. Depending on the speed of the computer system and the DCC system,
-short and quick click and releases would provide a short blast of the horn or
-whistle. Holding down the button a little longer would produce a longer held
-blast of the whistle.</p>
+      <h2>Advanced Configuration of the Function Panel</h2>
 
-<p>The <strong>Visible</strong> check box allows for the "removal" of unwanted
-buttons. By default, all function buttons are enabled as "visible" so that they
-can obviously be seen. But if there is only a single function being used, for
-example the "lights" (F0), then this option does provide the ability to "hide"
-all of the other buttons.</p>
+      <table border="0" width="100%" cellpadding="0" cellspacing=
+      "0">
+        <tbody>
+          <tr>
+            <td align="left" valign="top">
+              <p>When a new throttle window is initialized, all
+              function button labels are set up with a set of
+              defaults (F1...F2...F3...etc.). These are closely
+              related to hand-held throttles. But one of the cool
+              features that the JMRI Throttles have to offer over
+              hand-held throttles, is the ability to customize the
+              button labels. In addition, each button can be hidden
+              from view or switched to an "unlocked" button.</p>
 
-<p class="important"><b>Warning! Disabling the "Visible" check box should be
-one of the last steps performed during this customization process. The reason
-for this is that once the button is marked as "invisible" (by removing the
-check box), it is indeed invisible to the user and therefore can't be
-right-clicked on with the mouse in order to get the "Edit Function Button"
-window back. To make all buttons visible select "View-&gt;Show All Function
-Buttons."</b> </p>
+              <p>The example image on the right shows the default
+              Function Panel window. When the mouse pointer hovers
+              over the top of the button, a <strong>right
+              click</strong> of the mouse will display a menu with
+              the only option on this menu at this time being
+              "<b>Properties</b>".</p>
+            </td>
 
-<table border="0" width="100%" cellpadding="0" cellspacing="0">
-  <tbody>
-    <tr>
-      <td align="left" valign="top"><p>The image shown on the right shows an
-        example of a finished customized function panel. This particular
-        example was made for a steam locomotive with a sound decoder installed
-        so there are additional functions needed for some of the sounds.</p>
+            <td><img width="20" height="20" src=
+            "images/spacer.gif"></td>
 
-        <p>These function buttons were all set up using the above outlined
-        procedures.</p>
-      </td>
-      <td><img width="20" height="20" src="images/spacer.gif"> </td>
-      <td align="center" valign="top"><br>
+            <td align="center" valign="top">
+              <p style="text-align: center; font-size: xx-small">
+              <img width="206" height="250" src=
+              "images/jmri022.jpg" title=
+              "Function Button Properties"><br>
+              Figure 3-1: Function Button Properties</p>
+            </td>
+          </tr>
+        </tbody>
+      </table><br>
 
+      <table border="0" width="100%" cellpadding="0" cellspacing=
+      "0">
+        <tbody>
+          <tr>
+            <td align="left" valign="top">
+              <br>
 
-        <p style="text-align: center; font-size: xx-small"><img width="200"
-        height="205" src="images/jmri041.jpg"
-        title="Customized Function Panel"><br>
-        Figure 3-3: Customized Function Panel </p>
-      </td>
-    </tr>
-  </tbody>
-</table>
+              <p style="text-align: center; font-size: xx-small">
+              <img width="180" height="181" src=
+              "images/jmri023.jpg" title=
+              "Edit Function Button"><br>
+              Figure 3-2: Edit Function Button</p>
+            </td>
 
-<a name="WinMenuOptions"></a> 
-<h1>Throttle Window Menu Options</h1>
+            <td><img width="20" height="20" src=
+            "images/spacer.gif"></td>
 
-<p>There are a few optional options that affect the general preferences of the
-overall JMRI Throttle window. These are found in a couple of menu options
-located just under the main title bar of the window.</p>
+            <td align="left" valign="top">
+              <p>When the "<b>Properties</b>" option is clicked on,
+              the "<b>Edit Function Button</b>" window opens (see
+              the example image on the left).</p>
 
-<a name="ViewPanels"></a> 
-<h2>View (Panels)</h2>
-<dir>
+              <ul>
+                <li><strong>Function Number</strong> associates the
+                button with a function number</li>
 
-  <table border="0" width="100%" cellpadding="0" cellspacing="0">
-    <tbody>
-      <tr>
-        <td align="left" valign="top"><p>Clicking on the "<big>View</big>" menu
-          option displays a small menu of 3 items. By default, each with a
-          check mark preceding the item. This corresponds to the 3 sub-windows
-          (Address Panel, Function Panel, &amp; Control Panel) that make up the
-          overall throttle window.</p>
-        </td>
-        <td><img width="20" height="20" src="images/spacer.gif"> </td>
-        <td align="center" valign="top"><br>
+                <li><strong>Text</strong> customizable button label
+                text</li>
 
+                <li><strong>Font Size</strong> set the size of text
+                displayed on button</li>
 
-          <p style="text-align: center; font-size: xx-small"><img width="308"
-          height="148" src="images/jmri018.jpg" title="View Menu Options"><br>
-          Figure 3-4: View Menu Options </p>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="3" align="left" valign="top"><p>As noted in <a
-          href="ThrottleChapter1.shtml">Chapter 1</a>, because each sub-window
-          has a minimize and close buttons, if one gets closed down in error,
-          this menu option allows you to restore the window again.</p>
+                <li><strong>Lockable</strong> identifies whether
+                the button acts as an "on/off" toggle switch; or as
+                a momentary switch</li>
 
-          <p>Another way to use this option is when using the features of the
-          throttles for decoders that are <u>not</u> associated with a motor
-          (such as a lighted passenger car or caboose or a Fred unit). In these
-          cases, critical screen real estate can be saved by being able to
-          disable (or close down) the Control Panel. Be a little creative with
-          the window resizing, and you could have several of these custom
-          throttle windows in the same area as one single complete throttle
-          window would take up.</p>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</dir>
+                <li><strong>Visible</strong> identifies whether the
+                button is visible in the Function Panel window</li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-<a name="EditFrameProperties"></a> 
-<h2>Edit (Frame Properties)</h2>
-<dir>
+      <p>By default, the <strong>Function Number</strong> is
+      associated with the button number that you initially
+      right-clicked on. For example, in the figures shown above,
+      function number "1" (F1) is being edited. It is recommended
+      that you leave this number as is, however, you <u>can</u>
+      change this to a different function number if you really
+      wish. An example of why you might want to do this is if you
+      really want the "lights" button, which is usually F0 (located
+      as the last/bottom button by default), to be located as the
+      first button in the Function Panel.</p>
 
-  <table border="0" width="100%" cellpadding="0" cellspacing="0">
-    <tbody>
-      <tr>
-        <td align="left" valign="top"><p>Clicking on the "<big>Edit</big>" menu
-          option displays a single-optioned sub menu of "<strong>Frame
-          Properties</strong>". This feature allows you to title the overall
-          throttle window.</p>
+      <p class="important"><b>Warning! If any modifications are
+      done to the "Function Number" field, verify to make sure that
+      no two buttons are assigned the same function number as some
+      unwanted consequences may occur.</b></p>
 
-          <p>By default, the title of the overall throttle window is titled
-          "<b>Throttle</b>" and is displayed within the window border (see the
-          figure on the right).</p>
-        </td>
-        <td><img width="20" height="20" src="images/spacer.gif"> </td>
-        <td align="center" valign="top"><br>
+      <p>The <strong>Text</strong> field will be the most welcome
+      and modified field. By default, it is set similar to
+      hand-held throttles: F1...F2...F3...etc. The content of the
+      field is pretty much open to the imagination, however, there
+      is going to be a point where the length of the text is
+      <u>not</u> going to fit on the button. The <strong>Font
+      Size</strong> field is available to also assist in getting
+      the wanted text to fit on the button. A little
+      experimentation will be required here to determine what looks
+      good for you and what will fit.</p>
 
+      <p>The <strong>Lockable</strong> check box may be a little
+      confusing at first. When enabled, as it is by default, it
+      simply means that when the button is clicked on, it will
+      "lock" itself in either an "on" state or an "off" state. In
+      other words, the button will act as a toggle switch: click
+      once to turn the function "on"; click again to turn the
+      function "off". The opposite of this action is what happens
+      when the check box is <b>disabled</b>. Then the button acts
+      like a momentary switch: supplying a momentary "on" command
+      for as long as the mouse button is clicked <i>and held</i>
+      over the button. When the mouse button is released, an "off"
+      command is sent to the function. A good example of where one
+      might want to use this is when customizing a throttle setup
+      for a sound decoder. The horn/whistle is closer to functional
+      when this option is disabled. Depending on the speed of the
+      computer system and the DCC system, short and quick click and
+      releases would provide a short blast of the horn or whistle.
+      Holding down the button a little longer would produce a
+      longer held blast of the whistle.</p>
 
-          <p style="text-align: center; font-size: xx-small"><img width="308"
-          height="147" src="images/jmri019.jpg"
-          title="Edit Frame Properties"><br>
-          Figure 3-5: Edit Frame Properties <br>
-          <br>
-          <br>
-          <img width="263" height="77" src="images/jmri020.jpg"
-          title="Frame Properties Dialog"><br>
-          Figure 3-6: Frame Properties Dialog </p>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="3" align="left" valign="top"><p>When "<b>Frame
-          Properties</b>" is clicked on, a single field dialog box will appear.
-          Type in the title for your throttle window in this field. For
-          example, "Santa Fe #8259 EMD-SD60" may be descriptive enough as a
-          single locomotive. If the throttle is for a consist, you may want to
-          identify it something like "Consist #221". Your only limitation is
-          how many characters you can fit into the width of the window title
-          bar.</p>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</dir>
+      <p>The <strong>Visible</strong> check box allows for the
+      "removal" of unwanted buttons. By default, all function
+      buttons are enabled as "visible" so that they can obviously
+      be seen. But if there is only a single function being used,
+      for example the "lights" (F0), then this option does provide
+      the ability to "hide" all of the other buttons.</p>
 
-<p>This chapter concludes the advanced throttle options that are currently
-available. The next chapter demonstrates how to save all these customized
-throttles into a "<b>Throttle Layout</b>" and then how to load them back again.
-You can use the right arrow below to go to this chapter now.</p>
+      <p class="important"><b>Warning! Disabling the "Visible"
+      check box should be one of the last steps performed during
+      this customization process. The reason for this is that once
+      the button is marked as "invisible" (by removing the check
+      box), it is indeed invisible to the user and therefore can't
+      be right-clicked on with the mouse in order to get the "Edit
+      Function Button" window back. To make all buttons visible
+      select "View-&gt;Show All Function Buttons."</b></p>
 
-<table border="0" width="100%" cellpadding="0" cellspacing="0">
-  <tbody>
-    <tr>
-      <td align="right"><dl>
-          <dt><a href="ThrottleChapter2.shtml"
-          title="Return to the previous chapter"><img width="18" height="18"
-          src="images/LeftArrow2.jpg"></a></dt>
-        </dl>
-      </td>
-      <td><img src="images/spacer.gif" width="30" height="10"> </td>
-      <td align="center"><b><a href="ThrottleTOC.shtml"
-        title="Jump to the Table Of Contents page">TOC</a></b> </td>
-      <td><img src="images/spacer.gif" width="30" height="10"> </td>
-      <td align="left"><b><a href="ThrottleChapter4.shtml"
-        title="Advance to the next chapter"><img width="18" height="18"
-        src="images/RightArrow2.jpg"></a></b></td>
-    </tr>
-  </tbody>
-</table>
+      <table border="0" width="100%" cellpadding="0" cellspacing=
+      "0">
+        <tbody>
+          <tr>
+            <td align="left" valign="top">
+              <p>The image shown on the right shows an example of a
+              finished customized function panel. This particular
+              example was made for a steam locomotive with a sound
+              decoder installed so there are additional functions
+              needed for some of the sounds.</p>
 
-<!--#include virtual="/Footer" -->
+              <p>These function buttons were all set up using the
+              above outlined procedures.</p>
+            </td>
 
-      </div><!-- closes #mainContent-->
-    </div> <!-- closes #mBody-->
+            <td><img width="20" height="20" src=
+            "images/spacer.gif"></td>
+
+            <td align="center" valign="top">
+              <br>
+
+              <p style="text-align: center; font-size: xx-small">
+              <img width="200" height="205" src=
+              "images/jmri041.jpg" title=
+              "Customized Function Panel"><br>
+              Figure 3-3: Customized Function Panel</p>
+            </td>
+          </tr>
+        </tbody>
+      </table><a name="WinMenuOptions" id="WinMenuOptions"></a>
+
+      <h1>Throttle Window Menu Options</h1>
+
+      <p>There are a few optional options that affect the general
+      preferences of the overall JMRI Throttle window. These are
+      found in a couple of menu options located just under the main
+      title bar of the window.</p><a name="ViewPanels" id=
+      "ViewPanels"></a>
+
+      <h2>View (Panels)</h2>
+
+      <div style="margin-left: 2em">
+        <table border="0" width="100%" cellpadding="0" cellspacing=
+        "0">
+          <tbody>
+            <tr>
+              <td align="left" valign="top">
+                <p>Clicking on the "<big>View</big>" menu option
+                displays a small menu of 3 items. By default, each
+                with a check mark preceding the item. This
+                corresponds to the 3 sub-windows (Address Panel,
+                Function Panel, &amp; Control Panel) that make up
+                the overall throttle window.</p>
+              </td>
+
+              <td><img width="20" height="20" src=
+              "images/spacer.gif"></td>
+
+              <td align="center" valign="top">
+                <br>
+
+                <p style="text-align: center; font-size: xx-small">
+                <img width="308" height="148" src=
+                "images/jmri018.jpg" title="View Menu Options"><br>
+                Figure 3-4: View Menu Options</p>
+              </td>
+            </tr>
+
+            <tr>
+              <td colspan="3" align="left" valign="top">
+                <p>As noted in <a href=
+                "ThrottleChapter1.shtml">Chapter 1</a>, because
+                each sub-window has a minimize and close buttons,
+                if one gets closed down in error, this menu option
+                allows you to restore the window again.</p>
+
+                <p>Another way to use this option is when using the
+                features of the throttles for decoders that are
+                <u>not</u> associated with a motor (such as a
+                lighted passenger car or caboose or a Fred unit).
+                In these cases, critical screen real estate can be
+                saved by being able to disable (or close down) the
+                Control Panel. Be a little creative with the window
+                resizing, and you could have several of these
+                custom throttle windows in the same area as one
+                single complete throttle window would take up.</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div><a name="EditFrameProperties" id=
+      "EditFrameProperties"></a>
+
+      <h2>Edit (Frame Properties)</h2>
+
+      <div style="margin-left: 2em">
+        <table border="0" width="100%" cellpadding="0" cellspacing=
+        "0">
+          <tbody>
+            <tr>
+              <td align="left" valign="top">
+                <p>Clicking on the "<big>Edit</big>" menu option
+                displays a single-optioned sub menu of
+                "<strong>Frame Properties</strong>". This feature
+                allows you to title the overall throttle
+                window.</p>
+
+                <p>By default, the title of the overall throttle
+                window is titled "<b>Throttle</b>" and is displayed
+                within the window border (see the figure on the
+                right).</p>
+              </td>
+
+              <td><img width="20" height="20" src=
+              "images/spacer.gif"></td>
+
+              <td align="center" valign="top">
+                <br>
+
+                <p style="text-align: center; font-size: xx-small">
+                <img width="308" height="147" src=
+                "images/jmri019.jpg" title=
+                "Edit Frame Properties"><br>
+                Figure 3-5: Edit Frame Properties<br>
+                <br>
+                <br>
+                <img width="263" height="77" src=
+                "images/jmri020.jpg" title=
+                "Frame Properties Dialog"><br>
+                Figure 3-6: Frame Properties Dialog</p>
+              </td>
+            </tr>
+
+            <tr>
+              <td colspan="3" align="left" valign="top">
+                <p>When "<b>Frame Properties</b>" is clicked on, a
+                single field dialog box will appear. Type in the
+                title for your throttle window in this field. For
+                example, "Santa Fe #8259 EMD-SD60" may be
+                descriptive enough as a single locomotive. If the
+                throttle is for a consist, you may want to identify
+                it something like "Consist #221". Your only
+                limitation is how many characters you can fit into
+                the width of the window title bar.</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>This chapter concludes the advanced throttle options that
+      are currently available. The next chapter demonstrates how to
+      save all these customized throttles into a "<b>Throttle
+      Layout</b>" and then how to load them back again. You can use
+      the right arrow below to go to this chapter now.</p>
+
+      <table border="0" width="100%" cellpadding="0" cellspacing=
+      "0">
+        <tbody>
+          <tr>
+            <td align="right">
+              <dl>
+                <dt><a href="ThrottleChapter2.shtml" title=
+                "Return to the previous chapter"><img width="18"
+                height="18" src="images/LeftArrow2.jpg"></a></dt>
+              </dl>
+            </td>
+
+            <td><img src="images/spacer.gif" width="30" height=
+            "10"></td>
+
+            <td align="center"><b><a href="ThrottleTOC.shtml"
+            title="Jump to the Table Of Contents page">TOC</a></b></td>
+
+            <td><img src="images/spacer.gif" width="30" height=
+            "10"></td>
+
+            <td align="left"><b><a href="ThrottleChapter4.shtml"
+            title="Advance to the next chapter"><img width="18"
+            height="18" src="images/RightArrow2.jpg"></a></b></td>
+          </tr>
+        </tbody>
+      </table><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

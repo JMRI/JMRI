@@ -66,7 +66,6 @@ import org.slf4j.LoggerFactory;
  * circle in the direction of the turntable center.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision$
  */
 public class LayoutTurntable {
 
@@ -397,7 +396,7 @@ public class LayoutTurntable {
         }
         popup.add(rb.getString("Turntable"));
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
-        popup.add(new AbstractAction(rb.getString("Edit")) {
+        popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
             /**
              *
              */
@@ -407,7 +406,7 @@ public class LayoutTurntable {
                 editTurntable(instance);
             }
         });
-        popup.add(new AbstractAction(rb.getString("Remove")) {
+        popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
             /**
              *
              */
@@ -555,21 +554,21 @@ public class LayoutTurntable {
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
-            panel5.add(turntableEditDone = new JButton(rb.getString("Done")));
+            panel5.add(turntableEditDone = new JButton(Bundle.getMessage("ButtonDone")));
             turntableEditDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     turntableEditDonePressed(e);
                 }
             });
-            turntableEditDone.setToolTipText(rb.getString("DoneHint"));
+            turntableEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             // Cancel
-            panel5.add(turntableEditCancel = new JButton(rb.getString("Cancel")));
+            panel5.add(turntableEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             turntableEditCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     turntableEditCancelPressed(e);
                 }
             });
-            turntableEditCancel.setToolTipText(rb.getString("CancelHint"));
+            turntableEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             footerPane.add(panel5);
 
             rayPanel = new JPanel();
@@ -623,7 +622,7 @@ public class LayoutTurntable {
             ang = Float.parseFloat(angleField.getText());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(editTurntableFrame, rb.getString("EntryError") + ": "
-                    + e + rb.getString("TryAgain"), rb.getString("Error"),
+                    + e + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -639,7 +638,7 @@ public class LayoutTurntable {
             ang = Float.parseFloat(angleField.getText());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(editTurntableFrame, rb.getString("EntryError") + ": "
-                    + e + rb.getString("TryAgain"), rb.getString("Error"),
+                    + e + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -655,7 +654,7 @@ public class LayoutTurntable {
         }
         if (bestDel > 30.0) {
             JOptionPane.showMessageDialog(editTurntableFrame, rb.getString("Error13"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         deleteRay(closest);
@@ -689,7 +688,7 @@ public class LayoutTurntable {
                 rad = Float.parseFloat(str);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(editTurntableFrame, rb.getString("EntryError") + ": "
-                        + e + rb.getString("TryAgain"), rb.getString("Error"),
+                        + e + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -907,7 +906,7 @@ public class LayoutTurntable {
                                     Float.parseFloat(angle.getText());
                                 } catch (Exception ex) {
                                     JOptionPane.showMessageDialog(editTurntableFrame, rb.getString("EntryError") + ": "
-                                            + ex + rb.getString("TryAgain"), rb.getString("Error"),
+                                            + ex + rb.getString("TryAgain"), Bundle.getMessage("ErrorTitle"),
                                             JOptionPane.ERROR_MESSAGE);
                                     return;
                                 }
@@ -939,7 +938,7 @@ public class LayoutTurntable {
                 panel.add(turnoutPanel);
 
                 JButton deleteRayButton;
-                top.add(deleteRayButton = new JButton(rb.getString("Remove")));
+                top.add(deleteRayButton = new JButton(Bundle.getMessage("ButtonDelete")));
                 deleteRayButton.setToolTipText(rb.getString("DeleteRayTrack"));
                 deleteRayButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -954,10 +953,10 @@ public class LayoutTurntable {
             showTurnoutDetails();
 
             angle.setText(twoDForm.format(getAngle()));
-            border.setTitle("Ray : " + connectionIndex);
+            border.setTitle(rb.getString("Ray") + " : " + connectionIndex);
             if (connect == null) {
                 border.setTitle(rb.getString("Unconnected") + " : " + connectionIndex);
-            } else if (connect != null && connect.getLayoutBlock() != null) {
+            } else if (connect.getLayoutBlock() != null) {
                 border.setTitle(rb.getString("Connected") + " : " + connect.getLayoutBlock().getDisplayName());
             }
             return panel;
@@ -966,7 +965,7 @@ public class LayoutTurntable {
         void delete() {
             int n = JOptionPane.showConfirmDialog(null,
                     rb.getString("Question7"),
-                    rb.getString("WarningTitle"),
+                    Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_OPTION);
             if (n == JOptionPane.NO_OPTION) {
                 return;

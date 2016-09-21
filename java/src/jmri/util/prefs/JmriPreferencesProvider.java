@@ -53,7 +53,7 @@ public final class JmriPreferencesProvider {
 
     private static final HashMap<File, JmriPreferencesProvider> sharedProviders = new HashMap<>();
     private static final HashMap<File, JmriPreferencesProvider> privateProviders = new HashMap<>();
-    private static final String INVALID_KEY_CHARACTERS = "_.";
+    //private static final String INVALID_KEY_CHARACTERS = "_.";
     private static final Logger log = LoggerFactory.getLogger(JmriPreferencesProvider.class);
 
     /**
@@ -170,21 +170,23 @@ public final class JmriPreferencesProvider {
         return this.firstUse;
     }
 
-    private static String encodeString(String s) {
-        StringBuilder result = new StringBuilder();
-
-        for (char c : s.toCharArray()) {
-            if (INVALID_KEY_CHARACTERS.indexOf(c) == (-1)) {
-                result.append(c);
-            } else {
-                result.append("_");
-                result.append(Integer.toHexString(c));
-                result.append("_");
-            }
-        }
-
-        return result.toString();
-    }
+    // retain unused method for reference - generates a String replacing
+    // all invalid characters in a String with underscores
+    //private static String encodeString(String s) {
+    //    StringBuilder result = new StringBuilder();
+    //
+    //    for (char c : s.toCharArray()) {
+    //        if (INVALID_KEY_CHARACTERS.indexOf(c) == (-1)) {
+    //            result.append(c);
+    //        } else {
+    //            result.append("_");
+    //            result.append(Integer.toHexString(c));
+    //            result.append("_");
+    //        }
+    //    }
+    //
+    //    return result.toString();
+    //}
 
     /**
      * Returns the name of the package for the class in a format that is treated

@@ -26,12 +26,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.picker.PickPanel;
 import jmri.util.JmriJFrame;
-import jmri.util.com.sun.TableSorter;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -128,17 +128,9 @@ public class TrackerTableAction extends AbstractAction {
         TableFrame() {
             setTitle(Bundle.getMessage("TrackerTable"));
             _model = new TrackerTableModel(this);
-            JTable table;   // = new JTable(_model);
-            try {   // following might fail due to a missing method on Mac Classic
-                TableSorter sorter = new jmri.util.com.sun.TableSorter(_model);
-                table = jmri.util.JTableUtil.sortableDataModel(sorter);
-                sorter.setTableHeader(table.getTableHeader());
-                // set model last so later casts will work
-                ((jmri.util.com.sun.TableSorter) table.getModel()).setTableModel(_model);
-            } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
-                log.error("WarrantTable: Unexpected error: " + e);
-                table = new JTable(_model);
-            }
+            JTable table = new JTable(_model);
+            TableRowSorter<TrackerTableModel> sorter = new TableRowSorter<>(_model);
+            table.setRowSorter(sorter);
             table.getColumnModel().getColumn(TrackerTableModel.STOP_COL).setCellEditor(new ButtonEditor(new JButton()));
             table.getColumnModel().getColumn(TrackerTableModel.STOP_COL).setCellRenderer(new ButtonRenderer());
             for (int i = 0; i < _model.getColumnCount(); i++) {
@@ -399,8 +391,8 @@ public class TrackerTableAction extends AbstractAction {
         }
 
         /**
-         * Adds listeners to all blocks in the range of a Tracker.
-         * Called when a new tracker is created.
+         * Adds listeners to all blocks in the range of a Tracker. Called when a
+         * new tracker is created.
          *
          */
         private void addBlockListeners(Tracker tracker) {
@@ -425,19 +417,13 @@ public class TrackerTableAction extends AbstractAction {
                 trackers.add(tracker);
                 _blocks.put(block, trackers);
                 block.addPropertyChangeListener(this);
-                if (log.isDebugEnabled()) {
-                    log.debug("\taddPropertyChangeListener for block " + block.getDisplayName());
-                }
+                log.debug("\taddPropertyChangeListener for block {}", block.getDisplayName());
             } else {
-                if (trackers.size() == 0) {
+                if (trackers.isEmpty()) {
                     block.addPropertyChangeListener(this);
-                    if (log.isDebugEnabled()) {
-                        log.debug("\taddPropertyChangeListener for block " + block.getDisplayName());
-                    }
+                    log.debug("\taddPropertyChangeListener for block {}", block.getDisplayName());
                 } else {
-                    if (log.isDebugEnabled()) {
-                        log.debug("\tassumed block " + block.getDisplayName() + "already has listener");
-                    }
+                    log.debug("\tassumed block {} already has listener" + block.getDisplayName());
                 }
                 if (!trackers.contains(tracker)) {
                     trackers.add(tracker);
@@ -501,7 +487,7 @@ public class TrackerTableAction extends AbstractAction {
                 int state = ((Number) evt.getNewValue()).intValue();
                 int oldState = ((Number) evt.getOldValue()).intValue();
                 if (log.isDebugEnabled()) {
-                    log.debug("propertyChange to block= "+b.getDisplayName()+" state= "+state+" oldstate= "+oldState);
+                    log.debug("propertyChange to block= " + b.getDisplayName() + " state= " + state + " oldstate= " + oldState);
                 }
                 // The "jiggle" (see tracker.showBlockValue() causes some state changes to be duplicated.
                 // The following washes out the extra notifications
@@ -511,17 +497,16 @@ public class TrackerTableAction extends AbstractAction {
                 } else if ((state & OBlock.RUNNING) != 0) {
                     return;		// repeats previous call that was completed.	            	
                 }*/
-                if ((state & (OBlock.UNOCCUPIED | OBlock.RUNNING)) == (oldState & (OBlock.UNOCCUPIED | OBlock.RUNNING)) &&
-                        (state & (OBlock.OCCUPIED | OBlock.RUNNING)) == (oldState & (OBlock.OCCUPIED | OBlock.RUNNING))) {
+                if ((state & (OBlock.UNOCCUPIED | OBlock.RUNNING)) == (oldState & (OBlock.UNOCCUPIED | OBlock.RUNNING))
+                        && (state & (OBlock.OCCUPIED | OBlock.RUNNING)) == (oldState & (OBlock.OCCUPIED | OBlock.RUNNING))) {
                     return;
-                }                    
+                }
                 List<Tracker> trackers = _blocks.get(b);
                 if (trackers == null) {
                     log.error("No Trackers found for block " + b.getDisplayName() + " going to state= " + state);
                     b.removePropertyChangeListener(this);
-                } else {
-                    // perhaps several trackers listen for this block
-                    if ((state & OBlock.OCCUPIED) != 0) {
+                } else // perhaps several trackers listen for this block
+                 if ((state & OBlock.OCCUPIED) != 0) {
                         // going occupied
                         if (b.getValue() == null) {
                             String[] trains = new String[trackers.size()];
@@ -576,8 +561,7 @@ public class TrackerTableAction extends AbstractAction {
                             processTrackerStateChange(copy[k], b, state);
                         }
                     }
-                }
- /*               if ((state & OBlock.UNOCCUPIED) != 0) {
+                /*               if ((state & OBlock.UNOCCUPIED) != 0) {
                     b.setValue(null);
                 }*/
             }
@@ -586,7 +570,7 @@ public class TrackerTableAction extends AbstractAction {
 
         /**
          * Called when a state change has occurred for one the blocks listened
-         * to for this tracker. Trackcr.move makes the changes to OBlocks to
+         * to for this tracker. Tracker.move makes the changes to OBlocks to
          * indicate the new occupancy positions of the train. Upon return,
          * update the listeners for the trains next move
          *

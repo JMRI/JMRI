@@ -11,6 +11,7 @@ import junit.framework.TestSuite;
 import org.openlcb.AbstractConnection;
 import org.openlcb.Connection;
 import org.openlcb.EventID;
+import org.openlcb.EventState;
 import org.openlcb.Message;
 import org.openlcb.MimicNodeStore;
 import org.openlcb.NodeID;
@@ -60,7 +61,7 @@ public class NetworkTreePaneDemo extends TestCase {
 
     public void setUp() throws Exception {
         store = new MimicNodeStore(connection, nid1);
-        Message msg = new ProducerIdentifiedMessage(nid1, eventA);
+        Message msg = new ProducerIdentifiedMessage(nid1, eventA, EventState.Unknown);
         store.put(msg, null);
 
         // Test is really popping a window before doing all else
@@ -94,14 +95,14 @@ public class NetworkTreePaneDemo extends TestCase {
 
     public void testAfterMessage() {
         frame.setTitle("After Message");
-        Message msg = new ProducerIdentifiedMessage(nid2, eventA);
+        Message msg = new ProducerIdentifiedMessage(nid2, eventA, EventState.Unknown);
         store.put(msg, null);
     }
 
     public void testWithProtocolID() {
         frame.setTitle("2nd has protocol id");
         Message msg;
-        msg = new ProducerIdentifiedMessage(nid2, eventA);
+        msg = new ProducerIdentifiedMessage(nid2, eventA, EventState.Unknown);
         store.put(msg, null);
         store.put(pipmsg, null);
     }
@@ -109,7 +110,7 @@ public class NetworkTreePaneDemo extends TestCase {
     public void testWith1stSNII() {
         frame.setTitle("3rd has PIP && 1st SNII");
         Message msg;
-        msg = new ProducerIdentifiedMessage(nid2, eventA);
+        msg = new ProducerIdentifiedMessage(nid2, eventA, EventState.Unknown);
         store.put(msg, null);
         store.put(pipmsg, null);
 
@@ -140,7 +141,7 @@ public class NetworkTreePaneDemo extends TestCase {
             }
         });
         Message msg;
-        msg = new ProducerIdentifiedMessage(nid2, eventA);
+        msg = new ProducerIdentifiedMessage(nid2, eventA, EventState.Unknown);
         store.put(msg, null);
         store.put(pipmsg, null);
 

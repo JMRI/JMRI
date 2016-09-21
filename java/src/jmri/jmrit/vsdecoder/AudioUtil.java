@@ -120,7 +120,7 @@ public class AudioUtil {
         int i = 0; // Index used for the sub-buffer system names
         for (AudioByteBuffer b : blist) {
             try {
-                AudioBuffer buf = (AudioBuffer) jmri.InstanceManager.audioManagerInstance().provideAudio(prefix + "_sbuf" + i);
+                AudioBuffer buf = (AudioBuffer) jmri.InstanceManager.getDefault(jmri.AudioManager.class).provideAudio(prefix + "_sbuf" + i);
                 i++;
                 if (buf == null) {
                     log.debug("provideAudio returned null!");
@@ -142,7 +142,7 @@ public class AudioUtil {
             } catch (AudioException | IllegalArgumentException e) {
                 log.warn("Error on provideAudio! " + e.toString());
                 if (log.isDebugEnabled()) {
-                    jmri.InstanceManager.audioManagerInstance().getSystemNameList(Audio.BUFFER).stream().forEach((s) -> {
+                    jmri.InstanceManager.getDefault(jmri.AudioManager.class).getSystemNameList(Audio.BUFFER).stream().forEach((s) -> {
                         log.debug("\tBuffer: " + s);
                     });
                 }

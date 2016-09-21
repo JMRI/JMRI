@@ -1,9 +1,9 @@
 package jmri.jmrix.lenz;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * LenzCommandStationTest.java
@@ -31,7 +31,7 @@ public class LenzCommandStationTest extends TestCase {
         r.setElement(3, 0x00);
         r.setElement(4, 0x74);
         c.setCommandStationSoftwareVersion(r);
-        Assert.assertEquals(3.6f, c.getCommandStationSoftwareVersion());
+        Assert.assertEquals(3.6f, c.getCommandStationSoftwareVersion(), 0.0);
         // test a version that is not BCD
         r.setElement(0, 0x63);
         r.setElement(1, 0x21);
@@ -39,18 +39,18 @@ public class LenzCommandStationTest extends TestCase {
         r.setElement(3, 0x00);
         r.setElement(4, 0xCF);
         c.setCommandStationSoftwareVersion(r);
-        Assert.assertEquals(8.13f, c.getCommandStationSoftwareVersion());
+        Assert.assertEquals(8.13f, c.getCommandStationSoftwareVersion(), 0.0);
         // make sure the command station version doesn't change when we send
         // the wrong message type.
         r = new XNetReply("01 04 05");
         c.setCommandStationSoftwareVersion(r);
-        Assert.assertEquals(8.13f, c.getCommandStationSoftwareVersion());
+        Assert.assertEquals(8.13f, c.getCommandStationSoftwareVersion(), 0.0);
         // make sure the command station type doesn't change if we send
         // the right prefix (0x63) but a message that doesn't contain the
         // version (2nd byte is not 0x21).
         r = new XNetReply("63 10 05 0C 7A"); // this is a service mode response. 
         c.setCommandStationSoftwareVersion(r);
-        Assert.assertEquals(8.13f, c.getCommandStationSoftwareVersion());
+        Assert.assertEquals(8.13f, c.getCommandStationSoftwareVersion(), 0.0);
 
     }
 
@@ -65,7 +65,7 @@ public class LenzCommandStationTest extends TestCase {
         r.setElement(3, 0x00);
         r.setElement(4, 0x74);
         c.setCommandStationSoftwareVersion(r);
-        Assert.assertEquals((float)0x36, c.getCommandStationSoftwareVersionBCD());
+        Assert.assertEquals((float)0x36, c.getCommandStationSoftwareVersionBCD(), 0.0);
         // test a version that is not BCD
         r.setElement(0, 0x63);
         r.setElement(1, 0x21);
@@ -73,7 +73,7 @@ public class LenzCommandStationTest extends TestCase {
         r.setElement(3, 0x00);
         r.setElement(4, 0xCF);
         c.setCommandStationSoftwareVersion(r);
-        Assert.assertEquals((float)0x8D, c.getCommandStationSoftwareVersionBCD());
+        Assert.assertEquals((float)0x8D, c.getCommandStationSoftwareVersionBCD(), 0.0);
     }
 
     public void testType() {
@@ -119,9 +119,9 @@ public class LenzCommandStationTest extends TestCase {
         // value.
         LenzCommandStation c = new LenzCommandStation();
         c.setCommandStationSoftwareVersion(3.6f);
-        Assert.assertEquals(3.6f, c.getCommandStationSoftwareVersion());
+        Assert.assertEquals(3.6f, c.getCommandStationSoftwareVersion(), 0.0);
         c.setCommandStationSoftwareVersion(8.13f);
-        Assert.assertEquals(8.13f, c.getCommandStationSoftwareVersion());
+        Assert.assertEquals(8.13f, c.getCommandStationSoftwareVersion(), 0.0);
     }
 
     public void testSetTypeNumeric() {
@@ -166,19 +166,6 @@ public class LenzCommandStationTest extends TestCase {
         c.setCommandStationType(r);
         c.setCommandStationSoftwareVersion(r);
         Assert.assertEquals("hardware type: 2 software version: 54",c.getVersionString());
-    }
-
-    public void testGetHasServiceMode() {
-        // test getting whether or not the CS has service mode.
-        LenzCommandStation c = new LenzCommandStation();
-        Assert.assertTrue(c.getHasServiceMode());  // always true for Lenz 
-                                                   // command stations.
-    }
-
-    public void testGetInServiceMode() {
-        // test whether or not the CS is in service mode.
-        LenzCommandStation c = new LenzCommandStation();
-        Assert.assertFalse(c.getInServiceMode());  // defaults to false.
     }
 
     public void testIsOpsModePossible() {

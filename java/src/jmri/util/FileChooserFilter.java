@@ -12,7 +12,6 @@ import java.util.HashSet;
  * Except in that case, files without extensions fail.
  *
  * @author Alex Shepherd
- * @version $Revision$
  */
 public class FileChooserFilter extends javax.swing.filechooser.FileFilter {
 
