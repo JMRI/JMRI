@@ -106,6 +106,8 @@ final public class XBeeIOStream extends AbstractPortController {
 
     @Override
     public void dispose() {
+        sourceThread=null;
+        sinkThread=null;
         super.dispose();
     }
 
