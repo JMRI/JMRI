@@ -1,6 +1,7 @@
 package jmri.jmrit.beantable;
 
 import jmri.util.JmriJFrame;
+import junit.extensions.jfcunit.TestHelper;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
@@ -30,6 +31,8 @@ public class OBlockTableActionTest extends jmri.util.SwingTestCase {
                 
         Assert.assertEquals(4, fob.length);
         flushAWT();
+        // Ask to close add window
+        TestHelper.disposeWindow(doc, this);
     }
 
     // from here down is testing infrastructure
@@ -55,8 +58,6 @@ public class OBlockTableActionTest extends jmri.util.SwingTestCase {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
     }
 
     protected void tearDown() throws Exception {
