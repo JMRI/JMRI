@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
-
 import com.digi.xbee.api.connection.IConnectionInterface;
 import com.digi.xbee.api.exceptions.OperationNotSupportedException;
 import com.digi.xbee.api.models.XBee16BitAddress;
@@ -14,7 +13,9 @@ import com.digi.xbee.api.models.XBee64BitAddress;
 import com.digi.xbee.api.models.XBeeProtocol;
 import com.digi.xbee.api.XBeeDevice;
 import com.digi.xbee.api.RemoteXBeeDevice;
-
+import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
+import org.powermock.core.classloader.annotations.MockPolicy;
+@MockPolicy(Slf4jMockPolicy.class)
 
 /**
  * XBeeInterfaceScaffold.java
@@ -116,6 +117,13 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
     }
 
     public void receiveLoop() {
+    }
+
+    public void dispose(){
+          localDevice=null;
+          remoteDevice1=null;
+          remoteDevice2=null;
+          remoteDevice3=null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeInterfaceScaffold.class.getName());

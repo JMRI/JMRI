@@ -8,13 +8,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.powermock.modules.junit4.PowerMockRunner;
-import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
-import org.powermock.core.classloader.annotations.MockPolicy;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
 import com.digi.xbee.api.models.XBeeProtocol;
 import com.digi.xbee.api.XBeeDevice;
 import com.digi.xbee.api.RemoteXBeeDevice;
+
+import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
+import org.powermock.core.classloader.annotations.MockPolicy;
+@MockPolicy(Slf4jMockPolicy.class)
 
 /**
  * XBeeNodeTest.java
@@ -24,7 +26,6 @@ import com.digi.xbee.api.RemoteXBeeDevice;
  * @author	Paul Bender Copyright (C) 2016
  */
 @RunWith(PowerMockRunner.class)
-@MockPolicy(Slf4jMockPolicy.class)
 public class XBeeNodeTest{
 
     private XBeeTrafficController tc = null;

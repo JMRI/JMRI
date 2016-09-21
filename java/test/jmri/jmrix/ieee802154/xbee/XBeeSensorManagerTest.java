@@ -14,8 +14,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.modules.junit4.PowerMockRunner;
-import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
-import org.powermock.core.classloader.annotations.MockPolicy;
 
 import com.digi.xbee.api.connection.IConnectionInterface;
 import com.digi.xbee.api.exceptions.OperationNotSupportedException;
@@ -25,8 +23,11 @@ import com.digi.xbee.api.models.XBeeProtocol;
 import com.digi.xbee.api.XBeeDevice;
 import com.digi.xbee.api.RemoteXBeeDevice;
 
-@RunWith(PowerMockRunner.class)
+
+import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
+import org.powermock.core.classloader.annotations.MockPolicy;
 @MockPolicy(Slf4jMockPolicy.class)
+
 /**
  * XBeeSensorManagerTest.java
  *
@@ -34,6 +35,7 @@ import com.digi.xbee.api.RemoteXBeeDevice;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
+@RunWith(PowerMockRunner.class)
 public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
 
     private static final String NODE_ID = "id";

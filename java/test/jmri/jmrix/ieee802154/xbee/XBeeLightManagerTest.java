@@ -6,10 +6,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.modules.junit4.PowerMockRunner;
+import jmri.Light;
+
 import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
 import org.powermock.core.classloader.annotations.MockPolicy;
-
-import jmri.Light;
+@MockPolicy(Slf4jMockPolicy.class)
 
 /**
  * XBeeLightManagerTest.java
@@ -19,7 +20,6 @@ import jmri.Light;
  * @author	Paul Bender Copyright (C) 2012,2016
  */
 @RunWith(PowerMockRunner.class)
-@MockPolicy(Slf4jMockPolicy.class)
 public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTest {
 
     @Override
