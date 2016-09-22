@@ -11,8 +11,7 @@ import org.slf4j.LoggerFactory;
  * Stands in for the can.TrafficController class
  *
  * @author	Bob Jacobsen 2008
- * @version	$Revision$
- */
+  */
 public class TrafficControllerScaffold extends TrafficController {
 
     public TrafficControllerScaffold() {

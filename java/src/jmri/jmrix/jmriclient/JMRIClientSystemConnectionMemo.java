@@ -20,7 +20,6 @@ import jmri.TurnoutManager;
  * activate their particular system.
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  */
 public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 

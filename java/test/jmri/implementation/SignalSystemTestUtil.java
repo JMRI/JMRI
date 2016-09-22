@@ -13,8 +13,7 @@ import org.slf4j.LoggerFactory;
  * Static utilities for testing signal system code
  *
  * @author	Bob Jacobsen Copyright 2014, 2015
- * @version	$Revision$
- */
+  */
 public class SignalSystemTestUtil {
 
     // Where in user space the "signals" file tree should live

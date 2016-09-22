@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * LocoNet connection on this machine. Copyright: Copyright (c) 2002
  *
  * @author Alex Shepherd
- * @version $Revision$
  */
 public class LnMessageServerAction extends AbstractAction {
 

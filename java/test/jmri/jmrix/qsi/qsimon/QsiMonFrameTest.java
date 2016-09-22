@@ -4,7 +4,6 @@
  * Description:	JUnit tests for the QsiProgrammer class
  *
  * @author	Bob Jacobsen
- * @version
  */
 package jmri.jmrix.qsi.qsimon;
 

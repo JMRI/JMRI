@@ -75,7 +75,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau (C) 2007, 2010
  * @author ken cameron (C) 2013
- * @version $Revision$
  */
 public class NceBinaryCommand {
 

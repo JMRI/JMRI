@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * (bit134)
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2006
- * @version $Revision$
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008, 2009 Based on CMRI serial
  * example, modified to establish Acela support.

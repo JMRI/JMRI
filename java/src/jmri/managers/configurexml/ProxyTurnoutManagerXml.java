@@ -10,7 +10,6 @@ import org.jdom2.Element;
  * class, but there's no object of that form created or used.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision$
  */
 public class ProxyTurnoutManagerXml extends AbstractXmlAdapter {
 

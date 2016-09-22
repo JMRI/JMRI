@@ -8,8 +8,7 @@ package jmri.jmrix.pricom.pockettester;
  * For more info on the product, see http://www.pricom.com
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version	$Revision$
- */
+  */
 public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements DataListener {
 
     /**

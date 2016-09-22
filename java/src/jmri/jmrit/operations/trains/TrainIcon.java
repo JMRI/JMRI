@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class TrainIcon extends LocoIcon {
 

@@ -15,7 +15,6 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen 2003, 2006, 2008
  * @author	Mark Underwood 2012
- * @version	$Revision: 17977 $
  */
 public class ProxyReporterManagerTest extends TestCase {
 

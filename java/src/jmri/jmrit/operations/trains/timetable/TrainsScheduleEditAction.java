@@ -8,7 +8,6 @@ import javax.swing.AbstractAction;
  * Action to edit timetable (Schedule)
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision$
  */
 public class TrainsScheduleEditAction extends AbstractAction {
 

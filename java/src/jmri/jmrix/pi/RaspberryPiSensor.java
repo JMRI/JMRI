@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * Extend jmri.AbstractSensor for RaspberryPi GPIO pins.
  * <P>
  * @author			Paul Bender Copyright (C) 2003-2010
- * @version         $Revision$
  */
 public class RaspberryPiSensor extends AbstractSensor implements GpioPinListenerDigital {
 

@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * to classes in particular subpackages.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  */
 abstract public class ConfigurationManager {
 

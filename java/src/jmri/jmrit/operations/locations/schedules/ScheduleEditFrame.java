@@ -37,7 +37,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of a schedule
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision$
  */
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 

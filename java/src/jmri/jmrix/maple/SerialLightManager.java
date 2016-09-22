@@ -15,8 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2008
  * @author	Dave Duchamp Copyright (C) 2004, 2010
- * @version	$Revision$
- */
+  */
 public class SerialLightManager extends AbstractLightManager {
 
     /**

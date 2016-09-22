@@ -38,7 +38,6 @@ import org.slf4j.LoggerFactory;
  * Frame displaying tree of OpenLCB nodes
  *
  * @author	Bob Jacobsen Copyright (C) 2009, 2010, 2012
- * @version $Revision: 17977 $
  */
 public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanListener, CanPanelInterface {
 

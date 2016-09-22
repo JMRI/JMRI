@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * LocoNet is an int with values from 0 to 127.
  * <P>
  * @author Bob Jacobsen Copyright (C) 2006
- * @version $Revision$
  */
 public class Pr2Throttle extends AbstractThrottle {
 

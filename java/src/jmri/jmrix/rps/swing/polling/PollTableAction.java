@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * We only permit one, because notification is not entirely right yet.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public class PollTableAction extends AbstractAction {
 

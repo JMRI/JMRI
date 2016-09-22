@@ -10,8 +10,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the NceAIU class
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class NceAIUTest extends TestCase {
 
     public void testMarkChanges() {

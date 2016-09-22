@@ -4,8 +4,7 @@
  * Description:	Stands in for the NceTrafficController class
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 package jmri.jmrix.nce;
 
 

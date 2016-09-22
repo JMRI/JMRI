@@ -10,8 +10,7 @@ import junit.framework.TestSuite;
  * port on card
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class SerialTurnoutTest3 extends AbstractTurnoutTest {
 
     private SerialTrafficControlScaffold tcis = null;

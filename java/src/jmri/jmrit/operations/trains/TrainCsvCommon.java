@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * Contains the csv operators for manifests and switch lists
  *
  * @author Daniel Boudreau Copyright (C) 2011, 2013, 2015
- * @version $Revision: 1 $
+ * 
  *
  */
 public class TrainCsvCommon extends TrainCommon {

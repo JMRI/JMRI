@@ -4,7 +4,6 @@
  * Description:	JUnit tests
  *
  * @author	Bob Jacobsen
- * @version
  */
 package jmri.jmrix.tmcc.serialmon;
 

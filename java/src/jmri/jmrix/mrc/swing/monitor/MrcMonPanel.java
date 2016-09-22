@@ -4,7 +4,6 @@
  * Description:	Swing action to create and register a MonFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision: 22942 $
  * @author	kcameron Copyright (C) 2011 copied from SerialMonPane.java
  * @author	Daniel Boudreau Copyright (C) 2012 added human readable format
  */

@@ -10,7 +10,6 @@ import javax.swing.AbstractAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2009
- * @version $Revision$
  */
 public class PrintOptionAction extends AbstractAction {
 

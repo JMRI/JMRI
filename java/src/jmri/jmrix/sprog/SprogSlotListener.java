@@ -8,7 +8,6 @@ package jmri.jmrix.sprog;
  *
  * @author Bob Jacobsen Copyright (C) 2001 Andrew Crosland (c) 2006 ported for
  * SPROG
- * @version $Revision$
  */
 public interface SprogSlotListener extends java.util.EventListener {
 
