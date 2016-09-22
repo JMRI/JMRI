@@ -10,7 +10,7 @@ import jmri.jmrit.operations.locations.TrackEditFrame;
  * by the program when placing new rolling stock to a track.
  *
  * @author Daniel Boudreau Copyright (C) 2012
- * @version $Revision: 18559 $
+ * 
  */
 public class IgnoreUsedTrackAction extends AbstractAction {
 

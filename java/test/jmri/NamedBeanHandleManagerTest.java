@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  * Tests for the NamedBeanHandleManager class
  *
  * @author	Kevin Dickerson Copyright (C) 2006
- * @version $Revision: 18111 $
+ * 
  */
 public class NamedBeanHandleManagerTest extends TestCase {
 

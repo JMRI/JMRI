@@ -11,7 +11,7 @@ import jmri.jmrix.loconet.SlotManager;
  *
  * @see jmri.ProgrammerManager
  * @author	Lisby Copyright (C) 2014
- * @version	$Revision: 27668 $
+ * 
  */
 public class UhlenbrockProgrammerManager extends LnProgrammerManager {
 
