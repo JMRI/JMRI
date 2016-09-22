@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.xpa.XpaTrafficController class
  *
  * @author	Paul Bender
- * @version $Revision: 17977 $
  */
 public class XpaTrafficControllerTest extends TestCase {
 

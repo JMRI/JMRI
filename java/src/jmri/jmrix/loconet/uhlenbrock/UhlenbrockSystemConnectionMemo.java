@@ -12,7 +12,6 @@ import jmri.jmrix.loconet.SlotManager;
  * active
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision: 18841 $
  */
 public class UhlenbrockSystemConnectionMemo extends LocoNetSystemConnectionMemo {
 

@@ -9,7 +9,6 @@ import javax.swing.JPanel;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003 Copies from NCE
  * @author kcameron Copyright (C) 2014
- * @version	$Revision: 17977 $
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 

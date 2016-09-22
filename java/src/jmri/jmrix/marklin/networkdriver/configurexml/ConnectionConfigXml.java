@@ -16,7 +16,6 @@ import jmri.jmrix.marklin.networkdriver.NetworkDriverAdapter;
  * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 208
- * @version $Revision: 17977 $
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 

@@ -11,7 +11,6 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.99.2
- * @version $Revision: 17977 $
  */
 abstract public class CanPanel extends jmri.util.swing.JmriPanel implements CanPanelInterface {
 

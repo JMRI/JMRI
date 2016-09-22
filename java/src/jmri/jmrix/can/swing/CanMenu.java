@@ -10,7 +10,6 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  *
  * @author	Bob Jacobsen Copyright 2003, 2008, 2009
  * @author Andrew Crosland 2008
- * @version $Revision: 17977 $
  */
 public class CanMenu extends JMenu {
 

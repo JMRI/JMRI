@@ -10,7 +10,6 @@ import org.jdom2.Element;
  * method here.
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2003
- * @version $Revision: 22821 $
  */
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "This is ineffect the same as its super class")
 public class LnSensorManagerXml extends jmri.jmrix.loconet.configurexml.LnSensorManagerXml {

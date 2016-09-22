@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2014, 2016
- * @version $Revision: 17977 $
  */
 public class TrainsTableSetColorFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
