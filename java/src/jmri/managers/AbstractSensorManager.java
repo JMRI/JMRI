@@ -96,7 +96,7 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         // is system name in correct format?
         if (!systemName.startsWith(getSystemPrefix() + typeLetter()) 
                 || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
-            log.warn("Invalid system name for sensor: " + systemName
+            log.debug("Invalid system name for sensor: " + systemName
                     + " needed " + getSystemPrefix() + typeLetter());
             throw new IllegalArgumentException("systemName \""+systemName+"\" bad format in newSensor");
         }

@@ -163,18 +163,6 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
     }
 
     /**
-     * Does nothing. Used to save the table width, position, and sorting status
-     * in the user preferences file.
-     *
-     * @param table Table to be saved.
-     * @deprecated since 4.5.4 without direct replacement
-     */
-    @Deprecated
-    protected void saveTableDetails(JTable table) {
-        ((OperationsPanel) this.getContentPane()).saveTableDetails(table);
-    }
-
-    /**
      * Load the table width, position, and sorting status from the user
      * preferences file.
      *

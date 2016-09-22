@@ -1,6 +1,6 @@
 package jmri.util;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 

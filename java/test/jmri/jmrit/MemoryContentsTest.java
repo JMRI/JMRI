@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import jmri.util.FileUtil;
 import jmri.util.JUnitAppender;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

@@ -1091,10 +1091,10 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
     }
 
     void handleNoCurrentRoute(boolean reverse, String message) {
-        Object[] options = {"Yes Stack",
-            "No"};
+        Object[] options = {Bundle.getMessage("ButtonYes"),
+                Bundle.getMessage("ButtonNo")};
         int n = JOptionPane.showOptionDialog(null,
-                message + "\n Would you like to Stack the Route", "Route Not Clear",
+                message + "\n" + Bundle.getMessage("StackRouteAsk"), Bundle.getMessage("RouteNotClear"),
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,

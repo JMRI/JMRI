@@ -75,6 +75,10 @@ public class ImportRollingStock extends Thread {
 
     protected String[] parseCommaLine(String line, int arraySize) {
         String[] outLine = new String[arraySize];
+        // load output array to prevent NPE
+        for (int i = 0; i < outLine.length; i++) {
+            outLine[i] = "";
+        }
         if (line.contains("\"")) { // NOI18N
             // log.debug("line number "+lineNum+" has escape char \"");
             String[] parseLine = line.split(",");

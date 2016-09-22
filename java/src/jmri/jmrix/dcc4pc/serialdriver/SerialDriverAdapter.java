@@ -53,6 +53,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
             log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
                     + " " + activeSerialPort.isReceiveTimeoutEnabled());
 
+            serialStream = activeSerialPort.getInputStream();
             // purge contents, if any
             purgeStream(serialStream);
 

@@ -18,7 +18,7 @@ import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.AbstractButtonFinder;
 import junit.extensions.jfcunit.finder.ComponentFinder;
 import junit.extensions.jfcunit.finder.DialogFinder;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

@@ -116,17 +116,6 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
-        setPreferredWidths(table);
-
-        // set row height
-        table.setRowHeight(new JComboBox<Object>().getPreferredSize().height);
-        updateList();
-        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-    }
-
-    private synchronized void setPreferredWidths(JTable table) {
-        log.debug("Setting preferred widths");
         // set column preferred widths
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(35);
         table.getColumnModel().getColumn(CURRENT_COLUMN).setPreferredWidth(50);
@@ -148,6 +137,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         _frame.loadTableDetails(table);
         // does not use a table sorter
         table.setRowSorter(null);
+
+        updateList();
     }
 
     @Override

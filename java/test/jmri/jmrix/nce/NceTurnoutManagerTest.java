@@ -67,7 +67,7 @@ public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest 
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {NceTurnoutManager.class.getName()};
+        String[] testCaseName = {NceTurnoutManagerTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
