@@ -1,4 +1,3 @@
-// DCCppNetworkPortController.java
 package jmri.jmrix.dccpp;
 
 import org.slf4j.Logger;
@@ -9,7 +8,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Kevin Dickerson Copyright (C) 2011
  * @author	Mark Underwoodn Copyright (C) 2015
- * @version $Revision: 1.24 $
  *
  * Based o LnNetworkPortController by Kevin Dickerson
  */
