@@ -8,7 +8,6 @@ import junit.framework.TestSuite;
  * Invoke complete set of tests for the apps.DispatcherPro package
  *
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007, 2012
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

@@ -12,8 +12,7 @@ package jmri.jmrix.loconet;
  * that deadlocks can be avoided in that case.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public interface LocoNetListener extends java.util.EventListener {
 
     /**

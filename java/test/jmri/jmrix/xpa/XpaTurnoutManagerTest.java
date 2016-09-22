@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.xpa.XpaTurnoutManager class
  *
  * @author	Paul Bender
- * @version $Revision: 17977 $
  */
 public class XpaTurnoutManagerTest extends TestCase {
 

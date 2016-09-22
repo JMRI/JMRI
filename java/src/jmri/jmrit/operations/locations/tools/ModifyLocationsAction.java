@@ -10,7 +10,6 @@ import jmri.jmrit.operations.locations.Location;
  * Swing action to create and register a LocationsByCarTypeFrame object.
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version $Revision$
  */
 public class ModifyLocationsAction extends AbstractAction {
 

@@ -7,7 +7,7 @@ package jmri.jmrix.can.adapters.gridconnect.can2usbino.serialdriver;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2012
  * @author Andrew Crosland 2008
- * @version	$Revision: 19909 $
+ * 
  */
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "name assigned historically")
 public class ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {

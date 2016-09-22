@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * database.
  *
  * @author Dan Boudreau Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 public class ResetEngineMovesAction extends AbstractAction {
 

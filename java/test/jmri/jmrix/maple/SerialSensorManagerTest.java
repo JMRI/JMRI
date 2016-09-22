@@ -13,8 +13,7 @@ import org.junit.Test;
  * JUnit tests for the SerialSensorManager class.
  *
  * @author	Bob Jacobsen Copyright 2003, 2008
- * @version	$Revision$
- */
+  */
 public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
 
     @Override

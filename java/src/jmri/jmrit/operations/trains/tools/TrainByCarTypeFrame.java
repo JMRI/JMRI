@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
  * Frame to display by rolling stock, the locations serviced by this train
  *
  * @author Dan Boudreau Copyright (C) 2010, 2013, 2014
- * @version $Revision$
  */
 public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 

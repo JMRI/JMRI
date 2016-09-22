@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * Builds a switch list for a location on the railroad
  *
  * @author Daniel Boudreau (C) Copyright 2008, 2011, 2012, 2013, 2015
- * @version $Revision: 21846 $
+ * 
  *
  */
 public class TrainSwitchLists extends TrainCommon {

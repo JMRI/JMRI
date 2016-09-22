@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  * <P>
  * @author Dave Duchamp Copyright (c) 2010
- * @version $Revision$
  */
 public class NceLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 

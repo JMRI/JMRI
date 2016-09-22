@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Based on work by Bob Jacobsen and Kevin Dickerson
  *
  * @author	Jan Boen
- * @version $Revision: 17977 $
  */
 public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
 

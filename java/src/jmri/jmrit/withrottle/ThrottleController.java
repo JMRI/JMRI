@@ -28,7 +28,6 @@ package jmri.jmrit.withrottle;
  *
  * @author Brett Hoffman Copyright (C) 2009, 2010, 2011
  * @author Created by Brett Hoffman on: 8/23/09.
- * @version $Revision$
  */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

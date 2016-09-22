@@ -12,8 +12,7 @@ import javax.swing.table.TableRowSorter;
  * Frame providing survey of DCC contents
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version	$Revision$
- */
+  */
 public class PacketTableFrame extends jmri.util.JmriJFrame implements DataListener {
 
     /**

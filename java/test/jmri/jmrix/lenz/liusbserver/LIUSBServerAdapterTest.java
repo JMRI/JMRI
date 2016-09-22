@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * class
  *
  * @author	Paul Bender
- * @version $Revision: 17977 $
  */
 public class LIUSBServerAdapterTest extends TestCase {
 

@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of a automation used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2016
- * @version $Revision$
  */
 public class AutomationTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 

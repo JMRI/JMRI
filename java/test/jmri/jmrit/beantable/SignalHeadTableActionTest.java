@@ -16,8 +16,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrit.beantable.SignalHeadTableAction class
  *
  * @author	Bob Jacobsen Copyright 2004, 2007, 2008, 2009
- * @version	$Revision$
- */
+  */
 public class SignalHeadTableActionTest extends jmri.util.SwingTestCase {
 
     public void testCreate() {

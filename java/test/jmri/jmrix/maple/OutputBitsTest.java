@@ -10,8 +10,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the OutputBits class
  *
  * @author	Dave Duchamp 2009
- * @version	$Revision$
- */
+  */
 public class OutputBitsTest extends TestCase {
 
     public void testConstructor1() {

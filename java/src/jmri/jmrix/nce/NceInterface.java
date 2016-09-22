@@ -6,8 +6,7 @@ package jmri.jmrix.nce;
  * station.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public interface NceInterface {
 
     public void addNceListener(NceListener l);

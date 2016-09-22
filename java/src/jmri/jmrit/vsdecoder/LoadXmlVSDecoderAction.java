@@ -103,8 +103,7 @@ public class LoadXmlVSDecoderAction extends AbstractAction {
      * An extension of the abstract XmlFile. No changes made to that class.
      *
      * @author glen
-     * @version $Revision$
-     */
+         */
     static class VSDecoderPrefs extends XmlFile {
     }
 

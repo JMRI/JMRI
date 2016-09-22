@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo class
  *
  * @author	Bob Jacobsen
- * @version $Revision: 17977 $
  */
 public class JMRIClientSystemConnectionMemoTest extends TestCase {
 

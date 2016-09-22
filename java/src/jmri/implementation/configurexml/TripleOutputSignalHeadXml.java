@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Suzie Tall based on work by Bob Jacobson
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 22821 $
  */
 public class TripleOutputSignalHeadXml extends DoubleTurnoutSignalHeadXml {
 

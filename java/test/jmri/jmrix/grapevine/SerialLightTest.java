@@ -9,8 +9,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.grapevine.SerialLight class, low address.
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class SerialLightTest extends AbstractLightTest {
 
     private SerialTrafficControlScaffold tcis = null;

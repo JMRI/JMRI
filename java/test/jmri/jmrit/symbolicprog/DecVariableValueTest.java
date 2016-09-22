@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
 
 /**
  * @author	Bob Jacobsen Copyright 2003, 2006
- * @version
  */
 public class DecVariableValueTest extends VariableValueTest {
 

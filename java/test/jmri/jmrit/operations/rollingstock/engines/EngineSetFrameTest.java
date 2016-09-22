@@ -15,7 +15,7 @@ import junit.framework.TestSuite;
  * Tests for the Operations EnginesSetFrame class
  *
  * @author	Dan Boudreau Copyright (C) 2010
- * @version $Revision: 28746 $
+ * 
  */
 public class EngineSetFrameTest extends OperationsSwingTestCase {
 

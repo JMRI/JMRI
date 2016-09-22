@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * attribute in the XML.
  *
  * @author Andrew Crosland Copyright: Copyright (c) 2016
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 

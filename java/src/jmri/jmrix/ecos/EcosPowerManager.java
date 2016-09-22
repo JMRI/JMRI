@@ -10,8 +10,7 @@ import org.slf4j.LoggerFactory;
  * PowerManager implementation for controlling layout power.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision$
- */
+  */
 public class EcosPowerManager implements PowerManager, EcosListener {
 
     public EcosPowerManager(EcosTrafficController etc) {

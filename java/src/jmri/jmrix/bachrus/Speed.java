@@ -8,8 +8,7 @@ package jmri.jmrix.bachrus;
  * Useful stuff for speed conversion
  *
  * @author	Andrew Crosland Copyright (C) 2010
- * @version	$Revision$
- */
+  */
 public class Speed {
 
     static final int MPH = 0;

@@ -26,7 +26,6 @@ import jmri.util.FileUtil;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010
- * @version $Revision$
  */
 public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 

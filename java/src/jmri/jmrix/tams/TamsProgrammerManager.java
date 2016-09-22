@@ -11,7 +11,7 @@ import jmri.managers.DefaultProgrammerManager;
  *
  * @see jmri.ProgrammerManager Based on work by Bob Jacobsen
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 18841 $
+ * 
  */
 public class TamsProgrammerManager extends DefaultProgrammerManager {
 

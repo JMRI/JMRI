@@ -6,8 +6,7 @@ package jmri.jmrix.ieee802154;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Paul Bender Copyright (C) 2013
- * @version	$Revision$
- *
+  *
  */
 public class SerialConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 

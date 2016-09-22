@@ -30,8 +30,7 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  * a larger detailed view.
  *
  * @author	Bob Jacobsen Copyright (C) 2007, 2008
- * @version	$Revision$
- */
+  */
 public class EditorPane extends javax.swing.JPanel implements TreeSelectionListener {
 
     /**

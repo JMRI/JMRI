@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * by the program when placing new rolling stock to a track.
  *
  * @author Daniel Boudreau Copyright (C) 2012
- * @version $Revision: 18559 $
+ * 
  */
 class IgnoreUsedTrackFrame extends OperationsFrame {
 

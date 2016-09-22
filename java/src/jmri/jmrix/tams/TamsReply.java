@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author  Jan Boen - version 151220 - 1211
  * 
- * @version $Revision: 18574 $
+ * 
  */
 public class TamsReply extends jmri.jmrix.AbstractMRReply {
 
