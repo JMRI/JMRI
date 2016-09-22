@@ -13,8 +13,7 @@ import junit.framework.TestSuite;
  * Tests for classes in the jmri.jmrit.ussctc.OsIndicator class
  *
  * @author	Bob Jacobsen Copyright 2003, 2007, 2015
- * @version	$Revision$
- */
+  */
 public class OsIndicatorTest extends TestCase {
 
     public void testCreate() {

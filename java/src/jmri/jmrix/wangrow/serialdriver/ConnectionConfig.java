@@ -8,8 +8,7 @@ import jmri.jmrix.nce.serialdriver.SerialDriverAdapter;
  * Wangrow SerialDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     public final static String NAME = "Serial";

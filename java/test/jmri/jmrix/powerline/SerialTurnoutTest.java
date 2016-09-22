@@ -10,8 +10,7 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen Copyright 2008 Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision$
- */
+  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 
     private SerialSystemConnectionMemo memo = null;

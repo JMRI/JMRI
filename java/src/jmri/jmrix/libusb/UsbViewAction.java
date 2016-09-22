@@ -8,8 +8,7 @@ import org.slf4j.LoggerFactory;
  * Invoke the UsbView tool from libusb-java.
  *
  * @author Bob Jacobsen Copyright 2008
- * @version	$Revision$
- */
+  */
 public class UsbViewAction extends javax.swing.AbstractAction {
 
     /**

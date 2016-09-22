@@ -13,8 +13,7 @@ import junit.framework.TestSuite;
  * Test the ProxySensorManager
  *
  * @author	Bob Jacobsen 2003, 2006, 2008, 2014
- * @version	$Revision$
- */
+  */
 public class ProxySensorManagerTest extends TestCase {
 
     public String getSystemName(int i) {

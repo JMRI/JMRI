@@ -13,8 +13,7 @@ import junit.framework.TestSuite;
  * Test the ProxyLightManager
  *
  * @author	Bob Jacobsen 2003, 2006, 2008
- * @version	$Revision$
- */
+  */
 public class ProxyLightManagerTest extends TestCase {
 
     public String getSystemName(int i) {

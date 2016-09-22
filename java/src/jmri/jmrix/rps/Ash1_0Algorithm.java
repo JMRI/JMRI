@@ -17,8 +17,7 @@ import org.slf4j.LoggerFactory;
  * property status of this algorithm. Use it at your own risk.
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version	$Revision$
- */
+  */
 public class Ash1_0Algorithm implements Calculator {
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy

@@ -21,8 +21,7 @@ import java.util.List;
  * <P>
  * @see jmri.Programmer
  * @author	Bob Jacobsen Copyright (C) 2008, 2014
- * @version	$Revision$
- */
+  */
 public class ProgrammerScaffold implements Programmer {
 
     ProgrammingMode matchesMode;

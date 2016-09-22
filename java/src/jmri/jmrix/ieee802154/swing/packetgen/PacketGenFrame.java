@@ -8,8 +8,7 @@ import jmri.jmrix.ieee802154.IEEE802154TrafficController;
  * Frame for user input of XpressNet messages
  *
  * @author	Bob Jacobsen Copyright (C) 2001,2002
- * @version	$Revision$
- */
+  */
 public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 
     /**

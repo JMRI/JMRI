@@ -13,8 +13,7 @@ import junit.framework.TestSuite;
  * Description:
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class PanelEditorTest extends TestCase {
 
     TurnoutIcon to = null;

@@ -10,8 +10,7 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a NodeConfigFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public class NodeConfigAction extends AbstractAction {
 
     /**

@@ -11,8 +11,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
- * @see jmri.jmrit.roster.RosterEntry
+  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
 public class RosterRecorder extends Thread {

@@ -6,8 +6,7 @@
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author	Paul Bender Copyright (C) 2003-2010
  * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- *
+  *
  * Based on XNetPowerManager by Bob Jacobsen and Paul Bender
  */
 package jmri.jmrix.dccpp;

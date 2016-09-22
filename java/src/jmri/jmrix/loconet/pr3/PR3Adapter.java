@@ -14,8 +14,7 @@ import org.slf4j.LoggerFactory;
  * switch settings on the new Digitrax PR3
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2005, 2006, 2008
- * @version	$Revision$
- */
+  */
 public class PR3Adapter extends LocoBufferAdapter {
 
     public PR3Adapter() {
