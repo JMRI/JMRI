@@ -22,7 +22,7 @@ package jmri.jmrit.vsdecoder;
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
+ * 
  */
 import java.awt.BorderLayout;
 import java.awt.Dimension;
