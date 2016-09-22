@@ -26,8 +26,8 @@ import org.slf4j.LoggerFactory;
  *
  * Based on work by Bob Jacobsen and Kevin Dickerson
  *
- * @author Jan Boen
- * @version  $Revision: 20160922 $
+ * @author  Jan Boen
+ * @version 20160922
  */
 public class TamsTrafficController extends AbstractMRTrafficController implements TamsInterface, CommandStation {
 

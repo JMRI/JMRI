@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * Based on work by Bob Jacobsen and Kevin Dickerson Copyright
  *
  * @author	Jan Boen
- * @version	$Revision: 20160922 $
+ * @version	20160922
  */
 public class TamsTurnout extends AbstractTurnout
         implements TamsListener {
