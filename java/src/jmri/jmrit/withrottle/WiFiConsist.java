@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010, 2011
- * @version $Revision: 18416 $
+ * 
  */
 public class WiFiConsist extends DccConsist {
 
@@ -50,7 +50,7 @@ public class WiFiConsist extends DccConsist {
             if (log.isDebugEnabled()) {
                 log.debug(java.util.Arrays.toString(packet));
             }
-            jmri.InstanceManager.commandStationInstance().sendPacket(packet, 1);
+            jmri.InstanceManager.getDefault(jmri.CommandStation.class).sendPacket(packet, 1);
         }
     }
 

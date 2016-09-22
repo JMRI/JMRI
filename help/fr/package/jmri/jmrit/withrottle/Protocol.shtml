@@ -1,90 +1,104 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="fr">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!--  $Id$ -->
-<!-- Translated  by Blorec Herv&#233; le 2011-11-3--> 
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright ($Author$) 2009 -->
+  <!--  $Id$ -->
+  <!-- Translated  by Blorec Herv&#233; le 2011-11-3-->
 
-<title>JMRI: WiFi Throttle Communications Protocol</title>
+  <title>JMRI: WiFi Throttle Communications Protocol</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
 
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
+<body>
+  <!--#include virtual="/Header" -->
 
-<BODY>
-<!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>JMRI:Protocole de Communications R&eacute;gulateur
+      WiFi</h1>Cette page d&eacute;crit le protocole fournit par le
+      paquet <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">
+      jmri.jmrit.withrottle</a> pour contr&ocirc;ler un train
+      &agrave; travers JMRI via un lien TCP/IP.
 
-<h1> 
-JMRI:Protocole de Communications R&#233;gulateur WiFi 
-</h1>
+      <p>Ouvrez un lienTCP/IP avec le port annonc&eacute; via
+      ZeroConf/Bonjour comme le service
+      "_withrottle._tcp.local.".</p>
 
-Cette page d&#233;crit le protocole fournit par le paquet
-<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">jmri.jmrit.withrottle</a>
-pour contr&#244;ler un train &#224; travers JMRI via un lien TCP/IP.
+      <p>La premi&egrave;re lettre est interpr&egrave;ter par la
+      DeviceServer class pour d&eacute;terminer o&ugrave; envoyer
+      le reste du paquet.</p>
 
+      <ol>
+        <li>'T' envoy&eacute;s &agrave; la class throttle
+        controller.</li>
 
+        <li>'N' est le nom du dispositif.</li>
 
-<p>
-Ouvrez un lienTCP/IP  avec le port annonc&#233; via ZeroConf/Bonjour comme le service "_withrottle._tcp.local.".
+        <li>'Q' indique que le dispositif a quitt&eacute;, fermer
+        cette fen&ecirc;tre .</li>
 
-<p>
-La premi&#232;re lettre est interpr&#232;ter par la DeviceServer class pour d&#233;terminer o&#249; envoyer le reste du paquet.
-<ol>
-    <li>
-        'T' envoy&#233;s &#224; la class throttle controller.
-    </li>
-    <li>
-        'N' est le nom du dispositif.
-    </li>
-    <li>
-        'Q' indique que le dispositif a quitt&#233;, fermer cette fen&#234;tre .
-    </li>
-    <li>
-        'C' n'est pas plus utilis&#233; et avance au contr&#244;leur de r&#233;gulateur.
-    </li>
-</ol>
+        <li>'C' n'est pas plus utilis&eacute; et avance au
+        contr&ocirc;leur de r&eacute;gulateur.</li>
+      </ol>
 
-<p>
-<h3>
-    Contr&#244;leur de R&#233;gulateur:
-</h3>
-<p>
-Ceci devrait suivte le 'T'
-<p>Envoyer Laddr, ou Saddr pour allouer un r&#233;gulateur
-.  "L" signifie adresse Longue DCC, "S"signifie adresse Courte DCC
-exemple TL345 voudra dire que le contr&#244;leur de r&#233;gulateur requi&#232;re une adresse longue 345. Quand l'adresse est d&#233;termin&#233;e, l'Equipement Serveur
-enverra l'adresse aquise au dispositif mobile.
+      <h3>Contr&ocirc;leur de R&eacute;gulateur:</h3>
 
-<p>
-R0 est inverse, R1 est avant. Exemple TR1 dit au contr&#244;leur de r&#233;gulateur de fixer la direction en avant.
+      <p>Ceci devrait suivte le 'T'</p>
 
-<p>
-Viii d&#233;termine la vitesse, o&#249; iii est une valeur enti&#232;re entre 0 et 126.
-Exemple: TV63 verra au contr&#244;leur de r&#233;gulateur la valeur de la vitesse &#224; 50%
+      <p>Envoyer Laddr, ou Saddr pour allouer un r&eacute;gulateur
+      . "L" signifie adresse Longue DCC, "S"signifie adresse Courte
+      DCC exemple TL345 voudra dire que le contr&ocirc;leur de
+      r&eacute;gulateur requi&egrave;re une adresse longue 345.
+      Quand l'adresse est d&eacute;termin&eacute;e, l'Equipement
+      Serveur enverra l'adresse aquise au dispositif mobile.</p>
 
-<p>
-'r' et 'd' "lib&#232;re" et "distribue" le r&#233;gulateur.  Pour la plupart des syst&#232;mes DCC c'est la m&#234;me chose; S'il y a un doute, utilisez lib&#232;re.
-L'&#233;quipement serveur  enverra alors "Pas Encore D&#233;fini" &#224; l'&#233;quipement mobile.
+      <p>R0 est inverse, R1 est avant. Exemple TR1 dit au
+      contr&ocirc;leur de r&eacute;gulateur de fixer la direction
+      en avant.</p>
 
-<p>
-Les boutons de fonction ne sont pas verrouill&#233;s par le dispositif mobile connect&#233;.
-Au lieu de cela les paquets envoy&#233;s &#224; partir du p&#233;riph&#233;rique indiquent &#224; quand JMRI
-un bouton est press&#233;, et quand il est lib&#233;r&#233;. Le format est "F"
-suivi par 0 ou 1 pour lib&#233;r&#233; et press&#233;, suivi par le
-num&#233;ro de fonction. par exemple TF13 dit que  le bouton de la fonction 3 est press&#233;,
-TF03 et est envoy&#233; lorsque le bouton de la fonction 3 est lib&#233;r&#233;. Le r&#233;gulateur v&#233;rifie ensuite si cette fonction est momentan&#233;,
-et il g&#232;re en cons&#233;quence
-<p>
-Ceci est la page d'aide help/en/package/jmri/jmrit/withrottle/Protocol.shtml
-<!--#include virtual="/Footer" -->
+      <p>Viii d&eacute;termine la vitesse, o&ugrave; iii est une
+      valeur enti&egrave;re entre 0 et 126. Exemple: TV63 verra au
+      contr&ocirc;leur de r&eacute;gulateur la valeur de la vitesse
+      &agrave; 50%</p>
+
+      <p>'r' et 'd' "lib&egrave;re" et "distribue" le
+      r&eacute;gulateur. Pour la plupart des syst&egrave;mes DCC
+      c'est la m&ecirc;me chose; S'il y a un doute, utilisez
+      lib&egrave;re. L'&eacute;quipement serveur enverra alors "Pas
+      Encore D&eacute;fini" &agrave; l'&eacute;quipement
+      mobile.</p>
+
+      <p>Les boutons de fonction ne sont pas verrouill&eacute;s par
+      le dispositif mobile connect&eacute;. Au lieu de cela les
+      paquets envoy&eacute;s &agrave; partir du
+      p&eacute;riph&eacute;rique indiquent &agrave; quand JMRI un
+      bouton est press&eacute;, et quand il est
+      lib&eacute;r&eacute;. Le format est "F" suivi par 0 ou 1 pour
+      lib&eacute;r&eacute; et press&eacute;, suivi par le
+      num&eacute;ro de fonction. par exemple TF13 dit que le bouton
+      de la fonction 3 est press&eacute;, TF03 et est envoy&eacute;
+      lorsque le bouton de la fonction 3 est lib&eacute;r&eacute;.
+      Le r&eacute;gulateur v&eacute;rifie ensuite si cette fonction
+      est momentan&eacute;, et il g&egrave;re en
+      cons&eacute;quence</p>
+
+      <p>Ceci est la page d'aide
+      help/en/package/jmri/jmrit/withrottle/Protocol.shtml 
+      <!--#include virtual="/Footer" --></p>
+    </div>
+  </div>
 </body>
 </html>

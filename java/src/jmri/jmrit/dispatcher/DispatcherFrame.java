@@ -34,6 +34,7 @@ import jmri.Transit;
 import jmri.TransitManager;
 import jmri.TransitSection;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
 import jmri.util.table.ButtonEditor;
@@ -79,16 +80,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         initializeOptions();
         openDispatcherWindow();
         autoTurnouts = new AutoTurnouts(this);
-        if (autoTurnouts == null) {
-            log.error("Failed to create AutoTurnouts object when constructing Dispatcher");
-        }
         if (_LE != null) {
             autoAllocate = new AutoAllocate(this);
-            if (autoAllocate == null) {
-                log.error("Failed to create AutoAllocate object when constructing Dispatcher");
-            }
         }
-        InstanceManager.sectionManagerInstance().initializeBlockingSensors();
+        InstanceManager.getDefault(jmri.SectionManager.class).initializeBlockingSensors();
         getActiveTrainFrame();
 
         if (fastClock == null) {
@@ -101,6 +96,95 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 }
             };
             fastClock.addMinuteChangeListener(minuteChangeListener);
+        }
+    }
+
+    public void loadAtStartup() {
+        log.debug("Loading saved trains flagged as LoadAtStartup");
+        TrainInfoFile tif = new TrainInfoFile();
+        String[] names = tif.getTrainInfoFileNames();
+        boolean pathsInited = false;
+        if (names.length > 0) {
+            for (int i = 0; i < names.length; i++) {
+                //read xml data from selected filename and move it into the new train dialog box 
+                TrainInfo info = null;
+                try {
+                    info = tif.readTrainInfo(names[i]);
+                } catch (java.io.IOException ioe) {
+                    log.error("IO Exception when reading train info file {}: {}", names[i], ioe);
+                } catch (org.jdom2.JDOMException jde) {
+                    log.error("JDOM Exception when reading train info file {}: {}", names[i], jde);
+                }
+                if (info != null && info.getLoadAtStartup()) {
+                    log.debug("restoring train:{}, startblockname:{}, destinationBlockName:{}", info.getTrainName(), 
+                            info.getStartBlockName(), info.getDestinationBlockName());
+                    // create a new Active Train
+                    int tSource = ActiveTrain.ROSTER;
+                    if (info.getTrainFromTrains()) {
+                        tSource = ActiveTrain.OPERATIONS;
+                    } else if (info.getTrainFromUser()) {
+                        tSource = ActiveTrain.USER;
+                    }
+                    //block and seq are stored together, split out for use here
+                    String startBlock = info.getStartBlockName().split("-")[0];
+                    int startBlockSeq = Integer.parseInt(info.getStartBlockName().split("-")[1]);
+                    String destinationBlock = info.getDestinationBlockName().split("-")[0];
+                    int destinationBlockSeq = Integer.parseInt(info.getDestinationBlockName().split("-")[1]);
+
+                    if (!pathsInited) { //only init the layoutblockpaths once here
+                        log.debug("initializing block paths early"); //TODO: figure out how to prevent the "regular" init
+                        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+                    }
+
+                    ActiveTrain at = createActiveTrain(info.getTransitName(), info.getTrainName(), tSource, 
+                            startBlock, startBlockSeq, destinationBlock, destinationBlockSeq, 
+                            info.getAutoRun(), info.getDCCAddress(), info.getPriority(),
+                            info.getResetWhenDone(), info.getReverseAtEnd(), true, null);
+                    if (at != null) {
+                        if (tSource == ActiveTrain.ROSTER) {
+                            RosterEntry re = Roster.getDefault().getEntryForId(info.getTrainName());
+                            at.setRosterEntry(re);
+                            at.setDccAddress(re.getDccAddress());
+                        }
+                        at.setDelayedStart(info.getDelayedStart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
+                        at.setDepartureTimeHr(info.getDepartureTimeHr()); // hour of day (fast-clock) to start this train
+                        at.setDepartureTimeMin(info.getDepartureTimeMin()); //minute of hour to start this train
+                        at.setDelayedReStart(info.getDelayedRestart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
+                        at.setRestartDelay(info.getRestartDelayMin());  //this is number of minutes to delay between runs
+                        at.setDelaySensor(info.getDelaySensor());
+                        if ((isFastClockTimeGE(at.getDepartureTimeHr(), at.getDepartureTimeMin()) && info.getDelayedStart() != ActiveTrain.SENSORDELAY) || 
+                                info.getDelayedStart()==ActiveTrain.NODELAY) {
+                            at.setStarted();
+                        }
+                        at.setRestartSensor(info.getRestartSensor());
+                        at.setTrainType(info.getTrainType());
+                        at.setTerminateWhenDone(info.getTerminateWhenDone());
+                        if (info.getAutoRun()) {
+                            AutoActiveTrain aat = new AutoActiveTrain(at);
+                            aat.setSpeedFactor(info.getSpeedFactor());
+                            aat.setMaxSpeed(info.getMaxSpeed());
+                            aat.setRampRate(AutoActiveTrain.getRampRateFromName(info.getRampRate()));
+                            aat.setResistanceWheels(info.getResistanceWheels());
+                            aat.setRunInReverse(info.getRunInReverse());
+                            aat.setSoundDecoder(info.getSoundDecoder());
+                            aat.setMaxTrainLength(info.getMaxTrainLength());
+                            if (!aat.initialize()) {
+                                log.error("ERROR initializing autorunning for train {}", at.getTrainName());
+                                JOptionPane.showMessageDialog(dispatcherFrame, Bundle.getMessage(
+                                        "Error27", at.getTrainName()), Bundle.getMessage("InformationTitle"),
+                                        JOptionPane.INFORMATION_MESSAGE);
+                            }
+                            getAutoTrainsFrame().addAutoActiveTrain(aat);
+                        }
+                        allocateNewActiveTrain(at);
+                        newTrainDone(at);
+
+                    } else {
+                        log.warn("failed to create create Active Train {}", info.getTrainName());
+                    }
+                }
+                
+            }
         }
     }
 
@@ -137,7 +221,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             = new ArrayList<java.beans.PropertyChangeListener>();
     private ArrayList<ActiveTrain> delayedTrains = new ArrayList<ActiveTrain>();  // list of delayed Active Trains
     private ArrayList<ActiveTrain> restartingTrainsList = new ArrayList<ActiveTrain>();  // list of Active Trains with restart requests
-    private TransitManager transitManager = InstanceManager.transitManagerInstance();
+    private TransitManager transitManager = InstanceManager.getDefault(jmri.TransitManager.class);
     private ArrayList<AllocationRequest> allocationRequests = new ArrayList<AllocationRequest>();  // List of AllocatedRequest objects
     private ArrayList<AllocatedSection> allocatedSections = new ArrayList<AllocatedSection>();  // List of AllocatedSection objects
     private boolean optionsRead = false;
@@ -149,9 +233,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     public ActivateTrainFrame getActiveTrainFrame() {
         if (atFrame == null) {
             atFrame = new ActivateTrainFrame(this);
-            if (atFrame == null) {
-                log.error("Failed to create ActivateTrainFrame object when constructing Dispatcher");
-            }
         }
         return atFrame;
     }
@@ -165,7 +246,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         newTrainActive = boo;
     }
     private AutoTrainsFrame _autoTrainsFrame = null;
-    private Timebase fastClock = InstanceManager.timebaseInstance();
+    private Timebase fastClock = InstanceManager.getNullableDefault(jmri.Timebase.class);
     private Sensor fastClockSensor = InstanceManager.sensorManagerInstance().provideSensor("ISCLOCKRUNNING");
     private transient java.beans.PropertyChangeListener minuteChangeListener = null;
 
@@ -567,9 +648,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         ActiveTrain at = activeTrainsList.get(atSelectedIndex);
         //Transit t = at.getTransit();
         ArrayList<AllocatedSection> allocatedSectionList = at.getAllocatedSectionList();
-        ArrayList<String> allSections = (ArrayList<String>) InstanceManager.sectionManagerInstance().getSystemNameList();
+        ArrayList<String> allSections = (ArrayList<String>) InstanceManager.getDefault(jmri.SectionManager.class).getSystemNameList();
         for (int j = 0; j < allSections.size(); j++) {
-            Section s = InstanceManager.sectionManagerInstance().getSection(allSections.get(j));
+            Section s = InstanceManager.getDefault(jmri.SectionManager.class).getSection(allSections.get(j));
             if (s.getState() == Section.FREE) {
                 // not already allocated, check connectivity to this train's allocated sections
                 boolean connected = false;
@@ -821,27 +902,28 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     /**
      * Creates a new ActiveTrain, and registers it with Dispatcher
      * <P>
-     * Required input entries: transitID - system or user name of a Transit in
-     * the Transit Table trainID - any text that identifies the train tSource -
-     * either ROSTER, OPERATIONS, or USER (see ActiveTrain.java) startBlockName
-     * - system or user name of Block where train currently resides
+     * Required input entries: 
+     * transitID - system or user name of a Transit in the Transit Table 
+     * trainID - any text that identifies the train 
+     * tSource - either ROSTER, OPERATIONS, or USER (see ActiveTrain.java) 
+     * startBlockName - system or user name of Block where train currently resides
      * startBlockSectionSequenceNumber - sequence number in the Transit of the
-     * Section containing the startBlock (if the startBlock is within the
-     * Transit) , or of the Section the train will enter from the startBlock (if
-     * the startBlock is outside the Transit). endBlockName - system or user
-     * name of Block where train will end up after its transit
+     *   Section containing the startBlock (if the startBlock is within the
+     *   Transit) , or of the Section the train will enter from the startBlock (if
+     *   the startBlock is outside the Transit). 
+     * endBlockName - system or user name of Block where train will end up after its transit
      * endBlockSectionSequenceNumber - sequence number in the Transit of the
-     * Section containing the endBlock. autoRun - set to "true" if computer is
-     * to run the train automatically, otherwise "false" dccAddress - required
-     * if "autoRun" is "true", set to null otherwise priority - any integer,
-     * higher number is higher priority. Used to arbitrate allocation request
-     * conflicts resetWhenDone - set to "true" if the Active Train is capable of
-     * continuous running and the user has requested that it be automatically
-     * reset for another run thru its Transit each time it completes running
-     * through its Transit. showErrorMessages - "true" if error message dialogs
-     * are to be displayed for detected errors Set to "false" to suppress error
-     * message dialogs from this method. frame - window request is from, or
-     * "null" if not from a window
+     *   Section containing the endBlock. 
+     * autoRun - set to "true" if computer is to run the train automatically, otherwise "false" 
+     * dccAddress - required if "autoRun" is "true", set to null otherwise 
+     * priority - any integer, higher number is higher priority. Used to arbitrate 
+     *   allocation request conflicts 
+     * resetWhenDone - set to "true" if the Active Train is capable of continuous running 
+     *   and the user has requested that it be automatically reset for another run thru its 
+     *   Transit each time it completes running through its Transit. 
+     * showErrorMessages - "true" if error message dialogs are to be displayed for 
+     *   detected errors Set to "false" to suppress error message dialogs from this method. 
+     *   frame - window request is from, or "null" if not from a window
      * <P>
      * Returns an ActiveTrain object if successful, returns "null" otherwise
      */
@@ -849,6 +931,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             int startBlockSectionSequenceNumber, String endBlockName, int endBlockSectionSequenceNumber,
             boolean autoRun, String dccAddress, int priority, boolean resetWhenDone, boolean reverseAtEnd,
             boolean showErrorMessages, JmriJFrame frame) {
+//        log.debug("trainID:{}, tSource:{}, startBlockName:{}, startBlockSectionSequenceNumber:{}, endBlockName:{}, endBlockSectionSequenceNumber:{}",
+//                trainID,tSource,startBlockName,startBlockSectionSequenceNumber,endBlockName,endBlockSectionSequenceNumber);
         // validate input
         Transit t = transitManager.getTransit(transitID);
         if (t == null) {
@@ -886,7 +970,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             log.error("Train source is invalid - " + tSource + " - cannot create an Active Train");
             return null;
         }
-        Block startBlock = InstanceManager.blockManagerInstance().getBlock(startBlockName);
+        Block startBlock = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(startBlockName);
         if (startBlock == null) {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(rb.getString(
@@ -928,7 +1012,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             log.error("Invalid sequence number '" + startBlockSectionSequenceNumber + "' when attempting to create an Active Train");
             return null;
         }
-        Block endBlock = InstanceManager.blockManagerInstance().getBlock(endBlockName);
+        Block endBlock = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(endBlockName);
         if ((endBlock == null) || (!t.containsBlock(endBlock))) {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(rb.getString(
@@ -989,7 +1073,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 }
             }
             // check/set Transit specific items for automatic running				
-            // validate connectivity for all Sections in this transit
+            // validate connectivity for all Sections in this transit            
             int numErrors = t.validateConnectivity(_LE);
             if (numErrors != 0) {
                 if (showErrorMessages) {
@@ -1014,7 +1098,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                     return null;
                 }
             }
-            //todo Need to set the same for signal masts
+            //TODO: Need to check signalMasts as well
             // this train is OK, activate the AutoTrains window, if needed
             if (_autoTrainsFrame == null) {
                 _autoTrainsFrame = new AutoTrainsFrame(_instance);
@@ -1263,8 +1347,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 delayedTrains.add(at);
             }
         } else if (at.getDelayedRestart() == ActiveTrain.SENSORDELAY) {
-            if (at.getRestartDelaySensor() != null) {
-                at.initializeReStartDelaySensor();
+            if (at.getRestartSensor() != null) {
+                at.initializeRestartSensor();
             }
         }
     }
@@ -1405,7 +1489,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                     property = "reverseMast";
                 }
                 if (ar.getSection().getProperty(property) != null) {
-                    SignalMast endMast = InstanceManager.signalMastManagerInstance().getSignalMast(ar.getSection().getProperty(property).toString());
+                    SignalMast endMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(ar.getSection().getProperty(property).toString());
                     if (endMast != null) {
                         if (endMast.getHeld()) {
                             mastHeldAtSection = ar.getSection();
@@ -1459,7 +1543,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                         } else {
                             if (mastHeldAtSection == null) {
                                 if (se.getProperty(property) != null) {
-                                    SignalMast endMast = InstanceManager.signalMastManagerInstance().getSignalMast(se.getProperty(property).toString());
+                                    SignalMast endMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(se.getProperty(property).toString());
                                     if (endMast != null && endMast.getHeld()) {
                                         mastHeldAtSection = se;
                                     }
@@ -1582,7 +1666,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 property = "reverseMast";
             }
             if (s.getProperty(property) != null) {
-                SignalMast toHold = InstanceManager.signalMastManagerInstance().getSignalMast(s.getProperty(property).toString());
+                SignalMast toHold = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(s.getProperty(property).toString());
                 if (toHold != null) {
                     if (!toHold.getHeld()) {
                         heldMasts.add(new HeldMastDetails(toHold, at));
@@ -1593,7 +1677,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             }
 
             if (at.getLastAllocatedSection() != null && at.getLastAllocatedSection().getProperty(property) != null) {
-                SignalMast toRelease = InstanceManager.signalMastManagerInstance().getSignalMast(at.getLastAllocatedSection().getProperty(property).toString());
+                SignalMast toRelease = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(at.getLastAllocatedSection().getProperty(property).toString());
                 if (toRelease != null && isMastHeldByDispatcher(toRelease, at)) {
                     removeHeldMast(toRelease, at);
                     //heldMasts.remove(toRelease);
@@ -1853,6 +1937,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                                         }
                                     }
                                     if (foundOne) {
+                                        log.debug("{}: releasing {}", at.getTrainName(), as.getSectionName());                                
                                         releaseAllocatedSection(as, false);
                                     }
                                 }

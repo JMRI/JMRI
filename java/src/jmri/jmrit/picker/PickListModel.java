@@ -11,6 +11,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
 import jmri.BlockManager;
 import jmri.ConditionalManager;
 import jmri.InstanceManager;
@@ -29,7 +30,7 @@ import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.signalling.EntryExitPairs;
 import jmri.util.NamedBeanComparator;
-import jmri.util.com.sun.TableSorter;
+import jmri.util.SystemNameComparator;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +63,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     protected ArrayList<NamedBean> _pickList;
     protected String _name;
     private JTable _table;       // table using this model
-    protected TableSorter _sorter;
+    protected TableRowSorter<PickListModel> _sorter;
 
     public static final int SNAME_COLUMN = 0;
     public static final int UNAME_COLUMN = 1;
@@ -104,7 +105,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
      * @param index = row of table
      */
     public NamedBean getBeanAt(int index) {
-        index = _sorter.modelIndex(index);
+        index = _sorter.convertRowIndexToModel(index);
         if (index >= _pickList.size()) {
             return null;
         }
@@ -275,16 +276,10 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
      */
     public JTable makePickTable() {
         this.init();
-        try {   // following might fail due to a missing method on Mac Classic
-            _sorter = new TableSorter(this);
-            _table = jmri.util.JTableUtil.sortableDataModel(_sorter);
-            _sorter.setTableHeader(_table.getTableHeader());
-            _sorter.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            _table.setModel(_sorter);
-        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
-            log.error("makePickTable: Unexpected error: " + e);
-            _table = new JTable(this);
-        }
+        _sorter = new TableRowSorter<>(this);
+        _table = new JTable(this);
+        _sorter.setComparator(SNAME_COLUMN, new SystemNameComparator());
+        _table.setRowSorter(_sorter);
 
         _table.setRowSelectionAllowed(true);
         _table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -313,14 +308,9 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     }
 
     public void makeSorter(JTable table) {
-        try {   // following might fail due to a missing method on Mac Classic
-            _sorter = new TableSorter(this);
-            _sorter.setTableHeader(table.getTableHeader());
-            _sorter.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            table.setModel(_sorter);
-        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
-            log.error("makeSorter: Unexpected error: " + e);
-        }
+        _sorter = new TableRowSorter<>(this);
+        _sorter.setComparator(SNAME_COLUMN, new SystemNameComparator());
+        table.setRowSorter(_sorter);
     }
 
     public JTable getTable() {
@@ -465,10 +455,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class TurnoutPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7013117956249797371L;
         TurnoutManager manager;
 
         TurnoutPickModel() {
@@ -495,10 +481,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class SensorPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -5449473524170410469L;
         SensorManager manager;
 
         SensorPickModel() {
@@ -525,10 +507,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class MultiSensorPickModel extends SensorPickModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5378755836882039735L;
         private HashMap<Integer, String> _position = new HashMap<Integer, String>();
 
         MultiSensorPickModel() {
@@ -551,10 +529,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class SignalHeadPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2036689134503776495L;
         SignalHeadManager manager;
 
         SignalHeadPickModel() {
@@ -562,7 +536,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
 
         public Manager getManager() {
-            manager = InstanceManager.signalHeadManagerInstance();
+            manager = InstanceManager.getDefault(jmri.SignalHeadManager.class);
             return manager;
         }
 
@@ -585,10 +559,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class SignalMastPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2376422980165819407L;
         SignalMastManager manager;
 
         SignalMastPickModel() {
@@ -596,7 +566,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
 
         public Manager getManager() {
-            manager = InstanceManager.signalMastManagerInstance();
+            manager = InstanceManager.getDefault(jmri.SignalMastManager.class);
             return manager;
         }
 
@@ -619,10 +589,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class MemoryPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 554967330577788658L;
         MemoryManager manager;
 
         MemoryPickModel() {
@@ -649,10 +615,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class BlockPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 6772550115260370075L;
         BlockManager manager;
 
         BlockPickModel() {
@@ -660,7 +622,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
 
         public Manager getManager() {
-            manager = InstanceManager.blockManagerInstance();
+            manager = InstanceManager.getDefault(jmri.BlockManager.class);
             return manager;
         }
 
@@ -679,10 +641,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class ReporterPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -8225533577316449385L;
         ReporterManager manager;
 
         ReporterPickModel() {
@@ -690,7 +648,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
 
         public Manager getManager() {
-            manager = InstanceManager.reporterManagerInstance();
+            manager = InstanceManager.getDefault(jmri.ReporterManager.class);
             return manager;
         }
 
@@ -709,10 +667,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class LightPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2563996274392877385L;
         LightManager manager;
 
         LightPickModel() {
@@ -739,10 +693,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class OBlockPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -8891253867640053650L;
         OBlockManager manager;
 
         OBlockPickModel() {
@@ -769,10 +719,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class WarrantPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 233304766160346957L;
         WarrantManager manager;
 
         WarrantPickModel() {
@@ -799,10 +745,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class ConditionalPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1850772979922233034L;
         ConditionalManager manager;
 
         ConditionalPickModel() {
@@ -810,7 +752,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
 
         public Manager getManager() {
-            manager = InstanceManager.conditionalManagerInstance();
+            manager = InstanceManager.getDefault(jmri.ConditionalManager.class);
             return manager;
         }
 
@@ -849,10 +791,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class EntryExitPickModel extends PickListModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -1274360959113717578L;
         EntryExitPairs manager;
 
         EntryExitPickModel() {

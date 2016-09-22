@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Handle XML configuration for TripleTurnoutSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision$
  */
 public class TripleTurnoutSignalHeadXml extends DoubleTurnoutSignalHeadXml {
 
@@ -69,7 +68,7 @@ public class TripleTurnoutSignalHeadXml extends DoubleTurnoutSignalHeadXml {
 
         loadCommon(h, shared);
 
-        InstanceManager.signalHeadManagerInstance().register(h);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         return true;
     }
 

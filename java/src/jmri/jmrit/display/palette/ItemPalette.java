@@ -63,7 +63,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
             return;     // never loaded
         }
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
-        CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
+        CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         // unfiltered, xml-stored, item palate icon tree
         CatalogTree tree = manager.getBySystemName("NXPI");
         // discard old version
@@ -140,7 +140,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     }
 
     static boolean loadSavedIcons(Editor ed) {
-        CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
+        CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         CatalogTree tree = manager.getBySystemName("NXPI");
         if (tree != null) {
             CatalogTreeNode root = tree.getRoot();
@@ -307,7 +307,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
             for (int j = 0; j < iconfiles.size(); j++) {
                 String iconName = iconfiles.get(j).getName();
                 String fileName = iconfiles.get(j).getText().trim();
-                if (fileName == null || fileName.length() == 0) {
+                if (fileName.length() == 0) {
                     fileName = "resources/icons/misc/X-red.gif";
                     log.warn("loadDefaultFamilyMap: iconName= " + iconName + " in family " + familyName + " has no image file.");
                 }
@@ -347,6 +347,9 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         return familyTOMap;
     }
 
+    /**
+     * Build the Control Panel Editor tabbed Item Panel frame &amp; menus
+     */
     public ItemPalette(String title, Editor editor) {
         super(title, true, true);
 //        long t = System.currentTimeMillis();
@@ -370,6 +373,9 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         pack();
     }
 
+    /**
+     * Add the tabs on the the Control Panel Editor
+     */
     static void buildTabPane(ItemPalette palette, Editor editor) {
         _tabPane = new JTabbedPane();
         _tabIndex = new HashMap<String, ItemPanel>();
@@ -377,37 +383,37 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         ItemPanel itemPanel = new TableItemPanel(palette, "Turnout", null,
                 PickListModel.turnoutPickModelInstance(), editor);
         itemPanel.init();		// show panel on start
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Turnout"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNameTurnout"));
         _tabIndex.put("Turnout", itemPanel);
 
         itemPanel = new TableItemPanel(palette, "Sensor", null,
                 PickListModel.sensorPickModelInstance(), editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Sensor"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNameSensor"));
         _tabIndex.put("Sensor", itemPanel);
 
         itemPanel = new SignalHeadItemPanel(palette, "SignalHead", null,
                 PickListModel.signalHeadPickModelInstance(), editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("SignalHead"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNameSignalHead"));
         _tabIndex.put("SignalHead", itemPanel);
 
         itemPanel = new SignalMastItemPanel(palette, "SignalMast", null,
                 PickListModel.signalMastPickModelInstance(), editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("SignalMast"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNameSignalMast"));
         _tabIndex.put("SignalMast", itemPanel);
 
         itemPanel = new MemoryItemPanel(palette, "Memory", null,
                 PickListModel.memoryPickModelInstance(), editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Memory"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNameMemory"));
         _tabIndex.put("Memory", itemPanel);
 
         itemPanel = new ReporterItemPanel(palette, "Reporter", null,
                 PickListModel.reporterPickModelInstance(), editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Reporter"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNameReporter"));
         _tabIndex.put("Reporter", itemPanel);
 
         itemPanel = new TableItemPanel(palette, "Light", null,
                 PickListModel.lightPickModelInstance(), editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Light"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNameLight"));
         _tabIndex.put("Light", itemPanel);
 
         itemPanel = new MultiSensorItemPanel(palette, "MultiSensor", null,
@@ -417,24 +423,24 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
 
         ItemPanel iconPanel = new IconItemPanel(palette, "Icon", editor);
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Icon"));
-        _tabIndex.put("Icon", itemPanel);
+        _tabIndex.put("Icon", iconPanel); // changed from "itemPanel"
 
         iconPanel = new BackgroundItemPanel(palette, "Background", editor);
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Background"));
-        _tabIndex.put("Background", itemPanel);
+        _tabIndex.put("Background", iconPanel);
 
         iconPanel = new TextItemPanel(palette, "Text", editor);
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Text"));
-        _tabIndex.put("Text", itemPanel);
+        _tabIndex.put("Text", iconPanel);
 
         iconPanel = new RPSItemPanel(palette, "RPSReporter", null, editor);
 //        itemPanel.init();		// show panel on start
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("RPSReporter"));
-        _tabIndex.put("RPSReporter", itemPanel);
+        _tabIndex.put("RPSReporter", iconPanel);
 
         iconPanel = new ClockItemPanel(palette, "FastClock", editor);
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("FastClock"));
-        _tabIndex.put("FastClock", itemPanel);
+        _tabIndex.put("FastClock", iconPanel);
 
         itemPanel = new IndicatorItemPanel(palette, "IndicatorTrack", null, editor);
         _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("IndicatorTrack"));
@@ -446,7 +452,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         _tabIndex.put("IndicatorTO", itemPanel);
 
         itemPanel = new PortalItemPanel(palette, "Portal", null, editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Portal"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNamePortal"));
         _tabIndex.put("Portal", itemPanel);
 
         _tabPane.addChangeListener(palette);
@@ -545,7 +551,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         if (family == null || family.length() == 0) {
             JOptionPane.showMessageDialog(frame,
                     Bundle.getMessage("EnterFamilyName"),
-                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
         }
         while (it.hasNext()) {
@@ -553,7 +559,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
                 JOptionPane.showMessageDialog(frame,
                         java.text.MessageFormat.format(Bundle.getMessage("DuplicateFamilyName"),
                                 new Object[]{family, type}),
-                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return false;
             }
         }
@@ -696,6 +702,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     static public String convertText(String name) {
         String cName = null;
         try {
+            // NOI18N
             cName = Bundle.getMessage(name);
         } catch (java.util.MissingResourceException mre) {
             try {

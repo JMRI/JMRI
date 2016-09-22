@@ -1,6 +1,3 @@
-/* 
- * DccCommandStation.java
- */
 package jmri.jmrix;
 
 /**
@@ -35,5 +32,3 @@ public interface DccCommandStation {
     public String getVersionString();
 }
 
-
-/* @(#)DccCommandStation.java */

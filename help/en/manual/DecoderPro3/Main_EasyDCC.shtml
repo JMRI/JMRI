@@ -1,46 +1,64 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>Comprehensive Programmer - Advanced Features Pane</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>Comprehensive Programmer - Advanced Features Pane</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<a name="Top"></a>
-<h1>DecoderPro&reg; Main Window</h1>
-<h2>EasyDCC Menu</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-<p><a href="dp3_menubar.shtml">Back to Index</a><a href="Main_Menu.shtml#System"></a></p>
-</div>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<hr>
-<p><strong>Command Monitor</strong></p>
-<p>Opens the <a href="Main_Monitor_Window.shtml">Communications Monitor Window</a> and automatically displays the information that is being sent and received on the communications link between your computer and your DCC system.</p>
-<p><strong>Send Command</strong></p>
-<p>Opens the Send EasyDcc command prompt, which is used to send commands using DecoderPro.</p>
-<p align="center"><img src="images/Main_EasyDCC_01.png" alt="Send Command" width="263" height="99" border="4"></p>
-<p>
-<hr>
+      <h1>DecoderPro&reg; Main Window</h1>
 
-<div align="right">
-<p><a href="dp3_menubar.shtml">Back to Index</a><a href="Main_Menu.shtml#System"></a></p>
-</div>
+      <h2>EasyDCC Menu</h2>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
- </body>
+      <div align="right">
+        <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
+        "Main_Menu.shtml#System"></a></p>
+      </div>
+      <hr>
+
+      <p><strong>Command Monitor</strong></p>
+
+      <p>Opens the <a href=
+      "Main_Monitor_Window.shtml">Communications Monitor Window</a>
+      and automatically displays the information that is being sent
+      and received on the communications link between your computer
+      and your DCC system.</p>
+
+      <p><strong>Send Command</strong></p>
+
+      <p>Opens the Send EasyDcc command prompt, which is used to
+      send commands using DecoderPro.</p>
+
+      <p align="center"><img src="images/Main_EasyDCC_01.png" alt=
+      "Send Command" width="263" height="99" border="4"></p>
+      <hr>
+
+      <div align="right">
+        <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
+        "Main_Menu.shtml#System"></a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
 </html>

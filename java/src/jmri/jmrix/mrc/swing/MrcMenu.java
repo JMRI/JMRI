@@ -1,4 +1,3 @@
-// MrcMenu.java
 package jmri.jmrix.mrc.swing;
 
 import javax.swing.JMenu;
@@ -10,14 +9,8 @@ import jmri.jmrix.mrc.MrcSystemConnectionMemo;
  * @author	Bob Jacobsen Copyright 2003, 2010 Copied from nce.swing
  * @author Ken Cameron 2014
  * @author Kevin Dickerson 2014
- * @version $Revision: 23001 $
  */
 public class MrcMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7065069034402845776L;
 
     /**
      * Create a MRC menu. And loads the MrcSystemConnectionMemo to the various
@@ -67,5 +60,3 @@ public class MrcMenu extends JMenu {
         String load;
     }
 }
-
-/* @(#)MrcMenu.java */

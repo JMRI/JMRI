@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008, 2009
- * @version $Revision$
  */
 public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -92,7 +91,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         if (log.isDebugEnabled()) {
             log.debug("Found " + reporterList.size() + " reporters");
         }
-        ReporterManager tm = InstanceManager.reporterManagerInstance();
+        ReporterManager tm = InstanceManager.getDefault(jmri.ReporterManager.class);
 
         for (int i = 0; i < reporterList.size(); i++) {
 
@@ -115,7 +114,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
     }
 
     public int loadOrder() {
-        return InstanceManager.reporterManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(jmri.ReporterManager.class).getXMLOrder();
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractReporterManagerConfigXML.class.getName());

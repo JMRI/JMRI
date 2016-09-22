@@ -11,8 +11,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrit.beantable.BlockTableAction class
  *
  * @author	Bob Jacobsen Copyright 2004, 2007, 2008
- * @version	$Revision$
- */
+  */
 public class BlockTableActionTest extends jmri.util.SwingTestCase {
 
     public void testCreate() {
@@ -26,9 +25,9 @@ public class BlockTableActionTest extends jmri.util.SwingTestCase {
         ba.actionPerformed(null);
 
         // create a couple blocks, and see if they show
-        InstanceManager.blockManagerInstance().createNewBlock("IB1", "block 1");
+        InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("IB1", "block 1");
 
-        Block b2 = InstanceManager.blockManagerInstance().createNewBlock("IB2", "block 2");
+        Block b2 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("IB2", "block 2");
         b2.setDirection(jmri.Path.EAST);
         TestHelper.disposeWindow(ba.f, this);
     }

@@ -8,8 +8,7 @@ import jmri.util.SystemType;
  * SerialDriverAdapter object.
  *
  * @author Andrew Crosland Copyright (C) 2016
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
@@ -58,7 +57,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     protected void setInstance() {
-        adapter = PiSprogOneSerialDriverAdapter.instance();
+        if(adapter == null) {
+           adapter = new PiSprogOneSerialDriverAdapter();
+        }
     }
 }
 

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
@@ -43,7 +44,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     public DefaultSignalMastLogicManager() {
         registerSelf();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
-        jmri.InstanceManager.signalMastManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).addVetoableChangeListener(this);
         jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         //_speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
     }
@@ -218,16 +219,18 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
      *
      */
     protected void registerSelf() {
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(this, jmri.Manager.SIGNALMASTLOGICS);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerConfig(this, jmri.Manager.SIGNALMASTLOGICS);
         }
     }
 
     // abstract methods to be extended by subclasses
     // to free resources when no longer used
     public void dispose() {
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().deregister(this);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.deregister(this);
         }
         signalMastLogic.clear();
     }
@@ -420,7 +423,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         Hashtable<NamedBean, ArrayList<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(null, SignalMast.class, LayoutBlockConnectivityTools.MASTTOMAST);
         Enumeration<NamedBean> en = validPaths.keys();
         firePropertyChange("autoGenerateUpdate", null, ("Found " + validPaths.size() + " masts as sources for logic"));
-        for (NamedBean nb : InstanceManager.signalMastManagerInstance().getNamedBeanList()) {
+        for (NamedBean nb : InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBeanList()) {
             nb.removeProperty("intermediateSignal");
         }
         while (en.hasMoreElements()) {
@@ -451,7 +454,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     }
 
     public void generateSection() {
-        SectionManager sm = InstanceManager.sectionManagerInstance();
+        SectionManager sm = InstanceManager.getDefault(jmri.SectionManager.class);
         for (NamedBean nb : sm.getNamedBeanList()) {
             if (((Section) nb).getSectionType() == Section.SIGNALMASTLOGIC) {
                 nb.removeProperty("intermediateSection");

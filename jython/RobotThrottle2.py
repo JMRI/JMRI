@@ -950,7 +950,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 if (self.loadFromRoster.isSelected() == True) :
                     # take the loco id and try looking up values in roster
                     if (self.rosterInstance == None) :
-                        self.rosterInstance = jmri.jmrit.roster.Roster.instance()
+                        self.rosterInstance = jmri.jmrit.roster.Roster.getDefault()
                         self.msgText("got roster instance\n")
                     rosterEntries = self.rosterInstance.matchingList(None, None, self.locoAddress.text, None, None, None, None)
                     self.msgText("found " + rosterEntries.size().toString() + " entries matching |" + id.toString() + "|\n")
@@ -1204,7 +1204,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     def whenSaveToRosterButtonClicked(self, event):   
         if (self.locoAddress.text != "") :
             if (self.rosterInstance == None) :
-                self.rosterInstance = jmri.jmrit.roster.Roster.instance()
+                self.rosterInstance = jmri.jmrit.roster.Roster.getDefault()
                 self.msgText("got roster instance\n")
             id = int(self.locoAddress.text)
             rosterEntries = self.rosterInstance.matchingList(None, None, id.toString(), None, None, None, None)

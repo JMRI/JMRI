@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * same address space, so there is no node number in the address.
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2009
- * @version $Revision$
  */
 public class SerialAddress {
 

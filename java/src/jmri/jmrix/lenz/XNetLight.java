@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Based in part on SerialLight.java
  *
  * @author Paul Bender Copyright (C) 2008-2010
- * @version $Revision$
  */
 public class XNetLight extends AbstractLight implements XNetListener {
 

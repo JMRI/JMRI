@@ -1,10 +1,10 @@
 package jmri.jmris.json;
 
-import static jmri.jmris.json.JSON.ADD;
-import static jmri.jmris.json.JSON.DATA;
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.ROSTER;
-import static jmri.jmris.json.JSON.TYPE;
+import static jmri.server.json.JSON.ADD;
+import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.roster.JsonRoster.ROSTER;
+import static jmri.server.json.JSON.TYPE;
 import static jmri.jmrit.roster.Roster.REMOVE;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -41,8 +41,8 @@ public class JsonRosterServer {
 
     public void listen() {
         if (!this.listening) {
-            Roster.instance().addPropertyChangeListener(this.rosterListener);
-            for (RosterEntry re : Roster.instance().getEntriesInGroup(Roster.ALLENTRIES)) {
+            Roster.getDefault().addPropertyChangeListener(this.rosterListener);
+            for (RosterEntry re : Roster.getDefault().getEntriesInGroup(Roster.ALLENTRIES)) {
                 re.addPropertyChangeListener(this.rosterEntryListener);
             }
             this.listening = true;
@@ -60,8 +60,8 @@ public class JsonRosterServer {
     }
 
     public void dispose() {
-        Roster.instance().removePropertyChangeListener(this.rosterListener);
-        for (RosterEntry re : Roster.instance().getEntriesInGroup(Roster.ALLENTRIES)) {
+        Roster.getDefault().removePropertyChangeListener(this.rosterListener);
+        for (RosterEntry re : Roster.getDefault().getEntriesInGroup(Roster.ALLENTRIES)) {
             re.removePropertyChangeListener(this.rosterEntryListener);
         }
         this.listening = false;

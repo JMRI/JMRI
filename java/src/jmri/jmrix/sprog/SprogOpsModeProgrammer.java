@@ -1,4 +1,3 @@
-/* SprogOpsModeProgrammer.java */
 package jmri.jmrix.sprog;
 
 import java.util.ArrayList;
@@ -19,17 +18,19 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.Programmer
  * @author	Andrew Crosland Copyright (C) 2006
- * @version	$Revision$
  */
 public class SprogOpsModeProgrammer extends SprogProgrammer implements AddressedProgrammer {
 
     int mAddress;
     boolean mLongAddr;
 
-    public SprogOpsModeProgrammer(int pAddress, boolean pLongAddr) {
+    private SprogSystemConnectionMemo _memo = null;
 
+    public SprogOpsModeProgrammer(int pAddress, boolean pLongAddr,SprogSystemConnectionMemo memo) {
+        super(memo);
         mAddress = pAddress;
         mLongAddr = pLongAddr;
+        _memo = memo;
     }
 
     /**
@@ -49,7 +50,7 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
         // [AC 23/01/16] Check that there is a free slot for the ops mode packet.
         // Delay the reply to allow time for the ops mode packet to be sent and prevent all slots from filling up
         // when writing multiple CVs, e.g. writing a sheet in the comprehensive programmer.
-        if (SprogCommandStation.instance().opsModepacket(mAddress, mLongAddr, CV, val) != null) {
+        if (_memo.getCommandStation().opsModepacket(mAddress, mLongAddr, CV, val) != null) {
             javax.swing.Timer t = new javax.swing.Timer(250, (java.awt.event.ActionEvent evt)->{notifyProgListenerEnd(_val, jmri.ProgListener.OK);});
             t.setRepeats(false);
             t.start();
@@ -66,9 +67,9 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
         throw new ProgrammerException();
     }
 
-    synchronized public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
+    synchronized public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) {
-            log.debug("confirm CV=" + CV);
+            log.debug("confirm CV={}", CV);
         }
         log.error("confirmCV not available in this protocol");
         throw new ProgrammerException();
@@ -124,5 +125,3 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
     private final static Logger log = LoggerFactory.getLogger(SprogOpsModeProgrammer.class.getName());
 
 }
-
-/* @(#)SprogOpsModeProgrammer.java */

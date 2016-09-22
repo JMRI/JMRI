@@ -17,8 +17,7 @@ import org.slf4j.LoggerFactory;
  * connection.
  *
  * @author      Paul Bender  Copyright (C) 2015
- * @version	$Revision$
- *
+  *
  * @see RaspberryPiAdapter
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {

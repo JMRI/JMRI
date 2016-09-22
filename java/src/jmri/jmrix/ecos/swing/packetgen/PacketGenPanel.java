@@ -13,7 +13,6 @@ import jmri.jmrix.ecos.EcosSystemConnectionMemo;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision$
  */
 public class PacketGenPanel extends jmri.jmrix.ecos.swing.EcosPanel implements EcosListener {
 

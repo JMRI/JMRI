@@ -11,7 +11,7 @@ import javax.swing.SwingUtilities;
 
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -19,7 +19,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.util.SwingTestCase class.
  *
  * @author	Bob Jacobsen Copyright 2009
- * @version	$Revision$
  */
 public class SwingTestCaseTest extends SwingTestCase {
 

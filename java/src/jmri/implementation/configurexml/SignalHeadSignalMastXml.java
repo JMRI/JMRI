@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Handle XML configuration for a DefaultSignalMastManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 18102 $
+ * 
  */
 public class SignalHeadSignalMastXml
         extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -60,7 +60,7 @@ public class SignalHeadSignalMastXml
         SignalMast m;
         String sys = getSystemName(shared);
         try {
-            m = InstanceManager.signalMastManagerInstance()
+            m = InstanceManager.getDefault(jmri.SignalMastManager.class)
                     .provideSignalMast(sys);
         } catch (Exception e) {
             log.error("An error occured while trying to create the signal '" + sys + "' " + e.toString());

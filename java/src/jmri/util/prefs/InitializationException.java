@@ -8,7 +8,6 @@ package jmri.util.prefs;
  */
 public class InitializationException extends Exception {
 
-    private static final long serialVersionUID = 1L;
     private String localizedMessage = null;
 
     public InitializationException(String message, String localized) {

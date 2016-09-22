@@ -16,7 +16,6 @@ import jmri.jmrix.easydcc.networkdriver.NetworkDriverAdapter;
  * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
@@ -84,7 +83,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         this.register(new ConnectionConfig(adapter));
     }
     /*protected void register(String host, String port, String manufacturer) {
-     InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(host, port, manufacturer));
+     InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(new ConnectionConfig(host, port, manufacturer));
      }*/
 
 }

@@ -32,6 +32,10 @@ import jmri.NamedBean;
 import jmri.Section;
 import jmri.SectionManager;
 import jmri.Sensor;
+import jmri.SignalHead;
+import jmri.SignalHeadManager;
+import jmri.SignalMast;
+import jmri.SignalMastManager;
 import jmri.Transit;
 import jmri.TransitManager;
 import jmri.TransitSection;
@@ -68,10 +72,10 @@ public class TransitTableAction extends AbstractTableAction {
      */
     public TransitTableAction(String actionName) {
         super(actionName);
-        // set manager - no need to use InstanceManager here
-        transitManager = jmri.InstanceManager.transitManagerInstance();
+
+        transitManager = jmri.InstanceManager.getNullableDefault(jmri.TransitManager.class);
         // disable ourself if there is no Transit manager available
-        if (sectionManager == null) {
+        if (sectionManager == null || transitManager == null) {
             setEnabled(false);
         }
 
@@ -98,7 +102,7 @@ public class TransitTableAction extends AbstractTableAction {
                     log.warn("requested getValue(null)");
                     return "(no name)";
                 }
-                Transit z = InstanceManager.transitManagerInstance().getBySystemName(name);
+                Transit z = InstanceManager.getDefault(jmri.TransitManager.class).getBySystemName(name);
                 if (z == null) {
                     log.debug("requested getValue(\"" + name + "\"), Transit doesn't exist");
                     return "(no Transit)";
@@ -107,18 +111,16 @@ public class TransitTableAction extends AbstractTableAction {
             }
 
             public Manager getManager() {
-                return InstanceManager.transitManagerInstance();
+                return InstanceManager.getDefault(jmri.TransitManager.class);
             }
 
             public NamedBean getBySystemName(String name) {
-                return InstanceManager.transitManagerInstance().getBySystemName(name);
+                return InstanceManager.getDefault(jmri.TransitManager.class).getBySystemName(name);
             }
 
             public NamedBean getByUserName(String name) {
-                return InstanceManager.transitManagerInstance().getByUserName(name);
+                return InstanceManager.getDefault(jmri.TransitManager.class).getByUserName(name);
             }
-            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"delete"); }
-             public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "delete", boo); }*/
 
             protected String getMasterClassName() {
                 return getClassName();
@@ -290,7 +292,7 @@ public class TransitTableAction extends AbstractTableAction {
     private boolean editMode = false;
     private boolean duplicateMode = false;
     private TransitManager transitManager = null;
-    private SectionManager sectionManager = InstanceManager.sectionManagerInstance();
+    private SectionManager sectionManager = InstanceManager.getNullableDefault(jmri.SectionManager.class);
     private Transit curTransit = null;
     private SectionTableModel sectionTableModel = null;
     private ArrayList<Section> sectionList = new ArrayList<>();
@@ -833,14 +835,16 @@ public class TransitTableAction extends AbstractTableAction {
                     && (s != afterSection) && (!inSectionList(s, altOldList))) {
                 if (beforeSection != null) {
                     if (forwardConnected(s, beforeSection, beforeSectionDirection)) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            mayBeName = mayBeName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            mayBeName = mayBeName + "( " + uname + " )";
                         }
                         mayBeSection = s;
                         mayBeDirection = Section.FORWARD;
                     } else if (reverseConnected(s, beforeSection, beforeSectionDirection)) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            mayBeName = mayBeName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            mayBeName = mayBeName + "( " + uname + " )";
                         }
                         mayBeSection = s;
                         mayBeDirection = Section.REVERSE;
@@ -858,14 +862,16 @@ public class TransitTableAction extends AbstractTableAction {
                     }
                 } else if (afterSection != null) {
                     if (forwardConnected(s, afterSection, afterSectionDirection)) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            mayBeName = mayBeName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            mayBeName = mayBeName + "( " + uname + " )";
                         }
                         mayBeSection = s;
                         mayBeDirection = Section.REVERSE;
                     } else if (reverseConnected(s, afterSection, afterSectionDirection)) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            mayBeName = mayBeName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            mayBeName = mayBeName + "( " + uname + " )";
                         }
                         mayBeSection = s;
                         mayBeDirection = Section.FORWARD;
@@ -1025,14 +1031,16 @@ public class TransitTableAction extends AbstractTableAction {
                     && (s != afterSection) && (!inSectionList(s, altOldList))) {
                 if (beforeSection != null) {
                     if (forwardConnected(s, beforeSection, beforeSectionDirection)) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            mayBeName = mayBeName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            mayBeName = mayBeName + "( " + uname + " )";
                         }
                         mayBeSection = s;
                         mayBeDirection = Section.FORWARD;
                     } else if (reverseConnected(s, beforeSection, beforeSectionDirection)) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            mayBeName = mayBeName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            mayBeName = mayBeName + "( " + uname + " )";
                         }
                         mayBeSection = s;
                         mayBeDirection = Section.REVERSE;
@@ -1050,14 +1058,16 @@ public class TransitTableAction extends AbstractTableAction {
                     }
                 } else if (afterSection != null) {
                     if (forwardConnected(s, afterSection, afterSectionDirection)) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            mayBeName = mayBeName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            mayBeName = mayBeName + "( " + uname + " )";
                         }
                         mayBeSection = s;
                         mayBeDirection = Section.REVERSE;
                     } else if (reverseConnected(s, afterSection, afterSectionDirection)) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            mayBeName = mayBeName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            mayBeName = mayBeName + "( " + uname + " )";
                         }
                         mayBeSection = s;
                         mayBeDirection = Section.FORWARD;
@@ -1225,11 +1235,6 @@ public class TransitTableAction extends AbstractTableAction {
         for (int i = 0; i < sectionList.size(); i++) {
             TransitSection ts = new TransitSection(sectionList.get(i),
                     sequence[i], direction[i], alternate[i]);
-            // FIXME: Why is this null check here? We just instansiated ts as a new TransitSection, which should keep it from ever being null
-            if (null == ts) {
-                log.error("Trouble creating TransitSection");
-                return false;
-            }
             ArrayList<TransitSectionAction> list = action[i];
             if (list != null) {
                 for (int j = 0; j < list.size(); j++) {
@@ -1255,8 +1260,9 @@ public class TransitTableAction extends AbstractTableAction {
                 String sName = allSections.get(i);
                 Section s = sectionManager.getBySystemName(sName);
                 if (s != null) {
-                    if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                        sName = sName + "( " + s.getUserName() + " )";
+                    String uname = s.getUserName();
+                    if ((uname != null) && (!uname.equals(""))) {
+                        sName = sName + "( " + uname + " )";
                     }
                     primarySectionBox.addItem(sName);
                     primarySectionBoxList.add(s);
@@ -1270,15 +1276,17 @@ public class TransitTableAction extends AbstractTableAction {
                 Section s = sectionManager.getBySystemName(sName);
                 if (s != null) {
                     if ((s != prevSection) && (forwardConnected(s, curSection, curSectionDirection))) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            sName = sName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            sName = sName + "( " + uname + " )";
                         }
                         primarySectionBox.addItem(sName);
                         primarySectionBoxList.add(s);
                         priSectionDirection[primarySectionBoxList.size() - 1] = Section.FORWARD;
                     } else if ((s != prevSection) && (reverseConnected(s, curSection, curSectionDirection))) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            sName = sName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            sName = sName + "( " + uname + " )";
                         }
                         primarySectionBox.addItem(sName);
                         primarySectionBoxList.add(s);
@@ -1294,16 +1302,18 @@ public class TransitTableAction extends AbstractTableAction {
                     if (s != null) {
                         if ((notIncludedWithSeq(s, curSequenceNum))
                                 && forwardConnected(s, prevSection, prevSectionDirection)) {
-                            if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                                sName = sName + "( " + s.getUserName() + " )";
+                            String uname = s.getUserName();
+                            if ((uname != null) && (!uname.equals(""))) {
+                                sName = sName + "( " + uname + " )";
                             }
                             alternateSectionBox.addItem(sName);
                             alternateSectionBoxList.add(s);
                             altSectionDirection[alternateSectionBoxList.size() - 1] = Section.FORWARD;
                         } else if (notIncludedWithSeq(s, curSequenceNum)
                                 && reverseConnected(s, prevSection, prevSectionDirection)) {
-                            if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                                sName = sName + "( " + s.getUserName() + " )";
+                            String uname = s.getUserName();
+                            if ((uname != null) && (!uname.equals(""))) {
+                                sName = sName + "( " + uname + " )";
                             }
                             alternateSectionBox.addItem(sName);
                             alternateSectionBoxList.add(s);
@@ -1323,15 +1333,17 @@ public class TransitTableAction extends AbstractTableAction {
                 Section s = sectionManager.getBySystemName(sName);
                 if (s != null) {
                     if ((s != firstSection) && (forwardConnected(s, firstSection, testDirection))) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            sName = sName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            sName = sName + "( " + uname + " )";
                         }
                         insertAtBeginningBox.addItem(sName);
                         insertAtBeginningBoxList.add(s);
                         insertAtBeginningDirection[insertAtBeginningBoxList.size() - 1] = Section.REVERSE;
                     } else if ((s != firstSection) && (reverseConnected(s, firstSection, testDirection))) {
-                        if ((s.getUserName() != null) && (!s.getUserName().equals(""))) {
-                            sName = sName + "( " + s.getUserName() + " )";
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            sName = sName + "( " + uname + " )";
                         }
                         insertAtBeginningBox.addItem(sName);
                         insertAtBeginningBoxList.add(s);
@@ -1744,6 +1756,7 @@ public class TransitTableAction extends AbstractTableAction {
 
     private void setWhat(int code) {
         whatBox.setSelectedIndex(code - 1);
+        //hide all the possible input boxes, to be set visible as needed
         whatStringField.setVisible(false);
         whatData1Field.setVisible(false);
         whatData2Field.setVisible(false);
@@ -1808,6 +1821,11 @@ public class TransitTableAction extends AbstractTableAction {
                 whatStringField.setVisible(true);
                 whatStringField.setToolTipText(rbx.getString("HintSensorEntry"));
                 break;
+            case TransitSectionAction.HOLDSIGNAL:
+            case TransitSectionAction.RELEASESIGNAL:
+                whatStringField.setVisible(true);
+                whatStringField.setToolTipText(rbx.getString("HintSignalEntry"));
+                break;
         }
         addEditActionFrame.pack();
         addEditActionFrame.setVisible(true);
@@ -1828,9 +1846,6 @@ public class TransitTableAction extends AbstractTableAction {
         }
         // entered data is OK, create a special action
         curTSA = new TransitSectionAction(tWhen, tWhat, tWhenData, tWhatData1, tWhatData2, tWhenString, tWhatString);
-        if (curTSA == null) {
-            log.error("Failure when creating new TransitSectionAction");
-        }
         ArrayList<TransitSectionAction> list = action[activeRow];
         list.add(curTSA);
         actionTableModel.fireTableDataChanged();
@@ -1921,6 +1936,30 @@ public class TransitTableAction extends AbstractTableAction {
         return true;
     }
 
+    private boolean validateSignal(String sName, boolean when) {
+        // check if anything entered
+        if (sName.length() < 1) {
+            // no sensor entered
+            JOptionPane.showMessageDialog(addEditActionFrame, (rbx.getString("NoSignalError")),
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        // get the signalMast or signalHead corresponding to this name
+        SignalMast sm = null;
+        SignalHead sh = null;
+        sm = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(sName);
+        if (sm == null) {
+            sh = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(sName);            
+        }
+        if (sm == null && sh == null) {
+            // There is no signal corresponding to this name
+            JOptionPane.showMessageDialog(addEditActionFrame, (rbx.getString("SignalEntryError")),
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+
     private boolean validateWhatData() {
         tWhat = whatBox.getSelectedIndex() + 1;
         tWhatData1 = 0;
@@ -1973,7 +2012,7 @@ public class TransitTableAction extends AbstractTableAction {
                     return false;
                 }
                 tWhatString = whatStringField.getText();
-                if ((tWhatString == null) || tWhatString == "" || (tWhatString.length() < 1)) {
+                if ((tWhatString == null) || tWhatString.equals("") || (tWhatString.length() < 1)) {
                     JOptionPane.showMessageDialog(addEditActionFrame, (rbx.getString("MissingPattern")),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
@@ -2002,6 +2041,13 @@ public class TransitTableAction extends AbstractTableAction {
             case TransitSectionAction.SETSENSORINACTIVE:
                 tWhatString = whatStringField.getText();
                 if (!validateSensor(tWhatString, false)) {
+                    return false;
+                }
+                break;
+            case TransitSectionAction.HOLDSIGNAL:
+            case TransitSectionAction.RELEASESIGNAL:
+                tWhatString = whatStringField.getText();
+                if (!validateSignal(tWhatString, false)) {
                     return false;
                 }
                 break;
@@ -2132,6 +2178,10 @@ public class TransitTableAction extends AbstractTableAction {
                 return rbx.getString("SetSensorActive");
             case TransitSectionAction.SETSENSORINACTIVE:
                 return rbx.getString("SetSensorInactive");
+            case TransitSectionAction.HOLDSIGNAL:
+                return rbx.getString("HoldSignal");
+            case TransitSectionAction.RELEASESIGNAL:
+                return rbx.getString("ReleaseSignal");
         }
         return "WHAT";
     }
@@ -2141,8 +2191,9 @@ public class TransitTableAction extends AbstractTableAction {
         blockBox.removeAllItems();
         for (int i = 0; i < blockList.size(); i++) {
             String s = blockList.get(i).getSystemName();
-            if ((blockList.get(i).getUserName() != null) && (!blockList.get(i).getUserName().equals(""))) {
-                s = s + "(" + blockList.get(i).getUserName() + ")";
+            String uname = blockList.get(i).getUserName();
+            if ((uname != null) && (!uname.equals(""))) {
+                s = s + "(" + uname + ")";
             }
             blockBox.addItem(s);
         }
@@ -2286,6 +2337,12 @@ public class TransitTableAction extends AbstractTableAction {
                         new Object[]{tsa.getStringWhat()});
             case TransitSectionAction.SETSENSORINACTIVE:
                 return java.text.MessageFormat.format(rbx.getString("SetSensorInactiveFull"),
+                        new Object[]{tsa.getStringWhat()});
+            case TransitSectionAction.HOLDSIGNAL:
+                return java.text.MessageFormat.format(rbx.getString("HoldSignalFull"),
+                        new Object[]{tsa.getStringWhat()});
+            case TransitSectionAction.RELEASESIGNAL:
+                return java.text.MessageFormat.format(rbx.getString("ReleaseSignalFull"),
                         new Object[]{tsa.getStringWhat()});
         }
         return "WHAT";

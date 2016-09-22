@@ -11,12 +11,13 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.finder.JLabelFinder;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Test of PositionableLabel
@@ -77,7 +78,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
 
         // make four windows
-        InstanceManager.configureManagerInstance()
+        InstanceManager.getDefault(ConfigureManager.class)
                 .load(new java.io.File("java/test/jmri/jmrit/display/configurexml/verify/backgrounds.xml"));
         flushAWT();
 
@@ -238,6 +239,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         flushAWT();
 
         // check for initial red
+        sleep(5);
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0,0));
 
         Assert.assertEquals("icon arraylength", 13*13, val.length);

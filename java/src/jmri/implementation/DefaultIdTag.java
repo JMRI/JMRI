@@ -51,7 +51,7 @@ public class DefaultIdTag extends AbstractIdTag {
         this.whereLastSeen = r;
         if (r != null) {
             this.whenLastSeen = InstanceManager.getDefault(IdTagManager.class).isFastClockUsed()
-                    ? InstanceManager.clockControlInstance().getTime()
+                    ? InstanceManager.getDefault(jmri.ClockControl.class).getTime()
                     : Calendar.getInstance().getTime();
         } else {
             this.whenLastSeen = null;
@@ -116,7 +116,7 @@ public class DefaultIdTag extends AbstractIdTag {
             }
             if (e.getChild("whereLastSeen") != null) { //NOI18N
                 try {
-                    Reporter r = InstanceManager.reporterManagerInstance()
+                    Reporter r = InstanceManager.getDefault(jmri.ReporterManager.class)
                                     .provideReporter(e.getChild("whereLastSeen").getText()); //NOI18N
                     this.setWhereLastSeen(r);
                     this.whenLastSeen = null;

@@ -42,7 +42,7 @@ public class BlockManager extends AbstractManager
     public BlockManager() {
         super();
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.reporterManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.getDefault(jmri.ReporterManager.class).addVetoableChangeListener(this);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class BlockManager extends AbstractManager
             }
         }
         try {
-            r.setBlockSpeed("Global");
+            r.setBlockSpeed("Global"); // NOI18N
         } catch (jmri.JmriException ex) {
             log.error(ex.toString());
         }

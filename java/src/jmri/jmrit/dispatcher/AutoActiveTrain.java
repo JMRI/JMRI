@@ -231,9 +231,14 @@ public class AutoActiveTrain implements ThrottleListener {
         _stoppingUsingSpeedProfile = false;
         
         // get decoder address
-        _address = Integer.valueOf(_activeTrain.getDccAddress()).intValue();
+        try {
+            _address = Integer.valueOf(_activeTrain.getDccAddress()).intValue();
+        } catch (NumberFormatException ex) {
+            log.warn("invalid dcc address '{}' for {}", _activeTrain.getDccAddress(), _activeTrain.getTrainName());
+            return false;
+        }
         if ((_address < 1) || (_address > 9999)) {
-            log.warn("invalid dcc address for " + _activeTrain.getTrainName());
+            log.warn("invalid dcc address '{}' for {}", _activeTrain.getDccAddress(), _activeTrain.getTrainName());
             return false;
         }
         // request a throttle for automatic operation, throttle returned via callback below
@@ -792,7 +797,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 //get maximum speed for the route between current and next signalmasts
                 float smLogicSpeed = -1.0f;
                 String smDestinationName = "unknown";
-                jmri.SignalMastLogic smLogic = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(_controllingSignalMast);
+                jmri.SignalMastLogic smLogic = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(_controllingSignalMast);
                 if (smLogic != null) {
                     SignalMast smDestination = smLogic.getActiveDestination();
                     if (smDestination != null) {
@@ -806,7 +811,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     speed = smLogicSpeed;
                 }
 
-                log.debug("{}: {}({}) {}({}) Dest: {} max: {}", 
+                log.debug("{}: {}({}) {}({}), Dest: {}, path max: {}", 
                         _activeTrain.getTrainName(), 
                         _controllingSignalMast.getDisplayName(), displayedAspect, aspectSpeedStr, aspectSpeed, 
                         smDestinationName, (int) smLogicSpeed);
@@ -1337,7 +1342,7 @@ public class AutoActiveTrain implements ThrottleListener {
             _activeTrain.setStatus(ActiveTrain.PAUSED);
             if (keepGoing) {
                 // wait for specified fast clock time
-                Timebase _clock = InstanceManager.timebaseInstance();
+                Timebase _clock = InstanceManager.getDefault(jmri.Timebase.class);
                 java.beans.PropertyChangeListener _clockListener = null;
                 _clock.addMinuteChangeListener(_clockListener
                         = new java.beans.PropertyChangeListener() {
@@ -1506,45 +1511,12 @@ public class AutoActiveTrain implements ThrottleListener {
 //                    _lastAllocatedSection = _currentAllocatedSection;
 //                }
                 // Give other threads a chance to work
-//                try { Thread.sleep(50); } catch(Exception ex) {}
+                try { Thread.sleep(DispatcherFrame.instance().getMinThrottleInterval()); } catch(Exception ex) {}
                 
-                // delay
-                synchronized (this) {
-                    try {
-                        wait(DispatcherFrame.instance().getMinThrottleInterval());
-                    } catch (InterruptedException ie) {
-                        log.error("InterruptedException in AutoEngineer: " + ie);
-                    }
-                }
             } //while !abort
             // shut down
         }
 
-//        private void setSpeedStep(int step) {
-//            switch (step) {
-//                case DccThrottle.SpeedStepMode14:
-//                    _minSpeedStep = 1.0f / 15;
-//                    for (int i = 1; i < 5; i++) {
-//                        _targetCount[i] *= 6;
-//                    }
-//                    break;
-//                case DccThrottle.SpeedStepMode27:
-//                    _minSpeedStep = 1.0f / 28;
-//                    for (int i = 1; i < 5; i++) {
-//                        _targetCount[i] *= 4;
-//                    }
-//                    break;
-//                case DccThrottle.SpeedStepMode28:
-//                    _minSpeedStep = 1.0f / 29;
-//                    for (int i = 1; i < 5; i++) {
-//                        _targetCount[i] *= 4;
-//                    }
-//                    break;
-//                default:
-//                    _minSpeedStep = 1.0f / 127;
-//                    break;
-//            }
-//        }
 
         public synchronized void slowToStop(boolean toStop) {
             _slowToStop = toStop;
@@ -1692,6 +1664,25 @@ public class AutoActiveTrain implements ThrottleListener {
                     break;
             }
         }
+    }
+    
+    /** routine to convert ramp rate name, stored as a string into the constant value assigned
+     * 
+     * @param rampRate - name of ramp rate, such as "RAMP_FAST"
+     * @return integer representing a ramprate constant value
+     */
+    
+    public static int getRampRateFromName(String rampRate) {
+        if (rampRate.equals(rb.getString("RAMP_FAST"))) {
+            return RAMP_FAST;
+        } else if (rampRate.equals(rb.getString("RAMP_MEDIUM"))) {
+            return RAMP_MEDIUM;
+        } else if (rampRate.equals(rb.getString("RAMP_MED_SLOW"))) {
+            return RAMP_MED_SLOW;
+        } else if (rampRate.equals(rb.getString("RAMP_SLOW"))) {
+            return RAMP_SLOW;
+        }
+        return RAMP_NONE;
     }
 
     private final static Logger log = LoggerFactory.getLogger(AutoActiveTrain.class.getName());

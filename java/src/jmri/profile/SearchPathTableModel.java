@@ -16,17 +16,16 @@ import org.slf4j.LoggerFactory;
  */
 class SearchPathTableModel extends AbstractTableModel implements PropertyChangeListener {
 
-    private static final long serialVersionUID = -3552357466103474946L;
     private static final Logger log = LoggerFactory.getLogger(SearchPathTableModel.class);
 
     @SuppressWarnings("LeakingThisInConstructor")
     public SearchPathTableModel() {
-        ProfileManager.defaultManager().addPropertyChangeListener(this);
+        ProfileManager.getDefault().addPropertyChangeListener(this);
     }
 
     @Override
     public int getRowCount() {
-        return ProfileManager.defaultManager().getSearchPaths().length;
+        return ProfileManager.getDefault().getSearchPaths().length;
     }
 
     @Override
@@ -36,14 +35,14 @@ class SearchPathTableModel extends AbstractTableModel implements PropertyChangeL
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        File p = ProfileManager.defaultManager().getSearchPaths(rowIndex);
+        File p = ProfileManager.getDefault().getSearchPaths(rowIndex);
         switch (columnIndex) {
             case -1: // tooltip
-                return Bundle.getMessage("SearchPathTableModel.tooltip", ProfileManager.defaultManager().getDefaultSearchPath().getPath());
+                return Bundle.getMessage("SearchPathTableModel.tooltip", ProfileManager.getDefault().getDefaultSearchPath().getPath());
             case 0:
                 return p;
             case 1:
-                return (p.equals(ProfileManager.defaultManager().getDefaultSearchPath()));
+                return (p.equals(ProfileManager.getDefault().getDefaultSearchPath()));
             default:
                 return null;
         }
@@ -89,7 +88,7 @@ class SearchPathTableModel extends AbstractTableModel implements PropertyChangeL
         switch (columnIndex) {
             case 1:
                 try {
-                    ProfileManager.defaultManager().setDefaultSearchPath((File) this.getValueAt(rowIndex, 0));
+                    ProfileManager.getDefault().setDefaultSearchPath((File) this.getValueAt(rowIndex, 0));
                 } catch (IOException ex) {
                     log.warn("Unable to write profiles while setting default search path", ex);
                 }

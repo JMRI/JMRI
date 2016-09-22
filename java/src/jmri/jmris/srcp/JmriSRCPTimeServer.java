@@ -1,4 +1,3 @@
-//JmriSRCPTimeServer.java
 package jmri.jmris.srcp;
 
 import java.beans.PropertyChangeEvent;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * interface between the JMRI (fast) clock and an SRCP network connection
  *
  * @author Paul Bender Copyright (C) 2013
- * @version $Revision$
  */
 public class JmriSRCPTimeServer extends AbstractTimeServer {
 

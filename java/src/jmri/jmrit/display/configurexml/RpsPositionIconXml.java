@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for rps.RpsPositionIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision$
  */
 public class RpsPositionIconXml extends PositionableLabelXml {
 

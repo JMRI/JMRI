@@ -1,4 +1,3 @@
-// NceConsistEngineAction.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.Component;
@@ -13,7 +12,6 @@ import jmri.jmrix.nce.NceTrafficController;
  * Starts the NceConsistEngine thread
  *
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class NceConsistEngineAction extends AbstractAction {
 
@@ -26,18 +24,18 @@ public class NceConsistEngineAction extends AbstractAction {
         // disable if NCE USB selected
         // get NceTrafficContoller if there's one
         List<NceSystemConnectionMemo> memos = InstanceManager.getList(NceSystemConnectionMemo.class);
-        if (memos != null) {
-            // find NceConnection that is serial
-            for (int i = 0; i < memos.size(); i++) {
-                NceSystemConnectionMemo memo = memos.get(i);
-                if (memo.getNceUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
-                    tc = memo.getNceTrafficController();
-                    if (!memo.getDisabled()) {
-                        setEnabled(true);
-                    }
+
+        // find NceConnection that is serial
+        for (int i = 0; i < memos.size(); i++) {
+            NceSystemConnectionMemo memo = memos.get(i);
+            if (memo.getNceUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
+                tc = memo.getNceTrafficController();
+                if (!memo.getDisabled()) {
+                    setEnabled(true);
                 }
             }
         }
+
     }
 
     @Override

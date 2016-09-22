@@ -7,7 +7,6 @@ import java.util.Comparator;
  * that otherwise as Strings.
  *
  * @author	Bob Jacobsen Copyright (C) 2013
- * @version	$Revision: 24569 $
  */
 public class PreferNumericComparator implements Comparator<Object>, java.io.Serializable {
 

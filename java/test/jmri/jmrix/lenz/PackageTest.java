@@ -8,8 +8,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.lenz package
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
@@ -35,12 +34,12 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(XNetLightTest.class));
         suite.addTest(new TestSuite(XNetPacketizerTest.class));
         suite.addTest(new TestSuite(XNetTurnoutManagerTest.class));
-        suite.addTest(new TestSuite(XNetSensorManagerTest.class));
-        suite.addTest(new TestSuite(XNetLightManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XNetSensorManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XNetLightManagerTest.class));
         suite.addTest(new TestSuite(XNetTrafficControllerTest.class));
         suite.addTest(new TestSuite(XNetTrafficRouterTest.class));
         suite.addTest(new TestSuite(XNetSystemConnectionMemoTest.class));
-        suite.addTest(new TestSuite(XNetThrottleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XNetThrottleTest.class));
         suite.addTest(new TestSuite(XNetConsistManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XNetConsistTest.class));
         suite.addTest(new TestSuite(XNetInitializationManagerTest.class));
@@ -61,9 +60,11 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.lenz.liusbethernet.LIUSBEthernetTest.suite());
         suite.addTest(jmri.jmrix.lenz.xnetsimulator.XNetSimulatorTest.suite());
         suite.addTest(jmri.jmrix.lenz.hornbyelite.EliteTest.suite());
+        suite.addTest(jmri.jmrix.lenz.ztc640.ZTC640Test.suite());
         suite.addTest(BundleTest.suite());
 
         suite.addTest(jmri.jmrix.lenz.swing.SwingTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.lenz.configurexml.PackageTest.class));
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
         }

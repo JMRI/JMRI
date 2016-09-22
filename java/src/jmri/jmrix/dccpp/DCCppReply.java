@@ -14,8 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Paul Bender Copyright (C) 2004
  * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- *
+  *
  * Based on XNetReply
  *
  */

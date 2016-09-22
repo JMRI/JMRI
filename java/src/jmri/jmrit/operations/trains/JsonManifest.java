@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-import jmri.jmris.json.JSON;
+import jmri.server.json.JSON;
 import jmri.jmris.json.JsonUtil;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -183,7 +183,7 @@ public class JsonManifest extends TrainCommon {
     protected ArrayNode dropEngines(List<Engine> engines, RouteLocation routeLocation) {
         ArrayNode node = this.mapper.createArrayNode();
         for (Engine engine : engines) {
-            if (engine.getRouteDestination().equals(routeLocation)) {
+            if (engine.getRouteDestination() != null && engine.getRouteDestination().equals(routeLocation)) {
                 node.add(JsonUtil.getEngine(engine));
             }
         }
@@ -193,7 +193,7 @@ public class JsonManifest extends TrainCommon {
     protected ArrayNode pickupEngines(List<Engine> engines, RouteLocation routeLocation) {
         ArrayNode node = this.mapper.createArrayNode();
         for (Engine engine : engines) {
-            if (engine.getRouteLocation().equals(routeLocation)) {
+            if (engine.getRouteLocation() != null && engine.getRouteLocation().equals(routeLocation)) {
                 node.add(JsonUtil.getEngine(engine));
             }
         }

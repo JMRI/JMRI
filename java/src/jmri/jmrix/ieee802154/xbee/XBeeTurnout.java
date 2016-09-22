@@ -1,5 +1,11 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
+import com.digi.xbee.api.exceptions.TimeoutException;
+import com.digi.xbee.api.exceptions.XBeeException;
+import com.digi.xbee.api.io.IOLine;
+import com.digi.xbee.api.io.IOMode;
+import com.digi.xbee.api.io.IOValue;
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
@@ -112,17 +118,40 @@ public class XBeeTurnout extends AbstractTurnout {
      * @param s new state value
      */
     protected void forwardCommandChangeToLayout(int s) {
-        // get message 
-        XBeeMessage message = XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(), pin, s == Turnout.THROWN);
-        // send the message
-        tc.sendXBeeMessage(message, null);
-        if (pin2 >= 0) {
-            XBeeMessage message2 = XBeeMessage.getRemoteDoutMessage(node.getPreferedTransmitAddress(), pin2, s == Turnout.CLOSED);
-            // send the message
-            tc.sendXBeeMessage(message2, null);
+        try  {
+            if((s == Turnout.THROWN) ^ getInverted() ) {
+              node.getXBee().setDIOValue(IOLine.getDIO(pin),IOValue.HIGH);
+            } else {
+              node.getXBee().setDIOValue(IOLine.getDIO(pin),IOValue.LOW);
+            }
+            
+            if (pin2 >= 0) {
+               if((s == Turnout.CLOSED) ^ getInverted() ) {
+                 node.getXBee().setDIOValue(IOLine.getDIO(pin),IOValue.HIGH);
+               } else {
+                 node.getXBee().setDIOValue(IOLine.getDIO(pin),IOValue.LOW);
+               }
+
+            }
+        } catch (TimeoutException toe) {
+           log.error("Timeout setting IO line value for turnout {} on {}",getUserName(),node.getXBee());
+        } catch (InterfaceNotOpenException ino) {
+           log.error("Interface Not Open setting IO line value for turnout {} on {}",getUserName(),node.getXBee());
+        } catch (XBeeException xbe) {
+           log.error("Error setting IO line value for turout {} on {}",getUserName(),node.getXBee());
         }
+
+
+
     }
 
+    /**
+     * XBee turnouts do support inversion
+     */
+    public boolean canInvert() {
+        return true;
+    }
+    
     protected void turnoutPushbuttonLockout(boolean locked) {
     }
 

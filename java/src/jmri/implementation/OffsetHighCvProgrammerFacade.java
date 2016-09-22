@@ -77,11 +77,6 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
     }
 
     @Override
-    public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        confirmCV("" + CV, val, p);
-    }
-
-    @Override
     public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }

@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * Does configuration for OpenLCB communications implementations.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision: 19643 $
+ * 
  */
 public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManager {
 
@@ -473,8 +473,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             timer.stop();
 
             // map our nodeID
-            log.debug("mapping own alias {} to own NodeID {}", (int) nidaa.getNIDa(), n);
-            aliasMap.insert((int) nidaa.getNIDa(), n);
+            int myAlias = nidaa.getNIDa();
+            log.debug("mapping own alias {} to own NodeID {}", myAlias, n);
+            aliasMap.insert(myAlias, n);
 
             // insert our protocol info
             updateSimpleNodeInfo();

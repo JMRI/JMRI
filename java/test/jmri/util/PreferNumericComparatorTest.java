@@ -1,7 +1,7 @@
 package jmri.util;
 
 import java.util.Comparator;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.util.StringUtil class.
  *
  * @author	Bob Jacobsen Copyright 2003
- * @version	$Revision: 24569 $
  */
 public class PreferNumericComparatorTest extends TestCase {
 

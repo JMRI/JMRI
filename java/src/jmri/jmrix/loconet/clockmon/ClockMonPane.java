@@ -9,7 +9,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LocoNetBundle;
 import jmri.jmrix.loconet.LocoNetSlot;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.SlotListener;
@@ -38,7 +37,7 @@ public class ClockMonPane extends LnPanel implements SlotListener {
     }
 
     public String getTitle() {
-        return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemClockMon"));
+        return getTitle(Bundle.getMessage("MenuItemClockMon"));
     }
 
     public ClockMonPane() {
@@ -142,7 +141,7 @@ public class ClockMonPane extends LnPanel implements SlotListener {
         private static final long serialVersionUID = 2901473960804245354L;
 
         public Default() {
-            super(LocoNetBundle.bundle().getString("MenuItemClockMon"),
+            super(Bundle.getMessage("MenuItemClockMon"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     ClockMonPane.class.getName(),
                     jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));

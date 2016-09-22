@@ -55,11 +55,11 @@ public class EntryPoint {
     private String fromBlockName = "";
 
     private void initialize() {
-        mBlock = jmri.InstanceManager.blockManagerInstance().getBySystemName(blockName);
+        mBlock = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(blockName);
         if (mBlock == null) {
             log.error("Missing block - " + blockName + " - when initializing entry point");
         }
-        mFromBlock = jmri.InstanceManager.blockManagerInstance().getBySystemName(fromBlockName);
+        mFromBlock = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(fromBlockName);
         if (mFromBlock == null) {
             log.error("Missing block - " + fromBlockName + " - when initializing entry point");
         }

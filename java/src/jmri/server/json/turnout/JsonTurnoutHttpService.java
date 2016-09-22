@@ -2,13 +2,10 @@ package jmri.server.json.turnout;
 
 import static jmri.server.json.JSON.CLOSED;
 import static jmri.server.json.JSON.COMMENT;
-import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.INCONSISTENT;
 import static jmri.server.json.JSON.INVERTED;
-import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.THROWN;
-import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.UNKNOWN;
 import static jmri.server.json.JSON.USERNAME;
 import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUT;
@@ -20,14 +17,15 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.Turnout;
+import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
-import jmri.server.json.JsonHttpService;
+import jmri.server.json.JsonNamedBeanHttpService;
 
 /**
  *
  * @author Randall Wood
  */
-public class JsonTurnoutHttpService extends JsonHttpService {
+public class JsonTurnoutHttpService extends JsonNamedBeanHttpService {
 
     public JsonTurnoutHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -36,30 +34,27 @@ public class JsonTurnoutHttpService extends JsonHttpService {
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, TURNOUT);
-        ObjectNode data = root.putObject(DATA);
+        root.put(JSON.TYPE, TURNOUT);
         Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(name);
-        if (turnout == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", TURNOUT, name));
-        }
-        data.put(NAME, turnout.getSystemName());
-        data.put(USERNAME, turnout.getUserName());
-        data.put(COMMENT, turnout.getComment());
-        data.put(INVERTED, turnout.getInverted());
-        switch (turnout.getKnownState()) {
-            case Turnout.THROWN:
-                data.put(STATE, THROWN);
-                break;
-            case Turnout.CLOSED:
-                data.put(STATE, CLOSED);
-                break;
-            case Turnout.INCONSISTENT:
-                data.put(STATE, INCONSISTENT);
-                break;
-            case Turnout.UNKNOWN:
-            default:
-                data.put(STATE, UNKNOWN);
-                break;
+        ObjectNode data = this.getNamedBean(turnout, name, type, locale); // throws JsonException if turnout == null
+        root.put(JSON.DATA, data);
+        if (turnout != null) {
+            data.put(INVERTED, turnout.getInverted());
+            switch (turnout.getKnownState()) {
+                case Turnout.THROWN:
+                    data.put(STATE, THROWN);
+                    break;
+                case Turnout.CLOSED:
+                    data.put(STATE, CLOSED);
+                    break;
+                case Turnout.INCONSISTENT:
+                    data.put(STATE, INCONSISTENT);
+                    break;
+                case Turnout.UNKNOWN:
+                default:
+                    data.put(STATE, UNKNOWN);
+                    break;
+            }
         }
         return root;
     }

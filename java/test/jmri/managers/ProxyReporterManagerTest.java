@@ -5,7 +5,7 @@ import jmri.InstanceManager;
 import jmri.LightManager;
 import jmri.Reporter;
 import jmri.ReporterManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -15,7 +15,6 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen 2003, 2006, 2008
  * @author	Mark Underwood 2012
- * @version	$Revision: 17977 $
  */
 public class ProxyReporterManagerTest extends TestCase {
 
@@ -196,7 +195,7 @@ public class ProxyReporterManagerTest extends TestCase {
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         // create and register the manager object
-        l = InstanceManager.reporterManagerInstance();
+        l = InstanceManager.getDefault(jmri.ReporterManager.class);
     }
 
     @Override

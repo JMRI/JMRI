@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * Handle XML configuration for a DefaultSignalMastManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 18102 $
+ * 
  */
 public class VirtualSignalMastXml
         extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -83,7 +83,7 @@ public class VirtualSignalMastXml
             }
         }
 
-        InstanceManager.signalMastManagerInstance()
+        InstanceManager.getDefault(jmri.SignalMastManager.class)
                 .register(m);
 
         return true;

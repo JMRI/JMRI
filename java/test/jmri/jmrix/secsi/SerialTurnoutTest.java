@@ -8,8 +8,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.secsi.SerialTurnout class
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 
     private SerialTrafficControlScaffold tcis = null;

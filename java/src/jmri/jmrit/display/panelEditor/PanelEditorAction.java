@@ -7,15 +7,9 @@ import javax.swing.AbstractAction;
  * Start a PanelEditor.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision$
  * @see jmri.jmrit.display.panelEditor.PanelEditorAction
  */
 public class PanelEditorAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1057276169969379561L;
 
     public PanelEditorAction(String s) {
         super(s);

@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen Copyright 2003
  * @author Paul Bender Copyright 2014
- * @version $Revision: 22233 $
  */
 public class PackageTest extends TestCase {
 
@@ -28,7 +27,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.util.zeroconf.ZeroConfTest");   // no tests in this class itself
 
-        suite.addTest(ZeroConfServiceTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ZeroConfServiceTest.class));
 
         return suite;
     }

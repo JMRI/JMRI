@@ -14,8 +14,7 @@ import junit.framework.TestSuite;
  * Description:
  *
  * @author	Bob Jacobsen Copyright 2009
- * @version	$Revision$
- */
+  */
 public class SignalMastIconTest extends jmri.util.SwingTestCase {
 
     SignalMastIcon to = null;
@@ -35,26 +34,26 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
 
         // reset instance manager & create test heads
         jmri.util.JUnitUtil.resetInstanceManager();
-        InstanceManager.signalHeadManagerInstance().register(
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH1") {
                     protected void updateOutput() {
                     }
                 }
         );
-        InstanceManager.signalHeadManagerInstance().register(
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH2") {
                     protected void updateOutput() {
                     }
                 }
         );
-        InstanceManager.signalHeadManagerInstance().register(
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH3") {
                     protected void updateOutput() {
                     }
                 }
         );
 
-        SignalMast s = InstanceManager.signalMastManagerInstance()
+        SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class)
                 .provideSignalMast("IF$shsm:basic:one-searchlight:IH1");
 
         to.setSignalMast(s.getSystemName());
@@ -82,26 +81,26 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
 
         // reset instance manager & create test heads
         jmri.util.JUnitUtil.resetInstanceManager();
-        InstanceManager.signalHeadManagerInstance().register(
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH1") {
                     protected void updateOutput() {
                     }
                 }
         );
-        InstanceManager.signalHeadManagerInstance().register(
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH2") {
                     protected void updateOutput() {
                     }
                 }
         );
-        InstanceManager.signalHeadManagerInstance().register(
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH3") {
                     protected void updateOutput() {
                     }
                 }
         );
 
-        SignalMast s = InstanceManager.signalMastManagerInstance()
+        SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class)
                 .provideSignalMast("IF$shsm:basic:two-searchlight:IH1:IH2");
 
         s.setAspect("Clear");

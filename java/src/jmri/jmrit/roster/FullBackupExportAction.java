@@ -26,7 +26,6 @@ import jmri.util.swing.WindowInterface;
 public class FullBackupExportAction
         extends JmriAbstractAction {
 
-    private static final long serialVersionUID = 1L;
     // parent component for GUI
 
     public FullBackupExportAction(String s, WindowInterface wi) {
@@ -49,7 +48,7 @@ public class FullBackupExportAction
     }
 
     public void actionPerformed(ActionEvent e) {
-        Roster roster = Roster.instance();
+        Roster roster = Roster.getDefault();
 
         ZipOutputStream zipper = null;
 

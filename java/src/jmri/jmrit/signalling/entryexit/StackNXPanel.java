@@ -8,16 +8,12 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import jmri.jmrit.signalling.EntryExitPairs;
 
 public class StackNXPanel extends JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8839931581946888647L;
 
     transient EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
 
@@ -45,7 +41,15 @@ public class StackNXPanel extends JPanel {
                 //This method can be called only if
                 //there's a valid selection
                 //so go ahead and remove whatever's selected.
+                if (list.getSelectedValue() != null) {
+                    // basic check to see if anything was selected
                 manager.cancelStackedRoute(listToDest.get(list.getSelectedValue()), false);
+                } else {
+                    JOptionPane.showMessageDialog(entryExitPanel,
+                            Bundle.getMessage("Error1", Bundle.getMessage("ButtonCancel")),
+                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                    // Keep Panel open
+                }
             }
 
         });

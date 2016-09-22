@@ -1,4 +1,3 @@
-// PositionablePointXml.java
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.geom.Point2D;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision$
  */
 public class PositionablePointXml extends AbstractXmlAdapter {
 
@@ -46,24 +44,24 @@ public class PositionablePointXml extends AbstractXmlAdapter {
         if (p.getConnect2() != null) {
             element.setAttribute("connect2name", p.getConnect2().getID());
         }
-        if ((p.getEastBoundSignal() != null) && (p.getEastBoundSignal().length() > 0)) {
+        if (p.getEastBoundSignal().length() > 0) {
             element.setAttribute("eastboundsignal", p.getEastBoundSignal());
         }
-        if ((p.getWestBoundSignal() != null) && (p.getWestBoundSignal().length() > 0)) {
+        if (p.getWestBoundSignal().length() > 0) {
             element.setAttribute("westboundsignal", p.getWestBoundSignal());
         }
 
-        if ((p.getEastBoundSignalMastName() != null) && (p.getEastBoundSignalMastName().length() > 0)) {
+        if (p.getEastBoundSignalMastName().length() > 0) {
             element.setAttribute("eastboundsignalmast", p.getEastBoundSignalMastName());
         }
-        if ((p.getWestBoundSignalMastName() != null) && (p.getWestBoundSignalMastName().length() > 0)) {
+        if (p.getWestBoundSignalMastName().length() > 0) {
             element.setAttribute("westboundsignalmast", p.getWestBoundSignalMastName());
         }
 
-        if ((p.getEastBoundSensorName() != null) && (p.getEastBoundSensorName().length() > 0)) {
+        if (p.getEastBoundSensorName().length() > 0) {
             element.setAttribute("eastboundsensor", p.getEastBoundSensorName());
         }
-        if ((p.getWestBoundSensorName() != null) && (p.getWestBoundSensorName().length() > 0)) {
+        if (p.getWestBoundSensorName().length() > 0) {
             element.setAttribute("westboundsensor", p.getWestBoundSensorName());
         }
         if (p.getType() == PositionablePoint.EDGE_CONNECTOR) {

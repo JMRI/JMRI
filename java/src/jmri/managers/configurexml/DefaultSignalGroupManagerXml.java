@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Handle XML configuration for a DefaultSignalGroupManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision$
  */
 public class DefaultSignalGroupManagerXml
         extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -129,7 +128,7 @@ public class DefaultSignalGroupManagerXml
         // loop over contained signalgroup elements
         List<Element> list = shared.getChildren("signalgroup");
 
-        SignalGroupManager sgm = InstanceManager.signalGroupManagerInstance();
+        SignalGroupManager sgm = InstanceManager.getDefault(jmri.SignalGroupManager.class);
 
         for (int i = 0; i < list.size(); i++) {
             SignalGroup m;
@@ -160,7 +159,7 @@ public class DefaultSignalGroupManagerXml
             if (signalHeadList.size() > 0) {
                 for (int y = 0; y < signalHeadList.size(); y++) {
                     String head = signalHeadList.get(y).getAttribute("name").getValue();
-                    SignalHead sigHead = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(head);
+                    SignalHead sigHead = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(head);
                     m.addSignalHead(sigHead);
                     yesno = signalHeadList.get(y).getAttribute("sensorTurnoutLogic").getValue();
                     inverse = false;
@@ -248,7 +247,7 @@ public class DefaultSignalGroupManagerXml
     }
 
     public int loadOrder() {
-        return InstanceManager.signalGroupManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(jmri.SignalGroupManager.class).getXMLOrder();
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManagerXml.class.getName());

@@ -1,4 +1,3 @@
-// LnHexFilePort.java
 package jmri.jmrix.loconet.hexfile;
 
 import java.io.BufferedReader;
@@ -26,7 +25,6 @@ import org.slf4j.LoggerFactory;
  * separated by a space. Variable whitespace is not (yet) supported
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class LnHexFilePort extends LnPortController implements Runnable, jmri.jmrix.SerialPortAdapter {
 
@@ -128,7 +126,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
                 log.info("LnHexFDilePort.run: normal finish to file");
 
             } catch (InterruptedException e) {
-                if (sFile != null) {
+                if (sFile != null) { // changed in another thread before the interrupt
                     log.info("LnHexFilePort.run: user selected new file");
                     // swallow the exception since we have handled its intent
                 } else {
@@ -243,5 +241,3 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
 
     private final static Logger log = LoggerFactory.getLogger(LnHexFilePort.class.getName());
 }
-
-/* @(#)LnHexFilePort.java */

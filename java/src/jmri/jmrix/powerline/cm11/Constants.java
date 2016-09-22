@@ -5,8 +5,7 @@ package jmri.jmrix.powerline.cm11;
  * Constants and functions specific to the CM11 interface
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
- */
+  */
 public class Constants {
 
     public static final int POLL_REQ = 0x5A;

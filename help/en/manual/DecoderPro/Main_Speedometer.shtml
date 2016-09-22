@@ -1,51 +1,74 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>
-DecoderPro&reg; Main Window
-</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>DecoderPro&reg; Main Window</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<h1>Tool Menu</h1>
-<h2>Speedometer Panel</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-<p><a href="Main_Tool.shtml#Speedometer">Back </a></p>
-<p><a href="index.shtml#Main">Back to Index</a></p>
-</div>
+    <div id="mainContent">
+      <h1>Tool Menu</h1>
 
-<hr>
-<p><img src="images/Main_Speedometer.png" alt="Speedometer" width="355" height="308"></p>
+      <h2>Speedometer Panel</h2>
 
-<p>Three sensors are installed on your layout, sensor 1 and 2 for slow speeds, and sensor 1 and 3 used for higher speeds. The time to travel between the sensors is used with the distance to calculate the speed in English or Metric units
-<p>Enter the sensor number for each of the sensors in the <strong>Sensor</strong> text box. You can set to start or stop on the <strong>entry</strong> or <strong>exit </strong>of the block.
-<p>Enter the <strong>Distance 1 (scale feet):</strong> in text box, which is the distance between sensor 1 and 2.
-<p>Enter the<strong> Distance 2 (scale feet):</strong> in text box, which is the distance between sensor 1 and 3.
-<p>The <strong>Start</strong> button starts the speedometer.   <strong>To metric units</strong> button converts output to metric values.
-<p>The <strong>Timer 1 and 2 Speed(scale MPH):</strong> and <strong>Time (seconds) </strong>is displayed.
-<hr>
+      <div align="right">
+        <p><a href="Main_Tool.shtml#Speedometer">Back</a></p>
 
-<div align="right">
-<p><a href="Main_Tool.shtml#Speedometer">Back </a></p>
-<p><a href="index.shtml#Main">Back to Index</a></p>
-</div>
+        <p><a href="index.shtml#Main">Back to Index</a></p>
+      </div>
+      <hr>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
+      <p><img src="images/Main_Speedometer.png" alt="Speedometer"
+      width="355" height="308"></p>
+
+      <p>Three sensors are installed on your layout, sensor 1 and 2
+      for slow speeds, and sensor 1 and 3 used for higher speeds.
+      The time to travel between the sensors is used with the
+      distance to calculate the speed in English or Metric
+      units</p>
+
+      <p>Enter the sensor number for each of the sensors in the
+      <strong>Sensor</strong> text box. You can set to start or
+      stop on the <strong>entry</strong> or <strong>exit</strong>
+      of the block.</p>
+
+      <p>Enter the <strong>Distance 1 (scale feet):</strong> in
+      text box, which is the distance between sensor 1 and 2.</p>
+
+      <p>Enter the <strong>Distance 2 (scale feet):</strong> in
+      text box, which is the distance between sensor 1 and 3.</p>
+
+      <p>The <strong>Start</strong> button starts the speedometer.
+      <strong>To metric units</strong> button converts output to
+      metric values.</p>
+
+      <p>The <strong>Timer 1 and 2 Speed(scale MPH):</strong> and
+      <strong>Time (seconds)</strong> is displayed.</p>
+      <hr>
+
+      <div align="right">
+        <p><a href="Main_Tool.shtml#Speedometer">Back</a></p>
+
+        <p><a href="index.shtml#Main">Back to Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

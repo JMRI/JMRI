@@ -12,7 +12,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import jmri.util.com.sun.TableSorter;
+import javax.swing.SortOrder;
+import javax.swing.table.TableRowSorter;
+import jmri.swing.RowSorterUtil;
+import jmri.util.SystemNameComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,12 +61,10 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         dataScroll = new JScrollPane(dataTable);
 
         // give system name column as smarter sorter and use it initially
-        try {
-            TableSorter tmodel = ((TableSorter) dataTable.getModel());
-            tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            tmodel.setSortingStatus(BeanTableDataModel.SYSNAMECOL, TableSorter.ASCENDING);
-        } catch (java.lang.ClassCastException e) {
-        }  // happens if not sortable table
+        TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter<>(dataModel);
+        sorter.setComparator(BeanTableDataModel.SYSNAMECOL, new SystemNameComparator());
+        RowSorterUtil.setSortOrder(sorter, BeanTableDataModel.SYSNAMECOL, SortOrder.ASCENDING);
+        this.dataTable.setRowSorter(sorter);
 
         // configure items for GUI
         dataModel.configureTable(dataTable);
@@ -116,7 +117,7 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         // set preferred scrolling options
         dataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         dataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        dataModel.loadTableColumnDetails(dataTable);
+        dataModel.persistTable(dataTable);
     }
 
     /**
@@ -147,7 +148,7 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
 
     public void dispose() {
         if (dataModel != null) {
-            dataModel.saveTableColumnDetails(dataTable);
+            dataModel.stopPersistingTable(dataTable);
             dataModel.dispose();
         }
         dataModel = null;

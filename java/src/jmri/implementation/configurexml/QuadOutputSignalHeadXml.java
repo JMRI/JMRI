@@ -12,7 +12,6 @@ import org.jdom2.Element;
  * Handle XML configuration for QuadOutputSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision$
  */
 public class QuadOutputSignalHeadXml extends TripleTurnoutSignalHeadXml {
 
@@ -68,7 +67,7 @@ public class QuadOutputSignalHeadXml extends TripleTurnoutSignalHeadXml {
 
         loadCommon(h, shared);
 
-        InstanceManager.signalHeadManagerInstance().register(h);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         return true;
     }
 }

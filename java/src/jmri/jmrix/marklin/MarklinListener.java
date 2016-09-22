@@ -6,7 +6,6 @@ package jmri.jmrix.marklin;
  * link.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 17977 $
  */
 public interface MarklinListener extends jmri.jmrix.AbstractMRListener {
 

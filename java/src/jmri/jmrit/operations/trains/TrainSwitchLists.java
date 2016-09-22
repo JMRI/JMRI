@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * Builds a switch list for a location on the railroad
  *
  * @author Daniel Boudreau (C) Copyright 2008, 2011, 2012, 2013, 2015
- * @version $Revision: 21846 $
+ * 
  *
  */
 public class TrainSwitchLists extends TrainCommon {
@@ -400,7 +400,7 @@ public class TrainSwitchLists extends TrainCommon {
                                         messageFormatText = TrainSwitchListText.getStringHoldCar(),
                                         new Object[]{padAndTruncateString(car.getRoadName(),
                                                 CarRoads.instance().getMaxNameLength()),
-                                                padAndTruncateString(car.getNumber(),
+                                                padAndTruncateString(TrainCommon.splitString(car.getNumber()),
                                                         Control.max_len_string_print_road_number),
                                                 padAndTruncateString(car.getTypeName().split("-")[0],
                                                         CarTypes.instance().getMaxNameLength()),

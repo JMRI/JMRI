@@ -1,88 +1,141 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>JMRI OperationsPro - Modify Trains</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI OperationsPro - Modify Trains</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<h1>Using JMRI&reg; to Operate Trains</h1>
-<h2>OperationsPro: Modify Trains by Car Type Window</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-<p><a href="Ops_Trains_Menu.shtml">Back</a><a href="#"></a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
-</div>
+    <div id="mainContent">
+      <h1>Using JMRI&reg; to Operate Trains</h1>
 
-<hr>
-<p>Opened from the <strong>Trains</strong> window <strong>Tools</strong>
-menu. Use this tool to quickly modify the type of Cars your Train will
-service. It's useful when adding a new Car Type to your Roster.</p>
-<table border="0" cellpadding="2" cellspacing="1" width="90%">
-  <tbody><tr>
-    <td valign="top" width="350"><img src="images/Ops_TrainsModify.png" alt="modify" height="356" width="300"></td>
-    <td valign="top"><p><strong>Menu Bar</strong></p>
-      <ul>
-        <li><strong>Tools</strong>
-          <ul>
-            <li><a name="PrintTop"></a><strong><a href="#Print">Print Train by Car Types</a></strong></li>
-            <li><a name="PreviewTop"></a><strong><a href="#Preview">Preview Train by Car Types</a></strong></li>
-          </ul>
-        </li>
-        <li><strong>Window</strong> - standard JMRI&reg; menu</li>
-        <li><strong>Help</strong> - standard JMRI&reg; menu</li>
-      </ul>
-      <p><strong>Type<br>
-        <select name="select" id="select"><option>Baggage</option></select>
-        <input name="checkbox" id="checkbox" type="checkbox">
-        Copy</strong></p>
-      <p>You can also <input name="checkbox" id="checkbox" type="checkbox"> <strong>Copy</strong>
-how all cars of an existing Car Type are to be serviced by your Train and apply those rules
-to another Car Type. To make a Car Type behave like another, first select the Car Type
-you would like to copy. The program will show which Trains
-can service that car type. Next, select the <input name="checkbox2" id="checkbox2" checked="checked" type="checkbox"> <strong>Copy</strong>.<br>
-The Car Type will now appear to the right of the <strong>Copy</strong> checkbox:</p>
-<img src="images/Ops_copyTrainbyCarType214.png" width="301" height="134">
-<p>Now select the Car Type you want to apply these Trains to using the Type pop-up menu and to have both
-Car Types serviced by the same Trains.</p>
+      <h2>OperationsPro: Modify Trains by Car Type Window</h2>
 
-      <p>Press 
-        <input name="button" id="button" value="Save" type="button">
-        to apply your choice.</p></td>
-  </tr>
-</tbody></table>
-<hr>
+      <div align="right">
+        <p><a href="Ops_Trains_Menu.shtml">Back</a><a href=
+        "#"></a></p>
 
-<h3><a name="Print"></a>Print Train by Car Types</h3>
-<p><img src="images/Ops_PrintTrainsbyCarTypes.png" alt="print" height="779" width="714"></p>
-<p><strong><a href="#PrintTop">Back</a><a href="#Print"></a></strong></p>
+        <p><a href="index.shtml#Operations">Back to Index</a></p>
+      </div>
+      <hr>
 
-<hr>
+      <p>Opened from the <strong>Trains</strong> window
+      <strong>Tools</strong> menu. Use this tool to quickly modify
+      the type of Cars your Train will service. It's useful when
+      adding a new Car Type to your Roster.</p>
 
-<h3><a name="Preview"></a>Preview Train by Car Types</h3>
-<p><img src="images/Ops_PrintPreview.png" alt="preview" height="933" width="660"></p>
-<p><strong><a href="#PreviewTop">Back</a></strong></p>
-<hr>
+      <table border="0" cellpadding="2" cellspacing="1" width=
+      "90%">
+        <tbody>
+          <tr>
+            <td valign="top" width="350"><img src=
+            "images/Ops_TrainsModify.png" alt="modify" height="356"
+            width="300"></td>
 
-<div align="right">
-<p><a href="Ops_Trains_Menu.shtml">Back</a><a href="#"></a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
-</div>
+            <td valign="top">
+              <p><strong>Menu Bar</strong></p>
 
-<!--#include virtual="/Footer" -->
-</div>
-</div>
+              <ul>
+                <li>
+                  <strong>Tools</strong>
+
+                  <ul>
+                    <li><a name="PrintTop" id=
+                    "PrintTop"></a><strong><a href="#Print">Print
+                    Train by Car Types</a></strong></li>
+
+                    <li><a name="PreviewTop" id=
+                    "PreviewTop"></a><strong><a href=
+                    "#Preview">Preview Train by Car
+                    Types</a></strong></li>
+                  </ul>
+                </li>
+
+                <li><strong>Window</strong> - standard JMRI&reg;
+                menu</li>
+
+                <li><strong>Help</strong> - standard JMRI&reg;
+                menu</li>
+              </ul>
+
+              <p><strong>Type<br>
+              <select name="select" id="select">
+                <option>
+                  Baggage
+                </option>
+              </select> <input name="checkbox" id="checkbox" type=
+              "checkbox"> Copy</strong></p>
+
+              <p>You can also <input name="checkbox" id="checkbox"
+              type="checkbox"> <strong>Copy</strong> how all cars
+              of an existing Car Type are to be serviced by your
+              Train and apply those rules to another Car Type. To
+              make a Car Type behave like another, first select the
+              Car Type you would like to copy. The program will
+              show which Trains can service that car type. Next,
+              select the <input name="checkbox2" id="checkbox2"
+              checked="checked" type="checkbox">
+              <strong>Copy</strong>.<br>
+              The Car Type will now appear to the right of the
+              <strong>Copy</strong> checkbox:</p><img src=
+              "images/Ops_copyTrainbyCarType214.png" width="301"
+              height="134">
+
+              <p>Now select the Car Type you want to apply these
+              Trains to using the Type pop-up menu and to have both
+              Car Types serviced by the same Trains.</p>
+
+              <p>Press <input name="button" id="button" value=
+              "Save" type="button"> to apply your choice.</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <hr>
+
+      <h3><a name="Print" id="Print"></a>Print Train by Car
+      Types</h3>
+
+      <p><img src="images/Ops_PrintTrainsbyCarTypes.png" alt=
+      "print" height="779" width="714"></p>
+
+      <p><strong><a href="#PrintTop">Back</a><a href=
+      "#Print"></a></strong></p>
+      <hr>
+
+      <h3><a name="Preview" id="Preview"></a>Preview Train by Car
+      Types</h3>
+
+      <p><img src="images/Ops_PrintPreview.png" alt="preview"
+      height="933" width="660"></p>
+
+      <p><strong><a href="#PreviewTop">Back</a></strong></p>
+      <hr>
+
+      <div align="right">
+        <p><a href="Ops_Trains_Menu.shtml">Back</a><a href=
+        "#"></a></p>
+
+        <p><a href="index.shtml#Operations">Back to Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

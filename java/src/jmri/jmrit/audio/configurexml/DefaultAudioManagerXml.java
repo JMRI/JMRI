@@ -53,7 +53,7 @@ public class DefaultAudioManagerXml extends AbstractAudioManagerConfigXML {
     @Override
     public boolean load(Element shared, Element perNode) {
         // create the master object
-        InstanceManager.audioManagerInstance();
+        InstanceManager.getDefault(jmri.AudioManager.class);
         // load individual shared objects
         loadAudio(shared);
         return true;

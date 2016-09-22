@@ -1,4 +1,3 @@
-// AnalogClock2DisplayXml.java
 package jmri.jmrit.display.configurexml;
 
 import jmri.configurexml.AbstractXmlAdapter;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.AnalogClock2Display objects.
  *
  * @author Howard G. Penny Copyright (c) 2005
- * @version $Revision$
  */
 public class AnalogClock2DisplayXml
         extends AbstractXmlAdapter {

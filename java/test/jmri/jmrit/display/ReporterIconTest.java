@@ -13,8 +13,7 @@ import junit.framework.TestSuite;
  * Description:
  *
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision$
- */
+  */
 public class ReporterIconTest extends jmri.util.SwingTestCase {
 
     ReporterIcon to = null;
@@ -36,9 +35,9 @@ public class ReporterIconTest extends jmri.util.SwingTestCase {
 
         // create objects to test
         jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager(tc, "L"));
-        jmri.InstanceManager.reporterManagerInstance().provideReporter("LR1");
+        jmri.InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter("LR1");
         to.setReporter("LR1");
-        jmri.InstanceManager.reporterManagerInstance().provideReporter("LR1").setReport("data");
+        jmri.InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter("LR1").setReport("data");
 
         jf.pack();
         jf.setVisible(true);
@@ -60,9 +59,9 @@ public class ReporterIconTest extends jmri.util.SwingTestCase {
 
         // create objects to test
         jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager(tc, "L"));
-        jmri.InstanceManager.reporterManagerInstance().provideReporter("1");
+        jmri.InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter("1");
         to.setReporter("1");
-        jmri.InstanceManager.reporterManagerInstance().provideReporter("1").setReport("data");
+        jmri.InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter("1").setReport("data");
 
         jf.pack();
         jf.setVisible(true);

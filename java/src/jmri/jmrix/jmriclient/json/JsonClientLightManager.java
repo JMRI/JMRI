@@ -2,8 +2,9 @@ package jmri.jmrix.jmriclient.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import jmri.Light;
-import jmri.jmris.json.JSON;
 import jmri.managers.AbstractLightManager;
+import jmri.server.json.JSON;
+import jmri.server.json.light.JsonLight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,7 +77,7 @@ public class JsonClientLightManager extends AbstractLightManager implements Json
     @Override
     public void reply(JsonNode reply) {
         log.debug("Got reply {}", reply);
-        if (reply.path(JSON.TYPE).asText().equals(JSON.LIGHT)) {
+        if (reply.path(JSON.TYPE).asText().equals(JsonLight.LIGHT)) {
             JsonClientLight light = (JsonClientLight) this.getInstanceBySystemName(reply.path(JSON.NAME).asText());
             if (light == null) {
                 light = (JsonClientLight) this.createNewLight(reply.path(JSON.NAME).asText(), reply.path(JSON.USERNAME).asText());

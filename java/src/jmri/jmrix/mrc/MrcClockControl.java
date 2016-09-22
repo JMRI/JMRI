@@ -41,10 +41,10 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         this.tc = tc;
         this.prefix = prefix;
 
-        // Create a Timebase listener for the Minute change events
-        internalClock = InstanceManager.timebaseInstance();
+        // Create a timebase listener for the Minute change events
+        internalClock = InstanceManager.getNullableDefault(jmri.Timebase.class);
         if (internalClock == null) {
-            log.error(MrcClockBundle.getMessage("LogMrcNoInternalTimebaseInstanceError")); //IN18N
+            log.error("No Internal Timebase Instance"); //IN18N
             return;
         }
         minuteChangeListener = new java.beans.PropertyChangeListener() {
@@ -141,7 +141,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         if (DEBUG_SHOW_PUBLIC_CALLS) {
             log.debug("getHardwareClockName"); //IN18N
         }
-        return (MrcClockBundle.getMessage("MrcClockName")); //IN18N
+        return (Bundle.getMessage("MrcClockName")); //IN18N
     }
 
     /**
@@ -173,7 +173,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         }
         int newRatio = (int) newRate;
         if (newRatio < 1 || newRatio > 60) {
-            log.error(MrcClockBundle.getMessage("LogMrcClockRatioRangeError")); //IN18N
+            log.error("Mrc clock ratio out of range:"); //IN18N
         } else {
             issueClockRatio(newRatio);
         }
@@ -272,7 +272,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
      */
     public void dispose() {
 
-        // Remove ourselves from the Timebase minute rollover event
+        // Remove ourselves from the timebase minute rollover event
         if (minuteChangeListener != null) {
             internalClock.removeMinuteChangeListener(minuteChangeListener);
             minuteChangeListener = null;

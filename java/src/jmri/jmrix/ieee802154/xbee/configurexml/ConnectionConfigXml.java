@@ -1,5 +1,11 @@
 package jmri.jmrix.ieee802154.xbee.configurexml;
 
+import com.digi.xbee.api.exceptions.OperationNotSupportedException;
+import com.digi.xbee.api.exceptions.TimeoutException;
+import com.digi.xbee.api.exceptions.XBeeException;
+import com.digi.xbee.api.RemoteXBeeDevice;
+import com.digi.xbee.api.models.XBee16BitAddress;
+import com.digi.xbee.api.models.XBee64BitAddress;
 import java.util.List;
 import jmri.jmrix.AbstractStreamPortController;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
@@ -22,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006, 2007, 2008
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -101,38 +106,57 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     @Override
     protected void unpackElement(Element shared, Element perNode) {
         List<Element> l = shared.getChildren("node");
+        // Trigger initialization of this Node to reflect these parameters
+        XBeeConnectionMemo xcm = (XBeeConnectionMemo) adapter.getSystemConnectionMemo();
+        XBeeTrafficController xtc = (XBeeTrafficController) xcm.getTrafficController();
         for (int i = 0; i < l.size(); i++) {
             Element n = l.get(i);
-            //int addr = Integer.parseInt(n.getAttributeValue("name"));
-            byte PAN[] = jmri.util.StringUtil.bytesFromHexString(findParmValue(n, "PAN"));
-            byte address[] = jmri.util.StringUtil.bytesFromHexString(findParmValue(n, "address"));
             byte GUID[] = jmri.util.StringUtil.bytesFromHexString(findParmValue(n, "GUID"));
+            XBee64BitAddress guid = new XBee64BitAddress(GUID);
+            byte addr[] = jmri.util.StringUtil.bytesFromHexString(findParmValue(n, "address"));
+            XBee16BitAddress address = new XBee16BitAddress(addr);
             String Identifier = findParmValue(n, "name");
-            // create node (they register themselves)
-            XBeeNode node = new XBeeNode(PAN, address, GUID);
-            node.setIdentifier(Identifier);
+            // create the RemoteXBeeDevice for the node.
+            RemoteXBeeDevice remoteDevice = remoteDevice = new RemoteXBeeDevice(xtc.getXBee(),
+                         guid,address,Identifier);
+            // Check to see if the node is a duplicate, if it is, move 
+            // to the next one.
+            // get a XBeeNode corresponding to this node address if one exists
+           XBeeNode curNode = (XBeeNode) xtc.getNodeFromXBeeDevice(remoteDevice);
+           if (curNode != null) {
+               log.info("Read duplicate node {} from file",remoteDevice);
+               continue; 
+           }
+    
+            try {
+               // and then add it to the network
+               xtc.getXBee().getNetwork().addRemoteDevice(remoteDevice);
+               // create node (they register themselves)
+               XBeeNode node = new XBeeNode(remoteDevice);
+            
+               String polled = findParmValue(n, "polled");
+               node.setPoll(polled.equals("yes"));
+                     
+               xtc.registerNode(node);
 
-            String polled = findParmValue(n, "polled");
-            node.setPoll(polled.equals("yes"));
-
-            // Trigger initialization of this Node to reflect these parameters
-            XBeeConnectionMemo xcm = (XBeeConnectionMemo) adapter.getSystemConnectionMemo();
-            XBeeTrafficController xtc = (XBeeTrafficController) xcm.getTrafficController();
-            xtc.registerNode(node);
-
-            // if there is a stream port controller stored for this
-            // node, we need to load that after the node starts running.
-            // otherwise, the IOStream associated with the node has not
-            // been configured.
-            String streamController = findParmValue(n, "StreamController");
-            if (streamController != null) {
-                try {
-                    @SuppressWarnings("unchecked") // Class.forName cast is unchecked at this point
-                    java.lang.Class<jmri.jmrix.AbstractStreamPortController> T = (Class<AbstractStreamPortController>) Class.forName(streamController);
-                    node.connectPortController(T);
-                } catch (java.lang.ClassNotFoundException cnfe) {
-                    //log.error("Unable to find class for stream controller : {}",streamController);
+               // if there is a stream port controller stored for this
+               // node, we need to load that after the node starts running.
+               // otherwise, the IOStream associated with the node has not
+               // been configured.
+               String streamController = findParmValue(n, "StreamController");
+               if (streamController != null) {
+                    try {
+                        @SuppressWarnings("unchecked") // Class.forName cast is unchecked at this point
+                        java.lang.Class<jmri.jmrix.AbstractStreamPortController> T = (Class<AbstractStreamPortController>) Class.forName(streamController);
+                        node.connectPortController(T);
+                    } catch (java.lang.ClassNotFoundException cnfe) {
+                        log.error("Unable to find class for stream controller : {}",streamController);
+                    }
                 }
+            } catch (TimeoutException toe) {
+               log.error("Timeout adding node {} from configuration file.",remoteDevice);
+            } catch (XBeeException xbe) {
+               log.error("Exception adding node {} from configuration file.",remoteDevice);
             }
 
         }

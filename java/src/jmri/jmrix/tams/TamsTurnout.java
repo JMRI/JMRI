@@ -1,4 +1,3 @@
-// TamsTurnout.java
 package jmri.jmrix.tams;
 
 import jmri.Turnout;
@@ -20,10 +19,6 @@ import org.slf4j.LoggerFactory;
 public class TamsTurnout extends AbstractTurnout
         implements TamsListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1921305278634163107L;
     String prefix;
 
     /**

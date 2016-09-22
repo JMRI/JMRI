@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Invoke complete set of tests for the apps package
  *
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007, 2012
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -29,7 +28,19 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("apps.PackageTest");  // no tests in this class itself
 
         suite.addTest(BundleTest.suite());
+        suite.addTest(ConfigBundleTest.suite());
         suite.addTest(ValidateConfigFilesTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(apps.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(apps.startup.PackageTest.class));
+        suite.addTest(apps.PacketPro.PackageTest.suite());
+        suite.addTest(apps.PacketScript.PackageTest.suite());
+        suite.addTest(apps.InstallTest.PackageTest.suite());
+        suite.addTest(apps.gui3.Gui3AppsTest.suite());
+        suite.addTest(apps.DecoderPro.PackageTest.suite());
+        suite.addTest(apps.JmriDemo.PackageTest.suite());
+        suite.addTest(apps.DispatcherPro.PackageTest.suite());
+        suite.addTest(apps.PanelPro.PackageTest.suite());
+        suite.addTest(apps.SignalPro.PackageTest.suite());
         return suite;
     }
 

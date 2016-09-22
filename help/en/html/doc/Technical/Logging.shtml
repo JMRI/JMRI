@@ -1,179 +1,252 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
+
 <html lang="en">
 <head>
-    <TITLE>
- 	JMRI: How to Use the Logging Facilities
-    </TITLE>
-   <meta name="Author" content="Bob Jacobsen">
-    <meta name="keywords" content="JMRI log4j logging log">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: How to Use the Logging Facilities</title>
+  <meta name="Author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI log4j logging log">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head><!--#include virtual="/Header" -->
 
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+    <div id="mainContent">
+      <h1>JMRI: How to Use the Logging Facilities</h1>This page
+      provides a little information on how JMRI logs error, status
+      and debugging information.
 
-<H1>JMRI: How to Use the Logging Facilities</H1>
+      <p>For other details on JMRI internals, please see the
+      <a href="../Technical/index.shtml" title=
+      "technical pages">technical pages</a>.</p>
 
+      <p>JMRI uses the Jakarta <a href=
+      "https://logging.apache.org/log4j/1.2/index.html">Log4J</a>
+      package to handle logging from individual classes.
+      Specifically, as of Summer 2015, we use version 1.2.15; note
+      that's not the most recent one! We use that via <a href=
+      "http://www.slf4j.org">SLF4J</a> framework. (For libraries
+      that use the java.util.logging framework, e.g. jmDNS, we also
+      use the jul-to-slf4j adapter) <a name="levels" id=
+      "levels"></a></p>
 
-This page provides a little information on how 
-JMRI logs error, status and debugging information.
+      <h3>Logging Levels</h3>This combination provides several
+      levels of messages:
 
-<P>
-For other details on JMRI internals, please see the
-<A HREF="../Technical/index.shtml" title="technical pages">technical pages</A>.
+      <table border="1">
+        <tr>
+          <th>Level</th>
 
-<P>
-JMRI uses the Jakarta
-<A HREF="https://logging.apache.org/log4j/1.2/index.html">Log4J</a>
-package to handle logging from individual classes. Specifically, as of
-Summer 2015, we use version 1.2.15; note that's not the most recent one!
-We use that via 
-<a href="http://www.slf4j.org">SLF4J</a> framework. (For libraries that
-use the java.util.logging framework, e.g. jmDNS, we also use the
-jul-to-slf4j adapter)
+          <th>Code Fragment</th>
 
-<a name="levels" id="levels"></a><h3>Logging Levels</h3>
-This combination provides several levels of messages:
-<table border="1">
-<tr><th>Level</th><th>Code Fragment</th><th>Use</th></tr>
-<tr><td>ERROR</td><td>log.error(..)</td><td>Indicates the desired operation is not going to happen, and should explain why.
-                                            ERROR is meant to be used only for serious problems which should get 
-                                            some attention every time they happen, typically indicating a possible
-                                            fault in JMRI itself.</td></tr>
-<tr><td>WARN</td><td>log.warn(..)</td><td>The program is still operating, sort of, but something has gone wrong;
-                                            often used to say "This operation may not have done all you wanted".
-                                            Use WARN when the cause of the problem is incorrect user input.</td></tr>
-<tr><td>INFO</td><td>log.info(..)</td><td>Routine messages you want to see in normal operation. Keep these to a 
-                                            minimum please, there shouldn't be any after the program has started up.</td></tr>
-<tr><td>DEBUG</td><td>log.debug(..)</td><td>Detailed messages, only used in debugging. 
-                                            There is a lot of this, and turning it all on can slow the 
-                                            program down significantly.</td></tr>
-<tr><td>TRACE</td><td>log.debug(..)</td><td>Very detailed messages, even more than DEBUG, used for
-                                            voluminous debugging (e.g. every character in a transmission) that
-                                            would normally be off even when debugging. 
-                                            Typically only turned on for one class at a time due to volume and performance
-                                            issues.</td></tr>
-</table>
+          <th>Use</th>
+        </tr>
 
-<a name="config" id="config"></a><h3>Configuration</h3>
-By convention, JMRI applications will attempt to initialize
-Log4J using a 
-"<a href="https://github.com/JMRI/JMRI/blob/master/default.lcf">default.lcf</a>"
-logging control file.  
-JMRI contains a version of the default.lcf file with
-extensive comments. (This file needs to be in the "Program Directory",
-which can be found by selecting the "Locations" item in the main help menu)
-The rest of this section describes the contents of a logging control file
-using the contents of default.lcf as an example.
+        <tr>
+          <td>ERROR</td>
 
-<P>
-The line:
-<PRE>
+          <td>log.error(..)</td>
+
+          <td>Indicates the desired operation is not going to
+          happen, and should explain why. ERROR is meant to be used
+          only for serious problems which should get some attention
+          every time they happen, typically indicating a possible
+          fault in JMRI itself.</td>
+        </tr>
+
+        <tr>
+          <td>WARN</td>
+
+          <td>log.warn(..)</td>
+
+          <td>The program is still operating, sort of, but
+          something has gone wrong; often used to say "This
+          operation may not have done all you wanted". Use WARN
+          when the cause of the problem is incorrect user
+          input.</td>
+        </tr>
+
+        <tr>
+          <td>INFO</td>
+
+          <td>log.info(..)</td>
+
+          <td>Routine messages you want to see in normal operation.
+          Keep these to a minimum please, there shouldn't be any
+          after the program has started up.</td>
+        </tr>
+
+        <tr>
+          <td>DEBUG</td>
+
+          <td>log.debug(..)</td>
+
+          <td>Detailed messages, only used in debugging. There is a
+          lot of this, and turning it all on can slow the program
+          down significantly.</td>
+        </tr>
+
+        <tr>
+          <td>TRACE</td>
+
+          <td>log.debug(..)</td>
+
+          <td>Very detailed messages, even more than DEBUG, used
+          for voluminous debugging (e.g. every character in a
+          transmission) that would normally be off even when
+          debugging. Typically only turned on for one class at a
+          time due to volume and performance issues.</td>
+        </tr>
+      </table><a name="config" id="config"></a>
+
+      <h3>Configuration</h3>By convention, JMRI applications will
+      attempt to initialize Log4J using a "<a href=
+      "https://github.com/JMRI/JMRI/blob/master/default.lcf">default.lcf</a>"
+      logging control file. JMRI contains a version of the
+      default.lcf file with extensive comments. (This file needs to
+      be in the "Program Directory", which can be found by
+      selecting the "Locations" item in the main help menu) The
+      rest of this section describes the contents of a logging
+      control file using the contents of default.lcf as an example.
+
+      <p>The line:</p>
+      <pre>
  log4j.rootCategory= INFO, A1, T, R
-</PRE>
-controls where logging output goes. Later in the file, 
-there are "appenders" A1, T and R defined that write log
-messages to:
+</pre>controls where logging output goes. Later in the file, there
+are "appenders" A1, T and R defined that write log messages to:
 
-<ul>
-<li>A1 - the console on the local computer, really stdout/stderr, which is also
-    available via the Console item on the JMRI Help menu
-<li>R - a single file.  By default, this is called "session.log". This starts
-        anew each time JMRI is restarted.
-<li>T - a set of rolling files. The current file is called "messages.log". 
-        When it reaches 2MB, it rolls to a new file. Two older versions are kept.
-        Note that this continues through program restarts, so you can see
-        any messages logged at the very beginning or end of the program.
-</ul>
+      <ul>
+        <li>A1 - the console on the local computer, really
+        stdout/stderr, which is also available via the Console item
+        on the JMRI Help menu</li>
 
-The files are stored in directory specified by the jmri.log.path parameter, 
-which is turn defaults to the log subdirectory in the preferences directory.
+        <li>R - a single file. By default, this is called
+        "session.log". This starts anew each time JMRI is
+        restarted.</li>
 
-<P>
-The "default.lcf" file also determines the format of the output by
-setting the "layout" parameter(s). 
-<pre><CODE>
-log4j.appender.R.layout=org.apache.log4j.PatternLayout<br/>
-log4j.appender.R.layout.ConversionPattern=%d{ISO8601} %-37.37c{2} %-5p - %m [%t]%n
-</CODE></pre>
+        <li>T - a set of rolling files. The current file is called
+        "messages.log". When it reaches 2MB, it rolls to a new
+        file. Two older versions are kept. Note that this continues
+        through program restarts, so you can see any messages
+        logged at the very beginning or end of the program.</li>
+      </ul>The files are stored in directory specified by the
+      jmri.log.path parameter, which is turn defaults to the log
+      subdirectory in the preferences directory.
 
-<p>
-An example of the default format:
-<pre><CODE>
+      <p>The "default.lcf" file also determines the format of the
+      output by setting the "layout" parameter(s).</p>
+      <pre>
+<code>
+log4j.appender.R.layout=org.apache.log4j.PatternLayout<br>log4j.appender.R.layout.ConversionPattern=%d{ISO8601} %-37.37c{2} %-5p - %m [%t]%n
+</code>
+</pre>
+
+      <p>An example of the default format:</p>
+      <pre>
+<code>
 2015-10-28 20:31:52,307 jmri.jmrit.powerpanel.PowerPane  WARN - No power manager instance found, panel not active [AWT-EventQueue-0]
-</CODE></pre>
-The columns are:
-<ul>
-<li><CODE>2015-10-28 20:31:52,307</CODE> - local time the message was logged
-<li><CODE>jmri.jmrit.powerpanel.PowerPane</CODE> - the place in the code (class name) that emitted the message
-<li><CODE>WARN</CODE> - the severity of the message
-<li><CODE>No power manager instance found, panel not active</CODE> - the message itself
-<li><CODE>[AWT-EventQueue-0]</CODE> - name of the thread that emitted the message
-</UL>
+</code>
+</pre>The columns are:
 
-<a name="code" id="code"></a><h3>Coding</h3>
-To log messages
-from a class named MyClass, add this to the bottom of the class's .java file:</p>
-<pre><code>
-	private static final Logger log = LoggerFactory.getLogger(MyClass.class);
-</code></pre>
-<p>and add imports for org.slf4j.Logger and org.slf4j.LoggerFactory in your imports section:</p>
-<pre><code>
-        import org.slf4j.Logger;<br/>
-        import org.slf4j.LoggerFactory;
-</code></pre>
-It's also OK to combine those into the fully-qualified form:
-<pre><code>
+      <ul>
+        <li><code>2015-10-28 20:31:52,307</code> - local time the
+        message was logged</li>
+
+        <li><code>jmri.jmrit.powerpanel.PowerPane</code> - the
+        place in the code (class name) that emitted the
+        message</li>
+
+        <li><code>WARN</code> - the severity of the message</li>
+
+        <li><code>No power manager instance found, panel not
+        active</code> - the message itself</li>
+
+        <li><code>[AWT-EventQueue-0]</code> - name of the thread
+        that emitted the message</li>
+      </ul><a name="code" id="code"></a>
+
+      <h3>Coding</h3>To log messages from a class named MyClass,
+      add this to the bottom of the class's .java file:
+      <pre>
+<code>
+        private static final Logger log = LoggerFactory.getLogger(MyClass.class);
+</code>
+</pre>
+
+      <p>and add imports for org.slf4j.Logger and
+      org.slf4j.LoggerFactory in your imports section:</p>
+      <pre>
+<code>
+        import org.slf4j.Logger;<br>        import org.slf4j.LoggerFactory;
+</code>
+</pre>It's also OK to combine those into the fully-qualified form:
+      <pre>
+<code>
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MyClass.class);
-</code></pre>
-<p>
-(If logging is removed (e.g. commented out), it's OK to comment out the log definition
-so that it can be easily added back later on.)
+</code>
+</pre>
 
-<p>Then for each message to log insert a line like:</p>
-<pre><code>
-	log.debug("message");
-</code></pre>
-<p>Messages that are not just an explicit string should use this form instead for variables:</p>
-<pre><code>
-	log.debug("Found {}", numberEntries);
-</code></pre>
-The string operations to build the actual error message (in this case, combining "Found" and the numberEntries argument)
-are only done if the message is going to be stored in the logs, which saves a lot of time
-during normal (non-debug) execution.
+      <p>(If logging is removed (e.g. commented out), it's OK to
+      comment out the log definition so that it can be easily added
+      back later on.)</p>
 
-<p>If it would be computationally expensive to pass a parameter into the log, use following form
-so the program does not waste time calculating parameters (in this
-case, calling numberEntries() to get a value to pass to the function call):</p>
-<pre><code>
+      <p>Then for each message to log insert a line like:</p>
+      <pre>
+<code>
+        log.debug("message");
+</code>
+</pre>
+
+      <p>Messages that are not just an explicit string should use
+      this form instead for variables:</p>
+      <pre>
+<code>
+        log.debug("Found {}", numberEntries);
+</code>
+</pre>The string operations to build the actual error message (in
+this case, combining "Found" and the numberEntries argument) are
+only done if the message is going to be stored in the logs, which
+saves a lot of time during normal (non-debug) execution.
+
+      <p>If it would be computationally expensive to pass a
+      parameter into the log, use following form so the program
+      does not waste time calculating parameters (in this case,
+      calling numberEntries() to get a value to pass to the
+      function call):</p>
+      <pre>
+<code>
         if (log.isDebugEnabled()) {
             log.debug("Found {}", numberEntries());
         }
-</code></pre>
-<p>Exceptions should be logged as:</p>
-<pre><code>
+</code>
+</pre>
+
+      <p>Exceptions should be logged as:</p>
+      <pre>
+<code>
         log.error("my local text"+exception.getLocalizedMessage(), exception);
-</code></pre>
-to include the user readable description from the exception itself, plus all its traceback information.
-
+</code>
+</pre>to include the user readable description from the exception
+itself, plus all its traceback information. 
 <!--#include virtual="/Footer" -->
-
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

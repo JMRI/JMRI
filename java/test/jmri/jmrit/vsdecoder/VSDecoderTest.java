@@ -8,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmrix.vsdecoder package & jmrix.vsdecoder.VSDecoder class.
  *
  * @author	Mark Underwood Copyright (C) 2011
- * @version $Revision: 17977 $
  */
 public class VSDecoderTest extends TestCase {
 
@@ -40,6 +39,7 @@ public class VSDecoderTest extends TestCase {
         suite.addTest(jmri.jmrit.vsdecoder.VSDSoundTest.suite());
         suite.addTest(jmri.jmrit.vsdecoder.SoundBiteTest.suite());
         suite.addTest(BundleTest.suite());
+        suite.addTest(VSDecoderBundleTest.suite());
         suite.addTest(jmri.jmrit.vsdecoder.swing.PackageTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {

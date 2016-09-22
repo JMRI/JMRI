@@ -1,4 +1,3 @@
-// DeleteRosterItemAction.java
 package jmri.jmrit.roster;
 
 import java.awt.Component;
@@ -37,15 +36,9 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  */
 public class DeleteRosterItemAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1566611248270959245L;
 
     public DeleteRosterItemAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -69,8 +62,8 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
     @Override
     public void actionPerformed(ActionEvent event) {
 
-        Roster roster = Roster.instance();
-        String rosterGroup = Roster.instance().getDefaultRosterGroup();
+        Roster roster = Roster.getDefault();
+        String rosterGroup = Roster.getDefault().getDefaultRosterGroup();
         RosterEntry[] entries;
         // rosterGroup may legitimately be null
         // but getProperty returns null if the property cannot be found, so
@@ -121,7 +114,7 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
                 re.deleteAttribute(group);
                 re.updateFile();
             }
-            Roster.writeRosterFile();
+            Roster.getDefault().writeRoster();
 
             // backup the file & delete it
             if (rosterGroup == null) {

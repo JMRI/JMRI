@@ -1,155 +1,204 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-  <title>
- 	JMRI: Sensors Documentation
-  </title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
+  <title>JMRI: Sensors Documentation</title>
   <meta name="Author" content="Bob Jacobsen">
-  <meta name="keywords"
-        content="sensor model railroad JMRI decoderpro panelpro">
-
-<!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <meta name="keywords" content=
+  "sensor model railroad JMRI decoderpro panelpro"><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
   <div id="container">
+    <!--#include virtual="/Header" -->
 
-<!--#include virtual="/Header" -->
     <div id="mBody">
-<!--#include virtual="Sidebar" -->
+      <!--#include virtual="Sidebar" -->
 
-    <div id="mainContent">
-<h1>JMRI: Sensors Documentation</h1>
+      <div id="mainContent">
+        <h1>JMRI: Sensors Documentation</h1>
 
-<h2>What are Sensors?</h2>
+        <h2>What are Sensors?</h2>
 
-<p>
-A Sensor is JMRI's way of representing an input from the layout.
-<p>
-JMRI uses a Sensor to represent the status of a block occupancy detector,
-or a pushbutton on the fascia, or just about anything else you can attach
-to an input on your DCC or C/MRI system.
+        <p>A Sensor is JMRI's way of representing an input from the
+        layout.</p>
 
-<h3>Controlling a Sensor</h3>
-<p>
-Generally, you don't control the state of a Sensor object; JMRI, working with the
-hardware on your layout, does.  
-<p>
-But there are some occasions where you might like to locally change the state
-of a Sensor: To debug some logic that uses the Sensor as an input, etc. It can
-be very convenient to temporarily change how a Sensor is set without having to 
-run out to the layout and push a button or put a locomotive in a block.
-<p>
-Therefore, JMRI lets you change a Sensor via the Sensor Table (see below), or 
-by clicking on a sensor icon on a panel (See the 
-<a href="../apps/PanelPro/PanelPro.shtml">PanelPro pages</a> 
-for more on Panels).
-<p>
-The change takes effect immediately, unless a debounce timer is configured (see below),
-but only lasts until the next time you change it in the program, or the next time the 
-input hardware on the layout changes the value.
+        <p>JMRI uses a Sensor to represent the status of a block
+        occupancy detector, or a pushbutton on the fascia, or just
+        about anything else you can attach to an input on your DCC
+        or C/MRI system.</p>
 
-<h2>Sensor Properties</h2>
+        <h3>Controlling a Sensor</h3>
 
-<h3><a name="Debounce"></a>Sensor Debounce</h2>
-<p>The Sensor Debounce facility is there to help prevent false triggers of a Sensor
-being passed into the system and triggering other events in the system.<br>
-Such false triggers could be due to a dirty piece of track or electrical interference.
+        <p>Generally, you don't control the state of a Sensor
+        object; JMRI, working with the hardware on your layout,
+        does.</p>
 
-<p>The facility allows you to assign a period in milliseconds before the change
-is registered with the rest of the system. If after that period the state has
-not changed then the Sensor state will be passed onto the rest the of the system.<br>
-    
-However if the Sensors state is different after the timer has finished, then the 
-system will restart the process, this time after the timer has finished it will
-check to see if the sensor state is in the same state as it was before it restarted 
-the process. If not the process is re-started again until the state is the same
-before and after the timer is run.
+        <p>But there are some occasions where you might like to
+        locally change the state of a Sensor: To debug some logic
+        that uses the Sensor as an input, etc. It can be very
+        convenient to temporarily change how a Sensor is set
+        without having to run out to the layout and push a button
+        or put a locomotive in a block.</p>
 
-<h2>How to setup Sensors</h2>
-<h3>The Sensor Table</h3>
-Sensors can be viewed and configured using the <a href="../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a>.
-It contains the following columns:</p>
-	<ul>
-	<li>System Name</li>
-	<li>User Name (optional)</li>
-	<li>State (either Active, Inactive, Inconsistent or - at first - Unknown</li>
-	<li>Comment (optional, double click to edit)</li>
-	<li>Inverted (checkbox)</li>
-	</ul>
-	
-<h3>Sensor Table Controls</h3>
-<p>Below the table is the <b>Add...</b> button<br>
-and a check box to <b>Show Sensor Debounce Information</b></p>
-<p>The <b>Defaults</b> menu allows you to set 2 system wide settings:
-	<ul>
-	<li>Global Debounce</li>
-	<li>Initial Sensor State</li>
-	</ul>
+        <p>Therefore, JMRI lets you change a Sensor via the Sensor
+        Table (see below), or by clicking on a sensor icon on a
+        panel (See the <a href=
+        "../apps/PanelPro/PanelPro.shtml">PanelPro pages</a> for
+        more on Panels).</p>
 
-<h3>Saving Sensor to disk</h3>
+        <p>The change takes effect immediately, unless a debounce
+        timer is configured (see below), but only lasts until the
+        next time you change it in the program, or the next time
+        the input hardware on the layout changes the value.</p>
 
-<p>Sensors are saved in your layout configuration file, along with Turnouts, 
-Lights, Signal Heads, etc. To store this information on disk, use <b>Store 
-Configuration...</b> in the <b>File</b> menu at the top of the Sensors 
-Table (or other tables from the Tools menu), or select <b>Store Panel...</b>
-in the <b>Panel</b> menu. 
+        <h2>Sensor Properties</h2>
 
-<a name="add"><h3>Adding a new Sensor</h3></a>
-<p>To create a new Sensor, follow this procedure:</p>
-	<ol>
-	<li><p>Click the <b>Tools</b> -&gt; <b>Tables</b> -&gt; <b>Sensors</b> menu to bring up
-	the <a href="../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a> pane.
-	Next, click the 
-	<a href="../../package/jmri/jmrit/beantable/SensorAddEdit.shtml"><b>Add...</b></a>
-	button at the bottom of the 
-	pane to bring up the Add/Edit Sensor window.</p></li>
-	
-	<li><p>From the <b>System</b> drop down list select the system to which the 
-	Sensor is connected. In the <b>Hardware Address</b> field enter the
-	<a href="../doc/Technical/Names.shtml#systeminfo">hardware address of the input connection</a> 
-	being referenced.<br>The format of the Hardware Address can often be made in 
-	the format of "board:channel" or "Cab Address:Pin"; you will need to confirm 
-	the specifics of each system's <a href="../doc/Technical/Names.shtml#systeminfo">Naming Rules</a>.
-	</li>
-	
-	<li><p>Enter a User Name for the Sensor. Any string of characters that is different 
-	from the User Name of other Sensors will be accepted, but it's 
-	wise to use a string that describes the intended use of the Sensor.
-	You can leave this field blank if you'd like.</p>
-	</li>
-	
-	<li><p>If you wish to add a number of Sensors at once, click on the 
-	<b>Add a Range</b> checkbox and then in the <b>Number to Add</b> field enter
-	the number of Sensors that you wish to add. If you have entered a User
-	Name, then this will be appended with a number to ensure that each User Name
-	is unique. If a hardware address already exists in the Sensors range that is being
-	added, then JMRI will skip that address and carry on.
-	</li>
-	
-	<li><p>Click the <b>OK</b> button at the bottom of the pane.  
-	If everything is fine, a message stating "New Sensor added..." will be 
-	displayed in the notes area. If there is trouble with anything, an error or 
-	warning message will be displayed in the notes area; you should then
-	correct the error and click <b>OK</b> again.</p>
-	</li>
-	<li><p>Back in the main Sensor Table, you can then see the current
-	status of the Sensor.</p>
-	</li>
-	</ol>
+        <h3><a name="Debounce" id="Debounce"></a>Sensor
+        Debounce</h3>
 
-<!--#include virtual="/Footer" -->
+        <p>The Sensor Debounce facility is there to help prevent
+        false triggers of a Sensor being passed into the system and
+        triggering other events in the system.<br>
+        Such false triggers could be due to a dirty piece of track
+        or electrical interference.</p>
 
+        <p>The facility allows you to assign a period in
+        milliseconds before the change is registered with the rest
+        of the system. If after that period the state has not
+        changed then the Sensor state will be passed onto the rest
+        the of the system.<br>
+        However if the Sensors state is different after the timer
+        has finished, then the system will restart the process,
+        this time after the timer has finished it will check to see
+        if the sensor state is in the same state as it was before
+        it restarted the process. If not the process is re-started
+        again until the state is the same before and after the
+        timer is run.</p>
+
+        <h2>How to setup Sensors</h2>
+
+        <h3>The Sensor Table</h3>Sensors can be viewed and
+        configured using the <a href=
+        "../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor
+        Table</a>. It contains the following columns:
+
+        <ul>
+          <li>System Name</li>
+
+          <li>User Name (optional)</li>
+
+          <li>State (either Active, Inactive, Inconsistent or - at
+          first - Unknown</li>
+
+          <li>Comment (optional, double click to edit)</li>
+
+          <li>Inverted (checkbox)</li>
+        </ul>
+
+        <h3>Sensor Table Controls</h3>
+
+        <p>Below the table is the <b>Add...</b> button<br>
+        and a check box to <b>Show Sensor Debounce
+        Information</b></p>
+
+        <p>The <b>Defaults</b> menu allows you to set 2 system wide
+        settings:</p>
+
+        <ul>
+          <li>Global Debounce</li>
+
+          <li>Initial Sensor State</li>
+        </ul>
+
+        <h3>Saving Sensor to disk</h3>
+
+        <p>Sensors are saved in your layout configuration file,
+        along with Turnouts, Lights, Signal Heads, etc. To store
+        this information on disk, use <b>Store Configuration...</b>
+        in the <b>File</b> menu at the top of the Sensors Table (or
+        other tables from the Tools menu), or select <b>Store
+        Panel...</b> in the <b>Panel</b> menu. <a name="add" id=
+        "add"></a></p>
+
+        <h3>Adding a new Sensor</h3>
+
+        <p>To create a new Sensor, follow this procedure:</p>
+
+        <ol>
+          <li>
+            <p>Click the <b>Tools</b> -&gt; <b>Tables</b> -&gt;
+            <b>Sensors</b> menu to bring up the <a href=
+            "../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor
+            Table</a> pane. Next, click the <a href=
+            "../../package/jmri/jmrit/beantable/SensorAddEdit.shtml">
+            <b>Add...</b></a> button at the bottom of the pane to
+            bring up the Add/Edit Sensor window.</p>
+          </li>
+
+          <li>
+            <p>From the <b>System</b> drop down list select the
+            system to which the Sensor is connected. In the
+            <b>Hardware Address</b> field enter the <a href=
+            "../doc/Technical/Names.shtml#systeminfo">hardware
+            address of the input connection</a> being
+            referenced.<br>
+            The format of the Hardware Address can often be made in
+            the format of "board:channel" or "Cab Address:Pin"; you
+            will need to confirm the specifics of each system's
+            <a href=
+            "../doc/Technical/Names.shtml#systeminfo">Naming
+            Rules</a>.</p>
+          </li>
+
+          <li>
+            <p>Enter a User Name for the Sensor. Any string of
+            characters that is different from the User Name of
+            other Sensors will be accepted, but it's wise to use a
+            string that describes the intended use of the Sensor.
+            You can leave this field blank if you'd like.</p>
+          </li>
+
+          <li>
+            <p>If you wish to add a number of Sensors at once,
+            click on the <b>Add a Range</b> checkbox and then in
+            the <b>Number to Add</b> field enter the number of
+            Sensors that you wish to add. If you have entered a
+            User Name, then this will be appended with a number to
+            ensure that each User Name is unique. If a hardware
+            address already exists in the Sensors range that is
+            being added, then JMRI will skip that address and carry
+            on.</p>
+          </li>
+
+          <li>
+            <p>Click the <b>OK</b> button at the bottom of the
+            pane. If everything is fine, a message stating "New
+            Sensor added..." will be displayed in the notes area.
+            If there is trouble with anything, an error or warning
+            message will be displayed in the notes area; you should
+            then correct the error and click <b>OK</b> again.</p>
+          </li>
+
+          <li>
+            <p>Back in the main Sensor Table, you can then see the
+            current status of the Sensor.</p>
+          </li>
+        </ol><!--#include virtual="/Footer" -->
       </div><!-- closes #mainContent-->
-    </div> <!-- closes #mBody-->
-  </div> <!-- closes #container -->
+    </div><!-- closes #mBody-->
+  </div><!-- closes #container -->
 </body>
 </html>
-

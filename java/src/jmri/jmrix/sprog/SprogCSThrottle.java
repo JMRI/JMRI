@@ -12,7 +12,6 @@ import jmri.jmrix.AbstractThrottle;
  * Updated by Andrew Crosland February 2012 to enable 28 step speed packets</P>
  *
  * @author	Andrew Crosland Copyright (C) 2006, 2012
- * @version $Revision$
  */
 public class SprogCSThrottle extends AbstractThrottle {
 
@@ -44,11 +43,10 @@ public class SprogCSThrottle extends AbstractThrottle {
         //should support other modes, but doesn't in practice.  
         //@see AbstractThrottleManager.supportedSpeedModes()
         // Find our command station
-        //commandStation = (SprogCommandStation) jmri.InstanceManager.commandStationInstance();
         if ((memo != null) && (memo.get(jmri.CommandStation.class) != null)) {
             commandStation = memo.get(jmri.CommandStation.class);
         } else {
-            commandStation = (SprogCommandStation) jmri.InstanceManager.commandStationInstance();
+            commandStation = (SprogCommandStation) jmri.InstanceManager.getNullableDefault(jmri.CommandStation.class);
         }
 
     }

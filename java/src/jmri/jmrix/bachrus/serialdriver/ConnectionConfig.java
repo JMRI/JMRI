@@ -9,8 +9,7 @@ import jmri.util.SystemType;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Andrew Crosland Copyright (C) 2010
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**

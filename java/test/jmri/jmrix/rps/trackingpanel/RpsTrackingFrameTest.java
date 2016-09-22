@@ -10,7 +10,7 @@ import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.Receiver;
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -19,8 +19,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the rps.RpsTrackingFrame class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision$
- */
+  */
 public class RpsTrackingFrameTest extends TestCase {
 
     public void testShow() {

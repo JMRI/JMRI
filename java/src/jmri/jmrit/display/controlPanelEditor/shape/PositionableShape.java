@@ -14,13 +14,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.PathIterator;
+import java.util.Optional;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.jmrit.display.CoordinateEdit;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
@@ -373,34 +376,39 @@ public class PositionableShape extends PositionableJComponent
      * Attach a named sensor to shape
      *
      * @param pName Used as a system/user name to lookup the sensor object
+     * @param hide true if sensor should be hidden
+     * @param level level at which sensor is placed
      */
     public void setControlSensor(String pName, boolean hide, int level) {
         NamedBeanHandle<Sensor> senHandle = null;
         String msg = null;
-        if (pName == null || pName.trim().length() == 0) {
-            msg = Bundle.getMessage("badSensorName", pName);
+        if (pName == null || pName.trim().isEmpty()) {
+            msg = Bundle.getMessage("badSensorName", pName); // NOI18N
         }
         _saveLevel = getDisplayLevel();
-        if (msg == null) {
-            if (InstanceManager.sensorManagerInstance() != null) {
-                Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(pName);
-                senHandle = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor);
+        if (pName != null && pName.trim().isEmpty()) {
+            Optional<SensorManager> sensorManager = InstanceManager.getOptionalDefault(SensorManager.class);
+            if (sensorManager.isPresent()) {
+                Sensor sensor = sensorManager.get().getSensor(pName);
+                Optional<NamedBeanHandleManager> nbhm = InstanceManager.getOptionalDefault(NamedBeanHandleManager.class);
                 if (sensor != null) {
+                    if (nbhm.isPresent()) {
+                        senHandle = nbhm.get().getNamedBeanHandle(pName, sensor);
+                    }
                     _doHide = hide;
                     _changeLevel = level;
                     if (_changeLevel <= 0) {
                         _changeLevel = getDisplayLevel();
                     }
                 } else {
-                    msg = Bundle.getMessage("badSensorName", pName);
+                    msg = Bundle.getMessage("badSensorName", pName); // NOI18N
                 }
             } else {
-                msg = "No SensorManager for this protocol, shape cannot acquire a sensor.";
+                msg = Bundle.getMessage("NoSensorManager"); // NOI18N
             }
         }
         if (msg != null) {
-            JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("ErrorSensor"),
-                    JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("ErrorSensorMsg"), JOptionPane.INFORMATION_MESSAGE); // NOI18N
         }
         setControlSensorHandle(senHandle);
     }

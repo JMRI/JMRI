@@ -1,4 +1,3 @@
-// SprogConsoleFrame.java
 package jmri.jmrix.sprog.console;
 
 import java.awt.Dimension;
@@ -19,6 +18,7 @@ import jmri.jmrix.sprog.update.SprogType;
 import jmri.jmrix.sprog.update.SprogVersion;
 import jmri.jmrix.sprog.update.SprogVersionListener;
 import jmri.jmrix.sprog.update.SprogVersionQuery;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,14 +35,10 @@ import org.slf4j.LoggerFactory;
  * Refactored
  *
  * @author	Andrew Crosland Copyright (C) 2008, 2016
- * @version	$Revision$
  */
 public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener, SprogVersionListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6621655151979316783L;
+    private SprogSystemConnectionMemo _memo = null;
     // member declarations
     protected javax.swing.JLabel cmdLabel = new javax.swing.JLabel();
     protected javax.swing.JLabel currentLabel = new javax.swing.JLabel();
@@ -91,8 +87,9 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
      static final int MODESENT = 6;              // awaiting reply to "M xxx"
      static final int WRITESENT = 7;             // awaiting reply to "W"
      */
-    public SprogConsoleFrame() {
+    public SprogConsoleFrame(SprogSystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
     @Override
@@ -103,13 +100,13 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     @Override
     protected void init() {
         // connect to TrafficController
-        tc = SprogTrafficController.instance();
+        tc = _memo.getSprogTrafficController();
         tc.addSprogListener(this);
     }
 
     @Override
     public void dispose() {
-        SprogTrafficController.instance().removeSprogListener(this);
+        tc.removeSprogListener(this);
         super.dispose();
     }
 
@@ -266,7 +263,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         pack();
 
         // Now the GUI is all setup we can get the SPROG version
-        SprogVersionQuery.requestVersion(this);
+        _memo.getSprogVersionQuery().requestVersion(this);
     }
 
     /**
@@ -291,7 +288,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         SprogMessage m = new SprogMessage(cmdTextField.getText());
         // Messages sent by us will not be forwarded back so add to display manually
         nextLine("cmd: \"" + m.toString() + "\"\n", "");
-        SprogTrafficController.instance().sendSprogMessage(m, this);
+        tc.sendSprogMessage(m, this);
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
@@ -299,7 +296,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     public void validateCurrent() {
         String currentRange = "200 - 996";
         int validLimit = 996;
-        if (SerialDriverAdapter.instance().getSystemConnectionMemo().getSprogVersion().sprogType.sprogType > SprogType.SPROGIIv3) {
+        if (_memo.getSprogVersion().sprogType.sprogType > SprogType.SPROGIIv3) {
             currentRange = "200 - 2499";
             validLimit = 2499;
         }
@@ -373,7 +370,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     synchronized public void notifyVersion(SprogVersion v) {
         sv = v;
         // Save it for others
-        SerialDriverAdapter.instance().getSystemConnectionMemo().setSprogVersion(v);
+        _memo.setSprogVersion(v);
         if (log.isDebugEnabled()) {
             log.debug("Found: " + sv.toString());
         }

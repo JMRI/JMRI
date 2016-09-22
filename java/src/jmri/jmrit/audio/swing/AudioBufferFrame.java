@@ -207,7 +207,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
      */
     @Override
     public void populateFrame(Audio a) {
-        if (a instanceof AudioBuffer) {
+        if (!(a instanceof AudioBuffer)) {
             throw new IllegalArgumentException(a.getSystemName() + " is not an AudioBuffer object");
         }
         super.populateFrame(a);
@@ -262,7 +262,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         String sName = sysName.getText().toUpperCase();
         AudioBuffer b;
         try {
-            AudioManager am = InstanceManager.audioManagerInstance();
+            AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
             try {
                 b = (AudioBuffer) am.provideAudio(sName);
             } catch (IllegalArgumentException ex) {

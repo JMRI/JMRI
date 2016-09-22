@@ -1,8 +1,10 @@
 package jmri.jmrit.operations.automation.actions;
 
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
+import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,9 +30,9 @@ public class RunTrainAction extends Action {
                 finishAction(false);
                 return;
             }
-            if (!TrainCustomManifest.manifestCreatorFileExists()) {
-                log.warn("Manifest creator file not found!, directory name: {}, file name: {}", TrainCustomManifest
-                        .getDirectoryName(), TrainCustomManifest.getFileName());
+            if (!TrainCustomManifest.instance().excelFileExists()) {
+                log.warn("Manifest creator file not found!, directory name: {}, file name: {}", TrainCustomManifest.instance()
+                        .getDirectoryName(), TrainCustomManifest.instance().getFileName());
                 finishAction(false);
                 return;
             }
@@ -47,12 +49,23 @@ public class RunTrainAction extends Action {
                 return;
             }
             setRunning(true);
-            new TrainCustomManifest().checkProcessComplete(); // this will wait thread
-            TrainCustomManifest.addCVSFile(train.createCSVManifestFile());
-            boolean status = TrainCustomManifest.process();
+            // this can wait thread
+            if (!new TrainCustomSwitchList().checkProcessReady()) {
+                log.warn(
+                        "Timeout waiting for excel switch list program to complete previous opeation, train ({}), timeout value: {} seconds",
+                        train.getName(), Control.excelWaitTime);
+            }
+            // this can wait thread
+            if (!new TrainCustomManifest().checkProcessReady()) {
+                log.warn(
+                        "Timeout waiting for excel manifest program to complete previous opeation, train ({}), timeout value: {} seconds",
+                        train.getName(), Control.excelWaitTime);
+            }
+            TrainCustomManifest.instance().addCVSFile(train.createCSVManifestFile());
+            boolean status = TrainCustomManifest.instance().process();
             if (status) {
                 try {
-                    status = TrainCustomManifest.waitForProcessToComplete(); // wait for process to complete or timeout
+                    status = TrainCustomManifest.instance().waitForProcessToComplete(); // wait for process to complete or timeout
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

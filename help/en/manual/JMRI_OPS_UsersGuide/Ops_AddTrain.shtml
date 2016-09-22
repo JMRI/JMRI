@@ -1,175 +1,283 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<title>JMRI Operations - Add Train</title>
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI Operations - Add Train</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<a name="Top"></a>
-<h1>Using JMRI&reg; to Operate Trains</h1>
-<h2>OperationsPro: Add Train</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-<p><a href="Ops_Trains.shtml">Back</a><a href="#"></a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
-</div>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<hr>
-<p>The <strong>Add Train</strong> window is opened from the <strong>Trains</strong> window.</p>
-<blockquote>
-  <p><img src="images/Ops_AddTrain.png" alt="add trains" height="869" width="675"></p>
+      <h1>Using JMRI&reg; to Operate Trains</h1>
 
-<p>In the body of the window</p>
-<p><strong>Name</strong>
-  <input name="textfield" id="textfield" type="text">
-  <strong>Description</strong>
-<input name="textfield2" id="textfield2" type="text">
-<br>
-type in a Train Name and optional description, then press 
-  <input name="button" id="button" value="Add Train" type="submit">.</p>
-<p>Both will  show up on the train's Manifest. The Train's name will also show up on the Train Icon, so short names work best.</p>
-<p><img src="images/Ops_AddTrain01.png" alt="add train" height="869" width="675"><br>
-Now that all other options are activated on the pane you can complete the Train.</p>
-<table border="0" cellpadding="2" cellspacing="1" width="90%">
-  <tbody><tr>
-    <td width="69%"><img src="images/Ops_addTrain02.png" height="420" width="687"></td>
-    <td align="left" valign="top" width="31%">
-    <p>Select <strong>Route</strong>
-        <select name="select" id="select"><option>Lakeview-Susanville</option></select>
-Route that  this Train will travel. </p>
-      <p>Clicking on
-        <input name="button2" id="button2" value="Edit" type="submit">
-    to the right of the Route allows you to <a href="Ops_AddRoutes.shtml"><strong>directly edit</strong></a>
-the selected Route. Once a Route is selected a list of Locations that
-the Train will visit should appear. You can deselect any Location that
-you don't want this Train to work. </p></td>
-  </tr>
-</tbody></table>
-<table border="0" cellpadding="2" cellspacing="1" width="90%">
-  <tbody><tr>
-    <td width="28%"><img src="images/Ops_AddTrain03.png" alt="Add Train time" height="137" width="244"></td>
-    <td align="left" valign="top" width="72%">Set the <strong>Departure Time(hh:mm)</strong>
-      <select name="select2" id="select2"><option>08</option></select>     <select name="select3" id="select3"><option>00</option></select>
-, the time that this Train will depart the first Location in its Route.
-You can use the departure time to sort your Trains in the order that
-you want them built.</td>
-  </tr>
-</tbody></table>
-<p>&nbsp;</p>
-<table border="0" cellpadding="2" cellspacing="1" width="90%">
-  <tbody><tr>
-    <td valign="top" width="69%"><img src="images/Ops_AddTrain04.png" height="282" width="686"></td>
-    <td align="left" valign="top" width="31%"><p>You
-can determine what type of rolling stock the Train will service. Select
-the Rolling stock the Train will carry by clicking on the appropriate
-check boxes. A checked box means the Train will service this type of
-rolling stock. </p></td>
-  </tr>
-  <tr>
-    <td valign="top" width="69%"><img src="images/Ops_AddTrain05.png" alt="trains" height="130" width="682"></td>
-    <td align="left" valign="top"><p><strong>Select locomotive types serviced by this train </strong>by checking all required engine types.</p></td>
-  </tr>
-  <tr>
-    <td valign="top"><img src="images/Ops_AddTrain07.png" alt="train" height="129" width="684"></td>
-    <td align="left" valign="top"><p>you
-can control the number of Locomotives that will be assigned to this
-Train, and optionally, the engine's model and road name. If you want
-two or more engines assigned to a Train, the engines must be part of a
-Consist. If you select "Auto", the program will calculate the number of
-engines required for this Train based on the weight of the Train, the
-track grade, and the horsepower of the engines.</p>
-<p>You can also require a Caboose or Car with FRED
-(Flashing Rear End Device) as the last Car in the Train, and you can
-optionally specify the road name for the Caboose or Car with FRED. If
-you leave the road name blank, the program will try and find a Caboose
-with the same road name as the engine.</p></td>
-  </tr>
-  <tr>
-    <td><img src="images/Ops_AddTrain08.png" alt="Add Train" height="100" width="656"></td>
-    <td align="left" valign="top"></td>
-  </tr>
-</tbody></table>
-<p>
-  <input name="button7" id="button7" value="Reset Train" type="submit">
-allows you to remove Locomotives and Cars that have been assigned to a
-Train. This may be useful when you want to try various build options and don't what
-to physically move locomotive and cars on the layout.</p>
-<p>
- Press 
-   <input name="button8" id="button8" value="Save Train" type="submit">
-to save your Train. The program will create a file
-(OperationsTrainRoster.xml) in your JMRI directory in a folder called
-"operations". A backup file with the last settings for all of your
-trains is also created each time the <input name="button9" id="button9" value="Save Train" type="submit">
-is pressed. </p>
-<p>Note that the Train is now shown in the<a href="Ops_Trains.shtml">Trains</a> window.</p>
+      <h2>OperationsPro: Add Train</h2>
 
-<h3>Add Train menu</h3>
-  <p><img src="images/Ops_AddTrainMenu.png" alt="menu" height="105" width="219"></p>
-  <p><strong>Tools</strong><br>
-  </p>
-</blockquote>
-<table border="0" cellpadding="2" cellspacing="1" width="90%">
-  <tbody><tr>
-    <td rowspan="10" valign="top" width="28%"><img style="width: 219px; height: 305px;" alt="add train tools" src="images/Ops_AddTrainTools.png"><br></td>
-    <td width="72%"><strong><a href="Ops_AddTrainBuildOptions.shtml">Train Build Options</a></strong></td>
-  </tr>
-  <tr>
-    <td valign="top"><a href="Ops_AddTrainBuildOptions.shtml"><strong>Manifest Options</strong><br>
-    <img src="images/Ops_AddTrainOption.png" alt="option" height="162" width="305"></a></td>
-  </tr>
-  <tr>
-    <td><strong>Scripts</strong> - Opens the Scripts window allow scripts to be added to the build</td>
-  </tr>
-  <tr>
-    <td height="137"><strong>Show Car Types Serviced</strong><br>
-    <img src="images/Ops_CarsServiced.png" alt="cars" height="105" width="400"></td>
-  </tr>
-  <tr>
-    <td><strong>Print</strong><br>
-    <img style="width: 706px; height: 156px;" src="images/Ops_TrainPrint.png" alt="print"></td>
-  </tr>
-  <tr>
-    <td><strong>Preview</strong><br>
-    <img src="images/Ops_TrainPreview.png" alt="preview" height="252" width="644"></td>
-  </tr>
-  <tr>
-    <td><a style="font-weight: bold;" href="Ops_ManifestPrint.shtml"><strong>Print Manifest</strong> </a></td>
-  </tr>
-  <tr>
-    <td><a href="Ops_ManifestPreview.shtml"><strong>Preview Manifest</strong></a></td>
-  </tr>
-  <tr>
-    <td><a href="Ops_BuildReportPrint.shtml"><strong>Print Build Report</strong></a></td>
-  </tr>
-  <tr>
-    <td><a href="Ops_BuildReportPreveiw.shtml"><strong>Preview Build Report</strong></a></td>
-  </tr>
-</tbody></table>
+      <div align="right">
+        <p><a href="Ops_Trains.shtml">Back</a><a href="#"></a></p>
 
-<hr>
+        <p><a href="index.shtml#Operations">Back to Index</a></p>
+      </div>
+      <hr>
 
-<div align="right">
-<p><a href="Ops_Trains.shtml">Back</a><a href="#"></a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
-</div>
+      <p>The <strong>Add Train</strong> window is opened from the
+      <strong>Trains</strong> window.</p>
 
-<!--#include virtual="/Footer" -->
-</div>
-</div>
+      <blockquote>
+        <p><img src="images/Ops_AddTrain.png" alt="add trains"
+        height="869" width="675"></p>
+
+        <p>In the body of the window</p>
+
+        <p><strong>Name</strong> <input name="textfield" id=
+        "textfield" type="text"> <strong>Description</strong>
+        <input name="textfield2" id="textfield2" type="text"><br>
+        type in a Train Name and optional description, then press
+        <input name="button" id="button" value="Add Train" type=
+        "submit">.</p>
+
+        <p>Both will show up on the train's Manifest. The Train's
+        name will also show up on the Train Icon, so short names
+        work best.</p>
+
+        <p><img src="images/Ops_AddTrain01.png" alt="add train"
+        height="869" width="675"><br>
+        Now that all other options are activated on the pane you
+        can complete the Train.</p>
+
+        <table border="0" cellpadding="2" cellspacing="1" width=
+        "90%">
+          <tbody>
+            <tr>
+              <td width="69%"><img src="images/Ops_addTrain02.png"
+              height="420" width="687"></td>
+
+              <td align="left" valign="top" width="31%">
+                <p>Select <strong>Route</strong> <select name=
+                "select" id="select">
+                  <option>
+                    Lakeview-Susanville
+                  </option>
+                </select> Route that this Train will travel.</p>
+
+                <p>Clicking on <input name="button2" id="button2"
+                value="Edit" type="submit"> to the right of the
+                Route allows you to <a href=
+                "Ops_AddRoutes.shtml"><strong>directly
+                edit</strong></a> the selected Route. Once a Route
+                is selected a list of Locations that the Train will
+                visit should appear. You can deselect any Location
+                that you don't want this Train to work.</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table border="0" cellpadding="2" cellspacing="1" width=
+        "90%">
+          <tbody>
+            <tr>
+              <td width="28%"><img src="images/Ops_AddTrain03.png"
+              alt="Add Train time" height="137" width="244"></td>
+
+              <td align="left" valign="top" width="72%">Set the
+              <strong>Departure Time(hh:mm)</strong> <select name=
+              "select2" id="select2">
+                <option>
+                  08
+                </option>
+              </select> <select name="select3" id="select3">
+                <option>
+                  00
+                </option>
+              </select> , the time that this Train will depart the
+              first Location in its Route. You can use the
+              departure time to sort your Trains in the order that
+              you want them built.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table border="0" cellpadding="2" cellspacing="1" width=
+        "90%">
+          <tbody>
+            <tr>
+              <td valign="top" width="69%"><img src=
+              "images/Ops_AddTrain04.png" height="282" width=
+              "686"></td>
+
+              <td align="left" valign="top" width="31%">
+                <p>You can determine what type of rolling stock the
+                Train will service. Select the Rolling stock the
+                Train will carry by clicking on the appropriate
+                check boxes. A checked box means the Train will
+                service this type of rolling stock.</p>
+              </td>
+            </tr>
+
+            <tr>
+              <td valign="top" width="69%"><img src=
+              "images/Ops_AddTrain05.png" alt="trains" height="130"
+              width="682"></td>
+
+              <td align="left" valign="top">
+                <p><strong>Select locomotive types serviced by this
+                train</strong> by checking all required engine
+                types.</p>
+              </td>
+            </tr>
+
+            <tr>
+              <td valign="top"><img src="images/Ops_AddTrain07.png"
+              alt="train" height="129" width="684"></td>
+
+              <td align="left" valign="top">
+                <p>you can control the number of Locomotives that
+                will be assigned to this Train, and optionally, the
+                engine's model and road name. If you want two or
+                more engines assigned to a Train, the engines must
+                be part of a Consist. If you select "Auto", the
+                program will calculate the number of engines
+                required for this Train based on the weight of the
+                Train, the track grade, and the horsepower of the
+                engines.</p>
+
+                <p>You can also require a Caboose or Car with FRED
+                (Flashing Rear End Device) as the last Car in the
+                Train, and you can optionally specify the road name
+                for the Caboose or Car with FRED. If you leave the
+                road name blank, the program will try and find a
+                Caboose with the same road name as the engine.</p>
+              </td>
+            </tr>
+
+            <tr>
+              <td><img src="images/Ops_AddTrain08.png" alt=
+              "Add Train" height="100" width="656"></td>
+
+              <td align="left" valign="top"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p><input name="button7" id="button7" value="Reset Train"
+        type="submit"> allows you to remove Locomotives and Cars
+        that have been assigned to a Train. This may be useful when
+        you want to try various build options and don't what to
+        physically move locomotive and cars on the layout.</p>
+
+        <p>Press <input name="button8" id="button8" value=
+        "Save Train" type="submit"> to save your Train. The program
+        will create a file (OperationsTrainRoster.xml) in your JMRI
+        directory in a folder called "operations". A backup file
+        with the last settings for all of your trains is also
+        created each time the <input name="button9" id="button9"
+        value="Save Train" type="submit"> is pressed.</p>
+
+        <p>Note that the Train is now shown in the<a href=
+        "Ops_Trains.shtml">Trains</a> window.</p>
+
+        <h3>Add Train menu</h3>
+
+        <p><img src="images/Ops_AddTrainMenu.png" alt="menu"
+        height="105" width="219"></p>
+
+        <p><strong>Tools</strong><br></p>
+      </blockquote>
+
+      <table border="0" cellpadding="2" cellspacing="1" width=
+      "90%">
+        <tbody>
+          <tr>
+            <td rowspan="10" valign="top" width="28%"><img style=
+            "width: 219px; height: 305px;" alt="add train tools"
+            src="images/Ops_AddTrainTools.png"><br></td>
+
+            <td width="72%"><strong><a href=
+            "Ops_AddTrainBuildOptions.shtml">Train Build
+            Options</a></strong></td>
+          </tr>
+
+          <tr>
+            <td valign="top"><a href=
+            "Ops_AddTrainBuildOptions.shtml"><strong>Manifest
+            Options</strong><br>
+            <img src="images/Ops_AddTrainOption.png" alt="option"
+            height="162" width="305"></a></td>
+          </tr>
+
+          <tr>
+            <td><strong>Scripts</strong> - Opens the Scripts window
+            allow scripts to be added to the build</td>
+          </tr>
+
+          <tr>
+            <td height="137"><strong>Show Car Types
+            Serviced</strong><br>
+            <img src="images/Ops_CarsServiced.png" alt="cars"
+            height="105" width="400"></td>
+          </tr>
+
+          <tr>
+            <td><strong>Print</strong><br>
+            <img style="width: 706px; height: 156px;" src=
+            "images/Ops_TrainPrint.png" alt="print"></td>
+          </tr>
+
+          <tr>
+            <td><strong>Preview</strong><br>
+            <img src="images/Ops_TrainPreview.png" alt="preview"
+            height="252" width="644"></td>
+          </tr>
+
+          <tr>
+            <td><a style="font-weight: bold;" href=
+            "Ops_ManifestPrint.shtml"><strong>Print
+            Manifest</strong></a></td>
+          </tr>
+
+          <tr>
+            <td><a href="Ops_ManifestPreview.shtml"><strong>Preview
+            Manifest</strong></a></td>
+          </tr>
+
+          <tr>
+            <td><a href="Ops_BuildReportPrint.shtml"><strong>Print
+            Build Report</strong></a></td>
+          </tr>
+
+          <tr>
+            <td><a href=
+            "Ops_BuildReportPreveiw.shtml"><strong>Preview Build
+            Report</strong></a></td>
+          </tr>
+        </tbody>
+      </table>
+      <hr>
+
+      <div align="right">
+        <p><a href="Ops_Trains.shtml">Back</a><a href="#"></a></p>
+
+        <p><a href="index.shtml#Operations">Back to Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

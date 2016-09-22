@@ -10,7 +10,6 @@ import org.jdom2.Element;
  * Handle configuration for display.PositionableShape objects
  *
  * @author Pete Cressman Copyright: Copyright (c) 2012
- * @version $Revision: 1 $
  */
 public class PositionablePolygonXml extends PositionableShapeXml {
 

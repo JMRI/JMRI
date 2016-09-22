@@ -58,12 +58,6 @@ public abstract class AbstractMemoryManager extends AbstractManager
                     + ((systemName == null) ? "null" : systemName)
                     + ";" + ((userName == null) ? "null" : userName));
         }
-        if (systemName == null) {
-            log.error("SystemName cannot be null. UserName was "
-                    + ((userName == null) ? "null" : userName));
-            throw new IllegalArgumentException("SystemName cannot be null. UserName was "
-                    + ((userName == null) ? "null" : userName));
-        }
         // return existing if there is one
         Memory s;
         if ((userName != null) && ((s = getByUserName(userName)) != null)) {

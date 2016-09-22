@@ -1,4 +1,3 @@
-// CatalogPanel.java
 package jmri.jmrit.catalog;
 
 import java.awt.Color;
@@ -78,10 +77,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CatalogPanel extends JPanel implements MouseListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5940317496784694547L;
     public static final double ICON_SCALE = 0.15;
     public static final int ICON_WIDTH = 100;
     public static final int ICON_HEIGHT = 100;
@@ -188,7 +183,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
      */
     public void createNewBranch(String systemName, String userName, String path) {
 
-        CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
+        CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         CatalogTree tree = manager.getBySystemName(systemName);
         if (tree != null) {
             jmri.util.ThreadingUtil.runOnGUI(()->{
@@ -602,14 +597,12 @@ public class CatalogPanel extends JPanel implements MouseListener {
     public static CatalogPanel makeDefaultCatalog() {
         CatalogPanel catalog = new CatalogPanel("catalogs", "selectNode");
         catalog.init(false);
-        CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
+        CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         List<String> sysNames = manager.getSystemNameList();
-        if (sysNames != null) {
-            for (int i = 0; i < sysNames.size(); i++) {
-                String systemName = sysNames.get(i);
-                if (systemName.charAt(0) == 'I') {
-                    catalog.addTree(manager.getBySystemName(systemName));
-                }
+        for (int i = 0; i < sysNames.size(); i++) {
+            String systemName = sysNames.get(i);
+            if (systemName.charAt(0) == 'I') {
+                catalog.addTree(manager.getBySystemName(systemName));
             }
         }
         catalog.createNewBranch("IFJAR", "Program Directory", "resources");

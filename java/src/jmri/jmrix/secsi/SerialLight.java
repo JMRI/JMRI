@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version $Revision$
  */
 public class SerialLight extends AbstractLight {
 

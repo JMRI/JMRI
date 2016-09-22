@@ -13,7 +13,6 @@ import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 17977 $
  */
 public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements Dcc4PcListener {
 

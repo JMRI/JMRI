@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010
- * @version $Revision$
  */
 public class ConsistController extends AbstractController implements ProgListener {
 
@@ -30,7 +29,7 @@ public class ConsistController extends AbstractController implements ProgListene
             manager = new WiFiConsistManager();
             log.debug("Using WiFiConsisting");
         } else {
-            manager = jmri.InstanceManager.getDefault(jmri.ConsistManager.class);
+            manager = jmri.InstanceManager.getNullableDefault(jmri.ConsistManager.class);
             log.debug("Using JMRIConsisting");
         }
 
@@ -87,7 +86,7 @@ public class ConsistController extends AbstractController implements ProgListene
 
         // Loop through the NCE consists and send consist detail for each
     	/* dboudreau 2/26/2012 added consist manager for NCE
-         NceConsistRoster r = NceConsistRoster.instance();
+         NceConsistRoster r = NceConsistRoster.getDefault();
          List<NceConsistRosterEntry> l = r.matchingList(null, null, null, null, null, null, null, null, null, null); // take all
          int i=-1;
          for (i = 0; i<l.size(); i++) {
@@ -416,7 +415,7 @@ public class ConsistController extends AbstractController implements ProgListene
 
             return;
         }
-        AddressedProgrammer pom = jmri.InstanceManager.programmerManagerInstance()
+        AddressedProgrammer pom = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class)
                 .getAddressedProgrammer(loco.isLongAddress(), loco.getNumber());
 
         // loco done, now get CVs
@@ -434,7 +433,7 @@ public class ConsistController extends AbstractController implements ProgListene
                 log.warn("Error in setting CVs: " + nfe);
             }
         }
-        jmri.InstanceManager.programmerManagerInstance().releaseAddressedProgrammer(pom);
+        jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).releaseAddressedProgrammer(pom);
 
     }
 

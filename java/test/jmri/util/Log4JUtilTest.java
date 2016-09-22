@@ -1,6 +1,6 @@
 package jmri.util;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the jmri.util.Log4JUtil class.
  *
  * @author	Bob Jacobsen Copyright 2003, 2009, 2010, 2015
- * @version	$Revision$
  */
 public class Log4JUtilTest extends TestCase {
 

@@ -138,7 +138,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     protected void installComponents() {
 
         // create ShutDownTasks
-        if (jmri.InstanceManager.shutDownManagerInstance() != null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
 
             if (decoderDirtyTask == null) {
                 decoderDirtyTask
@@ -151,7 +151,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                             }
                         };
             }
-            jmri.InstanceManager.shutDownManagerInstance().register(decoderDirtyTask);
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(decoderDirtyTask);
             if (fileDirtyTask == null) {
                 fileDirtyTask
                         = new SwingShutDownTask("DecoderPro Decoder Window Check",
@@ -168,7 +168,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                             }
                         };
             }
-            jmri.InstanceManager.shutDownManagerInstance().register(fileDirtyTask);
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(fileDirtyTask);
         }
 
         // Create a menu bar
@@ -477,7 +477,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // set the programming mode
         if (pProg != null) {
-            if (jmri.InstanceManager.programmerManagerInstance() != null) {
+            if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) != null) {
                 // go through in preference order, trying to find a mode
                 // that exists in both the programmer and decoder.
                 // First, get attributes. If not present, assume that
@@ -849,14 +849,14 @@ abstract public class PaneProgFrame extends JmriJFrame
             }
         }
         // Check for a "<new loco>" roster entry; if found, remove it
-        List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, SymbolicProgBundle.getMessage("LabelNewDecoder"));
+        List<RosterEntry> l = Roster.getDefault().matchingList(null, null, null, null, null, null, SymbolicProgBundle.getMessage("LabelNewDecoder"));
         if (l.size() > 0 && log.isDebugEnabled()) {
             log.debug("Removing " + l.size() + " <new loco> entries");
         }
         int x = l.size() + 1;
         while (l.size() > 0) {
-            Roster.instance().removeEntry(l.get(0));
-            l = Roster.instance().matchingList(null, null, null, null, null, null, SymbolicProgBundle.getMessage("LabelNewDecoder"));
+            Roster.getDefault().removeEntry(l.get(0));
+            l = Roster.getDefault().matchingList(null, null, null, null, null, null, SymbolicProgBundle.getMessage("LabelNewDecoder"));
             x--;
             if (x == 0) {
                 log.error("We have tried to remove all the entries, however an error has occured which has result in the entries not being deleted correctly");
@@ -868,12 +868,12 @@ abstract public class PaneProgFrame extends JmriJFrame
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         // deregister shutdown hooks
-        if (jmri.InstanceManager.shutDownManagerInstance() != null) {
-            jmri.InstanceManager.shutDownManagerInstance().deregister(decoderDirtyTask);
+        if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(decoderDirtyTask);
         }
         decoderDirtyTask = null;
-        if (jmri.InstanceManager.shutDownManagerInstance() != null) {
-            jmri.InstanceManager.shutDownManagerInstance().deregister(fileDirtyTask);
+        if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(fileDirtyTask);
         }
         fileDirtyTask = null;
 
@@ -1643,7 +1643,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // and store an updated roster file
         FileUtil.createDirectory(FileUtil.getUserFilesPath());
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
 
         // save date changed, update
         _rPane.updateGUI(_rosterEntry);
@@ -1726,7 +1726,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * @param yes true if empty panes should be shown
      */
     public static void setShowEmptyPanes(boolean yes) {
-        if (InstanceManager.getDefault(ProgrammerConfigManager.class) != null)
+        if (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) != null)
             InstanceManager.getDefault(ProgrammerConfigManager.class).setShowEmptyPanes(yes);
     }
 
@@ -1734,7 +1734,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * get value of Preference option to show empty panes
      */
     public static boolean getShowEmptyPanes() {
-        return (InstanceManager.getDefault(ProgrammerConfigManager.class) == null ) ?
+        return (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) == null ) ?
             true :
             InstanceManager.getDefault(ProgrammerConfigManager.class).isShowEmptyPanes();
     }
@@ -1763,12 +1763,12 @@ abstract public class PaneProgFrame extends JmriJFrame
      * @param yes true is CV numbers should be shown
      */
     public static void setShowCvNumbers(boolean yes) {
-        if (InstanceManager.getDefault(ProgrammerConfigManager.class) != null)
+        if (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) != null)
             InstanceManager.getDefault(ProgrammerConfigManager.class).setShowCvNumbers(yes);
     }
 
     public static boolean getShowCvNumbers() {
-        return (InstanceManager.getDefault(ProgrammerConfigManager.class) == null ) ?
+        return (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) == null ) ?
             true :
             InstanceManager.getDefault(ProgrammerConfigManager.class).isShowCvNumbers();
     }

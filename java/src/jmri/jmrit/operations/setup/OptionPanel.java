@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of setup options
  *
  * @author Dan Boudreau Copyright (C) 2010, 2011, 2012, 2013, 2015
- * @version $Revision$
  */
 public class OptionPanel extends OperationsPreferencesPanel {
 

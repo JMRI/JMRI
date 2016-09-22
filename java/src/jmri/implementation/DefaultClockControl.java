@@ -78,7 +78,7 @@ public class DefaultClockControl implements ClockControl {
     }
 
     public double getRate() {
-        return InstanceManager.timebaseInstance().getRate();
+        return InstanceManager.getDefault(jmri.Timebase.class).getRate();
     }
 
     /**
@@ -90,7 +90,7 @@ public class DefaultClockControl implements ClockControl {
     }
 
     public Date getTime() {
-        return InstanceManager.timebaseInstance().getTime();
+        return InstanceManager.getDefault(jmri.Timebase.class).getTime();
     }
 
     /**

@@ -1,5 +1,6 @@
 package jmri.jmrix.ecos.configurexml;
 
+import jmri.ConfigureManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2009
- * @version $Revision$
  */
 public class EcosPreferencesXml extends jmri.configurexml.AbstractXmlAdapter /*extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML*/ {
 
@@ -31,10 +31,13 @@ public class EcosPreferencesXml extends jmri.configurexml.AbstractXmlAdapter /*e
     protected void register() {
         /*log.error("unexpected call to register()");
          new Exception().printStackTrace();*/
-        jmri.InstanceManager.configureManagerInstance().registerPref(this);
+        ConfigureManager cm = jmri.InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerPref(this);
+        }
     }
     /*protected void register(String host, String port, String mode) {
-     InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(host, port, mode));
+     InstanceManager.getNullableDefault(jmri.ConfigureManager.class).registerPref(new ConnectionConfig(host, port, mode));
      }*/
 
     public boolean load(Element shared, Element perNode) {

@@ -1,14 +1,16 @@
-// MatrixSignalMast.java
 package jmri.implementation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import javax.annotation.Nonnull;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 
 /**
  * SignalMast implemented via a Binary Matrix (Truth Table) of Apects x Turnout objects.
@@ -94,7 +96,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
     */
     public void setBitsForAspect(String aspect, char[] bitArray) {
         if (aspectToOutput.containsKey(aspect)) {
-            log.debug("Aspect " + aspect + " is already defined as " + aspectToOutput.get(aspect));
+            if (log.isDebugEnabled()) log.debug("Aspect {} is already defined as {}", aspect, java.util.Arrays.toString(aspectToOutput.get(aspect)));
             aspectToOutput.remove(aspect);
         }
         aspectToOutput.put(aspect, bitArray); // store keypair aspectname - bitArray in hashmap
@@ -163,7 +165,9 @@ public class MatrixSignalMast extends AbstractSignalMast {
             return;
         }
         if (newLit) {
-            setAspect(getAspect());
+            if (getAspect() != null) {
+                setAspect(getAspect());
+            }
             // if true, activate prior aspect
         } else {
             if (unLitBits != null) {
@@ -182,14 +186,14 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  Receive unLitBits from xml and store
      *  @param bitString String for 1-n 1/0 chararacters setting an unlit aspect
      */
-    public void setUnLitBits(String bitString) {
+    public void setUnLitBits(@Nonnull String bitString) {
         setUnLitBits(bitString.toCharArray());
     }
 
     /**
      *  provide to panel for edit
      */
-    public char[] getUnLitBits() {
+    public @Nonnull char[] getUnLitBits() {
         if (unLitBits != null) {
             return unLitBits;
         } else {
@@ -201,7 +205,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  Hand unLitBits to xml
      *  @return String for 1-n 1/0 chararacters setting an unlit aspect
      */
-    public String getUnLitChars() {
+    public @Nonnull String getUnLitChars() {
         if (unLitBits != null) {
             return String.valueOf(unLitBits);
         } else {
@@ -210,7 +214,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         }
     }
 
-    public Turnout getOutputBean(int colnum) { // as bean
+    public @CheckForNull Turnout getOutputBean(int colnum) { // as bean
         String key = "output" + Integer.toString(colnum);
         if (colnum > 0 && colnum <= outputsToBeans.size()) {
             return outputsToBeans.get(key).getBean();
@@ -225,7 +229,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  @param colnum int index (1 up to 5) for the column of the desired output
      *  @return NamedBeanHandle to the configured turnout output
      */
-    public NamedBeanHandle<Turnout> getOutputHandle (int colnum) {
+    public @CheckForNull NamedBeanHandle<Turnout> getOutputHandle (int colnum) {
         String key = "output" + Integer.toString(colnum);
         if (colnum > 0 && colnum <= outputsToBeans.size()) {
             return outputsToBeans.get(key);
@@ -240,7 +244,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  @param colnum int index (1 up to 5) for the column of the desired output
      *  @return String with the desplay name of the configured turnout output
      */
-    public String getOutputName(int colnum) {
+    public @Nonnull String getOutputName(int colnum) {
         String key = "output" + Integer.toString(colnum);
         if (colnum > 0 && colnum <= outputsToBeans.size()) {
                 return outputsToBeans.get(key).getName();
@@ -255,7 +259,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  @param aspect String describing (valid) signal mast aspect, like "Clear"
      *  @param bitString String of 1/0 digits representing on/off outputs per aspect, like "00010"
      */
-    public void setBitstring(String aspect, String bitString) {
+    public void setBitstring(@Nonnull String aspect, @Nonnull String bitString) {
         if (aspectToOutput.containsKey(aspect)) {
             log.debug("Aspect " + aspect + " is already defined so will override");
             aspectToOutput.remove(aspect);
@@ -283,11 +287,11 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  @return bitString String of 1 (= on) and 0 (= off) chars
      *  @param aspect String describing valid signal mast aspect, like "Clear"
      */
-    public String getBitstring(String aspect) {
+    public @Nonnull String getBitstring(@Nonnull String aspect) {
         if (aspectToOutput.containsKey(aspect)) { // hashtable
             String bitString = new String(aspectToOutput.get(aspect)); // convert char[] to string
             return bitString;
-            }
+        }
         return "";
     }
 
@@ -295,7 +299,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  Provide the names of the on/off turnout outputs from outputsToBeans hashmap to xml
      *  @return outputlist List&lt;String&gt; of display names for the outputs in order 1 to (max) 5
      */
-    public List<String> getOutputs() { // provide to xml
+    public @Nonnull List<String> getOutputs() { // provide to xml
         // to do: use for loop
         ArrayList<String> outputlist = new ArrayList<String>(); // (5) or (mastBitNum) ?
         //list = outputsToBeans.keySet();
@@ -351,10 +355,10 @@ public class MatrixSignalMast extends AbstractSignalMast {
                 if (getOutputBean(i + 1) != null) {
                     getOutputBean(i + 1).setBinaryOutput(true); // prevent feedback etc.
                 }
-                if (bits[i] == '1' && getOutputBean(i + 1) != null && getOutputBean(i + 1).getCommandedState() == Turnout.THROWN) {
+                if (bits[i] == '1' && getOutputBean(i + 1) != null && getOutputBean(i + 1).getCommandedState() != Turnout.CLOSED) {
                     // no need to set a state already set
                     getOutputBean(i + 1).setCommandedState(Turnout.CLOSED);
-                } else if (bits[i] == '0' && getOutputBean(i + 1) != null && getOutputBean(i + 1).getCommandedState() == Turnout.CLOSED) {
+                } else if (bits[i] == '0' && getOutputBean(i + 1) != null && getOutputBean(i + 1).getCommandedState() != Turnout.THROWN) {
                     getOutputBean(i + 1).setCommandedState(Turnout.THROWN);
                 } else if (bits[i] == 'n' || bits[i] == 'u') {
                     // let pass, extra chars up to 5 are not defined
@@ -470,5 +474,3 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     private final static Logger log = LoggerFactory.getLogger(MatrixSignalMast.class.getName());
 }
-
-/* @(#)MatrixSignalMast.java */

@@ -12,7 +12,6 @@ import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 /**
  * <P>
  * @author Pete Cressman Copyright: Copyright (c) 2012
- * @version $Revision: 1 $
  *
  */
 public class ShapeDrawer {
@@ -28,14 +27,14 @@ public class ShapeDrawer {
     public JMenu makeMenu() {
         JMenu drawMenu = new JMenu(Bundle.getMessage("drawShapes"));
 
-        JMenuItem shapeItem = new JMenuItem(Bundle.getMessage("drawRectangle"));
+        JMenuItem shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Rectangle")));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 newRectangle();
             }
         });
-        shapeItem = new JMenuItem(Bundle.getMessage("drawRoundRectangle"));
+        shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("roundRect")));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -43,7 +42,7 @@ public class ShapeDrawer {
             }
         });
 
-        shapeItem = new JMenuItem(Bundle.getMessage("drawPolygon"));
+        shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Polygon")));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -51,14 +50,14 @@ public class ShapeDrawer {
             }
         });
 
-        shapeItem = new JMenuItem(Bundle.getMessage("drawCircle"));
+        shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Circle")));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 newCircle();
             }
         });
-        shapeItem = new JMenuItem(Bundle.getMessage("drawEllipse"));
+        shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Ellipse")));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -71,7 +70,7 @@ public class ShapeDrawer {
 
     private void newRectangle() {
         if (_drawFrame == null) {
-            _drawFrame = new DrawRectangle("newShape", "rectangle", this);
+            _drawFrame = new DrawRectangle("newShape", "Rectangle", this);
         } else {
             _drawFrame.toFront();
         }
@@ -87,7 +86,7 @@ public class ShapeDrawer {
 
     private void newPolygon() {
         if (_drawFrame == null) {
-            _drawFrame = new DrawPolygon("newShape", "polygon", this);
+            _drawFrame = new DrawPolygon("newShape", "Polygon", this);
         } else {
             _drawFrame.toFront();
         }
@@ -95,7 +94,7 @@ public class ShapeDrawer {
 
     private void newCircle() {
         if (_drawFrame == null) {
-            _drawFrame = new DrawCircle("newShape", "circle", this);
+            _drawFrame = new DrawCircle("newShape", "Circle", this);
         } else {
             _drawFrame.toFront();
         }
@@ -103,7 +102,7 @@ public class ShapeDrawer {
 
     private void newEllipse() {
         if (_drawFrame == null) {
-            _drawFrame = new DrawEllipse("newShape", "ellipse", this);
+            _drawFrame = new DrawEllipse("newShape", "Ellipse", this);
         } else {
             _drawFrame.toFront();
         }

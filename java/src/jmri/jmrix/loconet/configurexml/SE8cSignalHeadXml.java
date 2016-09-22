@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Handle XML configuration for loconet.SE8cSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision$
  */
 public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -67,7 +66,7 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
         loadCommon(h, shared);
 
-        InstanceManager.signalHeadManagerInstance().register(h);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         return true;
     }
 

@@ -1,16 +1,15 @@
 package jmri.util;
 
 import java.util.Locale;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.util.IntlUtilities class.
  *
- * @author	Bob Jacobsen Copyright 20014
- * @version	$Revision$
+ * @author	Bob Jacobsen Copyright 2014
  */
 public class IntlUtilitiesTest extends TestCase {
 
@@ -18,8 +17,8 @@ public class IntlUtilitiesTest extends TestCase {
         Locale startingLocale = Locale.getDefault();
         try {
             Locale.setDefault(Locale.US);
-            Assert.assertEquals("1.0", 1.0f, IntlUtilities.floatValue("1.0"));
-            Assert.assertEquals("2.3", 2.3f, IntlUtilities.floatValue("2.3"));
+            Assert.assertEquals("1.0", 1.0f, IntlUtilities.floatValue("1.0"), 0.0);
+            Assert.assertEquals("2.3", 2.3f, IntlUtilities.floatValue("2.3"), 0.0);
         } finally {
             Locale.setDefault(startingLocale);
         }
@@ -29,8 +28,8 @@ public class IntlUtilitiesTest extends TestCase {
         Locale startingLocale = Locale.getDefault();
         try {
             Locale.setDefault(Locale.ITALY);
-            Assert.assertEquals("1,0", 1.0f, IntlUtilities.floatValue("1,0"));
-            Assert.assertEquals("2,3", 2.3f, IntlUtilities.floatValue("2,3"));
+            Assert.assertEquals("1,0", 1.0f, IntlUtilities.floatValue("1,0"), 0.0);
+            Assert.assertEquals("2,3", 2.3f, IntlUtilities.floatValue("2,3"), 0.0);
         } finally {
             Locale.setDefault(startingLocale);
         }
@@ -40,8 +39,8 @@ public class IntlUtilitiesTest extends TestCase {
         Locale startingLocale = Locale.getDefault();
         try {
             Locale.setDefault(Locale.US);
-            Assert.assertEquals("1.0", 1.0, IntlUtilities.doubleValue("1.0"));
-            Assert.assertEquals("2.3", 2.3, IntlUtilities.doubleValue("2.3"));
+            Assert.assertEquals("1.0", 1.0, IntlUtilities.doubleValue("1.0"), 0.0);
+            Assert.assertEquals("2.3", 2.3, IntlUtilities.doubleValue("2.3"), 0.0);
         } finally {
             Locale.setDefault(startingLocale);
         }
@@ -51,8 +50,8 @@ public class IntlUtilitiesTest extends TestCase {
         Locale startingLocale = Locale.getDefault();
         try {
             Locale.setDefault(Locale.ITALY);
-            Assert.assertEquals("1,0", 1.0, IntlUtilities.doubleValue("1,0"));
-            Assert.assertEquals("2,3", 2.3, IntlUtilities.doubleValue("2,3"));
+            Assert.assertEquals("1,0", 1.0, IntlUtilities.doubleValue("1,0"), 0.0);
+            Assert.assertEquals("2,3", 2.3, IntlUtilities.doubleValue("2,3"), 0.0);
         } finally {
             Locale.setDefault(startingLocale);
         }

@@ -21,8 +21,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Alex Shepherd Copyright (C) 2006
  * @author Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- */
+  */
 public final class ClientRxHandler extends Thread implements DCCppListener {
 
     Socket clientSocket;
@@ -162,12 +161,6 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
 			outBuf.append(">");
                         log.debug("ClientTxHandler: Send: " + outBuf.toString());
                         outBuf.append("\r\n");
-                        // See if we are waiting for an echo of a sent message
-                        // and if it is append the Ack to the client
-                        if ((lastSentMessage != null) && lastSentMessage.equals(msg)) {
-                            lastSentMessage = null;
-                            outBuf.append("SENT OK\r\n");
-                        }
                         outStream.write(outBuf.toString().getBytes());
                         outStream.flush();
                     }

@@ -1,126 +1,203 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
-<head><title>Comprehensive Programmer - Speed Control Pane</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>Comprehensive Programmer - Speed Control Pane</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<a name="Top"></a>
-<h1>DecoderPro&reg; Comprehensive Programmer</h1>
-<h2>Basic Speed Control Pane</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-<p><a href="Comp_Motor.shtml">Previous | </a>
-  <a href="Comp_Speed_Talble.shtml">Next </a>
-</p><p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
-</p></div>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<hr>
-<p>The <strong>Speed Control pane</strong> looks very complicated, but it can be one of
-the most significant in improving the performance of your locomotive fleet. Remember if you use <strong>Speed Table </strong>TAB this TAB is not used.
-</p><h1><img src="images/Speed_Table_Main.png" alt="speed" height="386" width="804"></h1>
+      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
 
-<p>Let's look first at the top of the pane: You now have the option of
-using Basic Speed Control (this pane) or Speed Table to control your
-locomotive's speed. Use the tabs at the top of the screen to select the
-method you wish to use and then click the button in the top center for
-the page to select that method of speed control.&nbsp; Whichever one
-you select last with the button will be the method used for speed
-control.
-</p><p>Now back to Basic Speed Control Pane.
-We see the
-<strong> Start Voltage(0-255) </strong>slider to set the start voltage.
-What appears in the body of this panel is dependent on what is
-available from your decoder manufacturer.&nbsp; Most have something
-similar to what is shown, but the Soundtraxx Tsunami series is very
-limited.&nbsp; We&#8217;ll show you a way around this limitation when we get
-to the Speed Table screen. </p><p>Three important CVs are programmed in this pane Vstart, Vmid
-and Vhigh. They work together to make a very basic three point speed
-table. On some decoders these settings may be labeled differently and
-all three may not be available. Decoder Pro will show the correct
-options for your selected decoder. </p><p>Possible setting that can appear on this TAB.
-</p><p>
-<b>Vstart</b>(<strong>Start Voltage</strong>) is the voltage at the first speed step. If your locomotive
-didn't start moving until there were three volts on the track with analog
-power, this lets you set up the decoder to give it 2.99 volts right away,
-so it will start moving when you advance your DCC throttle.
-</p><p>
-<b>Vhigh(Top Voltage, Max Voltage, Maximum Voltage)</b> is the maximum amount of power the locomotive will
-get from the decoder. If your locomotive looks like Chuck Yeager's X-1
-at full throttle, then you can trim the top speed down to a more reasonable scale 
-level.
-A similar looking limit can be set on the Roster  Entry screen, but it only apples to JMRI Throttles.
-</p><p>
-<b>Vmid</b>(<strong>Mid Voltage, Midpoint Voltage) </strong>lets you configure the slope between <b>Vstart</b>
-and <b>Vhigh</b> a bit, so that if your locomotive reaches full speed
-at 5 volts, you can stretch out the lower end of the curve to get more
-fine control in a useful speed range.
-</p><p>If you are having problems with unpredictable speeds with your
-locomotives, check these settings. Sometimes, one or more of these
-settings have been changed accidentally (usually due to an error in
-programming CV&#8217;s with a throttle), leading to very odd speed
-performance. In particular, if the <strong>Vmid</strong> is  lower than <strong>Vstart</strong> or higher than <strong>Vhigh</strong>, results can be highly  unpredictable. Decoder Pro will not let you make this mistake. 
-</p><p><b>Forward Trim</b> and <b>Reverse
-    Trim</b> allow you to
-compensate for differences in the forward speed and reverse speed of
-the locomotive. Most model locomotives do not run at exactly the
-same speed forward and backward due to the motor mechanics and the gear
-train to the wheels. </p><p>The settings for these controls are not as intuitive as you
-might think. A setting of 0 in these CVs turns them off. However, a
-setting of 128 in either of them will have no visible effect! To make
-the forward and reverse trim effective, raise the value above 128 to
-increase speed, and lower it below 128 to decrease speed in this pane.
-The Forward and Reverse Trim does not work the same for all decoders,
-with variations between manufacturers.
-</p><div class="BOXIT">
-  <h3>Some suggestions on using the basic motor controls and programming on the main.<br>
-  </h3>
-  <p> Unless you want to get into some precision speed matching, you probably won't need to use the <b>Speed Tables</b> you'll see on the <a href="Comp_Speed_Talble.shtml" target="_parent"><strong>Speed Table pane</strong></a>- you'll be able to accomplish much of what you want using just <b>Kick start</b> (<a href="Comp_Motor.shtml">previous  pane</a>), and <b>Start Volts</b>, <b>Mid Volts</b>, and <b>Max Volts</b> if  they are available in this pane...  but how to do this?
-  </p><p> Start with the <b>Kick start</b> value, and <a href="Programmer_OpsMode.shtml">Programming on the main</a> rather than the programming track. Set the locomotive to be programmed on throttle step 1. If it moves <span class="ACCENT">at all</span>, don't change the <b>Kick start</b>
-value. If it doesn't move, slowly step up the throttle until it does.
-Then, turn the throttle down. If the locomotive stops at the same
-setting it started, you won't need to set the <b>Kick start</b> value. However, if it continues to run at a slower speed than it would start, then increase the <b>Kick start</b> value until it will start and run at its slowest possible speed.
-  </p><p> Now, if the locomotive isn't running at throttle step 1, increase the <b>Start Volts</b> value (and  write it) without changing the throttle until the locomotive <span class="ACCENT">barely</span> crawls... you can usually get this down to a speed of a tie a minute or so if you like! Remember, you are doing this in "<b>ops mode</b>",
-so you can make these changes while the locomotive is actually running.
-Don't forget to write the value changes to the decoder - they won't
-take effect unless you do. </p><p> Now, set the top speed of the locomotive. Run the throttle up to full, and lower the <b>Max Volts</b>
-value (and write it) until the locomotive runs at the maximum speed you
-want it to reach, but don't forget that adding a train will slow it
-down! </p><p> Finally, set the <b>Mid Volts</b> value about half-way between <b>Start Volts</b> and <b>Max Volts</b>. Setting it above or below the median of the <b>Start Volts</b> and <b>Max Volts</b> values will give you a crude, three point speed table.
-  </p><p>There
-are no hard and fast rules for the exact numbers to use. Even identical
-locomotives with identical decoders will need different numbers, due to
-variances in motors and drive trains. Experiment with the settings -
-Decoder Pro makes it easy! </p><p>Note: Not all decoders will have Start, Mid and Max Volts,
-but will have some version of this which will be displayed by Decoder
-Pro for the specific decoder.
-</p></div>
-<hr>
-<p>If you select <a href="Comp_Speed_Talble.shtml"><strong>Speed Table </strong></a>all of the settings in this pane are ignored. 
-   <br>
-</p>
+      <h2>Basic Speed Control Pane</h2>
 
-<hr>
-<div align="right">
-<p><a href="Comp_Speed_Talble.shtml"></a>
-  <a href="Comp_Motor.shtml">Previous | </a> <a href="Comp_Speed_Talble.shtml">Next </a>
-</p><p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
-</p></div>
+      <div align="right">
+        <p><a href="Comp_Motor.shtml">Previous |</a> <a href=
+        "Comp_Speed_Talble.shtml">Next</a></p>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
- </body>
+        <p><a href="index.shtml#Advanced%20Programmer">Back to
+        Index</a></p>
+      </div>
+      <hr>
+
+      <p>The <strong>Speed Control pane</strong> looks very
+      complicated, but it can be one of the most significant in
+      improving the performance of your locomotive fleet. Remember
+      if you use <strong>Speed Table</strong> TAB this TAB is not
+      used.</p>
+
+      <h1><img src="images/Speed_Table_Main.png" alt="speed"
+      height="386" width="804"></h1>
+
+      <p>Let's look first at the top of the pane: You now have the
+      option of using Basic Speed Control (this pane) or Speed
+      Table to control your locomotive's speed. Use the tabs at the
+      top of the screen to select the method you wish to use and
+      then click the button in the top center for the page to
+      select that method of speed control. Whichever one you select
+      last with the button will be the method used for speed
+      control.</p>
+
+      <p>Now back to Basic Speed Control Pane. We see the
+      <strong>Start Voltage(0-255)</strong> slider to set the start
+      voltage. What appears in the body of this panel is dependent
+      on what is available from your decoder manufacturer. Most
+      have something similar to what is shown, but the Soundtraxx
+      Tsunami series is very limited. We'll show you a way around
+      this limitation when we get to the Speed Table screen.</p>
+
+      <p>Three important CVs are programmed in this pane Vstart,
+      Vmid and Vhigh. They work together to make a very basic three
+      point speed table. On some decoders these settings may be
+      labeled differently and all three may not be available.
+      Decoder Pro will show the correct options for your selected
+      decoder.</p>
+
+      <p>Possible setting that can appear on this TAB.</p>
+
+      <p><b>Vstart</b>(<strong>Start Voltage</strong>) is the
+      voltage at the first speed step. If your locomotive didn't
+      start moving until there were three volts on the track with
+      analog power, this lets you set up the decoder to give it
+      2.99 volts right away, so it will start moving when you
+      advance your DCC throttle.</p>
+
+      <p><b>Vhigh(Top Voltage, Max Voltage, Maximum Voltage)</b> is
+      the maximum amount of power the locomotive will get from the
+      decoder. If your locomotive looks like Chuck Yeager's X-1 at
+      full throttle, then you can trim the top speed down to a more
+      reasonable scale level. A similar looking limit can be set on
+      the Roster Entry screen, but it only apples to JMRI
+      Throttles.</p>
+
+      <p><b>Vmid</b>(<strong>Mid Voltage, Midpoint
+      Voltage)</strong> lets you configure the slope between
+      <b>Vstart</b> and <b>Vhigh</b> a bit, so that if your
+      locomotive reaches full speed at 5 volts, you can stretch out
+      the lower end of the curve to get more fine control in a
+      useful speed range.</p>
+
+      <p>If you are having problems with unpredictable speeds with
+      your locomotives, check these settings. Sometimes, one or
+      more of these settings have been changed accidentally
+      (usually due to an error in programming CV's with a
+      throttle), leading to very odd speed performance. In
+      particular, if the <strong>Vmid</strong> is lower than
+      <strong>Vstart</strong> or higher than
+      <strong>Vhigh</strong>, results can be highly unpredictable.
+      Decoder Pro will not let you make this mistake.</p>
+
+      <p><b>Forward Trim</b> and <b>Reverse Trim</b> allow you to
+      compensate for differences in the forward speed and reverse
+      speed of the locomotive. Most model locomotives do not run at
+      exactly the same speed forward and backward due to the motor
+      mechanics and the gear train to the wheels.</p>
+
+      <p>The settings for these controls are not as intuitive as
+      you might think. A setting of 0 in these CVs turns them off.
+      However, a setting of 128 in either of them will have no
+      visible effect! To make the forward and reverse trim
+      effective, raise the value above 128 to increase speed, and
+      lower it below 128 to decrease speed in this pane. The
+      Forward and Reverse Trim does not work the same for all
+      decoders, with variations between manufacturers.</p>
+
+      <div class="BOXIT">
+        <h3>Some suggestions on using the basic motor controls and
+        programming on the main.<br></h3>
+
+        <p>Unless you want to get into some precision speed
+        matching, you probably won't need to use the <b>Speed
+        Tables</b> you'll see on the <a href=
+        "Comp_Speed_Talble.shtml" target="_parent"><strong>Speed
+        Table pane</strong></a>- you'll be able to accomplish much
+        of what you want using just <b>Kick start</b> (<a href=
+        "Comp_Motor.shtml">previous pane</a>), and <b>Start
+        Volts</b>, <b>Mid Volts</b>, and <b>Max Volts</b> if they
+        are available in this pane... but how to do this?</p>
+
+        <p>Start with the <b>Kick start</b> value, and <a href=
+        "Programmer_OpsMode.shtml">Programming on the main</a>
+        rather than the programming track. Set the locomotive to be
+        programmed on throttle step 1. If it moves <span class=
+        "ACCENT">at all</span>, don't change the <b>Kick start</b>
+        value. If it doesn't move, slowly step up the throttle
+        until it does. Then, turn the throttle down. If the
+        locomotive stops at the same setting it started, you won't
+        need to set the <b>Kick start</b> value. However, if it
+        continues to run at a slower speed than it would start,
+        then increase the <b>Kick start</b> value until it will
+        start and run at its slowest possible speed.</p>
+
+        <p>Now, if the locomotive isn't running at throttle step 1,
+        increase the <b>Start Volts</b> value (and write it)
+        without changing the throttle until the locomotive
+        <span class="ACCENT">barely</span> crawls... you can
+        usually get this down to a speed of a tie a minute or so if
+        you like! Remember, you are doing this in "<b>ops
+        mode</b>", so you can make these changes while the
+        locomotive is actually running. Don't forget to write the
+        value changes to the decoder - they won't take effect
+        unless you do.</p>
+
+        <p>Now, set the top speed of the locomotive. Run the
+        throttle up to full, and lower the <b>Max Volts</b> value
+        (and write it) until the locomotive runs at the maximum
+        speed you want it to reach, but don't forget that adding a
+        train will slow it down!</p>
+
+        <p>Finally, set the <b>Mid Volts</b> value about half-way
+        between <b>Start Volts</b> and <b>Max Volts</b>. Setting it
+        above or below the median of the <b>Start Volts</b> and
+        <b>Max Volts</b> values will give you a crude, three point
+        speed table.</p>
+
+        <p>There are no hard and fast rules for the exact numbers
+        to use. Even identical locomotives with identical decoders
+        will need different numbers, due to variances in motors and
+        drive trains. Experiment with the settings - Decoder Pro
+        makes it easy!</p>
+
+        <p>Note: Not all decoders will have Start, Mid and Max
+        Volts, but will have some version of this which will be
+        displayed by Decoder Pro for the specific decoder.</p>
+      </div>
+      <hr>
+
+      <p>If you select <a href=
+      "Comp_Speed_Talble.shtml"><strong>Speed Table</strong></a>
+      all of the settings in this pane are ignored.<br></p>
+      <hr>
+
+      <div align="right">
+        <p><a href="Comp_Speed_Talble.shtml"></a> <a href=
+        "Comp_Motor.shtml">Previous |</a> <a href=
+        "Comp_Speed_Talble.shtml">Next</a></p>
+
+        <p><a href="index.shtml#Advanced%20Programmer">Back to
+        Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
 </html>

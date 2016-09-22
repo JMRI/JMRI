@@ -1,4 +1,3 @@
-// ConnectionLabel.java
 package jmri.swing;
 
 import java.awt.Color;
@@ -16,10 +15,6 @@ import jmri.jmrix.JmrixConfigPane;
  */
 public final class ConnectionLabel extends JLabel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4404932240707919099L;
     ConnectionConfig connection;
 
     public ConnectionLabel(ConnectionConfig connection) {

@@ -9,8 +9,7 @@ import javax.swing.AbstractAction;
  *
  * @author Alex Shepherd Copyright (C) 2006
  * @author Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- */
+  */
 public class ServerAction
         extends AbstractAction {
 

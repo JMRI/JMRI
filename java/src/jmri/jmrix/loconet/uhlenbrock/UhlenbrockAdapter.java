@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Alex Shepherd Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2005, 2010
- * @version	$Revision: 17977 $
  */
 public class UhlenbrockAdapter extends LocoBufferAdapter {
 
