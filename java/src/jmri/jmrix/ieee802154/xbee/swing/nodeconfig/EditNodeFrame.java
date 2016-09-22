@@ -40,8 +40,8 @@ public class EditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.EditNo
     /**
      * Constructor method
      *
-     * @param XBeeTrafficController tc, the XBeeTrafficController assocaiated with this connection.
-     * @param NodeConfigFrame source, the NodeConfigFrame that started this add.
+     * @param tc, the XBeeTrafficController assocaiated with this connection.
+     * @param source, the NodeConfigFrame that started this add.
      */
     public EditNodeFrame(XBeeTrafficController tc,XBeeNode node,NodeConfigFrame source) {
         super(tc,node);

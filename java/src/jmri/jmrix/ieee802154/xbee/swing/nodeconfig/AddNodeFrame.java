@@ -40,8 +40,8 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
     /**
      * Constructor method
      *
-     * @param XBeeTrafficController tc, the XBeeTrafficController assocaiated with this connection.
-     * @param NodeConfigFrame source, the NodeConfigFrame that started this add.
+     * @param tc, the XBeeTrafficController assocaiated with this connection.
+     * @param source, the NodeConfigFrame that started this add.
      */
     public AddNodeFrame(XBeeTrafficController tc,NodeConfigFrame source) {
         super(tc);
