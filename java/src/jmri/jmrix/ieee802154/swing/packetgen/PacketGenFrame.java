@@ -1,4 +1,3 @@
-// PacketGenFrame.java
 package jmri.jmrix.ieee802154.swing.packetgen;
 
 import jmri.jmrix.ieee802154.IEEE802154Message;
@@ -8,14 +7,9 @@ import jmri.jmrix.ieee802154.IEEE802154TrafficController;
  * Frame for user input of XpressNet messages
  *
  * @author	Bob Jacobsen Copyright (C) 2001,2002
- * @version	$Revision$
  */
 public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6639533222251655795L;
     final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.ieee802154.IEEE802154ActionListBundle");
 
     public void initComponents() throws Exception {
