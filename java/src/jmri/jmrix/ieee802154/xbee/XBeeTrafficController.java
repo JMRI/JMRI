@@ -1,10 +1,15 @@
-// XBeeTrafficController
 package jmri.jmrix.ieee802154.xbee;
 
-import com.rapplogic.xbee.api.AtCommandResponse;
-import com.rapplogic.xbee.api.XBee;
-import com.rapplogic.xbee.api.XBeeException;
-import com.rapplogic.xbee.api.XBeeResponse;
+import com.digi.xbee.api.models.ATCommandResponse;
+import com.digi.xbee.api.XBeeDevice;
+import com.digi.xbee.api.RemoteXBeeDevice;
+import com.digi.xbee.api.exceptions.XBeeException;
+import com.digi.xbee.api.RemoteXBeeDevice;
+import com.digi.xbee.api.packet.XBeePacket;
+import com.digi.xbee.api.listeners.IPacketReceiveListener;
+import com.digi.xbee.api.listeners.IModemStatusReceiveListener;
+import com.digi.xbee.api.listeners.IDataReceiveListener;
+import com.digi.xbee.api.models.ModemStatusEvent;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -20,12 +25,11 @@ import org.slf4j.LoggerFactory;
  * Traffic Controller interface for communicating with XBee devices directly
  * using the XBee API.
  *
- * @author Paul Bender Copyright (C) 2013
- * @version $Revision$
+ * @author Paul Bender Copyright (C) 2013,2016
  */
-public class XBeeTrafficController extends IEEE802154TrafficController implements com.rapplogic.xbee.api.PacketListener, XBeeInterface {
+public class XBeeTrafficController extends IEEE802154TrafficController implements IPacketReceiveListener, IModemStatusReceiveListener, IDataReceiveListener, XBeeInterface {
 
-    private XBee xbee = null;
+    private XBeeDevice xbee = null;
 
     /**
      * Get a message of a specific length for filling in.
@@ -52,14 +56,22 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     @Override
     public void connectPort(AbstractPortController p) {
         // Attach XBee to the port
-        if (xbee == null) {
-            xbee = new XBee();
-        }
         try {
             if( p instanceof XBeeAdapter) {
                XBeeAdapter xbp = (XBeeAdapter) p;
-               xbee.initProviderConnection(xbp);
+               xbee = new XBeeDevice(xbp);
+               xbee.open();
+               xbee.reset(); 
+               try {
+                  synchronized(this){
+                     wait(2000);
+                  }
+               } catch (java.lang.InterruptedException e) {
+               }
                xbee.addPacketListener(this);
+               xbee.addModemStatusListener(this);
+               xbee.addDataListener(this);
+
                // and start threads
                xmtThread = new Thread(xmtRunnable = new Runnable() {
                    public void run() {
@@ -72,14 +84,12 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
                });
                xmtThread.setName("Transmit");
                xmtThread.start();
+
             } else {
                throw new java.lang.IllegalArgumentException("Wrong adapter type specified when connecting to the port.");
             }
-
-        } catch (XBeeException xe) {
-            log.error("Failed to make XBee connection " + xe);
         } catch (Exception e) {
-            log.error("Failed to start up communications. Error was " + e);
+            log.error("Failed to start up communications. Error was {} cause {} ",e,e.getCause());
         }
     }
 
@@ -104,7 +114,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
          in AbstractMRTrafficController here */
         // forward using XBee Specific message format
         try {
-            xbee.sendAsynchronous(((XBeeMessage) m).getXBeeRequest());
+            xbee.sendPacketAsync(((XBeeMessage) m).getXBeeRequest());
         } catch (XBeeException xbe) {
             log.error("Error Sending message to XBee: " + xbe);
         }
@@ -177,36 +187,51 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         }
     }
 
-    // XBee Packet Listener interface methods
-    // NOTE: Many of the details of this function are derived
-    // from the the handleOneIncomingReply() in 
-    // AbstractMRTrafficController.
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"NO_NOTIFY_NOT_NOTIFYALL","UW_UNCOND_WAIT","WA_NOT_IN_LOOP"}, justification="There should only be one thread waiting on xmtRunnable. wait() on xmtRunnable is unconditional and not in a loop because it is used to wait for the hardware when switching modes.")
-    public void processResponse(XBeeResponse response) {
-
-        // before we forward this on to the listeners, handle
-        // responses that may modify how the message is interpreted.
-        try {
-            // set the hardware type from a response to an "HV" AtCommandResponse
-            if (response instanceof AtCommandResponse
-                    && ((AtCommandResponse) response).getCommand().equals("HV")) {
-                setSeries(com.rapplogic.xbee.api.HardwareVersion.parse(
-                        (com.rapplogic.xbee.api.AtCommandResponse) response));
+    public synchronized void deleteNode(XBeeNode node) {
+        // find the serial node
+        int index = 0;
+        for (int i = 0; i < numNodes; i++) {
+            if (nodeArray[i] == node) {
+                index = i;
             }
-        } catch (com.rapplogic.xbee.api.XBeeException xbe) {
-            setSeries(com.rapplogic.xbee.api.HardwareVersion.RadioType.UNKNOWN);
         }
-
-        // set the firmware version after a "VR" AtCommandResponse
-        if (response instanceof AtCommandResponse
-                && ((AtCommandResponse) response).getCommand().equals("VR")) {
-            setVersion(((com.rapplogic.xbee.api.AtCommandResponse) response).getValue());
+        if (index == curSerialNodeIndex) {
+            log.warn("Deleting the serial node active in the polling loop");
         }
+        // Delete the node from the node list
+        numNodes--;
+        if (index < numNodes) {
+            // did not delete the last node, shift
+            for (int j = index; j < numNodes; j++) {
+                nodeArray[j] = nodeArray[j + 1];
+            }
+        }
+        nodeArray[numNodes] = null;
+        // remove this node from the network too.
+        getXBee().getNetwork().addRemoteDevice(node.getXBee());
+ 
+    }
 
-        //if(response.isError()) {
-        //    log.error("XBee API Reports error in parsing reply");
-        //    return;
-        //}
+
+    // XBee IPacketReceiveListener interface methods
+    public void packetReceived(XBeePacket response) {
+
+        log.debug("packetReceived called with {}",response);
+        dispatchResponse(response);
+    }
+
+    // XBee IModemStatusReceiveListener interface methods
+    public void modemStatusEventReceived(ModemStatusEvent modemStatusEvent){
+       log.debug("modemStatusEventReceived called with event {} ", modemStatusEvent);
+    }
+
+    // XBee IDataReceiveListener interface methods
+    public void dataReceived(com.digi.xbee.api.models.XBeeMessage xbm){
+       log.debug("dataReceived called with message {} ", xbm);
+    }
+
+
+    private void dispatchResponse(XBeePacket response){
         XBeeReply reply = new XBeeReply(response);
 
         // message is complete, dispatch it !!
@@ -219,112 +244,22 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         // forward the message to the registered recipients,
         // which includes the communications monitor
         // return a notification via the Swing event queue to ensure proper thread
-        Runnable r = new RcvNotifier(reply, mLastSender, this);
+        /*Runnable r = new RcvNotifier(reply, mLastSender, this);
         try {
+            log.debug("invoking dispatch thread");
             javax.swing.SwingUtilities.invokeAndWait(r);
+            log.debug("dispatch thread complete");
         } catch (Exception e) {
             log.error("Unexpected exception in invokeAndWait:" + e);
             log.error("cause:" + e.getCause());
             e.printStackTrace();
-        }
+        }*/
         if (log.isDebugEnabled()) {
             log.debug("dispatch thread invoked");
         }
 
-        // from here to the end of the function was copied verbatim from 
-        // handleOneIncomingReply.  We may not need it after the send code
-        // is put into place.
-        if (!reply.isUnsolicited()) {
-            // effect on transmit:
-            switch (mCurrentState) {
-                case WAITMSGREPLYSTATE: {
-                    // check to see if the response was an error message we want
-                    // to automatically handle by re-queueing the last sent
-                    // message, otherwise go on to the next message
-                    if (reply.isRetransmittableErrorMsg()) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("Automatic Recovery from Error Message: +reply.toString()");
-                        }
-                        synchronized (xmtRunnable) {
-                            mCurrentState = AUTORETRYSTATE;
-                            replyInDispatch = false;
-                            xmtRunnable.notify();
-                        }
-                    } else {
-                        // update state, and notify to continue
-                        synchronized (xmtRunnable) {
-                            mCurrentState = NOTIFIEDSTATE;
-                            replyInDispatch = false;
-                            xmtRunnable.notify();
-                        }
-                    }
-                    break;
-                }
-                case WAITREPLYINPROGMODESTATE: {
-                    // entering programming mode
-                    mCurrentMode = PROGRAMINGMODE;
-                    replyInDispatch = false;
-
-                    // check to see if we need to delay to allow decoders to become
-                    // responsive
-                    int warmUpDelay = enterProgModeDelayTime();
-                    if (warmUpDelay != 0) {
-                        try {
-                            synchronized (xmtRunnable) {
-                                xmtRunnable.wait(warmUpDelay);
-                            }
-                        } catch (InterruptedException e) {
-                            Thread.currentThread().interrupt(); // retain if needed later
-                        }
-                    }
-                    // update state, and notify to continue
-                    synchronized (xmtRunnable) {
-                        mCurrentState = OKSENDMSGSTATE;
-                        xmtRunnable.notify();
-                    }
-                    break;
-                }
-                case WAITREPLYINNORMMODESTATE: {
-                    // entering normal mode
-                    mCurrentMode = NORMALMODE;
-                    replyInDispatch = false;
-                    // update state, and notify to continue
-                    synchronized (xmtRunnable) {
-                        mCurrentState = OKSENDMSGSTATE;
-                        xmtRunnable.notify();
-                    }
-                    break;
-                }
-                default: {
-                    replyInDispatch = false;
-                    if (allowUnexpectedReply == true) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("Allowed unexpected reply received in state: "
-                                    + mCurrentState + " was " + reply.toString());
-                        }
-                        //synchronized (xmtRunnable) {
-                        // The transmit thread sometimes gets stuck
-                        // when unexpected replies are received.  Notify
-                        // it to clear the block without a timeout.
-                        // (do not change the current state)
-                        //if(mCurrentState!=IDLESTATE)
-                        //        xmtRunnable.notify();
-                        // }
-                    } else {
-                        log.error("reply complete in unexpected state: "
-                                + mCurrentState + " was " + reply.toString());
-                    }
-                }
-            }
-            // Unsolicited message
-        } else {
-            if (log.isDebugEnabled()) {
-                log.debug("Unsolicited Message Received "
-                        + reply.toString());
-            }
-
-            replyInDispatch = false;
-        }
+        replyInDispatch = false;
+        log.debug("Dispatch Complete");
     }
 
     /*
@@ -388,37 +323,6 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         }
     }
 
-    // keep track of the XBee Series
-    private com.rapplogic.xbee.api.HardwareVersion.RadioType series = com.rapplogic.xbee.api.HardwareVersion.RadioType.UNKNOWN;
-
-    private void setSeries(com.rapplogic.xbee.api.HardwareVersion.RadioType type) {
-        series = type;
-    }
-
-    // if we are using Series 1 XBees, use wpan classes from the XBee API library
-    public boolean isSeries1() {
-        return ((!((firmwareVersion[0] & 0xF0) == 0x80))
-                && (series == com.rapplogic.xbee.api.HardwareVersion.RadioType.SERIES1
-                || series == com.rapplogic.xbee.api.HardwareVersion.RadioType.SERIES1_PRO
-                || series == com.rapplogic.xbee.api.HardwareVersion.RadioType.UNKNOWN));
-    }
-
-    // if we are using Series 2 XBees, use zigbee classes from the XBee API library
-    public boolean isSeries2() {
-        return ((firmwareVersion[0] & 0xF0) == 0x80
-                || series == com.rapplogic.xbee.api.HardwareVersion.RadioType.SERIES2
-                || series == com.rapplogic.xbee.api.HardwareVersion.RadioType.SERIES2_PRO
-                || series == com.rapplogic.xbee.api.HardwareVersion.RadioType.SERIES2B_PRO);
-    }
-
-    // keep track of the XBee Firmware Version
-    private int firmwareVersion[] = {0xFF, 0xFF};
-
-    private void setVersion(int version[]) {
-        firmwareVersion[0] = version[0];
-        firmwareVersion[1] = version[1];
-    }
-
     /**
      * Public method to identify an XBeeNode from its node identifier
      *
@@ -426,7 +330,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      * @return the node if found, or null otherwise.
      */
     synchronized public jmri.jmrix.AbstractNode getNodeFromName(String Name) {
-        log.debug("getNodeFromName called with " + Name);
+        log.debug("getNodeFromName called with {}",Name);
         for (int i = 0; i < numNodes; i++) {
             XBeeNode node = (XBeeNode) getNode(i);
             if (node.getIdentifier().equals(Name)) {
@@ -435,6 +339,35 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         }
         return (null);
     }
+ 
+   /**
+     * Public method to identify an XBeeNode from its RemoteXBeeDevice object.
+     *
+     * @param device the RemoteXBeeDevice to search for.
+     * @return the node if found, or null otherwise.
+     */
+    synchronized public jmri.jmrix.AbstractNode getNodeFromXBeeDevice(RemoteXBeeDevice device) {
+        log.debug("getNodeFromXBeeDevice called with {}",device);
+        for (int i = 0; i < numNodes; i++) {
+            XBeeNode node = (XBeeNode) getNode(i);
+            // examine the addresses of the two XBee Devices to see
+            // if they are the same.
+            RemoteXBeeDevice nodeXBee = node.getXBee();
+            if(nodeXBee.get16BitAddress().equals(device.get16BitAddress())
+               && nodeXBee.get64BitAddress().equals(device.get64BitAddress())) {
+                return node;
+            }
+        }
+        return (null);
+    }
+
+    /*
+     * @return the XBeeDevice associated with this traffic controller.
+     */
+    public XBeeDevice getXBee(){
+        return xbee;
+    }
+
 
     private final static Logger log = LoggerFactory.getLogger(XBeeTrafficController.class);
 
