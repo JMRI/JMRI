@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.server.json.Bundle {
 
-    private final static String name = "jmri.server.json.time"; // NOI18N
+    private final static String name = "jmri.server.json.time.Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
