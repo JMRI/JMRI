@@ -8,7 +8,6 @@ import com.rapplogic.xbee.api.XBeeRequest;
  * <P>
  *
  * @author Paul Bender Copyright (C) 2013
- * @version $Revision$
  */
 public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
 

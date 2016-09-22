@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * using the XBee API.
  *
  * @author Paul Bender Copyright (C) 2013
- * @version $Revision$
  */
 public class XBeeTrafficController extends IEEE802154TrafficController implements com.rapplogic.xbee.api.PacketListener, XBeeInterface {
 

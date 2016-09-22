@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2011
- * @version $Revision$
  */
 public class PrintCarLoadsAction extends AbstractAction {
 

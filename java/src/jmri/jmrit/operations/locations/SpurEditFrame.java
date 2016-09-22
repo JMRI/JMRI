@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of a spur.
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision$
  */
 public class SpurEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
 

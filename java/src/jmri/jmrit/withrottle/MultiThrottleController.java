@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2011
- * @version $Revision$
  */
 public class MultiThrottleController extends ThrottleController {
 

@@ -60,7 +60,6 @@ import org.slf4j.LoggerFactory;
  * the LocoMon tool by Bob Jacobsen
  *
  * @author	Mark Underwood Copyright (C) 2011
- * @version $Revision$
  */
 @SuppressWarnings("serial")
 public class VSDecoderPane extends JmriPanel {

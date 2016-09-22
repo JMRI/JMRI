@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Implementation of a ThrottleManager.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001, 2006
- * @version $Revision$
  */
 public class SerialThrottleManager extends AbstractThrottleManager {
 

@@ -10,7 +10,6 @@ import jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo;
  * Frame displaying (and logging) IEEE 802.15.4 messages
  *
  * @author Paul Bender Copyright (C) 2013
- * @version $Revision$
  */
 public class IEEE802154MonFrame extends jmri.jmrix.AbstractMonFrame implements IEEE802154Listener {
 

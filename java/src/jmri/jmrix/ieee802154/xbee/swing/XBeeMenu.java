@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
  * Create a menu containing the XBee specific tools
  *
  * @author	Paul Bender Copyright 2013
- * @version $Revision$
  */
 public class XBeeMenu extends jmri.jmrix.ieee802154.swing.IEEE802154Menu {
 

@@ -11,7 +11,6 @@ import com.rapplogic.xbee.api.XBeeResponse;
  * multiple connection
  * @author kcameron Copyright (C) 2011 Modified for IEEE 802.15.4 connection
  * @author Paul Bender Copyright (C) 2013
- * @version $Revision$
  */
 public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
 

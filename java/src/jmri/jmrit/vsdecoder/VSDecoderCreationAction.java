@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * Create a new VSDecoder Pane.
  *
  * @author	Mark Underwood
- * @version $Revision$
  */
 @SuppressWarnings("serial")
 public class VSDecoderCreationAction extends AbstractAction {

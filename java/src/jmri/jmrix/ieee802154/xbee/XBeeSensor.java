@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * Extend jmri.AbstractSensor for XBee connections.
  * <P>
  * @author	Paul Bender Copyright (C) 2013
- * @version $Revision$
  */
 public class XBeeSensor extends AbstractSensor implements XBeeListener {
 
