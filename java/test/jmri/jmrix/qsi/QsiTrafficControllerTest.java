@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Description:	JUnit tests for the QsiTrafficController class
  *
  * @author	Bob Jacobsen
- * @version
  */
 public class QsiTrafficControllerTest extends TestCase {
 
