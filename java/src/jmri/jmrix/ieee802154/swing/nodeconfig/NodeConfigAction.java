@@ -1,4 +1,3 @@
-// NodeConfigAction.java
 package jmri.jmrix.ieee802154.swing.nodeconfig;
 
 import java.awt.event.ActionEvent;
@@ -13,10 +12,6 @@ import org.slf4j.LoggerFactory;
   */
 public class NodeConfigAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9095207703075488295L;
     private jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo icm = null;
 
     public NodeConfigAction(String s, jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo cm) {

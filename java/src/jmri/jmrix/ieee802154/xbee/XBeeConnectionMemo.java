@@ -87,15 +87,9 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
      */
     @Override
     public void configureManagers() {
-        log.error("Configuring Managers for XBee Connection");
+        log.debug("Configuring Managers for XBee Connection");
 
         XBeeTrafficController cont = (XBeeTrafficController) getTrafficController();
-        // before we start the managers, request the hardware
-        // version.
-        cont.sendXBeeMessage(XBeeMessage.getHardwareVersionRequest(), null);
-        // and the firmware revision.
-        cont.sendXBeeMessage(XBeeMessage.getFirmwareVersionRequest(), null);
-
         // the start the managers.
         _NodeManager = new XBeeNodeManager(cont);
 
@@ -105,7 +99,7 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
         jmri.InstanceManager.setLightManager(getLightManager());
         setTurnoutManager(new XBeeTurnoutManager(cont, getSystemPrefix()));
         jmri.InstanceManager.setTurnoutManager(getTurnoutManager());
-
+        
     }
 
     /*

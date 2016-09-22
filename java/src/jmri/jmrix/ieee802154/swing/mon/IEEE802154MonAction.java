@@ -27,7 +27,7 @@ public class IEEE802154MonAction extends AbstractAction {
     }
 
     public IEEE802154MonAction(jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo memo) {
-        this("IEEE 802.15.4 Monitor", memo);
+        this(Bundle.getMessage("MonActionTitle"), memo);
     }
 
     public IEEE802154MonAction(String s) {
@@ -39,7 +39,7 @@ public class IEEE802154MonAction extends AbstractAction {
     }
 
     public IEEE802154MonAction() {
-        this("IEEE 802.15.4 Monitor");
+        this(Bundle.getMessage("MonActionTitle"));
     }
 
     public void actionPerformed(ActionEvent e) {

@@ -1,10 +1,10 @@
 package jmri.jmrit.beantable;
 
 import javax.swing.JFrame;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for classes in the jmri.jmrit.beantable package
@@ -44,6 +44,7 @@ public class PackageTest extends TestCase {
         suite.addTest(BlockTableActionTest.suite());
         suite.addTest(LogixTableActionTest.suite());
         suite.addTest(LRouteTableActionTest.suite());
+        suite.addTest(OBlockTableActionTest.suite());
         suite.addTest(RouteTableActionTest.suite());
         suite.addTest(SensorTableWindowTest.suite());
         suite.addTest(SignalHeadTableActionTest.suite());
