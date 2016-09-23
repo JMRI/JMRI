@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  * Common elements for the Conductor and Yardmaster Frames.
  *
  * @author Dan Boudreau Copyright (C) 2013
- * @version $Revision: 18630 $
+ * 
  */
 public abstract class CommonConductorYardmasterPanel extends OperationsPanel implements PropertyChangeListener {
 

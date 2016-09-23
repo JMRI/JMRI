@@ -56,7 +56,6 @@ import org.slf4j.LoggerFactory;
  * appropriate macro address.
  *
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision$
  */
 public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListener {
 

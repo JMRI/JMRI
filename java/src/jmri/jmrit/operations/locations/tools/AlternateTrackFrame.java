@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * Frame that allows user to select alternate track and options.
  *
  * @author Daniel Boudreau Copyright (C) 2011, 2015
- * @version $Revision: 17977 $
  */
 class AlternateTrackFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 

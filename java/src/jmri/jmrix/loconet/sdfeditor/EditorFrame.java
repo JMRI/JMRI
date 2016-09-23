@@ -14,7 +14,6 @@ import jmri.util.JmriJFrame;
  * This handles file read/write.
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
  */
 public class EditorFrame extends JmriJFrame {
 

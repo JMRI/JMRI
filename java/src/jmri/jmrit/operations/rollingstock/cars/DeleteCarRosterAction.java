@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * or remove all cars sitting on a track.
  *
  * @author Dan Boudreau Copyright (C) 2007, 2016
- * @version $Revision$
  */
 public class DeleteCarRosterAction extends AbstractAction {
 

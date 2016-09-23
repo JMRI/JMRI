@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * Test the AddressedHighCvProgrammerFacade class.
  *
  * @author	Bob Jacobsen Copyright 2013
- * @version $Revision: 24246 $
+ * 
  */
 public class AddressedHighCvProgrammerFacadeTest extends TestCase {
 

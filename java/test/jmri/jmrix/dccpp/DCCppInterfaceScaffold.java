@@ -11,8 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2006
  * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- *
+  *
  * Use an object of this type as a DCCppTrafficController in tests
  */
 public class DCCppInterfaceScaffold extends DCCppTrafficController {

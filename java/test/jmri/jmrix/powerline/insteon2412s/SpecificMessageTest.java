@@ -10,8 +10,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the cm11.SpecficMessage class.
  *
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008, 2009
- * @version	$Revision$
- */
+  */
 public class SpecificMessageTest extends TestCase {
 
     public void testCreate() {

@@ -19,8 +19,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003, 2007, 2008
  * @author Dave Duchamp, multi node extensions, 2004
- * @version	$Revision$
- */
+  */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         implements SerialListener {
 

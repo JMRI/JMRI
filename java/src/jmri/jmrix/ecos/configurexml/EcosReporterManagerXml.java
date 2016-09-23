@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2012
- * @version $Revision: 17977 $
  */
 public class EcosReporterManagerXml extends jmri.managers.configurexml.AbstractReporterManagerConfigXML {
 

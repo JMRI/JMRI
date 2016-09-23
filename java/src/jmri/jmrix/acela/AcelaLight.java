@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Based in part on SerialTurnout.java
  *
  * @author Dave Duchamp Copyright (C) 2004
- * @version $Revision$
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.

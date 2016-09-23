@@ -4,7 +4,6 @@
  * Description:	tests for the jmri.jmrix.dcc.DccTurnoutManager class
  *
  * @author	Bob Jacobsen
- * @version
  */
 package jmri.jmrix.dcc;
 

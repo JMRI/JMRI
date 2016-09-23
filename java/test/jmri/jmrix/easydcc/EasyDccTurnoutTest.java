@@ -4,7 +4,6 @@
  * Description:	tests for the jmri.jmrix.nce.EasyDccTurnout class
  *
  * @author	Bob Jacobsen
- * @version
  */
 package jmri.jmrix.easydcc;
 

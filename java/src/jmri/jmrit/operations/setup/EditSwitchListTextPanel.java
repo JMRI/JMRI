@@ -15,7 +15,7 @@ import jmri.jmrit.operations.trains.TrainSwitchListText;
  * Frame for user edit of switch list text strings
  *
  * @author Dan Boudreau Copyright (C) 2013
- * @version $Revision: 21846 $
+ * 
  */
 public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
 

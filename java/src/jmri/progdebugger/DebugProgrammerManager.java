@@ -14,8 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision$
- */
+  */
 public class DebugProgrammerManager extends DefaultProgrammerManager {
 
     public DebugProgrammerManager() {

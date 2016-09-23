@@ -11,7 +11,6 @@ import jmri.jmrix.powerline.SerialSystemConnectionMemo;
  * @author	Bob Jacobsen Copyright 2003, 2010 Copied from NCE Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
- * @version $Revision$
  */
 public class PowerlineMenu extends JMenu {
 

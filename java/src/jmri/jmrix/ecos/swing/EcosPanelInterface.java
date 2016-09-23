@@ -9,7 +9,6 @@ import jmri.jmrix.ecos.EcosSystemConnectionMemo;
  *
  * @author Kevin Dickerson Copyright 2010
  * @since 2.11.3
- * @version $Revision$
  */
 public interface EcosPanelInterface {
 

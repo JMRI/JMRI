@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * here directly via the class attribute in the XML.
  *
  * @author Paul Bender Copyright: Copyright (c) 2015
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 

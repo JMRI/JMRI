@@ -25,14 +25,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ClockItemPanel extends IconItemPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -9176192083954731242L;
-
-    /**
-     * Constructor for plain icons and backgrounds
-     */
     public ClockItemPanel(JmriJFrame parentFrame, String type, Editor editor) {
         super(parentFrame, type, editor);
         setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
@@ -78,18 +70,10 @@ public class ClockItemPanel extends IconItemPanel {
         add(_iconPanel, 1);
     }
 
-    /**
-     * SOUTH Panel
-     */
     public void initButtonPanel() {
     }
 
     public class ClockDragJLabel extends DragJLabel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7819734168461606333L;
 
         public ClockDragJLabel(DataFlavor flavor) {
             super(flavor);
@@ -103,17 +87,26 @@ public class ClockItemPanel extends IconItemPanel {
             if (log.isDebugEnabled()) {
                 log.debug("DragJLabel.getTransferData url= " + url);
             }
-            AnalogClock2Display c;
-            String link = _linkName.getText().trim();
-            if (link.length() == 0) {
-                c = new AnalogClock2Display(_editor);
-            } else {
-                c = new AnalogClock2Display(_editor, link);
+            if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
+                AnalogClock2Display c;
+                String link = _linkName.getText().trim();
+                if (link.length() == 0) {
+                    c = new AnalogClock2Display(_editor);
+                } else {
+                    c = new AnalogClock2Display(_editor, link);
+                }
+                c.setOpaque(false);
+                c.update();
+                c.setLevel(Editor.CLOCK);
+                return c;                
+            } else if (DataFlavor.stringFlavor.equals(flavor)) {
+                StringBuilder sb = new StringBuilder(_itemType);
+                sb.append(" icon \"");
+                sb.append(url);
+                sb.append("\"");
+                return  sb.toString();
             }
-            c.setOpaque(false);
-            c.update();
-            c.setLevel(Editor.CLOCK);
-            return c;
+            return null;
         }
     }
 

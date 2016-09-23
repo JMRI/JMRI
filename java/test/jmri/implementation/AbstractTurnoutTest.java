@@ -4,7 +4,6 @@
  * Description:	AbsBaseClass for Turnout tests in specific jmrix. packages
  *
  * @author	Bob Jacobsen
- * @version
  */
 /**
  * This is not itself a test class, e.g. should not be added to a suite.

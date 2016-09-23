@@ -13,8 +13,7 @@ import junit.framework.TestSuite;
  * The default transmitter location for the 7, 13, 13, 13 readings is (0,0,12)
  *
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision$
- */
+  */
 public class Ash2_1AlgorithmTest extends AbstractAlgorithmTest {
 
     Calculator getAlgorithm(Point3d[] pts, double vs) {
