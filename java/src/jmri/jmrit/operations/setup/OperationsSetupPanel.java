@@ -36,7 +36,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of operation parameters
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012
- * @version $Revision$
  */
 public class OperationsSetupPanel extends OperationsPreferencesPanel implements PropertyChangeListener {
 

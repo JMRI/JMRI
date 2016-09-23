@@ -40,8 +40,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2005, 2015
  * @author B. Milhaupt Copyright (C) 2013, 2014
- * @version	$Revision$
- */
+  */
 public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         implements ActionListener, jmri.jmrix.loconet.swing.LnPanelInterface {
 

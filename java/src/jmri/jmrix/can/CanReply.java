@@ -19,7 +19,6 @@ import jmri.jmrix.AbstractMRReply;
  *
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008, 2009, 2010
- * @version $Revision$
  */
 public class CanReply extends AbstractMRReply implements CanMutableFrame {
 

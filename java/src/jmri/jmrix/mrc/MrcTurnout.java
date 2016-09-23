@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Paul Bender Copyright (C) 2004
  * @author Martin Wade Copyright (C) 2014
- * @version	$Revision: 22821 $
+ * 
  */
 public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
 

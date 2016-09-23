@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrew Crosland Copyright (C) 2012
  * @author Andrew Crosland Copyright (C) 2008
- * @version	$Revision: 17977 $
  */
 public class GridConnectDoubledMessage extends GridConnectMessage {
 

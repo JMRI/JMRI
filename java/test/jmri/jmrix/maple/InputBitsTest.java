@@ -10,8 +10,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the InputBits class
  *
  * @author	Dave Duchamp 2009
- * @version	$Revision$
- */
+  */
 public class InputBitsTest extends TestCase {
 
     public void testConstructor1() {

@@ -57,7 +57,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of a train
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011, 2012, 2013, 2014
- * @version $Revision$
  */
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 

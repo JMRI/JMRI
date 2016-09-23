@@ -15,7 +15,6 @@ package jmri.jmrit.vsdecoder;
  * <p>
  *
  * @author Mark Underwood copyright (c) 2009, 2013
- * @version $Revision$
  */
 import com.jogamp.openal.AL;
 import com.jogamp.openal.ALException;

@@ -55,7 +55,6 @@ import org.slf4j.LoggerFactory;
  * This backup routine uses the same macro data format as NCE.
  *
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision$
  */
 public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener {
 

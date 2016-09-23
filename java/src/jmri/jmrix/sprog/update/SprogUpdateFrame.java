@@ -27,8 +27,7 @@ import org.slf4j.LoggerFactory;
  * Refactored
  *
  * @author	Andrew Crosland Copyright (C) 2004
- * @version	$Revision$
- */
+  */
 abstract public class SprogUpdateFrame
         extends jmri.util.JmriJFrame
         implements SprogListener {

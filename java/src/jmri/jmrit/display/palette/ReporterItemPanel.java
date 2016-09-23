@@ -1,14 +1,16 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.HashMap;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import jmri.NamedBean;
@@ -22,10 +24,6 @@ import org.slf4j.LoggerFactory;
 
 public class ReporterItemPanel extends TableItemPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7260181246347519378L;
     ReporterIcon _reporter;
 
     public ReporterItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
@@ -62,6 +60,14 @@ public class ReporterItemPanel extends TableItemPanel {
         _iconFamilyPanel.add(_dragIconPanel);
     }
 
+    protected void makeBottomPanel(ActionListener doneAction) {
+        if (doneAction != null) {
+            addUpdateButtonToBottom(doneAction);
+        }
+        initIconFamiliesPanel();
+        add(_iconFamilyPanel);
+    }
+    
     protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
         if (_update) {
             return;
@@ -76,7 +82,6 @@ public class ReporterItemPanel extends TableItemPanel {
             cnfe.printStackTrace();
             comp = new JPanel();
         }
-        comp.add(_reporter);
         panel.add(comp);
         panel.revalidate();
         int width = Math.max(100, panel.getPreferredSize().width);
@@ -106,7 +111,7 @@ public class ReporterItemPanel extends TableItemPanel {
                 _updateButton.setEnabled(true);
                 _updateButton.setToolTipText(null);
             }
-            NamedBean bean = getNamedBean();
+            NamedBean bean = getDeviceNamedBean();
             _reporter.setReporter(bean.getDisplayName());
         } else {
             if (_updateButton != null) {
@@ -118,34 +123,48 @@ public class ReporterItemPanel extends TableItemPanel {
     }
 
     protected IconDragJComponent getDragger(DataFlavor flavor) {
-        return new IconDragJComponent(flavor, _reporter.getPreferredSize());
+        return new IconDragJComponent(flavor, _reporter);
     }
 
     protected class IconDragJComponent extends DragJComponent {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -7459600899859373554L;
-
-        public IconDragJComponent(DataFlavor flavor, Dimension dim) {
-            super(flavor, dim);
+        public IconDragJComponent(DataFlavor flavor, JComponent comp) {
+            super(flavor, comp);
         }
+        
+        protected boolean okToDrag() {
+            NamedBean bean = getDeviceNamedBean();
+            if (bean == null) {
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                return false;
+            }
+            return true;
+        }
+
 
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {
                 return null;
             }
-            NamedBean bean = getNamedBean();
+            NamedBean bean = getDeviceNamedBean();
             if (bean == null) {
-                log.error("IconDragJLabel.getTransferData: NamedBean is null!");
                 return null;
             }
 
-            ReporterIcon r = new ReporterIcon(_editor);
-            r.setReporter(bean.getDisplayName());
-            r.setLevel(Editor.REPORTERS);
-            return r;
+            if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
+                ReporterIcon r = new ReporterIcon(_editor);
+                r.setReporter(bean.getDisplayName());
+                r.setLevel(Editor.REPORTERS);
+                return r;                
+            } else if (DataFlavor.stringFlavor.equals(flavor)) {
+                StringBuilder sb = new StringBuilder(_itemType);
+                sb.append(" icon for \"");
+                sb.append(bean.getDisplayName());
+                sb.append("\"");
+                return  sb.toString();
+            }
+            return null;
         }
     }
 

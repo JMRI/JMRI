@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author Glen Oberhauser, Bob Jacobsen Copyright (C) 2003, 2004
  * @author Stephen Williams Copyright (C) 2008
- * @version $Revision$
  */
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 

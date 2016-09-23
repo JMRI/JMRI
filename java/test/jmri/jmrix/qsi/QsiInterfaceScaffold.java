@@ -4,7 +4,6 @@
  * Description:	Stands in for the QsiTrafficController class
  *
  * @author	Bob Jacobsen
- * @version
  */
 package jmri.jmrix.qsi;
 

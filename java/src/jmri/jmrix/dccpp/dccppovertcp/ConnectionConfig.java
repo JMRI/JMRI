@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * @author Stephen Williams Copyright (C) 2008
  * @author Mark Underwood Copyright (C) 2015
  *
- * @version $Revision$
  *
  * Based on LocoNetOverTCP 
  */

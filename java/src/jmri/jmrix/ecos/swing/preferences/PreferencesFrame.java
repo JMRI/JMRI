@@ -9,7 +9,6 @@ import jmri.jmrix.ecos.EcosSystemConnectionMemo;
  * Frame for ECoS preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version $Revision$
  */
 public class PreferencesFrame extends jmri.util.JmriJFrame {
 

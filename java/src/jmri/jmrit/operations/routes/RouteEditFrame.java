@@ -35,7 +35,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of route
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2014
- * @version $Revision$
  */
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 

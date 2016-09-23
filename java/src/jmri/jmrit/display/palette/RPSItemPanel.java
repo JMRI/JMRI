@@ -15,15 +15,7 @@ import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * ItemPanel for for plain icons and backgrounds
- */
 public class RPSItemPanel extends FamilyItemPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2633287040269806654L;
 
     /**
      * Constructor for plain icons and backgrounds
@@ -47,21 +39,17 @@ public class RPSItemPanel extends FamilyItemPanel {
     /**
      * ****************************************************
      */
-    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map) {
-        return new IconDragJLabel(flavor, map);
+    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
+        return new IconDragJLabel(flavor, map, icon);
     }
 
     protected class IconDragJLabel extends DragJLabel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -4933936822216537874L;
         HashMap<String, NamedIcon> iconMap;
 
         @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // icon map is within package 
-        public IconDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map) {
-            super(flavor);
+        public IconDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
+            super(flavor, icon);
             iconMap = map;
         }
 
@@ -77,12 +65,19 @@ public class RPSItemPanel extends FamilyItemPanel {
             if (log.isDebugEnabled()) {
                 log.debug("IconDragJLabel.getTransferData");
             }
-            RpsPositionIcon r = new RpsPositionIcon(_editor);
-            r.setActiveIcon(new NamedIcon(iconMap.get("active")));
-            r.setErrorIcon(new NamedIcon(iconMap.get("error")));
-            r.setSize(r.getPreferredSize().width, r.getPreferredSize().height);
-            r.setLevel(Editor.SENSORS);
-            return r;
+            if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
+                RpsPositionIcon r = new RpsPositionIcon(_editor);
+                r.setActiveIcon(new NamedIcon(iconMap.get("active")));
+                r.setErrorIcon(new NamedIcon(iconMap.get("error")));
+                r.setSize(r.getPreferredSize().width, r.getPreferredSize().height);
+                r.setLevel(Editor.SENSORS);
+                return r;                
+            } else if (DataFlavor.stringFlavor.equals(flavor)) {
+                StringBuilder sb = new StringBuilder(_itemType);
+                sb.append(" icons");
+                return  sb.toString();
+            }
+            return null;
         }
     }
 

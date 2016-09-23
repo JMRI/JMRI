@@ -8,7 +8,6 @@ import jmri.util.JmriJFrame;
  * Frame for control of RPS polling
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public class PollTableFrame extends JmriJFrame {
 

@@ -13,8 +13,7 @@ import org.slf4j.LoggerFactory;
  * The {@link SprogReply} class handles the response from the command station.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
 
     // Special characters (NOTE: microchip bootloader does not use standard ASCII)

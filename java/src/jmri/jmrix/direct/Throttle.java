@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version $Revision$
  */
 public class Throttle extends AbstractThrottle {
 

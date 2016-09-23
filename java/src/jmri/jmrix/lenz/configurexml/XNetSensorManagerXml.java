@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Paul Bender Copyright (c) 2003
- * @version $Revision$
  */
 public class XNetSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 

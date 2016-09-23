@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
  * Tests for the {@link jmri.jmris.srcp.parser.SRCPVisitor} class.
  *
  * @author Paul Bender
- * @version $Revision: 21215 $
+ * 
  */
 public class SRCPVisitorTest extends TestCase {
 

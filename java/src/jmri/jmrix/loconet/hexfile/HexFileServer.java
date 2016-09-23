@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * jmri is running in headless mode.
  *
  * @author	Steve Todd Copyright 2012
- * @version $Revision: 18841 $
  */
 public class HexFileServer {
 

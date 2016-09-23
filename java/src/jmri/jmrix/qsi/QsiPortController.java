@@ -5,8 +5,7 @@ package jmri.jmrix.qsi;
  * Abstract base for classes representing a QSI communications port
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version	$Revision$
- */
+  */
 public abstract class QsiPortController extends jmri.jmrix.AbstractSerialPortController {
 
     // base class. Implementations will provide InputStream and OutputStream

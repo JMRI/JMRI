@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * Interchanges and Staging.
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision$
  */
 class ChangeTrackFrame extends OperationsFrame {
 

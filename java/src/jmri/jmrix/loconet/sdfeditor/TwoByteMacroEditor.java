@@ -14,7 +14,6 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  * content.
  *
  * @author	Bob Jacobsen Copyright (C) 2007, 2008
- * @version $Revision$
  */
 class TwoByteMacroEditor extends SdfMacroEditor {
 

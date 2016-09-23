@@ -10,8 +10,7 @@ import javax.vecmath.Vector3d;
  * Immutable
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version	$Revision$
- */
+  */
 public class Measurement {
 
     public Measurement(Reading r) {

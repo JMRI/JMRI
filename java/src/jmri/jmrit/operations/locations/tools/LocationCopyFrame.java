@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2014
- * @version $Revision: 17977 $
  */
 public class LocationCopyFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 

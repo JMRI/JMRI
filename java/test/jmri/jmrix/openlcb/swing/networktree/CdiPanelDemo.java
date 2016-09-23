@@ -16,7 +16,7 @@ import org.openlcb.cdi.swing.CdiPanel;
 
 /**
  * @author Bob Jacobsen Copyright 2012
- * @version $Revision: 2175 $
+ * 
  */
 public class CdiPanelDemo extends TestCase {
 

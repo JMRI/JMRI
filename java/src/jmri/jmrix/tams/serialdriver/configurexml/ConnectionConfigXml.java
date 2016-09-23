@@ -15,7 +15,6 @@ import jmri.jmrix.tams.serialdriver.SerialDriverAdapter;
  * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 17977 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 

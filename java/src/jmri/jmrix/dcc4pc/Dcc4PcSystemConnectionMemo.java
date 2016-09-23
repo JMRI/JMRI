@@ -17,7 +17,6 @@ import jmri.managers.DefaultRailComManager;
  * activate their particular system.
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 18322 $
  */
 public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 

@@ -16,7 +16,7 @@ import jmri.ProgrammerManager;
  * Based on work by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 18320 $
+ * 
  */
 public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 

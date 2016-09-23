@@ -14,8 +14,7 @@ import javax.swing.JToggleButton;
  * defined in {@link LZ100InternalFrame}
  *
  * @author	Paul Bender Copyright (C) 2005
- * @version	$Revision$
- */
+  */
 public class LZ100Frame extends jmri.util.JmriJFrame {
 
     //private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lz100.LZ100Bundle");

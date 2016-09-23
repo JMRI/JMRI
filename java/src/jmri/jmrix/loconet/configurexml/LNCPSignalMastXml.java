@@ -13,7 +13,6 @@ import org.jdom2.Element;
  * Handle XML configuration for loconet.LNCPSignalMast objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 17977 $
  */
 public class LNCPSignalMastXml extends jmri.implementation.configurexml.DccSignalMastXml {
 

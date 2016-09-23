@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2009, 2010, 2011
- * @version $Revision$
  */
 public class CarLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 

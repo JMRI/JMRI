@@ -10,8 +10,7 @@ import org.slf4j.LoggerFactory;
  * Description:	Test scaffold implementation of XNetInterface
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2006
- * @version	$Revision$
- *
+  *
  * Use an object of this type as a XNetTrafficController in tests
  */
 public class XNetInterfaceScaffold extends XNetTrafficController {

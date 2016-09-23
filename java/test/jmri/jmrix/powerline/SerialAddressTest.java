@@ -11,8 +11,7 @@ import junit.framework.TestSuite;
  *
  * @author	Dave Duchamp Copyright 2004
  * @author Bob Jacobsen Copyright 2007, 2008
- * @version	$Revision$
- */
+  */
 public class SerialAddressTest extends TestCase {
 
     SerialTrafficControlScaffold tc = null;

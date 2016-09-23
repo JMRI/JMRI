@@ -33,7 +33,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user to place RollingStock on the layout
  *
  * @author Dan Boudreau Copyright (C) 2010, 2011, 2012, 2013
- * @version $Revision$
  */
 public class RollingStockSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 

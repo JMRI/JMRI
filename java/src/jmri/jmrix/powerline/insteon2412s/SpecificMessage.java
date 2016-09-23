@@ -19,8 +19,7 @@ import jmri.util.StringUtil;
  *
  * @author	Bob Jacobsen Copyright (C) 2001,2003, 2006, 2007, 2008, 2009
  * @author	Ken Cameron Copyright (C) 2010
- * @version	$Revision$
- */
+  */
 public class SpecificMessage extends SerialMessage {
     // is this logically an abstract class?
 
