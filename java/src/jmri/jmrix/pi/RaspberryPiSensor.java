@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
  */
 public class RaspberryPiSensor extends AbstractSensor implements GpioPinListenerDigital {
 
-    private static final long serialVersionUID = 2015_02_16L;
     private static GpioController gpio = null;
     private int address;
     private GpioPinDigitalInput pin = null;
