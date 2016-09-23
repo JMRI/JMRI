@@ -207,7 +207,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
             case ALT_TRACK_COLUMN:
                 return Bundle.getMessage("AlternateTrack");
             case EDIT_COLUMN:
-                return ""; // no title above Edit column
+                return Bundle.getMessage("ButtonEdit"); // titles above all columns
             default:
                 return "unknown"; // NOI18N
         }

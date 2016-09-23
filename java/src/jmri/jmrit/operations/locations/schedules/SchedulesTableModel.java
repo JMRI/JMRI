@@ -139,9 +139,9 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
             case MODE_COLUMN:
                 return Bundle.getMessage("ScheduleMode");
             case EDIT_COLUMN:
-                return ""; // no title above Edit column (compare Turnout Table)
+                return Bundle.getMessage("ButtonEdit");
             case DELETE_COLUMN:
-                return ""; // no title above Delete column (compare Turnout Table)
+                return Bundle.getMessage("ButtonDelete"); // titles above all columns
             default:
                 return "unknown"; // NOI18N
         }

@@ -87,8 +87,8 @@ Other resources are named so as not to conflict with these.
 
 <p>Many standard names for buttons, objects, colors etc. are grouped in one place, from which
 they are available in all tools, tables and JMRI apps. The highest level Bundle is called
-    <em>NamedBeanBundle</em>, located in the src/jmri directory. Inside the src/jmri/jmrit (Tools) directory,
-the Bundle.properties bundle contains keys common for all tools, such as the names of colors and
+    <em>NamedBeanBundle</em>, located in the jmri package. A next level is inside the jmri.jmrit (Tools) directory,
+where the Bundle.properties bundle contains keys common for all tools, such as the names of colors and
 other Tools interface strings.</p>
 
 <h2>Adapting to a new language</h2>

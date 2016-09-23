@@ -293,7 +293,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             case SET_COLUMN:
                 return Bundle.getMessage("Set");
             case EDIT_COLUMN:
-                return ""; // no title above Edit column
+                return Bundle.getMessage("ButtonEdit"); // titles above all columns
             default:
                 return "unknown"; // NOI18N
         }
