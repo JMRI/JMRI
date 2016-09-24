@@ -49,7 +49,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 
     // major buttons
     JButton editRoadButton = new JButton(Bundle.getMessage("ButtonEdit"));
-    JButton clearRoadNumberButton = new JButton(Bundle.getMessage("Clear"));
+    JButton clearRoadNumberButton = new JButton(Bundle.getMessage("ButtonClear"));
     JButton editTypeButton = new JButton(Bundle.getMessage("ButtonEdit"));
     JButton editColorButton = new JButton(Bundle.getMessage("ButtonEdit"));
     JButton editLengthButton = new JButton(Bundle.getMessage("ButtonEdit"));

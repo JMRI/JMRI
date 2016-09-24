@@ -44,7 +44,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 
     // major buttons
     JButton editRoadButton = new JButton(Bundle.getMessage("ButtonEdit"));
-    JButton clearRoadNumberButton = new JButton(Bundle.getMessage("Clear"));
+    JButton clearRoadNumberButton = new JButton(Bundle.getMessage("ButtonClear"));
     JButton editModelButton = new JButton(Bundle.getMessage("ButtonEdit"));
     JButton editTypeButton = new JButton(Bundle.getMessage("ButtonEdit"));
     JButton editLengthButton = new JButton(Bundle.getMessage("ButtonEdit"));

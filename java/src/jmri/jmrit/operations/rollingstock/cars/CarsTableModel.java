@@ -440,7 +440,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     public String getColumnName(int col) {
         switch (col) {
             case SELECT_COLUMN:
-                return Bundle.getMessage("Select");
+                return Bundle.getMessage("ButtonSelect");
             case NUMBER_COLUMN:
                 return Bundle.getMessage("Number");
             case ROAD_COLUMN:

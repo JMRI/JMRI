@@ -81,8 +81,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     JLabel destinationOption = new JLabel();
 
     // major buttons
-    JButton clearButton = new JButton(Bundle.getMessage("Clear"));
-    JButton setButton = new JButton(Bundle.getMessage("Select"));
+    JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
+    JButton setButton = new JButton(Bundle.getMessage("SelectAll"));
     JButton saveTrackButton = new JButton(Bundle.getMessage("SaveTrack"));
     JButton deleteTrackButton = new JButton(Bundle.getMessage("DeleteTrack"));
     JButton addTrackButton = new JButton(Bundle.getMessage("AddTrack"));

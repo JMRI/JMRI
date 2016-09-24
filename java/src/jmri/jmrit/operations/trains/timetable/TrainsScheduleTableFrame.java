@@ -72,8 +72,8 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     ButtonGroup schGroup = new ButtonGroup();
 
     // major buttons
-    JButton selectButton = new JButton(Bundle.getMessage("Select"));
-    JButton clearButton = new JButton(Bundle.getMessage("Clear"));
+    JButton selectButton = new JButton(Bundle.getMessage("SelectAll"));
+    JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
 
     JButton applyButton = new JButton(Bundle.getMessage("Apply"));
     JButton buildButton = new JButton(Bundle.getMessage("Build"));

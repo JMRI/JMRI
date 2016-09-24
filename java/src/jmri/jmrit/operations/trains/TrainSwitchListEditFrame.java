@@ -52,8 +52,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     JCheckBox switchListAllTrainsCheckBox = new JCheckBox(Bundle.getMessage("SwitchListAllTrains"));
 
     // major buttons
-    JButton clearButton = new JButton(Bundle.getMessage("Clear"));
-    JButton setButton = new JButton(Bundle.getMessage("Select"));
+    JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
+    JButton setButton = new JButton(Bundle.getMessage("SelectAll"));
     JButton printButton = new JButton(Bundle.getMessage("PrintSwitchLists"));
     JButton previewButton = new JButton(Bundle.getMessage("PreviewSwitchLists"));
     JButton printChangesButton = new JButton(Bundle.getMessage("PrintChanges"));
