@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010
- * @version $Revision$
  */
 public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
 

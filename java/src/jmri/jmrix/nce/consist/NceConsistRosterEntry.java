@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2004, 2005
  * @author Dennis Miller Copyright 2004
  * @author Daniel Boudreau (C) 2008
- * @version $Revision$
  * @see NceConsistRoster
  *
  */

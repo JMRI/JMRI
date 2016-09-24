@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * class
  *
  * @author	Bob Jacobsen
- * @version $Revision: 17977 $
  */
 public class JMRIClientTurnoutManagerTest extends TestCase {
 

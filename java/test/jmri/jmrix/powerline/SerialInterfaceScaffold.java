@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
  * Stands in for the SerialTrafficController class
  *
  * @author	Ken Cameron
- * @version	$Revision$ Copied from NceInterfaceScaffold
+ *  Copied from NceInterfaceScaffold
  *
  */
 class SerialInterfaceScaffold extends SerialTrafficController {

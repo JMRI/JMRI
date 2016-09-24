@@ -12,7 +12,7 @@ import jmri.managers.DefaultProgrammerManager;
  *
  * @see jmri.ProgrammerManager
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 18841 $
+ * 
  */
 public class Dcc4PcProgrammerManager extends DefaultProgrammerManager {
 

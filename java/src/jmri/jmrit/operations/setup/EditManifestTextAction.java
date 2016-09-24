@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2013
- * @version $Revision: 21656 $
+ * 
  */
 public class EditManifestTextAction extends AbstractAction {
 

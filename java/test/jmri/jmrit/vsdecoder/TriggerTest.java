@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the Trigger class
  *
  * @author Mark Underwood Copyright (C) 2011
- * @version $Revision: 17977 $
  */
 public class TriggerTest extends TestCase {
 

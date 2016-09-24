@@ -9,7 +9,6 @@ import javax.swing.JMenu;
  *
  * @author	Paul Bender Copyright 2003,2010
  * @author	Mark Underwood Copyright 2015
- * @version $Revision$
  *
  * Based on XNetMenu by Paul Bender
  */

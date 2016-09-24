@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010
- * @version $Revision$
  */
 abstract public class AbstractWiThrottlePreferences {
 

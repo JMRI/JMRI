@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of tracks used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012
- * @version $Revision$
  */
 public class TrackTableModel extends AbstractTableModel implements PropertyChangeListener {
 

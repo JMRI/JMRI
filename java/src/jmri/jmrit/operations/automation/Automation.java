@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * Automation for operations
  *
  * @author Daniel Boudreau Copyright (C) 2016
- * @version $Revision$
  */
 public class Automation implements java.beans.PropertyChangeListener {
 

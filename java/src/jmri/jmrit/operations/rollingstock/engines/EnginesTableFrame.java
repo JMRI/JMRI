@@ -35,7 +35,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2013
- * @version $Revision$
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener {
 

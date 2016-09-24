@@ -4,7 +4,6 @@
  * Description:	tests for the jmri.jmrix.nce.EasyDccConsistManager class
  *
  * @author	Paul Bender
- * @version
  */
 package jmri.jmrix.easydcc;
 

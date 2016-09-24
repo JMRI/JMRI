@@ -13,8 +13,7 @@ import org.openlcb.NodeID;
  * the code isn't up to that right now.
  *
  * @author	Bob Jacobsen Copyright (C) 2012
- * @version	$Revision$
- */
+  */
 public class OpenLcbLocoAddress extends DccLocoAddress {
 
     public OpenLcbLocoAddress(NodeID node) {

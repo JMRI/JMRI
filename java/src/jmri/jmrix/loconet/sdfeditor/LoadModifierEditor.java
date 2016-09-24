@@ -12,7 +12,6 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
  */
 class LoadModifierEditor extends SdfMacroEditor {
 

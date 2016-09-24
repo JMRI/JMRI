@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * staging.
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2011, 2015
- * @version $Revision$
  */
 class ScheduleOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 

@@ -17,8 +17,7 @@ import org.jdom2.Element;
  * working directory.
  *
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision$
- */
+  */
 public class PositionFileTest extends TestCase {
 
     public void testCtor() {

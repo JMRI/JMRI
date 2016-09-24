@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2016
- * @version $Revision$
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 

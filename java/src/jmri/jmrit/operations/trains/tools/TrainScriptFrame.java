@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2004
  * @author Dan Boudreau Copyright (C) 2010, 2011, 2013
- * @version $Revision$
  */
 public class TrainScriptFrame extends OperationsFrame {
 

@@ -10,8 +10,7 @@ import jmri.jmrit.symbolicprog.VariableValue;
  * visibility
  *
  * @author	Bob Jacobsen Copyright (C) 2010, 2014
- * @version	$Revision$
- *
+  *
  */
 public class JComponentQualifier extends ArithmeticQualifier {
 

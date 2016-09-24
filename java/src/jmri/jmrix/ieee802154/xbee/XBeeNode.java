@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * All nodes in a given network must have the same PAN ID
  *
  * @author Paul Bender Copyright 2013
- * @version $Revision$
  */
 public class XBeeNode extends IEEE802154Node {
 

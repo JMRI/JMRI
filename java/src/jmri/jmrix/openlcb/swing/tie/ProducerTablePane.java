@@ -14,8 +14,7 @@ import javax.swing.table.TableRowSorter;
  * Pane for showing the producer table
  *
  * @author	Bob Jacobsen 2008
- * @version	$Revision$
- * @since 2.3.7
+  * @since 2.3.7
  */
 public class ProducerTablePane extends JPanel {
 

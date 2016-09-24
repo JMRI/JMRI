@@ -16,8 +16,7 @@ import org.slf4j.LoggerFactory;
  * NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
- */
+  */
 public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortController {
 
     public NetworkDriverAdapter() {

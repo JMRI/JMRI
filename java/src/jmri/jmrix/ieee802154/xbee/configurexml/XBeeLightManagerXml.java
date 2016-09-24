@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Ken Cameron Copyright: Copyright (c) 2014
- * @version $Revision$
  */
 public class XBeeLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 

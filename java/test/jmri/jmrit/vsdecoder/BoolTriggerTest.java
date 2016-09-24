@@ -11,7 +11,6 @@ import org.jdom2.Element;
  * Tests for the BoolTrigger class
  *
  * @author Mark Underwood Copyright (C) 2011
- * @version $Revision: 17977 $
  */
 public class BoolTriggerTest extends TestCase {
 

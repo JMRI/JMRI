@@ -11,8 +11,7 @@ import java.io.DataOutputStream;
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  * @author	Paul Bender Copyright (C) 2004,2010,2014
  * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- */
+  */
 public class DCCppStreamPortController extends jmri.jmrix.AbstractStreamPortController implements DCCppPortController {
 
     public DCCppStreamPortController(DataInputStream in, DataOutputStream out, String pname) {

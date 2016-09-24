@@ -6,7 +6,6 @@ package jmri.jmrix.dcc4pc;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 17977 $
  *
  */
 public class Dcc4PcConnectionTypeList implements jmri.jmrix.ConnectionTypeList {

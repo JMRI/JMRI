@@ -33,7 +33,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision$
  */
 public class SetTrainIconPositionFrame extends OperationsFrame {
 

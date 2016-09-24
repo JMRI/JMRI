@@ -4,8 +4,7 @@
  * Description:	AbsBaseClass for PowerManager tests in specific jmrix. packages
  *
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision$
- */
+  */
 package jmri.jmrix;
 
 //import jmri.*;

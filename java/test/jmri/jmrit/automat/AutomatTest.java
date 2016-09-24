@@ -9,8 +9,7 @@ import junit.framework.TestSuite;
  * Tests for classes in the jmri.jmrit.automat package
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision$
- */
+  */
 public class AutomatTest extends TestCase {
 
     boolean initDone;

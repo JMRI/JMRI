@@ -8,7 +8,6 @@ import javax.swing.AbstractAction;
  * Action to launch schedule options.
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2011
- * @version $Revision$
  */
 public class ScheduleOptionsAction extends AbstractAction {
 

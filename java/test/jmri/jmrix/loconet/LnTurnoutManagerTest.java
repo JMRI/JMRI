@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the jmri.jmrix.loconet.LnTurnoutManager class
  *
  * @author	Bob Jacobsen Copyright 2005
- * @version
  */
 public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 

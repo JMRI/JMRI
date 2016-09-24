@@ -29,8 +29,7 @@ import org.slf4j.LoggerFactory;
  * </UL>
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version	$Revision$
- */
+  */
 public class StoppingBlock {
 
     public StoppingBlock(Block b) {

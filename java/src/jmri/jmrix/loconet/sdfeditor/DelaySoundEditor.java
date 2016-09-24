@@ -9,7 +9,6 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  * language
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
  */
 class DelaySoundEditor extends SdfMacroEditor {
 

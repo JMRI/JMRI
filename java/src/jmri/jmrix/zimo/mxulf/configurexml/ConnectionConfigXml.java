@@ -14,7 +14,6 @@ import jmri.jmrix.zimo.mxulf.SerialDriverAdapter;
  * attribute in the XML.
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2014
- * @version $Revision: 22821 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 

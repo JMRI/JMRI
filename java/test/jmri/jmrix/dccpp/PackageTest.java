@@ -9,8 +9,7 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen
  * @author	Mark Underwood
- * @version	$Revision$
- */
+  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure

@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision$
  */
 public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
 
