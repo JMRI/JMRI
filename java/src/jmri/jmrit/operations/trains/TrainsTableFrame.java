@@ -80,7 +80,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 
     // labels
     JLabel numTrains = new JLabel();
-    JLabel textTrains = new JLabel(Bundle.getMessage("Trains").toLowerCase());
+    JLabel textTrains = new JLabel(Bundle.getMessage("trains"));
     JLabel textSep1 = new JLabel("      ");
 
     // radio buttons
