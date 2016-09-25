@@ -7,30 +7,17 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.powermock.modules.junit4.PowerMockRunner;
-import org.mockito.Mockito;
-import static org.mockito.Mockito.any;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
-import org.powermock.core.classloader.annotations.MockPolicy;
-import org.powermock.core.classloader.annotations.PrepareForTest;
 
-import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioProvider;
-import com.pi4j.io.gpio.RaspiPin;
+import com.pi4j.io.gpio.WiringPiGpioProviderBase;
 import com.pi4j.io.gpio.Pin;
+import com.pi4j.io.gpio.PinMode;
+import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.PinPullResistance;
-import com.pi4j.io.gpio.GpioPinDigitalInput;
-import com.pi4j.wiringpi.Gpio;
-import com.pi4j.wiringpi.GpioUtil;
 
 import jmri.Sensor;
 
-
-@MockPolicy(Slf4jMockPolicy.class)
-@PrepareForTest({Gpio.class,GpioUtil.class,GpioFactory.class,GpioProvider.class,GpioController.class})
-@RunWith(PowerMockRunner.class)
 
 /**
  * <P>
@@ -40,12 +27,11 @@ import jmri.Sensor;
  */
 public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
 
-    private GpioController mocked_gpioController = null;
-    private GpioPinDigitalInput mypin = null;
+    private GpioProvider myprovider = null;
 
     @Override
     public String getSystemName(int i) {
-        return "PiS" + i;
+        return "PIS" + i;
     }
 
     @Test
@@ -55,23 +41,94 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
 
     @Test
     public void checkPrefix(){
-        Assert.assertEquals("Prefix","Pi",l.getSystemPrefix());
+        Assert.assertEquals("Prefix","PI",l.getSystemPrefix());
     }
 
-    // The minimal setup for log4J
+    @Override
+    @Test
+    public void testSensorPutGet() {
+        // create
+        Sensor t = l.newSensor(getSystemName(10), "mine");
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("user name correct ", t == l.getByUserName("mine"));
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(10)));
+    }
+
+    @Override
+    @Test
+    public void testSingleObject() {
+        // test that you always get the same representation
+        Sensor t1 = l.newSensor(getSystemName(11), "mine");
+        Assert.assertTrue("t1 real object returned ", t1 != null);
+        Assert.assertTrue("same by user ", t1 == l.getByUserName("mine"));
+        Assert.assertTrue("same by system ", t1 == l.getBySystemName(getSystemName(11)));
+
+        Sensor t2 = l.newSensor(getSystemName(11), "mine");
+        Assert.assertTrue("t2 real object returned ", t2 != null);
+        // check
+        Assert.assertTrue("same new ", t1 == t2);
+    }
+
+    @Override
+    @Test
+    public void testRename() {
+        // get light
+        Sensor t1 = l.newSensor(getSystemName(12), "before");
+        Assert.assertNotNull("t1 real object ", t1);
+        t1.setUserName("after");
+        Sensor t2 = l.getByUserName("after");
+        Assert.assertEquals("same object", t1, t2);
+        Assert.assertEquals("no old object", null, l.getByUserName("before"));
+    }
+
+    @Override
+    @Test
+    public void testDefaultSystemName() {
+        // create
+        Sensor t = l.provideSensor("" + 13);
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(13)));
+    }
+
+
+
     @Override
     @Before
     public void setUp() {
-       //PowerMockito.mockStatic(Gpio.class);
-       //PowerMockito.when(Gpio.wiringPiSetup()).thenReturn(0);
-       //PowerMockito.mockStatic(GpioUtil.class);
-       //PowerMockito.when(GpioUtil.isPinSupported(Mockito.anyInt())).thenReturn(0);
-       mocked_gpioController = PowerMockito.mock(GpioController.class);
-       PowerMockito.mockStatic(GpioProvider.class);
-       PowerMockito.mockStatic(GpioFactory.class);
-       PowerMockito.when(GpioFactory.getInstance()).thenReturn(mocked_gpioController);
-       mypin= PowerMockito.mock(GpioPinDigitalInput.class);
-       Mockito.when(mocked_gpioController.provisionDigitalInputPin(Mockito.any(Pin.class),Mockito.any(PinPullResistance.class))).thenReturn(mypin);
+       apps.tests.Log4JFixture.setUp();
+       GpioProvider myprovider = new WiringPiGpioProviderBase(){
+           @Override
+           public String getName(){
+              return "RaspberryPi GPIO Provider";
+           }
+
+           @Override
+           public boolean hasPin(Pin pin) {
+              return false;
+           }
+
+           @Override
+           public void export(Pin pin, PinMode mode, PinState defaultState) {
+           }
+
+           @Override
+           public void setPullResistance(Pin pin, PinPullResistance resistance) {
+           }
+            
+           @Override
+           protected void updateInterruptListener(Pin pin) {
+           }
+
+           @Override
+           public PinState getState(Pin pin) {
+                  return PinState.HIGH;
+           }
+       };
+ 
+       GpioFactory.setDefaultProvider(myprovider);
+
        jmri.util.JUnitUtil.resetInstanceManager();
        l = new RaspberryPiSensorManager("Pi");
     }
@@ -79,6 +136,8 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
     @After
     public void tearDown() {
        jmri.util.JUnitUtil.resetInstanceManager();
+       myprovider = null;
+       apps.tests.Log4JFixture.tearDown();
     }
 
 }
