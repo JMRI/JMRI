@@ -544,7 +544,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
             } else {
                 // rolling stock has been terminated or reset, bump rolling stock moves
                 if (getTrain() != null && getTrain().getRoute() != null) {
-                    setSavedRouteId(getTrain().getRoute().getId());
+                    setLastRouteId(getTrain().getRoute().getId());
                 }
                 if (getRouteDestination() != null) {
                     setMoves(getMoves() + 1);
@@ -730,7 +730,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         return NONE;
     }
 
-    public String getSavedRouteId() {
+    public String getLastRouteId() {
         return _routeId;
     }
 
@@ -741,7 +741,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      *
      * @param id The route id.
      */
-    public void setSavedRouteId(String id) {
+    public void setLastRouteId(String id) {
         _routeId = id;
     }
 
@@ -1356,8 +1356,8 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         if (!getDestinationTrackId().equals(NONE)) {
             e.setAttribute(Xml.SEC_DESTINATION_ID, getDestinationTrackId());
         }
-        if (!getSavedRouteId().equals(NONE)) {
-            e.setAttribute(Xml.LAST_ROUTE_ID, getSavedRouteId());
+        if (!getLastRouteId().equals(NONE)) {
+            e.setAttribute(Xml.LAST_ROUTE_ID, getLastRouteId());
         }
         if (verboseStore) {
             e.setAttribute(Xml.LOCATION, getLocationName());
