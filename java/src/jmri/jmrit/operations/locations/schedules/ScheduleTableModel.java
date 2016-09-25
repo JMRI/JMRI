@@ -347,7 +347,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
     private String getCurrentPointer(ScheduleItem si) {
         if (_track.getCurrentScheduleItem() == si) {
-            if (si.getCount() > 1) {
+            if (_track.getScheduleMode() == Track.SEQUENTIAL && si.getCount() > 1) {
                 return " " + _track.getScheduleCount() + " -->"; // NOI18N
             } else {
                 return "    -->"; // NOI18N

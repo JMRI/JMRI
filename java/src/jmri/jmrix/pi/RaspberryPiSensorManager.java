@@ -17,7 +17,7 @@ public class RaspberryPiSensorManager extends jmri.managers.AbstractSensorManage
     // ctor has to register for RaspberryPi events
     public RaspberryPiSensorManager(String prefix) {
         super();
-        this.prefix=prefix;
+        this.prefix=prefix.toUpperCase();
     }
 
     /**

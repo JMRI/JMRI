@@ -589,7 +589,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 if (car.getFinalDestinationTrack() != null) {
                     s = s + " (" + car.getFinalDestinationTrackName() + ")";
                 }
-                if (car.getFinalDestinationTrack() != null && car.getFinalDestinationTrack().getSchedule() != null) {
+                if (log.isDebugEnabled() && car.getFinalDestinationTrack() != null && car.getFinalDestinationTrack().getSchedule() != null) {
                     s = s + " " + car.getScheduleItemId();
                 }
                 return s;
