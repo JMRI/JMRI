@@ -1793,6 +1793,9 @@ public class Track {
 
     private static boolean debugFlag = false;
 
+    /*
+     * Match mode search
+     */
     private String searchSchedule(Car car) {
         if (debugFlag) {
             log.debug("Search match for car ({}) type ({}) load ({})", car.toString(), car.getTypeName(), car
@@ -1890,7 +1893,7 @@ public class Track {
                     si.getReceiveLoadName() +
                     ")";
         }
-        if (!car.getScheduleItemId().equals(si.getId()) && !si.getRandom().equals(ScheduleItem.NONE)) {
+        if (car.getFinalDestinationTrack() != this && !si.getRandom().equals(ScheduleItem.NONE)) {
             try {
                 int value = Integer.parseInt(si.getRandom());
                 double random = 100 * Math.random();

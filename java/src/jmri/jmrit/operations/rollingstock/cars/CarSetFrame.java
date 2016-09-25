@@ -295,6 +295,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
                             .getMessage("rsCanNotFinal"), JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
+                car.setFinalDestination((Location) finalDestinationBox.getSelectedItem());
+                car.setFinalDestinationTrack(finalDestTrack);
                 String status = car.testDestination((Location) finalDestinationBox.getSelectedItem(),
                         finalDestTrack);
                 if (!status.equals(Track.OKAY)) {
@@ -302,8 +304,6 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
                             .getMessage("rsCanNotFinalMsg"), new Object[]{car.toString(), status}), Bundle
                             .getMessage("rsCanNotFinal"), JOptionPane.WARNING_MESSAGE);
                 }
-                car.setFinalDestination((Location) finalDestinationBox.getSelectedItem());
-                car.setFinalDestinationTrack(finalDestTrack);
             }
         }
         // kernel
