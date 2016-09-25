@@ -856,7 +856,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         if (locationBox.getSelectedItem() == null) {
             car.setLocation(null, null);
         } else {
-            car.setSavedRouteId(RollingStock.NONE); // clear last route id
+            car.setLastRouteId(RollingStock.NONE); // clear last route id
             String status = car.setLocation((Location) locationBox.getSelectedItem(), (Track) trackLocationBox
                     .getSelectedItem());
             if (!status.equals(Track.OKAY)) {
