@@ -257,8 +257,9 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
     // Remove all terminated or reset trains from the switch lists for selected locations
     private void reset() {
-        for (JCheckBox checkbox : locationCheckBoxes) {
-            String locationName = checkbox.getName();
+        // this for loop prevents ConcurrentModificationException when printing and status changes
+        for (int i = 0; i < locationCheckBoxes.size(); i++) {
+            String locationName = locationCheckBoxes.get(i).getName();
             Location location = locationManager.getLocationByName(locationName);
             if (location.isSwitchListEnabled()) {
                 // new switch lists will now be created for the location
@@ -272,6 +273,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
     // save printer selection
     private void save() {
+        // this for loop prevents ConcurrentModificationException when printing and status changes
         for (int i = 0; i < locationCheckBoxes.size(); i++) {
             String locationName = locationCheckBoxes.get(i).getName();
             Location location = locationManager.getLocationByName(locationName);
@@ -430,7 +432,6 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         repaint();
     }
 
-
     /**
      * Creates custom switch lists using an external program like MS Excel.
      * Switch lists are created for locations that have switch lists enabled.
@@ -449,6 +450,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         log.debug("run custom switch lists");
         TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
         TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
+        // this for loop prevents ConcurrentModificationException when printing and status changes
         for (int i = 0; i < locationCheckBoxes.size(); i++) {
             String locationName = locationCheckBoxes.get(i).getName();
             Location location = locationManager.getLocationByName(locationName);
@@ -469,10 +471,13 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         }
         // Processes the CSV Manifest files using an external custom program.
         if (!TrainCustomSwitchList.instance().excelFileExists()) {
-            log.warn("Manifest creator file not found!, directory name: {}, file name: {}", TrainCustomSwitchList.instance()
-                    .getDirectoryName(), TrainCustomSwitchList.instance().getFileName());
+            log.warn("Manifest creator file not found!, directory name: {}, file name: {}",
+                    TrainCustomSwitchList.instance()
+                            .getDirectoryName(),
+                    TrainCustomSwitchList.instance().getFileName());
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LoadDirectoryNameFileName"),
-                    new Object[]{TrainCustomSwitchList.instance().getDirectoryName(), TrainCustomSwitchList.instance().getFileName()}),
+                    new Object[]{TrainCustomSwitchList.instance().getDirectoryName(),
+                            TrainCustomSwitchList.instance().getFileName()}),
                     Bundle.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
             return;
         }
