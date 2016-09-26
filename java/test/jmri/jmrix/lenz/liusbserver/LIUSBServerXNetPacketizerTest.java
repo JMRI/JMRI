@@ -12,7 +12,6 @@ import junit.framework.TestCase;
  * Copyright: Copyright (c) 2009</p>
  *
  * @author Paul Bender
- * @version $Revision: 17977 $
  */
 public class LIUSBServerXNetPacketizerTest extends TestCase {
 

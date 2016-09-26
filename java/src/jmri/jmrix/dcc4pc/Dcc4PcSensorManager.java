@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * that board.
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 17977 $
  */
 public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         implements Dcc4PcListener {

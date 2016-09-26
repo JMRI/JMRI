@@ -11,8 +11,7 @@ import jmri.managers.DefaultProgrammerManager;
  * @see jmri.ProgrammerManager
  * @author	Paul Bender Copyright (C) 2003
  * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- *
+  *
  * Based on XNetProgrammerManager by Paul Bender
  */
 public class DCCppProgrammerManager extends DefaultProgrammerManager {

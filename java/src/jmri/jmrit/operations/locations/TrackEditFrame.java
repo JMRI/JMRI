@@ -81,15 +81,15 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     JLabel destinationOption = new JLabel();
 
     // major buttons
-    JButton clearButton = new JButton(Bundle.getMessage("Clear"));
-    JButton setButton = new JButton(Bundle.getMessage("Select"));
+    JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
+    JButton setButton = new JButton(Bundle.getMessage("SelectAll"));
     JButton saveTrackButton = new JButton(Bundle.getMessage("SaveTrack"));
     JButton deleteTrackButton = new JButton(Bundle.getMessage("DeleteTrack"));
     JButton addTrackButton = new JButton(Bundle.getMessage("AddTrack"));
 
-    JButton deleteDropButton = new JButton(Bundle.getMessage("Delete"));
+    JButton deleteDropButton = new JButton(Bundle.getMessage("ButtonDelete"));
     JButton addDropButton = new JButton(Bundle.getMessage("Add"));
-    JButton deletePickupButton = new JButton(Bundle.getMessage("Delete"));
+    JButton deletePickupButton = new JButton(Bundle.getMessage("ButtonDelete"));
     JButton addPickupButton = new JButton(Bundle.getMessage("Add"));
 
     // check boxes
@@ -443,7 +443,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
                 id = train.getId();
                 if (!checkRoute(route)) {
                     JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackNotByTrain"),
-                            new Object[]{train.getName()}), Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);
+                            new Object[]{train.getName()}), Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 selectNextItemComboBox(comboBoxDropTrains);
@@ -455,7 +455,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
                 id = route.getId();
                 if (!checkRoute(route)) {
                     JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackNotByRoute"),
-                            new Object[]{route.getName()}), Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);
+                            new Object[]{route.getName()}), Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 selectNextItemComboBox(comboBoxDropRoutes);
@@ -490,7 +490,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
                 id = train.getId();
                 if (!checkRoute(route)) {
                     JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackNotByTrain"),
-                            new Object[]{train.getName()}), Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);
+                            new Object[]{train.getName()}), Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 selectNextItemComboBox(comboBoxPickupTrains);
@@ -502,7 +502,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
                 id = route.getId();
                 if (!checkRoute(route)) {
                     JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackNotByRoute"),
-                            new Object[]{route.getName()}), Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);
+                            new Object[]{route.getName()}), Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 selectNextItemComboBox(comboBoxPickupRoutes);

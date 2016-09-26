@@ -13,8 +13,7 @@ import org.junit.Test;
  * JUnit tests for the SerialSensorManager class.
  *
  * @author	Bob Jacobsen Copyright 2003, 2008
- * @version	$Revision$
- */
+  */
 public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
 
     @Override
@@ -63,6 +62,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
 
     @After
     public void tearDown() {
+        l.dispose();
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }

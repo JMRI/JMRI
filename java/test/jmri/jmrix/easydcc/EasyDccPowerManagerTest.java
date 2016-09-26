@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Description:	JUnit tests for the EasyDccPowerManager class
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version
  */
 public class EasyDccPowerManagerTest extends AbstractPowerManagerTest {
 

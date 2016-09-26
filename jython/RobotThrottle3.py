@@ -4,9 +4,6 @@
 # Author: Ken Cameron, copyright 2009,2010
 # Part of the JMRI distribution
 #
-# The next line is maintained by CVS, please don't change it
-# $Revision$
-#
 # The start button is inactive until data has been entered.
 #
 # The test button is to force re-evaluation of all block and signal values.

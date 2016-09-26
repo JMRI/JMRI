@@ -15,7 +15,6 @@ import org.jdom2.Element;
  * used.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
- * @version $Revision$
  * @since 2.9.7
  */
 public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {

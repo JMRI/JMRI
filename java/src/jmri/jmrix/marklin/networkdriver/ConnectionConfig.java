@@ -8,7 +8,7 @@ import javax.swing.JPanel;
  * via a NetworkDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @version	$Revision: 18902 $
+ * 
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 

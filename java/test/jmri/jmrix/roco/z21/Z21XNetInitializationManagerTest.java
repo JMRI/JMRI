@@ -19,7 +19,7 @@ import junit.framework.TestSuite;
  class
  *
  * @author	Paul Bender Copyright (C) 2015
- * @version $Revision: 22710 $
+ * 
  */
 public class Z21XNetInitializationManagerTest extends TestCase {
 

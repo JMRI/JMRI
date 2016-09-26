@@ -11,7 +11,6 @@ import org.jdom2.Element;
  * Tests for the ButtonTrigger class
  *
  * @author Mark Underwood Copyright (C) 2011
- * @version $Revision: 17977 $
  */
 public class ButtonTriggerTest extends TestCase {
 

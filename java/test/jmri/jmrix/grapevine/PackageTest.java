@@ -36,10 +36,10 @@ public class PackageTest extends TestCase {
         suite.addTest(SerialTurnoutTest1.suite());
         suite.addTest(SerialTurnoutTest2.suite());
         suite.addTest(SerialTurnoutTest3.suite());
-        suite.addTest(SerialTurnoutManagerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialTurnoutManagerTest.class));
         suite.addTest(SerialLightTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialLightManagerTest.class));
-        suite.addTest(SerialSensorManagerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialSensorManagerTest.class));
         suite.addTest(SerialNodeTest.suite());
         suite.addTest(SerialMessageTest.suite());
         suite.addTest(SerialReplyTest.suite());

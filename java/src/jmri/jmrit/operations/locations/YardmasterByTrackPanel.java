@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * Yardmaster frame by track. Shows work at one location listed by track.
  *
  * @author Dan Boudreau Copyright (C) 2015
- * @version $Revision: 18630 $
+ * 
  */
 public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
 

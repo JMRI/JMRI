@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * ComboRadioButtonsTest.java
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version $Release:$
  */
 public class ComboRadioButtonsTest extends TestCase {
 

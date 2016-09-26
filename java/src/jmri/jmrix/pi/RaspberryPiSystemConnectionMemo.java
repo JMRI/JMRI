@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * instance manager to activate their particular system.
  *
  * @author   Paul Bender Copyright (C) 2015
- * @version  $Revision$
+ * 
  */
 
 public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {

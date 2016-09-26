@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * activate their particular system.
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  */
 public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 

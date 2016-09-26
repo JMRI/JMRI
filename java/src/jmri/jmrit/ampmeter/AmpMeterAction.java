@@ -8,8 +8,7 @@ import javax.swing.AbstractAction;
  *
  * @author	Ken Cameron Copyright (C) 2007
  * @author	Mark Underwood Copyright (C) 2007
- * @version	$Revision$
- *
+  *
  * This was a direct steal form the LCDClock code by Ken Cameron,
  * which was a direct steal from the Nixie clock code, ver 1.5. 
  * Thank you Bob Jacobsen and Ken Cameron.

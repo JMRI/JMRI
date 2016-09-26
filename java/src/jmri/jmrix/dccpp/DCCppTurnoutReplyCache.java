@@ -10,8 +10,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Paul Bender Copyright (C) 2012
  * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- *
+  *
  * Based on XNetFeedbackMessageCache by Paul Bender
  */
 public class DCCppTurnoutReplyCache implements DCCppListener {

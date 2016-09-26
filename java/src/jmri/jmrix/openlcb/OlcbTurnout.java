@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Turnout for OpenLCB connections.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010, 2011
- * @version $Revision$
  */
 public class OlcbTurnout extends jmri.implementation.AbstractTurnout
         implements CanListener {

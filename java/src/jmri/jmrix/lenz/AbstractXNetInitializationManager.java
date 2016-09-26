@@ -10,8 +10,7 @@ import org.slf4j.LoggerFactory;
  * the Initialization Manager based on the Command Station Type.
  *
  * @author	Paul Bender Copyright (C) 2003-2010
- * @version	$Revision$
- */
+  */
 abstract public class AbstractXNetInitializationManager {
 
     protected Thread initThread = null;

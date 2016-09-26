@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * @author	Bob Jacobsen Copyright 2014
- * @version $Revision: 24246 $
+ * 
  */
 public class TwoIndexTcsProgrammerFacadeTest extends TestCase {
 

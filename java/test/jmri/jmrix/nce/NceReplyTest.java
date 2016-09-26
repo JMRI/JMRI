@@ -9,8 +9,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the NceReplyclass
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class NceReplyTest extends TestCase {
 
     public void testCreate() {

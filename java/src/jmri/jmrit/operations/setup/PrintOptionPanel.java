@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of manifest and switch list print options
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2013
- * @version $Revision$
  */
 public class PrintOptionPanel extends OperationsPreferencesPanel {
 
@@ -40,7 +39,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
     JLabel logoURL = new JLabel("");
 
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     JButton addLogoButton = new JButton(Bundle.getMessage("AddLogo"));
     JButton removeLogoButton = new JButton(Bundle.getMessage("RemoveLogo"));
 

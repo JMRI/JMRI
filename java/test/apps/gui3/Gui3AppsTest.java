@@ -20,7 +20,6 @@ import junit.framework.TestSuite;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Bob Jacobsen Copyright 2009
- * @version $Revision$
  */
 public class Gui3AppsTest extends TestCase {
 

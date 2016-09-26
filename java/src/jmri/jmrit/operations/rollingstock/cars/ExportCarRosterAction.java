@@ -8,7 +8,6 @@ import javax.swing.AbstractAction;
  * Starts the ImportCars thread
  *
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class ExportCarRosterAction extends AbstractAction {
 

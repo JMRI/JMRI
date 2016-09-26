@@ -188,7 +188,62 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
         // done
         f.dispose();
     }
-
+  
+    public void testBuildReportOptionFrame() {
+        BuildReportOptionFrame f = new BuildReportOptionFrame();
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
+        f.initComponents();
+        
+        // TODO do more testing
+        
+        // done
+        f.dispose();        
+    }
+      
+    public void testPrintMoreOptionFrame() {
+        PrintMoreOptionFrame f = new PrintMoreOptionFrame();
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
+        f.initComponents();
+        
+        // TODO do more testing
+        
+        // done
+        f.dispose();        
+    }
+    
+    public void testEditManifestTextFrame() {
+        EditManifestTextFrame f = new EditManifestTextFrame();
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
+        f.initComponents();
+        
+        // TODO do more testing
+        
+        // done
+        f.dispose();        
+    }
+    
+    public void testEditSwitchListTextFrame() {
+        EditSwitchListTextFrame f = new EditSwitchListTextFrame();
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
+        f.initComponents();
+        
+        // TODO do more testing
+        
+        // done
+        f.dispose();        
+    }
+    
+    public void testEditManifestHeaderTextFrame() {
+        EditManifestHeaderTextFrame f = new EditManifestHeaderTextFrame();
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
+        f.initComponents();
+        
+        // TODO do more testing
+        
+        // done
+        f.dispose();        
+    }
+    
     public void testPrintOptionFrame() {
         PrintOptionFrame f = new PrintOptionFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly

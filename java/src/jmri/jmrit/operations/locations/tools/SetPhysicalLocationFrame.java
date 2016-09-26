@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
  * @author Mark Underwood Copyright (C) 2011
- * @version $Revision$
  */
 public class SetPhysicalLocationFrame extends OperationsFrame {
 
@@ -38,7 +37,7 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
     // text field
     // check boxes
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // combo boxes
     JComboBox<Location> locationBox = LocationManager.instance().getComboBox();

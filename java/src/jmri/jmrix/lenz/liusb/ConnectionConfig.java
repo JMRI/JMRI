@@ -9,8 +9,7 @@ import jmri.util.SystemType;
  * This uses the {@link LIUSBAdapter} class to do the actual connection.
  *
  * @author Paul Bender Copyright (C) 2005
- * @version	$Revision$
- *
+  *
  * @see LIUSBAdapter
  */
 public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig {

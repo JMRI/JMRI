@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * rail com tag.
  * <P>
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 17977 $
  */
 public class EcosReporter extends AbstractReporter implements PhysicalLocationReporter {
 

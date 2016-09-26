@@ -6,8 +6,7 @@ package jmri.jmrix.qsi;
  * station.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public interface QsiInterface {
 
     public void addQsiListener(QsiListener l);

@@ -9,8 +9,7 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.roster.FunctionLabelPane class.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
- */
+  */
 public class FunctionLabelPaneTest extends TestCase {
 
     // statics for test objects

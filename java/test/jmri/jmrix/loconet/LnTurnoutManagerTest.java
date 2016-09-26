@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,25 +15,24 @@ import org.slf4j.LoggerFactory;
  * Tests for the jmri.jmrix.loconet.LnTurnoutManager class
  *
  * @author	Bob Jacobsen Copyright 2005
- * @version
  */
 public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
+    @Override
     public String getSystemName(int i) {
         return "LT" + i;
     }
 
     LocoNetInterfaceScaffold lnis;
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown(){
         apps.tests.Log4JFixture.tearDown();
-        super.tearDown();
     }
 
     @Override
-    public void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp(){
         apps.tests.Log4JFixture.setUp();
         // prepare an interface, register
         lnis = new LocoNetInterfaceScaffold();
@@ -41,18 +41,14 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
-    public void testArraySort() {
-        String[] str = new String[]{"8567", "8456"};
-        jmri.util.StringUtil.sort(str);
-        Assert.assertEquals("first ", "8456", str[0]);
-    }
-
+    @Test
     public void testMisses() {
         // try to get nonexistant turnouts
         Assert.assertTrue(null == l.getByUserName("foo"));
         Assert.assertTrue(null == l.getBySystemName("bar"));
     }
 
+    @Test
     public void testLocoNetMessages() {
         // send messages for 21, 22
         // notify the Ln that somebody else changed it...
@@ -82,6 +78,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
         Assert.assertEquals("system name list", testList, l.getSystemNameList());
     }
 
+    @Test
     public void testAsAbstractFactory() {
         // create and register the manager object
         LnTurnoutManager l = new LnTurnoutManager(lnis, lnis, "L", false);
@@ -108,23 +105,6 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
         Assert.assertTrue(null != t.getBySystemName("LT21"));
         Assert.assertTrue(null != t.getByUserName("my name"));
 
-    }
-
-    // from here down is testing infrastructure
-    public LnTurnoutManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {LnTurnoutManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LnTurnoutManagerTest.class);
-        return suite;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnTurnoutManagerTest.class.getName());

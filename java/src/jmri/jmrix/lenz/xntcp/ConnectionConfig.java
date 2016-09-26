@@ -15,7 +15,7 @@ import jmri.jmrix.JmrixConfigPane;
  *
  * @author	Giorgio Terdina Copyright (C) 2008-2011, based on LI100 Action by Bob
  * Jacobsen, Copyright (C) 2003
- * @version	$Revision$ GT - May 2008 - Added possibility of manually
+ *  GT - May 2008 - Added possibility of manually
  * defining the IP address and the TCP port number GT - May 2011 - Fixed
  * problems arising from recent refactoring GT - Dec 2011 - Fixed problems in
  * 2.14 arising from changes introduced since May

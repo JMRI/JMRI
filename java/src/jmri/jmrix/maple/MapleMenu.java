@@ -8,7 +8,6 @@ import javax.swing.JMenu;
  * Create a "Systems" menu containing the Jmri Maple-specific tools
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class MapleMenu extends JMenu {
 

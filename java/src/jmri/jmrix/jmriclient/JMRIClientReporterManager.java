@@ -10,8 +10,7 @@ import jmri.Reporter;
  * the reporter number without padding.
  *
  * @author	Paul Bender Copyright (C) 2011
- * @version	$Revision$
- */
+  */
 public class JMRIClientReporterManager extends jmri.managers.AbstractReporterManager {
 
     private JMRIClientSystemConnectionMemo memo = null;
