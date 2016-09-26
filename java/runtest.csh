@@ -24,8 +24,6 @@
 #
 # For more information, please see
 # http://jmri.org/install/ShellScripts.shtml
-#
-# $Revision$ (CVS maintains this line, do not edit please)
 
 # runs from usual program directory
 cd ..

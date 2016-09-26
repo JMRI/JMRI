@@ -7,9 +7,6 @@
 #
 # Author: Bob Jacobsen, copyright 2008
 # JMRI
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
     
 # Define Listener to make a note if an answer is received
 class NodeListener(jmri.jmrix.grapevine.SerialListener):
