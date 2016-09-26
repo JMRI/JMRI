@@ -33,7 +33,7 @@ public class JsonServerPreferences extends Bean {
     private final static Logger log = LoggerFactory.getLogger(JsonServerPreferences.class);
 
     public static JsonServerPreferences getDefault() {
-        if (InstanceManager.getOptionalDefault(JsonServerPreferences.class) == null) {
+        if (InstanceManager.getNullableDefault(JsonServerPreferences.class) == null) {
             String fileName = FileUtil.getUserFilesPath() + "networkServices" + File.separator + "JsonServerPreferences.xml"; // NOI18N
             if ((new File(fileName)).exists()) {
                 InstanceManager.store(new JsonServerPreferences(fileName), JsonServerPreferences.class);

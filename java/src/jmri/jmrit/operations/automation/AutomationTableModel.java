@@ -1,4 +1,3 @@
-// AutomationTableModel.java
 package jmri.jmrit.operations.automation;
 
 import java.awt.BorderLayout;
@@ -19,7 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.ListSelectionModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 import jmri.jmrit.operations.automation.actions.Action;
@@ -36,7 +34,6 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of a automation used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2016
- * @version $Revision$
  */
 public class AutomationTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -65,7 +62,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     AutomationTableFrame _frame;
     boolean _matchMode = false;
 
-    synchronized void updateList() {
+    private synchronized void updateList() {
         if (_automation == null) {
             return;
         }
@@ -80,7 +77,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
 
     List<AutomationItem> _list = new ArrayList<AutomationItem>();
 
-    void initTable(AutomationTableFrame frame, JTable table, Automation automation) {
+    protected synchronized void initTable(AutomationTableFrame frame, JTable table, Automation automation) {
         _automation = automation;
         _table = table;
         _frame = frame;
@@ -108,22 +105,6 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
-        setPreferredWidths(table);
-
-        // set row height
-        table.setRowHeight(new JComboBox<Object>().getPreferredSize().height);
-        updateList();
-        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        // only allow one row at a time to be selected
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    }
-
-    private void setPreferredWidths(JTable table) {
-        if (_frame.loadTableDetails(table)) {
-            return; // done
-        }
-        log.debug("Setting preferred widths");
         // set column preferred widths
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(35);
         table.getColumnModel().getColumn(CURRENT_COLUMN).setPreferredWidth(60);
@@ -137,10 +118,16 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         table.getColumnModel().getColumn(UP_COLUMN).setPreferredWidth(60);
         table.getColumnModel().getColumn(DOWN_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(70);
+        
+        _frame.loadTableDetails(table);
+        // does not use a table sorter
+        table.setRowSorter(null);
+
+        updateList();
     }
 
     @Override
-    public int getRowCount() {
+    public synchronized int getRowCount() {
         return _list.size();
     }
 
@@ -214,7 +201,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     @Override
-    public boolean isCellEditable(int row, int col) {
+    public synchronized boolean isCellEditable(int row, int col) {
         switch (col) {
             case ACTION_COLUMN:
             case TRAIN_COLUMN:
@@ -239,8 +226,8 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     @Override
-    public Object getValueAt(int row, int col) {
-        if (row >= _list.size()) {
+    public synchronized Object getValueAt(int row, int col) {
+        if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
         AutomationItem item = _list.get(row);
@@ -281,7 +268,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     @Override
-    public void setValueAt(Object value, int row, int col) {
+    public synchronized void setValueAt(Object value, int row, int col) {
         if (value == null) {
             log.debug("Warning automation table row {} still in edit", row);
             return;
@@ -492,7 +479,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
 
     // this table listens for changes to a automation and it's car types
     @Override
-    public void propertyChange(PropertyChangeEvent e) {
+    public synchronized void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY)
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
@@ -518,16 +505,13 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
     }
 
-    private void removePropertyChangeAutomationItems() {
+    private synchronized void removePropertyChangeAutomationItems() {
         for (AutomationItem item : _list) {
             item.removePropertyChangeListener(this);
         }
     }
 
-    public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
+    public synchronized void dispose() {
         if (_automation != null) {
             removePropertyChangeAutomationItems();
             _automation.removePropertyChangeListener(this);

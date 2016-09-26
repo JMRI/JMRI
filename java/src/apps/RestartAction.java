@@ -1,7 +1,6 @@
 package apps;
 
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
 import javax.swing.Icon;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.JmriPanel;
@@ -36,15 +35,13 @@ public class RestartAction extends JmriAbstractAction {
     }
 
     public RestartAction() {
-        super(ResourceBundle.getBundle("apps.ActionListBundle").getString("apps.RestartAction"));
+        super(Bundle.getMessage("RestartAction")); // NOI18N
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (log.isDebugEnabled()) {
-            log.debug("Source: " + e.getSource().toString() + "; class: " + e.getSource().getClass().getName());
-        }
+        log.debug("Source: {}; class: {}", e.getSource().toString(), e.getSource().getClass().getName());
 
         // Don't actually do this if launched as a start-up action
         // as we'll be in an endless loop

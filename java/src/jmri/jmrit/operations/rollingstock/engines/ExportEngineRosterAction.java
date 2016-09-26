@@ -9,7 +9,6 @@ import javax.swing.AbstractAction;
  * Starts the ImportEngines thread
  *
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class ExportEngineRosterAction extends AbstractAction {
 

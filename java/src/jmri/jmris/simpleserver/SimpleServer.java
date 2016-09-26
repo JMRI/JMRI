@@ -27,7 +27,7 @@ public class SimpleServer extends JmriServer {
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmris.simpleserver.SimpleServerBundle");
 
     public static JmriServer instance() {
-        if (InstanceManager.getOptionalDefault(SimpleServer.class) == null) {
+        if (InstanceManager.getNullableDefault(SimpleServer.class) == null) {
             InstanceManager.store(new SimpleServer(),SimpleServer.class);
         }
         return InstanceManager.getDefault(SimpleServer.class);

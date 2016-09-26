@@ -1,7 +1,7 @@
 package jmri.jmrix.cmri.serial;
 
 import jmri.implementation.AbstractTurnoutTest;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.cmri.serial.SerialTurnout class
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 

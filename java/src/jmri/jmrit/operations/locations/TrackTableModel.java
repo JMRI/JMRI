@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of tracks used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012
- * @version $Revision$
  */
 public class TrackTableModel extends AbstractTableModel implements PropertyChangeListener {
 
@@ -70,7 +69,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         fireTableDataChanged();
     }
 
-    synchronized void updateList() {
+    private synchronized void updateList() {
         if (_location == null) {
             return;
         }
@@ -158,7 +157,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     }
 
     @Override
-    public int getRowCount() {
+    public synchronized int getRowCount() {
         return tracksList.size();
     }
 
@@ -271,8 +270,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     }
 
     @Override
-    public Object getValueAt(int row, int col) {
-        if (row >= tracksList.size()) {
+    public synchronized Object getValueAt(int row, int col) {
+        if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
         Track track = tracksList.get(row);
@@ -375,7 +374,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     }
 
     @Override
-    public void setValueAt(Object value, int row, int col) {
+    public synchronized void setValueAt(Object value, int row, int col) {
         switch (col) {
             case EDIT_COLUMN:
                 editTrack(row);
@@ -449,9 +448,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         }
     }
 
-    public void dispose() {
-        // if (log.isDebugEnabled())
-        // log.debug("dispose");
+    public synchronized void dispose() {
         removePropertyChangeTracks();
         if (_location != null) {
             _location.removePropertyChangeListener(this);

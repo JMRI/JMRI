@@ -1,6 +1,6 @@
 package jmri.util;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -69,6 +69,16 @@ public class JUnitAppenderTest extends TestCase {
         JUnitAppender.assertWarnMessage(msg);
     }
 
+    public void testIgnoreLowerBeforeExpectedWarnMessage() {
+        log.debug("this is a DEBUG, should still pass");
+        log.info("this is an INFO, should still pass");
+        log.trace("this is a TRACE, should still pass");
+        
+        String msg = "Message for testing";
+        log.warn(msg);
+        JUnitAppender.assertWarnMessage(msg);
+    }
+
     public void testExpectedWarnAfterDebugMessage() {
         String msg = "Message for testing";
         log.debug("debug to skip");
@@ -81,6 +91,51 @@ public class JUnitAppenderTest extends TestCase {
             String msg = "Message should appear in log";
             log.warn(msg);
         }
+    }
+
+    public void testClearBacklogDefaultNone() {
+        Assert.assertEquals(0,JUnitAppender.clearBacklog());
+    }
+        
+    public void testClearBacklogDefaultWarn() {
+        log.warn("warn message");
+        Assert.assertEquals(1,JUnitAppender.clearBacklog());
+        Assert.assertEquals(0,JUnitAppender.clearBacklog());
+    }
+        
+    public void testClearBacklogDefaultError() {
+        log.error("error message");
+        Assert.assertEquals(1,JUnitAppender.clearBacklog());
+        Assert.assertEquals(0,JUnitAppender.clearBacklog());
+    }
+
+    public void testClearBacklogDefaultInfo() {
+        log.info("info message");
+        Assert.assertEquals(0,JUnitAppender.clearBacklog());
+    }
+
+    public void testClearBacklogDefaultMultiple() {
+        log.info("info 1");
+        log.warn("warn 1");
+        log.info("info 2");        
+        Assert.assertEquals(1,JUnitAppender.clearBacklog());
+        Assert.assertEquals(0,JUnitAppender.clearBacklog());
+    }
+    
+    public void testClearBacklogAtInfoWithInfo() {
+        log.info("info message");
+
+        // this test skipped if INFO is not being logged
+        if (org.apache.log4j.Category.getRoot().getLevel().toInt() > Level.INFO.toInt()) return;  // redo for Log4J2
+        
+        Assert.assertEquals(1,JUnitAppender.clearBacklog(org.apache.log4j.Level.INFO));
+        Assert.assertEquals(0,JUnitAppender.clearBacklog(org.apache.log4j.Level.INFO));
+    }
+
+    public void testClearBacklogAtInfoWithWarn() {
+        log.warn("warn message");
+        Assert.assertEquals(1,JUnitAppender.clearBacklog(org.apache.log4j.Level.INFO));
+        Assert.assertEquals(0,JUnitAppender.clearBacklog(org.apache.log4j.Level.INFO));
     }
 
     // from here down is testing infrastructure

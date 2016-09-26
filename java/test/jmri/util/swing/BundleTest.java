@@ -1,6 +1,8 @@
 package jmri.util.swing;
 
-import junit.framework.Assert;
+import java.util.Locale;
+
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

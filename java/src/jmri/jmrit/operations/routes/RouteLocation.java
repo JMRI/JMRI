@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * route.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2013
- * @version $Revision$
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 
@@ -423,7 +422,6 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
      * @param e Consist XML element
      */
     public RouteLocation(Element e) {
-        // if (log.isDebugEnabled()) log.debug("ctor from element "+e);
         Attribute a;
         if ((a = e.getAttribute(Xml.ID)) != null) {
             _id = a.getValue();

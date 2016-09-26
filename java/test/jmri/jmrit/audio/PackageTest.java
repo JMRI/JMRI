@@ -28,7 +28,7 @@ public class PackageTest extends TestCase {
 
         suite.addTest(BundleTest.suite());
         suite.addTest(jmri.jmrit.audio.swing.PackageTest.suite());
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.audio.configurexml.PackageTest.class));
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
         }
 

@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * (bit134)
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2006
- * @version $Revision$
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008, 2009 Based on CMRI serial
  * example, modified to establish Acela support.
@@ -130,18 +129,16 @@ public class AcelaAddress {
      * Public static method to validate system name format returns 'true' if
      * system name has a valid format, else returns 'false'
      */
-    public static boolean validSystemNameFormat(String systemName, char type) {
+    public static boolean validSystemNameFormat(String systemName, char type,String prefix) {
         // validate the system Name leader characters
-        if ((systemName.charAt(0) != 'A') || ((systemName.charAt(1) != 'L')
-                && (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T')
-                && (systemName.charAt(1) != 'H'))) {
+        if (!(systemName.startsWith(prefix)) || (systemName.charAt(prefix.length()) != type )) {
             // here if an illegal format 
             log.error("illegal character in header field of system name: " + systemName);
             return (false);
         }
         int num;
         try {
-            num = Integer.valueOf(systemName.substring(2)).intValue();
+            num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
         } catch (Exception e) {
             log.error("illegal character in number field of system name: " + systemName);
             return (false);
@@ -161,7 +158,7 @@ public class AcelaAddress {
      * configuration, else returns 'false'
      */
     public static boolean validSystemNameConfig(String systemName, char type,AcelaSystemConnectionMemo memo) {
-        if (!validSystemNameFormat(systemName, type)) {
+        if (!validSystemNameFormat(systemName, type, memo.getSystemPrefix() )) {
             // No point in trying if a valid system name format is not present
             return false;
         }
@@ -191,7 +188,7 @@ public class AcelaAddress {
 
     public static boolean validSystemNameConfig(String systemName, AcelaSystemConnectionMemo memo) {
         char type = systemName.charAt(1);
-        if (!validSystemNameFormat(systemName, type)) {
+        if (!validSystemNameFormat(systemName, type, memo.getSystemPrefix() )) {
             // No point in trying if a valid system name format is not present
             return false;
         }
@@ -227,7 +224,7 @@ public class AcelaAddress {
      */
     public static String convertSystemNameToAlternate(String systemName) {
         // ensure that input system name has a valid format
-        if (!validSystemNameFormat(systemName, systemName.charAt(1))) {
+        if (!validSystemNameFormat(systemName, systemName.charAt(1),"A")) {
             // No point in trying if a valid system name format is not present
             return "";
         }
@@ -248,7 +245,7 @@ public class AcelaAddress {
      */
     public static String normalizeSystemName(String systemName) {
         // ensure that input system name has a valid format
-        if (!validSystemNameFormat(systemName, systemName.charAt(1))) {
+        if (!validSystemNameFormat(systemName, systemName.charAt(1),"A")) {
             // No point in normalizing if a valid system name format is not present
             return "";
         }

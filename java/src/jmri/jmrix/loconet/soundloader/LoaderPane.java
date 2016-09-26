@@ -46,7 +46,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
     }
 
     public String getTitle() {
-        return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemSoundload"));
+        return getTitle(Bundle.getMessage("MenuItemSoundload"));
     }
 
     public LoaderPane() {

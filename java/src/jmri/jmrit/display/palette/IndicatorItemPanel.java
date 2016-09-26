@@ -119,21 +119,17 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     /**
      * ****************************************************
      */
-    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map) {
-        return new IndicatorDragJLabel(flavor, map);
+    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
+        return new IndicatorDragJLabel(flavor, map, icon);
     }
 
     protected class IndicatorDragJLabel extends DragJLabel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -4091016874029191930L;
         HashMap<String, NamedIcon> iconMap;
 
         @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // icon map is within package 
-        public IndicatorDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map) {
-            super(flavor);
+        public IndicatorDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
+            super(flavor, icon);
             iconMap = map;
         }
 
@@ -152,20 +148,27 @@ public class IndicatorItemPanel extends FamilyItemPanel {
             if (log.isDebugEnabled()) {
                 log.debug("IndicatorDragJLabel.getTransferData");
             }
-            IndicatorTrackIcon t = new IndicatorTrackIcon(_editor);
+            if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
+                IndicatorTrackIcon t = new IndicatorTrackIcon(_editor);
 
-            t.setOccBlock(_detectPanel.getOccBlock());
-            t.setOccSensor(_detectPanel.getOccSensor());
-            t.setShowTrain(_detectPanel.getShowTrainName());
-            t.setFamily(_family);
+                t.setOccBlock(_detectPanel.getOccBlock());
+                t.setOccSensor(_detectPanel.getOccSensor());
+                t.setShowTrain(_detectPanel.getShowTrainName());
+                t.setFamily(_family);
 
-            Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<String, NamedIcon> entry = it.next();
-                t.setIcon(entry.getKey(), new NamedIcon(entry.getValue()));
+                Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
+                while (it.hasNext()) {
+                    Entry<String, NamedIcon> entry = it.next();
+                    t.setIcon(entry.getKey(), new NamedIcon(entry.getValue()));
+                }
+                t.setLevel(Editor.TURNOUTS);
+                return t;                
+            } else if (DataFlavor.stringFlavor.equals(flavor)) {
+                StringBuilder sb = new StringBuilder(_itemType);
+                sb.append(" icons");
+                return  sb.toString();
             }
-            t.setLevel(Editor.TURNOUTS);
-            return t;
+            return null;
         }
     }
 

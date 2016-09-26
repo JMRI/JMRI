@@ -10,7 +10,6 @@ import jmri.jmrix.mrc.MrcSystemConnectionMemo;
  * @author Bob Jacobsen Copyright 2010 Copied from nce.swing
  * @author Ken Cameron 2014
  * @author Kevin Dickerson 2014
- * @version $Revision: 17977 $
  */
 public interface MrcPanelInterface {
 

@@ -12,9 +12,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.SortOrder;
+import javax.swing.table.TableRowSorter;
 import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
-import jmri.util.JTableUtil;
-import jmri.util.com.sun.TableSorter;
+import jmri.swing.RowSorterUtil;
+import jmri.util.SystemNameComparator;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,49 +65,42 @@ public class AudioTablePanel extends JPanel {
 
         super();
         listenerDataModel = listenerModel;
-        listenerDataTable = JTableUtil.sortableDataModel(listenerDataModel);
+        TableRowSorter<AudioTableDataModel> sorter = new TableRowSorter<>(listenerDataModel);
+        sorter.setComparator(AudioTableDataModel.SYSNAMECOL, new SystemNameComparator());
+        RowSorterUtil.setSortOrder(sorter, AudioTableDataModel.SYSNAMECOL, SortOrder.ASCENDING);
+        listenerDataTable = listenerDataModel.makeJTable(listenerDataModel.getMasterClassName(), listenerDataModel, sorter);
         listenerDataScroll = new JScrollPane(listenerDataTable);
         listenerDataTable.setColumnModel(new XTableColumnModel());
         listenerDataTable.createDefaultColumnsFromModel();
 
         bufferDataModel = bufferModel;
-        bufferDataTable = JTableUtil.sortableDataModel(bufferDataModel);
+        sorter = new TableRowSorter<>(bufferDataModel);
+        sorter.setComparator(AudioTableDataModel.SYSNAMECOL, new SystemNameComparator());
+        RowSorterUtil.setSortOrder(sorter, AudioTableDataModel.SYSNAMECOL, SortOrder.ASCENDING);
+        bufferDataTable = bufferDataModel.makeJTable(bufferDataModel.getMasterClassName(), bufferDataModel, sorter);
         bufferDataScroll = new JScrollPane(bufferDataTable);
         bufferDataTable.setColumnModel(new XTableColumnModel());
         bufferDataTable.createDefaultColumnsFromModel();
 
         sourceDataModel = sourceModel;
-        sourceDataTable = JTableUtil.sortableDataModel(sourceDataModel);
+        sorter = new TableRowSorter<>(sourceDataModel);
+        sorter.setComparator(AudioTableDataModel.SYSNAMECOL, new SystemNameComparator());
+        RowSorterUtil.setSortOrder(sorter, AudioTableDataModel.SYSNAMECOL, SortOrder.ASCENDING);
+        sourceDataTable = sourceDataModel.makeJTable(sourceDataModel.getMasterClassName(), sourceDataModel, sorter);
         sourceDataScroll = new JScrollPane(sourceDataTable);
         sourceDataTable.setColumnModel(new XTableColumnModel());
         sourceDataTable.createDefaultColumnsFromModel();
 
-        // give system name column as smarter sorter and use it initially
-        try {
-            // Listener first
-            TableSorter ltmodel = ((TableSorter) listenerDataTable.getModel());
-            ltmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            ltmodel.setSortingStatus(AudioTableDataModel.SYSNAMECOL, TableSorter.ASCENDING);
-
-            // Buffers next
-            TableSorter btmodel = ((TableSorter) listenerDataTable.getModel());
-            btmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            btmodel.setSortingStatus(AudioTableDataModel.SYSNAMECOL, TableSorter.ASCENDING);
-
-            // Sources last
-            TableSorter stmodel = ((TableSorter) listenerDataTable.getModel());
-            stmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            stmodel.setSortingStatus(AudioTableDataModel.SYSNAMECOL, TableSorter.ASCENDING);
-        } catch (java.lang.ClassCastException e) {
-        }  // happens if not sortable table
-
         // configure items for GUI
         listenerDataModel.configureTable(listenerDataTable);
         listenerDataModel.configEditColumn(listenerDataTable);
+        listenerDataModel.persistTable(listenerDataTable);
         bufferDataModel.configureTable(bufferDataTable);
         bufferDataModel.configEditColumn(bufferDataTable);
+        bufferDataModel.persistTable(bufferDataTable);
         sourceDataModel.configureTable(sourceDataTable);
         sourceDataModel.configEditColumn(sourceDataTable);
+        sourceDataModel.persistTable(sourceDataTable);
 
         // general GUI config
         this.setLayout(new BorderLayout());
@@ -182,21 +177,21 @@ public class AudioTablePanel extends JPanel {
 
     public void dispose() {
         if (listenerDataModel != null) {
-            listenerDataModel.saveTableColumnDetails(listenerDataTable);
+            listenerDataModel.stopPersistingTable(listenerDataTable);
             listenerDataModel.dispose();
         }
         listenerDataModel = null;
         listenerDataTable = null;
         listenerDataScroll = null;
         if (bufferDataModel != null) {
-            bufferDataModel.saveTableColumnDetails(bufferDataTable);
+            bufferDataModel.stopPersistingTable(bufferDataTable);
             bufferDataModel.dispose();
         }
         bufferDataModel = null;
         bufferDataTable = null;
         bufferDataScroll = null;
         if (sourceDataModel != null) {
-            sourceDataModel.saveTableColumnDetails(sourceDataTable);
+            sourceDataModel.stopPersistingTable(sourceDataTable);
             sourceDataModel.dispose();
         }
         sourceDataModel = null;

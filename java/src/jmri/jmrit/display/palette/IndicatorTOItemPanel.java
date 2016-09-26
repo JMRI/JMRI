@@ -35,11 +35,6 @@ import org.slf4j.LoggerFactory;
  */
 public class IndicatorTOItemPanel extends TableItemPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -9080081407076209874L;
-
     final static String[] STATUS_KEYS = {"ClearTrack", "OccupiedTrack", "PositionTrack",
         "AllocatedTrack", "DontUseTrack", "ErrorTrack"};
 
@@ -69,7 +64,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             _detectPanel = new DetectionPanel(this);
             add(_detectPanel, 1);
             add(_iconFamilyPanel, 2);
-            _buttonPostion = 2;
+            _buttonPosition = 2;
         }
     }
 
@@ -80,7 +75,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     public void init(ActionListener doneAction) {
         super.init(doneAction);
         add(_iconFamilyPanel, 0);
-        _buttonPostion = 0;
+        _buttonPosition = 0;
     }
 
     /**
@@ -95,7 +90,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         _detectPanel = new DetectionPanel(this);
         add(_detectPanel, 1);
         add(_iconFamilyPanel, 2);
-        _buttonPostion = 2;
+        _buttonPosition = 2;
     }
 
     /**
@@ -131,7 +126,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         if (ItemPalette.getLevel4Family(_itemType, _family) != null) {
             JOptionPane.showMessageDialog(_paletteFrame,
                     Bundle.getMessage("DuplicateFamilyName", _family, _itemType),
-                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             // make sure name does not duplicate a known name
             _family = null;
         }
@@ -250,7 +245,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             _iconPanel.add(panel);
             c.gridx++;
             HashMap<String, NamedIcon> iconMap = entry.getValue();
-            ItemPanel.checkIconMap("Turnout", iconMap);
+            ItemPanel.checkIconMap("Turnout", iconMap); // NOI18N
             Iterator<Entry<String, NamedIcon>> iter = iconMap.entrySet().iterator();
             while (iter.hasNext()) {
                 Entry<String, NamedIcon> ent = iter.next();
@@ -350,7 +345,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             if (family.equals(iter.next())) {
                 JOptionPane.showMessageDialog(_paletteFrame,
                         Bundle.getMessage("DuplicateFamilyName", family, _itemType),
-                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return false;
             }
         }
@@ -396,7 +391,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     private void createNewFamily() {
         _iconGroupsMap = new HashMap<String, HashMap<String, NamedIcon>>();
         for (int i = 0; i < STATUS_KEYS.length; i++) {
-            _iconGroupsMap.put(STATUS_KEYS[i], makeNewIconMap("Turnout"));
+            _iconGroupsMap.put(STATUS_KEYS[i], makeNewIconMap("Turnout")); // NOI18N
         }
         ItemPalette.addLevel4Family(_editor, _itemType, _family, _iconGroupsMap);
         resetFamiliesPanel();
@@ -439,7 +434,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             removeIconFamiliesPanel();
         }
         initIconFamiliesPanel();
-        add(_iconFamilyPanel, _buttonPostion);
+        add(_iconFamilyPanel, _buttonPosition);
         showIcons();
         _iconFamilyPanel.invalidate();
         invalidate();
@@ -493,19 +488,15 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     }
 
     @Override
-    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map) {
-        return new IconDragJLabel(flavor);
+    protected JLabel getDragger(DataFlavor flavor, 
+            HashMap<String, NamedIcon> map, NamedIcon icon) {
+        return new IconDragJLabel(flavor, icon);
     }
 
     protected class IconDragJLabel extends DragJLabel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2484596501816237387L;
-
-        public IconDragJLabel(DataFlavor flavor) {
-            super(flavor);
+        public IconDragJLabel(DataFlavor flavor, NamedIcon icon) {
+            super(flavor, icon);
         }
 
         @Override
@@ -513,15 +504,23 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             return super.isDataFlavorSupported(flavor);
         }
 
-        @Override
+        protected boolean okToDrag() {
+            NamedBean bean = getDeviceNamedBean();
+            if (bean == null) {
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                return false;
+            }
+            return true;
+        }
+
+       @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {
                 return null;
             }
-            NamedBean bean = getNamedBean();
+            NamedBean bean = getDeviceNamedBean();
             if (bean == null) {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("noRowSelected"),
-                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }
 
@@ -531,26 +530,35 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 return null;
             }
 
-            IndicatorTurnoutIcon t = new IndicatorTurnoutIcon(_editor);
+            if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
+                IndicatorTurnoutIcon t = new IndicatorTurnoutIcon(_editor);
 
-            t.setOccBlock(_detectPanel.getOccBlock());
-            t.setOccSensor(_detectPanel.getOccSensor());
-            t.setShowTrain(_detectPanel.getShowTrainName());
-            t.setTurnout(bean.getSystemName());
-            t.setFamily(_family);
+                t.setOccBlock(_detectPanel.getOccBlock());
+                t.setOccSensor(_detectPanel.getOccSensor());
+                t.setShowTrain(_detectPanel.getShowTrainName());
+                t.setTurnout(bean.getSystemName());
+                t.setFamily(_family);
 
-            Iterator<Entry<String, HashMap<String, NamedIcon>>> it = iconMap.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<String, HashMap<String, NamedIcon>> entry = it.next();
-                String status = entry.getKey();
-                Iterator<Entry<String, NamedIcon>> iter = entry.getValue().entrySet().iterator();
-                while (iter.hasNext()) {
-                    Entry<String, NamedIcon> ent = iter.next();
-                    t.setIcon(status, ent.getKey(), new NamedIcon(ent.getValue()));
+                Iterator<Entry<String, HashMap<String, NamedIcon>>> it = iconMap.entrySet().iterator();
+                while (it.hasNext()) {
+                    Entry<String, HashMap<String, NamedIcon>> entry = it.next();
+                    String status = entry.getKey();
+                    Iterator<Entry<String, NamedIcon>> iter = entry.getValue().entrySet().iterator();
+                    while (iter.hasNext()) {
+                        Entry<String, NamedIcon> ent = iter.next();
+                        t.setIcon(status, ent.getKey(), new NamedIcon(ent.getValue()));
+                    }
                 }
+                t.setLevel(Editor.TURNOUTS);
+                return t;                
+            } else if (DataFlavor.stringFlavor.equals(flavor)) {
+                StringBuilder sb = new StringBuilder(_itemType);
+                sb.append(" icons for \"");
+                sb.append(bean.getDisplayName());
+                sb.append("\"");
+                return  sb.toString();
             }
-            t.setLevel(Editor.TURNOUTS);
-            return t;
+            return null;
         }
     }
 

@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision$
  * @since 2.3.1
  */
 public class RpsReporterManagerXml extends jmri.managers.configurexml.AbstractReporterManagerConfigXML {

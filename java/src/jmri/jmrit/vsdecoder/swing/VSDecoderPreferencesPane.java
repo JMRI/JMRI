@@ -16,7 +16,7 @@ package jmri.jmrit.vsdecoder.swing;
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
+ * 
  */
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

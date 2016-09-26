@@ -74,7 +74,12 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         } else {
             // The sensor exists.  We need to forward this 
             // message to it.
-            ((DCCppSensor) getBySystemName(s)).message(l);
+            Sensor sen = getBySystemName(s);
+            if (sen == null) {
+                log.error("Failed to get sensor for {}", s);
+            } else {
+                ((DCCppSensor) sen).message(l);
+            }
         }
 
     }

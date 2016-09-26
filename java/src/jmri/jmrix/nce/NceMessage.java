@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
  * @author kcameron Copyright (C) 2014
- * @version $Revision$
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 

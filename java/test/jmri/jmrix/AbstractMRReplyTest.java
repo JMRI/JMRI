@@ -1,6 +1,6 @@
 package jmri.jmrix;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -9,8 +9,7 @@ import junit.framework.TestSuite;
  * Tests for AbstractMRReply
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class AbstractMRReplyTest extends TestCase {
 
     AbstractMRReply testMsg;

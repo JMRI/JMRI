@@ -6,7 +6,7 @@
  *
  * @author Paul Bender Copyright (C) 2011
  * @author Daniel Boudreau Copyright (C) 2012
- * @version $Revision: 19142 $
+ * 
  */
 package jmri.jmrix.nce;
 

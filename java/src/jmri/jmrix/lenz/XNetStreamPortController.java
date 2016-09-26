@@ -10,8 +10,7 @@ import java.io.DataOutputStream;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  * @author	Paul Bender Copyright (C) 2004,2010,2014
- * @version	$Revision$
- */
+  */
 public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortController implements XNetPortController {
 
     public XNetStreamPortController(DataInputStream in, DataOutputStream out, String pname) {

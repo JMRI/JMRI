@@ -32,8 +32,8 @@ public class PackageTest extends TestCase {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.nce.PackageTest");
         suite.addTest(jmri.jmrix.nce.NceTurnoutTest.suite());
-        suite.addTest(jmri.jmrix.nce.NceTurnoutManagerTest.suite());
-        suite.addTest(jmri.jmrix.nce.NceSensorManagerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NceTurnoutManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NceSensorManagerTest.class));
         suite.addTest(jmri.jmrix.nce.NceAIUTest.suite());
         suite.addTest(jmri.jmrix.nce.NceProgrammerTest.suite());
         suite.addTest(jmri.jmrix.nce.NceProgrammerManagerTest.suite());
@@ -45,6 +45,11 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.nce.BundleTest.suite());
         suite.addTest(jmri.jmrix.nce.clockmon.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(NceConsistTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.nce.networkdriver.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.nce.usbdriver.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.nce.serialdriver.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.nce.simulator.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.nce.configurexml.PackageTest.class));
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.nce.ncemon.NceMonPanelTest.suite());
             suite.addTest(jmri.jmrix.nce.packetgen.NcePacketGenPanelTest.suite());

@@ -10,7 +10,10 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   SprogCSSerialDriverAdapterTest.class
+   SprogCSSerialDriverAdapterTest.class,
+   ConnectionConfigTest.class,
+   jmri.jmrix.sprog.sprogCS.configurexml.PackageTest.class
+
 })
 public class PackageTest {
 }

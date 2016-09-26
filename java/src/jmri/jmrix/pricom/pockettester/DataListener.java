@@ -9,8 +9,7 @@ package jmri.jmrix.pricom.pockettester;
  * @see jmri.jmrix.pricom.pockettester.DataSource
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version	$Revision$
- */
+  */
 public interface DataListener {
 
     public void asciiFormattedMessage(String m);

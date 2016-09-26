@@ -18,8 +18,7 @@ import org.slf4j.LoggerFactory;
  * There is also a link there to a C port of Sam's programs
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
- */
+  */
 public class Analytic_AAlgorithm extends AbstractCalculator {
 
     public Analytic_AAlgorithm(Point3d[] sensors, double vsound, int offset) {

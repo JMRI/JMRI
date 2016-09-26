@@ -120,7 +120,7 @@ public class MemoryComboIcon extends PositionableJPanel
         if (debug) {
             log.debug("setMemory for memory= " + pName);
         }
-        if (InstanceManager.getOptionalDefault(jmri.MemoryManager.class) != null) {
+        if (InstanceManager.getNullableDefault(jmri.MemoryManager.class) != null) {
             try {
                 Memory memory = InstanceManager.memoryManagerInstance().provideMemory(pName);
                 setMemory(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, memory));
@@ -197,7 +197,7 @@ public class MemoryComboIcon extends PositionableJPanel
     }
 
     public boolean setEditIconMenu(javax.swing.JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Memory"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameMemory"));
         popup.add(new javax.swing.AbstractAction(txt) {
             /**
              *

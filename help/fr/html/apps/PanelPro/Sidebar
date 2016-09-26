@@ -19,7 +19,7 @@
 <dt><h3>Autres Infos Utiles</h3></dt><DD>
 <UL>
 <LI><a HREF="../../tools/Sensors.shtml">Capteurs</a>
-<LI><A HREF="../../tools/Signalling/index.shtml">Signaux</a>
+<LI><A HREF="../../tools/signaling/index.shtml">Signaux</a>
 <LI><A HREF="../../tools/Routes.shtml">Itin&#233;raires</a>
 <LI><A HREF="../../tools/fastclock/index.shtml">Horloges Rapides</a>
 <LI><A HREF="../../doc/Technical/TurnoutFeedback.shtml">R&#233;troactions Aiguillage</a>
@@ -31,4 +31,3 @@
 </a> 
 
 </div> <!-- End of block of text on left side of page -->
-

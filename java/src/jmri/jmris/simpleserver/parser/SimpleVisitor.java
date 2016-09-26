@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 /* This class provides an interface between the JavaTree/JavaCC 
  * parser for the SimpleServer protocol and the JMRI back end.
  * @author Paul Bender Copyright (C) 2016
- * @version $Revision$
  */
 public class SimpleVisitor implements JmriServerParserVisitor {
 

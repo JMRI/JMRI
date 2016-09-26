@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2007
- * @version $Revision$
  */
 public class RpsSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 

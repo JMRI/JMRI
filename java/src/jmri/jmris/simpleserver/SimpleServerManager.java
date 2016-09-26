@@ -10,7 +10,7 @@ public class SimpleServerManager {
     private SimpleServer server;
 
     private SimpleServerManager() {
-        if (InstanceManager.getOptionalDefault(SimpleServerPreferences.class) == null) {
+        if (InstanceManager.getNullableDefault(SimpleServerPreferences.class) == null) {
             String fileName = FileUtil.getUserFilesPath() + "networkServices" + File.separator + "SimpleServer.xml";
             if ((new File(fileName)).exists()) {
                 InstanceManager.store(new SimpleServerPreferences(fileName), SimpleServerPreferences.class); // NOI18N
@@ -22,7 +22,7 @@ public class SimpleServerManager {
     }
 
     public static SimpleServerManager getInstance() {
-        if (InstanceManager.getOptionalDefault(SimpleServerManager.class) == null) {
+        if (InstanceManager.getNullableDefault(SimpleServerManager.class) == null) {
             InstanceManager.store(new SimpleServerManager(), SimpleServerManager.class); // NOI18N
         }
         return InstanceManager.getDefault(SimpleServerManager.class);

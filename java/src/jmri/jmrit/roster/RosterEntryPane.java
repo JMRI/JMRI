@@ -93,7 +93,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
         addrSel.setEnabled(false);
         addrSel.setLocked(false);
 
-        if ((InstanceManager.getOptionalDefault(jmri.ThrottleManager.class) != null)
+        if ((InstanceManager.getNullableDefault(jmri.ThrottleManager.class) != null)
                 && !InstanceManager.throttleManagerInstance().addressTypeUnique()) {
             // This goes through to find common protocols between the command station and the decoder
             // and will set the selection box list to match those that are common.
@@ -372,7 +372,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
      */
     public boolean checkDuplicate() {
         // check its not a duplicate
-        List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, id.getText());
+        List<RosterEntry> l = Roster.getDefault().matchingList(null, null, null, null, null, null, id.getText());
         boolean oops = false;
         for (int i = 0; i < l.size(); i++) {
             if (re != l.get(i)) {

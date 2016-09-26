@@ -11,8 +11,7 @@ import org.slf4j.LoggerFactory;
  * @author	Paul Bender Copyright (C) 2003-2010
  * @author	Giorgio Terdina Copyright (C) 2007
  * @author      Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- *
+  *
  * Based on XNetInitializationManager by Paul Bender and Giorgio Terdina
  */
 public class DCCppInitializationManager extends AbstractDCCppInitializationManager {
@@ -40,7 +39,7 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
 	    log.error("Power Manager not (yet) created!");
 	}
 	jmri.InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
-	if (jmri.InstanceManager.getOptionalDefault(jmri.PowerManager.class) == null) {
+	if (jmri.InstanceManager.getNullableDefault(jmri.PowerManager.class) == null) {
 	    log.error("Power Manager not accessible!");
 	} else {
 	    log.debug("Power Manager: {}", jmri.InstanceManager.getDefault(jmri.PowerManager.class));

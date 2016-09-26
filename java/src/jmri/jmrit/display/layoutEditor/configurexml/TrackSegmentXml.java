@@ -29,7 +29,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
 
         TrackSegment p = (TrackSegment) o;
 
-        Element element = new Element("tracksegment");
+        Element element = new Element("tracksegment"); // NOI18N
 
         // include attributes
         element.setAttribute("ident", p.getID());

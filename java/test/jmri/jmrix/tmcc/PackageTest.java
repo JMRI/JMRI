@@ -27,11 +27,13 @@ public class PackageTest extends TestCase {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.tmcc.SerialTest");
         suite.addTest(SerialTurnoutTest.suite());
-        suite.addTest(SerialTurnoutManagerTest.suite());
+ 	suite.addTest(new junit.framework.JUnit4TestAdapter(SerialTurnoutManagerTest.class));
         suite.addTest(SerialMessageTest.suite());
         suite.addTest(SerialReplyTest.suite());
         suite.addTest(SerialTrafficControllerTest.suite());
         suite.addTest(SerialAddressTest.suite());
+ 	suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.tmcc.serialdriver.PackageTest.class));
+ 	suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.tmcc.configurexml.PackageTest.class));
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.tmcc.serialmon.SerialMonFrameTest.suite());
         }

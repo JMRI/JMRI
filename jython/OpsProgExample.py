@@ -11,9 +11,6 @@
 
 # Author: Bob Jacobsen, copyright 2004, 2005
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 
 import jmri
 
@@ -33,7 +30,7 @@ class OpsProgExample(jmri.jmrit.automat.AbstractAutomaton) :
         
         # get references to sample layout objects
         self.sensor = sensors.provideSensor(self.sensorName)
-        self.programmer = programmers.getAddressedProgrammer(self.longAddress, self.locoNumber)
+        self.programmer = addressedProgrammers.getAddressedProgrammer(self.longAddress, self.locoNumber)
 
         # get initial state and set the CV as needed
         self.now = self.sensor.getKnownState()

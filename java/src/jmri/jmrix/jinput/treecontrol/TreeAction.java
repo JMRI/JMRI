@@ -7,8 +7,7 @@ import jmri.util.JmriJFrameAction;
  * Create a JInput control window.
  *
  * @author Bob Jacobsen Copyright 2008
- * @version	$Revision$
- */
+  */
 public class TreeAction extends JmriJFrameAction {
 
     /**

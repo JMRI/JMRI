@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * Builds a train's manifest using Comma Separated Values (csv).
  *
  * @author Daniel Boudreau Copyright (C) 2011, 2015
- * @version $Revision: 1 $
+ * 
  */
 public class TrainCsvManifest extends TrainCsvCommon {
 

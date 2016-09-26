@@ -1,49 +1,36 @@
 //SimpleServerFrameTest.java
 package jmri.jmris.simpleserver;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import java.awt.GraphicsEnvironment;
 
 /**
  * Tests for the jmri.jmris.simpleserver.SimpleServerFrame class 
  *
  * @author Paul Bender
  */
-public class SimpleServerFrameTest extends TestCase {
+public class SimpleServerFrameTest {
 
+    @Test
     public void testCtorDefault() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SimpleServerFrame a = new SimpleServerFrame();
         Assert.assertNotNull(a);
     }
 
-    // from here down is testing infrastructure
-    public SimpleServerFrameTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SimpleServerFrameTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(jmri.jmris.simpleserver.SimpleServerFrameTest.class);
-
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
-        super.setUp();
     }
 
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         apps.tests.Log4JFixture.tearDown();
     }
 
