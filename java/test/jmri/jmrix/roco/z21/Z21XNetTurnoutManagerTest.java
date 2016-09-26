@@ -6,9 +6,10 @@ import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,24 +21,21 @@ import org.slf4j.LoggerFactory;
  */
 public class Z21XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
+    @Override
     public String getSystemName(int i) {
         return "XT" + i;
     }
 
     XNetInterfaceScaffold lnis;
 
-    public void testArraySort() {
-        String[] str = new String[]{"8567", "8456"};
-        jmri.util.StringUtil.sort(str);
-        Assert.assertEquals("first ", "8456", str[0]);
-    }
-
+    @Test
     public void testMisses() {
         // try to get nonexistant turnouts
         Assert.assertTrue(null == l.getByUserName("foo"));
         Assert.assertTrue(null == l.getBySystemName("bar"));
     }
 
+    @Test
     public void testz21XNetMessages() {
         // send messages for 21, 22
         // notify that somebody else changed it...
@@ -67,6 +65,7 @@ public class Z21XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrT
         Assert.assertEquals("system name list", testList, l.getSystemNameList());
     }
 
+    @Test
     public void testAsAbstractFactory() {
         lnis = new XNetInterfaceScaffold(new RocoZ21CommandStation());
         // create and register the manager object
@@ -96,33 +95,15 @@ public class Z21XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrT
 
     }
 
-    // from here down is testing infrastructure
-    public Z21XNetTurnoutManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", Z21XNetTurnoutManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(Z21XNetTurnoutManagerTest.class);
-        return suite;
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
-        super.tearDown();
     }
 
     @Override
-    public void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp(){
         apps.tests.Log4JFixture.setUp();
         // prepare an interface, register
         lnis = new XNetInterfaceScaffold(new RocoZ21CommandStation());
