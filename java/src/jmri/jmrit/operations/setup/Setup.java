@@ -2160,7 +2160,7 @@ public class Setup {
                 log.debug("yearModeled: {}", year);
                 setYearModeled(year);
             }
-            // next seven attributes are for backward compatibility
+            // next eight attributes are here for backward compatibility
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.PRINT_LOC_COMMENTS)) != null) {
                 String enable = a.getValue();
                 log.debug("printLocComments: {}", enable);
@@ -2881,6 +2881,9 @@ public class Setup {
         }
     }
 
+    /*
+     * The print Manifest and switch list user selectable options are stored in the xml file using the English translation.
+     */
     private static final String[] keys = {"Road", "Number", "Type", "Model", "Length", "Load", "Color",
             "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist", "Kernel",
             "Kernel_Size", "Owner", "RWE", "Comment", "SetOut_Msg", "PickUp_Msg", "Hazardous", "Tab", "Tab2", "Tab3"};

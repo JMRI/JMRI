@@ -1548,7 +1548,7 @@ public class TrainBuilder extends TrainCommon {
             if (car.getTrack().getTrackType().equals(Track.INTERCHANGE)) {
                 // don't service a car at interchange and has been dropped off by this train
                 if (car.getTrack().getPickupOption().equals(Track.ANY) &&
-                        car.getSavedRouteId().equals(_train.getRoute().getId())) {
+                        car.getLastRouteId().equals(_train.getRoute().getId())) {
                     addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeCarDropByTrain"),
                             new Object[]{car.toString(), _train.getRoute().getName(), car.getLocationName(),
                                     car.getTrackName()}));
