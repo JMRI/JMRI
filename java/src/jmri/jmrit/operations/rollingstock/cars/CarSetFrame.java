@@ -171,7 +171,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 
     @Override
     protected void enableComponents(boolean enabled) {
-        // If routing is disable, the RWE and Final Destination fields do not work
+        // If routing is disabled, the RWE and Final Destination fields do not work
         if (!Setup.isCarRoutingEnabled()) {
             ignoreRWECheckBox.setSelected(true);
             ignoreFinalDestinationCheckBox.setSelected(true);

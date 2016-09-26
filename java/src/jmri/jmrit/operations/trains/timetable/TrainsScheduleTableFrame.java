@@ -75,7 +75,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     JButton selectButton = new JButton(Bundle.getMessage("SelectAll"));
     JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
 
-    JButton applyButton = new JButton(Bundle.getMessage("Apply"));
+    JButton applyButton = new JButton(Bundle.getMessage("ButtonApply"));
     JButton buildButton = new JButton(Bundle.getMessage("Build"));
     JButton printButton = new JButton(Bundle.getMessage("Print"));
     JButton runFileButton = new JButton(Bundle.getMessage("RunFile"));
