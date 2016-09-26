@@ -12,12 +12,14 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import javax.jmdns.JmDNS;
 import javax.jmdns.JmmDNS;
 import javax.jmdns.NetworkTopologyEvent;
 import javax.jmdns.NetworkTopologyListener;
 import javax.jmdns.ServiceInfo;
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.implementation.QuietShutDownTask;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
@@ -343,6 +345,17 @@ public class ZeroConfService {
 
     private static void stopAll(final boolean close) {
         log.debug("Stopping all ZeroConfServices");
+        CountDownLatch zcLatch = new CountDownLatch(ZeroConfService.services().size());
+        new HashMap<>(ZeroConfService.services()).values().parallelStream().forEach(service -> {
+            service.stop();
+            zcLatch.countDown();
+        });
+        try {
+            zcLatch.await();
+        } catch (InterruptedException ex) {
+            log.warn("ZeroConfService stop threads interrupted.", ex);
+        }
+        CountDownLatch nsLatch = new CountDownLatch(ZeroConfService.netServices().size());
         new HashMap<>(ZeroConfService.netServices()).values().parallelStream().forEach((netService) -> {
             new Thread(() -> {
                 netService.unregisterAllServices();
@@ -353,8 +366,14 @@ public class ZeroConfService {
                         log.debug("jmdns.close() returned IOException: {}", ex.getMessage());
                     }
                 }
+                nsLatch.countDown();
             }).start();
         });
+        try {
+            zcLatch.await();
+        } catch (InterruptedException ex) {
+            log.warn("JmDNS unregister threads interrupted.", ex);
+        }
         ZeroConfService.services().clear();
     }
 
@@ -392,9 +411,9 @@ public class ZeroConfService {
             } catch (IOException ex) {
                 log.warn("Unable to create JmDNS with error: {}", ex.getMessage(), ex);
             }
-            if (InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
-                InstanceManager.getDefault(jmri.ShutDownManager.class).register(ZeroConfService.shutDownTask);
-            }
+            InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(manager -> {
+                manager.register(ZeroConfService.shutDownTask);
+            });
         }
         return new HashMap<>(ZeroConfService.netServices);
     }

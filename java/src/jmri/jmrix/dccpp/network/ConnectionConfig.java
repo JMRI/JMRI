@@ -10,8 +10,7 @@ import javax.swing.JPanel;
  *
  * @author	Paul Bender Copyright (C) 2011
  * @author      Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- *
+  *
  * Adapted from LIUSBEthernetAdapter
  * 
  * @see jmri.jmrix.lenz.liusbethernet.LIUSBEthernetAdapter

@@ -8,7 +8,7 @@ import jmri.implementation.DoubleTurnoutSignalHead;
 import jmri.implementation.QuadOutputSignalHead;
 import jmri.implementation.SE8cSignalHead;
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -16,8 +16,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrit.beantable.SignalHeadTableAction class
  *
  * @author	Bob Jacobsen Copyright 2004, 2007, 2008, 2009
- * @version	$Revision$
- */
+  */
 public class SignalHeadTableActionTest extends jmri.util.SwingTestCase {
 
     public void testCreate() {

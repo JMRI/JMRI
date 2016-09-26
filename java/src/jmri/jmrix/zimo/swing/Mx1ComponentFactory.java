@@ -9,7 +9,6 @@ import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
  * @author	Bob Jacobsen Copyright (C) 2010 Copied from nce.swing
  * @author Ken Cameron 2014
  * @author Kevin Dickerson 2014
- * @version $Revision: 17977 $
  */
 public class Mx1ComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 

@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * </UL>
  *
  * @author	Bob Jacobsen Copyright (C) 2007, 2008, 2010
- * @version $Revision$
  */
 public class SdfBuffer {
 

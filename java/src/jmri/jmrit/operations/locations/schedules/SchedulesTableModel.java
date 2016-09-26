@@ -97,19 +97,6 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
-        setPreferredWidths(frame, table);
-
-        // set row height
-        table.setRowHeight(new JComboBox<>().getPreferredSize().height);
-        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-    }
-
-    private void setPreferredWidths(SchedulesTableFrame frame, JTable table) {
-        if (frame.loadTableDetails(table)) {
-            return; // done
-        }
-        log.debug("Setting preferred widths");
         // set column preferred widths
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(40);
         table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(200);
@@ -120,6 +107,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         table.getColumnModel().getColumn(MODE_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(90);
+        
+        frame.loadTableDetails(table);
     }
 
     @Override
@@ -162,21 +151,16 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case ID_COLUMN:
-                return String.class;
             case NAME_COLUMN:
-                return String.class;
             case SCHEDULE_STATUS_COLUMN:
-                return String.class;
-            case SPUR_NUMBER_COLUMN:
-                return String.class;
-            case SPUR_COLUMN:
-                return JComboBox.class;
             case STATUS_COLUMN:
-                return String.class;
             case MODE_COLUMN:
-                return String.class;
+            	return String.class;
+            case SPUR_COLUMN:
+            	return JComboBox.class;
+            case SPUR_NUMBER_COLUMN:
+                return Integer.class;  
             case EDIT_COLUMN:
-                return JButton.class;
             case DELETE_COLUMN:
                 return JButton.class;
             default:
@@ -316,7 +300,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
                 return Bundle.getMessage("Error");
             }
         }
-        return Bundle.getMessage("Okay");
+        return Bundle.getMessage("ButtonOK");
     }
 
     private JComboBox<LocationTrackPair> getComboBox(int row, Schedule schedule) {

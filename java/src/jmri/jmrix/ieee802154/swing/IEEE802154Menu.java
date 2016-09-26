@@ -8,7 +8,6 @@ import javax.swing.JMenu;
  * Create a menu containing the IEEE 802.15.4 specific tools
  *
  * @author	Paul Bender Copyright 2013
- * @version $Revision$
  */
 public class IEEE802154Menu extends JMenu {
 

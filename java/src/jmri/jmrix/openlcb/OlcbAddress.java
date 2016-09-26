@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  *
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008, 2010
- * @version $Revision$
  */
 public class OlcbAddress {
 

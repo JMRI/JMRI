@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * An implementation of DccThrottle for debugging use.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public class DebugThrottle extends AbstractThrottle {
 

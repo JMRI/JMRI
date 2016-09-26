@@ -8,7 +8,6 @@ import javax.swing.JMenu;
  * Create a "JMRIClient" menu containing the system-specific tools
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class JMRIClientMenu extends JMenu {
 

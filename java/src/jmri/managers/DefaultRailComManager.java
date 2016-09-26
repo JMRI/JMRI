@@ -30,10 +30,6 @@ public class DefaultRailComManager extends AbstractManager
 
     public DefaultRailComManager() {
         InstanceManager.store(this, RailComManager.class);
-        if (jmri.InstanceManager.getOptionalDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
-            new jmri.jmrit.beantable.ListedTableFrame();
-        }
-        jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class).addTable("jmri.jmrit.beantable.RailComTableAction", "RailComm Table", true);
     }
 
     @Override

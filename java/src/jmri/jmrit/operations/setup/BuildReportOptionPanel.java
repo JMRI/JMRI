@@ -18,7 +18,7 @@ import javax.swing.JRadioButton;
  * Frame for user edit of the build report options
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2013
- * @version $Revision: 21643 $
+ * 
  */
 public class BuildReportOptionPanel extends OperationsPreferencesPanel {
 

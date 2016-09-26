@@ -20,6 +20,7 @@ import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.routes.Route;
@@ -33,7 +34,6 @@ import org.slf4j.LoggerFactory;
  * Frame to display by rolling stock, the locations serviced by this train
  *
  * @author Dan Boudreau Copyright (C) 2010, 2013, 2014
- * @version $Revision$
  */
 public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -186,8 +186,10 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
             List<Track> tracks = location.getTrackByNameList(null);
             for (Track track : tracks) {
                 // show the car's track if there's a track destination restriction
-                if (_car != null && _car.getTrack() != null && !_car.getTrack().acceptsDestination(location)
-                        && _car.getTrack() != track) {
+                if (_car != null &&
+                        _car.getTrack() != null &&
+                        !_car.getTrack().acceptsDestination(location) &&
+                        _car.getTrack() != track) {
                     continue;
                 }
                 JLabel trk = new JLabel();
@@ -207,30 +209,26 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                 } // TODO need to do the same tests for caboose changes in the train's route
                 else if (_car != null &&
                         _car.isCaboose() &&
-                        (_train.getRequirements() & Train.CABOOSE) == Train.CABOOSE
-                        &&
+                        (_train.getRequirements() & Train.CABOOSE) == Train.CABOOSE &&
                         location.equals(_car.getLocation()) &&
-                        track.equals(_car.getTrack())
-                        &&
+                        track.equals(_car.getTrack()) &&
                         !_train.getCabooseRoad().equals(Train.NONE) &&
-                        !_car.getRoadName().equals(_train.getCabooseRoad())
-                        &&
+                        !_car.getRoadName().equals(_train.getCabooseRoad()) &&
                         location.getName().equals(_train.getTrainDepartsName())) {
                     op.setText(Bundle.getMessage("X(TrainRoad)"));
                 } else if (_car != null &&
                         _car.hasFred() &&
-                        (_train.getRequirements() & Train.FRED) == Train.FRED
-                        &&
+                        (_train.getRequirements() & Train.FRED) == Train.FRED &&
                         location.equals(_car.getLocation()) &&
-                        track.equals(_car.getTrack())
-                        &&
+                        track.equals(_car.getTrack()) &&
                         !_train.getCabooseRoad().equals(Train.NONE) &&
-                        !_car.getRoadName().equals(_train.getCabooseRoad())
-                        &&
+                        !_car.getRoadName().equals(_train.getCabooseRoad()) &&
                         location.getName().equals(_train.getTrainDepartsName())) {
                     op.setText(Bundle.getMessage("X(TrainRoad)"));
-                } else if (_car != null && !_car.isCaboose() && !_car.isPassenger()
-                        && !_train.acceptsLoad(_car.getLoadName(), _car.getTypeName())) {
+                } else if (_car != null &&
+                        !_car.isCaboose() &&
+                        !_car.isPassenger() &&
+                        !_train.acceptsLoad(_car.getLoadName(), _car.getTypeName())) {
                     op.setText(Bundle.getMessage("X(TrainLoad)"));
                 } else if (_car != null && !_train.acceptsBuiltDate(_car.getBuilt())) {
                     op.setText(Bundle.getMessage("X(TrainBuilt)"));
@@ -282,13 +280,39 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                     } else {
                         op.setText(Bundle.getMessage("X(TrainPickup)"));
                     }
-                } else if (!track.acceptsDropTrain(_train)) // can the train pick up car?
-                {
+                } else if (!track.acceptsDropTrain(_train)) {
+                    // can the train pick up car?
                     if (rl.isPickUpAllowed() && track.acceptsPickupTrain(_train)) {
                         op.setText(Bundle.getMessage("PickupOnly"));
                     } else {
                         op.setText(Bundle.getMessage("X(TrainDrop)"));
                     }
+                    // determine if a local move with default loads
+                } else if (!_train.isLocalSwitcher() &&
+                        _car != null &&
+                        _car.getTrack() != track &&
+                        _car.getLocation() == track.getLocation() &&
+                        _car.getFinalDestination() == null &&
+                        (_car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName()) ||
+                                _car.getLoadName().equals(CarLoads.instance().getDefaultLoadName()))) {
+                    op.setText(Bundle.getMessage("X(LocalMove)"));
+                    // determine if local move with custom load or final destination is allowed
+                } else if (!_train.isAllowLocalMovesEnabled() &&
+                        _car != null &&
+                        _car.getTrack() != track &&
+                        _car.getLocation() == track.getLocation() &&
+                        (_car.getFinalDestination() != null ||
+                                !_car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName()) &&
+                                        !_car.getLoadName().equals(CarLoads.instance().getDefaultLoadName()))) {
+                    op.setText(Bundle.getMessage("X(TrainLocalMove)"));
+                    // determine if spur can accept car with custom load
+                } else if (track.getTrackType().equals(Track.SPUR) &&
+                        track.getSchedule() == null &&
+                        _car != null &&
+                        _car.getTrack() != track &&
+                        !_car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName()) &&
+                        !_car.getLoadName().equals(CarLoads.instance().getDefaultLoadName())) {
+                    op.setText(Bundle.getMessage("X(TrackCustomLoad)"));
                 } else if (rl.isDropAllowed() && rl.isPickUpAllowed()) {
                     op.setText(Bundle.getMessage("OK"));
                 } else if (rl.isDropAllowed()) {
@@ -326,40 +350,38 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                 return true;
             }
             // check to see if schedule services car type and load
-            if (attribute.equals(LOAD)
-                    &&
-                    si.getTypeName().equals(carType)
-                    &&
+            if (attribute.equals(LOAD) &&
+                    si.getTypeName().equals(carType) &&
                     (si.getReceiveLoadName().equals(ScheduleItem.NONE) || car == null || si.getReceiveLoadName().equals(
                             car.getLoadName()))) {
                 return true;
             }
             // check to see if schedule services car type and road
             if (attribute.equals(ROAD) &&
-                    si.getTypeName().equals(carType)
-                    &&
-                    (si.getRoadName().equals(ScheduleItem.NONE) || car == null || si.getRoadName().equals(car.getRoadName()))) {
+                    si.getTypeName().equals(carType) &&
+                    (si.getRoadName().equals(ScheduleItem.NONE) ||
+                            car == null ||
+                            si.getRoadName().equals(car.getRoadName()))) {
                 return true;
             }
             // check to see if schedule timetable allows delivery
-            if (attribute.equals(TIMETABLE)
-                    && si.getTypeName().equals(carType)
-                    && (si.getSetoutTrainScheduleId().equals("") || TrainManager.instance().getTrainScheduleActiveId()
+            if (attribute.equals(TIMETABLE) &&
+                    si.getTypeName().equals(carType) &&
+                    (si.getSetoutTrainScheduleId().equals("") || TrainManager.instance().getTrainScheduleActiveId()
                             .equals(si.getSetoutTrainScheduleId()))) {
                 return true;
             }
             // check to see if at least one schedule item can service car
-            if (attribute.equals(ALL)
-                    &&
-                    si.getTypeName().equals(carType)
-                    &&
+            if (attribute.equals(ALL) &&
+                    si.getTypeName().equals(carType) &&
                     (si.getReceiveLoadName().equals(ScheduleItem.NONE) || car == null || si.getReceiveLoadName().equals(
-                            car.getLoadName()))
-                    &&
-                    (si.getRoadName().equals(ScheduleItem.NONE) || car == null || si.getRoadName().equals(car.getRoadName()))
-                    &&
-                    (si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) || TrainManager.instance().getTrainScheduleActiveId()
-                            .equals(si.getSetoutTrainScheduleId()))) {
+                            car.getLoadName())) &&
+                    (si.getRoadName().equals(ScheduleItem.NONE) ||
+                            car == null ||
+                            si.getRoadName().equals(car.getRoadName())) &&
+                    (si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) ||
+                            TrainManager.instance().getTrainScheduleActiveId()
+                                    .equals(si.getSetoutTrainScheduleId()))) {
                 return true;
             }
         }
@@ -371,7 +393,8 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         CarTypes.instance().updateComboBox(typeComboBox);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+            justification = "CarManager only provides Car Objects")
     private void updateCarsComboBox() {
         log.debug("update car combobox");
         carsComboBox.removeAllItems();
@@ -385,7 +408,8 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+            justification = "CarManager only provides Car Objects")
     private void adjustCarsComboBoxSize() {
         List<RollingStock> cars = CarManager.instance().getList();
         for (RollingStock rs : cars) {
@@ -449,18 +473,20 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
-        if (e.getSource().equals(_car) || e.getSource().equals(_train)
-                || e.getSource().getClass().equals(Track.class) || e.getSource().getClass().equals(Location.class)
-                || e.getSource().getClass().equals(Schedule.class)
-                || e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Route.LISTCHANGE_CHANGED_PROPERTY)) {
+        if (e.getSource().equals(_car) ||
+                e.getSource().equals(_train) ||
+                e.getSource().getClass().equals(Track.class) ||
+                e.getSource().getClass().equals(Location.class) ||
+                e.getSource().getClass().equals(Schedule.class) ||
+                e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Route.LISTCHANGE_CHANGED_PROPERTY)) {
             updateRoute();
         }
         if (e.getPropertyName().equals(Train.DISPOSE_CHANGED_PROPERTY)) {
             dispose();
         }
-        if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY)) {
             updateComboBox();
         }
         if (e.getPropertyName().equals(Location.LENGTH_CHANGED_PROPERTY)) {

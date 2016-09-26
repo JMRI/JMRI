@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2004
  * @author Dan Boudreau Copyright (C) 2011
- * @version $Revision$
  */
 public class TrainsScriptFrame extends OperationsFrame {
 

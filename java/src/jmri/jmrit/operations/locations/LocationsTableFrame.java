@@ -11,6 +11,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.schedules.SchedulesTableAction;
 import jmri.jmrit.operations.locations.tools.LocationCopyAction;
@@ -21,6 +22,7 @@ import jmri.jmrit.operations.locations.tools.SetPhysicalLocationAction;
 import jmri.jmrit.operations.locations.tools.ShowCarsByLocationAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.swing.JTablePersistenceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +31,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class LocationsTableFrame extends OperationsFrame {
 
@@ -113,6 +114,8 @@ public class LocationsTableFrame extends OperationsFrame {
     @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
+        // clear any sorts by column
+        clearTableSort(locationsTable);
         if (ae.getSource() == sortByName) {
             sortByName.setSelected(true);
             sortById.setSelected(false);
@@ -137,7 +140,9 @@ public class LocationsTableFrame extends OperationsFrame {
     
     @Override
     public void dispose() {
-        saveTableDetails(locationsTable);
+        InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {
+            tpm.stopPersisting(locationsTable);
+        });
         locationsModel.dispose();
         super.dispose();
     }

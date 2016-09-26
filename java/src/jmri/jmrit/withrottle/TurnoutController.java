@@ -13,14 +13,13 @@ import org.slf4j.LoggerFactory;
  *
  *
  * @author Brett Hoffman Copyright (C) 2010
- * @version $Revision$
  */
 public class TurnoutController extends AbstractController implements PropertyChangeListener {
 
     private TurnoutManager manager = null;
 
     public TurnoutController() {
-        manager = InstanceManager.getOptionalDefault(jmri.TurnoutManager.class);
+        manager = InstanceManager.getNullableDefault(jmri.TurnoutManager.class);
         if (manager == null) {
             log.info("No turnout manager instance.");
             isValid = false;

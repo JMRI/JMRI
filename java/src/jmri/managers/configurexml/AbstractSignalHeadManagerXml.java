@@ -1,6 +1,7 @@
 package jmri.managers.configurexml;
 
 import java.util.List;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.SignalHeadManager;
@@ -150,7 +151,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
             return;
         }
         // if old manager exists, remove it from configuration process
-        if (InstanceManager.getOptionalDefault(jmri.SignalHeadManager.class) != null) {
+        if (InstanceManager.getNullableDefault(jmri.SignalHeadManager.class) != null) {
             InstanceManager.getDefault(jmri.ConfigureManager.class).deregister(
                     InstanceManager.getDefault(jmri.SignalHeadManager.class));
         }
@@ -159,7 +160,10 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
         AbstractSignalHeadManager pManager = new AbstractSignalHeadManager();
         InstanceManager.setSignalHeadManager(pManager);
         // register new one for configuration
-        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerConfig(pManager, jmri.Manager.SIGNALHEADS);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerConfig(pManager, jmri.Manager.SIGNALHEADS);
+        }
     }
 
     public int loadOrder() {

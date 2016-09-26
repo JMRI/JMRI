@@ -1,7 +1,7 @@
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.TestCase;
 
 /**
@@ -14,8 +14,7 @@ import junit.framework.TestCase;
  * Implementing subclasses should provide static "main" and "suite" methods.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision$
- */
+  */
 abstract public class AbstractAlgorithmTest extends TestCase {
 
     abstract Calculator getAlgorithm(Point3d[] pts, double vs);

@@ -37,7 +37,7 @@ public class RailComTableAction extends AbstractTableAction {
         super(actionName);
 
         // disable ourself if there is no primary RailComm manager available
-        if (InstanceManager.getOptionalDefault(RailComManager.class) == null) {
+        if (InstanceManager.getNullableDefault(RailComManager.class) == null) {
             setEnabled(false);
         }
         includeAddButton = false;

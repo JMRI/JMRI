@@ -27,9 +27,9 @@ public class NetworkDriverAdapter extends SerialNetworkPortController {
         // connect to the traffic controller
         SerialTrafficController tc = new SerialTrafficController();
         tc.connectPort(this);
-        ((CMRISystemConnectionMemo)getSystemConnectionMemo()).setTrafficController(tc);
+        getSystemConnectionMemo().setTrafficController(tc);
 
-        ((CMRISystemConnectionMemo)getSystemConnectionMemo()).configureManagers();
+        getSystemConnectionMemo().configureManagers();
     }
 
 }

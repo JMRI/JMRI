@@ -18,7 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.ListSelectionModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 import jmri.jmrit.operations.automation.actions.Action;
@@ -35,7 +34,6 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of a automation used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2016
- * @version $Revision$
  */
 public class AutomationTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -107,22 +105,6 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
-        setPreferredWidths(table);
-
-        // set row height
-        table.setRowHeight(new JComboBox<Object>().getPreferredSize().height);
-        updateList();
-        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        // only allow one row at a time to be selected
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    }
-
-    private void setPreferredWidths(JTable table) {
-        if (_frame.loadTableDetails(table)) {
-            return; // done
-        }
-        log.debug("Setting preferred widths");
         // set column preferred widths
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(35);
         table.getColumnModel().getColumn(CURRENT_COLUMN).setPreferredWidth(60);
@@ -136,6 +118,12 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         table.getColumnModel().getColumn(UP_COLUMN).setPreferredWidth(60);
         table.getColumnModel().getColumn(DOWN_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(70);
+        
+        _frame.loadTableDetails(table);
+        // does not use a table sorter
+        table.setRowSorter(null);
+
+        updateList();
     }
 
     @Override

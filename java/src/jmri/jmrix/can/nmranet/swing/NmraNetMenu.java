@@ -11,7 +11,6 @@ import jmri.jmrix.can.swing.CanNamedPaneAction;
  *
  * @author	Bob Jacobsen Copyright 2003, 2008, 2009
  * @author Andrew Crosland 2008
- * @version $Revision: 17977 $
  */
 public class NmraNetMenu extends JMenu {
 

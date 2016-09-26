@@ -7,8 +7,7 @@ import junit.framework.TestSuite;
 
 /**
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class CvTableModelTest extends TestCase {
 
     public void testStart() {

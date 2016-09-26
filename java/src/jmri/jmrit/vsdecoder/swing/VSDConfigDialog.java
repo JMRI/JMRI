@@ -507,7 +507,7 @@ public class VSDConfigDialog extends JDialog {
         variableModel.setFileDirty(false);
 
         // and store an updated roster file
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
 
         return true;
     }

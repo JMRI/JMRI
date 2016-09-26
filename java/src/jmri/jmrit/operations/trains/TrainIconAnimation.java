@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
  * Provides simple animation for train icons.
  *
  * @author Daniel Boudreau (C) Copyright 2009, 2010
- * @version $Revision$
  */
 public class TrainIconAnimation extends Thread {
 

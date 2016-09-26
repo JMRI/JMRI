@@ -74,7 +74,12 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
                         } else {
                             // The sensor exists.  We need to forward this 
                             // message to it.
-                            ((XNetSensor) getBySystemName(s)).message(l);
+                            Sensor xns = getBySystemName(s);
+                            if (xns == null) {
+                                log.error("Failed to get sensor for {}", s);
+                            } else {
+                                ((XNetSensor) xns).message(l);
+                            }
                         }
                     }
                 }

@@ -4,12 +4,11 @@
  * Description:	tests for the jmri.jmrix.nce.EasyDccConsistManager class
  *
  * @author	Paul Bender
- * @version
  */
 package jmri.jmrix.easydcc;
 
 import java.util.Vector;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

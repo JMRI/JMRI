@@ -25,10 +25,12 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SortOrder;
 import javax.swing.border.Border;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
 import jmri.Conditional;
 import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
@@ -40,8 +42,10 @@ import jmri.Route;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.implementation.DefaultConditionalAction;
+import jmri.swing.RowSorterUtil;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.SystemNameComparator;
 import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,7 +77,7 @@ public class RouteTableAction extends AbstractTableAction {
     public RouteTableAction(String s) {
         super(s);
         // disable ourself if there is no primary Route manager available
-        if (jmri.InstanceManager.getOptionalDefault(jmri.RouteManager.class) == null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.RouteManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -91,20 +95,20 @@ public class RouteTableAction extends AbstractTableAction {
         // late initialization of string "constants" so that TurnoutManager 
         // has time to be fully configured
         SET_TO_CLOSED = Bundle.getMessage("Set") + " "
-            + InstanceManager.turnoutManagerInstance().getClosedText();
+                + InstanceManager.turnoutManagerInstance().getClosedText();
         SET_TO_THROWN = Bundle.getMessage("Set") + " "
-            + InstanceManager.turnoutManagerInstance().getThrownText();
+                + InstanceManager.turnoutManagerInstance().getThrownText();
         turnoutInputModes = new String[]{
-                Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getClosedText(),
-                Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getThrownText(),
-                Bundle.getMessage("OnConditionChange"),
-                "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),
-                "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateThrown")
+            Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getClosedText(),
+            Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getThrownText(),
+            Bundle.getMessage("OnConditionChange"),
+            "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),
+            "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateThrown")
         };
         lockTurnoutInputModes = new String[]{
-                Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getClosedText(),
-                Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getThrownText(),
-                Bundle.getMessage("OnConditionChange")
+            Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getClosedText(),
+            Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getThrownText(),
+            Bundle.getMessage("OnConditionChange")
         };
 
         m = new BeanTableDataModel() {
@@ -309,12 +313,12 @@ public class RouteTableAction extends AbstractTableAction {
 
             //public JButton configureButton() {
             //    return new JButton("Foo"));
-                //not used
+            //not used
             //}
-
             protected String getBeanType() {
                 return Bundle.getMessage("BeanNameRoute");
             }
+
             /*Routes do not get references by other parts of the code, we therefore 
              do not need to worry about controlling how the username is changed
              */
@@ -447,8 +451,13 @@ public class RouteTableAction extends AbstractTableAction {
         iter = systemNameList.iterator();
         while (iter.hasNext()) {
             String systemName = iter.next();
-            String userName = sm.getBySystemName(systemName).getUserName();
-            _sensorList.add(new RouteSensor(systemName, userName));
+            Sensor s = sm.getBySystemName(systemName);
+            if (s != null) {
+                String userName = s.getUserName();
+                _sensorList.add(new RouteSensor(systemName, userName));
+            } else {
+                log.error("Failed to get sensor {}", systemName);
+            }
         }
         initializeIncludedList();
 
@@ -538,13 +547,11 @@ public class RouteTableAction extends AbstractTableAction {
             p21t.add(new JLabel(Bundle.getMessage("SelectInRoute", Bundle.getMessage("Turnouts"))));
             p2xt.add(p21t);
             _routeTurnoutModel = new RouteTurnoutModel();
-            JTable routeTurnoutTable = jmri.util.JTableUtil.sortableDataModel(_routeTurnoutModel);
-            try {
-                jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter) routeTurnoutTable.getModel());
-                tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-                tmodel.setSortingStatus(RouteTurnoutModel.SNAME_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
-            } catch (ClassCastException e3) {
-            }  // if not a sortable table model
+            JTable routeTurnoutTable = new JTable(_routeTurnoutModel);
+            TableRowSorter<RouteTurnoutModel> rtSorter = new TableRowSorter<>(_routeTurnoutModel);
+            rtSorter.setComparator(RouteTurnoutModel.SNAME_COLUMN, new SystemNameComparator());
+            RowSorterUtil.setSortOrder(rtSorter, RouteTurnoutModel.SNAME_COLUMN, SortOrder.ASCENDING);
+            routeTurnoutTable.setRowSorter(rtSorter);
             routeTurnoutTable.setRowSelectionAllowed(false);
             routeTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 80));
 
@@ -592,13 +599,11 @@ public class RouteTableAction extends AbstractTableAction {
             p21s.add(new JLabel(Bundle.getMessage("SelectInRoute", Bundle.getMessage("Sensors"))));
             p2xs.add(p21s);
             _routeSensorModel = new RouteSensorModel();
-            JTable routeSensorTable = jmri.util.JTableUtil.sortableDataModel(_routeSensorModel);
-            try {
-                jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter) routeSensorTable.getModel());
-                tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-                tmodel.setSortingStatus(RouteSensorModel.SNAME_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
-            } catch (ClassCastException e3) {
-            }  // if not a sortable table model
+            JTable routeSensorTable = new JTable(_routeSensorModel);
+            TableRowSorter<RouteSensorModel> rsSorter = new TableRowSorter<>(_routeSensorModel);
+            rsSorter.setComparator(RouteSensorModel.SNAME_COLUMN, new SystemNameComparator());
+            RowSorterUtil.setSortOrder(rsSorter, RouteSensorModel.SNAME_COLUMN, SortOrder.ASCENDING);
+            routeSensorTable.setRowSorter(rsSorter);
             routeSensorTable.setRowSelectionAllowed(false);
             routeSensorTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 80));
             JComboBox<String> stateSCombo = new JComboBox<String>();
@@ -1654,7 +1659,7 @@ public class RouteTableAction extends AbstractTableAction {
                 Bundle.getMessage("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
-    
+
     ConditionalVariable cloneVariable(ConditionalVariable v) {
         return new ConditionalVariable(v.isNegated(), v.getOpern(), v.getType(), v.getName(), v.doTriggerActions());
     }
@@ -1792,18 +1797,18 @@ public class RouteTableAction extends AbstractTableAction {
      * Cancels Add mode
      */
     void cancelAdd() {
-            curRoute = null;
-            finishUpdate();
-            status1.setText(createInst);
-            status2.setText(editInst);
-            routeDirty = false;
-            // hide addFrame
-            if (addFrame != null) {
+        curRoute = null;
+        finishUpdate();
+        status1.setText(createInst);
+        status2.setText(editInst);
+        routeDirty = false;
+        // hide addFrame
+        if (addFrame != null) {
             addFrame.setVisible(false);
             //addFrame.dispose();  // causes multiple empty Routes next time
-            }
-            _routeSensorModel.dispose();
-            _routeTurnoutModel.dispose();
+        }
+        _routeSensorModel.dispose();
+        _routeTurnoutModel.dispose();
     }
 
     /**
@@ -2011,24 +2016,24 @@ public class RouteTableAction extends AbstractTableAction {
     private static int ROW_HEIGHT;
 
     private static String[] COLUMN_NAMES = {Bundle.getMessage("ColumnSystemName"),
-            Bundle.getMessage("ColumnUserName"),
-            Bundle.getMessage("Include"),
-            Bundle.getMessage("ColumnLabelSetState")};
+        Bundle.getMessage("ColumnUserName"),
+        Bundle.getMessage("Include"),
+        Bundle.getMessage("ColumnLabelSetState")};
     private static String SET_TO_ACTIVE = Bundle.getMessage("Set") + " " + Bundle.getMessage("SensorStateActive");
     private static String SET_TO_INACTIVE = Bundle.getMessage("Set") + " " + Bundle.getMessage("SensorStateInactive");
 
     private static String SET_TO_TOGGLE = Bundle.getMessage("Set") + " " + Bundle.getMessage("Toggle");
 
     private static String[] sensorInputModes = new String[]{
-            Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SensorStateActive"),
-            Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SensorStateInactive"),
-            Bundle.getMessage("OnConditionChange"),
-            "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("SensorStateActive"),
-            "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("SensorStateInactive")
+        Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SensorStateActive"),
+        Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SensorStateInactive"),
+        Bundle.getMessage("OnConditionChange"),
+        "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("SensorStateActive"),
+        "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("SensorStateInactive")
     };
     private static int[] sensorInputModeValues = new int[]{Route.ONACTIVE, Route.ONINACTIVE, Route.ONCHANGE,
         Route.VETOACTIVE, Route.VETOINACTIVE};
-    
+
     // This group will get runtime updates to system-specific contents at 
     // the start of buildModel() above.  This is done to prevent
     // invoking the TurnoutManager at class construction time, 
@@ -2038,16 +2043,16 @@ public class RouteTableAction extends AbstractTableAction {
     private static String SET_TO_THROWN = Bundle.getMessage("Set") + " "
             + Bundle.getMessage("TurnoutStateThrown");
     private static String[] turnoutInputModes = new String[]{
-            Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),
-            Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("TurnoutStateThrown"),
-            Bundle.getMessage("OnConditionChange"),
-            "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),
-            "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateThrown")
+        Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),
+        Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("TurnoutStateThrown"),
+        Bundle.getMessage("OnConditionChange"),
+        "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),
+        "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateThrown")
     };
     private static String[] lockTurnoutInputModes = new String[]{
-            Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),
-            Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("TurnoutStateThrown"),
-            Bundle.getMessage("OnConditionChange")
+        Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),
+        Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("TurnoutStateThrown"),
+        Bundle.getMessage("OnConditionChange")
     };
 
     private static int[] turnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE,

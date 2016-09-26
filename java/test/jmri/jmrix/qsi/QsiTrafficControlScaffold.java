@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
  * Description:	Stands in for the QsiTrafficController class
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version
  */
 public class QsiTrafficControlScaffold extends QsiTrafficController {
 

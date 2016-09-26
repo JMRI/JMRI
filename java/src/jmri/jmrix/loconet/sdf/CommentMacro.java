@@ -5,7 +5,6 @@ package jmri.jmrix.loconet.sdf;
  * An SdfMacro for carrying a comment
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
  */
 public class CommentMacro extends SdfMacro {
 

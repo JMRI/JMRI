@@ -44,7 +44,7 @@ import junit.framework.TestSuite;
  *
  *
  * @author Gregory Madsen Copyright (C) 2012
- * @version $Revision: 00001 $
+ * 
  */
 public class OperationsBackupTest extends TestCase {
 

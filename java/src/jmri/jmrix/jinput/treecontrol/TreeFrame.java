@@ -10,8 +10,7 @@ import jmri.util.JmriJFrame;
  * Frame for controlling JInput access to USN
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
- */
+  */
 public class TreeFrame extends JmriJFrame {
 
     /**

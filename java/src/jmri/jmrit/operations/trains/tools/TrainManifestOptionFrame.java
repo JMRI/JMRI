@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of the train manifest options
  *
  * @author Dan Boudreau Copyright (C) 2010, 2013
- * @version $Revision$
  */
 public class TrainManifestOptionFrame extends OperationsFrame {
 

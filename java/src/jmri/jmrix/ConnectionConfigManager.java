@@ -293,7 +293,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
      * @return the default ConnectionTypeManager
      */
     private ConnectionTypeManager getDefaultConnectionTypeManager() {
-        if (InstanceManager.getOptionalDefault(ConnectionTypeManager.class) == null) {
+        if (InstanceManager.getNullableDefault(ConnectionTypeManager.class) == null) {
             InstanceManager.setDefault(ConnectionTypeManager.class, new ConnectionTypeManager());
         }
         return InstanceManager.getDefault(ConnectionTypeManager.class);

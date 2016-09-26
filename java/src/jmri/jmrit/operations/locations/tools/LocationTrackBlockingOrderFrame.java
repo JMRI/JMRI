@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of location
  *
  * @author Dan Boudreau Copyright (C) 2015
- * @version $Revision: 29365 $
+ * 
  */
 public class LocationTrackBlockingOrderFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 

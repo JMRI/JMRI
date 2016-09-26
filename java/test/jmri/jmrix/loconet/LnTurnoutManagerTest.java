@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.Turnout;
 import jmri.TurnoutManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.slf4j.Logger;
@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the jmri.jmrix.loconet.LnTurnoutManager class
  *
  * @author	Bob Jacobsen Copyright 2005
- * @version
  */
 public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
@@ -117,7 +116,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {LnTurnoutManager.class.getName()};
+        String[] testCaseName = {LnTurnoutManagerTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 

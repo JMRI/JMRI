@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of manifest and switch list print options
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2013
- * @version $Revision$
  */
 public class PrintOptionPanel extends OperationsPreferencesPanel {
 

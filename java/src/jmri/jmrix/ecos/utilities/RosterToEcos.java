@@ -130,7 +130,7 @@ public class RosterToEcos implements EcosListener {
                                 objEcosLoco.setProtocol("DCC128");
                         }
                         _re.writeFile(null, null, null);
-                        jmri.jmrit.roster.Roster.writeRosterFile();
+                        jmri.jmrit.roster.Roster.getDefault().writeRoster();
                         objEcosLocoManager.register(objEcosLoco);
                         createloco = false;
                         dispose();

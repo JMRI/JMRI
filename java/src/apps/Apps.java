@@ -45,7 +45,6 @@ import javax.swing.WindowConstants;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.JTextComponent;
 import jmri.ConfigureManager;
-import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.JmriPlugin;
@@ -74,7 +73,6 @@ import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
-import jmri.managers.DefaultIdTagManager;
 import jmri.managers.DefaultShutDownManager;
 import jmri.managers.JmriUserPreferencesManager;
 import jmri.plaf.macosx.Application;
@@ -135,7 +133,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         prepareFontLists();
 
         // install shutdown manager
-        InstanceManager.setShutDownManager(new DefaultShutDownManager());
+        InstanceManager.setDefault(ShutDownManager.class, new DefaultShutDownManager());
 
         // add the default shutdown task to save blocks
         // as a special case, register a ShutDownTask to write out blocks
@@ -209,9 +207,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         }
 
         // Install configuration manager and Swing error handler
-        ConfigureManager cm = new JmriConfigurationManager();
-        InstanceManager.store(cm, ConfigureManager.class);
-        InstanceManager.setDefault(ConfigureManager.class, cm);
+        ConfigureManager cm = InstanceManager.setDefault(ConfigureManager.class, new JmriConfigurationManager());
 
         // Install a history manager
         InstanceManager.store(new FileHistory(), FileHistory.class);
@@ -221,8 +217,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // Install a user preferences manager
         InstanceManager.store(JmriUserPreferencesManager.getDefault(), UserPreferencesManager.class);
         InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
-        // Install an IdTag manager
-        InstanceManager.store(new DefaultIdTagManager(), IdTagManager.class);
 
         // install preference manager
         InstanceManager.store(new TabbedPreferences(), TabbedPreferences.class);
@@ -263,7 +257,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         if (file.exists()) {
             log.debug("start load config file {}", file.getPath());
             try {
-                configOK = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).load(file, true);
+                configOK = cm.load(file, true);
             } catch (JmriException e) {
                 log.error("Unhandled problem loading configuration", e);
                 configOK = false;
@@ -356,9 +350,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         if (sharedConfig == null && configOK == true && configDeferredLoadOK == true) {
             log.info("Migrating preferences to new format...");
             // migrate preferences
-            InstanceManager.tabbedPreferencesInstance().init();
-            InstanceManager.tabbedPreferencesInstance().saveContents();
-            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).storePrefs();
+            InstanceManager.getOptionalDefault(TabbedPreferences.class).ifPresent(tp -> {
+                tp.init();
+                tp.saveContents();
+                cm.storePrefs();
+            });
             // notify user of change
             log.info("Preferences have been migrated to new format.");
             log.info("New preferences format will be used after JMRI is restarted.");
@@ -376,7 +372,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             @Override
             public void run() {
                 try {
-                    InstanceManager.tabbedPreferencesInstance().init();
+                    InstanceManager.getOptionalDefault(TabbedPreferences.class).ifPresent(tp -> {
+                        tp.init();
+                    });
                 } catch (Exception ex) {
                     log.error("Error trying to setup preferences {}", ex.getLocalizedMessage(), ex);
                 }
@@ -465,7 +463,13 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         boolean result;
         log.debug("start deferred load from config");
         try {
-            result = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).loadDeferred(file);
+            ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+            if (cmOD != null) {
+                result = cmOD.loadDeferred(file);
+            } else {
+                log.error("Failed to get default configure manager");
+                result = false;
+            }
         } catch (JmriException e) {
             log.error("Unhandled problem loading deferred configuration", e);
             result = false;
@@ -1144,18 +1148,23 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     static protected void loadFile(String name) {
-        URL pFile = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).find(name);
-        if (pFile != null) {
-            try {
-                InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).load(pFile);
-            } catch (JmriException e) {
-                log.error("Unhandled problem in loadFile", e);
+        ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cmOD != null) {
+            URL pFile = cmOD.find(name);
+            if (pFile != null) {
+                try {
+                    cmOD.load(pFile);
+                } catch (JmriException e) {
+                    log.error("Unhandled problem in loadFile", e);
+                }
+            } else {
+                log.warn("Could not find {} config file", name);
             }
         } else {
-            log.warn("Could not find {} config file", name);
+            log.error("Failed to get default configure manager");
         }
-
     }
+
     static String configFilename = System.getProperty("org.jmri.Apps.configFilename", "jmriconfig2.xml");  // usually overridden, this is default
     // The following MUST be protected for 3rd party applications 
     // (such as CATS) which are derived from this class.

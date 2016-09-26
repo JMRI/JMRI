@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * provides a load method here.
  *
  * @author  Paul Bender Copyright (c) 2003
- * @version $Revision$
  */
 public class RaspberryPiSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 

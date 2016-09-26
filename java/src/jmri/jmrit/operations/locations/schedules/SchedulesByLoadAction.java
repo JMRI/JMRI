@@ -8,7 +8,6 @@ import javax.swing.AbstractAction;
  * Action to load the schedules by car type and load frame.
  *
  * @author Daniel Boudreau Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 public class SchedulesByLoadAction extends AbstractAction {
 

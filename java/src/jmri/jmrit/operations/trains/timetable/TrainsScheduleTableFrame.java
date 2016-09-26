@@ -24,6 +24,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -33,6 +34,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
+import jmri.swing.JTablePersistenceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +43,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010, 2012, 2016
- * @version $Revision$
  */
 public class TrainsScheduleTableFrame extends OperationsFrame implements PropertyChangeListener {
 
@@ -236,6 +237,8 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
+        // clear any sorts by column
+        clearTableSort(trainsScheduleTable);
         if (ae.getSource() == sortByName) {
             trainsScheduleModel.setSort(trainsScheduleModel.SORTBYNAME);
         } else if (ae.getSource() == sortByTime) {
@@ -477,7 +480,6 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
             ts.setComment(commentTextArea.getText());
         }
 //        updateControlPanel();
-        saveTableDetails(trainsScheduleTable);
         OperationsXml.save();
     }
 
@@ -489,6 +491,9 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         removePropertyChangeTrainSchedules();
         removePropertyChangeLocations();
         trainsScheduleModel.dispose();
+        InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {
+            tpm.stopPersisting(trainsScheduleTable);
+        });
         super.dispose();
     }
 

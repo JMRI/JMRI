@@ -12,8 +12,7 @@ package jmri.jmrix.zimo;
  * that deadlocks can be avoided in that case.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision$
- *
+  *
  * Adapted by Sip Bosch for use with Zimo Mx-1
  */
 public interface Mx1Listener extends java.util.EventListener {

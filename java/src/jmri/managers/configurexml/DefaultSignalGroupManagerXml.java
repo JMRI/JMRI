@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Handle XML configuration for a DefaultSignalGroupManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision$
  */
 public class DefaultSignalGroupManagerXml
         extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {

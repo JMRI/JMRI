@@ -7,7 +7,6 @@ import javax.swing.JMenu;
  * Create a "Pricom" menu containing the Jmri Pricom-specific tools.
  *
  * @author	Bob Jacobsen Copyright 2003, 2005
- * @version $Revision$
  */
 public class PricomMenu extends JMenu {
 

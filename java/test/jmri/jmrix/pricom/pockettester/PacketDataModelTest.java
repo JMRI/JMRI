@@ -1,6 +1,6 @@
 package jmri.jmrix.pricom.pockettester;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -9,8 +9,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the PacketDataModel class
  *
  * @author	Bob Jacobsen Copyright 2005
- * @version	$Revision$
- */
+  */
 public class PacketDataModelTest extends TestCase {
 
     public void testCreate() {

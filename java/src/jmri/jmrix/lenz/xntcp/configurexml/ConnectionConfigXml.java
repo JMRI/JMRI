@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Giorgio Terdina Copyright (C) 2008, based on LI100 Action by Bob
  * Jacobsen, Copyright (C) 2003
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 

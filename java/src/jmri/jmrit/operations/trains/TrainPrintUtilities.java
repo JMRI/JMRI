@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * Train print utilities. Used for train manifests and build reports.
  *
  * @author Daniel Boudreau (C) 2010
- * @version $Revision$
  *
  */
 public class TrainPrintUtilities {
@@ -60,17 +59,16 @@ public class TrainPrintUtilities {
         boolean isLandScape = false;
         boolean printHeader = true;
         double margin = .5;
-        Dimension pagesize = null;
+        Dimension pagesize = null; // HardcopyWritter provides default page sizes for portrait and landscape
         if (orientation.equals(Setup.LANDSCAPE)) {
             margin = .65;
             isLandScape = true;
         }
         if (orientation.equals(Setup.HANDHELD) || orientation.equals(Setup.HALFPAGE)) {
             printHeader = false;
-            pagesize = new Dimension(290, 792);
-            if (orientation.equals(Setup.HALFPAGE)) {
-                pagesize = new Dimension(345, 792);
-            }
+            // add margins to page size
+            pagesize = new Dimension(TrainCommon.getPageSize(orientation).width + TrainCommon.PAPER_MARGINS.width,
+                    TrainCommon.getPageSize(orientation).height + TrainCommon.PAPER_MARGINS.height);
         }
         try {
             writer = new HardcopyWriter(mFrame, name, fontSize, margin, margin, .5, .5,

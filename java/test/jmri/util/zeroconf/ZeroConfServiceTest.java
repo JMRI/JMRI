@@ -1,6 +1,5 @@
 package jmri.util.zeroconf;
 
-import java.util.Collection;
 import java.util.HashMap;
 import javax.jmdns.ServiceInfo;
 import jmri.util.JUnitUtil;
@@ -142,7 +141,7 @@ public class ZeroConfServiceTest {
         Assert.assertFalse(instance.isPublished());
         // can fail if platform does not release earlier stopped service within 15 seconds
         instance.publish();
-        Assume.assumeTrue("Publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
+        Assume.assumeTrue("Timed out publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
             return instance.isPublished() == true;
         }));
         Assert.assertTrue(instance.isPublished());
@@ -176,7 +175,7 @@ public class ZeroConfServiceTest {
         Assert.assertFalse(instance.isPublished());
         // can fail if platform does not release earlier stopped service within 15 seconds
         instance.publish();
-        Assume.assumeTrue("Publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
+        Assume.assumeTrue("Timed out publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
             return instance.isPublished() == true;
         }));
         Assert.assertTrue(instance.isPublished());
@@ -192,17 +191,16 @@ public class ZeroConfServiceTest {
      */
     @Test
     public void testAllServices() {
-        Collection<ZeroConfService> result = ZeroConfService.allServices();
-        Assert.assertEquals(0, result.size());
+        Assert.assertEquals(0, ZeroConfService.allServices().size());
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
-        result = ZeroConfService.allServices();
-        Assert.assertEquals(0, result.size());
+        Assert.assertEquals(WebServerPreferences.getDefault().getDefaultRailroadName(), instance.name());
+        Assert.assertEquals(0, ZeroConfService.allServices().size());
+        // can fail if platform does not release earlier stopped service within 15 seconds
         instance.publish();
-        JUnitUtil.waitFor(() -> {
+        Assume.assumeTrue("Timed out publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
             return instance.isPublished() == true;
-        }, "Publishing ZeroConf Service");
-        result = ZeroConfService.allServices();
-        Assert.assertEquals(1, result.size());
+        }));
+        Assert.assertEquals(1, ZeroConfService.allServices().size());
     }
 
 }

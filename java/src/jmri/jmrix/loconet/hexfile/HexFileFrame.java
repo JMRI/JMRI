@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * sending a few commands).
  *
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision$
  */
 public class HexFileFrame extends JmriJFrame {
 

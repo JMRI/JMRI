@@ -13,7 +13,7 @@ import jmri.implementation.AbstractSensor;
  * in one location.
  *
  * @author Kevin Dickerson (C) 2009
- * @version	$Revision: 20842 $
+ * 
  */
 public class MarklinSensor extends AbstractSensor {
 

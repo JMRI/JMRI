@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * types are Spurs, Yards, Interchanges and Staging.
  *
  * @author Daniel Boudreau Copyright (C) 2011
- * @version $Revision: 18559 $
+ * 
  */
 class ChangeTracksFrame extends OperationsFrame {
 

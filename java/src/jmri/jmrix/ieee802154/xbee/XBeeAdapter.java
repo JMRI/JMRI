@@ -1,6 +1,6 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import com.rapplogic.xbee.XBeeConnection;
+import com.digi.xbee.api.connection.IConnectionInterface;
 import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +17,9 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Paul Bender Copyright (C) 2013
  */
-public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter implements jmri.jmrix.SerialPortAdapter, XBeeConnection, SerialPortEventListener {
+public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter implements jmri.jmrix.SerialPortAdapter, IConnectionInterface, SerialPortEventListener {
+
+    private boolean iConnectionOpened = false;
 
     public XBeeAdapter() {
         super(new XBeeConnectionMemo());
@@ -90,7 +92,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
                         log.debug("SerialEvent: DATA_AVAILABLE is " + e.getNewValue());
                     }
                     synchronized (this) {
-                        this.notify();
+                        this.notifyAll();
                     }
                 } else {
                     log.warn("SerialEvent: DATA_AVAILABLE but no data available.");
@@ -139,11 +141,13 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         }
     }
 
+
     /**
      * Local method to do specific port configuration
      */
     @Override
     protected void setSerialPort() throws UnsupportedCommOperationException {
+        log.debug("setSerialPort() called.");
         // find the baud rate value, configure comm options
         int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i < validSpeeds.length; i++) {
@@ -156,12 +160,13 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
         // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);          // not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);          // pin 1 in DIN8; on main connector, this is DTR
+        //activeSerialPort.setRTS(true);          // not connected in some serial ports and adapters
+        //activeSerialPort.setDTR(true);          // pin 1 in DIN8; on main connector, this is DTR
 
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_NONE; // default
         activeSerialPort.setFlowControlMode(flow);
+        
 
         if (log.isDebugEnabled()) {
             try {
@@ -186,8 +191,14 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
             }
         }
 
+        activeSerialPort.enableReceiveTimeout(10);
+
         // The following are required for the XBee API's input thread.
-        activeSerialPort.notifyOnDataAvailable(true);
+        try {
+           activeSerialPort.notifyOnDataAvailable(true);
+        } catch (Exception e) {
+           log.debug("Could not notifyOnDataAvailable: " + e);
+        }
         // arrange to notify later
         try {
             activeSerialPort.addEventListener(this);
@@ -207,9 +218,8 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         // connect to the traffic controller
         this.getSystemConnectionMemo().setTrafficController(tc);
         tc.setAdapterMemo(this.getSystemConnectionMemo());
-        //tc.setXBee(xbee);
-        this.getSystemConnectionMemo().configureManagers();
         tc.connectPort(this);
+        this.getSystemConnectionMemo().configureManagers();
         // Configure the form of serial address validation for this connection
 //        adaptermemo.setSerialAddress(new jmri.jmrix.ieee802154.SerialAddress(adaptermemo));
     }
@@ -240,9 +250,49 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
     private int[] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200,
         38400, 57600, 115200};
 
-    // methods for XBeeConnection
+    // methods for IConnectionInterface
+    @Override
     public void close() {
         activeSerialPort.close();
+        iConnectionOpened = false;
+    }
+
+    @Override
+    public int readData(byte[] b) throws java.io.IOException {
+       log.debug("read data called with {}", b);
+       return serialStream.read(b);
+    }
+
+    @Override
+    public int readData(byte[] b,int off, int len) throws java.io.IOException {
+       log.debug("read data called with {} {} {}", b, off, len);
+       return serialStream.read(b,off,len);
+    }
+
+    @Override
+    public void writeData(byte[] b) throws java.io.IOException {
+       log.debug("write data called with {}", b);
+       getOutputStream().write(b);
+    }
+
+    @Override
+    public void writeData(byte[] b,int off, int len) throws java.io.IOException {
+       log.debug("write data called with {} {} {}", b, off, len);
+       getOutputStream().write(b,off,len);
+    }
+
+    @Override
+    public boolean isOpen(){
+       log.debug("isOpen called");
+       return ( iConnectionOpened );
+    }
+
+    @Override
+    public void open(){
+       log.debug("open called");
+       iConnectionOpened = true;
+       // don't do anything here.  We handle the details of open through the 
+       // openPort call, which is called from the JMRI infrastructure.
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeAdapter.class.getName());
