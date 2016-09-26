@@ -2,6 +2,7 @@ package apps.configurexml;
 
 import apps.SystemConsoleConfigPanel;
 import apps.systemconsole.SystemConsolePreferencesManager;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -96,7 +97,10 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
 
         // As we've had a load request, register the system console with the
         // preference manager
-        jmri.InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(new SystemConsoleConfigPanel());
+        ConfigureManager cm = jmri.InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.registerPref(new SystemConsoleConfigPanel());
+        }
 
         return result;
     }

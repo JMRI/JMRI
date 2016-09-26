@@ -68,7 +68,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
      *              0x01 - West 0x02 - East 0x04 - Lower West 0x06 - Upper East
      */
     public void setTurnout(String pName, int turn) {
-        if (InstanceManager.getOptionalDefault(jmri.TurnoutManager.class) != null) {
+        if (InstanceManager.getNullableDefault(jmri.TurnoutManager.class) != null) {
             try {
                 Turnout turnout = InstanceManager.turnoutManagerInstance().
                     provideTurnout(pName);
@@ -626,7 +626,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         switch (state) {
             case Turnout.UNKNOWN:
                 if (isText()) {
-                    super.setText(Bundle.getMessage("UnKnown"));
+                    super.setText(Bundle.getMessage("BeanStateUnknown"));
                 }
                 if (isIcon()) {
                     super.setIcon(unknown);
@@ -666,7 +666,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                 break;
             default:
                 if (isText()) {
-                    super.setText(Bundle.getMessage("Inconsistent"));
+                    super.setText(Bundle.getMessage("BeanStateInconsistent"));
                 }
                 if (isIcon()) {
                     super.setIcon(inconsistent);

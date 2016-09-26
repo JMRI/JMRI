@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * the JMRI simple interconnection protocol.
  * 
  * @author Paul Bender Copyright (C) 2015
- * @version $Revision: 17977 $
  */
 
 // This is generated code.  DO NOT ATTEMPT TO FIX ANY FINDBUGS WARNINGS

@@ -39,8 +39,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
     protected JPanel _iconPanel;     // panel contained in _iconFamilyPanel - all icons in family
     protected JPanel _dragIconPanel; // contained in _iconFamilyPanel - to drag to control panel
     protected boolean _supressDragging;
-    protected int _buttonPostion = 0;
-    JPanel _bottom1Panel;  // Typically _showIconsButton and editIconsButton 
+    protected int _buttonPosition = 0;
+    JPanel _bottom1Panel;  // Typically _showIconsButton and _editIconsButton
     JPanel _bottom2Panel;  // createIconFamilyButton - when all families have been deleted 
     JButton _showIconsButton;
     JButton _editIconsButton;
@@ -108,10 +108,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
      * _bottom1Panel and _bottom2Panel alternate visibility in bottomPanel
      * depending on whether icon families exist. They are made first because
      * they are referenced in initIconFamiliesPanel(). _bottom2Panel is for the
-     * exceptional case where there are no families at all subclasses will
+     * exceptional case where there are no families at all. Subclasses will
      * insert other panels
      */
-    private void makeBottomPanel(ActionListener doneAction) {
+    protected void makeBottomPanel(ActionListener doneAction) {
         _bottom2Panel = makeCreateNewFamilyPanel();
         makeItemButtonPanel();
         if (doneAction != null) {
@@ -122,16 +122,16 @@ public abstract class FamilyItemPanel extends ItemPanel {
         JPanel bottomPanel = new JPanel(new FlowLayout());
         bottomPanel.add(_bottom1Panel);
         bottomPanel.add(_bottom2Panel);
+        //_bottom2Panel.setVisible(false); // to prevent showing it on Reporter tab?
         add(bottomPanel);
         if (log.isDebugEnabled()) {
             log.debug("init done for family " + _family);
         }
     }
 
-    // add update button to  bottom1Panel
-    private void addUpdateButtonToBottom(ActionListener doneAction) {
-
-        _updateButton = new JButton(Bundle.getMessage("updateButton")); // custom Update text
+    // add update button to _bottom1Panel
+    protected void addUpdateButtonToBottom(ActionListener doneAction) {
+        _updateButton = new JButton(Bundle.getMessage("updateButton")); // custom update label
         _updateButton.addActionListener(doneAction);
         _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
         _bottom1Panel.add(_updateButton);
@@ -299,26 +299,47 @@ public abstract class FamilyItemPanel extends ItemPanel {
             removeIconFamiliesPanel();
         }
         initIconFamiliesPanel();
-        add(_iconFamilyPanel, _buttonPostion);
+        add(_iconFamilyPanel, _buttonPosition);
         hideIcons();
         _iconFamilyPanel.invalidate();
         invalidate();
         reset();
     }
 
+        String thisType = null;
     /*
      * Set actions of radioButtons to change family
      */
     protected JPanel makeFamilyButtons(Iterator<String> it, boolean setDefault) {
         JPanel familyPanel = new JPanel();
         familyPanel.setLayout(new BoxLayout(familyPanel, BoxLayout.Y_AXIS));
-        String txt = Bundle.getMessage("IconFamiliesLabel", Bundle.getMessage(_itemType));
+        // I18N use NamedBeanBundle property for basic beans like "Turnout" I18N
+        if ("Sensor".equals(_itemType)) {
+            thisType = "BeanNameSensor";
+        } else if ("Turnout".equals(_itemType)) {
+            thisType = "BeanNameTurnout";
+        } else if ("SignalHead".equals(_itemType)) {
+            thisType = "BeanNameSignalHead";
+        } else if ("SignalMast".equals(_itemType)) {
+            thisType = "BeanNameSignalMast";
+        } else if ("Memory".equals(_itemType)) {
+            thisType = "BeanNameMemory";
+        } else if ("Reporter".equals(_itemType)) {
+            thisType = "BeanNameReporter";
+        } else if ("Light".equals(_itemType)) {
+            thisType = "BeanNameLight";
+        } else if ("Portal".equals(_itemType)) {
+            thisType = "BeanNamePortal";
+        } else {
+            thisType = _itemType;
+        }
+        String txt = Bundle.getMessage("IconFamiliesLabel", Bundle.getMessage(thisType));
         JPanel p = new JPanel(new FlowLayout());
         p.add(new JLabel(txt));
         familyPanel.add(p);
         _familyButtonGroup = new ButtonGroup();
         JPanel buttonPanel = new JPanel(new FlowLayout());
-        String family = null;
+        String family = "";
         JRadioButton button = null;
         int count = 0;
         while (it.hasNext()) {
@@ -343,7 +364,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             if (family.equals(_family)) {
                 button.setSelected(true);
             }
-            if (count > 4) {
+            if (count > 4) { // put remaining radio buttons on a new line
                 count = 0;
                 familyPanel.add(buttonPanel);
                 buttonPanel = new JPanel(new FlowLayout());
@@ -425,6 +446,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             NamedIcon icon = new NamedIcon(entry.getValue());    // make copy for possible reduction
             icon.reduceTo(100, 100, 0.2);
             JPanel panel = new JPanel(new FlowLayout());
+            // I18N use existing NamedBeanBundle keys
             String borderName = getIconBorderName(entry.getKey());
             panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                     borderName));
@@ -435,7 +457,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
             }
             image.setToolTipText(icon.getName());
             panel.add(image);
-            int width = Math.max(100, panel.getPreferredSize().width);
+            int width = getFontMetrics(getFont()).stringWidth(borderName);
+            width = Math.max(100, Math.max(width, icon.getIconWidth())+10);
             panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
             c.gridx += 1;
             if (c.gridx >= numCol) { //start next row
@@ -461,7 +484,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         return ItemPalette.convertText(key);
     }
 
-    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map) {
+    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
         return null;
     }
 
@@ -484,10 +507,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
                         borderName));
                 JLabel label;
                 try {
-                    label = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR), iconMap);
+                    label = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR), iconMap, icon);
                     if (label != null) {
                         label.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
-                        label.setIcon(icon);
+//                        label.setIcon(icon);
                         label.setName(borderName);
                         panel.add(label);
                     }

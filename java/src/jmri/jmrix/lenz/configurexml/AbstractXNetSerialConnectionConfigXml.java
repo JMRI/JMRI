@@ -14,7 +14,6 @@ import jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig;
  * here directly via the class attribute in the XML.
  *
  * @author Paul Bender Copyright: Copyright (c) 2015
- * @version $Revision$
  */
 abstract public class AbstractXNetSerialConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 

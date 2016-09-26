@@ -176,6 +176,12 @@ We roll some general code maintenance items into the release process.  They can 
 
 - Pull back to make sure your repository is fully up to date
 
+- Check that the correct milestone is on all merged pulls. This is needed for the release note. Start with the list of PRs merged since the last test release was started:
+````
+https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr%20is%3Aclosed%20merged%3A%3E2016-08-13
+````
+where the date at the end should be the date (and optionally time) of the last release. For each, if it doesn't have the right milestone set, and is a change to the release code (e.g. isn't just a change to the CI settings or similar), add the current milestone.  
+
 - Start the release by creating a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)
 
 ```
@@ -198,13 +204,13 @@ We roll some general code maintenance items into the release process.  They can 
 - Put a comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note
 
 ```
-The release-4.5.2 branch has been created. 
+The release-4.5.4 branch has been created. 
 
-From now on, please document your changes in the [jmri4.5.2.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.5.2.shtml) release note file.
+From now on, please document your changes in the [jmri4.5.5.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.5.5.shtml) release note file.
 
-Maintainers, please set the 4.5.2 milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
+Maintainers, please set the 4.5.5 milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
 
-Jenkins will be creating files shortly at the [new server](http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.2/)
+Jenkins will be creating files shortly at the [CI server](http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.4/)
 ````
 
 ================================================================================
@@ -277,9 +283,13 @@ If you're building locally:
 
 - Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force via ["Build Now"](http://jmri.tagadab.com/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/) update). Confirm visible on web.
 
-- Announce the file set to jmri-developers with a download URL like:
+- Announce the file set via email to jmri-developers@lists.sf.net with a subject line "First 4.5.4 files available":
 
-    http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.2/
+First JMRI 4.5.4 files are available in the usual way at:
+
+http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.5.4
+
+Feedback appreciated. I would like to release this later today or tomorrow morning. 
 
 - *Wait for some replies* before proceeding
 
@@ -327,7 +337,7 @@ It still gets a bit tricky if there’s a difference (e.g. due to a conflict wit
 
  - (If you use a browser to download instead of curl, make sure the .tgz wasn't auto-expanded)
 
- - (The "./testrelease 4.5.2" local script on shell.sf.net does the following steps, except for the edit, of course)
+ - (The "./testrelease 4.5.4" local script on shell.sf.net does the following steps, except for the edit, of course)
 ```
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
@@ -385,15 +395,15 @@ Note: Unlike releasing files to SourceForge, once a GitHub Release is created it
 ```
    - Description content (really need to automate this!):
 ```    
-[Release notes](http://jmri.org/releasenotes/jmri4.5.2.shtml)
+[Release notes](http://jmri.org/releasenotes/jmri4.5.4.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.5.2-Rd144052.dmg](https://github.com/JMRI/JMRI/releases/download/v4.5.2/JMRI.4.5.2-Rd144052.dmg) | 346341bbb87d8c8530ae1ac923e2d1e61de3d97be5df364d85213d95d5f99702
-[JMRI.4.5.2-Rd144052.exe](https://github.com/JMRI/JMRI/releases/download/v4.5.2/JMRI.4.5.2-Rd144052.exe) | 4d8d86345adf2a06a2b60f3ddefbfa03751819bc34e894f5e947e98dcb36e294
-[JMRI.4.5.2-Rd144052.tgz](https://github.com/JMRI/JMRI/releases/download/v4.5.2/JMRI.4.5.2-Rd144052.tgz) | 0531e6ec7aebe13e75f82f4d9905431420f8a86e31f145470b0e3fe50d055c83
+[JMRI.4.5.4-Rb93cb4f.dmg](https://github.com/JMRI/JMRI/releases/download/v4.5.2/JMRI.4.5.4-Rb93cb4f.dmg) | f613c24cef0ba3e2aaa51575ba6566ef20ca57cb3f909ca4e3d8151f6f92693a
+[JMRI.4.5.4-Rb93cb4f.exe](https://github.com/JMRI/JMRI/releases/download/v4.5.2/JMRI.4.5.4-Rb93cb4f.exe) | 228b44a8bd3036f47be97492dcf51e37c64673bf322e417eefd849ab505ca5a6
+[JMRI.4.5.4-Rb93cb4f.tgz](https://github.com/JMRI/JMRI/releases/download/v4.5.2/JMRI.4.5.4-Rb93cb4f.tgz) | afe3d48bb6dc93f678dda3e6ce714c8683d225e80b7e884fe6c01e7aff038ba5
 ```
 
 - Attach files by dragging them in (you might have to have downloaded them above via e.g. a separate 

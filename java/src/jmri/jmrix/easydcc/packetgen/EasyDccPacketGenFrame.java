@@ -4,8 +4,7 @@
  * Description:	Frame for user input of EasyDcc messages
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 package jmri.jmrix.easydcc.packetgen;
 
 import java.awt.Dimension;

@@ -492,7 +492,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
      * the right type
      */
     protected void replaceRouteManager() {
-        RouteManager current = InstanceManager.getOptionalDefault(jmri.RouteManager.class);
+        RouteManager current = InstanceManager.getNullableDefault(jmri.RouteManager.class);
         if (current != null && current.getClass().getName()
                 .equals(DefaultRouteManager.class.getName())) {
             return;

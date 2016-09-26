@@ -5,7 +5,6 @@
  * LocoNet specific commands to build a consist.
  *
  * @author Paul Bender Copyright (C) 2011
- * @version $Revision$
  */
 package jmri.jmrix.loconet;
 

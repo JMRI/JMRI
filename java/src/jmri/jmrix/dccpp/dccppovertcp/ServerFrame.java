@@ -25,8 +25,7 @@ import javax.swing.event.ChangeListener;
  * @author	Bob Jacobsen Copyright (C) 2003, 2004
  * @author      Alex Shepherd Copyright (C) 2006
  * @author      Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- */
+  */
 public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
 
     private ServerFrame() {

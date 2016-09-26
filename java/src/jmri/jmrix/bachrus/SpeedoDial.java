@@ -22,7 +22,6 @@ import jmri.jmrit.catalog.NamedIcon;
  * @author Andrew Crosland Copyright (C) 2010
  * @author	Dennis Miller Copyright (C) 2015
  *
- * @version $Revision$
  */
 public class SpeedoDial extends JPanel {
 

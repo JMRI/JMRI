@@ -15,7 +15,6 @@ import jmri.jmrix.sprog.sprogCS.SprogCSSerialDriverAdapter;
  * attribute in the XML.
  *
  * @author Andrew Crosland Copyright: Copyright (c) 2006
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 

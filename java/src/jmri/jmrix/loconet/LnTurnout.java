@@ -34,8 +34,7 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 
     /**

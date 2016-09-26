@@ -149,7 +149,7 @@ public class Track {
 
     // return status when checking rolling stock
     public static final String OKAY = Bundle.getMessage("okay");
-    public static final String LENGTH = Bundle.getMessage("rollingStock") + " " + Bundle.getMessage("length");
+    public static final String LENGTH = Bundle.getMessage("rollingStock") + " " + Bundle.getMessage("Length").toLowerCase(); // lower case in report
     public static final String TYPE = Bundle.getMessage("type");
     public static final String ROAD = Bundle.getMessage("road");
     public static final String LOAD = Bundle.getMessage("load");
@@ -361,7 +361,7 @@ public class Track {
         int old = _reserved;
         _reserved = reserved;
         if (old != reserved) {
-            setDirtyAndFirePropertyChange("reserved", Integer.toString(old), // NOI18N
+            setDirtyAndFirePropertyChange("trackReserved", Integer.toString(old), // NOI18N
                     Integer.toString(reserved)); // NOI18N
         }
     }
@@ -375,7 +375,7 @@ public class Track {
         _numberCarsEnRoute++;
         _reservedEnRoute = old + car.getTotalLength();
         if (old != _reservedEnRoute) {
-            setDirtyAndFirePropertyChange("reservedInRoute", Integer.toString(old), // NOI18N
+            setDirtyAndFirePropertyChange("trackAddReservedInRoute", Integer.toString(old), // NOI18N
                     Integer.toString(_reservedEnRoute)); // NOI18N
         }
     }
@@ -385,7 +385,7 @@ public class Track {
         _numberCarsEnRoute--;
         _reservedEnRoute = old - car.getTotalLength();
         if (old != _reservedEnRoute) {
-            setDirtyAndFirePropertyChange("reservedInRoute", Integer.toString(old), // NOI18N
+            setDirtyAndFirePropertyChange("trackDeleteReservedInRoute", Integer.toString(old), // NOI18N
                     Integer.toString(_reservedEnRoute)); // NOI18N
         }
     }
@@ -415,7 +415,7 @@ public class Track {
         int old = _reservationFactor;
         _reservationFactor = factor;
         if (old != factor) {
-            setDirtyAndFirePropertyChange("reservationFactor", old, factor); // NOI18N
+            setDirtyAndFirePropertyChange("trackReservationFactor", old, factor); // NOI18N
         }
     }
 
@@ -465,7 +465,7 @@ public class Track {
     public void setHoldCarsWithCustomLoadsEnabled(boolean enable) {
         boolean old = _holdCustomLoads;
         _holdCustomLoads = enable;
-        setDirtyAndFirePropertyChange("holdCarsWithCustomLoads", old, enable);
+        setDirtyAndFirePropertyChange("trackHoldCarsWithCustomLoads", old, enable);
     }
 
     /**
@@ -513,7 +513,7 @@ public class Track {
         int old = _usedLength;
         _usedLength = length;
         if (old != length) {
-            setDirtyAndFirePropertyChange("usedLength", Integer.toString(old), // NOI18N
+            setDirtyAndFirePropertyChange("trackUsedLength", Integer.toString(old), // NOI18N
                     Integer.toString(length)); // NOI18N
         }
     }
@@ -549,7 +549,7 @@ public class Track {
         int old = _numberRS;
         _numberRS = number;
         if (old != number) {
-            setDirtyAndFirePropertyChange("numberRS", Integer.toString(old), // NOI18N
+            setDirtyAndFirePropertyChange("trackNumberRS", Integer.toString(old), // NOI18N
                     Integer.toString(number)); // NOI18N
         }
     }
@@ -562,7 +562,7 @@ public class Track {
         int old = _numberCars;
         _numberCars = number;
         if (old != number) {
-            setDirtyAndFirePropertyChange("numberCars", Integer.toString(old), // NOI18N
+            setDirtyAndFirePropertyChange("trackNumberCars", Integer.toString(old), // NOI18N
                     Integer.toString(number)); // NOI18N
         }
     }
@@ -575,7 +575,7 @@ public class Track {
         int old = _numberEngines;
         _numberEngines = number;
         if (old != number) {
-            setDirtyAndFirePropertyChange("numberEngines", Integer.toString(old), // NOI18N
+            setDirtyAndFirePropertyChange("trackNumberEngines", Integer.toString(old), // NOI18N
                     Integer.toString(number)); // NOI18N
         }
     }
@@ -638,7 +638,7 @@ public class Track {
         if (Setup.isBuildAggressive()) {
             setReserved(getReserved() - rs.getTotalLength());
         }
-        setDirtyAndFirePropertyChange("pickupRS", Integer.toString(old), // NOI18N
+        setDirtyAndFirePropertyChange("trackPickupRS", Integer.toString(old), // NOI18N
                 Integer.toString(_pickupRS));
     }
 
@@ -648,7 +648,7 @@ public class Track {
             setReserved(getReserved() + rs.getTotalLength());
         }
         _pickupRS--;
-        setDirtyAndFirePropertyChange("pickupRS", Integer.toString(old), // NOI18N
+        setDirtyAndFirePropertyChange("trackDeletePickupRS", Integer.toString(old), // NOI18N
                 Integer.toString(_pickupRS));
     }
 
@@ -671,7 +671,7 @@ public class Track {
         setMoves(getMoves() + 1);
         setReserved(getReserved() + rs.getTotalLength());
         _reservedLengthDrops = _reservedLengthDrops + rs.getTotalLength();
-        setDirtyAndFirePropertyChange("addDropRS", Integer.toString(old), Integer.toString(_dropRS)); // NOI18N
+        setDirtyAndFirePropertyChange("trackAddDropRS", Integer.toString(old), Integer.toString(_dropRS)); // NOI18N
     }
 
     public void deleteDropRS(RollingStock rs) {
@@ -679,7 +679,7 @@ public class Track {
         _dropRS--;
         setReserved(getReserved() - rs.getTotalLength());
         _reservedLengthDrops = _reservedLengthDrops - rs.getTotalLength();
-        setDirtyAndFirePropertyChange("deleteDropRS", Integer.toString(old), // NOI18N
+        setDirtyAndFirePropertyChange("trackDeleteDropRS", Integer.toString(old), // NOI18N
                 Integer.toString(_dropRS));
     }
 
@@ -1793,6 +1793,9 @@ public class Track {
 
     private static boolean debugFlag = false;
 
+    /*
+     * Match mode search
+     */
     private String searchSchedule(Car car) {
         if (debugFlag) {
             log.debug("Search match for car ({}) type ({}) load ({})", car.toString(), car.getTypeName(), car
@@ -1890,7 +1893,7 @@ public class Track {
                     si.getReceiveLoadName() +
                     ")";
         }
-        if (!car.getScheduleItemId().equals(si.getId()) && !si.getRandom().equals(ScheduleItem.NONE)) {
+        if (car.getFinalDestinationTrack() != this && !si.getRandom().equals(ScheduleItem.NONE)) {
             try {
                 int value = Integer.parseInt(si.getRandom());
                 double random = 100 * Math.random();

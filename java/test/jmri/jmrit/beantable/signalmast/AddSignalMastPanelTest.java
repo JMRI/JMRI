@@ -1,15 +1,14 @@
 package jmri.jmrit.beantable.signalmast;
 
 import jmri.implementation.SignalSystemTestUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
  * @author	Bob Jacobsen Copyright 2014
- * @version	$Revision$
- */
+  */
 public class AddSignalMastPanelTest extends TestCase {
 
     public void testDefaultSystems() {

@@ -6,7 +6,6 @@ package jmri.jmrix.tams.serialdriver;
  * SerialDriverAdapter object.
  *
  * @author Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 17977 $
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 

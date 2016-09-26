@@ -4,7 +4,6 @@
  * Description:	JUnit tests
  *
  * @author	Bob Jacobsen
- * @version
  */
 package jmri.jmrix.tmcc.serialmon;
 
@@ -12,7 +11,7 @@ import java.util.Vector;
 import jmri.jmrix.tmcc.SerialMessage;
 import jmri.jmrix.tmcc.SerialReply;
 import jmri.jmrix.tmcc.SerialTrafficController;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

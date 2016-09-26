@@ -1,7 +1,7 @@
 package jmri.jmrit.jython;
 
 import javax.swing.JFrame;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -43,7 +43,7 @@ public class JythonWindowsTest extends TestCase {
         f.dispose();
 
         // error messages are a fail
-        if (jmri.util.JUnitAppender.clearBacklog() != 0) {
+        if (jmri.util.JUnitAppender.clearBacklog(org.apache.log4j.Level.WARN) != 0) {
             Assert.fail("Emitted error messages caused test to fail");
         }
     }

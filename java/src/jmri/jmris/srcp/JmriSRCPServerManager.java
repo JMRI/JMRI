@@ -11,7 +11,7 @@ public class JmriSRCPServerManager {
     private JmriSRCPServer server;
 
     private JmriSRCPServerManager() {
-        if (InstanceManager.getOptionalDefault(JmriSRCPServerPreferences.class) == null) {
+        if (InstanceManager.getNullableDefault(JmriSRCPServerPreferences.class) == null) {
             String fileName = FileUtil.getUserFilesPath() + "networkServices" + File.separator + "JmriSRCPServerPreferences.xml";
             if ((new File(fileName)).exists()) {
                 InstanceManager.store(new JmriSRCPServerPreferences(fileName), JmriSRCPServerPreferences.class); // NOI18N

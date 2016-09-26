@@ -42,7 +42,7 @@
                 It is the current development version.
             </xs:documentation>
             <xs:appinfo>
-                <jmri:usingclass configurexml="false">jmri.managers.JmriUserMessagePreferences</jmri:usingclass>
+                <jmri:usingclass configurexml="false">jmri.managers.JmriJTablePersistenceManager</jmri:usingclass>
             </xs:appinfo>
         </xs:annotation>
         <xs:complexType>
@@ -56,7 +56,11 @@
                                         <xs:element name="column" minOccurs="0" maxOccurs="unbounded">
                                             <xs:complexType>
                                                 <xs:attribute name="name" type="xs:string" use="required" />
-                                                <xs:attribute name="order" type="xs:int" use="optional" /> 
+                                                <xs:attribute name="order" type="xs:int" use="optional">
+                                                    <xs:documentation>
+                                                        View index, not model index.
+                                                    </xs:documentation>
+                                                </xs:attribute>
                                                 <xs:attribute name="width" type="xs:int" use="optional" />
                                                 <xs:attribute name="hidden" type="xs:boolean" use="optional" />
                                             </xs:complexType>

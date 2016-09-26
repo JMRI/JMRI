@@ -34,8 +34,6 @@ public class PackageTest extends TestCase {
             suite.addTest(jmri.jmrix.can.swing.monitor.PackageTest.suite());
         }
 
-        suite.addTest(jmri.jmrix.can.swing.eventtable.PackageTest.suite());
-
         return suite;
     }
 

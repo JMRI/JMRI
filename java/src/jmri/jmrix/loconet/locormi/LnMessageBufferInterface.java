@@ -6,7 +6,6 @@ import jmri.jmrix.loconet.LocoNetMessage;
 
 /**
  * @author Bob Jacobsen, Alex Shepherd Copyright (c) 2002
- * @version $Revision$
  */
 public interface LnMessageBufferInterface extends Remote {
 

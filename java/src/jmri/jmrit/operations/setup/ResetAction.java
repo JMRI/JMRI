@@ -17,7 +17,6 @@ import jmri.jmrit.operations.UnexpectedExceptionContext;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
  * @author Gregory Madsen Copyright (C) 2012
- * @version $Revision$
  */
 public class ResetAction extends AbstractAction {
 

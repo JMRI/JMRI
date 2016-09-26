@@ -32,7 +32,7 @@ public class LoadXmlVSDecoderAction extends AbstractAction {
         // Pretty sure I don't need this
         // disable the ourselves if there is no throttle Manager
 	/*
-         if (jmri.InstanceManager.getOptionalDefault(jmri.ThrottleManager.class) == null) {
+         if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
          setEnabled(false);
          }
          */
@@ -103,8 +103,7 @@ public class LoadXmlVSDecoderAction extends AbstractAction {
      * An extension of the abstract XmlFile. No changes made to that class.
      *
      * @author glen
-     * @version $Revision$
-     */
+         */
     static class VSDecoderPrefs extends XmlFile {
     }
 

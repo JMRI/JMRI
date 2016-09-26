@@ -8,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.lenz.liusbserver package
  *
  * @author Paul Bender
- * @version $Revision: 17977 $
  */
 public class LIUSBServerTest extends TestCase {
 

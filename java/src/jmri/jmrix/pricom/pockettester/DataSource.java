@@ -30,8 +30,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * For more info on the product, see http://www.pricom.com
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
- */
+  */
 public class DataSource extends jmri.util.JmriJFrame {
 
     static DataSource existingInstance;

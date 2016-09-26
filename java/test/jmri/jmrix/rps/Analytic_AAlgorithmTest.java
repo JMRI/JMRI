@@ -9,8 +9,7 @@ import junit.framework.TestSuite;
  *
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision$
- */
+  */
 public class Analytic_AAlgorithmTest extends AbstractAlgorithmTest {
 
     Calculator getAlgorithm(Point3d[] pts, double vs) {

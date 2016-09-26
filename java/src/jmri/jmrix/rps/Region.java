@@ -20,8 +20,7 @@ import org.slf4j.LoggerFactory;
  * Java2D GeneralPath to handle the inside/outside calculations.
  *
  * @author	Bob Jacobsen Copyright (C) 2007, 2008
- * @version	$Revision$
- */
+  */
 @net.jcip.annotations.Immutable
 public class Region {
 

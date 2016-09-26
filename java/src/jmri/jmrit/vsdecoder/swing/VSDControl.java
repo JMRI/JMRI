@@ -22,7 +22,7 @@ package jmri.jmrit.vsdecoder.swing;
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision: 21510 $
+ * 
  */
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
@@ -59,7 +59,7 @@ import org.slf4j.LoggerFactory;
  * the LocoMon tool by Bob Jacobsen
  *
  * @author	Mark Underwood Copyright (C) 2011
- * @version $Revision: 21510 $
+ * 
  */
 @SuppressWarnings("serial")
 public class VSDControl extends JPanel {

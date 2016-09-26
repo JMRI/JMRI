@@ -175,7 +175,12 @@ public abstract class AbstractLightManager extends AbstractManager
                 log.error("System name null during activation of Lights");
             } else {
                 log.debug("Activated Light system name is " + systemName);
-                getBySystemName(systemName).activateLight();
+                Light l = getBySystemName(systemName);
+                if (l == null) {
+                    log.error("light null during activation of lights");
+                } else {
+                    l.activateLight();
+                }
             }
         }
     }

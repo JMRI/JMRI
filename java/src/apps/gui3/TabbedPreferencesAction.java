@@ -83,7 +83,7 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
                 public void run() {
                     try {
                         setWait(true);
-                        while (jmri.InstanceManager.tabbedPreferencesInstance().init() != 0x02) {
+                        while (jmri.InstanceManager.getDefault(TabbedPreferences.class).init() != TabbedPreferences.INITIALISED) {
                             Thread.sleep(50);
                         }
                         SwingUtilities.updateComponentTreeUI(f);

@@ -9,8 +9,7 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen
  * @author	Mark Underwood
- * @version	$Revision$
- */
+  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
@@ -41,11 +40,11 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(DCCppPowerManagerTest.class));
         suite.addTest(new TestSuite(DCCppThrottleManagerTest.class));
         suite.addTest(new TestSuite(DCCppLightTest.class));
-        suite.addTest(new TestSuite(DCCppLightManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppLightManagerTest.class));
         suite.addTest(new TestSuite(DCCppOpsModeProgrammerTest.class));
         suite.addTest(new TestSuite(DCCppStreamPortControllerTest.class));
         suite.addTest(new TestSuite(DCCppSensorTest.class));
-        suite.addTest(new TestSuite(DCCppSensorManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppSensorManagerTest.class));
         suite.addTest(jmri.jmrix.dccpp.network.DCCppEthernetTest.suite());
         suite.addTest(jmri.jmrix.dccpp.swing.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.dccpp.dccppovertcp.PackageTest.class));

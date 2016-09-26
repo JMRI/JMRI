@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * Used to edit train timetable (Schedule).
  *
  * @author Daniel Boudreau Copyright (C)
- * @version $Revision: 23749 $
+ * 
  *
  */
 public class TrainsScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {

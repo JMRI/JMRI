@@ -24,8 +24,7 @@ import org.slf4j.LoggerFactory;
  * XPressNet Address and the port speed used to communicate with the LI101.
  *
  * @author	Paul Bender Copyright (C) 2003-2010
- * @version	$Revision$
- */
+  */
 public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 
     /**

@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -26,6 +27,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
+import jmri.swing.JTablePersistenceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +35,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of route
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2014
- * @version $Revision$
  */
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -98,12 +99,13 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         routePane = new JScrollPane(routeTable);
         routePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         routePane.setBorder(BorderFactory.createTitledBorder(""));
+        
+        routeModel.initTable(this, routeTable, _route);
 
         if (_route != null) {
             routeName = _route.getName();
             routeNameTextField.setText(routeName);
             commentTextField.setText(_route.getComment());
-            routeModel.initTable(this, routeTable, route);
             enableButtons(true);
         } else {
             setTitle(Bundle.getMessage("TitleRouteAdd"));
@@ -193,6 +195,8 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         addButtonAction(saveRouteButton);
 
         // setup radio buttons
+        addRadioButtonAction(addLocAtTop); // to clear table row sorting
+        addRadioButtonAction(addLocAtBottom); // to clear table row sorting
         addRadioButtonAction(showWait);
         addRadioButtonAction(showDepartTime);
         setTimeWaitRadioButtons();
@@ -327,8 +331,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
             routeTable.getCellEditor().stopCellEditing();
         }
 
-        saveTableDetails(routeTable);
-
         // save route file
         OperationsXml.save();
     }
@@ -375,6 +377,9 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
     @Override
     public void dispose() {
+        InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {
+            tpm.stopPersisting(routeTable);
+        });
         routeModel.dispose();
         super.dispose();
     }

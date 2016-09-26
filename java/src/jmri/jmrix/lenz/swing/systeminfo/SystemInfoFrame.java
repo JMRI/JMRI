@@ -27,8 +27,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Paul Bender Copyright (C) 2003-2010
  * @author	Giorgio Terdina Copyright (C) 2007
- * @version	$Revision$
- */
+  */
 public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListener {
 
     /**

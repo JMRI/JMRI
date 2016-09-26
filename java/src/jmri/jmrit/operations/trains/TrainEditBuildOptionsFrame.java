@@ -37,7 +37,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of a train's build options
  *
  * @author Dan Boudreau Copyright (C) 2010, 2012, 2013
- * @version $Revision$
  */
 public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010, 2011
- * @version $Revision: 18416 $
+ * 
  */
 public class WiFiConsistManager extends AbstractConsistManager {
 

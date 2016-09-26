@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Action to print all of the routes used in operations.
  *
  * @author Daniel Boudreau Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 public class PrintRoutesAction extends PrintRouteAction {
 

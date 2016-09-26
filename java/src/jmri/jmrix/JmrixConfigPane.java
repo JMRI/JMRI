@@ -11,6 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
@@ -142,8 +143,11 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
                 log.error("Error Occured while disposing connection {}", ex.toString());
             }
         }
-        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).deregister(confPane);
-        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).deregister(confPane.ccCurrent);
+        ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cmOD != null) {
+            cmOD.deregister(confPane);
+            cmOD.deregister(confPane.ccCurrent);
+        }
         InstanceManager.getDefault(ConnectionConfigManager.class).remove(confPane.ccCurrent);
 
         configPaneTable.remove(getInstanceNumber(confPane));

@@ -9,7 +9,6 @@ import jmri.implementation.AbstractSensor;
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
- * @version $Revision$
  */
 public class SerialSensor extends AbstractSensor {
 

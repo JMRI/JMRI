@@ -30,8 +30,7 @@ import org.slf4j.LoggerFactory;
  * Panel displaying and programming a LocoIO configuration.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision$
- */
+  */
 public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements java.beans.PropertyChangeListener {
 
@@ -209,7 +208,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     public String getTitle() {
-        return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemLocoIOProgrammer"));
+        return getTitle(Bundle.getMessage("MenuItemLocoIOProgrammer"));
     }
 
     /**

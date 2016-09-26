@@ -9,7 +9,6 @@ package jmri.jmrix.loconet.loconetovertcp;
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Stephen Williams Copyright (C) 2008
  *
- * @version $Revision$
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 

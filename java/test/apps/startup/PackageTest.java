@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   apps.startup.configurexml.PackageTest.class
+   apps.startup.configurexml.PackageTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the apps.startup.configurexml package.

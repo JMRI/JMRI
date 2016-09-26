@@ -116,20 +116,6 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
-        setPreferredWidths(table);
-
-        // set row height
-        table.setRowHeight(new JComboBox<Object>().getPreferredSize().height);
-        updateList();
-        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-    }
-
-    private synchronized void setPreferredWidths(JTable table) {
-        if (_frame.loadTableDetails(table)) {
-            return; // done
-        }
-        log.debug("Setting preferred widths");
         // set column preferred widths
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(35);
         table.getColumnModel().getColumn(CURRENT_COLUMN).setPreferredWidth(50);
@@ -147,6 +133,12 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         table.getColumnModel().getColumn(UP_COLUMN).setPreferredWidth(60);
         table.getColumnModel().getColumn(DOWN_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(70);
+        
+        _frame.loadTableDetails(table);
+        // does not use a table sorter
+        table.setRowSorter(null);
+
+        updateList();
     }
 
     @Override
@@ -206,35 +198,23 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case ID_COLUMN:
-                return String.class;
             case CURRENT_COLUMN:
-                return String.class;
             case TYPE_COLUMN:
                 return String.class;
             case RANDOM_COLUMN:
-                return JComboBox.class;
             case SETOUT_DAY_COLUMN:
-                return JComboBox.class;
             case ROAD_COLUMN:
-                return JComboBox.class;
             case LOAD_COLUMN:
-                return JComboBox.class;
             case SHIP_COLUMN:
-                return JComboBox.class;
             case DEST_COLUMN:
-                return JComboBox.class;
             case TRACK_COLUMN:
-                return JComboBox.class;
             case PICKUP_DAY_COLUMN:
                 return JComboBox.class;
             case COUNT_COLUMN:
-                return String.class;
             case WAIT_COLUMN:
-                return String.class;
+                return Integer.class;
             case UP_COLUMN:
-                return JButton.class;
             case DOWN_COLUMN:
-                return JButton.class;
             case DELETE_COLUMN:
                 return JButton.class;
             default:
@@ -367,7 +347,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
     private String getCurrentPointer(ScheduleItem si) {
         if (_track.getCurrentScheduleItem() == si) {
-            if (si.getCount() > 1) {
+            if (_track.getScheduleMode() == Track.SEQUENTIAL && si.getCount() > 1) {
                 return " " + _track.getScheduleCount() + " -->"; // NOI18N
             } else {
                 return "    -->"; // NOI18N

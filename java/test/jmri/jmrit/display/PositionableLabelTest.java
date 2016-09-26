@@ -2,7 +2,6 @@
 package jmri.jmrit.display;
 
 import java.awt.Color;
-import jmri.ConfigureManager;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
@@ -12,12 +11,13 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.finder.JLabelFinder;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Test of PositionableLabel
@@ -239,6 +239,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         flushAWT();
 
         // check for initial red
+        sleep(5);
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0,0));
 
         Assert.assertEquals("icon arraylength", 13*13, val.length);

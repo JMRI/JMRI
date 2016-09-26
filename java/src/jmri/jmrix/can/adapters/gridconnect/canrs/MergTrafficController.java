@@ -20,8 +20,7 @@ import org.slf4j.LoggerFactory;
  * to) 8 data bytes
  *
  * @author Andrew Crosland Copyright (C) 2008
- * @version	$Revision$
- */
+  */
 public class MergTrafficController extends GcTrafficController {
 
     public MergTrafficController() {

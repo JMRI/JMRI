@@ -21,8 +21,7 @@ import org.slf4j.LoggerFactory;
  * normal or remote frame d0 - d7 are the (up to) 8 data bytes
  *
  * @author Andrew Crosland Copyright (C) 2008
- * @version	$Revision$
- */
+  */
 public class GcTrafficController extends TrafficController {
 
     public GcTrafficController() {

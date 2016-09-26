@@ -8,8 +8,7 @@ import jmri.util.SystemType;
  * PR2Adapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008, 2010
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**

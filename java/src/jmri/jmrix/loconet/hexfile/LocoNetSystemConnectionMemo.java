@@ -11,7 +11,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * activate their particular system.
  *
  * @author	Kevin Dickerson Copyright (C) 2010
- * @version $Revision: 22821 $
  */
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "This is ineffect the same as its super class")
 public class LocoNetSystemConnectionMemo extends jmri.jmrix.loconet.LocoNetSystemConnectionMemo {

@@ -13,7 +13,6 @@ import jmri.ProgrammerManager;
  * activate their particular system.
  *
  * @author	Bob Jacobsen Copyright (C) 2015
- * @version $Revision$
  */
 public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnectionMemo {
 

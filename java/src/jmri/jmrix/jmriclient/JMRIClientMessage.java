@@ -10,8 +10,7 @@ package jmri.jmrix.jmriclient;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2004, 2008
  * @author Paul Bender Copyright (C) 2010
- * @version	$Revision$
- */
+  */
 public class JMRIClientMessage extends jmri.jmrix.AbstractMRMessage {
 
     public JMRIClientMessage() {

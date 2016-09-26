@@ -26,8 +26,8 @@ abstract public class LoadStoreBaseAction extends AbstractAction {
     public LoadStoreBaseAction(String s) {
         super(s);
         // ensure that an XML config manager exists
-        if (InstanceManager.getOptionalDefault(ConfigureManager.class) == null) {
-            InstanceManager.setConfigureManager(new JmriConfigurationManager());
+        if (!InstanceManager.getOptionalDefault(ConfigureManager.class).isPresent()) {
+            InstanceManager.setDefault(ConfigureManager.class, new JmriConfigurationManager());
         }
     }
 
