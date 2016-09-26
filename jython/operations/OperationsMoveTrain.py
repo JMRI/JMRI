@@ -5,8 +5,6 @@
 #
 # Author: Daniel Boudreau copyright 2010
 #
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 
 import jmri
 
