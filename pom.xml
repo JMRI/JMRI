@@ -634,6 +634,11 @@
             <version>${powermock.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.sparetimelabs</groupId>
+            <artifactId>purejavacomm</artifactId>
+            <version>1.0.0</version>
+        </dependency>    
     </dependencies>
 
     <repositories>
@@ -648,6 +653,14 @@
                 <enabled>false</enabled>
             </snapshots>
             <url>file://${project.basedir}/lib</url>
+        </repository>
+        <repository>
+            <id>sparetimelabs</id>
+            <name>sparetimelabs</name>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <url>http://www.sparetimelabs.com/maven2/</url>
         </repository>
     </repositories>
 </project>
