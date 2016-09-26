@@ -716,7 +716,7 @@ public class TrainBuilder extends TrainCommon {
 
     private void showTrainRequirements() {
         addLine(_buildReport, ONE, BLANK_LINE); // add line
-        addLine(_buildReport, ONE, Bundle.getMessage("TrainRequrements"));
+        addLine(_buildReport, ONE, Bundle.getMessage("TrainRequirements"));
         if (_train.getNumberEngines().equals("0")) {
             addLine(_buildReport, ONE, Bundle.getMessage("buildTrainReq0Engine"));
         } else if (_train.getNumberEngines().equals("1")) {

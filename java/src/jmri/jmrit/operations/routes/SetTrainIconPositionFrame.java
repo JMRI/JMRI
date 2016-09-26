@@ -53,7 +53,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     // major buttons
     JButton placeButton = new JButton(Bundle.getMessage("PlaceTestIcon"));
     JButton applyButton = new JButton(Bundle.getMessage("UpdateRoutes"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // combo boxes
     JComboBox<Location> locationBox = LocationManager.instance().getComboBox();
