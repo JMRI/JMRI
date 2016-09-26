@@ -7,8 +7,6 @@
 # Use this script after the train has been built.
 #
 # Author: Daniel Boudreau, copyright 2011, 2012
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 #
 # To use this script you must assign the train that you want the cars waited, 
 # and the wait value.  
