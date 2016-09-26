@@ -33,7 +33,7 @@ public class PackageTest extends TestCase {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.maple.SerialTest");
         suite.addTest(jmri.jmrix.maple.SerialTurnoutTest.suite());
-        suite.addTest(jmri.jmrix.maple.SerialTurnoutManagerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialTurnoutManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialSensorManagerTest.class));
         suite.addTest(jmri.jmrix.maple.SerialNodeTest.suite());
         suite.addTest(jmri.jmrix.maple.SerialMessageTest.suite());

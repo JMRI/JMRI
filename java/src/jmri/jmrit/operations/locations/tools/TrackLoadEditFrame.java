@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of track loads
  *
  * @author Dan Boudreau Copyright (C) 2013, 2014, 2015
- * @version $Revision: 22371 $
+ * 
  */
 public class TrackLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 

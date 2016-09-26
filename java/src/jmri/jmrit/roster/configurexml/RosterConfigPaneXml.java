@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * Instead, this persists static members of the roster.Roster class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision$
  */
 public class RosterConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
 

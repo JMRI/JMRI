@@ -13,7 +13,6 @@ import jmri.jmrit.operations.locations.tools.TrackDestinationEditAction;
  * TrackEditFrame for train/route car drops and pulls.
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011, 2012
- * @version $Revision$
  */
 public class InterchangeEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
 

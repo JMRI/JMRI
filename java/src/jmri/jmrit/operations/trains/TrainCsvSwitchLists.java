@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * railroad.
  *
  * @author Daniel Boudreau (C) Copyright 2011, 2013, 2014, 2015
- * @version $Revision: 1 $
+ * 
  *
  */
 public class TrainCsvSwitchLists extends TrainCsvCommon {

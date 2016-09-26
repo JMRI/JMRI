@@ -16,8 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001, 2004
  * @author Kevin Dickerson Copyright (C) 2014
  * @author	kcameron Copyright (C) 2014
- * @version	$Revision$
- */
+  */
 public class MrcMessage {
 
     // create a new one

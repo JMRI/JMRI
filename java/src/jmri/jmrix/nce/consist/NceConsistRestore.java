@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * appropriate consist address.
  *
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision$
  */
 public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListener {
 

@@ -49,7 +49,6 @@ import org.slf4j.LoggerFactory;
  * Represents one automation item of a automation
  *
  * @author Daniel Boudreau Copyright (C) 2016
- * @version $Revision$
  */
 public class AutomationItem implements java.beans.PropertyChangeListener {
 

@@ -8,8 +8,7 @@ import javax.swing.AbstractAction;
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author Alex Shepherd Copyright (C) 2006
- * @version	$Revision$
- */
+  */
 public class ServerAction
         extends AbstractAction {
 

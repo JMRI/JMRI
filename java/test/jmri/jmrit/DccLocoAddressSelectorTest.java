@@ -15,8 +15,7 @@ import junit.framework.TestSuite;
  * Test simple functioning of DccLocoAddressSelector
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version	$Revision$
- */
+  */
 public class DccLocoAddressSelectorTest extends TestCase {
 
     public void testCtor() {

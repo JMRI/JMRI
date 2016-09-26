@@ -16,7 +16,6 @@ import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Andrew Crosland 2008
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 

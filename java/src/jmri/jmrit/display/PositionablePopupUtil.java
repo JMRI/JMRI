@@ -1,4 +1,3 @@
-// PositionablePopupUtil.java
 package jmri.jmrit.display;
 
 import java.awt.Color;
@@ -32,7 +31,6 @@ import org.slf4j.LoggerFactory;
  *
  * moved from PositionableLabel
  * @author Pete Cressman copyright (C) 2010
- * @version $I $
  */
 public class PositionablePopupUtil {
 

@@ -17,7 +17,6 @@ import jmri.jmrix.dccpp.dccppovertcp.DCCppTcpDriverAdapter;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Mark Underwood Copyright: Copyright (c) 2015
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 

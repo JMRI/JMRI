@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Alex Shepherd Copyright (c) 2002
  * @author Bob Jacobsen
- * @version $Revision$
  */
 public class LnMessageClient extends LnTrafficRouter {
 

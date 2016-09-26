@@ -4,7 +4,6 @@
  * Description:
  *
  * @author	Bob Jacobsen
- * @version
  */
 package jmri;
 

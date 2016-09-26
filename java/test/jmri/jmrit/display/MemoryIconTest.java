@@ -22,8 +22,7 @@ import org.slf4j.LoggerFactory;
  * Description:
  *
  * @author	Bob Jacobsen Copyright 2007, 2015
- * @version	$Revision$
- */
+  */
 public class MemoryIconTest extends jmri.util.SwingTestCase {
 
     MemoryIcon to = null;

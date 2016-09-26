@@ -12,8 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author	Bob Jacobsen Copyright 2005
- * @version	$Revision$
- */
+  */
 public class ComboCheckBoxTest extends TestCase {
 
     ProgDebugger p = new ProgDebugger();

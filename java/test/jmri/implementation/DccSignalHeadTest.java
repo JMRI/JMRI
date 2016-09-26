@@ -54,6 +54,7 @@ public class DccSignalHeadTest {
 
     }
 
+    @Test
     public void testLunarAppearance() {
         DccSignalHead s = new DccSignalHead("IH$1");
 
@@ -95,6 +96,7 @@ public class DccSignalHeadTest {
 
     }
 
+    @Test
     public void testFlashRedAppearance() {
         DccSignalHead s = new DccSignalHead("IH$1");
 

@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  * <P>
  * @author Dave Duchamp Copyright (c) 2006
- * @version $Revision$
  *
  * @author Bob Coleman, Copyright (c) 2007, 2008 Based on Loconet example,
  * modified to establish Acela support.

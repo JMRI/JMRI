@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * Train print utilities. Used for train manifests and build reports.
  *
  * @author Daniel Boudreau (C) 2010
- * @version $Revision$
  *
  */
 public class TrainPrintUtilities {

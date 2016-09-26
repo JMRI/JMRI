@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * Handle XML configuration for a DefaultSignalMastManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 18102 $
+ * 
  */
 public class TurnoutSignalMastXml
         extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {

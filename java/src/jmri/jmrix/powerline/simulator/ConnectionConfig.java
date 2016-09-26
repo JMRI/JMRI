@@ -8,8 +8,7 @@ import javax.swing.JPanel;
  * Powerline Simulator object.
  *
  * @author Ken Cameron Copyright (C) 2011 based on NceSimulator by Bob Jacobson
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
     public final static String NAME = "Simulator";

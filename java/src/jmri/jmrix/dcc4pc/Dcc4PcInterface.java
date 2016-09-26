@@ -7,7 +7,7 @@ package jmri.jmrix.dcc4pc;
  *
  * @author Kevin Dickerson Copyright 2012
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 18133 $
+ * 
  */
 public interface Dcc4PcInterface {
 

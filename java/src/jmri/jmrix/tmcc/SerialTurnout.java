@@ -15,8 +15,7 @@ import org.slf4j.LoggerFactory;
  * Description:	extend jmri.AbstractTurnout for TMCC serial layouts
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006
- * @version	$Revision$
- */
+  */
 public class SerialTurnout extends AbstractTurnout {
 
     public SerialTurnout(int number) {

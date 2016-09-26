@@ -6,7 +6,6 @@ package jmri.jmrix.loconet.sdf;
  * language
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
  */
 public class GenerateTrigger extends SdfMacro {
 

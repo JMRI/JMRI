@@ -5,8 +5,7 @@ package jmri.jmrix.acela;
  * Interface to send/receive Acela information
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- *
+  *
  * @author	Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */

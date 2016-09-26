@@ -11,8 +11,7 @@ import jmri.implementation.AbstractSensor;
  * one Sensor object pointing to a single device is not allowed.
  *
  * @author Kevin Dickerson (C) 2009
- * @version	$Revision$
- */
+  */
 public class EcosSensor extends AbstractSensor {
 
     //final static String prefix = "US";

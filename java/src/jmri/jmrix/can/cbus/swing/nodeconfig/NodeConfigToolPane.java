@@ -16,8 +16,7 @@ import jmri.jmrix.can.TrafficController;
  * Pane to for setting node configuration
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
- * @since 2.3.1
+  * @since 2.3.1
  */
 public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 

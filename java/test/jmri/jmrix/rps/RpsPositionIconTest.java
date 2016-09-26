@@ -10,8 +10,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the rps.Reading class.
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision$
- */
+  */
 public class RpsPositionIconTest extends TestCase {
 
     public void testCtorAndID() throws Exception {

@@ -11,8 +11,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the RPS Sensor class.
  *
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision$
- */
+  */
 public class RpsSensorTest extends TestCase {
 
     public void testCtor() {
