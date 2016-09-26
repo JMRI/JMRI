@@ -42,9 +42,9 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 
     // major buttons
     JButton addButton = new JButton(Bundle.getMessage("Add"));
-    JButton deleteButton = new JButton(Bundle.getMessage("Delete"));
+    JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
     JButton replaceButton = new JButton(Bundle.getMessage("Replace"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // combo boxes
     JComboBox<String> loadComboBox;
@@ -146,7 +146,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        toolMenu.add(new CarLoadAttributeAction(Bundle.getMessage("CarQuanity"), this));
+        toolMenu.add(new CarLoadAttributeAction(Bundle.getMessage("CarQuantity"), this));
         toolMenu.add(new PrintCarLoadsAction(Bundle.getMessage("MenuItemPreview"), true, this));
         toolMenu.add(new PrintCarLoadsAction(Bundle.getMessage("MenuItemPrint"), false, this));
         menuBar.add(toolMenu);

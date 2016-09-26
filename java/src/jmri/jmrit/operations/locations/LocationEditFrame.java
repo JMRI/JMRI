@@ -75,8 +75,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     JPanel directionPanel = new JPanel();
 
     // major buttons
-    JButton clearButton = new JButton(Bundle.getMessage("Clear"));
-    JButton setButton = new JButton(Bundle.getMessage("Select"));
+    JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
+    JButton setButton = new JButton(Bundle.getMessage("SelectAll"));
     JButton autoSelectButton = new JButton(Bundle.getMessage("AutoSelect"));
     JButton saveLocationButton = new JButton(Bundle.getMessage("SaveLocation"));
     JButton deleteLocationButton = new JButton(Bundle.getMessage("DeleteLocation"));

@@ -106,6 +106,7 @@ public class SignalHeadSignalMastTest {
         Assert.assertEquals("check stop", "Stop", s.getAspect());
     }
 
+    @Test
     public void testAspectAttributes() {
         SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");
 

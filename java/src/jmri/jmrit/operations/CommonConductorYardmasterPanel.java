@@ -71,8 +71,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     protected JLabel textStatus = new JLabel();
 
     // major buttons
-    protected JButton selectButton = new JButton(Bundle.getMessage("Select"));
-    protected JButton clearButton = new JButton(Bundle.getMessage("Clear"));
+    protected JButton selectButton = new JButton(Bundle.getMessage("SelectAll"));
+    protected JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
     protected JButton setButton = new JButton(Bundle.getMessage("Set"));
     protected JButton moveButton = new JButton(Bundle.getMessage("Move"));
 
