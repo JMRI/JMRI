@@ -10,9 +10,7 @@
 #
 # Author: Bob Jacobsen, copyright 2005
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
+
 
 import jarray
 import jmri
