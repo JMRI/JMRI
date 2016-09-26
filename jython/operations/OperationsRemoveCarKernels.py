@@ -3,8 +3,6 @@
 # Use this script after terminating a train that services kernels created by operation scripts.
 #
 # Author: Daniel Boudreau, copyright 2015
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 #
 
 

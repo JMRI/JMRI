@@ -1013,9 +1013,10 @@ your own.
 
         <dd>
           <p>When JMRI was originally using CVS, we used lines
-          like: <code># The next line is maintained by CVS, please
+          like: <br>
+          <code># The next line is maintained by CVS, please
           don't change it<br>
-          # $Revision$</code> as an additional way of tracking file
+          # $Revision$</code><br> as an additional way of tracking file
           versions. When we migrated to SVN, we kept those lines in
           certain files, like decoder XML, properties files, etc,
           that users are likely to edit and submit back for
