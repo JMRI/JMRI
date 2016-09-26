@@ -79,6 +79,7 @@ public class XBeeTurnout extends AbstractTurnout {
                                // if there was a number format exception, we couldn't
                                // find the node.
                                node = null;
+                               throw new IllegalArgumentException("Node not defined");
                            }
                        }
                    }
@@ -88,6 +89,7 @@ public class XBeeTurnout extends AbstractTurnout {
                    }
                } catch (NumberFormatException ex) {
                    log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
+                   throw new IllegalArgumentException("Unable to convert " + systemName + " into the cab and input format of nn:xx");
                }
            } else {
                try {
@@ -98,6 +100,7 @@ public class XBeeTurnout extends AbstractTurnout {
                    pin = ((address) % 10);
                } catch (NumberFormatException ex) {
                    log.debug("Unable to convert " + systemName + " Hardware Address to a number");
+                   throw new IllegalArgumentException("Unable to convert " + systemName + " Hardware Address to a number");
                }
            }
            if (log.isDebugEnabled()) {

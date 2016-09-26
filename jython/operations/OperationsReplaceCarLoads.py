@@ -6,9 +6,6 @@
 # Author: Daniel Boudreau, copyright 2011
 # Part of the JMRI distribution
 #
-# The next line is maintained by CVS, please don't change it
-# $Revision$
-#
 # To use this script you must assign the location, tracks, car type
 # and car loads.
 #

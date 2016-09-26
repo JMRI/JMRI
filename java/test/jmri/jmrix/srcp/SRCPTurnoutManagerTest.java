@@ -1,9 +1,10 @@
 package jmri.jmrix.srcp;
 
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * SRCPTurnoutManagerTest.java
@@ -12,50 +13,49 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen
  */
-public class SRCPTurnoutManagerTest extends TestCase {
+public class SRCPTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
+    @Override
+    public String getSystemName(int i){
+        return "A1T"+i;
+    }
+
+    @Test
     public void testCtor() {
         SRCPTurnoutManager m = new SRCPTurnoutManager();
         Assert.assertNotNull(m);
     }
 
+    @Test
     public void testBusCtor() {
+        Assert.assertNotNull(l);
+    }
+
+    // The minimal setup for log4J
+    @Override
+    @Before
+    public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
         SRCPTrafficController et = new SRCPTrafficController() {
             @Override
             public void sendSRCPMessage(SRCPMessage m, SRCPListener l) {
                 // we aren't actually sending anything to a layout.
             }
         };
-        SRCPBusConnectionMemo memo = new SRCPBusConnectionMemo(et, "TEST", 1);
-        SRCPTurnoutManager m = new SRCPTurnoutManager(memo, memo.getBus());
-        Assert.assertNotNull(m);
+        SRCPBusConnectionMemo memo = new SRCPBusConnectionMemo(new SRCPTrafficController() {
+            @Override
+            public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
+            }
+        }, "A", 1);
+
+        l = new SRCPTurnoutManager(memo, memo.getBus());
+        memo.setTurnoutManager(l);
     }
 
-    // from here down is testing infrastructure
-    public SRCPTurnoutManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SRCPTurnoutManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SRCPTurnoutManagerTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-    }
-
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 }

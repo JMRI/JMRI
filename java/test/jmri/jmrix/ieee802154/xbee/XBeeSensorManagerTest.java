@@ -76,8 +76,6 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
     @Override
     @Before 
     public void setUp() {
-        //apps.tests.Log4JFixture.setUp();
-
         jmri.util.JUnitUtil.resetInstanceManager();
 
         // setup the mock XBee Connection.
@@ -121,7 +119,6 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
     public void tearDown() {
         //l.dispose();
         jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
     }
 
 }
