@@ -37,7 +37,6 @@ public class SE8cSignalHeadTest {
         Assert.assertEquals("to high", Turnout.CLOSED, it12.getCommandedState());  // dark
     }
 
-
     @Test
     public void testCtor2() {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");

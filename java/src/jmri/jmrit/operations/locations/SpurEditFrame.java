@@ -100,7 +100,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         if (comboBoxSchedules.getSelectedItem() == null) {
             editScheduleButton.setText(Bundle.getMessage("Add"));
         } else {
-            editScheduleButton.setText(Bundle.getMessage("Edit"));
+            editScheduleButton.setText(Bundle.getMessage("ButtonEdit"));
         }
     }
 

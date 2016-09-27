@@ -1066,7 +1066,7 @@ public class PanelEditor extends Editor implements ItemListener {
 
     protected void showMultiSelectPopUp(final MouseEvent event, Positionable p) {
         JPopupMenu popup = new JPopupMenu();
-        JMenuItem copy = new JMenuItem("Copy"); // changed "edit" to "copy"
+        JMenuItem copy = new JMenuItem(Bundle.getMessage("ButtonCopy")); // changed "edit" to "copy"
         if (p.isPositionable()) {
             setShowAlignmentMenu(p, popup);
         }

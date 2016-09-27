@@ -26,7 +26,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
 
     // labels
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // radio buttons
     JRadioButton buildNormal = new JRadioButton(Bundle.getMessage("Normal"));

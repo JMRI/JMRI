@@ -206,7 +206,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
             case ALT_TRACK_COLUMN:
                 return Bundle.getMessage("AlternateTrack");
             case EDIT_COLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit"); // titles above all columns
             default:
                 return "unknown"; // NOI18N
         }
@@ -332,11 +332,11 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
                     return track.getAlternateTrack().getName();
                 }
                 if (track.isAlternate()) {
-                    return Bundle.getMessage("Yes");
+                    return Bundle.getMessage("ButtonYes");
                 }
                 return "";
             case EDIT_COLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit");
             default:
                 return "unknown " + col; // NOI18N
         }

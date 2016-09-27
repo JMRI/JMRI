@@ -25,7 +25,7 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
             .getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     JButton resetButton = new JButton(rb.getString("Reset"));
 
     // text fields

@@ -35,7 +35,7 @@ class ScheduleOptionsFrame extends OperationsFrame implements java.beans.Propert
 
     // radio buttons
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     Track _track;
 

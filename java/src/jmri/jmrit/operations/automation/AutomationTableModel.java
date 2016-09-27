@@ -162,7 +162,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
             case DOWN_COLUMN:
                 return Bundle.getMessage("Down");
             case DELETE_COLUMN:
-                return Bundle.getMessage("Delete");
+                return Bundle.getMessage("ButtonDelete");
             default:
                 return "unknown"; // NOI18N
         }
@@ -255,13 +255,13 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
                 if (item.getMessage().equals(AutomationItem.NONE) && item.getMessageFail().equals(AutomationItem.NONE))
                     return Bundle.getMessage("Add");
                 else
-                    return Bundle.getMessage("Edit");
+                    return Bundle.getMessage("ButtonEdit");
             case UP_COLUMN:
                 return Bundle.getMessage("Up");
             case DOWN_COLUMN:
                 return Bundle.getMessage("Down");
             case DELETE_COLUMN:
-                return Bundle.getMessage("Delete");
+                return Bundle.getMessage("ButtonDelete");
             default:
                 return "unknown " + col; // NOI18N
         }
@@ -418,7 +418,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
             buttonPane.add(new JLabel("      ")); // some padding
         }
 
-        JButton okayButton = new JButton(Bundle.getMessage("Okay"));
+        JButton okayButton = new JButton(Bundle.getMessage("ButtonOK"));
         okayButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -431,7 +431,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         });
         buttonPane.add(okayButton);
 
-        JButton cancelButton = new JButton(Bundle.getMessage("Cancel"));
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {

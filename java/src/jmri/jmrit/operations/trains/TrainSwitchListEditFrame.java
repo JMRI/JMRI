@@ -52,8 +52,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     JCheckBox switchListAllTrainsCheckBox = new JCheckBox(Bundle.getMessage("SwitchListAllTrains"));
 
     // major buttons
-    JButton clearButton = new JButton(Bundle.getMessage("Clear"));
-    JButton setButton = new JButton(Bundle.getMessage("Select"));
+    JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
+    JButton setButton = new JButton(Bundle.getMessage("SelectAll"));
     JButton printButton = new JButton(Bundle.getMessage("PrintSwitchLists"));
     JButton previewButton = new JButton(Bundle.getMessage("PreviewSwitchLists"));
     JButton printChangesButton = new JButton(Bundle.getMessage("PrintChanges"));
@@ -63,7 +63,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     JButton csvChangeButton = new JButton(Bundle.getMessage("CsvChanges"));
     JButton updateButton = new JButton(Bundle.getMessage("Update"));
     JButton resetButton = new JButton(Bundle.getMessage("ResetSwitchLists"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     JComboBox<String> switchListPageComboBox = Setup.getSwitchListPageFormatComboBox();
 
@@ -411,7 +411,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
             JButton button = new JButton(Bundle.getMessage("Add"));
             if (!location.getSwitchListComment().equals(Location.NONE)) {
-                button.setText(Bundle.getMessage("Edit"));
+                button.setText(Bundle.getMessage("ButtonEdit"));
             }
             button.setName(location.getName());
             addCommentButtonAction(button);
@@ -604,7 +604,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         Dimension minScrollerDim = new Dimension(1200, 500);
-        JButton saveButton = new JButton(Bundle.getMessage("Save"));
+        JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
         Location _location;
 
