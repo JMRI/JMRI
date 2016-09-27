@@ -2,7 +2,6 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.GridBagLayout;
-import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -184,7 +183,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
         pManifest.add(pPickup_Comment_TextField);
 
         JPanel pRWE_TextField = new JPanel();
-        pRWE_TextField.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RWE")));
+        pRWE_TextField.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RWELabel")));
         pRWE_TextField.add(rwe_TextField);
         rwe_TextField.setText(TrainManifestHeaderText.getStringHeader_RWE());
         pManifest.add(pRWE_TextField);
