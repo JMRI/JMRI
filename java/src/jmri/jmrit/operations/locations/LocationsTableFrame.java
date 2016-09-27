@@ -47,7 +47,7 @@ public class LocationsTableFrame extends OperationsFrame {
     javax.swing.JRadioButton sortById = new javax.swing.JRadioButton(Bundle.getMessage("Id"));
 
     // major buttons
-    JButton addButton = new JButton(Bundle.getMessage("Add"));
+    JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
 
     public LocationsTableFrame() {
         super(Bundle.getMessage("TitleLocationsTable"));

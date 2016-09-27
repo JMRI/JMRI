@@ -314,7 +314,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                         !_car.getLoadName().equals(CarLoads.instance().getDefaultLoadName())) {
                     op.setText(Bundle.getMessage("X(TrackCustomLoad)"));
                 } else if (rl.isDropAllowed() && rl.isPickUpAllowed()) {
-                    op.setText(Bundle.getMessage("OK"));
+                    op.setText(Bundle.getMessage("ButtonOK"));
                 } else if (rl.isDropAllowed()) {
                     op.setText(Bundle.getMessage("DropOnly"));
                 } else if (rl.isPickUpAllowed()) {

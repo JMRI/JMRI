@@ -48,19 +48,19 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
     JLabel textWeightTons = new JLabel(Bundle.getMessage("WeightTons"));
 
     // major buttons
-    JButton editRoadButton = new JButton(Bundle.getMessage("Edit"));
-    JButton clearRoadNumberButton = new JButton(Bundle.getMessage("Clear"));
-    JButton editTypeButton = new JButton(Bundle.getMessage("Edit"));
-    JButton editColorButton = new JButton(Bundle.getMessage("Edit"));
-    JButton editLengthButton = new JButton(Bundle.getMessage("Edit"));
+    JButton editRoadButton = new JButton(Bundle.getMessage("ButtonEdit"));
+    JButton clearRoadNumberButton = new JButton(Bundle.getMessage("ButtonClear"));
+    JButton editTypeButton = new JButton(Bundle.getMessage("ButtonEdit"));
+    JButton editColorButton = new JButton(Bundle.getMessage("ButtonEdit"));
+    JButton editLengthButton = new JButton(Bundle.getMessage("ButtonEdit"));
     JButton fillWeightButton = new JButton(Bundle.getMessage("Calculate"));
-    JButton editLoadButton = new JButton(Bundle.getMessage("Edit"));
-    JButton editKernelButton = new JButton(Bundle.getMessage("Edit"));
-    JButton editOwnerButton = new JButton(Bundle.getMessage("Edit"));
+    JButton editLoadButton = new JButton(Bundle.getMessage("ButtonEdit"));
+    JButton editKernelButton = new JButton(Bundle.getMessage("ButtonEdit"));
+    JButton editOwnerButton = new JButton(Bundle.getMessage("ButtonEdit"));
 
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
-    JButton deleteButton = new JButton(Bundle.getMessage("Delete"));
-    JButton addButton = new JButton(Bundle.getMessage("Add"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
+    JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
+    JButton addButton = new JButton(Bundle.getMessage("TitleCarAdd")); // have button state item to add
 
     // check boxes
     JCheckBox autoCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
