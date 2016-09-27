@@ -109,6 +109,10 @@ public class GraphPane extends JPanel implements Printable {
     }
 
     protected void drawGraph(Graphics g) {
+        if (!(g instanceof Graphics2D) ) {
+              throw new IllegalArgumentException("Graphics object passed is not the correct type");
+        }
+
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
@@ -269,6 +273,10 @@ public class GraphPane extends JPanel implements Printable {
             return Printable.NO_SUCH_PAGE;
         }
 
+        if (!(g instanceof Graphics2D) ) {
+              throw new IllegalArgumentException("Graphics object passed is not the correct type");
+        }
+           
         Graphics2D g2 = (Graphics2D) g;
         /* User (0,0) is typically outside the imageable area, so we must
          * translate by the X and Y values in the PageFormat to avoid clipping.
