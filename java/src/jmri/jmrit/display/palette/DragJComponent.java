@@ -20,8 +20,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Gives a JComponent the capability to Drag and Drop
  * <P>
+ * Gives a JComponent the capability to Drag and Drop
+ * </P>
  *
  * <hr>
  * This file is part of JMRI.
