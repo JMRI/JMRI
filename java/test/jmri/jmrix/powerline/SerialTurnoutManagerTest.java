@@ -1,6 +1,7 @@
 package jmri.jmrix.powerline;
 
 import jmri.Turnout;
+import jmri.jmrix.powerline.simulator.SpecificSystemConnectionMemo;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,8 +24,14 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     @Override
     @Before
     public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        SpecificSystemConnectionMemo memo = new SpecificSystemConnectionMemo();
         // prepare an interface, register
         nis = new SerialInterfaceScaffold();
+        nis.setAdapterMemo(memo);
+        memo.setTrafficController(nis);
+        memo.setSerialAddress(new SerialAddress(memo));
         // create and register the manager object
         l = new SerialTurnoutManager(nis);
         jmri.InstanceManager.setTurnoutManager(l);
@@ -32,7 +39,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
 
     @Override
     public String getSystemName(int n) {
-        return "PT" + n;
+        return "PTB" + n;
     }
 
     @Test
@@ -58,9 +65,29 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
 
     }
 
+    @Override
+    @Test
+    public void testDefaultSystemName() {
+        // create
+        Turnout t = l.provideTurnout("PTB" + getNumToTest1());
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+
+    @Override
+    @Test
+    public void testUpperLower() {
+        Turnout t = l.provideTurnout("PTB" + getNumToTest2());
+
+        Assert.assertNull(l.getTurnout(t.getSystemName().toLowerCase()));
+    }
+
+
     // The minimal setup for log4J
     @After
     public void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 
