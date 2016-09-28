@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
-    private SerialTrafficControllerScaffold nis = null;
+    private SerialTrafficControlScaffold nis = null;
 
     @Override
     @Before
@@ -28,7 +28,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         jmri.util.JUnitUtil.resetInstanceManager();
         SpecificSystemConnectionMemo memo = new SpecificSystemConnectionMemo();
         // prepare an interface, register
-        nis = new SerialTrafficControllerScaffold();
+        nis = new SerialTrafficControlScaffold();
         nis.setAdapterMemo(memo);
         memo.setTrafficController(nis);
         memo.setSerialAddress(new SerialAddress(memo));
