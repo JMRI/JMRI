@@ -147,7 +147,7 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
         }
         String Identifier = nodeIdentifierField.getText();
         // create the RemoteXBeeDevice for the node.
-        RemoteXBeeDevice remoteDevice = remoteDevice = new RemoteXBeeDevice(xtc.getXBee(),
+        RemoteXBeeDevice remoteDevice = new RemoteXBeeDevice(xtc.getXBee(),
               guid,address,Identifier);
         // get a XBeeNode corresponding to this node address if one exists
         curNode = (XBeeNode) xtc.getNodeFromXBeeDevice(remoteDevice);
