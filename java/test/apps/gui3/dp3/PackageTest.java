@@ -15,6 +15,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007, 2012
  */
-public class PackageTest extends TestCase {
+public class PackageTest {
 
 }
