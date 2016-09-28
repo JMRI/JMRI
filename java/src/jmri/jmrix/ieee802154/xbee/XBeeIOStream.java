@@ -153,7 +153,7 @@ final public class XBeeIOStream extends AbstractPortController {
                    dataArray[i++] = n;
                 }
                 if (log.isDebugEnabled()) {
-                    log.debug("XBee Thread received message " + dataArray);
+                    log.debug("XBee Thread received message " + jmri.util.StringUtil.hexStringFromBytes(dataArray));
                 }
                 try {
                    xtc.getXBee().sendData(node,dataArray);
