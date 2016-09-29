@@ -52,4 +52,15 @@ public class SpecificReplyTest extends TestCase {
         return suite;
     }
 
+    @Override
+    protected void setUp(){
+        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+    }
+
+    protected void tearDown(){
+        jmri.util.JUnitUtil.resetInstanceManager();
+        apps.tests.Log4JFixture.tearDown();
+    }
+
 }

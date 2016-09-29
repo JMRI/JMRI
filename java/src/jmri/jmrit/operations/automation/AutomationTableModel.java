@@ -118,7 +118,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         table.getColumnModel().getColumn(UP_COLUMN).setPreferredWidth(60);
         table.getColumnModel().getColumn(DOWN_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(70);
-        
+
         _frame.loadTableDetails(table);
         // does not use a table sorter
         table.setRowSorter(null);
@@ -225,8 +225,52 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
     }
 
+    // TODO adding synchronized to the following causes thread lock.
+    // See line in propertyChange below:
+    // _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
+    // Stack trace:
+    //    owns: Component$AWTTreeLock  (id=127)   
+    //    waiting for: AutomationTableModel  (id=128) 
+    //    AutomationTableModel.getRowCount() line: 131    
+    //    JTable.getRowCount() line: 2662 
+    //    BasicTableUI.paint(Graphics, JComponent) line: 1766 
+    //    BasicTableUI(ComponentUI).update(Graphics, JComponent) line: 161    
+    //    JTable(JComponent).paintComponent(Graphics) line: 777   
+    //    JTable(JComponent).paint(Graphics) line: 1053   
+    //    JViewport(JComponent).paintChildren(Graphics) line: 886 
+    //    JViewport(JComponent).paint(Graphics) line: 1062    
+    //    JViewport.paint(Graphics) line: 692 
+    //    JViewport(JComponent).paintToOffscreen(Graphics, int, int, int, int, int, int) line: 5223   
+    //    RepaintManager$PaintManager.paintDoubleBuffered(JComponent, Image, Graphics, int, int, int, int) line: 1572 
+    //    RepaintManager$PaintManager.paint(JComponent, JComponent, Graphics, int, int, int, int) line: 1495  
+    //    RepaintManager.paint(JComponent, JComponent, Graphics, int, int, int, int) line: 1265   
+    //    JViewport(JComponent).paintForceDoubleBuffered(Graphics) line: 1089 
+    //    JViewport.paintView(Graphics) line: 1635    
+    //    JViewport.flushViewDirtyRegion(Graphics, Rectangle) line: 1508  
+    //    JViewport.setViewPosition(Point) line: 1093 
+    //    JViewport.scrollRectToVisible(Rectangle) line: 436  
+    //    JTable(JComponent).scrollRectToVisible(Rectangle) line: 3108    
+    //    AutomationTableModel.propertyChange(PropertyChangeEvent) line: 498  
+    //    PropertyChangeSupport.fire(PropertyChangeListener[], PropertyChangeEvent) line: 335 
+    //    PropertyChangeSupport.firePropertyChange(PropertyChangeEvent) line: 327 
+    //    PropertyChangeSupport.firePropertyChange(String, Object, Object) line: 263  
+    //    Automation.setDirtyAndFirePropertyChange(String, Object, Object) line: 666  
+    //    Automation.setCurrentAutomationItem(AutomationItem) line: 279   
+    //    Automation.setNextAutomationItem() line: 243    
+    //    Automation.CheckForActionPropertyChange(PropertyChangeEvent) line: 607  
+    //    Automation.propertyChange(PropertyChangeEvent) line: 646    
+    //    PropertyChangeSupport.fire(PropertyChangeListener[], PropertyChangeEvent) line: 335 
+    //    PropertyChangeSupport.firePropertyChange(PropertyChangeEvent) line: 327 
+    //    PropertyChangeSupport.firePropertyChange(String, Object, Object) line: 263  
+    //    ResetTrainAction(Action).firePropertyChange(String, Object, Object) line: 244   
+    //    ResetTrainAction(Action).finishAction(boolean, Object[]) line: 158  
+    //    ResetTrainAction(Action).finishAction(boolean) line: 128    
+    //    ResetTrainAction.doAction() line: 27    
+    //    Automation$1.run() line: 172    
+    //    Thread.run() line: 745  
+
     @Override
-    public synchronized Object getValueAt(int row, int col) {
+    public Object getValueAt(int row, int col) {
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
@@ -478,8 +522,9 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     // this table listens for changes to a automation and it's car types
+    // TODO removed synchronized from propertyChange, it may cause a thread lock, see _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
     @Override
-    public synchronized void propertyChange(PropertyChangeEvent e) {
+    public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY)
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
@@ -490,6 +535,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
         if (e.getPropertyName().equals(Automation.CURRENT_ITEM_CHANGED_PROPERTY)) {
             int row = _list.indexOf(_automation.getCurrentAutomationItem());
+            // the following line can be responsible for a thread lock
             _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
             fireTableDataChanged();
         }

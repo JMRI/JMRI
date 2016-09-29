@@ -498,7 +498,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     @Override
-    public synchronized void propertyChange(PropertyChangeEvent e) {
+ // removed synchronized from propertyChange, it caused a thread lock, see _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
+    public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change {} old: {} new: {}",
                     e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
@@ -523,6 +524,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 // if there are issues with thread locking here, this needs to
                 // be refactored so the panel holding the table is listening for
                 // this changes so it can instruct the table to scroll
+                // adding "synchronized" to this propertyChange can lock up thread
                 _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
                 fireTableRowsUpdated(row, row);
             }
