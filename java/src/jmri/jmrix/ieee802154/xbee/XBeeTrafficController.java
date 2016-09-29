@@ -4,6 +4,7 @@ import com.digi.xbee.api.models.ATCommandResponse;
 import com.digi.xbee.api.XBeeDevice;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.exceptions.XBeeException;
+import com.digi.xbee.api.exceptions.TimeoutException;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.packet.XBeePacket;
 import com.digi.xbee.api.listeners.IPacketReceiveListener;
@@ -72,24 +73,13 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
                xbee.addModemStatusListener(this);
                xbee.addDataListener(this);
 
-               // and start threads
-               xmtThread = new Thread(xmtRunnable = new Runnable() {
-                   public void run() {
-                       try {
-                           transmitLoop();
-                       } catch (Throwable e) {
-                           log.error("Transmit thread terminated prematurely by: " + e.toString(), e);
-                       }
-                   }
-               });
-               xmtThread.setName("Transmit");
-               xmtThread.start();
-
             } else {
                throw new java.lang.IllegalArgumentException("Wrong adapter type specified when connecting to the port.");
             }
-        } catch (Exception e) {
-            log.error("Failed to start up communications. Error was {} cause {} ",e,e.getCause());
+        } catch (TimeoutException te) {
+            log.error("Timeout durring communication with Local XBee on communication start up. Error was {} cause {} ",te,te.getCause());
+        } catch (XBeeException xbe ) {
+            log.error("Exception durring XBee communication start up. Error was {} cause {} ",xbe,xbe.getCause());
         }
     }
 
