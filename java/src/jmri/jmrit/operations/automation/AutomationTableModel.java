@@ -62,7 +62,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     AutomationTableFrame _frame;
     boolean _matchMode = false;
 
-    private synchronized void updateList() {
+    private void updateList() {
         if (_automation == null) {
             return;
         }
@@ -77,7 +77,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
 
     List<AutomationItem> _list = new ArrayList<AutomationItem>();
 
-    protected synchronized void initTable(AutomationTableFrame frame, JTable table, Automation automation) {
+    protected void initTable(AutomationTableFrame frame, JTable table, Automation automation) {
         _automation = automation;
         _table = table;
         _frame = frame;
@@ -127,7 +127,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     @Override
-    public synchronized int getRowCount() {
+    public int getRowCount() {
         return _list.size();
     }
 
@@ -201,7 +201,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     @Override
-    public synchronized boolean isCellEditable(int row, int col) {
+    public boolean isCellEditable(int row, int col) {
         switch (col) {
             case ACTION_COLUMN:
             case TRAIN_COLUMN:
@@ -312,7 +312,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     @Override
-    public synchronized void setValueAt(Object value, int row, int col) {
+    public void setValueAt(Object value, int row, int col) {
         if (value == null) {
             log.debug("Warning automation table row {} still in edit", row);
             return;
@@ -551,13 +551,13 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
     }
 
-    private synchronized void removePropertyChangeAutomationItems() {
+    private void removePropertyChangeAutomationItems() {
         for (AutomationItem item : _list) {
             item.removePropertyChangeListener(this);
         }
     }
 
-    public synchronized void dispose() {
+    public void dispose() {
         if (_automation != null) {
             removePropertyChangeAutomationItems();
             _automation.removePropertyChangeListener(this);
