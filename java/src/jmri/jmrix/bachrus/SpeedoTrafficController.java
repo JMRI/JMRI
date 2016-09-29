@@ -177,6 +177,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
                         this.reply.setElement(i, char1);
 
                     } catch (Exception e) {
+                        log.debug("{} Exception handling reply cause {}",e,e.getCause());
                     }
                     if (endReply(this.reply)) {
                         sendreply();

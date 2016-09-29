@@ -884,6 +884,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     acc = acc * filterLength[3] / filterLength[4];
                 }
                 break;
+            default:
+                log.debug("range {} unsupported, range unchanged.",range);
         }
     }
 
