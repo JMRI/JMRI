@@ -10,8 +10,7 @@ import java.io.DataOutputStream;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  * @author	Paul Bender Copyright (C) 2004,2010
- * @version	$Revision$
- */
+  */
 public abstract class XNetSimulatorPortController extends jmri.jmrix.AbstractSerialPortController implements XNetPortController {
 
     public XNetSimulatorPortController() {

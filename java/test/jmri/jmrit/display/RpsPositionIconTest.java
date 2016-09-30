@@ -13,8 +13,7 @@ import junit.framework.TestSuite;
  * Tests for the RpsIcon class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision$
- */
+  */
 public class RpsPositionIconTest extends jmri.util.SwingTestCase {
 
     RpsPositionIcon rpsIcon;

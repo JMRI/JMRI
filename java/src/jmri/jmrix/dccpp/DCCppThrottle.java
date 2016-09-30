@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender (C) 2002-2010
  * @author Giorgio Terdina (C) 2007
  * @author Mark Underwood (C) 2015
- * @version $Revision$
  *
  * Based on XNetThrottle by Paul Bender and Giorgio Terdina
  */

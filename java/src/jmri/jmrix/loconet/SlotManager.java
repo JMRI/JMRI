@@ -42,7 +42,6 @@ import org.slf4j.LoggerFactory;
  * definitely can't.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001, 2003
- * @version $Revision$
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 

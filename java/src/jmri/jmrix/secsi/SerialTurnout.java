@@ -17,8 +17,7 @@ import org.slf4j.LoggerFactory;
  * Description:	extend jmri.AbstractTurnout for SECSI serial layouts
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007
- * @version	$Revision$
- */
+  */
 public class SerialTurnout extends AbstractTurnout {
 
     /**

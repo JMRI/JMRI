@@ -12,8 +12,7 @@ import junit.framework.TestSuite;
  * Description:
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class LinkingLabelTest extends jmri.util.SwingTestCase {
 
     LinkingLabel to = null;

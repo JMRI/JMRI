@@ -19,8 +19,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the rps.RpsTrackingFrame class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision$
- */
+  */
 public class RpsTrackingFrameTest extends TestCase {
 
     public void testShow() {

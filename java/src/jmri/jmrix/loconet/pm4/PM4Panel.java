@@ -26,8 +26,7 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2004, 2007, 2010
- * @version	$Revision$
- */
+  */
 public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
     /**

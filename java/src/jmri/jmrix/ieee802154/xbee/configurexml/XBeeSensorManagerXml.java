@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Ken Cameron Copyright: Copyright (c) 2014
- * @version $Revision$
  */
 public class XBeeSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 

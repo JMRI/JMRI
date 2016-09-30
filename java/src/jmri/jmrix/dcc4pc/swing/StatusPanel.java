@@ -15,7 +15,6 @@ import jmri.jmrix.dcc4pc.Dcc4PcTrafficController;
  * Panel to show DCC4PC status
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 17977 $
  */
 public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements Dcc4PcListener, Dcc4PcPanelInterface {
 

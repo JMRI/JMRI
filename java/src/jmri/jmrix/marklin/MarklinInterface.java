@@ -6,7 +6,6 @@ package jmri.jmrix.marklin;
  * station.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision: 17977 $
  */
 public interface MarklinInterface {
 

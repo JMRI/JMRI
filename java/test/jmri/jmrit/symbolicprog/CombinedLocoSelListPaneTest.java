@@ -9,7 +9,6 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-// Revision: $Revision$
 public class CombinedLocoSelListPaneTest extends TestCase {
 
     public CombinedLocoSelListPaneTest(String s) {

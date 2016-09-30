@@ -6,8 +6,7 @@ package jmri.jmrix.rps;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version	$Revision$
- */
+  */
 public interface ReadingListener {
 
     public void notify(Reading r);

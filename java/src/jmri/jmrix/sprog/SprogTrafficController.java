@@ -24,8 +24,7 @@ import org.slf4j.LoggerFactory;
  * Removed Runnable implementation and methods for it
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public class SprogTrafficController implements SprogInterface, SerialPortEventListener {
 
     private SprogReply reply = new SprogReply();

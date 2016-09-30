@@ -25,7 +25,6 @@ package jmri.jmrix.loconet;
  * @author	Bob Jacobsen Copyright (C) 2001
  * @see jmri.jmrix.loconet.LocoNetListener
  * @see jmri.jmrix.loconet.LnTrafficController
- * @version $Revision$
  */
 public interface LocoNetInterface {
 

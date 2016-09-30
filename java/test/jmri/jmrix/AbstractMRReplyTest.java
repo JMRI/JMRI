@@ -9,8 +9,7 @@ import junit.framework.TestSuite;
  * Tests for AbstractMRReply
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class AbstractMRReplyTest extends TestCase {
 
     AbstractMRReply testMsg;

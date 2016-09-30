@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user to place a group of cars on the layout
  *
  * @author Dan Boudreau Copyright (C) 2011, 2013
- * @version $Revision$
  */
 public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChangeListener {
 

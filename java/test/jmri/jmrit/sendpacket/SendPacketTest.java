@@ -9,8 +9,7 @@ import junit.framework.TestSuite;
  * Tests for classes in the jmri.jmrit.sendpacket package
  *
  * @author	Bob Jacobsen Copyright 2003
- * @version	$Revision$
- */
+  */
 public class SendPacketTest extends TestCase {
 
     public void testFrameCreate() {

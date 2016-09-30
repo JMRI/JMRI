@@ -7,8 +7,7 @@ package jmri.jmrix.dccpp;
  *
  * @author	Paul Bender Copyright (C) 2010
  * @author      Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- *
+  *
  * Based on XNetPortController by Paul Bender
  */
 public interface DCCppPortController extends jmri.jmrix.PortAdapter {

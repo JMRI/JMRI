@@ -2,7 +2,6 @@ package jmri.jmrit.display.palette;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -169,10 +168,10 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         return panel;
     }
 
+    /* Called by Palettte's TextItemPanel i.e. make a new panel item to drag */
     protected void initDecoratorPanel(DragDecoratorLabel sample) {
         sample.setDisplayLevel(Editor.LABELS);
         sample.setBackground(_editor.getTargetPanel().getBackground());
-        _previewPanel.add(sample);
         _util = sample.getPopupUtility();
         _sample.put("Text", sample);
         this.add(makeTextPanel("Text", sample, TEXT_FONT, true));
@@ -186,10 +185,10 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         this.add(_previewPanel);
         updateSamples();
     }
-    
+
+    /* Called by Editor's TextAttrDialog - i.e. update a panel item from menu */
     public void initDecoratorPanel(Positionable pos) {
         Positionable item = pos.deepClone();		// copy of PositionableLabel being edited
-        String text = Bundle.getMessage("sample");
         _util = item.getPopupUtility();
 
         if (pos instanceof SensorIcon && !((SensorIcon)pos).isIcon()) {
@@ -232,7 +231,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 doPopupUtility("Inconsistent", INCONSISTENT_FONT, sample, _util, true); // NOI18N
             }
         } else { // not a SensorIcon
-            PositionableLabel sample = new PositionableLabel(text, _editor);
+            PositionableLabel sample = new PositionableLabel("", _editor);
             sample.setForeground(pos.getForeground());
             sample.setBackground(pos.getBackground());
             sample.setOpaque(_util.hasBackground());
@@ -262,7 +261,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             doPopupUtility("Text", TEXT_FONT, sample, _util, addtextField);
         }
         makeFontPanels();
-        item.setVisible(false);		// otherwise leaves traces for PositionableJPanels
+//        item.setVisible(false);		// otherwise leaves traces for PositionableJPanels
 
         _chooser.getSelectionModel().addChangeListener(this);
         _chooser.setPreviewPanel(new JPanel());
@@ -483,6 +482,8 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             sam.setFont(font);
             util.setFixedWidth(_util.getFixedWidth());
             util.setFixedHeight(_util.getFixedHeight());
+            util.setMargin(mar);
+            util.setBorderSize(bor);
             Border borderMargin;
             if (sam.isOpaque()) {
                 borderMargin = new LineBorder(sam.getBackground(), mar);
@@ -502,7 +503,8 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     sam.setHorizontalAlignment(JLabel.CENTER);
             }
             sam.updateSize();
-            sam.setPreferredSize(new Dimension(sam.maxWidth(), sam.maxHeight()));
+            sam.setPreferredSize(sam.getSize());
+            sam.repaint();
         }
         if (_dialog!=null) {
             _dialog.pack();            
@@ -540,7 +542,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         return _util;
     }
 
-    public void getText(Positionable pos) {
+    public void setAttributes(Positionable pos) {
         if (pos instanceof SensorIcon  && !((SensorIcon)pos).isIcon()) {
             SensorIcon icon = (SensorIcon) pos;
             PositionableLabel sample = _sample.get("Active");

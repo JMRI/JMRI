@@ -6,7 +6,6 @@ package jmri.jmrix.tams;
  * Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 public abstract class TamsPortController extends jmri.jmrix.AbstractSerialPortController {
 

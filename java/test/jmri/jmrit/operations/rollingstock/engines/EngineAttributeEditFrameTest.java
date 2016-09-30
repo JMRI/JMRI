@@ -16,7 +16,7 @@ import junit.framework.TestSuite;
  * Tests for the Operations Engines GUI class
  *
  * @author	Dan Boudreau Copyright (C) 2010
- * @version $Revision: 28746 $
+ * 
  */
 public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
 

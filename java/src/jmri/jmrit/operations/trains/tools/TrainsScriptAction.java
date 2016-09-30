@@ -11,7 +11,6 @@ import jmri.jmrit.operations.trains.TrainsTableFrame;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2011
- * @version $Revision$
  */
 public class TrainsScriptAction extends AbstractAction {
 

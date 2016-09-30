@@ -14,8 +14,7 @@ import org.jdom2.Element;
  * Tests for DecoderIndexFile class
  *
  * @author	Bob Jacobsen, Copyright (c) 2001, 2002
- * @version	$Revision$
- */
+  */
 public class DecoderIndexFileTest extends TestCase {
 
     public void testLoading() {

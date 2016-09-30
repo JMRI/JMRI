@@ -13,7 +13,6 @@ import jmri.util.StringUtil;
  * @author	Bob Jacobsen Copyright (C) 2002, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
- * @version $Revision$
  */
 public class SpecificReply extends SerialReply {
 

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.TrainIcon objects.
  *
  * @author mstevetodd Copyright: Copyright (c) 2012
- * @version $Revision: $
+ * 
  */
 public class TrainIconXml extends LocoIconXml {
 

@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.jmrix.loconet.SlotManager
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 19121 $
+ * 
  */
 public class UhlenbrockLnThrottleManager extends LnThrottleManager implements ThrottleManager, SlotListener {
 

@@ -38,7 +38,7 @@ public class PackageTest extends TestCase {
         suite.addTest(OlcbProgrammerManagerTest.suite());
         suite.addTest(OlcbSensorTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(OlcbSystemConnectionMemoTest.class));
-        suite.addTest(OlcbTurnoutManagerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OlcbTurnoutManagerTest.class));
         suite.addTest(OlcbTurnoutTest.suite());
         suite.addTest(OlcbThrottleTest.suite());
         suite.addTest(OlcbThrottleManagerTest.suite());

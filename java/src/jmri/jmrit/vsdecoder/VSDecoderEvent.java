@@ -16,7 +16,7 @@ package jmri.jmrit.vsdecoder;
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision: 18512 $
+ * 
  */
 import java.util.EventObject;
 

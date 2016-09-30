@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * Frame for editing a car attribute.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2014
- * @version $Revision$
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -40,7 +39,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 
     // major buttons
     JButton addButton = new JButton(Bundle.getMessage("Add"));
-    JButton deleteButton = new JButton(Bundle.getMessage("Delete"));
+    JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
     JButton replaceButton = new JButton(Bundle.getMessage("Replace"));
 
     // combo box
@@ -105,7 +104,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        toolMenu.add(new CarAttributeAction(Bundle.getMessage("CarQuanity"), this));
+        toolMenu.add(new CarAttributeAction(Bundle.getMessage("CarQuantity"), this));
         toolMenu.add(new CarDeleteAttributeAction(Bundle.getMessage("DeleteUnusedAttributes"), this));
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);

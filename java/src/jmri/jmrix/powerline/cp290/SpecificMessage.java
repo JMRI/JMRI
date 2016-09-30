@@ -17,7 +17,6 @@ import jmri.jmrix.powerline.X10Sequence;
  * </ul>
  *
  * @author Bob Jacobsen Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version $Revision$
  */
 public class SpecificMessage extends SerialMessage {
     // is this logically an abstract class?

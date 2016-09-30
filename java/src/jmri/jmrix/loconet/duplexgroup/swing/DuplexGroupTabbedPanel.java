@@ -1,4 +1,3 @@
-// DuplexGroupTabbedPanel.java
 package jmri.jmrix.loconet.duplexgroup.swing;
 
 import java.util.ResourceBundle;
@@ -16,7 +15,6 @@ import jmri.util.JmriJFrame;
  * clarity, only the term UR92 is used herein.
  *
  * @author B. Milhaupt, Copyright 2011
- * @version	$Revision: 1.0 $
  */
 public class DuplexGroupTabbedPanel extends LnPanel {
 

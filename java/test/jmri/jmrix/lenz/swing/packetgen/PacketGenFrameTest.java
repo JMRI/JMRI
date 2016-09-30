@@ -11,8 +11,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.lenz.packetgen.PacketGenFrame class
  *
  * @author	Bob Jacobsen Copyright (c) 2001, 2002
- * @version	$Revision$
- */
+  */
 public class PacketGenFrameTest extends TestCase {
 
     public void testFrameCreate() {
