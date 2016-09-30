@@ -105,6 +105,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
                 log.debug("No element to read");
             }
             this.isDirty = false;
+            this.restartRequired = false;
             this.setInitialized(profile, true);
             if (exception != null) {
                 throw exception;

@@ -17,10 +17,14 @@ public class SerialTurnoutTest extends AbstractTurnoutTest {
     private SerialTrafficControlScaffold tc = null;
 
     public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
         // prepare an interface
         memo = new SpecificSystemConnectionMemo();
         tc = new SerialTrafficControlScaffold();
+        tc.setAdapterMemo(memo);
         memo.setTrafficController(tc);
+        memo.setSerialAddress(new SerialAddress(memo));
         t = new SerialTurnout("PTA4", tc, "tA4");
     }
 

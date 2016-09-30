@@ -498,7 +498,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
         Train t = TrainManager.instance().newTrain("TestRouteStatusTrain");
         t.setRoute(r);
         // note that the status strings are defined in JmritOperationsRoutesBundle.properties
-        Assert.assertEquals("Route status okay", "Okay", r.getStatus());
+        Assert.assertEquals("Route status okay", "OK", r.getStatus());
     }
 
     /**

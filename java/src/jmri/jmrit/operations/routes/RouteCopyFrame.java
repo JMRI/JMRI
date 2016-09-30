@@ -34,7 +34,7 @@ public class RouteCopyFrame extends OperationsFrame {
     javax.swing.JCheckBox invertCheckBox = new javax.swing.JCheckBox(Bundle.getMessage("Invert"));
 
     // major buttons
-    javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("Copy"));
+    javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("ButtonCopy"));
 
     // combo boxes
     JComboBox<Route> routeBox = RouteManager.instance().getComboBox();

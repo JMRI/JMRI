@@ -33,7 +33,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.easydcc.EasyDccTest");
 
         suite.addTest(jmri.jmrix.easydcc.EasyDccTurnoutTest.suite());
-        suite.addTest(jmri.jmrix.easydcc.EasyDccTurnoutManagerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EasyDccTurnoutManagerTest.class));
         suite.addTest(jmri.jmrix.easydcc.EasyDccProgrammerTest.suite());
         suite.addTest(jmri.jmrix.easydcc.EasyDccTrafficControllerTest.suite());
         suite.addTest(jmri.jmrix.easydcc.EasyDccMessageTest.suite());
