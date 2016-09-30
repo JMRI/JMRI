@@ -716,7 +716,7 @@ public class TrainBuilder extends TrainCommon {
 
     private void showTrainRequirements() {
         addLine(_buildReport, ONE, BLANK_LINE); // add line
-        addLine(_buildReport, ONE, Bundle.getMessage("TrainRequrements"));
+        addLine(_buildReport, ONE, Bundle.getMessage("TrainRequirements"));
         if (_train.getNumberEngines().equals("0")) {
             addLine(_buildReport, ONE, Bundle.getMessage("buildTrainReq0Engine"));
         } else if (_train.getNumberEngines().equals("1")) {
@@ -1548,7 +1548,7 @@ public class TrainBuilder extends TrainCommon {
             if (car.getTrack().getTrackType().equals(Track.INTERCHANGE)) {
                 // don't service a car at interchange and has been dropped off by this train
                 if (car.getTrack().getPickupOption().equals(Track.ANY) &&
-                        car.getSavedRouteId().equals(_train.getRoute().getId())) {
+                        car.getLastRouteId().equals(_train.getRoute().getId())) {
                     addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeCarDropByTrain"),
                             new Object[]{car.toString(), _train.getRoute().getName(), car.getLocationName(),
                                     car.getTrackName()}));

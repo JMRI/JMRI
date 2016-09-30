@@ -16,8 +16,7 @@ import org.jdom2.Element;
  * Test PaneProgFrame
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class PaneProgFrameTest extends TestCase {
 
     // test creating a pane in config file

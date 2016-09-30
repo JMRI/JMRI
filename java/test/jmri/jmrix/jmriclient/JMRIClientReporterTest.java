@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.jmriclient.JMRIClientReporter class
  *
  * @author	Bob Jacobsen
- * @version $Revision: 17977 $
  */
 public class JMRIClientReporterTest extends TestCase {
 

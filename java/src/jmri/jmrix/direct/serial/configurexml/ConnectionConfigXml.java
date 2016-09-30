@@ -15,7 +15,6 @@ import jmri.jmrix.direct.serial.SerialDriverAdapter;
  * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2004
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 

@@ -10,8 +10,7 @@ import jmri.Sensor;
  * the sensor number without padding.
  *
  * @author	Paul Bender Copyright (C) 2010
- * @version	$Revision$
- */
+  */
 public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager {
 
     private JMRIClientSystemConnectionMemo memo = null;

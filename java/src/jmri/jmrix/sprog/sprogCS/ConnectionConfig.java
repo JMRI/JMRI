@@ -8,8 +8,7 @@ import jmri.util.SystemType;
  * SerialDriverAdapter object.
  *
  * @author Andrew Crosland Copyright (C) 2006
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**

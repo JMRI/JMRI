@@ -37,7 +37,7 @@ import org.junit.Assert;
  * Common setup and tear down for operation tests.
  *
  * @author	Dan Boudreau Copyright (C) 2015
- * @version $Revision: 28746 $
+ * 
  */
 public class OperationsSwingTestCase extends jmri.util.SwingTestCase {
 

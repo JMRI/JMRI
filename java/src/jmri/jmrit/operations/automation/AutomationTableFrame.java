@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of a automation
  *
  * @author Dan Boudreau Copyright (C) 2016
- * @version $Revision$
  */
 public class AutomationTableFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 

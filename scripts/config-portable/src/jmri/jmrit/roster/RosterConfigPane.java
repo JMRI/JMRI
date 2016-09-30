@@ -1,5 +1,3 @@
-// RosterConfigPane.java
-
 package jmri.jmrit.roster;
 
 import java.awt.FlowLayout;
@@ -15,7 +13,6 @@ import javax.swing.JTextField;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2007
  * @author      Matthew Harris  Copyright (C) 2008, 2010
- * @version	$Revision$
  */
 public class RosterConfigPane extends JPanel {
 

@@ -17,8 +17,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Andrew Crosland Copyright (C) 2008
- * @version	$Revision$
- */
+  */
 public class GridConnectMessage extends AbstractMRMessage {
 
     // Creates a new instance of GridConnectMessage

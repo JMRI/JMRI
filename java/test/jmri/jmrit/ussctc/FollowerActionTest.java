@@ -8,8 +8,7 @@ import junit.framework.TestSuite;
  * Tests for classes in the jmri.jmrit.ussctc.FollowerAction class
  *
  * @author	Bob Jacobsen Copyright 2003, 2007
- * @version	$Revision$
- */
+  */
 public class FollowerActionTest extends TestCase {
 
     public void testFrameCreate() {

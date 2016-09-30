@@ -15,7 +15,6 @@ import jmri.ProgrammerManager;
  * @author	Bob Jacobsen Copyright (C) 2010 copied from NCE into Powerline for
  * multiple connections by
  * @author	Ken Cameron Copyright (C) 2011
- * @version $Revision$
  */
 public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 

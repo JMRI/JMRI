@@ -1,9 +1,16 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import jmri.Turnout;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.modules.junit4.PowerMockRunner;
+
+import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
+import org.powermock.core.classloader.annotations.MockPolicy;
+@MockPolicy(Slf4jMockPolicy.class)
 
 /**
  * XBeeTurnoutManagerTest.java
@@ -11,44 +18,65 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeTurnoutManager
  * class
  *
- * @author	Paul Bender
+ * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class XBeeTurnoutManagerTest extends TestCase {
+@RunWith(PowerMockRunner.class)
+public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
-    XBeeTrafficController tc = new XBeeTrafficController() {
-        public void setInstance() {
-        }
-    };
+    XBeeTrafficController tc = null;
 
+    @Override
+    public String getSystemName(int i){
+       return "ABCT2:" +i;
+    }
+
+    @Test
     public void testCtor() {
-        XBeeTurnoutManager m = new XBeeTurnoutManager(tc, "ABC");
-        Assert.assertNotNull("exists", m);
+        Assert.assertNotNull("exists", l);
     }
 
-    // from here down is testing infrastructure
-    public XBeeTurnoutManagerTest(String s) {
-        super(s);
+    @Override
+    @Test
+    public void testDefaultSystemName() {
+        // create
+        Turnout t = l.provideTurnout("ABCT2:" + getNumToTest1());
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XBeeTurnoutManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Override
+    @Test(expected=IllegalArgumentException.class)
+    public void testProvideFailure() {
+        Turnout t = l.provideTurnout("");
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XBeeTurnoutManagerTest.class);
-        return suite;
+
+    @Override
+    @Test
+    public void testUpperLower() {
+        Turnout t = l.provideTurnout("ABCT2:" + getNumToTest2());
+
+        Assert.assertNull(l.getTurnout(t.getSystemName().toLowerCase()));
     }
+
 
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Override
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.resetInstanceManager();
+        XBeeTrafficController tc = new XBeeInterfaceScaffold();
+        XBeeConnectionMemo m = new XBeeConnectionMemo();
+        m.setSystemPrefix("ABC");
+        tc.setAdapterMemo(m);
+        l = new XBeeTurnoutManager(tc, "ABC");
+        m.setTurnoutManager(l);
     }
 
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
 }

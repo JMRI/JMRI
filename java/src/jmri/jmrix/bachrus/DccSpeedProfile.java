@@ -23,8 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Andrew Crosland Copyright (C) 2010
  * @author	Dennis Miller Copyright (C) 2015
- * @version	$Revision$
- */
+  */
 public class DccSpeedProfile {
 
     protected int _length;

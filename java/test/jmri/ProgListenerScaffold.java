@@ -17,7 +17,6 @@ package jmri;
  * <P>
  * @see jmri.Programmer
  * @author	Paul Bender Copyright (C) 2013
- * @version	$Revision: 17977 $
  */
 public class ProgListenerScaffold implements ProgListener {
 

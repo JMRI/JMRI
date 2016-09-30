@@ -140,7 +140,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
             case ACTIONCOLUMN:
                 return Bundle.getMessage("Action");
             case EDITCOLUMN:
-                return Bundle.getMessage("Edit"); // edit column
+                return Bundle.getMessage("ButtonEdit"); // titles above all columns
             default:
                 return "unknown"; // NOI18N
         }
@@ -207,7 +207,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
             case ACTIONCOLUMN:
                 return Bundle.getMessage("Yardmaster");
             case EDITCOLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit");
             default:
                 return "unknown " + col; // NOI18N
         }

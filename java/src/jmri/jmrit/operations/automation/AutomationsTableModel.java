@@ -136,9 +136,9 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
             case RUN_COLUMN:
                 return Bundle.getMessage("Run");
             case EDIT_COLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit");
             case DELETE_COLUMN:
-                return Bundle.getMessage("Delete");
+                return Bundle.getMessage("ButtonDelete");
             default:
                 return "unknown"; // NOI18N
         }
@@ -208,9 +208,9 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
                 else
                     return Bundle.getMessage("Resume");
             case EDIT_COLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit");
             case DELETE_COLUMN:
-                return Bundle.getMessage("Delete");
+                return Bundle.getMessage("ButtonDelete");
             default:
                 return "unknown " + col; // NOI18N
         }

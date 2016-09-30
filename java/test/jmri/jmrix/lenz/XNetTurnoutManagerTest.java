@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,18 +18,21 @@ import org.slf4j.LoggerFactory;
  */
 public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
+    @Override
     public String getSystemName(int i) {
         return "XT" + i;
     }
 
     XNetInterfaceScaffold lnis;
 
+    @Test
     public void testMisses() {
         // try to get nonexistant turnouts
         Assert.assertTrue(null == l.getByUserName("foo"));
         Assert.assertTrue(null == l.getBySystemName("bar"));
     }
 
+    @Test
     public void testXNetMessages() {
         // send messages for 21, 22
         // notify that somebody else changed it...
@@ -58,6 +62,7 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertEquals("system name list", testList, l.getSystemNameList());
     }
 
+    @Test
     public void testAsAbstractFactory() {
         // create and register the manager object
         XNetTurnoutManager l = new XNetTurnoutManager(lnis, "X");
@@ -86,41 +91,25 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     }
 
+    @Test
     public void testGetSystemPrefix(){
         Assert.assertEquals("prefix","X",l.getSystemPrefix());
     }
 
+    @Test
     public void testAllowMultipleAdditions(){
         Assert.assertTrue(l.allowMultipleAdditions("foo"));
     }
 
-    // from here down is testing infrastructure
-    public XNetTurnoutManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XNetTurnoutManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XNetTurnoutManagerTest.class);
-        return suite;
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown(){
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
-        super.tearDown();
     }
 
     @Override
-    public void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         // prepare an interface, register

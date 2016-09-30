@@ -4,7 +4,7 @@ package jmri.jmrit.operations.automation;
  * A convenient place to access operations xml element and attribute names.
  *
  * @author Daniel Boudreau Copyright (C) 2016
- * @version $Revision: 22156 $
+ * 
  *
  */
 public class Xml {

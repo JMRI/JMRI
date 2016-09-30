@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2011, 2013
- * @version $Revision: 17977 $
  */
 public class TrainCopyFrame extends OperationsFrame {
 
@@ -33,7 +32,7 @@ public class TrainCopyFrame extends OperationsFrame {
     javax.swing.JTextField trainNameTextField = new javax.swing.JTextField(Control.max_len_string_train_name);
 
     // major buttons
-    javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("Copy"));
+    javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("ButtonCopy"));
 
     // combo boxes
     JComboBox<Train> trainBox = TrainManager.instance().getTrainComboBox();

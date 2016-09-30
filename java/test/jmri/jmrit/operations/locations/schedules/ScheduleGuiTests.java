@@ -1,27 +1,57 @@
-//ScheduleTableFrameTest.java
 package jmri.jmrit.operations.locations.schedules;
 
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.locations.schedules.SchedulesTableFrame;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
- * Tests for the Operations Locations GUI class
+ * Tests for the Operations Schedules class
  *
- * @author	Dan Boudreau Copyright (C) 2009
+ * @author Dan Boudreau Copyright (C) 2016
  */
-public class ScheduleTableFrameTest extends OperationsSwingTestCase {
+public class ScheduleGuiTests extends OperationsSwingTestCase {
 
-    final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
+    public void testScheduleCopyFrame() {
+        ScheduleCopyFrame f = new ScheduleCopyFrame();
+        Assert.assertNotNull(f);
 
-    public void testScheduleTableFrame() {
+        // TODO improve test
+        f.dispose();
+    }
+
+    public void testScheduleOptionsFrame() {
+        LocationManager lManager = LocationManager.instance();
+        Track track = lManager.getLocationByName("Test Loc E").getTrackByName("Test Track", null);
+        ScheduleManager sManager = ScheduleManager.instance();
+        Schedule schedule = sManager.newSchedule("test schedule");
+        ScheduleEditFrame f = new ScheduleEditFrame(schedule, track);
+        Assert.assertNotNull(f);
+
+        // TODO improve test
+
+        ScheduleOptionsFrame sf = new ScheduleOptionsFrame(f);
+        Assert.assertNotNull(sf);
+        sf.dispose();
+        f.dispose();
+    }
+
+    public void testSchedulesByLoadFrame() {
+        SchedulesByLoadFrame f = new SchedulesByLoadFrame();
+        Assert.assertNotNull(f);
+
+        // TODO improve test
+        f.dispose();
+    }
+
+    public void testSchedulesTableFrame() {
         SchedulesTableFrame f = new SchedulesTableFrame();
         Assert.assertNotNull(f);
+
+        // TODO improve test
         f.dispose();
     }
 
@@ -29,7 +59,7 @@ public class ScheduleTableFrameTest extends OperationsSwingTestCase {
         // create 5 locations
         LocationManager lManager = LocationManager.instance();
         Location l1 = lManager.newLocation("Test Loc E");
-        l1.setLength(1001);
+        l1.addTrack("Test Track", Track.SPUR);
         Location l2 = lManager.newLocation("Test Loc D");
         l2.setLength(1002);
         Location l3 = lManager.newLocation("Test Loc C");
@@ -49,19 +79,19 @@ public class ScheduleTableFrameTest extends OperationsSwingTestCase {
         loadLocations();
     }
 
-    public ScheduleTableFrameTest(String s) {
+    public ScheduleGuiTests(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", ScheduleTableFrameTest.class.getName()};
+        String[] testCaseName = {"-noloading", ScheduleGuiTests.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(ScheduleTableFrameTest.class);
+        TestSuite suite = new TestSuite(ScheduleGuiTests.class);
         return suite;
     }
 

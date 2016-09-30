@@ -10,7 +10,7 @@ import jmri.jmrit.operations.locations.Location;
  * Opens the location track blocking order window.
  *
  * @author Daniel Boudreau Copyright (C) 2015
- * @version $Revision: 28746 $
+ * 
  */
 public class LocationTrackBlockingOrderAction extends AbstractAction {
 

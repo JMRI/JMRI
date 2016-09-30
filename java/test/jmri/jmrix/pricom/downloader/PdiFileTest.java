@@ -9,8 +9,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the PdiFile class
  *
  * @author	Bob Jacobsen Copyright 2005
- * @version	$Revision$
- */
+  */
 public class PdiFileTest extends TestCase {
 
     public void testCreate() {

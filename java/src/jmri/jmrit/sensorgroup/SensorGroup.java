@@ -17,8 +17,7 @@ import org.slf4j.LoggerFactory;
  * Sensor groups are implemented by (groups) of Routes, not by any other object.
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version	$Revision$
- */
+  */
 public class SensorGroup {
 
     /**

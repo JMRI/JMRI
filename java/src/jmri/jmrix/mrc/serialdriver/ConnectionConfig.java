@@ -6,8 +6,7 @@ package jmri.jmrix.mrc.serialdriver;
  * connection via a MRC SerialDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**

@@ -12,8 +12,7 @@ import org.slf4j.LoggerFactory;
  * Command Station Type.
  *
  * @author	Paul Bender Copyright (C) 2003
- * @version	$Revision$
- */
+  */
 public class LI100XNetInitializationManager extends AbstractXNetInitializationManager {
 
     public LI100XNetInitializationManager(XNetSystemConnectionMemo memo) {

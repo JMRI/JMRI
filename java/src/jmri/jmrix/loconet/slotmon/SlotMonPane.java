@@ -20,8 +20,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  * separately.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
 
     /**

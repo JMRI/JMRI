@@ -7,8 +7,7 @@ package jmri.jmrix.lenz.li101;
  * This uses the {@link LI101Adapter} class to do the actual connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @version	$Revision$
- *
+  *
  * @see LI101Adapter
  */
 public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig {

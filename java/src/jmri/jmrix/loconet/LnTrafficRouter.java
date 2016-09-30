@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * be done without traffic over the connection.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version $Revision$
  *
  */
 public class LnTrafficRouter extends LnTrafficController implements LocoNetListener {

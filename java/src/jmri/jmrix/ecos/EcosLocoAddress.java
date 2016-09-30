@@ -11,7 +11,6 @@ import jmri.jmrit.roster.RosterEntry;
  * Stores all the loco information from the Ecos into JMRI
  *
  * @author Kevin Dickerson
- * @version $Revision$
  */
 public class EcosLocoAddress implements jmri.LocoAddress {
 

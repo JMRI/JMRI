@@ -8,7 +8,7 @@ import javax.swing.AbstractAction;
  * Export trains to a CSV file
  *
  * @author Dan Boudreau Copyright (C) 2015
- * @version $Revision: 28746 $
+ * 
  */
 public class ExportTrainRosterAction extends AbstractAction {
 

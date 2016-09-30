@@ -9,8 +9,7 @@ import java.io.DataOutputStream;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author	Kevin Dickerson Copyright (C) 2014
- * @version	$Revision$
- */
+  */
 public abstract class MrcPortController extends jmri.jmrix.AbstractSerialPortController {
 
     // base class. Implementations will provide InputStream and OutputStream

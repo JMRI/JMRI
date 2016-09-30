@@ -3,7 +3,6 @@ package jmri.jmrit.withrottle;
 /**
  *
  * @author Brett
- * @version $Revision$
  */
 import java.util.EventListener;
 

@@ -9,8 +9,7 @@ import junit.framework.TestSuite;
  * Test simple functioning of DccLocoAddress
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version	$Revision$
- */
+  */
 public class DccLocoAddressTest extends TestCase {
 
     public void testValue1() {

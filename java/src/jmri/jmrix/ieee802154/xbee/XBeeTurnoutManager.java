@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * <p>
  *
  * @author Paul Bender Copyright (C) 2014
- * @version $Revision$
  */
 public class XBeeTurnoutManager extends AbstractTurnoutManager {
 

@@ -1,4 +1,3 @@
-// MrcNamedPaneAction.java
 package jmri.jmrix.mrc.swing;
 
 import javax.swing.Icon;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2010 Copied from nce.swing
  * @author Ken Cameron 2014
  * @author Kevin Dickerson 2014
- * @version	$Revision: 22942 $
  */
 public class MrcNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 

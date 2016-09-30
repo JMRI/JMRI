@@ -17,8 +17,7 @@ import org.slf4j.LoggerFactory;
  * property status of this algorithm. Use it at your own risk.
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version	$Revision$
- */
+  */
 public class InitialAlgorithm implements Calculator {
 
     public InitialAlgorithm(Point3d[] sensors, double vsound) {

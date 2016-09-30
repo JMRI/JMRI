@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Handle XML configuration for VirtualSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2005, 2008
- * @version $Revision$
  */
 public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 

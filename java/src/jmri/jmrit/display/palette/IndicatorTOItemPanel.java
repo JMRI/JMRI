@@ -35,11 +35,6 @@ import org.slf4j.LoggerFactory;
  */
 public class IndicatorTOItemPanel extends TableItemPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -9080081407076209874L;
-
     final static String[] STATUS_KEYS = {"ClearTrack", "OccupiedTrack", "PositionTrack",
         "AllocatedTrack", "DontUseTrack", "ErrorTrack"};
 
@@ -493,19 +488,15 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     }
 
     @Override
-    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map) {
-        return new IconDragJLabel(flavor);
+    protected JLabel getDragger(DataFlavor flavor, 
+            HashMap<String, NamedIcon> map, NamedIcon icon) {
+        return new IconDragJLabel(flavor, icon);
     }
 
     protected class IconDragJLabel extends DragJLabel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2484596501816237387L;
-
-        public IconDragJLabel(DataFlavor flavor) {
-            super(flavor);
+        public IconDragJLabel(DataFlavor flavor, NamedIcon icon) {
+            super(flavor, icon);
         }
 
         @Override
@@ -513,15 +504,23 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             return super.isDataFlavorSupported(flavor);
         }
 
-        @Override
+        protected boolean okToDrag() {
+            NamedBean bean = getDeviceNamedBean();
+            if (bean == null) {
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                return false;
+            }
+            return true;
+        }
+
+       @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {
                 return null;
             }
-            NamedBean bean = getNamedBean();
+            NamedBean bean = getDeviceNamedBean();
             if (bean == null) {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("noRowSelected"),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }
 
@@ -531,26 +530,35 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 return null;
             }
 
-            IndicatorTurnoutIcon t = new IndicatorTurnoutIcon(_editor);
+            if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
+                IndicatorTurnoutIcon t = new IndicatorTurnoutIcon(_editor);
 
-            t.setOccBlock(_detectPanel.getOccBlock());
-            t.setOccSensor(_detectPanel.getOccSensor());
-            t.setShowTrain(_detectPanel.getShowTrainName());
-            t.setTurnout(bean.getSystemName());
-            t.setFamily(_family);
+                t.setOccBlock(_detectPanel.getOccBlock());
+                t.setOccSensor(_detectPanel.getOccSensor());
+                t.setShowTrain(_detectPanel.getShowTrainName());
+                t.setTurnout(bean.getSystemName());
+                t.setFamily(_family);
 
-            Iterator<Entry<String, HashMap<String, NamedIcon>>> it = iconMap.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<String, HashMap<String, NamedIcon>> entry = it.next();
-                String status = entry.getKey();
-                Iterator<Entry<String, NamedIcon>> iter = entry.getValue().entrySet().iterator();
-                while (iter.hasNext()) {
-                    Entry<String, NamedIcon> ent = iter.next();
-                    t.setIcon(status, ent.getKey(), new NamedIcon(ent.getValue()));
+                Iterator<Entry<String, HashMap<String, NamedIcon>>> it = iconMap.entrySet().iterator();
+                while (it.hasNext()) {
+                    Entry<String, HashMap<String, NamedIcon>> entry = it.next();
+                    String status = entry.getKey();
+                    Iterator<Entry<String, NamedIcon>> iter = entry.getValue().entrySet().iterator();
+                    while (iter.hasNext()) {
+                        Entry<String, NamedIcon> ent = iter.next();
+                        t.setIcon(status, ent.getKey(), new NamedIcon(ent.getValue()));
+                    }
                 }
+                t.setLevel(Editor.TURNOUTS);
+                return t;                
+            } else if (DataFlavor.stringFlavor.equals(flavor)) {
+                StringBuilder sb = new StringBuilder(_itemType);
+                sb.append(" icons for \"");
+                sb.append(bean.getDisplayName());
+                sb.append("\"");
+                return  sb.toString();
             }
-            t.setLevel(Editor.TURNOUTS);
-            return t;
+            return null;
         }
     }
 

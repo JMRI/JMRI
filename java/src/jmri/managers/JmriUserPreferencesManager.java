@@ -646,8 +646,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * make better sense of the details in the preferences window.
      * <p>
      * This looks for specific methods within the class called
-     * "getClassDescription" and "setMessagePreferenceDetails". If found it will
-     * invoke the methods, this will then trigger the class to send details
+     * "getClassDescription" and "setMessagePreferencesDetails". If found it
+     * will invoke the methods, this will then trigger the class to send details
      * about its preferences back to this code.
      */
     @Override
@@ -665,7 +665,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 desc = (String) method.invoke(t);
                 classDesFound = true;
             } catch (IllegalAccessException | IllegalArgumentException | java.lang.reflect.InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
-                log.warn(ex.toString());
+                log.debug(ex.toString());
                 classDesFound = false;
             }
             if (!classDesFound) {
@@ -673,7 +673,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                     method = cl.getMethod("getClassDescription");
                     desc = (String) method.invoke(t);
                 } catch (IllegalAccessException | IllegalArgumentException | java.lang.reflect.InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
-                    log.warn(ex.toString());
+                    log.debug(ex.toString());
                     classDesFound = false;
                 }
             }
@@ -699,7 +699,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                     method = cl.getMethod("setMessagePreferencesDetails");
                     method.invoke(t);
                 } catch (IllegalAccessException | IllegalArgumentException | java.lang.reflect.InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
-                    log.warn(ex.toString());
+                    log.debug(ex.toString());
                 }
             }
 

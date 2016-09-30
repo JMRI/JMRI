@@ -9,7 +9,6 @@ import jmri.jmrit.operations.locations.TrackEditFrame;
  * Action to launch selection of alternate track.
  *
  * @author Daniel Boudreau Copyright (C) 2011
- * @version $Revision: 17977 $
  */
 public class AlternateTrackAction extends AbstractAction {
 
