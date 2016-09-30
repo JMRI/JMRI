@@ -43,9 +43,15 @@ public abstract class AbstractThrottleManagerTestBase {
 
        @Override
        public void notifyFailedThrottleRequest(DccLocoAddress address, String reason){
-             throttleFoundResult = true;
+             throttleNotFoundResult = true;
        }
 
+    }
+
+    @After
+    public void postTestReset(){
+       throttleFoundResult = false;
+       throttleNotFoundResult = false;
     }
 
     // start of common tests
@@ -54,5 +60,47 @@ public abstract class AbstractThrottleManagerTestBase {
     public void testCreate() {
         Assert.assertNotNull(tm);
     }
+
+    @Test
+    public void getUserName() {
+        Assert.assertNotNull(tm.getUserName());
+        Assert.assertTrue(tm.getUserName() instanceof String);
+    }
+
+    @Test
+    public void hasDispatchFunction() {
+        Assert.assertNotNull(tm.hasDispatchFunction());
+    }
+
+    @Test
+    public void addressTypeUnique() {
+        Assert.assertNotNull(tm.addressTypeUnique());
+    }
+
+    @Test
+    public void canBeLongAddress() {
+       Assert.assertNotNull(tm.canBeLongAddress(50));
+    }
+
+    @Test
+    public void canBeShortAddress() {
+       Assert.assertNotNull(tm.canBeShortAddress(50));
+    }
+
+    @Test
+    public void supportedSpeedModes() {
+        Assert.assertNotNull(tm.supportedSpeedModes());
+    }
+
+    @Test
+    public void getAddressTypes() {
+        Assert.assertNotNull(tm.getAddressTypes());
+    }
+
+    @Test
+    public void getAddressProtocolTypes() {
+        Assert.assertNotNull(tm.getAddressProtocolTypes());
+    }
+
 
 }
