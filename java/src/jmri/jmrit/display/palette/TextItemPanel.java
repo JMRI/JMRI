@@ -135,8 +135,8 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
             }
             _decorator.setAttributes(l);
             PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
-            l.setPopupUtility(util);
-            l.setFont(util.getFont().deriveFont(util.getFontStyle()));
+            l.setPopupUtility(util.clone(l, l.getTextComponent()));
+//            l.setFont(util.getFont().deriveFont(util.getFontStyle()));
             if (util.hasBackground()) {     //unrotated
                 l.setOpaque(true);
             }

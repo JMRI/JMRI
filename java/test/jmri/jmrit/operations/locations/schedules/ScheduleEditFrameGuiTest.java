@@ -22,7 +22,7 @@ import junit.framework.TestSuite;
  *
  * @author	Dan Boudreau Copyright (C) 2009
  */
-public class ScheduleEditFrameTest extends OperationsSwingTestCase {
+public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
 
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
 
@@ -163,19 +163,19 @@ public class ScheduleEditFrameTest extends OperationsSwingTestCase {
         loadLocations();
     }
 
-    public ScheduleEditFrameTest(String s) {
+    public ScheduleEditFrameGuiTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", ScheduleEditFrameTest.class.getName()};
+        String[] testCaseName = {"-noloading", ScheduleEditFrameGuiTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(ScheduleEditFrameTest.class);
+        TestSuite suite = new TestSuite(ScheduleEditFrameGuiTest.class);
         return suite;
     }
 

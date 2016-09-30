@@ -237,6 +237,12 @@ public class StringUtilTest extends TestCase {
         Assert.assertTrue(compareStringArray(input, output));
     }
 
+    public void testArraySort() {
+        String[] str = new String[]{"8567", "8456"};
+        jmri.util.StringUtil.sort(str);
+        Assert.assertEquals("first ", "8456", str[0]);
+    }
+
     public void testSplit1() {
         String input = "abc.cdf";
         String[] result = jmri.util.StringUtil.split(input, ".");

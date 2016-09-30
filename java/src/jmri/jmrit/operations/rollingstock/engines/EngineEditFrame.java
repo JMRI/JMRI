@@ -43,18 +43,18 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
     Engine _engine;
 
     // major buttons
-    JButton editRoadButton = new JButton(Bundle.getMessage("Edit"));
-    JButton clearRoadNumberButton = new JButton(Bundle.getMessage("Clear"));
-    JButton editModelButton = new JButton(Bundle.getMessage("Edit"));
-    JButton editTypeButton = new JButton(Bundle.getMessage("Edit"));
-    JButton editLengthButton = new JButton(Bundle.getMessage("Edit"));
+    JButton editRoadButton = new JButton(Bundle.getMessage("ButtonEdit"));
+    JButton clearRoadNumberButton = new JButton(Bundle.getMessage("ButtonClear"));
+    JButton editModelButton = new JButton(Bundle.getMessage("ButtonEdit"));
+    JButton editTypeButton = new JButton(Bundle.getMessage("ButtonEdit"));
+    JButton editLengthButton = new JButton(Bundle.getMessage("ButtonEdit"));
     JButton fillWeightButton = new JButton();
-    JButton editConsistButton = new JButton(Bundle.getMessage("Edit"));
-    JButton editOwnerButton = new JButton(Bundle.getMessage("Edit"));
+    JButton editConsistButton = new JButton(Bundle.getMessage("ButtonEdit"));
+    JButton editOwnerButton = new JButton(Bundle.getMessage("ButtonEdit"));
 
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
-    JButton deleteButton = new JButton(Bundle.getMessage("Delete"));
-    JButton addButton = new JButton(Bundle.getMessage("Add"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
+    JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
+    JButton addButton = new JButton(Bundle.getMessage("TitleEngineAdd")); // have button state item to add
 
     // check boxes
     JCheckBox bUnitCheckBox = new JCheckBox(Bundle.getMessage("BUnit"));

@@ -356,7 +356,6 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
             } else {
                 this.fireTableDataChanged();
             }
-            this.manager.setRestartRequired();
         }
     }
 }
