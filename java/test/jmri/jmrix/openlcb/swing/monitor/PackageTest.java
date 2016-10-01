@@ -31,6 +31,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.openlcb.monitor.PackageTest");
 
         suite.addTest(MonitorFrameTest.suite());
+        suite.addTest(MonitorFrameDemo.suite());
 
         return suite;
     }
