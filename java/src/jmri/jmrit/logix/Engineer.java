@@ -993,11 +993,13 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             }
                         }
                     }
-                _warrant.setSpeedType(_speedType);
-                ThreadingUtil.runOnLayout(() -> {
-                    _warrant.fireRunStatus("SpeedChange", old, _speedType);
-                });
-               }
+                    if (stop && debug) {
+                        log.info("rampSpeed stopped before completion");
+                    }
+                    ThreadingUtil.runOnLayout(() -> {
+                        _warrant.fireRunStatus("SpeedChange", old, _speedType);
+                    });
+                }
             } finally {
                 _speedOverride = false;
                 _lock.unlock();

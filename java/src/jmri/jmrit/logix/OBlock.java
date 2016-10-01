@@ -70,7 +70,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * Block.UNOCCUPIED = Sensor.INACTIVE= 0x04;
      * NamedBean.INCONSISTENT            = 0x08;
      * Add the following to the 4 sensor states.
-     * States are OR'ed to show combination.  e.g. ALLOCATED | OCCUPIED = allocated block is occupied by rouge
+     * States are OR'ed to show combination.  e.g. ALLOCATED | OCCUPIED = allocated block is occupied
      */
     static final public int ALLOCATED = 0x10;   // reserve the block for subsequent use by a train
     static final public int RUNNING = 0x20;     // Block that running train has reached 
@@ -78,9 +78,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     static final public int DARK = 0x01;        // Block has no Sensor, same as UNKNOWN
     static final public int TRACK_ERROR = 0x80; // Block has Error
 
-    static final HashMap<String, Integer> _oldstatusMap = new HashMap<String, Integer>();
-    static final HashMap<String, Integer> _statusMap = new HashMap<String, Integer>();
-    static final HashMap<String, String> _statusNameMap = new HashMap<String, String>();
+//    static final HashMap<String, Integer> _oldstatusMap = new HashMap<String, Integer>();
+    private static final HashMap<String, Integer> _statusMap = new HashMap<String, Integer>();
+    private static final HashMap<String, String> _statusNameMap = new HashMap<String, String>();
 
     static final Color DEFAULT_FILL_COLOR = new Color(200, 0, 200);
 
@@ -92,6 +92,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         _statusMap.put("outOfService", Integer.valueOf(OUT_OF_SERVICE));
         _statusMap.put("dark", Integer.valueOf(DARK));
         _statusMap.put("powerError", Integer.valueOf(TRACK_ERROR));
+        /* I can't see any reason for this - peteC
         _oldstatusMap.put(Bundle.getMessage("unoccupied"), Integer.valueOf(UNOCCUPIED));
         _oldstatusMap.put(Bundle.getMessage("occupied"), Integer.valueOf(OCCUPIED));
         _oldstatusMap.put(Bundle.getMessage("allocated"), Integer.valueOf(ALLOCATED));
@@ -99,6 +100,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         _oldstatusMap.put(Bundle.getMessage("outOfService"), Integer.valueOf(OUT_OF_SERVICE));
         _oldstatusMap.put(Bundle.getMessage("dark"), Integer.valueOf(DARK));
         _oldstatusMap.put(Bundle.getMessage("powerError"), Integer.valueOf(TRACK_ERROR));
+        */
     }
 
     static void loadStatusNameMap() {
@@ -481,9 +483,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             loadStatusMap();
         }
         Integer i = _statusMap.get(statusName);
-        if (i == null) {
+/*        if (i == null) {
             i = _oldstatusMap.get(statusName);
-        }
+        }*/
         if (i != null) {
             return ((getState() & i.intValue()) != 0);
         }
@@ -536,7 +538,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 
     /**
      * Note path name may be set if block is not allocated to a warrant. For use
-     * by Circuitbuilder Only.
+     * by CircuitBuilder Only.
      *
      * @return error message
      */

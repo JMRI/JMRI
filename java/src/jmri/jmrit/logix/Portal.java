@@ -38,8 +38,6 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     private float _toSignalOffset;             // adjustment distance for speed change
     private int _state = UNKNOWN;
 
-    //public static final int UNKNOWN      = 0x01;
-    //public static final int INCONSISTENT = 0x08;
     public static final int ENTER_TO_BLOCK = 0x02;
     public static final int ENTER_FROM_BLOCK = 0x04;
 
@@ -73,6 +71,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
 
     /**
      * Utility for both path lists
+     * Check for duplicate name
      */
     private boolean addPath(List<OPath> list, OPath path) {
         if (list.contains(path)) {

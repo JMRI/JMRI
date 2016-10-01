@@ -18,20 +18,12 @@ import org.slf4j.LoggerFactory;
 class OpSessionLog {
 
     static BufferedWriter _outBuff;
-
     private static OpSessionLog _instance = null;
 
     private OpSessionLog() {
     }
 
-/*    public static OpSessionLog getInstance() {
-        if (_instance == null) {
-            _instance = new OpSessionLog();
-        }
-        return _instance;
-    }*/
-
-    public static synchronized OpSessionLog getLogFile(java.awt.Component parent) {
+    public static synchronized boolean makeLogFile(java.awt.Component parent) {
         if (_instance != null) {
             close();
         }
@@ -41,7 +33,7 @@ class OpSessionLog {
         fileChooser.setFileFilter(new FileNameExtensionFilter("Text files", "txt", "TXT"));
         int retVal = fileChooser.showDialog(parent, Bundle.getMessage("logFile"));
         if (retVal != JFileChooser.APPROVE_OPTION) {
-            return null;
+            return false;
         }
         if (_instance == null) {
             _instance = new OpSessionLog();
@@ -59,7 +51,7 @@ class OpSessionLog {
             if (JOptionPane.showConfirmDialog(parent,
                     Bundle.getMessage("overWritefile", fileName), Bundle.getMessage("QuestionTitle"),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE) != JOptionPane.OK_OPTION) {
-                return null;
+                return false;
             }
         }
         
@@ -72,9 +64,9 @@ class OpSessionLog {
         } catch (FileNotFoundException fnfe) {
             JOptionPane.showMessageDialog(parent, fnfe.getMessage(),
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            return null;
+            return false;
         }
-        return _instance;
+        return true;
     }
 
     static private void writeHeader(String fileName) {
