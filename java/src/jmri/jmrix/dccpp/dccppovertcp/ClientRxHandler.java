@@ -21,8 +21,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Alex Shepherd Copyright (C) 2006
  * @author Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- */
+  */
 public final class ClientRxHandler extends Thread implements DCCppListener {
 
     Socket clientSocket;

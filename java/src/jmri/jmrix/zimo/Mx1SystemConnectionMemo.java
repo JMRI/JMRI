@@ -14,7 +14,7 @@ import jmri.ProgrammerManager;
  *
  * @author	Kevin Dickerson Copyright (C) 2012
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision: 19712 $
+ * 
  */
 public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 

@@ -7,7 +7,6 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  * Provide access to Swing components for the LocoNet subsystem.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
  * @since 2.9.4
  */
 public class LnComponentFactory extends jmri.jmrix.swing.ComponentFactory {

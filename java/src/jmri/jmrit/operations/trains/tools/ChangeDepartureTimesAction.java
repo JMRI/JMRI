@@ -10,7 +10,6 @@ import javax.swing.AbstractAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2013
- * @version $Revision: 17977 $
  */
 public class ChangeDepartureTimesAction extends AbstractAction {
 

@@ -12,7 +12,6 @@ import junit.framework.TestCase;
  * Copyright: Copyright (c) 2002</p>
  *
  * @author Bob Jacobsen
- * @version $Id$
  */
 public class LnPacketizerTest extends TestCase {
 

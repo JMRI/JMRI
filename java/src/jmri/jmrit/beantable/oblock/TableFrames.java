@@ -106,7 +106,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     public void initComponents() {
         setTitle(Bundle.getMessage("TitleOBlocks"));
         JMenuBar menuBar = new JMenuBar();
-        java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("apps.AppsBundle");
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         fileMenu.add(new jmri.configurexml.SaveMenu());
 
@@ -435,7 +434,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             OBlockTableModel.DELETE_COL, OBlockTableModel.REPORT_CURRENTCOL,
             OBlockTableModel.PERMISSIONCOL, OBlockTableModel.UNITSCOL});
 
-        TableRowSorter<OBlockTableModel> sorter = new TableRowSorter<>();
+        TableRowSorter<OBlockTableModel> sorter = new TableRowSorter<>(_oBlockModel);
         sorter.setComparator(OBlockTableModel.SYSNAMECOL, new jmri.util.SystemNameComparator());
         _oBlockTable.setRowSorter(sorter);
         // Use XTableColumnModel so we can control which columns are visible
@@ -528,10 +527,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 //        _portalModel.init();
         _portalTable = new DnDJTable(_portalModel, new int[]{PortalTableModel.DELETE_COL});
 //        _portalModel.makeSorter(portalTable);
-        TableRowSorter<OBlockTableModel> sorter = new TableRowSorter<>();
-        sorter.setComparator(OBlockTableModel.SYSNAMECOL, new jmri.util.SystemNameComparator());
-        _oBlockTable.setRowSorter(sorter);
-
+        TableRowSorter<PortalTableModel> sorter = new TableRowSorter<>(_portalModel);
+        _portalTable.setRowSorter(sorter);
         _portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         _portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
         for (int i = 0; i < _portalModel.getColumnCount(); i++) {
@@ -599,9 +596,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _signalModel = new SignalTableModel(this);
         _signalModel.init();
         _signalTable = new DnDJTable(_signalModel, new int[]{SignalTableModel.UNITSCOL, SignalTableModel.DELETE_COL});
-        TableRowSorter<OBlockTableModel> sorter = new TableRowSorter<>();
-        sorter.setComparator(OBlockTableModel.SYSNAMECOL, new jmri.util.SystemNameComparator());
-        _oBlockTable.setRowSorter(sorter);
+        TableRowSorter<SignalTableModel> sorter = new TableRowSorter<>(_signalModel);
+        _signalTable.setRowSorter(sorter);
         _signalTable.getColumnModel().getColumn(SignalTableModel.UNITSCOL).setCellRenderer(
                 new MyBooleanRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
         _signalTable.getColumnModel().getColumn(SignalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));

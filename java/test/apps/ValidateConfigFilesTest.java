@@ -11,6 +11,10 @@ import junit.framework.TestSuite;
  */
 public class ValidateConfigFilesTest extends jmri.util.swing.GuiUtilBaseTest {
 
+    public void testDirectory(){
+        // dummy test until the base classes are converted.
+    }
+
     // from here down is testing infrastructure
     // Note setup() and teardown are provided from base class, and 
     // need to be invoked if you add methods here

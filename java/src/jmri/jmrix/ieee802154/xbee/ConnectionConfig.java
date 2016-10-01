@@ -9,8 +9,7 @@ import jmri.jmrix.ieee802154.xbee.swing.nodeconfig.NodeConfigAction;
  * Definition of objects to handle configuring a layout connection
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**

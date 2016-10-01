@@ -1,7 +1,7 @@
 package jmri;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  * Tests for the NamedBeanHandleManager class
  *
  * @author	Kevin Dickerson Copyright (C) 2006
- * @version $Revision: 18111 $
+ * 
  */
 public class NamedBeanHandleManagerTest extends TestCase {
 

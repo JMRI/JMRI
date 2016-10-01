@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  *
  * @see AbstractThrottleManager
  * @author	Bob Jacobsen Copyright (C) 2001, 2006
- * @version $Revision$
  */
 public class LnPr2ThrottleManager extends AbstractThrottleManager {
 

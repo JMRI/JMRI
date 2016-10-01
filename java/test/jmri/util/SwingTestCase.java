@@ -9,7 +9,7 @@ import junit.extensions.jfcunit.JFCTestCase;
 import junit.extensions.jfcunit.JFCTestHelper;
 import junit.extensions.jfcunit.TestHelper;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 /**
  * Provide Swing context for JUnit test classes.

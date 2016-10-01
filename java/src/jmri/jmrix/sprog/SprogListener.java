@@ -6,8 +6,7 @@ package jmri.jmrix.sprog;
  * link.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public interface SprogListener extends java.util.EventListener {
 
     public void notifyMessage(SprogMessage m);

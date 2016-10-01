@@ -14,8 +14,7 @@ import org.slf4j.LoggerFactory;
  * NetworkDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
     public final static String NAME = "CAN via GridConnect Network Interface";

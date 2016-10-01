@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
  * @author Mark Underwood Copyright (C) 2011
- * @version $Revision$
  */
 public class SetPhysicalLocationAction extends AbstractAction {
 
@@ -61,7 +60,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
         // text field
         // check boxes
         // major buttons
-        JButton saveButton = new JButton(Bundle.getMessage("Save"));
+        JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
         JButton closeButton = new JButton(Bundle.getMessage("Close"));
 
         // combo boxes

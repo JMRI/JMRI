@@ -11,7 +11,6 @@ import javax.swing.JTextField;
  * Panel for sending messages to throttles.
  *
  * @author	Bob Jacobsen Copyright (C) 2008, 2010
- * @version $Revision$
  */
 public class MessagePanel extends jmri.jmrix.loconet.swing.LnPanel {
 

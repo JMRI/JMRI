@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Persist RPS polling information
  * <P>
  * @author Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class PollingFile extends XmlFile {
 

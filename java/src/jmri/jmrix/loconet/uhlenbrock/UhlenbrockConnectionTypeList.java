@@ -6,7 +6,6 @@ package jmri.jmrix.loconet.uhlenbrock;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010, 2014
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 17977 $
  *
  */
 public class UhlenbrockConnectionTypeList implements jmri.jmrix.ConnectionTypeList {

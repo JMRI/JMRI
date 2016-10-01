@@ -16,7 +16,6 @@ import jmri.jmrit.operations.trains.Train;
  * Frame for user edit of a staging track
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision$
  */
 public class StagingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
 

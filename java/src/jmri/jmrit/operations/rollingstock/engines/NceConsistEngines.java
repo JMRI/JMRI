@@ -40,7 +40,6 @@ import org.slf4j.LoggerFactory;
  * (con 127 mid loco4) :0000
  *
  * @author Dan Boudreau Copyright (C) 2008, 2015
- * @version $Revision$
  */
 public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListener {
 

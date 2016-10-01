@@ -5,7 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import jmri.InstanceManager;
 import jmri.util.FileUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -14,8 +14,7 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.roster.RosterEntry class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
- */
+  */
 public class RosterEntryTest extends TestCase {
 
     public void testCreate() {

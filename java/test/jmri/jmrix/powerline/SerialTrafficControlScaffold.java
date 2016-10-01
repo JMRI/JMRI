@@ -10,8 +10,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright 2004, 2007, 2008 Converted to multiple
  * connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision$
- */
+  */
 public class SerialTrafficControlScaffold extends SerialTrafficController {
 
     public SerialTrafficControlScaffold() {

@@ -1,9 +1,10 @@
 package jmri.jmrit.withrottle;
 
-import junit.framework.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Test simple functioning of ThrottleController
@@ -38,6 +39,7 @@ public class ThrottleControllerTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
+        JUnitUtil.resetInstanceManager();
     }
     
     @Override

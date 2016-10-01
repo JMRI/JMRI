@@ -8,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmrix.vsdecoder package & jmrix.vsdecoder.VSDecoder class.
  *
  * @author	Mark Underwood Copyright (C) 2011
- * @version $Revision: 17977 $
  */
 public class VSDecoderTest extends TestCase {
 

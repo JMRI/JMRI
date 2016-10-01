@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * of serial port adapters.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision$
  */
 abstract public class AbstractSerialConnectionConfigXml extends AbstractConnectionConfigXml {
 

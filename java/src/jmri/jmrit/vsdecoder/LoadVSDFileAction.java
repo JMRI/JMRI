@@ -16,7 +16,7 @@ package jmri.jmrit.vsdecoder;
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
+ * 
  */
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -33,7 +33,6 @@ import org.slf4j.LoggerFactory;
  * Adapted from LoadXmlThrottleProfileAction by Glen Oberhauser (2004)
  *
  * @author Mark Underwood 2011
- * @version $Revision$
  */
 @SuppressWarnings("serial")
 public class LoadVSDFileAction extends AbstractAction {

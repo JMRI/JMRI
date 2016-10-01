@@ -14,8 +14,7 @@ import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
  * instance via the JMRI Network Protocol.
  *
  * @author Paul Bender Copyright (C) 2010
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
     protected JLabel transmitPrefixLabel = new JLabel("Server Connection Prefix");

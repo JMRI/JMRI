@@ -1,6 +1,6 @@
 package jmri.jmrix.rps;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -9,8 +9,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the rps.Engine class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision$
- */
+  */
 public class EngineTest extends TestCase {
 
     public void testCtor() {

@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of additional manifest print options
  *
  * @author Dan Boudreau Copyright (C) 2012
- * @version $Revision: 21846 $
+ * 
  */
 public class PrintMoreOptionPanel extends OperationsPreferencesPanel {
 
@@ -24,7 +24,7 @@ public class PrintMoreOptionPanel extends OperationsPreferencesPanel {
 
     // labels
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // radio buttons
     // check boxes

@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * This is an implementation of SRCP for JMRI.
  *
  * @author Paul Bender Copyright (C) 2009
- * @version $Revision$
  *
  */
 public class JmriSRCPServer extends JmriServer {

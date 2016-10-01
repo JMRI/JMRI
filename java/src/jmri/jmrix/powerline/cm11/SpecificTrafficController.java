@@ -25,8 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005, 2006, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision$
- */
+  */
 public class SpecificTrafficController extends SerialTrafficController {
 
     public SpecificTrafficController(SerialSystemConnectionMemo memo) {

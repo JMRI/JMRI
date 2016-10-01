@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * 0xFE or 0xFF 0xFD bytes that appear prior to any message read in.
  *
  * @author	Paul Bender Copyright (C) 2005
- * @version $Revision$
  *
  */
 public class LIUSBXNetPacketizer extends XNetPacketizer {

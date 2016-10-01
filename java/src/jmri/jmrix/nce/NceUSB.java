@@ -224,7 +224,6 @@ package jmri.jmrix.nce;
  * <P>
  *
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision$
  */
 @Deprecated
 public class NceUSB {

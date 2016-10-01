@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * connection
  *
  * @author Paul Bender Copyright (C) 2010-2013
- * @version $Revision$
  */
 public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
 

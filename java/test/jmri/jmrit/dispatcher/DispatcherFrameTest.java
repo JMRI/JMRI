@@ -3,7 +3,7 @@ package jmri.jmrit.dispatcher;
 import jmri.Scale;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.TestHelper;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

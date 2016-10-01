@@ -40,7 +40,6 @@ import org.slf4j.LoggerFactory;
  * This backup routine uses the same consist data format as NCE.
  *
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision$
  */
 public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListener {
 

@@ -17,7 +17,6 @@ import jmri.jmrix.lenz.liusbethernet.LIUSBEthernetAdapter;
  * attribute in the XML.
  *
  * @author Paul Bender Copyright (C) 2011
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 

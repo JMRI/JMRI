@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * Action to print a train's manifest that has been saved.
  *
  * @author Daniel Boudreau Copyright (C) 2015
- * @version $Revision$
  */
 public class PrintSavedTrainManifestAction extends AbstractAction implements java.beans.PropertyChangeListener {
 
