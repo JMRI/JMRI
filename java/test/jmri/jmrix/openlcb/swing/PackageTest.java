@@ -11,9 +11,6 @@ import junit.framework.TestSuite;
  */
 public class PackageTest extends TestCase {
 
-    public void testDefinitions() {
-    }
-
     // from here down is testing infrastructure
     public PackageTest(String s) {
         super(s);
