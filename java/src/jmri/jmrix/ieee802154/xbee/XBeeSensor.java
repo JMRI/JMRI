@@ -122,9 +122,8 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
     public void requestUpdateFromLayout() {
         // Request the sensor status from the XBee Node this sensor is
         // attached to.  
-        IOValue value = IOValue.LOW; 
         try  {
-           value = node.getXBee().getDIOValue(IOLine.getDIO(pin));
+           IOValue value = node.getXBee().getDIOValue(IOLine.getDIO(pin));
            if ((value==IOValue.HIGH) ^ _inverted) {
                setOwnState(Sensor.ACTIVE);
            } else {

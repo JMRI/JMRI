@@ -1,43 +1,26 @@
 package jmri.jmrit.withrottle;
 
 import jmri.util.JUnitUtil;
+import org.junit.Test;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
 
 /**
  * Test simple functioning of WiThrottlePrefsPanel
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class WiThrottlePrefsPanelTest extends TestCase {
+public class WiThrottlePrefsPanelTest {
 
+    @Test
     public void testCtor() {
         WiThrottlePrefsPanel panel = new WiThrottlePrefsPanel();
         Assert.assertNotNull("exists", panel );
     }
 
-    // from here down is testing infrastructure
-    public WiThrottlePrefsPanelTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", WiThrottlePrefsPanelTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(WiThrottlePrefsPanelTest.class);
-        return suite;
-    }
-
-    @Override
+    @Before
     public void setUp() throws Exception {
-        super.setUp();
         apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -47,10 +30,9 @@ public class WiThrottlePrefsPanelTest extends TestCase {
         JUnitUtil.initStartupActionsManager();
     }
     
-    @Override
+    @After
     public void tearDown() throws Exception {
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
         JUnitUtil.resetInstanceManager();
+        apps.tests.Log4JFixture.tearDown();
     }
 }
