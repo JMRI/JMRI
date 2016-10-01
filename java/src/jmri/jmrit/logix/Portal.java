@@ -124,7 +124,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
             return null;
         }
         String oldName = getUserName();
-        if (oldName.equals(newName)) {
+        if (newName.equals(oldName)) {
             return null;
         }
 

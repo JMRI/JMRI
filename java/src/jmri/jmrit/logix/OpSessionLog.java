@@ -17,27 +17,34 @@ import org.slf4j.LoggerFactory;
 
 class OpSessionLog {
 
-    BufferedWriter _outBuff;
+    static BufferedWriter _outBuff;
 
-    private static OpSessionLog _instance;
+    private static OpSessionLog _instance = null;
 
     private OpSessionLog() {
     }
 
-    public static OpSessionLog getInstance() {
+/*    public static OpSessionLog getInstance() {
         if (_instance == null) {
             _instance = new OpSessionLog();
         }
         return _instance;
-    }
+    }*/
 
-    public synchronized boolean showFileChooser(java.awt.Component parent) {
+    public static synchronized OpSessionLog getLogFile(java.awt.Component parent) {
+        if (_instance != null) {
+            close();
+        }
+
         JFileChooser fileChooser = new JFileChooser(FileUtil.getUserFilesPath());
         fileChooser.setDialogTitle(Bundle.getMessage("logSession"));
         fileChooser.setFileFilter(new FileNameExtensionFilter("Text files", "txt", "TXT"));
         int retVal = fileChooser.showDialog(parent, Bundle.getMessage("logFile"));
         if (retVal != JFileChooser.APPROVE_OPTION) {
-            return false;
+            return null;
+        }
+        if (_instance == null) {
+            _instance = new OpSessionLog();
         }
 
         File file = fileChooser.getSelectedFile();
@@ -52,8 +59,12 @@ class OpSessionLog {
             if (JOptionPane.showConfirmDialog(parent,
                     Bundle.getMessage("overWritefile", fileName), Bundle.getMessage("QuestionTitle"),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE) != JOptionPane.OK_OPTION) {
-                return false;
+                return null;
             }
+        }
+        
+        if (_instance == null) {
+            _instance = new OpSessionLog();
         }
         try {
             _outBuff = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
@@ -61,12 +72,15 @@ class OpSessionLog {
         } catch (FileNotFoundException fnfe) {
             JOptionPane.showMessageDialog(parent, fnfe.getMessage(),
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            return false;
+            return null;
         }
-        return true;
+        return _instance;
     }
 
-    void writeHeader(String fileName) {
+    static private void writeHeader(String fileName) {
+        if (_outBuff==null) {
+            return;
+        }
         try {
             _outBuff.newLine();
             _outBuff.append("\t\t\t");
@@ -83,7 +97,10 @@ class OpSessionLog {
         }
     }
 
-    synchronized public void writeLn(String text) {
+    static synchronized public void writeLn(String text) {
+        if (_outBuff==null) {
+            return;
+        }
         try {
             SimpleDateFormat dateFormatter = new SimpleDateFormat("  hh:mm:ss a   ");
             _outBuff.append(dateFormatter.format(new Date()));
@@ -94,7 +111,10 @@ class OpSessionLog {
         }
     }
 
-    synchronized public void close() {
+    static synchronized public void close() {
+        if (_outBuff==null) {
+            return;
+        }
         try {
             writeLn(Bundle.getMessage("stopLog"));
             _outBuff.flush();

@@ -65,7 +65,7 @@ public class WarrantTableAction extends AbstractAction {
     protected static NXFrame _nxFrame;
     private static OpSessionLog _log;
     private static boolean _edit;
-    static ShutDownTask     _shutDownTask;
+    static ShutDownTask     _shutDownTask = null;
 
     protected WarrantTableAction(String menuOption) {
         super(Bundle.getMessage(menuOption));
@@ -164,12 +164,11 @@ public class WarrantTableAction extends AbstractAction {
             mi.addActionListener( new ActionListener()
                 {
                     public void actionPerformed(ActionEvent e) {
-                        _log = OpSessionLog.getInstance();
-                        if (!_log.showFileChooser(WarrantTableFrame.getInstance())) {
-                            _log = null;
+                        _log = OpSessionLog.getLogFile(WarrantTableFrame.getInstance());
+                        if (log==null) {
                             return;
                         }
-                        if (_shutDownTask == null) {
+//                        if (_shutDownTask == null) {
                             _shutDownTask = new SwingShutDownTask("PanelPro Save default icon check",
                                     null, null, null)
                             {
@@ -180,7 +179,7 @@ public class WarrantTableAction extends AbstractAction {
                                 }
                             };
                             jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(_shutDownTask);
-                        }
+//                        }
                         updateWarrantMenu();
                     }
                 });
@@ -202,7 +201,7 @@ public class WarrantTableAction extends AbstractAction {
     
     synchronized protected static void writetoLog(String text) {
         if (_log!=null) {
-            _log.writeLn(text);
+            OpSessionLog.writeLn(text);
         }       
     }
     

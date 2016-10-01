@@ -227,7 +227,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
     /*
-     * retuen true if successful
+     * return true if successful
      */
     public boolean setErrorSensor(String pName) {
         if (getErrorSensor() != null) {
@@ -250,8 +250,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         sensor = jmri.InstanceManager.sensorManagerInstance().getSensor(pName);
         if (sensor != null) {
             _errNamedSensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor);
-            getErrorSensor().addPropertyChangeListener(this, _errNamedSensor.getName(), "OBlock Error Sensor " + getDisplayName());
-            return true;
+            if (_errNamedSensor!=null) {
+                getErrorSensor().addPropertyChangeListener(this, _errNamedSensor.getName(), "OBlock Error Sensor " + getDisplayName());
+                return true;                
+            }
         }
         return false;
     }
