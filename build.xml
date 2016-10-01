@@ -151,8 +151,8 @@
          packages. Does not include JMRI itself.
     -->
     <path id="runtime.class.path">
-        <pathelement location="${libdir}/jna.jar"/>
-        <pathelement location="${libdir}/purejavacomm.jar"/>
+        <pathelement location="${libdir}/jna-4.2.2.jar"/>
+        <pathelement location="${libdir}/purejavacomm-1.0.1.jar"/>
         <pathelement location="${libdir}/ch.ntb.usb.jar"/>
         <pathelement location="${libdir}/xercesImpl.jar"/>
         <pathelement location="${libdir}/gluegen-rt.jar"/>
