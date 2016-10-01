@@ -11,8 +11,7 @@ import jmri.managers.DefaultProgrammerManager;
  *
  * @see jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision$
- */
+  */
 public class EasyDccProgrammerManager extends DefaultProgrammerManager {
 
     //private Programmer localProgrammer;

@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (c) 2003
  * @author Mark Underwood Copyright (c) 2015
- * @version $Revision$
  */
 public class DCCppSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 

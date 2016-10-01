@@ -5,7 +5,6 @@
  * consists it builds
  *
  * @author Paul Bender Copyright (C) 2006
- * @version $Revision$
  */
 package jmri.jmrix.easydcc;
 

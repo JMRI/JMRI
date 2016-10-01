@@ -17,8 +17,7 @@ import org.slf4j.LoggerFactory;
  * Table data model for display of DCC packet contents
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version	$Revision$
- */
+  */
 public class PacketDataModel extends javax.swing.table.AbstractTableModel {
 
     /**

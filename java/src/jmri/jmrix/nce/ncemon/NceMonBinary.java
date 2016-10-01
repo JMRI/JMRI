@@ -14,7 +14,7 @@ import jmri.util.StringUtil;
  * published November 2007 and is used with NCE's permission.
  *
  * @author	Daniel Boudreau Copyright (C) 2012
- * @version $Revision: 19264 $
+ * 
  */
 public class NceMonBinary {
 

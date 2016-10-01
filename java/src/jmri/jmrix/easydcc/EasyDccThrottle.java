@@ -14,7 +14,6 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen Copyright (C) 2001, modified 2004 by Kelly Loyd
- * @version $Revision$
  */
 public class EasyDccThrottle extends AbstractThrottle {
 

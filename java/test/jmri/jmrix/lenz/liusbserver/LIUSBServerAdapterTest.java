@@ -1,6 +1,6 @@
 package jmri.jmrix.lenz.liusbserver;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * class
  *
  * @author	Paul Bender
- * @version $Revision: 17977 $
  */
 public class LIUSBServerAdapterTest extends TestCase {
 

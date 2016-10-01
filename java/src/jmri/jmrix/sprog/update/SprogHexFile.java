@@ -16,8 +16,7 @@ import org.slf4j.LoggerFactory;
  * hardware device via some bootloading process.
  *
  * @author	Andrew Crosland Copyright (C) 2010
- * @version	$Revision$
- */
+  */
 public class SprogHexFile extends jmri.util.JmriJFrame {
 
     private File file;

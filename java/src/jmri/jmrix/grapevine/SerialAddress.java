@@ -465,25 +465,29 @@ public class SerialAddress {
      */
     public static String normalizeSystemName(String systemName) {
         // ensure that input system name has a valid format
-        if (!validSystemNameFormat(systemName, systemName.charAt(1))) {
-            // No point in normalizing if a valid system name format is not present
-            return "";
-        }
+        try {
+           if (!validSystemNameFormat(systemName, systemName.charAt(1))) {
+               // No point in normalizing if a valid system name format is not present
+               return "";
+           }
 
-        Matcher matcher = getAllPattern().matcher(systemName);
-        matcher.matches(); // known to work, just need values
+           Matcher matcher = getAllPattern().matcher(systemName);
+           matcher.matches(); // known to work, just need values
 
-        // check format
-        if (matcher.group(7) != null) {
-            int num = Integer.valueOf(matcher.group(7)).intValue();
-            return matcher.group(1) + matcher.group(2) + num;
-        } else {
-            // there are alternate forms...
-            int offset = typeOffset(matcher.group(5));
-            int node = Integer.valueOf(matcher.group(4)).intValue();
-            int bit = Integer.valueOf(matcher.group(6)).intValue();
-            return matcher.group(1) + matcher.group(2) + (node * 1000 + bit + offset);
-        }
+           // check format
+           if (matcher.group(7) != null) {
+              int num = Integer.valueOf(matcher.group(7)).intValue();
+              return matcher.group(1) + matcher.group(2) + num;
+           } else {
+              // there are alternate forms...
+              int offset = typeOffset(matcher.group(5));
+              int node = Integer.valueOf(matcher.group(4)).intValue();
+              int bit = Integer.valueOf(matcher.group(6)).intValue();
+              return matcher.group(1) + matcher.group(2) + (node * 1000 + bit + offset);
+           }
+       } catch(java.lang.StringIndexOutOfBoundsException sobe){
+             throw new IllegalArgumentException("Invalid System Name Format: " +systemName );
+       }
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialAddress.class.getName());

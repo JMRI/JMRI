@@ -18,11 +18,9 @@ import org.slf4j.LoggerFactory;
  * Extend jmri.AbstractSensor for RaspberryPi GPIO pins.
  * <P>
  * @author			Paul Bender Copyright (C) 2003-2010
- * @version         $Revision$
  */
 public class RaspberryPiSensor extends AbstractSensor implements GpioPinListenerDigital {
 
-    private static final long serialVersionUID = 2015_02_16L;
     private static GpioController gpio = null;
     private int address;
     private GpioPinDigitalInput pin = null;
@@ -57,6 +55,7 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
            pin = gpio.provisionDigitalInputPin(RaspiPin.getPinByName("GPIO "+address),getSystemName(),PinPullResistance.PULL_DOWN);
         } catch(java.lang.RuntimeException re) {
             log.error("Provisioning sensor {} failed with: {}", id, re.getMessage());
+            throw new IllegalArgumentException(re.getMessage());
         }
         pin.addListener(this);
         requestUpdateFromLayout(); // set state to match current value.

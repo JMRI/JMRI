@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * Train file utilities
  *
  * @author Daniel Boudreau (C) 2010
- * @version $Revision: 20668 $
+ * 
  *
  */
 public class TrainUtilities {

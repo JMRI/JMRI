@@ -2,7 +2,7 @@
 #
 #This script will issue the DS54 interrogate commands 
 #
-# $Revision$ revision of AutomatonExample distributed with JMRI
+# AutomatonExample distributed with JMRI
 #					 from which this script has been developed.
 # Created by Phil Klein
 

@@ -3,7 +3,7 @@ package jmri.jmrix.powerline.insteon2412s;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialTrafficController;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -14,8 +14,7 @@ import junit.framework.TestSuite;
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008, 2009, 2010 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision$
- */
+  */
 public class SpecificReplyTest extends TestCase {
 
     SerialTrafficController t = null;

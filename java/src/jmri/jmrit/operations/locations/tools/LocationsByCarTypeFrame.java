@@ -48,12 +48,12 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
     JPanel pLocations;
 
     // major buttons
-    JButton clearButton = new JButton(Bundle.getMessage("Clear"));
-    JButton setButton = new JButton(Bundle.getMessage("Select"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
+    JButton setButton = new JButton(Bundle.getMessage("SelectAll"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // check boxes
-    JCheckBox copyCheckBox = new JCheckBox(Bundle.getMessage("Copy"));
+    JCheckBox copyCheckBox = new JCheckBox(Bundle.getMessage("ButtonCopy"));
 
     // text field
     JLabel textCarType = new JLabel(Empty);

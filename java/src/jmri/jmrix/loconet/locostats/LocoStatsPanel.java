@@ -36,8 +36,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Alex Shepherd Copyright (C) 2003
  * @author	Bob Jacobsen Copyright (C) 2008, 2010
- * @version	$Revision$
- * @since 2.1.5
+  * @since 2.1.5
  */
 public class LocoStatsPanel extends LnPanel implements LocoNetListener {
 

@@ -8,7 +8,6 @@ import jmri.InstanceManager;
  * Does configuration for Nmra Net communications implementations.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision: 17977 $
  */
 public class CanConfigurationManager extends ConfigurationManager {
 

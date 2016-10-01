@@ -188,7 +188,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
             case DOWN_COLUMN:
                 return Bundle.getMessage("Down");
             case DELETE_COLUMN:
-                return Bundle.getMessage("Delete");
+                return Bundle.getMessage("ButtonDelete");
             default:
                 return "unknown"; // NOI18N
         }
@@ -288,7 +288,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
             case DOWN_COLUMN:
                 return Bundle.getMessage("Down");
             case DELETE_COLUMN:
-                return Bundle.getMessage("Delete");
+                return Bundle.getMessage("ButtonDelete");
             default:
                 return "unknown " + col; // NOI18N
         }
@@ -347,7 +347,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
     private String getCurrentPointer(ScheduleItem si) {
         if (_track.getCurrentScheduleItem() == si) {
-            if (si.getCount() > 1) {
+            if (_track.getScheduleMode() == Track.SEQUENTIAL && si.getCount() > 1) {
                 return " " + _track.getScheduleCount() + " -->"; // NOI18N
             } else {
                 return "    -->"; // NOI18N

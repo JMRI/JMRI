@@ -10,7 +10,6 @@ import javax.swing.JMenu;
  * activate their particular system.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
  * @since 2.9.4
  */
 abstract public class ComponentFactory {

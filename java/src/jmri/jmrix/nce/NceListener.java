@@ -6,8 +6,7 @@ package jmri.jmrix.nce;
  * link.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public interface NceListener extends jmri.jmrix.AbstractMRListener {
 
     public void message(NceMessage m);

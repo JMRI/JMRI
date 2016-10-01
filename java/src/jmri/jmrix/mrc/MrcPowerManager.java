@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 22998 $
+ * 
  */
 public class MrcPowerManager
         extends jmri.managers.AbstractPowerManager

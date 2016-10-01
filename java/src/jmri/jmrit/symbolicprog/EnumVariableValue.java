@@ -484,8 +484,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * model between this object and the real JComboBox value.
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version         $Revision$
-     */
+         */
     public static class VarComboBox extends JComboBox<String> {
 
         VarComboBox(ComboBoxModel<String> m, EnumVariableValue var) {

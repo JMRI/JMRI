@@ -10,7 +10,6 @@ import jmri.jmrit.operations.locations.TrackEditFrame;
  *
  * @author Daniel Boudreau Copyright (C) 2011
  * @author Gregory Madsen Copyright (C) 2012
- * @version $Revision$
  */
 public class PoolTrackAction extends AbstractAction {
 

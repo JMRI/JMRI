@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of a spur.
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision$
  */
 public class SpurEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
 
@@ -101,7 +100,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         if (comboBoxSchedules.getSelectedItem() == null) {
             editScheduleButton.setText(Bundle.getMessage("Add"));
         } else {
-            editScheduleButton.setText(Bundle.getMessage("Edit"));
+            editScheduleButton.setText(Bundle.getMessage("ButtonEdit"));
         }
     }
 

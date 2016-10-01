@@ -1,3 +1,5 @@
+package jmri.jmrix.dccpp;
+
 /**
  * DCCppConstants.java
  *
@@ -5,7 +7,6 @@
  *
  * @author	Paul Bender Copyright (C) 2003-2009
  * @author	Mark Underwood Copyright (C) 2015
- * @version $ Revision: $
  *
  * Variable prefix abreviation keys: ACC_ is for accessory messages BC_ is for
  * broadcast messages CS_ is for command station messages PROG_ is for
@@ -17,8 +18,6 @@
  * A few variables don't have a prefix. The name should be self explanitory, but
  * a prefix may be added later.
  */
-package jmri.jmrix.dccpp;
-
 public final class DCCppConstants {
 
     public final static int MAX_MESSAGE_SIZE = 30;

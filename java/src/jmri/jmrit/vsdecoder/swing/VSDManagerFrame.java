@@ -22,7 +22,7 @@ package jmri.jmrit.vsdecoder.swing;
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision: 21510 $
+ * 
  */
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;

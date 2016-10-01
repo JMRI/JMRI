@@ -111,7 +111,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
      * exceptional case where there are no families at all. Subclasses will
      * insert other panels
      */
-    private void makeBottomPanel(ActionListener doneAction) {
+    protected void makeBottomPanel(ActionListener doneAction) {
         _bottom2Panel = makeCreateNewFamilyPanel();
         makeItemButtonPanel();
         if (doneAction != null) {
@@ -130,7 +130,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     }
 
     // add update button to _bottom1Panel
-    private void addUpdateButtonToBottom(ActionListener doneAction) {
+    protected void addUpdateButtonToBottom(ActionListener doneAction) {
         _updateButton = new JButton(Bundle.getMessage("updateButton")); // custom update label
         _updateButton.addActionListener(doneAction);
         _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
@@ -339,9 +339,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
         familyPanel.add(p);
         _familyButtonGroup = new ButtonGroup();
         JPanel buttonPanel = new JPanel(new FlowLayout());
-        String family = null;
+        String family = "";
         JRadioButton button = null;
-        String BundleFamily = null;
         int count = 0;
         while (it.hasNext()) {
             family = it.next();
@@ -458,7 +457,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
             }
             image.setToolTipText(icon.getName());
             panel.add(image);
-            int width = Math.max(100, panel.getPreferredSize().width);
+            int width = getFontMetrics(getFont()).stringWidth(borderName);
+            width = Math.max(100, Math.max(width, icon.getIconWidth())+10);
             panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
             c.gridx += 1;
             if (c.gridx >= numCol) { //start next row
@@ -484,7 +484,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         return ItemPalette.convertText(key);
     }
 
-    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map) {
+    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
         return null;
     }
 
@@ -507,10 +507,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
                         borderName));
                 JLabel label;
                 try {
-                    label = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR), iconMap);
+                    label = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR), iconMap, icon);
                     if (label != null) {
                         label.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
-                        label.setIcon(icon);
+//                        label.setIcon(icon);
                         label.setName(borderName);
                         panel.add(label);
                     }

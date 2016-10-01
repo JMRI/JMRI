@@ -11,7 +11,6 @@ import javax.swing.JMenu;
  * system-independent tools
  *
  * @author	Paul Bender Copyright 2010
- * @version $Revision$
  */
 public class ServerMenu extends JMenu {
 

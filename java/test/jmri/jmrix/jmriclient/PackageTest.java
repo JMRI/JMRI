@@ -30,8 +30,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(JMRIClientTurnoutTest.class));
         suite.addTest(new TestSuite(JMRIClientSensorTest.class));
         suite.addTest(new TestSuite(JMRIClientReporterTest.class));
-        suite.addTest(new TestSuite(JMRIClientTurnoutManagerTest.class));
-        suite.addTest(new TestSuite(JMRIClientSensorManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientTurnoutManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JMRIClientSensorManagerTest.class));
         suite.addTest(new TestSuite(JMRIClientReporterManagerTest.class));
         suite.addTest(new TestSuite(JMRIClientTrafficControllerTest.class));
         suite.addTest(new TestSuite(JMRIClientSystemConnectionMemoTest.class));

@@ -3,7 +3,6 @@ package jmri.web.server;
 /**
  * @author Steve Todd Copyright (C) 2011
  * @author Randall Wood Copyright (C) 2012
- * @version $Revision$
  */
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;

@@ -11,7 +11,7 @@ import jmri.Turnout;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.managers.InternalSensorManager;
 import jmri.managers.InternalTurnoutManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008, 2010
- * @version $Revision$
  * @since 2.3.1
  */
 public class OlcbTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {

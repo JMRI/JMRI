@@ -10,7 +10,6 @@ import javax.swing.AbstractAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class RouteCopyAction extends AbstractAction {
 

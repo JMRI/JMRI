@@ -10,7 +10,7 @@ import javax.swing.SwingUtilities;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.finder.ComponentFinder;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.slf4j.Logger;
@@ -22,8 +22,7 @@ import org.slf4j.LoggerFactory;
  * Description:
  *
  * @author	Bob Jacobsen Copyright 2007, 2015
- * @version	$Revision$
- */
+  */
 public class MemoryIconTest extends jmri.util.SwingTestCase {
 
     MemoryIcon to = null;

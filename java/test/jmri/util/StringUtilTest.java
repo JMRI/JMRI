@@ -1,6 +1,6 @@
 package jmri.util;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -235,6 +235,12 @@ public class StringUtilTest extends TestCase {
         String output[] = new String[]{"A", "A", "b"};
         StringUtil.sort(input);
         Assert.assertTrue(compareStringArray(input, output));
+    }
+
+    public void testArraySort() {
+        String[] str = new String[]{"8567", "8456"};
+        jmri.util.StringUtil.sort(str);
+        Assert.assertEquals("first ", "8456", str[0]);
     }
 
     public void testSplit1() {

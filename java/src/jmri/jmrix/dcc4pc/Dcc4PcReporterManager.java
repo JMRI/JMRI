@@ -9,7 +9,6 @@ import jmri.Reporter;
  * Description:	Implement Reporter manager for dcc4pc
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 public class Dcc4PcReporterManager extends jmri.managers.AbstractReporterManager {
 

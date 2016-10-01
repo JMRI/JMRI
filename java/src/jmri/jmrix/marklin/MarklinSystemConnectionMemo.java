@@ -13,7 +13,7 @@ import jmri.InstanceManager;
  *
  * @author	Bob Jacobsen Copyright (C) 2010
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 20728 $
+ * 
  */
 public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 

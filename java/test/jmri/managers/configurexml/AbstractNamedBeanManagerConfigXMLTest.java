@@ -2,7 +2,7 @@ package jmri.managers.configurexml;
 
 import jmri.NamedBean;
 import jmri.implementation.AbstractNamedBean;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

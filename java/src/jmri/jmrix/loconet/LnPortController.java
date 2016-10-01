@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Base for classes representing a LocoNet communications port
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision$
  */
 public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortController {
     // base class. Implementations will provide InputStream and OutputStream
