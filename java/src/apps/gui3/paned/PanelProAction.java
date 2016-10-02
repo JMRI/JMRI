@@ -16,6 +16,8 @@ public class PanelProAction extends jmri.util.swing.JmriAbstractAction {
 
     /**
      * Enhanced constructor for placing the pane in various GUIs
+     * @param s Name of the action
+     * @param wi The window this action is associated with
      */
     public PanelProAction(String s, WindowInterface wi) {
         super(s, wi);
