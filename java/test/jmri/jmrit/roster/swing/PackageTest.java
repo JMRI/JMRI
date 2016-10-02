@@ -26,7 +26,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.roster.swing.PackageTest");
 
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(RosterTableModelTest.suite());
 
         suite.addTest(jmri.jmrit.roster.swing.attributetable.PackageTest.suite());

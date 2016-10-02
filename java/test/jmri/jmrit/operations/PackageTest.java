@@ -34,7 +34,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.operations.automation.PackageTest.suite());
 
         suite.addTest(XmlLoadTests.suite()); // no tests in class itself
-        suite.addTest(BundleTest.suite()); 
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class)); 
         return suite;
     }
 
