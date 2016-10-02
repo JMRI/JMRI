@@ -29,8 +29,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- * @see jmri.jmrix.nce.NceMessage
+  * @see jmri.jmrix.nce.NceMessage
  *
  */
 public class LocoNetMessage implements Serializable {

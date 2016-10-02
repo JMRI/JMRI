@@ -5,8 +5,7 @@ package jmri.jmrix.zimo;
  * Abstract base for classes representing a MX-1 communications port
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- *
+  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  */
 public abstract class Mx1PortController extends jmri.jmrix.AbstractSerialPortController {

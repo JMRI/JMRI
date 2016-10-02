@@ -28,8 +28,7 @@ import org.slf4j.LoggerFactory;
  * that initialization is in the right order.
  *
  * @author	Paul Bender Copyright (C) 2005
- * @version	$Revision$
- */
+  */
 public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
     /**

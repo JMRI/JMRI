@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @version	$Revision: 18323 $
+ * 
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 

@@ -56,7 +56,7 @@ import org.slf4j.LoggerFactory;
  *
  * <P>
  * @author	Lisby Copyright (C) 2014
- * @version $Revision: 27215 $
+ * 
  */
 public class UhlenbrockSlotManager extends SlotManager implements LocoNetListener, CommandStation {
 

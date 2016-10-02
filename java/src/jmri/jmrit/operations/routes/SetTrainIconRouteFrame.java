@@ -1,4 +1,3 @@
-// SetTrainIconPositionFrame.java
 package jmri.jmrit.operations.routes;
 
 import java.awt.Color;
@@ -31,7 +30,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision$
  */
 public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyChangeListener {
 
@@ -50,7 +48,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
     JButton nextButton = new JButton(Bundle.getMessage("Next"));
     JButton placeButton = new JButton(Bundle.getMessage("PlaceTestIcon"));
     JButton applyButton = new JButton(Bundle.getMessage("Apply"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // combo boxes
     // Spinners
@@ -321,10 +319,8 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
 
     @Override
     public void propertyChange(PropertyChangeEvent e) {
-        if (log.isDebugEnabled()) {
-            log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(),
-                    e.getNewValue());
-        }
+        log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(),
+                e.getNewValue());
         if (e.getSource().equals(_route)) {
             updateRoute();
         }

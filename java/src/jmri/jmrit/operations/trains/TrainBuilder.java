@@ -16,8 +16,8 @@ import javax.swing.JOptionPane;
 import jmri.Version;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.ScheduleItem;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
@@ -716,7 +716,7 @@ public class TrainBuilder extends TrainCommon {
 
     private void showTrainRequirements() {
         addLine(_buildReport, ONE, BLANK_LINE); // add line
-        addLine(_buildReport, ONE, Bundle.getMessage("TrainRequrements"));
+        addLine(_buildReport, ONE, Bundle.getMessage("TrainRequirements"));
         if (_train.getNumberEngines().equals("0")) {
             addLine(_buildReport, ONE, Bundle.getMessage("buildTrainReq0Engine"));
         } else if (_train.getNumberEngines().equals("1")) {
@@ -1548,7 +1548,7 @@ public class TrainBuilder extends TrainCommon {
             if (car.getTrack().getTrackType().equals(Track.INTERCHANGE)) {
                 // don't service a car at interchange and has been dropped off by this train
                 if (car.getTrack().getPickupOption().equals(Track.ANY) &&
-                        car.getSavedRouteId().equals(_train.getRoute().getId())) {
+                        car.getLastRouteId().equals(_train.getRoute().getId())) {
                     addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeCarDropByTrain"),
                             new Object[]{car.toString(), _train.getRoute().getName(), car.getLocationName(),
                                     car.getTrackName()}));
@@ -1896,9 +1896,12 @@ public class TrainBuilder extends TrainCommon {
      * locations requesting the most moves.
      */
     private void blockByLocationMoves() throws BuildFailedException {
-        // start at the second location in the route to begin blocking
         List<RouteLocation> routeList = _train.getRoute().getLocationsBySequenceList();
         for (RouteLocation rl : routeList) {
+            // start at the second location in the route to begin blocking
+            if (rl == _train.getTrainDepartsRouteLocation()) {
+                continue;
+            }
             int possibleMoves = rl.getMaxCarMoves() - rl.getCarMoves();
             if (rl.isDropAllowed() && possibleMoves > 0) {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("blockLocationHasMoves"),
@@ -1936,20 +1939,20 @@ public class TrainBuilder extends TrainCommon {
                                 addLine(_buildReport, SEVEN, MessageFormat.format(
                                         Bundle.getMessage("blockNotAbleDest"), new Object[]{car.toString(),
                                                 car.getDestinationName()}));
-                                continue;
+                                continue; // can't block this car
                             }
                             if (car.getFinalDestination() != null) {
                                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
                                         .getMessage("blockNotAbleFinalDest"), new Object[]{car.toString(),
                                                 car.getFinalDestination().getName()}));
-                                continue;
+                                continue; // can't block this car
                             }
                             if (!car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName()) &&
                                     !car.getLoadName().equals(CarLoads.instance().getDefaultLoadName())) {
                                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
                                         .getMessage("blockNotAbleCustomLoad"), new Object[]{car.toString(),
                                                 car.getLoadName()}));
-                                continue;
+                                continue; // can't block this car
                             }
                             if (car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName()) &&
                                     (_departStageTrack.isAddCustomLoadsEnabled() ||
@@ -1959,7 +1962,7 @@ public class TrainBuilder extends TrainCommon {
                                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
                                         .getMessage("blockNotAbleCarTypeGenerate"), new Object[]{car.toString(),
                                                 car.getLoadName()}));
-                                continue;
+                                continue; // can't block this car
                             }
                             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("blockingCar"),
                                     new Object[]{car.toString(), loc.getName(), rld.getName()}));
@@ -2197,6 +2200,7 @@ public class TrainBuilder extends TrainCommon {
             return;
         }
         boolean messageFlag = true;
+        boolean foundCar = false;
         _success = false;
         for (_carIndex = 0; _carIndex < _carList.size(); _carIndex++) {
             Car car = _carList.get(_carIndex);
@@ -2209,6 +2213,7 @@ public class TrainBuilder extends TrainCommon {
             if (!car.getLocationName().equals(rl.getName())) {
                 continue;
             }
+            foundCar = true;
             // add message that we're on the second pass for this location
             if (isSecondPass && messageFlag) {
                 messageFlag = false;
@@ -2385,7 +2390,7 @@ public class TrainBuilder extends TrainCommon {
                     (car.getDestination() == null || car.getDestinationTrack() == null || car.getTrain() == null)) {
                 addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildWarningCarStageDest"),
                         new Object[]{car.toString()}));
-                // does the car has a final destination track going into staging? If so we need to reset this car
+                // does the car have a final destination to staging? If so we need to reset this car
                 if (car.getFinalDestinationTrack() != null && car.getFinalDestinationTrack() == _terminateStageTrack) {
                     addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingCarHasFinal"),
                             new Object[]{car.toString(), car.getFinalDestinationName(),
@@ -2394,6 +2399,11 @@ public class TrainBuilder extends TrainCommon {
                 }
                 addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
             }
+        }
+        if (!foundCar) {
+            addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildNoCarsAtLocation"),
+                    new Object[]{rl.getName()}));
+            addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
         }
     }
 
@@ -4751,8 +4761,8 @@ public class TrainBuilder extends TrainCommon {
             throw new BuildFailedException(Bundle.getMessage("buildErrorEngHp"));
         }
     }
-    
-    private void removeRollingStockFromTrain(RollingStock rs) {  
+
+    private void removeRollingStockFromTrain(RollingStock rs) {
         // adjust train length and weight for each location that the rolling stock is in the train
         boolean inTrain = false;
         for (RouteLocation routeLocation : _routeList) {
@@ -4914,9 +4924,8 @@ public class TrainBuilder extends TrainCommon {
         _train.setBuildFailedMessage(msg);
         _train.setStatusCode(Train.CODE_BUILD_FAILED);
         _train.setBuildFailed(true);
-        if (log.isDebugEnabled()) {
-            log.debug(msg);
-        }
+        log.debug(msg);
+
         if (TrainManager.instance().isBuildMessagesEnabled()) {
             if (e.getExceptionType().equals(BuildFailedException.NORMAL)) {
                 JOptionPane.showMessageDialog(null, msg, MessageFormat.format(Bundle.getMessage("buildErrorMsg"),

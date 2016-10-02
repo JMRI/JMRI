@@ -150,7 +150,7 @@ public class ActiveTrain {
     private jmri.Transit mTransit = null;
     private String mTrainName = "";
     private int mTrainSource = ROSTER;
-        private jmri.jmrit.roster.RosterEntry mRoster = null;
+    private jmri.jmrit.roster.RosterEntry mRoster = null;
     private int mStatus = WAITING;
     private int mMode = DISPATCHED;
     private boolean mTransitReversed = false;  // true if Transit is running in reverse
@@ -239,7 +239,7 @@ public class ActiveTrain {
     public jmri.jmrit.roster.RosterEntry getRosterEntry() {
         if (mRoster == null && getTrainSource() == ROSTER) {
             //Try to resolve the roster based upon the train name
-            mRoster = jmri.jmrit.roster.Roster.instance().getEntryForId(getTrainName());
+            mRoster = jmri.jmrit.roster.Roster.getDefault().getEntryForId(getTrainName());
         } else if (getTrainSource() != ROSTER) {
             mRoster = null;
         }
@@ -291,7 +291,7 @@ public class ActiveTrain {
                 return jmri.jmrit.beantable.LogixTableAction.formatTime(restartHr,
                         restartMin) + " " + rb.getString("START");
             } else if (restartPoint && getDelayedRestart() == SENSORDELAY) {
-                return (Bundle.getMessage("BeanNameSensor") + " " + getRestartDelaySensorName());
+                return (Bundle.getMessage("BeanNameSensor") + " " + getRestartSensorName());
             }
             return rb.getString("READY");
         } else if (mStatus == STOPPED) {
@@ -394,21 +394,21 @@ public class ActiveTrain {
         mStartSensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(s.getDisplayName(), s);
     }
 
-    public jmri.Sensor getRestartDelaySensor() {
+    public jmri.Sensor getRestartSensor() {
         if (mRestartSensor == null) {
             return null;
         }
         return mRestartSensor.getBean();
     }
 
-    public String getRestartDelaySensorName() {
+    public String getRestartSensorName() {
         if (mRestartSensor == null) {
             return null;
         }
         return mRestartSensor.getName();
     }
 
-    public void setRestartDelaySensor(jmri.Sensor s) {
+    public void setRestartSensor(jmri.Sensor s) {
         if (s == null) {
             mRestartSensor = null;
             return;
@@ -417,7 +417,7 @@ public class ActiveTrain {
     }
 
     private java.beans.PropertyChangeListener delaySensorListener = null;
-    private java.beans.PropertyChangeListener delayReStartSensorListener = null;
+    private java.beans.PropertyChangeListener restartSensorListener = null;
 
     public void initializeDelaySensor() {
         if (mStartSensor == null) {
@@ -447,24 +447,24 @@ public class ActiveTrain {
         getDelaySensor().addPropertyChangeListener(delaySensorListener);
     }
 
-    public void initializeReStartDelaySensor() {
+    public void initializeRestartSensor() {
         if (mRestartSensor == null) {
             log.error("Call to initialise delay on start sensor, but none specified");
             return;
         }
-        if (delayReStartSensorListener == null) {
+        if (restartSensorListener == null) {
             final ActiveTrain at = this;
-            delayReStartSensorListener = new java.beans.PropertyChangeListener() {
+            restartSensorListener = new java.beans.PropertyChangeListener() {
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     if (e.getPropertyName().equals("KnownState")) {
                         if (((Integer) e.getNewValue()).intValue() == jmri.Sensor.ACTIVE) {
-                            getRestartDelaySensor().removePropertyChangeListener(delayReStartSensorListener);
-                            delayReStartSensorListener = null;
+                            getRestartSensor().removePropertyChangeListener(restartSensorListener);
+                            restartSensorListener = null;
                             DispatcherFrame.instance().removeDelayedTrain(at);
                             restart();
                             DispatcherFrame.instance().forceScanOfAllocation();
                             try {
-                                getRestartDelaySensor().setKnownState(jmri.Sensor.INACTIVE);
+                                getRestartSensor().setKnownState(jmri.Sensor.INACTIVE);
                             } catch (jmri.JmriException ex) {
                                 log.error("Error reseting start sensor back to in active");
                             }
@@ -473,11 +473,33 @@ public class ActiveTrain {
                 }
             };
         }
-        getRestartDelaySensor().addPropertyChangeListener(delayReStartSensorListener);
+        getRestartSensor().addPropertyChangeListener(restartSensorListener);
     }
 
     public void setTrainType(int type) {
         mTrainType = type;
+    }
+
+    /** set train type using localized string name as stored
+     * 
+     * @param sType - name, such as "LOCAL_PASSENGER"
+     */
+    public void setTrainType(String sType) {
+        if (sType.equals(rb.getString("LOCAL_FREIGHT"))) {
+            setTrainType(LOCAL_FREIGHT);
+        } else if (sType.equals(rb.getString("LOCAL_PASSENGER"))) {
+            setTrainType(LOCAL_PASSENGER);
+        } else if (sType.equals(rb.getString("THROUGH_FREIGHT"))) {
+            setTrainType(THROUGH_FREIGHT);
+        } else if (sType.equals(rb.getString("THROUGH_PASSENGER"))) {
+            setTrainType(THROUGH_PASSENGER);
+        } else if (sType.equals(rb.getString("EXPRESS_FREIGHT"))) {
+            setTrainType(EXPRESS_FREIGHT);
+        } else if (sType.equals(rb.getString("EXPRESS_PASSENGER"))) {
+            setTrainType(EXPRESS_PASSENGER);
+        } else if (sType.equals(rb.getString("MOW"))) {
+            setTrainType(MOW);
+        }
     }
 
     public int getTrainType() {
@@ -1016,8 +1038,8 @@ public class ActiveTrain {
         if (getDelaySensor() != null && delaySensorListener != null) {
             getDelaySensor().removePropertyChangeListener(delaySensorListener);
         }
-        if (getRestartDelaySensor() != null && delayReStartSensorListener != null) {
-            getRestartDelaySensor().removePropertyChangeListener(delayReStartSensorListener);
+        if (getRestartSensor() != null && restartSensorListener != null) {
+            getRestartSensor().removePropertyChangeListener(restartSensorListener);
         }
         mTransit.setState(jmri.Transit.IDLE);
     }
@@ -1042,4 +1064,5 @@ public class ActiveTrain {
     }
 
     private final static Logger log = LoggerFactory.getLogger(ActiveTrain.class.getName());
+
 }

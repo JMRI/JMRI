@@ -1,11 +1,19 @@
 // XBeeSensor.java
 package jmri.jmrix.ieee802154.xbee;
 
-import com.rapplogic.xbee.api.ApiId;
-import com.rapplogic.xbee.api.RemoteAtResponse;
-import com.rapplogic.xbee.api.wpan.IoSample;
-import com.rapplogic.xbee.api.wpan.RxResponseIoSample;
-import com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse;
+import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
+import com.digi.xbee.api.exceptions.TimeoutException;
+import com.digi.xbee.api.exceptions.XBeeException;
+import com.digi.xbee.api.io.IOSample;
+import com.digi.xbee.api.io.IOLine;
+import com.digi.xbee.api.io.IOValue;
+import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
+import com.digi.xbee.api.models.XBee16BitAddress;
+import com.digi.xbee.api.models.XBee64BitAddress;
+import com.digi.xbee.api.packet.common.RemoteATCommandResponsePacket;
+import com.digi.xbee.api.packet.common.IODataSampleRxIndicatorPacket;
+import com.digi.xbee.api.RemoteXBeeDevice;
+
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
 import org.slf4j.Logger;
@@ -15,9 +23,8 @@ import org.slf4j.LoggerFactory;
  * Extend jmri.AbstractSensor for XBee connections.
  * <P>
  * @author	Paul Bender Copyright (C) 2013
- * @version $Revision$
  */
-public class XBeeSensor extends AbstractSensor implements XBeeListener {
+public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListener {
 
     /**
      *
@@ -100,9 +107,12 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
                     + " ,D" + pin
                     + ")");
            }
+
+           // register to hear XBee IO Sample events.
+          tc.getXBee().addIOSampleListener(this);
+
            // Finally, request the current state from the layout.
            this.requestUpdateFromLayout();
-           tc.addXBeeListener(this);
         } 
     }
 
@@ -111,115 +121,49 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
      */
     public void requestUpdateFromLayout() {
         // Request the sensor status from the XBee Node this sensor is
-        // attached to.  NOTE: This requests status for all sensor inputs
-        // on the device.
-        XBeeMessage msg = XBeeMessage.getForceSampleMessage(node.getPreferedTransmitAddress());
-        // send the message
-        tc.sendXBeeMessage(msg, null);
-
+        // attached to.  
+        try  {
+           IOValue value = node.getXBee().getDIOValue(IOLine.getDIO(pin));
+           if ((value==IOValue.HIGH) ^ _inverted) {
+               setOwnState(Sensor.ACTIVE);
+           } else {
+               setOwnState(Sensor.INACTIVE);
+           }
+        } catch (TimeoutException toe) {
+           log.error("Timeout retrieving IO line value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+           // hidden terminal? Make sure the state appears as unknown.
+           setOwnState(Sensor.UNKNOWN);
+        } catch (InterfaceNotOpenException ino) {
+           log.error("Interface Not Open retrieving IO line value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+        } catch (XBeeException xbe) {
+           log.error("Error retrieving IO line value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+        }
     }
 
-    /**
-     * implementing classes will typically have a function/listener to get
-     * updates from the layout, which will then call public void
-     * firePropertyChange(String propertyName, Object oldValue, Object newValue)
-     * _once_ if anything has changed state (or set the commanded state
-     * directly)
-     *
-     */
-    public synchronized void reply(XBeeReply l) {
+
+    // IIOSampleReceiveListener methods
+    public synchronized void ioSampleReceived(RemoteXBeeDevice remoteDevice,IOSample ioSample) {
         if (log.isDebugEnabled()) {
-            log.debug("recieved message: " + l);
+            log.debug("recieved io sample {} from {}",ioSample,remoteDevice);
         }
 
-        com.rapplogic.xbee.api.XBeeResponse response = l.getXBeeResponse();
+        XBeeNode sourcenode = (XBeeNode) tc.getNodeFromXBeeDevice(remoteDevice);
 
-        if (response.getApiId() == ApiId.RX_64_IO_RESPONSE
-                || response.getApiId() == ApiId.RX_16_IO_RESPONSE) {
-            // This message is an IO response.
-            RxResponseIoSample ioSample = (RxResponseIoSample) response;
-
-            int address[] = ioSample.getSourceAddress().getAddress();
-            XBeeNode sourcenode = (XBeeNode) tc.getNodeFromAddress(address);
-
-            if (node.equals(sourcenode)) {
-                for (IoSample sample : ioSample.getSamples()) {
-                    if (sample.isDigitalOn(pin) ^ _inverted) {
-                        setOwnState(Sensor.ACTIVE);
-                    } else {
-                        setOwnState(Sensor.INACTIVE);
-                    }
-                }
-            }
-        } else if (response.getApiId() == ApiId.ZNET_IO_SAMPLE_RESPONSE) {
-            com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse ioSample
-                    = (com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse) response;
-
-            int address[] = ioSample.getRemoteAddress64().getAddress();
-            XBeeNode sourcenode = (XBeeNode) tc.getNodeFromAddress(address);
-
-            if (node.equals(sourcenode)) {
-                if (ioSample.isDigitalOn(pin) ^ _inverted) {
-                    setOwnState(Sensor.ACTIVE);
-                } else {
-                    setOwnState(Sensor.INACTIVE);
-                }
-            } else {
-                // not what we expected
-                log.debug("Ignoring mystery packet " + response.toString());
-            }
-        } else if (response instanceof RemoteAtResponse) {
-            RemoteAtResponse atResp = (RemoteAtResponse) response;
-            XBeeNode sourcenode = (XBeeNode) tc.getNodeFromAddress(atResp.getRemoteAddress64().getAddress());
-            if (node.equals(sourcenode)) {
-                if (atResp.getCommand().equals("IS")) {
-                    try {
-                        ZNetRxIoSampleResponse ioSample = ZNetRxIoSampleResponse.parseIsSample(atResp);
-                        if (ioSample.isDigitalOn(pin) ^ _inverted) {
-                            setOwnState(Sensor.ACTIVE);
-                        } else {
-                            setOwnState(Sensor.INACTIVE);
-                        }
-                    } catch (java.io.IOException ioe) {
-                        // parse error, wrong format.
-                        log.debug("Caught IOException parsing IS packet");
-                    } catch (java.lang.IllegalStateException ise) {
-                        // is this a series 1 packet?
-                        log.debug("Caught IllegalStateException parsing IS packet");
-                        RxResponseIoSample rxSample = new RxResponseIoSample();
-                        // don't need sampleSize now, might later.
-                        //int sampleSize = atResp.getValue()[0];
-                        rxSample.setChannelIndicator1(atResp.getValue()[1]);
-                        rxSample.setChannelIndicator2(atResp.getValue()[2]);
-                        IoSample sample = new IoSample(rxSample);
-                        sample.setDioMsb(atResp.getValue()[3]);
-                        sample.setDioLsb(atResp.getValue()[4]);
-                        if (sample.isDigitalOn(pin) ^ _inverted) {
-                           setOwnState(Sensor.ACTIVE);
-                        } else {
-                           setOwnState(Sensor.INACTIVE);
-                        }
-                    }
-                }
-            }
+        if (node.equals(sourcenode)) {
+          if ( ioSample.hasDigitalValues()){
+              if ((ioSample.getDigitalValue(IOLine.getDIO(pin))==IOValue.HIGH) ^ _inverted) {
+                 setOwnState(Sensor.ACTIVE);
+             } else {
+                 setOwnState(Sensor.INACTIVE);
+             }
+          }
         }
         return;
     }
 
-    // listen for the messages to the Xbee 
-    public void message(XBeeMessage l) {
-    }
-
-    // Handle a timeout notification
-    public void notifyTimeout(XBeeMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
-        }
-    }
-
     public void dispose() {
+        tc.getXBee().removeIOSampleListener(this);
         super.dispose();
-        tc.removeXBeeListener(this);
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeSensor.class.getName());

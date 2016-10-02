@@ -11,8 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Paul Bender Copyright (C) 2003-2010
  * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- *
+  *
  * Based on AbstractXNetInitializationManager
  */
 abstract public class AbstractDCCppInitializationManager {

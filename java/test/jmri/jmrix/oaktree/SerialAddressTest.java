@@ -1,7 +1,7 @@
 package jmri.jmrix.oaktree;
 
 import jmri.util.JUnitAppender;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -11,8 +11,7 @@ import junit.framework.TestSuite;
  *
  * @author	Dave Duchamp Copyright 2004
  * @author Bob Jacobsen Copyright 2007
- * @version	$Revision$
- */
+  */
 public class SerialAddressTest extends TestCase {
 
     public void testValidateSystemNameFormat() {

@@ -4,7 +4,6 @@
  * Description:	Swing action to create and register a MonFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version
  */
 package jmri.jmrix.marklin.swing.monitor;
 

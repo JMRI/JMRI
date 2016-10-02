@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * Represents a route on the layout
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision$
  */
 public class Route implements java.beans.PropertyChangeListener {
 
@@ -42,10 +41,10 @@ public class Route implements java.beans.PropertyChangeListener {
     public static final String LISTCHANGE_CHANGED_PROPERTY = "routeListChange"; // NOI18N
     public static final String DISPOSE = "routeDispose"; // NOI18N
 
-    public static final String OKAY = Bundle.getMessage("Okay");
+    public static final String OKAY = Bundle.getMessage("ButtonOK");
     public static final String ORPHAN = Bundle.getMessage("Orphan");
-    public static final String ERROR = Bundle.getMessage("Error");
-    
+    public static final String ERROR = Bundle.getMessage("ErrorTitle");
+
     public static final int START = 1; // add location at start of route
 
     public Route(String id, String name) {
@@ -180,7 +179,7 @@ public class Route implements java.beans.PropertyChangeListener {
         List<RouteLocation> routeList = getLocationsBySequenceList();
         for (int i = 0; i < routeList.size(); i++) {
             _sequenceNum = i + 1; // start sequence numbers at 1
-            routeList.get(i).setSequenceId(_sequenceNum);            
+            routeList.get(i).setSequenceId(_sequenceNum);
         }
     }
 
@@ -361,9 +360,10 @@ public class Route implements java.beans.PropertyChangeListener {
         }
         return ORPHAN;
     }
-    
+
     /**
      * Gets the shortest train length specified in the route.
+     * 
      * @return the minimum scale train length for this route.
      */
     public int getRouteMinimumTrainLength() {
@@ -374,9 +374,10 @@ public class Route implements java.beans.PropertyChangeListener {
         }
         return min;
     }
-    
+
     /**
      * Gets the longest train length specified in the route.
+     * 
      * @return the maximum scale train length for this route.
      */
     public int getRouteMaximumTrainLength() {
@@ -411,7 +412,6 @@ public class Route implements java.beans.PropertyChangeListener {
      * @param e Consist XML element
      */
     public Route(Element e) {
-        // if (log.isDebugEnabled()) log.debug("ctor from element "+e);
         Attribute a;
         if ((a = e.getAttribute(Xml.ID)) != null) {
             _id = a.getValue();
@@ -427,9 +427,7 @@ public class Route implements java.beans.PropertyChangeListener {
         if (e.getChildren(Xml.LOCATION) != null) {
             @SuppressWarnings("unchecked")
             List<Element> eRouteLocations = e.getChildren(Xml.LOCATION);
-            if (log.isDebugEnabled()) {
-                log.debug("route: ({}) has {} locations", getName(), eRouteLocations.size());
-            }
+            log.debug("route: ({}) has {} locations", getName(), eRouteLocations.size());
             for (Element eRouteLocation : eRouteLocations) {
                 register(new RouteLocation(eRouteLocation));
             }
@@ -460,11 +458,11 @@ public class Route implements java.beans.PropertyChangeListener {
                     .getNewValue());
         }
         // forward drops, pick ups, train direction, max moves, and max length as a list change
-        if (e.getPropertyName().equals(RouteLocation.DROP_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(RouteLocation.PICKUP_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(RouteLocation.TRAIN_DIRECTION_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(RouteLocation.MAX_MOVES_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(RouteLocation.MAX_LENGTH_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(RouteLocation.DROP_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(RouteLocation.PICKUP_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(RouteLocation.TRAIN_DIRECTION_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(RouteLocation.MAX_MOVES_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(RouteLocation.MAX_LENGTH_CHANGED_PROPERTY)) {
             setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, "RouteLocation"); // NOI18N
         }
     }

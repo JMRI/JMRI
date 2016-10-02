@@ -1,7 +1,7 @@
 package jmri.jmrix.maple;
 
 import jmri.implementation.AbstractTurnoutTest;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -9,8 +9,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.maple.SerialTurnout class
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 
     private SerialTrafficControlScaffold tcis = null;

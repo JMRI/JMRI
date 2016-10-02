@@ -5,8 +5,7 @@
  * object
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
- */
+  */
 package jmri.jmrix.ieee802154.swing.packetgen;
 
 import java.awt.event.ActionEvent;

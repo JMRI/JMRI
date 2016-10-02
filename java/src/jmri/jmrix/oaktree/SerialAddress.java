@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author Bob Jacobsen, Copyright (C) 2006
- * @version $Revision$
  */
 public class SerialAddress {
 

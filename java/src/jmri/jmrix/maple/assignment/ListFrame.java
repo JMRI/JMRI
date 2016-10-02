@@ -37,8 +37,7 @@ import org.slf4j.LoggerFactory;
  * Frame for running assignment list.
  *
  * @author	Dave Duchamp Copyright (C) 2006
- * @version	$Revision$
- */
+  */
 public class ListFrame extends jmri.util.JmriJFrame {
 
     /**

@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
    SpeedoSystemConnectionMemoTest.class,
    SpeedoTrafficControllerTest.class,
-   SpeedoReplyTest.class})
+   SpeedoReplyTest.class,
+   jmri.jmrix.bachrus.serialdriver.PackageTest.class
+})
 
 /**
  * Tests for the jmri.jmrix.bachrus package

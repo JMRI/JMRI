@@ -15,7 +15,6 @@ import jmri.jmrix.dccpp.AbstractDCCppSerialConnectionConfig;
  *
  * @author Paul Bender Copyright: Copyright (c) 2015
  * @author Mark Underwood Copyright: Copyright (c) 2015
- * @version $Revision$
  *
  * Based on AbstractXNetSerialConnectionConfigXml by Paul Bender
  */

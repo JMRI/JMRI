@@ -5,7 +5,6 @@ package jmri.jmrit.operations.trains;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
  * 2014
- * @version $Revision$
  */
 class BuildFailedException extends Exception {
 

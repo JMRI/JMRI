@@ -11,7 +11,6 @@ import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.11.3
- * @version $Revision: 17977 $
  */
 abstract public class Dcc4PcPanel extends jmri.util.swing.JmriPanel {
 

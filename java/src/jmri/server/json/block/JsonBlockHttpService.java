@@ -6,7 +6,7 @@ import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.USERNAME;
 import static jmri.server.json.JSON.VALUE;
-import static jmri.server.json.block.JsonBlockServiceFactory.BLOCK;
+import static jmri.server.json.block.JsonBlock.BLOCK;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

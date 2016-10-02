@@ -8,7 +8,6 @@ import java.util.ArrayList;
  * language
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
  */
 public class InitiateSound extends SdfMacro {
 

@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
  * @author	Paul Bender, Copyright (C) 2009
  * @author Daniel Boudreau Copyright (C) 2010
- * @version	$Revision: 24776 $
+ * 
  */
 public class SimulatorAdapter extends TamsPortController implements
         jmri.jmrix.SerialPortAdapter, Runnable {

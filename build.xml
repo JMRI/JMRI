@@ -192,7 +192,7 @@
         <pathelement location="${libdir}/slf4j-api-1.7.13.jar"/>
         <pathelement location="${libdir}/slf4j-log4j12-1.7.13.jar"/>
         <pathelement location="${libdir}/jul-to-slf4j-1.7.13.jar"/>
-        <pathelement location="${libdir}/xbee-api-0.9.jar"/>
+        <pathelement location="${libdir}/xbjlib-1.1.1.jar"/>
         <pathelement location="${libdir}/pi4j-core.jar"/>
         <pathelement location="${libdir}/pi4j-device.jar"/>
         <pathelement location="${libdir}/pi4j-gpio-extension.jar"/>
@@ -224,6 +224,16 @@
         <pathelement location="${libdir}/hamcrest-core-1.3.jar"/>
         <pathelement location="${libdir}/jfcunit.jar"/>
         <pathelement path="${i18n.class.jars}"/>            <!-- i18n test -->
+        <!-- powermock and it's dependencies -->
+        <pathelement location="${libdir}/mockito-core-2.0.42-beta.jar"/>
+        <pathelement location="${libdir}/powermock-mockito2-1.6.5-full.jar"/>
+        <pathelement location="${libdir}/powermock-api-mockito-common-1.6.5.jar"/>
+        <pathelement location="${libdir}/cglib-nodep-2.2.2.jar"/>
+        <pathelement location="${libdir}/javassist-3.20.0-GA.jar"/>
+        <pathelement location="${libdir}/objenesis-2.2.jar"/>
+        <pathelement location="${libdir}/byte-buddy-1.2.1.jar"/>
+         
+
     </path>
 
     <!-- path to run regular executables -->
@@ -1307,6 +1317,7 @@
 
     <target name="logalltest" depends="tests, runtime-library-selection" description="run headless test suite">
         <jacoco:coverage destfile="jacoco.exec" excludes="org.slf4j.*">
+
         <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1317,11 +1328,14 @@
 
             <classpath refid="test.class.path"/>
 
+            <!-- use different log4j settings to pick up additional coverage -->
+            <sysproperty key="jmri.log4jconfigfilename" value="tests_jacoco.lcf"/>
+
             <test name="apps.tests.AllTest" outfile="junit-results">
                 <formatter type="xml"/>
             </test>
-
         </junit>
+        
         </jacoco:coverage>
     </target>
 
@@ -1690,7 +1704,7 @@
         </findbugs>
     </target>
 
-<!--  Start for checker framework -->
+    <!--  Start for checker framework -->
 
     <property environment="env"/>
     <property name="checkerframework" value="${libdir}/checker-framework/" />

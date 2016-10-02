@@ -18,7 +18,6 @@ import javax.swing.ImageIcon;
  * for more details.
  * <P>
  * @author	Lionel Jeanson   Copyright (C) 2009
- * @version	$$
  */
 public class RosterIconFactory {
 
@@ -37,7 +36,7 @@ public class RosterIconFactory {
         if (id == null) {
             return null;
         }
-        RosterEntry re = Roster.instance().entryFromTitle(id);
+        RosterEntry re = Roster.getDefault().entryFromTitle(id);
         if (re == null) {
             return null;
         }

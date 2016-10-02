@@ -7,7 +7,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.ResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,8 +48,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class MrcPacketizer extends MrcTrafficController {
-
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.mrc.MrcPacketizerBundle");
 
     final static boolean fulldebug = false;
 
@@ -120,7 +117,7 @@ public class MrcPacketizer extends MrcTrafficController {
                 }
             }
         } catch (Exception e) {
-            log.warn(MrcPacketizerBundle.getMessage("LogMrcPacketizerPassXmitError"), e); //IN18N
+            log.warn("passing to xmit: unexpected exception: {0}", e); //IN18N
         }
     }
 
@@ -152,7 +149,7 @@ public class MrcPacketizer extends MrcTrafficController {
         istream = p.getInputStream();
         ostream = p.getOutputStream();
         if (controller != null) {
-            log.warn(MrcPacketizerBundle.getMessage("LogMrcPacketizerConnectWarn")); //IN18N
+            log.warn("connectPort: connect called while connected"); //IN18N
         }
         controller = p;
     }
@@ -167,7 +164,7 @@ public class MrcPacketizer extends MrcTrafficController {
         istream = null;
         ostream = null;
         if (controller != p) {
-            log.warn(MrcPacketizerBundle.getMessage("LogMrcPacketizerDisconnectWarn")); //IN18N
+            log.warn("disconnectPort: disconnect called from non-connected MrcPortController"); //IN18N
         }
         controller = null;
     }
@@ -461,12 +458,12 @@ public class MrcPacketizer extends MrcTrafficController {
 
                     if ((msg.getMessageClass() & MrcInterface.POLL) != MrcInterface.POLL && msg.getNumDataElements() > 6) {
                         if (!msg.validCheckSum()) {
-                            log.warn(MrcPacketizerBundle.getMessage("LogMrcPacketizerIgnorBadCkSumWarn"), msg.toString()); //IN18N
+                            log.warn("Ignore Mrc packet with bad checksum: {0}", msg.toString()); //IN18N
                             throw new MrcMessageException();
                         } else {
                             for (int i = 1; i < msg.getNumDataElements(); i += 2) {
                                 if (msg.getElement(i) != 0x00) {
-                                    log.warn(MrcPacketizerBundle.getMessage("LogMrcPacketizerIgnoreBadBitWarn"), msg.toString()); //IN18N
+                                    log.warn("Ignore Mrc packet with bad bit: {0}", msg.toString()); //IN18N
                                     throw new MrcMessageException();
                                 }
                             }
@@ -493,7 +490,7 @@ public class MrcPacketizer extends MrcTrafficController {
                     // done with this one
                 } catch (MrcMessageException e) {
                     // just let it ride for now
-                    log.warn(MrcPacketizerBundle.getMessage("LogMrcPacketizerMsgExceptionWarn"), e); //IN18N
+                    log.warn("run: unexpected MrcMessageException: {0}", e); //IN18N
                 } catch (java.io.EOFException e) {
                     // posted from idle port when enableReceiveTimeout used
                     if (fulldebug) {
@@ -509,7 +506,7 @@ public class MrcPacketizer extends MrcTrafficController {
                 } // normally, we don't catch the unnamed Exception, but in this
                 // permanently running loop it seems wise.
                 catch (Exception e) {
-                    log.warn(MrcPacketizerBundle.getMessage("LogMrcPacketizerUnkExceptionWarn"), e);  //IN18N
+                    log.warn("Unknown Exception: {0}", e);  //IN18N
                     e.printStackTrace();
                 }
             } // end of permanent loop
@@ -581,9 +578,9 @@ public class MrcPacketizer extends MrcTrafficController {
                     if (m.getMessageClass() != MrcInterface.POLL) {
                         if (fulldebug) {
                             log.debug("end write to stream: " + jmri.util.StringUtil.hexStringFromBytes(msg));
-                            log.info(MrcPacketizerBundle.getMessage("LogMrcPacketizerWaitInfo"), m.getTimeout(), x); //IN18N
+                            log.info("wait : {0} : {1}", m.getTimeout(), x); //IN18N
                         }
-                        transmitWait(m.getTimeout(), state, MrcPacketizerBundle.getMessage("LogMrcPacketizerXmitLoopError"), x); //IN18N
+                        transmitWait(m.getTimeout(), state, "transmitLoop interrupted", x); //IN18N
                         x++;
                     } else {
                         mCurrentState = IDLESTATE;
@@ -621,7 +618,7 @@ public class MrcPacketizer extends MrcTrafficController {
                                 }
                             }
                         } else {
-                            log.warn(MrcPacketizerBundle.getMessage("LogMrcPacketizerMsgMissedPollsWarn"), consecutiveMissedPolls, m.toString()); //IN18N
+                            log.warn("Message missed {0} polls for message {1}", consecutiveMissedPolls, m.toString()); //IN18N
                             consecutiveMissedPolls = 0;
                         }
                     } else if (mCurrentState == DOUBLELOCOCONTROL && m.getRetries() >= 0) {
@@ -643,7 +640,7 @@ public class MrcPacketizer extends MrcTrafficController {
                         consecutiveMissedPolls = 0;
                     }
                 } catch (java.io.IOException e) {
-                    log.warn(MrcPacketizerBundle.getMessage("LogMrcPacketizerSendMsgExWarn"), e.toString()); //IN18N
+                    log.warn("sendMrcMessage: IOException: {1}", e.toString()); //IN18N
                 }
             }
         }

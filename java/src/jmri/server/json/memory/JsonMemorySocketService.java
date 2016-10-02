@@ -3,7 +3,7 @@ package jmri.server.json.memory;
 import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PUT;
-import static jmri.server.json.memory.JsonMemoryServiceFactory.MEMORY;
+import static jmri.server.json.memory.JsonMemory.MEMORY;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import java.beans.PropertyChangeEvent;

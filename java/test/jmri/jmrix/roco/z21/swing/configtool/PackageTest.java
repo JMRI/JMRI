@@ -26,8 +26,9 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.roco.z21.swing.configtool");  // no tests in this class itself
-        suite.addTest(BundleTest.suite());
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Z21ConfigActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Z21ConfigFrameTest.class));
         return suite;
     }
 

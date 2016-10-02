@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.ResourceBundle;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,15 +87,20 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
         }
 
         // and finally store
-        boolean results = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).storeConfig(file);
-        System.out.println(results);
-        log.debug(results ? "store was successful" : "store failed");
-        if (!results) {
-            JOptionPane.showMessageDialog(null,
-                    rb.getString("StoreHasErrors") + "\n"
-                    + rb.getString("StoreIncomplete") + "\n"
-                    + rb.getString("ConsoleWindowHasInfo"),
-                    rb.getString("StoreError"), JOptionPane.ERROR_MESSAGE);
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm == null) {
+            log.error("Failed to get default configure manager");
+        } else {
+            boolean results = cm.storeConfig(file);
+            System.out.println(results);
+            log.debug(results ? "store was successful" : "store failed");
+            if (!results) {
+                JOptionPane.showMessageDialog(null,
+                        rb.getString("StoreHasErrors") + "\n"
+                        + rb.getString("StoreIncomplete") + "\n"
+                        + rb.getString("ConsoleWindowHasInfo"),
+                        rb.getString("StoreError"), JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 

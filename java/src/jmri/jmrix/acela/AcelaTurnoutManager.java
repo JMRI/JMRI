@@ -59,7 +59,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
          }
          */
         // Validate the systemName
-        if (AcelaAddress.validSystemNameFormat(systemName, 'T')) {
+        if (AcelaAddress.validSystemNameFormat(systemName, 'T',getSystemPrefix())) {
             trn = new AcelaTurnout(systemName, userName,_memo);
             if (!AcelaAddress.validSystemNameConfig(systemName, 'T',_memo)) {
                 log.warn("Turnout system Name does not refer to configured hardware: "
@@ -86,7 +86,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      * name has a valid format, else returns 'false'
      */
     public boolean validSystemNameFormat(String systemName) {
-        return (AcelaAddress.validSystemNameFormat(systemName, 'T'));
+        return (AcelaAddress.validSystemNameFormat(systemName, 'T',getSystemPrefix()));
     }
 
     /**

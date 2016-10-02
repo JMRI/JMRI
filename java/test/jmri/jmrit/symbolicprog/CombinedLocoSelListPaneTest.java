@@ -4,12 +4,11 @@ import javax.swing.JLabel;
 import jmri.Programmer;
 import jmri.jmrit.progsupport.ProgModeSelector;
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-// Revision: $Revision$
 public class CombinedLocoSelListPaneTest extends TestCase {
 
     public CombinedLocoSelListPaneTest(String s) {

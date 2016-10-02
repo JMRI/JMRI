@@ -26,7 +26,8 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.vsdecoder.swing.PackageTest");   // no tests in this class itself
 
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(VSDSwingBundleTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
         }

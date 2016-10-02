@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of interchanges used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class InterchangeTableModel extends TrackTableModel {
 

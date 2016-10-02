@@ -1,4 +1,4 @@
-//SpurTableModel.java
+// SpurTableModel.java
 package jmri.jmrit.operations.locations;
 
 import java.beans.PropertyChangeEvent;
@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of spurs used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class SpurTableModel extends TrackTableModel {
 

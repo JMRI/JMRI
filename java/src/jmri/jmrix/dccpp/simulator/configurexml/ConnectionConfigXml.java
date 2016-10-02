@@ -19,7 +19,6 @@ import org.jdom2.Element;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Paul Bender Copyright: Copyright (c) 2009
  * @author Mark Underwood Copyright: Copyright (c) 2015
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 

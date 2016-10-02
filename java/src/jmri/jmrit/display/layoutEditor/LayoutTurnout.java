@@ -1969,22 +1969,22 @@ public class LayoutTurnout {
         if (editable) {
             switch (getTurnoutType()) {
                 case RH_TURNOUT:
-                    popup.add(rb.getString("RHTurnout"));
+                    popup.add(Bundle.getMessage("RightTurnout"));
                     break;
                 case LH_TURNOUT:
-                    popup.add(rb.getString("LHTurnout"));
+                    popup.add(Bundle.getMessage("LeftTurnout"));
                     break;
                 case WYE_TURNOUT:
                     popup.add(rb.getString("WYETurnout"));
                     break;
                 case DOUBLE_XOVER:
-                    popup.add(rb.getString("XOverTurnout"));
+                    popup.add(rb.getString("DoubleCrossOver"));
                     break;
                 case RH_XOVER:
-                    popup.add(rb.getString("RHXOverTurnout"));
+                    popup.add(Bundle.getMessage("RightCrossOver"));
                     break;
                 case LH_XOVER:
-                    popup.add(rb.getString("LHXOverTurnout"));
+                    popup.add(Bundle.getMessage("LeftCrossOver"));
                     break;
                 default:
                     break;
@@ -1993,7 +1993,7 @@ public class LayoutTurnout {
             if (getTurnout() == null) {
                 popup.add(rb.getString("NoTurnout"));
             } else {
-                popup.add(rb.getString("Turnout") + ": " + turnoutName);
+                popup.add(Bundle.getMessage("BeanNameTurnout") + ": " + turnoutName);
             }
             // Rotate if there are no track connections
             if ((connectA == null) && (connectB == null)
@@ -2018,7 +2018,7 @@ public class LayoutTurnout {
                                 rot = Double.parseDouble(newAngle);
                             } catch (Exception e) {
                                 JOptionPane.showMessageDialog(layoutEditor, rb.getString("Error3")
-                                        + " " + e, rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                                        + " " + e, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                                 error = true;
                                 newAngle = "";
                             }
@@ -2034,7 +2034,7 @@ public class LayoutTurnout {
                 });
             }
             if (disableItem == null) {
-                disableItem = new JCheckBoxMenuItem(rb.getString("Disabled"));
+                disableItem = new JCheckBoxMenuItem(Bundle.getMessage("Disabled"));
             }
             disableItem.setSelected(disabled);
             popup.add(disableItem);
@@ -2056,18 +2056,18 @@ public class LayoutTurnout {
             if (blockName.equals("")) {
                 popup.add(rb.getString("NoBlock"));
             } else {
-                popup.add(rb.getString("Block") + ": " + getLayoutBlock().getID());
+                popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getID());
             }
             if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
                 // check if extra blocks have been entered
                 if (blockB != null) {
-                    popup.add(rb.getString("Block2ID") + ": " + blockBName);
+                    popup.add(Bundle.getMessage("Block_ID", 2) + ": " + blockBName);
                 }
                 if (blockC != null) {
-                    popup.add(rb.getString("Block3ID") + ": " + blockCName);
+                    popup.add(Bundle.getMessage("Block_ID", 3) + ": " + blockCName);
                 }
                 if (blockD != null) {
-                    popup.add(rb.getString("Block4ID") + ": " + blockDName);
+                    popup.add(Bundle.getMessage("Block_ID", 4) + ": " + blockDName);
                 }
             }
             if (hidden) {
@@ -2086,7 +2086,7 @@ public class LayoutTurnout {
                     setUpDefaultSize();
                 }
             });
-            popup.add(new AbstractAction(rb.getString("Edit")) {
+            popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
                 /**
                  *
                  */
@@ -2096,7 +2096,7 @@ public class LayoutTurnout {
                     editLayoutTurnout();
                 }
             });
-            popup.add(new AbstractAction(rb.getString("Remove")) {
+            popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 /**
                  *
                  */
@@ -2449,7 +2449,7 @@ public class LayoutTurnout {
             // setup turnout name
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
-            JLabel turnoutNameLabel = new JLabel(rb.getString("Turnout") + " " + rb.getString("Name"));
+            JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout")));
             panel1.add(turnoutNameLabel);
             panel1.add(turnoutNameField);
             turnoutNameField.setToolTipText(rb.getString("EditTurnoutNameHint"));
@@ -2474,7 +2474,7 @@ public class LayoutTurnout {
             }
             panel1a.add(additionalTurnout);
             contentPane.add(panel1a);
-            secondTurnoutLabel = new JLabel(rb.getString("Supporting") + rb.getString("Turnout") + " " + rb.getString("Name"));
+            secondTurnoutLabel = new JLabel(Bundle.getMessage("Supporting", Bundle.getMessage("BeanNameTurnout")));
             secondTurnoutLabel.setEnabled(false);
             secondTurnoutComboBox.setEnabled(false);
             JPanel panel1b = new JPanel();
@@ -2504,7 +2504,7 @@ public class LayoutTurnout {
             contentPane.add(panel33);
 
             TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-            border.setTitle(rb.getString("Block"));
+            border.setTitle(Bundle.getMessage("BeanNameBlock"));
             // setup block name
             JPanel panel2 = new JPanel();
             panel2.setBorder(border);
@@ -2522,7 +2522,7 @@ public class LayoutTurnout {
                 JPanel panel21 = new JPanel();
                 panel21.setLayout(new FlowLayout());
                 TitledBorder borderblk2 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-                borderblk2.setTitle(rb.getString("Block") + " 2");
+                borderblk2.setTitle(Bundle.getMessage("BeanNameBlock") + " 2");
                 panel21.setBorder(borderblk2);
                 panel21.add(blockBNameField);
                 blockBNameField.setToolTipText(rb.getString("EditBlockBNameHint"));
@@ -2533,13 +2533,13 @@ public class LayoutTurnout {
                         turnoutEditBlockBPressed(e);
                     }
                 });
-                turnoutEditBlockB.setToolTipText(rb.getString("EditBlockBHint"));
+                turnoutEditBlockB.setToolTipText(Bundle.getMessage("EditBlockHint", "2"));
                 contentPane.add(panel21);
 
                 JPanel panel22 = new JPanel();
                 panel22.setLayout(new FlowLayout());
                 TitledBorder borderblk3 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-                borderblk3.setTitle(rb.getString("Block") + " 3");
+                borderblk3.setTitle(Bundle.getMessage("BeanNameBlock") + " 3");
                 panel22.setBorder(borderblk3);
                 panel22.add(blockCNameField);
                 blockCNameField.setToolTipText(rb.getString("EditBlockCNameHint"));
@@ -2549,13 +2549,13 @@ public class LayoutTurnout {
                         turnoutEditBlockCPressed(e);
                     }
                 });
-                turnoutEditBlockC.setToolTipText(rb.getString("EditBlockCHint"));
+                turnoutEditBlockC.setToolTipText(Bundle.getMessage("EditBlockHint", "3"));
                 contentPane.add(panel22);
 
                 JPanel panel23 = new JPanel();
                 panel23.setLayout(new FlowLayout());
                 TitledBorder borderblk4 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-                borderblk4.setTitle(rb.getString("Block") + " 4");
+                borderblk4.setTitle(Bundle.getMessage("BeanNameBlock") + " 4");
                 panel23.setBorder(borderblk4);
                 panel23.add(blockDNameField);
                 blockDNameField.setToolTipText(rb.getString("EditBlockDNameHint"));
@@ -2565,7 +2565,7 @@ public class LayoutTurnout {
                         turnoutEditBlockDPressed(e);
                     }
                 });
-                turnoutEditBlockD.setToolTipText(rb.getString("EditBlockDHint"));
+                turnoutEditBlockD.setToolTipText(Bundle.getMessage("EditBlockHint", "4"));
                 contentPane.add(panel23);
             }
             // set up Edit Block, Done and Cancel buttons
@@ -2573,23 +2573,23 @@ public class LayoutTurnout {
             panel5.setLayout(new FlowLayout());
             // Edit Block
 
-            turnoutEditBlock.setToolTipText(rb.getString("EditBlockHint"));
+            turnoutEditBlock.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
             // Done
-            panel5.add(turnoutEditDone = new JButton(rb.getString("Done")));
+            panel5.add(turnoutEditDone = new JButton(Bundle.getMessage("ButtonDone")));
             turnoutEditDone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     turnoutEditDonePressed(e);
                 }
             });
-            turnoutEditDone.setToolTipText(rb.getString("DoneHint"));
+            turnoutEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             // Cancel
-            panel5.add(turnoutEditCancel = new JButton(rb.getString("Cancel")));
+            panel5.add(turnoutEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             turnoutEditCancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     turnoutEditCancelPressed(e);
                 }
             });
-            turnoutEditCancel.setToolTipText(rb.getString("CancelHint"));
+            turnoutEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
         }
 
@@ -2656,7 +2656,7 @@ public class LayoutTurnout {
         if (block == null) {
             JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
                     rb.getString("Error1"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         block.editLayoutBlock(editLayoutTurnoutFrame);
@@ -2691,7 +2691,7 @@ public class LayoutTurnout {
         if (blockB == null) {
             JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
                     rb.getString("Error1"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         blockB.editLayoutBlock(editLayoutTurnoutFrame);
@@ -2726,7 +2726,7 @@ public class LayoutTurnout {
         if (blockC == null) {
             JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
                     rb.getString("Error1"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         blockC.editLayoutBlock(editLayoutTurnoutFrame);
@@ -2761,7 +2761,7 @@ public class LayoutTurnout {
         if (blockD == null) {
             JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
                     rb.getString("Error1"),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         blockD.editLayoutBlock(editLayoutTurnoutFrame);

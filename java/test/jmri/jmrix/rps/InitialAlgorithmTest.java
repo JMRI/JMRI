@@ -1,7 +1,7 @@
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -12,8 +12,7 @@ import junit.framework.TestSuite;
  * The default transmitter location for the 7, 13, 13, 13 readings is (0,0,12)
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision$
- */
+  */
 public class InitialAlgorithmTest extends TestCase {
 
     double vs = 0.0344; // SI default for testing

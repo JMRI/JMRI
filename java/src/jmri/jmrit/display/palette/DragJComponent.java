@@ -14,13 +14,16 @@ import java.awt.dnd.DragSourceDropEvent;
 import java.awt.dnd.DragSourceEvent;
 import java.awt.dnd.DragSourceListener;
 import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * <P>
  * Gives a JComponent the capability to Drag and Drop
- * <BR>
+ * </P>
+ *
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -38,18 +41,16 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class DragJComponent extends JPanel implements DragGestureListener, DragSourceListener, Transferable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4302272454749137127L;
     DataFlavor _dataFlavor;
 
-    public DragJComponent(DataFlavor flavor, Dimension dim) {
+    public DragJComponent(DataFlavor flavor,  JComponent comp) {
         super();
         String borderName = ItemPalette.convertText("dragToPanel");
         setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                 borderName));
         // guestimate border is about 5 pixels thick. plus some margin
+        add(comp);
+        Dimension dim = comp.getPreferredSize();
         int width = Math.max(100, dim.width + 20);
         int height = Math.max(65, dim.height + 20);
         setPreferredSize(new java.awt.Dimension(width, height));
@@ -60,6 +61,10 @@ public abstract class DragJComponent extends JPanel implements DragGestureListen
         _dataFlavor = flavor;
     }
 
+    protected boolean okToDrag() {
+        return true;
+    }
+    
     /**
      * ************** DragGestureListener **************
      */
@@ -67,8 +72,9 @@ public abstract class DragJComponent extends JPanel implements DragGestureListen
         if (log.isDebugEnabled()) {
             log.debug("DragJLabel.dragGestureRecognized ");
         }
-        //Transferable t = getTransferable(this);
-        e.startDrag(DragSource.DefaultCopyDrop, this, this);
+        if (okToDrag()) {
+            e.startDrag(DragSource.DefaultCopyDrop, this, this);            
+        }
     }
 
     /**

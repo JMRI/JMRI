@@ -1,4 +1,3 @@
-// MatrixSignalMastXml.java
 package jmri.implementation.configurexml;
 
 import java.util.List;
@@ -121,7 +120,7 @@ public class MatrixSignalMastXml
                 } else {
                     m.setAllowUnLit(true);
                     String bits = unlit.getChild("bitString").getText();
-                    ((MatrixSignalMast) m).setUnLitBits(bits);
+                    m.setUnLitBits(bits);
                 }
             }
         }
@@ -133,11 +132,11 @@ public class MatrixSignalMastXml
             for (Element outp : list) {
                 i++; // count outputs
             }
-            ((MatrixSignalMast) m).setBitNum(i); // set char[] size before creating outputs
+            m.setBitNum(i); // set char[] size before creating outputs
             for (Element outp : list) {
                 String outputname = outp.getAttribute("matrixCol").getValue();
                 String turnoutname = outp.getText();
-                ((MatrixSignalMast) m).setOutput(outputname, turnoutname);
+                m.setOutput(outputname, turnoutname);
             }
         }
 
@@ -145,7 +144,7 @@ public class MatrixSignalMastXml
         if (bss != null) {
             List<Element> list = bss.getChildren("bitString"); // singular
             for (Element bs : list) {
-                ((MatrixSignalMast) m).setBitstring(bs.getAttribute("aspect").getValue(), bs.getText());
+                m.setBitstring(bs.getAttribute("aspect").getValue(), bs.getText());
             }
         }
 
@@ -153,7 +152,7 @@ public class MatrixSignalMastXml
         if (disabled != null) {
             List<Element> list = disabled.getChildren("disabledAspect"); // singular
             for (Element asp : list) {
-                ((MatrixSignalMast) m).setAspectDisabled(asp.getText());
+                m.setAspectDisabled(asp.getText());
             }
         }
         InstanceManager.getDefault(jmri.SignalMastManager.class).register(m);

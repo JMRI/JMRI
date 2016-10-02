@@ -6,8 +6,7 @@ package jmri.jmrix.powerline.insteon2412s;
  *
  * @author	Bob Jacobsen Copyright (C) 2008, 2009
  * @author	Ken Cameron Copyright (C) 2010
- * @version	$Revision$
- */
+  */
 public class Constants {
 
     public static final int HEAD_STX = 0x02;

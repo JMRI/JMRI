@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
  * @author Mark Underwood Copyright: Copyright (c) 2015
- * @version $Revision$
  */
 public class DCCppTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 

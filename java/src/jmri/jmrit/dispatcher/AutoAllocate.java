@@ -510,37 +510,37 @@ public class AutoAllocate {
             }
             // already in a PASSING_MEET Allocation Plan - find target Section and sequence
             Section oSection = null;
-            ActiveTrain oTrain = null;
+//            ActiveTrain oTrain = null;
             if (apx.getActiveTrain(1) == nt) {
                 nSecSeq = apx.getTargetSectionSequenceNum(1);
                 nSec = apx.getTargetSection(1);
                 oSection = apx.getTargetSection(2);
-                oTrain = apx.getActiveTrain(2);
+//                oTrain = apx.getActiveTrain(2);
             } else {
                 nSecSeq = apx.getTargetSectionSequenceNum(2);
                 nSec = apx.getTargetSection(2);
                 oSection = apx.getTargetSection(1);
-                oTrain = apx.getActiveTrain(1);
+//                oTrain = apx.getActiveTrain(1);
             }
             int aCurrentSeq = getCurrentSequenceNumber(at);
             aSecSeq = willTraverse(nSec, at, aCurrentSeq);
             if (aSecSeq == 0) {
                 return false;
             }
-            int tnSecSeq = nSecSeq;
-            if (nt.getPriority() > oTrain.getPriority()) {
-                if (!nt.isAllocationReversed()) {
-                    tnSecSeq--;
-                    if (tnSecSeq <= 0) {
-                        tnSecSeq = nSecSeq;
-                    }
-                } else {
-                    tnSecSeq++;
-                    if (tnSecSeq > nt.getTransit().getMaxSequence()) {
-                        tnSecSeq = nSecSeq;
-                    }
-                }
-            }
+//            int tnSecSeq = nSecSeq;
+//            if (nt.getPriority() > oTrain.getPriority()) {
+//                if (!nt.isAllocationReversed()) {
+//                    tnSecSeq--;
+//                    if (tnSecSeq <= 0) {
+//                        tnSecSeq = nSecSeq;
+//                    }
+//                } else {
+//                    tnSecSeq++;
+//                    if (tnSecSeq > nt.getTransit().getMaxSequence()) {
+//                        tnSecSeq = nSecSeq;
+//                    }
+//                }
+//            }
             ArrayList<Section> nSections = nt.getTransit().getSectionListBySeq(nSecSeq);
             if (nSections.size() <= 1) {
                 return false;

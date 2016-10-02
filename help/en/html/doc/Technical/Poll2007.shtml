@@ -92,7 +92,7 @@
 
         <li>10% 1.7</li>
 
-        <li>  0% 1.3 or earlier</li>
+        <li>0% 1.3 or earlier</li>
       </ol>Out of 159 responses, there were zero users of Java 1.3
       or earlier. This is somewhat inconsistent with smallbut
       non-zero number of people who said they are using JMRI on
@@ -119,14 +119,14 @@
 
         <li>11% Windows 2000</li>
 
-        <li>  9% Mac OS X - 10.4 or later</li>
+        <li>9% Mac OS X - 10.4 or later</li>
 
-        <li>  8% Linux - combined types, with no clear leader among
+        <li>8% Linux - combined types, with no clear leader among
         them</li>
 
-        <li>  3% Windows Vista</li>
+        <li>3% Windows Vista</li>
 
-        <li>  2% Windows Millenium Edition</li>
+        <li>2% Windows Millenium Edition</li>
       </ol>There were no respondents using Windows x64, Windows NT,
       or Windows 95. One respondent used "Windows Server (Any,
       including 2003)", and one "Windows (Other, including CE)".
@@ -154,7 +154,7 @@
       <p>Among other operating systems, there were no respondents
       indicating they used OS/2, or either "Other Unix-based" or
       "Other non-Unix-based". One respondent was using Solaris.
-      <a name="raw"></a></p>
+      <a name="raw" id="raw"></a></p>
 
       <h3>Raw Data</h3>The poll results are available from the
       <a href="http://groups.yahoo.com/group/jmriusers/polls">poll

@@ -1,6 +1,6 @@
 package jmri.jmrix.dccpp;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 /**
  * Tests for the {@link jmri.jmrix.dccpp.DCCppLight} class.

@@ -99,7 +99,7 @@ public abstract class Action {
     }
 
     public String getActionSuccessfulString() {
-        return Bundle.getMessage("OK");
+        return Bundle.getMessage("ButtonOK");
     }
 
     public String getActionFailedString() {
@@ -125,7 +125,7 @@ public abstract class Action {
      * @return OKAY, HALT, CLOSED, NO_MESSAGE_SENT, FINISH_FAILED
      */
     public int finishAction(boolean success) {
-        return finishAction(success, new Object[]{Bundle.getMessage("HALT"), Bundle.getMessage("OK")});
+        return finishAction(success, new Object[]{Bundle.getMessage("HALT"), Bundle.getMessage("ButtonOK")});
     }
 
     /**

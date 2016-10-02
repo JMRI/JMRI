@@ -40,11 +40,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TableItemPanel extends FamilyItemPanel implements ListSelectionListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -72832594032854676L;
-
     int ROW_HEIGHT;
 
     protected JTable _table;
@@ -72,7 +67,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         if (!_initialized) {
             super.init();
             add(initTablePanel(_model, _editor), 0);      // top of Panel    		
-            _buttonPostion = 1;
+            _buttonPosition = 1;
         }
     }
 
@@ -83,7 +78,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
         super.init(doneAction, iconMap);
         add(initTablePanel(_model, _editor), 0);
-        _buttonPostion = 1;
+        _buttonPosition = 1;
     }
 
     /**
@@ -100,6 +95,12 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         topPanel.add(_scrollPane, BorderLayout.CENTER);
         topPanel.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
         java.awt.Dimension dim = _table.getPreferredSize();
+        dim.height = _table.getRowCount();
+        if (dim.height < 2) {
+            dim.height = 4;
+        } else {
+            dim.height +=2;
+        }
         dim.height = ROW_HEIGHT * 12;
         _scrollPane.getViewport().setPreferredSize(dim);
 
@@ -175,7 +176,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
                 _addTableDialog.dispose();
             } catch (IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(_paletteFrame, ex.getMessage(),
-                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             }
         }
         _sysNametext.setText("");
@@ -237,13 +238,13 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         hideIcons();
     }
 
-    protected NamedBean getNamedBean() {
+    protected NamedBean getDeviceNamedBean() {
         if (_table == null) {
             return null;
         }
         int row = _table.getSelectedRow();
         if (log.isDebugEnabled()) {
-            log.debug("getNamedBean: from table \"" + _itemType + "\" at row " + row);
+            log.debug("getDeviceNamedBean: from table \"" + _itemType + "\" at row " + row);
         }
         if (row < 0) {
             return null;
@@ -251,77 +252,80 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         return _model.getBeanAt(row);
     }
 
-    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map) {
-        return new IconDragJLabel(flavor, map);
+    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
+        return new IconDragJLabel(flavor, map, icon);
     }
 
     protected class IconDragJLabel extends DragJLabel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2477024053040181591L;
-        HashMap<String, NamedIcon> iconMap;
+        HashMap<String, NamedIcon> iMap;
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // icon map is within package 
-        public IconDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map) {
-            super(flavor);
-            iconMap = map;
+        public IconDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
+            super(flavor, icon);
+            iMap = map;
         }
-
-        public boolean isDataFlavorSupported(DataFlavor flavor) {
-            return super.isDataFlavorSupported(flavor);
+        
+        protected boolean okToDrag() {
+            NamedBean bean = getDeviceNamedBean();
+            if (bean == null) {
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                return false;
+            }
+            return true;
         }
 
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {
                 return null;
             }
-            if (iconMap == null) {
-                log.error("IconDragJLabel.getTransferData: iconMap is null!");
-                return null;
-            }
-            NamedBean bean = getNamedBean();
+            NamedBean bean = getDeviceNamedBean();
             if (bean == null) {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("noRowSelected"),
-                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }
-
-            if (_itemType.equals("Turnout")) {
-                TurnoutIcon t = new TurnoutIcon(_editor);
-                t.setTurnout(bean.getDisplayName());
-                Iterator<Entry<String, NamedIcon>> iter = iconMap.entrySet().iterator();
-                while (iter.hasNext()) {
-                    Entry<String, NamedIcon> ent = iter.next();
-                    t.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
+            
+            if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
+                if (_itemType.equals("Turnout")) {
+                    TurnoutIcon t = new TurnoutIcon(_editor);
+                    t.setTurnout(bean.getDisplayName());
+                    Iterator<Entry<String, NamedIcon>> iter = iMap.entrySet().iterator();
+                    while (iter.hasNext()) {
+                        Entry<String, NamedIcon> ent = iter.next();
+                        t.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
+                    }
+                    t.setFamily(_family);
+                    t.setLevel(Editor.TURNOUTS);
+                    return t;
+                } else if (_itemType.equals("Sensor")) {
+                    SensorIcon s = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
+                            "resources/icons/smallschematics/tracksegments/circuit-error.gif"), _editor);
+                    Iterator<Entry<String, NamedIcon>> iter = iMap.entrySet().iterator();
+                    while (iter.hasNext()) {
+                        Entry<String, NamedIcon> ent = iter.next();
+                        s.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
+                    }
+                    s.setSensor(bean.getDisplayName());
+                    s.setFamily(_family);
+                    s.setLevel(Editor.SENSORS);
+                    return s;
+                } else if (_itemType.equals("Light")) {
+                    LightIcon l = new LightIcon(_editor);
+                    l.setOffIcon(iMap.get("LightStateOff"));
+                    l.setOnIcon(iMap.get("LightStateOn"));
+                    l.setInconsistentIcon(iMap.get("BeanStateInconsistent"));
+                    l.setUnknownIcon(iMap.get("BeanStateUnknown"));
+                    l.setLight((jmri.Light) bean);
+                    l.setLevel(Editor.LIGHTS);
+                    return l;
                 }
-                t.setFamily(_family);
-                t.setLevel(Editor.TURNOUTS);
-                return t;
-            } else if (_itemType.equals("Sensor")) {
-                SensorIcon s = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
-                        "resources/icons/smallschematics/tracksegments/circuit-error.gif"), _editor);
-                Iterator<Entry<String, NamedIcon>> iter = iconMap.entrySet().iterator();
-                while (iter.hasNext()) {
-                    Entry<String, NamedIcon> ent = iter.next();
-                    s.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
-                }
-                s.setSensor(bean.getDisplayName());
-                s.setFamily(_family);
-                s.setLevel(Editor.SENSORS);
-                return s;
-            } else if (_itemType.equals("Light")) {
-                LightIcon l = new LightIcon(_editor);
-                l.setOffIcon(iconMap.get("LightStateOff"));
-                l.setOnIcon(iconMap.get("LightStateOn"));
-                l.setInconsistentIcon(iconMap.get("BeanStateInconsistent"));
-                l.setUnknownIcon(iconMap.get("BeanStateUnknown"));
-                l.setLight((jmri.Light) bean);
-                l.setLevel(Editor.LIGHTS);
-                return l;
+            } else if (DataFlavor.stringFlavor.equals(flavor)) {
+                StringBuilder sb = new StringBuilder(_itemType);
+                sb.append(" icons for \"");
+                sb.append(bean.getDisplayName());
+                sb.append("\"");
+                return  sb.toString();
             }
-            return null;
+            return null;                
         }
     }
 

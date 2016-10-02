@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import jmri.util.com.sun.TableSorter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,13 +13,11 @@ import org.slf4j.LoggerFactory;
  * Frame for user to place a group of cars on the layout
  *
  * @author Dan Boudreau Copyright (C) 2011, 2013
- * @version $Revision$
  */
 public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChangeListener {
 
     CarsTableModel _carsTableModel;
     JTable _carsTable;
-    TableSorter _sorter;
 
     public CarsSetFrame() {
         super();
@@ -38,8 +35,7 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 
     public void initComponents(JTable carsTable) {
         _carsTable = carsTable;
-        _sorter = (TableSorter) carsTable.getModel();
-        _carsTableModel = (CarsTableModel) _sorter.getTableModel();
+        _carsTableModel = (CarsTableModel) carsTable.getModel();
 
         super.initComponents();
 
@@ -73,7 +69,7 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
         // first car in the list becomes the master
         int rows[] = _carsTable.getSelectedRows();
         if (rows.length > 0) {
-            Car car = _carsTableModel.getCarAtIndex(_sorter.modelIndex(rows[0]));
+            Car car = _carsTableModel.getCarAtIndex(_carsTable.convertRowIndexToModel(rows[0]));
             super.loadCar(car);
         }
     }
@@ -118,7 +114,7 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
         List<Car> cars = new ArrayList<Car>();
         int rows[] = _carsTable.getSelectedRows();
         for (int row : rows) {
-            Car car = _carsTableModel.getCarAtIndex(_sorter.modelIndex(row));
+            Car car = _carsTableModel.getCarAtIndex(_carsTable.convertRowIndexToModel(row));
             log.debug("Adding selected car {} to change list", car.toString());
             cars.add(car);
         }

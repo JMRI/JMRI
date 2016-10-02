@@ -4,7 +4,6 @@
  * Description:	Swing action to create and register a MonFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision: 22942 $
  * @author	kcameron Copyright (C) 2011 copied from SerialMonPane.java
  * @author	Daniel Boudreau Copyright (C) 2012 added human readable format
  */
@@ -30,18 +29,10 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
 
     public String getHelpTarget() {
         return "package.jmri.jmrix.mrc.swing.monitor.MrcMonPanel";
-    }//IN18N
+    }//NOI18N
 
     public String getTitle() {
-        StringBuilder x = new StringBuilder();
-        if (memo != null) {
-            x.append(memo.getUserName());
-        } else {
-            x.append("MRC_"); //IN18N
-        }
-        x.append(": "); //IN18N
-        x.append("Command Monitor"); //IN18N
-        return x.toString();
+        return(Bundle.getMessage("MrcMonPanelName"));
     }
 
     @Override
@@ -66,7 +57,7 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
         }
     }
 
-    JCheckBox includePoll = new JCheckBox("Include Poll Messages"); //IN18N
+    JCheckBox includePoll = new JCheckBox(Bundle.getMessage("MrcMonPanelCheckIncPoll")); //NOI18N
 
     private int trafficFilter = MrcInterface.ALL;
 
@@ -91,18 +82,18 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
             return;
         }
 
-        logMessage(timestamp, m, "Tx:");
+        logMessage(timestamp, m, Bundle.getMessage("MrcMonPanelTextXmit")); //NOI18N
     }
 
     public synchronized void notifyFailedXmit(Date timestamp, MrcMessage m) {
 
-        logMessage(timestamp, m, "FAILED:");
+        logMessage(timestamp, m, Bundle.getMessage("MrcMonPanelTextFailed"));   //NOI18N
     }
 
     @Override
     public synchronized void notifyRcv(Date timestamp, MrcMessage m) {
 
-        String prefix = "Rx:"; //IN18N
+        String prefix = Bundle.getMessage("MrcMonPanelTextRecv"); //NOI18N
         if (!includePoll.isSelected() && (m.getMessageClass() & MrcInterface.POLL) == MrcInterface.POLL && m.getElement(1) == 0x01) {
             //Do not show poll messages
             previousPollMessage = m;
@@ -112,7 +103,7 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
                 previousPollMessage = null;
                 return;
             }
-            prefix = "Rx: From Cab - " + Integer.toString(previousPollMessage.getElement(0)); //IN18N
+            prefix = Bundle.getMessage("MrcMonPanelTextRxCab") + Integer.toString(previousPollMessage.getElement(0)); //NOI18N
             previousPollMessage = null;
         }
         logMessage(timestamp, m, prefix);
