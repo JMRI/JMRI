@@ -44,7 +44,7 @@ public class JsonServerTest extends TestCase {
         suite.addTest(jmri.jmris.json.JsonSensorServerTest.suite());
         suite.addTest(jmri.jmris.json.JsonLightServerTest.suite());
         suite.addTest(jmri.jmris.json.JsonOperationsServerTest.suite());
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             // put any tests that require a UI here.
