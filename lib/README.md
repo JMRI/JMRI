@@ -53,13 +53,13 @@ Note that Windows installers don't necessarily remove existing library versions.
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
 
-##### purejavacomm.jar
-- version 1.0.0
-- from https://github.com/nyholku/purejavacomm/tree/master/bin
+##### purejavacomm-1.0.1.jar
+- version 1.0.1
+- from http://www.sparetimelabs.com/maven2/com/sparetimelabs/purejavacomm/1.0.1/
 
-##### jna.jar
-- version 4.2.0
-- from https://github.com/java-native-access/jna/releases/tag/4.2.0
+##### jna-4.2.2.jar
+- version 4.2.2
+- from https://maven.java.net/content/repositories/releases/net/java/dev/jna/jna/4.2.2/
 
 ##### security.policy
 - (JMRI file)
