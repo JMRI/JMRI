@@ -63,7 +63,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _unRotatedText = s;
         debug = log.isDebugEnabled();
         if (debug) {
-            log.debug("PositionableLabel ctor (text) " + s);
+            if (log.isDebugEnabled()) log.debug("PositionableLabel ctor (text) " + s);
         }
         setHorizontalAlignment(JLabel.CENTER);
         setVerticalAlignment(JLabel.CENTER);
@@ -77,7 +77,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _namedIcon = s;
         debug = log.isDebugEnabled();
         if (debug) {
-            log.debug("PositionableLabel ctor (icon) " + s.getName());
+            if (log.isDebugEnabled()) log.debug("PositionableLabel ctor (icon) " + s.getName());
         }
         setPopupUtility(new PositionablePopupUtil(this, this));
     }
@@ -167,7 +167,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _displayLevel = l;
         if (oldDisplayLevel != l) {
             if (debug) {
-                log.debug("Changing label display level from " + oldDisplayLevel + " to " + _displayLevel);
+                if (log.isDebugEnabled()) log.debug("Changing label display level from " + oldDisplayLevel + " to " + _displayLevel);
             }
             _editor.displayLevelChange(this);
         }
@@ -646,13 +646,13 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
     
     public void rotate(int deg) {
-        log.debug("rotate({}) with _rotateText {}, _text {}, _icon {}", deg, _rotateText, _text, _icon);
+        if (log.isDebugEnabled()) log.debug("rotate({}) with _rotateText {}, _text {}, _icon {}", deg, _rotateText, _text, _icon);
         _degrees = deg;
         if (_rotateText || deg==0) {
             if (deg == 0) {             // restore unrotated whatever
                 _rotateText = false;
                 if(_text) {
-                    log.debug("   super.setText(\"{}\");", _unRotatedText);
+                    if (log.isDebugEnabled()) log.debug("   super.setText(\"{}\");", _unRotatedText);
                     super.setText(_unRotatedText);
                     if (_popupUtil!=null) {
                         setOpaque( _popupUtil.hasBackground());
@@ -898,10 +898,10 @@ public class PositionableLabel extends JLabel implements Positionable {
         _unRotatedText = text;
         _text = (text !=null && text.length()>0);  // when "" is entered for text, and a font has been specified, the descender distance moves the position
         if (/*_rotateText &&*/ !isIcon() && _namedIcon != null) {
-            log.debug("setText calls rotate({})", _degrees);
+            if (log.isDebugEnabled()) log.debug("setText calls rotate({})", _degrees);
             rotate(_degrees);		//this will change text label as a icon with a new _namedIcon.
         } else {
-            log.debug("setText calls super.setText()");
+            if (log.isDebugEnabled()) log.debug("setText calls super.setText()");
             super.setText(text);
         }
     }
