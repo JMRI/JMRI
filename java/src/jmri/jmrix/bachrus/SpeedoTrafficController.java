@@ -26,7 +26,8 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
 
     private SpeedoReply reply = new SpeedoReply();
 
-    public SpeedoTrafficController() {
+    public SpeedoTrafficController(SpeedoSystemConnectionMemo adaptermemo) {
+        memo = adaptermemo;
     }
 
     // The methods to implement the SpeedoInterface
@@ -123,6 +124,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
         return null;
     }
 
+    private SpeedoSystemConnectionMemo memo = null;
     // data members to hold the streams
     DataInputStream istream = null;
     OutputStream ostream = null;

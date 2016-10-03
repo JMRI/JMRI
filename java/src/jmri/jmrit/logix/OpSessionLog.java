@@ -17,27 +17,26 @@ import org.slf4j.LoggerFactory;
 
 class OpSessionLog {
 
-    BufferedWriter _outBuff;
-
-    private static OpSessionLog _instance;
+    static BufferedWriter _outBuff;
+    private static OpSessionLog _instance = null;
 
     private OpSessionLog() {
     }
 
-    public static OpSessionLog getInstance() {
-        if (_instance == null) {
-            _instance = new OpSessionLog();
+    public static synchronized boolean makeLogFile(java.awt.Component parent) {
+        if (_instance != null) {
+            close();
         }
-        return _instance;
-    }
 
-    public synchronized boolean showFileChooser(java.awt.Component parent) {
         JFileChooser fileChooser = new JFileChooser(FileUtil.getUserFilesPath());
         fileChooser.setDialogTitle(Bundle.getMessage("logSession"));
         fileChooser.setFileFilter(new FileNameExtensionFilter("Text files", "txt", "TXT"));
         int retVal = fileChooser.showDialog(parent, Bundle.getMessage("logFile"));
         if (retVal != JFileChooser.APPROVE_OPTION) {
             return false;
+        }
+        if (_instance == null) {
+            _instance = new OpSessionLog();
         }
 
         File file = fileChooser.getSelectedFile();
@@ -55,6 +54,10 @@ class OpSessionLog {
                 return false;
             }
         }
+        
+        if (_instance == null) {
+            _instance = new OpSessionLog();
+        }
         try {
             _outBuff = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
             writeHeader(fileName);
@@ -66,7 +69,10 @@ class OpSessionLog {
         return true;
     }
 
-    void writeHeader(String fileName) {
+    static private void writeHeader(String fileName) {
+        if (_outBuff==null) {
+            return;
+        }
         try {
             _outBuff.newLine();
             _outBuff.append("\t\t\t");
@@ -83,7 +89,10 @@ class OpSessionLog {
         }
     }
 
-    synchronized public void writeLn(String text) {
+    static synchronized public void writeLn(String text) {
+        if (_outBuff==null) {
+            return;
+        }
         try {
             SimpleDateFormat dateFormatter = new SimpleDateFormat("  hh:mm:ss a   ");
             _outBuff.append(dateFormatter.format(new Date()));
@@ -94,7 +103,10 @@ class OpSessionLog {
         }
     }
 
-    synchronized public void close() {
+    static synchronized public void close() {
+        if (_outBuff==null) {
+            return;
+        }
         try {
             writeLn(Bundle.getMessage("stopLog"));
             _outBuff.flush();
