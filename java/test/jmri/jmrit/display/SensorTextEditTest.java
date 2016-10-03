@@ -27,7 +27,7 @@ public class SensorTextEditTest {
     public void initCheck() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SensorTextEdit frame = new SensorTextEdit();
-        Editor ef = new jmri.jmrit.display.layoutEditor.LayoutEditor();
+        Editor ef = new EditorScaffold();
         SensorIcon i = new SensorIcon(ef);
         // this test (currently) makes sure there are no exceptions
         // thrown when initComponents is called.
