@@ -33,7 +33,7 @@ public class PackageTest extends TestCase {
             suite.addTest(ItemPaletteTest.suite());
         }
 
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
 
         return suite;
     }

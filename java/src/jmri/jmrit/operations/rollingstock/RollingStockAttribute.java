@@ -24,7 +24,7 @@ public class RollingStockAttribute {
     public RollingStockAttribute() {
     }
 
-    public synchronized void dispose() {
+    public void dispose() {
         list.clear();
         //TODO The removal of listeners causes the tests to fail.
         // Need to reload all listeners for the tests to work.

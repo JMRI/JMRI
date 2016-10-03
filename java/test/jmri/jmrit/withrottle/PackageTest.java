@@ -27,7 +27,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.withrottle.PackageTest");   // no tests in this class itself
 
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(ConsistControllerTest.suite());
         suite.addTest(ConsistFunctionControllerTest.suite());
         suite.addTest(DeviceServerTest.suite());

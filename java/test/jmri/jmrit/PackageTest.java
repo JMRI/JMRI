@@ -33,7 +33,7 @@ public class PackageTest extends TestCase {
         if (!Boolean.getBoolean("jmri.headlesstest")) {
             suite.addTest(jmri.jmrit.AbstractIdentifyTest.suite());
         }
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(DccLocoAddressSelectorTest.suite());
         suite.addTest(MemoryContentsTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(SoundTest.class));

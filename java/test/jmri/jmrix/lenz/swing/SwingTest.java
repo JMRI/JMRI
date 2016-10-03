@@ -36,8 +36,7 @@ public class SwingTest extends TestCase {
             suite.addTest(jmri.jmrix.lenz.swing.lzv100.LZV100Test.suite());
         }
 
-        suite.addTest(BundleTest.suite());
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         return suite;
     }
 

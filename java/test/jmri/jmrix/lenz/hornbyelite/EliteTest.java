@@ -29,7 +29,7 @@ public class EliteTest extends TestCase {
         suite.addTest(new TestSuite(EliteAdapterTest.class));
         suite.addTest(new TestSuite(EliteConnectionTypeListTest.class));
         suite.addTest(new TestSuite(EliteXNetInitializationManagerTest.class));
-        suite.addTest(new TestSuite(EliteXNetThrottleManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EliteXNetThrottleManagerTest.class));
         suite.addTest(new TestSuite(EliteXNetThrottleTest.class));
         suite.addTest(new TestSuite(EliteXNetTurnoutTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(EliteXNetTurnoutManagerTest.class));

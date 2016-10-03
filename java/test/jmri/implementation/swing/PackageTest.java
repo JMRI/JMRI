@@ -29,7 +29,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.implementation.swing");   // no tests in this class itself
 
         suite.addTest(SwingShutDownTaskTest.suite());
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
 
         return suite;
     }
