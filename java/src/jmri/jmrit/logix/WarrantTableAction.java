@@ -63,9 +63,9 @@ public class WarrantTableAction extends AbstractAction {
     private static JDialog _errorDialog;
     protected static WarrantFrame _openFrame;
     protected static NXFrame _nxFrame;
-    private static OpSessionLog _log;
+    private static boolean _logging = false;
     private static boolean _edit;
-    static ShutDownTask     _shutDownTask;
+    static ShutDownTask     _shutDownTask = null;
 
     protected WarrantTableAction(String menuOption) {
         super(Bundle.getMessage(menuOption));
@@ -159,28 +159,25 @@ public class WarrantTableAction extends AbstractAction {
     
     protected static JMenuItem makeLogMenu() {
         JMenuItem mi;
-        if (_log==null) {
+        if (!_logging) {
             mi = new JMenuItem(Bundle.getMessage("startLog"));          
             mi.addActionListener( new ActionListener()
                 {
                     public void actionPerformed(ActionEvent e) {
-                        _log = OpSessionLog.getInstance();
-                        if (!_log.showFileChooser(WarrantTableFrame.getInstance())) {
-                            _log = null;
+                        if (!OpSessionLog.makeLogFile(WarrantTableFrame.getInstance())) {
                             return;
                         }
-                        if (_shutDownTask == null) {
-                            _shutDownTask = new SwingShutDownTask("PanelPro Save default icon check",
-                                    null, null, null)
-                            {
-                                public boolean checkPromptNeeded() {
-                                    _log.close();
-                                    _log = null;
-                                    return true;
-                                }
-                            };
-                            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(_shutDownTask);
-                        }
+                        _logging = true;
+                        _shutDownTask = new SwingShutDownTask("PanelPro Save default icon check",
+                                null, null, null)
+                        {
+                            public boolean checkPromptNeeded() {
+                                OpSessionLog.close();
+                                _logging = false;
+                                return true;
+                            }
+                        };
+                        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(_shutDownTask);
                         updateWarrantMenu();
                     }
                 });
@@ -189,10 +186,10 @@ public class WarrantTableAction extends AbstractAction {
             mi.addActionListener( new ActionListener()
                 {
                     public void actionPerformed(ActionEvent e) {
-                        _log.close();
+                        OpSessionLog.close();
                         jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(_shutDownTask);
                         _shutDownTask = null;
-                        _log = null;
+                        _logging = false;
                         updateWarrantMenu();
                     }
                 });
@@ -201,8 +198,8 @@ public class WarrantTableAction extends AbstractAction {
     }
     
     synchronized protected static void writetoLog(String text) {
-        if (_log!=null) {
-            _log.writeLn(text);
+        if (_logging) {
+            OpSessionLog.writeLn(text);
         }       
     }
     
