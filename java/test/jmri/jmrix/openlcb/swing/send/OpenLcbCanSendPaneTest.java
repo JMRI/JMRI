@@ -1,4 +1,4 @@
-package jmri.jmrix.openlcb.swing.hub;
+package jmri.jmrix.openlcb.swing.send;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -7,19 +7,17 @@ import org.junit.Ignore;
 import org.junit.Test;
 /**
  * @author Bob Jacobsen Copyright 2013
+ * @author Paul Bender Copyright (C) 2016
  */
-public class HubPaneTest {
+public class OpenLcbCanSendPaneTest {
 
-    HubPane hub;
     jmri.jmrix.can.CanSystemConnectionMemo memo;
     jmri.jmrix.can.TrafficController tc;
 
     @Test
     public void testCtor() {
-        hub = new HubPane();
-        Assert.assertNotNull("Connection memo object non-null", memo);
-        // this next step takes 30 seconds of clock time, so has been commented out
-        //hub.initContext(memo);
+        OpenLcbCanSendPane p = new OpenLcbCanSendPane();
+        Assert.assertNotNull("Pane object non-null", p);
     }
 
     // The minimal setup for log4J
@@ -29,7 +27,6 @@ public class HubPaneTest {
         jmri.util.JUnitUtil.resetInstanceManager();
 
         memo = new jmri.jmrix.can.CanSystemConnectionMemo();
-        Assert.assertNotNull("Connection memo object non-null", memo);
         tc = new jmri.jmrix.can.adapters.loopback.LoopbackTrafficController();
         memo.setTrafficController(tc);
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
@@ -38,7 +35,6 @@ public class HubPaneTest {
 
     @After
     public void tearDown() {
-        hub.stopHubThread();
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
