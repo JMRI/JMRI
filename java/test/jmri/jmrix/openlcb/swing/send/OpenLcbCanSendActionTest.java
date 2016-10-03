@@ -2,9 +2,11 @@ package jmri.jmrix.openlcb.swing.send;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import java.awt.GraphicsEnvironment;
 /**
  * @author Bob Jacobsen Copyright 2013
  * @author Paul Bender Copyright(C) 2016
@@ -16,6 +18,7 @@ public class OpenLcbCanSendActionTest {
 
     @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         OpenLcbCanSendAction h = new OpenLcbCanSendAction();
         Assert.assertNotNull("Action object non-null", h);
     }
