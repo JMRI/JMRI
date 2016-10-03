@@ -54,6 +54,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.display.controlPanelEditor.PackageTest.suite());
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SensorTextEditTest.class));
 
         return suite;
     }
