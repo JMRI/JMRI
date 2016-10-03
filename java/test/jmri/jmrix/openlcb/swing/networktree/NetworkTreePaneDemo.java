@@ -19,9 +19,11 @@ import org.openlcb.swing.networktree.NodeTreeRep;
 import org.openlcb.swing.networktree.TreePane;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import java.awt.GraphicsEnvironment;
 
 /**
  * Simulate nine nodes interacting on a single gather/scatter "link", and feed
@@ -63,6 +65,7 @@ public class NetworkTreePaneDemo {
 
     @Before
     public void setUp() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         store = new MimicNodeStore(connection, nid1);
         Message msg = new ProducerIdentifiedMessage(nid1, eventA, EventState.Unknown);
         store.put(msg, null);
@@ -95,11 +98,13 @@ public class NetworkTreePaneDemo {
 
     @Test
     public void testPriorMessage() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.setTitle("Prior Message");
     }
 
     @Test
     public void testAfterMessage() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.setTitle("After Message");
         Message msg = new ProducerIdentifiedMessage(nid2, eventA, EventState.Unknown);
         store.put(msg, null);
@@ -107,6 +112,7 @@ public class NetworkTreePaneDemo {
 
     @Test
     public void testWithProtocolID() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.setTitle("2nd has protocol id");
         Message msg;
         msg = new ProducerIdentifiedMessage(nid2, eventA, EventState.Unknown);
@@ -116,6 +122,7 @@ public class NetworkTreePaneDemo {
 
     @Test
     public void testWith1stSNII() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.setTitle("3rd has PIP && 1st SNII");
         Message msg;
         msg = new ProducerIdentifiedMessage(nid2, eventA, EventState.Unknown);
@@ -130,6 +137,7 @@ public class NetworkTreePaneDemo {
 
     @Test
     public void testWithSelect() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.setTitle("listener test");
 
         pane.addTreeSelectionListener(new TreeSelectionListener() {

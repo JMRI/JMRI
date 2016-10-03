@@ -12,10 +12,11 @@ import org.jdom2.input.SAXBuilder;
 import org.openlcb.cdi.swing.CdiPanel;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-
+import java.awt.GraphicsEnvironment;
 
 /**
  * @author Bob Jacobsen Copyright 2012
@@ -25,6 +26,7 @@ public class CdiPanelDemo {
 
     @Test
     public void testDisplay() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame f = new JFrame();
         f.setTitle("Configuration Demonstration");
         CdiPanel m = new CdiPanel();
@@ -65,6 +67,7 @@ public class CdiPanelDemo {
 
     @Test
     public void testDisplaySample1() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame f = makeFrame(getRootFromFile("java/test/jmri/jmrix/openlcb/sample1.xml"));
         f.setTitle("Sample1 XML");
         f.setVisible(true);
@@ -72,6 +75,7 @@ public class CdiPanelDemo {
 
     @Test
     public void testDisplaySample2() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame f = makeFrame(getRootFromFile("java/test/jmri/jmrix/openlcb/sample2.xml"));
         f.setTitle("Sample 2 XML");
         f.setVisible(true);
@@ -79,6 +83,7 @@ public class CdiPanelDemo {
 
     @Test
     public void testLocoCdiDisplay() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame f = makeFrame(getRootFromFile("java/test/jmri/jmrix/openlcb/NMRAnetDatabaseTrainNode.xml"));
         f.setTitle("Locomotive CDI Demonstration");
         f.setVisible(true);
