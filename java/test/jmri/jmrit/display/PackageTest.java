@@ -56,6 +56,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SensorTextEditTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(AnalogClock2DisplayTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BlockContentsIconTest.class));
 
         return suite;
     }
