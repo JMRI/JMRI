@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
         jmri.jmrix.openlcb.swing.monitor.PackageTest.class,
         jmri.jmrix.openlcb.swing.clockmon.PackageTest.class,
         jmri.jmrix.openlcb.swing.downloader.PackageTest.class,
+        jmri.jmrix.openlcb.swing.send.PackageTest.class,
         BundleTest.class
 })
 

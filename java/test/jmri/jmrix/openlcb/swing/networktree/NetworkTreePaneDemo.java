@@ -5,9 +5,6 @@ import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.openlcb.AbstractConnection;
 import org.openlcb.Connection;
 import org.openlcb.EventID;
@@ -20,6 +17,13 @@ import org.openlcb.ProtocolIdentificationReplyMessage;
 import org.openlcb.SimpleNodeIdentInfoReplyMessage;
 import org.openlcb.swing.networktree.NodeTreeRep;
 import org.openlcb.swing.networktree.TreePane;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import java.awt.GraphicsEnvironment;
 
 /**
  * Simulate nine nodes interacting on a single gather/scatter "link", and feed
@@ -32,7 +36,7 @@ import org.openlcb.swing.networktree.TreePane;
  *
  * @author Bob Jacobsen Copyright 2009
  */
-public class NetworkTreePaneDemo extends TestCase {
+public class NetworkTreePaneDemo {
 
     NodeID nid1 = new NodeID(new byte[]{0, 0, 0, 0, 0, 1});
     NodeID nid2 = new NodeID(new byte[]{0, 0, 0, 0, 0, 2});
@@ -59,7 +63,9 @@ public class NetworkTreePaneDemo extends TestCase {
 
     MimicNodeStore store;
 
+    @Before
     public void setUp() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         store = new MimicNodeStore(connection, nid1);
         Message msg = new ProducerIdentifiedMessage(nid1, eventA, EventState.Unknown);
         store.put(msg, null);
@@ -85,21 +91,28 @@ public class NetworkTreePaneDemo extends TestCase {
 
     }
 
+    @After
     public void tearDown() {
-        //frame.setVisible(false);
+        frame.setVisible(false);
     }
 
+    @Test
     public void testPriorMessage() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.setTitle("Prior Message");
     }
 
+    @Test
     public void testAfterMessage() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.setTitle("After Message");
         Message msg = new ProducerIdentifiedMessage(nid2, eventA, EventState.Unknown);
         store.put(msg, null);
     }
 
+    @Test
     public void testWithProtocolID() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.setTitle("2nd has protocol id");
         Message msg;
         msg = new ProducerIdentifiedMessage(nid2, eventA, EventState.Unknown);
@@ -107,7 +120,9 @@ public class NetworkTreePaneDemo extends TestCase {
         store.put(pipmsg, null);
     }
 
+    @Test
     public void testWith1stSNII() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.setTitle("3rd has PIP && 1st SNII");
         Message msg;
         msg = new ProducerIdentifiedMessage(nid2, eventA, EventState.Unknown);
@@ -120,7 +135,9 @@ public class NetworkTreePaneDemo extends TestCase {
         store.put(msg, null);
     }
 
+    @Test
     public void testWithSelect() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.setTitle("listener test");
 
         pane.addTreeSelectionListener(new TreeSelectionListener() {
@@ -151,20 +168,4 @@ public class NetworkTreePaneDemo extends TestCase {
         store.put(msg, null);
     }
 
-    // from here down is testing infrastructure
-    public NetworkTreePaneDemo(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {NetworkTreePaneDemo.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(NetworkTreePaneDemo.class);
-        return suite;
-    }
 }
