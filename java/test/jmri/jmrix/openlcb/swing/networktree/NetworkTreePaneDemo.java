@@ -65,7 +65,9 @@ public class NetworkTreePaneDemo {
 
     @Before
     public void setUp() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if(GraphicsEnvironment.isHeadless()) {
+           return; // don't bother setting up a frame in headless.
+        }
         store = new MimicNodeStore(connection, nid1);
         Message msg = new ProducerIdentifiedMessage(nid1, eventA, EventState.Unknown);
         store.put(msg, null);
