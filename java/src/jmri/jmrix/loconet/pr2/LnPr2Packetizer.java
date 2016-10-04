@@ -14,17 +14,12 @@ import org.slf4j.LoggerFactory;
  */
 public class LnPr2Packetizer extends jmri.jmrix.loconet.LnPacketizer {
 
-    final static boolean fulldebug = false;
-
-    boolean debug = false;
-
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization")
     public LnPr2Packetizer() {
         super();
         self = this;
         echo = true;
-        debug = log.isDebugEnabled();
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnPr2Packetizer.class.getName());

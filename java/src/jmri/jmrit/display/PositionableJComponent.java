@@ -21,7 +21,6 @@ public class PositionableJComponent extends JComponent implements Positionable {
      */
     private static final long serialVersionUID = -4906476926163826709L;
     protected Editor _editor = null;
-    protected boolean debug = false;
 
     private ToolTip _tooltip;
     private boolean _showTooltip = true;
@@ -39,7 +38,6 @@ public class PositionableJComponent extends JComponent implements Positionable {
     public PositionableJComponent(Editor editor) {
         _editor = editor;
         _scale = 1.0;
-        debug = log.isDebugEnabled();
     }
 
     @Override
