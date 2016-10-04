@@ -37,7 +37,6 @@ public class PositionableLabel extends JLabel implements Positionable {
 
     protected Editor _editor;
 
-    private boolean debug = false;
     protected boolean _icon = false;
     protected boolean _text = false;
     protected boolean _control = false;
@@ -61,10 +60,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _editor = editor;
         _text = true;
         _unRotatedText = s;
-        debug = log.isDebugEnabled();
-        if (debug) {
-            if (log.isDebugEnabled()) log.debug("PositionableLabel ctor (text) " + s);
-        }
+        log.debug("PositionableLabel ctor (text) {}", s);
         setHorizontalAlignment(JLabel.CENTER);
         setVerticalAlignment(JLabel.CENTER);
         setPopupUtility(new PositionablePopupUtil(this, this));
@@ -75,10 +71,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _editor = editor;
         _icon = true;
         _namedIcon = s;
-        debug = log.isDebugEnabled();
-        if (debug) {
-            if (log.isDebugEnabled()) log.debug("PositionableLabel ctor (icon) " + s.getName());
-        }
+        log.debug("PositionableLabel ctor (icon) {}", s.getName());
         setPopupUtility(new PositionablePopupUtil(this, this));
     }
 
@@ -166,9 +159,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         int oldDisplayLevel = _displayLevel;
         _displayLevel = l;
         if (oldDisplayLevel != l) {
-            if (debug) {
-                if (log.isDebugEnabled()) log.debug("Changing label display level from " + oldDisplayLevel + " to " + _displayLevel);
-            }
+            log.debug("Changing label display level from {} to {}", oldDisplayLevel, _displayLevel);
             _editor.displayLevelChange(this);
         }
     }
@@ -212,6 +203,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     public String getUnRotatedText() {
         return _unRotatedText;
     }
+
     public void setUnRotatedText(String s) {
         _unRotatedText = s;
     }
@@ -324,11 +316,11 @@ public class PositionableLabel extends JLabel implements Positionable {
      * changed
      */
     public void updateSize() {
-        if (debug) {
-            log.trace("updateSize() w= " + maxWidth() + ", h= " + maxHeight() + " _namedIcon= " + _namedIcon);
-        }
+        int width = maxWidth();
+        int height = maxHeight();
+        log.trace("updateSize() w= {}, h= {} _namedIcon= {}", width, height, _namedIcon);
 
-        setSize(maxWidth(), maxHeight());
+        setSize(width, height);
         if (_namedIcon != null && _text) {
             //we have a combined icon/text therefore the icon is central to the text.
             setHorizontalTextPosition(CENTER);
@@ -399,8 +391,8 @@ public class PositionableLabel extends JLabel implements Positionable {
                 max = PositionablePopupUtil.MIN_SIZE;
             }
         }
-        if (debug) {
-            log.trace("maxWidth= " + max + " preferred width= " + getPreferredSize().width);
+        if (log.isTraceEnabled()) { // avoid AWT size computation
+            log.trace("maxWidth= {} preferred width= ", max, getPreferredSize().width);
         }
         return max;
     }
@@ -429,8 +421,8 @@ public class PositionableLabel extends JLabel implements Positionable {
                 max = PositionablePopupUtil.MIN_SIZE;
             }
         }
-        if (debug) {
-            log.trace("maxHeight= " + max + " preferred height= " + getPreferredSize().height);
+        if (log.isTraceEnabled()) { // avoid AWT size computation
+            log.trace("maxHeight= {} preferred height= {}", max, getPreferredSize().height);
         }
         return max;
     }
@@ -639,28 +631,32 @@ public class PositionableLabel extends JLabel implements Positionable {
         }
         return ((NamedIcon) getIcon()).getScale();
     }
-    
+
     public void setIcon(NamedIcon icon) {
         _namedIcon = icon;
         super.setIcon(icon);
     }
-    
+
     public void rotate(int deg) {
-        if (log.isDebugEnabled()) log.debug("rotate({}) with _rotateText {}, _text {}, _icon {}", deg, _rotateText, _text, _icon);
+        if (log.isDebugEnabled()) {
+            log.debug("rotate({}) with _rotateText {}, _text {}, _icon {}", deg, _rotateText, _text, _icon);
+        }
         _degrees = deg;
-        if (_rotateText || deg==0) {
+        if (_rotateText || deg == 0) {
             if (deg == 0) {             // restore unrotated whatever
                 _rotateText = false;
-                if(_text) {
-                    if (log.isDebugEnabled()) log.debug("   super.setText(\"{}\");", _unRotatedText);
+                if (_text) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("   super.setText(\"{}\");", _unRotatedText);
+                    }
                     super.setText(_unRotatedText);
-                    if (_popupUtil!=null) {
-                        setOpaque( _popupUtil.hasBackground());
-                        _popupUtil.setBorder(true);                        
+                    if (_popupUtil != null) {
+                        setOpaque(_popupUtil.hasBackground());
+                        _popupUtil.setBorder(true);
                     }
                     if (_icon) {
                         String url = _namedIcon.getURL();
-                        _namedIcon = new NamedIcon(url, url);                        
+                        _namedIcon = new NamedIcon(url, url);
                     } else {
                         _namedIcon = null;
                     }
@@ -691,7 +687,7 @@ public class PositionableLabel extends JLabel implements Positionable {
                 _rotateText = true;
                 setOpaque(false);
             }
-            if (_popupUtil!=null) {
+            if (_popupUtil != null) {
                 _popupUtil.setBorder(false);
             }
             _namedIcon.rotate(deg, this);
@@ -745,7 +741,7 @@ public class PositionableLabel extends JLabel implements Positionable {
                 vOffset += _popupUtil.getMargin() + _popupUtil.getBorderSize();
             }
         }
-        
+
         BufferedImage bufIm = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = bufIm.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
@@ -758,7 +754,7 @@ public class PositionableLabel extends JLabel implements Positionable {
                 RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 
         if (_popupUtil != null) {
-            if ( _popupUtil.hasBackground()) {
+            if (_popupUtil.hasBackground()) {
                 g2d.setColor(_popupUtil.getBackground());
                 g2d.fillRect(0, 0, width, height);
             }
@@ -769,9 +765,9 @@ public class PositionableLabel extends JLabel implements Positionable {
             }
         }
 
-        g2d.drawImage(icon.getImage(), AffineTransform.getTranslateInstance(hOffset, vOffset+1), this);
+        g2d.drawImage(icon.getImage(), AffineTransform.getTranslateInstance(hOffset, vOffset + 1), this);
         g2d.setFont(getFont());
-        
+
         hOffset = Math.max((width - textWidth) / 2, 0);
         vOffset = Math.max((height - textHeight) / 2, 0) + getFontMetrics(getFont()).getAscent();
         g2d.setColor(getForeground());
@@ -837,7 +833,7 @@ public class PositionableLabel extends JLabel implements Positionable {
                 RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 
         if (_popupUtil != null) {
-            if ( _popupUtil.hasBackground()) {
+            if (_popupUtil.hasBackground()) {
                 g2d.setColor(_popupUtil.getBackground());
                 g2d.fillRect(0, 0, width, height);
             }
@@ -896,12 +892,12 @@ public class PositionableLabel extends JLabel implements Positionable {
     @Override
     public void setText(String text) {
         _unRotatedText = text;
-        _text = (text !=null && text.length()>0);  // when "" is entered for text, and a font has been specified, the descender distance moves the position
-        if (/*_rotateText &&*/ !isIcon() && _namedIcon != null) {
-            if (log.isDebugEnabled()) log.debug("setText calls rotate({})", _degrees);
+        _text = (text != null && text.length() > 0);  // when "" is entered for text, and a font has been specified, the descender distance moves the position
+        if (/*_rotateText &&*/!isIcon() && _namedIcon != null) {
+            log.debug("setText calls rotate({})", _degrees);
             rotate(_degrees);		//this will change text label as a icon with a new _namedIcon.
         } else {
-            if (log.isDebugEnabled()) log.debug("setText calls super.setText()");
+            log.debug("setText calls super.setText()");
             super.setText(text);
         }
     }
