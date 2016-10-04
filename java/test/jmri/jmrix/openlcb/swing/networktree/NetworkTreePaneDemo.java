@@ -1,10 +1,17 @@
 package jmri.jmrix.openlcb.swing.networktree;
 
+import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.openlcb.AbstractConnection;
 import org.openlcb.Connection;
 import org.openlcb.EventID;
@@ -17,13 +24,6 @@ import org.openlcb.ProtocolIdentificationReplyMessage;
 import org.openlcb.SimpleNodeIdentInfoReplyMessage;
 import org.openlcb.swing.networktree.NodeTreeRep;
 import org.openlcb.swing.networktree.TreePane;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Simulate nine nodes interacting on a single gather/scatter "link", and feed
@@ -65,13 +65,13 @@ public class NetworkTreePaneDemo {
 
     @Before
     public void setUp() throws Exception {
-        if(GraphicsEnvironment.isHeadless()) {
-           return; // don't bother setting up a frame in headless.
-        }
         store = new MimicNodeStore(connection, nid1);
         Message msg = new ProducerIdentifiedMessage(nid1, eventA, EventState.Unknown);
         store.put(msg, null);
 
+        if(GraphicsEnvironment.isHeadless()) {
+           return; // don't bother setting up a frame in headless.
+        }
         // Test is really popping a window before doing all else
         frame = new JFrame();
         frame.setTitle("TreePane Test");
@@ -95,6 +95,10 @@ public class NetworkTreePaneDemo {
 
     @After
     public void tearDown() {
+        store=null;
+        if(GraphicsEnvironment.isHeadless()) {
+           return; // don't bother tearing down a frame in headless.
+        }
         frame.setVisible(false);
     }
 
