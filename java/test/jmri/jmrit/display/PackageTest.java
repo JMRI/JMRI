@@ -59,6 +59,9 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(BlockContentsIconTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(CoordinateEditTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(IconAdderTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IndicatorTrackIconTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IndicatorTrackPathsTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LightIconTest.class));
 
         return suite;
     }
