@@ -132,6 +132,53 @@ public class OlcbTurnoutTest extends TestCase {
         knownListener.verifyExpectations();
     }
 
+    public void testDirectFeedback() throws jmri.JmriException {
+        // load dummy TrafficController
+        TestTrafficController t = new TestTrafficController();
+
+        OlcbTurnout s = new OlcbTurnout("MT", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t);
+        s.setFeedbackMode(Turnout.DIRECT);
+
+        FakePropertyChangeListener knownListener = new FakePropertyChangeListener(KNOWN_STATE);
+        s.addPropertyChangeListener(knownListener);
+
+        knownListener.expectChange(Turnout.THROWN);
+        s.setState(Turnout.THROWN);
+        Assert.assertEquals(Turnout.THROWN, s.getCommandedState());
+        Assert.assertEquals(Turnout.THROWN, s.getKnownState());
+
+        knownListener.expectChange(Turnout.CLOSED);
+        s.setState(Turnout.CLOSED);
+        Assert.assertEquals(Turnout.CLOSED, s.getCommandedState());
+        Assert.assertEquals(Turnout.CLOSED, s.getKnownState());
+
+        knownListener.verifyExpectations();
+
+        // message for Active and Inactive
+        CanMessage mActive = new CanMessage(
+                new int[]{1, 2, 3, 4, 5, 6, 7, 8},
+                0x195B4000
+        );
+        mActive.setExtended(true);
+
+        CanMessage mInactive = new CanMessage(
+                new int[]{1, 2, 3, 4, 5, 6, 7, 9},
+                0x195B4000
+        );
+        mInactive.setExtended(true);
+
+        //  Feedback is ignored. Neither known nor commanded state changes.
+        s.message(mActive);
+        Assert.assertEquals(Turnout.CLOSED, s.getCommandedState());
+        Assert.assertEquals(Turnout.CLOSED, s.getKnownState());
+
+        s.message(mInactive);
+        Assert.assertEquals(Turnout.CLOSED, s.getCommandedState());
+        Assert.assertEquals(Turnout.CLOSED, s.getKnownState());
+
+        knownListener.verifyExpectations();
+    }
+
     public void testLoopback() throws jmri.JmriException {
         // need a real TrafficController here to loopback the CAN messages to ourselves.
         LoopbackTrafficController t = new LoopbackTrafficController();

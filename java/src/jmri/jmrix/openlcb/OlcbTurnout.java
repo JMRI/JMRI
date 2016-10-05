@@ -22,9 +22,10 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout
     private static final long serialVersionUID = -2709042631708878196L;
     OlcbAddress addrThrown;   // go to thrown state
     OlcbAddress addrClosed;   // go to closed state
-    private static final String[] validFeedbackNames = {"MONITORING", "ONESENSOR", "TWOSENSOR"};
-    private static final int[] validFeedbackModes = {MONITORING, ONESENSOR, TWOSENSOR};
-    private static final int validFeedbackTypes = MONITORING | ONESENSOR | TWOSENSOR;
+    private static final String[] validFeedbackNames = {"MONITORING", "ONESENSOR", "TWOSENSOR",
+            "DIRECT"};
+    private static final int[] validFeedbackModes = {MONITORING, ONESENSOR, TWOSENSOR, DIRECT};
+    private static final int validFeedbackTypes = MONITORING | ONESENSOR | TWOSENSOR | DIRECT;
     private static final int defaultFeedbackType = MONITORING;
 
     protected OlcbTurnout(String prefix, String address, TrafficController tc) {
@@ -106,13 +107,13 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout
 
     public void message(CanMessage f) {
         if (addrThrown.match(f)) {
-            newCommandedState(THROWN);
             if (_activeFeedbackType == MONITORING) {
+                newCommandedState(THROWN);
                 newKnownState(THROWN);
             }
         } else if (addrClosed.match(f)) {
-            newCommandedState(CLOSED);
             if (_activeFeedbackType == MONITORING) {
+                newCommandedState(CLOSED);
                 newKnownState(CLOSED);
             }
         }
@@ -120,13 +121,13 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout
 
     public void reply(CanReply f) {
         if (addrThrown.match(f)) {
-            newCommandedState(THROWN);
             if (_activeFeedbackType == MONITORING) {
+                newCommandedState(THROWN);
                 newKnownState(THROWN);
             }
         } else if (addrClosed.match(f)) {
-            newCommandedState(CLOSED);
             if (_activeFeedbackType == MONITORING) {
+                newCommandedState(CLOSED);
                 newKnownState(CLOSED);
             }
         }
