@@ -62,7 +62,7 @@ public class UDPOutputStream extends OutputStream {
     int idx = 0; // buffer index; points to next empty buffer byte
     int bufferMax = DEFAULT_MAX_BUFFER_SIZE;
 
-    /**
+    /*
      * ******************** constructors *******************
      */
     /*
@@ -395,7 +395,7 @@ public class UDPOutputStream extends OutputStream {
         }
     }
 
-    /**
+    /*
      * ***************** buffer size accesors *****************
      */
     /*
