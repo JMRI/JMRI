@@ -198,7 +198,7 @@ public class UDPOutputStream extends OutputStream {
         setBufferSize(buffSize);
     }
 
-    /**
+    /*
      * ********** opening and closing the stream ***********
      */
     /*
@@ -248,7 +248,7 @@ public class UDPOutputStream extends OutputStream {
         idx = 0;
     }
 
-    /**
+    /*
      * ********* writing to and flushing the buffer ***********
      */
     /*
