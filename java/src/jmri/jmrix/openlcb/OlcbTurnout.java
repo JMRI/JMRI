@@ -88,9 +88,19 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout
         if (s == Turnout.THROWN) {
             m = addrThrown.makeMessage();
             tc.sendCanMessage(m, this);
+            // TC will not give us back the message we sent to the port, so short-circuit the
+            // monitoring feedback here
+            if (_activeFeedbackType == MONITORING) {
+                newKnownState(THROWN);
+            }
         } else if (s == Turnout.CLOSED) {
             m = addrClosed.makeMessage();
             tc.sendCanMessage(m, this);
+            // TC will not give us back the message we sent to the port, so short-circuit the
+            // monitoring feedback here
+            if (_activeFeedbackType == MONITORING) {
+                newKnownState(CLOSED);
+            }
         }
     }
 
