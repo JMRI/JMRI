@@ -80,13 +80,11 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
      * @param pName Used as a system/user name to lookup the Memory object
      */
     public void setMemory(String pName) {
-        if (debug) {
-            log.debug("setMemory for memory= " + pName);
-        }
+        log.debug("setMemory for memory= {}", pName);
         if (InstanceManager.getNullableDefault(jmri.MemoryManager.class) != null) {
             try {
                 Memory memory = InstanceManager.memoryManagerInstance().
-                    provideMemory(pName);
+                        provideMemory(pName);
                 setMemory(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, memory));
             } catch (IllegalArgumentException e) {
                 log.error("Memory '" + pName + "' not available, icon won't see changes");
@@ -230,9 +228,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
      * Drive the current state of the display from the state of the Memory.
      */
     public void displayState() {
-        if (debug) {
-            log.debug("displayState");
-        }
+        log.debug("displayState");
         if (namedMemory == null) {  // leave alone if not connected yet
             return;
         }

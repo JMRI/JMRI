@@ -8,7 +8,7 @@ import jmri.util.swing.multipane.MultiPaneWindow;
 import jmri.util.swing.multipane.PanedInterface;
 
 /**
- * Standalone, but paned, PanelPro window.   Note: This is test code!
+ * Standalone, but paned, PanelPro window. Note: This is test code!
  *
  * Ignores WindowInterface, since standalone.
  *
@@ -18,6 +18,8 @@ public class PanelProFrame extends MultiPaneWindow {
 
     /**
      * Enhanced constructor for placing the pane in various GUIs
+     *
+     * @param title The title of the Window
      */
     public PanelProFrame(String title) {
         super(title, "xml/config/apps/panelpro/Gui3LeftTree.xml",

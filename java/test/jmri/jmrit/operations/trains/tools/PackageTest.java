@@ -25,7 +25,7 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.operations.trains.tools.PackageTest"); // no tests in class itself
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
 
         // GUI tests start here
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {

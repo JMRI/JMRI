@@ -3,7 +3,6 @@ package jmri.jmrit.display;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import jmri.util.JmriJFrame;
@@ -18,8 +17,6 @@ import jmri.util.JmriJFrame;
  * @author Kevin Dickerson (SensorTextEditor version);
  */
 public class SensorTextEdit extends JmriJFrame {
-
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     SensorIcon pl; 	// layout positional label tracked by this frame
     static final String INIT = null;
@@ -78,38 +75,38 @@ public class SensorTextEdit extends JmriJFrame {
         textUnknown.setVisible(true);
 
         inactTextField.setText(pl.getInactiveText());
-        inactTextField.setToolTipText(rb.getString("EnterInActiveToolTip"));
+        inactTextField.setToolTipText(Bundle.getMessage("EnterInActiveToolTip"));
         inactTextField.setMaximumSize(new Dimension(
                 inactTextField.getMaximumSize().width, inactTextField
                 .getPreferredSize().height));
 
         actTextField.setText(pl.getActiveText());
-        actTextField.setToolTipText(rb.getString("EnterActiveToolTip"));
+        actTextField.setToolTipText(Bundle.getMessage("EnterActiveToolTip"));
         actTextField.setMaximumSize(new Dimension(
                 actTextField.getMaximumSize().width, actTextField
                 .getPreferredSize().height));
 
         inconTextField.setText(pl.getInconsistentText());
-        inconTextField.setToolTipText(rb.getString("EnterInconToolTip"));
+        inconTextField.setToolTipText(Bundle.getMessage("EnterInconToolTip"));
         inconTextField.setMaximumSize(new Dimension(
                 inconTextField.getMaximumSize().width, inconTextField
                 .getPreferredSize().height));
 
         unknownTextField.setText(pl.getUnknownText());
-        unknownTextField.setToolTipText(rb.getString("EnterUnknownToolTip"));
+        unknownTextField.setToolTipText(Bundle.getMessage("EnterUnknownToolTip"));
         unknownTextField.setMaximumSize(new Dimension(
                 unknownTextField.getMaximumSize().width, unknownTextField
                 .getPreferredSize().height));
 
         okButton.setText(Bundle.getMessage("ButtonOK"));
         okButton.setVisible(true);
-        okButton.setToolTipText(rb.getString("SetButtonToolTipSensor"));
+        okButton.setToolTipText(Bundle.getMessage("SetButtonToolTipSensor"));
 
         cancelButton.setText(Bundle.getMessage("ButtonCancel"));
         cancelButton.setVisible(true);
-        cancelButton.setToolTipText(rb.getString("CancelButtonToolTipSensor"));
+        cancelButton.setToolTipText(Bundle.getMessage("CancelButtonToolTipSensor"));
 
-        setTitle(rb.getString("SetSensorText"));
+        setTitle(Bundle.getMessage("SetSensorText"));
         getContentPane().setLayout(new GridBagLayout());
 
         setSize(250, 220);

@@ -364,18 +364,22 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
                 log.error("Unexpected editor component of class: {}", component.getClass().getName());
                 return component;
             }
-            JComboBox<String> comboBox = (JComboBox<String>) getComponent();
+            JComboBox<?> comboBox = (JComboBox<?>) getComponent();
             if (warrant == null) {
                 log.warn("getWarrantAt row= " + row + " Warrant is null!");
                 return comboBox;
             }
             comboBox.removeAllItems();
+
+            // make new comboBox because cast "(JComboBox<String>)component" shows warning
+            JComboBox<String> comboBox2 = new JComboBox<>();
+            comboBox2.setFont(new Font(null, Font.PLAIN, 12));
             List<BlockOrder> orders = warrant.getBlockOrders();
             for (int i = 0; i < orders.size(); i++) {
                 BlockOrder order = orders.get(i);
-                comboBox.addItem(order.getBlock().getDisplayName() + ": - " + order.getPath().getName());
+                comboBox2.addItem(order.getBlock().getDisplayName() + ": - " + order.getPath().getName());
             }
-            return comboBox;
+            return comboBox2;
         }
     }
 
