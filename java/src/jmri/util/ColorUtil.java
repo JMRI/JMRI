@@ -1,85 +1,120 @@
 package jmri.util;
 
 import java.awt.Color;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/*
+/**
  * A collection of utilities related to colors.
- * 
+ *
  * @author Dave Duchamp Copyright: (c) 2004-2007
  */
-public class ColorUtil{
+public class ColorUtil {
 
     /**
-     * Utility methods for converting between string and color Note: These names
-     * are only used internally, so don't need a resource bundle
+     * Handles known colors plus special value for track
+     *
+     * @param color the color or null
+     * @return the name of the color or "black" if a color was provided; "track"
+     *         if color is null
      */
-
-    /* handles known colors plus special value for track */
-    public static String colorToString(Color color) {
-        if (color == null) return "track";
+    @Nonnull
+    public static String colorToString(@Nullable Color color) {
+        if (color == null) {
+            return "track";
+        }
         String colorName = colorToName(color);
-        if (colorName != null) return colorName;
+        if (colorName != null) {
+            return colorName;
+        }
         log.error("unknown color sent to colorToString");
         return "black";
     }
 
-    /* returns known color name or hex value of form #RRGGBB */
-    public static String colorToColorName(Color color) {
-        if (color == null) return null;
+    /**
+     * Returns known color name or hex value in form #RRGGBB
+     *
+     * @param color the color
+     * @return the name or hex value of color; returns null if color is null
+     */
+    @CheckForNull
+    public static String colorToColorName(@Nullable Color color) {
+        if (color == null) {
+            return null;
+        }
         String colorName = colorToName(color);
-        if (colorName != null) return colorName;
+        if (colorName != null) {
+            return colorName;
+        }
         return colorToHexString(color);
     }
 
     public static Color stringToColor(String string) {
-        if (string.equals("black")) {
-            return Color.black;
-        } else if (string.equals("darkGray")) {
-            return Color.darkGray;
-        } else if (string.equals("gray")) {
-            return Color.gray;
-        } else if (string.equals("lightGray")) {
-            return Color.lightGray;
-        } else if (string.equals("white")) {
-            return Color.white;
-        } else if (string.equals("red")) {
-            return Color.red;
-        } else if (string.equals("pink")) {
-            return Color.pink;
-        } else if (string.equals("orange")) {
-            return Color.orange;
-        } else if (string.equals("yellow")) {
-            return Color.yellow;
-        } else if (string.equals("green")) {
-            return Color.green;
-        } else if (string.equals("blue")) {
-            return Color.blue;
-        } else if (string.equals("magenta")) {
-            return Color.magenta;
-        } else if (string.equals("cyan")) {
-            return Color.cyan;
-        } else if (string.equals("track")) {
-            return null;
+        switch (string) {
+            case "black":
+                return Color.black;
+            case "darkGray":
+                return Color.darkGray;
+            case "gray":
+                return Color.gray;
+            case "lightGray":
+                return Color.lightGray;
+            case "white":
+                return Color.white;
+            case "red":
+                return Color.red;
+            case "pink":
+                return Color.pink;
+            case "orange":
+                return Color.orange;
+            case "yellow":
+                return Color.yellow;
+            case "green":
+                return Color.green;
+            case "blue":
+                return Color.blue;
+            case "magenta":
+                return Color.magenta;
+            case "cyan":
+                return Color.cyan;
+            case "track":
+                return null;
+            default:
+                break;
         }
         log.error("unknown color text '" + string + "' sent to stringToColor");
         return Color.black;
     }
 
     /**
-    * Convert a color into hex value of form #RRGGBB
-    */
-    public static String colorToHexString(Color color) {
-        if (color == null) return null;
-        return "#"+Integer.toHexString(color.getRGB()).substring(2).toUpperCase();
+     * Convert a color into hex value of form #RRGGBB.
+     *
+     * @param color the color or null
+     * @return the hex string or null if color is null
+     */
+    @CheckForNull
+    public static String colorToHexString(@Nullable Color color) {
+        if (color == null) {
+            return null;
+        }
+        return String.format("#%02X%02X%02X", color.getRed(), color.getGreen(), color.getBlue());
     }
 
     /**
-     * internal method to return string name of several known colors, returns
-     *   null if not in list
+     * Internal method to return string name of several known colors, returns
+     * null if not in list.
+     *
+     * @param color the color
+     * @return the color name or null if not known
      */
-    private static String colorToName(Color color) {
+    @CheckForNull
+    private static String colorToName(@Nullable Color color) {
+        if (color == null) {
+            return null;
+        }
         if (color.equals(Color.black)) {
             return "black";
         } else if (color.equals(Color.darkGray)) {
@@ -109,7 +144,6 @@ public class ColorUtil{
         }
         return null;
     }
-
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(ColorUtil.class.getName());

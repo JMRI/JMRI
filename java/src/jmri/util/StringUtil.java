@@ -118,8 +118,7 @@ public class StringUtil {
     static public @Nonnull
     String appendTwoHexFromInt(int val, @Nonnull String inString) {
         StringBuilder sb = new StringBuilder(inString);
-        sb.append(HEX_CHARS[(val & 0xF0) >> 4]);
-        sb.append(HEX_CHARS[val & 0x0F]);
+        sb.append(StringUtil.twoHexFromInt(val));
         return sb.toString();
     }
 
