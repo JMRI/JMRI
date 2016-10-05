@@ -22,10 +22,16 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout
     private static final long serialVersionUID = -2709042631708878196L;
     OlcbAddress addrThrown;   // go to thrown state
     OlcbAddress addrClosed;   // go to closed state
+    private static final String[] validFeedbackNames = {"MONITORING", "ONESENSOR", "TWOSENSOR"};
+    private static final int validFeedbackTypes = MONITORING | ONESENSOR | TWOSENSOR;
+    private static final int defaultFeedbackType = MONITORING;
 
     protected OlcbTurnout(String prefix, String address, TrafficController tc) {
         super(prefix + "T" + address);
         this.tc = tc;
+        this._validFeedbackNames = validFeedbackNames;
+        this._validFeedbackTypes = validFeedbackTypes;
+        this._activeFeedbackType = defaultFeedbackType;
         init(address);
     }
 
@@ -89,16 +95,28 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout
     public void message(CanMessage f) {
         if (addrThrown.match(f)) {
             newCommandedState(THROWN);
+            if (_activeFeedbackType == MONITORING) {
+                newKnownState(THROWN);
+            }
         } else if (addrClosed.match(f)) {
             newCommandedState(CLOSED);
+            if (_activeFeedbackType == MONITORING) {
+                newKnownState(CLOSED);
+            }
         }
     }
 
     public void reply(CanReply f) {
         if (addrThrown.match(f)) {
             newCommandedState(THROWN);
+            if (_activeFeedbackType == MONITORING) {
+                newKnownState(THROWN);
+            }
         } else if (addrClosed.match(f)) {
             newCommandedState(CLOSED);
+            if (_activeFeedbackType == MONITORING) {
+                newKnownState(CLOSED);
+            }
         }
     }
 

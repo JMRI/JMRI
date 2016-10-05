@@ -8,6 +8,9 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbTurnout class.
  *
@@ -15,6 +18,48 @@ import junit.framework.TestSuite;
  */
 public class OlcbTurnoutTest extends TestCase {
 
+    public class FakePropertyChangeListener implements PropertyChangeListener {
+        private String property;
+        public int eventCount;
+        private int expectedCount;
+        private Object expectedValue;
+        public FakePropertyChangeListener(String property) {
+            this.property = property;
+            eventCount = 0;
+            expectedValue = null;
+            expectedCount = 0;
+        }
+
+        public void expectChange(Object newValue, int count) {
+            clear();
+            expectedValue = newValue;
+            expectedCount += count;
+        }
+        public void expectChange(Object newValue) {
+            expectChange(newValue, 1);
+        }
+
+        public void clear() {
+            Assert.assertEquals("expected count mismatch. last expected change: " +
+                    (expectedValue != null ? expectedValue.toString() : "null"), expectedCount,
+                    eventCount);
+        }
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            if (!evt.getPropertyName().equals(property)) {
+                return;
+            }
+            Assert.assertTrue(eventCount < expectedCount);
+            ++eventCount;
+            if (expectedValue != null) {
+                Assert.assertEquals(evt.getNewValue(), expectedValue);
+            }
+        }
+    }
+
+    private static final String COMMANDED_STATE = "CommandedState";
+    private static final String KNOWN_STATE = "KnownState";
     public void testIncomingChange() {
         // load dummy TrafficController
         TestTrafficController t = new TestTrafficController();
@@ -34,15 +79,28 @@ public class OlcbTurnoutTest extends TestCase {
         );
         mInactive.setExtended(true);
 
+        FakePropertyChangeListener commandedListener = new FakePropertyChangeListener
+                (COMMANDED_STATE);
+        s.addPropertyChangeListener(commandedListener);
+        FakePropertyChangeListener knownListener = new FakePropertyChangeListener
+                (KNOWN_STATE);
+        s.addPropertyChangeListener(knownListener);
+
         // check states
         Assert.assertTrue(s.getCommandedState() == Turnout.UNKNOWN);
 
+        commandedListener.expectChange(Turnout.THROWN);
+        knownListener.expectChange(Turnout.THROWN);
         s.message(mActive);
         Assert.assertTrue(s.getCommandedState() == Turnout.THROWN);
 
+        commandedListener.expectChange(Turnout.CLOSED);
+        knownListener.expectChange(Turnout.CLOSED);
         s.message(mInactive);
         Assert.assertTrue(s.getCommandedState() == Turnout.CLOSED);
 
+        commandedListener.clear();
+        knownListener.clear();
     }
 
     public void testLocalChange() throws jmri.JmriException {
