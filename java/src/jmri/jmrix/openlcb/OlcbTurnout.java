@@ -23,6 +23,7 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout
     OlcbAddress addrThrown;   // go to thrown state
     OlcbAddress addrClosed;   // go to closed state
     private static final String[] validFeedbackNames = {"MONITORING", "ONESENSOR", "TWOSENSOR"};
+    private static final int[] validFeedbackModes = {MONITORING, ONESENSOR, TWOSENSOR};
     private static final int validFeedbackTypes = MONITORING | ONESENSOR | TWOSENSOR;
     private static final int defaultFeedbackType = MONITORING;
 
@@ -30,6 +31,7 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout
         super(prefix + "T" + address);
         this.tc = tc;
         this._validFeedbackNames = validFeedbackNames;
+        this._validFeedbackModes = validFeedbackModes;
         this._validFeedbackTypes = validFeedbackTypes;
         this._activeFeedbackType = defaultFeedbackType;
         init(address);
