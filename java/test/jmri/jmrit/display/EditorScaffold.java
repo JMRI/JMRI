@@ -92,10 +92,12 @@ public class EditorScaffold extends Editor implements MouseListener, MouseMotion
         ActionListener, KeyListener, java.beans.VetoableChangeListener {
 
     public EditorScaffold() {
+        this("foo");
     }
 
     public EditorScaffold(String name, boolean saveSize, boolean savePosition) {
         super(name, saveSize, savePosition);
+        setTargetPanel(null,null);
     }
 
     public EditorScaffold(String name) {
