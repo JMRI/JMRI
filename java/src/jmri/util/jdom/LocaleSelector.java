@@ -83,6 +83,11 @@ public class LocaleSelector {
     /**
      * Checks one element to see if it's the one for the current language else
      * returns null.
+     *
+     * @param el     the element
+     * @param name   the attribute
+     * @param suffix the locale
+     * @return the value of the attribute or null
      */
     static String checkElement(Element el, String name, String suffix) {
         for (Object obj : el.getChildren(name)) {
