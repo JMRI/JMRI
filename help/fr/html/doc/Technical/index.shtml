@@ -221,12 +221,13 @@
       pour le projet JMRI de sorte que nous puissions les
       distribuer au reste de la communaut&eacute;.
 
+      <!-- the following needs to be re-translated from English -->
       <p>Pour la premiere des petites contributions, par exemple,
       un fichier nouveau d&eacute;codeur ou correction d'un petit
       bug, s'il vous pla&icirc;t remplir une nouvelle entr&eacute;e
-      "Patches" sur SourceForge &agrave; l'aide <a href=
-      "http://sourceforge.net/tracker/?group_id=26788&amp;atid=388315">
-      nos pages patchs</a> (cliquez sur Nouveau dans les milieu
+      "Issues" sur GitHub &agrave; l'aide <a href=
+      "https://github.com/JMRI/JMRI/issues">
+      nos pages issues</a> (cliquez sur Nouveau dans les milieu
       &agrave; gauche, puis remplissez le formulaire qui en
       r&eacute;sulte). Vous pouvez joindre l'ensemble du dossier.
       Si c'est plusieurs fichiers, et que vous utilisez un IDE
