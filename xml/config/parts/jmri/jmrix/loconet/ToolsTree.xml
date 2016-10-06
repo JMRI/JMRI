@@ -33,7 +33,7 @@
     </node>
     <node><name>Interface Status
      <name xml:lang="it">Stato Interfaccia</name>
-     <name xml:lang="cs">Stav zozhraní</name>
+     <name xml:lang="cs">Stav rozhraní</name>
     </name>
         <panel>jmri.jmrix.loconet.locostats.LocoStatsPanel</panel>
     </node>
@@ -54,7 +54,7 @@
   <node><name>Configuration</name>
     <node><name>Set LocoNet ID
      <name xml:lang="it">Imposta ID Loconet</name>
-     <name xml:lang="cs">nastavit Loconet ID</name>
+     <name xml:lang="cs">Nastavit Loconet ID</name>
     </name>
         <panel>jmri.jmrix.loconet.locoid.LocoIdPanel</panel>
     </node>

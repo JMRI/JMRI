@@ -124,7 +124,7 @@
     <node>
       <name>Routes</name>
       <name xml:lang="it">Percorsi</name>
-      <name xml:lang="cs">cesty</name>
+      <name xml:lang="cs">Cesty</name>
     </node>
     <node>
       <name>LRoutes</name>
