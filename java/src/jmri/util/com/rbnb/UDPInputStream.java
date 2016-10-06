@@ -56,7 +56,7 @@ public class UDPInputStream extends InputStream {
 
     int value;
 
-    /**
+    /*
      * ******************** constructors *******************
      */
     /*
@@ -101,7 +101,7 @@ public class UDPInputStream extends InputStream {
         open(address, port);
     }
 
-    /**
+    /*
      * ********** opening and closing the stream ***********
      */
     /*
@@ -155,7 +155,7 @@ public class UDPInputStream extends InputStream {
         packIdx = 0;
     }
 
-    /**
+    /*
      * **** reading, skipping and checking available data *****
      */
     /*
@@ -302,7 +302,7 @@ public class UDPInputStream extends InputStream {
         return len;
     }
 
-    /**
+    /*
      * **************** receiving more data *****************
      */
     /*
@@ -329,7 +329,7 @@ public class UDPInputStream extends InputStream {
         packSize = dpack.getLength();
     }
 
-    /**
+    /*
      * ******* marking and reseting are unsupported *******
      */
     public void mark(int readlimit) {

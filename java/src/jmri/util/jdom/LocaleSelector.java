@@ -38,6 +38,10 @@ public class LocaleSelector {
      * first looks for a contained element named ATT with an XML 'lang'
      * attribute for the suffix. If so, it takes that value. If none are found,
      * the attribute value is taken from the original element</p>
+     *
+     * @param el   the element with the attribute or child element
+     * @param name the name of the attribute or child element
+     * @return the value of the attribute or null
      */
     static public String getAttribute(Element el, String name) {
         String retval;
@@ -77,8 +81,13 @@ public class LocaleSelector {
     }
 
     /**
-     * checks one element to see if it's the one for the current language else
-     * returns null
+     * Checks one element to see if it's the one for the current language else
+     * returns null.
+     *
+     * @param el     the element
+     * @param name   the attribute
+     * @param suffix the locale
+     * @return the value of the attribute or null
      */
     static String checkElement(Element el, String name, String suffix) {
         for (Object obj : el.getChildren(name)) {

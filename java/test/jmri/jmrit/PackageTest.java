@@ -86,6 +86,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.analogclock.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.revhistory.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.sound.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.vsdecoder.PackageTest.class));
         return suite;
     }
 
