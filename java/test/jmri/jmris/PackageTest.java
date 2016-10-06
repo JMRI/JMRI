@@ -33,7 +33,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmris.JmriServerTest.suite());
         suite.addTest(jmri.jmris.JmriConnectionTest.suite());
         suite.addTest(jmri.jmris.ServiceHandlerTest.suite());
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             // put any tests that require a UI here.

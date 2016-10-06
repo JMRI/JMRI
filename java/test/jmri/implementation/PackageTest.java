@@ -53,7 +53,7 @@ public class PackageTest extends TestCase {
         suite.addTest(SignalSystemFileCheckTest.suite());
         suite.addTest(SingleTurnoutSignalHeadTest.suite());
         suite.addTest(TwoIndexTcsProgrammerFacadeTest.suite());
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DccConsistTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NmraConsistTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(MatrixSignalMastTest.class));

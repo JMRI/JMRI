@@ -32,7 +32,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ieee802154.xbee.PackageTest.class));
         suite.addTest(jmri.jmrix.ieee802154.serialdriver.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(IEEE802154NodeTest.class));
-        suite.addTest(new TestSuite(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ieee802154.swing.PackageTest.class));
         return suite;
     }
