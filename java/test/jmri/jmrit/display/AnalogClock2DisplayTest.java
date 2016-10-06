@@ -19,7 +19,7 @@ public class AnalogClock2DisplayTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Editor ef = new jmri.jmrit.display.layoutEditor.LayoutEditor();
+        Editor ef = new EditorScaffold();
         AnalogClock2Display frame = new AnalogClock2Display(ef);
         Assert.assertNotNull("AnalogClock2Display Constructor",frame);
     }

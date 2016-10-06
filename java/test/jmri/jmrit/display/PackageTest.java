@@ -56,6 +56,24 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SensorTextEditTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(AnalogClock2DisplayTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BlockContentsIconTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CoordinateEditTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IconAdderTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IndicatorTrackIconTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IndicatorTrackPathsTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LightIconTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocoIconTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(MemoryComboIconTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(MemoryIconCoordinateEditTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(MultiIconEditorTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(MultiSensorIconTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(MultiSensorIconAdderTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PositionableIconTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SensorIconTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SignalHeadIconTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SlipIconAdderTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SlipTurnoutIconTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SlipTurnoutTextEditTest.class));
 
         return suite;
     }

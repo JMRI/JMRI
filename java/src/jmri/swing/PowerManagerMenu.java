@@ -17,8 +17,11 @@ import jmri.PowerManager;
 abstract public class PowerManagerMenu extends JMenu {
 
     /**
-     * Get the currently selected manager
+     * Get the currently selected manager.
+     *
+     * @return null unless overridden by subclass
      */
+    // should this be abstract?
     public PowerManager get() {
         return null;
     }
@@ -44,10 +47,8 @@ abstract public class PowerManagerMenu extends JMenu {
                 add(item);
                 group.add(item);
                 items.add(item);
-                item.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent e) {
-                        choiceChanged();
-                    }
+                item.addActionListener((java.awt.event.ActionEvent e) -> {
+                    choiceChanged();
                 });
             }
         }
@@ -55,7 +56,7 @@ abstract public class PowerManagerMenu extends JMenu {
         setDefault();
     }
 
-    List<JMenuItem> items = new java.util.ArrayList<JMenuItem>();
+    List<JMenuItem> items = new java.util.ArrayList<>();
 
     void setDefault() {
         // name of default
