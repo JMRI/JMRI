@@ -41,7 +41,6 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     static final public int INACTIVE_BACKGROUND_COLOR = 0x08;
     static final public int INCONSISTENT_FONT_COLOR = 0x0A;
     static final public int INCONSISTENT_BACKGROUND_COLOR = 0x0B;
-    private boolean debug = false;
 
     protected HashMap<String, Integer> _name2stateMap;       // name to state
     protected HashMap<Integer, String> _state2nameMap;       // state to name
@@ -57,7 +56,6 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         super(s, editor);
         setOpaque(false);
         _control = true;
-        debug = log.isDebugEnabled();
         setPopupUtility(new SensorPopupUtil(this, this));
     }
 
@@ -65,7 +63,6 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         super(s, editor);
         _control = true;
         originalText = s;
-        debug = log.isDebugEnabled();
         setPopupUtility(new SensorPopupUtil(this, this));
         displayState(sensorState());
     }
@@ -194,10 +191,9 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             setOpaque(false);
         }
         displayState(sensorState());
-        if (debug) {
-            log.debug("setSensor: namedSensor= "
-                    + ((namedSensor == null) ? "null" : getNameString())
-                    + " isIcon= " + isIcon() + ", isText= " + isText() + ", activeText= " + activeText);
+        if (log.isDebugEnabled()) { // Avoid String building unless needed
+            log.debug("setSensor: namedSensor= {} isIcon= {}, isText= {}, activeText= {}",
+                    ((namedSensor == null) ? "null" : getNameString()), isIcon(), isText(), activeText);
         }
         repaint();
     }
@@ -283,9 +279,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     // update icon as state of turnout changes
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (debug) {
-            log.debug("property change: " + e);
-        }
+        log.debug("property change: {}", e);
         if (e.getPropertyName().equals("KnownState")) {
             int now = ((Integer) e.getNewValue()).intValue();
             displayState(now);
@@ -345,10 +339,8 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                     setMomentary(momentaryItem.isSelected());
                 }
             });
-        } else {
-            if (getPopupUtility() != null) {
-                getPopupUtility().setAdditionalViewPopUpMenu(popup);
-            }
+        } else if (getPopupUtility() != null) {
+            getPopupUtility().setAdditionalViewPopUpMenu(popup);
         }
         return true;
     }
@@ -359,9 +351,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     // overide
     @Override
     public boolean setTextEditMenu(JPopupMenu popup) {
-        if (debug) {
-            log.debug("setTextEditMenu isIcon=" + isIcon() + ", isText=" + isText());
-        }
+        log.debug("setTextEditMenu isIcon={}, isText={}", isIcon(), isText());
         if (isIcon()) {
             popup.add(CoordinateEdit.getTextEditAction(this, "OverlayText"));
         } else {
@@ -389,9 +379,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     public void sensorTextEdit(String name) {
-        if (debug) {
-            log.debug("make text edit menu");
-        }
+        log.debug("make text edit menu");
 
         SensorTextEdit f = new SensorTextEdit();
         f.addHelpMenu("package.jmri.jmrit.display.SensorTextEdit", true);
@@ -440,7 +428,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         }
         int deg = getDegrees();
         rotate(deg);
-        if (deg==0) {
+        if (deg == 0) {
             setOpaque(getPopupUtility().hasBackground());
         }
 
@@ -624,9 +612,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     @Override
     public void doMousePressed(MouseEvent e) {
-        if (debug) {
-            log.debug("doMousePressed buttonLive=" + buttonLive() + ", getMomentary=" + getMomentary());
-        }
+        log.debug("doMousePressed buttonLive={}, getMomentary={}", buttonLive(), getMomentary());
         if (getMomentary() && buttonLive() && !e.isMetaDown() && !e.isAltDown()) {
             // this is a momentary button press
             try {
@@ -943,6 +929,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             util.setHasBackground(hasBackground());     // must do this AFTER setBackgroundColor
             return util;
         }
+
         @Override
         public void setTextJustificationMenu(JPopupMenu popup) {
             if (isText()) {
@@ -988,13 +975,13 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         public void setBackgroundMenu(JPopupMenu popup) {
             if (isIcon()) {
                 super.setBackgroundMenu(popup);
-            }         
+            }
         }
 
         @Override
         protected ButtonGroup makeColorMenu(JMenu colorMenu, int type) {
-            ButtonGroup buttonGrp = super.makeColorMenu( colorMenu,  type);
-            if (type == UNKOWN_BACKGROUND_COLOR || type == ACTIVE_BACKGROUND_COLOR 
+            ButtonGroup buttonGrp = super.makeColorMenu(colorMenu, type);
+            if (type == UNKOWN_BACKGROUND_COLOR || type == ACTIVE_BACKGROUND_COLOR
                     || type == INACTIVE_BACKGROUND_COLOR || type == INCONSISTENT_BACKGROUND_COLOR) {
                 addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("ColorClear"), null, type);
             }
@@ -1023,35 +1010,35 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                             setTextUnknown(desiredColor);
                             break;
                         case UNKOWN_BACKGROUND_COLOR:
-                            _self.setHasBackground(color!=null);
+                            _self.setHasBackground(color != null);
                             setBackgroundUnknown(desiredColor);
                             break;
                         case ACTIVE_FONT_COLOR:
                             setTextActive(desiredColor);
                             break;
                         case ACTIVE_BACKGROUND_COLOR:
-                            _self.setHasBackground(color!=null);
+                            _self.setHasBackground(color != null);
                             setBackgroundActive(desiredColor);
                             break;
                         case INACTIVE_FONT_COLOR:
                             setTextInActive(desiredColor);
                             break;
                         case INACTIVE_BACKGROUND_COLOR:
-                            _self.setHasBackground(color!=null);
+                            _self.setHasBackground(color != null);
                             setBackgroundInActive(desiredColor);
                             break;
                         case INCONSISTENT_FONT_COLOR:
                             setTextInconsistent(desiredColor);
                             break;
                         case INCONSISTENT_BACKGROUND_COLOR:
-                            _self.setHasBackground(color!=null);
+                            _self.setHasBackground(color != null);
                             setBackgroundInconsistent(desiredColor);
                             break;
                         default:
                             break;
                     }
                     _parent.getEditor().setAttributes(_self, _parent);
-               }
+                }
             };
             JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
             r.addActionListener(a);
@@ -1062,9 +1049,9 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                     break;
                 case BACKGROUND_COLOR:
                     if (hasBackground()) {
-                        setColorButton(getBackground(), color, r);                       
+                        setColorButton(getBackground(), color, r);
                     } else {
-                        setColorButton(null, color, r);                        
+                        setColorButton(null, color, r);
                     }
                     break;
                 case BORDER_COLOR:

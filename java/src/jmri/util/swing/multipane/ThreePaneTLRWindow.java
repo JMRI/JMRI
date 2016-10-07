@@ -24,6 +24,10 @@ public class ThreePaneTLRWindow extends jmri.util.JmriJFrame {
 
     /**
      * Create and initialize a multi-pane GUI window.
+     *
+     * @param name        the name and title of the window
+     * @param menubarFile path to the XML file for the menubar
+     * @param toolbarFile path to the XML file for the toolbar
      */
     public ThreePaneTLRWindow(String name, String menubarFile, String toolbarFile) {
         super(name);

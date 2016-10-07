@@ -61,7 +61,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.lenz.xnetsimulator.XNetSimulatorTest.suite());
         suite.addTest(jmri.jmrix.lenz.hornbyelite.EliteTest.suite());
         suite.addTest(jmri.jmrix.lenz.ztc640.ZTC640Test.suite());
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
 
         suite.addTest(jmri.jmrix.lenz.swing.SwingTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.lenz.configurexml.PackageTest.class));

@@ -3,21 +3,23 @@ package jmri.jmrit.vsdecoder.swing;
 import java.util.Locale;
 
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import junit.framework.TestCase;
+import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * Tests for the VSDSwingBundle class
  *
  * @author Bob Jacobsen Copyright (C) 2012
  */
-public class VSDSwingBundleTest extends TestCase {
+public class VSDSwingBundleTest {
 
+    @Test
     public void testGoodKeyMessage() {
         Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
     }
 
+    @Test
     public void testBadKeyMessage() {
         try {
             Bundle.getMessage("FFFFFTTTTTTT");
@@ -27,11 +29,13 @@ public class VSDSwingBundleTest extends TestCase {
         Assert.fail("No exception thrown");
     }
 
+    @Test
     public void testGoodKeyMessageArg() {
         Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", new Object[]{}));
         Assert.assertEquals("About Test", Bundle.getMessage("TitleAbout", "Test"));
     }
 
+    @Test
     public void testBadKeyMessageArg() {
         try {
             Bundle.getMessage("FFFFFTTTTTTT", new Object[]{});
@@ -41,31 +45,15 @@ public class VSDSwingBundleTest extends TestCase {
         Assert.fail("No exception thrown");
     }
 
+    @Test
     public void testLocaleMessage() {
         Assert.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout"));
     }
 
+    @Test
     public void testLocaleMessageArg() {
         Assert.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout", new Object[]{}));
         Assert.assertEquals("Informazioni su Test", Bundle.getMessage(Locale.ITALY, "TitleAbout", "Test"));
-    }
-
-    // from here down is testing infrastructure
-
-    public VSDSwingBundleTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {VSDSwingBundleTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(VSDSwingBundleTest.class);
-        return suite;
     }
 
 }
