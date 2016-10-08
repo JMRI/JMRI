@@ -6,8 +6,7 @@
  * </P>
  *
  * @author	Paul Bender Copyright (C) 2008
- * @version	$Revision$
- */
+  */
 package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.lenz.XNetTrafficController;

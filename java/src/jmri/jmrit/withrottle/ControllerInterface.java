@@ -6,7 +6,6 @@ package jmri.jmrit.withrottle;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010
- * @version $Revision$
  */
 public interface ControllerInterface {
 

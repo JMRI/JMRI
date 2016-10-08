@@ -5,8 +5,7 @@ package jmri.jmrix.can;
  * Traffic controller for CAN access.
  *
  * @author Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
- */
+  */
 abstract public class TrafficController extends AbstractCanTrafficController {
 
     public TrafficController() {

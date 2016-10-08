@@ -19,8 +19,7 @@ import org.slf4j.LoggerFactory;
  * have it change back the next time that AIU is polled.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2005
- * @version	$Revision$
- */
+  */
 public class NceAIU {
 
     public NceAIU() {

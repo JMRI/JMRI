@@ -40,8 +40,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision$
- */
+  */
 public class TreePanel extends JPanel {
 
     /**

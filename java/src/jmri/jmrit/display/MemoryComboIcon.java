@@ -63,12 +63,13 @@ public class MemoryComboIcon extends PositionableJPanel
         }
         setPopupUtility(new PositionablePopupUtil(this, _comboBox));
     }
-    
+
     public JComboBox<String> getTextComponent() {
         return _comboBox;
     }
 
     class ComboModel extends DefaultComboBoxModel<String> {
+
         private static final long serialVersionUID = 2915042785923780735L;
 
         ComboModel() {
@@ -117,9 +118,7 @@ public class MemoryComboIcon extends PositionableJPanel
      * @param pName Used as a system/user name to lookup the Memory object
      */
     public void setMemory(String pName) {
-        if (debug) {
-            log.debug("setMemory for memory= " + pName);
-        }
+        log.debug("setMemory for memory= {}", pName);
         if (InstanceManager.getNullableDefault(jmri.MemoryManager.class) != null) {
             try {
                 Memory memory = InstanceManager.memoryManagerInstance().provideMemory(pName);
@@ -305,9 +304,7 @@ public class MemoryComboIcon extends PositionableJPanel
      * Drive the current state of the display from the state of the Memory.
      */
     public void displayState() {
-        if (debug) {
-            log.debug("displayState");
-        }
+        log.debug("displayState");
         if (namedMemory == null) {  // leave alone if not connected yet
             return;
         }

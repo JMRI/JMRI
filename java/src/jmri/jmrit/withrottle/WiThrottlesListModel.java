@@ -7,7 +7,6 @@ package jmri.jmrit.withrottle;
  * @author Brett Hoffman Copyright (C) 2009
  * @author Created by Brett Hoffman on:
  * @author 11/11/09.
- * @version $Revision$
  */
 import java.util.ArrayList;
 import java.util.ResourceBundle;

@@ -13,7 +13,6 @@ import jmri.InstanceManager;
  * @author	Bob Jacobsen Copyright (C) 2010 copied from powerline class as part
  * of the multiple connections
  * @author	Ken Cameron Copyright (C) 2011
- * @version $Revision$
  */
 public class SpecificSystemConnectionMemo extends jmri.jmrix.powerline.SerialSystemConnectionMemo {
 

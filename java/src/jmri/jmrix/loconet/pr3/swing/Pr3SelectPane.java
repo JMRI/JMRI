@@ -18,8 +18,7 @@ import org.slf4j.LoggerFactory;
  * Pane for downloading software updates to PRICOM products
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version	$Revision$
- */
+  */
 public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements LocoNetListener {
 
     /**

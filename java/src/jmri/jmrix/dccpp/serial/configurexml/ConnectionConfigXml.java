@@ -15,7 +15,6 @@ import jmri.jmrix.dccpp.serial.DCCppAdapter;
  *
  * @author Paul Bender Copyright: Copyright (c) 2005
  * @author Mark Underwood Copyright: Copyright (c) 2015
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractDCCppSerialConnectionConfigXml {
 

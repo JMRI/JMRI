@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * Table data model for display of Lenz Command Station Stack information.
  *
  * @author Paul Bender Copyright (c) 2008
- * @version $Revision$
  */
 public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
 

@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2016
- * @version $Revision$
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -271,7 +270,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         return (Car) sysList.get(index);
     }
 
-    synchronized void updateList() {
+    private void updateList() {
         // first, remove listeners from the individual objects
         removePropertyChangeCars();
         sysList = getSelectedCarList();
@@ -441,7 +440,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     public String getColumnName(int col) {
         switch (col) {
             case SELECT_COLUMN:
-                return Bundle.getMessage("Select");
+                return Bundle.getMessage("ButtonSelect");
             case NUMBER_COLUMN:
                 return Bundle.getMessage("Number");
             case ROAD_COLUMN:
@@ -491,7 +490,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case SET_COLUMN:
                 return Bundle.getMessage("Set");
             case EDIT_COLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit"); // titles above all columns
             default:
                 return "unknown"; // NOI18N
         }
@@ -531,7 +530,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     @Override
-    public synchronized Object getValueAt(int row, int col) {
+    public Object getValueAt(int row, int col) {
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
@@ -590,6 +589,11 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 if (car.getFinalDestinationTrack() != null) {
                     s = s + " (" + car.getFinalDestinationTrackName() + ")";
                 }
+                if (log.isDebugEnabled() &&
+                        car.getFinalDestinationTrack() != null &&
+                        car.getFinalDestinationTrack().getSchedule() != null) {
+                    s = s + " " + car.getScheduleItemId();
+                }
                 return s;
             }
             case RWE_COLUMN:
@@ -622,7 +626,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case SET_COLUMN:
                 return Bundle.getMessage("Set");
             case EDIT_COLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit");
             default:
                 return "unknown " + col; // NOI18N
         }
@@ -632,7 +636,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     CarSetFrame csf = null;
 
     @Override
-    public synchronized void setValueAt(Object value, int row, int col) {
+    public void setValueAt(Object value, int row, int col) {
         Car car = (Car) sysList.get(row);
         switch (col) {
             case SELECT_COLUMN:

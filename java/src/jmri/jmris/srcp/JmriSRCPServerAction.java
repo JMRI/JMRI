@@ -8,7 +8,6 @@ import javax.swing.AbstractAction;
  * Swing action to create and register a JmriSRCPServerControlFrame object
  *
  * @author Paul Bender Copyright (C) 2009
- * @version $Revision$
  */
 public class JmriSRCPServerAction extends AbstractAction {
 

@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Base class for rolling stock managers car and engine.
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2011
- * @version $Revision$
  */
 public class RollingStockManager {
 

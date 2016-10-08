@@ -108,7 +108,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
      *
      * @return -1 if not found, table row number if found
      */
-    public synchronized int findEngineByRoadNumber(String roadNumber) {
+    public int findEngineByRoadNumber(String roadNumber) {
         if (sysList != null) {
             if (!roadNumber.equals(_roadNumber)) {
                 return getIndex(0, roadNumber);
@@ -153,7 +153,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         return -1;
     }
 
-    private synchronized void updateList() {
+    private void updateList() {
         // first, remove listeners from the individual objects
         removePropertyChangeEngines();
         sysList = getSelectedEngineList();
@@ -242,7 +242,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     }
 
     @Override
-    public synchronized int getRowCount() {
+    public int getRowCount() {
         return sysList.size();
     }
 
@@ -293,7 +293,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             case SET_COLUMN:
                 return Bundle.getMessage("Set");
             case EDIT_COLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit"); // titles above all columns
             default:
                 return "unknown"; // NOI18N
         }
@@ -329,7 +329,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     }
 
     @Override
-    public synchronized Object getValueAt(int row, int col) {
+    public Object getValueAt(int row, int col) {
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
@@ -403,7 +403,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             case SET_COLUMN:
                 return Bundle.getMessage("Set");
             case EDIT_COLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit");
             default:
                 return "unknown " + col; // NOI18N
         }
@@ -413,7 +413,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     EngineSetFrame engineSetFrame = null;
 
     @Override
-    public synchronized void setValueAt(Object value, int row, int col) {
+    public void setValueAt(Object value, int row, int col) {
         Engine engine = (Engine) sysList.get(row);
         switch (col) {
             case MOVES_COLUMN:
@@ -482,7 +482,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         }
     }
 
-    private synchronized void removePropertyChangeEngines() {
+    private void removePropertyChangeEngines() {
         if (sysList != null) {
             for (RollingStock rs : sysList) {
                 rs.removePropertyChangeListener(this);
@@ -491,7 +491,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     }
 
     @Override
-    public synchronized void propertyChange(PropertyChangeEvent e) {
+    public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());

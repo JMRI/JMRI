@@ -9,8 +9,7 @@ import jmri.util.SystemType;
  * This uses the {@link DCCppAdapter} class to do the actual connection.
  *
  * @author Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- *
+  *
  * @see DCCppAdapter
  *
  * Based on jmri.jmrix.lenz.liusb.ConnectionConfig by Paul Bender

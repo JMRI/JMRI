@@ -20,8 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Andrew Crosland Copyright (C) 2006, 2012
  * @author	Andrew Berridge 2010
- * @version	$Revision$
- */
+  */
 public class SprogSlot {
 
     private boolean speedPacket = false;

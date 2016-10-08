@@ -4,9 +4,6 @@
 # Author: Daniel Boudreau, copyright 2015
 # Part of the JMRI distribution
 #
-# The next line is maintained by CVS, please don't change it
-# $Revision$
-#
 # To use this script you must provide the type names for containers and trailers, and the type names for the flatcars to use. 
 # You must also enter the train name that will service them. The train doesn't have to service the flatcars, this script will
 # do the flatcar assignments based on the container or trailer destinations. Run this script after the train is built.

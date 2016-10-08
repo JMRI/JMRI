@@ -11,8 +11,7 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmrit.roster.IdentifyDecoder class
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class IdentifyDecoderTest extends TestCase {
 
     static int cvRead = -1;

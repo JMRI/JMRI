@@ -14,8 +14,7 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.roster.RosterEntry class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
- */
+  */
 public class RosterEntryTest extends TestCase {
 
     public void testCreate() {

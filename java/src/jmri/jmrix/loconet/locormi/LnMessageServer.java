@@ -4,7 +4,6 @@ package jmri.jmrix.loconet.locormi;
  * Title: Description: Copyright: Copyright (c) 2002 Company:
  *
  * @author Alex Shepherd
- * @version $Revision$
  */
  // -Djava.security.policy=lib/security.policy
 import java.rmi.Naming;

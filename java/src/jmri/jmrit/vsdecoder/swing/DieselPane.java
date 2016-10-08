@@ -22,7 +22,7 @@ package jmri.jmrit.vsdecoder.swing;
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision: 18410 $
+ * 
  */
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;

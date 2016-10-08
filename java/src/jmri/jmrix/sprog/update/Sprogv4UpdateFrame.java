@@ -14,8 +14,7 @@ import jmri.jmrix.sprog.SprogSystemConnectionMemo;
  * Refactored
  *
  * @author	Andrew Crosland Copyright (C) 2004
- * @version	$Revision$
- */
+  */
 public class Sprogv4UpdateFrame
         extends SprogUpdateFrame
         implements SprogVersionListener {

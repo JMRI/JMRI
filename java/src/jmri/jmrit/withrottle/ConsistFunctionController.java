@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * @author Brett Hoffman Copyright (C) 2010, 2011
- * @version $Revision$
  */
 public class ConsistFunctionController implements ThrottleListener {
 

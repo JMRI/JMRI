@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * @author	Ken Cameron Copyright (C) 2011 copied from powerline into IEEE802154
  * for multiple connections by
  * @author	Paul Bender Copyright (C) 2013
- * @version $Revision$
  */
 public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo {
 

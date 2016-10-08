@@ -8,7 +8,6 @@ import junit.framework.TestSuite;
  * Invoke complete set of tests for the apps.SoundPro package
  *
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007, 2012
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -27,7 +26,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("apps.PackageTest");  // no tests in this class itself
 
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         return suite;
     }
 

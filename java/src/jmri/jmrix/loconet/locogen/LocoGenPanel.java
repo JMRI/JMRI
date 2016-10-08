@@ -28,8 +28,7 @@ import org.slf4j.LoggerFactory;
  * </UL>
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2010
- * @version	$Revision$
- */
+  */
 public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements LocoNetListener {
 

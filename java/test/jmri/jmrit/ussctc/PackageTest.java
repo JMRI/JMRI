@@ -8,8 +8,7 @@ import junit.framework.TestSuite;
  * Tests for classes in the jmri.jmrit.ussctc package
  *
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision$
- */
+  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure

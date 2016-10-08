@@ -29,7 +29,7 @@ public class PackageTest extends TestCase {
         suite.addTest(XmlTest.suite());
         suite.addTest(TrackTest.suite());
         suite.addTest(OperationsPoolTest.suite());
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
 
         suite.addTest(jmri.jmrit.operations.locations.tools.PackageTest.suite());
         suite.addTest(jmri.jmrit.operations.locations.schedules.PackageTest.suite());

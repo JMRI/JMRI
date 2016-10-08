@@ -16,7 +16,6 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  * Editor panel for the INITIATE_SOUND macro.
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
  */
 class InitiateSoundEditor extends SdfMacroEditor {
 

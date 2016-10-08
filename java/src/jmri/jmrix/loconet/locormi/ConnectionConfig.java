@@ -12,8 +12,7 @@ import org.slf4j.LoggerFactory;
  * RMI.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @version	$Revision$
- */
+  */
  //@todo This class could ideally do with refactoring to the NetworkConnectionConfig and also multi-connection
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 

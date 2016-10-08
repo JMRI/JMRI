@@ -3,7 +3,6 @@ package jmri.jmrix.loconet.duplexgroup;
 /**
  *
  * @author B. Milhaupt Copyright 2011
- * @version	$Revision: 1.0 $
  */
 public enum DuplexGroupMessageType {
 

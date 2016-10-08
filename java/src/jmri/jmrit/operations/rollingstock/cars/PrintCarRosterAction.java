@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2013, 2014
- * @version $Revision$
  */
 public class PrintCarRosterAction extends AbstractAction {
 
@@ -311,7 +310,7 @@ public class PrintCarRosterAction extends AbstractAction {
     JCheckBox printSpace = new JCheckBox(Bundle.getMessage("PrintSpace"));
     JCheckBox printPage = new JCheckBox(Bundle.getMessage("PrintPage"));
 
-    JButton okayButton = new JButton(Bundle.getMessage("ButtonOkay"));
+    JButton okayButton = new JButton(Bundle.getMessage("ButtonOK"));
 
     static final String NEW_LINE = "\n"; // NOI18N
 

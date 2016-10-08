@@ -11,8 +11,7 @@ import junit.framework.TestSuite;
  * we test with four and more.
  *
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision$
- */
+  */
 public class Ash2_2AlgorithmTest extends AbstractAlgorithmTest {
 
     Calculator getAlgorithm(Point3d[] pts, double vs) {

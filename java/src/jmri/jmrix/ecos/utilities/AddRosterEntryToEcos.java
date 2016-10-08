@@ -27,8 +27,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision$
- */
+  */
 public class AddRosterEntryToEcos extends AbstractAction {
 
     /**

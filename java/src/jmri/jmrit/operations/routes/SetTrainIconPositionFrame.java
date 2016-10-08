@@ -33,7 +33,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision$
  */
 public class SetTrainIconPositionFrame extends OperationsFrame {
 
@@ -54,7 +53,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     // major buttons
     JButton placeButton = new JButton(Bundle.getMessage("PlaceTestIcon"));
     JButton applyButton = new JButton(Bundle.getMessage("UpdateRoutes"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // combo boxes
     JComboBox<Location> locationBox = LocationManager.instance().getComboBox();

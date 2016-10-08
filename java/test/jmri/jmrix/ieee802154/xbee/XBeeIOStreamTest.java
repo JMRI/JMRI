@@ -85,5 +85,4 @@ public class XBeeIOStreamTest {
         node = null;
     }
 
-
 }

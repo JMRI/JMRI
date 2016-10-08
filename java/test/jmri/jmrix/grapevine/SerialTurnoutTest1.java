@@ -9,8 +9,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.grapevine.SerialTurnout class, middle bank.
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class SerialTurnoutTest1 extends AbstractTurnoutTest {
 
     private SerialTrafficControlScaffold tcis = null;

@@ -28,8 +28,8 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     public static final int ID_COLUMN = 0;
     public static final int NAME_COLUMN = ID_COLUMN + 1;
     public static final int COMMENT_COLUMN = NAME_COLUMN + 1;
-    public static final int MIN_LENGTH_COLUMN = COMMENT_COLUMN +1;
-    public static final int MAX_LENGTH_COLUMN = MIN_LENGTH_COLUMN +1;
+    public static final int MIN_LENGTH_COLUMN = COMMENT_COLUMN + 1;
+    public static final int MAX_LENGTH_COLUMN = MIN_LENGTH_COLUMN + 1;
     public static final int STATUS_COLUMN = MAX_LENGTH_COLUMN + 1;
     public static final int EDIT_COLUMN = STATUS_COLUMN + 1;
 
@@ -49,14 +49,12 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     private int _sort = SORTBYNAME;
 
     public void setSort(int sort) {
-        synchronized (this) {
-            _sort = sort;
-        }
+        _sort = sort;
         updateList();
         fireTableDataChanged();
     }
 
-    private synchronized void updateList() {
+    private void updateList() {
         // first, remove listeners from the individual objects
         removePropertyChangeRoutes();
 
@@ -80,7 +78,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
         tcm.getColumn(EDIT_COLUMN).setCellRenderer(buttonRenderer);
         tcm.getColumn(EDIT_COLUMN).setCellEditor(buttonEditor);
-        
+
         // set column preferred widths
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(30);
         table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(220);
@@ -89,12 +87,12 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         table.getColumnModel().getColumn(MIN_LENGTH_COLUMN).setPreferredWidth(75);
         table.getColumnModel().getColumn(MAX_LENGTH_COLUMN).setPreferredWidth(75);
         table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(80);
-        
+
         frame.loadTableDetails(table);
     }
 
     @Override
-    public synchronized int getRowCount() {
+    public int getRowCount() {
         return sysList.size();
     }
 
@@ -119,7 +117,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
             case STATUS_COLUMN:
                 return Bundle.getMessage("Status");
             case EDIT_COLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit"); // titles above all columns
             default:
                 return "unknown"; // NOI18N
         }
@@ -154,7 +152,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     @Override
-    public synchronized Object getValueAt(int row, int col) {
+    public Object getValueAt(int row, int col) {
         if (row >= getRowCount()) {
             return "ERROR unknown " + row; // NOI18N
         }
@@ -176,14 +174,14 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
             case STATUS_COLUMN:
                 return route.getStatus();
             case EDIT_COLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit");
             default:
                 return "unknown " + col; // NOI18N
         }
     }
 
     @Override
-    public synchronized void setValueAt(Object value, int row, int col) {
+    public void setValueAt(Object value, int row, int col) {
         switch (col) {
             case EDIT_COLUMN:
                 editRoute(row);
@@ -195,7 +193,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 
     RouteEditFrame ref = null;
 
-    private synchronized void editRoute(int row) {
+    private void editRoute(int row) {
         log.debug("Edit route");
         if (ref != null) {
             ref.dispose();
@@ -212,7 +210,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     @Override
-    public synchronized void propertyChange(PropertyChangeEvent e) {
+    public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
@@ -234,7 +232,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
-    private synchronized void removePropertyChangeRoutes() {
+    private void removePropertyChangeRoutes() {
         if (sysList != null) {
             for (Route route : sysList) {
                 route.removePropertyChangeListener(this);

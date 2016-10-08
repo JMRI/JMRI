@@ -10,8 +10,7 @@ import org.junit.Assert;
  * Tests for classes in the jmri.jmrit.beantable package
  *
  * @author	Bob Jacobsen Copyright 2004
- * @version	$Revision$
- */
+  */
 public class PackageTest extends TestCase {
 
     public void testCreate() {
@@ -50,7 +49,7 @@ public class PackageTest extends TestCase {
         suite.addTest(SensorTableWindowTest.suite());
         suite.addTest(SignalHeadTableActionTest.suite());
         suite.addTest(TurnoutTableWindowTest.suite());
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
 
         suite.addTest(jmri.jmrit.beantable.signalmast.PackageTest.suite());
         suite.addTest(jmri.jmrit.beantable.sensor.PackageTest.suite());

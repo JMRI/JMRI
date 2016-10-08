@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * color, type, load, road, owner, model etc.
  *
  * @author Daniel Boudreau Copyright (C) 2014
- * @version $Revision: 25735 $
+ * 
  */
 public class RollingStockAttribute {
 
@@ -24,7 +24,7 @@ public class RollingStockAttribute {
     public RollingStockAttribute() {
     }
 
-    public synchronized void dispose() {
+    public void dispose() {
         list.clear();
         //TODO The removal of listeners causes the tests to fail.
         // Need to reload all listeners for the tests to work.
