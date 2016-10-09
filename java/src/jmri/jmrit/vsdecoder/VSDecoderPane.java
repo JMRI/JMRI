@@ -64,7 +64,6 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("serial")
 public class VSDecoderPane extends JmriPanel {
 
-    //private static final ResourceBundle vsdBundle = VSDecoderBundle.bundle();
     public static enum PropertyChangeID {
 
         ADDRESS_CHANGE, PROFILE_SELECT, MUTE, VOLUME_CHANGE
@@ -132,7 +131,7 @@ public class VSDecoderPane extends JmriPanel {
      * Return a suggested title for the enclosing frame.
      */
     public String getTitle() {
-        return VSDecoderBundle.bundle().getString("WindowTitle");
+        return Bundle.getMessage("WindowTitle");
     }
 
     /**
