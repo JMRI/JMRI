@@ -47,7 +47,9 @@
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori da 0 a 255</comment>
     <comment xml:lang="de">Wertebereich 0-255</comment>
-  </variable>
+    <label xml:lang="cs">Zrychlení</label>
+    <comment xml:lang="cs">Meze 0-255</comment>
+</variable>
   <variable CV="4" item="Decel" default="5" comment="Range 0-255">
     <decVal min="0" max="255"/>
     <label>Deceleration (Brake) Momentum (0-255)</label>
@@ -56,5 +58,7 @@
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori da 0 a 255</comment>
     <comment xml:lang="de">Wertebereich 0-255</comment>
+    <label xml:lang="cs">Zpomalení</label>
+    <comment xml:lang="cs">Meze 0-255</comment>
   </variable>
 </variables>

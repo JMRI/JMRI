@@ -53,5 +53,7 @@
 	<label xml:lang="de">Wiederholrate der EMK (0-63)</label>
 	<comment xml:lang="de">Wertebereich 0-63</comment>
 	<comment xml:lang="it">Valori 0-63</comment>
+        <label xml:lang="cs">Back EMF míra opakování</label>
+        <comment xml:lang="cs">Meze 0-63</comment>
   </variable>
 </variables>

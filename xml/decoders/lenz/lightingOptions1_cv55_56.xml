@@ -52,6 +52,8 @@
 	<label xml:lang="it">Intensità attenuazione Uscite A e C (0-255)</label>
 	<label xml:lang="de">Helligkeit an Ausgang A und C (0-255)</label>
 	<tooltip xml:lang="de">Helligkeit an Ausgang A und C (größer = heller)</tooltip>
+        <label xml:lang="cs">Nastavení jasu, výstupy A a C (0-255)</label>
+        <tooltip xml:lang="cs">Nastavení jasu světel (vyšší číslo = vyšší jas)</tooltip>
   </variable>
   <variable CV="56" item="Global lighting option 2" default="255" tooltip="Sets intensity of output B and D (larger number = brighter light)">
 	<decVal min="0" max="255"/>
@@ -59,6 +61,8 @@
 	<label xml:lang="it">Intensità attenuazione Uscite B e D (0-255)</label>
 	<label xml:lang="de">Helligkeit an Ausgang B und D (0-255)</label>
 	<tooltip xml:lang="de">Helligkeit an Ausgang B und D (größer = heller)</tooltip>
+        <label xml:lang="cs">Nastavení jasu, výstupy B a D (0-255)</label>
+        <tooltip xml:lang="cs">Nastavení jasu světel (vyšší číslo = vyšší jas)</tooltip>
   </variable>
   
 </variables>
