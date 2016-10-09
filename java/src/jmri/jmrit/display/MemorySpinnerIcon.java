@@ -60,25 +60,20 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
         pos.setMemory(namedMemory.getName());
         return super.finishClone(pos);
     }
+
     public javax.swing.JComponent getTextComponent() {
-        return ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField();
+        return ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField();
     }
 
     public Dimension getSize() {
-        if (debug) {
+        if (log.isDebugEnabled()) {
             Dimension d = spinner.getSize();
-            if (debug) {
-                log.debug("spinner width= " + d.width + ", height= " + d.height);
-            }
+            log.debug("spinner width= {}, height= {}", d.width, d.height);
             java.awt.Rectangle rect = getBounds(null);
-            if (debug) {
-                log.debug("Bounds rect= (" + rect.x + "," + rect.y
-                        + ") width= " + rect.width + ", height= " + rect.height);
-            }
+            log.debug("Bounds rect= ({},{}) width= {}, height= {}",
+                    rect.x, rect.y, rect.width, rect.height);
             d = super.getSize();
-            if (debug) {
-                log.debug("Panel width= " + d.width + ", height= " + d.height);
-            }
+            log.debug("Panel width= {}, height= {}", d.width, d.height);
         }
         return super.getSize();
     }
@@ -89,15 +84,13 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
      * @param pName Used as a system/user name to lookup the Memory object
      */
     public void setMemory(String pName) {
-        if (debug) {
-            log.debug("setMemory for memory= " + pName);
-        }
+        log.debug("setMemory for memory= {}", pName);
         if (InstanceManager.getNullableDefault(jmri.MemoryManager.class) != null) {
             try {
                 Memory memory = InstanceManager.memoryManagerInstance().provideMemory(pName);
                 setMemory(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, memory));
             } catch (IllegalArgumentException e) {
-                log.error("Memory '" + pName + "' not available, icon won't see changes");
+                log.error("Memory '{}' not available, icon won't see changes", pName);
             }
         } else {
             log.error("No MemoryManager for this protocol, icon won't see changes");
@@ -155,12 +148,12 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
         }
         return name;
     }
+
     /*
      public void setSelectable(boolean b) {selectable = b;}
      public boolean isSelectable() { return selectable;}
      boolean selectable = false;
      */
-
     public boolean setEditIconMenu(javax.swing.JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameMemory"));
         popup.add(new AbstractAction(txt) {
@@ -201,9 +194,7 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
      * Drive the current state of the display from the state of the Memory.
      */
     public void displayState() {
-        if (debug) {
-            log.debug("displayState");
-        }
+        log.debug("displayState");
         if (namedMemory == null) {  // leave alone if not connected yet
             return;
         }
@@ -220,19 +211,17 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
         } else if (getMemory().getValue().getClass() == Integer.class) {
             num = ((Number) getMemory().getValue()).intValue();
         } else if (getMemory().getValue().getClass() == Float.class) {
-            num = Integer.valueOf(Math.round((Float) getMemory().getValue()));
-            if (debug) {
-                log.debug("num= " + num.toString());
-            }
+            num = Math.round((Float) getMemory().getValue());
+            log.debug("num= {}", num);
         } else {
             //spinner.setValue(getMemory().getValue());
             return;
         }
-        int n = num.intValue();
+        int n = num;
         if (n > _max) {
-            num = Integer.valueOf(_max);
+            num = _max;
         } else if (n < _min) {
-            num = Integer.valueOf(_min);
+            num = _min;
         }
         spinner.setValue(num);
     }
