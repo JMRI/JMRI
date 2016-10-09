@@ -2,7 +2,7 @@ package jmri.implementation;
 
 import java.util.Calendar;
 import java.util.Date;
-import jmri.IdTag;
+import jmri.RailCom;
 import jmri.Reporter;
 import org.junit.Assert;
 import org.junit.After;
@@ -11,55 +11,52 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Tests for the DefaultIdTag class
+ * Tests for the DefaultRailCom class
  *
  * @author Matthew Harris Copyright (C) 2011
  */
-public class DefaultIdTagTest {
+public class DefaultRailComTest {
 
     @Test
-    public void testCreateIdTag() {
-        IdTag r = new DefaultIdTag("ID0413276BC1");
-        Assert.assertNotNull("IdTag not null", r);
+    public void testCreateRailCom() {
+        RailCom r = new DefaultRailCom("ID1234");
+        Assert.assertNotNull("RailCom not null", r);
     }
 
     @Test
-    public void testGetIdTagUserName() {
-        IdTag r = new DefaultIdTag("ID0413276BC1", "Test Tag");
-        Assert.assertEquals("IdTag user name is 'Test Tag'", "Test Tag", r.getUserName());
+    public void testGetRailComUserName() {
+        RailCom r = new DefaultRailCom("ID1234", "Test Tag");
+        Assert.assertEquals("RailCom user name is 'Test Tag'", "Test Tag", r.getUserName());
     }
 
     @Test
-    public void testGetIdTagTagID() {
-        IdTag r = new DefaultIdTag("ID0413276BC1");
-        Assert.assertEquals("IdTag TagID is 0413276BC1", "0413276BC1", r.getTagID());
+    public void testGetRailComTagID() {
+        RailCom r = new DefaultRailCom("ID1234");
+        Assert.assertEquals("RailCom TagID is 1234", "1234", r.getTagID());
     }
 
     @Test
-    public void testIdTagToString() {
-        IdTag r = new DefaultIdTag("ID0413276BC1");
-        Assert.assertEquals("IdTag toString is 0413276BC1", "0413276BC1", r.toString());
-
-        r.setUserName("Test Tag");
-        Assert.assertEquals("IdTag toString is 'Test Tag'", "Test Tag", r.toString());
+    public void testRailComToString() {
+        RailCom r = new DefaultRailCom("ID1234");
+        Assert.assertEquals("RailCom toString ", "Unknown Orientation Address 1234(S) ", r.toString());
     }
 
     @Test
     public void testNotYetSeen() {
-        IdTag r = new DefaultIdTag("ID0413276BC1");
+        RailCom r = new DefaultRailCom("ID0413276BC1");
         Assert.assertNull("At creation, Reporter where seen is null", r.getWhereLastSeen());
         Assert.assertNull("At creation, Date when seen is null", r.getWhenLastSeen());
-        Assert.assertEquals("At creation, IdTag status is UNSEEN", IdTag.UNSEEN, r.getState());
+        Assert.assertEquals("At creation, RailCom status is UNSEEN", RailCom.UNSEEN, r.getState());
 
         r.setWhereLastSeen(null);
         Assert.assertNull("After setWhereLastSeen(null), Reporter where seen is null", r.getWhereLastSeen());
         Assert.assertNull("After setWhereLastSeen(null), Date when seen is null", r.getWhenLastSeen());
-        Assert.assertEquals("After setWhereLastSeen(null), IdTag status is UNSEEN", IdTag.UNSEEN, r.getState());
+        Assert.assertEquals("After setWhereLastSeen(null), RailCom status is UNSEEN", RailCom.UNSEEN, r.getState());
     }
 
     @Test
     public void testHasBeenSeen() throws InterruptedException {
-        IdTag r = new DefaultIdTag("ID0413276BC1");
+        RailCom r = new DefaultRailCom("ID0413276BC1");
         Reporter rep = new AbstractReporter("IR1") {
             public int getState() {
                 return state;
@@ -79,14 +76,14 @@ public class DefaultIdTagTest {
 
         Assert.assertEquals("Where last seen is 'IR1'", rep, r.getWhereLastSeen());
         Assert.assertNotNull("When last seen is not null", r.getWhenLastSeen());
-        Assert.assertEquals("Status is SEEN", IdTag.SEEN, r.getState());
+        Assert.assertEquals("Status is SEEN", RailCom.SEEN, r.getState());
         Assert.assertTrue("Time when last seen is later than 'timeBefore'", r.getWhenLastSeen().after(timeBefore));
         Assert.assertTrue("Time when last seen is earlier than 'timeAfter'", r.getWhenLastSeen().before(timeAfter));
 
         r.setWhereLastSeen(null);
         Assert.assertNull("After setWhereLastSeen(null), Reporter where seen is null", r.getWhereLastSeen());
         Assert.assertNull("After setWhereLastSeen(null), Date when seen is null", r.getWhenLastSeen());
-        Assert.assertEquals("After setWhereLastSeen(null), IdTag status is UNSEEN", IdTag.UNSEEN, r.getState());
+        Assert.assertEquals("After setWhereLastSeen(null), RailCom status is UNSEEN", RailCom.UNSEEN, r.getState());
 
     }
 
@@ -98,7 +95,7 @@ public class DefaultIdTagTest {
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initIdTagManager();
+        jmri.util.JUnitUtil.initRailComManager();
     }
 
     @After
