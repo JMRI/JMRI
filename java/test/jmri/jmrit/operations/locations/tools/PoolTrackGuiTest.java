@@ -642,7 +642,7 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
     //
     // // confirm schedule add frame creation
     // JmriJFrame sef = JmriJFrame
-    // .getFrame("Add Schedule for Spur 3rd siding track");
+    // .getFrame("Add Schedule for Spur \"3rd siding track\"");
     // Assert.assertNotNull(sef);
     //
     // // kill all frames
