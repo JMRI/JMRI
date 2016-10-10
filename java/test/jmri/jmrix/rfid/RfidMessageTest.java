@@ -1,4 +1,4 @@
-package jmri.jmrix.lenz;
+package jmri.jmrix.rfid;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -7,17 +7,22 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * LenzConnectionTypeListTest.java
+ * RfidMessageTest.java
  *
- * Description:	tests for the jmri.jmrix.lenz.LenzConnectionTypeList class
+ * Description:	tests for the jmri.jmrix.rfid.RfidMessage class
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class LenzConnectionTypeListTest {
+public class RfidMessageTest {
 
     @Test
     public void testCtor() {
-        LenzConnectionTypeList c = new LenzConnectionTypeList();
+        RfidMessage c = new RfidMessage(20){
+           @Override
+           public String toMonitorString(){
+               return "";
+           }
+        };
         Assert.assertNotNull(c);
     }
 
