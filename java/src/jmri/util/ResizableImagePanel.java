@@ -96,10 +96,11 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     }
 
     /**
-     * Enable or disable drag'n drop, dropped files will be copied in latest
-     * used image path top folder when dnd enabled, also enable contextual menu
-     * with remove entry
+     * Enable or disable drag and drop, dropped files will be copied in latest
+     * used image path top folder when DND enabled, also enable contextual menu
+     * with remove entry.
      *
+     * @param dnd true to enable drag and drop
      */
     public void setDnd(boolean dnd) {
         if (dnd) {
@@ -172,6 +173,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     /**
      * Allows this DnDImagePanel to force resize of its container
      *
+     * @param b true if the container can be resized
      */
     public void setResizingContainer(boolean b) {
         _resizeContainer = b;
@@ -180,6 +182,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     /**
      * Can this DnDImagePanel resize its container?
      *
+     * @return true if the container can be resized
      */
     public boolean isResizingContainer() {
         return _resizeContainer;
@@ -188,31 +191,35 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     /**
      * Is this DnDImagePanel respecting aspect ratio when resizing content?
      *
+     * @return true if the aspect ratio respected when resizing
      */
     public boolean isRespectingAspectRatio() {
         return _respectAspectRatio;
     }
 
     /**
-     * Allow this DnDImagePanel to respect aspect ratio when resizing content
+     * Allow this DnDImagePanel to respect aspect ratio when resizing content.
      *
+     * @param b true if aspect ratio needs to be respected
      */
     public void setRespectAspectRatio(boolean b) {
         _respectAspectRatio = b;
     }
 
     /**
-     * Return curent image file path
+     * Return current image file path
      *
+     * @return the path
      */
     public String getImagePath() {
         return _imagePath;
     }
 
     /**
-     * Set image file path, display will be updated If passed value is null,
-     * blank image
+     * Set image file path, display will be updated if passed value is null,
+     * blank image.
      *
+     * @param s the path
      */
     public void setImagePath(String s) {
         if (s == null) {
@@ -272,13 +279,11 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     public void componentShown(ComponentEvent e) {
         if (isResizingContainer()) {
             resizeContainer();
-        } else {
-            if ((toResize) || (scaledImage == null)) {
-                setSize(e.getComponent().getSize());
-                setPreferredSize(e.getComponent().getSize());
-                setScaledImage();
-                toResize = false;
-            }
+        } else if ((toResize) || (scaledImage == null)) {
+            setSize(e.getComponent().getSize());
+            setPreferredSize(e.getComponent().getSize());
+            setScaledImage();
+            toResize = false;
         }
     }
 
@@ -322,7 +327,9 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     }
 
     /**
-     * Get curent scaled Image
+     * Get current scaled Image.
+     *
+     * @return the scaled image
      */
     public BufferedImage getScaledImage() {
         return scaledImage;

@@ -47,7 +47,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
     JButton previousButton = new JButton(Bundle.getMessage("Previous"));
     JButton nextButton = new JButton(Bundle.getMessage("Next"));
     JButton placeButton = new JButton(Bundle.getMessage("PlaceTestIcon"));
-    JButton applyButton = new JButton(Bundle.getMessage("Apply"));
+    JButton applyButton = new JButton(Bundle.getMessage("ButtonApply"));
     JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // combo boxes

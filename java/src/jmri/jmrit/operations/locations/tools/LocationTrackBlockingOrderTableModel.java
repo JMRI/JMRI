@@ -43,7 +43,7 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
         super();
     }
 
-    private synchronized void updateList() {
+    private void updateList() {
         if (_location == null) {
             return;
         }
@@ -58,7 +58,7 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
         fireTableDataChanged();
     }
 
-    protected synchronized void initTable(JTable table, Location location) {
+    protected void initTable(JTable table, Location location) {
         _table = table;
         _location = location;
         if (_location != null) {
@@ -76,7 +76,7 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
         XTableColumnModel tcm = new XTableColumnModel();
         _table.setColumnModel(tcm);
         _table.createDefaultColumnsFromModel();
-        
+
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
         tcm.getColumn(UP_COLUMN).setCellRenderer(buttonRenderer);
@@ -94,7 +94,7 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
     }
 
     @Override
-    public synchronized int getRowCount() {
+    public int getRowCount() {
         return _tracksList.size();
     }
 
@@ -156,7 +156,7 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
     }
 
     @Override
-    public synchronized Object getValueAt(int row, int col) {
+    public Object getValueAt(int row, int col) {
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
@@ -183,7 +183,7 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
     }
 
     @Override
-    public synchronized void setValueAt(Object value, int row, int col) {
+    public void setValueAt(Object value, int row, int col) {
         if (row >= getRowCount()) {
             return;
         }
@@ -213,13 +213,13 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
         if (Control.SHOW_PROPERTY)
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
-        if (e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Location.TRACK_BLOCKING_ORDER_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Location.TRACK_BLOCKING_ORDER_CHANGED_PROPERTY)) {
             updateList();
         }
-        if (e.getPropertyName().equals(Track.TRACK_BLOCKING_ORDER_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Track.NAME_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Track.TRACK_TYPE_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(Track.TRACK_BLOCKING_ORDER_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Track.NAME_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Track.TRACK_TYPE_CHANGED_PROPERTY)) {
             fireTableDataChanged();
         }
     }
@@ -230,7 +230,7 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
         }
     }
 
-    public synchronized void dispose() {
+    public void dispose() {
         removePropertyChangeTracks();
         if (_location != null) {
             _location.removePropertyChangeListener(this);

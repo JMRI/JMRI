@@ -51,7 +51,7 @@ public class PackageTest extends TestCase {
         suite.addTest(LnSensorAddressTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(LnSensorManagerTest.class));
         suite.addTest(LnCommandStationTypeTest.suite());
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(jmri.jmrix.loconet.pr3.PackageTest.suite());
         suite.addTest(jmri.jmrix.loconet.hexfile.PackageTest.suite());
         suite.addTest(jmri.jmrix.loconet.lnsvf2.PackageTest.suite());

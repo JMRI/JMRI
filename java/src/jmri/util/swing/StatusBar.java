@@ -21,6 +21,7 @@ public class StatusBar extends JLabel {
 
     /**
      * Update the status bar message
+     * @param message the message to add
      */
     public void setMessage(String message) {
         setText(" " + message);
