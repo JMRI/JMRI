@@ -1,4 +1,4 @@
-package jmri.jmrix.lenz;
+package jmri.implementation.configurexml;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -7,18 +7,17 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * LenzConnectionTypeListTest.java
+ * SingleTurnoutSignalHeadXmlTest.java
  *
- * Description:	tests for the jmri.jmrix.lenz.LenzConnectionTypeList class
+ * Description: tests for the SingleTurnoutSignalHeadXml class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author   Paul Bender  Copyright (C) 2016
  */
-public class LenzConnectionTypeListTest {
+public class SingleTurnoutSignalHeadXmlTest {
 
     @Test
-    public void testCtor() {
-        LenzConnectionTypeList c = new LenzConnectionTypeList();
-        Assert.assertNotNull(c);
+    public void testCtor(){
+      Assert.assertNotNull("SingleTurnoutSignalHeadXml constructor",new SingleTurnoutSignalHeadXml());
     }
 
     // The minimal setup for log4J
@@ -33,3 +32,4 @@ public class LenzConnectionTypeListTest {
     }
 
 }
+

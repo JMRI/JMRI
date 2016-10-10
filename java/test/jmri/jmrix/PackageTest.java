@@ -64,7 +64,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.powerline.PackageTest.suite());
         suite.addTest(jmri.jmrix.pricom.PackageTest.suite());
         suite.addTest(jmri.jmrix.qsi.PackageTest.suite());
-        suite.addTest(jmri.jmrix.rfid.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.rfid.PackageTest.class));
         suite.addTest(jmri.jmrix.roco.PackageTest.suite());
         suite.addTest(jmri.jmrix.rps.PackageTest.suite());
         suite.addTest(jmri.jmrix.secsi.PackageTest.suite());
