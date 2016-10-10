@@ -1,5 +1,6 @@
 package jmri.util.iharder.dnd;
 
+import java.awt.Component;
 import java.awt.datatransfer.DataFlavor;
 import java.io.BufferedReader;
 import java.io.File;
@@ -28,7 +29,7 @@ import java.util.List;
  *          }   // end filesDropped
  *      }); // end FileDrop.Listener
  * </code></pre>
- * 
+ *
  * You can specify the border that will appear when files are being dragged by
  * calling the constructor with a <tt>javax.swing.border.Border</tt>. Only
  * <tt>JComponent</tt>s will show any indication with a border.
@@ -37,7 +38,7 @@ import java.util.List;
  * object (such as <tt>System.out</tt>) into the full constructor. A
  * <tt>null</tt>
  * value will result in no extra debugging information being output.
- * 
+ *
  *
  * <p>
  * I'm releasing this code into the Public Domain. Enjoy.
@@ -259,6 +260,7 @@ public class FileDrop {
 
         if (supportsDnD()) {   // Make a drop listener
             dropListener = new java.awt.dnd.DropTargetListener() {
+                @Override
                 public void dragEnter(java.awt.dnd.DropTargetDragEvent evt) {
                     log(out, "FileDrop: dragEnter event.");
 
@@ -284,11 +286,13 @@ public class FileDrop {
                     }   // end else: drag not ok
                 }   // end dragEnter
 
+                @Override
                 public void dragOver(java.awt.dnd.DropTargetDragEvent evt) {   // This is called continually as long as the mouse is
                     // over the drag target.
                 }   // end dragOver
 
                 @SuppressWarnings("unchecked")
+                @Override
                 public void drop(java.awt.dnd.DropTargetDropEvent evt) {
                     log(out, "FileDrop: drop event.");
                     try {   // Get whatever was dropped
@@ -324,21 +328,17 @@ public class FileDrop {
                             // BEGIN 2007-09-12 Nathan Blomquist -- Linux (KDE/Gnome) support added.
                             DataFlavor[] flavors = tr.getTransferDataFlavors();
                             boolean handled = false;
-                            for (int zz = 0; zz < flavors.length; zz++) {
-                                if (flavors[zz].isRepresentationClassReader()) {
+                            for (DataFlavor flavor : flavors) {
+                                if (flavor.isRepresentationClassReader()) {
                                     // Say we'll take it.
                                     //evt.acceptDrop ( java.awt.dnd.DnDConstants.ACTION_COPY_OR_MOVE );
                                     evt.acceptDrop(java.awt.dnd.DnDConstants.ACTION_COPY);
                                     log(out, "FileDrop: reader accepted.");
-
-                                    Reader reader = flavors[zz].getReaderForText(tr);
-
+                                    Reader reader = flavor.getReaderForText(tr);
                                     BufferedReader br = new BufferedReader(reader);
-
                                     if (listener != null) {
                                         listener.filesDropped(createFileArray(br, out));
                                     }
-
                                     // Mark that drop is completed.
                                     evt.getDropTargetContext().dropComplete(true);
                                     log(out, "FileDrop: drop complete.");
@@ -373,6 +373,7 @@ public class FileDrop {
                     }   // end finally
                 }   // end drop
 
+                @Override
                 public void dragExit(java.awt.dnd.DropTargetEvent evt) {
                     log(out, "FileDrop: dragExit event.");
                     // If it's a Swing component, reset its border
@@ -383,6 +384,7 @@ public class FileDrop {
                     }   // end if: JComponent
                 }   // end dragExit
 
+                @Override
                 public void dropActionChanged(java.awt.dnd.DropTargetDragEvent evt) {
                     log(out, "FileDrop: dropActionChanged event.");
                     // Is this an acceptable drag event?
@@ -415,9 +417,9 @@ public class FileDrop {
             catch (Exception e) {
                 support = false;
             }   // end catch
-            supportsDnD = Boolean.valueOf(support);
+            supportsDnD = support;
         }   // end if: first time through
-        return supportsDnD.booleanValue();
+        return supportsDnD;
     }   // end supportsDnD
 
     // BEGIN 2007-09-12 Nathan Blomquist -- Linux (KDE/Gnome) support added.
@@ -425,7 +427,7 @@ public class FileDrop {
 
     private static File[] createFileArray(BufferedReader bReader, PrintStream out) {
         try {
-            java.util.List<File> list = new java.util.ArrayList<File>();
+            java.util.List<File> list = new java.util.ArrayList<>();
             java.lang.String line = null;
             while ((line = bReader.readLine()) != null) {
                 try {
@@ -461,20 +463,17 @@ public class FileDrop {
         }   // end catch
 
         // Listen for hierarchy changes and remove the drop target when the parent gets cleared out.
-        c.addHierarchyListener(new java.awt.event.HierarchyListener() {
-            public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
-                log(out, "FileDrop: Hierarchy changed.");
-                java.awt.Component parent = c.getParent();
-                if (parent == null) {
-                    c.setDropTarget(null);
-                    log(out, "FileDrop: Drop target cleared from component.");
-                } // end if: null parent
-                else {
-                    new java.awt.dnd.DropTarget(c, dropListener);
-                    log(out, "FileDrop: Drop target added to component.");
-                }   // end else: parent not null
-            }   // end hierarchyChanged
-        }); // end hierarchy listener
+        c.addHierarchyListener((java.awt.event.HierarchyEvent evt) -> {
+            log(out, "FileDrop: Hierarchy changed.");
+            java.awt.Component parent = c.getParent();
+            if (parent == null) {
+                c.setDropTarget(null);
+                log(out, "FileDrop: Drop target cleared from component.");
+            } else {
+                new java.awt.dnd.DropTarget(c, dropListener);
+                log(out, "FileDrop: Drop target added to component.");
+            }
+        });
         if (c.getParent() != null) {
             new java.awt.dnd.DropTarget(c, dropListener);
         }
@@ -487,8 +486,8 @@ public class FileDrop {
             java.awt.Component[] comps = cont.getComponents();
 
             // Set it's components as listeners also
-            for (int i = 0; i < comps.length; i++) {
-                makeDropTarget(out, comps[i], recursive);
+            for (Component comp : comps) {
+                makeDropTarget(out, comp, recursive);
             }
         }   // end if: recursively set components as listener
     }   // end dropListener
@@ -546,6 +545,7 @@ public class FileDrop {
      * <var>c</var> if <var>c</var> is a {@link java.awt.Container}.
      *
      * @param c The component to unregister as a drop target
+     * @return true if any components were unregistered
      * @since 1.0
      */
     public static boolean remove(java.awt.Component c) {
@@ -561,6 +561,7 @@ public class FileDrop {
      *                  and drop messages
      * @param c         The component to unregister
      * @param recursive Recursively unregister components within a container
+     * @return true if any components were unregistered
      * @since 1.0
      */
     public static boolean remove(java.io.PrintStream out, java.awt.Component c, boolean recursive) {   // Make sure we support dnd.
@@ -569,16 +570,14 @@ public class FileDrop {
             c.setDropTarget(null);
             if (recursive && (c instanceof java.awt.Container)) {
                 java.awt.Component[] comps = ((java.awt.Container) c).getComponents();
-                for (int i = 0; i < comps.length; i++) {
-                    remove(out, comps[i], recursive);
+                for (Component comp : comps) {
+                    remove(out, comp, recursive);
                 }
                 return true;
-            } // end if: recursive
-            else {
+            } else {
                 return false;
             }
-        } // end if: supports DnD
-        else {
+        } else {
             return false;
         }
     }   // end remove
@@ -586,7 +585,8 @@ public class FileDrop {
     /* ********  I N N E R   I N T E R F A C E   L I S T E N E R  ******** */
     /**
      * Implement this inner interface to listen for when files are dropped. For
-     * example your class declaration may begin like this:      <pre><code>
+     * example your class declaration may begin like this:
+     * <pre><code>
      *      public class MyClass implements FileDrop.Listener
      *      ...
      *      public void filesDropped( java.io.File[] files )

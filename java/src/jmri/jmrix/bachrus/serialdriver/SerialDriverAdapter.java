@@ -38,6 +38,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
         super(new SpeedoSystemConnectionMemo());
         setManufacturer(SpeedoConnectionTypeList.BACHRUS);
         mInstance = this;
+        this.getSystemConnectionMemo().setSpeedoTrafficController(new SpeedoTrafficController(this.getSystemConnectionMemo()));
     }
 
     SerialPort activeSerialPort = null;
@@ -93,11 +94,9 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
                 );
             }
 
-            SpeedoTrafficController tc = new SpeedoTrafficController();
-
             //AJB - add Sprog Traffic Controller as event listener
             try {
-                activeSerialPort.addEventListener(tc);
+                activeSerialPort.addEventListener(this.getSystemConnectionMemo().getTrafficController());
             } catch (TooManyListenersException e) {
             }
             setManufacturer(SpeedoConnectionTypeList.BACHRUS);
@@ -135,10 +134,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
      */
     public void configure() {
         // connect to the traffic controller
-        SpeedoTrafficController control = new SpeedoTrafficController();
-
-        this.getSystemConnectionMemo().setSpeedoTrafficController(control);        
-        control.connectPort(this);
+        this.getSystemConnectionMemo().getTrafficController().connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
 

@@ -254,15 +254,15 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
             log.info("set protocol to CORE-ID");
             String opt2 = getOptionState(option2Name);
             switch (opt2) {
-                case "A-H" :
+                case "A-H":
                     log.info("set concentrator range to 'A-H' at position 1");
                     protocol = new CoreIdRfidProtocol('A', 'H', 1);
                     break;
-                case "I-P" :
+                case "I-P":
                     log.info("set concentrator range to 'I-P' at position 1");
                     protocol = new CoreIdRfidProtocol('I', 'P', 1);
                     break;
-                default :
+                default:
                     // unrecognised concentrator range - warn
                     log.warn("concentrator range '{}' not supported - default to no concentrator", opt2);
                     protocol = new CoreIdRfidProtocol();
@@ -338,7 +338,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
     /**
      * Local method to do specific port configuration
      *
-     * @throws UnsupportedCommOperationException
+     * @throws UnsupportedCommOperationException if unable to configure port
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
@@ -377,6 +377,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
     /**
      * Set the baud rate.
      *
+     * @param rate the baud rate to set
      */
     @Override
     public void configureBaudRate(String rate) {

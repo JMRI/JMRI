@@ -33,7 +33,7 @@ public class PackageTest extends TestCase {
         if (!Boolean.getBoolean("jmri.headlesstest")) {
             suite.addTest(jmri.jmrit.AbstractIdentifyTest.suite());
         }
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(DccLocoAddressSelectorTest.suite());
         suite.addTest(MemoryContentsTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(SoundTest.class));
@@ -86,6 +86,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.analogclock.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.revhistory.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.sound.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.vsdecoder.PackageTest.class));
         return suite;
     }
 
