@@ -83,6 +83,8 @@ public class SetupExcelProgramFrame extends OperationsFrame {
     /**
      * Opens a dialog window in either the csvManifest or csvSwitchLists
      * directory
+     * @param directoryName The string name of the directory
+     * @return The File selected.
      *
      */
     protected File selectFile(String directoryName) {
