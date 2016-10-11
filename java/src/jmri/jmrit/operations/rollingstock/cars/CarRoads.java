@@ -91,6 +91,7 @@ public class CarRoads extends RollingStockAttribute {
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-cars.dtd.
+     * @param root The common Element for operations-cars.dtd.
      *
      */
     public void store(Element root) {

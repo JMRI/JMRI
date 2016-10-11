@@ -98,6 +98,7 @@ public class TrainBuilder extends TrainCommon {
      * </ol>
      *
      * @param train the train that is to be built
+     * @return True if successful.
      *
      */
     public boolean build(Train train) {
@@ -2493,9 +2494,7 @@ public class TrainBuilder extends TrainCommon {
      * @param rl the planned origin for this car
      * @param rld the planned destination for this car
      * @param track the final destination for car
-     * @return true if car was successfully added to train. Also makes the
-     *         boolean "success" true if location doesn't need any more pick
-     *         ups.
+     * 
      */
     private void addCarToTrain(Car car, RouteLocation rl, RouteLocation rld, Track track) {
         addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarAssignedDest"), new Object[]{
