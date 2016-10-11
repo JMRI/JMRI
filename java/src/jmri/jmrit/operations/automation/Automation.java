@@ -325,10 +325,11 @@ public class Automation implements java.beans.PropertyChangeListener {
      * Add a automation item at a specific place (sequence) in the automation
      * Allowable sequence numbers are 0 to max size of automation. 0 = start of
      * list.
+     * @param sequence where to add a new item in the automation
      *
      * @return automation item
      */
-    public AutomationItem addItem(int sequence) {
+    public AutomationItem addNewItem(int sequence) {
         AutomationItem item = addItem();
         if (sequence < 0 || sequence > getSize()) {
             return item;
@@ -341,6 +342,7 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     * @param item the item to be added to this automation.
      */
     public void register(AutomationItem item) {
         _automationHashTable.put(item.getId(), item);
@@ -358,6 +360,7 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     /**
      * Delete a AutomationItem
+     * @param item The item to be deleted.
      *
      */
     public void deleteItem(AutomationItem item) {
@@ -392,6 +395,7 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     /**
      * Get a AutomationItem by id
+     * @param id The string id of the item.
      *
      * @return automation item
      */
@@ -450,6 +454,7 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     /**
      * Places a AutomationItem earlier in the automation
+     * @param item The item to move up one position in the automation.
      *
      */
     public void moveItemUp(AutomationItem item) {
@@ -471,7 +476,8 @@ public class Automation implements java.beans.PropertyChangeListener {
     }
 
     /**
-     * Places a AutomationItem later in the automation
+     * Places a AutomationItem later in the automation.
+     * @param item The item to move later in the automation.
      *
      */
     public void moveItemDown(AutomationItem item) {

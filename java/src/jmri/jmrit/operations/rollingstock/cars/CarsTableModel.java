@@ -105,6 +105,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
      * <p>
      * Moves, Built, Owner, Value, RFID, Wait, Pickup, and Last are grouped
      * together.
+     * @param sort The integer sort to use.
      *
      */
     public void setSort(int sort) {
@@ -218,6 +219,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
     /**
      * Search for car by road number
+     * @param roadNumber The string road number to search for.
      *
      * @return -1 if not found, table row number if found
      */

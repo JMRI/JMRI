@@ -104,6 +104,7 @@ public class CarManager extends RollingStockManager {
 
     /**
      * Create a new Kernel
+     * @param name string name for this Kernel
      *
      * @return Kernel
      */
@@ -121,6 +122,7 @@ public class CarManager extends RollingStockManager {
 
     /**
      * Delete a Kernel by name
+     * @param name string name for the Kernel
      *
      */
     public void deleteKernel(String name) {
@@ -136,6 +138,7 @@ public class CarManager extends RollingStockManager {
 
     /**
      * Get a Kernel by name
+     * @param name string name for the Kernel
      *
      * @return named Kernel
      */
@@ -309,6 +312,7 @@ public class CarManager extends RollingStockManager {
      * Return a list available cars (no assigned train or car already assigned
      * to this train) on a route, cars are ordered least recently moved to most
      * recently moved.
+     * @param train The Train to use.
      *
      * @return List of cars with no assigned train on a route
      */
@@ -406,6 +410,7 @@ public class CarManager extends RollingStockManager {
      * 
      * If the train is to be blocked by track blocking order, all of the tracks
      * at that location need a blocking number greater than 0.
+     * @param train The selected Train.
      *
      * @return Ordered list of cars assigned to the train
      */
@@ -600,6 +605,7 @@ public class CarManager extends RollingStockManager {
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-cars.dtd.
+     * @param root The common Element for operations-cars.dtd.
      */
     public void store(Element root) {
         root.addContent(new Element(Xml.OPTIONS)); // nothing to save under
