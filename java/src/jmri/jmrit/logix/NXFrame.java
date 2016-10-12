@@ -1,6 +1,7 @@
 package jmri.jmrit.logix;
 
 import java.awt.BorderLayout;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -44,7 +45,9 @@ import org.slf4j.LoggerFactory;
  */
 public class NXFrame extends WarrantRoute {
 
-    private float _scale = 87.1f;
+    static float _scale = 87.1f;
+    static float _intervalTime = 0.0f;     // milliseconds
+    static float _throttleIncr = 0.0f;
 
     JTextField _trainName = new JTextField(6);
     JTextField _maxSpeedBox = new JTextField(6);
@@ -65,12 +68,13 @@ public class NXFrame extends WarrantRoute {
     private boolean _haltStart = false;
     private float _maxSpeed = 0.5f;
     private float _minSpeed = 0.05f;
-    private float _intervalTime = 0.0f;     // milliseconds
-    private float _throttleIncr = 0.0f;
     
     private static NXFrame _instance;
 
     static public NXFrame getInstance() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return null;
+        }
         if (_instance == null) {
             _instance = new NXFrame();
         }
@@ -158,6 +162,7 @@ public class NXFrame extends WarrantRoute {
         if (_controlPanel==null) {
             return;
         }
+        _rampInterval.setText(Float.toString(_intervalTime/1000));
         java.awt.Component[] list = _controlPanel.getComponents();
         int i = 0;
         while (i<list.length && !list[i].equals(_autoRunPanel)) {
@@ -431,7 +436,6 @@ public class NXFrame extends WarrantRoute {
 
     public void setTimeInterval(float s) {
         _intervalTime = s;
-        _rampInterval.setText(Float.toString(_intervalTime/1000));
     }
     public void setRampIncrement(float throttleIncr) {
         _throttleIncr = throttleIncr;        

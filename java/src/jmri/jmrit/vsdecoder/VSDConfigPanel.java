@@ -7,7 +7,6 @@ import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -45,8 +44,6 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("deprecation")
 public class VSDConfigPanel extends JmriPanel {
-
-    private static final ResourceBundle vsdecoderBundle = VSDecoderBundle.bundle();
 
     // Local References
     VSDecoderManager decoder_mgr; // local reference to the VSDecoderManager instance
@@ -267,7 +264,7 @@ public class VSDConfigPanel extends JmriPanel {
             }
         });
         rosterSaveButton.setEnabled(false); // temporarily disable this until we update the RosterEntry
-        rosterSaveButton.setToolTipText(vsdecoderBundle.getString("RosterSaveButtonToolTip"));
+        rosterSaveButton.setToolTipText(Bundle.getMessage("RosterSaveButtonToolTip"));
         rosterPanel.add(rosterSaveButton);
 
         addressLabel = new javax.swing.JLabel();
@@ -401,9 +398,9 @@ public class VSDConfigPanel extends JmriPanel {
                 r.putAttribute("VSDecoder_Path", main_pane.getDecoder().getVSDFilePath());
                 r.putAttribute("VSDecoder_Profile", profileComboBox.getSelectedItem().toString());
                 int value = JOptionPane.showConfirmDialog(null,
-                        MessageFormat.format(vsdecoderBundle.getString("UpdateRoster"),
+                        MessageFormat.format(Bundle.getMessage("UpdateRoster"),
                                 new Object[]{r.titleString()}),
-                        vsdecoderBundle.getString("SaveRoster?"), JOptionPane.YES_NO_OPTION);
+                        Bundle.getMessage("SaveRoster?"), JOptionPane.YES_NO_OPTION);
                 if (value == JOptionPane.YES_OPTION) {
                     storeFile(r);
                 }
