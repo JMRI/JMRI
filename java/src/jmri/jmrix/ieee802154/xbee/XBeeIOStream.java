@@ -153,7 +153,7 @@ final public class XBeeIOStream extends AbstractPortController {
                    dataArray[i++] = n;
                 }
                 if (log.isDebugEnabled()) {
-                    log.debug("XBee Thread received message " + dataArray);
+                    log.debug("XBee Thread received message " + jmri.util.StringUtil.hexStringFromBytes(dataArray));
                 }
                 try {
                    xtc.getXBee().sendData(node,dataArray);
@@ -196,7 +196,11 @@ final public class XBeeIOStream extends AbstractPortController {
                      }
                   }
                } catch (java.io.IOException ioe) {
-                log.error("IOException writing serial data from XBee to pipe");
+                  log.error("IOException writing serial data from XBee to pipe");
+               } catch (java.lang.NullPointerException npe) {
+                  log.error("NullPointerException writing serial data from XBee to pipe");
+                  // this is fatal, return
+                  return;
                }
             }
         }

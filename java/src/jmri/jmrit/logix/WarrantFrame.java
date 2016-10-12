@@ -1141,19 +1141,19 @@ public class WarrantFrame extends WarrantRoute {
         }
         if (_throttleCommands.size() == 0) {
             _throttleCommands.add(new ThrottleSetting(0, "Forward", fwString, ""));
-            log.debug("setForward adding to empty _throttleCommands");
+            if (log.isDebugEnabled()) log.debug("setForward adding to empty _throttleCommands");
             return;
         }
         for (int i=0; i<_throttleCommands.size(); i++) {
             ThrottleSetting ts = _throttleCommands.get(i);
-            log.info("setForward examining _throttleCommands "+i+" command: "+ts.getCommand()+" value: "+ts.getValue());
+            if (log.isDebugEnabled()) log.info("setForward examining _throttleCommands "+i+" command: "+ts.getCommand()+" value: "+ts.getValue());
             if (ts.getCommand().toUpperCase().equals("FORWARD")) {
-                log.debug("setForward modifying _throttleCommands "+i);
+                if (log.isDebugEnabled()) log.debug("setForward modifying _throttleCommands "+i);
                 ts.setValue(fwString);
                 return;
             }
         }
-        log.debug("setForward inserting new command at beginning of list");
+        if (log.isDebugEnabled()) log.debug("setForward inserting new command at beginning of list");
         _throttleCommands.add(0, new ThrottleSetting(0, "Forward", fwString, ""));
     }
 
@@ -1299,12 +1299,12 @@ public class WarrantFrame extends WarrantRoute {
         public Object getValueAt(int row, int col) {
             // some error checking
             if (row >= _throttleCommands.size()) {
-                log.debug("row is greater than throttle command size");
+                if (log.isDebugEnabled()) log.debug("row is greater than throttle command size");
                 return "";
             }
             ThrottleSetting ts = _throttleCommands.get(row);
             if (ts == null) {
-                log.debug("Throttle setting is null!");
+                if (log.isDebugEnabled()) log.debug("Throttle setting is null!");
                 return "";
             }
             switch (col) {

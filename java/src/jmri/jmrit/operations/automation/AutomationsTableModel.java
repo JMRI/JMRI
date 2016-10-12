@@ -57,14 +57,12 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
     private int _sort = SORTBYNAME;
 
     public void setSort(int sort) {
-        synchronized (this) {
-            _sort = sort;
-        }
+        _sort = sort;
         updateList();
         fireTableDataChanged();
     }
 
-    private synchronized void updateList() {
+    private void updateList() {
         // first, remove listeners from the individual objects
         removePropertyChangeAutomations();
 
@@ -82,7 +80,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
     List<Automation> _sysList = null;
     JTable _table;
 
-    protected synchronized void initTable(AutomationsTableFrame frame, JTable table) {
+    protected void initTable(AutomationsTableFrame frame, JTable table) {
         _table = table;
         // Install the button handlers
         TableColumnModel tcm = table.getColumnModel();
@@ -106,12 +104,12 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         table.getColumnModel().getColumn(RUN_COLUMN).setPreferredWidth(90);
         table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(90);
-        
+
         frame.loadTableDetails(table);
     }
 
     @Override
-    public synchronized int getRowCount() {
+    public int getRowCount() {
         return _sysList.size();
     }
 
@@ -181,7 +179,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
     }
 
     @Override
-    public synchronized Object getValueAt(int row, int col) {
+    public Object getValueAt(int row, int col) {
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
@@ -217,7 +215,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
     }
 
     @Override
-    public synchronized void setValueAt(Object value, int row, int col) {
+    public void setValueAt(Object value, int row, int col) {
         switch (col) {
             case RUN_COLUMN:
                 runAutomation(row);
@@ -298,7 +296,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         }
     }
 
-    public synchronized void dispose() {
+    public void dispose() {
         Enumeration<String> en = automationEditFrames.keys();
         while (en.hasMoreElements()) {
             AutomationTableFrame frame = automationEditFrames.get(en.nextElement());
@@ -311,7 +309,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
 
     // check for change in number of automations, or a change in a automation
     @Override
-    public synchronized void propertyChange(PropertyChangeEvent e) {
+    public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());

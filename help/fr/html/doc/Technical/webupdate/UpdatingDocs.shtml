@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Joseph A. Ellis - TesserAct Studios -->
   <!-- Copyright Bob Blackwell - afticarr@sympatico.ca 2007 -->
-  <!-- UpDated by Blorec Hervé 2011-09-06-->
+  <!-- UpDated by Blorec Hervï¿½ 2011-09-06-->
 
   <title>JMRI: Mise &#224; jour Manuels/Documents</title>
   <!-- Style -->
@@ -204,8 +204,8 @@
       compress&#233;.
 
       <p>Lien vers <a href=
-      "http://sourceforge.net/tracker/?group_id=26788&amp;atid=388315">
-      Proposer &#224; SourceForge</a> .</p>
+      "http://github.com/JMRI/JMRI/issues">
+      Proposer &#224; GitHub</a> .</p>
 
       <div>
         Ce document se trouve dans l'aide

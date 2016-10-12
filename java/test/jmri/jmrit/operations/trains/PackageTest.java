@@ -30,7 +30,7 @@ public class PackageTest extends TestCase {
         suite.addTest(TrainCommonTest.suite());
         suite.addTest(TrainBuilderTest.suite());
         suite.addTest(XmlTest.suite());
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(jmri.jmrit.operations.trains.tools.PackageTest.suite());
         suite.addTest(jmri.jmrit.operations.trains.excel.PackageTest.suite());
         suite.addTest(jmri.jmrit.operations.trains.timetable.PackageTest.suite());

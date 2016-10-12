@@ -68,8 +68,13 @@ public class CatalogTreeModel extends DefaultTreeModel {
         if (fp.isDirectory()) {
             // work on the kids
             String[] sp = fp.list();
+            
+            if (sp == null) {
+                log.warn("unexpected null list() in insertResourceNodes from \"{}\"", pPath);
+            }
+            
             for (int i = 0; i < sp.length; i++) {
-                //if (log.isDebugEnabled()) log.debug("Descend into resource: "+sp[i]);
+                log.trace("Descend into resource: {}", sp[i]);
                 insertResourceNodes(sp[i], pPath + "/" + sp[i], newElement);
             }
         }
@@ -126,4 +131,7 @@ public class CatalogTreeModel extends DefaultTreeModel {
      */
     static final String resourceRoot = "resources";
     static final String fileRoot = FileUtil.getUserFilesPath() + "resources";
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CatalogTreeModel.class.getName());
+
 }
