@@ -123,8 +123,11 @@ public class JsonRosterHttpService extends JsonHttpService {
      * folder of the JMRI server. It is expected that clients will fill in the
      * server IP address and port as they know it to be.
      *
-     * @param id     The id of an entry in the roster.
+     * @param locale The client's locale
+     * @param id     The id of an entry in the roster
      * @return a roster entry in JSON notation
+     * @throws jmri.server.json.JsonException If no roster entry exists for the
+     *                                        given id
      */
     public JsonNode getRosterEntry(Locale locale, String id) throws JsonException {
         try {
@@ -141,6 +144,7 @@ public class JsonRosterHttpService extends JsonHttpService {
      * folder of the JMRI server. It is expected that clients will fill in the
      * server IP address and port as they know it to be.
      *
+     * @param locale the client's Locale
      * @param entry  A RosterEntry that may or may not be in the roster.
      * @return a roster entry in JSON notation
      */
