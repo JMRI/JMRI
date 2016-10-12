@@ -62,6 +62,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
     }
 
     /**
+     * @param name The string name of the automation to be returned.
      * @return requested Automation object or null if none exists
      */
     public Automation getAutomationByName(String name) {
@@ -83,6 +84,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
     /**
      * Finds an existing automation or creates a new automation if needed
      * requires automation's name creates a unique id for this automation
+     * @param name The string name of the automation.
      *
      *
      * @return new automation or existing automation
@@ -102,6 +104,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     * @param automation The automation that is being registered.
      */
     public void register(Automation automation) {
         Integer oldSize = Integer.valueOf(_automationHashTable.size());
@@ -117,6 +120,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
 
     /**
      * Forget a NamedBean Object created outside the manager.
+     * @param automation The automation to be deleted.
      */
     public void deregister(Automation automation) {
         if (automation == null) {

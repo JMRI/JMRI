@@ -39,6 +39,7 @@ public class RunSwitchListChangesAction extends Action {
      * there's new work for that location.
      * <p>
      * common code see RunSwitchListAction.java
+     * @param isChanged if set true only locations with changes will get a custom switch list.
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
             value = {"UC_USELESS_CONDITION", "RpC_REPEATED_CONDITIONAL_TEST"},
