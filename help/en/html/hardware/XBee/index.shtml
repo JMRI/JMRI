@@ -78,12 +78,19 @@
       <h3>Wiring</h3>
 
       <p>JMRI can communicate with XBee Series 1 and XBee Series 2
-      modules. Underlying support for communication is provided by
-      <a href="https://code.google.com/p/xbee-api/">Andrew Rapp's
-      xbee-api library for Java</a>. This library requires that the
-      XBee module connected to the PC be configured for <a href=
-      "https://code.google.com/p/xbee-api/wiki/WhyApiMode">API
-      mode</a>.</p>
+      modules.</p>
+
+      <p>In JMRI versions Prior to 4.5.5, Underlying support for 
+      communication is provided by 
+      <a href="https://github.com/andrewrapp/xbee-api">Andrew Rapp's
+      xbee-api library for Java</a>.</p>
+
+      <p>Starting with JMRI version 4.5.5, the Underlying support for
+      communication is provided by <a href="http://docs.digi.com/display/XBJLIB/XBee+Java+Library">The Digi XBee Java Library</a>.
+
+      <p>Both library requires that the
+      XBee module connected to the PC be configured for API
+      mode with escapes (mode 2).</p>
 
       <p>JMRI support for the Digi XBee Modules currently includes
       the ability to passively read digital sensor inputs, as JMRI
