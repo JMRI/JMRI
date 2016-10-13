@@ -273,8 +273,9 @@ public class ProfileManagerDialog extends JDialog {
     /**
      * Get the active profile or display a dialog to prompt the user for it.
      *
-     * @param f - The {@link java.awt.Frame} to display the dialog over.
+     * @param f - The {@link java.awt.Frame} to display the dialog over
      * @return the active or selected {@link Profile}
+     * @throws java.io.IOException if unable to read or set the starting Profile
      * @see ProfileManager#getStartingProfile()
      */
     public static Profile getStartingProfile(Frame f) throws IOException {
@@ -318,7 +319,7 @@ public class ProfileManagerDialog extends JDialog {
         }
     }//GEN-LAST:event_profilesKeyPressed
 
-    @SuppressFBWarnings(value="DM_EXIT", justification="This exit ensures launch is aborted if a profile is not selected or autostarted")
+    @SuppressFBWarnings(value = "DM_EXIT", justification = "This exit ensures launch is aborted if a profile is not selected or autostarted")
     private void formWindowClosing(WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         if (countDown != -1) {
             System.exit(255);
