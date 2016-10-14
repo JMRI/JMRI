@@ -1819,35 +1819,14 @@
         <delete dir="${dist.macosx}"/>
         <mkdir dir="${dist.macosx}/JMRI"/>
         <copy todir="${dist.macosx}/JMRI">
-            <fileset dir="${jartarget}"
-                     includes="jmri.jar"/>
-            <fileset dir="."
-                     includes="xml/,resources/,help/,web/,jython/"
-                     excludes="help/en/manual/**" />
             <!-- use question marks for spaces in filename; Ant will split the list on commas and spaces -->
             <fileset dir="${dist.apps}"
                      includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/"/>
-            <fileset dir="scripts"
-                     includes="default.lcf,COPYING"/>
-            <fileset dir="."
-                     includes="python.properties,jmri.conf"/>
-        </copy>
-        <mkdir dir="${dist.macosx}/JMRI/lib"/>
-        <copy todir="${dist.macosx}/JMRI/lib" flatten="true">
-            <path>
-                <pathelement path="${runtime.class.jars}"/>
-            </path>
-            <fileset file="${libdir}/security.policy"/>
-            <fileset file="${libdir}/README.md"/>
-        </copy>
-        <mkdir dir="${dist.macosx}/JMRI/lib/macosx"/>
-        <copy todir="${dist.macosx}/JMRI/lib/macosx">
-            <fileset dir="${libdir}/macosx"/>
+            <fileset dir="scripts" includes="COPYING"/>
         </copy>
         <chmod perm="ugo+rx">
             <fileset dir="${dist.macosx}/JMRI">
                 <include name="DecoderPro.app/Contents/MacOS/StartJMRI"/>
-                <include name="JMRI Demo.app/Contents/MacOS/StartJMRI"/>
                 <include name="PanelPro.app/Contents/MacOS/StartJMRI"/>
                 <include name="SoundPro.app/Contents/MacOS/StartJMRI"/>
             </fileset>
@@ -1953,6 +1932,29 @@
             <make-startup-script script.name="@{script.name}"
                                  script.class="@{script.class}"
                                  dest="${dist.apps}/@{script.name}.app/Contents/MacOS/StartJMRI"/>
+            <copy todir="${dist.apps}/@{script.name}.app/Contents/Resources">
+                <fileset dir="${jartarget}"
+                         includes="jmri.jar"/>
+                <fileset dir="."
+                         includes="xml/,resources/,help/,web/,jython/"
+                         excludes="help/en/manual/**" />
+                <fileset dir="scripts"
+                         includes="default.lcf,COPYING"/>
+                <fileset dir="."
+                         includes="python.properties,jmri.conf"/>
+            </copy>
+            <mkdir dir="${dist.apps}/@{script.name}.app/Contents/Resources/lib"/>
+            <copy todir="${dist.apps}/@{script.name}.app/Contents/Resources/lib" flatten="true">
+                <path>
+                    <pathelement path="${runtime.class.jars}"/>
+                </path>
+                <fileset file="${libdir}/security.policy"/>
+                <fileset file="${libdir}/README.md"/>
+            </copy>
+            <mkdir dir="${dist.apps}/@{script.name}.app/Contents/Resources/lib/macosx"/>
+            <copy todir="${dist.apps}/@{script.name}.app/Contents/Resources/lib/macosx">
+                <fileset dir="${libdir}/macosx"/>
+            </copy>
         </sequential>
     </macrodef>
 
@@ -1995,7 +1997,6 @@
                                              script.icon="DecoderPro"/>
         <create-macosx-application-directory script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
         <create-macosx-application-directory script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
-        <create-macosx-application-directory script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
     </target>
 
 
