@@ -112,6 +112,22 @@ public class NmraPacketTest extends TestCase {
         Assert.assertEquals("third byte ", 0x38, ba[2] & 0xFF);
     }
 
+    public void testAccDecoderPacket13() {
+        // invalid address (0)
+        int addr = 0;
+        // expect this to throw exception
+        boolean threw = false;
+        try {
+            byte[] ba = NmraPacket.accDecoderPkt(addr, 0, 0);
+            Assert.fail("Expected IllegalArgumentException not thrown");
+        } catch (IllegalArgumentException ex) {
+            threw = true;
+        } finally {
+            jmri.util.JUnitAppender.assertErrorMessage("invalid address " + addr);
+        }
+        Assert.assertTrue("Expected exception", threw);
+    }
+
     public void testOpsModeLong() {
         // "typical packet" test
         byte[] ba = NmraPacket.opsCvWriteByte(2065, true, 21, 75);
