@@ -1981,22 +1981,21 @@
         </sequential>
     </macrodef>
 
-
-    <!-- I dislike how much of these startup-scripts targets are shared.  Maybe they should be combined? -->
-
-    <target name="startup-scripts-linux"> <!-- Internal target to create all of the app specific startup scripts for Linux -->
-        <make-startup-script script.name="DecoderPro"   script.class="apps.gui3.dp3.DecoderPro3"/>
-        <make-startup-script script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
-        <make-startup-script script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
-        <make-startup-script script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
-        <make-startup-script script.name="JmriFaceless"   script.class="apps.JmriFaceless"/>
+    <!-- Internal target to create all of the app specific startup scripts for Linux -->
+    <target name="startup-scripts-linux">
+        <make-startup-script script.name="DecoderPro" script.class="apps.gui3.dp3.DecoderPro3"/>
+        <make-startup-script script.name="PanelPro" script.class="apps.PanelPro.PanelPro"/>
+        <make-startup-script script.name="SoundPro" script.class="apps.SoundPro.SoundPro"/>
+        <make-startup-script script.name="InstallTest" script.class="apps.InstallTest.InstallTest"/>
+        <make-startup-script script.name="JmriFaceless" script.class="apps.JmriFaceless"/>
     </target>
 
-    <target name="startup-scripts-macosx"> <!-- Internal target to create all of the app specific startup scripts for Mac OS X -->
-        <create-macosx-application-directory script.name="DecoderPro"  script.class="apps.gui3.dp3.DecoderPro3"
-                                             script.icon="DecoderPro"/>
-        <create-macosx-application-directory script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
-        <create-macosx-application-directory script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
+    <!-- Internal target to create all of the app specific startup scripts for macOS -->
+    <!-- not combined with above because additional launchers in macOS are expensive to create and ship -->
+    <target name="startup-scripts-macosx">
+        <create-macosx-application-directory script.name="DecoderPro" script.class="apps.gui3.dp3.DecoderPro3" script.icon="DecoderPro"/>
+        <create-macosx-application-directory script.name="PanelPro" script.class="apps.PanelPro.PanelPro"/>
+        <create-macosx-application-directory script.name="SoundPro" script.class="apps.SoundPro.SoundPro"/>
     </target>
 
 
