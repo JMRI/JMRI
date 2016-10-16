@@ -86,7 +86,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 
     // the draw bar length must only be calculated once at startup
     public static final int COUPLER = Setup.getLengthUnit().equals(Setup.FEET) ? Integer.parseInt(Bundle
-            .getMessage("DrawBarLengthFeet")) : Integer.parseInt(Bundle.getMessage("DrawBarLengthMeter")); // stocks
+            .getMessage("DrawBarLengthFeet")) : Integer.parseInt(Bundle.getMessage("DrawBarLengthMeter")); // stocks TODO catch empty/non-integer value
 
     LocationManager locationManager = LocationManager.instance();
 
@@ -114,6 +114,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 
     /**
      * Set the rolling stock identification or road number
+     * @param number The rolling stock road number.
      *
      */
     public void setNumber(String number) {
@@ -299,6 +300,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      * or the format MM-YY where MM is the two digit month, and YY is the last
      * two years if the rolling stock was built in the 1900s. Use MM-YYYY for
      * units build after 1999.
+     * @param built The string built date.
      *
      */
     public void setBuilt(String built) {
@@ -394,6 +396,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 
     /**
      * Sets rolling stock location on the layout
+     * @param location The Location.
      *
      * @param track (yard, spur, staging, or interchange track)
      *
@@ -406,6 +409,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 
     /**
      * Sets rolling stock location on the layout
+     * @param location The Location.
      *
      * @param track (yard, spur, staging, or interchange track)
      * @param force when true place rolling stock ignore track length, type,
@@ -481,6 +485,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 
     /**
      * Sets rolling stock destination on the layout
+     * @param destination The Location.
      *
      * @param track (yard, spur, staging, or interchange track)
      * @return "okay" if successful, "type" if the rolling stock's type isn't
@@ -492,6 +497,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 
     /**
      * Sets rolling stock destination on the layout
+     * @param destination The Location.
      *
      * @param track (yard, spur, staging, or interchange track)
      * @param force when true ignore track length, type, {@literal &} road when
@@ -562,6 +568,8 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 
     /**
      * Used to check destination track to see if it will accept rolling stock
+     * @param destination The Location.
+     * @param track The Track at destination.
      *
      * @return status OKAY, TYPE, ROAD, LENGTH, ERROR_TRACK
      */
@@ -616,6 +624,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      * Sets rolling stock destination track without reserving destination track
      * space or drop count. Used by car router to test destinations. Does not
      * fire a property change. Use setDestination(Location, Track) instead.
+     * @param track The Track for set out at destination.
      *
      */
     public void setDestinationTrack(Track track) {
@@ -672,6 +681,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 
     /**
      * Sets the train that will service this rolling stock.
+     * @param train The Train.
      *
      */
     public void setTrain(Train train) {
@@ -1013,6 +1023,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     /**
      * Sets the last date when this rolling stock was moved, or was reset from a
      * built train.
+     * @param date The Date when this rolling stock was last moved.
      *
      */
     public void setLastDate(Date date) {
@@ -1317,6 +1328,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 
     /**
      * Add XML elements to represent this Entry.
+     * @param e Element for car or engine store.
      *
      * @return Contents in a JDOM Element
      */

@@ -49,7 +49,6 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                 "resources/icons/smallschematics/tracksegments/os-slip-lower-west-upper-east.gif"), editor);
         _control = true;
         displayState(turnoutState());
-        debug = log.isDebugEnabled();
         setPopupUtility(null);
     }
 
@@ -58,7 +57,6 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     private NamedBeanHandle<Turnout> namedTurnoutWestLower = null;
     private NamedBeanHandle<Turnout> namedTurnoutEast = null;
     private NamedBeanHandle<Turnout> namedTurnoutEastLower = null;
-    private boolean debug = false;
 
     /**
      * Attached a named turnout to this display item
@@ -71,7 +69,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         if (InstanceManager.getNullableDefault(jmri.TurnoutManager.class) != null) {
             try {
                 Turnout turnout = InstanceManager.turnoutManagerInstance().
-                    provideTurnout(pName);
+                        provideTurnout(pName);
                 setTurnout(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, turnout), turn);
             } catch (IllegalArgumentException e) {
                 log.error("Turnout '" + pName + "' not available, icon won't see changes");
@@ -1187,9 +1185,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     }
 
     public void slipTurnoutTextEdit(String name) {
-        if (debug) {
-            log.debug("make text edit menu");
-        }
+        log.debug("make text edit menu");
 
         SlipTurnoutTextEdit f = new SlipTurnoutTextEdit();
         f.addHelpMenu("package.jmri.jmrit.display.SlipTurnoutTextEdit", true);
@@ -1286,7 +1282,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             while (itr.hasNext()) {
                 Turnout t = itr.next();
                 int state = _turnoutSetting.get(t);
-                jmri.util.ThreadingUtil.runOnLayout(()->{ // run on layout thread
+                jmri.util.ThreadingUtil.runOnLayout(() -> { // run on layout thread
                     t.setCommandedState(state);
                 });
                 try {

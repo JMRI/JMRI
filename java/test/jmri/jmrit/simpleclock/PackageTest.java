@@ -26,7 +26,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.simpleclock.PackageTest"); // no tests in class itself
         suite.addTest(jmri.jmrit.simpleclock.SimpleTimebaseTest.suite());
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.simpleclock.configurexml.PackageTest.class));
         return suite;
     }

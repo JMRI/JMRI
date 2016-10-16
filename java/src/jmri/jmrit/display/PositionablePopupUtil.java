@@ -30,11 +30,11 @@ import org.slf4j.LoggerFactory;
  * </p>
  *
  * moved from PositionableLabel
+ *
  * @author Pete Cressman copyright (C) 2010
  */
 public class PositionablePopupUtil {
 
-    private boolean debug = false;
     protected JComponent _textComponent;    // closest ancestor for JLabel and JTextField
     protected int _textType;                // JComponent does not have text, used for casting
     protected Positionable _parent;
@@ -60,7 +60,6 @@ public class PositionablePopupUtil {
         }
         _textComponent = textComp;
         _self = this;
-        debug = log.isDebugEnabled();
         defaultForeground = _textComponent.getForeground();
 //        defaultBackground = _textComponent.getBackground();
         defaultBorderColor = _parent.getBackground();
@@ -291,7 +290,7 @@ public class PositionablePopupUtil {
         }
         _parent.updateSize();
     }
-    
+
     public void setHasBackground(boolean set) {
         _hasBackground = set;
         if (_textComponent instanceof PositionableJPanel) {
@@ -307,12 +306,11 @@ public class PositionablePopupUtil {
         return _hasBackground;
     }
 
-
     public Color getBackground() {
-        if(!_hasBackground) {
+        if (!_hasBackground) {
             return null;
         }
-        return _textComponent.getBackground();            
+        return _textComponent.getBackground();
     }
 
     protected JMenu makeFontSizeMenu() {
@@ -370,9 +368,7 @@ public class PositionablePopupUtil {
     }
 
     void setItalic() {
-        if (debug) {
-            log.debug("When style item selected italic state is " + italic.isSelected());
-        }
+        log.debug("When style item selected italic state is {}", italic.isSelected());
         if (italic.isSelected()) {
             setFontStyle(Font.ITALIC, 0);
         } else {
@@ -381,9 +377,7 @@ public class PositionablePopupUtil {
     }
 
     void setBold() {
-        if (debug) {
-            log.debug("When style item selected bold state is " + bold.isSelected());
-        }
+        log.debug("When style item selected bold state is {}", bold.isSelected());
         if (bold.isSelected()) {
             setFontStyle(Font.BOLD, 0);
         } else {
@@ -400,9 +394,8 @@ public class PositionablePopupUtil {
             private static final long serialVersionUID = -9122936163045992381L;
 
             public void actionPerformed(ActionEvent e) {
-                if (debug) {
-                    log.debug("When style item selected " + ((String) getValue(NAME))
-                            + " italic state is " + italic.isSelected());
+                if (log.isDebugEnabled()) { // Avoid action lookup unless needed
+                    log.debug("When style item selected {} italic state is {}", ((String) getValue(NAME)), italic.isSelected());
                 }
                 if (italic.isSelected()) {
                     setFontStyle(Font.ITALIC, 0);
@@ -419,9 +412,9 @@ public class PositionablePopupUtil {
             private static final long serialVersionUID = 6493363758504326865L;
 
             public void actionPerformed(ActionEvent e) {
-                if (debug) {
-                    log.debug("When style item selected " + ((String) getValue(NAME))
-                            + " bold state is " + bold.isSelected());
+                if (log.isDebugEnabled()) { // Avoid action lookup unless needed
+                    log.debug("When style item selected {} bold state is {}",
+                            ((String) getValue(NAME)), bold.isSelected());
                 }
                 if (bold.isSelected()) {
                     setFontStyle(Font.BOLD, 0);
@@ -440,10 +433,7 @@ public class PositionablePopupUtil {
 
     public void setFontStyle(int addStyle, int dropStyle) {
         int styleValue = (_textComponent.getFont().getStyle() & ~dropStyle) | addStyle;
-        if (debug) {
-            log.debug("setFontStyle: addStyle=" + addStyle + ", dropStyle= " + dropStyle
-                    + ", net styleValue is " + styleValue);
-        }
+        log.debug("setFontStyle: addStyle={}, dropStyle={}, net styleValue is {}", addStyle, dropStyle, styleValue);
         if (bold != null) {
             bold.setSelected((styleValue & Font.BOLD) != 0);
         }
@@ -464,9 +454,9 @@ public class PositionablePopupUtil {
         // next two lines needed because JCheckBoxMenuItem(AbstractAction) not in 1.1.8
         JCheckBoxMenuItem c = new JCheckBoxMenuItem((String) a.getValue(AbstractAction.NAME));
         c.addActionListener(a);
-        if (debug) {
-            log.debug("When creating style item " + ((String) a.getValue(AbstractAction.NAME))
-                    + " mask was " + mask + " state was " + _textComponent.getFont().getStyle());
+        if (log.isDebugEnabled()) { // Avoid action lookup unless needed
+            log.debug("When creating style item {} mask was {} state was {}",
+                    ((String) a.getValue(AbstractAction.NAME)), mask, _textComponent.getFont().getStyle());
         }
         if ((mask & _textComponent.getFont().getStyle()) == mask) {
             c.setSelected(true);
@@ -522,9 +512,7 @@ public class PositionablePopupUtil {
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
         r.addActionListener(a);
 
-        if (debug) {
-            log.debug("setColorButton: colorType=" + colorType);
-        }
+        log.debug("setColorButton: colorType={}", colorType);
         switch (colorType) {
             case FONT_COLOR:
                 if (color == null) {
@@ -549,9 +537,10 @@ public class PositionablePopupUtil {
     }
 
     protected void setColorButton(Color color, Color buttonColor, JRadioButtonMenuItem r) {
-        if (debug) {
-            log.debug("setColorButton: color =" + color + " (RGB = " + (color == null ? "" : color.getRGB())
-                    + ") buttonColor = " + buttonColor + " (RGB = " + (buttonColor == null ? "" : buttonColor.getRGB()) + ")");
+        if (log.isDebugEnabled()) { // Avoid color to string computations unless needed
+            log.debug("setColorButton: color = {} (RGB = {}) buttonColor = {} (RGB = {})",
+                    color, (color == null ? "" : color.getRGB()),
+                    buttonColor, (buttonColor == null ? "" : buttonColor.getRGB()));
         }
         if (buttonColor != null) {
             if (color != null && buttonColor.getRGB() == color.getRGB()) {
@@ -559,12 +548,10 @@ public class PositionablePopupUtil {
             } else {
                 r.setSelected(false);
             }
+        } else if (color == null) {
+            r.setSelected(true);
         } else {
-            if (color == null) {
-                r.setSelected(true);
-            } else {
-                r.setSelected(false);
-            }
+            r.setSelected(false);
         }
     }
 

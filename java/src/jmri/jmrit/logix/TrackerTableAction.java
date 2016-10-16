@@ -417,13 +417,13 @@ public class TrackerTableAction extends AbstractAction {
                 trackers.add(tracker);
                 _blocks.put(block, trackers);
                 block.addPropertyChangeListener(this);
-                log.debug("\taddPropertyChangeListener for block {}", block.getDisplayName());
+                if (log.isDebugEnabled()) log.debug("\taddPropertyChangeListener for block {}", block.getDisplayName());
             } else {
                 if (trackers.isEmpty()) {
                     block.addPropertyChangeListener(this);
-                    log.debug("\taddPropertyChangeListener for block {}", block.getDisplayName());
+                    if (log.isDebugEnabled()) log.debug("\taddPropertyChangeListener for block {}", block.getDisplayName());
                 } else {
-                    log.debug("\tassumed block {} already has listener" + block.getDisplayName());
+                    if (log.isDebugEnabled()) log.debug("\tassumed block {} already has listener" + block.getDisplayName());
                 }
                 if (!trackers.contains(tracker)) {
                     trackers.add(tracker);
@@ -476,7 +476,7 @@ public class TrackerTableAction extends AbstractAction {
                     }
                 }
             } else {
-                log.error("Block \"" + b.getDisplayName() + "\" has no listeners.  Tracker for train "
+                if (log.isDebugEnabled()) log.error("Block \"" + b.getDisplayName() + "\" has no listeners.  Tracker for train "
                         + tracker.getTrainName() + " expected a listener");
             }
         }

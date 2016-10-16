@@ -62,6 +62,7 @@ public abstract class BackupBase {
     /**
      * Creates a BackupBase instance and initializes the Operations root
      * directory to its normal value.
+     * @param rootName Directory name to use.
      */
     protected BackupBase(String rootName) {
         // A root directory name for the backups must be supplied, which will be
@@ -121,6 +122,7 @@ public abstract class BackupBase {
 
     /**
      * Returns a sorted list of the Backup Sets under the backup root.
+     * @return A sorted backup list.
      *
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
@@ -159,6 +161,7 @@ public abstract class BackupBase {
 
     /**
      * Check to see if the given backup set already exists in the backup store.
+     * @param setName The directory name to check.
      *
      * @return true if it exists
      */
@@ -180,6 +183,7 @@ public abstract class BackupBase {
 
     /**
      * Restores a Backup Set with the given name from the backup store.
+     * @param setName The directory name.
      *
      * @throws java.io.IOException Due to trouble loading files
      */
@@ -189,6 +193,7 @@ public abstract class BackupBase {
 
     /**
      * Restores a Backup Set from the given directory.
+     * @param directory The File directory.
      *
      * @throws java.io.IOException Due to trouble loading files
      */
@@ -204,6 +209,8 @@ public abstract class BackupBase {
      * destination directory if it does not exist.
      *
      * Only copies files that are included in the list of Operations files.
+     * @param sourceDir From Directory
+     * @param destDir To Directory
      *
      * @throws java.io.IOException Due to trouble reading or writing
      */
@@ -278,6 +285,7 @@ public abstract class BackupBase {
     /**
      * Checks to see how many of the Operations files are present in the source
      * directory.
+     * @param sourceDir The Directory to check.
      *
      * @return number of files
      */
@@ -420,6 +428,10 @@ public abstract class BackupBase {
         /**
          * Copies an existing file to a new file. Overwriting a file of the same
          * name is allowed. The destination directory must exist.
+         * @param sourceFileName From directory name
+         * @param destFileName To directory name
+         * @param overwrite When true overwrite any existing files
+         * @throws IOException Thrown when overwrite false and destination directory exists.
          *
          */
         @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "OBL_UNSATISFIED_OBLIGATION")

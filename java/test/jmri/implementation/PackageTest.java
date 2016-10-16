@@ -39,7 +39,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(DccSignalMastTest.class));
         suite.addTest(DefaultConditionalTest.suite());
         suite.addTest(DefaultConditionalActionTest.suite());
-        suite.addTest(DefaultIdTagTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DefaultIdTagTest.class));
         suite.addTest(DefaultLogixTest.suite());
         suite.addTest(DefaultSignalSystemTest.suite());
         suite.addTest(DefaultSignalAppearanceMapTest.suite());
@@ -53,10 +53,11 @@ public class PackageTest extends TestCase {
         suite.addTest(SignalSystemFileCheckTest.suite());
         suite.addTest(SingleTurnoutSignalHeadTest.suite());
         suite.addTest(TwoIndexTcsProgrammerFacadeTest.suite());
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DccConsistTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NmraConsistTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(MatrixSignalMastTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DefaultRailComTest.class));
 
         // sub-packages
         suite.addTest(jmri.implementation.swing.PackageTest.suite());

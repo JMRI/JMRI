@@ -67,6 +67,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     }
 
     /**
+     * @param name The schedule string name to search for. 
      * @return requested TrainSchedule object or null if none exists
      */
     public TrainSchedule getScheduleByName(String name) {
@@ -88,6 +89,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     /**
      * Finds an existing schedule or creates a new schedule if needed requires
      * schedule's name creates a unique id for this schedule
+     * @param name The string name of the schedule.
      *
      *
      * @return new TrainSchedule or existing TrainSchedule
@@ -107,6 +109,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     * @param schedule The TrainSchedule to add.
      */
     public void register(TrainSchedule schedule) {
         Integer oldSize = Integer.valueOf(_scheduleHashTable.size());
@@ -121,6 +124,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 
     /**
      * Forget a NamedBean Object created outside the manager.
+     * @param schedule The TrainSchedule to delete.
      */
     public void deregister(TrainSchedule schedule) {
         if (schedule == null) {
@@ -251,6 +255,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-trains.dtd.
+     * @param root The common Element for operations-trains.dtd.
      *
      */
     public void store(Element root) {
