@@ -151,7 +151,7 @@ public class LnPowerManager
         public void run() {
             // wait a little bit to allow power manager to be initialized
             try {
-                // Delay 200 mSec to allow init of traffic controller, listeners.
+                // Delay 500 mSec to allow init of traffic controller, listeners.
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
