@@ -18,6 +18,7 @@ public class JTreeUtil extends GuiUtilBase {
      * @param name    XML file to be read and processed
      * @param wi      WindowInterface to be passed to the nodes in the tree
      * @param context Blind context Object passed to the nodes in the tree
+     * @return a mutable tree node
      */
     static public DefaultMutableTreeNode loadTree(String name, WindowInterface wi, Object context) {
         Element root = rootFromName(name);
@@ -29,6 +30,7 @@ public class JTreeUtil extends GuiUtilBase {
      * @param main    Element to be processed
      * @param wi      WindowInterface to be passed to the nodes in the tree
      * @param context Blind context Object passed to the nodes in the tree
+     * @return a mutable tree node
      */
     static DefaultMutableTreeNode treeFromElement(Element main, WindowInterface wi, Object context) {
         String name = "<none>";
@@ -40,9 +42,9 @@ public class JTreeUtil extends GuiUtilBase {
         DefaultMutableTreeNode node = new DefaultMutableTreeNode(name);
         node.setUserObject(actionFromNode(main, wi, context));
 
-        for (Object child : main.getChildren("node")) {
+        main.getChildren("node").stream().forEach((child) -> {
             node.add(treeFromElement((Element) child, wi, context));
-        }
+        });
         return node;
     }
 }

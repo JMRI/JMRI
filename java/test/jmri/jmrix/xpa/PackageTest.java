@@ -39,6 +39,7 @@ public class PackageTest extends TestCase {
         //suite.addTest(new TestSuite(XpaTrafficRouterTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.xpa.serialdriver.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.xpa.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.xpa.swing.PackageTest.class));
         return suite;
     }
 

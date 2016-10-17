@@ -85,6 +85,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 
     /**
      * Adds a car type to the end of this schedule
+     * @param type The string car type to add.
      *
      * @return ScheduleItem created for the car type added
      */
@@ -108,11 +109,13 @@ public class Schedule implements java.beans.PropertyChangeListener {
      * Add a schedule item at a specific place (sequence) in the schedule
      * Allowable sequence numbers are 0 to max size of schedule. 0 = start of
      * list.
+     * @param carType The string car type name to add.
+     * @param sequence Where in the schedule to add the item.
      *
      * @return schedule item
      */
-    public ScheduleItem addItem(String item, int sequence) {
-        ScheduleItem si = addItem(item);
+    public ScheduleItem addItem(String carType, int sequence) {
+        ScheduleItem si = addItem(carType);
         if (sequence < 0 || sequence > _scheduleHashTable.size()) {
             return si;
         }
@@ -124,6 +127,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     * @param si The schedule item to add.
      */
     public void register(ScheduleItem si) {
         Integer old = Integer.valueOf(_scheduleHashTable.size());
@@ -146,6 +150,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 
     /**
      * Delete a ScheduleItem
+     * @param si The scheduleItem to delete.
      *
      */
     public void deleteItem(ScheduleItem si) {
@@ -174,16 +179,17 @@ public class Schedule implements java.beans.PropertyChangeListener {
 
     /**
      * Get item by car type (gets last schedule item with this type)
+     * @param carType The string car type to search for.
      *
      * @return schedule item
      */
-    public ScheduleItem getItemByType(String type) {
+    public ScheduleItem getItemByType(String carType) {
         List<ScheduleItem> scheduleSequenceList = getItemsBySequenceList();
         ScheduleItem si;
 
         for (int i = scheduleSequenceList.size() - 1; i >= 0; i--) {
             si = scheduleSequenceList.get(i);
-            if (si.getTypeName().equals(type)) {
+            if (si.getTypeName().equals(carType)) {
                 return si;
             }
         }
@@ -192,6 +198,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 
     /**
      * Get a ScheduleItem by id
+     * @param id The string id of the ScheduleItem.
      *
      * @return schedule item
      */
@@ -241,6 +248,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 
     /**
      * Places a ScheduleItem earlier in the schedule
+     * @param si The ScheduleItem to move.
      *
      */
     public void moveItemUp(ScheduleItem si) {
@@ -263,6 +271,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 
     /**
      * Places a ScheduleItem later in the schedule
+     * @param si The ScheduleItem to move.
      *
      */
     public void moveItemDown(ScheduleItem si) {
