@@ -528,6 +528,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _portalTable = new DnDJTable(_portalModel, new int[]{PortalTableModel.DELETE_COL});
 //        _portalModel.makeSorter(portalTable);
         TableRowSorter<PortalTableModel> sorter = new TableRowSorter<>(_portalModel);
+        sorter.setComparator(PortalTableModel.FROM_BLOCK_COLUMN, new jmri.util.SystemNameComparator());
+        sorter.setComparator(PortalTableModel.TO_BLOCK_COLUMN, new jmri.util.SystemNameComparator());
         _portalTable.setRowSorter(sorter);
         _portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         _portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
@@ -633,7 +635,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         /**
          *
          */
-        private static final long serialVersionUID = 1917299755191589427L;
         BlockPathTableModel blockPathModel;
 
         public BlockPathFrame(String title, boolean resizable, boolean closable,
@@ -809,7 +810,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     static class MyBooleanRenderer extends javax.swing.table.DefaultTableCellRenderer {
 
-        private static final long serialVersionUID = 934007494903837404L;
         String _trueValue;
         String _falseValue;
 
