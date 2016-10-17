@@ -8,8 +8,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.lenz.swing package
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 public class SwingTest extends TestCase {
 
     // from here down is testing infrastructure
@@ -37,8 +36,7 @@ public class SwingTest extends TestCase {
             suite.addTest(jmri.jmrix.lenz.swing.lzv100.LZV100Test.suite());
         }
 
-        suite.addTest(BundleTest.suite());
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         return suite;
     }
 

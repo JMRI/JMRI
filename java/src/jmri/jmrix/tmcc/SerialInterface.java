@@ -5,8 +5,7 @@ package jmri.jmrix.tmcc;
  * Interface to send/receive serial TMCC information
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2006
- * @version	$Revision$
- */
+  */
 public interface SerialInterface {
 
     public void addSerialListener(SerialListener l);

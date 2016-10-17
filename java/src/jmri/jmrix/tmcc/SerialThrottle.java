@@ -11,7 +11,6 @@ import jmri.jmrix.AbstractThrottle;
  * considered long addresses.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2006
- * @version $Revision$
  */
 public class SerialThrottle extends AbstractThrottle {
 

@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * Frame to show which trains can service this location
  *
  * @author Dan Boudreau Copyright (C) 2014
- * @version $Revision: 24984 $
+ * 
  */
 public class ShowTrainsServingLocationFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 

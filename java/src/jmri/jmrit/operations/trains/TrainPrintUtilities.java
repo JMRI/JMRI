@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * Train print utilities. Used for train manifests and build reports.
  *
  * @author Daniel Boudreau (C) 2010
- * @version $Revision$
  *
  */
 public class TrainPrintUtilities {
@@ -338,6 +337,7 @@ public class TrainPrintUtilities {
 
     /**
      * This method uses Desktop which is supported in Java 1.6.
+     * @param file The File to be opened using an editor.
      */
     public static void openDesktopEditor(File file) {
         if (!java.awt.Desktop.isDesktopSupported()) {

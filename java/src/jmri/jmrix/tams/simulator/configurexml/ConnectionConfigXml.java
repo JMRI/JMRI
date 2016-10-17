@@ -16,7 +16,6 @@ import jmri.jmrix.tams.simulator.SimulatorAdapter;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003 copied from NCE code
  * @author kcameron Copyright (c) 2014
- * @version $Revision: 22821 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 

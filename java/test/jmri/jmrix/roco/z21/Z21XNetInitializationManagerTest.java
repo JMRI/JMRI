@@ -4,7 +4,7 @@ import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetListenerScaffold;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -19,7 +19,7 @@ import junit.framework.TestSuite;
  class
  *
  * @author	Paul Bender Copyright (C) 2015
- * @version $Revision: 22710 $
+ * 
  */
 public class Z21XNetInitializationManagerTest extends TestCase {
 

@@ -18,7 +18,6 @@ import javax.swing.ImageIcon;
  * for more details.
  * <P>
  * @author	Lionel Jeanson   Copyright (C) 2009
- * @version	$$
  */
 public class RosterIconFactory {
 

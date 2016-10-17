@@ -98,6 +98,7 @@ public class TrainBuilder extends TrainCommon {
      * </ol>
      *
      * @param train the train that is to be built
+     * @return True if successful.
      *
      */
     public boolean build(Train train) {
@@ -716,7 +717,7 @@ public class TrainBuilder extends TrainCommon {
 
     private void showTrainRequirements() {
         addLine(_buildReport, ONE, BLANK_LINE); // add line
-        addLine(_buildReport, ONE, Bundle.getMessage("TrainRequrements"));
+        addLine(_buildReport, ONE, Bundle.getMessage("TrainRequirements"));
         if (_train.getNumberEngines().equals("0")) {
             addLine(_buildReport, ONE, Bundle.getMessage("buildTrainReq0Engine"));
         } else if (_train.getNumberEngines().equals("1")) {
@@ -1548,7 +1549,7 @@ public class TrainBuilder extends TrainCommon {
             if (car.getTrack().getTrackType().equals(Track.INTERCHANGE)) {
                 // don't service a car at interchange and has been dropped off by this train
                 if (car.getTrack().getPickupOption().equals(Track.ANY) &&
-                        car.getSavedRouteId().equals(_train.getRoute().getId())) {
+                        car.getLastRouteId().equals(_train.getRoute().getId())) {
                     addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeCarDropByTrain"),
                             new Object[]{car.toString(), _train.getRoute().getName(), car.getLocationName(),
                                     car.getTrackName()}));
@@ -2493,9 +2494,7 @@ public class TrainBuilder extends TrainCommon {
      * @param rl the planned origin for this car
      * @param rld the planned destination for this car
      * @param track the final destination for car
-     * @return true if car was successfully added to train. Also makes the
-     *         boolean "success" true if location doesn't need any more pick
-     *         ups.
+     * 
      */
     private void addCarToTrain(Car car, RouteLocation rl, RouteLocation rld, Track track) {
         addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarAssignedDest"), new Object[]{

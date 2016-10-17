@@ -10,8 +10,7 @@ import jmri.jmrix.secsi.nodeconfig.NodeConfigAction;
  * Definition of objects to handle configuring a SECSI layout connection
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**

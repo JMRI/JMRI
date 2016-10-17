@@ -33,7 +33,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2013
- * @version $Revision: 17977 $
  */
 public class TrackCopyFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -41,8 +40,8 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
     JTextField trackNameTextField = new javax.swing.JTextField(Control.max_len_string_track_name);
 
     // major buttons
-    JButton copyButton = new javax.swing.JButton(Bundle.getMessage("Copy"));
-    JButton saveButton = new javax.swing.JButton(Bundle.getMessage("Save"));
+    JButton copyButton = new javax.swing.JButton(Bundle.getMessage("ButtonCopy"));
+    JButton saveButton = new javax.swing.JButton(Bundle.getMessage("ButtonSave"));
 
     // combo boxes
     JComboBox<Location> locationBox = LocationManager.instance().getComboBox();
@@ -241,13 +240,13 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
     protected boolean checkName() {
         if (trackNameTextField.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
-                    .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("Copy")}), JOptionPane.ERROR_MESSAGE);
+                    .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (TrainCommon.splitString(trackNameTextField.getText()).length() > Control.max_len_string_track_name) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackNameLengthMax"),
                     new Object[]{Integer.toString(Control.max_len_string_track_name + 1)}), MessageFormat.format(Bundle
-                            .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("Copy")}), JOptionPane.ERROR_MESSAGE);
+                            .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         // check to see if track already exists
@@ -257,7 +256,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
         Track check = _location.getTrackByName(trackNameTextField.getText(), null);
         if (check != null) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("TrackAlreadyExists"), MessageFormat.format(Bundle
-                    .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("Copy")}), JOptionPane.ERROR_MESSAGE);
+                    .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;

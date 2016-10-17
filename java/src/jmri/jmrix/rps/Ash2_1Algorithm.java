@@ -20,8 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Robert Ashenfelter Copyright (C) 2007
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version	$Revision$
- */
+  */
 public class Ash2_1Algorithm extends AbstractCalculator {
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")

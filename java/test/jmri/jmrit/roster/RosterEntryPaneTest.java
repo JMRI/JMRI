@@ -1,7 +1,7 @@
 package jmri.jmrit.roster;
 
 import jmri.InstanceManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,8 +10,7 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.roster.RosterEntryPane class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
- */
+  */
 public class RosterEntryPaneTest extends TestCase {
 
     // statics for test objects

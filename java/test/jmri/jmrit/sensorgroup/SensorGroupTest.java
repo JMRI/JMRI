@@ -8,8 +8,7 @@ import junit.framework.TestSuite;
  * Tests for classes in the jmri.jmrit.sensorgroup package
  *
  * @author	Bob Jacobsen Copyright 2003, 2007
- * @version	$Revision$
- */
+  */
 public class SensorGroupTest extends TestCase {
 
     public void testFrameCreate() {

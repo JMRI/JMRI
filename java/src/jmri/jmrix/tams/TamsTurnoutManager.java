@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on work by Bob Jacobsen and Kevin Dickerson
  *
- * @author Jan Boen
+ * @author  Jan Boen
  */
 public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager implements TamsListener {
 
@@ -81,7 +81,7 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
                         tr.setBinary(r.isBinary());
                         tr.setElement(0, r.getElement(i));
                         tr.setElement(1, r.getElement(i + 1));
-                        log.debug("Going to pass this to the decoder = " + tr.toString());
+                        //log.debug("Going to pass this to the decoder = " + tr.toString());
                         //The decodeTurnoutState will do the actual decoding of each individual turnout
                         decodeTurnoutState(tr, prefix, tc);
                     }
@@ -107,8 +107,8 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         int lowerByte = r.getElement(0) & 0xff;
         int upperByte = r.getElement(1) & 0xff;
         log.debug("Decoding turnout");
-        log.debug("Lower Byte: " + lowerByte);
-        log.debug("Upper Byte: " + upperByte);
+        //log.debug("Lower Byte: " + lowerByte);
+        //log.debug("Upper Byte: " + upperByte);
         //Core logic to be added here
         int turnoutAddress = (upperByte & 0x07) * 256 + lowerByte;
         String turnoutName = prefix + "T" + Integer.toString(turnoutAddress);
@@ -122,7 +122,7 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         //Next line provided via JMRI dev's
         TamsTurnout ttu = (TamsTurnout)provideTurnout(turnoutName);
         ttu.setCommandedStateFromCS(turnoutState);
-        //ttu.setKnownStateFromCS(turnoutState);
+        ttu.setKnownStateFromCS(turnoutState);
     }
 
     private final static Logger log = LoggerFactory.getLogger(TamsTurnoutManager.class.getName());

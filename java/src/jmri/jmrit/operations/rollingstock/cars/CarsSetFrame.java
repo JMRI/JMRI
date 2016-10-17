@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user to place a group of cars on the layout
  *
  * @author Dan Boudreau Copyright (C) 2011, 2013
- * @version $Revision$
  */
 public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChangeListener {
 
@@ -42,8 +41,9 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 
         setTitle(Bundle.getMessage("TitleSetCars"));
         addHelpMenu("package.jmri.jmrit.operations.Operations_SetCars", true); // NOI18N
-        // modify Save button text to "Change"
-        saveButton.setText(Bundle.getMessage("Change"));
+        // modify Save button text to "Change";
+        // as the changes entered in the panel is directly applied, use ButtonApply
+        saveButton.setText(Bundle.getMessage("ButtonApply"));
         // disable edit load button if no cars selected
         editLoadButton.setEnabled(false);
         // show ignore checkboxes

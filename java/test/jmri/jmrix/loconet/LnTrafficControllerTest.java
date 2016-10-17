@@ -14,8 +14,6 @@ import junit.framework.TestSuite;
  * Copyright: Copyright (c) 2002</p>
  *
  * @author Bob Jacobsen
- * @version $Id: LnTrafficControllerTest.java 27828 2014-12-11 22:46:11Z
- * jacobsen $
  */
 public class LnTrafficControllerTest extends TestCase {
 

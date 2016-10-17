@@ -4,7 +4,7 @@ import jmri.ConsistManager;
 import jmri.InstanceManager;
 import jmri.jmrit.consisttool.TestConsistManager;
 import jmri.util.JUnitUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -43,6 +43,7 @@ public class WiFiConsistFileTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
+        JUnitUtil.resetInstanceManager();
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
     }
     

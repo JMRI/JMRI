@@ -16,7 +16,7 @@ package jmri.jmrit.vsdecoder;
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
+ * 
  */
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * Create a new VSDecoder Pane.
  *
  * @author	Mark Underwood
- * @version $Revision$
  */
 @SuppressWarnings("serial")
 public class VSDecoderCreationAction extends AbstractAction {

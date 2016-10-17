@@ -12,8 +12,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrix.pricom.pockettester.StatusFrame
  *
  * @author	Bob Jacobsen Copyright (C) 2002,2004, 2005
- * @version	$Revision$
- */
+  */
 public abstract class StatusAction extends AbstractAction {
 
     /**

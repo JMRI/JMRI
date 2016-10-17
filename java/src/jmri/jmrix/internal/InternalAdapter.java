@@ -9,8 +9,7 @@ import org.slf4j.LoggerFactory;
  * Internal managers to be handled.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
- */
+  */
 public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
         implements jmri.jmrix.PortAdapter {
 

@@ -2,7 +2,7 @@ package jmri.jmrit.simpleclock;
 
 import java.util.Date;
 import java.time.Instant;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

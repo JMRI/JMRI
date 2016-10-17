@@ -1,6 +1,6 @@
 package jmri.jmrix.secsi;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -33,8 +33,8 @@ public class PackageTest extends TestCase {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.secsi.SerialTest");
         suite.addTest(SerialTurnoutTest.suite());
-        suite.addTest(SerialTurnoutManagerTest.suite());
-        suite.addTest(SerialSensorManagerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialTurnoutManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialSensorManagerTest.class));
         suite.addTest(SerialNodeTest.suite());
         suite.addTest(SerialMessageTest.suite());
         suite.addTest(SerialTrafficControllerTest.suite());

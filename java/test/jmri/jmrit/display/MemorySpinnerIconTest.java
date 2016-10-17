@@ -1,7 +1,7 @@
 package jmri.jmrit.display;
 
 import jmri.util.JmriJFrame;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -11,8 +11,7 @@ import junit.framework.TestSuite;
  * Description:
  *
  * @author	Bob Jacobsen Copyright 2009
- * @version	$Revision$
- */
+  */
 public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
 
     MemorySpinnerIcon tos1 = null;

@@ -14,8 +14,7 @@ import junit.framework.TestSuite;
  * Description:
  *
  * @author	Bob Jacobsen Copyright 2009
- * @version	$Revision$
- */
+  */
 public class SignalMastIconTest extends jmri.util.SwingTestCase {
 
     SignalMastIcon to = null;

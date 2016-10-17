@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003
  * @author Alex Shepherd Copyright (C) 2003, 2006
- * @version $Revision$
  */
 public class LnTcpDriverAdapter extends LnNetworkPortController {
 

@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
  * @author Paul Bender Copyright: Copyright (c) 2015 
- * @version $Revision$
  */
 public class JMRIClientReporterManagerXml extends jmri.managers.configurexml.AbstractReporterManagerConfigXML {
 

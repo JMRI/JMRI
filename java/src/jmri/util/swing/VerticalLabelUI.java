@@ -167,6 +167,7 @@ public class VerticalLabelUI extends BasicLabelUI {
     /**
      * Return default VerticalLabelUI instance
      *
+     * @param component ignored
      * @return default VerticalLabelUI instance
      */
     public static ComponentUI createUI(JComponent component) {

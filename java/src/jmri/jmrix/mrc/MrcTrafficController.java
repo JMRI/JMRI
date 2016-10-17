@@ -18,8 +18,7 @@ import org.slf4j.LoggerFactory;
  * message.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public abstract class MrcTrafficController implements MrcInterface {
 
     public MrcTrafficController() {

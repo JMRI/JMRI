@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * Abstract interface between a JMRI signal head and a network connection
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  */
 abstract public class AbstractSignalHeadServer {
 

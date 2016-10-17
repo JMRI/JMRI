@@ -1,6 +1,6 @@
 package jmri.jmrix.powerline;
 
-//import junit.framework.Assert;
+//import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -17,10 +17,6 @@ public class PackageTest extends TestCase {
         super(s);
     }
 
-//    public void testDefinitions() {
-//        Assert.assertEquals("Node definitions match", SerialSensorManager.SENSORSPERNODE,
-//                                    SerialNode.MAXSENSORS+1);
-//    }
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
@@ -32,10 +28,11 @@ public class PackageTest extends TestCase {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.powerline.SerialTest");
         suite.addTest(X10SequenceTest.suite());
-        //suite.addTest(SerialTurnoutTest.suite());
-        //suite.addTest(SerialSensorManagerTest.suite());
+        suite.addTest(SerialTurnoutTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialTurnoutManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialSensorManagerTest.class));
         suite.addTest(SerialNodeTest.suite());
-        //suite.addTest(SerialAddressTest.suite());
+        suite.addTest(SerialAddressTest.suite());
         suite.addTest(jmri.jmrix.powerline.cm11.CM11Test.suite());
         suite.addTest(jmri.jmrix.powerline.insteon2412s.Insteon2412sTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.powerline.simulator.PackageTest.class));

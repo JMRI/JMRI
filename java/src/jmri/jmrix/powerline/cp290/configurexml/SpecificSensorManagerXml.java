@@ -15,7 +15,6 @@ package jmri.jmrix.powerline.cp290.configurexml;
  *
  * @author Bob Jacobsen 2008
  * @author Ken Cameron, (C) 2009, add sensors from poll replies
- * @version $Revision$
  */
 public class SpecificSensorManagerXml extends jmri.jmrix.powerline.configurexml.SerialSensorManagerXml {
 

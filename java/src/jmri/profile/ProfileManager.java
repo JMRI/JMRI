@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * {@link jmri.ConfigureManager} since the ConfigureManager's configuration is
  * influenced by this manager.
  *
- * @author Randall Wood
+ * @author Randall Wood (C) 2014, 2015, 2016
  */
 public class ProfileManager extends Bean {
 
@@ -72,6 +72,7 @@ public class ProfileManager extends Bean {
      * Create a new ProfileManager. In almost all cases, the use of
      * {@link #getDefault()} is preferred.
      *
+     * @param catalog the list of know profiles as an XML file
      */
     // TODO: write Test cases using this.
     public ProfileManager(File catalog) {
@@ -126,6 +127,7 @@ public class ProfileManager extends Bean {
      * Set the {@link Profile} to use. This method finds the Profile by Id and
      * calls {@link #setActiveProfile(jmri.profile.Profile)}.
      *
+     * @param id the profile id
      */
     public void setActiveProfile(String id) {
         if (id == null) {
@@ -152,6 +154,7 @@ public class ProfileManager extends Bean {
      * Once the {@link jmri.ConfigureManager} is loaded, this only sets the
      * Profile used at next application start.
      *
+     * @param profile the profile to activate
      */
     public void setActiveProfile(Profile profile) {
         Profile old = activeProfile;
@@ -188,6 +191,7 @@ public class ProfileManager extends Bean {
     /**
      * Save the active {@link Profile} and automatic start setting.
      *
+     * @throws java.io.IOException if unable to save the profile
      */
     public void saveActiveProfile() throws IOException {
         this.saveActiveProfile(this.getActiveProfile(), this.autoStartActiveProfile);
@@ -222,6 +226,7 @@ public class ProfileManager extends Bean {
      * Read the active {@link Profile} and automatic start setting from the
      * ProfileManager config file.
      *
+     * @throws java.io.IOException if unable to read the profile
      * @see #getConfigFile()
      * @see #setConfigFile(java.io.File)
      */
@@ -270,6 +275,7 @@ public class ProfileManager extends Bean {
     /**
      * Get the enabled {@link Profile} at index.
      *
+     * @param index the index of the desired Profile
      * @return A Profile
      */
     public Profile getProfiles(int index) {
@@ -282,6 +288,8 @@ public class ProfileManager extends Bean {
     /**
      * Set the enabled {@link Profile} at index.
      *
+     * @param profile the Profile to set
+     * @param index   the index to set; any existing profile at index is removed
      */
     public void setProfiles(Profile profile, int index) {
         Profile oldProfile = profiles.get(index);
@@ -336,7 +344,7 @@ public class ProfileManager extends Bean {
      * with a list of Profiles. Profiles that are discovered in these paths are
      * automatically added to the catalog.
      *
-     * @return Paths that may contain profiles.
+     * @return Paths that may contain profiles
      */
     public File[] getSearchPaths() {
         return searchPaths.toArray(new File[searchPaths.size()]);
@@ -349,7 +357,8 @@ public class ProfileManager extends Bean {
     /**
      * Get the search path at index.
      *
-     * @return A path that may contain profiles.
+     * @param index the index of the search path
+     * @return A path that may contain profiles
      */
     public File getSearchPaths(int index) {
         if (index >= 0 && index < searchPaths.size()) {
@@ -557,7 +566,8 @@ public class ProfileManager extends Bean {
     /**
      * Create a default profile if no profiles exist.
      *
-     * @return A new profile or null if profiles already exist.
+     * @return A new profile or null if profiles already exist
+     * @throws java.io.IOException if unable to create a Profile
      */
     public Profile createDefaultProfile() throws IllegalArgumentException, IOException {
         if (this.getAllProfiles().isEmpty()) {
@@ -578,7 +588,10 @@ public class ProfileManager extends Bean {
      * Copy a JMRI configuration not in a profile and its user preferences to a
      * profile.
      *
-     * @return The profile with the migrated configuration.
+     * @param config the configuration file
+     * @param name   the name of the configuration
+     * @return The profile with the migrated configuration
+     * @throws java.io.IOException if unable to create a Profile
      */
     public Profile migrateConfigToProfile(File config, String name) throws IllegalArgumentException, IOException {
         String pid = FileUtil.sanitizeFilename(name);
@@ -627,7 +640,9 @@ public class ProfileManager extends Bean {
      * This method returns true if a migration occurred, and false in all other
      * circumstances.
      *
+     * @param configFilename the name of the app config file
      * @return true if a user's existing config was migrated, false otherwise
+     * @throws java.io.IOException if unable to to create a Profile
      */
     public boolean migrateToProfiles(String configFilename) throws IllegalArgumentException, IOException {
         File appConfigFile = new File(configFilename);
@@ -665,7 +680,7 @@ public class ProfileManager extends Bean {
     }
 
     /**
-     * Export the {@link jmri.profile.Profile} to a JAR file.
+     * Export the {@link jmri.profile.Profile} to a zip file.
      *
      * @param profile                 The profile to export
      * @param target                  The file to export the profile into
@@ -674,6 +689,11 @@ public class ProfileManager extends Bean {
      *                                included?
      * @param exportExternalRoster    It the roster is not within the profile
      *                                directory, should it be included?
+     * @throws java.io.IOException     if unable to write a file during the
+     *                                 export
+     * @throws org.jdom2.JDOMException if unable to create a new profile
+     *                                 configuration file in the exported
+     *                                 Profile
      */
     public void export(Profile profile, File target, boolean exportExternalUserFiles, boolean exportExternalRoster) throws IOException, JDOMException {
         if (!target.exists() && !target.createNewFile()) {
@@ -767,6 +787,7 @@ public class ProfileManager extends Bean {
      * headless app launches.
      *
      * @return The active {@link Profile}
+     * @throws java.io.IOException if unable to read the current active profile
      * @see ProfileManagerDialog#getStartingProfile(java.awt.Frame)
      */
     public static Profile getStartingProfile() throws IOException {

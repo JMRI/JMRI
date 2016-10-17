@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
  *
  *
  * @author Daniel Boudreau (C) 2007
- * @version $Revision$
  */
 public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChangeListener {
 
