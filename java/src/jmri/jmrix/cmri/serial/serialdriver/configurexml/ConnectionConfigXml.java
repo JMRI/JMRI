@@ -74,8 +74,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         return p;
     }
 
+    @Override
     protected void getInstance() {
-        adapter = SerialDriverAdapter.instance();
+        if(adapter == null) {
+           adapter = new SerialDriverAdapter();
+           adapter.configure(); // sets the memo and traffic controller.
+        } 
     }
 
     @Override
