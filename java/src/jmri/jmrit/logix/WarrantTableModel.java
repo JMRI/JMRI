@@ -162,9 +162,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
 
     /**
      * Removes any warrant, not just NXWarrant
-     *
+     * @param w Warrant
      */
-    public void removeNXWarrant(Warrant w) {
+    public void removeWarrant(Warrant w) {
         w.removePropertyChangeListener(this);
         _warList.remove(w);
         _warNX.remove(w);
@@ -538,15 +538,21 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             }
             break;
         case EDIT_COLUMN:
-            openWarrantFrame(w);
+            if (w.getRunMode()==Warrant.MODE_NONE) {
+                openWarrantFrame(w);                
+            } else {
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("CannotEdit", w.getDisplayName()),
+                        Bundle.getMessage("WarningTitle"),
+                        JOptionPane.WARNING_MESSAGE);
+            }
             break;
         case DELETE_COLUMN:
             if (w.getRunMode() == Warrant.MODE_NONE) {
-                removeNXWarrant(w); // removes any warrant
+                removeWarrant(w); // removes any warrant
             } else {
                 w.controlRunTrain(Warrant.ABORT);
                 if (_warNX.contains(w)) { // don't remove regular warrants
-                    removeNXWarrant(w);
+                    removeWarrant(w);
                 }
 
             }
@@ -617,7 +623,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                             && ((property.equals("runMode") && ((Integer)e.getNewValue()).intValue() == Warrant.MODE_NONE) 
                                     || (property.equals("controlChange") && ((Integer)e.getNewValue()).intValue() == Warrant.ABORT))) {
                         fireTableRowsDeleted(i, i);
-                        removeNXWarrant(bean);
+                        removeWarrant(bean);
                     } else {
                         fireTableRowsUpdated(i, i);
                     }
@@ -654,7 +660,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                 int row = getRow(bean);
                 if (row>=0) {
                     fireTableRowsUpdated(row, row);                    
-//                    _frame.setStatusText(bean.getRunningMessage(), myGreen, true);
                 }
             } else if (e.getPropertyName().equals("runMode")) {
                 int oldMode = ((Integer) e.getOldValue()).intValue();

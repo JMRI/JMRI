@@ -939,7 +939,6 @@ public class WarrantFrame extends WarrantRoute {
     }
     private void clearWarrant() {
         if (_warrant != null) {
-            _warrant.deAllocate();
             _warrant.stopWarrant(false);
             _warrant.removePropertyChangeListener(this);
         }        

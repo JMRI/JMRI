@@ -79,7 +79,7 @@ class IndicatorTrackPaths {
         return _showTrain;
     }
 
-    protected String setStatus(OBlock block, int state) {
+    protected String getStatus(OBlock block, int state) {
         String pathName = block.getAllocatedPathName();
         String status;
         removeLocoIcon();
@@ -90,7 +90,9 @@ class IndicatorTrackPaths {
         } else if ((state & OBlock.ALLOCATED) != 0) {
             if (_paths != null && _paths.contains(pathName)) {
                 if ((state & OBlock.RUNNING) != 0) {
-                    status = "PositionTrack";
+                    status = "PositionTrack";   //occupied by train on a warrant
+                } else if ((state & OBlock.OCCUPIED) != 0) {
+                    status = "OccupiedTrack";   // occupied by rouge train
                 } else {
                     status = "AllocatedTrack";
                 }
@@ -152,13 +154,9 @@ class IndicatorTrackPaths {
     }
 
     /**
-     * This method seems basically wrong.  It doesn't set
-     * anything, it just converts an int status into a String status value.
-     * Note that it has no internal side-effects.
-     * See also comment in IndicatorTurnoutIcon.setStatus(..) which FindBugs
-     * points out is messed up because of this.
+     * Return track name for known state of occupancy sensor
      */
-    protected String setStatus(int state) {
+    protected String getStatus(int state) {
         String status;
         if (state == Sensor.ACTIVE) {
             status = "OccupiedTrack";

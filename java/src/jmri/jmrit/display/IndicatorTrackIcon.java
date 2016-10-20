@@ -102,7 +102,7 @@ public class IndicatorTrackIcon extends PositionableIcon
             }
             Sensor sensor = getOccSensor();
             sensor.addPropertyChangeListener(this, namedOccSensor.getName(), "Indicator Track");
-            _status = _pathUtil.setStatus(sensor.getKnownState());
+            _status = _pathUtil.getStatus(sensor.getKnownState());
             displayState(_status);
         }
     }
@@ -188,8 +188,11 @@ public class IndicatorTrackIcon extends PositionableIcon
         _pathUtil.removePath(path);
     }
 
+    /**
+     * get track name for known state of occupancy sensor
+     */
     public void setStatus(int state) {
-        _pathUtil.setStatus(state);
+        _status = _pathUtil.getStatus(state);
     }
 
     /**
@@ -247,7 +250,7 @@ public class IndicatorTrackIcon extends PositionableIcon
             if (evt.getPropertyName().equals("KnownState")) {
                 int now = ((Integer) evt.getNewValue()).intValue();
                 if (source.equals(getOccSensor())) {
-                    _status = _pathUtil.setStatus(now);
+                    _status = _pathUtil.getStatus(now);
                 }
             }
         }
@@ -255,7 +258,7 @@ public class IndicatorTrackIcon extends PositionableIcon
     }
 
     private void setStatus(OBlock block, int state) {
-        _status = _pathUtil.setStatus(block, state);
+        _status = _pathUtil.getStatus(block, state);
         if ((state & (OBlock.OCCUPIED | OBlock.RUNNING)) != 0) {
             _pathUtil.setLocoIcon(block, getLocation(), getSize(), _editor);
         }
