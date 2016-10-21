@@ -83,6 +83,11 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     @Override
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig) object).getAdapter();
+    }
+
+    @Override
     protected void unpackElement(Element shared, Element perNode) {
         List<Element> l = shared.getChildren("node");
         for (int i = 0; i < l.size(); i++) {
