@@ -950,10 +950,10 @@
     your trains to route a car. If you only want the router to use the trains that you've selected
     in the "Build" column of the "Trains" window, then deselect this option.</p>
 
-   <h4>Enable Track Destination Restrictions when Routing</h4>
+   <h4>Enable EXTREME Track Destination Restrictions when Routing</h4>
 
    <p>
-    The last routing option "Enable Track Destination Restrictions when Routing" is disabled by
+    The last routing option "Enable EXTREME Track Destination Restrictions when Routing" is disabled by
     default, and is recommended that you leave it disabled. This option makes the track destination
     feature of a classification/interchange track more restrictive. When selected it tells the
     router to only use <a href="#Interchange">classification/interchange</a> tracks that match a

@@ -33,6 +33,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 
     /**
      * builds a csv file containing the switch list for a location
+     * @param location The Location requesting a switch list.
      *
      * @return File
      */
