@@ -963,7 +963,7 @@
     route a car to its final destination. For example, say the route for a car looks something like
     this: New York to Springfield to Worcester to Boston with each city hop requiring a separate
     train. In this case three trains are need to move the car from NY to Boston. With the "Enable
-    Track Destination Restrictions when Routing" disabled, which is the default, you only have to
+    EXTREME Track Destination Restrictions when Routing" disabled, which is the default, you only have to
     enter "Boston" as the destination for the departure C/I track in New York. The program when
     routing a car to Boston from New York, will determine that sending the car first to Springfield
     and then Worcester is okay because that's the route to get the car to Boston. However, if you
