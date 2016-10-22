@@ -1,18 +1,13 @@
 package jmri.server.json;
 
-import static jmri.server.json.JSON.CARS;
 import static jmri.server.json.JSON.DATA;
-import static jmri.server.json.JSON.ENGINES;
 import static jmri.server.json.JSON.GOODBYE;
 import static jmri.server.json.JSON.HELLO;
 import static jmri.server.json.JSON.LIST;
 import static jmri.server.json.JSON.LOCALE;
-import static jmri.server.json.JSON.LOCATIONS;
 import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.PING;
 import static jmri.server.json.JSON.PROGRAMMER;
-import static jmri.server.json.JSON.TRAIN;
-import static jmri.server.json.JSON.TRAINS;
 import static jmri.server.json.JSON.TYPE;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -24,9 +19,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.ServiceLoader;
 import jmri.JmriException;
-import jmri.jmris.json.JsonOperationsServer;
 import jmri.jmris.json.JsonProgrammerServer;
-import jmri.jmris.json.JsonUtil;
 import jmri.spi.JsonServiceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,12 +27,11 @@ import org.slf4j.LoggerFactory;
 public class JsonClientHandler {
 
     /**
-     * When used as a parameter to
-     * {@link #onMessage(java.lang.String)}, will cause a
-     * {@value jmri.server.json.JSON#HELLO} message to be sent to the client.
+     * When used as a parameter to {@link #onMessage(java.lang.String)}, will
+     * cause a {@value jmri.server.json.JSON#HELLO} message to be sent to the
+     * client.
      */
     public static final String HELLO_MSG = "{\"" + JSON.TYPE + "\":\"" + JSON.HELLO + "\"}";
-    private final JsonOperationsServer operationsServer;
     private final JsonProgrammerServer programmerServer;
     private final JsonConnection connection;
     private final HashMap<String, HashSet<JsonSocketService>> services = new HashMap<>();
@@ -47,7 +39,6 @@ public class JsonClientHandler {
 
     public JsonClientHandler(JsonConnection connection) {
         this.connection = connection;
-        this.operationsServer = new JsonOperationsServer(this.connection);
         this.programmerServer = new JsonProgrammerServer(this.connection);
         for (JsonServiceFactory factory : ServiceLoader.load(JsonServiceFactory.class)) {
             for (String type : factory.getTypes()) {
@@ -65,7 +56,6 @@ public class JsonClientHandler {
     }
 
     public void dispose() {
-        this.operationsServer.dispose();
         this.programmerServer.dispose();
         services.values().stream().forEach((set) -> {
             set.stream().forEach((service) -> {
@@ -141,41 +131,21 @@ public class JsonClientHandler {
                 data = this.connection.getObjectMapper().createObjectNode();
             }
             if (type.equals(LIST)) {
-                JsonNode reply;
                 String list = root.path(LIST).asText();
-                switch (list) {
-                    case CARS:
-                        reply = JsonUtil.getCars(this.connection.getLocale());
-                        break;
-                    case ENGINES:
-                        reply = JsonUtil.getEngines(this.connection.getLocale());
-                        break;
-                    case LOCATIONS:
-                        reply = JsonUtil.getLocations(this.connection.getLocale());
-                        break;
-                    case TRAINS:
-                        reply = JsonUtil.getTrains(this.connection.getLocale());
-                        break;
-                    default:
-                        if (this.services.get(list) != null) {
-                            for (JsonSocketService service : this.services.get(list)) {
-                                service.onList(list, data, this.connection.getLocale());
-                            }
-                            return;
-                        } else {
-                            log.warn("Requested list type '{}' unknown.", list);
-                            this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", list));
-                            return;
-                        }
+                if (this.services.get(list) != null) {
+                    for (JsonSocketService service : this.services.get(list)) {
+                        service.onList(list, data, this.connection.getLocale());
+                    }
+                    return;
+                } else {
+                    log.warn("Requested list type '{}' unknown.", list);
+                    this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", list));
+                    return;
                 }
-                this.connection.sendMessage(this.connection.getObjectMapper().writeValueAsString(reply));
             } else if (!data.isMissingNode()) {
                 switch (type) {
                     case PROGRAMMER:
                         this.programmerServer.parseRequest(this.connection.getLocale(), data);
-                        break;
-                    case TRAIN:
-                        this.operationsServer.parseTrainRequest(this.connection.getLocale(), data);
                         break;
                     case HELLO:
                     case LOCALE:

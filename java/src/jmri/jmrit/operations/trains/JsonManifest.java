@@ -8,13 +8,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-import jmri.server.json.JSON;
-import jmri.jmris.json.JsonUtil;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.server.json.JSON;
+import jmri.server.json.operations.JsonOperations;
+import jmri.server.json.operations.JsonUtil;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * this manifest will be capable of querying operations for more specific
  * information while transforming this manifest into other formats.
  *
- * @author rhwood
+ * @author Randall Wood
  * @author Daniel Boudreau 1/26/2015 Load all cars including utility cars into
  * the JSON file, and tidied up the code a bit.
  *
@@ -39,6 +40,7 @@ public class JsonManifest extends TrainCommon {
     protected final Locale locale = Locale.getDefault();
     protected final Train train;
     private final ObjectMapper mapper = new ObjectMapper();
+    private final JsonUtil utilities = new JsonUtil(mapper);
 
     private final static Logger log = LoggerFactory.getLogger(JsonManifest.class);
 
@@ -60,12 +62,12 @@ public class JsonManifest extends TrainCommon {
         }
         root.put(JSON.NAME, StringEscapeUtils.escapeHtml4(this.train.getName()));
         root.put(JSON.DESCRIPTION, StringEscapeUtils.escapeHtml4(this.train.getDescription()));
-        root.put(JSON.LOCATIONS, this.getLocations());
+        root.put(JsonOperations.LOCATIONS, this.getLocations());
         if (!this.train.getManifestLogoURL().equals(Train.NONE)) {
             // The operationsServlet will need to change this to a usable URL
             root.put(JSON.IMAGE, this.train.getManifestLogoURL());
         }
-        root.put(JSON.DATE, TrainCommon.getISO8601Date(true)); // Validity
+        root.put(JsonOperations.DATE, TrainCommon.getISO8601Date(true)); // Validity
         this.mapper.writeValue(TrainManagerXml.instance().createManifestFile(this.train.getName(), JSON.JSON), root);
     }
 
@@ -95,7 +97,7 @@ public class JsonManifest extends TrainCommon {
             ObjectNode locationNode = this.mapper.createObjectNode();
             locationNode.put(JSON.COMMENT, StringEscapeUtils.escapeHtml4(routeLocation.getLocation().getComment()));
             locationNode.put(JSON.ID, routeLocation.getLocation().getId());
-            jsonLocation.put(JSON.LOCATION, locationNode);
+            jsonLocation.put(JsonOperations.LOCATION, locationNode);
             jsonLocation.put(JSON.COMMENT, StringEscapeUtils.escapeHtml4(routeLocation.getComment()));
             // engine change or helper service?
             if (train.getSecondLegOptions() != Train.NO_CABOOSE_OR_FRED) {
@@ -143,7 +145,7 @@ public class JsonManifest extends TrainCommon {
             for (RouteLocation destination : route) {
                 for (Car car : carList) {
                     if (car.getRouteLocation() == routeLocation && car.getRouteDestination() == destination) {
-                        pickups.add(JsonUtil.getCar(car));
+                        pickups.add(this.utilities.getCar(car));
                     }
                 }
             }
@@ -152,19 +154,19 @@ public class JsonManifest extends TrainCommon {
             ArrayNode setouts = this.mapper.createArrayNode();
             for (Car car : carList) {
                 if (car.getRouteDestination() == routeLocation) {
-                    setouts.add(JsonUtil.getCar(car));
+                    setouts.add(this.utilities.getCar(car));
                 }
             }
             jsonCars.put(JSON.REMOVE, setouts);
 
             if (routeLocation != train.getRoute().getTerminatesRouteLocation()) {
-                jsonLocation.put(JSON.TRACK, this.getTrackComments(routeLocation, carList));
+                jsonLocation.put(JsonOperations.TRACK, this.getTrackComments(routeLocation, carList));
                 jsonLocation.put(JSON.DIRECTION, routeLocation.getTrainDirection());
                 ObjectNode length = this.mapper.createObjectNode();
                 length.put(JSON.LENGTH, train.getTrainLength(routeLocation));
                 length.put(JSON.UNIT, Setup.getLengthUnit());
                 jsonLocation.put(JSON.LENGTH, length);
-                jsonLocation.put(JSON.WEIGHT, train.getTrainWeight(routeLocation));
+                jsonLocation.put(JsonOperations.WEIGHT, train.getTrainWeight(routeLocation));
                 int cars = train.getNumberCarsInTrain(routeLocation);
                 int emptyCars = train.getNumberEmptyCarsInTrain(routeLocation);
                 jsonCars.put(JSON.TOTAL, cars);
@@ -174,7 +176,7 @@ public class JsonManifest extends TrainCommon {
                 log.debug("Train terminates in {}", locationName);
                 jsonLocation.put("TrainTerminatesIn", StringEscapeUtils.escapeHtml4(locationName));
             }
-            jsonLocation.put(JSON.CARS, jsonCars);
+            jsonLocation.put(JsonOperations.CARS, jsonCars);
             locations.add(jsonLocation);
         }
         return locations;
@@ -184,7 +186,7 @@ public class JsonManifest extends TrainCommon {
         ArrayNode node = this.mapper.createArrayNode();
         for (Engine engine : engines) {
             if (engine.getRouteDestination() != null && engine.getRouteDestination().equals(routeLocation)) {
-                node.add(JsonUtil.getEngine(engine));
+                node.add(this.utilities.getEngine(engine));
             }
         }
         return node;
@@ -194,7 +196,7 @@ public class JsonManifest extends TrainCommon {
         ArrayNode node = this.mapper.createArrayNode();
         for (Engine engine : engines) {
             if (engine.getRouteLocation() != null && engine.getRouteLocation().equals(routeLocation)) {
-                node.add(JsonUtil.getEngine(engine));
+                node.add(this.utilities.getEngine(engine));
             }
         }
         return node;
