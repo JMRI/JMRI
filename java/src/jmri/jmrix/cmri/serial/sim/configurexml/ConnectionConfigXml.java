@@ -24,8 +24,12 @@ public class ConnectionConfigXml extends jmri.jmrix.cmri.serial.serialdriver.con
         super();
     }
 
+    @Override
     protected void getInstance() {
-        adapter = SimDriverAdapter.instance();
+        if(adapter == null) {
+           adapter = new SimDriverAdapter();
+           adapter.configure(); // sets the memo and traffic controller.
+        }
     }
 
     @Override

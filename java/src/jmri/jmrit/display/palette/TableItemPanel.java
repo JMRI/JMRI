@@ -192,6 +192,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
      */
     public NamedBean getTableSelection() {
         int row = _table.getSelectedRow();
+        row = _table.convertRowIndexToModel(row);
         if (row >= 0) {
             NamedBean b = _model.getBeanAt(row);
             _table.clearSelection();
@@ -207,6 +208,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
 
     public void setSelection(NamedBean bean) {
         int row = _model.getIndexOf(bean);
+        row = _table.convertRowIndexToView(row);
         log.debug("setSelection: NamedBean= " + bean + ", row= " + row);
         if (row >= 0) {
             _table.addRowSelectionInterval(row, row);

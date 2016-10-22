@@ -1,11 +1,11 @@
 package jmri.jmris.json;
 
-import static jmri.server.json.JsonException.CODE;
-import static jmri.server.json.JsonException.ERROR;
 import static jmri.server.json.JSON.ID;
-import static jmri.server.json.JsonException.MESSAGE;
 import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.TYPE;
+import static jmri.server.json.JsonException.CODE;
+import static jmri.server.json.JsonException.ERROR;
+import static jmri.server.json.JsonException.MESSAGE;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,7 +29,9 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2010
  * @author Dan Boudreau Copyright (C) 2012 (Documented the code, changed reply
  * format, and some minor refactoring)
+ * @deprecated since 4.5.6
  */
+@Deprecated
 public class JsonOperationsServer extends AbstractOperationsServer {
 
     private final JmriConnection connection;
