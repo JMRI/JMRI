@@ -81,7 +81,7 @@
       <p><b>This environment varialbe must be set prior to executing 
       JMRI</b></p>.  
      <p>For more information, please see the relavent portions of 
-     <"a href=http://www.savagehomeautomation.com/projects/pi4j-now-supports-non-privileged-access-no-more-rootsudo.html">the pi4j web page</a>.</p>
+     <a href="http://www.savagehomeautomation.com/projects/pi4j-now-supports-non-privileged-access-no-more-rootsudo.html">the pi4j web page</a>.</p>
 
       <p>JMRI currently supports inputs (Sensors) and outputs
       (Turnouts) via the Raspberry Pi's GPIO pins.</p>

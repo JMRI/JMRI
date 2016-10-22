@@ -66,6 +66,8 @@ public class EngineManager extends RollingStockManager {
     /**
      * Finds an existing engine or creates a new engine if needed requires
      * engine's road and number
+     * @param engineRoad The engine's road initials
+     * @param engineNumber The engine's road number
      *
      * @return new engine or existing engine
      */
@@ -216,6 +218,7 @@ public class EngineManager extends RollingStockManager {
     /**
      * return a list available engines (no assigned train) engines are ordered
      * least recently moved to most recently moved.
+     * @param train The Train requesting this list.
      *
      * @return Ordered list of engines not assigned to a train
      */
@@ -235,6 +238,8 @@ public class EngineManager extends RollingStockManager {
     /**
      * Returns a list of locos sorted by blocking number for a train. This
      * returns a list of consisted locos in the order that they were entered in.
+     * @param train The Train requesting this list.
+     * @return A list of sorted locos.
      */
     public List<Engine> getByTrainBlockingList(Train train) {
         return castListToEngine(getByList(super.getByTrainList(train), BY_BLOCKING));
@@ -250,6 +255,7 @@ public class EngineManager extends RollingStockManager {
 
     /**
      * Get a list of engine road names.
+     * @param model The string model name, can be NONE.
      *
      * @return List of engine road names.
      */
@@ -311,6 +317,7 @@ public class EngineManager extends RollingStockManager {
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-engines.dtd.
+     * @param root The common Element for operations-engines.dtd.
      *
      */
     public void store(Element root) {
