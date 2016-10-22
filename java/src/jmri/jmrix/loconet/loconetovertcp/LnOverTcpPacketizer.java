@@ -109,7 +109,6 @@ public class LnOverTcpPacketizer extends LnPacketizer {
         // with multi-byte characters here.
         @SuppressWarnings({"deprecation", "null"})
         public void run() {
-            boolean debug = log.isDebugEnabled();
 
             String rxLine;
             while (true) {   // loop permanently, program close will exit
@@ -121,9 +120,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                         return;
                     }
 
-                    if (debug) {
-                        log.debug("Received: " + rxLine);
-                    }
+                    log.debug("Received: {}", rxLine);
 
                     StringTokenizer st = new StringTokenizer(rxLine);
                     if (st.nextToken().equals(RECEIVE_PREFIX)) {
@@ -134,22 +131,26 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                         // Decide length
                         switch ((opCode & 0x60) >> 5) {
                             default:  // not really possible, but this closes selection for FindBugs  
-                            case 0:     /* 2 byte message */
+                            case 0:
+                                /* 2 byte message */
 
                                 msg = new LocoNetMessage(2);
                                 break;
 
-                            case 1:     /* 4 byte message */
+                            case 1:
+                                /* 4 byte message */
 
                                 msg = new LocoNetMessage(4);
                                 break;
 
-                            case 2:     /* 6 byte message */
+                            case 2:
+                                /* 6 byte message */
 
                                 msg = new LocoNetMessage(6);
                                 break;
 
-                            case 3:     /* N byte message */
+                            case 3:
+                                /* N byte message */
 
                                 if (byte2 < 2) {
                                     log.error("LocoNet message length invalid: " + byte2
@@ -206,14 +207,10 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                     log.warn("run: unexpected LocoNetMessageException: " + e);
                 } catch (java.io.EOFException e) {
                     // posted from idle port when enableReceiveTimeout used
-                    if (debug) {
-                        log.debug("EOFException, is LocoNet serial I/O using timeouts?");
-                    }
+                    log.debug("EOFException, is LocoNet serial I/O using timeouts?");
                 } catch (java.io.IOException e) {
                     // fired when write-end of HexFile reaches end
-                    if (debug) {
-                        log.debug("IOException, should only happen with HexFIle: " + e);
-                    }
+                    log.debug("IOException, should only happen with HexFIle: {}", e);
                     log.info("End of file");
 //                    disconnectPort(networkController);
                     return;
@@ -232,15 +229,12 @@ public class LnOverTcpPacketizer extends LnPacketizer {
     class XmtHandler implements Runnable {
 
         public void run() {
-            boolean debug = log.isDebugEnabled();
 
             while (true) {   // loop permanently
                 // any input?
                 try {
                     // get content; failure is a NoSuchElementException
-                    if (debug) {
-                        log.debug("check for input");
-                    }
+                    log.debug("check for input");
                     byte msg[] = null;
                     synchronized (this) {
                         msg = xmtList.removeFirst();
@@ -251,9 +245,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                         if (ostream != null) {
                             //Commented out as the origianl LnPortnetworkController always returned true.
                             //if (!networkController.okToSend()) log.warn("LocoNet port not ready to receive"); // TCP, not RS232, so message is a real warning
-                            if (debug) {
-                                log.debug("start write to stream");
-                            }
+                            log.debug("start write to stream");
                             StringBuffer packet = new StringBuffer(msg.length * 3 + SEND_PREFIX.length() + 2);
                             packet.append(SEND_PREFIX);
                             String hexString;
@@ -265,15 +257,13 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                                 }
                                 packet.append(hexString);
                             }
-                            if (debug) {
-                                log.debug("Write to LbServer: " + packet.toString());
+                            if (log.isDebugEnabled()) { // Avoid building unneeded Strings
+                                log.debug("Write to LbServer: {}", packet.toString());
                             }
                             packet.append("\r\n");
                             ostream.write(packet.toString().getBytes());
                             ostream.flush();
-                            if (debug) {
-                                log.debug("end write to stream");
-                            }
+                            log.debug("end write to stream");
                         } else {
                             // no stream connected
                             log.warn("sendLocoNetMessage: no connection established");
@@ -283,15 +273,11 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                     }
                 } catch (NoSuchElementException e) {
                     // message queue was empty, wait for input
-                    if (debug) {
-                        log.debug("start wait");
-                    }
+                    log.debug("start wait");
 
                     new jmri.util.WaitHandler(this);  // handle synchronization, spurious wake, interruption
 
-                    if (debug) {
-                        log.debug("end wait");
-                    }
+                    log.debug("end wait");
                 }
             }
         }

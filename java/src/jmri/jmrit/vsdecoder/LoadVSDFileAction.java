@@ -20,7 +20,6 @@ package jmri.jmrit.vsdecoder;
  */
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -37,8 +36,6 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("serial")
 public class LoadVSDFileAction extends AbstractAction {
 
-    static final ResourceBundle rb = VSDecoderBundle.bundle();
-
     /**
      * Constructor
      *
@@ -49,7 +46,7 @@ public class LoadVSDFileAction extends AbstractAction {
     }
 
     public LoadVSDFileAction() {
-        this(rb.getString("LoadVSDFileChoserTitle")); // Shouldn't this be in the resource bundle?
+        this(Bundle.getMessage("LoadVSDFileChoserTitle")); // Shouldn't this be in the resource bundle?
     }
 
     JFileChooser fileChooser;
@@ -73,7 +70,7 @@ public class LoadVSDFileAction extends AbstractAction {
             log.debug("Using path: " + start_dir);
 
             fileChooser = new JFileChooser(start_dir);
-            jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter(rb.getString("LoadVSDFileChooserFilterLabel"));
+            jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter(Bundle.getMessage("LoadVSDFileChooserFilterLabel"));
             filt.addExtension("vsd");
             filt.addExtension("zip");
             fileChooser.setFileFilter(filt);
@@ -111,7 +108,7 @@ public class LoadVSDFileAction extends AbstractAction {
 
             if (!vsdfile.isInitialized()) {
                 JOptionPane.showMessageDialog(null, vsdfile.getStatusMessage(),
-                        rb.getString("VSDFileError"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("VSDFileError"), JOptionPane.ERROR_MESSAGE);
             }
 
             return (vsdfile.isInitialized());

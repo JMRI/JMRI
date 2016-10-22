@@ -225,6 +225,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
 
         // check boxes
         addCheckBoxAction(routerCheckBox);
+        addCheckBoxAction(routerRestrictBox);       
         setRouterCheckBoxesEnabled();
 
         setBuildOption();
@@ -270,6 +271,10 @@ public class OptionPanel extends OperationsPreferencesPanel {
     protected void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == routerCheckBox) {
             setRouterCheckBoxesEnabled();
+        }
+        if (ae.getSource() == routerRestrictBox && routerRestrictBox.isSelected()) {
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("WarnExtremeTrackDest"), Bundle
+                    .getMessage("WarnExtremeTitle"), JOptionPane.WARNING_MESSAGE);
         }
     }
 

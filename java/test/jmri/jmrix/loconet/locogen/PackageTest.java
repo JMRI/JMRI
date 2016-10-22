@@ -28,7 +28,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.loconet.locogen.PackageTest");  // no tests in this class itself
         suite.addTest(new TestSuite(LocoGenTest.class));
-        suite.addTest(new TestSuite(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         return suite;
     }
 

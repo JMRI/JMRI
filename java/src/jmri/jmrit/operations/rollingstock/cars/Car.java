@@ -172,7 +172,8 @@ public class Car extends RollingStock {
     }
 
     /**
-     * Gets the car load's priority.
+     * Gets the car's load's priority.
+     * @return The car's load priority.
      */
     public String getLoadPriority() {
         return (carLoads.getPriority(_type, _loadName));
@@ -205,6 +206,7 @@ public class Car extends RollingStock {
 
     /**
      * Used to keep track of which item in a schedule was used for this car.
+     * @param id The ScheduleItem id for this car.
      *
      */
     public void setScheduleItemId(String id) {
@@ -505,6 +507,7 @@ public class Car extends RollingStock {
 
     /**
      * A kernel is a group of cars that are switched as a unit.
+     * @param kernel The assigned Kernel for this car.
      *
      */
     public void setKernel(Kernel kernel) {
