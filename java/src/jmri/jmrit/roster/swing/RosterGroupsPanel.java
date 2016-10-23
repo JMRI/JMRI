@@ -91,6 +91,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
     /**
      * Create a RosterGroupTreePane with the defaultRosterGroup selected.
      *
+     * @param defaultRosterGroup the name of the default selection
      */
     public RosterGroupsPanel(String defaultRosterGroup) {
         this.scrollPane = new JScrollPane(getTree());
