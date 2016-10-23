@@ -34,7 +34,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(SRCPTurnoutTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPSensorManagerTest.class));
         suite.addTest(new TestSuite(SRCPSensorTest.class));
-        suite.addTest(new TestSuite(SRCPThrottleManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPThrottleManagerTest.class));
         suite.addTest(new TestSuite(SRCPThrottleTest.class));
         suite.addTest(new TestSuite(SRCPPowerManagerTest.class));
         suite.addTest(new TestSuite(SRCPProgrammerTest.class));
@@ -43,6 +43,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.srcp.parser.SRCPClientParserTests.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.srcp.networkdriver.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.srcp.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.srcp.swing.PackageTest.class));
 
         return suite;
     }

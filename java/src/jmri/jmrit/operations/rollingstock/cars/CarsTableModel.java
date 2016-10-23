@@ -105,6 +105,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
      * <p>
      * Moves, Built, Owner, Value, RFID, Wait, Pickup, and Last are grouped
      * together.
+     * @param sort The integer sort to use.
      *
      */
     public void setSort(int sort) {
@@ -218,6 +219,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
     /**
      * Search for car by road number
+     * @param roadNumber The string road number to search for.
      *
      * @return -1 if not found, table row number if found
      */
@@ -270,7 +272,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         return (Car) sysList.get(index);
     }
 
-    synchronized void updateList() {
+    private void updateList() {
         // first, remove listeners from the individual objects
         removePropertyChangeCars();
         sysList = getSelectedCarList();
@@ -530,7 +532,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     @Override
-    public synchronized Object getValueAt(int row, int col) {
+    public Object getValueAt(int row, int col) {
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
@@ -589,7 +591,9 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 if (car.getFinalDestinationTrack() != null) {
                     s = s + " (" + car.getFinalDestinationTrackName() + ")";
                 }
-                if (log.isDebugEnabled() && car.getFinalDestinationTrack() != null && car.getFinalDestinationTrack().getSchedule() != null) {
+                if (log.isDebugEnabled() &&
+                        car.getFinalDestinationTrack() != null &&
+                        car.getFinalDestinationTrack().getSchedule() != null) {
                     s = s + " " + car.getScheduleItemId();
                 }
                 return s;
@@ -634,7 +638,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     CarSetFrame csf = null;
 
     @Override
-    public synchronized void setValueAt(Object value, int row, int col) {
+    public void setValueAt(Object value, int row, int col) {
         Car car = (Car) sysList.get(row);
         switch (col) {
             case SELECT_COLUMN:

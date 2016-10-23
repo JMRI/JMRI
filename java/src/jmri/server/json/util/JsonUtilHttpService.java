@@ -334,12 +334,13 @@ public class JsonUtilHttpService extends JsonHttpService {
 
     /**
      * Gets the {@link jmri.DccLocoAddress} for a String in the form
-     * <code>number(type)</code> or <code>number</code>.
+     * {@code number(type)} or {@code number}.
      *
-     * Type may be <code>L</code> for long or <code>S</code> for short. If the
+     * Type may be {@code L} for long or {@code S} for short. If the
      * type is not specified, type is assumed to be short.
      *
-     * @return The DccLocoAddress for address.
+     * @param address the address
+     * @return The DccLocoAddress for address
      */
     static public DccLocoAddress addressForString(String address) {
         String[] components = address.split("[()]");

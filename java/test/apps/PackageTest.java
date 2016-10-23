@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
         apps.DispatcherPro.PackageTest.class,
         apps.PanelPro.PackageTest.class,
         apps.SignalPro.PackageTest.class,
+        apps.SoundPro.PackageTest.class,
         JmriFacelessTest.class
 })
 /**

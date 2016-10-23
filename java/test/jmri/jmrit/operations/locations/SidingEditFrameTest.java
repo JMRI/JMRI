@@ -69,7 +69,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         getHelper().enterClickAndLeave(new MouseEventData(this, f.editScheduleButton));
 
         // confirm schedule add frame creation
-        JmriJFrame sef = JmriJFrame.getFrame("Add Schedule for Spur 3rd siding track");
+        JmriJFrame sef = JmriJFrame.getFrame("Add Schedule for Spur \"3rd siding track\"");
         Assert.assertNotNull(sef);
 
         // kill all frames

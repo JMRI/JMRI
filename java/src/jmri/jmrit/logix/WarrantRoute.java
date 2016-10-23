@@ -59,13 +59,14 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     RouteLocation _focusedField;
     
     static int STRUT_SIZE = 10;
+    static int _depth =20;
+    
     static String PAD = "               ";
     private JDialog         _pickRouteDialog;
     private RouteTableModel _routeModel;
     private ArrayList <BlockOrder> _orders = new ArrayList <BlockOrder>();
     private JFrame      _debugFrame;
     private RouteFinder _routeFinder;
-    private int         _depth =20;
     private JTextField  _searchDepth =  new JTextField(5);
 
     private RosterEntry _train;

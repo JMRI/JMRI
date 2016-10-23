@@ -199,7 +199,8 @@ public class NmraPacket {
         // right hardware addresses
         if (addr < 1 || addr > 511) {
             log.error("invalid address " + addr);
-            return null;
+            //return null;
+            throw new IllegalArgumentException();
         }
         if (active < 0 || active > 1) {
             log.error("invalid active (C) bit " + addr);
@@ -235,7 +236,7 @@ public class NmraPacket {
 
         if (addr < 1 || addr > 511) {
             log.error("invalid address " + addr);
-            return null;
+            throw new IllegalArgumentException();
         }
         if (active < 0 || active > 1) {
             log.error("invalid active (C) bit " + addr);

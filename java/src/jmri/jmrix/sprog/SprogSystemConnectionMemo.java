@@ -129,14 +129,14 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * Configure the programming manager and "command station" objects
      */
     public void configureCommandStation() {
+        log.debug("start command station queuing thread");
+        commandStation = new jmri.jmrix.sprog.SprogCommandStation(st);
+        commandStation.setSystemConnectionMemo(this);
+        jmri.InstanceManager.setCommandStation(commandStation);
         switch (sprogMode) {
             case OPS:
-                log.debug("start command station queuing thread");
-                commandStation = new jmri.jmrix.sprog.SprogCommandStation(st);
                 slotThread = new Thread(commandStation);
-                commandStation.setSystemConnectionMemo(this);
                 slotThread.start();
-                jmri.InstanceManager.setCommandStation(commandStation);
                 break;
             case SERVICE:
                 break;
