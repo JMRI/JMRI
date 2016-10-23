@@ -206,8 +206,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         }
     }
 
-    //private JFileChooser chooser;
-            public JFileChooser chooser;
+    private JFileChooser chooser;
 
     /**
      * Add filter(s) for possible types to the input file chooser.
@@ -227,7 +226,6 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         if (name.equals("")) {
             name = FileUtil.getUserFilesPath();
         }
-        // dph
         if (chooser == null) {
             chooser = new JFileChooser(name);
             addChooserFilters(chooser);
@@ -277,7 +275,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
     /**
      * Read file into local memory
      */
-    public void doRead() {
+    private void doRead() {
         if (inputFileName.getText().equals("")) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNoInputFile"),
                     Bundle.getMessage("ErrorTitle"),
