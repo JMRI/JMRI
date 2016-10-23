@@ -92,7 +92,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     protected void addChooserFilters(JFileChooser chooser) {}
 
     @Override
-    public void doRead() {
+    public void doRead(JFileChooser chooser) {
         String fn = chooser.getSelectedFile().getPath();
         readFile(fn);
         bar.setValue(0);
