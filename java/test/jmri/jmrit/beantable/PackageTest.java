@@ -55,6 +55,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.beantable.sensor.PackageTest.suite());
         suite.addTest(jmri.jmrit.beantable.oblock.PackageTest.suite());
         suite.addTest(jmri.jmrit.beantable.beanedit.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.beantable.usermessagepreferences.PackageTest.class));
         return suite;
     }
 
