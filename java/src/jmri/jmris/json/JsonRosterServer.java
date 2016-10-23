@@ -1,11 +1,11 @@
 package jmri.jmris.json;
 
+import static jmri.jmrit.roster.Roster.REMOVE;
 import static jmri.server.json.JSON.ADD;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.NAME;
-import static jmri.server.json.roster.JsonRoster.ROSTER;
 import static jmri.server.json.JSON.TYPE;
-import static jmri.jmrit.roster.Roster.REMOVE;
+import static jmri.server.json.roster.JsonRoster.ROSTER;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,7 +25,9 @@ import org.slf4j.LoggerFactory;
  * Listen for changes in the roster and notify subscribed clients of the change.
  *
  * @author Randall Wood Copyright (C) 2014
+ * @deprecated since 4.5.6
  */
+@Deprecated
 public class JsonRosterServer {
 
     private final JmriConnection connection;

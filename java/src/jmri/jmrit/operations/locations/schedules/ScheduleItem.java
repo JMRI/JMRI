@@ -45,6 +45,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 
     /**
      *
+     * @param id ScheduleItem string id
      * @param type car type for schedule
      */
     public ScheduleItem(String id, String type) {
