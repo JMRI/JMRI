@@ -62,7 +62,7 @@
         <label xml:lang="de">Höchstgeschwindigkeit</label>
         <comment>Sets the maximum voltage at full throttle</comment>
         <comment xml:lang="de">Sets the maximum voltage at full throttle</comment>
-        <label xml:lang="cs">Maximální napětí</label>
+        <label xml:lang="cs">Maximální napětí (0-255)</label>
         <comment xml:lang="cs">Nastavení maximálního napětí při plně otevřeném ovladači</comment>
       </variable>
       <variable CV="6" item="Vmid" default="48" comment="Range 0-255">
