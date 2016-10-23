@@ -27,6 +27,7 @@ import jmri.server.json.JsonException;
  * @author Randall Wood Copyright (C) 2013
  * @deprecated Use {@link jmri.server.json.sensor.JsonSensorSocketService} instead.
  */
+@Deprecated
 public class JsonSensorServer extends AbstractSensorServer {
 
     private final JmriConnection connection;
