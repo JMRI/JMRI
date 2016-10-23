@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 /**
  * Throw an exception, but include an HTTP error code.
  *
- * @author rhwood
+ * @author Randall Wood Copyright (C) 2015, 2016
  */
 @SuppressWarnings("serial")
 public class JsonException extends Exception {
@@ -28,7 +28,7 @@ public class JsonException extends Exception {
      */
     public static final String MESSAGE = "message"; // NOI18N
 
-    private static final ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper MAPPER = new ObjectMapper();
     private int code = 500;
 
     public JsonException(int i, String s, Throwable t) {
@@ -54,7 +54,7 @@ public class JsonException extends Exception {
     }
 
     public JsonNode getJsonMessage() {
-        ObjectNode root = mapper.createObjectNode();
+        ObjectNode root = MAPPER.createObjectNode();
         root.put(TYPE, ERROR);
         ObjectNode data = root.putObject(DATA);
         data.put(CODE, this.getCode());

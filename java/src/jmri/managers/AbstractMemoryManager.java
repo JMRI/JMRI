@@ -1,6 +1,7 @@
 package jmri.managers;
 
 import java.text.DecimalFormat;
+import javax.annotation.Nonnull;
 import jmri.Manager;
 import jmri.Memory;
 import jmri.MemoryManager;
@@ -15,14 +16,17 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractMemoryManager extends AbstractManager
         implements MemoryManager {
 
+    @Override
     public int getXMLOrder() {
         return Manager.MEMORIES;
     }
 
+    @Override
     public char typeLetter() {
         return 'M';
     }
 
+    @Override
     public Memory provideMemory(String sName) {
         Memory t = getMemory(sName);
         if (t != null) {
@@ -35,6 +39,7 @@ public abstract class AbstractMemoryManager extends AbstractManager
         }
     }
 
+    @Override
     public Memory getMemory(String name) {
         Memory t = getByUserName(name);
         if (t != null) {
@@ -44,14 +49,17 @@ public abstract class AbstractMemoryManager extends AbstractManager
         return getBySystemName(name);
     }
 
+    @Override
     public Memory getBySystemName(String name) {
         return (Memory) _tsys.get(name);
     }
 
+    @Override
     public Memory getByUserName(String key) {
         return (Memory) _tuser.get(key);
     }
 
+    @Override
     public Memory newMemory(String systemName, String userName) {
         if (log.isDebugEnabled()) {
             log.debug("new Memory:"
@@ -70,10 +78,10 @@ public abstract class AbstractMemoryManager extends AbstractManager
             // handle user name from request
             if (userName != null) {
                 // check if already on set in Object, might be inconsistent
-                if ( !userName.equals(s.getUserName())) {
+                if (!userName.equals(s.getUserName())) {
                     // this is a problem
                     log.warn("newMemory request for system name \"{}\" user name \"{}\" found memory with existing user name \"{}\"",
-                                systemName, userName, s.getUserName());
+                            systemName, userName, s.getUserName());
                 } else {
                     s.setUserName(userName);
                 }
@@ -108,6 +116,7 @@ public abstract class AbstractMemoryManager extends AbstractManager
         return s;
     }
 
+    @Override
     public Memory newMemory(String userName) {
         int nextAutoMemoryRef = lastAutoMemoryRef + 1;
         StringBuilder b = new StringBuilder("IM:AUTO:");
@@ -124,10 +133,14 @@ public abstract class AbstractMemoryManager extends AbstractManager
      * Internal method to invoke the factory, after all the logic for returning
      * an existing method has been invoked.
      *
-     * @return never null
+     * @param systemName Memory system name
+     * @param userName   Memory user name
+     * @return a new Memory
      */
+    @Nonnull
     abstract protected Memory createNewMemory(String systemName, String userName);
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameMemory");
     }
