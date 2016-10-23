@@ -51,7 +51,7 @@ Note that Windows installers don't necessarily remove existing library versions.
 - updated JMRI 4.1.4 from version 1.7.6, added jul-to-slf4j
 
 ##### openlcb.jar
-- 0.7.5 from https://sourceforge.net/p/openlcb/svn/HEAD/tree/trunk/prototypes/java/
+- 0.7.6 from https://sourceforge.net/p/openlcb/svn/HEAD/tree/trunk/prototypes/java/
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
