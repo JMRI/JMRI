@@ -80,6 +80,12 @@
       <authorinitials>ALM</authorinitials>
       <revremark>Minor adjustments after creation of Tsunami2 Electric + separate ECO CVs for Light Effects</revremark>
     </revision>
+      <revision>
+         <revnumber>3</revnumber>
+         <date>2016-10-21</date>
+         <authorinitials>MJM</authorinitials>
+         <revremark>Add ID CV 253,254,255,256 and change product ID to values in CV256</revremark>
+      </revision>
   </revhistory>
   <version author="Michael Mosher" version="1" lastUpdated="20150725"/>
   <version author="Alain Le Marchand" version="1.1" lastUpdated="20150726"/>
@@ -89,10 +95,11 @@
   <version author="Michael Mosher" version="1.5" lastUpdated="20160202"/>
   <version author="Michael Mosher" version="2" lastUpdated="20160529"/>
   <version author="Alain Le Marchand" version="2.1" lastUpdated="20160604"/>
+   <version author="Michael Mosher" version="3" lastUpdated="20161021"/>
 <!-- Decoder Model information follows -->
   <decoder>
     <family name="Econami Electric" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Econami Electric decoders">
-      <model model="ECO-100 Electric" numOuts="4" numFns="20" maxMotorCurrent="1A" connector="other" productID="883001" comment="Model 883001">
+      <model model="ECO-100 Electric" numOuts="4" numFns="20" maxMotorCurrent="1A" connector="other" productID="3" comment="Model 883001">
         <versionCV lowVersionID="70"/>
         <output name="3" label="  FX3  "/>
         <output name="4" label="  FX4  "/>
@@ -127,7 +134,7 @@
         </output>
         <size length="27" width="10.5" height="5" units="mm"/>
       </model>
-      <model model="ECO-200 Electric" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="883002" comment="Model 883002">
+      <model model="ECO-200 Electric" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="12" comment="Model 883002">
         <versionCV lowVersionID="70"/>
         <output name="3" label="  FX3  "/>
         <output name="4" label="  FX4  "/>
@@ -162,7 +169,7 @@
         </output>
         <size length="35" width="18" height="6" units="mm"/>
       </model>
-      <model model="ECO-21P Electric" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21pin" productID="883003" comment="Model 883003">
+      <model model="ECO-21P Electric" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21pin" productID="9" comment="Model 883003">
         <versionCV lowVersionID="70"/>
         <output name="3" label="  FX3  "/>
         <output name="4" label="  FX4  "/>
@@ -197,7 +204,7 @@
         </output>
         <size length="30.5" width="15.5" height="6.5" units="mm"/>
       </model>
-      <model model="ECO-400 Electric" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="883005" comment="Model 883005">
+      <model model="ECO-400 Electric" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="6" comment="Model 883005">
         <versionCV lowVersionID="70"/>
         <output name="3" label="  FX3  "/>
         <output name="4" label="  FX4  "/>
@@ -232,7 +239,7 @@
         </output>
         <size length="69" width="30.5" height="14" units="mm"/>
       </model>
-      <model model="ECO-PNP Electric" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="883004" comment="Model 883004">
+      <model model="ECO-PNP Electric" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="15" comment="Model 883004">
         <versionCV lowVersionID="70"/>
         <output name="3" label="  FX3  "/>
         <output name="4" label="  FX4  "/>
@@ -1166,4 +1173,5 @@
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneASCdiesel.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOPaneFnMap.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOlegacyPaneFnMap.xml"/>
+   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOPaneID.xml"/>
 </decoder-config>

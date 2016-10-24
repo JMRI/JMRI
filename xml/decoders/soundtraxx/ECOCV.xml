@@ -781,6 +781,201 @@
           </enumVal>
           <tooltip>&lt;html&gt;Sets the status of automatic effects when in emergency stop.&lt;br&gt; Emergency Stop (ESTP) effects defined on Function Map&lt;/html&gt;</tooltip>
         </variable>
+   <variable CV="253" item="Customer Code" readOnly="yes">
+      <decVal/>
+      <tooltip>Most of the time this will be a value of 1 for SoundTraxx, but if you purchased the decoder installed in a model, the value will be different.</tooltip>
+   </variable>
+   <variable CV="254" item="Sound Type" readOnly="yes">
+      <enumVal>
+         <enumChoice>
+            <choice>Read decoder to get value</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>Steam</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>Diesel</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>Electric</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>UK Steam</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>UK Diesel</choice>
+         </enumChoice>
+      </enumVal>
+   </variable>
+   <variable CV="255" item="Product Revision" readOnly="yes">
+      <decVal/>
+   </variable>
+   <variable CV="256" item="Product ID" readOnly="yes">
+      <enumVal>
+         <enumChoice>
+            <choice>Read decoder to get value</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-100 Steam</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-100 Diesel</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-100 Electric</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-400 Steam</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-400 Diesel</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-400 Electric</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-21P Steam</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-21P Diesel</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-21P Electric</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-200 Steam</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-200 Diesel</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-200 Electric</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-PNP Steam</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-PNP Diesel</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-PNP Electric</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-1100 Steam</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-2200 Steam</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-21PNEM Steam</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-4400 Steam</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-1100 Diesel EMD</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-1100 Diesel GE</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-1100 Diesel ALCO</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-1100 Diesel Baldwin &amp; Others</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-2200 Diesel EMD</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-2200 Diesel GE</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-2200 Diesel ALCO</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-2200 Diesel Baldwin &amp; Others</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-21PNEM Diesel EMD</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-21PNEM Diesel GE</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-21PNEM Diesel ALCO</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-21PNEM Diesel ALCO</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-PNP Diesel EMD</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-PNP Diesel GE</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-PNP Diesel ALCO</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-PNP Diesel Baldwin &amp; Others</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-4400 Diesel EMD</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-4400 Diesel GE</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-4400 Diesel ALCO</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-4400 Diesel Baldwin &amp; Others</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-1100 Electric</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-2200 Electric</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-21PNEM Electric</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>TSU-4400 Electric</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-100 UK Steam</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-100 UK Diesel</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-200 UK Steam</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-200 UK Diesel</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-21PNEM UK Steam</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-21PNEM UK Diesel</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-400 UK Steam</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-400 UK Diesel</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-21PNEM Steam</choice>
+         </enumChoice>
+         <enumChoice>
+            <choice>ECO-21PNEM Diesel</choice>
+         </enumChoice>
+      </enumVal>
+   </variable>
 	  <variable CV="1.257" item="Extended Function Map Headlight" default="0">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
 		<tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
