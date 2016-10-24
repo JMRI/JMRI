@@ -1821,8 +1821,7 @@
         <copy todir="${dist.macosx}/JMRI">
             <!-- use question marks for spaces in filename; Ant will split the list on commas and spaces -->
             <fileset dir="${dist.apps}"
-                     includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/"/>
-            <fileset dir="scripts" includes="COPYING"/>
+                     includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/"/>
         </copy>
         <chmod perm="ugo+rx">
             <fileset dir="${dist.macosx}/JMRI">
