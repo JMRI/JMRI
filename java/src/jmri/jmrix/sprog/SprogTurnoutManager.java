@@ -8,28 +8,26 @@ import jmri.Turnout;
  * System names are "STnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
-    // Ignore FindBugs warnings as there can only be one instance at present
-    public SprogTurnoutManager() {
-        _instance = this;
+    SprogSystemConnectionMemo _memo = null;
+    public SprogTurnoutManager(SprogSystemConnectionMemo memo) {
+        _memo = memo;
     }
 
     public String getSystemPrefix() {
-        return "S";
+        return _memo.getSystemPrefix();
     }
 
     // Sprog-specific methods
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.valueOf(systemName.substring(2)).intValue();
         Turnout t;
-        if (jmri.jmrix.sprog.ActiveFlagCS.isActive()) {
-            t = new SprogCSTurnout(addr);
+        if (_memo.getSprogMode() == SprogConstants.SprogMode.OPS ) {
+            t = new SprogCSTurnout(addr,_memo);
         } else {
-            t = new SprogTurnout(addr);
+            t = new SprogTurnout(addr,_memo);
         }
         t.setUserName(userName);
         return t;
@@ -40,11 +38,7 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
      */
     @Deprecated
     static public SprogTurnoutManager instance() {
-        if (_instance == null) {
-            _instance = new SprogTurnoutManager();
-        }
-        return _instance;
+        return null;
     }
-    static SprogTurnoutManager _instance = null;
 
 }

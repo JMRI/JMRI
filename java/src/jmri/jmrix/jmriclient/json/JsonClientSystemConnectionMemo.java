@@ -5,10 +5,11 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.LightManager;
 import jmri.PowerManager;
-import jmri.jmris.json.JSON;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.jmriclient.json.swing.JsonClientComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
+import jmri.server.json.JSON;
+import jmri.server.json.light.JsonLight;
 import jmri.util.node.NodeIdentity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,7 +71,7 @@ public class JsonClientSystemConnectionMemo extends SystemConnectionMemo {
         InstanceManager.setLightManager(this.getLightManager());
         InstanceManager.store(this.getPowerManager(), PowerManager.class);
         // make initial information requests from server to initialize listeners
-        this.getList(JSON.LIGHTS, this.lightManager);
+        this.getList(JsonLight.LIGHTS, this.lightManager);
         try {
             // setting power to unknown will cause a JSON server to return current power state
             powerManager.setPower(PowerManager.UNKNOWN);

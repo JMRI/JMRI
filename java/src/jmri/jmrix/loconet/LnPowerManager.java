@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  */
 public class LnPowerManager
         extends jmri.managers.AbstractPowerManager
@@ -152,8 +151,8 @@ public class LnPowerManager
         public void run() {
             // wait a little bit to allow power manager to be initialized
             try {
-                // Delay 200 mSec to allow init of traffic controller, listeners.
-                Thread.sleep(200);
+                // Delay 500 mSec to allow init of traffic controller, listeners.
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
             }

@@ -12,8 +12,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003
- * @version	$Revision$
- */
+  */
 public class NetworkDriverAdapter extends NceNetworkPortController {
 
     public NetworkDriverAdapter() {

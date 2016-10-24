@@ -1,6 +1,6 @@
 package jmri.jmrix.lenz;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 /**
  * Tests for the {@link jmri.jmrix.lenz.XNetLight} class.

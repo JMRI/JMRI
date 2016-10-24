@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import jmri.Application;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
 import jmri.UserPreferencesManager;
@@ -122,17 +123,25 @@ public class AppConfigBase extends JmriPanel {
 
     public void saveContents() {
         // remove old prefs that are registered in ConfigManager
-        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).removePrefItems();
+        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            cm.removePrefItems();
+        }
         // put the new GUI managedPreferences on the persistance list
         this.getPreferencesPanels().values().stream().forEach((panel) -> {
             this.registerWithConfigureManager(panel);
         });
-        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).storePrefs();
+        if (cm != null) {
+            cm.storePrefs();
+        }
     }
 
     private void registerWithConfigureManager(PreferencesPanel panel) {
         if (panel.isPersistant()) {
-            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(panel);
+            ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+            if (cm != null) {
+                cm.registerPref(panel);
+            }
         }
         if (panel instanceof ManagingPreferencesPanel) {
             log.debug("Iterating over managed panels within {}/{}", panel.getPreferencesItemText(), panel.getTabbedPreferencesTitle());

@@ -1,7 +1,7 @@
 package jmri.web.servlet.frameimage;
 
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.URL;
+import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.URL;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -31,10 +31,10 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
-import jmri.jmris.json.JSON;
-import jmri.jmris.json.JsonUtil;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
+import jmri.server.json.JSON;
+import jmri.server.json.util.JsonUtilHttpService;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
 import jmri.web.server.WebServerPreferences;
@@ -78,9 +78,7 @@ public class JmriJFrameServlet extends HttpServlet {
             log.debug("Invoke directly on MouseListener, at {},{}", x, y);
             sendClickSequence((MouseListener) c, c, x, y);
         } else if (c instanceof jmri.jmrit.display.MultiSensorIcon) {
-            if (log.isDebugEnabled()) {
-                log.debug("Invoke Clicked on MultiSensorIcon");
-            }
+            log.debug("Invoke Clicked on MultiSensorIcon");
             MouseEvent e = new MouseEvent(c,
                     MouseEvent.MOUSE_CLICKED,
                     0, // time
@@ -91,9 +89,7 @@ public class JmriJFrameServlet extends HttpServlet {
             );
             ((Positionable) c).doMouseClicked(e);
         } else if (Positionable.class.isAssignableFrom(c.getClass())) {
-            if (log.isDebugEnabled()) {
-                log.debug("Invoke Pressed, Released and Clicked on Positionable");
-            }
+            log.debug("Invoke Pressed, Released and Clicked on Positionable");
             MouseEvent e = new MouseEvent(c,
                     MouseEvent.MOUSE_PRESSED,
                     0, // time
@@ -349,9 +345,10 @@ public class JmriJFrameServlet extends HttpServlet {
         if ("json".equals(format)) { // NOI18N
             ArrayNode root = mapper.createArrayNode();
             HashSet<JFrame> frames = new HashSet<>();
+            JsonUtilHttpService service = new JsonUtilHttpService(new ObjectMapper());
             JmriJFrame.getFrameList().stream().forEach((frame) -> {
                 if (usePanels && frame instanceof Editor) {
-                    ObjectNode node = JsonUtil.getPanel(request.getLocale(), (Editor) frame, "xml"); // NOI18N
+                    ObjectNode node = service.getPanel(request.getLocale(), (Editor) frame, JSON.XML);
                     if (node != null) {
                         root.add(node);
                         frames.add(((Editor) frame).getTargetFrame());
@@ -443,9 +440,7 @@ public class JmriJFrameServlet extends HttpServlet {
                 } else {
                     coords[0] = key;
                 }
-                if (log.isDebugEnabled()) {
-                    log.info("Setting click coords to " + coords[0]);
-                }
+                log.debug("Setting click coords to {}", coords[0]);
                 parameters.put("coords", coords); // NOI18N
             } else {
                 parameters.put(key, value);

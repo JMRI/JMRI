@@ -5,8 +5,7 @@
  *
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- */
+  */
 package jmri.jmrix.dccpp;
 
 import jmri.JmriException;

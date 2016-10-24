@@ -28,7 +28,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreeNode;
-import org.jdom2.*;
 import jmri.*;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.decoderdefn.DecoderFile;
@@ -52,7 +51,7 @@ import jmri.jmrit.symbolicprog.tabbedframe.PaneServiceProgFrame;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriPanel;
-import org.jdom2.Element;
+import org.jdom2.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -145,14 +144,14 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                         p = new PaneProgFrame(decoderFile, re,
                                 title, "programmers" + File.separator + "Comprehensive.xml", // NOI18N
                                 null, false) {
-                                    protected JPanel getModePane() {
-                                        return null;
-                                    }
-                                };
+                            protected JPanel getModePane() {
+                                return null;
+                            }
+                        };
                     } else {
                         p = new PaneServiceProgFrame(decoderFile, re,
-                            title, "programmers" + File.separator + "Comprehensive.xml", // NOI18N
-                            modePane.getProgrammer());
+                                title, "programmers" + File.separator + "Comprehensive.xml", // NOI18N
+                                modePane.getProgrammer());
                     }
                     p.pack();
                     p.setVisible(true);
@@ -163,9 +162,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                     log.debug("openNewLoco");
                     // find the decoderFile object
                     DecoderFile decoderFile = DecoderIndexFile.instance().fileFromTitle(selectedDecoderType());
-                    if (log.isDebugEnabled()) {
-                        log.debug("decoder file: " + decoderFile.getFilename()); // NOI18N
-                    }
+                    log.debug("decoder file: {}", decoderFile.getFilename()); // NOI18N
                     if (rosterIdField.getText().equals(SymbolicProgBundle.getMessage("LabelNewDecoder"))) { // NOI18N
                         re = new RosterEntry();
                         re.setDecoderFamily(decoderFile.getFamily());
@@ -174,7 +171,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                         //re.writeFile(cvModel, iCvModel, variableModel );
                         // note that we're leaving the filename null
                         // add the new roster entry to the in-memory roster
-                        Roster.instance().addEntry(re);
+                        Roster.getDefault().addEntry(re);
                     } else {
                         try {
                             saveRosterEntry();
@@ -288,9 +285,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
             f.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
 
             f.pack();
-            if (log.isDebugEnabled()) {
-                log.debug("Tab-Programmer setup created"); // NOI18N
-            }
+            log.debug("Tab-Programmer setup created"); // NOI18N
         } else {
             re = null;
             combinedLocoSelTree.resetSelections();
@@ -435,7 +430,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
             f.repaint();
             f.pack();
         }
-        if (jmri.InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) != null
+        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) != null
                 && jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).isGlobalProgrammerAvailable()) {
             this.mProgrammer = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
         }
@@ -498,9 +493,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
             }
             // for all "pane" elements in the programmer
             List<Element> paneList = base.getChildren("pane"); // NOI18N
-            if (log.isDebugEnabled()) {
-                log.debug("will process " + paneList.size() + " pane definitions"); // NOI18N
-            }
+            log.debug("will process {} pane definitions", paneList.size()); // NOI18N
             String name = jmri.util.jdom.LocaleSelector.getAttribute(paneList.get(0), "name");
             progPane = new ThisProgPane(this, name, paneList.get(0), cvModel, iCvModel, variableModel, modelElem);
 
@@ -525,10 +518,12 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
 
     void updateDccAddress() {
 
+        // wrapped in isDebugEnabled test to prevent overhead of assembling message
         if (log.isDebugEnabled()) {
-            log.debug("updateDccAddress: short " + (primaryAddr == null ? "<null>" : primaryAddr.getValueString()) + // NOI18N
-                    " long " + (extendAddr == null ? "<null>" : extendAddr.getValueString()) + // NOI18N
-                    " mode " + (addMode == null ? "<null>" : addMode.getValueString())); // NOI18N
+            log.debug("updateDccAddress: short {} long {} mode {}",
+                    (primaryAddr == null ? "<null>" : primaryAddr.getValueString()),
+                    (extendAddr == null ? "<null>" : extendAddr.getValueString()),
+                    (addMode == null ? "<null>" : addMode.getValueString()));
         }
         new DccAddressVarHandler(primaryAddr, extendAddr, addMode) {
             protected void doPrimary() {
@@ -567,7 +562,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
      */
     boolean checkDuplicate() {
         // check its not a duplicate
-        List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, rosterIdField.getText());
+        List<RosterEntry> l = Roster.getDefault().matchingList(null, null, null, null, null, null, rosterIdField.getText());
         boolean oops = false;
         for (int i = 0; i < l.size(); i++) {
             if (re != l.get(i)) {
@@ -598,7 +593,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
             re.setDecoderFamily(decoderFile.getFamily());
             re.setDecoderModel(decoderFile.getModel());
             re.setId(rosterIdField.getText());
-            Roster.instance().addEntry(re);
+            Roster.getDefault().addEntry(re);
         }
 
         updateDccAddress();
@@ -619,7 +614,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
         }
         // and store an updated roster file
         FileUtil.createDirectory(FileUtil.getUserFilesPath());
-        Roster.writeRosterFile();
+        Roster.getDefault().writeRoster();
 
         // show OK status
         statusLabel.setText(java.text.MessageFormat.format(

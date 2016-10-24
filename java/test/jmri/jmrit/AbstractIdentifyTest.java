@@ -1,6 +1,6 @@
 package jmri.jmrit;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -12,8 +12,7 @@ import jmri.Programmer;
  * define a local subclass here for the tests.
  *
  * @author	Bob Jacobsen Copyright 2001
- * @version	$Revision$
- */
+  */
 public class AbstractIdentifyTest extends TestCase {
 
     public void testFullSequence() {

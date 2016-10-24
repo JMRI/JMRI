@@ -62,9 +62,9 @@
 
         <li>The file <em>python.properties</em> to configure the
         Jython interpreter</li>
-      </ul>
+      </ul><a name="linux" id="linux"></a>
 
-      <a name="linux"></a><h2>Linux</h2>
+      <h2>Linux</h2>
 
       <p>JMRI distributions for Linux contain bash shell scripts
       for each of the main applications: DecoderPro, PanelPro, etc.
@@ -107,6 +107,12 @@
         itself to the console. On OS X, this is always on, and
         debugging output is available through the Console.app.</dd>
 
+        <dt><code>-D<em>PROPERTY</em></code></dt>
+
+        <dd>Pass a Java System Property to the Java Virtual
+        Machine. This will be available to the JMRI application
+        while running.</dd>
+
         <dt><code>-J<em>OPTION</em></code></dt>
 
         <dd>Pass a complete Java option to the Java Virtual
@@ -146,6 +152,11 @@
             <dd><code>${HOME}/Library/Preferences/JMRI</code></dd>
           </dl>
         </dd>
+
+        <dt><code>--help</code></dt>
+
+        <dd>Print a consise list of all options the launcher
+        handles.</dd>
       </dl>
 
       <p>If you need to set one or more of these parameters
@@ -195,7 +206,7 @@
       script in the Contents/MacOSX directory what does the actual
       startup. This is the same script as used for Linux, see
       please see <a href="#linux">that section</a> for details.
-      <a name="windows"></a>
+      <a name="windows" id="windows"></a>
 
       <h2>Windows</h2>Upto and including JMRI version 2.3.2, the
       Windows .bat files just create a fixed java command and
@@ -490,63 +501,53 @@
         <dt>Icon</dt>
 
         <dd>"C:\Program Files\JMRI\decpro5.ico"</dd>
-      </dl>
+      </dl><a name="old_DecoderPro" id="old_DecoderPro"></a>
 
-      <a name="old_DecoderPro"></a><h4>Retrieving
-      "legacy" DecoderPro from versions prior to 4.0.x</h4>
+      <h4>Retrieving "legacy" DecoderPro from versions prior to
+      4.0.x</h4>
 
-      <p>The "legacy"
-      DecoderPro that was existing prior to version 4.0.x has been
-      removed from the distribution package and the former
-      "DecoderPro 3" has been promoted to be the only available
-      DecoderPro version.</p>
+      <p>The "legacy" DecoderPro that was existing prior to version
+      4.0.x has been removed from the distribution package and the
+      former "DecoderPro 3" has been promoted to be the only
+      available DecoderPro version.</p>
 
-      <p>If you
-      absolutely cannot use the new DecoderPro user interface
-      (roster view), we suggest one of the following
+      <p>If you absolutely cannot use the new DecoderPro user
+      interface (roster view), we suggest one of the following
       methods:</p>
 
       <ol>
-        <li><b>Using
-        PanelPro with script</b>: With the exception of a different
-        icon and different fixed buttons on the main window,
-        PanelPro has an identical user interface to the legacy
-        DecoderPro.</li>
+        <li><b>Using PanelPro with script</b>: With the exception
+        of a different icon and different fixed buttons on the main
+        window, PanelPro has an identical user interface to the
+        legacy DecoderPro.</li>
 
         <li style="list-style: none">
           <ul>
-            <li>You
-            can add the 3 fixed buttons (Open Roster, Service Mode,
-            Operations Mode) that used to be on the legacy
-            DecoderPro by adding a script at start-up.</li>
+            <li>You can add the 3 fixed buttons (Open Roster,
+            Service Mode, Operations Mode) that used to be on the
+            legacy DecoderPro by adding a script at start-up.</li>
 
-            <li>Go to
-            Edit &gt; Preferences &gt; Start-up &gt; Scripts &gt;
-            Add Script. Select file "C:\Program
+            <li>Go to Edit &gt; Preferences &gt; Start-up &gt;
+            Scripts &gt; Add Script. Select file "C:\Program
             Files\JMRI\jython\jython/MakeOriginalDecoderPro.py"</li>
 
-            <li>Then,
-            save and restart.</li>
+            <li>Then, save and restart.</li>
           </ul>
         </li>
 
-        <li><b>Using
-        PanelPro with buttons</b>:</li>
+        <li><b>Using PanelPro with buttons</b>:</li>
 
         <li style="list-style: none">
           <ul>
-            <li>You
-            can add several fixed buttons of your choice on the
-            PanelPro interface.</li>
+            <li>You can add several fixed buttons of your choice on
+            the PanelPro interface.</li>
 
-            <li>Go to
-            Edit &gt; Preferences &gt; Start-up &gt; Buttons &gt;
-            Add Button. Select the action of your choice. Repeat
-            for as many buttons as you wish.</li>
+            <li>Go to Edit &gt; Preferences &gt; Start-up &gt;
+            Buttons &gt; Add Button. Select the action of your
+            choice. Repeat for as many buttons as you wish.</li>
 
-            <li>For
-            same buttons as on legacy DecoderPro, select "Open
-            Roster", "DecoderPro service programmer" and
+            <li>For same buttons as on legacy DecoderPro, select
+            "Open Roster", "DecoderPro service programmer" and
             "DecoderPro ops-mode programmer"</li>
 
             <li>Then, save and restart.</li>

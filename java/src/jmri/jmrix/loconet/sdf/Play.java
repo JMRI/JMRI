@@ -7,7 +7,6 @@ import jmri.util.StringUtil;
  * Implement the PLAY macro from the Digitrax sound definition language
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
  */
 public class Play extends SdfMacro {
 

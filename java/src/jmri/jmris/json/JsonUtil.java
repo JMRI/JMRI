@@ -1,7 +1,27 @@
 package jmri.jmris.json;
 
-import static jmri.jmris.json.JSON.*;
 import static jmri.jmrit.operations.trains.TrainCommon.splitString;
+import static jmri.server.json.JSON.*;
+import static jmri.server.json.JsonException.CODE;
+import static jmri.server.json.JsonException.ERROR;
+import static jmri.server.json.JsonException.MESSAGE;
+import static jmri.server.json.consist.JsonConsist.CONSIST;
+import static jmri.server.json.light.JsonLight.LIGHT;
+import static jmri.server.json.memory.JsonMemory.MEMORY;
+import static jmri.server.json.operations.JsonOperations.*;
+import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
+import static jmri.server.json.reporter.JsonReporter.LAST_REPORT;
+import static jmri.server.json.reporter.JsonReporter.REPORT;
+import static jmri.server.json.reporter.JsonReporter.REPORTER;
+import static jmri.server.json.roster.JsonRoster.ROSTER;
+import static jmri.server.json.roster.JsonRoster.ROSTER_ENTRY;
+import static jmri.server.json.roster.JsonRoster.ROSTER_GROUP;
+import static jmri.server.json.roster.JsonRoster.ROSTER_GROUPS;
+import static jmri.server.json.sensor.JsonSensor.SENSOR;
+import static jmri.server.json.signalHead.JsonSignalHead.SIGNAL_HEAD;
+import static jmri.server.json.signalMast.JsonSignalMast.SIGNAL_MAST;
+import static jmri.server.json.time.JsonTimeServiceFactory.TIME;
+import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUT;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -54,6 +74,7 @@ import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.profile.ProfileManager;
 import jmri.server.json.JsonException;
+import jmri.server.json.util.JsonUtilHttpService;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.node.NodeIdentity;
@@ -70,8 +91,10 @@ import org.slf4j.LoggerFactory;
  * implementations of the {@code do*} methods in
  * {@link jmri.server.json.JsonHttpService}.
  *
- * @author rhwood
+ * @author Randall Wood
+ * @deprecated since 4.5.6
  */
+@Deprecated
 public class JsonUtil {
 
     private static final ObjectMapper mapper = new ObjectMapper();
@@ -180,6 +203,7 @@ public class JsonUtil {
      * @param data    The JSON representation of the consist. See
      * {@link #getConsist(Locale, jmri.DccLocoAddress) } for the
      *                JSON structure.
+     * @throws jmri.server.json.JsonException if no consist manager is available
      */
     static public void putConsist(Locale locale, DccLocoAddress address, JsonNode data) throws JsonException {
         try {
@@ -198,6 +222,7 @@ public class JsonUtil {
      * @param locale The locale to throw exceptions in.
      * @return JSON array of consists as in the structure returned by
      * {@link #getConsist(Locale, jmri.DccLocoAddress) }
+     * @throws jmri.server.json.JsonException if no ConsistManager is available
      */
     static public JsonNode getConsists(Locale locale) throws JsonException {
         try {
@@ -232,6 +257,7 @@ public class JsonUtil {
      * @param locale  the locale to throw exceptions in
      * @param address the consist address
      * @param data    the consist as a JsonObject
+     * @throws jmri.server.json.JsonException if no ConsistManager is available
      */
     static public void setConsist(Locale locale, DccLocoAddress address, JsonNode data) throws JsonException {
         try {
@@ -244,7 +270,7 @@ public class JsonUtil {
                     consist.setConsistType(data.path(TYPE).asInt());
                 }
                 if (data.path(ENGINES).isArray()) {
-                    ArrayList<DccLocoAddress> engines = new ArrayList<DccLocoAddress>();
+                    ArrayList<DccLocoAddress> engines = new ArrayList<>();
                     // add every engine in
                     for (JsonNode engine : data.path(ENGINES)) {
                         DccLocoAddress engineAddress = new DccLocoAddress(engine.path(ADDRESS).asInt(), engine.path(IS_LONG_ADDRESS).asBoolean());
@@ -273,6 +299,14 @@ public class JsonUtil {
         }
     }
 
+    /**
+     *
+     * @param locale the client's locale
+     * @param id     the engine id
+     * @return the engine in JSON
+     * @deprecated since 4.5.6
+     */
+    @Deprecated
     static public JsonNode getEngine(Locale locale, String id) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ENGINE);
@@ -280,6 +314,13 @@ public class JsonUtil {
         return root;
     }
 
+    /**
+     *
+     * @param locale the client's locale
+     * @return the list of engines
+     * @deprecated since 4.5.6
+     */
+    @Deprecated
     static public JsonNode getEngines(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         for (RollingStock rs : EngineManager.instance().getByIdList()) {
@@ -320,7 +361,7 @@ public class JsonUtil {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", LIGHT, name));
         }
     }
-    
+
     /*
      * deprecated in favor of the implementations of the {@code do*} methods in
      * {@link jmri.server.json.JsonHttpService}.
@@ -385,6 +426,15 @@ public class JsonUtil {
         }
     }
 
+    /**
+     *
+     * @param locale the client's locale
+     * @param id     the location ID
+     * @return the JSON representation of a Location
+     * @throws JsonException if the location cannot be located by ID
+     * @deprecated since 4.5.6
+     */
+    @Deprecated
     static public JsonNode getLocation(Locale locale, String id) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, LOCATION);
@@ -402,6 +452,14 @@ public class JsonUtil {
         return root;
     }
 
+    /**
+     *
+     * @param locale the client's locale
+     * @return a list of Locations
+     * @throws JsonException if thrown while creating a location
+     * @deprecated since 4.5.6
+     */
+    @Deprecated
     static public JsonNode getLocations(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         for (Location location : LocationManager.instance().getLocationsByIdList()) {
@@ -494,6 +552,15 @@ public class JsonUtil {
         }
     }
 
+    /**
+     *
+     * @param locale The client's Locale.
+     * @param name   The metadata element to get.
+     * @return JSON metadata element.
+     * @throws JsonException if name is not a recognized metadata element.
+     * @deprecated since 4.5.2
+     */
+    @Deprecated
     static public JsonNode getMetadata(Locale locale, String name) throws JsonException {
         String metadata = Metadata.getBySystemName(name);
         ObjectNode root;
@@ -510,6 +577,15 @@ public class JsonUtil {
         return root;
     }
 
+    /**
+     *
+     * @param locale The client's Locale.
+     * @return Array of JSON metadata elements.
+     * @throws JsonException if thrown by
+     *                       {@link #getMetadata(java.util.Locale, java.lang.String)}.
+     * @deprecated since 4.5.2
+     */
+    @Deprecated
     static public JsonNode getMetadata(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         List<String> names = Metadata.getSystemNameList();
@@ -685,13 +761,14 @@ public class JsonUtil {
      * folder of the JMRI server. It is expected that clients will fill in the
      * server IP address and port as they know it to be.
      *
-     * @param id The id of an entry in the roster.
+     * @param locale the client Locale
+     * @param id     The id of an entry in the roster.
      * @return a roster entry in JSON notation
      * @deprecated since 4.3.5
      */
     @Deprecated
     static public JsonNode getRosterEntry(Locale locale, String id) {
-        return JsonUtil.getRosterEntry(locale, Roster.instance().getEntryForId(id));
+        return JsonUtil.getRosterEntry(locale, Roster.getDefault().getEntryForId(id));
     }
 
     /**
@@ -701,7 +778,8 @@ public class JsonUtil {
      * folder of the JMRI server. It is expected that clients will fill in the
      * server IP address and port as they know it to be.
      *
-     * @param re A RosterEntry that may or may not be in the roster.
+     * @param locale The client Locale
+     * @param re     A RosterEntry that may or may not be in the roster.
      * @return a roster entry in JSON notation
      * @deprecated since 4.3.5
      */
@@ -763,7 +841,7 @@ public class JsonUtil {
         String decoderFamily = (!data.path(DECODER_FAMILY).isMissingNode()) ? data.path(DECODER_FAMILY).asText() : null;
         String id = (!data.path(NAME).isMissingNode()) ? data.path(NAME).asText() : null;
         ArrayNode root = mapper.createArrayNode();
-        for (RosterEntry re : Roster.instance().getEntriesMatchingCriteria(roadName, roadNumber, dccAddress, mfg, decoderModel, decoderFamily, id, group)) {
+        for (RosterEntry re : Roster.getDefault().getEntriesMatchingCriteria(roadName, roadNumber, dccAddress, mfg, decoderModel, decoderFamily, id, group)) {
             root.add(getRosterEntry(locale, re.getId()));
         }
         return root;
@@ -779,7 +857,7 @@ public class JsonUtil {
     static public JsonNode getRosterGroups(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         root.add(getRosterGroup(locale, Roster.ALLENTRIES));
-        for (String name : Roster.instance().getRosterGroupList()) {
+        for (String name : Roster.getDefault().getRosterGroupList()) {
             root.add(getRosterGroup(locale, name));
         }
         return root;
@@ -798,7 +876,7 @@ public class JsonUtil {
         root.put(TYPE, ROSTER_GROUP);
         ObjectNode data = root.putObject(DATA);
         data.put(NAME, name);
-        data.put(LENGTH, Roster.instance().getEntriesInGroup(name).size());
+        data.put(LENGTH, Roster.getDefault().getEntriesInGroup(name).size());
         return root;
     }
 
@@ -856,6 +934,8 @@ public class JsonUtil {
      * @param locale The locale to throw exceptions in
      * @param name   The name of the route
      * @param data   A JsonNode containing route attributes to set
+     * @throws jmri.server.json.JsonException if the named route does not exist
+     *                                        or the state is invalid
      * @see jmri.Route#TOGGLE
      */
     @Deprecated
@@ -1100,6 +1180,14 @@ public class JsonUtil {
         }
     }
 
+    /**
+     *
+     * @param locale the client's Locale.
+     * @return the JSON networkServices message.
+     * @deprecated since 4.5.2; use
+     * {@link jmri.server.json.util.JsonUtilHttpService#getSystemConnections(java.util.Locale)}.
+     */
+    @Deprecated
     static public JsonNode getSystemConnections(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         ArrayList<String> prefixes = new ArrayList<String>();
@@ -1232,6 +1320,8 @@ public class JsonUtil {
      * @param locale The locale to throw exceptions in.
      * @param id     The id of the train.
      * @param data   Train data to change.
+     * @throws jmri.server.json.JsonException if the train cannot move to the
+     *                                        location in data.
      */
     static public void setTrain(Locale locale, String id, JsonNode data) throws JsonException {
         Train train = TrainManager.instance().getTrainById(id);
@@ -1330,6 +1420,15 @@ public class JsonUtil {
         }
     }
 
+    /**
+     *
+     * @param locale the client's Locale.
+     * @param type   the requested type.
+     * @return JSON error message.
+     * @deprecated since 4.5.2; throw a {@link jmri.server.json.JsonException}
+     * instead.
+     */
+    @Deprecated
     static public JsonNode getUnknown(Locale locale, String type) {
         return handleError(404, Bundle.getMessage(locale, "ErrorUnknownType", type));
     }
@@ -1373,6 +1472,16 @@ public class JsonUtil {
         return rlan;  //return array of routeLocations
     }
 
+    /**
+     *
+     * @param locale    the client's Locale
+     * @param heartbeat seconds before which no communications from client will
+     *                  cause connection to be broken
+     * @return a JSON hello message
+     * @deprecated since 4.5.2; use
+     * {@link jmri.server.json.util.JsonUtilHttpService#getHello(java.util.Locale, int)}.
+     */
+    @Deprecated
     static public JsonNode getHello(Locale locale, int heartbeat) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, HELLO);
@@ -1386,6 +1495,14 @@ public class JsonUtil {
         return root;
     }
 
+    /**
+     *
+     * @param locale the client's Locale.
+     * @return the JSON networkServices message.
+     * @deprecated since 4.5.2; use
+     * {@link jmri.server.json.util.JsonUtilHttpService#getNetworkServices(java.util.Locale)}.
+     */
+    @Deprecated
     static public JsonNode getNetworkServices(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         for (ZeroConfService service : ZeroConfService.allServices()) {
@@ -1404,6 +1521,14 @@ public class JsonUtil {
         return root;
     }
 
+    /**
+     *
+     * @param locale the client's Locale
+     * @return the JSON node message
+     * @deprecated since 4.5.2; use
+     * {@link jmri.server.json.util.JsonUtilHttpService#getNode(java.util.Locale)}.
+     */
+    @Deprecated
     public static JsonNode getNode(Locale locale) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, NODE);
@@ -1421,6 +1546,9 @@ public class JsonUtil {
      * JSON errors should be handled by throwing a
      * {@link jmri.server.json.JsonException}.
      *
+     * @param code the error value
+     * @param message the error message
+     * @return a JSON encoded error
      * @deprecated
      */
     @Deprecated
@@ -1440,16 +1568,15 @@ public class JsonUtil {
      * Type may be <code>L</code> for long or <code>S</code> for short. If the
      * type is not specified, type is assumed to be short.
      *
+     * @param address the address
      * @return The DccLocoAddress for address.
+     * @deprecated since 4.5.3; use
+     * {@link jmri.server.json.util.JsonUtilHttpService#addressForString(java.lang.String)}
+     * instead.
      */
+    @Deprecated
     static public DccLocoAddress addressForString(String address) {
-        String[] components = address.split("[()]");
-        int number = Integer.parseInt(components[0]);
-        boolean isLong = false;
-        if (components.length > 1 && "L".equals(components[1].toUpperCase())) {
-            isLong = true;
-        }
-        return new DccLocoAddress(number, isLong);
+        return JsonUtilHttpService.addressForString(address);
     }
 
     static public ObjectNode getCar(Car car) {

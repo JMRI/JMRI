@@ -228,7 +228,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
 
         // Add a fourth location but put it in the second spot and check that locations are in the expected order
         Location l4 = new Location("TESTLOCATIONID4", "TESTLOCATIONNAME4");
-        rladd = r1.addLocation(l4, 1);
+        rladd = r1.addLocation(l4, 2);
 
         rl1test = r1.getLastLocationByName("TESTLOCATIONNAME4");
         Assert.assertEquals("Add Location 4", "TESTLOCATIONNAME4", rl1test.getName());
@@ -498,7 +498,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
         Train t = TrainManager.instance().newTrain("TestRouteStatusTrain");
         t.setRoute(r);
         // note that the status strings are defined in JmritOperationsRoutesBundle.properties
-        Assert.assertEquals("Route status okay", "Okay", r.getStatus());
+        Assert.assertEquals("Route status okay", "OK", r.getStatus());
     }
 
     /**

@@ -35,7 +35,7 @@ public class EditableList<E> extends JList<E> implements CellEditorListener {
     private PropertyChangeListener editorRemover = null;
 
     public EditableList() {
-        super(new DefaultEditableListModel<E>());
+        super(new DefaultEditableListModel<>());
         init();
     }
 
@@ -62,7 +62,7 @@ public class EditableList<E> extends JList<E> implements CellEditorListener {
     }
 
     public boolean isEditing() {
-        return (editorComp == null) ? false : true;
+        return (editorComp != null);
     }
 
     public Component getEditorComponent() {

@@ -16,7 +16,7 @@ package jmri.jmrit.vsdecoder;
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
+ * 
  */
 // JMRI and Java stuff
 import java.awt.event.ActionEvent;

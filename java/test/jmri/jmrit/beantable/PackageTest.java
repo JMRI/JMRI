@@ -1,17 +1,16 @@
 package jmri.jmrit.beantable;
 
 import javax.swing.JFrame;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for classes in the jmri.jmrit.beantable package
  *
  * @author	Bob Jacobsen Copyright 2004
- * @version	$Revision$
- */
+  */
 public class PackageTest extends TestCase {
 
     public void testCreate() {
@@ -45,16 +44,18 @@ public class PackageTest extends TestCase {
         suite.addTest(BlockTableActionTest.suite());
         suite.addTest(LogixTableActionTest.suite());
         suite.addTest(LRouteTableActionTest.suite());
+        suite.addTest(OBlockTableActionTest.suite());
         suite.addTest(RouteTableActionTest.suite());
         suite.addTest(SensorTableWindowTest.suite());
         suite.addTest(SignalHeadTableActionTest.suite());
         suite.addTest(TurnoutTableWindowTest.suite());
-        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
 
         suite.addTest(jmri.jmrit.beantable.signalmast.PackageTest.suite());
         suite.addTest(jmri.jmrit.beantable.sensor.PackageTest.suite());
         suite.addTest(jmri.jmrit.beantable.oblock.PackageTest.suite());
         suite.addTest(jmri.jmrit.beantable.beanedit.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.beantable.usermessagepreferences.PackageTest.class));
         return suite;
     }
 

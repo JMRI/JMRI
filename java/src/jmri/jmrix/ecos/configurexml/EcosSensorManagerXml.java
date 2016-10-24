@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision$
  */
 public class EcosSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 

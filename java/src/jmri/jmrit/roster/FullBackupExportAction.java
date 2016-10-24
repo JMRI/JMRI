@@ -48,7 +48,7 @@ public class FullBackupExportAction
     }
 
     public void actionPerformed(ActionEvent e) {
-        Roster roster = Roster.instance();
+        Roster roster = Roster.getDefault();
 
         ZipOutputStream zipper = null;
 

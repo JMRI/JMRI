@@ -2,7 +2,6 @@ package jmri.jmrit.roster.swing;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
 import javax.swing.Icon;
 import javax.swing.WindowConstants;
 import jmri.InstanceManager;
@@ -37,7 +36,7 @@ public class RosterFrameAction extends JmriAbstractAction {
      * configured in user preferences
      */
     public RosterFrameAction() {
-        super(ResourceBundle.getBundle("apps.ActionListBundle").getString("jmri.jmrit.roster.swing.RosterFrameAction"));
+        super(Bundle.getMessage("RosterFrameAction")); // NOI18N
         allowQuit = false;
     }
 

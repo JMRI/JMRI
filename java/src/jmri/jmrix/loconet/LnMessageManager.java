@@ -11,7 +11,6 @@ package jmri.jmrix.loconet;
  * Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  */
 public class LnMessageManager implements LocoNetListener {
 

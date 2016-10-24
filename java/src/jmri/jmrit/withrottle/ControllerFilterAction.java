@@ -13,7 +13,7 @@ public class ControllerFilterAction extends AbstractAction {
 
     public ControllerFilterAction(String name) {
         super(name);
-        if ((jmri.InstanceManager.getOptionalDefault(jmri.TurnoutManager.class) == null) && (jmri.InstanceManager.getOptionalDefault(jmri.RouteManager.class) == null)) {
+        if ((jmri.InstanceManager.getNullableDefault(jmri.TurnoutManager.class) == null) && (jmri.InstanceManager.getNullableDefault(jmri.RouteManager.class) == null)) {
             setEnabled(false);
         }
     }

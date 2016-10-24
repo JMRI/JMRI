@@ -5,7 +5,7 @@ import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.ScheduleManager;
+import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteManager;
@@ -109,7 +109,7 @@ public final class OperationsManager {
      * @param shutDownTask The new ShutDownTask or null
      */
     public void setShutDownTask(ShutDownTask shutDownTask) {
-        if (InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+        if (InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
             if (this.shutDownTask != null) {
                 InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
             }

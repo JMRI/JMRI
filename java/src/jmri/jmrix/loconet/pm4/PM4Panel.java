@@ -26,8 +26,7 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2004, 2007, 2010
- * @version	$Revision$
- */
+  */
 public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
     /**
@@ -103,7 +102,7 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     }
 
     public String getTitle() {
-        return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemPM4Programmer"));
+        return getTitle(Bundle.getMessage("MenuItemPM4Programmer"));
     }
 
     void setSpeedFromDisplay(int offset, JComboBox<String> box) {

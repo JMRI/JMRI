@@ -11,17 +11,18 @@ import jmri.managers.DefaultProgrammerManager;
  *
  * @see jmri.ProgrammerManager
  * @author	Andrew crosland Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public class SprogProgrammerManager extends DefaultProgrammerManager {
 
     //private Programmer localProgrammer;
     private SprogMode mode;
+    private SprogSystemConnectionMemo adapterMemo = null;
 
     public SprogProgrammerManager(Programmer serviceModeProgrammer, SprogSystemConnectionMemo memo) {
         super(serviceModeProgrammer, memo);
         //localProgrammer = serviceModeProgrammer;
         this.mode = SprogMode.SERVICE;
+        adapterMemo = memo;
     }
 
     public SprogProgrammerManager(Programmer serviceModeProgrammer, SprogMode mode, SprogSystemConnectionMemo memo) {
@@ -52,7 +53,7 @@ public class SprogProgrammerManager extends DefaultProgrammerManager {
     }
 
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
-        return new SprogOpsModeProgrammer(pAddress, pLongAddress);
+        return new SprogOpsModeProgrammer(pAddress, pLongAddress,adapterMemo);
     }
 
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {

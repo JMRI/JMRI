@@ -10,8 +10,7 @@ import javax.swing.JTextField;
  * This uses the {@link LIUSBServerAdapter} class to do the actual connection.
  *
  * @author	Paul Bender Copyright (C) 2009
- * @version	$Revision$
- *
+  *
  * @see LIUSBServerAdapter
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {

@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * route.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2013
- * @version $Revision$
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 
@@ -166,6 +165,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 
     /**
      * Set the train length departing this location when building a train
+     * @param length The train's current length.
      *
      */
     public void setTrainLength(int length) {
@@ -182,6 +182,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 
     /**
      * Set the train weight departing this location when building a train
+     * @param weight The train's current weight.
      *
      */
     public void setTrainWeight(int weight) {
@@ -260,7 +261,8 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     }
 
     /**
-     * Set the number of moves that this location has when building a train
+     * Set the number of moves completed when building a train
+     * @param moves An integer representing the amount of moves completed.
      *
      */
     public void setCarMoves(int moves) {
@@ -423,7 +425,6 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
      * @param e Consist XML element
      */
     public RouteLocation(Element e) {
-        // if (log.isDebugEnabled()) log.debug("ctor from element "+e);
         Attribute a;
         if ((a = e.getAttribute(Xml.ID)) != null) {
             _id = a.getValue();

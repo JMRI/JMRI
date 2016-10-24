@@ -8,7 +8,6 @@ import javax.swing.JMenu;
  * Create a menu or menu item containing the PRICOM Pocket Tester tools
  *
  * @author	Bob Jacobsen Copyright 2005
- * @version $Revision$
  */
 public class PocketTesterMenu extends JMenu {
 

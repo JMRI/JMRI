@@ -50,7 +50,7 @@ public class JythonAutomaton extends AbstractAutomaton {
             // load some general objects
             java.lang.reflect.Method set
                     = interp.getClass().getMethod("set", new Class[]{String.class, Object.class});
-            set.invoke(interp, new Object[]{"dcc", InstanceManager.getOptionalDefault(jmri.CommandStation.class)});
+            set.invoke(interp, new Object[]{"dcc", InstanceManager.getNullableDefault(jmri.CommandStation.class)});
             set.invoke(interp, new Object[]{"self", this});
 
             // set up the method to exec python functions

@@ -13,8 +13,7 @@ import org.slf4j.LoggerFactory;
  * The {@link SprogReply} class handles the response from the command station.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
 
     // Special characters (NOTE: microchip bootloader does not use standard ASCII)
@@ -94,9 +93,6 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     public void setElement(int n, int v) {
-        if (!SprogTrafficController.instance().isSIIBootMode()) {
-            v &= 0x7f;
-        }
         _dataChars[n] = v;
     }
 
@@ -212,9 +208,14 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // display format
-    public String toString() {
+    public String ToString(){
+       // default to not SIIBootMode being false.
+       return this.toString(false);
+    }
+
+    public String toString(boolean isSIIBootMode) {
         StringBuffer buf = new StringBuffer();
-        if (!SprogTrafficController.instance().isSIIBootMode()) {
+        if (isSIIBootMode) {
             for (int i = 0; i < _nDataChars; i++) {
                 buf.append((char) _dataChars[i]);
             }
@@ -249,7 +250,9 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         byte msg[] = new byte[len + cr];
 
         for (int i = 0; i < len; i++) {
-            msg[i] = (byte) this.getElement(i);
+            if (sprogState != SprogState.SIIBOOTMODE) {
+               msg[i] = (byte) ( this.getElement(i) & 0x7f);
+            }
         }
         if (sprogState != SprogState.SIIBOOTMODE) {
             msg[len] = 0x0d;

@@ -53,7 +53,7 @@ public class NmraPacket {
     static final public int accIdLowLimit = 1;
     static final public int accIdHighLimit = 2044;
     static final public int accIdAltHighLimit = 2048;
-    
+
     /**
      * Create a packet containing a one-byte instruction.
      */
@@ -199,7 +199,8 @@ public class NmraPacket {
         // right hardware addresses
         if (addr < 1 || addr > 511) {
             log.error("invalid address " + addr);
-            return null;
+            //return null;
+            throw new IllegalArgumentException();
         }
         if (active < 0 || active > 1) {
             log.error("invalid active (C) bit " + addr);
@@ -235,7 +236,7 @@ public class NmraPacket {
 
         if (addr < 1 || addr > 511) {
             log.error("invalid address " + addr);
-            return null;
+            throw new IllegalArgumentException();
         }
         if (active < 0 || active > 1) {
             log.error("invalid active (C) bit " + addr);
@@ -505,9 +506,7 @@ public class NmraPacket {
     }
 
     public static byte[] opsCvWriteByte(int address, boolean longAddr, int cvNum, int data) {
-        if (log.isDebugEnabled()) {
-            log.debug("opswrite " + address + " " + cvNum + " " + data);
-        }
+        log.debug("opswrite {} {} {}", address, cvNum, data);
 
         if (!addressCheck(address, longAddr)) {
             return null;  // failed!
@@ -550,9 +549,7 @@ public class NmraPacket {
     }
 
     public static byte[] speedStep128Packet(int address, boolean longAddr, int speed, boolean fwd) {
-        if (log.isDebugEnabled()) {
-            log.debug("128 step packet " + address + " " + speed);
-        }
+        log.debug("128 step packet {} {}", address, speed);
 
         if (!addressCheck(address, longAddr)) {
             return null;  // failed!
@@ -611,9 +608,7 @@ public class NmraPacket {
      * each direction.
      */
     public static byte[] speedStep28Packet(int address, boolean longAddr, int speed, boolean fwd) {
-        if (log.isDebugEnabled()) {
-            log.debug("28 step packet " + address + " " + speed);
-        }
+        log.debug("28 step packet {} {}", address, speed);
 
         if (!addressCheck(address, longAddr)) {
             return null;  // failed!
@@ -667,9 +662,7 @@ public class NmraPacket {
      * @param fwd      true for forward direction; false for reverse
      */
     public static byte[] speedStep28Packet(Boolean full, int address, boolean longAddr, int speed, boolean fwd) {
-        if (log.isDebugEnabled()) {
-            log.debug("28 step packet " + address + " " + speed);
-        }
+        log.debug("28 step packet {} {}", address, speed);
 
         if (full != true) {
             log.error("invalid method invocation");
@@ -712,9 +705,7 @@ public class NmraPacket {
 
     public static byte[] speedStep14Packet(int address, boolean longAddr,
             int speed, boolean fwd, boolean F0) {
-        if (log.isDebugEnabled()) {
-            log.debug("14 step packet " + address + " " + speed + " " + F0);
-        }
+        log.debug("14 step packet {} {} {}", address, speed, F0);
 
         if (speed < 0 || speed > 15) {
             log.error("invalid speed " + speed);
@@ -751,9 +742,7 @@ public class NmraPacket {
 
     public static byte[] function0Through4Packet(int address, boolean longAddr,
             boolean f0, boolean f1, boolean f2, boolean f3, boolean f4) {
-        if (log.isDebugEnabled()) {
-            log.debug("f0 through f4 packet " + address);
-        }
+        log.debug("f0 through f4 packet {}", address);
 
         if (!addressCheck(address, longAddr)) {
             return null;  // failed!
@@ -787,9 +776,7 @@ public class NmraPacket {
 
     public static byte[] function5Through8Packet(int address, boolean longAddr,
             boolean f5, boolean f6, boolean f7, boolean f8) {
-        if (log.isDebugEnabled()) {
-            log.debug("f5 through f8 packet " + address);
-        }
+        log.debug("f5 through f8 packet {}", address);
 
         if (!addressCheck(address, longAddr)) {
             return null;  // failed!
@@ -822,9 +809,7 @@ public class NmraPacket {
 
     public static byte[] function9Through12Packet(int address, boolean longAddr,
             boolean f9, boolean f10, boolean f11, boolean f12) {
-        if (log.isDebugEnabled()) {
-            log.debug("f9 through f12 packet " + address);
-        }
+        log.debug("f9 through f12 packet {}", address);
 
         if (!addressCheck(address, longAddr)) {
             return null;  // failed!
@@ -858,9 +843,7 @@ public class NmraPacket {
     public static byte[] function13Through20Packet(int address, boolean longAddr,
             boolean f13, boolean f14, boolean f15, boolean f16,
             boolean f17, boolean f18, boolean f19, boolean f20) {
-        if (log.isDebugEnabled()) {
-            log.debug("f13 through f20 packet " + address);
-        }
+        log.debug("f13 through f20 packet {}", address);
 
         if (!addressCheck(address, longAddr)) {
             return null;  // failed!
@@ -900,9 +883,7 @@ public class NmraPacket {
     public static byte[] function21Through28Packet(int address, boolean longAddr,
             boolean f21, boolean f22, boolean f23, boolean f24,
             boolean f25, boolean f26, boolean f27, boolean f28) {
-        if (log.isDebugEnabled()) {
-            log.debug("f21 through f28 packet " + address);
-        }
+        log.debug("f21 through f28 packet {}", address);
 
         if (!addressCheck(address, longAddr)) {
             return null;  // failed!

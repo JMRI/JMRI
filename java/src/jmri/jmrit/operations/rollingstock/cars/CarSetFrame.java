@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user to place car on the layout
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2013, 2014
- * @version $Revision$
  */
 public class CarSetFrame extends RollingStockSetFrame implements java.beans.PropertyChangeListener {
 
@@ -49,8 +48,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
     JComboBox<String> kernelComboBox = carManager.getKernelComboBox();
 
     // buttons
-    JButton editLoadButton = new JButton(Bundle.getMessage("Edit"));
-    JButton editKernelButton = new JButton(Bundle.getMessage("Edit"));
+    JButton editLoadButton = new JButton(Bundle.getMessage("ButtonEdit"));
+    JButton editKernelButton = new JButton(Bundle.getMessage("ButtonEdit"));
 
     // check boxes
     protected JCheckBox ignoreRWECheckBox = new JCheckBox(Bundle.getMessage("Ignore"));
@@ -172,7 +171,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 
     @Override
     protected void enableComponents(boolean enabled) {
-        // If routing is disable, the RWE and Final Destination fields do not work
+        // If routing is disabled, the RWE and Final Destination fields do not work
         if (!Setup.isCarRoutingEnabled()) {
             ignoreRWECheckBox.setSelected(true);
             ignoreFinalDestinationCheckBox.setSelected(true);
@@ -296,6 +295,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
                             .getMessage("rsCanNotFinal"), JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
+                car.setFinalDestination((Location) finalDestinationBox.getSelectedItem());
+                car.setFinalDestinationTrack(finalDestTrack);
                 String status = car.testDestination((Location) finalDestinationBox.getSelectedItem(),
                         finalDestTrack);
                 if (!status.equals(Track.OKAY)) {
@@ -303,8 +304,6 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
                             .getMessage("rsCanNotFinalMsg"), new Object[]{car.toString(), status}), Bundle
                             .getMessage("rsCanNotFinal"), JOptionPane.WARNING_MESSAGE);
                 }
-                car.setFinalDestination((Location) finalDestinationBox.getSelectedItem());
-                car.setFinalDestinationTrack(finalDestTrack);
             }
         }
         // kernel

@@ -85,7 +85,7 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
         actionPerformed();
         // create the JTable model, with changes for specific NamedBean
         //createModel();
-        //final Roster roster = Roster.instance();
+        //final Roster roster = Roster.getDefault();
         // create the frame
         //f = new RosterGroupTableFrame(m, helpTarget()){
         /**
@@ -126,7 +126,7 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
     }
 
     void comboSelected(ActionEvent e, String group) {
-        jmri.jmrit.roster.Roster roster = jmri.jmrit.roster.Roster.instance();
+        jmri.jmrit.roster.Roster roster = jmri.jmrit.roster.Roster.getDefault();
         m.setGroup(roster.getRosterGroupPrefix() + group);
         m.fireTableDataChanged();
 

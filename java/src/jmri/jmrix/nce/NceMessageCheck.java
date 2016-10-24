@@ -11,8 +11,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author Dan Boudreau Copyright (C) 2010
  * @author ken cameron Copyright (C) 2013
- * @version	$Revision$
- *
+  *
  */
 public class NceMessageCheck {
 

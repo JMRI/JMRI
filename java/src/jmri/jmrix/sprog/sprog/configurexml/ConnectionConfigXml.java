@@ -15,7 +15,6 @@ import jmri.jmrix.sprog.sprog.ConnectionConfig;
  * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -23,9 +22,18 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
-        adapter = SerialDriverAdapter.instance();
+        if (adapter == null) {
+            adapter = new SerialDriverAdapter();
+        }
     }
+
+    @Override
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig) object).getAdapter();
+    }
+
 
     @Override
     protected void register() {

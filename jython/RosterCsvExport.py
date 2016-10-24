@@ -161,10 +161,10 @@ def writeDetails(csvFile):
 
         # OK, read the value of CV29
         cv29Value = 0;
-        if cvTable.getCvByNumber("29")  != None :
+        if cvTable.getCvByNumber("29") != None:
             cv29Value = cvTable.getCvByNumber("29").getValue()
-        else :
-            Print "Did not find a CV29 value, using zero"
+        else:
+            print "Did not find a CV29 value, using zero"
         
         # Now do the bitwise comparisons.
         # First example is speedsteps, which is the second bit 

@@ -3,7 +3,6 @@ package jmri.jmrit.display;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import jmri.util.JmriJFrame;
@@ -18,8 +17,6 @@ import jmri.util.JmriJFrame;
  * @author Kevin Dickerson (SensorTextEditor version);
  */
 public class SensorTextEdit extends JmriJFrame {
-
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     SensorIcon pl; 	// layout positional label tracked by this frame
     static final String INIT = null;
@@ -62,54 +59,54 @@ public class SensorTextEdit extends JmriJFrame {
         pl = l;
 
         // the following code sets the frame's initial state
-        lableName.setText(rb.getString("Name") + ": ");
+        lableName.setText(Bundle.getMessage("Name") + ": ");
         lableName.setVisible(true);
 
         nameText.setText(name);
         nameText.setVisible(true);
 
-        textInact.setText("Inactive= " + pl.getInactiveText());
+        textInact.setText(Bundle.getMessage("SensorStateInactive") + " = " + pl.getInactiveText());
         textInact.setVisible(true);
-        textAct.setText("Active= " + pl.getActiveText());
+        textAct.setText(Bundle.getMessage("SensorStateActive") + " = " + pl.getActiveText());
         textAct.setVisible(true);
-        textIncon.setText("Inconsistent= " + pl.getInconsistentText());
+        textIncon.setText(Bundle.getMessage("BeanStateInconsistent") + " = " + pl.getInconsistentText());
         textIncon.setVisible(true);
-        textUnknown.setText("Unknown= " + pl.getUnknownText());
+        textUnknown.setText(Bundle.getMessage("BeanStateUnknown") + " = " + pl.getUnknownText());
         textUnknown.setVisible(true);
 
         inactTextField.setText(pl.getInactiveText());
-        inactTextField.setToolTipText(rb.getString("EnterInActiveToolTip"));
+        inactTextField.setToolTipText(Bundle.getMessage("EnterInActiveToolTip"));
         inactTextField.setMaximumSize(new Dimension(
                 inactTextField.getMaximumSize().width, inactTextField
                 .getPreferredSize().height));
 
         actTextField.setText(pl.getActiveText());
-        actTextField.setToolTipText(rb.getString("EnterActiveToolTip"));
+        actTextField.setToolTipText(Bundle.getMessage("EnterActiveToolTip"));
         actTextField.setMaximumSize(new Dimension(
                 actTextField.getMaximumSize().width, actTextField
                 .getPreferredSize().height));
 
         inconTextField.setText(pl.getInconsistentText());
-        inconTextField.setToolTipText(rb.getString("EnterInconToolTip"));
+        inconTextField.setToolTipText(Bundle.getMessage("EnterInconToolTip"));
         inconTextField.setMaximumSize(new Dimension(
                 inconTextField.getMaximumSize().width, inconTextField
                 .getPreferredSize().height));
 
         unknownTextField.setText(pl.getUnknownText());
-        unknownTextField.setToolTipText(rb.getString("EnterUnknownToolTip"));
+        unknownTextField.setToolTipText(Bundle.getMessage("EnterUnknownToolTip"));
         unknownTextField.setMaximumSize(new Dimension(
                 unknownTextField.getMaximumSize().width, unknownTextField
                 .getPreferredSize().height));
 
-        okButton.setText(rb.getString("Set"));
+        okButton.setText(Bundle.getMessage("ButtonOK"));
         okButton.setVisible(true);
-        okButton.setToolTipText(rb.getString("SetButtonToolTipSensor"));
+        okButton.setToolTipText(Bundle.getMessage("SetButtonToolTipSensor"));
 
-        cancelButton.setText(rb.getString("Cancel"));
+        cancelButton.setText(Bundle.getMessage("ButtonCancel"));
         cancelButton.setVisible(true);
-        cancelButton.setToolTipText(rb.getString("CancelButtonToolTipSensor"));
+        cancelButton.setToolTipText(Bundle.getMessage("CancelButtonToolTipSensor"));
 
-        setTitle(rb.getString("SetSensorText"));
+        setTitle(Bundle.getMessage("SetSensorText"));
         getContentPane().setLayout(new GridBagLayout());
 
         setSize(250, 220);
@@ -169,10 +166,10 @@ public class SensorTextEdit extends JmriJFrame {
             pl.setActiveText(actTextField.getText());
             pl.setInconsistentText(inconTextField.getText());
             pl.setUnknownText(unknownTextField.getText());
-            textInact.setText("Inactive= " + pl.getInactiveText());
-            textAct.setText("Active= " + pl.getActiveText());
-            textIncon.setText("Inconsistent= " + pl.getInconsistentText());
-            textUnknown.setText("Unknown= " + pl.getUnknownText());
+            textInact.setText(Bundle.getMessage("SensorStateInactive") + " = " + pl.getInactiveText());
+            textAct.setText(Bundle.getMessage("SensorStateActive") + " = " + pl.getActiveText());
+            textIncon.setText(Bundle.getMessage("BeanStateInconsistent") + " = " + pl.getInconsistentText());
+            textUnknown.setText(Bundle.getMessage("BeanStateUnknown") + " = " + pl.getUnknownText());
         }
         if (ae.getSource() == cancelButton) {
             if (oldActive != INIT) {

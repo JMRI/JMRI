@@ -1,5 +1,7 @@
 package jmri.server.json.sensor;
 
+import static jmri.server.json.sensor.JsonSensor.SENSOR;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -14,7 +16,6 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
-import static jmri.server.json.sensor.JsonSensorServiceFactory.SENSOR;
 
 /**
  * JSON Socket service for {@link jmri.Sensor}s.
@@ -59,8 +60,8 @@ public class JsonSensorSocketService extends JsonSocketService {
 
     @Override
     public void onClose() {
-        sensors.values().stream().forEach((sensor) -> {
-            sensor.sensor.removePropertyChangeListener(sensor);
+        sensors.values().stream().forEach((listener) -> {
+            listener.sensor.removePropertyChangeListener(listener);
         });
         sensors.clear();
     }

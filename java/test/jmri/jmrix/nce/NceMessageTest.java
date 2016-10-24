@@ -1,6 +1,6 @@
 package jmri.jmrix.nce;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -9,8 +9,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the NceMessage class
  *
  * @author	Bob Jacobsen Copyright 2002-2004
- * @version	$Revision$
- */
+  */
 public class NceMessageTest extends TestCase {
 
     // ensure that the static useBinary value is left OK

@@ -134,6 +134,7 @@
     <property name="coveragetarget" value="${basedir}/coveragereport"/>
     <property name="source"       value="${javadir}/src"/>
     <property name="target"       value="${javadir}/classes"/>
+    <property name="testtarget"   value="${javadir}/test-classes"/>
     <property name="test"         value="${javadir}/test"/>
     <property name="templatedir"  value="${javadir}/template"/>
     <property name="tmptarget"    value="${javadir}/tmp"/>
@@ -191,7 +192,7 @@
         <pathelement location="${libdir}/slf4j-api-1.7.13.jar"/>
         <pathelement location="${libdir}/slf4j-log4j12-1.7.13.jar"/>
         <pathelement location="${libdir}/jul-to-slf4j-1.7.13.jar"/>
-        <pathelement location="${libdir}/xbee-api-0.9.jar"/>
+        <pathelement location="${libdir}/xbjlib-1.1.1.jar"/>
         <pathelement location="${libdir}/pi4j-core.jar"/>
         <pathelement location="${libdir}/pi4j-device.jar"/>
         <pathelement location="${libdir}/pi4j-gpio-extension.jar"/>
@@ -223,6 +224,16 @@
         <pathelement location="${libdir}/hamcrest-core-1.3.jar"/>
         <pathelement location="${libdir}/jfcunit.jar"/>
         <pathelement path="${i18n.class.jars}"/>            <!-- i18n test -->
+        <!-- powermock and it's dependencies -->
+        <pathelement location="${libdir}/mockito-core-2.0.42-beta.jar"/>
+        <pathelement location="${libdir}/powermock-mockito2-1.6.5-full.jar"/>
+        <pathelement location="${libdir}/powermock-api-mockito-common-1.6.5.jar"/>
+        <pathelement location="${libdir}/cglib-nodep-2.2.2.jar"/>
+        <pathelement location="${libdir}/javassist-3.20.0-GA.jar"/>
+        <pathelement location="${libdir}/objenesis-2.2.jar"/>
+        <pathelement location="${libdir}/byte-buddy-1.2.1.jar"/>
+         
+
     </path>
 
     <!-- path to run regular executables -->
@@ -230,7 +241,7 @@
         <pathelement path="${cp.prepend}"/>   <!-- prepended by user -->
         <pathelement location="${jartarget}"/>
         <path        refid="runtime.class.path"/>
-        <pathelement location="${target}/"/>  <!-- last to check for name collisions -->
+        <pathelement location="${target}/"/>  <!-- after declared jars to check for name collisions -->
         <pathelement path="${cp.append}"/>    <!-- appended by user -->
     </path>
 
@@ -238,7 +249,8 @@
     <path id="test.class.path">
         <pathelement location="${jartarget}"/>
         <path   refid="compile.class.path"/>
-        <pathelement location="${target}/"/>  <!-- last to check for name collisions -->
+        <pathelement location="${target}/"/>  <!-- after declared jars to check for name collisions -->
+        <pathelement location="${testtarget}"/> <!-- test resources in classpath that collide with stock resources -->
     </path>
 
     <macrodef name="quiet">
@@ -357,10 +369,10 @@
     <target name="realclean"
             description="remove all non-respository files from a build"
             depends="clean">
-        <delete quiet="true">
-            <fileset dir="temp"/>
+        <delete includeEmptyDirs="true" quiet="true">
             <fileset dir="lib/cachedir"/>
             <fileset dir="${coveragetarget}"/>
+            <fileset file=".run.sh"/>
         </delete>
     </target>
 
@@ -371,6 +383,7 @@
             <fileset file="${jartarget}/jmri.jar"/>
             <fileset dir="${doctarget}"/>
             <fileset dir="${target}"/>
+            <fileset dir="${testtarget}"/>
             <fileset dir="${dist}"/>
             <fileset dir="${genjavasrcdir}"/>
             <fileset file="${javadir}/manifest"/>
@@ -396,7 +409,7 @@
             <fileset dir="${resourcedir}" includes="*.gif"/>
         </copy>
         <copy todir="${target}">
-            <fileset dir="${source}" includes="**/*.properties"/>
+            <fileset dir="${source}" includes="**/*.properties,**/*.js"/>
             <fileset dir="${source}" includes="META-INF/**"/>
         </copy>
     </target>
@@ -484,29 +497,37 @@
 
     <!-- this one target handles the compiler processing for all of the JDK based
          compilation - normal code, generated code and tests -->
-
+    <!-- use the java-compile macro instead -->
     <target name="-java-compile-internal"> <!-- Internal target for compiling Java source from a specified directory -->
-        <javac compiler="modern"
-               srcdir="${java.source.directory}"
-               destdir="${target}"
-               source="${source_version}"
-               target="${jre_version}"
-               includeantruntime="false"
-               fork="true"
-               deprecation="${deprecation}"
-               debug="${java.debugging}">
-            <classpath refid="compile.class.path"/>
-            <compilerarg value="-Xlint:-unchecked"/>  <!-- off during 1.8 migration -->
-        </javac>
+        <java-compile javac.source="${java.source.directory}" javac.target="${target}" />
     </target>
 
+    <macrodef name="java-compile">
+        <attribute name="javac.source"/>
+        <attribute name="javac.target" default="${target}"/>
+        <attribute name="javac.deprecation" default="${deprecation}"/>
+        <attribute name="javac.classpath" default="compile.class.path"/>
+        <sequential>
+            <mkdir dir="@{javac.target}"/> <!-- ensure destdir exists -->
+            <javac compiler="modern"
+                   srcdir="@{javac.source}"
+                   destdir="@{javac.target}"
+                   source="${source_version}"
+                   target="${jre_version}"
+                   includeantruntime="false"
+                   fork="true"
+                   deprecation="@{javac.deprecation}"
+                   debug="${java.debugging}">
+                <classpath refid="@{javac.classpath}"/>
+                <compilerarg value="-Xlint:-unchecked"/>  <!-- off during 1.8 migration -->
+            </javac>
+        </sequential>
+    </macrodef>
 
     <target name="compile-generated-source"
             depends="javacc, update-template-code"><!-- compile all generated Java source; internal target -->
         <!-- Compile the java code from ${genjavasrcdir} into ${target} -->
-        <antcall target="-java-compile-internal">
-            <param name="java.source.directory" value="${genjavasrcdir}"/>
-        </antcall>
+        <java-compile javac.source="${genjavasrcdir}"/>
         <copy todir="${target}/jmri" overwrite="true">
             <fileset dir="${genjavasrcdir}/jmri" includes="*.properties"/>
         </copy>
@@ -517,10 +538,7 @@
             description="compile source, omitting tests"
             depends="init, copyfiles, compile-generated-source">
         <!-- Compile the java code from ${source} into ${target} -->
-        <antcall target="-java-compile-internal">
-            <param name="java.source.directory" value="${source}"/>
-            <param name="deprecation" value="${deprecation}"/>
-        </antcall>
+        <java-compile javac.source="${source}"/>
     </target>
 
     <target name="ci-compile-deprecations"
@@ -551,9 +569,7 @@
             description="compile source with debugging on, omitting tests"
             depends="init, javacc, copyfiles, compile-generated-source">
         <!-- Compile the java code from ${source} into ${target} -->
-        <antcall target="-java-compile-internal">
-            <param name="java.source.directory" value="${source}"/>
-        </antcall>
+        <java-compile javac.source="${source}"/>
     </target>
 
 
@@ -561,11 +577,12 @@
             description="compile test classes"
             depends="debug">
         <!-- Compile the test java code from ${source} into ${target} -->
-        <antcall target="-java-compile-internal">
-            <param name="java.source.directory" value="${test}"/>
-        </antcall>
-        <copy todir="${target}">
+        <java-compile javac.source="${test}" javac.target="${testtarget}" javac.classpath="test.class.path"/>
+        <!-- Copy resources into ${testtarget} so they coexist with identical
+             resources in ${target} (this is important for the Java ServiceLoader -->
+        <copy todir="${testtarget}">
             <fileset dir="${test}" includes="**/*.properties"/>
+            <fileset dir="${test}" includes="META-INF/**"/>
         </copy>
     </target>
 
@@ -827,6 +844,12 @@
             <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
+    </target>
+
+    <target name="run-sh" description="Create run.sh in SCM root">
+        <make-startup-script script.name=".run.sh"
+                             script.class="jmri.util.junit.TestClassMainMethod"
+                             dest="${basedir}/.run.sh"/>
     </target>
 
     <!-- This is a set of targets used to start up the various JMRI applications
@@ -1294,6 +1317,7 @@
 
     <target name="logalltest" depends="tests, runtime-library-selection" description="run headless test suite">
         <jacoco:coverage destfile="jacoco.exec" excludes="org.slf4j.*">
+
         <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1304,11 +1328,14 @@
 
             <classpath refid="test.class.path"/>
 
+            <!-- use different log4j settings to pick up additional coverage -->
+            <sysproperty key="jmri.log4jconfigfilename" value="tests_jacoco.lcf"/>
+
             <test name="apps.tests.AllTest" outfile="junit-results">
                 <formatter type="xml"/>
             </test>
-
         </junit>
+        
         </jacoco:coverage>
     </target>
 
@@ -1450,7 +1477,7 @@
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="6000"/><!-- change from default 100 warnings -->
+            <arg value="4866"/><!-- change from default 100 warnings -->
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
 
@@ -1460,7 +1487,7 @@
             <group title="Implementations" packages="jmri.implementation:jmri.implementation.*:jmri.managers:jmri.managers.*:jmri.progdebugger:jmri.layout"/>
             <group title="Utilities" packages="jmri.util:jmri.util.*"/>
             <group title="XML persistance" packages="jmri.configurexml:jmri.configurexml.*:apps.configurexml:apps.configurexml.*"/>
-            <group title="Web Services" packages="jmri.web:jmri.web.*"/>
+            <group title="Web Services" packages="jmri.web:jmri.web.*:jmri.server:jmri.server.*"/>
             <group title="Interface Server Support" packages="jmri.jmris:jmri.jmris.*"/>
       <!-- Layout Connections last because so large -->
             <group title="Layout Connections" packages="jmri.jmrix:jmri.jmrix.*"/>
@@ -1677,7 +1704,7 @@
         </findbugs>
     </target>
 
-<!--  Start for checker framework -->
+    <!--  Start for checker framework -->
 
     <property environment="env"/>
     <property name="checkerframework" value="${libdir}/checker-framework/" />
@@ -2034,4 +2061,25 @@
         <echo message="new release branch ${branch-name} created"/>
     </target>
 
+    <!-- CI Test runners -->
+    <target name="travis-ci" description="Parallel execution of CI tasks on Travis CI">
+        <parallel threadCount="4"> <!-- allow up to four tasks at once -->
+            <antcall target="checklineends" />
+            <antcall target="checknonascii" />
+            <sequential>
+                <antcall target="compile-generated-source" />
+                <parallel>
+                    <antcall target="javadoc" />
+                    <antcall target="ci-test-travis" />
+                </parallel>
+            </sequential>
+        </parallel>
+    </target>
+    
+    <target name="appveyor" description="Parallel execution of CI tasks on Appveyor">
+        <parallel threadCount="4"> <!-- allow up to four tasks at once -->
+            <antcall target="checkPropertiesFiles" />
+            <antcall target="ci-test-appveyor" />
+        </parallel>
+    </target>
 </project>

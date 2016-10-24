@@ -13,9 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle XML persistance of PerformActionModel objects.
+ * Handle XML persistence of PerformActionModel objects.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003
+ * @author Bob Jacobsen Copyright (c) 2003
  * @see apps.startup.PerformActionModelFactory
  */
 public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter {
@@ -56,10 +56,11 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) {
+    public boolean load(Element shared, Element perNode) throws Exception {
         boolean result = true;
         String className = shared.getAttribute("name").getValue();
         PerformActionModel model = new PerformActionModel();
+        Exception exception = null;
         model.setClassName(className);
         for (Element child : shared.getChildren("property")) { // NOI18N
             if (child.getAttributeValue("name").equals("systemPrefix") // NOI18N
@@ -80,21 +81,26 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
                 }
             }
             action.actionPerformed(new ActionEvent("prefs", 0, ""));
-        } catch (ClassNotFoundException ex1) {
+        } catch (ClassNotFoundException ex) {
             log.error("Could not find specified class: {}", className);
+            exception = ex;
+        } catch (IllegalAccessException ex) {
+            log.error("Unexpected access exception for class: {}", className, ex);
             result = false;
-        } catch (IllegalAccessException ex2) {
-            log.error("Unexpected access exception for  class: " + className, ex2);
+            exception = ex;
+        } catch (InstantiationException ex) {
+            log.error("Could not instantiate specified class: {}", className, ex);
             result = false;
-        } catch (InstantiationException ex3) {
-            log.error("Could not instantiate specified class: " + className, ex3);
+            exception = ex;
+        } catch (Exception ex) {
+            log.error("Error while performing startup action for class: {}", className, ex);
             result = false;
-        } catch (Exception ex4) {
-            log.error("Error while performing startup action for class: " + className, ex4);
-            ex4.printStackTrace();
-            result = false;
+            exception = ex;
         }
         InstanceManager.getDefault(StartupActionsManager.class).addAction(model);
+        if (exception != null) {
+            throw exception;
+        }
         return result;
     }
 

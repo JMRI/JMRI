@@ -15,11 +15,13 @@ import jmri.managers.DefaultProgrammerManager;
  * programmer. This provides a service mode programmer.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public class SprogProgrammer extends AbstractProgrammer implements SprogListener {
 
-    public SprogProgrammer() {
+    private SprogSystemConnectionMemo _memo = null;
+
+    public SprogProgrammer(SprogSystemConnectionMemo memo) {
+         _memo = memo;
     }
 
     /**
@@ -256,7 +258,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     protected SprogTrafficController controller() {
         // connect the first time
         if (_controller == null) {
-            _controller = SprogTrafficController.instance();
+            _controller = _memo.getSprogTrafficController();
         }
         return _controller;
     }

@@ -1,35 +1,21 @@
 package jmri.jmrix.roco.z21.swing;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
 /**
  * Tests for the jmri.jmrix.roco.z21.swing package
  *
  * @author	Bob Jacobsen
  */
-public class PackageTest extends TestCase {
-
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        apps.tests.Log4JFixture.initLogging();
-        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.roco.z21.swing");  // no tests in this class itself
-        suite.addTest(jmri.jmrix.roco.z21.swing.configtool.PackageTest.suite());
-        suite.addTest(BundleTest.suite());
-
-        return suite;
-    }
-
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+    jmri.jmrix.roco.z21.swing.configtool.PackageTest.class,
+    BundleTest.class,
+    Z21MenuTest.class,
+    Z21ComponentFactoryTest.class,
+    jmri.jmrix.roco.z21.swing.mon.PackageTest.class,
+    jmri.jmrix.roco.z21.swing.packetgen.PackageTest.class
+})
+public class PackageTest {
 }

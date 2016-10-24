@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2008-2010
  * @author Mark Underwood Copyright (C) 2015
- * @version $Revision$
  */
 public class DCCppLight extends AbstractLight implements DCCppListener {
 

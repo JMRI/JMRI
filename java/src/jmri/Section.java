@@ -3,6 +3,7 @@ package jmri;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
@@ -15,9 +16,6 @@ import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import jmri.jmrit.display.layoutEditor.TrackNode;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
 import jmri.util.JmriJFrame;
-
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -2286,8 +2284,9 @@ public class Section extends AbstractNamedBean
         // set up missing signal head message, if any
         if ((missingSignalsBB + missingSignalsTurnouts + missingSignalsLevelXings) > 0) {
             String s = "Section - " + getSystemName();
-            if ((getUserName() != null) && (!getUserName().equals(""))) {
-                s = s + "(" + getUserName() + ")";
+            String uname = getUserName();
+            if ((uname != null) && (!uname.equals(""))) {
+                s = s + "(" + uname + ")";
             }
             if (missingSignalsBB > 0) {
                 s = s + ", " + (missingSignalsBB) + " anchor point signal heads missing";
@@ -2550,38 +2549,22 @@ public class Section extends AbstractNamedBean
     }
 
     /**
-     * This function sets a string in the memories associated with blocks in
-     * this section. If Layout Editor panel is not present, Layout Blocks will
-     * not be present, and nothing will be set.
+     * This function sets the block values for blocks in this section. 
      */
     public void setNameInBlocks(String name) {
         for (int i = 0; i < mBlockEntries.size(); i++) {
             Block b = mBlockEntries.get(i);
-            LayoutBlock lb = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getByUserName(b.getUserName());
-            if (lb != null) {
-                Memory m = lb.getMemory();
-                if (m != null) {
-                    m.setValue(name);
-                }
-            }
+            b.setValue(name);
         }
     }
 
     /**
-     * This function sets an object in the memories associated with blocks in
-     * this section. If Layout Editor panel is not present, Layout Blocks will
-     * not be present, and nothing will be set.
+     * This function sets the block values for blocks in this section.  
      */
     public void setNameInBlocks(Object value) {
         for (int i = 0; i < mBlockEntries.size(); i++) {
             Block b = mBlockEntries.get(i);
-            LayoutBlock lb = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getByUserName(b.getUserName());
-            if (lb != null) {
-                Memory m = lb.getMemory();
-                if (m != null) {
-                    m.setValue(value);
-                }
-            }
+            b.setValue(value);
         }
     }
 
@@ -2597,13 +2580,7 @@ public class Section extends AbstractNamedBean
                     beenSet = true;
                 }
                 if (beenSet) {
-                    LayoutBlock lb = lbm.getByUserName(b.getUserName());
-                    if (lb != null) {
-                        Memory m = lb.getMemory();
-                        if (m != null) {
-                            m.setValue(value);
-                        }
-                    }
+                    b.setValue(value);
                 }
             }
         } else if (getState() == REVERSE) {
@@ -2613,13 +2590,7 @@ public class Section extends AbstractNamedBean
                     beenSet = true;
                 }
                 if (beenSet) {
-                    LayoutBlock lb = lbm.getByUserName(b.getUserName());
-                    if (lb != null) {
-                        Memory m = lb.getMemory();
-                        if (m != null) {
-                            m.setValue(value);
-                        }
-                    }
+                    b.setValue(value);
                 }
             }
         }
@@ -2629,21 +2600,13 @@ public class Section extends AbstractNamedBean
     }
 
     /**
-     * This function clears the string in the memories associated with
-     * unoccupied blocks in this section. If Layout Editor panel is not present,
-     * Layout Blocks will not be present, and nothing will be set.
+     * This function clears the block values for blocks in this section. 
      */
     public void clearNameInUnoccupiedBlocks() {
         for (int i = 0; i < mBlockEntries.size(); i++) {
             Block b = mBlockEntries.get(i);
             if (b.getState() == Block.UNOCCUPIED) {
-                LayoutBlock lb = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getByUserName(b.getUserName());
-                if (lb != null) {
-                    Memory m = lb.getMemory();
-                    if (m != null) {
-                        m.setValue("  ");
-                    }
-                }
+                b.setValue("  ");
             }
         }
     }

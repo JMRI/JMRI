@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * </UL>
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 17977 $
  */
 public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 

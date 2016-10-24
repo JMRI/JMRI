@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * the SRCP protocol.
  * 
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  */
 
 // This is generated code.  DO NOT ATTEMPT TO FIX ANY FINDBUGS WARNINGS

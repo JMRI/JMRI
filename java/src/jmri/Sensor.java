@@ -130,7 +130,7 @@ public interface Sensor extends NamedBean {
     public void setReporter(@CheckForNull Reporter re);
 
     /**
-     * Retrieve the reporter assocated with this sensor if there is one.
+     * Retrieve the reporter associated with this sensor if there is one.
      * <p>
      * returns null if there is no direct reporter.
      */

@@ -1,4 +1,3 @@
-// ValidateConfigFilesTest.java
 package apps;
 
 import junit.framework.Test;
@@ -9,9 +8,12 @@ import junit.framework.TestSuite;
  *
  * @author Bob Jacobsen Copyright 2012
  * @since 2.5.5
- * @version $Revision$
  */
 public class ValidateConfigFilesTest extends jmri.util.swing.GuiUtilBaseTest {
+
+    public void testDirectory(){
+        // dummy test until the base classes are converted.
+    }
 
     // from here down is testing infrastructure
     // Note setup() and teardown are provided from base class, and 
@@ -33,4 +35,12 @@ public class ValidateConfigFilesTest extends jmri.util.swing.GuiUtilBaseTest {
         return suite;
     }
 
+    // The minimal setup for log4J
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 }

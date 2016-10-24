@@ -9,8 +9,7 @@ import jmri.jmrix.AbstractMessage;
  * PowerManager implementation for controlling SPROG layout power.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public class SprogPowerManager extends jmri.managers.AbstractPowerManager
         implements PowerManager, SprogListener {
 
@@ -19,7 +18,7 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
     public SprogPowerManager(SprogSystemConnectionMemo memo) {
         super(memo);
         // connect to the TrafficManager
-        trafficController = SprogTrafficController.instance();
+        trafficController = memo.getSprogTrafficController();
         trafficController.addSprogListener(this);
     }
 

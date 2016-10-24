@@ -1,4 +1,3 @@
-// PositionablePopupUtil.java
 package jmri.jmrit.display;
 
 import java.awt.Color;
@@ -31,12 +30,11 @@ import org.slf4j.LoggerFactory;
  * </p>
  *
  * moved from PositionableLabel
+ *
  * @author Pete Cressman copyright (C) 2010
- * @version $I $
  */
 public class PositionablePopupUtil {
 
-    private boolean debug = false;
     protected JComponent _textComponent;    // closest ancestor for JLabel and JTextField
     protected int _textType;                // JComponent does not have text, used for casting
     protected Positionable _parent;
@@ -62,7 +60,6 @@ public class PositionablePopupUtil {
         }
         _textComponent = textComp;
         _self = this;
-        debug = log.isDebugEnabled();
         defaultForeground = _textComponent.getForeground();
 //        defaultBackground = _textComponent.getBackground();
         defaultBorderColor = _parent.getBackground();
@@ -125,15 +122,15 @@ public class PositionablePopupUtil {
     public void setFixedTextMenu(JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditFixed"));
         if (getFixedWidth() == 0) {
-            edit.add("Width= Auto");
+            edit.add("Width = Auto");
         } else {
-            edit.add("Width= " + _parent.maxWidth());
+            edit.add("Width = " + _parent.maxWidth());
         }
 
         if (getFixedHeight() == 0) {
-            edit.add("Height= Auto");
+            edit.add("Height = Auto");
         } else {
-            edit.add("Height= " + _parent.maxHeight());
+            edit.add("Height = " + _parent.maxHeight());
         }
 
         edit.add(CoordinateEdit.getFixedSizeEditAction(_parent));
@@ -143,7 +140,7 @@ public class PositionablePopupUtil {
     public void setTextMarginMenu(JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditMargin"));
         if ((fixedHeight == 0) || (fixedWidth == 0)) {
-            edit.add("Margin= " + getMargin());
+            edit.add("Margin = " + getMargin());
             edit.add(CoordinateEdit.getMarginEditAction(_parent));
         }
         popup.add(edit);
@@ -158,7 +155,7 @@ public class PositionablePopupUtil {
 
     public void setTextBorderMenu(JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditBorder"));
-        edit.add("Border Size= " + borderSize);
+        edit.add("Border Size = " + borderSize);
         edit.add(CoordinateEdit.getBorderEditAction(_parent));
         JMenu colorMenu = new JMenu(Bundle.getMessage("BorderColorMenu"));
         makeColorMenu(colorMenu, BORDER_COLOR);
@@ -293,7 +290,7 @@ public class PositionablePopupUtil {
         }
         _parent.updateSize();
     }
-    
+
     public void setHasBackground(boolean set) {
         _hasBackground = set;
         if (_textComponent instanceof PositionableJPanel) {
@@ -309,12 +306,11 @@ public class PositionablePopupUtil {
         return _hasBackground;
     }
 
-
     public Color getBackground() {
-        if(!_hasBackground) {
+        if (!_hasBackground) {
             return null;
         }
-        return _textComponent.getBackground();            
+        return _textComponent.getBackground();
     }
 
     protected JMenu makeFontSizeMenu() {
@@ -372,9 +368,7 @@ public class PositionablePopupUtil {
     }
 
     void setItalic() {
-        if (debug) {
-            log.debug("When style item selected italic state is " + italic.isSelected());
-        }
+        log.debug("When style item selected italic state is {}", italic.isSelected());
         if (italic.isSelected()) {
             setFontStyle(Font.ITALIC, 0);
         } else {
@@ -383,9 +377,7 @@ public class PositionablePopupUtil {
     }
 
     void setBold() {
-        if (debug) {
-            log.debug("When style item selected bold state is " + bold.isSelected());
-        }
+        log.debug("When style item selected bold state is {}", bold.isSelected());
         if (bold.isSelected()) {
             setFontStyle(Font.BOLD, 0);
         } else {
@@ -402,9 +394,8 @@ public class PositionablePopupUtil {
             private static final long serialVersionUID = -9122936163045992381L;
 
             public void actionPerformed(ActionEvent e) {
-                if (debug) {
-                    log.debug("When style item selected " + ((String) getValue(NAME))
-                            + " italic state is " + italic.isSelected());
+                if (log.isDebugEnabled()) { // Avoid action lookup unless needed
+                    log.debug("When style item selected {} italic state is {}", ((String) getValue(NAME)), italic.isSelected());
                 }
                 if (italic.isSelected()) {
                     setFontStyle(Font.ITALIC, 0);
@@ -421,9 +412,9 @@ public class PositionablePopupUtil {
             private static final long serialVersionUID = 6493363758504326865L;
 
             public void actionPerformed(ActionEvent e) {
-                if (debug) {
-                    log.debug("When style item selected " + ((String) getValue(NAME))
-                            + " bold state is " + bold.isSelected());
+                if (log.isDebugEnabled()) { // Avoid action lookup unless needed
+                    log.debug("When style item selected {} bold state is {}",
+                            ((String) getValue(NAME)), bold.isSelected());
                 }
                 if (bold.isSelected()) {
                     setFontStyle(Font.BOLD, 0);
@@ -442,10 +433,7 @@ public class PositionablePopupUtil {
 
     public void setFontStyle(int addStyle, int dropStyle) {
         int styleValue = (_textComponent.getFont().getStyle() & ~dropStyle) | addStyle;
-        if (debug) {
-            log.debug("setFontStyle: addStyle=" + addStyle + ", dropStyle= " + dropStyle
-                    + ", net styleValue is " + styleValue);
-        }
+        log.debug("setFontStyle: addStyle={}, dropStyle={}, net styleValue is {}", addStyle, dropStyle, styleValue);
         if (bold != null) {
             bold.setSelected((styleValue & Font.BOLD) != 0);
         }
@@ -466,9 +454,9 @@ public class PositionablePopupUtil {
         // next two lines needed because JCheckBoxMenuItem(AbstractAction) not in 1.1.8
         JCheckBoxMenuItem c = new JCheckBoxMenuItem((String) a.getValue(AbstractAction.NAME));
         c.addActionListener(a);
-        if (debug) {
-            log.debug("When creating style item " + ((String) a.getValue(AbstractAction.NAME))
-                    + " mask was " + mask + " state was " + _textComponent.getFont().getStyle());
+        if (log.isDebugEnabled()) { // Avoid action lookup unless needed
+            log.debug("When creating style item {} mask was {} state was {}",
+                    ((String) a.getValue(AbstractAction.NAME)), mask, _textComponent.getFont().getStyle());
         }
         if ((mask & _textComponent.getFont().getStyle()) == mask) {
             c.setSelected(true);
@@ -490,7 +478,7 @@ public class PositionablePopupUtil {
         addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Blue"), Color.blue, type);
         addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Magenta"), Color.magenta, type);
         if (type == BACKGROUND_COLOR) {
-            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Clear"), null, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("ColorClear"), null, type);
         }
         return buttonGrp;
     }
@@ -524,9 +512,7 @@ public class PositionablePopupUtil {
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
         r.addActionListener(a);
 
-        if (debug) {
-            log.debug("setColorButton: colorType=" + colorType);
-        }
+        log.debug("setColorButton: colorType={}", colorType);
         switch (colorType) {
             case FONT_COLOR:
                 if (color == null) {
@@ -551,9 +537,10 @@ public class PositionablePopupUtil {
     }
 
     protected void setColorButton(Color color, Color buttonColor, JRadioButtonMenuItem r) {
-        if (debug) {
-            log.debug("setColorButton: color=" + color + " (RGB= " + (color == null ? "" : color.getRGB())
-                    + ") buttonColor= " + buttonColor + " (RGB= " + (buttonColor == null ? "" : buttonColor.getRGB()) + ")");
+        if (log.isDebugEnabled()) { // Avoid color to string computations unless needed
+            log.debug("setColorButton: color = {} (RGB = {}) buttonColor = {} (RGB = {})",
+                    color, (color == null ? "" : color.getRGB()),
+                    buttonColor, (buttonColor == null ? "" : buttonColor.getRGB()));
         }
         if (buttonColor != null) {
             if (color != null && buttonColor.getRGB() == color.getRGB()) {
@@ -561,12 +548,10 @@ public class PositionablePopupUtil {
             } else {
                 r.setSelected(false);
             }
+        } else if (color == null) {
+            r.setSelected(true);
         } else {
-            if (color == null) {
-                r.setSelected(true);
-            } else {
-                r.setSelected(false);
-            }
+            r.setSelected(false);
         }
     }
 
@@ -584,7 +569,7 @@ public class PositionablePopupUtil {
      * ************* Justification ***********************
      */
     public void setTextJustificationMenu(JPopupMenu popup) {
-        JMenu justMenu = new JMenu("Justification");
+        JMenu justMenu = new JMenu(Bundle.getMessage("Justification"));
         addJustificationMenuEntry(justMenu, LEFT);
         addJustificationMenuEntry(justMenu, RIGHT);
         addJustificationMenuEntry(justMenu, CENTRE);
@@ -605,7 +590,7 @@ public class PositionablePopupUtil {
     }
 
     public void setJustification(String just) {
-        log.debug("setJustification: justification=" + just);
+        log.debug("setJustification: justification =" + just);
         if (just.equals("right")) {
             justification = RIGHT;
         } else if (just.equals("centre")) {
@@ -618,7 +603,7 @@ public class PositionablePopupUtil {
     }
 
     public int getJustification() {
-        log.debug("getJustification: justification=" + justification);
+        log.debug("getJustification: justification =" + justification);
         return justification;
     }
 
@@ -627,16 +612,16 @@ public class PositionablePopupUtil {
         JRadioButtonMenuItem r;
         switch (just) {
             case LEFT:
-                r = new JRadioButtonMenuItem("LEFT");
+                r = new JRadioButtonMenuItem(Bundle.getMessage("left"));
                 break;
             case RIGHT:
-                r = new JRadioButtonMenuItem("RIGHT");
+                r = new JRadioButtonMenuItem(Bundle.getMessage("right"));
                 break;
             case CENTRE:
-                r = new JRadioButtonMenuItem("CENTRE");
+                r = new JRadioButtonMenuItem(Bundle.getMessage("center"));
                 break;
             default:
-                r = new JRadioButtonMenuItem("LEFT");
+                r = new JRadioButtonMenuItem(Bundle.getMessage("left"));
         }
         r.addActionListener(new ActionListener() {
             //final int justification = just;
@@ -720,7 +705,7 @@ public class PositionablePopupUtil {
     }
 
     public void setTextOrientationMenu(JPopupMenu popup) {
-        JMenu oriMenu = new JMenu("Orientation");
+        JMenu oriMenu = new JMenu(Bundle.getMessage("Orientation"));
         addOrientationMenuEntry(oriMenu, HORIZONTAL);
         addOrientationMenuEntry(oriMenu, VERTICAL_UP);
         addOrientationMenuEntry(oriMenu, VERTICAL_DOWN);

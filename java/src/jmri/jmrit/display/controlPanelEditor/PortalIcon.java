@@ -249,8 +249,8 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
 
     private void setShowCoordinatesMenu(JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditLocation"));
-        edit.add("x= " + getX());
-        edit.add("y= " + getY());
+        edit.add("x = " + getX());
+        edit.add("y = " + getY());
         edit.add(CoordinateEdit.getCoordinateEditAction(this));
         popup.add(edit);
     }

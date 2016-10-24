@@ -2,12 +2,14 @@
 package jmri.jmrit.operations.locations;
 
 import javax.swing.BorderFactory;
+import jmri.jmrit.operations.locations.tools.ChangeTrackTypeAction;
+import jmri.jmrit.operations.locations.tools.ShowCarsByLocationAction;
+import jmri.jmrit.operations.locations.tools.ShowTrainsServingLocationAction;
 
 /**
  * Frame for user edit of a yard
  *
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class YardEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
 

@@ -6,6 +6,7 @@ import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.SprogMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
  * Frame for SPROG firmware update utility.
@@ -13,19 +14,13 @@ import org.slf4j.LoggerFactory;
  * Refactored
  *
  * @author	Andrew Crosland Copyright (C) 2004
- * @version	$Revision$
- */
+  */
 public class Sprogv4UpdateFrame
         extends SprogUpdateFrame
         implements SprogVersionListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2440054586566473704L;
-
-    public Sprogv4UpdateFrame() {
-        super();
+    public Sprogv4UpdateFrame(SprogSystemConnectionMemo memo) {
+        super(memo);
     }
 
     /**
@@ -40,7 +35,7 @@ public class Sprogv4UpdateFrame
         addHelpMenu("package.jmri.jmrix.sprog.update.Sprogv4UpdateFrame", true);
 
         // Get the SPROG version
-        SprogVersionQuery.requestVersion(this);
+        _memo.getSprogVersionQuery().requestVersion(this);
     }
 
     synchronized public void notifyVersion(SprogVersion v) {

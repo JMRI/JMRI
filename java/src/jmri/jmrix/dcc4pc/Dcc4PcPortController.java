@@ -5,7 +5,7 @@ package jmri.jmrix.dcc4pc;
  * Identifying class representing a DCC4PC communications port
  * @author          Kevin Dickerson Copyright (C) 2012
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
- * @version $Revision: 18133 $
+ * 
  */
 public abstract class Dcc4PcPortController extends jmri.jmrix.AbstractSerialPortController {
 

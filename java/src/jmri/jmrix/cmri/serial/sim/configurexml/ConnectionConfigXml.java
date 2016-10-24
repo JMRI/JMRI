@@ -16,7 +16,6 @@ import jmri.jmrix.cmri.serial.sim.SimDriverAdapter;
  * benefit from changes to) that code.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision$
  */
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS") // OK by convention
 public class ConnectionConfigXml extends jmri.jmrix.cmri.serial.serialdriver.configurexml.ConnectionConfigXml {
@@ -25,8 +24,17 @@ public class ConnectionConfigXml extends jmri.jmrix.cmri.serial.serialdriver.con
         super();
     }
 
+    @Override
     protected void getInstance() {
-        adapter = SimDriverAdapter.instance();
+        if(adapter == null) {
+           adapter = new SimDriverAdapter();
+           adapter.configure(); // sets the memo and traffic controller.
+        }
+    }
+
+    @Override
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig) object).getAdapter();
     }
 
     @Override
