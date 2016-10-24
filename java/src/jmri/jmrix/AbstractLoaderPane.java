@@ -111,7 +111,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
                     setDefaultFieldValues();
                     updateDownloadVerifyButtons();
                     selectInputFile();
-                    doRead();
+                    doRead(chooser);
                 }
             });
             p.add(selectButton);
@@ -275,7 +275,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
     /**
      * Read file into local memory
      */
-    private void doRead() {
+    protected void doRead(JFileChooser chooser) {
         if (inputFileName.getText().equals("")) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNoInputFile"),
                     Bundle.getMessage("ErrorTitle"),

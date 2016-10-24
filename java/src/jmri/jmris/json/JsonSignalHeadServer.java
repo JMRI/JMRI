@@ -28,7 +28,9 @@ import org.slf4j.LoggerFactory;
  * connection
  *
  * @author Paul Bender Copyright (C) 2010
+ * @deprecated since 4.5.6
  */
+@Deprecated
 public class JsonSignalHeadServer extends AbstractSignalHeadServer {
 
     private final JmriConnection connection;

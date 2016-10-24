@@ -40,6 +40,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
      * @param o Object to store, of type SignalHeadManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element signalheads = new Element("signalheads");
         setStoreElementClass(signalheads);
@@ -68,8 +69,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
                         signalheads.addContent(e);
                     }
                 } catch (Exception e) {
-                    log.error("Error storing signalhead: " + e);
-                    e.printStackTrace();
+                    log.error("Error storing signalhead: {}", e, e);
                 }
             }
         }
@@ -105,6 +105,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
         return true;
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -114,7 +115,9 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
      * additional info needed for a specific signal head type, invoke this with
      * the parent of the set of SignalHead elements.
      *
-     * @param shared Element containing the SignalHead elements to load.
+     * @param shared  Element containing the SignalHead elements to load.
+     * @param perNode Element containing any per-node information associated
+     *                with the shared Element.
      */
     public void loadSignalHeads(Element shared, Element perNode) {
         InstanceManager.getDefault(jmri.SignalHeadManager.class);
@@ -134,8 +137,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
                 // and do it
                 adapter.load(item, null);
             } catch (Exception e) {
-                log.error("Exception while loading " + item.getName() + ":" + e);
-                e.printStackTrace();
+                log.error("Exception while loading {}: {}", item.getName(), e, e);
             }
         }
     }
@@ -166,6 +168,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
         }
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.getDefault(jmri.SignalHeadManager.class).getXMLOrder();
     }
