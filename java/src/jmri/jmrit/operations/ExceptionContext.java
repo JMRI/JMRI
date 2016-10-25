@@ -52,6 +52,7 @@ public class ExceptionContext {
     /**
      * Returns a user friendly summary of the Exception. Empty parts are not
      * included. (Maybe later?)
+     * @return A string summary.
      */
     public String getSummary() {
         return _preface + _nl + _operation + _nl + _exception.getMessage() + _nl + _hint;
@@ -66,6 +67,8 @@ public class ExceptionContext {
     /**
      * Returns up to the given number of stack trace elements concatenated into
      * one string.
+     * @param maxLevels The number of stack trace elements to return.
+     * @return A string stack trace.
      *
      */
     public String getStackTraceAsString(int maxLevels) {

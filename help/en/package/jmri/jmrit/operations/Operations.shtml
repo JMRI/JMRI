@@ -950,10 +950,10 @@
     your trains to route a car. If you only want the router to use the trains that you've selected
     in the "Build" column of the "Trains" window, then deselect this option.</p>
 
-   <h4>Enable Track Destination Restrictions when Routing</h4>
+   <h4>Enable EXTREME Track Destination Restrictions when Routing</h4>
 
    <p>
-    The last routing option "Enable Track Destination Restrictions when Routing" is disabled by
+    The last routing option "Enable EXTREME Track Destination Restrictions when Routing" is disabled by
     default, and is recommended that you leave it disabled. This option makes the track destination
     feature of a classification/interchange track more restrictive. When selected it tells the
     router to only use <a href="#Interchange">classification/interchange</a> tracks that match a
@@ -963,7 +963,7 @@
     route a car to its final destination. For example, say the route for a car looks something like
     this: New York to Springfield to Worcester to Boston with each city hop requiring a separate
     train. In this case three trains are need to move the car from NY to Boston. With the "Enable
-    Track Destination Restrictions when Routing" disabled, which is the default, you only have to
+    EXTREME Track Destination Restrictions when Routing" disabled, which is the default, you only have to
     enter "Boston" as the destination for the departure C/I track in New York. The program when
     routing a car to Boston from New York, will determine that sending the car first to Springfield
     and then Worcester is okay because that's the route to get the car to Boston. However, if you

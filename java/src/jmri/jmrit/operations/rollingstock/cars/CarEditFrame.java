@@ -457,7 +457,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         if (ae.getSource() == typeComboBox && typeComboBox.getSelectedItem() != null) {
             log.debug("Type comboBox sees change, update car loads");
             CarLoads.instance().updateComboBox((String) typeComboBox.getSelectedItem(), loadComboBox);
-            // turnout off auto for location tracks
+            // turn off auto for location tracks
             autoTrackCheckBox.setSelected(false);
             autoTrackCheckBox.setEnabled(false);
             updateTrackLocationBox();
