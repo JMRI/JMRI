@@ -299,7 +299,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
         if (!CarRoads.instance().containsName(engine.getRoadName())) {
             String msg = MessageFormat.format(Bundle.getMessage("roadNameNotExist"), new Object[]{engine
                     .getRoadName()});
-            if (JOptionPane.showConfirmDialog(this, msg, Bundle.getMessage("engineAddRoad"),
+            if (JOptionPane.showConfirmDialog(this, msg, Bundle.getMessage("rsAddRoad"),
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 CarRoads.instance().addName(engine.getRoadName());
             }
