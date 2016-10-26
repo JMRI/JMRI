@@ -166,7 +166,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                         wait();
                         _halt = false;
                         _atHalt = false;
-                        rampSpeedTo(_speedType);
+                        if (!_waitForClear) {
+                            rampSpeedTo(_speedType);                            
+                        }
                     } catch (InterruptedException ie) {
                         Thread.currentThread().interrupt();
                         log.error("InterruptedException at _atHalt " + ie);
@@ -272,7 +274,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         return _setRunOnET;
     }
 
-    synchronized protected void setWaitforClear(boolean set) {
+    synchronized private void setWaitforClear(boolean set) {
         if ( !set) {
             _waitForClear = false;
             if (_atClear) {
@@ -316,16 +318,19 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
 
         if (endSpeedType!=null && (endSpeedType.equals(Warrant.Stop) || endSpeedType.equals(Warrant.EStop))) {
+            setWaitforClear(true);
             if (_throttle.getSpeedSetting() <= 0) {
                 return;
             }
             // keep train commands halted until speed is restored
-            setWaitforClear(true);
             if (endSpeedType.equals(Warrant.EStop)) {
                 setSpeed(-0.5f);
                 return;
             }
         } else {
+            if (_halt) {
+                return;
+            }
             _speedType = endSpeedType;
         }
         synchronized (this) {
@@ -338,6 +343,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             t.setPriority(Thread.MAX_PRIORITY);
             t.start();
         }
+    }
+    
+    protected boolean ramping() {
+        return _speedOverride;
     }
 
     protected float modifySpeed(float tSpeed, String sType) {
@@ -384,7 +393,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 }
                 break;
             default:
-                log.error("Unknown speed interpretation " + _speedMap.getInterpretation());
+                log.error("Unknown speed interpretation {}", _speedMap.getInterpretation());
                 throw new java.lang.IllegalArgumentException("Unknown speed interpretation " + _speedMap.getInterpretation());
         }
         if (log.isDebugEnabled()) log.debug("modifySpeed: from {}, to {}, speedtype= {} using interpretation {}",
@@ -409,6 +418,19 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     
     protected void setSpeedToType(String speedType) {
         float speed = _throttle.getSpeedSetting();
+        setWaitforClear(true);
+        if (speedType!=null && (speedType.equals(Warrant.Stop) || speedType.equals(Warrant.EStop))) {
+            if (_throttle.getSpeedSetting() <= 0) {
+                return;
+            }
+            // keep train commands halted until speed is restored
+            if (speedType.equals(Warrant.EStop)) {
+                setSpeed(-0.5f);
+                return;
+            }
+        } else {
+            _speedType = speedType;
+        }
         setSpeed(modifySpeed(speed, speedType));
     }
 
@@ -419,6 +441,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     synchronized public int getRunState() {
         if (_abort) {
             return Warrant.ABORT;
+        } else if(_speedOverride) {
+            return Warrant.SPEED_RESTRICTED;
         } else if (_halt) {
             return Warrant.HALT;
         } else if (_waitForClear) {
@@ -427,7 +451,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             return Warrant.WAIT_FOR_TRAIN;
         } else if (_waitForSensor) {
             return Warrant.WAIT_FOR_SENSOR;
-        } else if (!_speedType.equals(Warrant.Normal) || _speedOverride) {
+        } else if (!_speedType.equals(Warrant.Normal)) {
             return Warrant.SPEED_RESTRICTED;
         } else if (_idxCurrentCommand < 0) {
             return 0;
@@ -437,30 +461,26 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
 
     public String getSpeedRestriction() {
         float curSpeed = _throttle.getSpeedSetting();
-        if (curSpeed <= 0.0f) {
-            return "At Stop";
+        String units;
+        float speed;
+        if (_speedProfile != null) {
+            speed = _speedProfile.getSpeed(curSpeed, _throttle.getIsForward()) / 1000;
         } else {
-            String units;
-            float speed;
-            if (_speedProfile != null) {
-                speed = _speedProfile.getSpeed(curSpeed, _throttle.getIsForward()) / 1000;
-            } else {
-                speed = curSpeed * _speedMap.getDefaultThrottleFactor();
+            speed = curSpeed * _speedMap.getDefaultThrottleFactor();
 
-            }
-            speed = speed * jmri.InstanceManager.getDefault(SignalSpeedMap.class
-            ).getLayoutScale();
-
-            if (jmri.InstanceManager.getDefault(SignalSpeedMap.class
-            ).getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
-                units = "Kmph";
-                speed = speed * 3.6f;
-            } else {
-                units = "Mph";
-                speed = speed * 2.2369363f;
-            }
-            return Bundle.getMessage("atSpeed", _speedType, Math.round(speed), units);
         }
+        speed = speed * jmri.InstanceManager.getDefault(SignalSpeedMap.class
+        ).getLayoutScale();
+
+        if (jmri.InstanceManager.getDefault(SignalSpeedMap.class
+        ).getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
+            units = "Kmph";
+            speed = speed * 3.6f;
+        } else {
+            units = "Mph";
+            speed = speed * 2.2369363f;
+        }
+        return Bundle.getMessage("atSpeed", _speedType, Math.round(speed), units);
     }
 
     /**
@@ -862,7 +882,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (_speedProfile != null) {
             distance = _speedProfile.getSpeed(speed, isForward) * time / 1000;
         } else {
-            distance = (speed * time) / _speedMap.getDefaultThrottleFactor();
+            distance = (speed * time) * _speedMap.getDefaultThrottleFactor();
         }
         return distance;
     }
@@ -928,13 +948,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             return _speedProfile.getSpeed(speedStep, _throttle.getIsForward()) / (speedStep * 1000);
         }
         return _speedMap.getDefaultThrottleFactor();
-    }
-
-    protected String minSpeedType(String speed1, String speed2) {
-        if (secondGreaterThanFirst(speed1, speed2)) {
-            return speed1;
-        }
-        return speed2;
     }
 
     // return a boolean so minSpeedType() can return a non-null String if possible
@@ -1006,9 +1019,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                                 break;
                             }
                         }
-                        if (!stop) {
-                            setWaitforClear(false); // speed restored                            
-                        }
                     }
                 } else {
                     synchronized (this) {
@@ -1032,12 +1042,15 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 }
                 if (stop) {
                     log.info("ThrottleRamp stopped before completion");
+                } else if (!endSpeedType.equals(Warrant.Stop) && 
+                        !endSpeedType.equals(Warrant.EStop) /*&& speed > 0.0001f */) {
+                    setWaitforClear(false); // speed restored                            
                 }
             } finally {
                 _speedOverride = false;
                 _lock.unlock();
             }
-            if (!_speedType.equals(Warrant.Normal)) {
+            if (!endSpeedType.equals(Warrant.Normal)) {
                 ThreadingUtil.runOnLayout(() -> {
                 _warrant.fireRunStatus("SpeedRestriction", Warrant.Normal, _speedType);
                 });

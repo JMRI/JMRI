@@ -1160,6 +1160,12 @@ public class WarrantFrame extends WarrantRoute {
         if (_isSCWarrant.isSelected()) {
             setForward(_runForward.isSelected());
         }
+        if (_warrant.getRunMode()!=Warrant.MODE_NONE) {
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("CannotEdit", _warrant.getDisplayName()),
+                    Bundle.getMessage("WarningTitle"),
+                    JOptionPane.WARNING_MESSAGE);
+            return false;            
+        }
         String msg = routeIsValid();
         if (msg!=null) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("SaveError")+" - "+msg,

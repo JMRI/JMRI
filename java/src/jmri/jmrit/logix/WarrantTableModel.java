@@ -514,7 +514,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             if (mode == Warrant.MODE_LEARN) {
                 Bundle.getMessage("Learning", w.getCurrentBlockOrder()
                         .getBlock().getDisplayName());
-            } else {
+            } else if (value!=null) {
                 String setting = (String) value;
                 if (mode == Warrant.MODE_RUN || mode == Warrant.MODE_MANUAL) {
                     int s = -1;
@@ -538,12 +538,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             }
             break;
         case EDIT_COLUMN:
-            if (w.getRunMode()==Warrant.MODE_NONE) {
-                openWarrantFrame(w);                
-            } else {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("CannotEdit", w.getDisplayName()),
-                        Bundle.getMessage("WarningTitle"),
-                        JOptionPane.WARNING_MESSAGE);
+            openWarrantFrame(w);                
+            if (w.getRunMode()!=Warrant.MODE_NONE) {
+                msg = Bundle.getMessage("CannotEdit", w.getDisplayName());
             }
             break;
         case DELETE_COLUMN:
@@ -567,9 +564,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                     JOptionPane.WARNING_MESSAGE);
             _frame.setStatusText(msg, Color.red, true);
         }
-        fireTableRowsUpdated(row, row);
-        if (log.isDebugEnabled()) log.debug("Leaving setValueAt: row= " + row
-                + ", column= " + col + ", value= " + value.toString());
+//        fireTableRowsUpdated(row, row);
     }
 
     private void openWarrantFrame(Warrant warrant) {
