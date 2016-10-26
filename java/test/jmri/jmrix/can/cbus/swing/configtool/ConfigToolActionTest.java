@@ -25,8 +25,8 @@ public class ConfigToolActionTest extends TestCase {
         CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tcs);
         //f.initComponents(memo);
-        new ConfigToolPane();
-        Assert.assertNotNull("exists", tcs);
+        ConfigToolPane pane = new ConfigToolPane();
+        Assert.assertNotNull("exists", pane);
     }
 
     /*public void testFrameCreation() {
