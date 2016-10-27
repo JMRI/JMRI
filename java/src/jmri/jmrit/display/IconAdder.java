@@ -364,6 +364,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
 
     public void setSelection(NamedBean bean) {
         int row = _pickListModel.getIndexOf(bean);
+        row = _table.convertRowIndexToView(row);
         _table.addRowSelectionInterval(row, row);
         _pickTablePane.getVerticalScrollBar().setValue(row * ROW_HEIGHT);
     }
@@ -473,6 +474,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             checkIconSizes();
         }
         int row = _table.getSelectedRow();
+        row = _table.convertRowIndexToModel(row);
         if (row >= 0) {
             NamedBean b = _pickListModel.getBeanAt(row);
             _table.clearSelection();

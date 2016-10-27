@@ -75,6 +75,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.wangrow.PackageTest.class));
         suite.addTest(jmri.jmrix.xpa.PackageTest.suite());
         suite.addTest(jmri.jmrix.zimo.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.jinput.PackageTest.class));
         return suite;
 
     }
