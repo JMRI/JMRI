@@ -79,8 +79,8 @@ public class StringUtil {
      * @return the first matching name or null if none found
      */
     @CheckReturnValue
-    static public @CheckForNull
-    String getNameFromState(int state, @Nonnull int[] states, @Nonnull String[] names) {
+    @CheckForNull
+    static public String getNameFromState(int state, @Nonnull int[] states, @Nonnull String[] names) {
         for (int i = 0; i < states.length; i++) {
             if (state == states[i]) {
                 return names[i];
@@ -98,8 +98,8 @@ public class StringUtil {
      * @return String exactly two characters long
      */
     @CheckReturnValue
-    static public @Nonnull
-    String twoHexFromInt(int val) {
+    @Nonnull
+    static public String twoHexFromInt(int val) {
         StringBuilder sb = new StringBuilder();
         sb.append(HEX_CHARS[(val & 0xF0) >> 4]);
         sb.append(HEX_CHARS[val & 0x0F]);
@@ -115,8 +115,8 @@ public class StringUtil {
      * @return String exactly two characters long
      */
     @CheckReturnValue
-    static public @Nonnull
-    String appendTwoHexFromInt(int val, @Nonnull String inString) {
+    @Nonnull
+    static public String appendTwoHexFromInt(int val, @Nonnull String inString) {
         StringBuilder sb = new StringBuilder(inString);
         sb.append(StringUtil.twoHexFromInt(val));
         return sb.toString();
@@ -130,8 +130,8 @@ public class StringUtil {
      * @return a string of binary characters
      */
     @CheckReturnValue
-    static public @Nonnull
-    String to8Bits(int val, boolean msbLeft) {
+    @Nonnull
+    static public String to8Bits(int val, boolean msbLeft) {
         String result = "";
         for (int i = 0; i < 8; i++) {
             if (msbLeft) {
@@ -151,8 +151,8 @@ public class StringUtil {
      * @return String of hex values, ala "01 02 0A B1 21 ".
      */
     @CheckReturnValue
-    static public @Nonnull
-    String hexStringFromBytes(@Nonnull byte[] bytes) {
+    @Nonnull
+    static public String hexStringFromBytes(@Nonnull byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < bytes.length; i++) {
             sb.append(HEX_CHARS[(bytes[i] & 0xF0) >> 4]);
@@ -170,8 +170,8 @@ public class StringUtil {
      *         will not be null.
      */
     @CheckReturnValue
-    static public @Nonnull
-    byte[] bytesFromHexString(@Nonnull String s) {
+    @Nonnull
+    static public byte[] bytesFromHexString(@Nonnull String s) {
         String ts = s + "  "; // ensure blanks on end to make scan easier
         int len = 0;
         // scan for length
@@ -234,7 +234,7 @@ public class StringUtil {
      */
     @Deprecated
     static public void sort(@Nonnull Object[] values) {
-        java.util.Arrays.sort(values);
+        Arrays.sort(values);
     }
 
     static void bubblesortUpper(@Nonnull Object[] values) {
@@ -310,6 +310,9 @@ public class StringUtil {
      * @param s	        collection of strings
      * @param delimiter the delimiter
      * @return e.g. {@code join({"abc","def,"ghi"}, ".") ==> "abc.def.ghi"}
+     * @deprecated since 4.5.6; use
+     * {@link java.lang.String#join(java.lang.CharSequence, java.lang.CharSequence...)}
+     * instead
      */
     @CheckReturnValue
     @Deprecated

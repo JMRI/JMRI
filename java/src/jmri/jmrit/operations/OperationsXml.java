@@ -70,13 +70,12 @@ public abstract class OperationsXml extends XmlFile {
         return file;
     }
 
-    /**
-     */
     protected void writeFile(String filename) throws FileNotFoundException, IOException {
         log.error("writeFile not overridden");
     }
 
     /**
+     * @param filename The string file name.
      * @throws org.jdom2.JDOMException Due to XML parsing error
      * @throws java.io.IOException Due to trouble accessing named file
      */
@@ -126,6 +125,7 @@ public abstract class OperationsXml extends XmlFile {
      * Absolute path to location of Operations files.
      * <P>
      * Default is in the user's files path, but can be set to anything.
+     * @return The string path name.
      *
      * @see jmri.util.FileUtil#getUserFilesPath()
      */
@@ -190,6 +190,7 @@ public abstract class OperationsXml extends XmlFile {
     
     /**
      * Checks name for the file control characters:
+     * @param name The string to check for a valid file name.
      * @return true if name is okay, false if name contains a control character.
      */
     public static boolean checkFileName(String name) {
