@@ -3382,9 +3382,6 @@ public class Llnmon {
                                         : (type == LnConstants.RE_IPL_DIGITRAX_HOST_DT402) ? "Digitrax DT402(x) host"
                                                 : (type == LnConstants.RE_IPL_DIGITRAX_HOST_DCS51) ? "Digitrax DCS51 host"
                                                         : (type == LnConstants.RE_IPL_DIGITRAX_HOST_PR3) ? "Digitrax PR3 host"
-                : (type == LnConstants.RE_IPL_DIGITRAX_HOST_DCS210) ? "Digitrax DCS210 host"
-                : (type == LnConstants.RE_IPL_DIGITRAX_HOST_DCS240) ? "Digitrax DCS240 host"
-                : (type == LnConstants.RE_IPL_DIGITRAX_HOST_DT500) ? "Digitrax DT500 host"
                                                                 : "Digitrax (unknown host device type)");
     } // end of public static String getDeviceNameFromIPLInfo
 
